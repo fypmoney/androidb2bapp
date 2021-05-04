@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewHelper"
+            type="com.dreamfolks.baseapp.viewhelper.ContactViewHelper" />
+
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivServiceLogo"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_centerVertical="true"
+            app:srcCompat="@drawable/ic_profile" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/heading"
+            style="@style/AppTheme.Widget.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_toStartOf="@+id/invite"
+            android:layout_toEndOf="@+id/ivServiceLogo"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:text="@{viewHelper.contactEntity.firstName}"
+            android:textSize="@dimen/edit_text_size"
+            app:fontFamily="@font/poppins_medium" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/number_relation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/heading"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_toEndOf="@+id/ivServiceLogo"
+            android:ellipsize="end"
+            android:text="@{viewHelper.contactEntity.contactNumber}"
+            android:textColor="@color/text_color_little_dark"
+            android:textSize="@dimen/edit_text_size"
+            app:fontFamily="@font/poppins_regular" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/flagIdentifier"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/margin"
+            android:visibility="@{viewHelper.isRadioVisible?View.VISIBLE:View.GONE,default=gone}"
+            android:layout_toEndOf="@+id/number_relation"
+            android:src="@drawable/logo_white"
+          />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/selectedIcon"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/margin"
+            android:background="@{viewHelper.isContactSelected ? @drawable/radio_selected : @drawable/radio_unselected}"
+            android:onClick="@{()->viewHelper.onItemClicked()}"
+            android:visibility="@{viewHelper.isRadioVisible?View.VISIBLE:View.GONE,default=gone}" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/invite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/margin"
+            android:onClick="@{()->viewHelper.onIsAppUserClicked()}"
+            android:text="@string/invite_link"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/edit_text_size"
+            android:visibility="@{viewHelper.isRadioVisible?View.GONE:View.VISIBLE,default=visible}" />
+
+    </RelativeLayout>
+
+</layout>

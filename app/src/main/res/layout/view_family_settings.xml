@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.dreamfolks.baseapp.viewmodel.FamilySettingsViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin">
+
+        <include
+            android:id="@+id/layout"
+            layout="@layout/toolbar" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMembers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_toStartOf="@+id/tvViewAll"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="start"
+            android:text="@string/members_heading"
+            android:layout_below="@+id/layout"
+            android:textSize="@dimen/title_size" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvViewAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center"
+            android:layout_below="@+id/layout"
+            android:layout_marginTop="@dimen/margin"
+            android:fontFamily="@font/poppins_medium"
+            android:text="@string/view_all"
+            android:onClick="@{()->viewModel.onViewAllClicked()}"
+            android:textColor="@color/buttonBackgroundColor"
+            android:textSize="@dimen/sub_title_size" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/layoutServicePrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvMembers"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="@dimen/card_elevation"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="@dimen/_10sdp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+          >
+
+               <LinearLayout
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical"
+                   android:id="@+id/linear_layout"
+                   android:onClick="@{()->viewModel.onAddMemberClicked()}">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cvService"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginBottom="@dimen/margin"
+                    app:cardBackgroundColor="@color/ratingColor"
+                    app:cardCornerRadius="@dimen/_360sdp"
+                    app:cardElevation="@dimen/card_elevation">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivServiceLogo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/white"
+                        android:scaleType="center"
+                        app:srcCompat="@drawable/ic_add" />
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/name"
+                    style="@style/AppTheme.Widget.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textColor="@color/text_color_little_dark"
+                    android:text="@string/add_member_heading"
+                    android:textSize="@dimen/edit_text_size"
+                    app:fontFamily="@font/poppins_regular" />
+               </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/linear_layout"
+                    app:adapter="@{viewModel.memberAdapter}"/>
+
+
+            </RelativeLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvManage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layoutServicePrice"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_toStartOf="@+id/tvViewAll"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="start"
+            android:text="@string/manage_heading"
+            android:textSize="@dimen/title_size" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvManage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvManage"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardElevation="@dimen/card_elevation"
+            app:cardUseCompatPadding="true"
+            app:contentPadding="@dimen/_10sdp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/notification"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginBottom="@dimen/margin"
+                    android:backgroundTint="#D4E2FF"
+                    app:cardCornerRadius="@dimen/_360sdp"
+                    app:cardElevation="@dimen/_10sdp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/notification_bell"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@color/white"
+                        android:scaleType="center"
+                        app:srcCompat="@drawable/notification_bell_icon" />
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvNotification"
+                    style="@style/AppTheme.Widget.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_toEndOf="@+id/notification"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:text="@string/notification_text"
+                    android:textSize="@dimen/title_size"
+                    app:fontFamily="@font/poppins_medium" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvFamilyAlerts"
+                    style="@style/AppTheme.Widget.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvNotification"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_toEndOf="@+id/notification"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:textColor="@color/text_color_little_dark"
+                    android:text="@string/family_alerts_text"
+                    android:textSize="@dimen/edit_text_size"
+                    app:fontFamily="@font/poppins_regular" />
+
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:onCheckedChanged="@{viewModel::executeOnSwitchStatusChanged}"
+                    android:checked="@={viewModel.isSwitchChecked}"
+                    android:textColor="@android:color/black" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+    </RelativeLayout>
+</layout>

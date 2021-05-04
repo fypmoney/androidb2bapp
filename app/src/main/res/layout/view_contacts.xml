@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.dreamfolks.baseapp.viewmodel.ContactViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <include
+            android:id="@+id/layout"
+            layout="@layout/toolbar" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/search"
+            style="@style/AppTheme.Widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout"
+            android:layout_margin="@dimen/margin"
+            android:background="@color/fragmentBackgroundColor"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:hint="@string/search"
+            android:onTextChanged="@{viewModel.onTextChanged}"
+            android:textColor="@color/black" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/continueBtn"
+            android:layout_below="@+id/search"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            app:adapter="@{viewModel.contactAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/continueBtn"
+            style="@style/Widget.App.Button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_button_height"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:onClick="@{()->viewModel.onContinueClicked()}"
+            android:text="@string/continue_btn_text"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/black" />
+
+    </RelativeLayout>
+</layout>
+

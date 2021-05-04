@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.dreamfolks.baseapp.viewmodel.LoginViewModel" />
+
+        <variable
+            name="activity"
+            type="com.dreamfolks.baseapp.view.activity.LoginView" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/page_padding">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/enter_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/enter_phone_title"
+                    android:layout_centerHorizontal="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/verification_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_below="@+id/enter_phone"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/send_verification_title" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_below="@+id/verification_title"
+                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                  >
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/spCountryCode"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="26dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="gone"
+                        app:selection="@{viewModel.selectedCountryCodePosition}" />
+
+                    <View
+                        android:id="@+id/vDivider5"
+                        style="@style/VerticalDivider"
+                        android:visibility="gone"
+                        android:layout_margin="@dimen/_4sdp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/spCountryCode"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etMobileNo"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@android:color/transparent"
+                        android:focusable="@{viewModel.isMobileFocusable?true:false}"
+                        android:gravity="center_vertical"
+                        android:hint="@string/mobile_no"
+                        android:inputType="phone"
+                        android:visibility="@{viewModel.isMobileEditableVisible?View.GONE:View.VISIBLE,default=visible}"
+                        android:enabled="@{viewModel.isMobileEnabled?true:false}"
+                        android:onClick="@{()->viewModel.onMobileClick()}"
+                        android:text="@={viewModel.mobile}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/vDivider5"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etMobileNo1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:hint="@string/mobile_no"
+                        android:inputType="phone"
+                        android:visibility="@{viewModel.isMobileEditableVisible?View.VISIBLE:View.GONE,default=gone}"
+                        android:text="@={viewModel.mobile}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/vDivider5"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSendOtp"
+                    style="@style/Widget.App.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/main_button_height"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:text="@string/continue_btn_text"
+                    android:textAllCaps="false"
+                    android:onClick="@{()->viewModel.onContinueClicked()}"
+                   android:layout_alignParentBottom="true" />
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

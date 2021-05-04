@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.dreamfolks.baseapp.viewmodel.SelectInterestViewModel" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/page_padding">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                    android:hint="@string/first_name_label"
+                    android:padding="@dimen/_8sdp"
+                    android:singleLine="true"
+                    android:text="@={viewModel.firstName}" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_last_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/et_first_name"
+                    android:layout_marginTop="@dimen/margin"
+                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                    android:hint="@string/last_name_label"
+                    android:padding="@dimen/_8sdp"
+                    android:text="@={viewModel.lastName}" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etDateOfBirth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/et_last_name"
+                    android:layout_marginTop="@dimen/margin"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:hint="@string/dd_mm_yyyy"
+                    android:inputType="none"
+                    android:onClick="@{()->viewModel.onDobClicked()}"
+                    android:singleLine="true"
+                    android:text="@={viewModel.dob}" />
+
+             <!--   <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/majorMinor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@{viewModel.majorMinorText}"
+                    android:visibility="@{}"
+                    android:layout_below="@+id/etDateOfBirth" />
+-->
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/spNameTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/etDateOfBirth"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@{viewModel.majorMinorText}"
+                    android:visibility="@{viewModel.isMajorMinorVisible?View.VISIBLE:View.GONE}"
+                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                    android:padding="@dimen/_5sdp"
+
+                 />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/choose_interest_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/choose_interest"
+                   android:layout_below="@+id/spNameTitle" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/choose_interest_title"
+                    android:layout_marginTop="@dimen/margin"
+                    app:adapter="@{viewModel.chooseInterestAdapter}"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="3"
+                    android:layout_marginBottom="@dimen/margin"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/AppTheme.Widget.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/spNameTitle"
+                    android:text="@string/no_data_found"
+                    android:textSize="@dimen/title_size"
+                    android:visibility="@{viewModel.noDataFoundVisibility?View.VISIBLE:View.GONE,default=gone}" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSendOtp"
+                    style="@style/Widget.App.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/main_button_height"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="@dimen/_90sdp"
+                    android:onClick="@{()->viewModel.onSubmitClicked()}"
+                    android:text="@string/submit_btn_text"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/black" />
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

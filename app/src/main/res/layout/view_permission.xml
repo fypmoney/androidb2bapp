@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+        <variable
+            name="activity"
+            type="com.dreamfolks.baseapp.view.activity.PermissionView" />
+
+
+        <variable
+            name="viewModel"
+            type="com.dreamfolks.baseapp.viewmodel.PermissionViewModel" />
+
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/_10sdp"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/heading"
+            style="@style/AppTheme.Widget.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar_layout"
+            android:ellipsize="end"
+            android:visibility="gone"
+            android:text="@string/enable_permission"
+            android:textColor="@color/text_color_little_dark"
+            android:textSize="@dimen/title_size"
+            app:fontFamily="@font/poppins_medium" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/location_permission"
+            style="@style/AppTheme.Widget.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/heading"
+            android:layout_marginTop="@dimen/margin"
+            android:text="finding location"
+            android:textColor="@color/text_color_little_dark"
+            android:textSize="@dimen/sub_title_size"
+            app:fontFamily="@font/poppins_regular" />
+
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/location_permission"
+            android:visibility="gone"
+
+            android:background="@color/dividerColor" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/contact_permission"
+            style="@style/AppTheme.Widget.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view1"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@string/contact_permission"
+            android:visibility="gone"
+            android:textColor="@color/text_color_little_dark"
+            android:textSize="@dimen/sub_title_size"
+            app:fontFamily="@font/poppins_regular" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSendOtp"
+            style="@style/Widget.App.Button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_button_height"
+            android:layout_alignParentBottom="true"
+            android:text="@string/grant_permission_btn_text"
+            android:textAllCaps="false"
+            android:visibility="gone"
+
+            app:backgroundTint="@color/black" />
+
+
+    </RelativeLayout>
+
+</layout>

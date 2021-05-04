@@ -1,0 +1,169 @@
+<resources>
+    <string name="app_name">FYP money</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="please_wait">Please wait</string>
+    <string name="dreamFolksDb">pockket.db</string>
+    <string name="no_internet">No internet! Please check internet connection.</string>
+    <string name="try_again_text"><u>Try Again</u></string>
+    <string name="something_went_wrong_error">Something went wrong</string>
+    <string name="something_went_wrong_error1">Something went wrong, please try again</string>
+
+    <!--
+    Button Text
+    -->
+    <string name="continue_btn_text">Continue</string>
+    <string name="submit_btn_text">Submit</string>
+    <string name="add_money_btn_text">Add Money</string>
+    <string name="view_feeds">View Feeds</string>
+    <string name="send_link_btn_text">Send link</string>
+    <string name="remove_btn_text">Remove</string>
+    <string name="cancel_btn_text">Cancel</string>
+    <string name="leave_btn_text">Leave</string>
+    <string name="add_member_btn_text">Add member</string>
+    <string name="grant_permission_btn_text">Grant Permission</string>
+
+
+    <!--Login-->
+    <string name="enter_otp">Enter OTP</string>
+    <string name="otp">OTP</string>
+    <string name="sign_in_sign_up">Sign In/Sign Up</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="request_otp">Request OTP</string>
+    <string name="continue_with">Continue with</string>
+    <string name="phone_no_email">Mobile No. or Email Id</string>
+    <string name="phone_email_empty_error">Please enter Mobile No</string>
+    <string name="first_name_empty_error">Please enter first name</string>
+    <string name="last_name_empty_error">Please enter last name</string>
+    <string name="dob_empty_error">Please enter Date of Birth</string>
+    <string name="otp_length_error">OTP length must be 6</string>
+    <string name="phone_email_validity_error">Please enter valid Mobile No. or Email Id</string>
+    <string name="continue_txt">Continue</string>
+    <string name="no_internet_try_again">Not connected with internet, please try again</string>
+    <string name="google_sign_in_failure">Google sign in failed.</string>
+
+    <!--
+    Device Security
+    -->
+    <string name="dialog_title_auth">Enter phone screen lock pattern, PIN, password or fingerprint</string>
+    <string name="dialog_msg_auth">Unlock DreamFolks</string>
+
+    <!--contact activity
+    -->
+    <string name="name_title">Name :</string>
+    <string name="contact_title">Contact : </string>
+    <string name="contact_screen_title">Contacts</string>
+    <string name="no_data_found">No Data Found</string>
+    <string name="permission_required">Permission are required to access contacts</string>
+    <string name="invite_link"><u>Invite</u></string>
+    <string name="pocket_user">Pocket User</string>
+    <string name="empty_contact_error">Unable to fetch contacts. Add member by entering the contact number</string>
+
+    <!--
+    Sign in
+    -->
+    <string name="enter_phone_title">Enter your mobile number</string>
+    <string name="send_verification_title">We will send you SMS verification code</string>
+    <string name="mobile_no">Mobile No.</string>
+
+    <!--
+    Enter OTP screen
+    -->
+    <string name="enter_code_title">Enter the code to verify your number</string>
+    <string name="change_text">Change</string>
+    <string name="reading_otp_text">Reading OTP</string>
+    <string name="empty_otp_error">Please enter OTP</string>
+
+    <!-- Select interest
+    -->
+    <string name="first_name_label">First Name</string>
+    <string name="last_name_label">Last Name</string>
+    <string name="choose_interest">Choose your interests</string>
+    <string name="dd_mm_yyyy">DD/MM/YYYY</string>
+    <string name="fill_details">Fill your details</string>
+    <string name="minor_text">Minor</string>
+    <string name="major_text">Major</string>
+
+    <string-array name="person_category_array">
+        <item>Minor</item>
+        <item>Major</item>
+    </string-array>
+
+
+    <!--Home Screen-->
+
+    <string name="balance_text">Balance</string>
+    <string name="set_upi_id_text">Set up your UPI ID</string>
+    <string name="register_for_upi_title">Register now and start UPI payments</string>
+    <string name="balance_default_value">0.0</string>
+
+    <!--
+    Feeds Screen
+    -->
+    <string name="feeds_screen_title">Feeds</string>
+    <string name="feeds_details_screen_title">Feed Details</string>
+    <string name="browse_with">Browse with</string>
+
+    <!--
+    User profile
+    -->
+    <string name="logout">Log out</string>
+    <string name="user_profile_screen_title">Profile</string>
+    <string-array name="my_profile_title_list">
+        <item>Family Settings</item>
+        <item>Logout</item>
+    </string-array>
+    <integer-array name="my_profile_icon_list">
+        <item>@drawable/ic_profile</item>
+        <item>@drawable/ic_profile</item>
+    </integer-array>
+
+    <!-- Family Settings-->
+    <string name="family_settings_screen_title">Family Settings</string>
+    <string name="view_all">View All</string>
+    <string name="members_heading">Members</string>
+    <string name="add_member_heading">Add member</string>
+    <string name="manage_heading">Manage</string>
+    <string name="notification_text">Notifications</string>
+    <string name="family_alerts_text">Family alerts</string>
+
+    <!-- Members
+    -->
+    <string name="adult_title">Adult</string>
+    <string name="invites_title">Invites</string>
+    <string name="leave_family">Leave family</string>
+    <string name="remove_txt">Remove</string>
+    <string name="edit_txt">Edit</string>
+
+    <!--
+    Leave member
+    -->
+
+    <string name="remove_title">Are you sure u want to remove?</string>
+    <string name="cancel_title">Are you sure u want to cancel?</string>
+    <string name="leave_title">Are you sure u want to leave family?</string>
+
+
+    <!--Add member
+    -->
+    <string name="from_contact"><u>From Contact</u></string>
+    <string name="search">Search</string>
+    <string name="select_relation">Select Relation</string>
+    <string name="invite_user_dialog_title">is not the App User. Please send invite.</string>
+    <string name="invite_text">Invite</string>
+
+    <!--
+    Permission View
+    -->
+    <string name="enable_permission">Enable location and contact permission for better experience</string>
+    <string name="contact_permission">Contact</string>
+    <string name="location_permission">Location</string>
+
+</resources>

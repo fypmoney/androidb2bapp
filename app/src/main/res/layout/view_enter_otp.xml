@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.dreamfolks.baseapp.viewmodel.EnterOtpViewModel" />
+
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/page_padding">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/enter_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/enter_code_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_mobile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/enter_phone"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:text="@{viewModel.mobile}" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/enter_phone"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_toEndOf="@+id/tv_mobile"
+                    android:onClick="@{()->viewModel.onChangeClicked()}"
+                    android:text="@string/change_text"
+                    android:textColor="@color/teal_700" />
+
+
+                <com.mukesh.OtpView
+                    android:id="@+id/otpView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_change"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/card_padding"
+                    android:cursorVisible="true"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    app:OtpItemCount="6"
+                    android:focusable="true"
+                    app:OtpLineColor="@color/colorPrimary"
+                    app:OtpViewType="line" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSentOtpAgain"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:onClick="@{() ->viewModel.callSendOtpApi() }"
+                        android:text="@string/resend_otp"
+                        android:enabled="@{viewModel.isResendEnabled?true:false,default=true}"
+                        android:visibility="@{viewModel.resendOtpVisibility?View.VISIBLE:View.GONE}"
+                        android:textColor="@color/buttonBackgroundColor"
+
+                        />
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSendOtp"
+                        style="@style/Widget.App.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/main_button_height"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:onClick="@{()->viewModel.onSubmitClicked()}"
+                        android:text="@string/submit_btn_text"
+                        android:textAllCaps="false"
+                        app:backgroundTint="@color/black" />
+                </LinearLayout>
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

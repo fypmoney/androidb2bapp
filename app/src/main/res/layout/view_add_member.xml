@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.dreamfolks.baseapp.viewmodel.AddMemberViewModel" />
+
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/page_padding">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/enter_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/enter_phone_title"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/enter_phone"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray">
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:id="@+id/spCountryCode"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="26dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:selection="@{viewModel.selectedCountryCodePosition}" />
+
+                    <View
+                        android:id="@+id/vDivider5"
+                        style="@style/VerticalDivider"
+                        android:layout_margin="@dimen/_4sdp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/spCountryCode"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/etMobileNo"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:backgroundTint="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:hint="@string/mobile_no"
+                        android:inputType="phone"
+                        android:text="@={viewModel.mobile}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/vDivider5"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layoutPhoneNumber"
+                    android:layout_marginTop="@dimen/margin"
+                    android:fontFamily="@font/poppins_regular"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@{viewModel.name}"
+                    android:textSize="@dimen/sub_title_size" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvAddContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/layoutPhoneNumber"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/margin"
+                    android:fontFamily="@font/poppins_medium"
+                    android:onClick="@{()->viewModel.onFromContactClicked()}"
+                    android:padding="@dimen/_5sdp"
+                    android:text="@string/from_contact"
+                    android:textColor="@color/buttonBackgroundColor"
+                    android:textSize="@dimen/sub_title_size" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSelectRelation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvAddContact"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/select_relation"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spNameTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvSelectRelation"
+                    android:layout_marginTop="@dimen/margin"
+                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                    android:entries="@{viewModel.relationList}"
+                    android:gravity="end"
+                    android:padding="@dimen/_5sdp"
+                    app:selection="@{viewModel.selectedRelationPosition}"
+                    tools:setOnItemSelectedListener="@{viewModel.clicksListener}" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSendOtp"
+                    style="@style/Widget.App.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/main_button_height"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="@dimen/margin"
+                    android:onClick="@{()->viewModel.onAddMemberClicked()}"
+                    android:text="@string/add_member_btn_text"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/black" />
+
+
+                <!--   <com.google.android.material.button.MaterialButton
+                       android:id="@+id/btnSendOtp"
+                       style="@style/Widget.App.Button"
+                       android:layout_width="match_parent"
+                       android:layout_height="@dimen/main_button_height"
+                       android:layout_alignParentBottom="true"
+                       android:layout_marginTop="@dimen/_12sdp"
+                       android:onClick="@{()->viewModel.onContinueClicked()}"
+                       android:text="@string/continue_btn_text"
+                       android:textAllCaps="false" />-->
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
