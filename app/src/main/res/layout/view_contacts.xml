@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.dreamfolks.baseapp.viewmodel.ContactViewModel" />
+            type="com.fypmoney.viewmodel.ContactViewModel" />
     </data>
 
     <RelativeLayout

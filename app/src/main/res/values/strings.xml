@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">FYP money</string>
     <string name="action_settings">Settings</string>
+    <string name="default_notification_channel_id">fypmoney</string>
+
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
@@ -29,6 +31,10 @@
     <string name="leave_btn_text">Leave</string>
     <string name="add_member_btn_text">Add member</string>
     <string name="grant_permission_btn_text">Grant Permission</string>
+    <string name="accept_btn_text">Accept</string>
+    <string name="decline_btn_text">Decline</string>
+    <string name="get_otp_btn_text">Get OTP</string>
+    <string name="verify_btn_text">Verify</string>
 
 
     <!--Login-->
@@ -46,8 +52,11 @@
     <string name="otp_length_error">OTP length must be 6</string>
     <string name="phone_email_validity_error">Please enter valid Mobile No. or Email Id</string>
     <string name="continue_txt">Continue</string>
+    <string name="phone_number">Phone number</string>
     <string name="no_internet_try_again">Not connected with internet, please try again</string>
     <string name="google_sign_in_failure">Google sign in failed.</string>
+    <string name="back_to_login"><font fgcolor='#9CA3A5'>Back to &#032;</font>Log in</string>
+    <string name="login"><font fgcolor='#231F20'>Log in</font></string>
 
     <!--
     Device Security
@@ -69,17 +78,19 @@
     <!--
     Sign in
     -->
-    <string name="enter_phone_title">Enter your mobile number</string>
+    <string name="enter_phone_title">Phone number \n verification</string>
     <string name="send_verification_title">We will send you SMS verification code</string>
     <string name="mobile_no">Mobile No.</string>
 
     <!--
     Enter OTP screen
     -->
-    <string name="enter_code_title">Enter the code to verify your number</string>
+    <string name="enter_code_title">Enter OTP here</string>
     <string name="change_text">Change</string>
     <string name="reading_otp_text">Reading OTP</string>
-    <string name="empty_otp_error">Please enter OTP</string>
+    <string name="empty_otp_error">Please fill OTP</string>
+    <string name="otp_title">OTP</string>
+    <string name="resend_timer_text">" Resend OTP in"</string>
 
     <!-- Select interest
     -->
@@ -165,5 +176,23 @@
     <string name="enable_permission">Enable location and contact permission for better experience</string>
     <string name="contact_permission">Contact</string>
     <string name="location_permission">Location</string>
+
+    <!--
+    Family Notification
+    -->
+    <string name="family_notification_screen_title">Family Notification</string>
+
+    <!--
+    Login success
+    -->
+    <string name="login_success_msg">Your phone number verification is successfully done!</string>
+
+    <!-- Referral code
+    -->
+    <string name="skip_title">Skip</string>
+    <string name="referral_code_title">Do you have A referral code?</string>
+    <string name="code_text">Code</string>
+    <string name="referral_code_empty_error">Please enter ReferralCode</string>
+
 
 </resources>

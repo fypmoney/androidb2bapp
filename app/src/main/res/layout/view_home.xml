@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.dreamfolks.baseapp.viewmodel.HomeViewModel" />
+            type="com.fypmoney.viewmodel.HomeViewModel" />
 
     </data>
 
@@ -38,6 +38,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
+                android:onClick="@{()->viewModel.onNotificationClicked()}"
                 android:layout_toStartOf="@+id/myProfile"
                 app:srcCompat="@drawable/notification_bell_icon" />
 
@@ -200,12 +201,6 @@
             android:visibility="gone"
             app:backgroundTint="@color/colorPrimary" />
 
-
-        <ListView
-            android:id="@+id/mobile_list"
-            android:layout_margin="@dimen/_10sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
 
     </LinearLayout>

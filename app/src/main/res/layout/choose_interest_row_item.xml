@@ -10,11 +10,11 @@
 
 <variable
     name="viewHelper"
-    type="com.dreamfolks.baseapp.viewhelper.ChooseInterestViewHelper" />
+    type="com.fypmoney.viewhelper.ChooseInterestViewHelper" />
 
 <variable
     name="viewModel"
-    type="com.dreamfolks.baseapp.viewmodel.SelectInterestViewModel" />
+    type="com.fypmoney.viewmodel.SelectInterestViewModel" />
 
 </data>
 

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.LoginSuccessViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/no_internet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/ic_verification_tick" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/no_internet"
+            android:layout_marginTop="@dimen/margin_20"
+            android:textColor="@color/text_color_little_dark"
+            android:text="@string/login_success_msg"
+            android:textAlignment="center"
+            android:textSize="@dimen/title_size" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSendOtp"
+            style="@style/Widget.App.Button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_button_height"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/_30sdp"
+            android:background="@drawable/curved_background1"
+            app:backgroundTint="@color/text_color_dark"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/margin"
+            android:onClick="@{()->viewModel.callGetCustomerProfileApi()}"
+            android:text="@string/continue_btn_text"
+            android:textAllCaps="false"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imPattern1"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_pattern" />
+
+
+
+
+    </RelativeLayout>
+
+</layout>

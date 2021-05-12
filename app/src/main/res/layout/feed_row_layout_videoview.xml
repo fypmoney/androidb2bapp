@@ -10,7 +10,7 @@
 
         <variable
             name="viewHelper"
-            type="com.dreamfolks.baseapp.viewhelper.FeedsViewHelper" />
+            type="com.fypmoney.viewhelper.FeedsViewHelper" />
 
     </data>
 

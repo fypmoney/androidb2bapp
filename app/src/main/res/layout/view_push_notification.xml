@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.dreamfolks.baseapp.viewmodel.PushNotificationViewModel" />
+            type="com.fypmoney.viewmodel.PushNotificationViewModel" />
     </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

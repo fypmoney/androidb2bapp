@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="com.dreamfolks.baseapp.viewmodel.FeedDetailsViewModel" />
+            type="com.fypmoney.viewmodel.FeedDetailsViewModel" />
 
     </data>
 

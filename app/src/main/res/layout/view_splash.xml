@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.dreamfolks.baseapp.viewmodel.SplashViewModel" />
+            type="com.fypmoney.viewmodel.SplashViewModel" />
     </data>
 
     <RelativeLayout

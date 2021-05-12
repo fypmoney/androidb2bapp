@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.dreamfolks.baseapp.viewmodel.AddMemberViewModel" />
+            type="com.fypmoney.viewmodel.AddMemberViewModel" />
 
 
     </data>

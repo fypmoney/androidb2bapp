@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.dreamfolks.baseapp.viewmodel.EnterOtpViewModel" />
+            type="com.fypmoney.viewmodel.EnterOtpViewModel" />
 
 
     </data>
@@ -38,18 +38,17 @@
                     android:id="@+id/enter_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/enter_code_title"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="@dimen/main_title_size"
+                    android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_mobile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/enter_phone"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:text="@{viewModel.mobile}" />
 
@@ -65,54 +64,65 @@
                     android:text="@string/change_text"
                     android:textColor="@color/teal_700" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/otp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_mobile"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:text="@string/otp_title" />
 
                 <com.mukesh.OtpView
                     android:id="@+id/otpView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_change"
+                    android:layout_below="@+id/otp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/card_padding"
+                    android:layout_marginTop="@dimen/margin"
                     android:cursorVisible="true"
-                    android:inputType="number"
-                    android:textColor="@color/black"
-                    app:OtpItemCount="6"
                     android:focusable="true"
-                    app:OtpLineColor="@color/colorPrimary"
-                    app:OtpViewType="line" />
+                    android:inputType="number"
+                    app:OtpItemCount="6"
+                    android:itemBackground="@drawable/otp_background"
+                    app:OtpItemSpacing="@dimen/_15sdp"
+                    app:OtpViewType="none" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvResendIn"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/otpView"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="@dimen/margin"
+                    android:textColor="@color/text_color_little_dark"
+                    android:visibility="@{viewModel.resendOtpTimerVisibility?View.VISIBLE:View.GONE}" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSentOtpAgain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/otpView"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/margin"
+                    android:enabled="@{viewModel.isResendEnabled?true:false,default=true}"
+                    android:onClick="@{() ->viewModel.callSendOtpApi() }"
+                    android:text="@string/resend_otp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSendOtp"
+                    style="@style/Widget.App.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/main_button_height"
                     android:layout_alignParentBottom="true"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvSentOtpAgain"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_4sdp"
-                        android:onClick="@{() ->viewModel.callSendOtpApi() }"
-                        android:text="@string/resend_otp"
-                        android:enabled="@{viewModel.isResendEnabled?true:false,default=true}"
-                        android:visibility="@{viewModel.resendOtpVisibility?View.VISIBLE:View.GONE}"
-                        android:textColor="@color/buttonBackgroundColor"
-
-                        />
-
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnSendOtp"
-                        style="@style/Widget.App.Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/main_button_height"
-                        android:layout_marginTop="@dimen/_12sdp"
-                        android:onClick="@{()->viewModel.onSubmitClicked()}"
-                        android:text="@string/submit_btn_text"
-                        android:textAllCaps="false"
-                        app:backgroundTint="@color/black" />
-                </LinearLayout>
+                    android:layout_marginStart="@dimen/margin_20"
+                    android:layout_marginEnd="@dimen/margin_20"
+                    android:background="@drawable/curved_background1"
+                    app:backgroundTint="@color/text_color_dark"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:onClick="@{()->viewModel.onVerifyClicked()}"
+                    android:text="@string/verify_btn_text"
+                    android:textAllCaps="false"
+                  />
 
             </RelativeLayout>
         </ScrollView>

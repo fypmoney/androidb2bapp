@@ -39,7 +39,8 @@
     <style name="App_EditTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:background">@drawable/edit_text_rounded_rectangle_shape_solid_gray
         </item>
-        <item name="android:textColor">@color/colorFontSecondary</item>
+        <item name="android:textColor">@color/text_color_dark</item>
+        <item name="android:textColorHint">@color/text_color_light</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="android:textSize">@dimen/edit_text_size</item>
         <item name="android:padding">@dimen/_8sdp</item>
@@ -48,8 +49,7 @@
     </style>
 
     <style name="AppTheme.Widget.TextView" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/poppins_medium</item>
-        <item name="android:textColor">@color/colorFontPrimary</item>
+        <item name="android:textColor">@color/text_color_light</item>
         <item name="android:textSize">@dimen/sub_title_size</item>
     </style>
 

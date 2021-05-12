@@ -9,12 +9,12 @@
         <import type="androidx.core.content.ContextCompat" />
         <variable
             name="activity"
-            type="com.dreamfolks.baseapp.view.activity.PermissionView" />
+            type="com.fypmoney.view.activity.PermissionView" />
 
 
         <variable
             name="viewModel"
-            type="com.dreamfolks.baseapp.viewmodel.PermissionViewModel" />
+            type="com.fypmoney.viewmodel.PermissionViewModel" />
 
     </data>
 

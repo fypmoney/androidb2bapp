@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dreamfolks.baseapp">
+    package="com.fypmoney">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -22,8 +22,13 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.DreamfolksApp">
+        android:theme="@style/Theme.DreamfolksApp"
+        android:usesCleartextTraffic="true">
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+
         <activity
             android:name=".view.activity.SplashView"
             android:label="@string/app_name"
@@ -51,23 +56,39 @@
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <activity
+            android:name=".view.activity.CreateAccountView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+
+        <activity
             android:name=".view.activity.PermissionView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.ReferralCodeView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <activity
             android:name=".view.activity.MainActivity"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-        <activity android:name=".view.activity.ContactView"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar"/>
+        <activity
+            android:name=".view.activity.ContactView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity android:name=".view.activity.HomeView" />
-        <activity android:name=".view.activity.UserProfileView"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar"/>
-        <activity android:name=".view.activity.FamilySettingsView"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar"/>
-        <activity android:name=".view.activity.MemberView"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar"/>
-        <activity android:name=".view.activity.AddMemberView"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar"/>
+        <activity
+            android:name=".view.activity.UserProfileView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.FamilySettingsView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.FamilyNotificationView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.MemberView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.AddMemberView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <activity
             android:name=".view.activity.UserFeedsDetailView"

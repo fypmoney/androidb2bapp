@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.ReferralCodeViewModel" />
+
+        <variable
+            name="activity"
+            type="com.fypmoney.view.activity.ReferralCodeView" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/page_padding">
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivServiceLogo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_referral_code" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/enter_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivServiceLogo"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:text="@string/referral_code_title"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="@dimen/main_title_size"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/verification_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/enter_phone"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:text="@string/code_text"
+                    android:textColor="@color/text_color_light" />
+
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/etReferralCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/verification_title"
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                    android:gravity="center_vertical"
+                    android:hint="@string/mobile_no"
+                    android:inputType="phone"
+                    android:text="@={viewModel.referralCode}"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnContinue"
+                    style="@style/Widget.App.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/main_button_height"
+                    android:layout_below="@+id/etReferralCode"
+                    android:layout_marginStart="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginEnd="@dimen/margin_20"
+                    android:background="@drawable/curved_background1"
+                    android:onClick="@{()->viewModel.callVerifyReferralCode()}"
+                    android:text="@string/continue_btn_text"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/text_color_dark" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/back_to_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginBottom="@dimen/margin_20"
+                    android:onClick="@{()->viewModel.onSkipClicked()}"
+                    android:text="@string/skip_title"
+                    android:textColor="@color/text_color_dark" />
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

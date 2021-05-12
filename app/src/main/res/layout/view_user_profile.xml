@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.dreamfolks.baseapp.viewmodel.UserProfileViewModel" />
+            type="com.fypmoney.viewmodel.UserProfileViewModel" />
     </data>
 
     <LinearLayout

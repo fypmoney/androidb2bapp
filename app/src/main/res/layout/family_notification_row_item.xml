@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewHelper"
+            type="com.fypmoney.viewhelper.FamilyNotificationViewHelper" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.FamilyNotificationViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/_5sdp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:text="@{viewHelper.familyList.description}"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_10sdp"
+            app:fontFamily="@font/poppins_regular" />
+
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:orientation="horizontal"
+            android:visibility="@{viewHelper.isAcceptVisible?View.VISIBLE:View.GONE}"
+            android:weightSum="1">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_accept"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/main_button_height"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_weight="0.5"
+                android:onClick="@{()->viewModel.callUpdateApprovalRequestApi(viewHelper.position,viewHelper.familyList,viewHelper.accepted)}"
+                android:text="@string/accept_btn_text"
+                app:backgroundTint="@color/colorPrimary" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_ok"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/main_button_height"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_weight="0.5"
+                android:onClick="@{()->viewModel.callUpdateApprovalRequestApi(viewHelper.position,viewHelper.familyList,viewHelper.decline)}"
+                android:text="@string/decline_btn_text"
+                app:backgroundTint="@color/black" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/main_button_height"
+            android:layout_gravity="center"
+            android:visibility="@{viewHelper.isAcceptVisible?View.GONE:View.VISIBLE}"
+            android:onClick="@{()->viewModel.callUpdateApprovalRequestApi(viewHelper.position,viewHelper.familyList,viewHelper.cancel)}"
+            android:text="@string/cancel_btn_text"
+            app:backgroundTint="@color/black" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/dividerColor" />
+
+    </LinearLayout>
+
+</layout>

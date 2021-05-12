@@ -15,7 +15,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.dreamfolks.baseapp"
+        applicationId "com.fypmoney"
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
@@ -125,8 +125,7 @@ dependencies {
     // shimmer
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
-
-
+    
 
 }
 apollo {

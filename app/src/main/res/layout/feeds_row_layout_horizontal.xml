@@ -10,11 +10,11 @@
 
         <variable
             name="viewHelper"
-            type="com.dreamfolks.baseapp.viewhelper.FeedsViewHelper" />
+            type="com.fypmoney.viewhelper.FeedsViewHelper" />
 
         <variable
             name="viewModel"
-            type="com.dreamfolks.baseapp.viewmodel.FeedsViewModel" />
+            type="com.fypmoney.viewmodel.FeedsViewModel" />
 
     </data>
 
