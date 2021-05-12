@@ -7,7 +7,6 @@
     <dimen name="normal_text_size">@dimen/_10sdp</dimen>
     <dimen name="micro_text_size">@dimen/_8sdp</dimen>
     <dimen name="page_padding">@dimen/_10sdp</dimen>
-    <dimen name="button_margin">@dimen/_20sdp</dimen>
     <dimen name="card_padding">@dimen/_8sdp</dimen>
     <dimen name="edit_text_size">@dimen/_10sdp</dimen>
     <dimen name="corner_radius">@dimen/_8sdp</dimen>
@@ -20,5 +19,6 @@
     <dimen name="list_item_spacing_half">8dp</dimen>
     <dimen name="margin">@dimen/_10sdp</dimen>
     <dimen name="margin_20">@dimen/_20sdp</dimen>
+    <dimen name="button_margin">@dimen/_30sdp</dimen>
 
 </resources>

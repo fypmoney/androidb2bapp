@@ -58,6 +58,9 @@
         <activity
             android:name=".view.activity.CreateAccountView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.LoginSuccessView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
 
         <activity

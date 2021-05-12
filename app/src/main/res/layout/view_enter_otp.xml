@@ -118,8 +118,8 @@
                     android:layout_marginEnd="@dimen/margin_20"
                     android:background="@drawable/curved_background1"
                     app:backgroundTint="@color/text_color_dark"
-                    android:layout_marginTop="@dimen/_12sdp"
                     android:onClick="@{()->viewModel.onVerifyClicked()}"
+                    android:layout_marginBottom="@dimen/button_margin"
                     android:text="@string/verify_btn_text"
                     android:textAllCaps="false"
                   />

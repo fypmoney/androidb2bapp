@@ -185,7 +185,7 @@
     <!--
     Login success
     -->
-    <string name="login_success_msg">Your phone number verification is successfully done!</string>
+    <string name="login_success_msg">Your phone number verification \n is successfully done!</string>
 
     <!-- Referral code
     -->
