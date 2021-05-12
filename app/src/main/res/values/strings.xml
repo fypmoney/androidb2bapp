@@ -94,10 +94,8 @@
 
     <!-- Select interest
     -->
-    <string name="first_name_label">First Name</string>
-    <string name="last_name_label">Last Name</string>
+
     <string name="choose_interest">Choose your interests</string>
-    <string name="dd_mm_yyyy">DD/MM/YYYY</string>
     <string name="fill_details">Fill your details</string>
     <string name="minor_text">Minor</string>
     <string name="major_text">Major</string>
@@ -193,6 +191,17 @@
     <string name="referral_code_title">Do you have A referral code?</string>
     <string name="code_text">Code</string>
     <string name="referral_code_empty_error">Please enter ReferralCode</string>
+
+    <!--Create Account-->
+
+    <string name="first_name_label">First Name*</string>
+    <string name="last_name_label">Last Name*</string>
+    <string name="first_name_hint">Your name</string>
+    <string name="last_name_hint">Your last name</string>
+    <string name="dob_label">Date of Birth*</string>
+    <string name="dd_mm_yyyy">dd/mm/yyyy</string>
+    <string name="create_account_title">Create Account</string>
+    <string name="already_have_account_title">Create Account</string>
 
 
 </resources>

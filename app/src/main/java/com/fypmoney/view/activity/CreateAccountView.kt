@@ -41,7 +41,8 @@ class CreateAccountView :
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = this@CreateAccountView,
-            toolbar = toolbar
+            toolbar = toolbar,
+            isBackArrowVisible = true
         )
         try {
             mViewModel.setData(intent.getSerializableExtra((AppConstants.CUSTOMER_INFO_RESPONSE)) as CustomerInfoResponse)
