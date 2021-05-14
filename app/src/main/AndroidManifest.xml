@@ -71,6 +71,14 @@
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <activity
+            android:name=".view.activity.CreateAccountSuccessView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+        <activity
+            android:name=".view.activity.CommunityView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+        <activity
             android:name=".view.activity.MainActivity"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity

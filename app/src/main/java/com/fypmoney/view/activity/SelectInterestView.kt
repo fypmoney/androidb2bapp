@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.toolbar.toolbar
 * This is used to handle interest of the user
 * */
 class SelectInterestView :
-    BaseActivity<ViewSelectInterestBinding, SelectInterestViewModel>(), Utility.OnDateSelected {
+    BaseActivity<ViewSelectInterestBinding, SelectInterestViewModel>() {
     private lateinit var mViewModel: SelectInterestViewModel
     private lateinit var mViewBinding: ViewSelectInterestBinding
 
@@ -40,13 +40,9 @@ class SelectInterestView :
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = this@SelectInterestView,
-            toolbar = toolbar
+            toolbar = toolbar,isBackArrowVisible = true
         )
-        try {
-            mViewModel.setData(intent.getSerializableExtra((AppConstants.CUSTOMER_INFO_RESPONSE)) as CustomerInfoResponse)
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
+
 
 
         setObserver()
@@ -57,38 +53,16 @@ Create this method for observe the viewModel fields
  */
 
     private fun setObserver() {
-        mViewModel.onDobClicked.observe(this) {
-            if (it) {
-                try {
-                    Utility.showDatePickerDialog(context = this, this)
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-                mViewModel.onDobClicked.value = false
-            }
-        }
+
         mViewModel.onUpdateProfileSuccess.observe(this) {
             if (it) {
-                intentToActivity(HomeView::class.java)
+                intentToActivity(CommunityView::class.java)
                 mViewModel.onUpdateProfileSuccess.value = false
             }
         }
 
     }
 
-    override fun onDateSelected(dateOnEditText: String, dateOnServer: String, yearDifference: Int) {
-        mViewModel.dob.value = dateOnEditText
-        mViewModel.dobForServer.value = dateOnServer
-        mViewModel.isMajorMinorVisible.set(true)
-        when {
-            yearDifference < 18 -> {
-                mViewModel.majorMinorText.set(getString(R.string.minor_text))
-            }
-            else -> {
-                mViewModel.majorMinorText.set(getString(R.string.major_text))
-            }
-        }
-    }
 
 
     /**

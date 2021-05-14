@@ -27,6 +27,7 @@ import com.fypmoney.view.adapter.ChooseInterestAdapter
 class CreateAccountViewModel(application: Application) : BaseViewModel(application) {
     var noDataFoundVisibility = ObservableField(false)
     var onUpdateProfileSuccess = MutableLiveData<Boolean>()
+    var onLoginClicked = MutableLiveData<Boolean>()
     var firstName = MutableLiveData<String>()
     var lastName = MutableLiveData<String>()
     var dob = MutableLiveData<String>()
@@ -47,9 +48,9 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
     }
 
     /*
-    * This method is used to handle click of submit
+    * This method is used to handle click of continue
     * */
-    fun onSubmitClicked() {
+    fun onContinueClicked() {
         when {
             TextUtils.isEmpty(firstName.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.first_name_empty_error))
@@ -71,7 +72,6 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
                             userId = SharedPrefUtils.getLong(
                                 getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID
                             ),
-                            interest = selectedInterestList,
                             firstName = firstName.value?.trim(),
                             lastName = lastName.value?.trim(),
                             mobile = SharedPrefUtils.getString(
@@ -92,6 +92,12 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
     fun onDobClicked() {
         onDobClicked.value = true
     }
+    /*
+    * This method is used to handle click of login
+    * */
+    fun onLoginClicked() {
+        onLoginClicked.value = true
+    }
 
 
     override fun onSuccess(purpose: String, responseData: Any) {
@@ -99,8 +105,25 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
         when (purpose) {
             ApiConstant.API_UPDATE_PROFILE -> {
                 if (responseData is CustomerInfoResponse) {
+
+                    // save first name, last name, date of birth
+
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_USER_FIRST_NAME,responseData.firstName
+                    )
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_USER_LAST_NAME,responseData.lastName
+                    )
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_USER_DOB,dobForServer.value?.trim()
+                    )
+
+
                     val interestList=ArrayList<String>()
-                    if(selectedInterestList.isNullOrEmpty()==false) {
+                    if(!selectedInterestList.isNullOrEmpty()) {
                         selectedInterestList.forEach {
                             interestList.add(it.name!!)
                         }

@@ -2,62 +2,56 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<data>
+    <data>
 
-<import type="android.view.View" />
+        <import type="android.view.View" />
 
-<import type="androidx.core.content.ContextCompat" />
+        <import type="androidx.core.content.ContextCompat" />
 
-<variable
-    name="viewHelper"
-    type="com.fypmoney.viewhelper.ChooseInterestViewHelper" />
+        <variable
+            name="viewHelper"
+            type="com.fypmoney.viewhelper.ChooseInterestViewHelper" />
 
-<variable
-    name="viewModel"
-    type="com.fypmoney.viewmodel.SelectInterestViewModel" />
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.SelectInterestViewModel" />
 
-</data>
+    </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/serviceLayout"
-    android:paddingStart="@dimen/_4sdp"
-    android:paddingEnd="@dimen/_4sdp"
-    android:layout_width="wrap_content"
-    android:layout_margin="@dimen/_5sdp"
-    android:onClick="@{()->viewHelper.onItemClicked()}"
-    android:background="@{viewHelper.isBackgroundHighlight?@color/dividerColor:@color/white}"
-    android:layout_height="wrap_content">
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cvService"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
-        android:backgroundTint="#D4E2FF"
-        android:padding="@dimen/_20sdp"
-        app:cardCornerRadius="@dimen/_360sdp"
-        app:cardElevation="@dimen/card_elevation"
+    <LinearLayout
+        android:id="@+id/serviceLayout"
+        android:paddingStart="@dimen/_4sdp"
+        android:paddingEnd="@dimen/_4sdp"
+        android:layout_width="wrap_content"
         android:layout_margin="@dimen/_5sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:onClick="@{()->viewHelper.onItemClicked()}"
+        android:background="@drawable/curved_background3"
+        android:elevation="@dimen/_5sdp"
+        android:padding="@dimen/_5sdp"
+        android:layout_height="wrap_content">
+
+
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivServiceLogo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="center"
-           app:srcCompat="@drawable/logo_white"/>
-    </com.google.android.material.card.MaterialCardView>
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_gravity="center"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/curved_background4"
+            app:srcCompat="@drawable/ic_profile"/>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvServiceName"
-        android:layout_width="@dimen/_66sdp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:gravity="top|center"
-        android:text="@{viewHelper.interestResponseDetails.name}"
-        android:textSize="@dimen/micro_text_size"
-        app:layout_constraintEnd_toEndOf="@id/cvService"
-        app:layout_constraintStart_toStartOf="@id/cvService"
-        app:layout_constraintTop_toBottomOf="@id/cvService" />
-</androidx.constraintlayout.widget.ConstraintLayout></layout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvServiceName"
+            android:layout_width="@dimen/_66sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:text="@{viewHelper.interestResponseDetails.name}"
+            android:textSize="@dimen/micro_text_size"
+
+            />
+    </LinearLayout></layout>

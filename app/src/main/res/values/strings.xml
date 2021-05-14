@@ -35,6 +35,7 @@
     <string name="decline_btn_text">Decline</string>
     <string name="get_otp_btn_text">Get OTP</string>
     <string name="verify_btn_text">Verify</string>
+    <string name="activate_account_btn_text">Activate Account</string>
 
 
     <!--Login-->
@@ -95,10 +96,11 @@
     <!-- Select interest
     -->
 
-    <string name="choose_interest">Choose your interests</string>
+    <string name="choose_interest_title">Tell us about </string>
     <string name="fill_details">Fill your details</string>
     <string name="minor_text">Minor</string>
     <string name="major_text">Major</string>
+    <string name="answer_later">Answer later</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>
@@ -201,7 +203,23 @@
     <string name="dob_label">Date of Birth*</string>
     <string name="dd_mm_yyyy">dd/mm/yyyy</string>
     <string name="create_account_title">Create Account</string>
-    <string name="already_have_account_title">Create Account</string>
+    <string name="already_have_account_title">Already have an account?</string>
+
+    <!--
+    Community
+    -->
+    <string name="community_screen_title">"Let's build a community together"</string>
+    <string name="community_screen_sub_title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod</string>
+    <string name="school_name_title"> School name*</string>
+    <string name="school_name_hint">Your School name</string>
+    <string name="city_label">City*</string>
+    <string name="city_hint">Enter city</string>
+
+    <!--
+    create account success
+    -->
+    <string name="congratulation_title">Congratulations!</string>
+    <string name="create_account_success_title">Your account has been created \n successfully.</string>
 
 
 </resources>

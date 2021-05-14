@@ -1,11 +1,8 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.fypmoney.R
-import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -16,9 +13,9 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.InterestRepository
 import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.InterestEntity
+import com.fypmoney.model.InterestResponse
 import com.fypmoney.model.UpdateProfileRequest
 import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.ChooseInterestAdapter
 
 /*
@@ -28,98 +25,96 @@ class SelectInterestViewModel(application: Application) : BaseViewModel(applicat
     var chooseInterestAdapter = ChooseInterestAdapter(this)
     var noDataFoundVisibility = ObservableField(false)
     var onUpdateProfileSuccess = MutableLiveData<Boolean>()
-    var firstName = MutableLiveData<String>()
-    var lastName = MutableLiveData<String>()
-    var dob = MutableLiveData<String>()
     var dobForServer = MutableLiveData<String>()
-    var onDobClicked = MutableLiveData(false)
-    var majorMinorText = ObservableField<String>()
-    var isMajorMinorVisible = ObservableField(false)
     var selectedInterestList = ArrayList<InterestEntity>()
     var interestRepository = InterestRepository(mDB = appDatabase)
 
     init {
-        chooseInterestAdapter.setList(interestRepository.getAllInterestFromDatabase())
+        callGetInterestApi()
 
     }
 
+
     /*
-    * This method is used to set data
-    * */
-    fun setData(customerInfoResponse: CustomerInfoResponse) {
-        firstName.value = customerInfoResponse.firstName
-        lastName.value = customerInfoResponse.lastName
+       * This method is used to call get interest API
+       * */
+
+    private fun callGetInterestApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_GET_INTEREST,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_INTEREST),
+                request_type = ApiUrl.GET,
+                param = "", onResponse = this,
+                isProgressBar = true
+            )
+        )
+
+
     }
 
     /*
     * This method is used to handle click of submit
     * */
     fun onSubmitClicked() {
-        when {
-            TextUtils.isEmpty(firstName.value) -> {
-                Utility.showToast(PockketApplication.instance.getString(R.string.first_name_empty_error))
-            }
-            TextUtils.isEmpty(lastName.value) -> {
-                Utility.showToast(PockketApplication.instance.getString(R.string.last_name_empty_error))
-            }
-            TextUtils.isEmpty(dob.value) -> {
-                Utility.showToast(PockketApplication.instance.getString(R.string.dob_empty_error))
-            }
-            else -> {
-                WebApiCaller.getInstance().request(
-                    ApiRequest(
-                        purpose = ApiConstant.API_UPDATE_PROFILE,
-                        endpoint = NetworkUtil.endURL(ApiConstant.API_UPDATE_PROFILE),
-                        request_type = ApiUrl.PUT,
-                        onResponse = this, isProgressBar = true,
-                        param = UpdateProfileRequest(
-                            userId = SharedPrefUtils.getLong(
-                                getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID
-                            ),
-                            interest = selectedInterestList,
-                            firstName = firstName.value?.trim(),
-                            lastName = lastName.value?.trim(),
-                            mobile = SharedPrefUtils.getString(
-                                getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE
-                            ),
-                            dob = dobForServer.value?.trim()
-                        )
-                    )
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_UPDATE_PROFILE,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_UPDATE_PROFILE),
+                request_type = ApiUrl.PUT,
+                onResponse = this, isProgressBar = true,
+                param = UpdateProfileRequest(
+                    userId = SharedPrefUtils.getLong(
+                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID
+                    ),
+                    interest = selectedInterestList,
+                    firstName = SharedPrefUtils.getString(
+                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_FIRST_NAME
+                    ),
+                    lastName = SharedPrefUtils.getString(
+                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_LAST_NAME
+                    ),
+                    mobile = SharedPrefUtils.getString(
+                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE
+                    ),
+                    dob = SharedPrefUtils.getString(
+                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_DOB
+                    ),
                 )
+            )
+        )
 
-            }
-        }
-    }
-
-    /*
- * This method is used to handle click of date of birth
- * */
-    fun onDobClicked() {
-        onDobClicked.value = true
     }
 
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
+
+            ApiConstant.API_GET_INTEREST -> {
+                if (responseData is InterestResponse) {
+                    chooseInterestAdapter.setList(responseData.interestDetails)
+
+                }
+            }
             ApiConstant.API_UPDATE_PROFILE -> {
                 if (responseData is CustomerInfoResponse) {
-                    val interestList=ArrayList<String>()
-                    if(selectedInterestList.isNullOrEmpty()==false) {
-                       selectedInterestList.forEach {
+                    val interestList = ArrayList<String>()
+                    if (!selectedInterestList.isNullOrEmpty()) {
+                        selectedInterestList.forEach {
                             interestList.add(it.name!!)
                         }
 
                         SharedPrefUtils.putArrayList(
                             getApplication(),
-                            SharedPrefUtils.SF_KEY_USER_INTEREST,interestList
+                            SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
 
                         )
 
                     }
 
-                    onUpdateProfileSuccess . value =
-                    true                    // set the button text to continue
+                    onUpdateProfileSuccess.value =
+                        true                    // set the button text to continue
 
                 }
             }

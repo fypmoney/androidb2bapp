@@ -3,7 +3,6 @@ package com.fypmoney.view.activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -14,8 +13,6 @@ import com.fypmoney.databinding.ViewHomeBinding
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.HomeViewModel
-import com.google.firebase.FirebaseApp
-import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.view_home.*
 
 

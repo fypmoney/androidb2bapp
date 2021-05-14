@@ -22,7 +22,7 @@ data class UpdateProfileRequest(
     @SerializedName("anniversary") val anniversary: String? = null,
     @SerializedName("cityId") val cityId: Int? = null,
     @SerializedName("subscribedToPromotions") val subscribedToPromotions: String? = null,
-    @SerializedName("interest") val interest: ArrayList<InterestEntity>,
+    @SerializedName("interest") val interest: ArrayList<InterestEntity>?=null,
     ) : BaseRequest()
 
 

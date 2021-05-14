@@ -71,8 +71,15 @@ Create this method for observe the viewModel fields
         }
         mViewModel.onUpdateProfileSuccess.observe(this) {
             if (it) {
-                intentToActivity(HomeView::class.java)
+                intentToActivity(SelectInterestView::class.java)
                 mViewModel.onUpdateProfileSuccess.value = false
+            }
+        }
+
+        mViewModel.onLoginClicked.observe(this) {
+            if (it) {
+                intentToActivity(LoginView::class.java)
+                mViewModel.onLoginClicked.value = false
             }
         }
 
