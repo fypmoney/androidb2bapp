@@ -36,6 +36,7 @@
     <string name="get_otp_btn_text">Get OTP</string>
     <string name="verify_btn_text">Verify</string>
     <string name="activate_account_btn_text">Activate Account</string>
+    <string name="create_account_btn_text">Create Account</string>
 
 
     <!--Login-->
@@ -220,6 +221,14 @@
     -->
     <string name="congratulation_title">Congratulations!</string>
     <string name="create_account_success_title">Your account has been created \n successfully.</string>
+
+
+    <!--
+    First screen
+    -->
+    <string name="pull_up_to_start">Pull up to start</string>
+    <string name="welcome">Welcome to</string>
+    <string name="create_account_terms">"By tapping create Account you agree to the Terms of Services &amp; Privacy Policy"</string>
 
 
 </resources>

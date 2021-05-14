@@ -16,6 +16,7 @@
     <color name="colorFontSecondary">#565656</color>
     <color name="editTextStrokeColor">#D6D6D6</color>
     <color name="editTextSolidColor">#F4F4F4</color>
+    <color name="screenBackground">#F4F4F4</color>
     <color name="mainBackgroundColor">#FFFFFF</color>
     <color name="buttonBackgroundColor">#1F4AA8</color>
     <color name="fragmentBackgroundColor">#F6F6F6</color>
