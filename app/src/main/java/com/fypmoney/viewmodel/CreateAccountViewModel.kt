@@ -35,6 +35,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
     var onDobClicked = MutableLiveData(false)
     var majorMinorText = ObservableField<String>()
     var isMajorMinorVisible = ObservableField(false)
+    var buttonColor = ObservableField(false)
     var selectedInterestList = ArrayList<InterestEntity>()
     var interestRepository = InterestRepository(mDB = appDatabase)
 
@@ -136,8 +137,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
 
                     }
 
-                    onUpdateProfileSuccess . value =
-                        true                    // set the button text to continue
+                    onUpdateProfileSuccess.value = true                    // set the button text to continue
 
                 }
             }

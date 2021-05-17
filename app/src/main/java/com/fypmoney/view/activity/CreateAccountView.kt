@@ -49,8 +49,6 @@ class CreateAccountView :
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
-
-
         setObserver()
     }
 
@@ -88,16 +86,7 @@ Create this method for observe the viewModel fields
     override fun onDateSelected(dateOnEditText: String, dateOnServer: String, yearDifference: Int) {
         mViewModel.dob.value = dateOnEditText
         mViewModel.dobForServer.value = dateOnServer
-     /*   mViewModel.isMajorMinorVisible.set(true)
-        when {
-            yearDifference < 18 -> {
-                mViewModel.majorMinorText.set(getString(R.string.minor_text))
-            }
-            else -> {
-                mViewModel.majorMinorText.set(getString(R.string.major_text))
-            }
-        }
-    */}
+    }
 
 
     /**
@@ -105,7 +94,6 @@ Create this method for observe the viewModel fields
      */
     private fun intentToActivity(aClass: Class<*>) {
         startActivity(Intent(this@CreateAccountView, aClass))
-        finish()
     }
 
 

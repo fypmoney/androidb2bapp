@@ -53,7 +53,6 @@ Create this method for observe the viewModel fields
  */
 
     private fun setObserver() {
-
         mViewModel.onUpdateProfileSuccess.observe(this) {
             if (it) {
                 intentToActivity(CommunityView::class.java)

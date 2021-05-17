@@ -46,6 +46,13 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
             }
 
         }
+        mViewModel.onReferralCodeSuccess.observe(this) {
+            if (it) {
+                intentToActivity()
+                mViewModel.onReferralCodeSuccess.value = false
+            }
+
+        }
 
     }
 

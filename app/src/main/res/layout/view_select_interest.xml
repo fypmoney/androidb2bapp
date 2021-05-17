@@ -13,18 +13,18 @@
     </data>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/toolbar"
+            android:id="@+id/toolbar_layout"/>
 
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
                 android:padding="@dimen/page_padding">
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -32,13 +32,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/community_screen_title"
+                    android:text="@string/choose_interest_title"
                     android:textAlignment="center"
                     android:textColor="@color/text_color_dark"
                     android:textSize="@dimen/main_title_size"
                     android:textStyle="bold" />
-
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
@@ -47,7 +45,8 @@
                     android:layout_marginTop="@dimen/margin"
                     app:adapter="@{viewModel.chooseInterestAdapter}"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="3"
+                    app:spanCount="2"
+                    android:layout_centerHorizontal="true"
                     android:layout_below="@+id/tvInterest"
                     android:layout_above="@+id/btnContinue"
                     android:layout_marginBottom="@dimen/margin"/>
@@ -79,5 +78,5 @@
 
             </RelativeLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>

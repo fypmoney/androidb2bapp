@@ -77,7 +77,7 @@
                     android:layout_marginTop="@dimen/_4sdp"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:gravity="center_vertical"
-                    android:hint="@string/mobile_no"
+                    android:hint="@string/referral_code_hint"
                     android:inputType="phone"
                     android:text="@={viewModel.referralCode}"
                     android:textStyle="bold" />

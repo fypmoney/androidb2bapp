@@ -14,6 +14,7 @@ import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -107,6 +108,9 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
         mViewBinding.activity = this
         mViewBinding.viewModel = mViewModel
         setObservers()
+
+
+
         setCountryCodeAdapter(applicationContext, mViewBinding.spCountryCode)
 
     }
@@ -133,7 +137,7 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
     private fun setCountryCodeAdapter(context: Context, spCountryCode: AppCompatSpinner) {
         val adapterCountryCode = CountryCodeArrayAdapter(
             context,
-            android.R.layout.simple_spinner_item,
+            R.layout.spinner_item,
             AppConstants.countryCodeList
         )
         with(spCountryCode) {
@@ -260,7 +264,7 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
             mViewModel.mobile.value
         )
         startActivity(intent)
-        finish()
+       // finish()
     }
 
     companion object {

@@ -96,7 +96,7 @@ class ApiDataParsing {
                 }
 
                 ApiConstant.API_VERIFY_REFERRAL_CODE -> {
-                    getObject(response, LeaveFamilyResponse::class.java)
+                    getObject(response, ReferralCodeResponse::class.java)
                 }
 
                 else -> response

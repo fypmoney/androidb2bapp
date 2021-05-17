@@ -50,3 +50,7 @@ data class UserDeviceInfo(
     @SerializedName("dtoken") val dtoken: String
 ) : Serializable
 
+data class ReferralCodeResponse(
+    @SerializedName("msg") var msg: String?
+) : Serializable
+

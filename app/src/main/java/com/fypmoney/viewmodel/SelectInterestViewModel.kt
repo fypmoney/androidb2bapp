@@ -1,8 +1,11 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -16,6 +19,7 @@ import com.fypmoney.model.InterestEntity
 import com.fypmoney.model.InterestResponse
 import com.fypmoney.model.UpdateProfileRequest
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.ChooseInterestAdapter
 
 /*
@@ -57,32 +61,39 @@ class SelectInterestViewModel(application: Application) : BaseViewModel(applicat
     * This method is used to handle click of submit
     * */
     fun onSubmitClicked() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_UPDATE_PROFILE,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_UPDATE_PROFILE),
-                request_type = ApiUrl.PUT,
-                onResponse = this, isProgressBar = true,
-                param = UpdateProfileRequest(
-                    userId = SharedPrefUtils.getLong(
-                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID
-                    ),
-                    interest = selectedInterestList,
-                    firstName = SharedPrefUtils.getString(
-                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_FIRST_NAME
-                    ),
-                    lastName = SharedPrefUtils.getString(
-                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_LAST_NAME
-                    ),
-                    mobile = SharedPrefUtils.getString(
-                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE
-                    ),
-                    dob = SharedPrefUtils.getString(
-                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_DOB
-                    ),
+        when {
+            selectedInterestList.isNullOrEmpty() -> {
+                Utility.showToast(PockketApplication.instance.getString(R.string.interest_error))
+            }
+            else -> {
+                WebApiCaller.getInstance().request(
+                    ApiRequest(
+                        purpose = ApiConstant.API_UPDATE_PROFILE,
+                        endpoint = NetworkUtil.endURL(ApiConstant.API_UPDATE_PROFILE),
+                        request_type = ApiUrl.PUT,
+                        onResponse = this, isProgressBar = true,
+                        param = UpdateProfileRequest(
+                            userId = SharedPrefUtils.getLong(
+                                getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID
+                            ),
+                            interest = selectedInterestList,
+                            firstName = SharedPrefUtils.getString(
+                                getApplication(), key = SharedPrefUtils.SF_KEY_USER_FIRST_NAME
+                            ),
+                            lastName = SharedPrefUtils.getString(
+                                getApplication(), key = SharedPrefUtils.SF_KEY_USER_LAST_NAME
+                            ),
+                            mobile = SharedPrefUtils.getString(
+                                getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE
+                            ),
+                            dob = SharedPrefUtils.getString(
+                                getApplication(), key = SharedPrefUtils.SF_KEY_USER_DOB
+                            ),
+                        )
+                    )
                 )
-            )
-        )
+            }
+        }
 
     }
 
@@ -94,6 +105,9 @@ class SelectInterestViewModel(application: Application) : BaseViewModel(applicat
             ApiConstant.API_GET_INTEREST -> {
                 if (responseData is InterestResponse) {
                     chooseInterestAdapter.setList(responseData.interestDetails)
+                    if (chooseInterestAdapter.itemCount == 0) {
+                        noDataFoundVisibility.set(true)
+                    }
 
                 }
             }
@@ -113,8 +127,7 @@ class SelectInterestViewModel(application: Application) : BaseViewModel(applicat
 
                     }
 
-                    onUpdateProfileSuccess.value =
-                        true                    // set the button text to continue
+                    onUpdateProfileSuccess.value = true                    // set the button text to continue
 
                 }
             }

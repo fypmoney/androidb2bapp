@@ -135,7 +135,7 @@
                     style="@style/Widget.App.Button"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/main_button_height"
-                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/_50sdp"
                     android:onClick="@{()->viewModel.onContinueClicked()}"
                     android:text="@string/get_otp_btn_text"
                     android:layout_marginStart="@dimen/margin_20"

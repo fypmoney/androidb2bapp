@@ -112,7 +112,7 @@
                     android:layout_below="@+id/tvDob"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:cursorVisible="false"
-                    android:drawableEnd="@drawable/ic_birthday_icon"
+                    android:drawableEnd="@drawable/birthday_icon"
                     android:focusable="false"
                     android:hint="@string/dd_mm_yyyy"
                     android:inputType="none"
@@ -131,7 +131,6 @@
                     android:padding="@dimen/_5sdp"
                     android:text="@{viewModel.majorMinorText}"
                     android:visibility="@{viewModel.isMajorMinorVisible?View.VISIBLE:View.GONE}"
-
                     />
 
 

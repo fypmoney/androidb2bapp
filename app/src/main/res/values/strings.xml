@@ -97,11 +97,12 @@
     <!-- Select interest
     -->
 
-    <string name="choose_interest_title">Tell us about </string>
+    <string name="choose_interest_title">Tell us about your interests</string>
     <string name="fill_details">Fill your details</string>
     <string name="minor_text">Minor</string>
     <string name="major_text">Major</string>
     <string name="answer_later">Answer later</string>
+    <string name="interest_error">Please select interest</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>
@@ -170,6 +171,10 @@
     <string name="select_relation">Select Relation</string>
     <string name="invite_user_dialog_title">is not the App User. Please send invite.</string>
     <string name="invite_text">Invite</string>
+    <string name="add_member_sub_title">To Activate the account you need to add a family member</string>
+    <string name="add_member_title">Hey,</string>
+    <string name="name_label">Name*</string>
+    <string name="name_hint">Your parent name</string>
 
     <!--
     Permission View
@@ -193,7 +198,8 @@
     <string name="skip_title">Skip</string>
     <string name="referral_code_title">Do you have A referral code?</string>
     <string name="code_text">Code</string>
-    <string name="referral_code_empty_error">Please enter ReferralCode</string>
+    <string name="referral_code_empty_error">Please enter Referral Code</string>
+    <string name="referral_code_hint">Your referral code</string>
 
     <!--Create Account-->
 
@@ -215,6 +221,8 @@
     <string name="school_name_hint">Your School name</string>
     <string name="city_label">City*</string>
     <string name="city_hint">Enter city</string>
+    <string name="school_name_empty_error">Please enter school name</string>
+    <string name="city_name_empty_error">Please enter city</string>
 
     <!--
     create account success

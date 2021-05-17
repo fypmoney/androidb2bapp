@@ -69,6 +69,6 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
             mViewModel.getCustomerInfoSuccess.value?.isProfileCompleted
         )
         startActivity(intent)
-        finish()
+       // finish()
     }
 }

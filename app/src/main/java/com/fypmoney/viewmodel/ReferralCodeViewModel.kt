@@ -13,7 +13,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.LeaveFamilyResponse
+import com.fypmoney.model.ReferralCodeResponse
 import com.fypmoney.util.Utility
 
 /*
@@ -22,6 +22,7 @@ import com.fypmoney.util.Utility
 class ReferralCodeViewModel(application: Application) : BaseViewModel(application) {
     var onContinueClicked = MutableLiveData(false)
     var onSkipClicked = MutableLiveData(false)
+    var onReferralCodeSuccess = MutableLiveData(false)
     var referralCode = MutableLiveData<String>()
 
     /*
@@ -46,7 +47,7 @@ class ReferralCodeViewModel(application: Application) : BaseViewModel(applicatio
                         NetworkUtil.endURL(ApiConstant.API_VERIFY_REFERRAL_CODE + referralCode.value?.trim()),
                         ApiUrl.POST,
                         BaseRequest(),
-                        this, isProgressBar = false
+                        this, isProgressBar = true
                     )
                 )
             }
@@ -58,10 +59,11 @@ class ReferralCodeViewModel(application: Application) : BaseViewModel(applicatio
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_VERIFY_REFERRAL_CODE -> {
-                if (responseData is LeaveFamilyResponse) {
+                if (responseData is ReferralCodeResponse) {
                     // set the button text to continue
                     when (responseData.msg) {
                         ApiConstant.API_SUCCESS -> {
+                            onReferralCodeSuccess.value=true
                         }
                     }
                 }

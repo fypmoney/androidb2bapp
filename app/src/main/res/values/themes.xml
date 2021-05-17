@@ -103,6 +103,9 @@
     <style name="BottomSheet" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/shape_rounded_dialog</item></style>
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert"/>
+    <style name="spinnerTheme">
+        <item name="android:textColor">@color/text_color_dark</item>
+    </style>
 
 
 </resources>
