@@ -129,11 +129,14 @@ class MemberView : BaseActivity<ViewMemberBinding, MemberViewModel>(),
         bottomSheet.show(supportFragmentManager, "LeaveMemberBottomSheet")
     }
 
+
     /**
      * Method to navigate to the different activity
      */
     private fun intentToActivity(aClass: Class<*>) {
-        startActivity(Intent(this@MemberView, aClass))
+        val intent = Intent(this@MemberView, aClass)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "")
+        startActivity(intent)
     }
 
     override fun onBottomSheetButtonClick(type: String) {

@@ -44,6 +44,7 @@
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.LoginView"
+            android:noHistory="true"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.SelectInterestView"
@@ -62,6 +63,7 @@
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.LoginSuccessView"
+            android:noHistory="true"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
 
@@ -101,6 +103,7 @@
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.AddMemberView"
+            android:noHistory="true"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <activity

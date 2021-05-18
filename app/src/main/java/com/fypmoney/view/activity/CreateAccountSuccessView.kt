@@ -1,18 +1,21 @@
 package com.fypmoney.view.activity
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewLoginSuccessBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.CreateAccountSuccessViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 
 /*
 * This class is used for show create account success
 * */
-class CreateAccountSuccessView : BaseActivity<ViewLoginSuccessBinding, CreateAccountSuccessViewModel>() {
+class CreateAccountSuccessView :
+    BaseActivity<ViewLoginSuccessBinding, CreateAccountSuccessViewModel>() {
     private lateinit var mViewModel: CreateAccountSuccessViewModel
 
     override fun getBindingVariable(): Int {
@@ -43,9 +46,18 @@ class CreateAccountSuccessView : BaseActivity<ViewLoginSuccessBinding, CreateAcc
      */
     private fun setObserver() {
         mViewModel.onActivateAccountClicked.observe(this) {
-
+            intentToActivity(AddMemberView::class.java)
         }
 
+    }
+
+    /**
+     * Method to navigate to the different activity
+     */
+    private fun intentToActivity(aClass: Class<*>) {
+        val intent=Intent(this@CreateAccountSuccessView, aClass)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN,AppConstants.CREATE_ACCOUNT_SUCCESS)
+        startActivity(intent)
     }
 
 

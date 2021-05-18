@@ -69,10 +69,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/verification_title"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:hint="@string/first_name_hint"
                     android:padding="@dimen/_8sdp"
+                    android:inputType="textCapWords"
                     android:singleLine="true"
                     android:text="@={viewModel.firstName}" />
 
@@ -94,6 +95,7 @@
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:hint="@string/last_name_hint"
                     android:padding="@dimen/_8sdp"
+                    android:inputType="textCapWords"
                     android:text="@={viewModel.lastName}" />
 
                 <androidx.appcompat.widget.AppCompatTextView

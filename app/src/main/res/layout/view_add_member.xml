@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginTop="@dimen/margin"
                     android:layout_below="@+id/tvSubTitle"
                     app:srcCompat="@drawable/ic_add_family_member" />
                 <androidx.appcompat.widget.AppCompatTextView
@@ -72,7 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ivServiceLogo"
-                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/margin"
                     android:text="@string/name_label"
                     android:textColor="@color/text_color_light" />
 
@@ -82,11 +82,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/verification_title"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:hint="@string/parent_name_hint"
                     android:padding="@dimen/_8sdp"
                     android:singleLine="true"
+                    android:inputType="textCapWords"
                     android:text="@={viewModel.parentName}" />
 
 
@@ -106,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/enter_phone"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray">
 
                     <androidx.appcompat.widget.AppCompatSpinner
@@ -174,7 +175,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvAddContact"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/margin_20"
                     android:text="@string/select_relation"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -185,14 +186,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvSelectRelation"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:entries="@{viewModel.relationList}"
                     android:gravity="end"
-                    android:padding="@dimen/_5sdp"
+                    android:padding="@dimen/_10sdp"
                     app:selection="@{viewModel.selectedRelationPosition}"
                     tools:setOnItemSelectedListener="@{viewModel.clicksListener}" />
-
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSendOtp"
@@ -200,11 +200,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/main_button_height"
                     android:layout_alignParentBottom="true"
-                    android:layout_margin="@dimen/margin"
+                    android:layout_marginStart="@dimen/_30sdp"
+                    android:layout_marginEnd="@dimen/_30sdp"
+                    android:background="@drawable/curved_background1"
+                    app:backgroundTint="@color/text_color_dark"
                     android:onClick="@{()->viewModel.onAddMemberClicked()}"
+                    android:layout_marginBottom="@dimen/button_margin"
                     android:text="@string/add_member_btn_text"
                     android:textAllCaps="false"
-                    app:backgroundTint="@color/black" />
+                    />
 
 
             </RelativeLayout>

@@ -4,18 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSplashBinding
-import com.fypmoney.model.CustomerInfoResponse
-import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.viewmodel.SplashViewModel
-import com.google.firebase.iid.FirebaseInstanceId
 
 /*
 * This class is used for show app logo and check user logged in or not
@@ -57,7 +53,6 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                 }
                 finish()
             } else {
-
                 if (SharedPrefUtils.getBoolean(
                         applicationContext,
                         SharedPrefUtils.SF_KEY_IS_LOGIN
@@ -71,12 +66,10 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                             intentToActivity(CreateAccountView::class.java)
                         }
                         else -> {
-                            intentToActivity(HomeView::class.java)
+                            intentToActivity(AddMemberView::class.java)
                         }
-
-
                     }
-                        goToDashboardScreen()
+
                 } else {
                     goToLoginScreen()
                 }
@@ -112,6 +105,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         val intent = Intent(this@SplashView, aClass)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
         startActivity(intent)
+        finish()
     }
 
 }

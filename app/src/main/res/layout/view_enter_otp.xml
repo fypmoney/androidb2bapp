@@ -9,16 +9,14 @@
         <variable
             name="viewModel"
             type="com.fypmoney.viewmodel.EnterOtpViewModel" />
-
-
     </data>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/toolbar"
+            android:visibility="gone"/>
 
         <ScrollView
             android:id="@+id/scroll_view"
@@ -106,7 +104,8 @@
                     android:layout_marginTop="@dimen/margin"
                     android:enabled="@{viewModel.isResendEnabled?true:false,default=true}"
                     android:onClick="@{() ->viewModel.callSendOtpApi() }"
-                    android:text="@string/resend_otp" />
+                    android:text="@string/resend_otp"
+                    android:textColor="@{viewModel.isResendEnabled?@color/text_color_dark:@color/text_color_light}"/>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSendOtp"

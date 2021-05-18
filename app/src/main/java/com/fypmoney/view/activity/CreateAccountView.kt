@@ -42,7 +42,7 @@ class CreateAccountView :
         setToolbarAndTitle(
             context = this@CreateAccountView,
             toolbar = toolbar,
-            isBackArrowVisible = true
+            isBackArrowVisible = false
         )
         try {
             mViewModel.setData(intent.getSerializableExtra((AppConstants.CUSTOMER_INFO_RESPONSE)) as CustomerInfoResponse)
@@ -69,7 +69,7 @@ Create this method for observe the viewModel fields
         }
         mViewModel.onUpdateProfileSuccess.observe(this) {
             if (it) {
-                intentToActivity(SelectInterestView::class.java)
+                intentToActivity(CommunityView::class.java)
                 mViewModel.onUpdateProfileSuccess.value = false
             }
         }

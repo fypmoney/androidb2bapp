@@ -43,8 +43,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = this@EnterOtpView,
-            toolbar = toolbar,
-            isBackArrowVisible = true
+            toolbar = toolbar
         )
         mViewModel.mobile.value = intent.getStringExtra(AppConstants.MOBILE_TYPE)
         mViewModel.mobileWithoutCountryCode.value =
@@ -116,9 +115,10 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
         timer = object : CountDownTimer(30000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 mViewModel.isResendEnabled.set(false)
-                tvResendIn.text = SimpleDateFormat("00:ss").format(
-                    Date(millisUntilFinished)
-                ) + getString(R.string.resend_timer_text)
+                tvResendIn.text =
+                    getString(R.string.resend_timer_text) + SimpleDateFormat("00:ss").format(
+                        Date(millisUntilFinished)
+                    ) + "sec"
             }
 
             override fun onFinish() {

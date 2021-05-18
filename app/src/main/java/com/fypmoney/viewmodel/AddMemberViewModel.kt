@@ -46,6 +46,7 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
     var name = ObservableField<String>()
     var parentName = ObservableField<String>()
     var contactResult = ObservableField(ContactEntity())
+    var isGuarantor = ObservableField<String>()
 
     val clicksListener = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -126,8 +127,8 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
                 ApiUrl.POST,
                 AddFamilyMemberRequest(
                     mobileNo = mobile.value!!.trim(),
-                    name = name.get(),
-                    relation = selectedRelation.get()!!
+                    name = parentName.get(),
+                    relation = selectedRelation.get()!!,isGuarantor = isGuarantor.get()!!
                 ),
                 this,
                 isProgressBar = false

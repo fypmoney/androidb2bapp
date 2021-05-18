@@ -11,7 +11,8 @@ class MemberModel(var name: String? = null, var imageUrl: String? = null) {
 data class AddFamilyMemberRequest(
     @SerializedName("mobileNo") val mobileNo: String,
     @SerializedName("name") val name: String?,
-    @SerializedName("relation") val relation: String
+    @SerializedName("relation") val relation: String,
+    @SerializedName("isGuarantor") val isGuarantor: String
 ) : BaseRequest()
 
 data class AddFamilyMemberResponse(

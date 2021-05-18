@@ -57,11 +57,13 @@ class FamilySettingsView : BaseActivity<ViewFamilySettingsBinding, FamilySetting
 
         setObserver()
     }
+
     var receiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             mViewModel.callGetMemberApi()
         }
     }
+
     /**
      * Create this method for observe the viewModel fields
      */
@@ -75,7 +77,7 @@ class FamilySettingsView : BaseActivity<ViewFamilySettingsBinding, FamilySetting
 
         mViewModel.onAddMemberClicked.observe(this) {
             if (it) {
-                intentToActivity(AddMemberView::class.java)
+                intentToAddMemberActivity(AddMemberView::class.java)
                 mViewModel.onAddMemberClicked.value = false
             }
         }
@@ -88,6 +90,16 @@ class FamilySettingsView : BaseActivity<ViewFamilySettingsBinding, FamilySetting
     private fun intentToActivity(aClass: Class<*>) {
         startActivity(Intent(this@FamilySettingsView, aClass))
     }
+
+    /**
+     * Method to navigate to the different activity
+     */
+    private fun intentToAddMemberActivity(aClass: Class<*>) {
+        val intent = Intent(this@FamilySettingsView, aClass)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "")
+        startActivity(intent)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)

@@ -94,7 +94,7 @@
     <string name="reading_otp_text">Reading OTP</string>
     <string name="empty_otp_error">Please fill OTP</string>
     <string name="otp_title">OTP</string>
-    <string name="resend_timer_text">" Resend OTP in"</string>
+    <string name="resend_timer_text">"Resend OTP in "</string>
 
     <!-- Select interest
     -->
@@ -170,7 +170,7 @@
     -->
     <string name="from_contact"><u>From Contact</u></string>
     <string name="search">Search</string>
-    <string name="select_relation">Relation</string>
+    <string name="select_relation">Relation*</string>
     <string name="invite_user_dialog_title">is not the App User. Please send invite.</string>
     <string name="invite_text">Invite</string>
     <string name="add_member_sub_title">To Activate the account you need to add a family member</string>

@@ -63,4 +63,5 @@ object AppConstants {
     const val FEED_WITHIN_RADIUS = "20"
     const val IS_PROFILE_COMPLETED = "isProfileCompleted"
     const val RELATION = "relation"
+    const val CREATE_ACCOUNT_SUCCESS = "create_account_success"
 }

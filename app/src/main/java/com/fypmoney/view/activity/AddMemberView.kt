@@ -52,9 +52,20 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
             toolbar = toolbar,
             isBackArrowVisible = true
         )
-        //  setCountryCodeAdapter(applicationContext, mViewBinding.spCountryCode)
-        // register broadcast receiver to handle user active loyalty points
 
+        // set the is Guarantor value
+        when (intent.getStringExtra(AppConstants.CREATE_ACCOUNT_SUCCESS)) {
+            AppConstants.CREATE_ACCOUNT_SUCCESS -> {
+                mViewModel.isGuarantor.set(AppConstants.YES)
+            }
+            else -> {
+                mViewModel.isGuarantor.set(AppConstants.NO)
+
+            }
+        }
+
+
+        // register broadcast receiver to handle user active loyalty points
         val lbm = LocalBroadcastManager.getInstance(this)
         lbm.registerReceiver(receiver, IntentFilter(AppConstants.CONTACT_BROADCAST_NAME))
         setObserver()
@@ -64,7 +75,7 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
     private fun setCountryCodeAdapter(context: Context, spCountryCode: AppCompatSpinner) {
         val adapterCountryCode = CountryCodeArrayAdapter(
             context,
-            android.R.layout.simple_spinner_item,
+            R.layout.spinner_item,
             AppConstants.countryCodeList
         )
         with(spCountryCode) {
@@ -122,15 +133,15 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
                 AppConstants.API_FAIL -> {
                     intentToActivity(InviteMemberView::class.java)
 
-                  /*  DialogUtils.showConfirmationDialog(
-                        context = this,
-                        title = "",
-                        message = mViewModel.mobile.value + " " + getString(R.string.invite_user_dialog_title),
-                        positiveButtonText = getString(R.string.invite_text),
-                        negativeButtonText = getString(R.string.cancel_btn_text),
-                        uniqueIdentifier = "",
-                        onAlertDialogClickListener = this, isNegativeButtonRequired = true
-                    )*/
+                    /*  DialogUtils.showConfirmationDialog(
+                          context = this,
+                          title = "",
+                          message = mViewModel.mobile.value + " " + getString(R.string.invite_user_dialog_title),
+                          positiveButtonText = getString(R.string.invite_text),
+                          negativeButtonText = getString(R.string.cancel_btn_text),
+                          uniqueIdentifier = "",
+                          onAlertDialogClickListener = this, isNegativeButtonRequired = true
+                      )*/
                 }
                 AppConstants.API_SUCCESS -> {
                     askForDevicePassword()
@@ -144,7 +155,7 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
         {
             when (it) {
                 AppConstants.API_SUCCESS -> {
-                 //   callBroadCast()
+                    //   callBroadCast()
                     intentToActivity(StayTunedView::class.java)
 
                 }
@@ -202,7 +213,7 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
             AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
                 when (resultCode) {
                     RESULT_OK -> {
-                        runOnUiThread( {
+                        runOnUiThread({
                             mViewModel.callAddMemberApi()
 
                         })

@@ -19,7 +19,13 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
     var getCustomerInfoSuccess = MutableLiveData<CustomerInfoResponse>()
 
     init {
-        callGetCustomerProfileApi()
+        if (SharedPrefUtils.getBoolean(
+                application,
+                SharedPrefUtils.SF_KEY_IS_LOGIN
+            )!!
+        ) {
+            callGetCustomerProfileApi()
+        }
     }
 
     /*
