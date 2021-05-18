@@ -64,7 +64,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:layout_below="@+id/tvSubTitle"
-                    app:srcCompat="@drawable/ic_create_account" />
+                    app:srcCompat="@drawable/ic_school_community" />
 
 
                 <androidx.appcompat.widget.AppCompatTextView

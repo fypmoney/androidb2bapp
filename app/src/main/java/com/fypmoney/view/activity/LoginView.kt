@@ -108,9 +108,6 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
         mViewBinding.activity = this
         mViewBinding.viewModel = mViewModel
         setObservers()
-
-
-
         setCountryCodeAdapter(applicationContext, mViewBinding.spCountryCode)
 
     }

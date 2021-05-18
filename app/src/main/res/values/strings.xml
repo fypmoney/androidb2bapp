@@ -35,8 +35,10 @@
     <string name="decline_btn_text">Decline</string>
     <string name="get_otp_btn_text">Get OTP</string>
     <string name="verify_btn_text">Verify</string>
+    <string name="invite_btn_text">Invite</string>
     <string name="activate_account_btn_text">Activate Account</string>
     <string name="create_account_btn_text">Create Account</string>
+    <string name="request_again_btn_text">Request again</string>
 
 
     <!--Login-->
@@ -168,13 +170,17 @@
     -->
     <string name="from_contact"><u>From Contact</u></string>
     <string name="search">Search</string>
-    <string name="select_relation">Select Relation</string>
+    <string name="select_relation">Relation</string>
     <string name="invite_user_dialog_title">is not the App User. Please send invite.</string>
     <string name="invite_text">Invite</string>
     <string name="add_member_sub_title">To Activate the account you need to add a family member</string>
     <string name="add_member_title">Hey,</string>
     <string name="name_label">Name*</string>
-    <string name="name_hint">Your parent name</string>
+    <string name="parent_name_hint">Your parent name</string>
+    <string name="relation_drop_down_hint">Your relation with parent</string>
+    <string name="relation_empty_error">Please choose your relation</string>
+    <string name="parent_name_empty_error">Please enter your parent name</string>
+
 
     <!--
     Permission View
@@ -237,6 +243,28 @@
     <string name="pull_up_to_start">Pull up to start</string>
     <string name="welcome">Welcome to</string>
     <string name="create_account_terms">"By tapping create Account you agree to the Terms of Services &amp; Privacy Policy"</string>
+
+    <!-- stay tuned
+    -->
+    <string name="stay_tuned_screen_title">Stay tuned!</string>
+    <string name="stay_tuned_screen_sub_title">Hang in there, we have sent a request to your</string>
+    <string name="stay_tuned_screen_sub_title1">, to activate your account</string>
+
+
+    <!-- Invite member
+    -->
+    <string name="invite_member_screen_title">Oops!</string>
+    <string name="invite_member_screen_sub_title">Looks like your parent is not a FYP user. No worries you can invite them right now.</string>
+
+    <!-- Account activation success
+  -->
+    <string name="account_activation_success_screen_title">Kuddos!</string>
+    <string name="account_activation_success_screen_sub_title">Your account has activated</string>
+
+    <!--  invite rejected
+  -->
+    <string name="invite_rejected_screen_title">Uh-Oh!</string>
+    <string name="invite_rejected_screen_sub_title">Seems like your parent has rejected your request.</string>
 
 
 </resources>

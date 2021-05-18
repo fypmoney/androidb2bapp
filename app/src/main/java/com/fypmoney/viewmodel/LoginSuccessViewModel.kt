@@ -16,7 +16,6 @@ import com.fypmoney.util.SharedPrefUtils
 * This class is used to show login success
 * */
 class LoginSuccessViewModel(application: Application) : BaseViewModel(application) {
-
     var getCustomerInfoSuccess = MutableLiveData<CustomerInfoResponse>()
     var onContinueClicked = MutableLiveData<Boolean>()
 
@@ -34,7 +33,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
     /*
       *This method is used to call get customer profile API
       * */
-    fun callGetCustomerProfileApi() {
+    private fun callGetCustomerProfileApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_GET_CUSTOMER_INFO,

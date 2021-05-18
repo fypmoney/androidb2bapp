@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="@{@string/add_member_title(viewModel.firstName)}"
+                    android:text="@{@string/add_member_title(viewModel.name)}"
                     android:textAlignment="center"
                     android:textColor="@color/text_color_dark"
                     android:textSize="@dimen/main_title_size"
@@ -66,16 +66,37 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:layout_below="@+id/tvSubTitle"
-                    app:srcCompat="@drawable/ic_create_account" />
+                    app:srcCompat="@drawable/ic_add_family_member" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/verification_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivServiceLogo"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:text="@string/name_label"
+                    android:textColor="@color/text_color_light" />
 
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/verification_title"
+                    android:layout_marginTop="@dimen/margin"
+                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                    android:hint="@string/parent_name_hint"
+                    android:padding="@dimen/_8sdp"
+                    android:singleLine="true"
+                    android:text="@={viewModel.parentName}" />
 
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/enter_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/enter_phone_title"
-                    android:layout_below="@+id/ivServiceLogo"
+                    android:text="@string/phone_number"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_below="@+id/et_first_name"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,14 +106,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/enter_phone"
-                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/margin"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray">
 
                     <androidx.appcompat.widget.AppCompatSpinner
                         android:id="@+id/spCountryCode"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="26dp"
-                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -102,7 +122,6 @@
                         android:id="@+id/vDivider5"
                         style="@style/VerticalDivider"
                         android:layout_margin="@dimen/_4sdp"
-                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@id/spCountryCode"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -187,17 +206,6 @@
                     android:textAllCaps="false"
                     app:backgroundTint="@color/black" />
 
-
-                <!--   <com.google.android.material.button.MaterialButton
-                       android:id="@+id/btnSendOtp"
-                       style="@style/Widget.App.Button"
-                       android:layout_width="match_parent"
-                       android:layout_height="@dimen/main_button_height"
-                       android:layout_alignParentBottom="true"
-                       android:layout_marginTop="@dimen/_12sdp"
-                       android:onClick="@{()->viewModel.onContinueClicked()}"
-                       android:text="@string/continue_btn_text"
-                       android:textAllCaps="false" />-->
 
             </RelativeLayout>
         </ScrollView>

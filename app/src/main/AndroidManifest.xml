@@ -107,6 +107,21 @@
             android:name=".view.activity.UserFeedsDetailView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
+
+        <activity
+            android:name=".view.activity.InviteRejectedView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.AccountActivationSuccessView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.StayTunedView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+        <activity
+            android:name=".view.activity.InviteMemberView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
         <activity android:name=".view.activity.PushNotificationView">
             <intent-filter>
                 <action android:name="Webview" />

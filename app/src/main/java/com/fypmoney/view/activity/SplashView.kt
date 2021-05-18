@@ -57,12 +57,26 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                 }
                 finish()
             } else {
+
                 if (SharedPrefUtils.getBoolean(
                         applicationContext,
                         SharedPrefUtils.SF_KEY_IS_LOGIN
                     )!!
                 ) {
-                    goToDashboardScreen()
+                    when {
+                        mViewModel.getCustomerInfoSuccess.value?.isReferralAllowed == AppConstants.YES -> {
+                            intentToActivity(ReferralCodeView::class.java)
+                        }
+                        mViewModel.getCustomerInfoSuccess.value?.isProfileCompleted == AppConstants.NO -> {
+                            intentToActivity(CreateAccountView::class.java)
+                        }
+                        else -> {
+                            intentToActivity(HomeView::class.java)
+                        }
+
+
+                    }
+                        goToDashboardScreen()
                 } else {
                     goToLoginScreen()
                 }
@@ -77,7 +91,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     * navigate to the login screen
     * */
     private fun goToLoginScreen() {
-        val intent = Intent(this, SelectInterestView::class.java)
+        val intent = Intent(this, LoginView::class.java)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "")
         startActivity(intent)
         finish()

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.InviteRejectedViewModel" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_150sdp"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/ic_uh_oh" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCongrats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:text="@string/invite_rejected_screen_title"
+            android:textAlignment="center"
+            android:textColor="@color/text_color_dark"
+            android:textSize="@dimen/main_title_size"
+            android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCreateAccount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvCongrats"
+            android:layout_marginTop="@dimen/margin"
+            android:textColor="@color/text_color_little_dark"
+            android:text="@string/invite_rejected_screen_sub_title"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:textSize="@dimen/title_size" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnSendOtp"
+            style="@style/Widget.App.Button"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/main_button_height"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/button_margin"
+            android:layout_marginEnd="@dimen/button_margin"
+            android:background="@drawable/curved_background1"
+            app:backgroundTint="@color/text_color_dark"
+            android:layout_marginBottom="@dimen/button_margin"
+            android:onClick="@{()->viewModel.onRequestAgainClicked()}"
+            android:text="@string/request_again_btn_text"
+            android:textAllCaps="false"
+            />
+
+
+
+
+    </RelativeLayout>
+
+</layout>

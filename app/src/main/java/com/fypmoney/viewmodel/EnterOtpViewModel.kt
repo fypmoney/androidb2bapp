@@ -146,7 +146,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                     SharedPrefUtils.putBoolean(
                         getApplication(),
                         SharedPrefUtils.SF_KEY_IS_LOGIN,
-                        false
+                        true
                     )
                     // Save the access token in shared preference
                     SharedPrefUtils.putString(

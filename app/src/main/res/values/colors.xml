@@ -31,6 +31,7 @@
     <color name="colorRed">#FF4B4B</color>
     <color name="ratingColor">#FDB341</color>
     <color name="colorGreen">#5EC32E</color>
+    <color name="buttonUnselectedColor">#E6E7E8</color>
 
 
 

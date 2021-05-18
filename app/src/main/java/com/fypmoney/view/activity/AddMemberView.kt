@@ -57,8 +57,8 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
 
         val lbm = LocalBroadcastManager.getInstance(this)
         lbm.registerReceiver(receiver, IntentFilter(AppConstants.CONTACT_BROADCAST_NAME))
-
         setObserver()
+        setCountryCodeAdapter(applicationContext, mViewBinding.spCountryCode)
     }
 
     private fun setCountryCodeAdapter(context: Context, spCountryCode: AppCompatSpinner) {
@@ -105,7 +105,6 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-
         mViewModel.onFromContactClicked.observe(this) {
             if (it) {
                 intentToActivity(ContactView::class.java)
@@ -121,7 +120,9 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
         mViewModel.onIsAppUser.observe(this) {
             when (it) {
                 AppConstants.API_FAIL -> {
-                    DialogUtils.showConfirmationDialog(
+                    intentToActivity(InviteMemberView::class.java)
+
+                  /*  DialogUtils.showConfirmationDialog(
                         context = this,
                         title = "",
                         message = mViewModel.mobile.value + " " + getString(R.string.invite_user_dialog_title),
@@ -129,7 +130,7 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
                         negativeButtonText = getString(R.string.cancel_btn_text),
                         uniqueIdentifier = "",
                         onAlertDialogClickListener = this, isNegativeButtonRequired = true
-                    )
+                    )*/
                 }
                 AppConstants.API_SUCCESS -> {
                     askForDevicePassword()
@@ -143,7 +144,9 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
         {
             when (it) {
                 AppConstants.API_SUCCESS -> {
-                    callBroadCast()
+                 //   callBroadCast()
+                    intentToActivity(StayTunedView::class.java)
+
                 }
                 AppConstants.API_FAIL -> {
 

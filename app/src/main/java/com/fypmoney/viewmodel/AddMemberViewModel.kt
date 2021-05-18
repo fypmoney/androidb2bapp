@@ -23,6 +23,7 @@ import com.fypmoney.model.AddFamilyMemberResponse
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.IsAppUserResponse
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 
 /*
@@ -40,10 +41,10 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
     var mobile = MutableLiveData<String>()
     var relationList = mutableListOf<String>()
     var selectedCountryCode = ObservableField<String>()
-    var firstName = ObservableField<String>()
     var selectedRelationPosition = ObservableField(0)
     var selectedRelation = ObservableField<String>()
     var name = ObservableField<String>()
+    var parentName = ObservableField<String>()
     var contactResult = ObservableField(ContactEntity())
 
     val clicksListener = object : AdapterView.OnItemSelectedListener {
@@ -56,6 +57,8 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
     }
 
     init {
+        name.set(SharedPrefUtils.getString(getApplication(),SharedPrefUtils.SF_KEY_USER_FIRST_NAME))
+        relationList.add(application.resources.getString(R.string.relation_drop_down_hint))
         relationList.add("PARENT")
         relationList.add("CHILD")
         relationList.add("SIBLING")
@@ -76,11 +79,20 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
     * */
     fun onAddMemberClicked() {
         when {
+            TextUtils.isEmpty(parentName.get()) -> {
+                Utility.showToast(PockketApplication.instance.getString(R.string.parent_name_empty_error))
+            }
             TextUtils.isEmpty(mobile.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.phone_email_empty_error))
             }
+            selectedRelation.get().equals(PockketApplication.instance.resources.getString(R.string.relation_drop_down_hint))->{
+                Utility.showToast(PockketApplication.instance.getString(R.string.relation_empty_error))
+
+            }
+
             else -> {
-                when (mobile.value) {
+                callIsAppUserApi()
+              /*  when (mobile.value) {
                     contactResult.get()!!.contactNumber -> {
                         when (contactResult.get()!!.isAppUser!!) {
                             true -> {
@@ -94,7 +106,7 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
                     else -> {
                         callIsAppUserApi()
                     }
-                }
+                }*/
             }
 
 
@@ -151,12 +163,9 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
             API_CHECK_IS_APP_USER -> {
                 if (responseData is IsAppUserResponse) {
                     if (responseData.isAppUserResponseDetails.isAppUser!!) {
-                        if (!responseData.isAppUserResponseDetails.name.isNullOrEmpty() && responseData.isAppUserResponseDetails.name != "null null")
-                            name.set(responseData.isAppUserResponseDetails.name!!)
                         onIsAppUser.value = AppConstants.API_SUCCESS
 
                     } else {
-                        name.set("")
                         onIsAppUser.value = AppConstants.API_FAIL
                         mobile.value = ""
                     }
@@ -178,14 +187,13 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
             API_CHECK_IS_APP_USER -> {
-                if (errorResponseInfo.errorCode == ApiConstant.API_CHECK_USER_ERROR_CODE)
-                    name.set("")
-                onIsAppUser.value = AppConstants.API_FAIL
-                mobile.value = ""
+                if (errorResponseInfo.errorCode == ApiConstant.API_CHECK_USER_ERROR_CODE) {
+                    onIsAppUser.value = AppConstants.API_FAIL
+                    mobile.value = ""
+                }
             }
             API_ADD_FAMILY_MEMBER -> {
                 progressDialog.value = false
-                name.set("")
                 mobile.value = ""
                 onAddMember.value = AppConstants.API_FAIL
             }
