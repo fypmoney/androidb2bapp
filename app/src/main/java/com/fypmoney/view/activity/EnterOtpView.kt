@@ -3,12 +3,13 @@ package com.fypmoney.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputConnection
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewEnterOtpBinding
-import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.EnterOtpViewModel
 import kotlinx.android.synthetic.main.toolbar.*
@@ -54,6 +55,9 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
         otpView.setOtpCompletionListener { otp -> // do Stuff
             mViewModel.otp.set(otp)
         }
+
+        val ic: InputConnection = otpView.onCreateInputConnection(EditorInfo())
+        keyboard.setInputConnection(ic)
         // start timer get started initially
         startTimer()
     }

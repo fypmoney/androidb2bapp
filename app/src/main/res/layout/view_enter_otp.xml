@@ -107,6 +107,15 @@
                     android:text="@string/resend_otp"
                     android:textColor="@{viewModel.isResendEnabled?@color/text_color_dark:@color/text_color_light}"/>
 
+
+                <com.fypmoney.util.MyKeyboard
+                    android:id="@+id/keyboard"
+                    android:layout_width="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"/>
+
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSendOtp"
                     style="@style/Widget.App.Button"
@@ -117,8 +126,8 @@
                     android:layout_marginEnd="@dimen/margin_20"
                     android:background="@drawable/curved_background1"
                     app:backgroundTint="@color/text_color_dark"
+                    android:visibility="gone"
                     android:onClick="@{()->viewModel.onVerifyClicked()}"
-                    android:layout_marginBottom="@dimen/button_margin"
                     android:text="@string/verify_btn_text"
                     android:textAllCaps="false"
                   />
