@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/curved_background2"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="220dp"
+            app:behavior_peekHeight="255dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
 
             <LinearLayout
@@ -118,7 +118,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvTerms"
                         style="@style/TextviewRegular"
-                        android:layout_width="wrap_content"
+                        android:layout_width="299dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="22dp"

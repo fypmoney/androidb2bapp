@@ -130,6 +130,8 @@ public class MyKeyboard extends LinearLayout implements View.OnClickListener {
         }
     }
 
+
+
     // The activity (or some parent or controller) must give us
     // a reference to the current EditText's InputConnection
     public void setInputConnection(InputConnection ic) {

@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        android:background="@drawable/curved_background5"
+        android:background="@drawable/curved_background6"
         android:orientation="vertical">
 
         <LinearLayout
@@ -18,7 +18,7 @@
                 android:id="@+id/button_1"
                 style="@style/keyview"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="69dp"
                 android:layout_weight="1"
                 android:textAlignment="center"
                 android:background="@drawable/white_round"
@@ -28,7 +28,7 @@
                 android:id="@+id/button_2"
                 style="@style/keyview"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="69dp"
                 android:layout_weight="1"
                 android:text="2" />
 
@@ -36,7 +36,7 @@
                 android:id="@+id/button_3"
                 style="@style/keyview"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="69dp"
                 android:layout_weight="1"
                 android:text="3" />
         </LinearLayout>
@@ -51,7 +51,7 @@
                 android:id="@+id/button_4"
                 style="@style/keyview"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="69dp"
                 android:layout_weight="1"
                 android:text="4" />
 
@@ -59,7 +59,7 @@
                 android:id="@+id/button_5"
                 style="@style/keyview"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="69dp"
                 android:layout_weight="1"
                 android:text="5" />
 
@@ -67,7 +67,7 @@
                 android:id="@+id/button_6"
                 style="@style/keyview"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="69dp"
                 android:layout_weight="1"
                 android:text="6" />
         </LinearLayout>
@@ -82,7 +82,7 @@
                 android:id="@+id/button_7"
                 style="@style/keyview"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="69dp"
                 android:layout_weight="1"
                 android:text="7" />
 
@@ -90,7 +90,7 @@
                 android:id="@+id/button_8"
                 style="@style/keyview"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="69dp"
                 android:layout_weight="1"
                 android:text="8" />
 
@@ -98,7 +98,7 @@
                 android:id="@+id/button_9"
                 style="@style/keyview"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="69dp"
                 android:layout_weight="1"
                 android:text="9" />
         </LinearLayout>
@@ -113,7 +113,7 @@
                 style="@style/keyview"
                 android:layout_width="0dp"
                 android:visibility="invisible"
-                android:layout_height="wrap_content"
+                android:layout_height="69dp"
                 android:layout_weight="1"
                 android:text="0" />
 
@@ -121,7 +121,7 @@
                 android:id="@+id/button_0"
                 style="@style/keyview"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="69dp"
                 android:layout_weight="1"
                 android:text="0" />
 
@@ -129,7 +129,7 @@
                 android:id="@+id/iv_delete"
                 style="@style/keyview"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="69dp"
                 app:srcCompat="@drawable/ic_cross"
                 android:layout_weight="1"
                 android:text="0" />
@@ -143,14 +143,14 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/main_button_height"
             android:layout_marginStart="@dimen/margin_20"
-            android:layout_marginEnd="@dimen/margin_20"
-            android:background="@drawable/curved_background1"
-            app:backgroundTint="@color/text_color_dark"
-            android:text="@string/verify_btn_text"
-            android:layout_marginBottom="28dp"
-            android:textAllCaps="false"
             android:layout_marginTop="@dimen/margin_20"
-            />
+            android:layout_marginEnd="@dimen/margin_20"
+            android:layout_marginBottom="28dp"
+            android:background="@drawable/curved_background1"
+            android:text="@string/verify_btn_text"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            app:backgroundTint="@color/text_color_dark" />
 
     </LinearLayout>
 

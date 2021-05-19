@@ -30,17 +30,17 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/page_padding">
+              >
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/enter_phone"
+                    style="@style/TextviewBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/enter_code_title"
-                    android:textColor="@color/text_color_dark"
-                    android:textSize="@dimen/main_title_size"
-                    android:textStyle="bold" />
+                 />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_mobile"
@@ -48,6 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/enter_phone"
                     android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginStart="25dp"
                     android:text="@{viewModel.mobile}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -64,10 +65,13 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/otp"
+                    style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_mobile"
-                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginTop="79dp"
                     android:text="@string/otp_title" />
 
                 <com.mukesh.OtpView
@@ -81,6 +85,8 @@
                     android:focusable="true"
                     android:inputType="number"
                     app:OtpItemCount="6"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="24dp"
                     android:itemBackground="@drawable/otp_background"
                     app:OtpItemSpacing="@dimen/_15sdp"
                     app:OtpViewType="none" />
@@ -91,6 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/otpView"
                     android:layout_alignParentStart="true"
+                    android:layout_marginStart="25dp"
                     android:layout_marginTop="@dimen/margin"
                     android:textColor="@color/text_color_little_dark"
                     android:visibility="@{viewModel.resendOtpTimerVisibility?View.VISIBLE:View.GONE}" />
@@ -101,6 +108,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/otpView"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="@dimen/margin"
                     android:enabled="@{viewModel.isResendEnabled?true:false,default=true}"
                     android:onClick="@{() ->viewModel.callSendOtpApi() }"
@@ -111,26 +119,34 @@
                 <com.fypmoney.util.MyKeyboard
                     android:id="@+id/keyboard"
                     android:layout_width="match_parent"
-                    android:layout_alignParentBottom="true"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"/>
+                    android:layout_above="@+id/linear"
+                    android:orientation="vertical"
+                    />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/linear"
+                    android:paddingBottom="@dimen/margin_20"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/curved_background7">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSendOtp"
                     style="@style/Widget.App.Button"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/main_button_height"
-                    android:layout_alignParentBottom="true"
                     android:layout_marginStart="@dimen/margin_20"
                     android:layout_marginEnd="@dimen/margin_20"
                     android:background="@drawable/curved_background1"
                     app:backgroundTint="@color/text_color_dark"
-                    android:visibility="gone"
                     android:onClick="@{()->viewModel.onVerifyClicked()}"
                     android:text="@string/verify_btn_text"
-                    android:textAllCaps="false"
-                  />
+                    android:textAllCaps="false"/>
+                </LinearLayout>
+
+                />
 
             </RelativeLayout>
         </ScrollView>
