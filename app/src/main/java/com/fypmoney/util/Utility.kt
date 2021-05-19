@@ -29,6 +29,8 @@ import androidx.appcompat.widget.AppCompatEditText
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.database.ContactRepository
 import com.fypmoney.database.entity.ContactEntity
+import com.fypmoney.model.CustomerInfoResponse
+import com.google.gson.Gson
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -442,7 +444,7 @@ object Utility {
                     e.printStackTrace()
                 }
 
-              //  Log.d("contacts", "step1_before_insertion")
+                //  Log.d("contacts", "step1_before_insertion")
 
 
                 if (SharedPrefUtils.getString(
@@ -451,7 +453,7 @@ object Utility {
                     ) == null
                 ) {
                     contactRepository.insertAllContacts(contactList)
-                  //  Log.d("contacts", "step2_after_insertion")
+                    //  Log.d("contacts", "step2_after_insertion")
 
                 } else {
                     when {
@@ -460,7 +462,7 @@ object Utility {
                                 contactRepository.deleteContactsBasedOnLookupKey(it.phoneBookIdentifier!!)
                             }
                             contactRepository.insertAllContacts(contactList)
-                        //    Log.d("contacts", "step3_after_insertion")
+                            //    Log.d("contacts", "step3_after_insertion")
                         }
                         else -> {
                         }
@@ -583,5 +585,29 @@ object Utility {
         return cal
     }
 
+    /*
+    * This is used to store the data of customer in the preference
+    * */
+     fun saveCustomerDataInPreference(responseData: CustomerInfoResponse) {
+        val gson = Gson()
+        val json = gson.toJson(responseData)
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_PROFILE_INFO,
+            json
+        )
+    }
+    /*
+        * This is used to get the data of customer from the preference
+        * */
+    fun getCustomerDataFromPreference(): CustomerInfoResponse? {
+        val gson = Gson()
+        val json =
+            SharedPrefUtils.getString(
+                PockketApplication.instance,
+                SharedPrefUtils.SF_KEY_USER_PROFILE_INFO
+            )
+        return gson.fromJson(json, CustomerInfoResponse::class.java)
+    }
 
 }

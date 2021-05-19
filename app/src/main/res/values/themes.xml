@@ -12,7 +12,6 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <item name="editTextStyle">@style/App_EditTextStyle</item>
-        <item name="android:textViewStyle">@style/AppTheme.Widget.TextView</item>
         <item name="buttonStyle">@style/Widget.App.Button</item>
         <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
 
@@ -40,12 +39,12 @@
         <item name="android:background">@drawable/edit_text_rounded_rectangle_shape_solid_gray
         </item>
         <item name="android:textColor">@color/text_color_dark</item>
-        <item name="android:textColorHint">@color/text_color_light</item>
-        <item name="android:fontFamily">@font/poppins_regular</item>
-        <item name="android:textSize">@dimen/edit_text_size</item>
+        <item name="android:textColorHint">@color/text_color_dark</item>
+        <item name="android:textSize">@dimen/textSize_18</item>
         <item name="android:padding">@dimen/_8sdp</item>
         <item name="android:layout_marginLeft">@dimen/_10sdp</item>
         <item name="android:layout_marginRight">@dimen/_10sdp</item>
+        <item name="fontFamily">@font/product_sans_regular</item>
     </style>
 
     <style name="AppTheme.Widget.TextView" parent="Widget.AppCompat.TextView">
@@ -56,12 +55,12 @@
     <!--Button Style-->
     <style name="App_Button" parent="Widget.MaterialComponents.Button">
         <item name="materialButtonStyle">@style/Widget.MaterialComponents.Button</item>
-        <item name="android:fontFamily">@font/poppins_medium</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Button</item>
         <item name="android:textColor">@color/buttonTextColor</item>
-        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:textSize">@dimen/textSize_18</item>
         <item name="cornerRadius">@dimen/corner_radius</item>
+        <item name="fontFamily">@font/product_sans_regular</item>
     </style>
 
 
@@ -107,5 +106,27 @@
         <item name="android:textColor">@color/text_color_dark</item>
     </style>
 
+    <!--
+    Textview product sans bold
+    -->
+    <style name="TextviewBold" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_color_dark</item>
+        <item name="android:textSize">@dimen/textSize_31</item>
+        <item name="fontFamily">@font/product_sans_bold</item>
+    </style>
+
+
+    <!--
+  Textview product sans regular
+  -->
+    <style name="TextviewRegular" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_color_light</item>
+        <item name="android:textSize">@dimen/textSize_14</item>
+        <item name="fontFamily">@font/product_sans_regular</item>
+    </style>
 
 </resources>

@@ -29,26 +29,13 @@
             app:srcCompat="@drawable/ic_verification_tick" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvCongrats"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/image"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:text="@string/create_account_title"
-            android:textAlignment="center"
-            android:textColor="@color/text_color_dark"
-            android:textSize="@dimen/main_title_size"
-            android:textStyle="bold" />
-
-        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCreateAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvCongrats"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_below="@id/image"
+            android:layout_marginTop="@dimen/_30sdp"
             android:textColor="@color/text_color_little_dark"
-            android:text="@string/create_account_success_title"
+            android:text="@string/login_success_msg"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
             android:textSize="@dimen/title_size" />

@@ -63,7 +63,7 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
         setToolbarAndTitle(
             context = this@LoginView,
             toolbar = toolbar,
-            isBackArrowVisible = false
+            isBackArrowVisible = true
         )
         requestPhoneNumberHint(this)
 

@@ -14,145 +14,160 @@
 
     </data>
 
-    <RelativeLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/screenBackground">
 
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_100sdp"
-            android:layout_centerHorizontal="true"
-            android:visibility="@{viewModel.isLogoVisible?View.VISIBLE:View.GONE}"
+            android:layout_width="133dp"
+            android:layout_height="74dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="240dp"
             app:srcCompat="@drawable/ic_fyp_logo" />
 
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/bottomSheet"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/image"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:orientation="vertical"
-            android:background="@drawable/curved_background2">
+            android:layout_height="wrap_content"
+            android:background="@drawable/curved_background2"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight="220dp"
+            app:layout_behavior="@string/bottom_sheet_behavior">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/image1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="-10dp"
-                app:srcCompat="@drawable/ic_card_graphic" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/image2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_pull_up_icon" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPullUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_20"
-                android:layout_gravity="center"
-                android:text="@string/pull_up_to_start"
-                android:textColor="@color/text_color_light" />
-
-
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:orientation="vertical"
-        >
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvWelcome"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_20"
-                android:layout_gravity="center"
-                android:text="@string/welcome"
-                android:textSize="@dimen/main_title_size"
-                android:textColor="@color/text_color_light" />
-
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/image3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_20"
-                app:srcCompat="@drawable/ic_fyp_logo" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnSendOtp"
-                style="@style/Widget.App.Button"
+            <LinearLayout
+                android:id="@+id/lay1"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/main_button_height"
-                android:layout_marginStart="@dimen/margin_20"
-                android:layout_marginTop="@dimen/margin_20"
-                android:layout_marginEnd="@dimen/margin_20"
-                android:background="@drawable/curved_background1"
-                app:backgroundTint="@color/text_color_dark"
-                android:onClick="@{()->viewModel.onCreateAccountClicked()}"
-                android:layout_marginBottom="@dimen/button_margin"
-                android:text="@string/create_account_btn_text"
-                android:textAllCaps="false"
-                />
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvTerms"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_20"
-                android:layout_gravity="center"
-                android:text="@string/create_account_terms"
-                android:textColor="@color/text_color_light"
-                android:textAlignment="center"/>
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/_30sdp"
-            >
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/alreadyHaveAccount"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_20"
-            android:layout_marginEnd="@dimen/margin_20"
-            android:layout_marginBottom="@dimen/margin_20"
-            android:gravity="start"
-            android:layout_toStartOf="@id/login"
-            android:text="@string/already_have_account_title"
-            android:textColor="@color/text_color_light" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="end"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="@dimen/margin"
-            android:onClick="@{()->viewModel.onCreateAccountClicked()}"
-            android:textStyle="bold"
-            android:layout_marginBottom="@dimen/margin_20"
-            android:layout_marginEnd="@dimen/margin_20"
-            android:text="@string/login" />
-        </RelativeLayout>
-
-    </LinearLayout>
-
-        </LinearLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image1"
+                    android:layout_width="187dp"
+                    android:layout_height="161dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="104dp"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/ic_card_graphic" />
 
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image2"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="30dp"
+                    android:padding="10dp"
+                    android:visibility="@{viewModel.isPullToRefreshVisible?View.VISIBLE:View.GONE,default=visible}"
+                    app:srcCompat="@drawable/ic_pull_up_icon" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_pull"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:padding="10dp"
+                    android:text="@string/pull_up_to_start"
+                    android:textAlignment="center"
+                    android:visibility="@{viewModel.isPullToRefreshVisible?View.VISIBLE:View.GONE,default=visible}"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="@dimen/textSize_18" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:orientation="vertical">
 
 
-    </RelativeLayout>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvWelcome"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="92dp"
+                        android:text="@string/welcome"
+                        android:textSize="@dimen/textSize_16" />
 
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image3"
+                        android:layout_width="163dp"
+                        android:layout_height="63dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_20"
+                        app:srcCompat="@drawable/ic_fyp_logo" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSendOtp"
+                        style="@style/Widget.App.Button"
+                        android:layout_width="299dp"
+                        android:layout_height="52dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="54dp"
+                        android:background="@drawable/curved_background1"
+                        android:onClick="@{()->viewModel.onCreateAccountClicked()}"
+                        android:text="@string/create_account_btn_text"
+                        android:textAllCaps="false"
+                        app:backgroundTint="@color/text_color_dark" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTerms"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="22dp"
+                        android:text="@string/create_account_terms"
+                        android:textAlignment="center" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="111dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/alreadyHaveAccount"
+                            style="@style/TextviewRegular"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_20"
+                            android:layout_marginEnd="@dimen/margin_20"
+                            android:layout_marginBottom="@dimen/margin_20"
+                            android:layout_toStartOf="@id/login"
+                            android:gravity="start"
+                            android:text="@string/already_have_account_title"
+                            android:textSize="@dimen/textSize_18" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/login"
+                            style="@style/TextviewBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginStart="@dimen/margin"
+                            android:layout_marginEnd="@dimen/margin_20"
+                            android:layout_marginBottom="@dimen/margin_20"
+                            android:gravity="end"
+                            android:onClick="@{()->viewModel.onCreateAccountClicked()}"
+                            android:text="@string/login"
+                            android:textSize="@dimen/textSize_18" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -8,9 +8,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.databinding.ViewSplashBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SplashViewModel
 
 /*
@@ -41,42 +43,14 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (intent.hasExtra("tag")) {
-                try {
-                       intentToActivity(
-                            Class.forName(AppConstants.BASE_ACTIVITY_URL + intent.getStringExtra("tag")),intent.getStringExtra("type")
-                        )
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    intentToActivity(HomeView::class.java)
-                }
-                finish()
-            } else {
-                if (SharedPrefUtils.getBoolean(
-                        applicationContext,
-                        SharedPrefUtils.SF_KEY_IS_LOGIN
-                    )!!
-                ) {
-                    when {
-                        mViewModel.getCustomerInfoSuccess.value?.isReferralAllowed == AppConstants.YES -> {
-                            intentToActivity(ReferralCodeView::class.java)
-                        }
-                        mViewModel.getCustomerInfoSuccess.value?.isProfileCompleted == AppConstants.NO -> {
-                            intentToActivity(CreateAccountView::class.java)
-                        }
-                        else -> {
-                            intentToActivity(AddMemberView::class.java)
-                        }
-                    }
-
-                } else {
-                    goToLoginScreen()
-                }
-
-
+        mViewModel.moveToNextScreen.observe(this)
+        {
+            if (it) {
+                moveToNextScreen()
+                mViewModel.moveToNextScreen.value = false
             }
-        }, AppConstants.SPLASH_TIME)
+        }
+
 
     }
 
@@ -84,7 +58,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     * navigate to the login screen
     * */
     private fun goToLoginScreen() {
-        val intent = Intent(this, LoginView::class.java)
+        val intent = Intent(this, FirstScreenView::class.java)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "")
         startActivity(intent)
         finish()
@@ -98,6 +72,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         startActivity(intent)
         finish()
     }
+
     /**
      * Method to navigate to the different activity
      */
@@ -106,6 +81,49 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
         startActivity(intent)
         finish()
+    }
+
+    /*
+    * This method is used to move to the next screen
+    * */
+    private fun moveToNextScreen(delayTime: Long = AppConstants.SPLASH_TIME) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (intent.hasExtra("tag")) {
+                try {
+                    intentToActivity(
+                        Class.forName(AppConstants.BASE_ACTIVITY_URL + intent.getStringExtra("tag")),
+                        intent.getStringExtra("type")
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    intentToActivity(HomeView::class.java)
+                }
+                finish()
+            } else {
+                if (SharedPrefUtils.getBoolean(
+                        applicationContext,
+                        SharedPrefUtils.SF_KEY_IS_LOGIN
+                    )!!
+                ) {
+                    when {
+                        Utility.getCustomerDataFromPreference()!!.isReferralAllowed == AppConstants.YES -> {
+                            intentToActivity(ReferralCodeView::class.java)
+                        }
+                        Utility.getCustomerDataFromPreference()!!.isProfileCompleted == AppConstants.NO -> {
+                            intentToActivity(CreateAccountView::class.java)
+                        }
+                        else -> {
+                            intentToActivity(HomeView::class.java)
+                        }
+                    }
+
+                } else {
+                    goToLoginScreen()
+                }
+
+
+            }
+        }, delayTime)
     }
 
 }

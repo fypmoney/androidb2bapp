@@ -21,4 +21,11 @@
     <dimen name="margin_20">@dimen/_20sdp</dimen>
     <dimen name="button_margin">@dimen/_30sdp</dimen>
 
+    <dimen name="textSize_31">31dp</dimen>
+    <dimen name="textSize_18">18dp</dimen>
+    <dimen name="textSize_14">14dp</dimen>
+    <dimen name="textSize_16">16dp</dimen>
+
+
+
 </resources>

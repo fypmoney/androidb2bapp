@@ -8,6 +8,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.LoginSuccessViewModel
 
 /*
@@ -38,12 +39,12 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onContinueClicked.observe(this) {
+        mViewModel.onApiSuccess.observe(this) {
             when {
-                mViewModel.getCustomerInfoSuccess.value?.isReferralAllowed == AppConstants.YES -> {
+                Utility.getCustomerDataFromPreference()?.isReferralAllowed == AppConstants.YES -> {
                     intentToActivity(ReferralCodeView::class.java)
                 }
-                mViewModel.getCustomerInfoSuccess.value?.isProfileCompleted == AppConstants.NO -> {
+                Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
                     intentToActivity(CreateAccountView::class.java)
                 }
                 else->{
@@ -66,7 +67,7 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
         val intent = Intent(this@LoginSuccessView, aClass)
         intent.putExtra(
             AppConstants.IS_PROFILE_COMPLETED,
-            mViewModel.getCustomerInfoSuccess.value?.isProfileCompleted
+            Utility.getCustomerDataFromPreference()?.isProfileCompleted
         )
         startActivity(intent)
     }

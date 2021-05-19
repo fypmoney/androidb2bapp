@@ -11,23 +11,23 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 
 /*
 * This class is used to show login success
 * */
 class LoginSuccessViewModel(application: Application) : BaseViewModel(application) {
-    var getCustomerInfoSuccess = MutableLiveData<CustomerInfoResponse>()
-    var onContinueClicked = MutableLiveData<Boolean>()
+    var onApiSuccess = MutableLiveData<Boolean>()
 
     init {
-        callGetCustomerProfileApi()
     }
 
     /*
     * This method is used to handle click of continue
     * */
     fun onContinueClicked() {
-        onContinueClicked.value = true
+        callGetCustomerProfileApi()
+
     }
 
     /*
@@ -39,7 +39,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                 purpose = ApiConstant.API_GET_CUSTOMER_INFO,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_GET_CUSTOMER_INFO),
                 request_type = ApiUrl.GET,
-                onResponse = this, isProgressBar = false,
+                onResponse = this, isProgressBar = true,
                 param = ""
             )
         )
@@ -50,7 +50,8 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
         when (purpose) {
             ApiConstant.API_GET_CUSTOMER_INFO -> {
                 if (responseData is CustomerInfoResponse) {
-                    getCustomerInfoSuccess.value = responseData
+                    Utility.saveCustomerDataInPreference(responseData)
+                    onApiSuccess.value=true
                     // Save the user id in shared preference
                     SharedPrefUtils.putLong(
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,

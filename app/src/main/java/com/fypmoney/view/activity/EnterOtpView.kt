@@ -43,7 +43,8 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = this@EnterOtpView,
-            toolbar = toolbar
+            toolbar = toolbar,
+            isBackArrowVisible = true
         )
         mViewModel.mobile.value = intent.getStringExtra(AppConstants.MOBILE_TYPE)
         mViewModel.mobileWithoutCountryCode.value =
@@ -77,7 +78,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
 
         mViewModel.onLoginSuccess.observe(this) {
             if (it) {
-                intentToActivity(LoginSuccessView::class.java)
+                intentToActivity(LoginSuccessView::class.java,true)
                 mViewModel.onLoginSuccess.value = false
             }
         }
@@ -103,9 +104,11 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
     /**
      * Method to navigate to the different activity
      */
-    private fun intentToActivity(aClass: Class<*>) {
+    private fun intentToActivity(aClass: Class<*>, isFinish: Boolean?=false) {
         startActivity(Intent(this@EnterOtpView, aClass))
-        finish()
+        if (isFinish!!) {
+            finishAffinity()
+        }
     }
 
     /*

@@ -2,7 +2,7 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -10,6 +10,7 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewFirstScreenBinding
 import com.fypmoney.listener.OnSwipeTouchListener
 import com.fypmoney.viewmodel.FirstScreenViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_first_screen.*
 
@@ -19,6 +20,8 @@ import kotlinx.android.synthetic.main.view_first_screen.*
 * */
 class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewModel>() {
     private lateinit var mViewModel: FirstScreenViewModel
+    private var mBottomSheetBehavior: BottomSheetBehavior<*>? = null
+
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -35,12 +38,13 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val view = findViewById<View>(R.id.bottomSheet)
+        mBottomSheetBehavior = BottomSheetBehavior.from(view)
 
-
+        setBottomSheetAndCallBackBottomSheetBehaviour()
         image2.setOnTouchListener(object : OnSwipeTouchListener(this@FirstScreenView) {
             override fun onSwipeTop() {
-                mViewModel.isLogoVisible.set(false)
-                Toast.makeText(this@FirstScreenView, "top", Toast.LENGTH_SHORT).show()
+                //mBottomSheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
 
             }
 
@@ -53,13 +57,13 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
      */
     private fun setObserver() {
 
-     mViewModel.onCreateAccountClicked.observe(this){
-         if(it)
-         {intentToActivity()
-             mViewModel.onCreateAccountClicked.value=false
-         }
+        mViewModel.onCreateAccountClicked.observe(this) {
+            if (it) {
+                intentToActivity()
+                mViewModel.onCreateAccountClicked.value = false
+            }
 
-     }
+        }
 
     }
 
@@ -73,4 +77,26 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
         finish()
     }
 
+    /**
+     * set bottom sheet behavior and state
+     */
+    private fun setBottomSheetAndCallBackBottomSheetBehaviour() {
+        //callback
+        mBottomSheetBehavior?.setBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
+                    mViewModel.isPullToRefreshVisible.set(true)
+                } else {
+                    mViewModel.isPullToRefreshVisible.set(false)
+
+
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                mViewModel.isPullToRefreshVisible.set(false)
+            }
+        })
+    }
 }
