@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -12,7 +13,9 @@ import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewHomeBinding
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.fragment.HomeScreen
 import com.fypmoney.viewmodel.HomeViewModel
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.view_home.*
 
 
@@ -42,6 +45,20 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         mViewBinding = getViewDataBinding()
         setObserver()
         checkAndAskPermission()
+
+        setCurrentFragment(HomeScreen())
+
+        mViewBinding.navigationView.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.home -> setCurrentFragment(HomeScreen())
+                R.id.feeds -> setCurrentFragment(HomeScreen())
+                R.id.store -> setCurrentFragment(HomeScreen())
+                R.id.card -> setCurrentFragment(HomeScreen())
+                R.id.family -> setCurrentFragment(HomeScreen())
+
+            }
+            true
+        }
 
     }
 
@@ -141,5 +158,11 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         mViewModel.callContactSyncApi()
     }
 
+    private fun setCurrentFragment(fragment: Fragment) =
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.container, fragment)
+            commit()
+        }
 
 }
+

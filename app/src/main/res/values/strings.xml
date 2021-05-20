@@ -34,6 +34,7 @@
     <string name="accept_btn_text">Accept</string>
     <string name="decline_btn_text">Decline</string>
     <string name="get_otp_btn_text">Get OTP</string>
+    <string name="pay_btn_text">Pay</string>
     <string name="verify_btn_text">Verify</string>
     <string name="invite_btn_text">Invite</string>
     <string name="activate_account_btn_text">Activate Account</string>
@@ -114,14 +115,28 @@
 
     <!--Home Screen-->
 
-    <string name="balance_text">Balance</string>
+    <string name="balance_text">Available Balance</string>
     <string name="set_upi_id_text">Set up your UPI ID</string>
     <string name="register_for_upi_title">Register now and start UPI payments</string>
     <string name="balance_default_value">0.0</string>
+    <string name="home_bottom_nav_title">Home</string>
+    <string name="feeds_bottom_nav_title">Feed</string>
+    <string name="card_bottom_nav_title">Card</string>
+    <string name="store_bottom_nav_title">Store</string>
+    <string name="fyper_bottom_nav_title">Fyper</string>
+    <string name="dummy_amount">8,952</string>
+    <string name="Rs">\u20B9</string>
+    <string name="quick_actions">Quick Actions</string>
+    <string name="quick_actions_split_bill">Split Bills</string>
+    <string name="quick_actions_split_bill1">Split expenses with friends &amp; Family</string>
+    <string name="quick_actions_chores">Chores</string>
+    <string name="quick_actions_chores1">Perform task and get cash rewards</string>
+    <string name="quick_actions_rewards">Rewards</string>
+    <string name="quick_actions_referrals">Referrals</string>
 
     <!--
-    Feeds Screen
-    -->
+   Feeds Screen
+   -->
     <string name="feeds_screen_title">Feeds</string>
     <string name="feeds_details_screen_title">Feed Details</string>
     <string name="browse_with">Browse with</string>
@@ -265,6 +280,7 @@
   -->
     <string name="invite_rejected_screen_title">Uh-Oh!</string>
     <string name="invite_rejected_screen_sub_title">Seems like your parent has rejected your request.</string>
+
 
 
 </resources>

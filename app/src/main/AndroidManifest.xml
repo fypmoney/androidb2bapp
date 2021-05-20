@@ -87,7 +87,8 @@
         <activity
             android:name=".view.activity.ContactView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-        <activity android:name=".view.activity.HomeView" />
+        <activity android:name=".view.activity.HomeView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar"/>
         <activity
             android:name=".view.activity.UserProfileView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />

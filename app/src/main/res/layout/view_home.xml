@@ -12,196 +12,29 @@
 
     </data>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_height="match_parent"
-        android:background="@color/fragmentBackgroundColor"
-        android:orientation="vertical">
+        android:layout_width="match_parent">
 
-        <RelativeLayout
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"
-                android:layout_marginEnd="@dimen/margin"
-                app:srcCompat="@drawable/ic_qr_icon" />
-
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivNotificationBell"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginEnd="@dimen/margin"
-                android:onClick="@{()->viewModel.onNotificationClicked()}"
-                android:layout_toStartOf="@+id/myProfile"
-                app:srcCompat="@drawable/notification_bell_icon" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/myProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginEnd="@dimen/margin"
-                android:backgroundTint="@color/black"
-                android:onClick="@{()->viewModel.onProfileClicked()}"
-                app:srcCompat="@drawable/my_profile_icon" />
-
-        </RelativeLayout>
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/layoutServicePrice"
-            android:layout_width="match_parent"
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:background="?android:attr/windowBackground"
+            android:id="@+id/navigationView"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="@dimen/card_elevation"
-            app:cardUseCompatPadding="true"
-            app:contentPadding="@dimen/_10sdp"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_balance"
-                    style="@style/AppTheme.Widget.TextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_toStartOf="@+id/btnAddMoney"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="start"
-                    android:singleLine="true"
-                    android:text="@string/balance_text"
-                    android:textSize="@dimen/title_size" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/amount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tv_balance"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/poppins_medium"
-                    android:singleLine="true"
-                    android:text="@{viewModel.balanceAmount}"
-                    android:textSize="@dimen/edit_text_size" />
-
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAddMoney"
-                    style="@style/Widget.App.Button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/main_button_height"
-                    android:layout_alignParentEnd="true"
-                    android:gravity="center_vertical"
-                    android:onClick="@{()->viewModel.onSubmitClicked()}"
-                    android:text="@string/add_money_btn_text"
-                    android:textAllCaps="false"
-                    app:backgroundTint="@color/black" />
-
-
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/layoutServicePrice1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="@dimen/card_elevation"
-            app:cardUseCompatPadding="true"
-            app:contentPadding="@dimen/_5sdp"
-            app:layout_constraintTop_toTopOf="parent">
+            app:itemBackground="@color/white"
+            app:itemIconTint="@color/text_color_little_dark"
+            app:itemTextColor="@color/text_color_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:menu="@menu/navigation"
+            />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvSetUpi"
-                    style="@style/AppTheme.Widget.TextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:layout_toStartOf="@+id/next"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/poppins_medium"
-                    android:gravity="start"
-                    android:singleLine="true"
-                    android:text="@string/set_upi_id_text"
-                    android:textSize="@dimen/title_size" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvRegisteUpi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvSetUpi"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/poppins_regular"
-                    android:singleLine="true"
-                    android:text="@string/register_for_upi_title"
-                    android:textSize="@dimen/edit_text_size" />
-
-
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/next"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:gravity="center_vertical"
-                    app:srcCompat="@drawable/ic_arrow_forward_rounded" />
-
-
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/feeds"
-            style="@style/Widget.App.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/main_button_height"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:onClick="@{()->viewModel.onFeedClicked()}"
-            android:text="@string/view_feeds"
-            android:textAllCaps="false"
-            app:backgroundTint="@color/colorPrimary" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/location"
-            style="@style/Widget.App.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/main_button_height"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:onClick="@{()->viewModel.onLocationClicked()}"
-            android:text="Find Location"
-            android:textAllCaps="false"
-            android:visibility="gone"
-            app:backgroundTint="@color/colorPrimary" />
-
-
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

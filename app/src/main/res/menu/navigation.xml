@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home_bottom_nav_title"/>
+
+    <item
+        android:id="@+id/feeds"
+        android:icon="@drawable/ic_home"
+        android:title="@string/feeds_bottom_nav_title"/>
+
+    <item
+        android:id="@+id/card"
+        android:icon="@drawable/ic_card"
+        android:title="@string/card_bottom_nav_title"/>
+    <item
+        android:id="@+id/store"
+        android:icon="@drawable/ic_store"
+        android:title="@string/store_bottom_nav_title"/>
+    <item
+        android:id="@+id/family"
+        android:icon="@drawable/ic_family"
+        android:title="@string/fyper_bottom_nav_title"/>
+
+</menu>

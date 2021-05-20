@@ -1,12 +1,18 @@
 package com.fypmoney.base
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.fypmoney.R
 
 
 //create base fragment with AndroidViewModel
@@ -72,6 +78,30 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         viewDataBinding!!.setVariable(getBindingVariable(), mViewModel)
         viewDataBinding!!.lifecycleOwner = this
         viewDataBinding!!.executePendingBindings()
+    }
+    /*
+  * This method will set the toolbar with back navigation arrow and toolbar title
+  * */
+    fun setToolbarAndTitle(
+        context: Context,
+        toolbar: Toolbar,
+        isBackArrowVisible: Boolean? = false
+    ) {  val activity = activity as AppCompatActivity?
+        activity!!.setSupportActionBar(toolbar)
+        val upArrow = ContextCompat.getDrawable(
+            context,
+            R.drawable.ic_back_arrow
+        )
+
+        activity.supportActionBar?.let {
+            if (isBackArrowVisible!!) {
+                it.setHomeAsUpIndicator(upArrow)
+                it.setDisplayHomeAsUpEnabled(true)
+            }
+            it.setDisplayShowHomeEnabled(true)
+            it.setDisplayShowTitleEnabled(false)
+        }
+
     }
 
 }
