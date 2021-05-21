@@ -35,7 +35,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/page_padding">
+                android:layout_marginEnd="@dimen/screenMarginRight"
+                android:layout_marginStart="@dimen/screenMarginLeft">
 
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -43,16 +44,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="67dp"
                     app:srcCompat="@drawable/ic_referral_code" />
 
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/enter_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/TextviewBold"
                     android:layout_below="@+id/ivServiceLogo"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginTop="50dp"
                     android:text="@string/referral_code_title"
                     android:textAlignment="center"
                     android:textColor="@color/text_color_dark"
@@ -61,44 +62,44 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/verification_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/TextviewRegular"
                     android:layout_below="@+id/enter_phone"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:text="@string/code_text"
-                    android:textColor="@color/text_color_light" />
-
+                    android:layout_marginTop="55dp"
+                    android:text="@string/code_text" />
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etReferralCode"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="57dp"
                     android:layout_below="@+id/verification_title"
-                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                    android:gravity="center_vertical"
                     android:hint="@string/referral_code_hint"
-                    android:inputType="phone"
+                    android:inputType="text"
+                    android:paddingStart="@dimen/edittextHintPaddingStart"
+                    android:paddingEnd="@dimen/edittextHintPaddingEnd"
                     android:text="@={viewModel.referralCode}"
-                    android:textStyle="bold" />
+                    />
+
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnContinue"
                     style="@style/Widget.App.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/main_button_height"
+                    android:layout_width="299dp"
+                    android:layout_height="52dp"
                     android:layout_below="@+id/etReferralCode"
-                    android:layout_marginStart="@dimen/margin_20"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:layout_marginEnd="@dimen/margin_20"
+                    android:layout_marginTop="30dp"
                     android:background="@drawable/curved_background1"
                     android:onClick="@{()->viewModel.callVerifyReferralCode()}"
                     android:text="@string/continue_btn_text"
                     android:textAllCaps="false"
+                    android:layout_centerHorizontal="true"
                     app:backgroundTint="@color/text_color_dark" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/back_to_login"
+                    style="@style/TextviewRegular"
+                    android:textSize="18dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"

@@ -10,6 +10,7 @@ import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.databinding.ViewReferralCodeBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.ReferralCodeViewModel
+import kotlinx.android.synthetic.main.toolbar.*
 
 /*
 * This class is used for show referral code
@@ -32,6 +33,11 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setToolbarAndTitle(
+            context = this@ReferralCodeView,
+            toolbar = toolbar,
+            isBackArrowVisible = true
+        )
         setObserver()
     }
 

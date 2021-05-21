@@ -109,6 +109,7 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
         mViewBinding.viewModel = mViewModel
         setObservers()
         setCountryCodeAdapter(applicationContext, mViewBinding.spCountryCode)
+        spCountryCode.isEnabled=false
 
     }
 
@@ -191,7 +192,6 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
         mViewModel.onContinueClicked.observe(this) {
             if (it) {
                 mViewModel.callSendOtpApi()
-                goToEnterOtpScreen()
                 mViewModel.onContinueClicked.value = false
             }
         }

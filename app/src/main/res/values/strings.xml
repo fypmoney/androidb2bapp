@@ -188,8 +188,8 @@
     <string name="select_relation">Relation*</string>
     <string name="invite_user_dialog_title">is not the App User. Please send invite.</string>
     <string name="invite_text">Invite</string>
-    <string name="add_member_sub_title">To Activate the account you need to add a family member</string>
-    <string name="add_member_title">Hey,</string>
+    <string name="add_member_sub_title">To Activate the account you need to add a \n family member</string>
+    <string name="add_member_title">Hey</string>
     <string name="name_label">Name*</string>
     <string name="parent_name_hint">Your parent name</string>
     <string name="relation_drop_down_hint">Your relation with parent</string>
@@ -217,7 +217,7 @@
     <!-- Referral code
     -->
     <string name="skip_title">Skip</string>
-    <string name="referral_code_title">Do you have A referral code?</string>
+    <string name="referral_code_title">Do you have \n A referral code?</string>
     <string name="code_text">Code</string>
     <string name="referral_code_empty_error">Please enter Referral Code</string>
     <string name="referral_code_hint">Your referral code</string>
@@ -236,7 +236,7 @@
     <!--
     Community
     -->
-    <string name="community_screen_title">"Let's build a community together"</string>
+    <string name="community_screen_title">"Let's build a \n community together"</string>
     <string name="community_screen_sub_title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod</string>
     <string name="school_name_title"> School name*</string>
     <string name="school_name_hint">Your School name</string>
@@ -269,7 +269,7 @@
     <!-- Invite member
     -->
     <string name="invite_member_screen_title">Oops!</string>
-    <string name="invite_member_screen_sub_title">Looks like your parent is not a FYP user. No worries you can invite them right now.</string>
+    <string name="invite_member_screen_sub_title">Looks like your parent is not a FYP user. \n No worries you can invite them right now.</string>
 
     <!-- Account activation success
   -->

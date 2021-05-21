@@ -18,46 +18,58 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/patternImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            app:srcCompat="@drawable/ic_pattern_reflect" />
 
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_150sdp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="247dp"
             app:srcCompat="@drawable/ic_verification_tick" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCreateAccount"
+            style="@style/TextviewRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/image"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:textColor="@color/text_color_little_dark"
-            android:text="@string/login_success_msg"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="78dp"
+            android:text="@string/login_success_msg"
             android:textAlignment="center"
-            android:textSize="@dimen/title_size" />
+            android:textColor="@color/text_color_little_dark"
+            android:textSize="18dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/pattern"
+            android:layout_width="146dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="100dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_pattern" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSendOtp"
             style="@style/Widget.App.Button"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/main_button_height"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/button_margin"
-            android:layout_marginEnd="@dimen/button_margin"
-            android:background="@drawable/curved_background1"
-            app:backgroundTint="@color/text_color_dark"
+            android:layout_width="299dp"
+            android:layout_height="52dp"
             android:layout_marginBottom="@dimen/button_margin"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/curved_background1"
             android:onClick="@{()->viewModel.onContinueClicked()}"
             android:text="@string/continue_btn_text"
             android:textAllCaps="false"
-            />
-
-
-
+            android:layout_centerHorizontal="true"
+            app:backgroundTint="@color/text_color_dark" />
 
     </RelativeLayout>
 

@@ -21,6 +21,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.CountryCodeArrayAdapter
 import com.fypmoney.viewmodel.AddMemberViewModel
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_login.*
 
 
 /*
@@ -64,12 +65,13 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
             }
         }
 
-
         // register broadcast receiver to handle user active loyalty points
         val lbm = LocalBroadcastManager.getInstance(this)
         lbm.registerReceiver(receiver, IntentFilter(AppConstants.CONTACT_BROADCAST_NAME))
         setObserver()
         setCountryCodeAdapter(applicationContext, mViewBinding.spCountryCode)
+        spCountryCode.isEnabled=false
+
     }
 
     private fun setCountryCodeAdapter(context: Context, spCountryCode: AppCompatSpinner) {

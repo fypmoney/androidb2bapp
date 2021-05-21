@@ -7,6 +7,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewStayTunedBinding
 import com.fypmoney.viewmodel.InviteMemberViewModel
+import kotlinx.android.synthetic.main.toolbar.*
 
 /*
 * This class is used to invite the family member
@@ -29,6 +30,11 @@ class InviteMemberView : BaseActivity<ViewStayTunedBinding, InviteMemberViewMode
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setToolbarAndTitle(
+            context = this@InviteMemberView,
+            toolbar = toolbar,
+            isBackArrowVisible = true
+        )
         setObserver()
 
     }

@@ -14,63 +14,63 @@
 
     </data>
 
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <include layout="@layout/toolbar" />
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/screenMarginLeft"
+        android:layout_marginEnd="@dimen/screenMarginRight">
 
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_150sdp"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="247dp"
             app:srcCompat="@drawable/ic_oops" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCongrats"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextviewBold"
             android:layout_below="@+id/image"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="49dp"
             android:text="@string/invite_member_screen_title"
             android:textAlignment="center"
-            android:textColor="@color/text_color_dark"
-            android:textSize="@dimen/main_title_size"
-            android:textStyle="bold" />
+            />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCreateAccount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextviewRegular"
             android:layout_below="@id/tvCongrats"
-            android:layout_marginTop="@dimen/margin"
-            android:textColor="@color/text_color_little_dark"
-            android:text="@string/invite_member_screen_sub_title"
             android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:textSize="@dimen/title_size" />
+            android:layout_marginTop="19dp"
+            android:text="@string/invite_member_screen_sub_title"
+            android:textAlignment="center" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSendOtp"
             style="@style/Widget.App.Button"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/main_button_height"
+            android:layout_width="299dp"
+            android:layout_height="52dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/button_margin"
-            android:layout_marginEnd="@dimen/button_margin"
-            android:background="@drawable/curved_background1"
-            app:backgroundTint="@color/text_color_dark"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/button_margin"
+            android:background="@drawable/curved_background1"
             android:onClick="@{()->viewModel.onInviteClicked()}"
             android:text="@string/invite_btn_text"
             android:textAllCaps="false"
-            />
-
+            app:backgroundTint="@color/text_color_dark" />
 
 
     </RelativeLayout>
-
+    </LinearLayout>
 </layout>

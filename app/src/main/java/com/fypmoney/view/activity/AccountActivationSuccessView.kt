@@ -10,6 +10,7 @@ import com.fypmoney.databinding.ViewStayTunedBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.AccountActivationSuccessViewModel
 import com.fypmoney.viewmodel.StayTunedViewModel
+import kotlinx.android.synthetic.main.toolbar.*
 
 /*
 * This class is used to display successful account activation
@@ -32,6 +33,11 @@ class AccountActivationSuccessView : BaseActivity<ViewAccountActivationSuccessBi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setToolbarAndTitle(
+            context = this@AccountActivationSuccessView,
+            toolbar = toolbar,
+            isBackArrowVisible = true
+        )
     }
 
 }

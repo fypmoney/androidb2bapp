@@ -42,7 +42,7 @@ class CreateAccountView :
         setToolbarAndTitle(
             context = this@CreateAccountView,
             toolbar = toolbar,
-            isBackArrowVisible = false
+            isBackArrowVisible = true
         )
         try {
             mViewModel.setData(intent.getSerializableExtra((AppConstants.CUSTOMER_INFO_RESPONSE)) as CustomerInfoResponse)
@@ -76,7 +76,7 @@ Create this method for observe the viewModel fields
 
         mViewModel.onLoginClicked.observe(this) {
             if (it) {
-                intentToActivity(LoginView::class.java)
+                intentToActivity(FirstScreenView::class.java)
                 mViewModel.onLoginClicked.value = false
             }
         }
@@ -94,6 +94,7 @@ Create this method for observe the viewModel fields
      */
     private fun intentToActivity(aClass: Class<*>) {
         startActivity(Intent(this@CreateAccountView, aClass))
+        finish()
     }
 
 

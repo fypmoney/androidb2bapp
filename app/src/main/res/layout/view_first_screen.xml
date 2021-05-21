@@ -19,14 +19,21 @@
         android:layout_height="match_parent"
         android:background="@color/screenBackground">
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/patternImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            app:srcCompat="@drawable/ic_pattern_reflect" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"
-            android:layout_width="133dp"
-            android:layout_height="74dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="240dp"
+            android:layout_marginTop="@dimen/_240sdp"
             app:srcCompat="@drawable/ic_fyp_logo" />
+
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/bottomSheet"
@@ -46,8 +53,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/image1"
-                    android:layout_width="187dp"
-                    android:layout_height="161dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="104dp"
                     android:visibility="gone"
@@ -56,8 +63,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/image2"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="30dp"
                     android:padding="10dp"
@@ -96,8 +103,8 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/image3"
-                        android:layout_width="163dp"
-                        android:layout_height="63dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/margin_20"
                         app:srcCompat="@drawable/ic_fyp_logo" />

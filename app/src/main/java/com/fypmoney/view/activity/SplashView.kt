@@ -58,7 +58,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     * navigate to the login screen
     * */
     private fun goToLoginScreen() {
-        val intent = Intent(this, HomeView::class.java)
+        val intent = Intent(this, FirstScreenView::class.java)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "")
         startActivity(intent)
         finish()

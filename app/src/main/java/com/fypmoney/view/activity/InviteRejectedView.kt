@@ -9,6 +9,7 @@ import com.fypmoney.databinding.ViewInviteRejectedBinding
 import com.fypmoney.databinding.ViewStayTunedBinding
 import com.fypmoney.viewmodel.InviteMemberViewModel
 import com.fypmoney.viewmodel.InviteRejectedViewModel
+import kotlinx.android.synthetic.main.toolbar.*
 
 /*
 * This class is used to invite the family member
@@ -31,6 +32,11 @@ class InviteRejectedView : BaseActivity<ViewInviteRejectedBinding, InviteRejecte
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setToolbarAndTitle(
+            context = this@InviteRejectedView,
+            toolbar = toolbar,
+            isBackArrowVisible = true
+        )
         setObserver()
 
     }

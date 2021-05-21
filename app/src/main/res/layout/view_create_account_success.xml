@@ -27,46 +27,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_150sdp"
+            android:layout_marginTop="247dp"
             app:srcCompat="@drawable/ic_account_created" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/community_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextviewBold"
             android:layout_centerHorizontal="true"
             android:text="@string/congratulation_title"
             android:textAlignment="center"
             android:layout_below="@id/image"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:textColor="@color/text_color_dark"
-            android:textSize="@dimen/main_title_size"
-            android:textStyle="bold" />
+            android:layout_marginTop="49dp"
+            />
 
 
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvAccountSuccess"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/community_title"
-            android:layout_marginTop="@dimen/_10sdp"
+            style="@style/TextviewRegular"
+           android:layout_below="@id/community_title"
+            android:layout_marginTop="19dp"
             android:textColor="@color/text_color_little_dark"
             android:text="@string/create_account_success_title"
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
-            android:textSize="@dimen/title_size" />
+           />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSendOtp"
             style="@style/Widget.App.Button"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/main_button_height"
+            android:layout_width="299dp"
+            android:layout_height="52dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/button_margin"
-            android:layout_marginEnd="@dimen/button_margin"
             android:background="@drawable/curved_background1"
             app:backgroundTint="@color/text_color_dark"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/button_margin"
             android:onClick="@{()->viewModel.onActivateAccountClicked()}"
             android:text="@string/activate_account_btn_text"

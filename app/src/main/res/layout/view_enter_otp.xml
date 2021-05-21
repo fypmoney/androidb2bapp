@@ -15,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar"
-          />
+        <include layout="@layout/toolbar" />
 
         <ScrollView
             android:id="@+id/scroll_view"
@@ -29,26 +28,24 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-              >
+                android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/enter_phone"
                     style="@style/TextviewBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
                     android:layout_gravity="center_horizontal"
-                    android:text="@string/enter_code_title"
-                 />
+                    android:layout_marginStart="25dp"
+                    android:text="@string/enter_code_title" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_mobile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/enter_phone"
-                    android:layout_marginTop="@dimen/_5sdp"
                     android:layout_marginStart="25dp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:text="@{viewModel.mobile}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -70,8 +67,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_mobile"
                     android:layout_marginStart="25dp"
-                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="79dp"
+                    android:layout_marginEnd="24dp"
                     android:text="@string/otp_title" />
 
                 <com.mukesh.OtpView
@@ -80,14 +77,15 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/otp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/margin"
-                    android:cursorVisible="true"
-                    android:focusable="true"
-                    android:inputType="number"
-                    app:OtpItemCount="6"
                     android:layout_marginStart="25dp"
+                    android:layout_marginTop="@dimen/margin"
                     android:layout_marginEnd="24dp"
+                    android:inputType="number"
+                    android:focusableInTouchMode="true"
+                    android:cursorVisible="true"
+                    android:focusable="false"
                     android:itemBackground="@drawable/otp_background"
+                    app:OtpItemCount="6"
                     app:OtpItemSpacing="@dimen/_15sdp"
                     app:OtpViewType="none" />
 
@@ -108,12 +106,12 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/otpView"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="24dp"
                     android:layout_marginTop="@dimen/margin"
+                    android:layout_marginEnd="24dp"
                     android:enabled="@{viewModel.isResendEnabled?true:false,default=true}"
                     android:onClick="@{() ->viewModel.callSendOtpApi() }"
                     android:text="@string/resend_otp"
-                    android:textColor="@{viewModel.isResendEnabled?@color/text_color_dark:@color/text_color_light}"/>
+                    android:textColor="@{viewModel.isResendEnabled?@color/text_color_dark:@color/text_color_light}" />
 
 
                 <com.fypmoney.util.MyKeyboard
@@ -121,32 +119,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/linear"
-                    android:orientation="vertical"
-                    />
+                    android:orientation="vertical" />
 
-                <LinearLayout
+                <RelativeLayout
+                    android:id="@+id/linear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/linear"
-                    android:paddingBottom="@dimen/margin_20"
                     android:layout_alignParentBottom="true"
-                    android:background="@drawable/curved_background7">
+                    android:background="@drawable/curved_background7"
+                    android:paddingBottom="@dimen/margin_20">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSendOtp"
-                    style="@style/Widget.App.Button"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/main_button_height"
-                    android:layout_marginStart="@dimen/margin_20"
-                    android:layout_marginEnd="@dimen/margin_20"
-                    android:background="@drawable/curved_background1"
-                    app:backgroundTint="@color/text_color_dark"
-                    android:onClick="@{()->viewModel.onVerifyClicked()}"
-                    android:text="@string/verify_btn_text"
-                    android:textAllCaps="false"/>
-                </LinearLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSendOtp"
+                        style="@style/Widget.App.Button"
+                        android:layout_width="299dp"
+                        android:layout_height="52dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/curved_background1"
+                        android:onClick="@{()->viewModel.onVerifyClicked()}"
+                        android:text="@string/verify_btn_text"
+                        android:textAllCaps="false"
+                        app:backgroundTint="@color/text_color_dark" />
+                </RelativeLayout>
 
-                />
 
             </RelativeLayout>
         </ScrollView>

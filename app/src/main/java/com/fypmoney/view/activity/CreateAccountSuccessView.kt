@@ -55,9 +55,11 @@ class CreateAccountSuccessView :
      * Method to navigate to the different activity
      */
     private fun intentToActivity(aClass: Class<*>) {
-        val intent=Intent(this@CreateAccountSuccessView, aClass)
-        intent.putExtra(AppConstants.FROM_WHICH_SCREEN,AppConstants.CREATE_ACCOUNT_SUCCESS)
+        val intent = Intent(this@CreateAccountSuccessView, aClass)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.CREATE_ACCOUNT_SUCCESS)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
+        finish()
     }
 
 

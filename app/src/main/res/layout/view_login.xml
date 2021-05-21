@@ -78,6 +78,8 @@
                         android:id="@+id/spCountryCode"
                         android:layout_width="@dimen/_80sdp"
                         android:layout_height="26dp"
+                        android:clickable="false"
+                        android:enabled="false"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"

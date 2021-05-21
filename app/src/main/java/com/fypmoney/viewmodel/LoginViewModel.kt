@@ -109,6 +109,7 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
                     // set the button text to continue
                     when (responseData.msg) {
                         ApiConstant.API_SUCCESS -> {
+                            onOtpSentSuccess.value=true
                         }
                     }
                 }
