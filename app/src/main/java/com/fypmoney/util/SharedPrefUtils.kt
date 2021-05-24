@@ -28,6 +28,7 @@ class SharedPrefUtils {
         const val SF_KEY_USER_LAST_NAME ="last name"
         const val SF_KEY_USER_DOB = "dob"
         const val SF_KEY_SELECTED_RELATION = "relation"
+        const val SF_KEY_AADHAAR_NUMBER = "aadhaar_number"
 
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {

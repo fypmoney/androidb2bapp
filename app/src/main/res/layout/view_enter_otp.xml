@@ -51,15 +51,18 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_change"
+                    style="@style/TextviewBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/enter_phone"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_5sdp"
                     android:layout_toEndOf="@+id/tv_mobile"
+                    android:textSize="@dimen/textSize_14"
                     android:onClick="@{()->viewModel.onChangeClicked()}"
                     android:text="@string/change_text"
-                    android:textColor="@color/teal_700" />
+                    android:visibility="@{viewModel.isChangeVisible?View.VISIBLE:View.GONE}"
+                   />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/otp"
@@ -70,6 +73,7 @@
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="79dp"
                     android:layout_marginEnd="24dp"
+                    android:visibility="@{viewModel.isChangeVisible?View.VISIBLE:View.GONE}"
                     android:text="@string/otp_title" />
 
                 <com.mukesh.OtpView

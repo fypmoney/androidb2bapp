@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/toolbar_for_aadhaar" />
 
         <ScrollView
             android:id="@+id/scroll_view"
@@ -49,6 +49,8 @@
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:layout_below="@+id/community_title"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/account_verification_sub_title"
@@ -61,9 +63,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvSubTitle"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="50dp"
                     app:srcCompat="@drawable/ic_account_activation" />
-
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -71,12 +72,12 @@
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/ivServiceLogo"
+                    android:layout_marginTop="40dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     android:text="@string/account_verification_sub_title1"
-                    android:textAlignment="center"
-                    android:layout_marginTop="30dp"
-                    android:layout_below="@+id/ivServiceLogo"/>
-
+                    android:textAlignment="center" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/association_with"

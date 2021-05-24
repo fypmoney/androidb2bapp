@@ -4,7 +4,7 @@ import android.app.Application
 import android.os.Build
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.fypmoney.BuildConfig
+import androidx.multidex.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -26,7 +26,9 @@ import java.util.*
 class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     var mobile = MutableLiveData<String>()
     var heading =
-        MutableLiveData<String>(application.resources.getString(R.string.enter_code_title))
+        MutableLiveData(application.resources.getString(R.string.enter_code_title))
+    var changeOrEditText =
+        MutableLiveData(application.resources.getString(R.string.change_text))
     var mobileWithoutCountryCode = MutableLiveData<String>()
     var onChangeClicked = MutableLiveData<Boolean>()
     var onLoginSuccess = MutableLiveData<Boolean>()
@@ -34,6 +36,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     var otp = ObservableField<String>()
     var resendOtpSuccess = MutableLiveData(true)
     var resendOtpTimerVisibility = ObservableField(true)
+    var isChangeVisible = ObservableField(true)
     var isResendEnabled = ObservableField(false)
     var fromWhichScreen = ObservableField<String>()
 
@@ -54,8 +57,16 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
 
             }
             else -> {
-                cancelTimer.value = true
-                callLoginApi()
+                when (fromWhichScreen.get()) {
+                    AppConstants.LOGIN_SCREEN -> {
+                        cancelTimer.value = true
+                        callLoginApi()
+                    }
+
+                    else -> {
+                        onLoginSuccess.value=true
+                    }
+                }
             }
         }
     }
@@ -106,24 +117,27 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
 * This method is used to call send otp API
 * */
     fun callSendOtpApi() {
-        if (!resendOtpTimerVisibility.get()!!) {
-            WebApiCaller.getInstance().request(
-                ApiRequest(
-                    ApiConstant.API_LOGIN_INIT,
-                    NetworkUtil.endURL(ApiConstant.API_LOGIN_INIT),
-                    ApiUrl.POST,
-                    LoginInitRequest(
-                        identifierType = AppConstants.MOBILE_TYPE,
-                        identifier = mobileWithoutCountryCode.value!!
-                    ),
-                    this, isProgressBar = true
-                )
-            )
-        } else {
-            Utility.showToast("")
+        when (fromWhichScreen.get()) {
+            AppConstants.LOGIN_SCREEN -> {
+                if (!resendOtpTimerVisibility.get()!!) {
+                    WebApiCaller.getInstance().request(
+                        ApiRequest(
+                            ApiConstant.API_LOGIN_INIT,
+                            NetworkUtil.endURL(ApiConstant.API_LOGIN_INIT),
+                            ApiUrl.POST,
+                            LoginInitRequest(
+                                identifierType = AppConstants.MOBILE_TYPE,
+                                identifier = mobileWithoutCountryCode.value!!
+                            ),
+                            this, isProgressBar = true
+                        )
+                    )
+                } else {
+                    Utility.showToast("")
+                }
+
+            }
         }
-
-
     }
 
 
@@ -178,6 +192,13 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
             AppConstants.AADHAAR_VERIFICATION -> {
                 heading.value =
                     PockketApplication.instance.resources.getString(R.string.aadhaar_otp_screen_title)
+                mobile.value =
+                    PockketApplication.instance.resources.getString(R.string.aadhaar_otp_sub_title) + SharedPrefUtils.getString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_AADHAAR_NUMBER
+                    )+ PockketApplication.instance.resources.getString(R.string.aadhaar_otp_edit)
+                isChangeVisible.set(false)
+
             }
         }
 

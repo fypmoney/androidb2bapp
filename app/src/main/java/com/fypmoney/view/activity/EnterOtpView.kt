@@ -1,11 +1,21 @@
 package com.fypmoney.view.activity
 
+import android.R.attr.left
+import android.R.attr.right
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -14,6 +24,7 @@ import com.fypmoney.databinding.ViewEnterOtpBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.EnterOtpViewModel
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 import kotlinx.android.synthetic.main.view_enter_otp.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -63,6 +74,35 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
         keyboard.setInputConnection(ic)
         // start timer get started initially
         startTimer()
+
+        when (mViewModel.fromWhichScreen.get()) {
+            AppConstants.AADHAAR_VERIFICATION -> {
+                //
+                val ss = SpannableString(mViewModel.mobile.value)
+                val clickableSpan: ClickableSpan = object : ClickableSpan() {
+                    override fun onClick(textView: View) {
+                        intentToActivity(
+                            AadhaarVerificationView::class.java,
+                            isFinish = true
+                        )
+                    }
+
+                    override fun updateDrawState(ds: TextPaint) {
+                        super.updateDrawState(ds)
+                        ds.isUnderlineText = false
+                        ds.color =
+                            ContextCompat.getColor(applicationContext, R.color.text_color_dark)
+                    }
+                }
+                ss.setSpan(clickableSpan, 68, 87, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                tv_mobile.text = ss
+                tv_mobile.movementMethod = LinkMovementMethod.getInstance()
+
+
+            }
+        }
+
+
     }
 
 
@@ -72,7 +112,15 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
     private fun setObservers() {
         mViewModel.onChangeClicked.observe(this) {
             if (it) {
-                intentToActivity(LoginView::class.java)
+                when (mViewModel.fromWhichScreen.get()) {
+                    AppConstants.LOGIN_SCREEN -> {
+                        intentToActivity(LoginView::class.java)
+                    }
+                    else -> {
+                        intentToActivity(AadhaarVerificationView::class.java)
+
+                    }
+                }
                 mViewModel.onChangeClicked.value = false
             }
         }
@@ -85,7 +133,18 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
 
         mViewModel.onLoginSuccess.observe(this) {
             if (it) {
-                intentToActivity(LoginSuccessView::class.java,true)
+                when (mViewModel.fromWhichScreen.get()) {
+                    AppConstants.LOGIN_SCREEN -> {
+                        intentToActivity(LoginSuccessView::class.java)
+                    }
+                    else -> {
+                        intentToActivity(
+                            ActivationSuccessWithAadhaarView::class.java,
+                            isFinish = true
+                        )
+
+                    }
+                }
                 mViewModel.onLoginSuccess.value = false
             }
         }
@@ -111,7 +170,10 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
     /**
      * Method to navigate to the different activity
      */
-    private fun intentToActivity(aClass: Class<*>, isFinish: Boolean?=false) {
+    private fun intentToActivity(
+        aClass: Class<*>,
+        isFinish: Boolean? = false
+    ) {
         startActivity(Intent(this@EnterOtpView, aClass))
         if (isFinish!!) {
             finishAffinity()

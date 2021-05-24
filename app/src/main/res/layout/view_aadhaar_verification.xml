@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.fypmoney.viewmodel.AadhaarAccountActivationViewModel" />
+            type="com.fypmoney.viewmodel.AadhaarVerificationViewModel" />
 
     </data>
 
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/toolbar_for_aadhaar" />
 
         <ScrollView
             android:id="@+id/scroll_view"
@@ -81,8 +81,9 @@
                     android:layout_marginTop="@dimen/edittextMarginTop"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:hint="@string/aadhaar_number_hint"
-                    android:inputType="textCapWords"
+                    android:inputType="number"
                     android:padding="@dimen/_8sdp"
+                    android:maxLength="16"
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
                     android:singleLine="true"

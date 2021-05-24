@@ -59,7 +59,7 @@ class AadhaarAccountActivationView : BaseActivity<ViewAadhaarAccountActivationBi
                 ds.color = ContextCompat.getColor(applicationContext, R.color.text_color_dark)
             }
         }
-        ss.setSpan(clickableSpan, 7, 14, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        ss.setSpan(clickableSpan, 49, 52, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         tvSubTitle.text = ss
         tvSubTitle.movementMethod = LinkMovementMethod.getInstance()
 

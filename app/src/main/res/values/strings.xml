@@ -293,12 +293,13 @@
     <string name="aadhaar_number_not_linked">if your Aadhaar card is not linked with your Mobile number</string>
     <string name="aadhaar_number_help_text">Help?</string>
     <string name="aadhaar_number_empty_error">Please enter Aadhaar number</string>
+    <string name="aadhaar_number_valid_error">Please enter valid Aadhaar number</string>
 
 
     <!-- Account verification for Aadhaar
  -->
 
-    <string name="account_verification_screen_title">Account verification</string>
+    <string name="account_verification_screen_title">Account Activation</string>
     <string name="account_verification_sub_title"><font fgcolor='#9CA3A5'>Complete your Aadhaar KYC now. And have fun with &#032;</font>Fyp</string>
     <string name="account_verification_sub_title1">Within just 1 minute unlock the FYP benefits now.</string>
     <string name="account_verification_sub_title2">FYP is in association with &#032;</string>
@@ -307,9 +308,13 @@
 -->
 
     <string name="aadhaar_otp_screen_title">Activate Account</string>
-    <string name="aadhaar_otp_sub_title">Enter the OTP send to your phone number linked to </string>
-    <string name="aadhaar_otp_edit">Edit Aadhaar number </string>
+    <string name="aadhaar_otp_sub_title">"Enter the OTP send to your phone number linked to "</string>
+    <string name="aadhaar_otp_edit">. Edit Aadhaar number </string>
 
+    <!-- Account verification success with Aadhaar
+ -->
+
+    <string name="account_activation_success_aadhaar_title">Your account is Successfully created. You can now enjoy all the benefits of being a FYP user.</string>
 
 
 
