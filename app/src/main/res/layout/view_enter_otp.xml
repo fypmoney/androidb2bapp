@@ -73,8 +73,7 @@
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="79dp"
                     android:layout_marginEnd="24dp"
-                    android:visibility="@{viewModel.isChangeVisible?View.VISIBLE:View.GONE}"
-                    android:text="@string/otp_title" />
+                    android:text="@{viewModel.otpTitle}" />
 
                 <com.mukesh.OtpView
                     android:id="@+id/otpView"

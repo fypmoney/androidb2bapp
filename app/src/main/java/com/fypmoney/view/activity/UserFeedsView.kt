@@ -171,12 +171,14 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
         super.onPause()
     }
 
-  /*  override fun onTryAgainClicked() {
-        shimmerLayout.startShimmerAnimation()
-        mViewModel.isRecyclerviewVisible.set(false)
-        mViewModel.callFetchFeedsApi(
-            latitude = mViewModel.latitude.get(),
-            longitude = mViewModel.longitude.get()
-        )
-    }
-*/}
+
+
+      override fun onTryAgainClicked() {
+          shimmerLayout.startShimmerAnimation()
+          mViewModel.isRecyclerviewVisible.set(false)
+          mViewModel.callFetchFeedsApi(
+              latitude = mViewModel.latitude.get(),
+              longitude = mViewModel.longitude.get()
+          )
+      }
+  }

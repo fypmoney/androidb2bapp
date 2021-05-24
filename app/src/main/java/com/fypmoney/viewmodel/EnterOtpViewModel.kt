@@ -39,6 +39,8 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     var isChangeVisible = ObservableField(true)
     var isResendEnabled = ObservableField(false)
     var fromWhichScreen = ObservableField<String>()
+    var otpTitle =
+        ObservableField<String>(PockketApplication.instance.getString(R.string.otp_title))
 
     /*
     * This method is used to handle click of mobile
@@ -64,7 +66,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                     }
 
                     else -> {
-                        onLoginSuccess.value=true
+                        onLoginSuccess.value = true
                     }
                 }
             }
@@ -196,8 +198,10 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                     PockketApplication.instance.resources.getString(R.string.aadhaar_otp_sub_title) + SharedPrefUtils.getString(
                         getApplication(),
                         SharedPrefUtils.SF_KEY_AADHAAR_NUMBER
-                    )+ PockketApplication.instance.resources.getString(R.string.aadhaar_otp_edit)
+                    ) + PockketApplication.instance.resources.getString(R.string.aadhaar_otp_edit)
                 isChangeVisible.set(false)
+
+                otpTitle.set("")
 
             }
         }

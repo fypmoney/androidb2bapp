@@ -130,10 +130,10 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
                 AddFamilyMemberRequest(
                     mobileNo = mobile.value!!.trim(),
                     name = parentName.get(),
-                    relation = selectedRelation.get()!!,isGuarantor = isGuarantor.get()!!
+                    relation = selectedRelation.get()!!
                 ),
                 this,
-                isProgressBar = false
+                isProgressBar = true
             )
         )
 

@@ -17,7 +17,7 @@ import com.fypmoney.util.Utility
 
 abstract class BaseViewModel(application: Application) : AndroidViewModel(application),
     WebApiCaller.OnWebApiResponse {
-    var progressDialog = MutableLiveData<Boolean>(false)
+    var progressDialog = MutableLiveData(false)
     val internetError = MutableLiveData(false)
 
     var appDatabase: AppDatabase? = null

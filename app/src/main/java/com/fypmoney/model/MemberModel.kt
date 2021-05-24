@@ -12,7 +12,7 @@ data class AddFamilyMemberRequest(
     @SerializedName("mobileNo") val mobileNo: String,
     @SerializedName("name") val name: String?,
     @SerializedName("relation") val relation: String,
-    @SerializedName("isGuarantor") val isGuarantor: String
+    @SerializedName("isGuarantor") val isGuarantor: String?=null
 ) : BaseRequest()
 
 data class AddFamilyMemberResponse(

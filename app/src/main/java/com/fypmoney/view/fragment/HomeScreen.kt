@@ -47,5 +47,9 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
 
     }
 
+    override fun onTryAgainClicked() {
+
+    }
+
 
 }

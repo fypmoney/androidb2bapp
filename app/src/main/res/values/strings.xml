@@ -191,7 +191,7 @@
     <string name="add_member_sub_title">To Activate the account you need to add a \n family member</string>
     <string name="add_member_title">Hey</string>
     <string name="name_label">Name*</string>
-    <string name="parent_name_hint">Your parent name</string>
+    <string name="parent_name_hint">Your family member name</string>
     <string name="relation_drop_down_hint">Your relation with parent</string>
     <string name="relation_empty_error">Please choose your relation</string>
     <string name="parent_name_empty_error">Please enter your parent name</string>

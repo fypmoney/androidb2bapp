@@ -46,7 +46,7 @@ class CreateAccountSuccessView :
      */
     private fun setObserver() {
         mViewModel.onActivateAccountClicked.observe(this) {
-            intentToActivity(AddMemberView::class.java)
+            intentToActivity(AadhaarAccountActivationView::class.java)
         }
 
     }
@@ -56,10 +56,8 @@ class CreateAccountSuccessView :
      */
     private fun intentToActivity(aClass: Class<*>) {
         val intent = Intent(this@CreateAccountSuccessView, aClass)
-        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.CREATE_ACCOUNT_SUCCESS)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
-        finish()
+        finishAffinity()
     }
 
 

@@ -70,7 +70,7 @@
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/etReferralCode"
                     android:layout_width="match_parent"
-                    android:layout_height="57dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/verification_title"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
