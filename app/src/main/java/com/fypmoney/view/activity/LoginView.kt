@@ -109,7 +109,7 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
         mViewBinding.viewModel = mViewModel
         setObservers()
         setCountryCodeAdapter(applicationContext, mViewBinding.spCountryCode)
-        spCountryCode.isEnabled=false
+        spCountryCode.isEnabled = false
 
     }
 
@@ -257,11 +257,14 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
             mViewModel.selectedCountryCode.get() + mViewModel.mobile.value
         )
         intent.putExtra(
+            AppConstants.FROM_WHICH_SCREEN,AppConstants.LOGIN_SCREEN
+        )
+
+        intent.putExtra(
             AppConstants.MOBILE_WITHOUT_COUNTRY_CODE,
             mViewModel.mobile.value
         )
         startActivity(intent)
-       // finish()
     }
 
     companion object {

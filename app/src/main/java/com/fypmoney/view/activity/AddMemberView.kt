@@ -23,7 +23,6 @@ import com.fypmoney.viewmodel.AddMemberViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_login.*
 
-
 /*
 * This class is used as Add member Screen
 * */
@@ -215,10 +214,10 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
             AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
                 when (resultCode) {
                     RESULT_OK -> {
-                        runOnUiThread({
+                        runOnUiThread {
                             mViewModel.callAddMemberApi()
 
-                        })
+                        }
 
                     }
 

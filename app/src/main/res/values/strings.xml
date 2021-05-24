@@ -262,7 +262,7 @@
     <!-- stay tuned
     -->
     <string name="stay_tuned_screen_title">Stay tuned!</string>
-    <string name="stay_tuned_screen_sub_title">Hang in there, we have sent a request to your</string>
+    <string name="stay_tuned_screen_sub_title">"Hang in there, we have sent a request to your "</string>
     <string name="stay_tuned_screen_sub_title1">, to activate your account</string>
 
 
@@ -280,6 +280,36 @@
   -->
     <string name="invite_rejected_screen_title">Uh-Oh!</string>
     <string name="invite_rejected_screen_sub_title">Seems like your parent has rejected your request.</string>
+
+    <!-- Aadhaar verification
+    -->
+
+    <string name="aadhaar_screen_title">Enter your Aadhaar number</string>
+    <string name="aadhaar_screen_sub_title">We will send you a One Time Password on your registered mobile number for the given Aadhaar number</string>
+    <string name="aadhaar_number_title">Aadhaar number</string>
+    <string name="aadhaar_number_hint">Your Aadhaar number</string>
+    <string name="aadhaar_number_issue_title">I am having issue with Aadhaar</string>
+    <string name="aadhaar_number_click_here">Click here</string>
+    <string name="aadhaar_number_not_linked">if your Aadhaar card is not linked with your Mobile number</string>
+    <string name="aadhaar_number_help_text">Help?</string>
+    <string name="aadhaar_number_empty_error">Please enter Aadhaar number</string>
+
+
+    <!-- Account verification for Aadhaar
+ -->
+
+    <string name="account_verification_screen_title">Account verification</string>
+    <string name="account_verification_sub_title"><font fgcolor='#9CA3A5'>Complete your Aadhaar KYC now. And have fun with &#032;</font>Fyp</string>
+    <string name="account_verification_sub_title1">Within just 1 minute unlock the FYP benefits now.</string>
+    <string name="account_verification_sub_title2">FYP is in association with &#032;</string>
+
+    <!-- Account verification for Aadhaar
+-->
+
+    <string name="aadhaar_otp_screen_title">Activate Account</string>
+    <string name="aadhaar_otp_sub_title">Enter the OTP send to your phone number linked to </string>
+    <string name="aadhaar_otp_edit">Edit Aadhaar number </string>
+
 
 
 

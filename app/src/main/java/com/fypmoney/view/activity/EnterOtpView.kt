@@ -49,6 +49,8 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
             isBackArrowVisible = true
         )
         mViewModel.mobile.value = intent.getStringExtra(AppConstants.MOBILE_TYPE)
+        mViewModel.fromWhichScreen.set(intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN))
+        mViewModel.setInitialData()
         mViewModel.mobileWithoutCountryCode.value =
             intent.getStringExtra(AppConstants.MOBILE_WITHOUT_COUNTRY_CODE)
         mViewBinding.viewModel = mViewModel

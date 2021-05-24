@@ -25,6 +25,7 @@ import com.fypmoney.model.IsAppUserResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.google.android.gms.common.util.SharedPreferencesUtils
 
 /*
 * This class is used to handle add member functionality
@@ -54,6 +55,7 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             selectedRelation.set(parent?.getItemAtPosition(position) as String)
+            SharedPrefUtils.putString(getApplication(),SharedPrefUtils.SF_KEY_SELECTED_RELATION,selectedRelation.get())
         }
     }
 

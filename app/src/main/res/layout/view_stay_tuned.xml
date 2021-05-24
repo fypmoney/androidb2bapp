@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="247dp"
             android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/ic_verification_tick" />
+            app:srcCompat="@drawable/ic_stay_tuned" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCongrats"
@@ -51,7 +51,9 @@
              android:layout_below="@id/tvCongrats"
             android:layout_marginTop="19dp"
             android:textColor="@color/text_color_little_dark"
-            android:text="@{@string/stay_tuned_screen_sub_title(viewModel.relation)}"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text='@{@string/stay_tuned_screen_sub_title.concat(viewModel.relation)}'
             android:layout_centerHorizontal="true"
             android:textAlignment="center"
             android:textSize="@dimen/title_size" />

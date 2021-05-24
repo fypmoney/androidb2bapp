@@ -7,6 +7,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewStayTunedBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.viewmodel.StayTunedViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -36,7 +37,13 @@ class StayTunedView : BaseActivity<ViewStayTunedBinding, StayTunedViewModel>() {
             toolbar = toolbar,
             isBackArrowVisible = true
         )
-        mViewModel.relation.set(intent.getStringExtra(AppConstants.RELATION) + resources.getString(R.string.stay_tuned_screen_sub_title1))
+        mViewModel.relation.set(
+            SharedPrefUtils.getString(
+                getApplication(),
+                SharedPrefUtils.SF_KEY_SELECTED_RELATION
+            )
+                    + resources.getString(R.string.stay_tuned_screen_sub_title1)
+        )
     }
 
 }

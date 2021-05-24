@@ -52,9 +52,7 @@
             android:name=".view.activity.EnterOtpView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
-        <activity
-            android:name=".view.activity.UserFeedsView"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
 
         <activity
             android:name=".view.activity.CreateAccountView"

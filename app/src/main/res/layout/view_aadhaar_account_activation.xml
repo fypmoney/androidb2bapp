@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.AadhaarAccountActivationViewModel" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/screenMarginLeft"
+                android:layout_marginEnd="@dimen/screenMarginRight">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/community_title"
+                    style="@style/TextviewBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/account_verification_screen_title"
+                    android:textAlignment="center" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSubTitle"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/community_title"
+                    android:layout_marginTop="@dimen/margin"
+                    android:text="@string/account_verification_sub_title"
+                    android:textAlignment="center" />
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivServiceLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvSubTitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="32dp"
+                    app:srcCompat="@drawable/ic_account_activation" />
+
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/click_here_title"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/account_verification_sub_title1"
+                    android:textAlignment="center"
+                    android:layout_marginTop="30dp"
+                    android:layout_below="@+id/ivServiceLogo"/>
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/association_with"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:drawableEnd="@drawable/yes_bank_logo"
+                    android:layout_below="@+id/click_here_title"
+                    android:layout_marginTop="40dp"
+                    android:text="@string/account_verification_sub_title2"
+                    android:gravity="center" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGetOtp"
+                    style="@style/Widget.App.Button"
+                    android:layout_width="299dp"
+                    android:layout_height="52dp"
+                    android:layout_below="@+id/association_with"
+                    android:layout_marginTop="50dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/curved_background1"
+                    android:onClick="@{()->viewModel.onActivateAccountClicked()}"
+                    android:text="@string/activate_account_btn_text"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/text_color_dark" />
+
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -25,6 +25,8 @@ import java.util.*
 * */
 class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     var mobile = MutableLiveData<String>()
+    var heading =
+        MutableLiveData<String>(application.resources.getString(R.string.enter_code_title))
     var mobileWithoutCountryCode = MutableLiveData<String>()
     var onChangeClicked = MutableLiveData<Boolean>()
     var onLoginSuccess = MutableLiveData<Boolean>()
@@ -33,6 +35,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     var resendOtpSuccess = MutableLiveData(true)
     var resendOtpTimerVisibility = ObservableField(true)
     var isResendEnabled = ObservableField(false)
+    var fromWhichScreen = ObservableField<String>()
 
     /*
     * This method is used to handle click of mobile
@@ -153,11 +156,10 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                         getApplication(), key = SharedPrefUtils.SF_KEY_ACCESS_TOKEN,
                         value = responseData.loginResponseDetails?.access_token!!
                     )
-                    onLoginSuccess.value=true
+                    onLoginSuccess.value = true
 
                 }
             }
-
 
 
         }
@@ -168,6 +170,17 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
         super.onError(purpose, errorResponseInfo)
     }
 
+    /*
+    * Used to set initial data
+    * */
+    fun setInitialData() {
+        when (fromWhichScreen.get()) {
+            AppConstants.AADHAAR_VERIFICATION -> {
+                heading.value =
+                    PockketApplication.instance.resources.getString(R.string.aadhaar_otp_screen_title)
+            }
+        }
 
 
+    }
 }

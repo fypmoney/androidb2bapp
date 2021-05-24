@@ -51,7 +51,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         mViewBinding.navigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> setCurrentFragment(HomeScreen())
-                R.id.feeds -> setCurrentFragment(HomeScreen())
+                R.id.feeds -> setCurrentFragment(UserFeedsView())
                 R.id.store -> setCurrentFragment(HomeScreen())
                 R.id.card -> setCurrentFragment(HomeScreen())
                 R.id.family -> setCurrentFragment(HomeScreen())

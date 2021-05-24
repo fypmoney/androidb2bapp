@@ -33,6 +33,8 @@
     <dimen name="edittextMarginTop">11dp</dimen>
     <dimen name="edittextHintPaddingStart">11dp</dimen>
     <dimen name="edittextHintPaddingEnd">11dp</dimen>
+    <dimen name="textViewMarginTop">11dp</dimen>
+
 
 
 

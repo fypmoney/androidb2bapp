@@ -64,4 +64,6 @@ object AppConstants {
     const val IS_PROFILE_COMPLETED = "isProfileCompleted"
     const val RELATION = "relation"
     const val CREATE_ACCOUNT_SUCCESS = "create_account_success"
+    const val LOGIN_SCREEN = "login_screen"
+    const val AADHAAR_VERIFICATION = "aadhaar_verification"
 }

@@ -4,12 +4,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.base.BaseActivity
+import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ViewUserFeedsBinding
 import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.model.CustomerInfoResponse
@@ -24,7 +25,7 @@ import kotlinx.android.synthetic.main.view_user_feeds.*
 /*
 * This is used to show list of feeds
 * */
-class UserFeedsView : BaseActivity<ViewUserFeedsBinding, FeedsViewModel>(),
+class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
     LocationListenerClass.GetCurrentLocationListener {
     private lateinit var mViewModel: FeedsViewModel
     private lateinit var mViewBinding: ViewUserFeedsBinding
@@ -42,16 +43,16 @@ class UserFeedsView : BaseActivity<ViewUserFeedsBinding, FeedsViewModel>(),
         return mViewModel
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
-            context = this@UserFeedsView,
+            context = requireContext(),
             toolbar = toolbar,
             isBackArrowVisible = true
         )
         LocationListenerClass(
-            this@UserFeedsView, this
+            requireActivity(), this
         ).permissions()
         setObserver()
     }
@@ -61,7 +62,7 @@ class UserFeedsView : BaseActivity<ViewUserFeedsBinding, FeedsViewModel>(),
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onFeedButtonClick.observe(this) {
+        mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
             when (it.action?.type) {
                 AppConstants.FEED_TYPE_IN_APP -> {
                     try {
@@ -92,7 +93,7 @@ class UserFeedsView : BaseActivity<ViewUserFeedsBinding, FeedsViewModel>(),
 
         }
 
-        mViewModel.onFeedsApiFail.observe(this) {
+        mViewModel.onFeedsApiFail.observe(viewLifecycleOwner) {
             if (it) {
                 mViewModel.noDataFoundVisibility.set(true)
                 mViewModel.noDataText.set(getString(R.string.something_went_wrong_error1))
@@ -108,7 +109,7 @@ class UserFeedsView : BaseActivity<ViewUserFeedsBinding, FeedsViewModel>(),
      * Method to navigate to the different activity
      */
     private fun intentToActivity(aClass: Class<*>, feedDetails: FeedDetails, type: String? = null) {
-        val intent = Intent(this@UserFeedsView, aClass)
+        val intent = Intent(context, aClass)
         intent.putExtra(FEED_RESPONSE, feedDetails)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
         intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponse())
@@ -132,7 +133,7 @@ class UserFeedsView : BaseActivity<ViewUserFeedsBinding, FeedsViewModel>(),
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         for (permission in permissions) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), permission)) {
                 //denied
 
                 if (mViewModel.isDenied.get() == false) {
@@ -141,14 +142,13 @@ class UserFeedsView : BaseActivity<ViewUserFeedsBinding, FeedsViewModel>(),
                 }
             } else {
                 if (ActivityCompat.checkSelfPermission(
-                        this,
+                        requireContext(),
                         permission
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     //allow
                     if (!isLocationPermissionAllowed.get()!!) {
-                        LocationListenerClass(
-                            this@UserFeedsView, this
+                        LocationListenerClass(requireActivity(), this
                         ).permissions()
                     }
                     isLocationPermissionAllowed.set(true)
@@ -171,7 +171,7 @@ class UserFeedsView : BaseActivity<ViewUserFeedsBinding, FeedsViewModel>(),
         super.onPause()
     }
 
-    override fun onTryAgainClicked() {
+  /*  override fun onTryAgainClicked() {
         shimmerLayout.startShimmerAnimation()
         mViewModel.isRecyclerviewVisible.set(false)
         mViewModel.callFetchFeedsApi(
@@ -179,4 +179,4 @@ class UserFeedsView : BaseActivity<ViewUserFeedsBinding, FeedsViewModel>(),
             longitude = mViewModel.longitude.get()
         )
     }
-}
+*/}
