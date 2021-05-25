@@ -40,6 +40,8 @@
     <string name="activate_account_btn_text">Activate Account</string>
     <string name="create_account_btn_text">Create Account</string>
     <string name="request_again_btn_text">Request again</string>
+    <string name="add_btn_text">Add</string>
+    <string name="retry_btn_text">Retry</string>
 
 
     <!--Login-->
@@ -315,6 +317,33 @@
  -->
 
     <string name="account_activation_success_aadhaar_title">Your account is Successfully created. You can now enjoy all the benefits of being a FYP user.</string>
+
+
+    <!--
+    Add money
+    -->
+    <string name="add_money_screen_title">Add Money</string>
+    <string name="add_money_to_account">Add money to your Account</string>
+    <string name="add_money_50">\u20B9 50</string>
+    <string name="add_money_100">\u20B9 100</string>
+    <string name="add_money_500">\u20B9 500</string>
+    <string name="add_money_1000">\u20B9 1000</string>
+    <string name="add_money_screen_text">You can add funds up to Rs.5,433 for the current month</string>
+    <string name="add_money_empty_error">Please enter amount</string>
+
+    <!--
+    add money transaction success
+    -->
+    <string name="add_money_trans_success_title">Money Added successfully</string>
+    <string name="updated_balance">Updated Account Balance: </string>
+
+    <!--
+    add money transaction fail
+    -->
+    <string name="add_money_trans_fail_title">Transaction Failed!</string>
+    <string name="add_money_trans_fail_text">Any amount deducted will be refunded within 3–5 days. How would you like to proceed?</string>
+    <string name="add_money_trans_fail_change">Change Method</string>
+    <string name="add_money_trans_fail_add">"Add "</string>
 
 
 

@@ -133,7 +133,7 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
                     relation = selectedRelation.get()!!
                 ),
                 this,
-                isProgressBar = true
+                isProgressBar = false
             )
         )
 

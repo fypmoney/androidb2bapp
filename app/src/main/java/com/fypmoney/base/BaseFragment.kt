@@ -20,13 +20,15 @@ import androidx.fragment.app.Fragment
 import com.fypmoney.R
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
+import kotlinx.android.synthetic.main.toolbar.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
 
 //create base fragment with AndroidViewModel
 
-abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment(),DialogUtils.OnAlertDialogNoInternetClickListener {
+abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment(),
+    DialogUtils.OnAlertDialogNoInternetClickListener {
 
     private var baseActivity: BaseActivity<*, *>? = null
         private set
@@ -113,7 +115,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         {
             when (it) {
                 true -> {
-                    DialogUtils.showInternetErrorDialog(requireActivity(),this)
+                    DialogUtils.showInternetErrorDialog(requireActivity(), this)
                     mViewModel!!.internetError.value = false
 
                 }
@@ -129,8 +131,9 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     fun setToolbarAndTitle(
         context: Context,
         toolbar: Toolbar,
-        isBackArrowVisible: Boolean? = false
-    ) {  val activity = activity as AppCompatActivity?
+        isBackArrowVisible: Boolean? = false, toolbarTitle: String? = null
+    ) {
+        val activity = activity as AppCompatActivity?
         activity!!.setSupportActionBar(toolbar)
         val upArrow = ContextCompat.getDrawable(
             context,
@@ -144,9 +147,14 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
             }
             it.setDisplayShowHomeEnabled(true)
             it.setDisplayShowTitleEnabled(false)
+            if (toolbarTitle != null) {
+                toolbar_title.text = toolbarTitle
+
+            }
         }
 
     }
+
     /*
    * Ask for device security pin, pattern or fingerprint
    * */
@@ -172,6 +180,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
         }
     }
+
     /*
         * Ask for device security pin, pattern or fingerprint greater than OS pie
         * */
@@ -188,7 +197,11 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
                 override fun onAuthenticationSucceeded(
                     result: BiometricPrompt.AuthenticationResult
                 ) {
-                    onActivityResult(AppConstants.DEVICE_SECURITY_REQUEST_CODE, AppCompatActivity.RESULT_OK, Intent())
+                    onActivityResult(
+                        AppConstants.DEVICE_SECURITY_REQUEST_CODE,
+                        AppCompatActivity.RESULT_OK,
+                        Intent()
+                    )
                     super.onAuthenticationSucceeded(result)
 
                 }
