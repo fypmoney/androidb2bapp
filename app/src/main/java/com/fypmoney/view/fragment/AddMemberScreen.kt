@@ -56,7 +56,7 @@ class AddMemberScreen : BaseFragment<ViewAddMemberBinding, AddMemberViewModel>()
         setToolbarAndTitle(
             context =requireContext(),
             toolbar = toolbar,
-            isBackArrowVisible = true
+            isBackArrowVisible = false
         )
 
         // set the is Guarantor value

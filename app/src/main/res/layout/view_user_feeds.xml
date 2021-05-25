@@ -19,7 +19,8 @@
 
         <include
             android:id="@+id/layout"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar"
+            android:visibility="gone"/>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_container"

@@ -49,7 +49,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar,
-            isBackArrowVisible = true
+            isBackArrowVisible = false
         )
         LocationListenerClass(
             requireActivity(), this

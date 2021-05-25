@@ -14,6 +14,7 @@ import com.fypmoney.databinding.ViewHomeBinding
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.AddMemberScreen
+import com.fypmoney.view.fragment.CardScreen
 import com.fypmoney.view.fragment.HomeScreen
 import com.fypmoney.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.view_home.*
@@ -53,7 +54,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 R.id.home -> setCurrentFragment(HomeScreen())
                 R.id.feeds -> setCurrentFragment(UserFeedsView())
                 R.id.store -> setCurrentFragment(HomeScreen())
-                R.id.card -> setCurrentFragment(HomeScreen())
+                R.id.card -> setCurrentFragment(CardScreen())
                 R.id.family -> setCurrentFragment(AddMemberScreen())
 
             }

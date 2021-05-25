@@ -42,6 +42,7 @@
     <string name="request_again_btn_text">Request again</string>
     <string name="add_btn_text">Add</string>
     <string name="retry_btn_text">Retry</string>
+    <string name="view_details_btn_text">View details</string>
 
 
     <!--Login-->
@@ -127,6 +128,7 @@
     <string name="store_bottom_nav_title">Store</string>
     <string name="fyper_bottom_nav_title">Fyper</string>
     <string name="dummy_amount">8,952</string>
+    <string name="dummy_name">FYP User</string>
     <string name="Rs">\u20B9</string>
     <string name="quick_actions">Quick Actions</string>
     <string name="quick_actions_split_bill">Split Bills</string>
@@ -317,8 +319,6 @@
  -->
 
     <string name="account_activation_success_aadhaar_title">Your account is Successfully created. You can now enjoy all the benefits of being a FYP user.</string>
-
-
     <!--
     Add money
     -->
@@ -344,6 +344,13 @@
     <string name="add_money_trans_fail_text">Any amount deducted will be refunded within 3–5 days. How would you like to proceed?</string>
     <string name="add_money_trans_fail_change">Change Method</string>
     <string name="add_money_trans_fail_add">"Add "</string>
+
+   <!--
+   Card screen
+   -->
+
+    <string name="balance_text1">"Balance - "</string>
+    <string name="card_transaction_limit1">Transaction Limit - 1 Lakh</string>
 
 
 

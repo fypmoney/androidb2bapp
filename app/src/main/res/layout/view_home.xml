@@ -15,11 +15,50 @@
     <RelativeLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relativeLayout"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginTop="18dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_scan" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivNotificationBell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="18dp"
+                android:layout_toStartOf="@+id/myProfile"
+                app:srcCompat="@drawable/notification_bell_icon" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/myProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/black"
+                app:srcCompat="@drawable/ic_profile" />
+
+        </RelativeLayout>
+
 
         <FrameLayout
             android:id="@+id/container"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_below="@+id/relativeLayout"
             android:layout_above="@+id/navigationView"
              app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
