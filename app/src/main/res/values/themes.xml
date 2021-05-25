@@ -152,11 +152,13 @@
     </style>
 
     <style name="EditTextStyle">
-        <item name="android:background">@drawable/edit_bg</item>
-        <item name="android:textColor">@android:color/white</item>
-        <item name="android:textColorHint">@android:color/darker_gray</item>
-        <item name="colorAccent">@color/colorRed</item>
-        <item name="colorControlNormal">@color/colorRed</item>
-        <item name="colorControlActivated">@color/colorRed</item>
+        <item name="android:textColor">@color/text_color_dark</item>
+        <item name="android:textColorHint">@color/text_color_light</item>
+        <item name="android:textSize">@dimen/textSize_18</item>
+        <item name="android:padding">@dimen/_8sdp</item>
+        <item name="android:layout_marginLeft">@dimen/_10sdp</item>
+        <item name="android:layout_marginRight">@dimen/_10sdp</item>
+        <item name="fontFamily">@font/product_sans_regular</item>
+
     </style>
 </resources>

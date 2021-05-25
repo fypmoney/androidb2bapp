@@ -124,22 +124,33 @@
 
                 <EditText
                     android:id="@+id/add_money_editext"
+                    style="@style/EditTextStyle"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/linear"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="72dp"
+                    android:background="@null"
                     android:drawableStart="@drawable/rupee_symbol"
-                    android:drawablePadding="@dimen/edittextHintPaddingEnd"
+                    android:drawablePadding="5dp"
                     android:inputType="number"
                     android:text="@={viewModel.amountSelected}"
                     android:textColor="@color/add_money_amount_color"
                     android:textSize="32dp" />
 
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="150dp"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/add_money_editext"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/dividerColor" />
+
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/add_money_text"
                     style="@style/TextviewRegular"
-                    android:layout_below="@+id/add_money_editext"
+                    android:layout_below="@+id/view1"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="35dp"
                     android:paddingStart="20dp"
