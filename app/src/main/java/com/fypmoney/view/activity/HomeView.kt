@@ -51,11 +51,31 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
         mViewBinding.navigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.home -> setCurrentFragment(HomeScreen())
-                R.id.feeds -> setCurrentFragment(UserFeedsView())
-                R.id.store -> setCurrentFragment(HomeScreen())
-                R.id.card -> setCurrentFragment(CardScreen())
-                R.id.family -> setCurrentFragment(AddMemberScreen())
+                R.id.home -> {
+                    mViewModel.isScanVisible.set(true)
+                    mViewModel.headerText.set("")
+                    setCurrentFragment(HomeScreen())
+                }
+                R.id.feeds -> {
+                    mViewModel.isScanVisible.set(false)
+                    mViewModel.headerText.set(getString(R.string.feeds_bottom_nav_title))
+                    setCurrentFragment(UserFeedsView())
+                }
+                R.id.store -> {
+                    mViewModel.isScanVisible.set(false)
+                    mViewModel.headerText.set(getString(R.string.store_bottom_nav_title))
+                    setCurrentFragment(HomeScreen())
+                }
+                R.id.card -> {
+                    mViewModel.isScanVisible.set(false)
+                    mViewModel.headerText.set(getString(R.string.card_details_title))
+                    setCurrentFragment(CardScreen())
+                }
+                R.id.family -> {
+                    mViewModel.isScanVisible.set(false)
+                    mViewModel.headerText.set(getString(R.string.fyper_bottom_nav_title))
+                    setCurrentFragment(AddMemberScreen())
+                }
 
             }
             true

@@ -351,6 +351,7 @@
 
     <string name="balance_text1">"Balance - "</string>
     <string name="card_transaction_limit1">Transaction Limit - 1 Lakh</string>
+    <string name="card_details_title">Card Details</string>
 
 
 

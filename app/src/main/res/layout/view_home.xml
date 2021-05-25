@@ -13,22 +13,34 @@
     </data>
 
     <RelativeLayout
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/relativeLayout"
             android:layout_marginStart="18dp"
-            android:layout_marginEnd="18dp"
             android:layout_marginTop="18dp"
-            >
+            android:layout_marginEnd="18dp">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:id="@+id/scan"
+                android:visibility="@{viewModel.isScanVisible?View.VISIBLE:View.GONE}"
                 app:srcCompat="@drawable/ic_scan" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCreateAccount"
+                style="@style/TextviewBold"
+                android:layout_marginTop="19dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/scan"
+                android:text="@{viewModel.headerText}"
+                android:textAlignment="center"
+                android:textSize="20dp" />
 
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -56,26 +68,25 @@
 
         <FrameLayout
             android:id="@+id/container"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:layout_below="@+id/relativeLayout"
+            android:layout_height="match_parent"
             android:layout_above="@+id/navigationView"
-             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_below="@+id/relativeLayout"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:background="?android:attr/windowBackground"
             android:id="@+id/navigationView"
-            android:theme="@style/Widget.BottomNavigationView"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="?android:attr/windowBackground"
+            android:theme="@style/Widget.BottomNavigationView"
             app:itemBackground="@color/white"
             app:itemIconSize="18dp"
             app:itemIconTint="@drawable/bottom_navigation_selector"
             app:itemTextColor="@drawable/bottom_navigation_selector"
             app:labelVisibilityMode="labeled"
-          android:layout_alignParentBottom="true"
-            app:menu="@menu/navigation"
-            />
+            app:menu="@menu/navigation" />
 
     </RelativeLayout>
 </layout>

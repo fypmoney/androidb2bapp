@@ -28,6 +28,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var onNotificationClicked = MutableLiveData<Boolean>()
     var balanceAmount = ObservableField(application.getString(R.string.balance_default_value))
     var otp = ObservableField<String>()
+    var headerText = ObservableField<String>()
+    var isScanVisible = ObservableField(true)
     var contactRepository = ContactRepository(mDB = appDatabase)
 
 

@@ -43,7 +43,7 @@ class AddMoneyScreen : BaseFragment<ViewAddMoneyBinding, AddMoneyViewModel>(),Ad
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = getString(R.string.add_money_screen_title)
+            isBackArrowVisible = false, toolbarTitle = getString(R.string.add_money_screen_title)
         )
 
 
