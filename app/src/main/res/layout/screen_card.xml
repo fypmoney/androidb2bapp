@@ -28,6 +28,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/ic_card"
+                android:visibility="@{viewModel.isCardDetailsVisible?View.GONE:View.VISIBLE,default=visible}"
                 android:padding="16dp">
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -70,11 +71,75 @@
                     android:background="@drawable/curved_background11"
                     android:text="@string/view_details_btn_text"
                     android:textAllCaps="false"
+                    android:onClick="@{()->viewModel.onViewDetailsClicked()}"
                     app:backgroundTint="@color/text_color_light" />
 
 
             </RelativeLayout>
 
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="199dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/ic_card_details"
+                android:visibility="@{viewModel.isCardDetailsVisible?View.VISIBLE:View.GONE,default=gone}"
+                android:padding="16dp">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/card_details"
+                    style="@style/TextviewRegular"
+                    android:layout_marginTop="80dp"
+                    android:text="@{viewModel.cardNumber}"
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/copy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="80dp"
+                    android:layout_alignParentEnd="true"
+                    app:srcCompat="@drawable/ic_icon_feather_copy" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/expiry"
+                    style="@style/TextviewRegular"
+                    android:text="@string/expiry_details_title"
+                    android:layout_alignParentBottom="true"
+                    android:textSize="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/ExpiryValue"
+                    style="@style/TextviewBold"
+                    android:text="@{viewModel.expiry}"
+                    android:textColor="@color/white"
+                    android:layout_toEndOf="@+id/expiry"
+                    android:layout_alignParentBottom="true"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cvv"
+                    style="@style/TextviewRegular"
+                    android:text="@string/cvv_details_title"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toStartOf="@+id/cvvValue"
+                    android:textSize="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cvvValue"
+                    style="@style/TextviewBold"
+                    android:text="@{viewModel.cvv}"
+                    android:textColor="@color/white"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:textSize="17dp" />
+
+
+            </RelativeLayout>
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/limit"
                     style="@style/TextviewRegular"

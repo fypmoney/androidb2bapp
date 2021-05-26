@@ -129,6 +129,10 @@
     <string name="fyper_bottom_nav_title">Fyper</string>
     <string name="dummy_amount">8,952</string>
     <string name="dummy_name">FYP User</string>
+    <string name="dummy_card">9872 7263 6538 7263</string>
+    <string name="dummy_cvv">826</string>
+    <string name="dummy_expiry">01/26</string>
+
     <string name="Rs">\u20B9</string>
     <string name="quick_actions">Quick Actions</string>
     <string name="quick_actions_split_bill">Split Bills</string>
@@ -352,6 +356,8 @@
     <string name="balance_text1">"Balance - "</string>
     <string name="card_transaction_limit1">Transaction Limit - 1 Lakh</string>
     <string name="card_details_title">Card Details</string>
+    <string name="expiry_details_title">"Expiry - "</string>
+    <string name="cvv_details_title">"CVV - "</string>
 
 
 

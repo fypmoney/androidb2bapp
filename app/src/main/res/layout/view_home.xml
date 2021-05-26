@@ -50,7 +50,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="18dp"
                 android:layout_toStartOf="@+id/myProfile"
-                app:srcCompat="@drawable/notification_bell_icon" />
+                app:srcCompat="@drawable/notification" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/myProfile"

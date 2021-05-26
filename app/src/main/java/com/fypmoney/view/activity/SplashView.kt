@@ -58,7 +58,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     * navigate to the login screen
     * */
     private fun goToLoginScreen() {
-        val intent = Intent(this, FirstScreenView::class.java)
+        val intent = Intent(this, HomeView::class.java)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "")
         startActivity(intent)
         finish()
@@ -109,7 +109,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                         Utility.getCustomerDataFromPreference()!!.isReferralAllowed == AppConstants.YES -> {
                             intentToActivity(ReferralCodeView::class.java)
                         }
-                        Utility.getCustomerDataFromPreference()!!.isProfileCompleted == AppConstants.YES -> {
+                        Utility.getCustomerDataFromPreference()!!.isProfileCompleted == AppConstants.NO -> {
                             intentToActivity(CreateAccountView::class.java)
                         }
                         else -> {
