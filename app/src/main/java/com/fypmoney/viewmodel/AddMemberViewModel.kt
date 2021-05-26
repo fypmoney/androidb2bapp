@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
+import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -19,15 +20,15 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.entity.ContactEntity
-import com.fypmoney.model.AddFamilyMemberRequest
-import com.fypmoney.model.AddFamilyMemberResponse
-import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.IsAppUserResponse
+import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.adapter.RelationAdapter
 import com.google.android.gms.common.util.SharedPreferencesUtils
 import java.lang.Exception
+import java.util.*
+import kotlin.collections.ArrayList
 
 /*
 * This class is used to handle add member functionality
@@ -43,12 +44,15 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
     var addMemberError = MutableLiveData<Boolean>()
     var mobile = MutableLiveData<String>()
     var relationList = mutableListOf<String>()
+    var iconList = mutableListOf<Int>()
+    var relationAdapter = RelationAdapter(this)
     var selectedCountryCode = ObservableField<String>()
     var selectedRelationPosition = ObservableField(0)
     var selectedRelation = ObservableField<String>()
     var parentName = ObservableField<String>()
     var contactResult = ObservableField(ContactEntity())
     var isGuarantor = ObservableField<String>()
+    var selectedRelationList = ObservableArrayList<RelationModel>()
 
     val clicksListener = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -65,16 +69,19 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
     }
 
     init {
-        relationList.add(application.resources.getString(R.string.relation_drop_down_hint))
-        relationList.add("PARENT")
-        relationList.add("CHILD")
-        relationList.add("SIBLING")
-        relationList.add("SPOUSE")
-        relationList.add("GRANDPARENT")
-        relationList.add("GRANDCHILD")
-        relationList.add("UNKNOWN")
-        relationList.add("OTHER")
-        selectedRelation.set(relationList[0])
+        val list = PockketApplication.instance.resources.getStringArray(R.array.relationNameList)
+        val iconList = PockketApplication.instance.resources.getIntArray(R.array.relationIconList)
+        val relationModelList = ArrayList<RelationModel>()
+
+        list.forEachIndexed { index, it ->
+            val relationModel = RelationModel()
+            relationModel.relationName = it
+            relationModel.relationImage = iconList[index]
+            relationModelList.add(relationModel)
+        }
+
+        relationAdapter.setList(relationModelList)
+
     }
 
     fun onFromContactClicked() {
@@ -92,28 +99,27 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
             TextUtils.isEmpty(mobile.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.phone_email_empty_error))
             }
-            selectedRelation.get()
-                .equals(PockketApplication.instance.resources.getString(R.string.relation_drop_down_hint)) -> {
+           selectedRelationList.isNullOrEmpty() -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.relation_empty_error))
 
             }
 
             else -> {
-                 when (mobile.value) {
-                      contactResult.get()!!.contactNumber -> {
-                          when (contactResult.get()!!.isAppUser!!) {
-                              true -> {
-                                  onIsAppUser.value = AppConstants.API_SUCCESS
-                              }
-                              else -> {
-                                  callIsAppUserApi()
-                              }
-                          }
-                      }
-                      else -> {
-                          callIsAppUserApi()
-                      }
-                  }
+                when (mobile.value) {
+                    contactResult.get()!!.contactNumber -> {
+                        when (contactResult.get()!!.isAppUser!!) {
+                            true -> {
+                                onIsAppUser.value = AppConstants.API_SUCCESS
+                            }
+                            else -> {
+                                callIsAppUserApi()
+                            }
+                        }
+                    }
+                    else -> {
+                        callIsAppUserApi()
+                    }
+                }
             }
 
 
@@ -134,7 +140,7 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
                 AddFamilyMemberRequest(
                     mobileNo = mobile.value!!.trim(),
                     name = parentName.get(),
-                    relation = selectedRelation.get()!!
+                    relation = selectedRelationList.get(0).relationName?.toUpperCase(Locale.getDefault())!!
                 ),
                 this,
                 isProgressBar = false

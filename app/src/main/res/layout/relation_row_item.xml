@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewHelper"
+            type="com.fypmoney.viewhelper.RelationViewHelper" />
+
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{()->viewHelper.onItemClicked()}"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivServiceLogo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@{viewHelper.isBackgroundHighlight?@drawable/curved_background16:@drawable/curved_background14}"
+            android:padding="8dp"
+            android:layout_centerHorizontal="true"
+            SET_IMAGE="@{viewHelper.position}"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/heading"
+            style="@style/TextviewRegular"
+            android:layout_below="@+id/ivServiceLogo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="@{viewHelper.relationModel.relationName}"
+            android:textAlignment="center"
+            android:textColor="@{viewHelper.isBackgroundHighlight?@color/text_color_dark:@color/text_color_light}"
+            />
+    </RelativeLayout>
+</layout>

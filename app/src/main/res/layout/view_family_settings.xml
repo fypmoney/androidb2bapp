@@ -80,6 +80,7 @@
 
 
             <RelativeLayout
+                android:id="@id/relativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/heading"
@@ -116,6 +117,7 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/_5sdp"
                         android:layout_marginEnd="@dimen/_5sdp"
+                        android:layout_marginTop="10dp"
                         android:textColor="@color/text_color_dark"
                         android:text="@string/add_member_heading"
                         android:textSize="@dimen/textSize_18"
@@ -137,6 +139,75 @@
             </RelativeLayout>
 
 
+<View
+    android:layout_width="match_parent"
+    android:layout_height="2dp"
+    android:id="@+id/view1"
+    android:layout_below="@id/relativeLayout"
+    android:background="@color/grey"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewRegular"
+            android:id="@id/heading1"
+            android:layout_marginTop="38dp"
+            android:layout_below="@id/view1"
+            android:text="@string/family_fyper_pending_approval"
+            android:textColor="@color/text_color_dark"
+            android:textSize="17dp"
+            />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_centerVertical="true"
+                android:layout_below="@id/heading1"
+                app:adapter="@{viewModel.memberAdapter}"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+
+                />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_background1"
+            android:padding="15dp"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/recycler_view1">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                app:srcCompat="@drawable/ic_tak_graphic" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/image2"
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextviewBold"
+                android:id="@+id/ongoing_chores"
+                android:text="@string/ongoing_chores_txt"
+                android:textSize="20dp"
+                />
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextviewRegular"
+                android:id="@+id/ongoing_chores1"
+                android:text="@string/ongoing_chores_txt1"
+                android:layout_below="@id/ongoing_chores"
+                android:layout_toRightOf="@+id/image2"
+                android:layout_marginTop="10dp"
+                />
+            </LinearLayout>
+
+        </RelativeLayout>
 
 
 

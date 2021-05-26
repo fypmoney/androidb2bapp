@@ -153,7 +153,9 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
 
-                <androidx.appcompat.widget.AppCompatSpinner
+
+
+           <!--     <androidx.appcompat.widget.AppCompatSpinner
                     android:id="@+id/spNameTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -165,21 +167,33 @@
                     android:padding="@dimen/_10sdp"
                     app:selection="@{viewModel.selectedRelationPosition}"
                     tools:setOnItemSelectedListener="@{viewModel.clicksListener}" />
+-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvSelectRelation"
+                    android:layout_marginTop="@dimen/edittextMarginTop"
+                    app:adapter="@{viewModel.relationAdapter}"
+                    android:layout_above="@+id/btnContinue"
+                    app:spanCount="5"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSendOtp"
+                    android:id="@+id/btnContinue"
                     style="@style/Widget.App.Button"
                     android:layout_width="299dp"
                     android:layout_height="52dp"
-                    android:layout_below="@+id/spNameTitle"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="@dimen/button_margin"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/curved_background1"
                     android:onClick="@{()->viewModel.onAddMemberClicked()}"
+                    android:layout_alignParentBottom="true"
                     android:text="@string/add_member_btn_text"
                     android:textAllCaps="false"
+                    android:layout_centerHorizontal="true"
                     app:backgroundTint="@color/text_color_dark" />
+
 
 
             </RelativeLayout>

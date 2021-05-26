@@ -177,6 +177,9 @@
     <string name="family_alerts_text">Family alerts</string>
     <string name="welcome_txt">Welcome</string>
     <string name="family_fyper_txt">Family Fypers</string>
+    <string name="family_fyper_pending_approval">Pending Approval</string>
+    <string name="ongoing_chores_txt">Ongoing Chores</string>
+    <string name="ongoing_chores_txt1">Perform task and exciting cash rewards</string>
 
     <!-- Members
     -->
@@ -366,7 +369,24 @@
     <string name="cvv_details_title">"CVV - "</string>
 
 
+    <string-array name="relationNameList">
+        <item>Parent</item>
+        <item>Sibling</item>
+        <item>Spouse</item>
+        <item>Kids</item>
+        <item>Grand parents</item>
+        <item>Grand Child</item>
+        <item>Other</item>
+    </string-array>
 
-
+    <integer-array name="relationIconList">
+        <item>@drawable/ic_parent</item>
+        <item>@drawable/ic_siblings</item>
+        <item>@drawable/ic_spouse</item>
+        <item>@drawable/ic_kid</item>
+        <item>@drawable/ic_grand_parents</item>
+        <item>@drawable/ic_grand_child</item>
+        <item>@drawable/ic_other</item>
+    </integer-array>
 
 </resources>

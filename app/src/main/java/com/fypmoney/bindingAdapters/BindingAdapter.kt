@@ -67,6 +67,7 @@ class BindingAdapter {
 
             }
         }
+
         @BindingAdapter("STATUS_FOR_TEXT_COLOR")
         @JvmStatic
         fun setTextColor(view: AppCompatTextView, status: String) {
@@ -85,13 +86,52 @@ class BindingAdapter {
         fun setCardBackground(view: MaterialCardView, color: String?) {
             try {
                 view.setCardBackgroundColor(Color.parseColor(color))
-            }
-            catch (e:Exception)
-            {
+            } catch (e: Exception) {
                 e.printStackTrace()
             }
         }
+
+        /**
+         *  Method to Bind image in with the image view
+         */
+
+        @BindingAdapter("SET_IMAGE")
+        @JvmStatic
+        fun setImageInRelation(imageView: AppCompatImageView, position: Int) {
+            if(position==0)
+            {
+                imageView.setImageResource(R.drawable.ic_parent)
+            }
+            else if(position==1)
+            {
+                imageView.setImageResource(R.drawable.ic_siblings)
+            }
+            else if(position==2)
+            {
+                imageView.setImageResource(R.drawable.ic_spouse)
+            }
+            else if(position==3)
+            {
+                imageView.setImageResource(R.drawable.ic_kid)
+            }
+            else if(position==4)
+            {
+                imageView.setImageResource(R.drawable.ic_grand_parents)
+            }
+            else if(position==5)
+            {
+                imageView.setImageResource(R.drawable.ic_grand_child)
+            }
+            else
+            {
+                imageView.setImageResource(R.drawable.ic_other)
+
+            }
+           // imageView.setImageResource(imageUrl)
+
     }
+
+}
 
 
 }
