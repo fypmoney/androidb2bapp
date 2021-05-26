@@ -1,9 +1,7 @@
 package com.fypmoney.view.activity
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -50,26 +48,13 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
         setToolbarAndTitle(
             context = this@AddMemberView,
             toolbar = toolbar,
-            isBackArrowVisible = true
+            isBackArrowVisible = true,
+            toolbarTitle = getString(R.string.add_member_heading)
         )
-
-        // set the is Guarantor value
-        when (intent.getStringExtra(AppConstants.CREATE_ACCOUNT_SUCCESS)) {
-            AppConstants.CREATE_ACCOUNT_SUCCESS -> {
-                mViewModel.isGuarantor.set(AppConstants.YES)
-            }
-            else -> {
-                mViewModel.isGuarantor.set(AppConstants.NO)
-
-            }
-        }
-
-        // register broadcast receiver to handle user active loyalty points
-        val lbm = LocalBroadcastManager.getInstance(this)
-        lbm.registerReceiver(receiver, IntentFilter(AppConstants.CONTACT_BROADCAST_NAME))
         setObserver()
         setCountryCodeAdapter(applicationContext, mViewBinding.spCountryCode)
         spCountryCode.isEnabled=false
+       mViewModel.setResponseAfterContactSelected(intent.getParcelableExtra<ContactEntity>(AppConstants.CONTACT_SELECTED_RESPONSE))
 
     }
 
@@ -90,7 +75,6 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
                     id: Long
                 ) {
 
-                    setMobileLength(position)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -99,7 +83,6 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
             }
         }
 
-        setMobileLength(spCountryCode.selectedItemPosition)
     }
 
     /*
@@ -156,7 +139,6 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
         {
             when (it) {
                 AppConstants.API_SUCCESS -> {
-                    //   callBroadCast()
                     intentToActivity(StayTunedView::class.java)
 
                 }
@@ -174,24 +156,6 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
      */
     private fun intentToActivity(aClass: Class<*>) {
         startActivity(Intent(this@AddMemberView, aClass))
-    }
-
-    private var receiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            mViewModel.contactResult.set(intent.getParcelableExtra(AppConstants.CONTACT_BROADCAST_KEY))
-            if (mViewModel.contactResult.get()!!.lastName.isNullOrEmpty()) {
-                mViewModel.name.set(mViewModel.contactResult.get()!!.firstName)
-            } else {
-                mViewModel.name.set(mViewModel.contactResult.get()!!.firstName + " " + mViewModel.contactResult.get()!!.lastName)
-            }
-            mViewModel.mobile.value =
-                intent.getParcelableExtra<ContactEntity>(AppConstants.CONTACT_BROADCAST_KEY)?.contactNumber
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
     }
 
     /*

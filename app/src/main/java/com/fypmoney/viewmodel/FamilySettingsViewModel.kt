@@ -11,6 +11,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.MemberRepository
+import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.GetMemberResponse
 import com.fypmoney.view.adapter.MemberAdapter
 

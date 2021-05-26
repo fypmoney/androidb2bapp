@@ -24,7 +24,7 @@ object AppConstants {
     const val REGISTRATION_MODE_GOOGLE = "GOOGLE"
     const val RESEND_OTP_DURATION = 30000L
     const val RC_SIGN_IN = 9001
-    const val DIALOG_MSG_AUTH = "Unlock DreamFolks"
+    const val DIALOG_MSG_AUTH = "Unlock FYP Money"
     const val DIALOG_TITLE_AUTH = "Enter phone screen lock pattern, PIN, password or fingerprint"
     const val DEVICE_SECURITY_REQUEST_CODE = 1000
     const val READ_CONTACTS_PERMISSION_CODE = 100
@@ -66,4 +66,5 @@ object AppConstants {
     const val CREATE_ACCOUNT_SUCCESS = "create_account_success"
     const val LOGIN_SCREEN = "login_screen"
     const val AADHAAR_VERIFICATION = "aadhaar_verification"
+    const val CONTACT_SELECTED_RESPONSE = "contact_selected"
 }

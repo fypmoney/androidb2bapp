@@ -74,7 +74,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 R.id.family -> {
                     mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(getString(R.string.fyper_bottom_nav_title))
-                    setCurrentFragment(AddMemberScreen())
+                    setCurrentFragment(FamilySettingsView())
                 }
 
             }

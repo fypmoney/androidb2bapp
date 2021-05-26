@@ -1,8 +1,11 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -15,6 +18,7 @@ import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.ContactRequest
 import com.fypmoney.model.ContactRequestDetails
 import com.fypmoney.model.ContactResponse
+import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.ContactAdapter
 import java.lang.Exception
 
@@ -25,11 +29,11 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
     var contactAdapter = ContactAdapter(this)
     var isClickable = ObservableField(false)
     var contactRepository = ContactRepository(mDB = appDatabase)
-    var selectedContactList = ArrayList<ContactEntity>()
-    var onContinueClicked = MutableLiveData<Boolean>()
+    var onItemClicked = MutableLiveData<ContactEntity>()
     var onIsAppUserClicked = MutableLiveData<Boolean>()
     var emptyContactListError = MutableLiveData<Boolean>()
-    var selectedPosition = ObservableField(-1)
+    var selectedContactList = ObservableArrayList<ContactEntity>()
+    var onSelectClicked = MutableLiveData<Boolean>()
 
     /*
 * This method is used to get all the contacts
@@ -42,7 +46,7 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
                     contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>
                 if (!sortedList.isNullOrEmpty()) {
                     contactAdapter.setList(sortedList)
-                    contactAdapter.newContactList?.addAll(sortedList as MutableList<ContactEntity>)
+                    contactAdapter.newContactList?.addAll(sortedList)
                 } else {
                     emptyContactListError.value = true
                 }
@@ -56,16 +60,27 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
 
     }
 
+    /*
+    * This will handle the click of select
+    * */
+    fun onSelectClicked() {
+            when {
+                selectedContactList.isNullOrEmpty() -> {
+                    Utility.showToast(PockketApplication.instance.getString(R.string.contact_error))
+                }
+                else -> {
+                    onSelectClicked.value = true
+                }
+
+        }
+
+    }
+
     fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         val list = contactAdapter.newContactList?.filter {
             it.firstName!!.contains(s, ignoreCase = true) || it.contactNumber?.contains(s)!!
         }
         contactAdapter.setList(list!!)
-    }
-
-    fun onContinueClicked() {
-        onContinueClicked.value = true
-
     }
 
 

@@ -28,40 +28,41 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout"
             android:layout_margin="@dimen/margin"
-            android:background="@color/fragmentBackgroundColor"
+            android:background="@drawable/curved_background15"
             android:drawableStart="@android:drawable/ic_menu_search"
             android:hint="@string/search"
+            android:paddingStart="10dp"
+            android:paddingEnd="5dp"
+            android:textSize="14dp"
+            android:fontFamily="@font/product_sans_regular"
+            android:textColorHint="@color/text_color_dark"
             android:onTextChanged="@{viewModel.onTextChanged}"
-            android:textColor="@color/black" />
+            android:textColor="@color/text_color_dark" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/continueBtn"
             android:layout_below="@+id/search"
-            android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
             app:adapter="@{viewModel.contactAdapter}"
+            android:layout_above="@+id/btnContinue"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
-
-
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/continueBtn"
+            android:id="@+id/btnContinue"
             style="@style/Widget.App.Button"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/main_button_height"
+            android:layout_width="299dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/curved_background1"
+            android:onClick="@{()->viewModel.onSelectClicked()}"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
-            android:onClick="@{()->viewModel.onContinueClicked()}"
-            android:text="@string/continue_btn_text"
+            android:text="@string/select_btn_text"
             android:textAllCaps="false"
-            app:backgroundTint="@color/black" />
+            android:layout_centerHorizontal="true"
+            app:backgroundTint="@color/text_color_dark" />
 
     </RelativeLayout>
 </layout>

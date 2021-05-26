@@ -321,7 +321,7 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     fun setToolbarAndTitle(
         context: Context,
         toolbar: Toolbar,
-        isBackArrowVisible: Boolean? = false
+        isBackArrowVisible: Boolean? = false,toolbarTitle:String?=null
     ) {
         setSupportActionBar(toolbar)
         val upArrow = ContextCompat.getDrawable(
@@ -336,6 +336,10 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
             }
             it.setDisplayShowHomeEnabled(true)
             it.setDisplayShowTitleEnabled(false)
+            if (toolbarTitle != null) {
+                toolbar_title.text = toolbarTitle
+
+            }
         }
 
     }

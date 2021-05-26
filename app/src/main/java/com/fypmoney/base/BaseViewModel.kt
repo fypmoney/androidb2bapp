@@ -45,6 +45,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         }
     }
 
+
     override fun offLine() {
         internetError.value = true
     }

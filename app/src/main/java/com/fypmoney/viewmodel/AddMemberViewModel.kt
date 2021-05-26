@@ -2,6 +2,7 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import androidx.databinding.ObservableField
@@ -26,6 +27,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.google.android.gms.common.util.SharedPreferencesUtils
+import java.lang.Exception
 
 /*
 * This class is used to handle add member functionality
@@ -44,7 +46,6 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
     var selectedCountryCode = ObservableField<String>()
     var selectedRelationPosition = ObservableField(0)
     var selectedRelation = ObservableField<String>()
-    var name = ObservableField<String>()
     var parentName = ObservableField<String>()
     var contactResult = ObservableField(ContactEntity())
     var isGuarantor = ObservableField<String>()
@@ -55,12 +56,15 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
             selectedRelation.set(parent?.getItemAtPosition(position) as String)
-            SharedPrefUtils.putString(getApplication(),SharedPrefUtils.SF_KEY_SELECTED_RELATION,selectedRelation.get())
+            SharedPrefUtils.putString(
+                getApplication(),
+                SharedPrefUtils.SF_KEY_SELECTED_RELATION,
+                selectedRelation.get()
+            )
         }
     }
 
     init {
-        name.set(SharedPrefUtils.getString(getApplication(),SharedPrefUtils.SF_KEY_USER_FIRST_NAME))
         relationList.add(application.resources.getString(R.string.relation_drop_down_hint))
         relationList.add("PARENT")
         relationList.add("CHILD")
@@ -88,28 +92,28 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
             TextUtils.isEmpty(mobile.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.phone_email_empty_error))
             }
-            selectedRelation.get().equals(PockketApplication.instance.resources.getString(R.string.relation_drop_down_hint))->{
+            selectedRelation.get()
+                .equals(PockketApplication.instance.resources.getString(R.string.relation_drop_down_hint)) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.relation_empty_error))
 
             }
 
             else -> {
-                callIsAppUserApi()
-              /*  when (mobile.value) {
-                    contactResult.get()!!.contactNumber -> {
-                        when (contactResult.get()!!.isAppUser!!) {
-                            true -> {
-                                onIsAppUser.value = AppConstants.API_SUCCESS
-                            }
-                            else -> {
-                                callIsAppUserApi()
-                            }
-                        }
-                    }
-                    else -> {
-                        callIsAppUserApi()
-                    }
-                }*/
+                 when (mobile.value) {
+                      contactResult.get()!!.contactNumber -> {
+                          when (contactResult.get()!!.isAppUser!!) {
+                              true -> {
+                                  onIsAppUser.value = AppConstants.API_SUCCESS
+                              }
+                              else -> {
+                                  callIsAppUserApi()
+                              }
+                          }
+                      }
+                      else -> {
+                          callIsAppUserApi()
+                      }
+                  }
             }
 
 
@@ -198,9 +202,32 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
             API_ADD_FAMILY_MEMBER -> {
                 progressDialog.value = false
                 mobile.value = ""
+                parentName.set("")
                 onAddMember.value = AppConstants.API_FAIL
             }
         }
+
+    }
+
+    /*
+    * This is used to set selected response
+    * */
+    fun setResponseAfterContactSelected(contactEntity: ContactEntity?) {
+        try {
+            if (contactEntity?.contactNumber != null) {
+                contactResult.set(contactEntity)
+                if (contactResult.get()!!.lastName.isNullOrEmpty()) {
+                    parentName.set(contactResult.get()?.firstName)
+                } else {
+                    parentName.set(contactResult.get()?.firstName + " " + contactResult.get()?.lastName)
+                }
+                mobile.value = contactResult.get()?.contactNumber
+
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
 
     }
 

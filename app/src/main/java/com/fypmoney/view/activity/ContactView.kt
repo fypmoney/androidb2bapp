@@ -3,7 +3,10 @@ package com.fypmoney.view.activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.fypmoney.BR
@@ -15,6 +18,8 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.fragment.AddMemberScreen
+import com.fypmoney.view.fragment.AddMoneyScreen
 import com.fypmoney.viewmodel.ContactViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_user_feeds.*
@@ -45,7 +50,7 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
         setToolbarAndTitle(
             context = this@ContactView,
             toolbar = toolbar,
-            isBackArrowVisible = true
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.select_member)
         )
         setObserver()
         checkAndAskPermission()
@@ -56,17 +61,11 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onContinueClicked.observe(this) {
-            if (it) {
-                try {
-                    if (!mViewModel.selectedContactList.isNullOrEmpty())
-                        callBroadCast(mViewModel.selectedContactList[0])
-                } catch (e: Exception) {
-                    callBroadCast(ContactEntity())
-
-                }
-
-            }
+        mViewModel.onSelectClicked.observe(this) {
+            intentToActivity(
+                contactEntity = mViewModel.selectedContactList[0]!!,
+                aClass = AddMemberView::class.java
+            )
         }
 
         mViewModel.onIsAppUserClicked.observe(this) {
@@ -90,6 +89,15 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
             }
         }
 
+    }
+
+    /**
+     * Method to navigate to the different activity
+     */
+    private fun intentToActivity(contactEntity: ContactEntity, aClass: Class<*>) {
+        val intent = Intent(this@ContactView, aClass)
+        intent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, contactEntity)
+        startActivity(intent)
     }
 
     override fun onRequestPermissionsResult(
@@ -139,14 +147,6 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
         }
     }
 
-    /**
-     * Method to navigate to the different activity
-     */
-    private fun intentToActivity(aClass: Class<*>) {
-        val intent = Intent(this@ContactView, aClass)
-        intent.putExtra("selected", mViewModel.selectedContactList)
-        startActivity(intent)
-    }
 
     /*
     * This method is used to call the Broadcast receiver
@@ -168,5 +168,6 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
     override fun onTryAgainClicked() {
         mViewModel.callContactSyncApi()
     }
+
 
 }

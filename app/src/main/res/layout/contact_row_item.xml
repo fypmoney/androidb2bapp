@@ -18,77 +18,74 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_5sdp">
+        android:onClick="@{()->viewHelper.onItemClicked()}"
+        android:background="@{viewHelper.isBackgroundHighlight?@color/grey:@color/white}"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivServiceLogo"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_centerVertical="true"
-            app:srcCompat="@drawable/ic_profile" />
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/curved_background14"
+            android:padding="12dp"
+            app:srcCompat="@drawable/ic_user" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/heading"
-            style="@style/AppTheme.Widget.TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextviewRegular"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_toStartOf="@+id/invite"
             android:layout_toEndOf="@+id/ivServiceLogo"
-            android:ellipsize="end"
             android:gravity="start"
             android:text="@{viewHelper.contactEntity.firstName}"
-            android:textSize="@dimen/edit_text_size"
-            app:fontFamily="@font/poppins_medium" />
+            android:textColor="@color/text_color_dark"
+            android:textSize="@dimen/textSize_18" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/number_relation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextviewRegular"
             android:layout_below="@+id/heading"
             android:layout_marginStart="@dimen/margin"
             android:layout_toEndOf="@+id/ivServiceLogo"
             android:ellipsize="end"
-            android:text="@{viewHelper.contactEntity.contactNumber}"
-            android:textColor="@color/text_color_little_dark"
-            android:textSize="@dimen/edit_text_size"
-            app:fontFamily="@font/poppins_regular" />
+            android:text="@{viewHelper.contactEntity.contactNumber}" />
 
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/flagIdentifier"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_marginStart="@dimen/margin"
-            android:visibility="@{viewHelper.isRadioVisible?View.VISIBLE:View.GONE,default=gone}"
-            android:layout_toEndOf="@+id/number_relation"
-            android:src="@drawable/logo_white"
-          />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/ivServiceLogo"
+            app:srcCompat="@drawable/ic_fyper_cap"
+            android:layout_marginBottom="20dp"
+            android:layout_marginStart="40dp"
+            android:visibility="@{viewHelper.isAppUser?View.VISIBLE:View.GONE,default=gone}" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/selectedIcon"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/fyper"
+            style="@style/TextviewRegular"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/margin"
-            android:background="@{viewHelper.isContactSelected ? @drawable/radio_selected : @drawable/radio_unselected}"
-            android:onClick="@{()->viewHelper.onItemClicked()}"
-            android:visibility="@{viewHelper.isRadioVisible?View.VISIBLE:View.GONE,default=gone}" />
+            android:text="@string/fyper_txt"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/text_color_dark"
+            android:visibility="@{viewHelper.isAppUser?View.VISIBLE:View.GONE,default=gone}" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/invite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/TextviewRegular"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/margin"
             android:onClick="@{()->viewHelper.onIsAppUserClicked()}"
             android:text="@string/invite_link"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/edit_text_size"
-            android:visibility="@{viewHelper.isRadioVisible?View.GONE:View.VISIBLE,default=visible}" />
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/color_skyblue"
+            android:visibility="@{viewHelper.isAppUser?View.GONE:View.VISIBLE,default=visible}" />
 
     </RelativeLayout>
 

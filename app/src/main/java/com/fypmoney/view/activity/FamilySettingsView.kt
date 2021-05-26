@@ -5,12 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ViewFamilySettingsBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.FamilySettingsViewModel
@@ -21,7 +23,7 @@ import kotlinx.android.synthetic.main.view_family_settings.*
 /*
 * This class is used as Home Screen
 * */
-class FamilySettingsView : BaseActivity<ViewFamilySettingsBinding, FamilySettingsViewModel>() {
+class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySettingsViewModel>() {
     private lateinit var mViewModel: FamilySettingsViewModel
     private lateinit var mViewBinding: ViewFamilySettingsBinding
 
@@ -38,21 +40,16 @@ class FamilySettingsView : BaseActivity<ViewFamilySettingsBinding, FamilySetting
         return mViewModel
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
-        setToolbarAndTitle(
-            context = this@FamilySettingsView,
-            toolbar = toolbar,
-            isBackArrowVisible = true
-        )
         recycler_view.layoutManager = LinearLayoutManager(
-            this,
+            requireContext(),
             LinearLayoutManager.HORIZONTAL,
             true
         )
         mViewModel.callGetMemberApi()
-        val lbm = LocalBroadcastManager.getInstance(this)
+        val lbm = LocalBroadcastManager.getInstance(requireContext())
         lbm.registerReceiver(receiver, IntentFilter(AppConstants.AFTER_ADD_MEMBER_BROADCAST_NAME))
 
         setObserver()
@@ -68,16 +65,16 @@ class FamilySettingsView : BaseActivity<ViewFamilySettingsBinding, FamilySetting
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onViewAllClicked.observe(this) {
+        mViewModel.onViewAllClicked.observe(viewLifecycleOwner) {
             if (it) {
                 intentToActivity(MemberView::class.java)
                 mViewModel.onViewAllClicked.value = false
             }
         }
 
-        mViewModel.onAddMemberClicked.observe(this) {
+        mViewModel.onAddMemberClicked.observe(viewLifecycleOwner) {
             if (it) {
-                intentToAddMemberActivity(AddMemberView::class.java)
+                intentToAddMemberActivity(ContactView::class.java)
                 mViewModel.onAddMemberClicked.value = false
             }
         }
@@ -88,22 +85,25 @@ class FamilySettingsView : BaseActivity<ViewFamilySettingsBinding, FamilySetting
      * Method to navigate to the different activity
      */
     private fun intentToActivity(aClass: Class<*>) {
-        startActivity(Intent(this@FamilySettingsView, aClass))
+        val intent = Intent(requireActivity(), aClass)
+        requireContext().startActivity(intent)
     }
 
     /**
      * Method to navigate to the different activity
      */
     private fun intentToAddMemberActivity(aClass: Class<*>) {
-        val intent = Intent(this@FamilySettingsView, aClass)
+        val intent = Intent(requireActivity(), aClass)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "")
-        startActivity(intent)
+        requireContext().startActivity(intent)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver)
+        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver)
     }
 
+    override fun onTryAgainClicked() {
 
+    }
 }

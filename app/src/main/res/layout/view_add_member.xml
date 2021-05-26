@@ -20,7 +20,7 @@
         android:layout_height="match_parent">
 
         <include layout="@layout/toolbar"
-            android:visibility="gone"/>
+          />
 
         <ScrollView
             android:id="@+id/scroll_view"
@@ -37,33 +37,11 @@
                android:layout_marginStart="@dimen/screenMarginLeft"
                 android:layout_marginEnd="@dimen/screenMarginRight">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/community_title"
-                    style="@style/TextviewBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/add_member_title"
-                    android:textAlignment="center" />
-
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvSubTitle"
-                    style="@style/TextviewRegular"
-                    android:layout_below="@+id/community_title"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="19dp"
-                    android:paddingStart="30dp"
-                    android:paddingEnd="30dp"
-                    android:text="@string/add_member_sub_title"
-                    android:textAlignment="center" />
-
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivServiceLogo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvSubTitle"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="27dp"
                     app:srcCompat="@drawable/ic_add_family_member" />
@@ -146,16 +124,6 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/layoutPhoneNumber"
-                    android:layout_marginTop="@dimen/margin"
-                    android:fontFamily="@font/poppins_regular"
-                    android:padding="@dimen/_5sdp"
-                    android:text="@{viewModel.name}"
-                    android:textSize="@dimen/sub_title_size" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvAddContact"

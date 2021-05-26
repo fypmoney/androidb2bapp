@@ -29,7 +29,7 @@
     <string name="remove_btn_text">Remove</string>
     <string name="cancel_btn_text">Cancel</string>
     <string name="leave_btn_text">Leave</string>
-    <string name="add_member_btn_text">Add member</string>
+    <string name="add_member_btn_text">Add a Family Member</string>
     <string name="grant_permission_btn_text">Grant Permission</string>
     <string name="accept_btn_text">Accept</string>
     <string name="decline_btn_text">Decline</string>
@@ -43,6 +43,7 @@
     <string name="add_btn_text">Add</string>
     <string name="retry_btn_text">Retry</string>
     <string name="view_details_btn_text">View details</string>
+    <string name="select_btn_text">Select</string>
 
 
     <!--Login-->
@@ -79,9 +80,12 @@
     <string name="contact_screen_title">Contacts</string>
     <string name="no_data_found">No Data Found</string>
     <string name="permission_required">Permission are required to access contacts</string>
-    <string name="invite_link"><u>Invite</u></string>
+    <string name="invite_link">Invite</string>
     <string name="pocket_user">Pocket User</string>
+    <string name="fyper_txt">Fyper</string>
+    <string name="contact_error">Please choose any contact to add as a member</string>
     <string name="empty_contact_error">Unable to fetch contacts. Add member by entering the contact number</string>
+    <string name="select_member">Select a member</string>
 
     <!--
     Sign in
@@ -167,10 +171,12 @@
     <string name="family_settings_screen_title">Family Settings</string>
     <string name="view_all">View All</string>
     <string name="members_heading">Members</string>
-    <string name="add_member_heading">Add member</string>
+    <string name="add_member_heading">Add a member</string>
     <string name="manage_heading">Manage</string>
     <string name="notification_text">Notifications</string>
     <string name="family_alerts_text">Family alerts</string>
+    <string name="welcome_txt">Welcome</string>
+    <string name="family_fyper_txt">Family Fypers</string>
 
     <!-- Members
     -->
@@ -192,7 +198,7 @@
     <!--Add member
     -->
     <string name="from_contact"><u>From Contact</u></string>
-    <string name="search">Search</string>
+    <string name="search">Search from your contacts</string>
     <string name="select_relation">Relation*</string>
     <string name="invite_user_dialog_title">is not the App User. Please send invite.</string>
     <string name="invite_text">Invite</string>
@@ -358,6 +364,8 @@
     <string name="card_details_title">Card Details</string>
     <string name="expiry_details_title">"Expiry - "</string>
     <string name="cvv_details_title">"CVV - "</string>
+
+
 
 
 

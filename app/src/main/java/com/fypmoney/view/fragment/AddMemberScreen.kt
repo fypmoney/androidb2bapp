@@ -70,10 +70,7 @@ class AddMemberScreen : BaseFragment<ViewAddMemberBinding, AddMemberViewModel>()
             }
         }*/
 
-        // register broadcast receiver to handle user active loyalty points
-        val lbm = LocalBroadcastManager.getInstance(requireContext())
-        lbm.registerReceiver(receiver, IntentFilter(AppConstants.CONTACT_BROADCAST_NAME))
-        setObserver()
+          setObserver()
         setCountryCodeAdapter(requireContext(), mViewBinding.spCountryCode)
         spCountryCode.isEnabled=false
 
@@ -182,35 +179,12 @@ class AddMemberScreen : BaseFragment<ViewAddMemberBinding, AddMemberViewModel>()
         startActivity(Intent(requireContext(), aClass))
     }
 
-    private var receiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            mViewModel.contactResult.set(intent.getParcelableExtra(AppConstants.CONTACT_BROADCAST_KEY))
-            if (mViewModel.contactResult.get()!!.lastName.isNullOrEmpty()) {
-                mViewModel.name.set(mViewModel.contactResult.get()!!.firstName)
-            } else {
-                mViewModel.name.set(mViewModel.contactResult.get()!!.firstName + " " + mViewModel.contactResult.get()!!.lastName)
-            }
-            mViewModel.mobile.value =
-                intent.getParcelableExtra<ContactEntity>(AppConstants.CONTACT_BROADCAST_KEY)?.contactNumber
-        }
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver)
-    }
 
     override fun onTryAgainClicked() {
     }
 
-    /*
-    * This method is used to call the Broadcast receiver
-    * */
-    private fun callBroadCast() {
-        LocalBroadcastManager.getInstance(requireContext())
-            .sendBroadcast(Intent(AppConstants.AFTER_ADD_MEMBER_BROADCAST_NAME))
-        requireActivity().finish()
-    }
+
 
     override fun onPositiveButtonClick(uniqueIdentifier: String) {
       //  inviteUser()

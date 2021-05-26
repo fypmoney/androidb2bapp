@@ -3,7 +3,10 @@ package com.fypmoney.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewHolder
+import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.database.entity.MemberEntity
 import com.fypmoney.databinding.MemberRowItemBinding
 import com.fypmoney.viewhelper.MemberViewHelper
@@ -38,7 +41,7 @@ class MemberAdapter :
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         private lateinit var mViewHelper: MemberViewHelper
         override fun onBind(position: Int) {
-            mViewHelper = MemberViewHelper(
+            mViewHelper = MemberViewHelper(position,
                 memberList?.get(position)
             )
             mRowItemBinding!!.viewHelper = mViewHelper
@@ -53,6 +56,10 @@ class MemberAdapter :
      */
     fun setList(memberList1: List<MemberEntity>?) {
         memberList!!.clear()
+      /*  val memberEntity = MemberEntity()
+        memberEntity.name = PockketApplication.instance.getString(R.string.add_member_heading)
+        memberList?.add(memberEntity)*/
+
         memberList1!!.forEach {
             memberList!!.add(it)
         }

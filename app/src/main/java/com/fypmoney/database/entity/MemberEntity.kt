@@ -9,17 +9,17 @@ data class MemberEntity(
     @PrimaryKey(autoGenerate = true)
     var id: Long? = null,
     @ColumnInfo(name = "name")
-    var name: String?,
+    var name: String?=null,
     @ColumnInfo(name = "mobileNo")
-    var mobileNo: String?,
+    var mobileNo: String?=null,
     @ColumnInfo(name = "relation")
-    var relation: String?,
+    var relation: String?=null,
     @ColumnInfo(name = "userId")
-    var userId: Double?,
+    var userId: Double?=null,
     @ColumnInfo(name = "relationDisplayName")
-    var relationDisplayName: String?,
+    var relationDisplayName: String?=null,
     @ColumnInfo(name = "familyName")
-    var familyName: String?,
+    var familyName: String?=null,
     @ColumnInfo(name = "status")
-    var status: String?
+    var status: String?=null
 )

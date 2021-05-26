@@ -93,6 +93,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
     fun onDobClicked() {
         onDobClicked.value = true
     }
+
     /*
     * This method is used to handle click of login
     * */
@@ -111,33 +112,37 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
 
                     SharedPrefUtils.putString(
                         getApplication(),
-                        SharedPrefUtils.SF_KEY_USER_FIRST_NAME,responseData.firstName
+                        SharedPrefUtils.SF_KEY_USER_FIRST_NAME, responseData.firstName
                     )
                     SharedPrefUtils.putString(
                         getApplication(),
-                        SharedPrefUtils.SF_KEY_USER_LAST_NAME,responseData.lastName
+                        SharedPrefUtils.SF_KEY_USER_LAST_NAME, responseData.lastName
                     )
                     SharedPrefUtils.putString(
                         getApplication(),
-                        SharedPrefUtils.SF_KEY_USER_DOB,dobForServer.value?.trim()
+                        SharedPrefUtils.SF_KEY_USER_DOB, dobForServer.value?.trim()
                     )
 
+                    // again update the saved data in preference
+                    Utility.saveCustomerDataInPreference(responseData)
 
-                    val interestList=ArrayList<String>()
-                    if(!selectedInterestList.isNullOrEmpty()) {
+
+                    val interestList = ArrayList<String>()
+                    if (!selectedInterestList.isNullOrEmpty()) {
                         selectedInterestList.forEach {
                             interestList.add(it.name!!)
                         }
 
                         SharedPrefUtils.putArrayList(
                             getApplication(),
-                            SharedPrefUtils.SF_KEY_USER_INTEREST,interestList
+                            SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
 
                         )
 
                     }
 
-                    onUpdateProfileSuccess.value = true                    // set the button text to continue
+                    onUpdateProfileSuccess.value =
+                        true                    // set the button text to continue
 
                 }
             }
