@@ -34,7 +34,6 @@ class AadhaarAccountActivationView : BaseActivity<ViewAadhaarAccountActivationBi
     override fun getLayoutId(): Int {
         return R.layout.view_aadhaar_account_activation
     }
-
     override fun getViewModel(): AadhaarAccountActivationViewModel {
         mViewModel = ViewModelProvider(this).get(AadhaarAccountActivationViewModel::class.java)
         return mViewModel
@@ -47,6 +46,7 @@ class AadhaarAccountActivationView : BaseActivity<ViewAadhaarAccountActivationBi
             toolbar = toolbar,
             isBackArrowVisible = true
         )
+        //Test Commit
 
         val ss = SpannableString(getString(R.string.account_verification_sub_title))
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
