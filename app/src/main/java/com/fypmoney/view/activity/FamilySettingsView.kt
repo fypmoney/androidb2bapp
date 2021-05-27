@@ -43,11 +43,7 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
-        recycler_view.layoutManager = LinearLayoutManager(
-            requireContext(),
-            LinearLayoutManager.HORIZONTAL,
-            true
-        )
+
         mViewModel.callGetMemberApi()
         val lbm = LocalBroadcastManager.getInstance(requireContext())
         lbm.registerReceiver(receiver, IntentFilter(AppConstants.AFTER_ADD_MEMBER_BROADCAST_NAME))

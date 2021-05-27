@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewHelper"
+            type="com.fypmoney.viewhelper.MemberViewHelper" />
+    </data>
+
+<LinearLayout
+    android:id="@+id/serviceLayout"
+    android:paddingStart="@dimen/_4sdp"
+    android:paddingEnd="@dimen/_4sdp"
+    android:layout_width="@dimen/_120sdp"
+    android:layout_margin="@dimen/_5sdp"
+    android:padding="@dimen/_5sdp"
+    android:onClick="@{()->viewHelper.onItemClicked()}"
+    android:background="@drawable/curved_background8"
+    android:layout_height="@dimen/_45sdp">
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivServiceLogo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:padding="12dp"
+        android:background="@drawable/curved_background13"
+        android:layout_marginStart="@dimen/_2sdp"
+        app:srcCompat="@drawable/ic_add_member" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvServiceName"
+        style="@style/TextviewRegular"
+        android:layout_gravity="center"
+        android:layout_marginStart="@dimen/_5sdp"
+        android:layout_marginEnd="@dimen/_5sdp"
+        android:textColor="@color/text_color_dark"
+        android:text="@string/add_member_heading"
+        android:textSize="@dimen/textSize_18"
+
+        />
+</LinearLayout></layout>

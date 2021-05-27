@@ -10,8 +10,7 @@ import com.fypmoney.view.adapter.MemberAdapterViewAll
 * This is used to display all the members in the list
 * */
 class MemberHorizontalViewHelper(
-    var memberEntity: MemberEntity?,
-    var onMemberItemClickListener: MemberAdapterViewAll.OnMemberItemClickListener
+    var memberEntity: MemberEntity?
 ) {
     var isRemoveVisible = ObservableField(true)
     fun init() {
@@ -29,7 +28,7 @@ class MemberHorizontalViewHelper(
     * This is used to handle remove option
     * */
     fun onRemoveClicked(view: View) {
-        onMemberItemClickListener.onMemberClick(view.id, memberEntity!!)
+
     }
 
 }

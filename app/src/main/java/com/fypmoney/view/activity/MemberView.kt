@@ -89,13 +89,13 @@ class MemberView : BaseActivity<ViewMemberBinding, MemberViewModel>(),
                         AppConstants.LEAVE_MEMBER
                     )
                 }
-                R.id.removeIcon -> {
+               /* R.id.removeIcon -> {
                     callLeaveRemoveBottomSheet(
                         mViewModel.memberDetailsData.get(),
                         AppConstants.REMOVE_MEMBER
                     )
                 }
-
+*/
 
             }
 

@@ -3,6 +3,7 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import android.widget.CompoundButton
 import androidx.lifecycle.MutableLiveData
+import com.fypmoney.R
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -12,17 +13,22 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.MemberRepository
 import com.fypmoney.database.entity.ContactEntity
+import com.fypmoney.database.entity.MemberEntity
 import com.fypmoney.model.GetMemberResponse
+import com.fypmoney.util.AppConstants
 import com.fypmoney.view.adapter.MemberAdapter
+import com.fypmoney.view.adapter.MemberAdapterViewAll
 
 /*
 * This is used as a family settings
 * */
-class FamilySettingsViewModel(application: Application) : BaseViewModel(application) {
+class FamilySettingsViewModel(application: Application) : BaseViewModel(application),
+    MemberAdapter.OnMemberItemClickListener {
     var onViewAllClicked = MutableLiveData<Boolean>()
     var onAddMemberClicked = MutableLiveData<Boolean>()
     val isSwitchChecked: MutableLiveData<Boolean> = MutableLiveData()
-    var memberAdapter = MemberAdapter()
+    var memberAdapter = MemberAdapter(this)
+    var pendingAdapter = MemberAdapterViewAll()
     var memberRepository = MemberRepository(mDB = appDatabase)
 
     /*
@@ -69,9 +75,24 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
         when (purpose) {
             ApiConstant.API_ADD_FAMILY_MEMBER -> {
                 if (responseData is GetMemberResponse) {
+                    val approveList = mutableListOf<MemberEntity>()
+                    val inviteList = mutableListOf<MemberEntity>()
                     memberRepository.deleteAllMembers()
                     memberRepository.insertAllMembers(responseData.GetMemberResponseDetails)
-                    memberAdapter.setList(memberRepository.getAllMembersFromDatabase())
+                    memberRepository.getAllMembersFromDatabase()?.forEach {
+                        when (it.status) {
+                            AppConstants.ADD_MEMBER_STATUS_APPROVED -> {
+                                approveList.add(it)
+                            }
+                            AppConstants.ADD_MEMBER_STATUS_INVITED -> {
+                                inviteList.add(it)
+                            }
+                        }
+
+                    }
+
+                    memberAdapter.setList(approveList)
+                    pendingAdapter.setList(inviteList)
                 }
             }
 
@@ -80,8 +101,14 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
 
     }
 
-    override fun onError(purpose: String,errorResponseInfo: ErrorResponseInfo) {
-        super.onError(purpose,errorResponseInfo)
+    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
+        super.onError(purpose, errorResponseInfo)
+    }
+
+    override fun onItemClick(position: Int) {
+        if (position == 0) {
+            onAddMemberClicked.value = true
+        }
     }
 
 

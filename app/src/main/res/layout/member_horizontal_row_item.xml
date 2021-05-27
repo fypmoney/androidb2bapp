@@ -15,76 +15,40 @@
     </data>
 
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_5sdp">
+
+    <LinearLayout
+        android:id="@+id/serviceLayout"
+        android:paddingStart="@dimen/_4sdp"
+        android:paddingEnd="@dimen/_4sdp"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_margin="@dimen/_5sdp"
+        android:padding="@dimen/_5sdp"
+        android:elevation="2dp"
+        android:background="@drawable/curved_background17"
+        android:layout_height="@dimen/_45sdp">
+
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivServiceLogo"
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:layout_centerVertical="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:padding="12dp"
+            android:background="@drawable/curved_background5"
+            android:layout_marginStart="@dimen/_2sdp"
             app:srcCompat="@drawable/ic_profile" />
 
+
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/heading"
-            style="@style/AppTheme.Widget.TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_toStartOf="@+id/removeIcon"
-            android:layout_toEndOf="@+id/ivServiceLogo"
-            android:ellipsize="end"
-            android:gravity="start"
+            android:id="@+id/tvServiceName"
+            style="@style/TextviewRegular"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:textSize="@dimen/textSize_18"
             android:text="@{viewHelper.memberEntity.name}"
-            android:textSize="@dimen/edit_text_size"
-            app:fontFamily="@font/poppins_medium" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/number_relation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/heading"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_toEndOf="@+id/ivServiceLogo"
-            android:ellipsize="end"
-            android:text="@{viewHelper.memberEntity.relationDisplayName}"
-            android:textColor="@color/text_color_little_dark"
-            android:textSize="@dimen/edit_text_size"
-            app:fontFamily="@font/poppins_regular" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/heading"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_toEndOf="@+id/number_relation"
-            android:ellipsize="end"
-            android:text="@{viewHelper.memberEntity.status}"
-            android:textColor="@color/colorGreen"
-            android:textSize="@dimen/micro_text_size"
-            app:STATUS_FOR_TEXT_COLOR="@{viewHelper.memberEntity.status}"
-            app:fontFamily="@font/poppins_regular" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/removeIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:ellipsize="end"
-            android:onClick="@{(view)->viewHelper.onRemoveClicked(view)}"
-            android:text="@string/remove_btn_text"
-            android:visibility="@{viewHelper.isRemoveVisible?View.VISIBLE:View.GONE}"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/edit_text_size"
-            app:fontFamily="@font/poppins_regular" />
-
-    </RelativeLayout>
+            />
+    </LinearLayout>
 
 </layout>

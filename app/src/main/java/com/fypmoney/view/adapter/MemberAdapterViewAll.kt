@@ -13,7 +13,7 @@ import com.fypmoney.viewhelper.MemberHorizontalViewHelper
 /**
  * This adapter class is used to handle members
  */
-class MemberAdapterViewAll(var onMemberItemClickListener: OnMemberItemClickListener) :
+class MemberAdapterViewAll:
     RecyclerView.Adapter<BaseViewHolder>() {
     var memberList: ArrayList<MemberEntity>? = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -40,7 +40,7 @@ class MemberAdapterViewAll(var onMemberItemClickListener: OnMemberItemClickListe
         private lateinit var mViewHelper: MemberHorizontalViewHelper
         override fun onBind(position: Int) {
             mViewHelper = MemberHorizontalViewHelper(
-                memberList?.get(position),onMemberItemClickListener
+                memberList?.get(position)
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             mViewHelper.init()

@@ -20,9 +20,8 @@ import com.fypmoney.view.adapter.MemberAdapterViewAll
 /*
 * This is used to handle members of the family
 * */
-class MemberViewModel(application: Application) : BaseViewModel(application),
-    MemberAdapterViewAll.OnMemberItemClickListener {
-    var memberAdapter = MemberAdapterViewAll(this)
+class MemberViewModel(application: Application) : BaseViewModel(application){
+    var memberAdapter = MemberAdapterViewAll()
     var onSendLinkClicked = MutableLiveData<Boolean>()
     var onAddMemberClicked = MutableLiveData<Boolean>()
     var onLeaveMemberSuccess = MutableLiveData<Boolean>()
@@ -61,10 +60,10 @@ class MemberViewModel(application: Application) : BaseViewModel(application),
         onLeaveMemberClicked.value = view.id
     }
 
-    override fun onMemberClick(id: Int, memberDetails: MemberEntity) {
+   /* override fun onMemberClick(id: Int, memberDetails: MemberEntity) {
         memberDetailsData.set(memberDetails)
         onLeaveMemberClicked.value = id
-    }
+    }*/
 
     /*
      * This method is used to call leave family API
