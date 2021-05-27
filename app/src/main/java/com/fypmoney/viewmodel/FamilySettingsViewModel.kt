@@ -31,6 +31,9 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
     var pendingAdapter = MemberAdapterViewAll()
     var memberRepository = MemberRepository(mDB = appDatabase)
 
+    init {
+        memberAdapter.addFirstElement()
+    }
     /*
     * This method is used to handle view all of mobile
     * */

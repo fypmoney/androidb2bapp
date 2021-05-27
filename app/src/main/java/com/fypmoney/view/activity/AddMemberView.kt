@@ -2,6 +2,8 @@ package com.fypmoney.view.activity
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -11,12 +13,16 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewAddMemberBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.CountryCodeArrayAdapter
+import com.fypmoney.view.fragment.AddMoneyTransactionFailBottomSheet
+import com.fypmoney.view.fragment.InviteMemberBottomSheet
+import com.fypmoney.view.fragment.StayTunedBottomSheet
 import com.fypmoney.viewmodel.AddMemberViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_login.*
@@ -115,17 +121,8 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
         mViewModel.onIsAppUser.observe(this) {
             when (it) {
                 AppConstants.API_FAIL -> {
-                    intentToActivity(InviteMemberView::class.java)
+                    callInviteMemberBottomSheet(ApiConstant.API_CHECK_IS_APP_USER)
 
-                    /*  DialogUtils.showConfirmationDialog(
-                          context = this,
-                          title = "",
-                          message = mViewModel.mobile.value + " " + getString(R.string.invite_user_dialog_title),
-                          positiveButtonText = getString(R.string.invite_text),
-                          negativeButtonText = getString(R.string.cancel_btn_text),
-                          uniqueIdentifier = "",
-                          onAlertDialogClickListener = this, isNegativeButtonRequired = true
-                      )*/
                 }
                 AppConstants.API_SUCCESS -> {
                     askForDevicePassword()
@@ -139,12 +136,11 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
         {
             when (it) {
                 AppConstants.API_SUCCESS -> {
-                    intentToActivity(StayTunedView::class.java)
+                    callStayTunedBottomSheet()
 
                 }
-                AppConstants.API_FAIL -> {
-
-
+                else->{
+                    callInviteMemberBottomSheet(it)
                 }
             }
 
@@ -188,5 +184,25 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
                 }
             }
         }
+    }
+
+    /*
+* This method is used to call leave member
+* */
+    private fun callStayTunedBottomSheet() {
+        val bottomSheet =
+            StayTunedBottomSheet()
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "StayTunedView")
+    }
+
+    /*
+* This method is used to call leave member
+* */
+    private fun callInviteMemberBottomSheet(type:String) {
+        val bottomSheet =
+            InviteMemberBottomSheet(type)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "InviteMemberView")
     }
 }

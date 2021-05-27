@@ -48,25 +48,11 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
     var relationAdapter = RelationAdapter(this)
     var selectedCountryCode = ObservableField<String>()
     var selectedRelationPosition = ObservableField(0)
-    var selectedRelation = ObservableField<String>()
     var parentName = ObservableField<String>()
     var contactResult = ObservableField(ContactEntity())
     var isGuarantor = ObservableField<String>()
     var selectedRelationList = ObservableArrayList<RelationModel>()
 
-    val clicksListener = object : AdapterView.OnItemSelectedListener {
-        override fun onNothingSelected(parent: AdapterView<*>?) {
-        }
-
-        override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            selectedRelation.set(parent?.getItemAtPosition(position) as String)
-            SharedPrefUtils.putString(
-                getApplication(),
-                SharedPrefUtils.SF_KEY_SELECTED_RELATION,
-                selectedRelation.get()
-            )
-        }
-    }
 
     init {
         val list = PockketApplication.instance.resources.getStringArray(R.array.relationNameList)
@@ -131,21 +117,26 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
 * */
 
     fun callAddMemberApi() {
-        progressDialog.value = true
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                API_ADD_FAMILY_MEMBER,
-                NetworkUtil.endURL(API_ADD_FAMILY_MEMBER),
-                ApiUrl.POST,
-                AddFamilyMemberRequest(
-                    mobileNo = mobile.value!!.trim(),
-                    name = parentName.get(),
-                    relation = selectedRelationList.get(0).relationName?.toUpperCase(Locale.getDefault())!!
-                ),
-                this,
-                isProgressBar = false
-            )
+        SharedPrefUtils.putString(
+            getApplication(),
+            SharedPrefUtils.SF_KEY_SELECTED_RELATION,
+            selectedRelationList.get(0).relationName
         )
+        progressDialog.value = true
+          WebApiCaller.getInstance().request(
+              ApiRequest(
+                  API_ADD_FAMILY_MEMBER,
+                  NetworkUtil.endURL(API_ADD_FAMILY_MEMBER),
+                  ApiUrl.POST,
+                  AddFamilyMemberRequest(
+                      mobileNo = mobile.value!!.trim(),
+                      name = parentName.get(),
+                      relation = selectedRelationList.get(0).relationName?.toUpperCase(Locale.getDefault())!!
+                  ),
+                  this,
+                  isProgressBar = false
+              )
+          )
 
 
     }
@@ -209,7 +200,7 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
                 progressDialog.value = false
                 mobile.value = ""
                 parentName.set("")
-                onAddMember.value = AppConstants.API_FAIL
+                onAddMember.value = errorResponseInfo.msg
             }
         }
 

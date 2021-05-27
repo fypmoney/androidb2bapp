@@ -43,7 +43,6 @@ class ContactAdapter(var viewModel: ContactViewModel) :
 
         override fun onBind(position: Int) {
             mViewHelper = ContactViewHelper(
-                this@ContactAdapter,
                 position,
                 contactList?.get(position), viewModel
             )
@@ -69,5 +68,7 @@ class ContactAdapter(var viewModel: ContactViewModel) :
             e.printStackTrace()
         }
     }
+
+
 
 }

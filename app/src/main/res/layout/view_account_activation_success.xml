@@ -8,9 +8,6 @@
 
         <import type="androidx.core.content.ContextCompat" />
 
-        <variable
-            name="viewModel"
-            type="com.fypmoney.viewmodel.StayTunedViewModel" />
 
     </data>
     <LinearLayout

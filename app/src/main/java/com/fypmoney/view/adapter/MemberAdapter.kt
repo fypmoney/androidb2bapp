@@ -62,7 +62,7 @@ class MemberAdapter(var onMemberItemClickListener: OnMemberItemClickListener) :
         override fun onBind(position: Int) {
             mViewHelper = MemberViewHelper(
                 position,
-                memberList?.get(position),onMemberItemClickListener
+                memberList?.get(position), onMemberItemClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             mViewHelper.init()
@@ -78,7 +78,7 @@ class MemberAdapter(var onMemberItemClickListener: OnMemberItemClickListener) :
         override fun onBind(position: Int) {
             mViewHelper = MemberViewHelper(
                 position,
-                memberList?.get(position),onMemberItemClickListener
+                memberList?.get(position), onMemberItemClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             mViewHelper.init()
@@ -113,8 +113,21 @@ class MemberAdapter(var onMemberItemClickListener: OnMemberItemClickListener) :
         }
 
     }
+
     interface OnMemberItemClickListener {
         fun onItemClick(position: Int)
+    }
+
+    /**
+     * This will set the data in the list in adapter
+     */
+    fun addFirstElement() {
+        memberList!!.clear()
+        val memberEntity = MemberEntity()
+        memberEntity.name = PockketApplication.instance.getString(R.string.add_member_heading)
+        memberList?.add(memberEntity)
+
+        notifyItemInserted(0)
     }
 
 

@@ -62,6 +62,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE,
                         value = responseData.mobile
                     )
+
                     val interestList = ArrayList<String>()
                     if (responseData.userInterests?.isNullOrEmpty() == false) {
                         responseData.userInterests.forEach {

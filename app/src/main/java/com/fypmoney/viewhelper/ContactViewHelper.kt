@@ -12,7 +12,6 @@ import java.lang.Exception
 * This is used to display all the contacts in the list
 * */
 class ContactViewHelper(
-    var contactAdapter: ContactAdapter,
     var position: Int? = -1,
     var contactEntity: ContactEntity?,
     var viewModel: ContactViewModel
@@ -23,7 +22,6 @@ class ContactViewHelper(
     var isBackgroundHighlight = ObservableField<Boolean>()
 
     fun init() {
-
         when (contactEntity?.isAppUser) {
             true -> {
                 isAppUser.set(true)
@@ -39,19 +37,24 @@ class ContactViewHelper(
      * called when any item is selected
      * */
     fun onItemClicked() {
-        if (viewModel.selectedContactList.size < 1) {
-            contactEntity?.isSelected = contactEntity?.isSelected != true
-            viewModel.selectedContactList.add(contactEntity!!)
-            isBackgroundHighlight.set(true)
-        } else if (viewModel.selectedContactList.size == 1) {
-            if (viewModel.selectedContactList[0].contactNumber == contactEntity?.contactNumber) {
+        if (isAppUser.get() == true) {
+            if (viewModel.selectedContactList.size < 1) {
                 contactEntity?.isSelected = contactEntity?.isSelected != true
-                isBackgroundHighlight.set(false)
-                contactEntity?.let {
-                    viewModel.selectedContactList.remove(it)
+                viewModel.selectedContactList.add(contactEntity!!)
+                isBackgroundHighlight.set(true)
+            } else if (viewModel.selectedContactList.size == 1) {
+                if (viewModel.selectedContactList[0].contactNumber == contactEntity?.contactNumber) {
+                    contactEntity?.isSelected = contactEntity?.isSelected != true
+                    isBackgroundHighlight.set(false)
+                    contactEntity?.let {
+                        viewModel.selectedContactList.remove(it)
 
+                    }
                 }
+
             }
+        } else {
+            onIsAppUserClicked()
 
         }
     }
@@ -76,6 +79,7 @@ class ContactViewHelper(
         }
 
     }
+
     /*
     * This method will handle the click of invite option
     * */

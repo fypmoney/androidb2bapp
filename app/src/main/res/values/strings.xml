@@ -180,6 +180,7 @@
     <string name="family_fyper_pending_approval">Pending Approval</string>
     <string name="ongoing_chores_txt">Ongoing Chores</string>
     <string name="ongoing_chores_txt1">Perform task and exciting cash rewards</string>
+    <string name="family_settings_toolbar_heading">"'s Fypers"</string>
 
     <!-- Members
     -->
@@ -279,14 +280,15 @@
     <!-- stay tuned
     -->
     <string name="stay_tuned_screen_title">Stay tuned!</string>
-    <string name="stay_tuned_screen_sub_title">"Hang in there, we have sent a request to your "</string>
+    <string name="stay_tuned_screen_sub_title">"Hang in there, we have sent an invite to your "</string>
     <string name="stay_tuned_screen_sub_title1">, to activate your account</string>
 
 
     <!-- Invite member
     -->
     <string name="invite_member_screen_title">Oops!</string>
-    <string name="invite_member_screen_sub_title">Looks like your parent is not a FYP user. \n No worries you can invite them right now.</string>
+    <string name="invite_member_screen_sub_title">"Looks like your "</string>
+    <string name="invite_member_screen_sub_title1">" is not a FYP user. \n No worries you can invite them right now.</string>
 
     <!-- Account activation success
   -->

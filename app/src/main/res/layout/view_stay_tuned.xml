@@ -19,37 +19,48 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/toolbar" />
+        <include layout="@layout/toolbar"
+            android:visibility="gone"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/screenMarginLeft"
-        android:layout_marginEnd="@dimen/screenMarginRight">
+        android:layout_height="wrap_content"
+      >
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/curved_background1"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/stayTunedText"
+            android:layout_below="@+id/view1"
+            style="@style/TextviewBold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:text="@string/stay_tuned_screen_title"
+            android:textAlignment="center"
+            />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="247dp"
+            android:layout_below="@+id/stayTunedText"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
             app:srcCompat="@drawable/ic_stay_tuned" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvCongrats"
-           android:layout_below="@+id/image"
-            style="@style/TextviewBold"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="49dp"
-            android:text="@string/stay_tuned_screen_title"
-            android:textAlignment="center"
-            />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvCreateAccount"
+            android:id="@+id/stayTuned"
             style="@style/TextviewRegular"
-             android:layout_below="@id/tvCongrats"
-            android:layout_marginTop="19dp"
+             android:layout_below="@id/image"
+            android:layout_marginTop="28dp"
             android:textColor="@color/text_color_little_dark"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
@@ -58,7 +69,20 @@
             android:textAlignment="center"
             android:textSize="@dimen/title_size" />
 
-
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContinue"
+            style="@style/Widget.App.Button"
+            android:layout_width="299dp"
+            android:layout_height="52dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/curved_background1"
+            app:backgroundTint="@color/text_color_dark"
+            android:layout_marginBottom="@dimen/button_margin"
+            android:text="@string/continue_btn_text"
+            android:textAllCaps="false"
+            android:layout_marginTop="28dp"
+            android:layout_below="@+id/stayTuned"
+            />
 
 
 

@@ -159,14 +159,12 @@ class AddMemberScreen : BaseFragment<ViewAddMemberBinding, AddMemberViewModel>()
         {
             when (it) {
                 AppConstants.API_SUCCESS -> {
-                    //   callBroadCast()
                     intentToActivity(StayTunedView::class.java)
 
                 }
-                AppConstants.API_FAIL -> {
+            else->{
 
-
-                }
+            }
             }
 
         }
