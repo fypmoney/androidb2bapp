@@ -67,4 +67,6 @@ object AppConstants {
     const val LOGIN_SCREEN = "login_screen"
     const val AADHAAR_VERIFICATION = "aadhaar_verification"
     const val CONTACT_SELECTED_RESPONSE = "contact_selected"
+    const val NOTIFICATION_TYPE_ADD_TASK = "ADD_TASK"
+    const val NOTIFICATION_TYPE_ADD_FAMILY = "ADD_FAMILY_MEMBER"
 }

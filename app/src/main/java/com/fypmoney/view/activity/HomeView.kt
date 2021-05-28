@@ -108,7 +108,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         }
         mViewModel.onNotificationClicked.observe(this) {
             if (it) {
-                intentToActivity(FamilyNotificationView::class.java)
+                intentToActivity(NotificationView::class.java)
                 mViewModel.onNotificationClicked.value = false
             }
         }

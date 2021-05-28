@@ -44,6 +44,7 @@
     <string name="retry_btn_text">Retry</string>
     <string name="view_details_btn_text">View details</string>
     <string name="select_btn_text">Select</string>
+    <string name="reject_btn_text">Reject</string>
 
 
     <!--Login-->
@@ -223,9 +224,10 @@
     <string name="location_permission">Location</string>
 
     <!--
-    Family Notification
+     Notification
     -->
     <string name="family_notification_screen_title">Family Notification</string>
+    <string name="previous_txt">Previous</string>
 
     <!--
     Login success
@@ -390,5 +392,7 @@
         <item>@drawable/ic_grand_child</item>
         <item>@drawable/ic_other</item>
     </integer-array>
+
+
 
 </resources>

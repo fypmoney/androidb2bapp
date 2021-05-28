@@ -5,21 +5,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
-import com.fypmoney.databinding.FamilyNotificationRowItemBinding
-import com.fypmoney.model.FamilyNotificationResponse
-import com.fypmoney.model.FamilyNotificationResponseDetails
-import com.fypmoney.viewhelper.FamilyNotificationViewHelper
-import com.fypmoney.viewmodel.FamilyNotificationViewModel
+import com.fypmoney.databinding.UserTimelineRowItemBinding
+import com.fypmoney.model.NotificationModel
+import com.fypmoney.viewhelper.UserTimeLineViewHelper
+import com.fypmoney.viewmodel.NotificationViewModel
 
 
 /**
- * This adapter class is used to handle contacts
+ * This adapter class is used to handle user timelines
  */
-class FamilyNotificationAdapter(var viewModel: FamilyNotificationViewModel) :
+class UserTimeLineAdapter(var viewModel: NotificationViewModel) :
     RecyclerView.Adapter<BaseViewHolder>() {
-    var notificationList: ArrayList<FamilyNotificationResponseDetails>? = ArrayList()
+    var notificationList: ArrayList<NotificationModel.NotificationResponseDetails>? = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
-        val mRowBinding = FamilyNotificationRowItemBinding.inflate(
+        val mRowBinding = UserTimelineRowItemBinding.inflate(
             LayoutInflater.from(parent.context),
             parent, false
         )
@@ -37,17 +36,18 @@ class FamilyNotificationAdapter(var viewModel: FamilyNotificationViewModel) :
     }
 
     inner class ViewHolder(
-        private val mRowItemBinding: FamilyNotificationRowItemBinding? = null
+        private val mRowItemBinding: UserTimelineRowItemBinding? = null
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
-        lateinit var mViewHelper: FamilyNotificationViewHelper
+        lateinit var mViewHelper: UserTimeLineViewHelper
 
         override fun onBind(position: Int) {
-            mViewHelper = FamilyNotificationViewHelper(
+            mViewHelper = UserTimeLineViewHelper(
+                notificationList?.size!!,
                 position,
                 notificationList?.get(position)
             )
             mRowItemBinding!!.viewHelper = mViewHelper
-            mRowItemBinding.viewModel = viewModel
+            // mRowItemBinding.viewModel = viewModel
             mViewHelper.init()
             mRowItemBinding.executePendingBindings()
 
@@ -58,7 +58,7 @@ class FamilyNotificationAdapter(var viewModel: FamilyNotificationViewModel) :
     /**
      * This will set the data in the list in adapter
      */
-    fun setList(notificationList1: List<FamilyNotificationResponseDetails>?) {
+    fun setList(notificationList1: List<NotificationModel.NotificationResponseDetails>?) {
         try {
             notificationList!!.clear()
             notificationList1?.forEach {
@@ -70,17 +70,5 @@ class FamilyNotificationAdapter(var viewModel: FamilyNotificationViewModel) :
         }
     }
 
-    /**
-     * This will set the data in the list in adapter
-     */
-    fun updateList(notification: FamilyNotificationResponseDetails?, position: Int) {
-        try {
-            notificationList?.remove(notification)
-            notifyItemRemoved(position)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 
 }

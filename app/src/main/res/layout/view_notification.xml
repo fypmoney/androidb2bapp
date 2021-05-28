@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.NotificationViewModel" />
+
+    </data>
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include
+                android:id="@+id/toolbar_layout"
+                layout="@layout/toolbar" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar_layout"
+                android:paddingStart="@dimen/screenMarginLeft"
+                android:paddingEnd="@dimen/screenMarginRight"
+                android:paddingTop="@dimen/screenMarginRight"
+                app:adapter="@{viewModel.notificationAdapter}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:spanCount="2"
+
+                />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:id="@+id/view1"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="@dimen/screenMarginLeft"
+                android:layout_marginEnd="@dimen/screenMarginRight"
+                android:visibility="@{viewModel.isTimeLineRecyclerVisible?View.VISIBLE:View.GONE,default=gone}"
+                android:layout_below="@id/recyclerview"
+                android:background="@color/dividerColor"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@id/heading1"
+                style="@style/TextviewRegular"
+                android:layout_below="@id/view1"
+                android:layout_marginTop="5dp"
+                android:paddingStart="@dimen/screenMarginLeft"
+                android:paddingEnd="@dimen/screenMarginRight"
+                android:text="@string/previous_txt"
+                android:visibility="@{viewModel.isTimeLineRecyclerVisible?View.VISIBLE:View.GONE,default=gone}"
+                android:textColor="@color/text_color_dark" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/heading1"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="10dp"
+                android:background="@color/screenBackground"
+                android:paddingStart="@dimen/screenMarginLeft"
+                android:paddingEnd="@dimen/screenMarginRight"
+                android:paddingTop="@dimen/screenMarginRight"
+                android:paddingBottom="@dimen/screenMarginRight"
+                android:visibility="@{viewModel.isTimeLineRecyclerVisible?View.VISIBLE:View.GONE,default=gone}"
+                app:adapter="@{viewModel.userTimeLineAdapter}"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+
+                />
+
+
+        </RelativeLayout>
+
+
+    </ScrollView>
+</layout>

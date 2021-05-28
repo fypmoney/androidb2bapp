@@ -70,12 +70,12 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
         when (intent.getStringExtra(AppConstants.IS_PROFILE_COMPLETED)) {
             AppConstants.NO -> {
                 startActivity(Intent(this@ReferralCodeView, CreateAccountView::class.java))
-                finish()
+                finishAffinity()
 
             }
             else -> {
                 startActivity(Intent(this@ReferralCodeView, HomeView::class.java))
-                finish()
+                finishAffinity()
             }
         }
     }
