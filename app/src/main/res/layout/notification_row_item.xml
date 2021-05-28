@@ -47,7 +47,7 @@
             android:id="@+id/invite"
             style="@style/TextviewRegular"
             android:layout_alignParentEnd="true"
-            android:text="@string/invite_link"
+            android:text="@{viewHelper.actionAllowed}"
             android:layout_below="@+id/heading"
             android:textColor="@color/color_skyblue" />
 

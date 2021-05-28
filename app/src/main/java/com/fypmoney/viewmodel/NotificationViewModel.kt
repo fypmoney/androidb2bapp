@@ -10,7 +10,9 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.*
+import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.NotificationModel
+import com.fypmoney.model.UpdateFamilyApprovalResponse
 import com.fypmoney.view.adapter.NotificationAdapter
 import com.fypmoney.view.adapter.UserTimeLineAdapter
 
@@ -25,8 +27,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     var isTimeLineRecyclerVisible = ObservableField(false)
     var positionSelected = ObservableField<Int>()
     var onNotificationClicked = MutableLiveData<Boolean>()
-    var notificationSelectedResponse =
-        ObservableField<NotificationModel.NotificationResponseDetails>()
+    var notificationSelectedResponse = NotificationModel.NotificationResponseDetails()
 
     init {
         callGetFamilyNotificationApi()
@@ -112,7 +113,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     fun callUpdateApprovalRequestApi(
         actionAllowed: String
     ) {
-        notificationSelectedResponse.get()?.actionSelected = actionAllowed
+        notificationSelectedResponse.actionSelected = actionAllowed
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_UPDATE_APPROVAL_REQUEST,
@@ -133,7 +134,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
         position: Int
     ) {
         positionSelected.set(position)
-        notificationSelectedResponse.set(notification)
+        notificationSelectedResponse=notification!!
         onNotificationClicked.value = true
 
 

@@ -11,6 +11,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewHomeBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.AddMemberScreen
@@ -47,7 +48,13 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         setObserver()
         checkAndAskPermission()
 
-        setCurrentFragment(HomeScreen())
+
+
+        if (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN) == "stay_tuned") {
+            setCurrentFragment(FamilySettingsView())
+        } else {
+            setCurrentFragment(HomeScreen())
+        }
 
         mViewBinding.navigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
@@ -73,7 +80,11 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 }
                 R.id.family -> {
                     mViewModel.isScanVisible.set(false)
-                    mViewModel.headerText.set(Utility.getCustomerDataFromPreference()?.firstName+getString(R.string.family_settings_toolbar_heading))
+                    mViewModel.headerText.set(
+                        Utility.getCustomerDataFromPreference()?.firstName + getString(
+                            R.string.family_settings_toolbar_heading
+                        )
+                    )
                     setCurrentFragment(FamilySettingsView())
                 }
 

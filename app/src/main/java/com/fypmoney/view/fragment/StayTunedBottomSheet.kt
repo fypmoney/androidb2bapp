@@ -14,8 +14,10 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
 import com.fypmoney.databinding.ViewStayTunedBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.activity.FamilySettingsView
+import com.fypmoney.view.activity.HomeView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -47,12 +49,16 @@ class StayTunedBottomSheet : BottomSheetDialogFragment() {
         )
         bottomSheet.setContentView(bindingSheet.root)
 
-     val stayTuned = view.findViewById<TextView>(R.id.stayTuned)!!
-     val continueButton = view.findViewById<Button>(R.id.btnContinue)!!
-        stayTuned.text = getString(R.string.stay_tuned_screen_sub_title)+SharedPrefUtils.getString(requireContext(),SharedPrefUtils.SF_KEY_SELECTED_RELATION)
+        val stayTuned = view.findViewById<TextView>(R.id.stayTuned)!!
+        val continueButton = view.findViewById<Button>(R.id.btnContinue)!!
+        stayTuned.text =
+            getString(R.string.stay_tuned_screen_sub_title) + SharedPrefUtils.getString(
+                requireContext(),
+                SharedPrefUtils.SF_KEY_SELECTED_RELATION
+            )
 
         continueButton.setOnClickListener {
-
+            navigateToDifferentActivity()
 
         }
 
@@ -64,9 +70,11 @@ class StayTunedBottomSheet : BottomSheetDialogFragment() {
 * navigate to the HomeScreen
 * */
     private fun navigateToDifferentActivity() {
-        val intent = Intent(context, FamilySettingsView::class.java)
+        val intent = Intent(context, HomeView::class.java)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "stay_tuned")
         startActivity(intent)
-      //  requireActivity().finish()
+        dismiss()
+
     }
 
 

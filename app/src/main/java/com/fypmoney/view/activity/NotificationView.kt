@@ -1,6 +1,5 @@
 package com.fypmoney.view.activity
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,11 +8,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewNotificationBinding
-import com.fypmoney.model.CustomerInfoResponse
-import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
-import com.fypmoney.util.AppConstants.FEED_RESPONSE
-import com.fypmoney.view.fragment.AddMoneyTransactionFailBottomSheet
 import com.fypmoney.view.fragment.FamilyNotificationBottomSheet
 import com.fypmoney.viewmodel.NotificationViewModel
 import kotlinx.android.synthetic.main.toolbar.*
@@ -57,7 +52,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     private fun setObserver() {
         mViewModel.onNotificationClicked.observe(this) {
             if (it) {
-                when (mViewModel.notificationSelectedResponse.get()?.requestCategoryCode) {
+                when (mViewModel.notificationSelectedResponse.requestCategoryCode) {
                     AppConstants.NOTIFICATION_TYPE_ADD_FAMILY -> {
                         callBottomSheet()
                     }
@@ -79,8 +74,8 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     private fun callBottomSheet() {
         val bottomSheet =
             FamilyNotificationBottomSheet(
-                mViewModel.notificationSelectedResponse.get()?.actionAllowed,
-                mViewModel.notificationSelectedResponse.get()?.description,
+                mViewModel.notificationSelectedResponse.actionAllowed,
+                mViewModel.notificationSelectedResponse.description,
                 this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))

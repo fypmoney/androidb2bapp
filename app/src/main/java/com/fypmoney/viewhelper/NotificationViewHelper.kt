@@ -1,6 +1,7 @@
 package com.fypmoney.viewhelper
 
 import android.util.Log
+import android.view.View
 import androidx.databinding.ObservableField
 import com.fypmoney.model.NotificationModel
 import com.fypmoney.view.adapter.NotificationAdapter
@@ -14,14 +15,20 @@ class NotificationViewHelper(
     var notification: NotificationModel.NotificationResponseDetails?,
     var onNotificationClickListener: NotificationAdapter.OnNotificationClickListener
 ) {
-    var accepted = ObservableField<String>()
-    var decline = ObservableField<String>()
-    var cancel = ObservableField<String>()
+    var actionAllowed = ObservableField<String>()
     var isDividerVisible = ObservableField(true)
 
     fun init() {
         if (position == size - 1) {
             isDividerVisible.set(false)
+        }
+
+        val actionAllowedList = notification?.actionAllowed?.split(",")
+        if (actionAllowedList?.size!! > 1) {
+            actionAllowed.set(actionAllowedList.get(0))
+
+        } else {
+            actionAllowed.set(notification?.actionAllowed)
         }
 
     }
