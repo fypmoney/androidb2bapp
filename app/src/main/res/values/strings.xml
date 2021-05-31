@@ -44,6 +44,8 @@
     <string name="retry_btn_text">Retry</string>
     <string name="view_details_btn_text">View details</string>
     <string name="select_btn_text">Select</string>
+    <string name="reject_btn_text">Reject</string>
+    <string name="update_btn_text">Update</string>
 
 
     <!--Login-->
@@ -214,7 +216,12 @@
     <string name="family_fyper_pending_approval">Pending Approval</string>
     <string name="ongoing_chores_txt">Ongoing Chores</string>
     <string name="ongoing_chores_txt1">Perform task and exciting cash rewards</string>
-    <string name="family_settings_toolbar_heading">"'s Fypers"</string>
+    <string name="family_settings_toolbar_heading">My Fypers</string>
+    <string name="family_settings_family_fypers">"'s Fypers"</string>
+    <string name="family_settings_family_fypers1">Fypers</string>
+    <string name="family_no_data">"Looks like you haven't added any family member yet"</string>
+    <string name="set_family_name">Set your family name here</string>
+    <string name="update_family_hint">Your family name</string>
 
     <!-- Members
     -->
@@ -257,9 +264,12 @@
     <string name="location_permission">Location</string>
 
     <!--
-    Family Notification
+     Notification
     -->
     <string name="family_notification_screen_title">Family Notification</string>
+    <string name="previous_txt">Previous</string>
+    <string name="user_timeline_api_error">Your No previous actions found</string>
+    <string name="get_notification_api_error">Your No current actions found</string>
 
     <!--
     Login success
@@ -426,5 +436,7 @@
     </integer-array>
     <string name="title_activity_chores_history">ChoresHistoryActivity</string>
     <string name="title_activity_add_task">AddTaskActivity</string>
+
+
 
 </resources>

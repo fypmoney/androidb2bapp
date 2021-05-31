@@ -90,11 +90,9 @@
         <activity
             android:name=".view.activity.UserProfileView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
         <activity
-            android:name=".view.activity.FamilySettingsView"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-        <activity
-            android:name=".view.activity.FamilyNotificationView"
+            android:name=".view.activity.NotificationView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.MemberView"

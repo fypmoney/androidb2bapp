@@ -2,18 +2,13 @@ package com.fypmoney.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewHolder
-import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.database.entity.MemberEntity
 import com.fypmoney.databinding.AddMemberLayoutBinding
-import com.fypmoney.databinding.FeedsRowLayoutVerticalBinding
 import com.fypmoney.databinding.MemberRowItemBinding
-import com.fypmoney.model.FeedDetails
-import com.fypmoney.util.AppConstants
 import com.fypmoney.viewhelper.MemberViewHelper
 
 

@@ -37,7 +37,8 @@ import java.util.concurrent.Executors.newSingleThreadExecutor
 /**
  *  Base Activity
  */
-abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
+abstract class
+BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     AppCompatActivity(), DialogUtils.OnAlertDialogNoInternetClickListener {
     private var dialog: Dialog? = null
     private var mViewDataBinding: T? = null

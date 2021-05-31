@@ -2,7 +2,6 @@ package com.fypmoney.view.fragment
 
 
 import android.app.Dialog
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -10,21 +9,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
-import com.fypmoney.databinding.ViewStayTunedBinding
-import com.fypmoney.util.AppConstants
+import com.fypmoney.databinding.BottomSheetFamilyNotificationBinding
+import com.fypmoney.databinding.BottomSheetUpdateFamilyNameBinding
 import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.view.activity.FamilySettingsView
-import com.fypmoney.view.activity.HomeView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
+
 /*
-* This is used to success message in case add member
+* This is used to update family name
 * */
-class StayTunedBottomSheet : BottomSheetDialogFragment() {
+class UpdateFamilyNameBottomSheet(
+    private var onBottomSheetClickListener: OnUpdateFamilyClickListener
+) : BottomSheetDialogFragment() {
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -35,47 +36,40 @@ class StayTunedBottomSheet : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(
-            R.layout.view_stay_tuned,
+            R.layout.bottom_sheet_update_family_name,
             container,
             false
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<ViewStayTunedBinding>(
+        val bindingSheet = DataBindingUtil.inflate<BottomSheetUpdateFamilyNameBinding>(
             layoutInflater,
-            R.layout.view_stay_tuned,
+            R.layout.bottom_sheet_update_family_name,
             null,
             false
         )
         bottomSheet.setContentView(bindingSheet.root)
 
-        val stayTuned = view.findViewById<TextView>(R.id.stayTuned)!!
-        val continueButton = view.findViewById<Button>(R.id.btnContinue)!!
-        stayTuned.text =
-            getString(R.string.stay_tuned_screen_sub_title) + SharedPrefUtils.getString(
-                requireContext(),
-                SharedPrefUtils.SF_KEY_SELECTED_RELATION
-            )
+        val familyName = view.findViewById<EditText>(R.id.et_first_name)!!
+        val btnUpdate = view.findViewById<Button>(R.id.button_update)!!
+        val btnCancel = view.findViewById<TextView>(R.id.button_cancel)!!
 
-        continueButton.setOnClickListener {
-            navigateToDifferentActivity()
+        familyName.setText(SharedPrefUtils.getString(requireContext(),SharedPrefUtils.SF_KEY_USERNAME))
 
+        btnUpdate.setOnClickListener {
+            onBottomSheetClickListener.onUpdateFamilyButtonClick(familyName.text.toString())
+            dismiss()
         }
 
-
+        btnCancel.setOnClickListener {
+            dismiss()
+        }
         return view
     }
 
-    /*
-* navigate to the HomeScreen
-* */
-    private fun navigateToDifferentActivity() {
-        val intent = Intent(context, HomeView::class.java)
-        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "stay_tuned")
-        startActivity(intent)
-        dismiss()
+    interface OnUpdateFamilyClickListener {
+        fun onUpdateFamilyButtonClick(familyName:String)
 
     }
-
 
 }

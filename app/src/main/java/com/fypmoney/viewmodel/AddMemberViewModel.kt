@@ -85,14 +85,14 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
             TextUtils.isEmpty(mobile.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.phone_email_empty_error))
             }
-           selectedRelationList.isNullOrEmpty() -> {
+            selectedRelationList.isNullOrEmpty() -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.relation_empty_error))
 
             }
 
             else -> {
                 when (mobile.value) {
-                    contactResult.get()!!.contactNumber -> {
+                    Utility.removePlusOrNineOneFromNo(contactResult.get()?.contactNumber!!)-> {
                         when (contactResult.get()!!.isAppUser!!) {
                             true -> {
                                 onIsAppUser.value = AppConstants.API_SUCCESS
@@ -123,20 +123,20 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
             selectedRelationList.get(0).relationName
         )
         progressDialog.value = true
-          WebApiCaller.getInstance().request(
-              ApiRequest(
-                  API_ADD_FAMILY_MEMBER,
-                  NetworkUtil.endURL(API_ADD_FAMILY_MEMBER),
-                  ApiUrl.POST,
-                  AddFamilyMemberRequest(
-                      mobileNo = mobile.value!!.trim(),
-                      name = parentName.get(),
-                      relation = selectedRelationList.get(0).relationName?.toUpperCase(Locale.getDefault())!!
-                  ),
-                  this,
-                  isProgressBar = false
-              )
-          )
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                API_ADD_FAMILY_MEMBER,
+                NetworkUtil.endURL(API_ADD_FAMILY_MEMBER),
+                ApiUrl.POST,
+                AddFamilyMemberRequest(
+                    mobileNo = mobile.value!!.trim(),
+                    name = parentName.get(),
+                    relation = selectedRelationList.get(0).relationName?.toUpperCase(Locale.getDefault())!!
+                ),
+                this,
+                isProgressBar = false
+            )
+        )
 
 
     }
@@ -218,7 +218,7 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
                 } else {
                     parentName.set(contactResult.get()?.firstName + " " + contactResult.get()?.lastName)
                 }
-                mobile.value = contactResult.get()?.contactNumber
+                mobile.value =Utility.removePlusOrNineOneFromNo(contactResult.get()?.contactNumber!!)
 
             }
         } catch (e: Exception) {

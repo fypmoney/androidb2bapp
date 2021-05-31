@@ -5,7 +5,8 @@
     <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/margin"
+        android:paddingStart="@dimen/screenMarginLeft"
+        android:paddingEnd="@dimen/screenMarginRight"
         android:orientation="vertical">
 
         <View
@@ -15,13 +16,6 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/curved_background1"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/verification_title"
-            style="@style/TextviewBold"
-            android:layout_marginTop="55dp"
-            android:text="@string/add_money_trans_fail_title"
-            android:layout_gravity="center"
-           />
 
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -29,31 +23,34 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="43dp"
-            app:srcCompat="@drawable/ic_transaction_failed" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/updated_balance"
-            style="@style/TextviewRegular"
-            android:layout_marginTop="43dp"
-            android:text="@string/add_money_trans_fail_text"
-            android:layout_gravity="center"
-            android:paddingStart="40dp"
-            android:textAlignment="center"
-            android:paddingEnd="40dp"
-            />
+            app:srcCompat="@drawable/ic_family_name_update" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/add_amount"
+            android:id="@+id/verification_title"
             style="@style/TextviewRegular"
-            android:layout_marginTop="33dp"
-            android:text="@string/add_btn_text"
+            android:layout_marginTop="21dp"
+            android:text="@string/set_family_name"
             android:layout_gravity="center"
-            android:textAlignment="center"
             android:textSize="@dimen/textSize_18"
             android:textColor="@color/text_color_dark"
-
             />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+            android:hint="@string/update_family_hint"
+            android:inputType="textCapWords"
+            android:singleLine="true"
+            android:paddingStart="@dimen/edittextHintPaddingStart"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingEnd="@dimen/edittextHintPaddingEnd"
+         />
+
+
 
         <LinearLayout
             android:id="@+id/linear_layout"
@@ -64,7 +61,7 @@
             android:weightSum="1">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/button_leave"
+                android:id="@+id/button_cancel"
                 style="@style/TextviewRegular"
                 android:textSize="@dimen/textSize_18"
                 android:textColor="@color/text_color_dark"
@@ -73,21 +70,22 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_weight="0.5"
                 android:gravity="center"
-                android:text="@string/add_money_trans_fail_change"
+                android:text="@string/cancel_btn_text"
                 />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_cancel"
+                android:id="@+id/button_update"
                 style="@style/Widget.App.Button"
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_weight="0.5"
-                android:text="@string/retry_btn_text"
+                android:text="@string/update_btn_text"
                 android:background="@drawable/curved_background1"
                 android:textAllCaps="false"
                 app:backgroundTint="@color/text_color_dark"
-            />
+                />
+
 
         </LinearLayout>
 

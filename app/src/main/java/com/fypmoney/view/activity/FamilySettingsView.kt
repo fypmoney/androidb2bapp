@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +17,8 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ViewFamilySettingsBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.view.fragment.AddMoneyTransactionFailBottomSheet
+import com.fypmoney.view.fragment.UpdateFamilyNameBottomSheet
 import com.fypmoney.viewmodel.FamilySettingsViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_family_settings.*
@@ -23,7 +27,8 @@ import kotlinx.android.synthetic.main.view_family_settings.*
 /*
 * This class is used as Home Screen
 * */
-class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySettingsViewModel>() {
+class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySettingsViewModel>(),
+    UpdateFamilyNameBottomSheet.OnUpdateFamilyClickListener {
     private lateinit var mViewModel: FamilySettingsViewModel
     private lateinit var mViewBinding: ViewFamilySettingsBinding
 
@@ -74,6 +79,12 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
                 mViewModel.onAddMemberClicked.value = false
             }
         }
+        mViewModel.onEditFamilyNameClicked.observe(viewLifecycleOwner) {
+            if (it) {
+                callBottomSheet()
+                mViewModel.onEditFamilyNameClicked.value = false
+            }
+        }
 
     }
 
@@ -101,5 +112,23 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
 
     override fun onTryAgainClicked() {
 
+    }
+
+    override fun onUpdateFamilyButtonClick(familyName: String) {
+        mViewModel.changedUserName.set(familyName)
+        mViewModel.callUpdateFamilyName()
+
+    }
+
+    /*
+* This method is used to call leave member
+* */
+    private fun callBottomSheet() {
+        val bottomSheet =
+            UpdateFamilyNameBottomSheet(
+                onBottomSheetClickListener = this
+            )
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "UpdateFamilyName")
     }
 }

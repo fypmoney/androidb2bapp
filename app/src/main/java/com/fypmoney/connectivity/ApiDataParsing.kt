@@ -4,8 +4,8 @@ import com.fypmoney.connectivity.ApiConstant.API_AUTH_LOGIN
 import com.fypmoney.connectivity.ApiConstant.API_CHECK_IS_APP_USER
 import com.fypmoney.connectivity.ApiConstant.API_FETCH_ALL_FEEDS
 import com.fypmoney.connectivity.ApiConstant.API_GET_CUSTOMER_INFO
-import com.fypmoney.connectivity.ApiConstant.API_GET_FAMILY_NOTIFICATION_LIST
 import com.fypmoney.connectivity.ApiConstant.API_GET_INTEREST
+import com.fypmoney.connectivity.ApiConstant.API_GET_NOTIFICATION_LIST
 import com.fypmoney.connectivity.ApiConstant.API_LEAVE_FAMILY_MEMBER
 import com.fypmoney.connectivity.ApiConstant.API_LOGIN
 import com.fypmoney.connectivity.ApiConstant.API_LOGIN_INIT
@@ -88,8 +88,8 @@ class ApiDataParsing {
                 ApiConstant.API_REMOVE_FAMILY_MEMBER -> {
                     getObject(response, RemoveFamilyResponse::class.java)
                 }
-                API_GET_FAMILY_NOTIFICATION_LIST -> {
-                    getObject(response, FamilyNotificationResponse::class.java)
+                API_GET_NOTIFICATION_LIST -> {
+                    getObject(response, NotificationModel.NotificationResponse::class.java)
                 }
                 ApiConstant.API_UPDATE_APPROVAL_REQUEST -> {
                     getObject(response, UpdateFamilyApprovalResponse::class.java)
@@ -97,6 +97,9 @@ class ApiDataParsing {
 
                 ApiConstant.API_VERIFY_REFERRAL_CODE -> {
                     getObject(response, ReferralCodeResponse::class.java)
+                }
+                ApiConstant.API_UPDATE_FAMILY_NAME -> {
+                    getObject(response, UpdateFamilyNameResponse::class.java)
                 }
 
                 else -> response

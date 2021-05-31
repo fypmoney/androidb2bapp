@@ -31,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="200dp"
             android:id="@id/linear_layout"
+            android:layout_marginTop="30dp"
             android:orientation="vertical"
             android:background="@drawable/curved_background1">
 
@@ -61,18 +62,44 @@
                 android:layout_marginBottom="15dp"
                 />
 
-
-
-
-
-
         </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewBold"
+            android:id="@+id/headingMain"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_below="@id/linear_layout"
+            android:text="@{viewModel.username}"
+            android:textSize="20dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:onClick="@{()->viewModel.onEditFamilyNameClicked()}"
+            android:layout_below="@id/linear_layout"
+            app:srcCompat="@drawable/ic_edit" />
+
+
+        <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:id="@+id/view2"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/headingMain"
+        android:background="@color/grey"/>
+
 
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextviewRegular"
             android:id="@id/heading"
             android:layout_marginTop="38dp"
-            android:layout_below="@id/linear_layout"
+            android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=visible}"
+            android:layout_below="@id/view2"
             android:text="@string/family_fyper_txt"
             android:textColor="@color/text_color_dark"
             android:textSize="17dp"
@@ -85,53 +112,15 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/heading"
                 android:layout_marginTop="10dp"
+                android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=visible}"
                 android:layout_marginBottom="10dp"
                 >
-                <LinearLayout
-                    android:id="@+id/serviceLayout"
-                    android:paddingStart="@dimen/_4sdp"
-                    android:paddingEnd="@dimen/_4sdp"
-                    android:layout_width="@dimen/_120sdp"
-                    android:layout_margin="@dimen/_5sdp"
-                    android:padding="@dimen/_5sdp"
-                    android:visibility="gone"
-                    android:onClick="@{()->viewModel.onAddMemberClicked()}"
-                    android:background="@drawable/curved_background8"
-                    android:layout_height="@dimen/_45sdp">
-
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivServiceLogo"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_gravity="center"
-                        android:padding="12dp"
-                        android:background="@drawable/curved_background13"
-                        android:layout_marginStart="@dimen/_2sdp"
-                        app:srcCompat="@drawable/ic_add_member" />
-
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvServiceName"
-                        style="@style/TextviewRegular"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/_5sdp"
-                        android:layout_marginEnd="@dimen/_5sdp"
-                        android:textColor="@color/text_color_dark"
-                        android:text="@string/add_member_heading"
-                        android:textSize="@dimen/textSize_18"
-
-                        />
-                </LinearLayout>
-
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/serviceLayout"
                     app:adapter="@{viewModel.memberAdapter}"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="2"
@@ -145,13 +134,15 @@
     android:layout_height="2dp"
     android:id="@+id/view1"
     android:layout_marginBottom="10dp"
+    android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=visible}"
     android:layout_below="@id/relativeLayout"
-    android:background="@color/grey"/>
+    android:background="@color/dividerColor"/>
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextviewRegular"
             android:id="@id/heading1"
             android:layout_below="@id/view1"
             android:text="@string/family_fyper_pending_approval"
+            android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=visible}"
             android:textColor="@color/text_color_dark"
             android:textSize="17dp"
             />
@@ -165,11 +156,77 @@
                 android:layout_centerVertical="true"
                 android:layout_below="@id/heading1"
                 android:layout_marginTop="10dp"
+                android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=visible}"
                 app:adapter="@{viewModel.pendingAdapter}"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
 
                 />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view2"
+            android:layout_marginTop="30dp"
+            android:visibility="@{viewModel.isNoDataFoundVisible?View.VISIBLE:View.GONE,default=gone}"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_add_a_member_no_data" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextviewRegular"
+                android:id="@+id/headingNoData"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:text="@string/family_no_data"
+                />
+
+            <LinearLayout
+                android:id="@+id/serviceLayout1"
+                android:paddingStart="@dimen/_4sdp"
+                android:paddingEnd="@dimen/_4sdp"
+                android:layout_width="@dimen/_120sdp"
+                android:padding="@dimen/_5sdp"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center"
+                android:onClick="@{()->viewModel.onAddMemberClicked()}"
+                android:background="@drawable/curved_background8"
+                android:layout_height="@dimen/_45sdp">
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivServiceLogo1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:padding="12dp"
+                    android:background="@drawable/curved_background13"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    app:srcCompat="@drawable/ic_add_member" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvServiceName1"
+                    style="@style/TextviewRegular"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:textColor="@color/text_color_dark"
+                    android:text="@string/add_member_heading"
+                    android:textSize="@dimen/textSize_18"
+
+                    />
+            </LinearLayout>
+
+
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -177,6 +234,7 @@
             android:background="@drawable/border_background1"
             android:padding="15dp"
             android:layout_marginTop="30dp"
+            android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=visible}"
             android:layout_marginBottom="30dp"
             android:layout_below="@id/recycler_view1">
 
