@@ -13,6 +13,8 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
 import com.fypmoney.database.entity.MemberEntity
+import com.fypmoney.database.entity.TaskEntity
+import com.fypmoney.databinding.BottomSheetAcceptRejectBinding
 import com.fypmoney.databinding.BottomSheetLeaveMemberBinding
 import com.fypmoney.util.AppConstants
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -22,9 +24,8 @@ import kotlinx.android.synthetic.main.bottom_sheet_leave_member.*
 /*
 * This is used to leave or remove any member
 * */
-class LeaveMemberBottomSheetFragment(
-    private var memberEntity: MemberEntity?,
-    private val type: String, private var onBottomSheetClickListener: OnBottomSheetClickListener
+class AcceptRejectTaskFragment(
+    private var taskEntity: TaskEntity?, private var onBottomSheetClickListener: OnBottomSheetClickListener
 ) : BottomSheetDialogFragment() {
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
@@ -36,61 +37,42 @@ class LeaveMemberBottomSheetFragment(
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(
-            R.layout.bottom_sheet_leave_member,
+            R.layout.bottom_sheet_accept_reject,
             container,
             false
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetLeaveMemberBinding>(
+        val bindingSheet = DataBindingUtil.inflate<BottomSheetAcceptRejectBinding>(
             layoutInflater,
-            R.layout.bottom_sheet_leave_member,
+            R.layout.bottom_sheet_accept_reject,
             null,
             false
         )
         bottomSheet.setContentView(bindingSheet.root)
 
-        val title = view.findViewById<TextView>(R.id.title)!!
-        val name = view.findViewById<TextView>(R.id.name)!!
-        val cancel = view.findViewById<Button>(R.id.button_cancel)!!
-        val leaveRemove = view.findViewById<Button>(R.id.button_leave)!!
+        val task = view.findViewById<TextView>(R.id.task)!!
+        val task_detail = view.findViewById<TextView>(R.id.task_detail)!!
+        val relation = view.findViewById<TextView>(R.id.relation)!!
+        val amount = view.findViewById<TextView>(R.id.amount)!!
+        val time = view.findViewById<TextView>(R.id.time)!!
+        val button_reject = view.findViewById<Button>(R.id.button_reject)!!
+        val button_accept = view.findViewById<Button>(R.id.button_accept)!!
 
-        cancel.setOnClickListener {
+        button_reject.setOnClickListener {
             dialog!!.cancel()
         }
-        leaveRemove.setOnClickListener {
-            onBottomSheetClickListener.onBottomSheetButtonClick(type)
+        button_accept.setOnClickListener {
+            onBottomSheetClickListener.onBottomSheetButtonClick()
             dialog!!.cancel()
         }
 
-        when (type) {
-            AppConstants.LEAVE_MEMBER -> {
-                name.visibility = View.GONE
-            }
-            AppConstants.REMOVE_MEMBER -> {
-                name.text = memberEntity?.name
-                when (memberEntity?.status) {
-                    AppConstants.ADD_MEMBER_STATUS_APPROVED -> {
-                        title.text = getString(R.string.remove_title)
-                        leaveRemove.text = getString(R.string.remove_btn_text)
-                    }
-                    AppConstants.ADD_MEMBER_STATUS_INVITED -> {
-                        title.text = getString(R.string.remove_title)
-                        leaveRemove.text = getString(R.string.remove_btn_text)
-                    }
-
-
-                }
-
-
-            }
-        }
 
         return view
     }
 
     interface OnBottomSheetClickListener {
-        fun onBottomSheetButtonClick(type: String)
+        fun onBottomSheetButtonClick()
 
     }
 

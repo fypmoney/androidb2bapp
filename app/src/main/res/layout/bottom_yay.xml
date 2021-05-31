@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/curved_background1"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/verification_title"
+            style="@style/TextviewBold"
+            android:layout_marginTop="45dp"
+            android:text="@string/yay"
+            android:layout_gravity="center" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            app:srcCompat="@drawable/ic_yay" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/updated_balance"
+            style="@style/TextviewRegular"
+            android:layout_marginTop="25dp"
+            android:text="@string/hey_champ"
+            android:layout_gravity="center"
+            android:paddingStart="40dp"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:paddingEnd="40dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/amount"
+            style="@style/TextviewRegular"
+            android:layout_marginRight="@dimen/_12sdp"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:gravity="center_horizontal"
+            android:text="₹70"
+            android:textSize="19sp"
+            android:textColor="@color/color_skyblue"
+            tools:ignore="RtlCompat" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewRegular"
+            android:layout_marginTop="20dp"
+            android:text="@string/can_see"
+            android:layout_gravity="center"
+            android:paddingStart="40dp"
+            android:layout_marginBottom="30dp"
+            android:textAlignment="center"
+            android:paddingEnd="40dp" />
+
+
+    </LinearLayout>
+
+</layout>
+

@@ -122,6 +122,8 @@
                 </LinearLayout>
 
 
+
+
                 <EditText
                     android:id="@+id/add_money_editext"
                     style="@style/EditTextStyle"

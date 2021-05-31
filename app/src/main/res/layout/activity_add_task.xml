@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.AddTaskViewModel" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/toolbar" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_marginBottom="@dimen/_40sdp"
+                android:id="@+id/scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="vertical">
+
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/screenMarginLeft"
+                    android:layout_marginEnd="@dimen/screenMarginRight">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/balance_text"
+                        style="@style/TextviewRegular"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/create_own"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="15dp" />
+
+                    <LinearLayout
+                        android:id="@id/linear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/add_money"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="21dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+                            android:background="@drawable/curved_background5"
+                            android:gravity="center_vertical"
+                            android:padding="10dp"
+                            android:text="@string/add_money_50"
+                            android:textColor="@color/text_color_dark" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/curved_background5"
+                            android:gravity="center_vertical"
+                            android:padding="10dp"
+                            android:text="@string/add_money_100"
+
+                            android:textColor="@color/text_color_dark" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/curved_background5"
+                            android:gravity="center_vertical"
+                            android:padding="10dp"
+                            android:text="@string/add_money_500"
+                            android:textColor="@color/text_color_dark" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/curved_background5"
+                            android:gravity="center_vertical"
+                            android:padding="10dp"
+                            android:text="@string/add_money_1000"
+                            android:textColor="@color/text_color_dark" />
+
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/add_money_editext"
+                        style="@style/EditTextStyle"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="30dp"
+                        android:drawableStart="@drawable/rupee_symbol"
+                        android:drawablePadding="5dp"
+                        android:inputType="number"
+                        android:textColor="@color/add_money_amount_color"
+                        android:textSize="32dp" />
+
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                        android:hint="@string/title_hint"
+                        android:inputType="textCapWords"
+                        android:paddingStart="@dimen/edittextHintPaddingStart"
+                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                        android:layout_marginTop="20dp"
+                        android:singleLine="true"
+                        android:text="" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="140dp"
+                        android:gravity="top"
+                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                        android:hint="@string/desc_hint"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/edittextHintPaddingStart"
+                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:singleLine="true"
+                        android:text="" />
+
+
+                    <LinearLayout
+                        android:weightSum="2"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp">
+
+                        <LinearLayout
+                            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_marginRight="12dp"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/etMobileNo"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:backgroundTint="@android:color/transparent"
+                                android:gravity="center_vertical"
+                                android:hint="@string/time_limit_hint"
+                                android:inputType="number"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/vDivider5"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_marginLeft="12dp"
+                            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                            android:layout_weight="1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatSpinner
+                                android:id="@+id/spCountryCode"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAddContact"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/layoutPhoneNumber"
+                        android:layout_alignParentEnd="true"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin"
+                        android:fontFamily="@font/poppins_medium"
+                        android:padding="@dimen/_5sdp"
+                        android:text="@string/from_contact"
+                        android:textColor="@color/buttonBackgroundColor"
+                        android:textSize="@dimen/sub_title_size"
+                        android:visibility="gone" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextviewRegular"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/assign_to"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="15dp" />
+
+
+                    <ImageView
+                        android:layout_marginTop="20dp"
+                        android:layout_width="match_parent"
+                        android:background="@drawable/temp_family"
+                        android:layout_height="200dp"/>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        app:adapter="@{viewModel.relationTaskAdapter}"
+                        app:spanCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnContinue"
+                        style="@style/Widget.App.Button"
+                        android:layout_width="299dp"
+                        android:layout_height="52dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/curved_background1"
+                        android:text="@string/add_member_btn_text"
+                        android:textAllCaps="false"
+                        android:layout_centerHorizontal="true"
+                        app:backgroundTint="@color/text_color_dark" />
+
+
+
+                </LinearLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

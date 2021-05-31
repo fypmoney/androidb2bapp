@@ -1,7 +1,9 @@
 package com.fypmoney.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -10,7 +12,13 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenHomeBinding
+import com.fypmoney.util.AppConstants
+import com.fypmoney.view.activity.ChoresActivity
+import com.fypmoney.view.activity.ChoresHistoryActivity
+import com.fypmoney.view.activity.ContactView
+import com.fypmoney.viewmodel.ChoresViewModel
 import com.fypmoney.viewmodel.HomeScreenViewModel
+import com.google.android.material.card.MaterialCardView
 
 
 /**
@@ -20,6 +28,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
 
     private lateinit var mViewModel: HomeScreenViewModel
     private lateinit var mViewBinding: ScreenHomeBinding
+    lateinit var chore_card: MaterialCardView
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -38,6 +47,10 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
+        chore_card = view.findViewById(R.id.chore_card)
+        chore_card.setOnClickListener {
+            intentToAddMemberActivity(ChoresActivity::class.java)
+            }
         setObservers()
 
     }
@@ -49,9 +62,17 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         mViewModel.onAddMoneyClicked.observe(viewLifecycleOwner) {
             if (it) {
                 callFrag()
+                //intentToAddMemberActivity(ChoresActivity::class.java)
                 mViewModel.onAddMoneyClicked.value = false
             }
         }
+
+        /*mViewModel.onChoreClicked.observe(viewLifecycleOwner) {
+            if (it) {
+                intentToAddMemberActivity(ChoresActivity::class.java)
+                mViewModel.onChoreClicked.value = false
+            }
+        }*/
 
 
     }
@@ -76,5 +97,11 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         val fragmentTransaction: FragmentTransaction = fragmentManager!!.beginTransaction()
         fragmentTransaction.replace(R.id.container, fragment2)
         fragmentTransaction.commit()
+    }
+
+    private fun intentToAddMemberActivity(aClass: Class<*>) {
+        val intent = Intent(requireActivity(), aClass)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "")
+        requireContext().startActivity(intent)
     }
 }

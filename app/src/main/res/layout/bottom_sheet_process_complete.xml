@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/curved_background1"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/task"
+            style="@style/TextviewRegular"
+            android:layout_marginTop="45dp"
+            android:text="Water the plant"
+            android:layout_gravity="center"
+            android:textSize="@dimen/textSize_18"
+            android:textColor="@color/text_color_dark"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/task_detail"
+            style="@style/TextviewRegular"
+            android:layout_marginLeft="@dimen/_12sdp"
+            android:layout_marginRight="@dimen/_12sdp"
+            android:layout_marginTop="30dp"
+            android:textAlignment="center"
+            android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/relation"
+            style="@style/TextviewRegular"
+            android:text="By Mom"
+            android:layout_gravity="center"
+            android:textSize="@dimen/textSize_18"
+            android:textColor="@color/text_color_dark"/>
+
+        <LinearLayout
+            android:layout_marginTop="25dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/amount"
+                android:layout_marginRight="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="₹70"
+                android:textSize="17sp"
+                android:gravity="right"
+                android:fontFamily="@font/product_sans_regular"
+                android:textColor="@color/color_skyblue"/>
+
+            <View
+                android:background="@color/dividerColor"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/time"
+                android:layout_marginRight="@dimen/_12sdp"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="17sp"
+                android:text="6 Days Left"
+                android:gravity="right"
+                android:fontFamily="@font/product_sans_regular"
+                android:textColor="@color/text_color_red"/>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_desc"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:gravity="top"
+            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+            android:hint="@string/cmnt_here"
+            android:inputType="text"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:singleLine="true"
+            android:text="" />
+
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="20dp"
+            android:id="@+id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_reject"
+                style="@style/Widget.App.Button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/main_button_height"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_weight="0.5"
+                android:textColor="@color/black"
+                android:background="@drawable/curved_background1"
+                android:text="@string/in_process"
+                android:fontFamily="@font/product_sans_regular"
+                app:backgroundTint="@color/fragmentBackgroundColor" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_accept"
+                style="@style/Widget.App.Button"
+                android:layout_width="0dp"
+                android:background="@drawable/curved_background1"
+                android:layout_height="@dimen/main_button_height"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_weight="0.5"
+                android:fontFamily="@font/product_sans_regular"
+                android:text="@string/complete_btn"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/black" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>
+
