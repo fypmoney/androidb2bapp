@@ -25,6 +25,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     var userTimeLineAdapter = UserTimeLineAdapter(this)
     var noDataFoundVisibility = ObservableField(false)
     var isTimeLineRecyclerVisible = ObservableField(false)
+    var isGetNotificationsRecyclerVisible = ObservableField(false)
     var positionSelected = ObservableField<Int>()
     var onNotificationClicked = MutableLiveData<Boolean>()
     var notificationSelectedResponse = NotificationModel.NotificationResponseDetails()
@@ -73,8 +74,9 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
             ApiConstant.API_GET_NOTIFICATION_LIST -> {
                 if (responseData is NotificationModel.NotificationResponse) {
                     if (responseData.notificationResponseDetails.isNullOrEmpty()) {
-                        // noDataFoundVisibility.set(true)
+                       isGetNotificationsRecyclerVisible.set(false)
                     } else {
+                        isGetNotificationsRecyclerVisible.set(true)
                         notificationAdapter.setList(responseData.notificationResponseDetails)
                     }
                 }

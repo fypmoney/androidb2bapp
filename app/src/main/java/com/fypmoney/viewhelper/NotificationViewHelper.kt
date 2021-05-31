@@ -1,7 +1,5 @@
 package com.fypmoney.viewhelper
 
-import android.util.Log
-import android.view.View
 import androidx.databinding.ObservableField
 import com.fypmoney.model.NotificationModel
 import com.fypmoney.view.adapter.NotificationAdapter

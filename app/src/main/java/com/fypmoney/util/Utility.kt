@@ -588,7 +588,7 @@ object Utility {
     /*
     * This is used to store the data of customer in the preference
     * */
-     fun saveCustomerDataInPreference(responseData: CustomerInfoResponse) {
+    fun saveCustomerDataInPreference(responseData: CustomerInfoResponse) {
         val gson = Gson()
         val json = gson.toJson(responseData)
         SharedPrefUtils.putString(
@@ -597,6 +597,7 @@ object Utility {
             json
         )
     }
+
     /*
         * This is used to get the data of customer from the preference
         * */
@@ -610,4 +611,18 @@ object Utility {
         return gson.fromJson(json, CustomerInfoResponse::class.java)
     }
 
+    /*
+    * This method is used to remove + or +91 from number
+    * */
+    fun removePlusOrNineOneFromNo(phone: String): String {
+        if (phone.startsWith("+91")) {
+            return phone.replace("+91", "")
+        }
+        if (phone.startsWith("+")) {
+            return phone.replace("+", "")
+        }
+
+        return phone
+
+    }
 }

@@ -92,7 +92,7 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
 
             else -> {
                 when (mobile.value) {
-                    contactResult.get()!!.contactNumber -> {
+                    Utility.removePlusOrNineOneFromNo(contactResult.get()?.contactNumber!!)-> {
                         when (contactResult.get()!!.isAppUser!!) {
                             true -> {
                                 onIsAppUser.value = AppConstants.API_SUCCESS
@@ -218,14 +218,7 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
                 } else {
                     parentName.set(contactResult.get()?.firstName + " " + contactResult.get()?.lastName)
                 }
-
-                if (contactResult.get()?.contactNumber!!.startsWith("+91")) {
-                    mobile.value = contactResult.get()?.contactNumber!!.replace("+91", "")
-                }
-                else  if (contactResult.get()?.contactNumber!!.startsWith("+")) {
-                    mobile.value = contactResult.get()?.contactNumber!!.replace("+", "")
-                }
-
+                mobile.value =Utility.removePlusOrNineOneFromNo(contactResult.get()?.contactNumber!!)
 
             }
         } catch (e: Exception) {

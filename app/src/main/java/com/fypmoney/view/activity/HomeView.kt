@@ -80,8 +80,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 }
                 R.id.family -> {
                     mViewModel.isScanVisible.set(false)
-                    mViewModel.headerText.set(
-                        Utility.getCustomerDataFromPreference()?.firstName + getString(
+                    mViewModel.headerText.set(getString(
                             R.string.family_settings_toolbar_heading
                         )
                     )

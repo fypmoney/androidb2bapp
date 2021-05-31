@@ -109,7 +109,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                         Utility.getCustomerDataFromPreference()!!.isReferralAllowed == AppConstants.YES -> {
                             intentToActivity(ReferralCodeView::class.java)
                         }
-                        Utility.getCustomerDataFromPreference()!!.isProfileCompleted == AppConstants.YES -> {
+                        Utility.getCustomerDataFromPreference()!!.isProfileCompleted == AppConstants.NO -> {
                             intentToActivity(CreateAccountView::class.java)
                         }
                         else -> {

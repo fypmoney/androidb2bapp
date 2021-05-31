@@ -88,3 +88,12 @@ data class UpdateFamilyApprovalRequest(
     @SerializedName("entityType") var entityType: String?,
     @SerializedName("status") var status: String?) : BaseRequest()
 
+
+data class UpdateFamilyNameResponse(
+    @SerializedName("data") val updateFamilyNameDetails:UpdateFamilyNameDetails
+) : Serializable
+
+data class UpdateFamilyNameDetails(
+    @SerializedName("name") var name: String?
+) : Serializable
+
