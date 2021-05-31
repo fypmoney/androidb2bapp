@@ -87,6 +87,40 @@
     <string name="empty_contact_error">Unable to fetch contacts. Add member by entering the contact number</string>
     <string name="select_member">Select a member</string>
 
+    <!--chores activity
+    -->
+    <string name="chore_title">Chores</string>
+    <string name="chore_history_title">Chores</string>
+    <string name="assign_task">Assign tasks or participate to get cash.</string>
+    <string name="btn_text">Assign A Task</string>
+    <string name="btn_cont">Continue</string>
+    <string name="create_task">Choose a task or create one</string>
+    <string name="chores_error">Something went wrong.</string>
+    <string name="sub_title1">Your tasks</string>
+    <string name="sub_title2">Assigned tasks</string>
+    <string name="chores_history">Show chores history</string>
+    <string name="chores_accept">Accept</string>
+    <string name="chores_reject">Reject</string>
+    <string name="in_process">In process</string>
+    <string name="complete_btn">Completed</string>
+    <string name="cmnt_here">Comment here</string>
+    <string name="good_job">Good job!</string>
+    <string name="yay">Yay!</string>
+    <string name="whoop">Whoops!</string>
+    <string name="well_done">Well done!</string>
+    <string name="request_again">Request Again</string>
+    <string name="succesfully_assigned">You have successfully assigned the task to Ankush bro.</string>
+    <string name="successfully_job">You have successfully completed your task. Stay tuned you will get your cash soon.</string>
+    <string name="hey_champ">Hey Champ you have done a great job! I am proud of you. 👏</string>
+    <string name="can_see">You can see this in your rewards section.</string>
+    <string name="looks_like">Looks like your dad has rejected your task completion reward.</string>
+    <string name="create_own_task">Create your own task</string>
+    <string name="title_hint">Title</string>
+    <string name="desc_hint">Description</string>
+    <string name="time_limit_hint">Time limit</string>
+    <string name="assign_to">Assign a task to</string>
+    <string name="create_own">Create your own task</string>
+
     <!--
     Sign in
     -->
@@ -360,7 +394,7 @@
     <string name="add_money_trans_fail_change">Change Method</string>
     <string name="add_money_trans_fail_add">"Add "</string>
 
-   <!--
+    <!--
    Card screen
    -->
 
@@ -390,5 +424,7 @@
         <item>@drawable/ic_grand_child</item>
         <item>@drawable/ic_other</item>
     </integer-array>
+    <string name="title_activity_chores_history">ChoresHistoryActivity</string>
+    <string name="title_activity_add_task">AddTaskActivity</string>
 
 </resources>

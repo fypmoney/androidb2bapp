@@ -11,6 +11,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     var availableAmount =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
     var onAddMoneyClicked = MutableLiveData(false)
+    var onChoreClicked = MutableLiveData(false)
 
     /*
     * This is used to handle add money
@@ -19,4 +20,12 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         onAddMoneyClicked.value = true
 
     }
+
+    /*
+   * This is used to handle Open Chore
+   * */
+   /* fun onChoreClicked() {
+        onChoreClicked.value = true
+
+    }*/
 }

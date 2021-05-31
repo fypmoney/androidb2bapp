@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:layout_margin="@dimen/margin"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/curved_background1"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/verification_title"
+            style="@style/TextviewBold"
+            android:layout_marginTop="35dp"
+            android:text="@string/yay"
+            android:layout_gravity="center" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            app:srcCompat="@drawable/ic_whoops" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewRegular"
+            android:layout_marginTop="30dp"
+            android:text="@string/looks_like"
+            android:layout_gravity="center"
+            android:paddingStart="40dp"
+            android:textAlignment="center"
+            android:paddingEnd="40dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContinue"
+            style="@style/Widget.App.Button"
+            android:layout_width="299dp"
+            android:layout_height="52dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/curved_background1"
+            android:text="@string/request_again"
+            android:textAllCaps="false"
+            android:layout_marginBottom="30dp"
+            android:layout_centerHorizontal="true"
+            app:backgroundTint="@color/text_color_dark" />
+
+
+    </LinearLayout>
+
+</layout>
+

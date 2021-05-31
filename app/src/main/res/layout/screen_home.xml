@@ -60,8 +60,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="38dp"
-         >
+            android:layout_marginTop="38dp">
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -101,10 +100,12 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/curved_border"
                 android:gravity="center"
+                android:onClick="@{()->viewModel.onAddMoneyClicked()}"
                 android:text="@string/add_money_btn_text"
                 android:textSize="16dp"
                 android:layout_marginEnd="24dp"
                 android:textColor="@color/text_color_dark" />
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageview"
                 style="@style/TextviewRegular"
@@ -114,7 +115,6 @@
                 android:background="@drawable/ic_triangle"
                 android:gravity="center"
                 android:text="@string/add_money_btn_text"
-                android:onClick="@{()->viewModel.onAddMoneyClicked()}"
                 android:textSize="16dp"
                 android:textColor="@color/text_color_dark" />
 
@@ -227,6 +227,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:id="@+id/chore_card"
                 android:layout_weight="1"
                 app:cardCornerRadius="@dimen/card_corner_radius"
                 app:cardElevation="@dimen/card_elevation"

@@ -24,6 +24,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DreamfolksApp"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".view.activity.AddTaskActivity"
+            android:label="@string/title_activity_add_task"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar"></activity>
+        <activity
+            android:name=".view.activity.ChoresHistoryActivity"
+            android:label="@string/title_activity_chores_history"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
@@ -51,7 +59,6 @@
         <activity
             android:name=".view.activity.EnterOtpView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
         <activity
             android:name=".view.activity.CreateAccountView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
@@ -59,31 +66,27 @@
             android:name=".view.activity.LoginSuccessView"
             android:noHistory="true"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
-
         <activity
             android:name=".view.activity.PermissionView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.ReferralCodeView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
         <activity
             android:name=".view.activity.CreateAccountSuccessView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
         <activity
             android:name=".view.activity.CommunityView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
         <activity
             android:name=".view.activity.MainActivity"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.ContactView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-        <activity android:name=".view.activity.HomeView"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar"/>
+        <activity
+            android:name=".view.activity.HomeView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.UserProfileView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
@@ -99,12 +102,12 @@
         <activity
             android:name=".view.activity.AddMemberView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
         <activity
             android:name=".view.activity.UserFeedsDetailView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
-
+        <activity
+            android:name=".view.activity.ChoresActivity"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.InviteRejectedView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
@@ -114,28 +117,22 @@
         <activity
             android:name=".view.activity.StayTunedView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
         <activity
             android:name=".view.activity.InviteMemberView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
         <activity
             android:name=".view.activity.AadhaarAccountActivationView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
         <activity
             android:name=".view.activity.AadhaarVerificationView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
         <activity
             android:name=".view.activity.ActivationSuccessWithAadhaarView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
-
-
         <activity android:name=".view.activity.PushNotificationView">
             <intent-filter>
                 <action android:name="Webview" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -147,7 +144,6 @@
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
             </intent-filter>
         </receiver>
-
         <receiver android:name=".receivers.GeofenceBroadcastReceiver" />
 
         <service
