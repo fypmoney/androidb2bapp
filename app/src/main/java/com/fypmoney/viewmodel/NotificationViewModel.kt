@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -24,8 +25,9 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     var notificationAdapter = NotificationAdapter(this, this)
     var userTimeLineAdapter = UserTimeLineAdapter(this)
     var noDataFoundVisibility = ObservableField(false)
-    var isTimeLineRecyclerVisible = ObservableField(false)
-    var isGetNotificationsRecyclerVisible = ObservableField(false)
+    var isPreviousVisible = ObservableField(false)
+    var isTimeLineNoDataVisible = ObservableField(false)
+    var isGetNotificationsRecyclerVisible = ObservableField(true)
     var positionSelected = ObservableField<Int>()
     var onNotificationClicked = MutableLiveData<Boolean>()
     var notificationSelectedResponse = NotificationModel.NotificationResponseDetails()
@@ -83,10 +85,14 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
             }
             ApiConstant.API_USER_TIMELINE -> {
                 if (responseData is NotificationModel.NotificationResponse) {
+                    Log.d("gkgggkkg","kkgkkgk")
+                    isPreviousVisible.set(true)
                     if (responseData.notificationResponseDetails.isNullOrEmpty()) {
-                        isTimeLineRecyclerVisible.set(false)
+                        Log.d("gkgggkkg","kkgkkgk_no_data")
+                        isTimeLineNoDataVisible.set(true)
                     } else {
-                        isTimeLineRecyclerVisible.set(true)
+                        Log.d("gkgggkkg","kkgkkgk_daat")
+                        isTimeLineNoDataVisible.set(false)
                         userTimeLineAdapter.setList(responseData.notificationResponseDetails)
                     }
                 }

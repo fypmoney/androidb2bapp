@@ -29,32 +29,55 @@
                 android:id="@+id/toolbar_layout"
                 layout="@layout/toolbar" />
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerview"
+            <LinearLayout
+                android:id="@+id/layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/toolbar_layout"
-                android:paddingStart="@dimen/screenMarginLeft"
-                android:paddingEnd="@dimen/screenMarginRight"
-                android:paddingTop="@dimen/screenMarginRight"
-                app:adapter="@{viewModel.notificationAdapter}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:spanCount="2"
+                android:orientation="vertical">
 
-                />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivServiceLogo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:visibility="@{viewModel.isGetNotificationsRecyclerVisible?View.GONE:View.VISIBLE,default=gone}"
+                    app:srcCompat="@drawable/ic_oops" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/get_notification_api_error"
+                    android:textColor="@color/text_color_dark"
+                    android:visibility="@{viewModel.isGetNotificationsRecyclerVisible?View.GONE:View.VISIBLE,default=gone}" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/screenMarginLeft"
+                    android:paddingTop="@dimen/screenMarginRight"
+                    android:paddingEnd="@dimen/screenMarginRight"
+                    app:adapter="@{viewModel.notificationAdapter}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:spanCount="2" />
+
+            </LinearLayout>
+
 
             <View
+                android:id="@+id/view1"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:id="@+id/view1"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="10dp"
+                android:layout_below="@id/layout"
                 android:layout_marginStart="@dimen/screenMarginLeft"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="@dimen/screenMarginRight"
-                android:visibility="@{viewModel.isTimeLineRecyclerVisible?View.VISIBLE:View.GONE,default=gone}"
-                android:layout_below="@id/recyclerview"
-                android:background="@color/dividerColor"/>
+                android:layout_marginBottom="16dp"
+                android:background="@color/dividerColor"
+                android:visibility="@{viewModel.isPreviousVisible?View.VISIBLE:View.GONE,default=gone}" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -65,29 +88,48 @@
                 android:paddingStart="@dimen/screenMarginLeft"
                 android:paddingEnd="@dimen/screenMarginRight"
                 android:text="@string/previous_txt"
-                android:visibility="@{viewModel.isTimeLineRecyclerVisible?View.VISIBLE:View.GONE,default=gone}"
-                android:textColor="@color/text_color_dark" />
+                android:textColor="@color/text_color_dark"
+                android:visibility="@{viewModel.isPreviousVisible?View.VISIBLE:View.GONE,default=gone}" />
 
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view1"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/heading1"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="10dp"
                 android:background="@color/screenBackground"
-                android:paddingStart="@dimen/screenMarginLeft"
-                android:paddingEnd="@dimen/screenMarginRight"
-                android:paddingTop="@dimen/screenMarginRight"
-                android:paddingBottom="@dimen/screenMarginRight"
-                android:visibility="@{viewModel.isTimeLineRecyclerVisible?View.VISIBLE:View.GONE,default=gone}"
-                app:adapter="@{viewModel.userTimeLineAdapter}"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                android:orientation="vertical"
+                android:visibility="@{viewModel.isPreviousVisible?View.VISIBLE:View.GONE,default=gone}">
 
-                />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:visibility="@{viewModel.isTimeLineNoDataVisible?View.VISIBLE:View.GONE,default=gone}"
+                    app:srcCompat="@drawable/ic_oops" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/user_timeline_api_error"
+                    android:textColor="@color/text_color_dark"
+                    android:visibility="@{viewModel.isTimeLineNoDataVisible?View.VISIBLE:View.GONE,default=gone}" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingStart="@dimen/screenMarginLeft"
+                    android:paddingTop="@dimen/screenMarginRight"
+                    android:paddingEnd="@dimen/screenMarginRight"
+                    android:paddingBottom="@dimen/screenMarginRight"
+                    app:adapter="@{viewModel.userTimeLineAdapter}"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+
+                    />
+
+            </LinearLayout>
         </RelativeLayout>
 
 

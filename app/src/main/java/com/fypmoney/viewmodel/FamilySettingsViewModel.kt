@@ -35,6 +35,7 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
     var username = ObservableField<String>()
     var changedUserName = ObservableField<String>()
     var isNoDataFoundVisible = ObservableField(false)
+    var isFamilyFiperVisible = ObservableField(false)
     val isSwitchChecked: MutableLiveData<Boolean> = MutableLiveData()
     var memberAdapter = MemberAdapter(this)
     var pendingAdapter = MemberAdapterViewAll()
@@ -42,8 +43,6 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
 
 
     init {
-        memberAdapter.addFirstElement()
-
         if (SharedPrefUtils.getString(
                 getApplication(),
                 SharedPrefUtils.SF_KEY_USER_FAMILY_NAME
@@ -131,6 +130,7 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
                     val inviteList = mutableListOf<MemberEntity>()
                     memberRepository.deleteAllMembers()
                     if (!responseData.GetMemberResponseDetails.isNullOrEmpty()) {
+                        isFamilyFiperVisible.set(true)
                         memberRepository.insertAllMembers(responseData.GetMemberResponseDetails)
                         memberRepository.getAllMembersFromDatabase()?.forEach {
                             when (it.status) {
@@ -146,9 +146,10 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
 
                         memberAdapter.setList(approveList)
                         pendingAdapter.setList(inviteList)
-                    }
+
                 } else {
                     isNoDataFoundVisible.set(true)
+                }
                 }
             }
             ApiConstant.API_UPDATE_FAMILY_NAME -> {

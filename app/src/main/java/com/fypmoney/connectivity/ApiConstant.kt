@@ -26,7 +26,7 @@ object ApiConstant {
     const val API_GET_NOTIFICATION_LIST = "/services/PockketService/internal/get/approval-request"
     const val API_UPDATE_APPROVAL_REQUEST = "/services/PockketService/internal/approval-request"
     const val API_VERIFY_REFERRAL_CODE = "/services/authservice/api/customer/refer/"
-    const val API_USER_TIMELINE = "/services/PockketService/api/user-timeline/"
+    const val API_USER_TIMELINE = "/services/PockketService/api/user-timeline"
     const val API_UPDATE_FAMILY_NAME = "/services/authservice/api/family-detail?name="
     const val API_LOGIN = "/auth/app/login"
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"

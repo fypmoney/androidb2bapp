@@ -20,6 +20,10 @@ import com.fypmoney.view.activity.NotificationView
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import org.jetbrains.annotations.NotNull
+import org.json.JSONObject
+
+
+
 
 
 /*
@@ -34,6 +38,16 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(@NotNull remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
+        Log.d("sjghe8ts9ge_data", remoteMessage.getData().toString())
+
+        val jsonRootObject = JSONObject(remoteMessage.getData().toString())
+        val notificationType: String = jsonRootObject.optString("notificationType").toString()
+        val url: String = jsonRootObject.optString("url").toString()
+
+        Log.d("sjghe8ts9ge_data_type",notificationType)
+
+
+
         remoteMessage.let {
             /*Log.d("Notification_title", it.notification?.title.toString())
             Log.d("Notification_body", it.notification?.body.toString())
@@ -41,13 +55,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.d("Notification_click", it.notification?.clickAction.toString())
             Log.d("Notification_data", it.data.toString())
             Log.d("sjghe8ts9ge_notific",it.notification.toString())*/
-            Log.d("sjghe8ts9ge_data",it.data.toString())
 
 
             val notificationBuilder: NotificationCompat.Builder =
                 NotificationCompat.Builder(this, createNotificationChannel())
-                    .setContentTitle("testing title")
-                    .setContentText("testing body")
+                    .setContentTitle(it.notification?.title.toString())
+                    .setContentText(it.notification?.body.toString())
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setStyle(NotificationCompat.BigTextStyle())
                     .setSmallIcon(R.mipmap.ic_launcher)
@@ -55,21 +68,23 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-           /* val intent = Intent(this,  Class.forName(AppConstants.BASE_ACTIVITY_URL + it.data.get().getStringExtra("tag")))
-            intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
+            /* val intent = Intent(this,  Class.forName(AppConstants.BASE_ACTIVITY_URL + it.data.get().getStringExtra("tag")))
+             intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
 
-            if (intent.hasExtra("tag")) {
-                try {
-                    intentToActivity(
-                        Class.forName(AppConstants.BASE_ACTIVITY_URL + intent.getStringExtra("tag")),intent.getStringExtra("type")
-                    )
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    intentToActivity(HomeView::class.java)
-                }
-                finish()
-            }
-            */
+             if (intent.hasExtra("tag")) {
+                 try {
+                     intentToActivity(
+                         Class.forName(AppConstants.BASE_ACTIVITY_URL + intent.getStringExtra("tag")),intent.getStringExtra("type")
+                     )
+                 } catch (e: Exception) {
+                     e.printStackTrace()
+                     intentToActivity(HomeView::class.java)
+                 }
+                 finish()
+             }
+             */
+
+
             val contentIntent = PendingIntent.getActivity(
                 this,
                 0,
