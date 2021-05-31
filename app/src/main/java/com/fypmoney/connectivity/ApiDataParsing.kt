@@ -94,7 +94,9 @@ class ApiDataParsing {
                 ApiConstant.API_UPDATE_APPROVAL_REQUEST -> {
                     getObject(response, UpdateFamilyApprovalResponse::class.java)
                 }
-
+                ApiConstant.API_USER_TIMELINE -> {
+                    getObject(response, NotificationModel.UserTimelineResponse::class.java)
+                }
                 ApiConstant.API_VERIFY_REFERRAL_CODE -> {
                     getObject(response, ReferralCodeResponse::class.java)
                 }

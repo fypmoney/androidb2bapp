@@ -9,7 +9,7 @@ import com.fypmoney.model.NotificationModel
 class UserTimeLineViewHelper(
     var size:Int,
     var position: Int,
-    var notification: NotificationModel.NotificationResponseDetails?
+    var notification: NotificationModel.UserTimelineResponseDetails?
 ) {
     var accepted = ObservableField<String>()
     var decline = ObservableField<String>()

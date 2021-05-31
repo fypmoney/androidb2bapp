@@ -16,7 +16,7 @@ import com.fypmoney.viewmodel.NotificationViewModel
  */
 class UserTimeLineAdapter(var viewModel: NotificationViewModel) :
     RecyclerView.Adapter<BaseViewHolder>() {
-    var notificationList: ArrayList<NotificationModel.NotificationResponseDetails>? = ArrayList()
+    var notificationList: ArrayList<NotificationModel.UserTimelineResponseDetails>? = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val mRowBinding = UserTimelineRowItemBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -58,7 +58,7 @@ class UserTimeLineAdapter(var viewModel: NotificationViewModel) :
     /**
      * This will set the data in the list in adapter
      */
-    fun setList(notificationList1: List<NotificationModel.NotificationResponseDetails>?) {
+    fun setList(notificationList1: List<NotificationModel.UserTimelineResponseDetails>?) {
         try {
             notificationList!!.clear()
             notificationList1?.forEach {

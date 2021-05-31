@@ -40,6 +40,7 @@ class StayTunedBottomSheet : BottomSheetDialogFragment() {
             false
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         val bottomSheet = BottomSheetDialog(requireContext())
         val bindingSheet = DataBindingUtil.inflate<ViewStayTunedBinding>(
             layoutInflater,
@@ -48,6 +49,7 @@ class StayTunedBottomSheet : BottomSheetDialogFragment() {
             false
         )
         bottomSheet.setContentView(bindingSheet.root)
+        bottomSheet.setCanceledOnTouchOutside(false)
 
         val stayTuned = view.findViewById<TextView>(R.id.stayTuned)!!
         val continueButton = view.findViewById<Button>(R.id.btnContinue)!!

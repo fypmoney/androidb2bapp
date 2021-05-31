@@ -19,20 +19,33 @@ class NotificationModel {
         @SerializedName("id") var id: String?=null,
         @SerializedName("sourceUserId") var sourceUserId: Int?=null,
         @SerializedName("destinationUserId") var destinationUserId: Int?=null,
-        @SerializedName("actionAllowed") var actionAllowed: String?=null,
         @SerializedName("requestStatus") var requestStatus: String?=null,
-        @SerializedName("requestHandler") var requestHandler: String?=null,
-        @SerializedName("expiryDate") var expiryDate: String?=null,
         @SerializedName("isParentRequest") var isParentRequest: String?=null,
-        @SerializedName("parentId") var parentId: String?=null,
         @SerializedName("entityId") var entityId: String?=null,
         @SerializedName("isApprovalProcessed") var isApprovalProcessed: String?=null,
-        @SerializedName("objectJson") var objectJson: String?=null,
         @SerializedName("description") var description: String?=null,
         @SerializedName("entityType") var entityType: String?=null,
-        @SerializedName("status") var status: String?=null,
-        @SerializedName("actionSelected") var actionSelected: String?=null,
-        @SerializedName("requestCategoryCode") var requestCategoryCode: String?=null
+        @SerializedName("requestCategoryCode") var requestCategoryCode: String?=null,
+        @SerializedName("actionAllowed") var actionAllowed: String?=null,
+        @SerializedName("actionSelected") var actionSelected: String?=null
 
-        ) : Serializable
+    ) : Serializable
+
+    data class UserTimelineResponse(
+        @SerializedName("data") val notificationResponseDetails: List<UserTimelineResponseDetails>
+    ) : Serializable
+
+    data class  UserTimelineResponseDetails(
+        @SerializedName("id") var id: String?=null,
+        @SerializedName("sourceUserId") var sourceUserId: Int?=null,
+        @SerializedName("destinationUserId") var destinationUserId: Int?=null,
+        @SerializedName("requestStatus") var requestStatus: String?=null,
+        @SerializedName("isParentRequest") var isParentRequest: String?=null,
+        @SerializedName("entityId") var entityId: String?=null,
+        @SerializedName("isApprovalProcessed") var isApprovalProcessed: String?=null,
+        @SerializedName("description") var description: String?=null,
+        @SerializedName("entityType") var entityType: String?=null,
+        @SerializedName("requestCategoryCode") var requestCategoryCode: String?=null) : Serializable
+
+
 }
