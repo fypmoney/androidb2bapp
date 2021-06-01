@@ -1,12 +1,15 @@
 package com.fypmoney.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenCardBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.view.adapter.CardListViewAdapter
 import com.fypmoney.viewmodel.CardScreenViewModel
 import kotlinx.android.synthetic.main.screen_card.*
@@ -62,23 +65,33 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() {
     * This method is used to observe the observers
     * */
     private fun setObservers() {
-        /*  mViewModel.setEdittextLength.observe(viewLifecycleOwner) {
+        mViewModel.onViewDetailsClicked.observe(viewLifecycleOwner) {
               if (it) {
-                  add_money_editext.setSelection(add_money_editext.text.length);
-                  mViewModel.setEdittextLength.value = false
+                  askForDevicePassword()
+                  mViewModel.onViewDetailsClicked.value = false
               }
           }
 
-          mViewModel.onAddClicked.observe(viewLifecycleOwner) {
-              if (it) {
-                  callBottomSheet(mViewModel.amountSelected.get()!!, getString(R.string.dummy_amount))
-                  mViewModel.onAddClicked.value = false
-              }
-          }*/
+
     }
 
     override fun onTryAgainClicked() {
 
+    }
+    override
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
+                when (resultCode) {
+                    AppCompatActivity.RESULT_OK -> {
+                       mViewModel.isCardDetailsVisible.set(true)
+
+                    }
+
+                }
+            }
+        }
     }
 
 

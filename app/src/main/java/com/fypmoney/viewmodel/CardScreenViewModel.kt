@@ -2,6 +2,7 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -19,12 +20,14 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         ObservableField(PockketApplication.instance.getString(R.string.dummy_cvv))
     var expiry =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_expiry))
+    var onViewDetailsClicked = MutableLiveData<Boolean>()
+
 
     /*
     * This is used to see the card details
     * */
     fun onViewDetailsClicked() {
-        isCardDetailsVisible.set(true)
+        onViewDetailsClicked.value=true
     }
 
 }

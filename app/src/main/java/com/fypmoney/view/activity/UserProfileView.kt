@@ -96,11 +96,10 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
     override fun onItemClick(position: Int) {
         when (position) {
             0 -> {
-                intentToFamilySettingsActivity(FamilySettingsView::class.java)
+                intentToFamilySettingsActivity(CommunityView::class.java)
             }
             1 -> {
-                Utility.resetPreferenceAfterLogout()
-                intentToActivity(LoginView::class.java)
+                intentToFamilySettingsActivity(SelectInterestView::class.java)
             }
         }
     }

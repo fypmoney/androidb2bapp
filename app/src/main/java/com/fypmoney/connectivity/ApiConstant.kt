@@ -28,6 +28,7 @@ object ApiConstant {
     const val API_VERIFY_REFERRAL_CODE = "/services/authservice/api/customer/refer/"
     const val API_USER_TIMELINE = "/services/PockketService/api/user-timeline"
     const val API_UPDATE_FAMILY_NAME = "/services/authservice/api/family-detail?name="
+    const val API_KYC_ACTIVATE_ACCOUNT = "/services/PockketService/api/activate/account/init"
     const val API_LOGIN = "/auth/app/login"
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
 }

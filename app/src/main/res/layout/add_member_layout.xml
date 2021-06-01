@@ -22,7 +22,7 @@
     android:padding="@dimen/_5sdp"
     android:onClick="@{()->viewHelper.onItemClicked()}"
     android:background="@drawable/curved_background8"
-    android:layout_height="@dimen/_45sdp">
+    android:layout_height="60dp">
 
 
     <androidx.appcompat.widget.AppCompatImageView

@@ -195,8 +195,8 @@
     <string name="logout">Log out</string>
     <string name="user_profile_screen_title">Profile</string>
     <string-array name="my_profile_title_list">
-        <item>Family Settings</item>
-        <item>Logout</item>
+        <item>Build Community</item>
+        <item>Select your Interest</item>
     </string-array>
     <integer-array name="my_profile_icon_list">
         <item>@drawable/ic_profile</item>

@@ -120,6 +120,7 @@
                     android:onClick="@{()->viewModel.onContinueClicked()}"
                     android:text="@string/continue_btn_text"
                     android:textAllCaps="false"
+                    android:layout_centerHorizontal="true"
                     app:backgroundTint="@color/text_color_dark" />
 
 

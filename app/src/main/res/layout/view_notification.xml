@@ -98,6 +98,7 @@
                 android:layout_below="@id/heading1"
                 android:background="@color/screenBackground"
                 android:orientation="vertical"
+                android:layout_marginTop="8dp"
                 android:visibility="@{viewModel.isPreviousVisible?View.VISIBLE:View.GONE,default=gone}">
 
                 <androidx.appcompat.widget.AppCompatImageView
