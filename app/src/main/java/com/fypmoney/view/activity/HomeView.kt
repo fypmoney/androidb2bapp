@@ -51,6 +51,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         mViewBinding = getViewDataBinding()
         setObserver()
         checkAndAskPermission()
+        setCurrentFragment(HomeScreen())
 
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.STAY_TUNED_BOTTOM_SHEET -> {
@@ -61,8 +62,8 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 mViewModel.callGetFamilyNotificationApi(intent.getStringExtra(AppConstants.NOTIFICATION_APRID))
 
             }
-            else -> {  setCurrentFragment(HomeScreen())
-            }
+           /* else -> {  setCurrentFragment(HomeScreen())
+            }*/
         }
 
         mViewBinding.navigationView.setOnNavigationItemSelectedListener {
@@ -218,6 +219,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             FamilyNotificationBottomSheet(
                 notificationResponse?.actionAllowed,
                 notificationResponse?.description,
+                notificationResponse?.isApprovalProcessed,
                 this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
@@ -226,7 +228,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
 
     override fun onBottomSheetButtonClick(actionAllowed: String?) {
-        //  mViewModel.callUpdateApprovalRequestApi(actionAllowed!!)
+         mViewModel.callUpdateApprovalRequestApi(actionAllowed!!)
 
 
     }

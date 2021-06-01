@@ -76,22 +76,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
-            /* val intent = Intent(this,  Class.forName(AppConstants.BASE_ACTIVITY_URL + it.data.get().getStringExtra("tag")))
-             intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
-
-             if (intent.hasExtra("tag")) {
-                 try {
-                     intentToActivity(
-                         Class.forName(AppConstants.BASE_ACTIVITY_URL + intent.getStringExtra("tag")),intent.getStringExtra("type")
-                     )
-                 } catch (e: Exception) {
-                     e.printStackTrace()
-                     intentToActivity(HomeView::class.java)
-                 }
-                 finish()
-             }
-             */
-
 
             val contentIntent = PendingIntent.getActivity(
                 this,
@@ -157,17 +141,17 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     }
 
-    fun onNotificationClick(remoteMessage: RemoteMessage): Intent {
-        when (remoteMessage.data["notificationType"]) {
+    private fun onNotificationClick(remoteMessage: RemoteMessage): Intent {
+        when (remoteMessage.data[AppConstants.NOTIFICATION_KEY_NOTIFICATION_TYPE]) {
             AppConstants.NOTIFICATION_TYPE_IN_APP_DIRECT -> {
 
-                when (remoteMessage.data["type"]) {
+                when (remoteMessage.data[AppConstants.NOTIFICATION_KEY_TYPE]) {
                     AppConstants.TYPE_APP_SLIDER_NOTIFICATION -> {
                         val intent = Intent(applicationContext, HomeView::class.java)
                         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.NOTIFICATION)
                         intent.putExtra(
                             AppConstants.NOTIFICATION_APRID,
-                            remoteMessage.data["aprid"]
+                            remoteMessage.data[AppConstants.NOTIFICATION_KEY_APRID]
                         )
                         return intent
 
@@ -180,7 +164,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                             )
                         } catch (e: Exception) {
                             e.printStackTrace()
-                            //   intentToActivity(HomeView::class.java)
+                            intentToActivity(HomeView::class.java)
                         }
 
                     }

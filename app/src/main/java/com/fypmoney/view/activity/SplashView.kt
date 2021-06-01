@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -14,6 +15,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SplashViewModel
+import com.google.firebase.messaging.RemoteMessage
 
 /*
 * This class is used for show app logo and check user logged in or not
@@ -88,17 +90,8 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     * */
     private fun moveToNextScreen(delayTime: Long = AppConstants.SPLASH_TIME) {
         Handler(Looper.getMainLooper()).postDelayed({
-            if (intent.hasExtra("tag")) {
-                try {
-                    intentToActivity(
-                        Class.forName(AppConstants.BASE_ACTIVITY_URL + intent.getStringExtra("tag")),
-                        intent.getStringExtra("type")
-                    )
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    intentToActivity(HomeView::class.java)
-                }
-                finish()
+            if (intent.hasExtra(AppConstants.NOTIFICATION_KEY_NOTIFICATION_TYPE)) {
+                startActivity(onNotificationClick(intent))
             } else {
                 if (SharedPrefUtils.getBoolean(
                         applicationContext,
@@ -125,5 +118,45 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
             }
         }, delayTime)
     }
+
+
+    private fun onNotificationClick(intent: Intent): Intent {
+        when (intent.getStringExtra(AppConstants.NOTIFICATION_KEY_NOTIFICATION_TYPE)) {
+            AppConstants.NOTIFICATION_TYPE_IN_APP_DIRECT -> {
+
+                when (intent.getStringExtra(AppConstants.NOTIFICATION_KEY_TYPE)) {
+                    AppConstants.TYPE_APP_SLIDER_NOTIFICATION -> {
+                        val intent = Intent(applicationContext, HomeView::class.java)
+                        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.NOTIFICATION)
+                        intent.putExtra(
+                            AppConstants.NOTIFICATION_APRID,
+                            intent.getStringExtra(AppConstants.NOTIFICATION_KEY_APRID)
+                        )
+                        return intent
+
+                    }
+                    AppConstants.TYPE_NONE_NOTIFICATION -> {
+                        try {
+                            return Intent(
+                                applicationContext,
+                                Class.forName(
+                                    AppConstants.BASE_ACTIVITY_URL + intent.getStringExtra(
+                                        "url"
+                                    )
+                                )
+                            )
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            intentToActivity(HomeView::class.java)
+                        }
+
+                    }
+                }
+
+            }
+        }
+        return Intent(applicationContext, HomeView::class.java)
+    }
+
 
 }

@@ -12,10 +12,9 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.ContactRepository
-import com.fypmoney.model.ContactRequest
-import com.fypmoney.model.ContactRequestDetails
-import com.fypmoney.model.ContactResponse
-import com.fypmoney.model.NotificationModel
+import com.fypmoney.model.*
+import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 
 /*
 * This is used as a home screen
@@ -33,7 +32,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var headerText = ObservableField<String>()
     var isScanVisible = ObservableField(true)
     var contactRepository = ContactRepository(mDB = appDatabase)
-
+    var notificationSelectedResponse = NotificationModel.NotificationResponseDetails()
 
 
     /*
@@ -78,7 +77,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
   * This method is used to call get family notification API
   * */
 
-     fun callGetFamilyNotificationApi(aprid: String?) {
+    fun callGetFamilyNotificationApi(aprid: String?) {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_GET_NOTIFICATION_LIST,
@@ -121,6 +120,20 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     }
 
+    fun callUpdateApprovalRequestApi(
+        actionAllowed: String
+    ) {
+        notificationSelectedResponse.actionSelected = actionAllowed
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_UPDATE_APPROVAL_REQUEST,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_UPDATE_APPROVAL_REQUEST),
+                request_type = ApiUrl.PUT,
+                param = notificationSelectedResponse, onResponse = this,
+                isProgressBar = true
+            )
+        )
+    }
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
@@ -133,12 +146,18 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             }
             ApiConstant.API_GET_NOTIFICATION_LIST -> {
                 if (responseData is NotificationModel.NotificationResponse) {
-                    onNotificationListener.value=responseData.notificationResponseDetails[0]
+                  //  responseData.notificationResponseDetails[0].isApprovalProcessed=AppConstants.YES
+                    notificationSelectedResponse= responseData.notificationResponseDetails[0]
+                    onNotificationListener.value = responseData.notificationResponseDetails[0]
 
                 }
             }
 
-
+            ApiConstant.API_UPDATE_APPROVAL_REQUEST -> {
+                if (responseData is UpdateFamilyApprovalResponse) {
+                    Utility.showToast("Your action completed successfully")
+                }
+            }
         }
 
     }

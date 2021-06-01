@@ -85,6 +85,12 @@ object AppConstants {
     const val NOTIFICATION = "NOTIFICATION"
     const val NOTIFICATION_APRID = "APRID"
 
+    const val NOTIFICATION_KEY_TYPE = "type"
+    const val NOTIFICATION_KEY_NOTIFICATION_TYPE = "notificationType"
+    const val NOTIFICATION_KEY_APRID = "aprid"
+
+
+
 
 
 }

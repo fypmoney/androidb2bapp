@@ -97,7 +97,6 @@
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextviewRegular"
             android:id="@id/heading"
-            android:layout_marginTop="30dp"
             android:visibility="@{viewModel.isFamilyFiperVisible?View.VISIBLE:View.GONE,default=gone}"
             android:layout_below="@id/view2"
             android:text="@string/family_fyper_txt"

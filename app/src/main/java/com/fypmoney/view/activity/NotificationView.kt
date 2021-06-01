@@ -75,7 +75,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         val bottomSheet =
             FamilyNotificationBottomSheet(
                 mViewModel.notificationSelectedResponse.actionAllowed,
-                mViewModel.notificationSelectedResponse.description,
+                mViewModel.notificationSelectedResponse.description,mViewModel.notificationSelectedResponse.isApprovalProcessed,
                 this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
