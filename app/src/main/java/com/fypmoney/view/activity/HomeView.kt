@@ -135,7 +135,14 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         }
 
         mViewModel.onNotificationListener.observe(this) {
-            callBottomSheet(it)
+            when (it?.requestCategoryCode) {
+                AppConstants.NOTIFICATION_TYPE_ADD_FAMILY -> {
+                    callBottomSheet(it)
+                }
+                AppConstants.NOTIFICATION_TYPE_ADD_TASK -> {
+
+                }
+            }
 
         }
 

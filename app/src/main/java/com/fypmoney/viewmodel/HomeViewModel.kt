@@ -146,7 +146,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             }
             ApiConstant.API_GET_NOTIFICATION_LIST -> {
                 if (responseData is NotificationModel.NotificationResponse) {
-                  //  responseData.notificationResponseDetails[0].isApprovalProcessed=AppConstants.YES
+                    responseData.notificationResponseDetails[0].isApprovalProcessed=AppConstants.YES
                     notificationSelectedResponse= responseData.notificationResponseDetails[0]
                     onNotificationListener.value = responseData.notificationResponseDetails[0]
 

@@ -32,6 +32,7 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
     var onViewAllClicked = MutableLiveData<Boolean>()
     var onAddMemberClicked = MutableLiveData<Boolean>()
     var onEditFamilyNameClicked = MutableLiveData<Boolean>()
+    var onChoresClicked = MutableLiveData<Boolean>()
     var username = ObservableField<String>()
     var changedUserName = ObservableField<String>()
     var isNoDataFoundVisible = ObservableField(false)
@@ -77,6 +78,13 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
     * */
     fun onAddMemberClicked() {
         onAddMemberClicked.value = true
+    }
+
+    /*
+* This method is used to handle click on chores
+* */
+    fun onChoresClicked() {
+        onChoresClicked.value = true
     }
 
     /*

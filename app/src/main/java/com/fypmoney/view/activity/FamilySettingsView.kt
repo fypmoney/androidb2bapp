@@ -79,6 +79,13 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
                 mViewModel.onAddMemberClicked.value = false
             }
         }
+
+        mViewModel.onChoresClicked.observe(viewLifecycleOwner) {
+            if (it) {
+                intentToAddMemberActivity(ChoresActivity::class.java)
+                mViewModel.onChoresClicked.value = false
+            }
+        }
         mViewModel.onEditFamilyNameClicked.observe(viewLifecycleOwner) {
             if (it) {
                 callBottomSheet()

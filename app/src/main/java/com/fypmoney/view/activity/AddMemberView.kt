@@ -60,7 +60,7 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
         setObserver()
         setCountryCodeAdapter(applicationContext, mViewBinding.spCountryCode)
         spCountryCode.isEnabled=false
-       mViewModel.setResponseAfterContactSelected(intent.getParcelableExtra<ContactEntity>(AppConstants.CONTACT_SELECTED_RESPONSE))
+       mViewModel.setResponseAfterContactSelected(intent.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE))
 
     }
 

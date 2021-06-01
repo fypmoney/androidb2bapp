@@ -3,6 +3,7 @@ package com.fypmoney.view.activity
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -37,6 +38,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
+        toolbar_image.visibility = View.VISIBLE
         setToolbarAndTitle(
             context = this@NotificationView,
             toolbar = toolbar,
@@ -75,7 +77,8 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         val bottomSheet =
             FamilyNotificationBottomSheet(
                 mViewModel.notificationSelectedResponse.actionAllowed,
-                mViewModel.notificationSelectedResponse.description,mViewModel.notificationSelectedResponse.isApprovalProcessed,
+                mViewModel.notificationSelectedResponse.description,
+                mViewModel.notificationSelectedResponse.isApprovalProcessed,
                 this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
