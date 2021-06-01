@@ -15,15 +15,15 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.fypmoney.R
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.view.activity.HomeView
 import com.fypmoney.view.activity.NotificationView
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import org.jetbrains.annotations.NotNull
 import org.json.JSONObject
-
-
-
+import retrofit2.adapter.rxjava2.Result.response
 
 
 /*
@@ -38,13 +38,21 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(@NotNull remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)
-        Log.d("sjghe8ts9ge_data", remoteMessage.getData().toString())
+        Log.d("sjghe8ts9ge_data", remoteMessage.data.toString())
 
-        val jsonRootObject = JSONObject(remoteMessage.getData().toString())
-        val notificationType: String = jsonRootObject.optString("notificationType").toString()
-        val url: String = jsonRootObject.optString("url").toString()
+        val result = remoteMessage.data
 
-        Log.d("sjghe8ts9ge_data_type",notificationType)
+
+        val res = remoteMessage.data["notificationType"]
+
+        //   val jObjResponse = JSONObject(java.lang.String.valueOf(response.getJSONObject()))
+
+
+        //   val jsonRootObject = JSONObject(remoteMessage.getData().toString())
+        /*  val notificationType: String = jsonRootObject.optString("notificationType").toString()
+          val url: String = jsonRootObject.optString("url").toString()
+  */
+        Log.d("sjghe8ts9ge_data_type", res.toString())
 
 
 
@@ -88,9 +96,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             val contentIntent = PendingIntent.getActivity(
                 this,
                 0,
-                Intent(this, NotificationView::class.java),
+                onNotificationClick(remoteMessage),
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
+
+
             notificationBuilder.setContentIntent(contentIntent)
             notificationManager.notify(4848, notificationBuilder.build())
             val uiHandler = Handler(Looper.getMainLooper())
@@ -135,5 +145,51 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             ""
         }
     }
+
+    /**
+     * Method to navigate to the different activity
+     */
+    private fun intentToActivity(aClass: Class<*>, type: String? = null, aprid: String? = null) {
+        val intent = Intent(applicationContext, aClass)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
+        intent.putExtra(AppConstants.NOTIFICATION_APRID, aprid)
+        startActivity(intent)
+
+    }
+
+    fun onNotificationClick(remoteMessage: RemoteMessage): Intent {
+        when (remoteMessage.data["notificationType"]) {
+            AppConstants.NOTIFICATION_TYPE_IN_APP_DIRECT -> {
+
+                when (remoteMessage.data["type"]) {
+                    AppConstants.TYPE_APP_SLIDER_NOTIFICATION -> {
+                        val intent = Intent(applicationContext, HomeView::class.java)
+                        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.NOTIFICATION)
+                        intent.putExtra(
+                            AppConstants.NOTIFICATION_APRID,
+                            remoteMessage.data["aprid"]
+                        )
+                        return intent
+
+                    }
+                    AppConstants.TYPE_NONE_NOTIFICATION -> {
+                        try {
+                            return Intent(
+                                applicationContext,
+                                Class.forName(AppConstants.BASE_ACTIVITY_URL + remoteMessage.data["url"])
+                            )
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            //   intentToActivity(HomeView::class.java)
+                        }
+
+                    }
+                }
+
+            }
+        }
+        return Intent()
+    }
+
 
 }

@@ -15,6 +15,10 @@ class NotificationModel {
         @SerializedName("data") val notificationResponseDetails: List<NotificationResponseDetails>
     ) : Serializable
 
+    data class NotificationResponseById(
+        @SerializedName("data") val notificationResponseDetails: NotificationResponseDetails
+    ) : Serializable
+
     data class NotificationResponseDetails(
         @SerializedName("id") var id: String?=null,
         @SerializedName("sourceUserId") var sourceUserId: Int?=null,

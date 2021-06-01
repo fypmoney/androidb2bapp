@@ -84,16 +84,12 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                 }
             }
             ApiConstant.API_USER_TIMELINE -> {
-                Log.d("gkgggkkg","kkgkkgkhhhhhhhhhh")
 
                 if (responseData is NotificationModel.UserTimelineResponse) {
-                    Log.d("gkgggkkg","kkgkkgk")
                     isPreviousVisible.set(true)
                     if (responseData.notificationResponseDetails.isNullOrEmpty()) {
-                        Log.d("gkgggkkg","kkgkkgk_no_data")
                         isTimeLineNoDataVisible.set(true)
                     } else {
-                        Log.d("gkgggkkg","kkgkkgk_daat")
                         isTimeLineNoDataVisible.set(false)
                         userTimeLineAdapter.setList(responseData.notificationResponseDetails)
                     }

@@ -2,6 +2,8 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -11,11 +13,13 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewHomeBinding
+import com.fypmoney.model.NotificationModel
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.AddMemberScreen
 import com.fypmoney.view.fragment.CardScreen
+import com.fypmoney.view.fragment.FamilyNotificationBottomSheet
 import com.fypmoney.view.fragment.HomeScreen
 import com.fypmoney.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.view_home.*
@@ -25,7 +29,7 @@ import kotlinx.android.synthetic.main.view_home.*
 * This class is used as Home Screen
 * */
 class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
-    Utility.OnAllContactsAddedListener {
+    Utility.OnAllContactsAddedListener, FamilyNotificationBottomSheet.OnBottomSheetClickListener {
     private lateinit var mViewModel: HomeViewModel
     private lateinit var mViewBinding: ViewHomeBinding
 
@@ -48,12 +52,17 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         setObserver()
         checkAndAskPermission()
 
+        when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
+            AppConstants.STAY_TUNED_BOTTOM_SHEET -> {
+                setCurrentFragment(FamilySettingsView())
 
+            }
+            AppConstants.NOTIFICATION -> {
+                mViewModel.callGetFamilyNotificationApi(intent.getStringExtra(AppConstants.NOTIFICATION_APRID))
 
-        if (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN) == "stay_tuned") {
-            setCurrentFragment(FamilySettingsView())
-        } else {
-            setCurrentFragment(HomeScreen())
+            }
+            else -> {  setCurrentFragment(HomeScreen())
+            }
         }
 
         mViewBinding.navigationView.setOnNavigationItemSelectedListener {
@@ -80,7 +89,8 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 }
                 R.id.family -> {
                     mViewModel.isScanVisible.set(false)
-                    mViewModel.headerText.set(getString(
+                    mViewModel.headerText.set(
+                        getString(
                             R.string.family_settings_toolbar_heading
                         )
                     )
@@ -121,6 +131,11 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 intentToActivity(NotificationView::class.java)
                 mViewModel.onNotificationClicked.value = false
             }
+        }
+
+        mViewModel.onNotificationListener.observe(this) {
+            callBottomSheet(it)
+
         }
 
     }
@@ -194,6 +209,27 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             replace(R.id.container, fragment)
             commit()
         }
+
+    /*
+  * This method is used to call leave member
+  * */
+    private fun callBottomSheet(notificationResponse: NotificationModel.NotificationResponseDetails?) {
+        val bottomSheet =
+            FamilyNotificationBottomSheet(
+                notificationResponse?.actionAllowed,
+                notificationResponse?.description,
+                this
+            )
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "FamilyNotification")
+    }
+
+
+    override fun onBottomSheetButtonClick(actionAllowed: String?) {
+        //  mViewModel.callUpdateApprovalRequestApi(actionAllowed!!)
+
+
+    }
 
 }
 

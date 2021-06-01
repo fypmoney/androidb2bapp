@@ -81,6 +81,9 @@ object AppConstants {
     const val TYPE_APP_SLIDER_NOTIFICATION = "APP_SLIDER"
     const val TYPE_NONE_NOTIFICATION = "NONE"
 
+    const val STAY_TUNED_BOTTOM_SHEET = "stay_tuned"
+    const val NOTIFICATION = "NOTIFICATION"
+    const val NOTIFICATION_APRID = "APRID"
 
 
 
