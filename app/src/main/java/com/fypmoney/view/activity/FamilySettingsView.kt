@@ -75,7 +75,7 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
 
         mViewModel.onAddMemberClicked.observe(viewLifecycleOwner) {
             if (it) {
-                intentToAddMemberActivity(ContactView::class.java)
+                intentToAddMemberActivity(AddMemberView::class.java)
                 mViewModel.onAddMemberClicked.value = false
             }
         }

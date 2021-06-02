@@ -67,6 +67,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     }
 
     /*
+
    * navigate to the HomeScreen
    * */
     private fun goToDashboardScreen() {
@@ -106,7 +107,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                             intentToActivity(CreateAccountView::class.java)
                         }
                         else -> {
-                            intentToActivity(HomeView::class.java)
+                            intentToActivity(AadhaarAccountActivationView::class.java)
                         }
                     }
 

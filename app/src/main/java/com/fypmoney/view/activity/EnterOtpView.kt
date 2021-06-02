@@ -1,7 +1,5 @@
 package com.fypmoney.view.activity
 
-import android.R.attr.left
-import android.R.attr.right
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -13,8 +11,6 @@ import android.text.style.ClickableSpan
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -34,7 +30,6 @@ import java.util.*
  * This is used to handle the OTP
  */
 class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
-
     private lateinit var mViewModel: EnterOtpViewModel
     private lateinit var mViewBinding: ViewEnterOtpBinding
     lateinit var timer: CountDownTimer
@@ -59,9 +54,11 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
             toolbar = toolbar,
             isBackArrowVisible = true
         )
-        mViewModel.mobile.value = intent.getStringExtra(AppConstants.MOBILE_TYPE)
-        mViewModel.fromWhichScreen.set(intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN))
-        mViewModel.setInitialData()
+        mViewModel.setInitialData(
+            intent.getStringExtra(AppConstants.MOBILE_TYPE),
+            intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN),
+            intent.getStringExtra(AppConstants.KYC_MOBILE_ACTIVATION_TOKEN)
+        )
         mViewModel.mobileWithoutCountryCode.value =
             intent.getStringExtra(AppConstants.MOBILE_WITHOUT_COUNTRY_CODE)
         mViewBinding.viewModel = mViewModel

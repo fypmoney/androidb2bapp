@@ -103,7 +103,7 @@
                     android:layout_marginTop="50dp"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/curved_background1"
-                    android:onClick="@{()->viewModel.onActivateAccountClicked()}"
+                    android:onClick="@{()->viewModel.callKycAccountActivationApi()}"
                     android:text="@string/activate_account_btn_text"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/text_color_dark" />

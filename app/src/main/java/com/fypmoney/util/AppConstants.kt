@@ -66,6 +66,7 @@ object AppConstants {
     const val CREATE_ACCOUNT_SUCCESS = "create_account_success"
     const val LOGIN_SCREEN = "login_screen"
     const val AADHAAR_VERIFICATION = "aadhaar_verification"
+    const val KYC_MOBILE_VERIFICATION = "mobile_verification"
     const val CONTACT_SELECTED_RESPONSE = "contact_selected"
     const val NOTIFICATION_TYPE_ADD_TASK = "ADD_TASK"
     const val NOTIFICATION_TYPE_ADD_FAMILY = "ADD_FAMILY_MEMBER"
@@ -88,6 +89,13 @@ object AppConstants {
     const val NOTIFICATION_KEY_TYPE = "type"
     const val NOTIFICATION_KEY_NOTIFICATION_TYPE = "notificationType"
     const val NOTIFICATION_KEY_APRID = "aprid"
+
+
+    const val KYC_ACTION_MOBILE_AUTH = "MOBILE_AUTH"
+    const val KYC_ACTION_ADHAR_AUTH = "aprid"
+    const val KYC_MOBILE_ACTIVATION_TOKEN = "mobile token"
+
+
 
 
 

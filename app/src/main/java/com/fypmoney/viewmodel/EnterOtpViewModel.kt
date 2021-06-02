@@ -39,6 +39,8 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     var isChangeVisible = ObservableField(true)
     var isResendEnabled = ObservableField(false)
     var fromWhichScreen = ObservableField<String>()
+    var kycMobileToken = ObservableField<String>()
+    var isYesBankLogoVisibile = ObservableField(false)
     var otpTitle =
         ObservableField<String>(PockketApplication.instance.getString(R.string.otp_title))
 
@@ -64,6 +66,11 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                         cancelTimer.value = true
                         callLoginApi()
                     }
+                    AppConstants.AADHAAR_VERIFICATION -> {
+                    }
+                    AppConstants.KYC_MOBILE_VERIFICATION -> {
+                        callKycMobileVerificationApi()
+                    }
 
                     else -> {
                         onLoginSuccess.value = true
@@ -72,6 +79,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
             }
         }
     }
+
 
     /*
       * This method is used to call login API
@@ -139,7 +147,46 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                 }
 
             }
+            AppConstants.KYC_MOBILE_VERIFICATION -> {
+                if (!resendOtpTimerVisibility.get()!!) {
+                    callKycAccountActivationApi()
+                }
+            }
         }
+    }
+
+    /*
+       * This method is used to call auth login API
+       * */
+    private fun callKycMobileVerificationApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_KYC_MOBILE_VERIFICATION,
+                NetworkUtil.endURL(ApiConstant.API_KYC_MOBILE_VERIFICATION),
+                ApiUrl.PUT,
+                KycModel.KycMobileVerifyRequest(
+                    action = AppConstants.KYC_ACTION_MOBILE_AUTH,
+                    otp = otp.get()!!,
+                    token = kycMobileToken.get()!!
+                ),
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    /*
+  * This method is used to call auth login API
+  * */
+    fun callKycAccountActivationApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_KYC_ACTIVATE_ACCOUNT,
+                NetworkUtil.endURL(ApiConstant.API_KYC_ACTIVATE_ACCOUNT),
+                ApiUrl.PUT,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
     }
 
 
@@ -158,6 +205,17 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                             Utility.showToast("OTP sent successfully")
                         }
                     }
+                }
+            }
+
+            ApiConstant.API_KYC_ACTIVATE_ACCOUNT -> {
+                if (responseData is KycModel.KycActivateAccountResponse) {
+                    resendOtpSuccess.value = true
+                    resendOtpTimerVisibility.set(true)
+                    isResendEnabled.set(false)
+                    kycMobileToken.set(responseData.kycActivateAccountResponseDetails.token)
+
+
                 }
             }
             ApiConstant.API_LOGIN -> {
@@ -189,7 +247,15 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     /*
     * Used to set initial data
     * */
-    fun setInitialData() {
+    fun setInitialData(
+        type: String? = null,
+        fromWhichScreenValue: String? = null,
+        token: String? = null
+    ) {
+        mobile.value = type
+        fromWhichScreen.set(fromWhichScreenValue)
+        kycMobileToken.set(token)
+
         when (fromWhichScreen.get()) {
             AppConstants.AADHAAR_VERIFICATION -> {
                 heading.value =
@@ -202,6 +268,17 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                 isChangeVisible.set(false)
 
                 otpTitle.set("")
+
+            }
+
+            AppConstants.KYC_MOBILE_VERIFICATION -> {
+                heading.value = ""
+                mobile.value =
+                    PockketApplication.instance.resources.getString(R.string.aadhaar_mobile_otp_sub_title)
+                isChangeVisible.set(false)
+
+                otpTitle.set("")
+                isYesBankLogoVisibile.set(true)
 
             }
         }

@@ -31,7 +31,8 @@ class NotificationModel {
         @SerializedName("entityType") var entityType: String?=null,
         @SerializedName("requestCategoryCode") var requestCategoryCode: String?=null,
         @SerializedName("actionAllowed") var actionAllowed: String?=null,
-        @SerializedName("actionSelected") var actionSelected: String?=null
+        @SerializedName("actionSelected") var actionSelected: String?=null,
+        @SerializedName("appDisplayAction") var appDisplayAction: String?=null
 
     ) : Serializable
 

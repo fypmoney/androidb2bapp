@@ -104,6 +104,10 @@ class ApiDataParsing {
                     getObject(response, UpdateFamilyNameResponse::class.java)
                 }
 
+                ApiConstant.API_KYC_ACTIVATE_ACCOUNT -> {
+                    getObject(response, KycModel.KycActivateAccountResponse::class.java)
+                }
+
                 else -> response
             }
         } catch (e: Exception) {

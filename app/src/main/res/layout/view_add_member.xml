@@ -132,13 +132,13 @@
                     android:layout_alignParentEnd="true"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/margin"
-                    android:fontFamily="@font/poppins_medium"
+                    android:fontFamily="@font/product_sans_bold"
                     android:onClick="@{()->viewModel.onFromContactClicked()}"
                     android:padding="@dimen/_5sdp"
                     android:text="@string/from_contact"
                     android:textColor="@color/buttonBackgroundColor"
                     android:textSize="@dimen/sub_title_size"
-                    android:visibility="gone" />
+                   />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvSelectRelation"

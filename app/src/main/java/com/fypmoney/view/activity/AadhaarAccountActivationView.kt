@@ -16,6 +16,7 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAadhaarAccountActivationBinding
 import com.fypmoney.databinding.ViewAadhaarVerificationBinding
 import com.fypmoney.databinding.ViewCommunityBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.AadhaarAccountActivationViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
@@ -24,7 +25,8 @@ import kotlinx.android.synthetic.main.view_login.*
 /*
 * This class is used to handle school name city
 * */
-class AadhaarAccountActivationView : BaseActivity<ViewAadhaarAccountActivationBinding, AadhaarAccountActivationViewModel>() {
+class AadhaarAccountActivationView :
+    BaseActivity<ViewAadhaarAccountActivationBinding, AadhaarAccountActivationViewModel>() {
     private lateinit var mViewModel: AadhaarAccountActivationViewModel
 
     override fun getBindingVariable(): Int {
@@ -34,6 +36,7 @@ class AadhaarAccountActivationView : BaseActivity<ViewAadhaarAccountActivationBi
     override fun getLayoutId(): Int {
         return R.layout.view_aadhaar_account_activation
     }
+
     override fun getViewModel(): AadhaarAccountActivationViewModel {
         mViewModel = ViewModelProvider(this).get(AadhaarAccountActivationViewModel::class.java)
         return mViewModel
@@ -71,8 +74,9 @@ class AadhaarAccountActivationView : BaseActivity<ViewAadhaarAccountActivationBi
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onActivateAccountClicked.observe(this) {
-            intentToActivity()
+        mViewModel.onActivateAccountSuccess.observe(this) {
+            if (it.showMobileOtpVerificationScreen == AppConstants.YES)
+                intentToActivity(it.token)
         }
 
 
@@ -82,8 +86,26 @@ class AadhaarAccountActivationView : BaseActivity<ViewAadhaarAccountActivationBi
     /*
    * navigate to the different screen
    * */
-    private fun intentToActivity() {
-        val intent = Intent(this@AadhaarAccountActivationView, AadhaarVerificationView::class.java)
+    private fun intentToActivity(token: String) {
+        val intent = Intent(this, EnterOtpView::class.java)
+        intent.putExtra(
+            AppConstants.MOBILE_TYPE,
+            ""
+        )
+        intent.putExtra(
+            AppConstants.FROM_WHICH_SCREEN, AppConstants.KYC_MOBILE_VERIFICATION
+        )
+
+        intent.putExtra(
+            AppConstants.MOBILE_WITHOUT_COUNTRY_CODE,
+            ""
+        )
+
+        intent.putExtra(
+            AppConstants.KYC_MOBILE_ACTIVATION_TOKEN,
+            token
+        )
+
         startActivity(intent)
     }
 

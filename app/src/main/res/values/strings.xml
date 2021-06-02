@@ -242,7 +242,7 @@
 
     <!--Add member
     -->
-    <string name="from_contact"><u>From Contact</u></string>
+    <string name="from_contact"><u>Choose From Contact</u></string>
     <string name="search">Search from your contacts</string>
     <string name="select_relation">Relation*</string>
     <string name="invite_user_dialog_title">is not the App User. Please send invite.</string>
@@ -372,6 +372,7 @@
 
     <string name="aadhaar_otp_screen_title">Activate Account</string>
     <string name="aadhaar_otp_sub_title">"Enter the OTP send to your phone number linked to "</string>
+    <string name="aadhaar_mobile_otp_sub_title">Please enter the OTP received from Yes bank</string>
     <string name="aadhaar_otp_edit">. Edit Aadhaar number </string>
 
     <!-- Account verification success with Aadhaar

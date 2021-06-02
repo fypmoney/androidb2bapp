@@ -2,6 +2,7 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import android.util.Log
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -31,12 +32,19 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     var positionSelected = ObservableField<Int>()
     var onNotificationClicked = MutableLiveData<Boolean>()
     var notificationSelectedResponse = NotificationModel.NotificationResponseDetails()
-
+    val isLoading = ObservableBoolean()
     init {
         callGetFamilyNotificationApi()
         callUserTimeLineApi()
     }
-
+    /*
+      * This method is used to refresh on swipe
+      *  */
+    fun onRefresh() {
+        isLoading.set(true)
+        callGetFamilyNotificationApi()
+        callUserTimeLineApi()
+    }
     /*
       * This method is used to call get family notification API
       * */
@@ -72,6 +80,8 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
+        isLoading.set(false)
+
         when (purpose) {
             ApiConstant.API_GET_NOTIFICATION_LIST -> {
                 if (responseData is NotificationModel.NotificationResponse) {
@@ -133,6 +143,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        isLoading.set(false)
     }
 
     override fun onNotificationClick(

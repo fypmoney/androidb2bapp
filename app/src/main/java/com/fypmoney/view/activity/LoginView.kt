@@ -264,6 +264,7 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
             AppConstants.MOBILE_WITHOUT_COUNTRY_CODE,
             mViewModel.mobile.value
         )
+
         startActivity(intent)
     }
 

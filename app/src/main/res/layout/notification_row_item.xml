@@ -34,6 +34,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/heading"
             style="@style/TextviewRegular"
+            android:layout_width="wrap_content"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_toStartOf="@+id/invite"
@@ -48,8 +49,7 @@
             android:id="@+id/invite"
             style="@style/TextviewRegular"
             android:layout_alignParentEnd="true"
-            android:visibility="gone"
-            android:text="@{viewHelper.actionAllowed}"
+            android:text="@{viewHelper.notification.appDisplayAction}"
             android:layout_below="@+id/heading"
             android:textColor="@color/color_skyblue" />
 
