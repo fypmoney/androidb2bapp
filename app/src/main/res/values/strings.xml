@@ -167,7 +167,7 @@
     <string name="card_bottom_nav_title">Card</string>
     <string name="store_bottom_nav_title">Store</string>
     <string name="fyper_bottom_nav_title">Fyper</string>
-    <string name="dummy_amount">8,952</string>
+    <string name="dummy_amount">0</string>
     <string name="dummy_name">FYP User</string>
     <string name="dummy_card">9872 7263 6538 7263</string>
     <string name="dummy_cvv">826</string>
@@ -253,7 +253,7 @@
     <string name="parent_name_hint">Your family member name</string>
     <string name="relation_drop_down_hint">Your relation with parent</string>
     <string name="relation_empty_error">Please choose your relation</string>
-    <string name="parent_name_empty_error">Please enter your parent name</string>
+    <string name="member_name_empty_error">Please enter your family member name</string>
 
 
     <!--

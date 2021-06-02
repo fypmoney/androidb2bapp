@@ -8,6 +8,7 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
@@ -57,7 +58,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
         mViewModel.setInitialData(
             intent.getStringExtra(AppConstants.MOBILE_TYPE),
             intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN),
-            intent.getStringExtra(AppConstants.KYC_MOBILE_ACTIVATION_TOKEN)
+            intent.getStringExtra(AppConstants.KYC_ACTIVATION_TOKEN)
         )
         mViewModel.mobileWithoutCountryCode.value =
             intent.getStringExtra(AppConstants.MOBILE_WITHOUT_COUNTRY_CODE)
@@ -91,9 +92,14 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                             ContextCompat.getColor(applicationContext, R.color.text_color_dark)
                     }
                 }
-                ss.setSpan(clickableSpan, 68, 87, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                tv_mobile.text = ss
-                tv_mobile.movementMethod = LinkMovementMethod.getInstance()
+                try {
+                    ss.setSpan(clickableSpan, 64, 83, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                    tv_mobile.text = ss
+                    tv_mobile.movementMethod = LinkMovementMethod.getInstance()
+
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
 
 
             }
@@ -115,10 +121,19 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                     }
                     else -> {
                         intentToActivity(AadhaarVerificationView::class.java)
+                        finish()
 
                     }
                 }
                 mViewModel.onChangeClicked.value = false
+            }
+        }
+
+        mViewModel.onVerificationFail.observe(this) {
+            if (it) {
+                intentToActivity(AadhaarAccountActivationView::class.java)
+                mViewModel.onVerificationFail.value = false
+                finishAffinity()
             }
         }
         mViewModel.resendOtpSuccess.observe(this) {
@@ -130,20 +145,30 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
 
         mViewModel.onLoginSuccess.observe(this) {
             if (it) {
+                intentToActivity(LoginSuccessView::class.java)
+                mViewModel.onLoginSuccess.value = false
+            }
+        }
+
+        mViewModel.onVerificationSuccess.observe(this) {
+            if (it) {
                 when (mViewModel.fromWhichScreen.get()) {
-                    AppConstants.LOGIN_SCREEN -> {
-                        intentToActivity(LoginSuccessView::class.java)
+                    AppConstants.AADHAAR_VERIFICATION -> {
+                        intentToActivity(ActivationSuccessWithAadhaarView::class.java,isFinish = true)
+
+
                     }
-                    else -> {
-                        intentToActivity(
-                            ActivationSuccessWithAadhaarView::class.java,
-                            isFinish = true
-                        )
+                    AppConstants.KYC_MOBILE_VERIFICATION -> {
+                        intentToActivity(AadhaarVerificationView::class.java)
+                        finish()
 
                     }
                 }
-                mViewModel.onLoginSuccess.value = false
+                mViewModel.onVerificationSuccess.value = false
+
+
             }
+
         }
         mViewModel.cancelTimer.observe(this) {
             if (it) {
@@ -157,7 +182,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
 
 
     /*invoke method for backpressed
-  * */
+    * */
     override fun onBackPressed() {
         super.onBackPressed()
         finish()

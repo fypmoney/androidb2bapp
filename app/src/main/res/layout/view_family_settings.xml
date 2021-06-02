@@ -67,8 +67,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextviewBold"
             android:id="@+id/headingMain"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:layout_below="@id/linear_layout"
             android:text="@{viewModel.username}"
             android:textSize="20dp"
@@ -89,7 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:id="@+id/view2"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_below="@id/headingMain"
         android:background="@color/grey"/>
 
@@ -118,7 +118,6 @@
                     android:id="@+id/recycler_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
                     android:layout_centerVertical="true"
                     app:adapter="@{viewModel.memberAdapter}"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -151,7 +150,6 @@
                 android:id="@+id/recycler_view1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_5sdp"
                 android:layout_centerVertical="true"
                 android:layout_below="@id/heading1"
                 android:layout_marginTop="10dp"

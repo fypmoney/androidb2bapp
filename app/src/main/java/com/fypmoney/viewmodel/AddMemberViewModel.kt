@@ -80,7 +80,7 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
     fun onAddMemberClicked() {
         when {
             TextUtils.isEmpty(parentName.get()) -> {
-                Utility.showToast(PockketApplication.instance.getString(R.string.parent_name_empty_error))
+                Utility.showToast(PockketApplication.instance.getString(R.string.member_name_empty_error))
             }
             TextUtils.isEmpty(mobile.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.phone_email_empty_error))

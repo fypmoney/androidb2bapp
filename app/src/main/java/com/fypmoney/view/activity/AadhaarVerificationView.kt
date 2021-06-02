@@ -46,8 +46,8 @@ class AadhaarVerificationView :
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onGetOtpClicked.observe(this) {
-            goToEnterOtpScreen()
+        mViewModel.onKycInitSuccess.observe(this) {
+            goToEnterOtpScreen(token = it.token)
         }
 
 
@@ -57,7 +57,7 @@ class AadhaarVerificationView :
     /**
      * Method to navigate to the Feeds screen after login
      */
-    private fun goToEnterOtpScreen() {
+    private fun goToEnterOtpScreen(token: String) {
         val intent = Intent(this, EnterOtpView::class.java)
         intent.putExtra(
             AppConstants.MOBILE_TYPE,
@@ -70,6 +70,11 @@ class AadhaarVerificationView :
         intent.putExtra(
             AppConstants.MOBILE_WITHOUT_COUNTRY_CODE,
             ""
+        )
+
+        intent.putExtra(
+            AppConstants.KYC_ACTIVATION_TOKEN, token
+
         )
         startActivity(intent)
     }

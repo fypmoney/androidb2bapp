@@ -105,7 +105,20 @@ class ApiDataParsing {
                 }
 
                 ApiConstant.API_KYC_ACTIVATE_ACCOUNT -> {
-                    getObject(response, KycModel.KycActivateAccountResponse::class.java)
+                    getObject(response, KycActivateAccountResponse::class.java)
+                }
+                ApiConstant.API_KYC_INIT -> {
+                    getObject(response, KycInitResponse::class.java)
+                }
+                ApiConstant.API_KYC_MOBILE_VERIFICATION -> {
+                    getObject(response, KycMobileVerifyResponse::class.java)
+                }
+                ApiConstant.API_KYC_VERIFICATION -> {
+                    getObject(response, KycVerificationResponse::class.java)
+                }
+
+                ApiConstant.API_GET_WALLET_BALANCE -> {
+                    getObject(response, GetWalletBalanceResponse::class.java)
                 }
 
                 else -> response

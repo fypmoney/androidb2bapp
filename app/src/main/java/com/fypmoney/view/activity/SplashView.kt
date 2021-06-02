@@ -107,7 +107,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                             intentToActivity(CreateAccountView::class.java)
                         }
                         else -> {
-                            intentToActivity(AadhaarAccountActivationView::class.java)
+                            intentToActivity(HomeView::class.java)
                         }
                     }
 

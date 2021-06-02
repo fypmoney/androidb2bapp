@@ -60,6 +60,7 @@ object AppConstants {
     const val API_SUCCESS = "Success"
     const val API_FAIL = "Fail"
     const val FEED_SCREEN_NAME = "FEED"
+    const val FEED_SCREEN_NAME_HOME = "HOME"
     const val FEED_WITHIN_RADIUS = "20"
     const val IS_PROFILE_COMPLETED = "isProfileCompleted"
     const val RELATION = "relation"
@@ -92,8 +93,13 @@ object AppConstants {
 
 
     const val KYC_ACTION_MOBILE_AUTH = "MOBILE_AUTH"
-    const val KYC_ACTION_ADHAR_AUTH = "aprid"
-    const val KYC_MOBILE_ACTIVATION_TOKEN = "mobile token"
+    const val KYC_ACTION_ADHAR_AUTH = "ADHAR_AUTH"
+    const val KYC_ACTIVATION_TOKEN = "kyc token"
+    const val KYC_MODE = "ADHAR_OTP"
+    const val KYC_TYPE = "SEMI"
+    const val KYC_DOCUMENT_TYPE = "adhar"
+
+
 
 
 

@@ -612,7 +612,7 @@ object Utility {
     }
 
     /*
-    * This method is used to remove + or +91 from number
+    * This method is used to remove + or +91 or 0 from number
     * */
     fun removePlusOrNineOneFromNo(phone: String): String {
         if (phone.startsWith("+91")) {
@@ -620,6 +620,9 @@ object Utility {
         }
         if (phone.startsWith("+")) {
             return phone.replace("+", "")
+        }
+        if (phone.startsWith("0")) {
+            return phone.replace("0", "")
         }
 
         return phone

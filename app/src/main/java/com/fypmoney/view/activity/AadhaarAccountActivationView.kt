@@ -102,7 +102,7 @@ class AadhaarAccountActivationView :
         )
 
         intent.putExtra(
-            AppConstants.KYC_MOBILE_ACTIVATION_TOKEN,
+            AppConstants.KYC_ACTIVATION_TOKEN,
             token
         )
 

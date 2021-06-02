@@ -33,16 +33,18 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     var onChangeClicked = MutableLiveData<Boolean>()
     var onLoginSuccess = MutableLiveData<Boolean>()
     var cancelTimer = MutableLiveData<Boolean>()
+    var onVerificationSuccess = MutableLiveData<Boolean>()
+    var onVerificationFail = MutableLiveData<Boolean>()
     var otp = ObservableField<String>()
     var resendOtpSuccess = MutableLiveData(true)
     var resendOtpTimerVisibility = ObservableField(true)
     var isChangeVisible = ObservableField(true)
     var isResendEnabled = ObservableField(false)
     var fromWhichScreen = ObservableField<String>()
-    var kycMobileToken = ObservableField<String>()
-    var isYesBankLogoVisibile = ObservableField(false)
+    private var kycToken = ObservableField<String>()
+    var isYesBankLogoVisible = ObservableField(false)
     var otpTitle =
-        ObservableField<String>(PockketApplication.instance.getString(R.string.otp_title))
+        ObservableField(PockketApplication.instance.getString(R.string.otp_title))
 
     /*
     * This method is used to handle click of mobile
@@ -67,19 +69,39 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                         callLoginApi()
                     }
                     AppConstants.AADHAAR_VERIFICATION -> {
+                        callKycVerificationApi()
                     }
                     AppConstants.KYC_MOBILE_VERIFICATION -> {
                         callKycMobileVerificationApi()
                     }
 
-                    else -> {
-                        onLoginSuccess.value = true
-                    }
                 }
             }
         }
     }
 
+    /*
+      * This method is used to call kyc init api
+      * */
+    private fun callKycInitApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_KYC_INIT,
+                NetworkUtil.endURL(ApiConstant.API_KYC_INIT),
+                ApiUrl.PUT,
+                KycInitRequest(
+                    kycMode = AppConstants.KYC_MODE,
+                    kycType = AppConstants.KYC_TYPE,
+                    documentIdentifier = SharedPrefUtils.getString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_AADHAAR_NUMBER
+                    )!!,
+                    documentType = AppConstants.KYC_DOCUMENT_TYPE,
+                    action = AppConstants.KYC_ACTION_ADHAR_AUTH
+                ), this, isProgressBar = true
+            )
+        )
+    }
 
     /*
       * This method is used to call login API
@@ -152,6 +174,12 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                     callKycAccountActivationApi()
                 }
             }
+
+            AppConstants.AADHAAR_VERIFICATION -> {
+                if (!resendOtpTimerVisibility.get()!!) {
+                    callKycInitApi()
+                }
+            }
         }
     }
 
@@ -164,10 +192,29 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                 ApiConstant.API_KYC_MOBILE_VERIFICATION,
                 NetworkUtil.endURL(ApiConstant.API_KYC_MOBILE_VERIFICATION),
                 ApiUrl.PUT,
-                KycModel.KycMobileVerifyRequest(
+                KycMobileVerifyRequest(
                     action = AppConstants.KYC_ACTION_MOBILE_AUTH,
                     otp = otp.get()!!,
-                    token = kycMobileToken.get()!!
+                    token = kycToken.get()!!
+                ),
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    /*
+      * This method is used to call aadhaar verification
+      * */
+    private fun callKycVerificationApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_KYC_VERIFICATION,
+                NetworkUtil.endURL(ApiConstant.API_KYC_VERIFICATION),
+                ApiUrl.PUT,
+                KycVerificationRequest(
+                    action = AppConstants.KYC_ACTION_ADHAR_AUTH,
+                    otp = otp.get()!!,
+                    token = kycToken.get()!!
                 ),
                 this, isProgressBar = true
             )
@@ -177,7 +224,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     /*
   * This method is used to call auth login API
   * */
-    fun callKycAccountActivationApi() {
+    private fun callKycAccountActivationApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_KYC_ACTIVATE_ACCOUNT,
@@ -208,16 +255,43 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                 }
             }
 
-            ApiConstant.API_KYC_ACTIVATE_ACCOUNT -> {
-                if (responseData is KycModel.KycActivateAccountResponse) {
+            ApiConstant.API_KYC_INIT -> {
+                if (responseData is KycInitResponse) {
                     resendOtpSuccess.value = true
                     resendOtpTimerVisibility.set(true)
                     isResendEnabled.set(false)
-                    kycMobileToken.set(responseData.kycActivateAccountResponseDetails.token)
+                    kycToken.set(responseData.kycInitResponseDetails.token)
+
+                }
+            }
+
+            ApiConstant.API_KYC_ACTIVATE_ACCOUNT -> {
+                if (responseData is KycActivateAccountResponse) {
+                    resendOtpSuccess.value = true
+                    resendOtpTimerVisibility.set(true)
+                    isResendEnabled.set(false)
+                    kycToken.set(responseData.kycActivateAccountResponseDetails.token)
+
+                }
+            }
+
+            ApiConstant.API_KYC_MOBILE_VERIFICATION -> {
+                if (responseData is KycMobileVerifyResponse) {
+                    if (responseData.kycMobileVerifyResponseDetails.showAdharInitScreen == AppConstants.YES)
+                        onVerificationSuccess.value = true
 
 
                 }
             }
+
+            ApiConstant.API_KYC_VERIFICATION -> {
+                if (responseData is KycVerificationResponse) {
+                    onVerificationSuccess.value = true
+
+
+                }
+            }
+
             ApiConstant.API_LOGIN -> {
                 if (responseData is LoginResponse) {
                     SharedPrefUtils.putBoolean(
@@ -242,6 +316,15 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+
+        when(purpose)
+        {
+            ApiConstant.API_KYC_MOBILE_VERIFICATION,ApiConstant.API_KYC_VERIFICATION->{
+                onVerificationFail.value=true
+            }
+        }
+
+
     }
 
     /*
@@ -254,7 +337,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     ) {
         mobile.value = type
         fromWhichScreen.set(fromWhichScreenValue)
-        kycMobileToken.set(token)
+        kycToken.set(token)
 
         when (fromWhichScreen.get()) {
             AppConstants.AADHAAR_VERIFICATION -> {
@@ -278,7 +361,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                 isChangeVisible.set(false)
 
                 otpTitle.set("")
-                isYesBankLogoVisibile.set(true)
+                isYesBankLogoVisible.set(true)
 
             }
         }

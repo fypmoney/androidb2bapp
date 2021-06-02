@@ -12,16 +12,14 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.KycModel
-import com.fypmoney.model.LeaveFamilyResponse
+import com.fypmoney.model.*
 import com.fypmoney.util.Utility
 
 /*
 * This class is used for handling aadhaar verification using otp
 * */
 class AadhaarAccountActivationViewModel(application: Application) : BaseViewModel(application) {
-    var onActivateAccountSuccess = MutableLiveData<KycModel.KycActivateAccountResponseDetails>()
+    var onActivateAccountSuccess = MutableLiveData<KycActivateAccountResponseDetails>()
 
     /*
 * This method is used to handle click of activate account using Aadhaar card
@@ -50,7 +48,7 @@ class AadhaarAccountActivationViewModel(application: Application) : BaseViewMode
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_KYC_ACTIVATE_ACCOUNT -> {
-                if (responseData is KycModel.KycActivateAccountResponse) {
+                if (responseData is KycActivateAccountResponse) {
                     onActivateAccountSuccess.value = responseData.kycActivateAccountResponseDetails
 
                 }

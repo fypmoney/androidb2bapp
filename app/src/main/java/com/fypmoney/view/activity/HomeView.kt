@@ -55,6 +55,12 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.STAY_TUNED_BOTTOM_SHEET -> {
+                mViewModel.isScanVisible.set(false)
+                mViewModel.headerText.set(
+                    getString(
+                        R.string.family_settings_toolbar_heading
+                    )
+                )
                 setCurrentFragment(FamilySettingsView())
 
             }
