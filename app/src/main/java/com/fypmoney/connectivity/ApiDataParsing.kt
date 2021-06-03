@@ -121,6 +121,14 @@ class ApiDataParsing {
                     getObject(response, GetWalletBalanceResponse::class.java)
                 }
 
+                ApiConstant.API_GET_VIRTUAL_CARD_REQUEST -> {
+                    getObject(response, VirtualCardRequestResponse::class.java)
+                }
+
+                ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
+                    getObject(response, FetchVirtualCardResponse::class.java)
+                }
+
                 else -> response
             }
         } catch (e: Exception) {

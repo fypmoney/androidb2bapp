@@ -227,6 +227,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         if (requestCode == AppConstants.DEVICE_SECURITY_REQUEST_CODE) {
             when (resultCode) {
                 AppCompatActivity.RESULT_OK -> {
+
                 }
                 AppCompatActivity.RESULT_CANCELED -> {
                     finishAffinity(requireActivity())

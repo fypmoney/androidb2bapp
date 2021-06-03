@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -53,9 +54,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         checkAndAskPermission()
         setCurrentFragment(HomeScreen())
 
-
-        callInviteBottomSheet()
-
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.STAY_TUNED_BOTTOM_SHEET -> {
                 mViewModel.isScanVisible.set(false)
@@ -71,8 +69,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 mViewModel.callGetFamilyNotificationApi(intent.getStringExtra(AppConstants.NOTIFICATION_APRID))
 
             }
-            /* else -> {  setCurrentFragment(HomeScreen())
-             }*/
+
         }
 
         mViewBinding.navigationView.setOnNavigationItemSelectedListener {
@@ -131,10 +128,11 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             }
         }
         mViewModel.onProfileClicked.observe(this) {
-            if (it) {
-                intentToActivity(UserProfileView::class.java)
-                mViewModel.onProfileClicked.value = false
-            }
+            inviteUser()
+            /*  if (it) {
+                  intentToActivity(UserProfileView::class.java)
+                  mViewModel.onProfileClicked.value = false
+              }*/
         }
         mViewModel.onNotificationClicked.observe(this) {
             if (it) {

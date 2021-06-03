@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.CardScreenViewModel" />
+
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/mCardFrontLayout"
+            android:layout_width="match_parent"
+            android:layout_height="199dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:background="@drawable/ic_card"
+            android:padding="16dp">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivServiceLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/rupay" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/balance"
+                style="@style/TextviewRegular"
+                android:layout_toStartOf="@+id/balance_amount"
+                android:text="@string/balance_text1"
+                android:textAlignment="center"
+                android:textSize="15dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/balance_amount"
+                style="@style/TextviewBold"
+                android:layout_alignParentEnd="true"
+                android:text="@{@string/Rs+viewModel.balance}"
+                android:textColor="@color/white"
+                android:textSize="17dp" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/name"
+                style="@style/TextviewRegular"
+                android:layout_marginTop="80dp"
+                android:text="@{viewModel.name}"
+                android:textColor="@color/textColorRed1"
+                android:textSize="21dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnViewDetails"
+                style="@style/Widget.App.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/curved_background11"
+                android:onClick="@{()->viewModel.onViewDetailsClicked()}"
+                android:text="@string/view_details_btn_text"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/text_color_light" />
+
+
+        </RelativeLayout>
+    </FrameLayout></layout>

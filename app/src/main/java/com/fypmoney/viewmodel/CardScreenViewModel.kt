@@ -12,8 +12,9 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.KycActivateAccountResponse
+import com.fypmoney.model.*
+import org.json.JSONObject
+
 
 class CardScreenViewModel(application: Application) : BaseViewModel(application) {
     var isCardDetailsVisible =
@@ -29,9 +30,9 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var expiry =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_expiry))
     var onViewDetailsClicked = MutableLiveData<Boolean>()
+    var onGetCardDetailsSuccess = MutableLiveData<Boolean>()
 
     init {
-        callKycAccountActivationApi()
     }
 
     /*
@@ -44,22 +45,22 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     /*
       * This method is used to call auth login API
       * */
-    private fun callKycAccountActivationApi() {
+     fun callKycAccountActivationApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_KYC_ACTIVATE_ACCOUNT,
                 NetworkUtil.endURL(ApiConstant.API_KYC_ACTIVATE_ACCOUNT),
                 ApiUrl.PUT,
                 BaseRequest(),
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
     }
 
     /*
-     * This method is used to call get virtual card details
+     * This method is used to call get virtual card request
      * */
-    private fun callGetVirtualCardDetailsApi() {
+    private fun callGetVirtualRequestApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_VIRTUAL_CARD_REQUEST,
@@ -71,18 +72,45 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         )
     }
 
+    /*
+     * This method is used to call get virtual card details
+     * */
+    private fun callGetVirtualCardDetailsApi(fetchVirtualCardRequest: FetchVirtualCardRequest) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS,
+                NetworkUtil.endURL(ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS),
+                ApiUrl.POST,
+                fetchVirtualCardRequest,
+                this, isProgressBar = false
+            )
+        )
+    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_GET_VIRTUAL_CARD_REQUEST -> {
-                if (responseData is KycActivateAccountResponse) {
-
+                if (responseData is VirtualCardRequestResponse) {
+                    callGetVirtualCardDetailsApi(makeFetchCardRequest(responseData.virtualCardRequestResponseDetails.requestData))
                 }
             }
 
             ApiConstant.API_KYC_ACTIVATE_ACCOUNT -> {
                 if (responseData is KycActivateAccountResponse) {
-                    callGetVirtualCardDetailsApi()
+                    callGetVirtualRequestApi()
+
+                }
+            }
+
+            ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
+                if (responseData is FetchVirtualCardResponse) {
+                    cardNumber.set(responseData.fetchVirtualCardResponseDetails.card_number)
+                    cvv.set(responseData.fetchVirtualCardResponseDetails.cvv)
+                    expiry.set(responseData.fetchVirtualCardResponseDetails.expiry_month+"/"+responseData.fetchVirtualCardResponseDetails.expiry_year)
+                    onGetCardDetailsSuccess.value=true
+
+
 
                 }
             }
@@ -91,6 +119,20 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+    }
+
+    fun makeFetchCardRequest(requestData:String):FetchVirtualCardRequest {
+        val fetchVirtualCardRequest=FetchVirtualCardRequest()
+        val mainObject = JSONObject(requestData)
+        fetchVirtualCardRequest.action_name=mainObject.getString("action_name")
+        fetchVirtualCardRequest.wlap_secret_key=mainObject.getString("wlap_secret_key")
+        fetchVirtualCardRequest.wlap_code=mainObject.getString("wlap_code")
+        fetchVirtualCardRequest.p1=mainObject.getString("p1")
+        fetchVirtualCardRequest.p2=mainObject.getString("p2")
+        fetchVirtualCardRequest.checksum=mainObject.getString("checksum")
+        return fetchVirtualCardRequest
+
+
     }
 
 }

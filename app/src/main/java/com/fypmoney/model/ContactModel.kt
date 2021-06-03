@@ -7,8 +7,7 @@ class ContactModel(
     var name: String? = null,
     var number: String? = null,
     var isSelected: Boolean? = false,
-) {
-}
+)
 
 data class ContactRequest(
     @SerializedName("userPhoneContact") val contactRequestDetails: List<ContactRequestDetails>

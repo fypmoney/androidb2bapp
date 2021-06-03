@@ -1,10 +1,7 @@
 package com.fypmoney.util
 
 import android.app.DatePickerDialog
-import android.content.ContentResolver
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.content.res.Resources
 import android.database.Cursor
 import android.graphics.BlendMode
@@ -633,7 +630,16 @@ object Utility {
     /*
     * This is used to format the amount
     * */
-     fun getFormatedAmount(amount: String): String? {
+    fun getFormatedAmount(amount: String): String? {
         return NumberFormat.getNumberInstance(Locale.US).format(amount.toInt())
+    }
+
+    /*
+    * This method is used to copy the text to clipboard
+    * */
+    fun copyTextToClipBoard(clipboardManager: ClipboardManager, text: String? = null) {
+        val clip =
+            ClipData.newPlainText(AppConstants.COPY_LABEL, text)
+        clipboardManager.setPrimaryClip(clip)
     }
 }

@@ -15,7 +15,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -351,7 +350,6 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     fun inviteUser() {
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
-        sendIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         sendIntent.putExtra(
             Intent.EXTRA_TEXT,
             "Hey check out my app at: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID
@@ -363,5 +361,10 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     override fun onTryAgainClicked() {
 
     }
+
+
+
+
+
 
 }

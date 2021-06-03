@@ -56,8 +56,7 @@ class InviteBottomSheet(var clipboardManager: ClipboardManager) : BottomSheetDia
 
 
         referralCode.setOnClickListener {
-                 val clip = ClipData.newPlainText("label", Utility.getCustomerDataFromPreference()?.referralCode)
-            clipboardManager.setPrimaryClip(clip)        }
+               Utility.copyTextToClipBoard(clipboardManager,Utility.getCustomerDataFromPreference()?.referralCode)      }
         return view
     }
 
