@@ -54,7 +54,17 @@ data class CustomerInfoResponse(
     @SerializedName("isProfileCompleted") val isProfileCompleted: String?=null,
     @SerializedName("isMandatoryProfileCompleted") val isMandatoryProfileCompleted: String?=null,
     @SerializedName("isReferralAllowed") val isReferralAllowed: String?=null,
-    @SerializedName("idToken") val idToken: String?=null
+    @SerializedName("idToken") val idToken: String?=null,
+    @SerializedName("referralCode") val referralCode: String?=null,
+    @SerializedName("referralMsg") val referralMsg: String?=null,
+    @SerializedName("referredCount") val referredCount: Int?=null,
+    @SerializedName("bankProfile") val bankProfile: BankProfile?=null
+) : Serializable
+
+data class BankProfile(
+    @SerializedName("isAccountActive") var isAccountActive: String?,
+    @SerializedName("isVirtualCardIssued") var isVirtualCardIssued: String?,
+    @SerializedName("isPhysicardIssued") var isPhysicardIssued: String?
 ) : Serializable
 
 data class UserInterestModel(

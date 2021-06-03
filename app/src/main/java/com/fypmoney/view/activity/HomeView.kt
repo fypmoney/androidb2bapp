@@ -1,5 +1,8 @@
 package com.fypmoney.view.activity
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -17,10 +20,7 @@ import com.fypmoney.model.NotificationModel
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.fragment.AddMemberScreen
-import com.fypmoney.view.fragment.CardScreen
-import com.fypmoney.view.fragment.FamilyNotificationBottomSheet
-import com.fypmoney.view.fragment.HomeScreen
+import com.fypmoney.view.fragment.*
 import com.fypmoney.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.view_home.*
 
@@ -53,6 +53,9 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         checkAndAskPermission()
         setCurrentFragment(HomeScreen())
 
+
+        callInviteBottomSheet()
+
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.STAY_TUNED_BOTTOM_SHEET -> {
                 mViewModel.isScanVisible.set(false)
@@ -68,8 +71,8 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 mViewModel.callGetFamilyNotificationApi(intent.getStringExtra(AppConstants.NOTIFICATION_APRID))
 
             }
-           /* else -> {  setCurrentFragment(HomeScreen())
-            }*/
+            /* else -> {  setCurrentFragment(HomeScreen())
+             }*/
         }
 
         mViewBinding.navigationView.setOnNavigationItemSelectedListener {
@@ -241,10 +244,21 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
 
     override fun onBottomSheetButtonClick(actionAllowed: String?) {
-         mViewModel.callUpdateApprovalRequestApi(actionAllowed!!)
+        mViewModel.callUpdateApprovalRequestApi(actionAllowed!!)
 
 
     }
 
+    /*
+      * This method is used to call leave member
+      * */
+    private fun callInviteBottomSheet() {
+        val bottomSheet =
+            InviteBottomSheet(
+                getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            )
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "InviteMemberBottomSheet")
+    }
 }
 

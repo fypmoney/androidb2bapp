@@ -39,6 +39,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.io.InputStream
 import java.nio.charset.Charset
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
@@ -627,5 +628,12 @@ object Utility {
 
         return phone
 
+    }
+
+    /*
+    * This is used to format the amount
+    * */
+     fun getFormatedAmount(amount: String): String? {
+        return NumberFormat.getNumberInstance(Locale.US).format(amount.toInt())
     }
 }

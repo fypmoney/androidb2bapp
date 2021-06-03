@@ -33,6 +33,7 @@ object ApiConstant {
     const val API_KYC_INIT = "/services/PockketService/api/kyc/init"
     const val API_KYC_VERIFICATION = "/services/PockketService/api/kyc/verification"
     const val API_GET_WALLET_BALANCE = "/services/PockketService/api/get/walletBalance"
+    const val API_GET_VIRTUAL_CARD_REQUEST = "/services/PockketService/api/get/virtualCardRequest"
     const val API_LOGIN = "/auth/app/login"
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
 }
