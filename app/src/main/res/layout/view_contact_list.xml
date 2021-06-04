@@ -63,6 +63,7 @@
             android:onClick="@{()->viewModel.onSelectClicked()}"
             android:text="@string/select_btn_text"
             android:textAllCaps="false"
+            android:visibility="gone"
             app:backgroundTint="@color/text_color_dark" />
 
     </RelativeLayout>

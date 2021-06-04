@@ -3,6 +3,7 @@ package com.fypmoney.database
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.ContactRequestDetails
 import com.fypmoney.model.UserPhoneContact
+import com.fypmoney.util.Utility
 import kotlinx.coroutines.runBlocking
 
 
@@ -51,7 +52,7 @@ class ContactRepository(mDB: AppDatabase?) {
     fun insertAllContacts(contactList: List<ContactEntity>) {
         runBlocking {
           appDB?.contactDao()?.insertAllContacts(contactList)
-          //  Log.d("contacts","insertAllContacts")
+        //  Log.d("contacts","insertAllContacts")
         }
     }
 

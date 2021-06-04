@@ -3,10 +3,7 @@ package com.fypmoney.viewhelper
 import androidx.databinding.ObservableField
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.util.Utility
-import com.fypmoney.view.adapter.ContactAdapter
 import com.fypmoney.viewmodel.ContactListViewModel
-import com.fypmoney.viewmodel.ContactViewModel
-import java.lang.Exception
 
 
 /*
@@ -39,21 +36,8 @@ class ContactListViewHelper(
      * */
     fun onItemClicked() {
         if (isAppUser.get() == true) {
-            if (viewModel.selectedContactList.size < 1) {
-                contactEntity?.isSelected = contactEntity?.isSelected != true
-                viewModel.selectedContactList.add(contactEntity!!)
-                isBackgroundHighlight.set(true)
-            } else if (viewModel.selectedContactList.size == 1) {
-                if (viewModel.selectedContactList[0].contactNumber == contactEntity?.contactNumber) {
-                    contactEntity?.isSelected = contactEntity?.isSelected != true
-                    isBackgroundHighlight.set(false)
-                    contactEntity?.let {
-                        viewModel.selectedContactList.remove(it)
+            viewModel.onItemClicked.value=contactEntity
 
-                    }
-                }
-
-            }
         } else {
             onIsAppUserClicked()
 

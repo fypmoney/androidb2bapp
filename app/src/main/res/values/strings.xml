@@ -46,6 +46,7 @@
     <string name="select_btn_text">Select</string>
     <string name="reject_btn_text">Reject</string>
     <string name="update_btn_text">Update</string>
+    <string name="request_btn_text">Request</string>
 
 
     <!--Login-->
@@ -452,6 +453,9 @@
     Pay or Request Money
     -->
     <string name="type_msg">Type your message here</string>
+    <string name="pay_title">Pay</string>
+    <string name="request_title">Request</string>
+    <string name="request_from">Request from</string>
 
 
 </resources>

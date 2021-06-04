@@ -51,7 +51,7 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
         setToolbarAndTitle(
             context = this@ContactListView,
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = getString(R.string.select_member)
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.pay_title)
         )
         setObserver()
         checkAndAskPermission()
@@ -74,6 +74,14 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
                 inviteUser()
                 mViewModel.onIsAppUserClicked.value = false
             }
+        }
+
+        mViewModel.onItemClicked.observe(this) {
+            intentToActivity(
+                contactEntity = it,
+                PayRequestProfileView::class.java
+            )
+
         }
         mViewModel.emptyContactListError.observe(this) {
             if (it) {

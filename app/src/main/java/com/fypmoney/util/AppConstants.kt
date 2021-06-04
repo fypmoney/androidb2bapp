@@ -101,6 +101,7 @@ object AppConstants {
 
     const val COPY_LABEL = "label"
     const val PAY = "pay"
+    const val WHICH_ACTION = "which_action"
 
 
 

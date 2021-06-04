@@ -51,8 +51,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/ivServiceLogo"
-                    android:layout_centerHorizontal="true"
-                    app:srcCompat="@drawable/ic_fyper_cap"
+                    android:layout_marginStart="-20dp"
+                    android:layout_toEndOf="@+id/ivServiceLogo"                    app:srcCompat="@drawable/ic_fyper_cap"
 
                     />
 
@@ -174,7 +174,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/curved_background1"
                     android:onClick="@{()->viewModel.onPayClicked()}"
-                    android:text="@string/pay_btn_text"
+                    android:text="@{viewModel.buttonText}"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/text_color_dark" />
 

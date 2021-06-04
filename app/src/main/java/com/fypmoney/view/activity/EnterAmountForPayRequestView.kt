@@ -7,6 +7,8 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewCommunityBinding
+import com.fypmoney.databinding.ViewEnterAmountForPayRequestBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.EnterAmountForPayRequestViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_add_money.*
@@ -14,7 +16,7 @@ import kotlinx.android.synthetic.main.view_add_money.*
 /*
 * This class is used to handle school name city
 * */
-class EnterAmountForPayRequestView : BaseActivity<ViewCommunityBinding, EnterAmountForPayRequestViewModel>() {
+class EnterAmountForPayRequestView : BaseActivity<ViewEnterAmountForPayRequestBinding, EnterAmountForPayRequestViewModel>() {
     private lateinit var mViewModel: EnterAmountForPayRequestViewModel
 
     override fun getBindingVariable(): Int {
@@ -22,7 +24,7 @@ class EnterAmountForPayRequestView : BaseActivity<ViewCommunityBinding, EnterAmo
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_community
+        return R.layout.view_enter_amount_for_pay_request
     }
 
     override fun getViewModel(): EnterAmountForPayRequestViewModel {
@@ -32,13 +34,27 @@ class EnterAmountForPayRequestView : BaseActivity<ViewCommunityBinding, EnterAmo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setToolbarAndTitle(
-            context = this@EnterAmountForPayRequestView,
-            toolbar = toolbar,
-            isBackArrowVisible = true
-        )
+        mViewModel.setResponseAfterContactSelected(intent.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE),actionValue = intent.getStringExtra(AppConstants.WHICH_ACTION))
+
+        when(mViewModel.action.get()){
+            AppConstants.PAY->{
+                setToolbarAndTitle(
+                    context = this@EnterAmountForPayRequestView,
+                    toolbar = toolbar,
+                    isBackArrowVisible = true,toolbarTitle = getString(R.string.pay_title)
+                )
+            }
+            else->{
+                setToolbarAndTitle(
+                    context = this@EnterAmountForPayRequestView,
+                    toolbar = toolbar,
+                    isBackArrowVisible = true,toolbarTitle = getString(R.string.request_title)
+                )
+            }
+        }
+
         setObserver()
-    }
+         }
 
     /**
      * Create this method for observe the viewModel fields
