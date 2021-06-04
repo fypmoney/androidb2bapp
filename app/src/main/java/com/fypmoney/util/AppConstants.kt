@@ -100,6 +100,7 @@ object AppConstants {
     const val KYC_DOCUMENT_TYPE = "adhar"
 
     const val COPY_LABEL = "label"
+    const val PAY = "pay"
 
 
 

@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.fypmoney.viewmodel.ContactViewModel" />
+            type="com.fypmoney.viewmodel.ContactListViewModel" />
     </data>
 
     <RelativeLayout

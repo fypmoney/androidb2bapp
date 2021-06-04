@@ -25,6 +25,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     var availableAmount =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
     var onAddMoneyClicked = MutableLiveData(false)
+    var onPayClicked = MutableLiveData(false)
     var onChoreClicked = MutableLiveData(false)
     var feedsAdapter = FeedsSectionAdapter(this)
     var onFeedButtonClick = MutableLiveData<FeedDetails>()
@@ -41,7 +42,13 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         onAddMoneyClicked.value = true
 
     }
+    /*
+    * This is used to handle pay button click
+    * */
+    fun onPayClicked() {
+        onPayClicked.value = true
 
+    }
     /*
      * This method is used to get the balance of wallet
      * */

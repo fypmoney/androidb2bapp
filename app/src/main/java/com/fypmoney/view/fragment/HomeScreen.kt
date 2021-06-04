@@ -67,6 +67,11 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
                 mViewModel.onAddMoneyClicked.value = false
             }
         }
+        mViewModel.onPayClicked.observe(viewLifecycleOwner) {
+            if (it) { intentToAddMemberActivity(ContactListView::class.java,AppConstants.PAY)
+                mViewModel.onPayClicked.value = false
+            }
+        }
 
         /*mViewModel.onChoreClicked.observe(viewLifecycleOwner) {
             if (it) {
@@ -129,9 +134,9 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         fragmentTransaction.commit()
     }
 
-    private fun intentToAddMemberActivity(aClass: Class<*>) {
+    private fun intentToAddMemberActivity(aClass: Class<*>,pay:String?=null) {
         val intent = Intent(requireActivity(), aClass)
-        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "")
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
         requireContext().startActivity(intent)
     }
 

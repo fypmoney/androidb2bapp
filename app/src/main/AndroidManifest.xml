@@ -70,6 +70,9 @@
             android:name=".view.activity.PermissionView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
+            android:name=".view.activity.ContactListView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
             android:name=".view.activity.ReferralCodeView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
