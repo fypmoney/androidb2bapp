@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewHelper"
+            type="com.fypmoney.viewhelper.TransactionHistoryViewHelper" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            SET_ALIGNMENT="@{viewHelper.position}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_5sdp"
+            android:background="@drawable/border_background2"
+            android:onClick="@{()->viewHelper.onItemClicked()}"
+            android:padding="10dp"
+
+            >
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/amount"
+                style="@style/TextviewBold"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:text="@{@string/Rs+viewHelper.transactionHistory.amount}"
+                android:textAlignment="center"
+                android:textColor="@color/color_skyblue"
+                android:textSize="28dp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/amount"
+                app:srcCompat="@drawable/ic_check" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvServiceName"
+                style="@style/TextviewRegular"
+                android:layout_below="@+id/amount"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:text="@{viewHelper.transactionHistory.message}"
+                android:textAlignment="center"
+                android:textSize="12dp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivServiceLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/amount"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_toEndOf="@+id/tvServiceName"
+                app:srcCompat="@drawable/ic_next" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

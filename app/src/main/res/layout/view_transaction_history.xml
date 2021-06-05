@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.TransactionHistoryViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <include
+            android:id="@+id/layout"
+            layout="@layout/toolbar_transaction_history"
+          />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/curved_background12">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/linear"
+            android:layout_marginStart="@dimen/screenMarginLeft"
+            android:layout_marginEnd="@dimen/screenMarginRight"
+            android:layout_marginTop="@dimen/margin"
+            app:adapter="@{viewModel.transactionHistoryAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/request"
+            style="@style/Widget.App.Button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/white"
+            android:background="@drawable/curved_background1"
+            android:onClick="@{(view)->viewModel.onPayOrRequestClicked(view)}"
+            android:text="@string/request_btn_text"
+           android:textAlignment="center"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/pay"
+                style="@style/Widget.App.Button"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/white"
+                android:background="@drawable/curved_background1"
+                android:onClick="@{(view)->viewModel.onPayOrRequestClicked(view)}"
+                android:text="@string/pay_btn_text"
+                android:textAlignment="center"
+                android:paddingTop="10dp"
+                android:layout_marginStart="20dp"
+                android:paddingBottom="10dp"
+                />
+        </LinearLayout>
+    </RelativeLayout>
+
+    </RelativeLayout>
+</layout>
+

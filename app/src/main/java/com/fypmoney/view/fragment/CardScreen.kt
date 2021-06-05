@@ -15,6 +15,7 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenCardBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.adapter.CardListViewAdapter
+import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.viewmodel.CardScreenViewModel
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
@@ -24,7 +25,7 @@ import kotlinx.android.synthetic.main.virtual_card_front_layout.*
 /**
  * This fragment is used for handling card
  */
-class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() {
+class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() , MyProfileListAdapter.OnListItemClickListener{
     private lateinit var mViewModel: CardScreenViewModel
     private lateinit var mViewBinding: ScreenCardBinding
     private var mSetRightOut: AnimatorSet? = null
@@ -50,14 +51,20 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() {
         mViewBinding.viewModel = mViewModel
         mViewBinding.fragment = this
 
-        val textString =
-            arrayOf("Card Settings", "Order Card", "Account Statement", "Set up Spending Limit")
-        val drawableIds = arrayOf<Int>(
-            R.drawable.lock, R.drawable.order, R.drawable.transaction,
-            R.drawable.set_up_limit
-        )
-        val adapter = CardListViewAdapter(requireActivity(), textString, drawableIds)
-        list.adapter = adapter
+        val textString = ArrayList<String>()
+        textString.add("Card Settings")
+        textString.add("Order Card")
+        textString.add("Account Statement")
+        textString.add("Set up Spending Limit")
+        val drawableIds = ArrayList<Int>()
+
+        drawableIds.add(R.drawable.lock)
+        drawableIds.add(R.drawable.order)
+        drawableIds.add(R.drawable.transaction)
+        drawableIds.add(R.drawable.set_up_limit)
+
+        val myProfileAdapter = MyProfileListAdapter(requireContext(), this)
+
         setObservers()
         loadAnimations()
         changeCameraDistance()
@@ -142,6 +149,10 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() {
             getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager,
             Utility.getCustomerDataFromPreference()?.referralCode
         )*/
+    }
+
+    override fun onItemClick(position: Int) {
+
     }
 
 

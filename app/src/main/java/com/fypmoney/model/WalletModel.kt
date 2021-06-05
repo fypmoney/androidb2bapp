@@ -41,6 +41,14 @@ data class SendMoneyResponseDetails(
     @SerializedName("receiverName") val receiverName: String,
     @SerializedName("reveiverMobile") val reveiverMobile: String,
     @SerializedName("txnTime") val txnTime: String
-)
+) : Serializable
 
-    : Serializable
+
+data class TransactionHistoryResponse(
+    @SerializedName("data") val transactionHistoryResponseDetails: List<TransactionHistoryResponseDetails>
+) : Serializable
+
+data class TransactionHistoryResponseDetails(
+    @SerializedName("amount") var amount: String?=null,
+    @SerializedName("message") var message: String?=null,
+) : Serializable
