@@ -102,6 +102,7 @@ object AppConstants {
     const val COPY_LABEL = "label"
     const val PAY = "pay"
     const val WHICH_ACTION = "which_action"
+    const val FUND_TRANSFER_TRANSACTION_TYPE = "FUND_TRANSAFER"
 
 
 

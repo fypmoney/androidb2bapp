@@ -1,67 +1,61 @@
 package com.fypmoney.view.activity
 
+
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.databinding.ViewUserProfileBinding
+import com.fypmoney.databinding.ViewUserLogsBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.MyProfileListAdapter
-import com.fypmoney.viewmodel.UserProfileViewModel
+import com.fypmoney.viewmodel.LogViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 
 
 /*
 * This class is used as Home Screen
 * */
-class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewModel>(),
+class LogView : BaseActivity<ViewUserLogsBinding, LogViewModel>(),
     MyProfileListAdapter.OnListItemClickListener {
-    private lateinit var mViewModel: UserProfileViewModel
-    private lateinit var mViewBinding: ViewUserProfileBinding
+    private lateinit var mViewModel: LogViewModel
+    private lateinit var mViewBinding: ViewUserLogsBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_user_profile
+        return R.layout.view_user_logs
     }
 
-    override fun getViewModel(): UserProfileViewModel {
-        mViewModel = ViewModelProvider(this).get(UserProfileViewModel::class.java)
+    override fun getViewModel(): LogViewModel {
+        mViewModel = ViewModelProvider(this).get(LogViewModel::class.java)
         return mViewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
-        setToolbarAndTitle(
-            context = this@UserProfileView,
-            toolbar = toolbar,
-            isBackArrowVisible = true
-        )
-        // set name
-        mViewModel.userName.set(
-            SharedPrefUtils.getString(
-                applicationContext,
-                SharedPrefUtils.SF_KEY_USERNAME
-            )
-        )
+
         val myProfileAdapter = MyProfileListAdapter(applicationContext, this)
         mViewBinding.profileList.adapter = myProfileAdapter
 
         val iconList = ArrayList<Int>()
-        iconList.add(R.drawable.ic_profile)
-        iconList.add(R.drawable.ic_profile)
-        iconList.add(R.drawable.ic_profile)
+
+
+        val logList = ArrayList<String>()
+        mViewModel.logRepository.getAllLogsFromDatabase()?.forEach {
+            logList.add(it.methodName + "      " + it.methodValue)
+            iconList.add(R.drawable.ic_profile)
+
+        }
 
         myProfileAdapter.setList(
             iconList1 = iconList,
-            resources.getStringArray(R.array.my_profile_title_list).toMutableList()
+            logList
         )
 
         setObserver()
@@ -79,7 +73,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
      * Method to navigate to the different activity
      */
     private fun intentToActivity(aClass: Class<*>) {
-        val intent = Intent(this@UserProfileView, aClass)
+        val intent = Intent(this@LogView, aClass)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.LOGOUT)
         startActivity(intent)
         finishAffinity()
@@ -90,22 +84,12 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
      * Method to navigate to the different activity
      */
     private fun intentToFamilySettingsActivity(aClass: Class<*>) {
-        val intent = Intent(this@UserProfileView, aClass)
+        val intent = Intent(this@LogView, aClass)
         startActivity(intent)
     }
 
     override fun onItemClick(position: Int) {
         when (position) {
-            0 -> {
-                intentToFamilySettingsActivity(CommunityView::class.java)
-            }
-            1 -> {
-                intentToFamilySettingsActivity(SelectInterestView::class.java)
-            }
-
-            2 -> {
-                intentToFamilySettingsActivity(LogView::class.java)
-            }
 
         }
     }

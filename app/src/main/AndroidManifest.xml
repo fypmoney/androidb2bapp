@@ -135,6 +135,9 @@
             android:name=".view.activity.AadhaarVerificationView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
+            android:name=".view.activity.LogView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
             android:name=".view.activity.ActivationSuccessWithAadhaarView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity android:name=".view.activity.PushNotificationView">

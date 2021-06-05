@@ -128,6 +128,9 @@ class ApiDataParsing {
                 ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
                     getObject(response, FetchVirtualCardResponse::class.java)
                 }
+                ApiConstant.API_FUND_TRANSFER -> {
+                    getObject(response, SendMoneyResponse::class.java)
+                }
 
                 else -> response
             }

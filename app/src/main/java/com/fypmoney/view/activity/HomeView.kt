@@ -128,11 +128,10 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             }
         }
         mViewModel.onProfileClicked.observe(this) {
-            inviteUser()
-            /*  if (it) {
-                  intentToActivity(UserProfileView::class.java)
-                  mViewModel.onProfileClicked.value = false
-              }*/
+            if (it) {
+                intentToActivity(UserProfileView::class.java)
+                mViewModel.onProfileClicked.value = false
+            }
         }
         mViewModel.onNotificationClicked.observe(this) {
             if (it) {
@@ -171,7 +170,8 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 Utility.getAllContactsInList(
                     contentResolver,
                     this,
-                    contactRepository = mViewModel.contactRepository,logRepository = mViewModel.logRepository
+                    contactRepository = mViewModel.contactRepository,
+                    logRepository = mViewModel.logRepository
                 )
             }
             else -> {
@@ -198,7 +198,8 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                     var list = Utility.getAllContactsInList(
                         contentResolver,
                         this,
-                        contactRepository = mViewModel.contactRepository,logRepository = mViewModel.logRepository
+                        contactRepository = mViewModel.contactRepository,
+                        logRepository = mViewModel.logRepository
                     )
 
                 } else {

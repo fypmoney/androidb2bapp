@@ -198,6 +198,7 @@
     <string-array name="my_profile_title_list">
         <item>Build Community</item>
         <item>Select your Interest</item>
+        <item>Logs</item>
     </string-array>
     <integer-array name="my_profile_icon_list">
         <item>@drawable/ic_profile</item>

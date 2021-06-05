@@ -434,7 +434,6 @@ object Utility {
                         contactEntity.phoneBookIdentifier = contacts.getString(
                             contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
                         )
-                        insertLogs(logRepository, "getAllContactsInList", "onLooping in contacts")
 
                         setLastContactSinkDate()
                         val newList =

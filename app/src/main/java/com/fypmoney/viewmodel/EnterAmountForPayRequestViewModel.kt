@@ -7,7 +7,17 @@ import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
+import com.fypmoney.connectivity.ApiConstant
+import com.fypmoney.connectivity.ApiUrl
+import com.fypmoney.connectivity.ErrorResponseInfo
+import com.fypmoney.connectivity.network.NetworkUtil
+import com.fypmoney.connectivity.retrofit.ApiRequest
+import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.entity.ContactEntity
+import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.KycActivateAccountResponse
+import com.fypmoney.model.SendMoneyRequest
+import com.fypmoney.model.SendMoneyResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 
@@ -21,6 +31,8 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
     var message = ObservableField<String>()
     var contactResult = ObservableField(ContactEntity())
     var buttonText = ObservableField(application.getString(R.string.pay_btn_text))
+    var onApiResponse = MutableLiveData<String>()
+    var sendMoneyApiResponse = ObservableField<SendMoneyResponse>()
 
     /*
       * This method is used to handle on click of pay or request button
@@ -32,6 +44,8 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
             }
             else -> {
                 onPayClicked.value = true
+
+
             }
         }
     }
@@ -48,10 +62,12 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
         try {
             if (contactEntity?.contactNumber != null) {
                 contactResult.set(contactEntity)
+                action.set(actionValue)
+
                 if (action.get() != AppConstants.PAY) {
                     buttonText.set(PockketApplication.instance.getString(R.string.request_btn_text))
                 }
-                action.set(actionValue)
+
                 if (contactResult.get()?.lastName.isNullOrEmpty()) {
                     if (action.get() == AppConstants.PAY)
                         contactName.set(PockketApplication.instance.getString(R.string.pay_btn_text) + " " + contactEntity.firstName)
@@ -74,6 +90,49 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
             }
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+
+    /*
+     * This method is used to call send money api on click of pay button
+     * */
+    fun callSendMoneyApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_FUND_TRANSFER,
+                NetworkUtil.endURL(ApiConstant.API_FUND_TRANSFER),
+                ApiUrl.POST,
+                SendMoneyRequest(
+                    mobileNo = contactResult.get()?.contactNumber,
+                    txnType = AppConstants.FUND_TRANSFER_TRANSACTION_TYPE,
+                    amount = amountSelected.get(),
+                    remarks = message.get()
+                ),
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    override fun onSuccess(purpose: String, responseData: Any) {
+        super.onSuccess(purpose, responseData)
+        when (purpose) {
+            ApiConstant.API_FUND_TRANSFER -> {
+                if (responseData is SendMoneyResponse) {
+                    sendMoneyApiResponse.set(responseData)
+                    onApiResponse.value = AppConstants.API_SUCCESS
+
+                }
+            }
+        }
+    }
+
+    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
+        super.onError(purpose, errorResponseInfo)
+        when (purpose) {
+            ApiConstant.API_FUND_TRANSFER -> {
+                onApiResponse.value = AppConstants.API_FAIL
+            }
         }
     }
 

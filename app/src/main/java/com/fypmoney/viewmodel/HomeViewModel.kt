@@ -102,7 +102,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             }
 
         }
-        // Log.d("contacts","step5_callContactSyncApi")
 
         if (!contactRequestDetailsList.isNullOrEmpty()) {
             WebApiCaller.getInstance().request(
