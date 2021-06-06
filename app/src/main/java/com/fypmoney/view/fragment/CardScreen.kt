@@ -1,7 +1,11 @@
 package com.fypmoney.view.fragment
 
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -11,16 +15,22 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenCardBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.adapter.CardListViewAdapter
+import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.viewmodel.CardScreenViewModel
 import kotlinx.android.synthetic.main.screen_card.*
+import kotlinx.android.synthetic.main.virtual_card_back_layout.*
+import kotlinx.android.synthetic.main.virtual_card_front_layout.*
 
 
 /**
  * This fragment is used for handling card
  */
-class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() {
+class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() , MyProfileListAdapter.OnListItemClickListener{
     private lateinit var mViewModel: CardScreenViewModel
     private lateinit var mViewBinding: ScreenCardBinding
+    private var mSetRightOut: AnimatorSet? = null
+    private var mSetLeftIn: AnimatorSet? = null
+    private var mIsBackVisible = false
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -39,25 +49,26 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
+        mViewBinding.fragment = this
 
-        val textString =
-            arrayOf("Card Settings", "Order Card", "Account Statement", "Set up Spending Limit")
-        val drawableIds = arrayOf<Int>(
-            R.drawable.lock, R.drawable.order, R.drawable.transaction,
-            R.drawable.set_up_limit
-        )
-        val adapter = CardListViewAdapter(requireActivity(), textString, drawableIds)
+        val textString = ArrayList<String>()
+        textString.add("Card Settings")
+        textString.add("Order Card")
+        textString.add("Account Statement")
+        textString.add("Set up Spending Limit")
+        val drawableIds = ArrayList<Int>()
 
+        drawableIds.add(R.drawable.lock)
+        drawableIds.add(R.drawable.order)
+        drawableIds.add(R.drawable.transaction)
+        drawableIds.add(R.drawable.set_up_limit)
 
-        list.setAdapter(adapter)
-        /*  setToolbarAndTitle(
-              context = requireContext(),
-              toolbar = toolbar,
-              isBackArrowVisible = true, toolbarTitle = getString(R.string.add_money_screen_title)
-          )*/
-
+        val myProfileAdapter = MyProfileListAdapter(requireContext(), this)
 
         setObservers()
+        loadAnimations()
+        changeCameraDistance()
+
 
     }
 
@@ -66,11 +77,18 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() {
     * */
     private fun setObservers() {
         mViewModel.onViewDetailsClicked.observe(viewLifecycleOwner) {
-              if (it) {
-                  askForDevicePassword()
-                  mViewModel.onViewDetailsClicked.value = false
-              }
-          }
+            if (it) {
+                askForDevicePassword()
+                mViewModel.onViewDetailsClicked.value = false
+            }
+        }
+
+        mViewModel.onGetCardDetailsSuccess.observe(viewLifecycleOwner) {
+            if (it) {
+                flipCard()
+                mViewModel.onGetCardDetailsSuccess.value = false
+            }
+        }
 
 
     }
@@ -78,6 +96,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() {
     override fun onTryAgainClicked() {
 
     }
+
     override
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -85,13 +104,55 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() {
             AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
                 when (resultCode) {
                     AppCompatActivity.RESULT_OK -> {
-                       mViewModel.isCardDetailsVisible.set(true)
+                        Handler(Looper.getMainLooper()).post(Runnable {
+                            mViewModel.callKycAccountActivationApi()
+
+                        })
 
                     }
 
                 }
             }
         }
+    }
+
+    private fun changeCameraDistance() {
+        val distance = 8000
+        val scale: Float = getResources().getDisplayMetrics().density * distance
+        mCardFrontLayout!!.cameraDistance = scale
+        mCardBackLayout!!.cameraDistance = scale
+    }
+
+    private fun loadAnimations() {
+        mSetRightOut =
+            AnimatorInflater.loadAnimator(context, R.animator.out_animation) as AnimatorSet
+        mSetLeftIn = AnimatorInflater.loadAnimator(context, R.animator.in_animation) as AnimatorSet
+    }
+
+    fun flipCard() {
+        if (!mIsBackVisible) {
+            mSetRightOut!!.setTarget(mCardFrontLayout)
+            mSetLeftIn!!.setTarget(mCardBackLayout)
+            mSetRightOut!!.start()
+            mSetLeftIn!!.start()
+            mViewModel.isCardDetailsVisible.set(true)
+            mIsBackVisible = true
+
+        }
+    }
+
+    /*
+    * This method is used to copy the text to clipboard
+    * */
+    fun onCopyClicked() {
+        /*Utility.copyTextToClipBoard(
+            getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager,
+            Utility.getCustomerDataFromPreference()?.referralCode
+        )*/
+    }
+
+    override fun onItemClick(position: Int) {
+
     }
 
 

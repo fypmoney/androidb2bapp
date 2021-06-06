@@ -1,6 +1,7 @@
 package com.fypmoney.view.fragment
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
@@ -12,10 +13,10 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenHomeBinding
+import com.fypmoney.model.CustomerInfoResponse
+import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.activity.ChoresActivity
-import com.fypmoney.view.activity.ChoresHistoryActivity
-import com.fypmoney.view.activity.ContactView
+import com.fypmoney.view.activity.*
 import com.fypmoney.viewmodel.ChoresViewModel
 import com.fypmoney.viewmodel.HomeScreenViewModel
 import com.google.android.material.card.MaterialCardView
@@ -66,6 +67,11 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
                 mViewModel.onAddMoneyClicked.value = false
             }
         }
+        mViewModel.onPayClicked.observe(viewLifecycleOwner) {
+            if (it) { intentToAddMemberActivity(ContactListView::class.java,AppConstants.PAY)
+                mViewModel.onPayClicked.value = false
+            }
+        }
 
         /*mViewModel.onChoreClicked.observe(viewLifecycleOwner) {
             if (it) {
@@ -74,7 +80,36 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
             }
         }*/
 
+        mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
+            when (it.action?.type) {
+                AppConstants.FEED_TYPE_IN_APP -> {
+                    try {
+                        intentToActivity(
+                            Class.forName(AppConstants.BASE_ACTIVITY_URL + it.action?.url!!),
+                            it
+                        )
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        intentToActivity(HomeView::class.java, it)
+                    }
+                }
+                AppConstants.FEED_TYPE_IN_APP_WEBVIEW, AppConstants.FEED_TYPE_FEED -> {
+                    intentToActivity(UserFeedsDetailView::class.java, it, type = it.action?.type)
+                }
+                AppConstants.FEED_TYPE_EXTERNAL_WEBVIEW -> {
+                    startActivity(
+                        Intent.createChooser(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(it.action?.url)
+                            ), getString(R.string.browse_with)
+                        )
+                    )
 
+                }
+            }
+
+        }
     }
 
     override fun onTryAgainClicked() {
@@ -99,9 +134,20 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         fragmentTransaction.commit()
     }
 
-    private fun intentToAddMemberActivity(aClass: Class<*>) {
+    private fun intentToAddMemberActivity(aClass: Class<*>,pay:String?=null) {
         val intent = Intent(requireActivity(), aClass)
-        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "")
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
         requireContext().startActivity(intent)
+    }
+
+    /**
+     * Method to navigate to the different activity
+     */
+    private fun intentToActivity(aClass: Class<*>, feedDetails: FeedDetails, type: String? = null) {
+        val intent = Intent(context, aClass)
+        intent.putExtra(AppConstants.FEED_RESPONSE, feedDetails)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
+        intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponse())
+        startActivity(intent)
     }
 }

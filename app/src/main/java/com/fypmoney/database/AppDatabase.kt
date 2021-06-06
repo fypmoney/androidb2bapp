@@ -8,15 +8,17 @@ import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.database.dao.ContactDao
 import com.fypmoney.database.dao.InterestDao
+import com.fypmoney.database.dao.LogDao
 import com.fypmoney.database.dao.MemberDao
 import com.fypmoney.database.entity.ContactEntity
+import com.fypmoney.database.entity.LogEntity
 import com.fypmoney.database.entity.MemberEntity
 import com.fypmoney.model.InterestEntity
 
 
 // Annotates class to be a Room Database with a table (entity) of the Word class
 @Database(
-    entities = [ContactEntity::class, MemberEntity::class, InterestEntity::class],
+    entities = [ContactEntity::class, MemberEntity::class, InterestEntity::class,LogEntity::class],
     version = 1
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -24,6 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun contactDao(): ContactDao
     abstract fun memberDao(): MemberDao
     abstract fun interestDao(): InterestDao
+    abstract fun logDao(): LogDao
 
 
     companion object {

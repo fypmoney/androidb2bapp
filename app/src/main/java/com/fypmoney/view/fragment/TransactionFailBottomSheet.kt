@@ -9,22 +9,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
-import com.fypmoney.database.entity.MemberEntity
-import com.fypmoney.databinding.BottomSheetAddMoneyTransactionFailBinding
-import com.fypmoney.databinding.BottomSheetLeaveMemberBinding
+import com.fypmoney.databinding.BottomSheetTransactionFailBinding
 import com.fypmoney.util.AppConstants
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.bottom_sheet_leave_member.*
 
 
 /*
 * This is used to show transaction fail in case of add money
 * */
-class AddMoneyTransactionFailBottomSheet(
+class TransactionFailBottomSheet(
+    private val fromWhichScreen: String,
     private val amount1: String, private var onBottomSheetClickListener: OnBottomSheetClickListener
 ) : BottomSheetDialogFragment() {
 
@@ -37,23 +36,43 @@ class AddMoneyTransactionFailBottomSheet(
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(
-            R.layout.bottom_sheet_add_money_transaction_fail,
+            R.layout.bottom_sheet_transaction_fail,
             container,
             false
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetAddMoneyTransactionFailBinding>(
+        bottomSheet.setCancelable(false)
+        val bindingSheet = DataBindingUtil.inflate<BottomSheetTransactionFailBinding>(
             layoutInflater,
-            R.layout.bottom_sheet_add_money_transaction_fail,
+            R.layout.bottom_sheet_transaction_fail,
             null,
             false
         )
         bottomSheet.setContentView(bindingSheet.root)
 
         val amount = view.findViewById<TextView>(R.id.add_amount)!!
+        val changeMethod = view.findViewById<TextView>(R.id.changeMethod)!!
+        val linearLayout = view.findViewById<LinearLayout>(R.id.linear_layout)!!
+        val retry = view.findViewById<Button>(R.id.button_retry)!!
+        val buttonRetryInCenter = view.findViewById<Button>(R.id.button_retry_InCenter)!!
 
-        amount.text =getString(R.string.add_money_trans_fail_add)+ getString(R.string.Rs) + amount1
+        amount.text =
+            getString(R.string.add_money_trans_fail_add) + getString(R.string.Rs) + amount1
+
+        when (fromWhichScreen) {
+            AppConstants.PAY -> {
+                linearLayout.visibility = View.GONE
+                buttonRetryInCenter.visibility = View.VISIBLE
+
+            }
+        }
+        buttonRetryInCenter.setOnClickListener {
+            dismiss()
+        }
+
+
+
 
         return view
     }

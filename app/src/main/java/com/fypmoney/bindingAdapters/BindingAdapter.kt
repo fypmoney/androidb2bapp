@@ -2,8 +2,11 @@ package com.fypmoney.bindingAdapters
 
 
 import android.graphics.Color
+import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.RelativeLayout
+import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -91,6 +94,33 @@ class BindingAdapter {
             }
         }
 
+
+        @BindingAdapter("SET_ALIGNMENT")
+        @JvmStatic
+        fun setLayoutAlignment(view: RelativeLayout, position: Int) {
+            try {
+                when {
+                    position % 2 == 0 -> {
+                        val layoutParams = RelativeLayout.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT
+                        )
+                        layoutParams.addRule(RelativeLayout.ALIGN_END)
+                        view.layoutParams = layoutParams
+                    }
+                    else -> {  val params: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
+                    )
+                        params.addRule(RelativeLayout.ALIGN_LEFT, view.id)
+                    }
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+
         /**
          *  Method to Bind image in with the image view
          */
@@ -124,14 +154,13 @@ class BindingAdapter {
 
         @BindingAdapter("SET_IMAGE_IN_NOTIFICATION")
         @JvmStatic
-        fun setImageInNotification(imageView: AppCompatImageView, requestCategoryCode:String) {
-            when(requestCategoryCode)
-            {
-                AppConstants.NOTIFICATION_TYPE_ADD_TASK->{
+        fun setImageInNotification(imageView: AppCompatImageView, requestCategoryCode: String) {
+            when (requestCategoryCode) {
+                AppConstants.NOTIFICATION_TYPE_ADD_TASK -> {
                     imageView.setImageResource(R.drawable.ic_jay)
 
                 }
-                else->{
+                else -> {
                     imageView.setImageResource(R.drawable.ic_ankush_bro)
 
                 }
@@ -139,7 +168,6 @@ class BindingAdapter {
 
         }
     }
-
 
 
 }

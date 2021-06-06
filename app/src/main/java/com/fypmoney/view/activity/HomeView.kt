@@ -1,7 +1,11 @@
 package com.fypmoney.view.activity
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -17,10 +21,7 @@ import com.fypmoney.model.NotificationModel
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.fragment.AddMemberScreen
-import com.fypmoney.view.fragment.CardScreen
-import com.fypmoney.view.fragment.FamilyNotificationBottomSheet
-import com.fypmoney.view.fragment.HomeScreen
+import com.fypmoney.view.fragment.*
 import com.fypmoney.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.view_home.*
 
@@ -68,8 +69,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 mViewModel.callGetFamilyNotificationApi(intent.getStringExtra(AppConstants.NOTIFICATION_APRID))
 
             }
-           /* else -> {  setCurrentFragment(HomeScreen())
-            }*/
+
         }
 
         mViewBinding.navigationView.setOnNavigationItemSelectedListener {
@@ -170,7 +170,8 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 Utility.getAllContactsInList(
                     contentResolver,
                     this,
-                    contactRepository = mViewModel.contactRepository
+                    contactRepository = mViewModel.contactRepository,
+                    logRepository = mViewModel.logRepository
                 )
             }
             else -> {
@@ -197,7 +198,8 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                     var list = Utility.getAllContactsInList(
                         contentResolver,
                         this,
-                        contactRepository = mViewModel.contactRepository
+                        contactRepository = mViewModel.contactRepository,
+                        logRepository = mViewModel.logRepository
                     )
 
                 } else {
@@ -215,6 +217,11 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     }
 
     override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {
+        Utility.insertLogs(
+            mViewModel.logRepository,
+            "onAllContactsSynced",
+            "Before api call"
+        )
         mViewModel.callContactSyncApi()
     }
 
@@ -241,10 +248,21 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
 
     override fun onBottomSheetButtonClick(actionAllowed: String?) {
-         mViewModel.callUpdateApprovalRequestApi(actionAllowed!!)
+        mViewModel.callUpdateApprovalRequestApi(actionAllowed!!)
 
 
     }
 
+    /*
+      * This method is used to call leave member
+      * */
+    private fun callInviteBottomSheet() {
+        val bottomSheet =
+            InviteBottomSheet(
+                getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            )
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "InviteMemberBottomSheet")
+    }
 }
 

@@ -99,6 +99,11 @@ object AppConstants {
     const val KYC_TYPE = "SEMI"
     const val KYC_DOCUMENT_TYPE = "adhar"
 
+    const val COPY_LABEL = "label"
+    const val PAY = "pay"
+    const val WHICH_ACTION = "which_action"
+    const val FUND_TRANSFER_TRANSACTION_TYPE = "FUND_TRANSAFER"
+
 
 
 

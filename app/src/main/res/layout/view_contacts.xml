@@ -21,6 +21,7 @@
             layout="@layout/toolbar" />
 
 
+
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/search"
             style="@style/AppTheme.Widget.TextView"

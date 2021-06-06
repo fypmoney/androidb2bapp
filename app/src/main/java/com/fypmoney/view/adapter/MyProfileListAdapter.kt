@@ -27,12 +27,6 @@ class MyProfileListAdapter(
         binding.icon = iconList[position]
         binding.image.setImageResource(iconList[position])
 
-
-        /*if (position == 1) {
-            binding.image.setColorFilter(ContextCompat.getColor(context, R.color.colorRed), android.graphics.PorterDuff.Mode.MULTIPLY)
-             binding.text.setTextColor(ContextCompat.getColor(context, R.color.colorRed))
-        }*/
-
         binding.linear.setOnClickListener {
             onItemClickListener.onItemClick(position)
         }

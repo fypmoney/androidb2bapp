@@ -9,6 +9,7 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.databinding.ViewReferralCodeBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.ReferralCodeViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -67,11 +68,20 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
      * Method to navigate to the different activity
      */
     private fun intentToActivity() {
-        when (intent.getStringExtra(AppConstants.IS_PROFILE_COMPLETED)) {
-            AppConstants.NO -> {
+        when {
+            intent.getStringExtra(AppConstants.IS_PROFILE_COMPLETED) == AppConstants.NO -> {
                 startActivity(Intent(this@ReferralCodeView, CreateAccountView::class.java))
                 finishAffinity()
 
+            }
+            Utility.getCustomerDataFromPreference()!!.bankProfile?.isAccountActive == AppConstants.NO -> {
+                startActivity(
+                    Intent(
+                        this@ReferralCodeView,
+                        AadhaarAccountActivationView::class.java
+                    )
+                )
+                finishAffinity()
             }
             else -> {
                 startActivity(Intent(this@ReferralCodeView, HomeView::class.java))

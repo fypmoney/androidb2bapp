@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.ContactListViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <include
+            android:id="@+id/layout"
+            layout="@layout/toolbar" />
+
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/search"
+            style="@style/AppTheme.Widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout"
+            android:layout_margin="@dimen/margin"
+            android:background="@drawable/curved_background15"
+            android:drawableStart="@drawable/ic_icon_feather_search"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/product_sans_regular"
+            android:hint="@string/search"
+            android:onTextChanged="@{viewModel.onTextChanged}"
+            android:padding="10dp"
+            android:textColor="@color/text_color_dark"
+            android:textColorHint="@color/text_color_dark"
+            android:textSize="14dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btnContinue"
+            android:layout_below="@+id/search"
+            android:layout_marginTop="@dimen/margin"
+            app:adapter="@{viewModel.contactAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnContinue"
+            style="@style/Widget.App.Button"
+            android:layout_width="299dp"
+            android:layout_height="52dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/curved_background1"
+            android:onClick="@{()->viewModel.onSelectClicked()}"
+            android:text="@string/select_btn_text"
+            android:textAllCaps="false"
+            android:visibility="gone"
+            app:backgroundTint="@color/text_color_dark" />
+
+    </RelativeLayout>
+</layout>
+

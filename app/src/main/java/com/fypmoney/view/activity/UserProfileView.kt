@@ -57,6 +57,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
         val iconList = ArrayList<Int>()
         iconList.add(R.drawable.ic_profile)
         iconList.add(R.drawable.ic_profile)
+        iconList.add(R.drawable.ic_profile)
 
         myProfileAdapter.setList(
             iconList1 = iconList,
@@ -101,6 +102,11 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
             1 -> {
                 intentToFamilySettingsActivity(SelectInterestView::class.java)
             }
+
+            2 -> {
+                intentToFamilySettingsActivity(LogView::class.java)
+            }
+
         }
     }
 

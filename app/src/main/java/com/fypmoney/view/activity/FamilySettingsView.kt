@@ -10,18 +10,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ViewFamilySettingsBinding
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.fragment.AddMoneyTransactionFailBottomSheet
 import com.fypmoney.view.fragment.UpdateFamilyNameBottomSheet
 import com.fypmoney.viewmodel.FamilySettingsViewModel
-import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_family_settings.*
 
 
 /*

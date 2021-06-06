@@ -15,6 +15,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.adapter.FeedsSectionAdapter
 import java.lang.Exception
@@ -24,8 +25,10 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     var availableAmount =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
     var onAddMoneyClicked = MutableLiveData(false)
+    var onPayClicked = MutableLiveData(false)
     var onChoreClicked = MutableLiveData(false)
     var feedsAdapter = FeedsSectionAdapter(this)
+    var onFeedButtonClick = MutableLiveData<FeedDetails>()
 
     init {
         callGetWalletBalanceApi()
@@ -39,7 +42,13 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         onAddMoneyClicked.value = true
 
     }
+    /*
+    * This is used to handle pay button click
+    * */
+    fun onPayClicked() {
+        onPayClicked.value = true
 
+    }
     /*
      * This method is used to get the balance of wallet
      * */
@@ -79,7 +88,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         when (purpose) {
             ApiConstant.API_GET_WALLET_BALANCE -> {
                 if (responseData is GetWalletBalanceResponse) {
-                    availableAmount.set(responseData.getWalletBalanceResponseDetails.accountBalance)
+                    availableAmount.set(Utility.getFormatedAmount(responseData.getWalletBalanceResponseDetails.accountBalance))
 
                 }
             }
@@ -103,7 +112,8 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     }
 
     override fun onFeedClick(feedDetails: FeedDetails) {
-        TODO("Not yet implemented")
+        onFeedButtonClick.value = feedDetails
+
     }
 
     /*
@@ -136,8 +146,10 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         }
 
         val feedRequestModel = FeedRequestModel()
-        feedRequestModel.query =
+      /*  feedRequestModel.query =
             "{getAllFeed(id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME_HOME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],latitude:\"" + latitude + "\",longitude:\"" + longitude + "\",withinRadius:\"" + AppConstants.FEED_WITHIN_RADIUS + "\") { total feedData { id name description screenName screenSection sortOrder displayCard readTime scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+     */   feedRequestModel.query ="{getAllFeed(page:null, size:null, id : null, screenName:\"HOME\",screenSection:null,tags :[\"SPORTS\"],latitude:null,longitude:null,withinRadius:null) { total feedData { id name description screenName screenSection sortOrder displayCard readTime scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+
         return feedRequestModel
 
     }

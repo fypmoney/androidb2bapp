@@ -1,28 +1,52 @@
 package com.fypmoney.view.adapter
 
-
-import android.app.Activity
+import android.app.LauncherActivity
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.TextView
-import com.fypmoney.R
+import com.fypmoney.databinding.MyProfileListRowItemBinding
+
+class CardListViewAdapter(
+    context: Context? = null, var onItemClickListener: OnListItemClickListener
+) :
+    ArrayAdapter<LauncherActivity.ListItem>(context!!, 0) {
+
+    var iconList = ArrayList<Int>()
+    var titleList = ArrayList<String>()
 
 
-class CardListViewAdapter(private val context: Activity, private val title: Array<String>,private val imgid: Array<Int>)
-    : ArrayAdapter<String>(context, R.layout.custom_list, title) {
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        /* val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_facilities_adapter, parent, false)
+        return FacilitiesViewHolder(view)*/
+        val binding =
+            MyProfileListRowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding.title = titleList[position]
+        binding.icon = iconList[position]
+        binding.image.setImageResource(iconList[position])
 
-    override fun getView(position: Int, view: View?, parent: ViewGroup): View {
-        val inflater = context.layoutInflater
-        val rowView = inflater.inflate(R.layout.custom_list, null, true)
+        binding.linear.setOnClickListener {
+            onItemClickListener.onItemClick(position)
+        }
+        return binding.root
+    }
 
-        val titleText = rowView.findViewById(R.id.title) as TextView
-        val imageView = rowView.findViewById(R.id.icon) as ImageView
+    override fun getCount(): Int {
+        return titleList.size
+    }
 
-        titleText.text = title[position]
-        imageView.setImageResource(imgid[position])
 
-        return rowView
+    fun setList(iconList1: List<Int>, titleList1: List<String>) {
+        iconList.clear()
+        titleList.clear()
+        iconList.addAll(iconList1)
+        titleList.addAll(titleList1)
+        notifyDataSetChanged()
+    }
+
+    interface OnListItemClickListener {
+        fun onItemClick(position: Int)
     }
 }

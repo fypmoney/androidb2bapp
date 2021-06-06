@@ -70,6 +70,16 @@
             android:name=".view.activity.PermissionView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
+            android:name=".view.activity.ContactListView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.EnterAmountForPayRequestView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+        <activity
+            android:name=".view.activity.PayRequestProfileView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
             android:name=".view.activity.ReferralCodeView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
@@ -123,6 +133,12 @@
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.AadhaarVerificationView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.LogView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.TransactionHistoryView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.ActivationSuccessWithAadhaarView"

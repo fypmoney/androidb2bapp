@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.CardScreenViewModel" />
+
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="199dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="30dp"
+            android:id="@+id/mCardBackLayout"
+            android:background="@drawable/ic_card_details"
+            android:padding="16dp">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_details"
+                style="@style/TextviewRegular"
+                android:layout_marginTop="80dp"
+                android:text="@{viewModel.cardNumber}"
+                android:textColor="@color/white"
+                android:textSize="17dp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/copy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:layout_alignParentEnd="true"
+                app:srcCompat="@drawable/ic_icon_feather_copy" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/expiry"
+                style="@style/TextviewRegular"
+                android:text="@string/expiry_details_title"
+                android:layout_alignParentBottom="true"
+                android:textSize="15dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/ExpiryValue"
+                style="@style/TextviewBold"
+                android:text="@{viewModel.expiry}"
+                android:textColor="@color/white"
+                android:layout_toEndOf="@+id/expiry"
+                android:layout_alignParentBottom="true"
+                android:textSize="17dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cvv"
+                style="@style/TextviewRegular"
+                android:text="@string/cvv_details_title"
+                android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@+id/cvvValue"
+                android:textSize="15dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/cvvValue"
+                style="@style/TextviewBold"
+                android:text="@{viewModel.cvv}"
+                android:textColor="@color/white"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:textSize="17dp" />
+
+
+        </RelativeLayout>
+    </FrameLayout></layout>

@@ -14,13 +14,11 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.connectivity.ApiConstant
-import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewAddMemberBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.CountryCodeArrayAdapter
-import com.fypmoney.view.fragment.AddMoneyTransactionFailBottomSheet
 import com.fypmoney.view.fragment.InviteMemberBottomSheet
 import com.fypmoney.view.fragment.StayTunedBottomSheet
 import com.fypmoney.viewmodel.AddMemberViewModel

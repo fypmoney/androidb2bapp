@@ -10,6 +10,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.database.entity.MemberEntity
 import com.fypmoney.databinding.ViewAddMoneyBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.AddMoneyViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_add_money.*
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.view_add_money.*
 /**
  * This fragment is used for Adding money
  */
-class AddMoneyScreen : BaseFragment<ViewAddMoneyBinding, AddMoneyViewModel>(),AddMoneyTransactionFailBottomSheet.OnBottomSheetClickListener {
+class AddMoneyScreen : BaseFragment<ViewAddMoneyBinding, AddMoneyViewModel>(),TransactionFailBottomSheet.OnBottomSheetClickListener {
 
     private lateinit var mViewModel: AddMoneyViewModel
     private lateinit var mViewBinding: ViewAddMoneyBinding
@@ -80,7 +81,7 @@ class AddMoneyScreen : BaseFragment<ViewAddMoneyBinding, AddMoneyViewModel>(),Ad
  * */
     private fun callBottomSheet(amount: String, updatedAmount: String) {
         val bottomSheet =
-            AddMoneyTransactionFailBottomSheet(
+            TransactionFailBottomSheet("",
                 amount,this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))

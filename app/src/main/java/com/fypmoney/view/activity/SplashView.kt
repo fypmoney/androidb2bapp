@@ -4,18 +4,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.databinding.ViewSplashBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SplashViewModel
-import com.google.firebase.messaging.RemoteMessage
 
 /*
 * This class is used for show app logo and check user logged in or not
@@ -105,6 +102,9 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                         }
                         Utility.getCustomerDataFromPreference()!!.isProfileCompleted == AppConstants.NO -> {
                             intentToActivity(CreateAccountView::class.java)
+                        }
+                        Utility.getCustomerDataFromPreference()!!.bankProfile?.isAccountActive == AppConstants.YES -> {
+                            intentToActivity(AadhaarAccountActivationView::class.java)
                         }
                         else -> {
                             intentToActivity(HomeView::class.java)

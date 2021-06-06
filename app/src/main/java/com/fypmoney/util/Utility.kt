@@ -1,10 +1,7 @@
 package com.fypmoney.util
 
 import android.app.DatePickerDialog
-import android.content.ContentResolver
-import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.content.res.Resources
 import android.database.Cursor
 import android.graphics.BlendMode
@@ -28,7 +25,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.database.ContactRepository
+import com.fypmoney.database.LogRepository
 import com.fypmoney.database.entity.ContactEntity
+import com.fypmoney.database.entity.LogEntity
 import com.fypmoney.model.CustomerInfoResponse
 import com.google.gson.Gson
 import com.google.i18n.phonenumbers.PhoneNumberUtil
@@ -39,6 +38,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.io.InputStream
 import java.nio.charset.Charset
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
@@ -363,13 +363,15 @@ object Utility {
     fun getAllContactsInList(
         contentResolver: ContentResolver,
         onAllContactsAddedListener: OnAllContactsAddedListener,
-        contactRepository: ContactRepository
+        contactRepository: ContactRepository, logRepository: LogRepository
     ) {
-
+        insertLogs(logRepository, "getAllContactsInList", "onStart()")
         val contactList = mutableListOf<ContactEntity>()
         GlobalScope.launch(Dispatchers.Main) {
             // Switch to a background (IO) thread
             withContext(Dispatchers.IO) {
+                insertLogs(logRepository, "getAllContactsInList", "Before contact fetch query in co-routine")
+
                 val contacts: Cursor?
                 //  GlobalScope.launch(Dispatchers.Main) {
                 // Switch to a background (IO) thread
@@ -397,6 +399,8 @@ object Utility {
                         )
 
                     }
+                    insertLogs(logRepository, "getAllContactsInList", "After contact fetch query in co-routine")
+
                     // Loop through the contacts
                     while (contacts?.moveToNext()!!) {
                         val contactEntity = ContactEntity()
@@ -430,6 +434,7 @@ object Utility {
                         contactEntity.phoneBookIdentifier = contacts.getString(
                             contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
                         )
+
                         setLastContactSinkDate()
                         val newList =
                             contactList.filter { it.contactNumber == contactEntity.contactNumber }
@@ -441,6 +446,8 @@ object Utility {
                 } catch (
                     e: Exception
                 ) {
+                    insertLogs(logRepository, "getAllContactsInList", "Exception occur")
+
                     e.printStackTrace()
                 }
 
@@ -452,7 +459,11 @@ object Utility {
                         SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
                     ) == null
                 ) {
+                    insertLogs(logRepository, "getAllContactsInList", "Before all contact inserted in database")
+
                     contactRepository.insertAllContacts(contactList)
+                    insertLogs(logRepository, "getAllContactsInList", "After all contact inserted in database")
+
                     //  Log.d("contacts", "step2_after_insertion")
 
                 } else {
@@ -461,7 +472,11 @@ object Utility {
                             contactList.forEach {
                                 contactRepository.deleteContactsBasedOnLookupKey(it.phoneBookIdentifier!!)
                             }
+                            insertLogs(logRepository, "getAllContactsInList", "Before contact inserted in database on edit or insert")
+
                             contactRepository.insertAllContacts(contactList)
+                            insertLogs(logRepository, "getAllContactsInList", "After contact inserted in database on edit or insert")
+
                             //    Log.d("contacts", "step3_after_insertion")
                         }
                         else -> {
@@ -472,6 +487,8 @@ object Utility {
                 }
             }
             // switch to the main thread
+            insertLogs(logRepository, "getAllContactsInList", "switch to main thread after insert contact")
+
             onAllContactsAddedListener.onAllContactsSynced(contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>)
 
         }
@@ -480,12 +497,14 @@ object Utility {
     /*
     * set the last sink date
     * */
-    private fun setLastContactSinkDate() {
+    private fun setLastContactSinkDate(logRepository: LogRepository?=null) {
         SharedPrefUtils.putString(
             PockketApplication.instance,
             SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP,
             System.currentTimeMillis().toString()
         )
+        insertLogs(logRepository, "setLastContactSinkDate", "set last sink date")
+
     }
 
     /*
@@ -627,5 +646,31 @@ object Utility {
 
         return phone
 
+    }
+
+    /*
+    * This is used to format the amount
+    * */
+    fun getFormatedAmount(amount: String): String? {
+        return NumberFormat.getNumberInstance(Locale.US).format(amount.toInt())
+    }
+
+    /*
+    * This method is used to copy the text to clipboard
+    * */
+    fun copyTextToClipBoard(clipboardManager: ClipboardManager, text: String? = null) {
+        val clip =
+            ClipData.newPlainText(AppConstants.COPY_LABEL, text)
+        clipboardManager.setPrimaryClip(clip)
+    }
+
+    /*
+    * This method is used to insert logs
+    * */
+    fun insertLogs(logRepository: LogRepository?, methodName: String, methodValue: String) {
+        val logEntity = LogEntity()
+        logEntity.methodName = methodName
+        logEntity.methodValue = methodValue
+        logRepository?.insertLog(logEntity)
     }
 }

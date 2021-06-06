@@ -101,7 +101,6 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
 
     override fun onFeedClick(feedDetails: FeedDetails) {
         onFeedButtonClick.value = feedDetails
-
     }
 
     /*

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.PayRequestProfileViewModel" />
+
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivServiceLogo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="62dp"
+                    android:background="@drawable/curved_background14"
+                    android:padding="12dp"
+                    app:srcCompat="@drawable/ic_ankush_bro" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/flagIdentifier"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/ivServiceLogo"
+                    android:layout_marginStart="-20dp"
+                    android:layout_toEndOf="@+id/ivServiceLogo"
+                    app:srcCompat="@drawable/ic_fyper_cap" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/contactName"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@+id/ivServiceLogo"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="17dp"
+                    android:text="@{viewModel.contactName}"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="17dp" />
+
+                <LinearLayout
+                    android:id="@+id/layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/contactName"
+                    android:layout_marginStart="@dimen/screenMarginLeft"
+                    android:layout_marginTop="44dp"
+                    android:layout_marginEnd="@dimen/screenMarginRight"
+                    android:weightSum="2">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextviewRegular"
+                        android:id="@+id/request"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_background2"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:text="@string/request_btn_text"
+                        android:textAlignment="center"
+                        android:onClick="@{(view)->viewModel.onPayOrRequestClicked(view)}"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="16dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/pay"
+                        style="@style/TextviewRegular"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/border_background2"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        android:text="@string/pay_btn_text"
+                        android:textAlignment="center"
+                        android:onClick="@{(view)->viewModel.onPayOrRequestClicked(view)}"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="16dp" />
+
+
+                </LinearLayout>
+
+
+                <ListView
+                    android:id="@+id/list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/layout"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/curved_background12"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="0dp" />
+
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

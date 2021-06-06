@@ -47,6 +47,9 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                 Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
                     intentToActivity(CreateAccountView::class.java)
                 }
+                Utility.getCustomerDataFromPreference()!!.bankProfile?.isAccountActive == AppConstants.NO -> {
+                    intentToActivity(AadhaarAccountActivationView::class.java)
+                }
                 else->{
                     intentToActivity(HomeView::class.java)
                 }
