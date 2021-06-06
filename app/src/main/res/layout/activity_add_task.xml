@@ -240,7 +240,7 @@
                         android:layout_height="52dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/curved_background1"
-                        android:text="@string/add_member_btn_text"
+                        android:text="@string/continue_btn_text"
                         android:textAllCaps="false"
                         android:layout_centerHorizontal="true"
                         app:backgroundTint="@color/text_color_dark" />

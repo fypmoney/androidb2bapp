@@ -72,10 +72,10 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:visibility="gone"
         android:id="@+id/card_add"
         android:layout_width="match_parent"
         app:cardElevation="6dp"
+        android:visibility="gone"
         app:cardBackgroundColor="@color/split_bills_background"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="5dp"

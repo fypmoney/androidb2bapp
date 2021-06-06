@@ -46,6 +46,7 @@
     <string name="select_btn_text">Select</string>
     <string name="reject_btn_text">Reject</string>
     <string name="update_btn_text">Update</string>
+    <string name="request_btn_text">Request</string>
 
 
     <!--Login-->
@@ -197,6 +198,7 @@
     <string-array name="my_profile_title_list">
         <item>Build Community</item>
         <item>Select your Interest</item>
+        <item>Logs</item>
     </string-array>
     <integer-array name="my_profile_icon_list">
         <item>@drawable/ic_profile</item>
@@ -334,6 +336,7 @@
     <string name="invite_member_screen_sub_title">"Looks like your "</string>
     <string name="invite_member_screen_sub_title1">" is not a FYP user. \n No worries you can invite them right now.</string>
 
+
     <!-- Account activation success
   -->
     <string name="account_activation_success_screen_title">Kuddos!</string>
@@ -438,6 +441,22 @@
     <string name="title_activity_chores_history">ChoresHistoryActivity</string>
     <string name="title_activity_add_task">AddTaskActivity</string>
 
+    <!--
+    Invite member
+    -->
+
+    <string name="invite_member_text1">Invite new Fypers</string>
+    <string name="invite_member_text2">Share this link with your friend and after they install both of you will get 50 cash rewards.</string>
+    <string name="invite_member_text3">Or Invite via</string>
+
+
+    <!--
+    Pay or Request Money
+    -->
+    <string name="type_msg">Type your message here</string>
+    <string name="pay_title">Pay</string>
+    <string name="request_title">Request</string>
+    <string name="request_from">Request from</string>
 
 
 </resources>
