@@ -53,7 +53,6 @@ class AddMemberScreen : BaseFragment<ViewAddMemberBinding, AddMemberViewModel>()
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
-
         setToolbarAndTitle(
             context =requireContext(),
             toolbar = toolbar,

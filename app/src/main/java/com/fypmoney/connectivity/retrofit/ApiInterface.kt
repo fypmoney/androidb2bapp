@@ -124,12 +124,4 @@ interface ApiInterface {
     ): Observable<ResponseBody>
 
 
-    @Headers("Accept: application/json")
-    @GET
-    fun getYourTasks(
-        @Header("client_id") client_id: String?,
-        @Header("Authorization") authorization: String?,
-        @Url endPoint: String
-    ): Observable<ResponseBody>
-
 }
