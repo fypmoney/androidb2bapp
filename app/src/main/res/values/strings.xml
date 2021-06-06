@@ -383,6 +383,7 @@
     Add money
     -->
     <string name="add_money_screen_title">Add Money</string>
+    <string name="your_task">Your Task</string>
     <string name="add_money_to_account">Add money to your Account</string>
     <string name="add_money_50">\u20B9 50</string>
     <string name="add_money_100">\u20B9 100</string>
@@ -438,6 +439,8 @@
     <string name="title_activity_chores_history">ChoresHistoryActivity</string>
     <string name="title_activity_add_task">AddTaskActivity</string>
 
-
+    <string name="no_internet_connection">No internet connection</string>
+    <string name="network_failure">Network Failure</string>
+    <string name="conversion_error">Conversion Error</string>
 
 </resources>

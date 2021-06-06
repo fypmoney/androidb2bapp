@@ -11,4 +11,9 @@ class ApiRequest(
     val param: Any, //Used to store api request parameter
     val onResponse: WebApiCaller.OnWebApiResponse, //Used to store reference of WebApiCaller.OnWebApiResponse to return the response
     val isProgressBar: Boolean? = false
+
+
+
 )
+
+

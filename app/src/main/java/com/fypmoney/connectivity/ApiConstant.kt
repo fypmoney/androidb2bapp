@@ -35,6 +35,7 @@ object ApiConstant {
     const val API_GET_WALLET_BALANCE = "/services/PockketService/api/get/walletBalance"
     const val API_LOGIN = "/auth/app/login"
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
+    const val YOUR_TASK = "http://54.84.197.170:9300/services/loyaltyservice/api/taskMaster"
 }
 
 

@@ -1,26 +1,33 @@
 package com.fypmoney.view.adapter
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
-import com.fypmoney.database.entity.TaskEntity
-import com.fypmoney.model.YourTaskModel
-import com.fypmoney.view.fragment.AcceptRejectTaskFragment
-import kotlinx.android.synthetic.main.card_your_task.view.*
+import com.fypmoney.util.AppConstants
+import com.fypmoney.view.activity.AddTaskActivity
 
 
-internal class TaskHistoryStaggeredAdapter(private var listOfTasks: List<YourTaskModel>) :
+internal class TaskHistoryStaggeredAdapter(context:Context, var listOfTasks: List<com.fypmoney.model.chaoseHistory.Data>) :
     RecyclerView.Adapter<TaskHistoryStaggeredAdapter.MyViewHolder>(){
-    var onItemClick: ((YourTaskModel) -> Unit)? = null
+    private val examples: List<com.fypmoney.model.chaoseHistory.Data>
+    private val context: Context
+
+    init {
+        this.examples = listOfTasks
+        this.context = context
+    }
     internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var label: TextView = view.findViewById(R.id.label)
         var ttl: TextView = view.findViewById(R.id.ttl)
@@ -37,22 +44,30 @@ internal class TaskHistoryStaggeredAdapter(private var listOfTasks: List<YourTas
         return MyViewHolder(itemView)
     }
 
+
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val tasks = listOfTasks[position]
-        holder.label.text = tasks.Title
-        holder.ttl  .text = tasks.Title
-        holder.amount.text = tasks.Amount
-        holder.relation.text = tasks.Relation
-        holder.itemView.setOnClickListener {
-                onItemClick?.invoke(listOfTasks[position])
-            }
+        holder.label.text = tasks!!.description
 
         if(position==0){
             holder.card_add.visible()
             holder.card_main.invisible()
+            holder.label.text ="Create your own task"
+            holder.ttl  .text = "Create your own task"
+
         }else{
             holder.card_add.invisible()
             holder.card_main.visible()
+            holder.label.text = tasks.name
+            holder.ttl  .text = tasks.description
+            holder.amount.text = tasks.amount?.toString()
+            holder.relation.text = "Father"
+        }
+
+        holder.card_add.setOnClickListener {
+            val intten=Intent(context,AddTaskActivity::class.java)
+            intten.putExtra(AppConstants.FROM_WHICH_SCREEN, "")
+            context.startActivity(intten)
         }
 
     }
@@ -60,7 +75,7 @@ internal class TaskHistoryStaggeredAdapter(private var listOfTasks: List<YourTas
         return listOfTasks.size
     }
 
-    fun setMovieList(listOfTasks: List<YourTaskModel>) {
+    fun setMovieList(listOfTasks: List<com.fypmoney.model.chaoseHistory.Data>) {
         this.listOfTasks = listOfTasks
         notifyDataSetChanged()
     }
@@ -72,5 +87,4 @@ internal class TaskHistoryStaggeredAdapter(private var listOfTasks: List<YourTas
     fun View.invisible() {
         visibility = View.INVISIBLE
     }
-
 }

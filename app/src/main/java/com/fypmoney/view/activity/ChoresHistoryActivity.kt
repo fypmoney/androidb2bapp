@@ -1,31 +1,34 @@
 package com.fypmoney.view.activity
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
+import android.view.View
+import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.connectivity.retrofit.Allapi
+import com.fypmoney.connectivity.retrofit.ApiClient1
 import com.fypmoney.database.entity.TaskEntity
+import com.fypmoney.databinding.ActivityChoresHistoryBinding
 import com.fypmoney.databinding.ViewChoresBinding
-import com.fypmoney.model.YourTaskModel
+import com.fypmoney.model.chaoseHistory.ChoresHistoryResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.adapter.TaskHistoryStaggeredAdapter
-import com.fypmoney.view.adapter.YourTaskStaggeredAdapter
 import com.fypmoney.view.fragment.*
 import com.fypmoney.viewhelper.GridItemDecoration
 import com.fypmoney.viewmodel.ChoresViewModel
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.toolbar.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>() ,
     ProcessCompleteBSFragment.OnPBottomSheetClickListener,
@@ -33,59 +36,52 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>()
     WellDoneBSFragment.OnWDBottomSheetClickListener,
     WhoopsBSFragment.OnWPBottomSheetClickListener,
     YayBSFragment.OnYyBottomSheetClickListener{
-
     private lateinit var mViewModel: ChoresViewModel
-    lateinit var card_create: CardView
-    lateinit var card_plant_water: CardView
-    lateinit var card_plant_water1: CardView
-    lateinit var card_clean_bed: CardView
-    lateinit var card_make_bed: CardView
-    lateinit var btnContinue: MaterialButton
+    var mbindign: ActivityChoresHistoryBinding?=null
     var taskDetailsData = ObservableField<TaskEntity>()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_chores_history)
+        mbindign= ActivityChoresHistoryBinding.inflate(layoutInflater)
+        setContentView(mbindign!!.root)
+
         setToolbarAndTitle(
             context = this@ChoresHistoryActivity,
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = getString(R.string.chore_history_title)
         )
-        card_create = findViewById(R.id.card_create)
-        card_plant_water = findViewById(R.id.card_plant_water)
-        card_plant_water1 = findViewById(R.id.card_plant_water1)
-        card_clean_bed = findViewById(R.id.card_clean_bed)
-        card_make_bed = findViewById(R.id.card_make_bed)
-        btnContinue = findViewById(R.id.btnContinue)
 
-        btnContinue.setOnClickListener {
+
+
+
+        mbindign!!.btnContinue.setOnClickListener {
             callYaySheet(taskDetailsData.get())
         }
 
-        card_create.setOnClickListener {
+        mbindign!!.cardCreate.setOnClickListener {
             intentToAddMemberActivity(AddTaskActivity::class.java)
         }
 
-        card_plant_water.setOnClickListener{
+        mbindign!!.cardPlantWater.setOnClickListener{
             callProcessSheet(taskDetailsData.get())
         }
 
-        card_plant_water1.setOnClickListener{
+        mbindign!!.cardPlantWater1.setOnClickListener{
             callGoodJSheet(taskDetailsData.get())
         }
 
-        card_clean_bed.setOnClickListener {
+        mbindign!!.cardCleanBed.setOnClickListener {
             callWellDSheet(taskDetailsData.get())
         }
 
-        card_make_bed.setOnClickListener {
+        mbindign!!.cardMakeBed.setOnClickListener {
             callWhoopSheet(taskDetailsData.get())
         }
 
-//        findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
+        mbindign!!.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        mbindign!!.recyclerView.addItemDecoration(GridItemDecoration(10, 2))
+
+        getHistory()
+
     }
 
     private fun intentToAddMemberActivity(aClass: Class<*>) {
@@ -173,5 +169,29 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>()
         mViewModel = ViewModelProvider(this).get(ChoresViewModel::class.java)
         return mViewModel
     }
+
+    fun getHistory() {
+        try {
+            val apiInterface = ApiClient1.getClient().create(Allapi::class.java)
+            val responseBodyCall = apiInterface.getChoresHistory("web_app", "d37d9fef-0023-4386-bda6-405fefff24bb-1ee78233bfe5797f59587de811ba078cc74642fc8a104ebfa745d321d674275f")
+            responseBodyCall.enqueue(object : Callback<ChoresHistoryResponse> {
+                override fun onResponse(call: Call<ChoresHistoryResponse>, response: Response<ChoresHistoryResponse>) {
+                    val status = response.body()?.data
+                    val adapter = status?.let {
+                        TaskHistoryStaggeredAdapter(
+                            this@ChoresHistoryActivity,
+                            it
+                        )
+                    }
+                    mbindign!!.recyclerView.adapter = adapter
+                }
+                override fun onFailure(call: Call<ChoresHistoryResponse>, t: Throwable) {
+
+                }
+            })
+        } catch (e: Exception) {
+        }
+    }
+
 
 }
