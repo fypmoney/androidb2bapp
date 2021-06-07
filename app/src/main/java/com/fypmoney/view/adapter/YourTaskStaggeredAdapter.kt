@@ -13,15 +13,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
 import com.fypmoney.database.entity.TaskEntity
 import com.fypmoney.model.YourTaskModel
-import com.fypmoney.model.yourTaskModal.YourTaskResponse
 import com.fypmoney.view.fragment.AcceptRejectTaskFragment
 import kotlinx.android.synthetic.main.card_your_task.view.*
 
 
-class YourTaskStaggeredAdapter( private var listOfTasks: List<com.fypmoney.model.yourTaskModal.Data>) :
+internal class YourTaskStaggeredAdapter(private var listOfTasks: List<YourTaskModel>) :
     RecyclerView.Adapter<YourTaskStaggeredAdapter.MyViewHolder>(){
-    var onItemClick: ((com.fypmoney.model.yourTaskModal.Data) -> Unit)? = null
-    inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    var onItemClick: ((YourTaskModel) -> Unit)? = null
+    internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var label: TextView = view.findViewById(R.id.label)
         var amount: TextView = view.findViewById(R.id.amount)
         var relation: TextView = view.findViewById(R.id.relation)
@@ -39,9 +38,9 @@ class YourTaskStaggeredAdapter( private var listOfTasks: List<com.fypmoney.model
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val tasks = listOfTasks[position]
-        holder.label.text = tasks.additionalAttributes.title
-        holder.amount.text = tasks.additionalAttributes.amount.toString()
-        holder.relation.text = "Father"
+        holder.label.text = tasks.Title
+        holder.amount.text = tasks.Amount
+        holder.relation.text = tasks.Relation
         holder.itemView.setOnClickListener {
                 onItemClick?.invoke(listOfTasks[position])
             }
@@ -69,7 +68,7 @@ class YourTaskStaggeredAdapter( private var listOfTasks: List<com.fypmoney.model
         return listOfTasks.size
     }
 
-    fun setMovieList(listOfTasks: List<com.fypmoney.model.yourTaskModal.Data>) {
+    fun setMovieList(listOfTasks: List<YourTaskModel>) {
         this.listOfTasks = listOfTasks
         notifyDataSetChanged()
     }

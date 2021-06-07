@@ -20,9 +20,9 @@ internal class TabsAdapter(
                 YourTaskFragment()
             }
             1 -> {
-                YourTaskFragment()
                 //AssignedTaskFragment()
-                }
+                YourTaskFragment()
+            }
             else -> getItem(position)
         }
     }
