@@ -7,9 +7,6 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewActivationSuccessWithAadhaarBinding
-import com.fypmoney.databinding.ViewInviteRejectedBinding
-import com.fypmoney.databinding.ViewStayTunedBinding
-import com.fypmoney.viewmodel.InviteMemberViewModel
 import com.fypmoney.viewmodel.ActivationSuccessWithAadhaarViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 
