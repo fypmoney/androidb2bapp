@@ -193,10 +193,6 @@ object Utility {
                     simpleDateFormat.parse("$year ${monthOfYear + 1} $dayOfMonth")
                 val simpleDateFormatDate =
                     SimpleDateFormat(AppConstants.DATE_FORMAT_CHANGED, Locale.ROOT)
-                Log.d(
-                    "snebfieuf_yesr",
-                    calculateDifferenceBetweenDates(date, getInstance().time).toString()
-                )
                 // calculateDifferenceBetweenDates(date,getInstance().time)
                 date?.let {
                     onDateSelected.onDateSelected(
@@ -371,7 +367,11 @@ object Utility {
         GlobalScope.launch(Dispatchers.Main) {
             // Switch to a background (IO) thread
             withContext(Dispatchers.IO) {
-                insertLogs(logRepository, "getAllContactsInList", "Before contact fetch query in co-routine")
+                insertLogs(
+                    logRepository,
+                    "getAllContactsInList",
+                    "Before contact fetch query in co-routine"
+                )
 
                 val contacts: Cursor?
                 //  GlobalScope.launch(Dispatchers.Main) {
@@ -400,7 +400,11 @@ object Utility {
                         )
 
                     }
-                    insertLogs(logRepository, "getAllContactsInList", "After contact fetch query in co-routine")
+                    insertLogs(
+                        logRepository,
+                        "getAllContactsInList",
+                        "After contact fetch query in co-routine"
+                    )
 
                     // Loop through the contacts
                     while (contacts?.moveToNext()!!) {
@@ -460,10 +464,18 @@ object Utility {
                         SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
                     ) == null
                 ) {
-                    insertLogs(logRepository, "getAllContactsInList", "Before all contact inserted in database")
+                    insertLogs(
+                        logRepository,
+                        "getAllContactsInList",
+                        "Before all contact inserted in database"
+                    )
 
                     contactRepository.insertAllContacts(contactList)
-                    insertLogs(logRepository, "getAllContactsInList", "After all contact inserted in database")
+                    insertLogs(
+                        logRepository,
+                        "getAllContactsInList",
+                        "After all contact inserted in database with size" + contactList.size
+                    )
 
                     //  Log.d("contacts", "step2_after_insertion")
 
@@ -473,10 +485,18 @@ object Utility {
                             contactList.forEach {
                                 contactRepository.deleteContactsBasedOnLookupKey(it.phoneBookIdentifier!!)
                             }
-                            insertLogs(logRepository, "getAllContactsInList", "Before contact inserted in database on edit or insert")
+                            insertLogs(
+                                logRepository,
+                                "getAllContactsInList",
+                                "Before contact inserted in database on edit or insert"
+                            )
 
                             contactRepository.insertAllContacts(contactList)
-                            insertLogs(logRepository, "getAllContactsInList", "After contact inserted in database on edit or insert")
+                            insertLogs(
+                                logRepository,
+                                "getAllContactsInList",
+                                "After contact inserted in database on edit or insert with size " + contactList.size
+                            )
 
                             //    Log.d("contacts", "step3_after_insertion")
                         }
@@ -488,7 +508,11 @@ object Utility {
                 }
             }
             // switch to the main thread
-            insertLogs(logRepository, "getAllContactsInList", "switch to main thread after insert contact")
+            insertLogs(
+                logRepository,
+                "getAllContactsInList",
+                "switch to main thread after insert contact"
+            )
 
             onAllContactsAddedListener.onAllContactsSynced(contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>)
 
@@ -498,7 +522,7 @@ object Utility {
     /*
     * set the last sink date
     * */
-    private fun setLastContactSinkDate(logRepository: LogRepository?=null) {
+    private fun setLastContactSinkDate(logRepository: LogRepository? = null) {
         SharedPrefUtils.putString(
             PockketApplication.instance,
             SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP,
@@ -675,6 +699,7 @@ object Utility {
         val logEntity = LogEntity()
         logEntity.methodName = methodName
         logEntity.methodValue = methodValue
+        logEntity.timestamp = System.currentTimeMillis()
         logRepository?.insertLog(logEntity)
     }
 }

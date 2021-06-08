@@ -48,7 +48,7 @@ class LogView : BaseActivity<ViewUserLogsBinding, LogViewModel>(),
 
         val logList = ArrayList<String>()
         mViewModel.logRepository.getAllLogsFromDatabase()?.forEach {
-            logList.add(it.methodName + "      " + it.methodValue)
+            logList.add(it.methodName + "      " + it.methodValue+"        "+"Time:  "+it.timestamp)
             iconList.add(R.drawable.ic_profile)
 
         }

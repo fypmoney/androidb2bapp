@@ -30,6 +30,7 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
     var isClickable = ObservableField(false)
     var countCheckIsAppUserApiCall: Int? = 0
     var searchedContact = ObservableField<String>()
+    var isApiError = ObservableField(false)
     var contactRepository = ContactRepository(mDB = appDatabase)
     var onItemClicked = MutableLiveData<ContactEntity>()
     var onIsAppUserClicked = MutableLiveData<Boolean>()
@@ -40,13 +41,14 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
     /*
 * This method is used to get all the contacts
 * */
-    private fun getAllContacts() {
+    fun getAllContacts() {
         contactRepository.getContactsFromDatabase().let {
             try {
                 progressDialog.value = false
                 val sortedList =
                     contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>
                 if (!sortedList.isNullOrEmpty()) {
+                    isApiError.set(true)
                     contactAdapter.setList(sortedList)
                     contactAdapter.newContactList?.addAll(sortedList)
                 } else {
@@ -140,7 +142,6 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
                         contactEntity.contactNumber = searchedContact.get()
                         contactEntity.firstName = responseData.isAppUserResponseDetails.name
                         contactEntity.isAppUser = true
-
                         contactAdapter.newSearchList?.add(contactEntity)
                         contactAdapter.setList(contactAdapter.newSearchList)
 
@@ -160,7 +161,6 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         progressDialog.value = false
-        emptyContactListError.value = true
         when (purpose) {
             ApiConstant.API_CHECK_IS_APP_USER -> {
                 if (countCheckIsAppUserApiCall == 1) {
@@ -170,6 +170,11 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
                 }
 
 
+            }
+
+            ApiConstant.API_SNC_CONTACTS -> {
+                isApiError.set(true)
+                getAllContacts()
             }
         }
     }

@@ -18,6 +18,7 @@ class ContactListViewHelper(
     var isContactSelected = ObservableField(false)
     var isAppUser = ObservableField(false)
     var isBackgroundHighlight = ObservableField<Boolean>()
+    var isApiError = ObservableField(false)
 
     fun init() {
         when (contactEntity?.isAppUser) {
@@ -29,6 +30,7 @@ class ContactListViewHelper(
             }
 
         }
+        isApiError.set(viewModel.isApiError.get())
     }
 
     /*
@@ -36,7 +38,7 @@ class ContactListViewHelper(
      * */
     fun onItemClicked() {
         if (isAppUser.get() == true) {
-            viewModel.onItemClicked.value=contactEntity
+            viewModel.onItemClicked.value = contactEntity
 
         } else {
             onIsAppUserClicked()
