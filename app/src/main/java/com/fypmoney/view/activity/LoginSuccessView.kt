@@ -54,7 +54,6 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                     intentToActivity(HomeView::class.java)
                 }
 
-
             }
 
 

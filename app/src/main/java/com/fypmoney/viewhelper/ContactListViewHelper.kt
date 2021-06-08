@@ -1,5 +1,6 @@
 package com.fypmoney.viewhelper
 
+import android.util.Log
 import androidx.databinding.ObservableField
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.util.Utility
@@ -37,12 +38,22 @@ class ContactListViewHelper(
      * called when any item is selected
      * */
     fun onItemClicked() {
-        if (isAppUser.get() == true) {
-            viewModel.onItemClicked.value = contactEntity
+        when (isApiError.get()) {
+            false -> {
+                if (isAppUser.get() == true) {
+                    viewModel.onItemClicked.value = contactEntity
 
-        } else {
-            onIsAppUserClicked()
+                } else {
+                    onIsAppUserClicked()
 
+                }
+            }
+            true -> {
+                viewModel.searchedContact.set(contactEntity?.contactNumber)
+                viewModel.searchedName.set(contactEntity?.firstName)
+                viewModel.callIsAppUserApi()
+
+            }
         }
     }
 

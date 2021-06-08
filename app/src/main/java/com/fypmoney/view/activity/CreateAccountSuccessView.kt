@@ -8,6 +8,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.CreateAccountSuccessViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -46,7 +47,12 @@ class CreateAccountSuccessView :
      */
     private fun setObserver() {
         mViewModel.onActivateAccountClicked.observe(this) {
-            intentToActivity(AadhaarAccountActivationView::class.java)
+            if (Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO)
+                intentToActivity(AadhaarAccountActivationView::class.java)
+            else {
+                intentToActivity(HomeView::class.java)
+
+            }
         }
 
     }

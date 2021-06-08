@@ -335,6 +335,7 @@
     -->
     <string name="invite_member_screen_title">Oops!</string>
     <string name="invite_member_screen_sub_title">"Looks like your "</string>
+    <string name="invite_member_screen_sub_title2">"Looks like "</string>
     <string name="invite_member_screen_sub_title1">" is not a FYP user. \n No worries you can invite them right now.</string>
 
 

@@ -30,6 +30,7 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
     var isClickable = ObservableField(false)
     var countCheckIsAppUserApiCall: Int? = 0
     var searchedContact = ObservableField<String>()
+    var searchedName = ObservableField<String>()
     var isApiError = ObservableField(false)
     var contactRepository = ContactRepository(mDB = appDatabase)
     var onItemClicked = MutableLiveData<ContactEntity>()
@@ -37,6 +38,7 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
     var emptyContactListError = MutableLiveData<Boolean>()
     var selectedContactList = ObservableArrayList<ContactEntity>()
     var onSelectClicked = MutableLiveData<Boolean>()
+    var inviteMember= MutableLiveData<Boolean>()
 
     /*
 * This method is used to get all the contacts
@@ -48,7 +50,6 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
                 val sortedList =
                     contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>
                 if (!sortedList.isNullOrEmpty()) {
-                    isApiError.set(true)
                     contactAdapter.setList(sortedList)
                     contactAdapter.newContactList?.addAll(sortedList)
                 } else {
@@ -142,13 +143,13 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
                         contactEntity.contactNumber = searchedContact.get()
                         contactEntity.firstName = responseData.isAppUserResponseDetails.name
                         contactEntity.isAppUser = true
+                        isApiError.set(false)
                         contactAdapter.newSearchList?.add(contactEntity)
                         contactAdapter.setList(contactAdapter.newSearchList)
 
 
                     } else {
-                        /// onIsAppUser.value = AppConstants.API_FAIL
-                        //  mobile.value = ""
+                        onIsAppUserClicked.value = true
                     }
                 }
             }
@@ -182,7 +183,7 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
 * This method is used to check if the user is a app user or not
 * */
 
-    private fun callIsAppUserApi() {
+     fun callIsAppUserApi() {
         countCheckIsAppUserApiCall = countCheckIsAppUserApiCall?.plus(1)
         WebApiCaller.getInstance().request(
             ApiRequest(

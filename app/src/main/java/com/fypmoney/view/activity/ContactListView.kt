@@ -2,6 +2,8 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
@@ -9,12 +11,14 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewContactsBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.fragment.InviteMemberBottomSheet
 import com.fypmoney.viewmodel.ContactListViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_user_feeds.*
@@ -64,7 +68,12 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
 
         mViewModel.onIsAppUserClicked.observe(this) {
             if (it) {
-                inviteUser()
+                if(mViewModel.isApiError.get()==true)
+                callInviteMemberBottomSheet(ApiConstant.API_CHECK_IS_APP_USER)
+                else
+                {
+                    inviteUser()
+                }
                 mViewModel.onIsAppUserClicked.value = false
             }
         }
@@ -140,9 +149,8 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
     private fun checkAndAskPermission() {
         when (checkPermission()) {
             true -> {
-            //    mViewModel.progressDialog.value = true
-                mViewModel.getAllContacts()
-           //     mViewModel.callContactSyncApi()
+                mViewModel.progressDialog.value = true
+                mViewModel.callContactSyncApi()
             }
             else -> {
                 requestPermission()
@@ -172,5 +180,14 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
         mViewModel.callContactSyncApi()
     }
 
+    /*
+   * This method is used to call leave member
+   * */
+    private fun callInviteMemberBottomSheet(type: String) {
+        val bottomSheet =
+            InviteMemberBottomSheet(type, mViewModel.searchedName.get())
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "InviteMemberView")
+    }
 
 }

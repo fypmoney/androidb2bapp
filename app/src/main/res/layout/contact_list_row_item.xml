@@ -40,7 +40,7 @@
             style="@style/TextviewRegular"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_toStartOf="@+id/invite"
+            android:layout_toStartOf="@+id/linear"
             android:layout_toEndOf="@+id/ivServiceLogo"
             android:gravity="start"
             android:text="@{viewHelper.contactEntity.firstName}"
@@ -69,6 +69,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

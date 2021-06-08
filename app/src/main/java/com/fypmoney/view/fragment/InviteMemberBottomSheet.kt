@@ -26,7 +26,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 /*
 * This is used to invite a family member
 * */
-class InviteMemberBottomSheet(var type: String) : BottomSheetDialogFragment() {
+class InviteMemberBottomSheet(var type: String, var personName: String? = null) :
+    BottomSheetDialogFragment() {
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -59,11 +60,16 @@ class InviteMemberBottomSheet(var type: String) : BottomSheetDialogFragment() {
                 inviteBtn.visibility = View.GONE
             }
             else -> {
-                message.text =
-                    getString(R.string.invite_member_screen_sub_title) + SharedPrefUtils.getString(
-                        requireContext(),
-                        SharedPrefUtils.SF_KEY_SELECTED_RELATION
-                    ) + getString(R.string.invite_member_screen_sub_title1)
+                if (personName.isNullOrEmpty()) {
+                    message.text =
+                        getString(R.string.invite_member_screen_sub_title) + SharedPrefUtils.getString(
+                            requireContext(),
+                            SharedPrefUtils.SF_KEY_SELECTED_RELATION
+                        ) + getString(R.string.invite_member_screen_sub_title1)
+                } else {
+                    message.text =
+                        getString(R.string.invite_member_screen_sub_title2) + personName + getString(R.string.invite_member_screen_sub_title1)
+                }
             }
 
         }
