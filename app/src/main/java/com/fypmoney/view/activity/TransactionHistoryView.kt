@@ -2,18 +2,14 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.database.entity.ContactEntity
-import com.fypmoney.databinding.ViewFirstScreenBinding
 import com.fypmoney.databinding.ViewTransactionHistoryBinding
-import com.fypmoney.listener.OnSwipeTouchListener
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.TransactionHistoryViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_first_screen.*
 

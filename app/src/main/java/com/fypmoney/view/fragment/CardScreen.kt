@@ -2,18 +2,23 @@ package com.fypmoney.view.fragment
 
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenCardBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.CardListViewAdapter
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.viewmodel.CardScreenViewModel
@@ -64,7 +69,13 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() , MyPr
         drawableIds.add(R.drawable.set_up_limit)
 
         val myProfileAdapter = MyProfileListAdapter(requireContext(), this)
+        list.adapter = myProfileAdapter
 
+
+        myProfileAdapter.setList(
+            iconList1 = drawableIds,
+            textString
+        )
         setObservers()
         loadAnimations()
         changeCameraDistance()
@@ -105,7 +116,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() , MyPr
                 when (resultCode) {
                     AppCompatActivity.RESULT_OK -> {
                         Handler(Looper.getMainLooper()).post(Runnable {
-                            mViewModel.callKycAccountActivationApi()
+                            mViewModel.callGetVirtualRequestApi()
 
                         })
 
@@ -145,10 +156,10 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() , MyPr
     * This method is used to copy the text to clipboard
     * */
     fun onCopyClicked() {
-        /*Utility.copyTextToClipBoard(
-            getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager,
-            Utility.getCustomerDataFromPreference()?.referralCode
-        )*/
+        Utility.copyTextToClipBoard(
+            requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager,
+           mViewModel.cardNumber.get()
+        )
     }
 
     override fun onItemClick(position: Int) {

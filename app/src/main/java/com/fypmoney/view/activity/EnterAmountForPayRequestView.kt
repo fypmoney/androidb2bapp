@@ -108,6 +108,10 @@ class EnterAmountForPayRequestView :
                                     mViewModel.callSendMoneyApi()
 
                                 }
+                                else->{
+                                    mViewModel.callRequestMoneyApi()
+
+                                }
                             }
 
                         }

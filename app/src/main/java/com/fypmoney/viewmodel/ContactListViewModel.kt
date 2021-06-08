@@ -15,9 +15,8 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.ContactRepository
 import com.fypmoney.database.entity.ContactEntity
-import com.fypmoney.model.ContactRequest
-import com.fypmoney.model.ContactRequestDetails
-import com.fypmoney.model.ContactResponse
+import com.fypmoney.model.*
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.ContactAdapter
 import com.fypmoney.view.adapter.ContactListAdapter
@@ -29,6 +28,8 @@ import java.lang.Exception
 class ContactListViewModel(application: Application) : BaseViewModel(application) {
     var contactAdapter = ContactListAdapter(this)
     var isClickable = ObservableField(false)
+    var countCheckIsAppUserApiCall: Int? = 0
+    var searchedContact = ObservableField<String>()
     var contactRepository = ContactRepository(mDB = appDatabase)
     var onItemClicked = MutableLiveData<ContactEntity>()
     var onIsAppUserClicked = MutableLiveData<Boolean>()
@@ -78,10 +79,25 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
     }
 
     fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        searchedContact.set(s.toString())
         val list = contactAdapter.newContactList?.filter {
             it.firstName!!.contains(s, ignoreCase = true) || it.contactNumber?.contains(s)!!
         }
-        contactAdapter.setList(list!!)
+        if (list?.size != 0) {
+            contactAdapter.setList(list)
+        } else {
+            contactAdapter.newSearchList?.clear()
+            val contactEntity = ContactEntity()
+            contactEntity.contactNumber = searchedContact.get()
+            contactEntity.firstName =
+                PockketApplication.instance.getString(R.string.new_number_text)
+
+            contactAdapter.newSearchList?.add(contactEntity)
+            contactAdapter.setList(contactAdapter.newSearchList)
+            if (searchedContact.get()?.length == 10) {
+                callIsAppUserApi()
+            }
+        }
     }
 
 
@@ -116,6 +132,25 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
                     getAllContacts()
                 }
             }
+            ApiConstant.API_CHECK_IS_APP_USER -> {
+                if (responseData is IsAppUserResponse) {
+                    if (responseData.isAppUserResponseDetails.isAppUser!!) {
+                        contactAdapter.newSearchList?.clear()
+                        val contactEntity = ContactEntity()
+                        contactEntity.contactNumber = searchedContact.get()
+                        contactEntity.firstName = responseData.isAppUserResponseDetails.name
+                        contactEntity.isAppUser = true
+
+                        contactAdapter.newSearchList?.add(contactEntity)
+                        contactAdapter.setList(contactAdapter.newSearchList)
+
+
+                    } else {
+                        /// onIsAppUser.value = AppConstants.API_FAIL
+                        //  mobile.value = ""
+                    }
+                }
+            }
 
 
         }
@@ -126,6 +161,39 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
         super.onError(purpose, errorResponseInfo)
         progressDialog.value = false
         emptyContactListError.value = true
+        when (purpose) {
+            ApiConstant.API_CHECK_IS_APP_USER -> {
+                if (countCheckIsAppUserApiCall == 1) {
+                    callIsAppUserApi()
+                } else {
+                    Utility.showToast("Please try again")
+                }
+
+
+            }
+        }
     }
+/*
+* This method is used to check if the user is a app user or not
+* */
+
+    private fun callIsAppUserApi() {
+        countCheckIsAppUserApiCall = countCheckIsAppUserApiCall?.plus(1)
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_CHECK_IS_APP_USER,
+                endpoint = NetworkUtil.endURL(
+                    ApiConstant.API_CHECK_IS_APP_USER + searchedContact.get()?.trim()
+                ),
+                request_type = ApiUrl.GET,
+                onResponse = this,
+                isProgressBar = true,
+                param = BaseRequest()
+            )
+        )
+
+
+    }
+
 
 }

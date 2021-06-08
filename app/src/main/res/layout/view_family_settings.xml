@@ -158,6 +158,12 @@
                 app:spanCount="2"
 
                 />
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/view2"
+            android:visibility="@{viewModel.isProgressBarVisible?View.VISIBLE:View.GONE,default=visible}"/>
 
 
         <LinearLayout

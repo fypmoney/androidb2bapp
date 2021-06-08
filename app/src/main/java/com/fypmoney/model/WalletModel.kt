@@ -43,6 +43,24 @@ data class SendMoneyResponseDetails(
     @SerializedName("txnTime") val txnTime: String
 ) : Serializable
 
+data class RequestMoneyRequest(
+    @SerializedName("requesteeMobile") val requesteeMobile: String? = null,
+    @SerializedName("amount") val amount: String? = null,
+    @SerializedName("emoji") val emoji: String? = null,
+    @SerializedName("remarks") val remarks: String? = null
+) : BaseRequest()
+
+data class RequestMoneyResponse(
+    @SerializedName("data") val requestMoneyResponseDetails: RequestMoneyResponseDetails
+) : Serializable
+
+data class RequestMoneyResponseDetails(
+    @SerializedName("requesteeMobile") val requesteeMobile: String? = null,
+    @SerializedName("amount") val amount: String? = null,
+    @SerializedName("emoji") val emoji: String? = null,
+    @SerializedName("remarks") val remarks: String? = null
+) : Serializable
+
 
 data class TransactionHistoryResponse(
     @SerializedName("data") val transactionHistoryResponseDetails: List<TransactionHistoryResponseDetails>
@@ -52,3 +70,5 @@ data class TransactionHistoryResponseDetails(
     @SerializedName("amount") var amount: String?=null,
     @SerializedName("message") var message: String?=null,
 ) : Serializable
+
+

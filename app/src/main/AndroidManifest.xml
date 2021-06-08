@@ -74,7 +74,8 @@
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.EnterAmountForPayRequestView"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
 
         <activity
             android:name=".view.activity.PayRequestProfileView"
@@ -109,7 +110,8 @@
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.AddMemberView"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".view.activity.UserFeedsDetailView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />

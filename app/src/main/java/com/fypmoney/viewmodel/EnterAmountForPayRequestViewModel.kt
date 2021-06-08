@@ -14,10 +14,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.entity.ContactEntity
-import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.KycActivateAccountResponse
-import com.fypmoney.model.SendMoneyRequest
-import com.fypmoney.model.SendMoneyResponse
+import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 
@@ -114,12 +111,37 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
         )
     }
 
+    /*
+   * This method is used to call send money api on click of pay button
+   * */
+    fun callRequestMoneyApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_REQUEST_MONEY,
+                NetworkUtil.endURL(ApiConstant.API_REQUEST_MONEY),
+                ApiUrl.POST,
+                RequestMoneyRequest(
+                    requesteeMobile = contactResult.get()?.contactNumber,
+                    amount = amountSelected.get(),
+                    remarks = message.get(),emoji = ""
+                ),
+                this, isProgressBar = true
+            )
+        )
+    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_FUND_TRANSFER -> {
                 if (responseData is SendMoneyResponse) {
                     sendMoneyApiResponse.set(responseData)
+                    onApiResponse.value = AppConstants.API_SUCCESS
+
+                }
+            }
+            ApiConstant.API_REQUEST_MONEY -> {
+                if (responseData is RequestMoneyResponse) {
                     onApiResponse.value = AppConstants.API_SUCCESS
 
                 }

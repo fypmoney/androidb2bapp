@@ -1,11 +1,9 @@
 package com.fypmoney.view.activity
 
-import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -143,6 +141,9 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         mViewModel.onNotificationListener.observe(this) {
             when (it?.requestCategoryCode) {
                 AppConstants.NOTIFICATION_TYPE_ADD_FAMILY -> {
+                    callBottomSheet(it)
+                }
+                AppConstants.NOTIFICATION_TYPE_REQUEST_MONEY -> {
                     callBottomSheet(it)
                 }
                 AppConstants.NOTIFICATION_TYPE_ADD_TASK -> {

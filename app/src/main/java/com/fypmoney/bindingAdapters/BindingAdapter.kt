@@ -101,12 +101,20 @@ class BindingAdapter {
             try {
                 when {
                     position % 2 == 0 -> {
-                        val layoutParams = RelativeLayout.LayoutParams(
-                            ViewGroup.LayoutParams.WRAP_CONTENT,
-                            ViewGroup.LayoutParams.WRAP_CONTENT
+                        val textViewLayoutParams = RelativeLayout.LayoutParams(
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT
                         )
-                        layoutParams.addRule(RelativeLayout.ALIGN_END)
-                        view.layoutParams = layoutParams
+
+                        // add a rule to align to the left
+
+                        // add a rule to align to the left
+                        textViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+
+                        // make sure the rule was applied
+
+                        // make sure the rule was applied
+                        view.layoutParams = textViewLayoutParams
                     }
                     else -> {  val params: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(
                         ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT

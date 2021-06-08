@@ -1,14 +1,12 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.util.Log
 import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.TransactionHistoryResponseDetails
-import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.TransactionHistoryAdapter
 
 class TransactionHistoryViewModel(application: Application) : BaseViewModel(application) {

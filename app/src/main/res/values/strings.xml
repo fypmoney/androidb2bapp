@@ -182,6 +182,7 @@
     <string name="quick_actions_chores1">Perform task and get cash rewards</string>
     <string name="quick_actions_rewards">Rewards</string>
     <string name="quick_actions_referrals">Referrals</string>
+    <string name="fetching_balance">Fetching balance</string>
 
     <!--
    Feeds Screen
@@ -457,6 +458,8 @@
     <string name="pay_title">Pay</string>
     <string name="request_title">Request</string>
     <string name="request_from">Request from</string>
+    <string name="new_number_text">New Number</string>
+    <string name="copy_to_clipboard_success">Text copied to clipboard</string>
 
 
 </resources>

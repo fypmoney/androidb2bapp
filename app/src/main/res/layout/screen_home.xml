@@ -94,8 +94,22 @@
                 android:singleLine="true"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
+                android:visibility="@{viewModel.isFetchBalanceVisible?View.GONE:View.VISIBLE,default=gone}"
                 android:text="@{@string/Rs+viewModel.availableAmount}"
                 android:textSize="22dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/amountFetching"
+                style="@style/TextviewRegular"
+                android:layout_below="@+id/tv_balance"
+                android:layout_marginTop="7dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:visibility="@{viewModel.isFetchBalanceVisible?View.VISIBLE:View.GONE,default=visible}"
+                android:text="@{@string/fetching_balance}"
+              />
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -398,6 +412,11 @@
             android:background="@color/grey"/>
 
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="@{viewModel.isFeedVisible?View.GONE:View.VISIBLE,default=visible}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -406,7 +425,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
             app:adapter="@{viewModel.feedsAdapter}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:visibility="@{viewModel.isFeedVisible?View.VISIBLE:View.GONE,default=gone}"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
 
 

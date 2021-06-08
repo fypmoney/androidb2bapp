@@ -43,16 +43,16 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     }
 
     /*
-      * This method is used to call auth login API
+      * This method is used to call add card
       * */
-     fun callKycAccountActivationApi() {
+    private fun callAddCardApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_KYC_ACTIVATE_ACCOUNT,
-                NetworkUtil.endURL(ApiConstant.API_KYC_ACTIVATE_ACCOUNT),
-                ApiUrl.PUT,
+                ApiConstant.API_ADD_CARD,
+                NetworkUtil.endURL(ApiConstant.API_ADD_CARD),
+                ApiUrl.POST,
                 BaseRequest(),
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
     }
@@ -60,14 +60,14 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     /*
      * This method is used to call get virtual card request
      * */
-    private fun callGetVirtualRequestApi() {
+     fun callGetVirtualRequestApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_VIRTUAL_CARD_REQUEST,
                 NetworkUtil.endURL(ApiConstant.API_GET_VIRTUAL_CARD_REQUEST),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
     }
@@ -82,13 +82,14 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 NetworkUtil.endURL(ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS),
                 ApiUrl.POST,
                 fetchVirtualCardRequest,
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
     }
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
+        progressDialog.value=false
         when (purpose) {
             ApiConstant.API_GET_VIRTUAL_CARD_REQUEST -> {
                 if (responseData is VirtualCardRequestResponse) {
@@ -96,15 +97,9 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 }
             }
 
-            ApiConstant.API_KYC_ACTIVATE_ACCOUNT -> {
-                if (responseData is KycActivateAccountResponse) {
-                    callGetVirtualRequestApi()
-
-                }
-            }
-
             ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
                 if (responseData is FetchVirtualCardResponse) {
+                    callAddCardApi()
                     cardNumber.set(responseData.fetchVirtualCardResponseDetails.card_number)
                     cvv.set(responseData.fetchVirtualCardResponseDetails.cvv)
                     expiry.set(responseData.fetchVirtualCardResponseDetails.expiry_month+"/"+responseData.fetchVirtualCardResponseDetails.expiry_year)

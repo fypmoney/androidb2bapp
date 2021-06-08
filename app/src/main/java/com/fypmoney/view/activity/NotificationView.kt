@@ -61,6 +61,10 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
                     AppConstants.NOTIFICATION_TYPE_ADD_TASK -> {
 
                     }
+                    AppConstants.NOTIFICATION_TYPE_REQUEST_MONEY -> {
+                        callBottomSheet()
+
+                    }
                 }
 
                 mViewModel.onNotificationClicked.value = false

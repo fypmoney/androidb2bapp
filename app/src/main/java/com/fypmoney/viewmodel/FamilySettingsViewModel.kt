@@ -36,6 +36,7 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
     var username = ObservableField<String>()
     var changedUserName = ObservableField<String>()
     var isNoDataFoundVisible = ObservableField(false)
+    var isProgressBarVisible = ObservableField(true)
     var isFamilyFiperVisible = ObservableField(false)
     val isSwitchChecked: MutableLiveData<Boolean> = MutableLiveData()
     var memberAdapter = MemberAdapter(this)
@@ -131,6 +132,7 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
+        isProgressBarVisible.set(false)
         when (purpose) {
             ApiConstant.API_ADD_FAMILY_MEMBER -> {
                 if (responseData is GetMemberResponse) {
@@ -183,6 +185,8 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        isProgressBarVisible.set(false)
+
     }
 
     override fun onItemClick(position: Int) {

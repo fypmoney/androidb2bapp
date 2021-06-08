@@ -23,6 +23,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
+import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.database.ContactRepository
 import com.fypmoney.database.LogRepository
@@ -633,19 +634,21 @@ object Utility {
     /*
     * This method is used to remove + or +91 or 0 from number
     * */
-    fun removePlusOrNineOneFromNo(phone: String): String {
-        if (phone.startsWith("+91")) {
-            return phone.replace("+91", "")
+    fun removePlusOrNineOneFromNo(phone: String?): String {
+        phone.let {
+            when {
+                phone?.startsWith("+91") == true -> {
+                    return phone.replace("+91", "")
+                }
+                phone?.startsWith("+") == true -> {
+                    return phone.replace("+", "")
+                }
+                phone?.startsWith("0") == true -> {
+                    return phone.replace("0", "")
+                }
+                else -> return phone!!
+            }
         }
-        if (phone.startsWith("+")) {
-            return phone.replace("+", "")
-        }
-        if (phone.startsWith("0")) {
-            return phone.replace("0", "")
-        }
-
-        return phone
-
     }
 
     /*
@@ -662,6 +665,7 @@ object Utility {
         val clip =
             ClipData.newPlainText(AppConstants.COPY_LABEL, text)
         clipboardManager.setPrimaryClip(clip)
+        showToast(PockketApplication.instance.getString(R.string.copy_to_clipboard_success))
     }
 
     /*

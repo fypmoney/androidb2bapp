@@ -11,6 +11,9 @@
             name="viewModel"
             type="com.fypmoney.viewmodel.CardScreenViewModel" />
 
+        <variable
+            name="fragment"
+            type="com.fypmoney.view.fragment.CardScreen" />
 
     </data>
 
@@ -43,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="80dp"
                 android:layout_alignParentEnd="true"
+                android:onClick="@{()->fragment.onCopyClicked()}"
                 app:srcCompat="@drawable/ic_icon_feather_copy" />
 
             <androidx.appcompat.widget.AppCompatTextView

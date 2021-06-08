@@ -27,6 +27,8 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     var onAddMoneyClicked = MutableLiveData(false)
     var onPayClicked = MutableLiveData(false)
     var onChoreClicked = MutableLiveData(false)
+    var isFetchBalanceVisible = ObservableField(true)
+    var isFeedVisible = ObservableField(false)
     var feedsAdapter = FeedsSectionAdapter(this)
     var onFeedButtonClick = MutableLiveData<FeedDetails>()
 
@@ -42,6 +44,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         onAddMoneyClicked.value = true
 
     }
+
     /*
     * This is used to handle pay button click
     * */
@@ -49,6 +52,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         onPayClicked.value = true
 
     }
+
     /*
      * This method is used to get the balance of wallet
      * */
@@ -88,6 +92,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         when (purpose) {
             ApiConstant.API_GET_WALLET_BALANCE -> {
                 if (responseData is GetWalletBalanceResponse) {
+                    isFetchBalanceVisible.set(false)
                     availableAmount.set(Utility.getFormatedAmount(responseData.getWalletBalanceResponseDetails.accountBalance))
 
                 }
@@ -98,7 +103,9 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
                     val response = responseData.getAllFeed?.getAllFeed
                     // check total count and if greater than 0 set list else set no data found
 
-                    response?.feedDetails.let { feedsAdapter.setList(response?.feedDetails) }
+                    response?.feedDetails.let {
+                        isFeedVisible.set(true)
+                        feedsAdapter.setList(response?.feedDetails) }
 
 
                 }
@@ -109,6 +116,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        isFeedVisible.set(true)
     }
 
     override fun onFeedClick(feedDetails: FeedDetails) {
@@ -146,9 +154,10 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         }
 
         val feedRequestModel = FeedRequestModel()
-      /*  feedRequestModel.query =
-            "{getAllFeed(id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME_HOME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],latitude:\"" + latitude + "\",longitude:\"" + longitude + "\",withinRadius:\"" + AppConstants.FEED_WITHIN_RADIUS + "\") { total feedData { id name description screenName screenSection sortOrder displayCard readTime scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
-     */   feedRequestModel.query ="{getAllFeed(page:null, size:null, id : null, screenName:\"HOME\",screenSection:null,tags :[\"SPORTS\"],latitude:null,longitude:null,withinRadius:null) { total feedData { id name description screenName screenSection sortOrder displayCard readTime scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+        /*  feedRequestModel.query =
+              "{getAllFeed(id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME_HOME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],latitude:\"" + latitude + "\",longitude:\"" + longitude + "\",withinRadius:\"" + AppConstants.FEED_WITHIN_RADIUS + "\") { total feedData { id name description screenName screenSection sortOrder displayCard readTime scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+       */   feedRequestModel.query =
+            "{getAllFeed(page:null, size:null, id : null, screenName:\"HOME\",screenSection:null,tags :[\"SPORTS\"],latitude:null,longitude:null,withinRadius:null) { total feedData { id name description screenName screenSection sortOrder displayCard readTime scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
 
         return feedRequestModel
 

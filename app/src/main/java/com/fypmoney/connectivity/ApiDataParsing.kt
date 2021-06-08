@@ -132,6 +132,11 @@ class ApiDataParsing {
                     getObject(response, SendMoneyResponse::class.java)
                 }
 
+                ApiConstant.API_REQUEST_MONEY -> {
+                    getObject(response, RequestMoneyResponse::class.java)
+                }
+
+
                 else -> response
             }
         } catch (e: Exception) {

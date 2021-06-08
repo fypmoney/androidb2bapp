@@ -91,20 +91,25 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
             }
 
             else -> {
-                when (mobile.value) {
-                    Utility.removePlusOrNineOneFromNo(contactResult.get()?.contactNumber!!)-> {
-                        when (contactResult.get()!!.isAppUser!!) {
-                            true -> {
-                                onIsAppUser.value = AppConstants.API_SUCCESS
-                            }
-                            else -> {
-                                callIsAppUserApi()
+                if (!contactResult.get()?.contactNumber.isNullOrEmpty()) {
+                    when (mobile.value) {
+                        Utility.removePlusOrNineOneFromNo(contactResult.get()?.contactNumber) -> {
+                            when (contactResult.get()!!.isAppUser!!) {
+                                true -> {
+                                    onIsAppUser.value = AppConstants.API_SUCCESS
+                                }
+                                else -> {
+                                    callIsAppUserApi()
+                                }
                             }
                         }
+                        else -> {
+                            callIsAppUserApi()
+                        }
                     }
-                    else -> {
-                        callIsAppUserApi()
-                    }
+                } else {
+
+                    callIsAppUserApi()
                 }
             }
 
@@ -218,7 +223,8 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
                 } else {
                     parentName.set(contactResult.get()?.firstName + " " + contactResult.get()?.lastName)
                 }
-                mobile.value =Utility.removePlusOrNineOneFromNo(contactResult.get()?.contactNumber!!)
+                mobile.value =
+                    Utility.removePlusOrNineOneFromNo(contactResult.get()?.contactNumber!!)
 
             }
         } catch (e: Exception) {

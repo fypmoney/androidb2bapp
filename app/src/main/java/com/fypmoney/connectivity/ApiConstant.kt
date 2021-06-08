@@ -37,6 +37,8 @@ object ApiConstant {
     const val API_FETCH_VIRTUAL_CARD_DETAILS = "/services/PockketService/api/fetch/virtualCard"
     const val API_FUND_TRANSFER = "/services/PockketService/api/fund/transfer"
     const val API_LOGIN = "/auth/app/login"
+    const val API_REQUEST_MONEY = "/services/PockketService/api/request/money"
+    const val API_ADD_CARD = "services/PockketService/api/card-infos"
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
 }
 

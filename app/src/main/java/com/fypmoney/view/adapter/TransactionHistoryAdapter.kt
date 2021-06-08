@@ -3,6 +3,7 @@ package com.fypmoney.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.TransactionHistoryRowItemBinding
@@ -39,6 +40,7 @@ class TransactionHistoryAdapter(var viewModel: TransactionHistoryViewModel) :
         private val mRowItemBinding: TransactionHistoryRowItemBinding? = null
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         lateinit var mViewHelper: TransactionHistoryViewHelper
+
 
         override fun onBind(position: Int) {
             mViewHelper = TransactionHistoryViewHelper(
