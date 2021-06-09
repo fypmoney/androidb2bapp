@@ -13,47 +13,42 @@ import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.databinding.ViewAadhaarAccountActivationBinding
-import com.fypmoney.databinding.ViewAadhaarVerificationBinding
+import com.fypmoney.databinding.ViewAddMoneyUpiDebitBinding
 import com.fypmoney.databinding.ViewCommunityBinding
-import com.fypmoney.util.AppConstants
-import com.fypmoney.viewmodel.AadhaarAccountActivationViewModel
+import com.fypmoney.viewmodel.AddMoneyUpiDebitViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
-import kotlinx.android.synthetic.main.view_login.*
 
 /*
 * This class is used to handle school name city
 * */
-class AadhaarAccountActivationView :
-    BaseActivity<ViewAadhaarAccountActivationBinding, AadhaarAccountActivationViewModel>() {
-    private lateinit var mViewModel: AadhaarAccountActivationViewModel
+class AddMoneyUpiDebitView : BaseActivity<ViewAddMoneyUpiDebitBinding, AddMoneyUpiDebitViewModel>() {
+    private lateinit var mViewModel: AddMoneyUpiDebitViewModel
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_aadhaar_account_activation
+        return R.layout.view_add_money_upi_debit
     }
 
-    override fun getViewModel(): AadhaarAccountActivationViewModel {
-        mViewModel = ViewModelProvider(this).get(AadhaarAccountActivationViewModel::class.java)
+    override fun getViewModel(): AddMoneyUpiDebitViewModel {
+        mViewModel = ViewModelProvider(this).get(AddMoneyUpiDebitViewModel::class.java)
         return mViewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setToolbarAndTitle(
-            context = this@AadhaarAccountActivationView,
+            context = this@AddMoneyUpiDebitView,
             toolbar = toolbar,
-            isBackArrowVisible = true
+            isBackArrowVisible = true,
+            toolbarTitle = getString(R.string.add_money_screen_title)
         )
-        //Test Commit
+        setObserver()
 
-
-
-        val ss = SpannableString(getString(R.string.account_verification_sub_title))
+      /*  val ss = SpannableString(getString(R.string.account_verification_sub_title))
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
             }
@@ -67,48 +62,28 @@ class AadhaarAccountActivationView :
         ss.setSpan(clickableSpan, 49, 52, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         tvSubTitle.text = ss
         tvSubTitle.movementMethod = LinkMovementMethod.getInstance()
-
-
-        setObserver()
+*/
     }
 
     /**
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onActivateAccountSuccess.observe(this) {
-            if (it.showMobileOtpVerificationScreen == AppConstants.YES)
-                intentToActivity(it.token)
+     /*   mViewModel.onContinueClicked.observe(this) {
+            intentToActivity()
         }
-
+*/
 
     }
 
 
     /*
-   * navigate to the different screen
+   * navigate to the HomeScreen
    * */
-    private fun intentToActivity(token: String) {
-        val intent = Intent(this, EnterOtpView::class.java)
-        intent.putExtra(
-            AppConstants.MOBILE_TYPE,
-            ""
-        )
-        intent.putExtra(
-            AppConstants.FROM_WHICH_SCREEN, AppConstants.KYC_MOBILE_VERIFICATION
-        )
-
-        intent.putExtra(
-            AppConstants.MOBILE_WITHOUT_COUNTRY_CODE,
-            ""
-        )
-
-        intent.putExtra(
-            AppConstants.KYC_ACTIVATION_TOKEN,
-            token
-        )
-
+    private fun intentToActivity() {
+        val intent = Intent(this@AddMoneyUpiDebitView, CreateAccountSuccessView::class.java)
         startActivity(intent)
+        finish()
     }
 
 }

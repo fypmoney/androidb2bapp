@@ -13,6 +13,19 @@
         android:name="android.permission.USE_BIOMETRIC"
         android:requiredFeature="false" />
 
+
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+
+            <data
+                android:host="pay"
+                android:scheme="upi" />
+        </intent>
+    </queries>
     <application
         android:name=".application.PockketApplication"
         android:allowBackup="true"
@@ -24,6 +37,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DreamfolksApp"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".view.activity.AddTaskActivity"
             android:label="@string/title_activity_add_task"
@@ -153,6 +167,9 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".view.activity.AddMoneyUpiDebitView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <receiver
             android:name=".receivers.SmsBroadcastReceiver"
             android:exported="true">

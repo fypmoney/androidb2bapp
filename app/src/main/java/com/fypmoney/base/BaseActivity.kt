@@ -8,8 +8,11 @@ import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
@@ -361,7 +364,24 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     override fun onTryAgainClicked() {
 
     }
+  fun getUpiApps()
+  {
+      val packageManager = applicationContext.packageManager
+      val mainIntent = Intent(Intent.ACTION_MAIN, null)
+      mainIntent.addCategory(Intent.CATEGORY_DEFAULT)
+      mainIntent.addCategory(Intent.CATEGORY_BROWSABLE)
+      mainIntent.action = Intent.ACTION_VIEW
+      val uri1: Uri = Uri.Builder().scheme("upi").authority("pay").build()
+      mainIntent.data = uri1
+      val pkgAppsList: List<*> = applicationContext.packageManager.queryIntentActivities(mainIntent, 0)
 
+      for (i in pkgAppsList.indices) {
+          val resolveInfo = pkgAppsList[i] as ResolveInfo
+          Log.d("ndcbcvhdbivu", "packageName: " + resolveInfo.activityInfo.packageName)
+          Log.d("ndcbcvhdbivu", "AppName: " + resolveInfo.loadLabel(packageManager))
+          Log.d("ndcbcvhdbivu", "AppIcon: " + resolveInfo.loadIcon(packageManager))
+      }
+  }
 
 
 

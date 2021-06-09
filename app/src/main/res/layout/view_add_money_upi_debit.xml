@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.AddMoneyUpiDebitViewModel" />
+
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/screenMarginLeft"
+                android:layout_marginEnd="@dimen/screenMarginRight">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/balance_text"
+                    style="@style/TextviewRegular"
+                    android:layout_marginTop="30dp"
+                    android:text="@{viewModel.amountToAdd}"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/upi_text"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@+id/balance_text"
+                    android:layout_marginTop="40dp"
+                    android:ellipsize="end"
+                    android:textColor="@color/text_color_dark"
+                    android:text="@string/add_money_upi_text"
+                    android:textSize="17dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/my_recycler_view"
+                    android:orientation="horizontal"
+                    android:layout_below="@+id/upi_text"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    app:adapter="@{viewModel.addMoneyUpiAdapter}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/debit_card_text"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@+id/my_recycler_view"
+                    android:layout_marginTop="40dp"
+                    android:ellipsize="end"
+                    android:textColor="@color/text_color_dark"
+                    android:text="@string/add_money_debit_text"
+                    android:textSize="17dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:id="@+id/my_recycler_view1"
+                    android:layout_below="@+id/debit_card_text"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin"
+                    app:adapter="@{viewModel.savedCardsAdapter}"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/add_debit_card_text"
+                    style="@style/TextviewBold"
+                    android:layout_below="@+id/my_recycler_view1"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:textColor="@color/color_skyblue"
+                    android:text="@string/add_money_add_new_card_text"
+                    android:textSize="17dp" />
+
+
+
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

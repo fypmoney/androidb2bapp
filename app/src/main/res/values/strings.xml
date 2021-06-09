@@ -462,5 +462,26 @@
     <string name="new_number_text">New Number</string>
     <string name="copy_to_clipboard_success">Text copied to clipboard</string>
 
+    <!--
+    Add money upi and debit
+    -->
+    <string name="add_money_title1">Add</string>
+    <string name="add_money_title2">to your account</string>
+    <string name="add_money_upi_text">UPI</string>
+    <string name="add_money_debit_text">Debit card</string>
+    <string name="add_money_add_new_card_text">+ Add New Card</string>
+    <string name="add_money_add_upi_text">Add UPI</string>
+
+   <!--
+   Add new card
+   -->
+    <string name="add_new_card_title">Add New Card</string>
+    <string name="add_new_card_enter_card">Enter Card Number</string>
+    <string name="add_new_card_name">Name on Card</string>
+    <string name="add_new_card_expiry">Expiry date</string>
+    <string name="add_new_card_cvv">CVV</string>
+    <string name="add_new_card_expiry_hint">MM/YY</string>
+    <string name="add_new_card_save_option">Save this option for faster payments</string>
+
 
 </resources>

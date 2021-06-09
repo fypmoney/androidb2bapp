@@ -1,5 +1,6 @@
 package com.fypmoney.view.fragment
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,6 +12,7 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.database.entity.MemberEntity
 import com.fypmoney.databinding.ViewAddMoneyBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.view.activity.AddMoneyUpiDebitView
 import com.fypmoney.viewmodel.AddMoneyViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_add_money.*
@@ -46,9 +48,6 @@ class AddMoneyScreen : BaseFragment<ViewAddMoneyBinding, AddMoneyViewModel>(),Tr
             toolbar = toolbar,
             isBackArrowVisible = false, toolbarTitle = getString(R.string.add_money_screen_title)
         )
-
-
-
         setObservers()
 
     }
@@ -66,7 +65,8 @@ class AddMoneyScreen : BaseFragment<ViewAddMoneyBinding, AddMoneyViewModel>(),Tr
 
         mViewModel.onAddClicked.observe(viewLifecycleOwner) {
             if (it) {
-                callBottomSheet(mViewModel.amountSelected.get()!!, getString(R.string.dummy_amount))
+                intentToActivity(AddMoneyUpiDebitView::class.java)
+               // callBottomSheet(mViewModel.amountSelected.get()!!, getString(R.string.dummy_amount))
                 mViewModel.onAddClicked.value = false
             }
         }
@@ -92,5 +92,12 @@ class AddMoneyScreen : BaseFragment<ViewAddMoneyBinding, AddMoneyViewModel>(),Tr
 
     }
 
-
+    /**
+     * Method to navigate to the different activity
+     */
+    private fun intentToActivity(aClass: Class<*>) {
+        val intent = Intent(requireContext(), aClass)
+        intent.putExtra(AppConstants.AMOUNT, mViewModel.amountSelected.get())
+        startActivity(intent)
+    }
 }
