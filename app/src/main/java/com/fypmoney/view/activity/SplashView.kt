@@ -103,7 +103,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                         Utility.getCustomerDataFromPreference()!!.isProfileCompleted == AppConstants.NO -> {
                             intentToActivity(CreateAccountView::class.java)
                         }
-                        Utility.getCustomerDataFromPreference()!!.bankProfile?.isAccountActive == AppConstants.NO -> {
+                        Utility.getCustomerDataFromPreference()!!.bankProfile?.isAccountActive == AppConstants.YES -> {
                             intentToActivity(AadhaarAccountActivationView::class.java)
                         }
                         else -> {

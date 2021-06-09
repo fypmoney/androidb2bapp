@@ -38,6 +38,8 @@ class ContactListViewHelper(
      * called when any item is selected
      * */
     fun onItemClicked() {
+        viewModel.searchedContact.set(contactEntity?.contactNumber)
+        viewModel.searchedName.set(contactEntity?.firstName)
         when (isApiError.get()) {
             false -> {
                 if (isAppUser.get() == true) {
@@ -49,9 +51,7 @@ class ContactListViewHelper(
                 }
             }
             true -> {
-                viewModel.searchedContact.set(contactEntity?.contactNumber)
-                viewModel.searchedName.set(contactEntity?.firstName)
-                viewModel.callIsAppUserApi()
+               viewModel.callIsAppUserApi()
 
             }
         }
@@ -82,7 +82,7 @@ class ContactListViewHelper(
     * This method will handle the click of invite option
     * */
     fun onIsAppUserClicked() {
-        viewModel.onIsAppUserClicked.value = true
+        viewModel.onInviteClicked.value = true
 
     }
 

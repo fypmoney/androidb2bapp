@@ -13,6 +13,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
+import com.fypmoney.base.BaseActivity
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.databinding.ViewInviteMemberBinding
 import com.fypmoney.databinding.ViewStayTunedBinding
@@ -78,7 +79,7 @@ class InviteMemberBottomSheet(var type: String, var personName: String? = null) 
 
 
         inviteBtn.setOnClickListener {
-            (context as AddMemberView).inviteUser()
+            (context as BaseActivity<*, *>).inviteUser()
         }
 
 

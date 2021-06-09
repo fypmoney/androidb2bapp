@@ -64,14 +64,14 @@ class YourTaskFragment : Fragment() ,
                 taskEntity, this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        activity?.let { bottomSheet.show(it.getSupportFragmentManager(), "AcceptRejectBottomSheet") }
+        activity?.let { bottomSheet.show(it.supportFragmentManager, "AcceptRejectBottomSheet") }
     }
 
     override fun onBottomSheetButtonClick() {
 
     }
 
-    fun GetTasks() {
+    private fun GetTasks() {
         try {
             val apiInterface = ApiClient1.getClient().create(Allapi::class.java)
             val task= TaskRequest("","","","")
@@ -80,7 +80,7 @@ class YourTaskFragment : Fragment() ,
                 override fun onResponse(call: Call<YourTaskResponse>, response: Response<YourTaskResponse>) {
                     val status = response.body()?.data
                     if (status!!.isNotEmpty()) {
-                        val taskListAdapter = YourTaskStaggeredAdapter(status!!)
+                        val taskListAdapter = YourTaskStaggeredAdapter(status)
                         recyclerViewTasks!!.adapter = taskListAdapter
                     }
                 }

@@ -35,6 +35,7 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
     var contactRepository = ContactRepository(mDB = appDatabase)
     var onItemClicked = MutableLiveData<ContactEntity>()
     var onIsAppUserClicked = MutableLiveData<Boolean>()
+    var onInviteClicked = MutableLiveData<Boolean>()
     var emptyContactListError = MutableLiveData<Boolean>()
     var selectedContactList = ObservableArrayList<ContactEntity>()
     var onSelectClicked = MutableLiveData<Boolean>()
@@ -50,6 +51,7 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
                 val sortedList =
                     contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>
                 if (!sortedList.isNullOrEmpty()) {
+                    isApiError.set(true)
                     contactAdapter.setList(sortedList)
                     contactAdapter.newContactList?.addAll(sortedList)
                 } else {

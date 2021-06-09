@@ -68,12 +68,14 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
 
         mViewModel.onIsAppUserClicked.observe(this) {
             if (it) {
-                if(mViewModel.isApiError.get()==true)
                 callInviteMemberBottomSheet(ApiConstant.API_CHECK_IS_APP_USER)
-                else
-                {
-                    inviteUser()
-                }
+                mViewModel.onIsAppUserClicked.value = false
+            }
+        }
+
+        mViewModel.onInviteClicked.observe(this) {
+            if (it) {
+                inviteUser()
                 mViewModel.onIsAppUserClicked.value = false
             }
         }
@@ -149,8 +151,9 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
     private fun checkAndAskPermission() {
         when (checkPermission()) {
             true -> {
-                mViewModel.progressDialog.value = true
-                mViewModel.callContactSyncApi()
+                mViewModel.getAllContacts()
+             /*   mViewModel.progressDialog.value = true
+                mViewModel.callContactSyncApi()*/
             }
             else -> {
                 requestPermission()
@@ -185,7 +188,7 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
    * */
     private fun callInviteMemberBottomSheet(type: String) {
         val bottomSheet =
-            InviteMemberBottomSheet(type, mViewModel.searchedName.get())
+            InviteMemberBottomSheet(type, mViewModel.searchedContact.get())
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "InviteMemberView")
     }

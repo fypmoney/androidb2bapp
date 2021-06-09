@@ -119,7 +119,7 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>()
                 taskEntity, this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(getSupportFragmentManager(), "AcceptRejectBottomSheet")
+        bottomSheet.show(supportFragmentManager, "AcceptRejectBottomSheet")
     }
 
     private fun callGoodJSheet(taskEntity: TaskEntity?) {
@@ -128,7 +128,7 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>()
                 taskEntity, this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(getSupportFragmentManager(), "AcceptRejectBottomSheet")
+        bottomSheet.show(supportFragmentManager, "AcceptRejectBottomSheet")
     }
 
     private fun callWellDSheet(taskEntity: TaskEntity?) {
@@ -137,7 +137,7 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>()
                 taskEntity, this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(getSupportFragmentManager(), "AcceptRejectBottomSheet")
+        bottomSheet.show(supportFragmentManager, "AcceptRejectBottomSheet")
     }
 
     private fun callWhoopSheet(taskEntity: TaskEntity?) {
@@ -146,7 +146,7 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>()
                 taskEntity, this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(getSupportFragmentManager(), "AcceptRejectBottomSheet")
+        bottomSheet.show(supportFragmentManager, "AcceptRejectBottomSheet")
     }
 
     private fun callYaySheet(taskEntity: TaskEntity?) {
@@ -155,7 +155,7 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>()
                 taskEntity, this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(getSupportFragmentManager(), "AcceptRejectBottomSheet")
+        bottomSheet.show(supportFragmentManager, "AcceptRejectBottomSheet")
     }
 
     override fun getBindingVariable(): Int {
@@ -171,7 +171,7 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>()
         return mViewModel
     }
 
-    fun getHistory() {
+    private fun getHistory() {
         try {
             val apiInterface = ApiClient1.getClient().create(Allapi::class.java)
             val responseBodyCall = apiInterface.getChoresHistory("web_app", SharedPrefUtils.SF_KEY_ACCESS_TOKEN)
