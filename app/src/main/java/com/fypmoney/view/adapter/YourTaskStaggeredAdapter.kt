@@ -13,14 +13,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
 import com.fypmoney.database.entity.TaskEntity
 import com.fypmoney.model.YourTaskModel
+import com.fypmoney.model.yourTaskModal.YourTaskResponse
 import com.fypmoney.view.fragment.AcceptRejectTaskFragment
 import kotlinx.android.synthetic.main.card_your_task.view.*
 
 
-internal class YourTaskStaggeredAdapter(private var listOfTasks: List<YourTaskModel>) :
+class YourTaskStaggeredAdapter( private var listOfTasks: List<com.fypmoney.model.yourTaskModal.Data>) :
     RecyclerView.Adapter<YourTaskStaggeredAdapter.MyViewHolder>(){
-    var onItemClick: ((YourTaskModel) -> Unit)? = null
-    internal inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    var onItemClick: ((com.fypmoney.model.yourTaskModal.Data) -> Unit)? = null
+    inner class MyViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var label: TextView = view.findViewById(R.id.label)
         var amount: TextView = view.findViewById(R.id.amount)
         var relation: TextView = view.findViewById(R.id.relation)
@@ -38,12 +39,12 @@ internal class YourTaskStaggeredAdapter(private var listOfTasks: List<YourTaskMo
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val tasks = listOfTasks[position]
-        holder.label.text = tasks.Title
-        holder.amount.text = tasks.Amount
-        holder.relation.text = tasks.Relation
+        holder.label.text = tasks.additionalAttributes.title
+        holder.amount.text = tasks.additionalAttributes.amount.toString()
+        holder.relation.text = "Father"
         holder.itemView.setOnClickListener {
-                onItemClick?.invoke(listOfTasks[position])
-            }
+            onItemClick?.invoke(listOfTasks[position])
+        }
 
         if(position==0){
             holder.new_ll.visible()
@@ -68,7 +69,7 @@ internal class YourTaskStaggeredAdapter(private var listOfTasks: List<YourTaskMo
         return listOfTasks.size
     }
 
-    fun setMovieList(listOfTasks: List<YourTaskModel>) {
+    fun setMovieList(listOfTasks: List<com.fypmoney.model.yourTaskModal.Data>) {
         this.listOfTasks = listOfTasks
         notifyDataSetChanged()
     }
