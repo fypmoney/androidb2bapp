@@ -141,8 +141,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
 
                     }
 
-                    onUpdateProfileSuccess.value =
-                        true                    // set the button text to continue
+                    onUpdateProfileSuccess.value = true                    // set the button text to continue
 
                 }
             }

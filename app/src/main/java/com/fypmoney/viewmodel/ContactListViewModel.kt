@@ -51,7 +51,6 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
                 val sortedList =
                     contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>
                 if (!sortedList.isNullOrEmpty()) {
-                    isApiError.set(true)
                     contactAdapter.setList(sortedList)
                     contactAdapter.newContactList?.addAll(sortedList)
                 } else {

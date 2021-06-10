@@ -151,9 +151,8 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
     private fun checkAndAskPermission() {
         when (checkPermission()) {
             true -> {
-                mViewModel.getAllContacts()
-             /*   mViewModel.progressDialog.value = true
-                mViewModel.callContactSyncApi()*/
+                mViewModel.progressDialog.value = true
+                mViewModel.callContactSyncApi()
             }
             else -> {
                 requestPermission()

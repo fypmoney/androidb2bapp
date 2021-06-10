@@ -19,3 +19,33 @@ data class SavedCardResponseDetails(
     @SerializedName("expiry_year") val expiry_year: String,
     @SerializedName("expiry_month") val expiry_month: String,
 ) : Serializable
+
+
+data class AddMoneyStep1Request(
+    @SerializedName("remarks") val remarks: String?,
+    @SerializedName("amount") val amount: String?
+) : Serializable
+
+data class AddMoneyStep1Response(
+    @SerializedName("data") val addMoneyStep1ResponseDetails: AddMoneyStep1ResponseDetails) : Serializable
+
+data class AddMoneyStep1ResponseDetails(
+    @SerializedName("pgTxnNo") val pgTxnNo: String,
+    @SerializedName("accountTxnNo") val accountTxnNo: String,
+    @SerializedName("pgRequestData") val pgRequestData: String,
+    ) : Serializable
+
+
+
+data class PgRequestData(
+    @SerializedName("transactionId") var transactionId: String?=null,
+    @SerializedName("amount") var amount: String?=null,
+    @SerializedName("phone") var phone: String?=null,
+    @SerializedName("pgUrl") var pgUrl: String?=null,
+    @SerializedName("userFirstName") var userFirstName: String?=null,
+    @SerializedName("productName") var productName: String?=null,
+    @SerializedName("email") var email: String?=null,
+    @SerializedName("merchantKey") var merchantKey: String?=null,
+    @SerializedName("merchantId") var merchantId: String?=null,
+    @SerializedName("paymentHash") var paymentHash: String?=null,
+) : Serializable

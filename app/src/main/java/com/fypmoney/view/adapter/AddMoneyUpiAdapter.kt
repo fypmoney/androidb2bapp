@@ -1,6 +1,5 @@
 package com.fypmoney.view.adapter
 
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +12,7 @@ import com.fypmoney.viewhelper.AddMoneyUpiViewHelper
 /**
  * This adapter class is used to handle upi list in add money
  */
-class AddMoneyUpiAdapter:
+class AddMoneyUpiAdapter(var onUpiClickListener:OnUpiClickListener) :
     RecyclerView.Adapter<BaseViewHolder>() {
     var upiList: ArrayList<UpiModel>? = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -39,8 +38,8 @@ class AddMoneyUpiAdapter:
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         private lateinit var mViewHelper: AddMoneyUpiViewHelper
         override fun onBind(position: Int) {
-            mViewHelper = AddMoneyUpiViewHelper(
-                upiList?.get(position)
+            mViewHelper = AddMoneyUpiViewHelper(position,
+                upiList?.get(position),onUpiClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             mRowItemBinding.executePendingBindings()
@@ -59,5 +58,8 @@ class AddMoneyUpiAdapter:
         notifyDataSetChanged()
     }
 
+    interface OnUpiClickListener {
+        fun onUpiItemClicked(position: Int, upiModel: UpiModel?)
+    }
 
 }

@@ -135,6 +135,9 @@ class ApiDataParsing {
                 ApiConstant.API_REQUEST_MONEY -> {
                     getObject(response, RequestMoneyResponse::class.java)
                 }
+                ApiConstant.API_ADD_MONEY_STEP1 -> {
+                    getObject(response, AddMoneyStep1Response::class.java)
+                }
 
 
                 else -> response
