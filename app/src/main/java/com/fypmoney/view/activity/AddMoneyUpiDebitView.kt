@@ -97,10 +97,22 @@ class AddMoneyUpiDebitView :
     }
 
     private fun callGooglePayIntent() {
-        mViewModel.requestData.set("pgRequestData\": \"{\"transactionId\":\"211616573310009\",\"amount\":\"3000.00\",\"phone\":\"8527029916\",\"pgUrl\":\"https://test.payu.in/_payment\",\"userFirstName\":\"Vikrant Testing\",\"productName\":\"Pockket Product\",\\\"email\":null,\"merchantKey\":\"MEqEEF\",\"merchantId\":\"5004627\",\"paymentHash\":\"2e6e46f428a2f8fdbcaac573e315866c8cddc73f4ed3186930951346553af20926dc9b38cd24764c9cd65bc9f6a28bcbaa86fa0f638a5f6356361a41cffe64a1\",\"udf1\":\"FLM-211616573310009\",\"udf2\":\"\",\"udf3\":\"\",\"udf4\":\"\",\"udf5\":\"\",\"udf6\":\"\",\"udf7\":\"\",\"udf8\":\"\",\"udf9\":\"\",\"udf10\":\"\",\"surl\":\"localhost:9191/api/pg/callback\",\"furl\":\"localhost:9191/api/pg/callback\"}")
 
         var callback = PayUGpayResponse(this)
 
+        Log.d(
+            "post data",
+            mViewModel.requestData.get()!!
+        )
+        Log.d(
+            "merchany_key",
+            mViewModel.parseResponseOfStep1(mViewModel.requestData.get()).merchantKey.toString()
+        )
+
+        Log.d(
+            "hash",
+            mViewModel.parseResponseOfStep1(mViewModel.requestData.get()).paymentHash.toString()
+        )
 
         GPay.getInstance().checkForPaymentAvailability(
             this@AddMoneyUpiDebitView,
@@ -119,31 +131,18 @@ class AddMoneyUpiDebitView :
 
     }
 
-    fun callGooglePayIntent1() {
-        mViewModel.requestData.set("pgRequestData\": \"{\"transactionId\":\"211616573310009\",\"amount\":\"3000.00\",\"phone\":\"8527029916\",\"pgUrl\":\"https://test.payu.in/_payment\",\"userFirstName\":\"Vikrant Testing\",\"productName\":\"Pockket Product\",\\\"email\":null,\"merchantKey\":\"MEqEEF\",\"merchantId\":\"5004627\",\"paymentHash\":\"2e6e46f428a2f8fdbcaac573e315866c8cddc73f4ed3186930951346553af20926dc9b38cd24764c9cd65bc9f6a28bcbaa86fa0f638a5f6356361a41cffe64a1\",\"udf1\":\"FLM-211616573310009\",\"udf2\":\"\",\"udf3\":\"\",\"udf4\":\"\",\"udf5\":\"\",\"udf6\":\"\",\"udf7\":\"\",\"udf8\":\"\",\"udf9\":\"\",\"udf10\":\"\",\"surl\":\"localhost:9191/api/pg/callback\",\"furl\":\"localhost:9191/api/pg/callback\"}")
-        val callback = PayUGpayResponse(this)
-
-
-        GPay.getInstance().checkForPaymentAvailability(
-            this@AddMoneyUpiDebitView,
-            callback,
-           "hafgieusyf9 8eiy8ge9isibg8",
-           "jvhbfdgyfhyd",
-            "default"
-        )
-        GPay.getInstance().makePayment(
-            this@AddMoneyUpiDebitView,
-           "jsbfujsfuhus",
-            callback,
-          "jvhbfdgyfhyd",
-            progressBar
-        )
-
-    }
 
     override fun onGpayResponseListener(payuResponse: String?) {
         Log.d("gpay_responseeee", payuResponse.toString())
     }
 
+    /*
+    * Used to call in case of phone pay
+    * */
+
+
+    fun callPhonePayIntent() {
+
+    }
 
 }

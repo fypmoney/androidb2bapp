@@ -48,4 +48,15 @@ data class PgRequestData(
     @SerializedName("merchantKey") var merchantKey: String?=null,
     @SerializedName("merchantId") var merchantId: String?=null,
     @SerializedName("paymentHash") var paymentHash: String?=null,
-) : Serializable
+    @SerializedName("furl") var furl: String?=null,
+    @SerializedName("surl") var surl: String?=null,
+    @SerializedName("udf10") var udf10: String?=null,
+    @SerializedName("udf8") var udf8: String?=null,
+    @SerializedName("udf9") var udf9: String?=null,
+    @SerializedName("udf7") var udf7: String?=null,
+    @SerializedName("udf6") var udf6: String?=null,
+    @SerializedName("udf5") var udf5: String?=null,
+    @SerializedName("udf4") var udf4: String?=null,
+    @SerializedName("udf3") var udf3: String?=null,
+    @SerializedName("udf2") var udf2: String?=null,
+    @SerializedName("udf1") var udf1: String?=null) : Serializable

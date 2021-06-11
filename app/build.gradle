@@ -138,8 +138,8 @@ dependencies {
     // google pay
     implementation 'in.payu:payu-gpay:1.4.0'
 
-
-    
+    // pay u core sdk
+    implementation 'in.payu:payu-sdk:5.2.2'
 
 }
 apollo {

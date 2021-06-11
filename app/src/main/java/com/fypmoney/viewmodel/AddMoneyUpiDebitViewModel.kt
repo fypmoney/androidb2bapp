@@ -15,6 +15,7 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.AddMoneyUpiAdapter
 import com.fypmoney.view.adapter.SavedCardsAdapter
+import com.payu.india.Model.PaymentParams
 import org.json.JSONObject
 
 class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(application),
@@ -55,7 +56,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         when (purpose) {
             ApiConstant.API_ADD_MONEY_STEP1 -> {
                 if (responseData is AddMoneyStep1Response) {
-                requestData.set(responseData.addMoneyStep1ResponseDetails.pgRequestData)
+                    requestData.set(responseData.addMoneyStep1ResponseDetails.pgRequestData)
 
                 }
             }
@@ -78,19 +79,52 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     /*
     *  used to parse the response
     * */
-    fun parseResponseOfStep1(requestData:String?): PgRequestData {
-        val pgRequestData= PgRequestData()
+    fun parseResponseOfStep1(requestData: String?): PgRequestData {
+        val pgRequestData = PgRequestData()
         val mainObject = JSONObject(requestData)
-        pgRequestData.transactionId=mainObject.getString("transactionId")
-        pgRequestData.email=mainObject.getString("email")
-        pgRequestData.amount=mainObject.getString("amount")
-        pgRequestData.merchantId=mainObject.getString("merchantId")
-        pgRequestData.merchantKey=mainObject.getString("merchantKey")
-        pgRequestData.productName=mainObject.getString("productName")
-        pgRequestData.paymentHash=mainObject.getString("paymentHash")
+        pgRequestData.transactionId = mainObject.getString("transactionId")
+        pgRequestData.email = mainObject.getString("email")
+        pgRequestData.amount = mainObject.getString("amount")
+        pgRequestData.merchantId = mainObject.getString("merchantId")
+        pgRequestData.merchantKey = mainObject.getString("merchantKey")
+        pgRequestData.productName = mainObject.getString("productName")
+        pgRequestData.paymentHash = mainObject.getString("paymentHash")
+        pgRequestData.userFirstName = mainObject.getString("userFirstName")
+        pgRequestData.surl = mainObject.getString("surl")
+        pgRequestData.furl = mainObject.getString("furl")
+        pgRequestData.pgUrl = mainObject.getString("pgUrl")
+        pgRequestData.udf1 = mainObject.getString("udf1")
+        pgRequestData.udf2 = mainObject.getString("udf2")
+        pgRequestData.udf3 = mainObject.getString("udf3")
+        pgRequestData.udf4 = mainObject.getString("udf4")
+        pgRequestData.udf5 = mainObject.getString("udf5")
+        pgRequestData.udf6 = mainObject.getString("udf6")
+        pgRequestData.udf7 = mainObject.getString("udf7")
+        pgRequestData.udf8 = mainObject.getString("udf8")
         return pgRequestData
 
 
+    }
+
+    fun getPaymentParams(): PaymentParams {
+        val resultData = parseResponseOfStep1(requestData.get())
+        val mPaymentParams = PaymentParams()
+        // mPaymentParams.setKey(< Your Key issued by PayU >)
+        mPaymentParams.setKey(resultData.merchantKey)
+        mPaymentParams.amount = resultData.amount
+        mPaymentParams.productInfo = resultData.productName
+        mPaymentParams.firstName = resultData.userFirstName
+        mPaymentParams.email = resultData.email
+        mPaymentParams.txnId = resultData.transactionId
+        mPaymentParams.surl = resultData.surl
+        mPaymentParams.furl = resultData.furl
+        mPaymentParams.udf1 = resultData.udf1
+        mPaymentParams.udf2 = resultData.udf2
+        mPaymentParams.udf3 = resultData.udf3
+        mPaymentParams.udf4 = resultData.udf4
+        mPaymentParams.udf5 = resultData.udf5
+
+        return mPaymentParams
     }
 }
 

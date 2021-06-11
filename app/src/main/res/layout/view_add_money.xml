@@ -53,8 +53,22 @@
                     android:layout_marginTop="12dp"
                     android:ellipsize="end"
                     android:singleLine="true"
+                    android:visibility="@{viewModel.isFetchBalanceVisible?View.GONE:View.VISIBLE,default=gone}"
                     android:text="@{@string/Rs+viewModel.availableAmount}"
                     android:textSize="42dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/amountFetching"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@+id/balance_text"
+                    android:layout_marginTop="12dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:layout_centerHorizontal="true"
+                    android:visibility="@{viewModel.isFetchBalanceVisible?View.VISIBLE:View.GONE,default=visible}"
+                    android:text="@{@string/fetching_balance}"
+                    />
+
 
 
                 <androidx.appcompat.widget.AppCompatTextView

@@ -26,6 +26,7 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
     var setEdittextLength = MutableLiveData(false)
     var availableAmount = ObservableField(application.getString(R.string.dummy_amount))
     var amountSelected = ObservableField<String>()
+    var isFetchBalanceVisible = ObservableField(true)
 
     init {
         callGetWalletBalanceApi()
@@ -67,6 +68,7 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
         when (purpose) {
             ApiConstant.API_GET_WALLET_BALANCE -> {
                 if (responseData is GetWalletBalanceResponse) {
+                    isFetchBalanceVisible.set(false)
                     availableAmount.set(Utility.getFormatedAmount(responseData.getWalletBalanceResponseDetails.accountBalance))
 
                 }
