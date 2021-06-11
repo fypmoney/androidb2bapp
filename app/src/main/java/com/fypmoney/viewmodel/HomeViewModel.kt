@@ -143,6 +143,30 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         )
     }
 
+    /*
+   * This method is used to call pay money api
+   * */
+    fun callPayMoneyApi(
+        actionAllowed: String
+    ) {
+        notificationSelectedResponse.actionSelected = actionAllowed
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_PAY_MONEY,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_PAY_MONEY),
+                request_type = ApiUrl.POST,
+                param = PayMoneyRequest(
+                    actionSelected = actionAllowed,
+                    txnType = AppConstants.FUND_TRANSFER_TRANSACTION_TYPE,
+                    approvalId = notificationSelectedResponse.id,
+                    emojis = "",
+                    remarks = ""
+                ), onResponse = this,
+                isProgressBar = true
+            )
+        )
+    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
@@ -170,6 +194,14 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             ApiConstant.API_UPDATE_APPROVAL_REQUEST -> {
                 if (responseData is UpdateFamilyApprovalResponse) {
                     Utility.showToast("Your action completed successfully")
+                }
+            }
+
+            ApiConstant.API_PAY_MONEY -> {
+                if (responseData is PayMoneyResponse) {
+                    Utility.showToast("Your action completed successfully")
+
+
                 }
             }
         }

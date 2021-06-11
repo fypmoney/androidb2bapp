@@ -12,6 +12,15 @@
 
     </data>
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout"
+        app:onRefreshListener="@{() -> viewModel.onRefresh()}"
+        app:refreshing="@{viewModel.isLoading}">
+
+
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
@@ -23,20 +32,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+         >
 
             <include
                 android:id="@+id/toolbar_layout"
                 layout="@layout/toolbar" />
-
-
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/toolbar_layout"
-                app:onRefreshListener="@{() -> viewModel.onRefresh()}"
-                app:refreshing="@{viewModel.isLoading}">
 
 
 
@@ -141,10 +142,9 @@
 
                     />
 
-            </LinearLayout>
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-        </RelativeLayout>
+            </LinearLayout></RelativeLayout>
 
 
-    </ScrollView>
+
+    </ScrollView></androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

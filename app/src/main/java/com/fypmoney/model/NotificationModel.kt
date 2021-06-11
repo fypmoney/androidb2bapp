@@ -32,8 +32,10 @@ class NotificationModel {
         @SerializedName("requestCategoryCode") var requestCategoryCode: String?=null,
         @SerializedName("actionAllowed") var actionAllowed: String?=null,
         @SerializedName("actionSelected") var actionSelected: String?=null,
-        @SerializedName("appDisplayAction") var appDisplayAction: String?=null
-
+        @SerializedName("appDisplayAction") var appDisplayAction: String?=null,
+        @SerializedName("sourceUserName") var sourceUserName: String?=null,
+        @SerializedName("destinationUserName") var destinationUserName: String?=null,
+        @SerializedName("objectJson") var objectJson: String?=null
     ) : Serializable
 
     data class UserTimelineResponse(
@@ -51,6 +53,4 @@ class NotificationModel {
         @SerializedName("description") var description: String?=null,
         @SerializedName("entityType") var entityType: String?=null,
         @SerializedName("requestCategoryCode") var requestCategoryCode: String?=null) : Serializable
-
-
 }

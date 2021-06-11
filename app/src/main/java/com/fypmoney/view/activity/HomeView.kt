@@ -1,12 +1,12 @@
 package com.fypmoney.view.activity
 
-import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.telephony.PhoneNumberUtils
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.view_home.*
 * This class is used as Home Screen
 * */
 class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
-    Utility.OnAllContactsAddedListener, FamilyNotificationBottomSheet.OnBottomSheetClickListener {
+    Utility.OnAllContactsAddedListener, FamilyNotificationBottomSheet.OnBottomSheetClickListener,  RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener{
     private lateinit var mViewModel: HomeViewModel
     private lateinit var mViewBinding: ViewHomeBinding
 
@@ -52,7 +52,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         checkAndAskPermission()
         setCurrentFragment(HomeScreen())
 
-        getUpiApps()
+        //getUpiApps()
 
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.STAY_TUNED_BOTTOM_SHEET -> {
@@ -256,16 +256,24 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
     }
 
+
+
     /*
-      * This method is used to call leave member
-      * */
-    private fun callInviteBottomSheet() {
+   * This method is used to call leave member
+   * */
+    private fun callRequestMoneyBottomSheet() {
         val bottomSheet =
-            InviteBottomSheet(
-                getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            RequestMoneyBottomSheet(
+                response = mViewModel.notificationSelectedResponse,
+                this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "InviteMemberBottomSheet")
+        bottomSheet.show(supportFragmentManager, "RequestMoneyNotification")
+    }
+
+    override fun onRequestMoneyBottomSheetButtonClick(actionAllowed: String?) {
+        mViewModel.callPayMoneyApi(actionAllowed!!)
+
     }
 }
 

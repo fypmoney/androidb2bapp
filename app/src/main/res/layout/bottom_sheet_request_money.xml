@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/margin"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/curved_background1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/verification_title"
+            style="@style/TextviewBold"
+            android:layout_gravity="center"
+            android:layout_marginTop="36dp"
+            android:text="@string/request_money_title"
+            android:textSize="17dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivServiceLogo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/curved_background14"
+            android:padding="12dp"
+            app:srcCompat="@drawable/ic_user" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/name"
+            style="@style/TextviewRegular"
+            android:layout_gravity="center"
+            android:layout_marginTop="13dp"
+            android:textSize="18dp"
+            android:textColor="@color/text_color_dark"
+            android:textAlignment="center" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/number"
+            style="@style/TextviewRegular"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/description"
+            style="@style/TextviewRegular"
+            android:layout_gravity="center"
+            android:layout_marginTop="43dp"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            android:textAlignment="center" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/amount"
+            style="@style/TextviewBold"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:textSize="32dp"
+             />
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/button_reject"
+                style="@style/TextviewRegular"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:text="@string/reject_btn_text"
+                android:textColor="@color/text_color_dark"
+                android:textSize="@dimen/textSize_18" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_accept"
+                style="@style/Widget.App.Button"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_weight="0.5"
+                android:background="@drawable/curved_background1"
+                android:text="@string/approve_pay_btn_text"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/text_color_dark" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_cancel"
+                style="@style/Widget.App.Button"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_weight="1"
+                android:background="@drawable/curved_background1"
+                android:text="@string/withdraw_btn_text"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/text_color_dark" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>
+

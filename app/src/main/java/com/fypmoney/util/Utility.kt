@@ -38,6 +38,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.io.InputStream
+import java.math.BigDecimal
 import java.nio.charset.Charset
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -148,7 +149,7 @@ object Utility {
     /*
     * This method is used to show toast message
     * */
-    fun showToast(message: String) {
+    fun showToast(message: String?) {
         Toast.makeText(PockketApplication.instance, message, Toast.LENGTH_LONG).show()
     }
 
@@ -679,7 +680,7 @@ object Utility {
     * This is used to format the amount
     * */
     fun getFormatedAmount(amount: String): String? {
-        return NumberFormat.getNumberInstance(Locale.US).format(amount.toInt())
+        return NumberFormat.getNumberInstance(Locale.US).format(amount.toBigDecimal())
     }
 
     /*
@@ -701,5 +702,27 @@ object Utility {
         logEntity.methodValue = methodValue
         logEntity.timestamp = System.currentTimeMillis()
         logRepository?.insertLog(logEntity)
+    }
+
+    /*
+    * This method is used to convert amount to paise
+    * */
+    fun convertToPaise(amount: String): String {
+        return (amount.toInt() * 100).toString()
+    }
+
+    /*
+    * This method is used to convert amount to Rs
+    * */
+    fun convertToRs(amount: String): String {
+        return (amount.toInt() / 100).toString()
+    }
+
+    /*
+   * This method is used to convert amount to Rs
+   * */
+    fun convertToRs1(amount: String): String {
+        val amountValue = (amount.toInt() / 100).toString()
+        return BigDecimal(amountValue).setScale(2, BigDecimal.ROUND_HALF_EVEN).toString()
     }
 }

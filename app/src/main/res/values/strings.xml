@@ -47,6 +47,8 @@
     <string name="reject_btn_text">Reject</string>
     <string name="update_btn_text">Update</string>
     <string name="request_btn_text">Request</string>
+    <string name="withdraw_btn_text">Withdraw</string>
+    <string name="approve_pay_btn_text">Approve &amp; Pay</string>
 
 
     <!--Login-->
@@ -482,6 +484,13 @@
     <string name="add_new_card_cvv">CVV</string>
     <string name="add_new_card_expiry_hint">MM/YY</string>
     <string name="add_new_card_save_option">Save this option for faster payments</string>
+
+   <!--
+   Request money
+   -->
+    <string name="request_money_title">Request Money</string>
+    <string name="request_money_by">Money Request by</string>
+    <string name="request_money_to">Money Request to</string>
 
 
 </resources>

@@ -12,9 +12,9 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.NotificationModel
-import com.fypmoney.model.UpdateFamilyApprovalResponse
+import com.fypmoney.model.*
+import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.NotificationAdapter
 import com.fypmoney.view.adapter.UserTimeLineAdapter
 
@@ -31,12 +31,15 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     var isGetNotificationsRecyclerVisible = ObservableField(true)
     var positionSelected = ObservableField<Int>()
     var onNotificationClicked = MutableLiveData<Boolean>()
+    var onPaySuccess = MutableLiveData<Boolean>()
     var notificationSelectedResponse = NotificationModel.NotificationResponseDetails()
     val isLoading = ObservableBoolean()
+
     init {
         callGetFamilyNotificationApi()
         callUserTimeLineApi()
     }
+
     /*
       * This method is used to refresh on swipe
       *  */
@@ -86,7 +89,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
             ApiConstant.API_GET_NOTIFICATION_LIST -> {
                 if (responseData is NotificationModel.NotificationResponse) {
                     if (responseData.notificationResponseDetails.isNullOrEmpty()) {
-                       isGetNotificationsRecyclerVisible.set(false)
+                        isGetNotificationsRecyclerVisible.set(false)
                     } else {
                         isGetNotificationsRecyclerVisible.set(true)
                         notificationAdapter.setList(responseData.notificationResponseDetails)
@@ -94,7 +97,6 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                 }
             }
             ApiConstant.API_USER_TIMELINE -> {
-
                 if (responseData is NotificationModel.UserTimelineResponse) {
                     isPreviousVisible.set(true)
                     if (responseData.notificationResponseDetails.isNullOrEmpty()) {
@@ -107,6 +109,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
             }
             ApiConstant.API_UPDATE_APPROVAL_REQUEST -> {
                 if (responseData is UpdateFamilyApprovalResponse) {
+                    Utility.showToast(responseData.msg)
                     responseData.notificationResponseDetails.let {
                         notificationAdapter.updateList(
                             notification = responseData.notificationResponseDetails,
@@ -121,11 +124,24 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                 }
             }
 
+            ApiConstant.API_PAY_MONEY -> {
+                if (responseData is PayMoneyResponse) {
+                    Utility.showToast(responseData.msg)
+
+                    onPaySuccess.value = true
+
+
+                }
+            }
+
 
         }
 
     }
 
+    /*
+    * This method is used to call get approval request api
+    * */
     fun callUpdateApprovalRequestApi(
         actionAllowed: String
     ) {
@@ -141,6 +157,30 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
         )
     }
 
+    /*
+   * This method is used to call pay money api
+   * */
+    fun callPayMoneyApi(
+        actionAllowed: String
+    ) {
+        notificationSelectedResponse.actionSelected = actionAllowed
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_PAY_MONEY,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_PAY_MONEY),
+                request_type = ApiUrl.POST,
+                param = PayMoneyRequest(
+                    actionSelected = actionAllowed,
+                    txnType = AppConstants.FUND_TRANSFER_TRANSACTION_TYPE,
+                    approvalId = notificationSelectedResponse.id,
+                    emojis = "",
+                    remarks = ""
+                ), onResponse = this,
+                isProgressBar = true
+            )
+        )
+    }
+
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         isLoading.set(false)
@@ -151,7 +191,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
         position: Int
     ) {
         positionSelected.set(position)
-        notificationSelectedResponse=notification!!
+        notificationSelectedResponse = notification!!
         onNotificationClicked.value = true
 
 

@@ -145,15 +145,6 @@
                     android:layout_centerHorizontal="true"
                     app:backgroundTint="@color/text_color_dark" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/back_to_login"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/margin_20"
-                    android:layout_marginBottom="@dimen/margin_20"
-                    android:textColor="@color/text_color_light" />
 
             </RelativeLayout>
         </ScrollView>

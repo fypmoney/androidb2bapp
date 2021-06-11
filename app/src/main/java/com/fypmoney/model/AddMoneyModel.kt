@@ -24,7 +24,7 @@ data class SavedCardResponseDetails(
 data class AddMoneyStep1Request(
     @SerializedName("remarks") val remarks: String?,
     @SerializedName("amount") val amount: String?
-) : Serializable
+) : BaseRequest()
 
 data class AddMoneyStep1Response(
     @SerializedName("data") val addMoneyStep1ResponseDetails: AddMoneyStep1ResponseDetails) : Serializable
@@ -60,3 +60,18 @@ data class PgRequestData(
     @SerializedName("udf3") var udf3: String?=null,
     @SerializedName("udf2") var udf2: String?=null,
     @SerializedName("udf1") var udf1: String?=null) : Serializable
+
+
+
+data class PayMoneyRequest(
+    @SerializedName("txnType") val txnType: String?,
+    @SerializedName("approvalId") val approvalId: String?,
+    @SerializedName("actionSelected") val actionSelected: String?,
+    @SerializedName("emojis") val emojis: String?,
+    @SerializedName("remarks") val remarks: String?
+) : BaseRequest()
+
+
+data class PayMoneyResponse(
+    @SerializedName("msg") val msg: String?=null
+    ) : Serializable

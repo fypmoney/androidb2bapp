@@ -93,7 +93,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
             ApiConstant.API_GET_WALLET_BALANCE -> {
                 if (responseData is GetWalletBalanceResponse) {
                     isFetchBalanceVisible.set(false)
-                    availableAmount.set(Utility.getFormatedAmount(responseData.getWalletBalanceResponseDetails.accountBalance))
+                    availableAmount.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)))
 
                 }
             }

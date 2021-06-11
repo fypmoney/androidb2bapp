@@ -64,6 +64,7 @@ data class RemoveFamilyResponse(
 
 
 data class UpdateFamilyApprovalResponse(
+    @SerializedName("msg") val msg: String?=null,
     @SerializedName("data") val notificationResponseDetails: NotificationModel.NotificationResponseDetails
 ) : Serializable
 

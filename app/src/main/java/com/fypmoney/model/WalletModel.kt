@@ -17,6 +17,7 @@ data class GetWalletBalanceResponseDetails(
     @SerializedName("posLimit") val posLimit: String,
     @SerializedName("ecomLimit") val ecomLimit: String,
     @SerializedName("accountBalance") val accountBalance: String,
+    @SerializedName("remainingLoadLimit") val remainingLoadLimit: String,
     @SerializedName("cl") val cl: String
 ) : Serializable
 

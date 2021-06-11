@@ -103,7 +103,7 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
                 SendMoneyRequest(
                     mobileNo = contactResult.get()?.contactNumber,
                     txnType = AppConstants.FUND_TRANSFER_TRANSACTION_TYPE,
-                    amount = amountSelected.get(),
+                    amount = Utility.convertToPaise(amountSelected.get()!!),
                     remarks = message.get()
                 ),
                 this, isProgressBar = true
@@ -122,7 +122,7 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
                 ApiUrl.POST,
                 RequestMoneyRequest(
                     requesteeMobile = contactResult.get()?.contactNumber,
-                    amount = amountSelected.get(),
+                    amount = Utility.convertToPaise(amountSelected.get()!!),
                     remarks = message.get(),emoji = ""
                 ),
                 this, isProgressBar = true

@@ -69,22 +69,6 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
 
         // spannable string
 
-        val ss = SpannableString(getString(R.string.back_to_login))
-        val clickableSpan: ClickableSpan = object : ClickableSpan() {
-            override fun onClick(textView: View) {
-                //  intentToActivity(LoginView::class.java)
-            }
-
-            override fun updateDrawState(ds: TextPaint) {
-                super.updateDrawState(ds)
-                ds.isUnderlineText = false
-                ds.color = ContextCompat.getColor(applicationContext, R.color.text_color_dark)
-            }
-        }
-        ss.setSpan(clickableSpan, 7, 14, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        back_to_login.text = ss
-        back_to_login.movementMethod = LinkMovementMethod.getInstance()
-
 
         // auto sms read
         //        Initialize the SmsRetriever client
@@ -257,7 +241,7 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
             mViewModel.selectedCountryCode.get() + mViewModel.mobile.value
         )
         intent.putExtra(
-            AppConstants.FROM_WHICH_SCREEN,AppConstants.LOGIN_SCREEN
+            AppConstants.FROM_WHICH_SCREEN, AppConstants.LOGIN_SCREEN
         )
 
         intent.putExtra(

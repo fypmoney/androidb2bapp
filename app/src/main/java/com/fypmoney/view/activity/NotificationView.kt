@@ -1,5 +1,6 @@
 package com.fypmoney.view.activity
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,6 +12,7 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewNotificationBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.fragment.FamilyNotificationBottomSheet
+import com.fypmoney.view.fragment.RequestMoneyBottomSheet
 import com.fypmoney.viewmodel.NotificationViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_user_feeds.*
@@ -19,7 +21,8 @@ import kotlinx.android.synthetic.main.view_user_feeds.*
 * This is used to show list of notification
 * */
 class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewModel>(),
-    FamilyNotificationBottomSheet.OnBottomSheetClickListener {
+    FamilyNotificationBottomSheet.OnBottomSheetClickListener,
+    RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener {
     private lateinit var mViewModel: NotificationViewModel
     private lateinit var mViewBinding: ViewNotificationBinding
     override fun getBindingVariable(): Int {
@@ -62,12 +65,20 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
 
                     }
                     AppConstants.NOTIFICATION_TYPE_REQUEST_MONEY -> {
-                        callBottomSheet()
+                        callRequestMoneyBottomSheet()
 
                     }
                 }
 
                 mViewModel.onNotificationClicked.value = false
+            }
+
+        }
+
+        mViewModel.onPaySuccess.observe(this) {
+            if (it) {
+                intentToActivity(NotificationView::class.java)
+                mViewModel.onPaySuccess.value = false
             }
 
         }
@@ -89,6 +100,19 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         bottomSheet.show(supportFragmentManager, "FamilyNotification")
     }
 
+    /*
+      * This method is used to call leave member
+      * */
+    private fun callRequestMoneyBottomSheet() {
+        val bottomSheet =
+            RequestMoneyBottomSheet(
+                response = mViewModel.notificationSelectedResponse,
+                this
+            )
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "RequestMoneyNotification")
+    }
+
 
     override fun onBottomSheetButtonClick(actionAllowed: String?) {
         mViewModel.callUpdateApprovalRequestApi(actionAllowed!!)
@@ -96,4 +120,16 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
 
     }
 
+    override fun onRequestMoneyBottomSheetButtonClick(actionAllowed: String?) {
+        mViewModel.callPayMoneyApi(actionAllowed!!)
+
+    }
+
+    /*
+    * This method is used to call activity
+    * */
+    private fun intentToActivity(aClass: Class<*>) {
+        startActivity(Intent(this@NotificationView, aClass))
+        finish()
+    }
 }
