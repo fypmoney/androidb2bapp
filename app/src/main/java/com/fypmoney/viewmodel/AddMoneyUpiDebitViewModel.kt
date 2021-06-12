@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -16,6 +17,8 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.AddMoneyUpiAdapter
 import com.fypmoney.view.adapter.SavedCardsAdapter
 import com.payu.india.Model.PaymentParams
+import com.payu.india.Payu.PayuConstants
+import com.payu.india.PostParams.PaymentPostParams
 import org.json.JSONObject
 
 class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(application),
@@ -25,6 +28,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var addMoneyUpiAdapter = AddMoneyUpiAdapter(this)
     var savedCardsAdapter = SavedCardsAdapter()
     var onUpiClicked = MutableLiveData<UpiModel>()
+    var onAddNewCardClicked = MutableLiveData<Boolean>()
     var requestData = ObservableField<String>()
 
     init {
@@ -46,7 +50,13 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
                 endpoint = NetworkUtil.endURL(ApiConstant.API_ADD_MONEY_STEP1),
                 request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = true,
-                param = AddMoneyStep1Request(remarks = "amount added", amount = amountToAdd.get())
+                param = AddMoneyStep1Request(
+                    remarks = "amount added",
+                    amount = Utility.convertToPaise(amountToAdd.get()!!),
+                    merchantId = "6616",
+                    merchantKey = "gtKFFx",
+                    salt = "wia56q6O"
+                )
             )
         )
     }
@@ -57,6 +67,9 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
             ApiConstant.API_ADD_MONEY_STEP1 -> {
                 if (responseData is AddMoneyStep1Response) {
                     requestData.set(responseData.addMoneyStep1ResponseDetails.pgRequestData)
+                   val result= requestData.get()?.replace("transactionId","txnid")
+                    requestData.set(result)
+                    Log.d("jbr8d",requestData.get()!!)
 
                 }
             }
@@ -82,7 +95,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     fun parseResponseOfStep1(requestData: String?): PgRequestData {
         val pgRequestData = PgRequestData()
         val mainObject = JSONObject(requestData)
-        pgRequestData.transactionId = mainObject.getString("transactionId")
+        pgRequestData.txnId = mainObject.getString("txnid")
         pgRequestData.email = mainObject.getString("email")
         pgRequestData.amount = mainObject.getString("amount")
         pgRequestData.merchantId = mainObject.getString("merchantId")
@@ -106,16 +119,17 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
     }
 
-    fun getPaymentParams(): PaymentParams {
+    fun getPaymentParams(addNewCardDetails: AddNewCardDetails): PaymentParams {
         val resultData = parseResponseOfStep1(requestData.get())
         val mPaymentParams = PaymentParams()
-        // mPaymentParams.setKey(< Your Key issued by PayU >)
-        mPaymentParams.setKey(resultData.merchantKey)
+        //mPaymentParams.setKey(< Your Key issued by PayU >)
+        mPaymentParams.key = resultData.merchantKey
         mPaymentParams.amount = resultData.amount
         mPaymentParams.productInfo = resultData.productName
         mPaymentParams.firstName = resultData.userFirstName
+        mPaymentParams.phone = resultData.phone
         mPaymentParams.email = resultData.email
-        mPaymentParams.txnId = resultData.transactionId
+        mPaymentParams.txnId = resultData.txnId
         mPaymentParams.surl = resultData.surl
         mPaymentParams.furl = resultData.furl
         mPaymentParams.udf1 = resultData.udf1
@@ -123,8 +137,26 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         mPaymentParams.udf3 = resultData.udf3
         mPaymentParams.udf4 = resultData.udf4
         mPaymentParams.udf5 = resultData.udf5
+        mPaymentParams.hash = resultData.paymentHash
+        mPaymentParams.userCredentials ="default"
+        mPaymentParams.cardNumber = addNewCardDetails.cardNumber
+        mPaymentParams.cardName = addNewCardDetails.nameOnCard
+        mPaymentParams.nameOnCard = addNewCardDetails.cardNumber
+        mPaymentParams.expiryMonth = addNewCardDetails.expiryMonth// MM
+        mPaymentParams.expiryYear = addNewCardDetails.expiryYear// YYYY
+        mPaymentParams.cvv = addNewCardDetails.cvv
 
+
+       // mPaymentParams.userCredentials = "your_key:"+SharedPrefUtils.SF_KEY_ACCESS_TOKEN
         return mPaymentParams
+    }
+
+    /*
+    * This method is used to handle on add new card
+    * */
+    fun onAddNewCardClicked() {
+        onAddNewCardClicked.value = true
+
     }
 }
 

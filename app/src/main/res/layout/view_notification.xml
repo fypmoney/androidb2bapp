@@ -92,22 +92,11 @@
                 android:visibility="@{viewModel.isPreviousVisible?View.VISIBLE:View.GONE,default=gone}" />
 
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@id/heading1"
-                style="@style/TextviewRegular"
-                android:layout_below="@id/view1"
-                android:layout_marginTop="5dp"
-                android:paddingStart="@dimen/screenMarginLeft"
-                android:paddingEnd="@dimen/screenMarginRight"
-                android:text="@string/previous_txt"
-                android:textColor="@color/text_color_dark"
-                android:visibility="@{viewModel.isPreviousVisible?View.VISIBLE:View.GONE,default=gone}" />
-
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/heading1"
+                android:layout_below="@id/view1"
                 android:background="@color/screenBackground"
                 android:orientation="vertical"
                 android:layout_marginTop="8dp"

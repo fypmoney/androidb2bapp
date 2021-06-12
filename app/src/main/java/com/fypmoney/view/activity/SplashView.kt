@@ -97,13 +97,19 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                     )!!
                 ) {
                     when {
-                        Utility.getCustomerDataFromPreference()!!.isReferralAllowed == AppConstants.YES -> {
-                            intentToActivity(ReferralCodeView::class.java)
-                        }
+
                         Utility.getCustomerDataFromPreference()!!.isProfileCompleted == AppConstants.NO -> {
-                            intentToActivity(CreateAccountView::class.java)
+                            when (Utility.getCustomerDataFromPreference()!!.isReferralAllowed) {
+                                AppConstants.YES -> {
+                                    intentToActivity(ReferralCodeView::class.java)
+                                }
+                                else -> {
+                                    intentToActivity(CreateAccountView::class.java)
+
+                                }
+                            }
                         }
-                        Utility.getCustomerDataFromPreference()!!.bankProfile?.isAccountActive == AppConstants.NO -> {
+                        Utility.getCustomerDataFromPreference()!!.bankProfile?.isAccountActive == AppConstants.YES -> {
                             intentToActivity(AadhaarAccountActivationView::class.java)
                         }
                         else -> {

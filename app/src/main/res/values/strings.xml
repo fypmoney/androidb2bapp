@@ -474,9 +474,9 @@
     <string name="add_money_add_new_card_text">+ Add New Card</string>
     <string name="add_money_add_upi_text">Add UPI</string>
 
-   <!--
-   Add new card
-   -->
+    <!--
+    Add new card
+    -->
     <string name="add_new_card_title">Add New Card</string>
     <string name="add_new_card_enter_card">Enter Card Number</string>
     <string name="add_new_card_name">Name on Card</string>
@@ -485,12 +485,23 @@
     <string name="add_new_card_expiry_hint">MM/YY</string>
     <string name="add_new_card_save_option">Save this option for faster payments</string>
 
-   <!--
-   Request money
-   -->
+    <!--
+    Request money
+    -->
     <string name="request_money_title">Request Money</string>
     <string name="request_money_by">Money Request by</string>
     <string name="request_money_to">Money Request to</string>
+
+    <!--
+    Add new card
+    -->
+    <string name="card_number_empty_error">Please enter card number</string>
+    <string name="card_name_empty_error">Please enter name on card</string>
+    <string name="card_expiry_empty_error">Please enter expiry date</string>
+    <string name="card_expiry_valid_empty_error">Please enter valid expiry date</string>
+    <string name="card_expiry_month_valid_empty_error">Please enter valid month</string>
+    <string name="card_expiry_year_valid_empty_error">Please enter valid year</string>
+    <string name="card_cvv_valid_error">Please enter valid CVV</string>
 
 
 </resources>

@@ -1,6 +1,8 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,11 +12,17 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAddMoneyUpiDebitBinding
+import com.fypmoney.model.AddNewCardDetails
+import com.fypmoney.model.NotificationModel
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.PayUGpayResponse
+import com.fypmoney.view.fragment.AddNewCardBottomSheet
+import com.fypmoney.view.fragment.FamilyNotificationBottomSheet
 import com.fypmoney.viewmodel.AddMoneyUpiDebitViewModel
 import com.payu.gpay.GPay
+import com.payu.india.Payu.PayuConstants
+import com.payu.india.PostParams.PaymentPostParams
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 
@@ -23,7 +31,7 @@ import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 * */
 class AddMoneyUpiDebitView :
     BaseActivity<ViewAddMoneyUpiDebitBinding, AddMoneyUpiDebitViewModel>(),
-    PayUGpayResponse.OnGpayResponseListener {
+    PayUGpayResponse.OnGpayResponseListener, AddNewCardBottomSheet.OnAddNewCardClickListener {
     private lateinit var mViewModel: AddMoneyUpiDebitViewModel
     lateinit var progressBar: ProgressBar
 
@@ -82,7 +90,12 @@ class AddMoneyUpiDebitView :
                 }
             }
         }
-
+        mViewModel.onAddNewCardClicked.observe(this) {
+            if (it) {
+                callBottomSheet()
+                mViewModel.onAddNewCardClicked.value = false
+            }
+        }
 
     }
 
@@ -97,8 +110,7 @@ class AddMoneyUpiDebitView :
     }
 
     private fun callGooglePayIntent() {
-
-        var callback = PayUGpayResponse(this)
+        val callback = PayUGpayResponse(this)
 
         Log.d(
             "post data",
@@ -118,14 +130,14 @@ class AddMoneyUpiDebitView :
             this@AddMoneyUpiDebitView,
             callback,
             mViewModel.parseResponseOfStep1(mViewModel.requestData.get()).paymentHash,
-            mViewModel.parseResponseOfStep1(mViewModel.requestData.get()).merchantKey,
+          "gtKFFx",
             "default"
         )
         GPay.getInstance().makePayment(
             this@AddMoneyUpiDebitView,
             mViewModel.requestData.get(),
             callback,
-            mViewModel.parseResponseOfStep1(mViewModel.requestData.get()).merchantKey,
+         "gtKFFx",
             progressBar
         )
 
@@ -139,10 +151,28 @@ class AddMoneyUpiDebitView :
     /*
     * Used to call in case of phone pay
     * */
-
-
     fun callPhonePayIntent() {
 
+    }
+
+    /*
+     * This method is used to call leave member
+     * */
+    private fun callBottomSheet() {
+        val bottomSheet =
+            AddNewCardBottomSheet(
+                mViewModel.amountToAdd.get(),
+                this
+            )
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "AddNewCard")
+    }
+
+    override fun onAddNewCardButtonClick(addNewCardDetails: AddNewCardDetails) {
+        val postData = PaymentPostParams(mViewModel.getPaymentParams(addNewCardDetails), PayuConstants.CC).paymentPostParams
+
+
+        Log.d("shnfveuvg8", addNewCardDetails.toString())
     }
 
 }

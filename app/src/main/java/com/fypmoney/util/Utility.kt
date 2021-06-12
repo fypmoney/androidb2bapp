@@ -680,7 +680,8 @@ object Utility {
     * This is used to format the amount
     * */
     fun getFormatedAmount(amount: String): String? {
-        return NumberFormat.getNumberInstance(Locale.US).format(amount.toBigDecimal())
+        //return NumberFormat.getNumberInstance(Locale.US).format(amount)
+        return amount
     }
 
     /*

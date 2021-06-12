@@ -28,7 +28,8 @@ import kotlinx.android.synthetic.main.view_home.*
 * This class is used as Home Screen
 * */
 class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
-    Utility.OnAllContactsAddedListener, FamilyNotificationBottomSheet.OnBottomSheetClickListener,  RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener{
+    Utility.OnAllContactsAddedListener, FamilyNotificationBottomSheet.OnBottomSheetClickListener,
+    RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener {
     private lateinit var mViewModel: HomeViewModel
     private lateinit var mViewBinding: ViewHomeBinding
 
@@ -146,7 +147,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                     callBottomSheet(it)
                 }
                 AppConstants.NOTIFICATION_TYPE_REQUEST_MONEY -> {
-                    callBottomSheet(it)
+                    callRequestMoneyBottomSheet()
                 }
                 AppConstants.NOTIFICATION_TYPE_ADD_TASK -> {
 
@@ -255,7 +256,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
 
     }
-
 
 
     /*

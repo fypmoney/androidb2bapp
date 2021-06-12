@@ -20,7 +20,7 @@ object ApiConstant {
     const val API_REMOVE_FAMILY_MEMBER = "/services/authservice/api/family-member/"
     const val API_CHECK_IS_APP_USER = "/services/loyaltyservice/api/phoneBook/checkUser/"
     const val API_SNC_CONTACTS = "/services/loyaltyservice/api/phoneBook"
-    const val API_UPDATE_PROFILE = "/services/authservice/api/customer/profile"
+    const val API_UPDATE_PROFILE = "/services/authservice/api/customer/update"
     const val API_GET_INTEREST = "/services/authservice/api/customer/interestMaster"
     const val API_GET_CUSTOMER_INFO = "/services/authservice/api/customer"
     const val API_GET_NOTIFICATION_LIST = "/services/PockketService/internal/get/approval-request"

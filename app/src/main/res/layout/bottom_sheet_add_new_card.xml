@@ -22,10 +22,11 @@
             android:id="@+id/verification_title"
             style="@style/TextviewRegular"
             android:layout_gravity="center"
-            android:layout_marginTop="21dp"
+            android:layout_marginTop="20dp"
             android:text="@string/add_new_card_title"
             android:textColor="@color/text_color_dark"
             android:textSize="17dp" />
+
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/enter_card"
@@ -34,32 +35,28 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
             android:hint="@string/add_new_card_enter_card"
-            android:inputType="textCapWords"
-            android:paddingStart="@dimen/edittextHintPaddingStart"
-            android:paddingTop="5dp"
-            android:paddingEnd="@dimen/edittextHintPaddingEnd"
-            android:paddingBottom="5dp"
+            android:inputType="number"
+            android:padding="10dp"
             android:singleLine="true" />
+
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/name_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
             android:hint="@string/add_new_card_name"
-            android:inputType="textCapWords"
-            android:paddingStart="@dimen/edittextHintPaddingStart"
-            android:paddingTop="5dp"
-            android:paddingEnd="@dimen/edittextHintPaddingEnd"
-            android:paddingBottom="5dp"
+            android:inputType="text"
+            android:maxLength="26"
+            android:padding="10dp"
             android:singleLine="true" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/expiry"
             style="@style/TextviewRegular"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="20dp"
             android:text="@string/add_new_card_expiry" />
 
 
@@ -67,6 +64,7 @@
             android:id="@+id/linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:weightSum="2">
 
@@ -77,11 +75,10 @@
                 android:layout_weight="1"
                 android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                 android:hint="@string/add_new_card_expiry_hint"
-                android:inputType="textCapWords"
-                android:paddingStart="@dimen/edittextHintPaddingStart"
-                android:paddingTop="5dp"
-                android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                android:paddingBottom="5dp" />
+                android:inputType="number"
+                android:maxLength="5"
+                android:padding="10dp"
+                />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/cvv"
@@ -90,15 +87,15 @@
                 android:layout_marginStart="20dp"
                 android:layout_weight="1"
                 android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                android:hint="@string/add_new_card_name"
-                android:inputType="textCapWords"
-                android:paddingStart="@dimen/edittextHintPaddingStart"
-                android:paddingTop="5dp"
-                android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                android:paddingBottom="5dp" />
+                android:hint="@string/add_new_card_cvv"
+                android:maxLength="3"
+                android:inputType="number"
+                android:padding="10dp"
+                />
         </LinearLayout>
 
-        <CheckedTextView
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/saveCardCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
@@ -118,7 +115,6 @@
             android:text="@string/add_btn_text"
             android:textAllCaps="false"
             app:backgroundTint="@color/text_color_dark" />
-
 
     </LinearLayout>
 </layout>
