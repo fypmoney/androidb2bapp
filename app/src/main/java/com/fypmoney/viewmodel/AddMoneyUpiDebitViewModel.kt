@@ -12,13 +12,10 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
-import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.AddMoneyUpiAdapter
 import com.fypmoney.view.adapter.SavedCardsAdapter
 import com.payu.india.Model.PaymentParams
-import com.payu.india.Payu.PayuConstants
-import com.payu.india.PostParams.PaymentPostParams
 import org.json.JSONObject
 
 class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(application),
@@ -30,6 +27,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var onUpiClicked = MutableLiveData<UpiModel>()
     var onAddNewCardClicked = MutableLiveData<Boolean>()
     var requestData = ObservableField<String>()
+    var hash = ObservableField<String>()
 
     init {
         val list = ArrayList<UpiModel>()
@@ -67,9 +65,8 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
             ApiConstant.API_ADD_MONEY_STEP1 -> {
                 if (responseData is AddMoneyStep1Response) {
                     requestData.set(responseData.addMoneyStep1ResponseDetails.pgRequestData)
-                   val result= requestData.get()?.replace("transactionId","txnid")
+                    val result = requestData.get()?.replace("transactionId", "txnid")
                     requestData.set(result)
-                    Log.d("jbr8d",requestData.get()!!)
 
                 }
             }
@@ -114,6 +111,11 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         pgRequestData.udf6 = mainObject.getString("udf6")
         pgRequestData.udf7 = mainObject.getString("udf7")
         pgRequestData.udf8 = mainObject.getString("udf8")
+
+        // set hash
+
+        hash.set(mainObject.getString("paymentHash"))
+
         return pgRequestData
 
 
@@ -124,6 +126,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         val mPaymentParams = PaymentParams()
         //mPaymentParams.setKey(< Your Key issued by PayU >)
         mPaymentParams.key = resultData.merchantKey
+        mPaymentParams.txnId = resultData.txnId
         mPaymentParams.amount = resultData.amount
         mPaymentParams.productInfo = resultData.productName
         mPaymentParams.firstName = resultData.userFirstName
@@ -138,16 +141,19 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         mPaymentParams.udf4 = resultData.udf4
         mPaymentParams.udf5 = resultData.udf5
         mPaymentParams.hash = resultData.paymentHash
-        mPaymentParams.userCredentials ="default"
+        mPaymentParams.userCredentials = resultData.merchantKey + ":" + "abcd"
         mPaymentParams.cardNumber = addNewCardDetails.cardNumber
-        mPaymentParams.cardName = addNewCardDetails.nameOnCard
-        mPaymentParams.nameOnCard = addNewCardDetails.cardNumber
+        mPaymentParams.nameOnCard = addNewCardDetails.nameOnCard
         mPaymentParams.expiryMonth = addNewCardDetails.expiryMonth// MM
         mPaymentParams.expiryYear = addNewCardDetails.expiryYear// YYYY
         mPaymentParams.cvv = addNewCardDetails.cvv
+        if (addNewCardDetails.isCardSaved == true) {
+            mPaymentParams.storeCard = 1
+        } else {
+            mPaymentParams.storeCard = 0
+        }
 
-
-       // mPaymentParams.userCredentials = "your_key:"+SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+        // mPaymentParams.userCredentials = "your_key:"+SharedPrefUtils.SF_KEY_ACCESS_TOKEN
         return mPaymentParams
     }
 

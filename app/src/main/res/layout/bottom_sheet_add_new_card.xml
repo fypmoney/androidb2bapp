@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-            android:hint="@string/add_new_card_enter_card"
+            android:hint="@string/card_number_format"
             android:inputType="number"
             android:padding="10dp"
             android:singleLine="true" />

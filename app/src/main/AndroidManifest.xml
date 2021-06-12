@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.fypmoney">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -9,15 +10,16 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission
         android:name="android.permission.USE_BIOMETRIC"
         android:requiredFeature="false" />
 
 
-
     <queries>
         <intent>
             <action android:name="android.intent.action.VIEW" />
+
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
 
@@ -36,7 +38,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DreamfolksApp"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        tools:replace="android:usesCleartextTraffic">
 
         <activity
             android:name=".view.activity.AddTaskActivity"
@@ -89,7 +92,7 @@
         <activity
             android:name=".view.activity.EnterAmountForPayRequestView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".view.activity.PayRequestProfileView"
@@ -125,7 +128,7 @@
         <activity
             android:name=".view.activity.AddMemberView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.activity.UserFeedsDetailView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
@@ -170,6 +173,7 @@
         <activity
             android:name=".view.activity.AddMoneyUpiDebitView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
         <receiver
             android:name=".receivers.SmsBroadcastReceiver"
             android:exported="true">
