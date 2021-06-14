@@ -16,6 +16,7 @@ import com.fypmoney.databinding.ViewAddMoneyUpiDebitBinding
 import com.fypmoney.model.AddNewCardDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.PayUGpayResponse
+import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.AddNewCardBottomSheet
 import com.fypmoney.viewmodel.AddMoneyUpiDebitViewModel
 import com.payu.custombrowser.*
@@ -175,7 +176,7 @@ class AddMoneyUpiDebitView :
                 this@AddMoneyUpiDebitView,
                 payUPhonePeCallback,
                 mViewModel.hash.get(),
-                mViewModel.merchantKey.get(),
+              "gtKFFx",
                 mViewModel.merchantKey.get() + ":" + "abcd"
             )
             /* PhonePe.getInstance().makePayment(
@@ -211,7 +212,7 @@ class AddMoneyUpiDebitView :
         }
 
         override fun onPaymentOptionInitialisationFailure(errorCode: Int, description: String) {
-            Log.d("phone_pay_payment", "initial fail")
+            Log.d("phone_pay_payment", errorCode.toString()+"  "+description)
 
             //Callback thrown in case PhonePe initialisation fails.
         }
@@ -292,6 +293,7 @@ class AddMoneyUpiDebitView :
                  */
                 customBrowserConfig.enableSurePay = 3
 
+
                 //htmlData - HTML string received from PayU webservice using Server to Server call.
 
                 // customBrowserConfig.setHtmlData("");
@@ -321,9 +323,9 @@ class AddMoneyUpiDebitView :
                  * By the time CB detects good network, if CBWebview is destroyed, we resume the transaction by passing payment post data to,
                  * this, merchant checkout activity.
                  */
-              /*  customBrowserConfig.merchantCheckoutActivityPath =
+                customBrowserConfig.merchantCheckoutActivityPath =
                     "com.payu.testapp.MerchantCheckoutActivity"
-*/
+
                 //Set the first url to open in WebView
 
                 //Set the first url to open in WebView
@@ -388,6 +390,7 @@ class AddMoneyUpiDebitView :
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Utility.showToast("onActivityResult")
         Log.d("kfkoefkepo","onActivityResulttt")
         if (requestCode == PayuConstants.PAYU_REQUEST_CODE) {
             Log.d("sjbfeufu", data.toString())
@@ -464,6 +467,8 @@ class AddMoneyUpiDebitView :
              * @param merchantResponse response received from Furl
              */
             override fun onPaymentFailure(payuResponse: String, merchantResponse: String) {
+                Utility.showToast("onPaymentFailure")
+
                 Log.d("onPaymentFailure", "onPaymentTerminate")
 
                 val intent = Intent()
@@ -477,6 +482,8 @@ class AddMoneyUpiDebitView :
             }
 
             override fun onPaymentTerminate() {
+                Utility.showToast("onPaymentTerminate")
+
                 Log.d("kfkoefkepo", "onPaymentTerminate")
                 finish()
             }
@@ -488,32 +495,35 @@ class AddMoneyUpiDebitView :
              * @param merchantResponse response received from Furl
              */
             override fun onPaymentSuccess(payuResponse: String, merchantResponse: String) {
+                Utility.showToast(payuResponse)
+
                 Log.d("kfkoefkepo", "onPaymentSuccess")
-                val intent = Intent()
-                intent.putExtra("result", merchantResponse)
-                intent.putExtra("payu_response", payuResponse)
-                if (null != mViewModel.hash.get()) {
-                    intent.putExtra(PayuConstants.MERCHANT_HASH, mViewModel.hash.get())
-                }
-                setResult(RESULT_OK, intent)
                 finish()
             }
 
             override fun onCBErrorReceived(code: Int, errormsg: String) {
+                Utility.showToast("onCBErrorReceived")
+
                 Log.d("kfkoefkepo", "onCBErrorReceived")
             }
 
             override fun setCBProperties(webview: WebView, payUCustomBrowser: Bank) {
+                Utility.showToast("setCBProperties")
+
                 webview.webChromeClient = PayUWebChromeClient(payUCustomBrowser)
                 Log.d("kfkoefkepo", "setCBProperties")
 
             }
 
             override fun onBackApprove() {
+                Utility.showToast("onBackApprove")
+
                 this@AddMoneyUpiDebitView.finish()
             }
 
             override fun onBackDismiss() {
+                Utility.showToast("onBackDismiss")
+
                 super.onBackDismiss()
             }
 
@@ -523,6 +533,8 @@ class AddMoneyUpiDebitView :
              * @param alertDialogBuilder a reference of AlertDialog.Builder to customize the dialog
              */
             override fun onBackButton(alertDialogBuilder: AlertDialog.Builder) {
+                Utility.showToast("onBackButton")
+
                 super.onBackButton(alertDialogBuilder)
             }
         }

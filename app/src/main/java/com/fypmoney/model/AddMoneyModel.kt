@@ -36,7 +36,8 @@ data class AddMoneyStep1Response(
 data class AddMoneyStep1ResponseDetails(
     @SerializedName("pgTxnNo") val pgTxnNo: String,
     @SerializedName("pgRequestData") val pgRequestData: String,
-) : Serializable
+    @SerializedName("accountTxnNo") val accountTxnNo: String?
+    ) : Serializable
 
 
 data class PgRequestData(
@@ -87,3 +88,9 @@ data class AddNewCardDetails(
     var cvv: String,
     var isCardSaved: Boolean? = false
 )
+
+data class AddMoneyStep2Request(
+    @SerializedName("pgTxnNo") val pgTxnNo: String?,
+    @SerializedName("accountTxnNo") val accountTxnNo: String?,
+    @SerializedName("pgResponseData") val pgResponseData: String?
+) : BaseRequest()
