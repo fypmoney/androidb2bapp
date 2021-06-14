@@ -35,7 +35,6 @@ data class AddMoneyStep1Response(
 
 data class AddMoneyStep1ResponseDetails(
     @SerializedName("pgTxnNo") val pgTxnNo: String,
-    @SerializedName("accountTxnNo") val accountTxnNo: String,
     @SerializedName("pgRequestData") val pgRequestData: String,
 ) : Serializable
 

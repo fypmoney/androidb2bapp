@@ -29,11 +29,14 @@ import com.payu.india.Payu.PayuConstants
 import com.payu.india.Payu.PayuErrors
 import com.payu.india.PostParams.PaymentPostParams
 import com.payu.paymentparamhelper.PostData
+import com.payu.phonepe.PhonePe
+import com.payu.phonepe.callbacks.PayUPhonePeCallback
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import kotlin.experimental.and
+
 
 /*
 * This class is used to handle school name city
@@ -71,7 +74,7 @@ class AddMoneyUpiDebitView :
         setObserver()
         mViewModel.amountToAdd.set(intent.getStringExtra(AppConstants.AMOUNT))
         mViewModel.callAddMoneyStep1Api()
-        payuConfig= PayuConfig()
+        payuConfig = PayuConfig()
 
 
         /*  val ss = SpannableString(getString(R.string.account_verification_sub_title))
@@ -99,6 +102,9 @@ class AddMoneyUpiDebitView :
             when (mViewModel.clickedPositionForUpi.get()) {
                 0 -> {
                     callGooglePayIntent()
+                }
+                1 -> {
+                    callPhonePayIntent()
                 }
             }
         }
@@ -163,8 +169,52 @@ class AddMoneyUpiDebitView :
     /*
     * Used to call in case of phone pay
     * */
-    fun callPhonePayIntent() {
+    private fun callPhonePayIntent() {
+        try {
+            PhonePe.getInstance().checkForPaymentAvailability(
+                this@AddMoneyUpiDebitView,
+                payUPhonePeCallback,
+                mViewModel.hash.get(),
+                mViewModel.merchantKey.get(),
+                mViewModel.merchantKey.get() + ":" + "abcd"
+            )
+            /* PhonePe.getInstance().makePayment(
+                 payUPhonePeCallback,
+                 this@AddMoneyUpiDebitView,
+                 mViewModel.requestData.get(),
+                 false,
+                 progressBar
+             )*/
 
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    private var payUPhonePeCallback: PayUPhonePeCallback = object : PayUPhonePeCallback() {
+        override fun onPaymentOptionFailure(payuResponse: String, merchantResponse: String) {
+            Log.d("phone_pay_payment", "failed")
+            //Called when Payment gets failed.
+        }
+
+        override fun onPaymentOptionInitialisationSuccess(result: Boolean) {
+            super.onPaymentOptionInitialisationSuccess(result)
+            Log.d("phone_pay_payment", "initial success")
+
+            // Merchants are advised to show PhonePe option on their UI after this callback is called.
+        }
+
+        override fun onPaymentOptionSuccess(payuResponse: String, merchantResponse: String) {
+            Log.d("phone_pay_payment", "success")
+
+            //Called when Payment gets successful.
+        }
+
+        override fun onPaymentOptionInitialisationFailure(errorCode: Int, description: String) {
+            Log.d("phone_pay_payment", "initial fail")
+
+            //Callback thrown in case PhonePe initialisation fails.
+        }
     }
 
     /*
@@ -192,7 +242,10 @@ class AddMoneyUpiDebitView :
                 //Sets the configuration of custom browser
 
                 //Sets the configuration of custom browser
-                val customBrowserConfig = CustomBrowserConfig(mViewModel.getPaymentParams(addNewCardDetails).key, mViewModel.getPaymentParams(addNewCardDetails).txnId)
+                val customBrowserConfig = CustomBrowserConfig(
+                    mViewModel.getPaymentParams(addNewCardDetails).key,
+                    mViewModel.getPaymentParams(addNewCardDetails).txnId
+                )
                 customBrowserConfig.setAutoApprove(false) // set true to automatically approve the OTP
 
                 customBrowserConfig.setAutoSelectOTP(true) // set true to automatically select the OTP flow
@@ -268,9 +321,9 @@ class AddMoneyUpiDebitView :
                  * By the time CB detects good network, if CBWebview is destroyed, we resume the transaction by passing payment post data to,
                  * this, merchant checkout activity.
                  */
-                customBrowserConfig.merchantCheckoutActivityPath =
+              /*  customBrowserConfig.merchantCheckoutActivityPath =
                     "com.payu.testapp.MerchantCheckoutActivity"
-
+*/
                 //Set the first url to open in WebView
 
                 //Set the first url to open in WebView
@@ -301,7 +354,7 @@ class AddMoneyUpiDebitView :
 
                 //  String postData = "device_type=1&udid=ea569f24d4748199&imei=default&key=l80gyM&txnid=MFIT4582680-R3&amount=300&productinfo=gym workout - zion fitness&firstname=kunal parte&email=kunal_coolrider14@hotmail.com&surl=https%3A%2F%2Fwww.fitternity.com%2Fpaymentsuccessandroid&furl=https%3A%2F%2Fwww.fitternity.com%2Fpaymentsuccessandroid&hash=9baff7f90f7af4d967697bc9495e67c8cb8aaed9ee9ffff6a53a10c0f88c608d10a6ac5d26fc71c554be7e5b6de0d696aec8bd17bdb9b6206553d09018643d4d&udf1=&udf2=&udf3=&udf4=&udf5=&phone=7021705378&bankcode=TEZ&pg=upi";
                 // String postData= "device_type=1&udid=51e15a3e697d56fe&imei=default&key=smsplus&txnid=1576147630600&amount=2&productinfo=product_info&firstname=firstname&email=test@gmail.com&surl=+https%3A%2F%2Fpayuresponse.firebaseapp.com%2Fsuccess&furl=https%3A%2F%2Fpayuresponse.firebaseapp.com%2Ffailure&hash=7e4c2be92f650c4c5f192ef6d9ea7a87ea1a435be993b130aa0fabe643e3687dd9da452c5f366e591e9e42be7f418e070df866605d1e309fe0a41d4d2dae7d3c&udf1=udf1&udf2=udf2&udf3=udf3&udf4=udf4&udf5=udf5&phone=&pg=CC&bankcode=CC&ccnum=5326760132120978&ccvv=123&ccexpyr=2021&ccexpmon=8&ccname=PayuUser&store_card=1&user_credentials=sa:sa";
-                if (payuConfig != null) customBrowserConfig.setPayuPostData(payuConfig.data)
+                if (payuConfig != null) customBrowserConfig.payuPostData = payuConfig.data
 
 
                 /* if (isPaymentByPhonePe == true & isStandAlonePhonePayAvailable == true) {
@@ -314,12 +367,11 @@ class AddMoneyUpiDebitView :
                     phonePe.makePayment(payUPhonePeCallback, PaymentsActivity.this, payuConfig.getData(),false);
 
                 } else*/
-                    CustomBrowser().addCustomBrowser(
-                        this@AddMoneyUpiDebitView,
-                        customBrowserConfig,
-                        payUCustomBrowserCallback
-                    )
-
+                CustomBrowser().addCustomBrowser(
+                    this@AddMoneyUpiDebitView,
+                    customBrowserConfig,
+                    payUCustomBrowserCallback
+                )
 
 
             }
@@ -336,26 +388,27 @@ class AddMoneyUpiDebitView :
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.d("kfkoefkepo","onActivityResulttt")
         if (requestCode == PayuConstants.PAYU_REQUEST_CODE) {
-            Log.d("sjbfeufu",data.toString())
+            Log.d("sjbfeufu", data.toString())
             //Lets pass the result back to previous activity
             setResult(resultCode, data)
-         //   finish()
+            //   finish()
         }
     }
 
     override fun onPaymentRelatedDetailsResponse(payuResponse: PayuResponse?) {
-        Log.d("sjbfeufu",payuResponse.toString())
+        Log.d("sjbfeufu", payuResponse.toString())
     }
 
     override fun onValueAddedServiceApiResponse(p0: PayuResponse?) {
-        Log.d("sjbfeufu",p0.toString())
+        Log.d("sjbfeufu", p0.toString())
     }
 
     //set callback to track important events
 
     //set callback to track important events
-    var payUCustomBrowserCallback: PayUCustomBrowserCallback =
+    private var payUCustomBrowserCallback: PayUCustomBrowserCallback =
         object : PayUCustomBrowserCallback() {
             override fun onVpaEntered(
                 vpa: String,
@@ -364,9 +417,11 @@ class AddMoneyUpiDebitView :
 
                 //This hash should be generated from server
                 val input = "smsplus|validateVPA|$vpa|1b1b0"
-                val verifyVpaHash = calculateHash(input).result
-                packageListDialogFragment.verifyVpa(verifyVpaHash)
+                val verifyVpaHash = mViewModel.hash.get()
                 Log.d("kfkoefkepo", "onVpaEntered")
+
+                packageListDialogFragment.verifyVpa(verifyVpaHash)
+                //     Log.d("kfkoefkepo", "onVpaEntered")
             }
 
             private fun calculateHash(hashString: String): PostData {
@@ -377,7 +432,9 @@ class AddMoneyUpiDebitView :
                     messageDigest.update(hashString.toByteArray())
                     val mdbytes = messageDigest.digest()
                     for (hashByte in mdbytes) {
-                        hash.append(Integer.toString((hashByte and 0xff.toByte()) + 0x100, 16).substring(1))
+                        hash.append(
+                            Integer.toString((hashByte and 0xff.toByte()) + 0x100, 16).substring(1)
+                        )
                     }
                     getReturnData(PayuErrors.NO_ERROR, PayuConstants.SUCCESS, hash.toString())
                 } catch (e: NoSuchAlgorithmException) {
@@ -407,6 +464,8 @@ class AddMoneyUpiDebitView :
              * @param merchantResponse response received from Furl
              */
             override fun onPaymentFailure(payuResponse: String, merchantResponse: String) {
+                Log.d("onPaymentFailure", "onPaymentTerminate")
+
                 val intent = Intent()
                 intent.putExtra("result", merchantResponse)
                 intent.putExtra("payu_response", payuResponse)
@@ -446,6 +505,8 @@ class AddMoneyUpiDebitView :
 
             override fun setCBProperties(webview: WebView, payUCustomBrowser: Bank) {
                 webview.webChromeClient = PayUWebChromeClient(payUCustomBrowser)
+                Log.d("kfkoefkepo", "setCBProperties")
+
             }
 
             override fun onBackApprove() {

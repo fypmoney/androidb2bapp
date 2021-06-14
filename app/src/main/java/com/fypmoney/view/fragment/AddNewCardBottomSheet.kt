@@ -82,6 +82,11 @@ class AddNewCardBottomSheet(
             }
         })
 
+        cardNumber.setText("4477468625646000")
+        cardName.setText("pooja")
+        cvv.setText("123")
+        expiry.setText("01/22")
+
         btnAdd.setOnClickListener {
             val expiryList = expiry.text.toString().split("/")
             val df: DateFormat =

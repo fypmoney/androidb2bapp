@@ -28,6 +28,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var onAddNewCardClicked = MutableLiveData<Boolean>()
     var requestData = ObservableField<String>()
     var hash = ObservableField<String>()
+    var merchantKey = ObservableField<String>()
 
     init {
         val list = ArrayList<UpiModel>()
@@ -51,9 +52,9 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
                 param = AddMoneyStep1Request(
                     remarks = "amount added",
                     amount = Utility.convertToPaise(amountToAdd.get()!!),
-                    merchantId = "6616",
-                    merchantKey = "gtKFFx",
-                    salt = "wia56q6O"
+                    merchantId = "",
+                    merchantKey = "",
+                    salt = ""
                 )
             )
         )
@@ -65,6 +66,8 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
             ApiConstant.API_ADD_MONEY_STEP1 -> {
                 if (responseData is AddMoneyStep1Response) {
                     requestData.set(responseData.addMoneyStep1ResponseDetails.pgRequestData)
+
+                    requestData.set("{\"transactionId\":\"211654905710001\",\"amount\":\"20.00\",\"phone\":\"9873752590\",\"pgUrl\":\"https://test.payu.in/_payment\",\"userFirstName\":\"yogesh  dayma\",\"productName\":\"Pockket Product\",\"email\":null,\"merchantKey\":\"MEqEEF\",\"merchantId\":\"5004627\",\"paymentHash\":\"1ffcc5a54e8b4706c8ed85b2b37f493cc44a70da33bea4d0654e5fdf6239cf4b2c94976fed766369310c94a5b17fa2a7f57aa4c275b50529ae228528a884de90\",\"udf1\":\"FLM-211654905710001\",\"udf2\":\"\",\"udf3\":\"\",\"udf4\":\"\",\"udf5\":\"\",\"udf6\":\"\",\"udf7\":\"\",\"udf8\":\"\",\"udf9\":\"\",\"udf10\":\"\",\"surl\":\"http://10.0.1.76:9898/services/PockketService/api/pg/callback\",\"furl\":\"http://10.0.1.76:9898/services/PockketService/api/pg/callback\"}")
                     val result = requestData.get()?.replace("transactionId", "txnid")
                     requestData.set(result)
 
@@ -93,7 +96,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         val pgRequestData = PgRequestData()
         val mainObject = JSONObject(requestData)
         pgRequestData.txnId = mainObject.getString("txnid")
-        pgRequestData.email = mainObject.getString("email")
+        pgRequestData.email =  mainObject.getString("email")
         pgRequestData.amount = mainObject.getString("amount")
         pgRequestData.merchantId = mainObject.getString("merchantId")
         pgRequestData.merchantKey = mainObject.getString("merchantKey")
@@ -115,6 +118,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         // set hash
 
         hash.set(mainObject.getString("paymentHash"))
+        merchantKey.set(mainObject.getString("merchantKey"))
 
         return pgRequestData
 
@@ -147,6 +151,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         mPaymentParams.expiryMonth = addNewCardDetails.expiryMonth// MM
         mPaymentParams.expiryYear = addNewCardDetails.expiryYear// YYYY
         mPaymentParams.cvv = addNewCardDetails.cvv
+
         if (addNewCardDetails.isCardSaved == true) {
             mPaymentParams.storeCard = 1
         } else {
