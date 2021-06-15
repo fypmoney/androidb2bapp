@@ -34,6 +34,13 @@ import com.payu.india.PostParams.PaymentPostParams
 import com.payu.paymentparamhelper.PostData
 import com.payu.phonepe.PhonePe
 import com.payu.phonepe.callbacks.PayUPhonePeCallback
+import com.payu.upisdk.PaymentOption
+import com.payu.upisdk.Upi
+import com.payu.upisdk.bean.UpiConfig
+import com.payu.upisdk.callbacks.PayUUPICallback
+import com.payu.upisdk.generatepostdata.PostDataGenerate.PostDataBuilder
+import com.payu.upisdk.upi.IValidityCheck
+import com.payu.upisdk.util.UpiConstant
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 import java.security.MessageDigest
@@ -79,6 +86,8 @@ class AddMoneyUpiDebitView :
         mViewModel.amountToAdd.set(intent.getStringExtra(AppConstants.AMOUNT))
         mViewModel.callAddMoneyStep1Api()
         payuConfig = PayuConfig()
+
+        mViewModel.getAllSavedCardsApi()
 
 
         /*  val ss = SpannableString(getString(R.string.account_verification_sub_title))
@@ -167,7 +176,7 @@ class AddMoneyUpiDebitView :
         GPay.getInstance().checkForPaymentAvailability(
             this@AddMoneyUpiDebitView,
             callback,
-            mViewModel.parseResponseOfStep1(mViewModel.requestData.get()).paymentHash,
+            mViewModel.hash.get(),
             "gtKFFx",
             "default"
         )
@@ -175,7 +184,7 @@ class AddMoneyUpiDebitView :
             this@AddMoneyUpiDebitView,
             mViewModel.requestData.get(),
             callback,
-            "gtKFFx",
+            mViewModel.merchantKey.get(),
             progressBar
         )
 
@@ -195,7 +204,7 @@ class AddMoneyUpiDebitView :
                 this@AddMoneyUpiDebitView,
                 payUPhonePeCallback,
                 mViewModel.hash.get(),
-                "gtKFFx",
+                mViewModel.merchantKey.get(),
                 mViewModel.merchantKey.get() + ":" + "abcd"
             )
             /* PhonePe.getInstance().makePayment(
@@ -468,7 +477,6 @@ class AddMoneyUpiDebitView :
             }
 
             private fun calculateHash(hashString: String): PostData {
-                Log.d("kfkoefkepo", "onVpaEntered")
                 return try {
                     val hash = StringBuilder()
                     val messageDigest = MessageDigest.getInstance("SHA-512")
@@ -562,8 +570,95 @@ class AddMoneyUpiDebitView :
 
     }
 
-    override fun onAddUpiClickListener(upiId: String) {
+    override fun onAddUpiClickListener(upiId: String, isUpiSaved: Boolean) {
+        val params = mViewModel.getPaymentParamsForUpi(upiId, isUpiSaved)
+        val postDataFromUpiSdk = PostDataBuilder(this).setPaymentMode(UpiConstant.UPI)
+            .setPaymentParamUpiSdk(params).build().toString()
+        val upi: Upi = Upi.getInstance()
+        upi.checkForPaymentAvailability(
+            this,
+            PaymentOption.PHONEPE,
+            payUUpiSdkCallback,
+            mViewModel.hash.get(),
+            mViewModel.merchantKey.get(),
+            mViewModel.merchantKey.get() + ":" + "abcd"
+        )
+        upi.checkForPaymentAvailability(
+            this,
+            PaymentOption.SAMSUNGPAY,
+            payUUpiSdkCallback,
+            mViewModel.hash.get(),
+            mViewModel.merchantKey.get(),
+            mViewModel.merchantKey.get() + ":" + "abcd"
+        )
+        upi.checkForPaymentAvailability(
+            this,
+            PaymentOption.TEZ,
+            payUUpiSdkCallback,
+            mViewModel.hash.get(),
+            mViewModel.merchantKey.get(),
+            mViewModel.merchantKey.get() + ":" + "abcd"
+        )
+
+        val upiConfig = UpiConfig()
+        upiConfig.merchantKey = mViewModel.merchantKey.get()
+        upiConfig.payuPostData = postDataFromUpiSdk// that we generate above
+        //In order to set CustomProgress View use below settings
+        upiConfig.progressDialogCustomView = progressBar
+        upiConfig.disableIntentSeamlessFailure=UpiConfig.FALSE
+        upiConfig.postUrl=PayuConstants.TEST_PAYMENT_URL
+
+
+        Upi.getInstance()
+            .makePayment(payUUpiSdkCallbackUpiSdk, this@AddMoneyUpiDebitView, upiConfig)
+
 
     }
 
+    /**
+     * Callback of payment availability while doing through UPISDK.
+     */
+    private var payUUpiSdkCallback: PayUUPICallback = object : PayUUPICallback() {
+        override fun isPaymentOptionAvailable(isAvailable: Boolean, paymentOption: PaymentOption) {
+            super.isPaymentOptionAvailable(isAvailable, paymentOption)
+            when (paymentOption) {
+                PaymentOption.PHONEPE -> {
+                }
+                PaymentOption.SAMSUNGPAY -> {
+                }
+
+            }
+        }
+    }
+
+   private var payUUpiSdkCallbackUpiSdk: PayUUPICallback = object : PayUUPICallback() {
+        override fun onPaymentFailure(payuResult: String, merchantResponse: String) {
+            super.onPaymentFailure(payuResult, merchantResponse)
+            Utility.showToast("onPaymentFailure")
+
+            //Payment failed
+        }
+
+        override fun onPaymentSuccess(payuResult: String, merchantResponse: String) {
+            super.onPaymentSuccess(payuResult, merchantResponse)
+            Utility.showToast("onPaymentSuccess")
+
+            //Payment succeed
+        }
+
+        override fun onVpaEntered(vpa: String, iValidityCheck: IValidityCheck) {
+            super.onVpaEntered(vpa, iValidityCheck)
+            Utility.showToast("onVpaEntered")
+
+            val input = "payu merchant key|validateVPA|$vpa|payu merchant salt"
+            iValidityCheck.verifyVpa(mViewModel.hash.get())
+        }
+
+        override fun onUpiErrorReceived(code: Int, errormsg: String) {
+            Utility.showToast("onUpiErrorReceived")
+            super.onUpiErrorReceived(code, errormsg)
+
+            //Any error on upisdk
+        }
+    }
 }

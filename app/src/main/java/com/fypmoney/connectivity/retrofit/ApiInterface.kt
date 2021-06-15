@@ -85,7 +85,9 @@ interface ApiInterface {
      * @description Call POST type's web API
      */
     @POST
-    fun postDataOnServer1(@Url endPoint: String, @Body request: Any): Observable<ResponseBody>
+    fun postDataOnPayUServer(@Url endPoint: String, @Body request: Any): Observable<ResponseBody>
+
+
 
 
     /**

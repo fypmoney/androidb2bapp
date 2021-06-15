@@ -7,6 +7,7 @@ object ApiConstant {
     const val APP_ID = "WEBAPP"
     const val GRANT_TYPE = "client_credentials"*/
     const val BASE_URL = "http://54.84.197.170:9300"
+    const val PAYU_BASE_URL = "https://test.payu.in"
     const val CLIENT_ID = "web_app"
     const val CLIENT_SECRET = "user"
     const val APP_ID = "FYPMONEY"
@@ -43,6 +44,17 @@ object ApiConstant {
     const val API_ADD_MONEY_STEP2 = "/services/PockketService/api/add/money/wallet/step2/load-money"
     const val API_PAY_MONEY = "/services/PockketService/api/pay/money"
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
+
+ // pay u test url
+
+ const val PAYU_TEST_URL="/merchant/postservice.php?form=2"
+ const val PAYU_PRODUCTION_URL="https://info.payu.in/merchant/postservice.php?form=2"
+
+ const val GET_USER_CARDS="get_user_cards"
+
+
 }
+
+
 
 

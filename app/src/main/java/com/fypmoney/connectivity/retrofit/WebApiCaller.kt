@@ -8,6 +8,7 @@ import com.fypmoney.connectivity.ApiUrl
 import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.network.NetworkUtil.Companion.isNetworkAvailable
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import io.reactivex.Observable
 import io.reactivex.Observer
@@ -43,14 +44,23 @@ class WebApiCaller {
      * @param request ApiRequest
      * @description Method is used to hit singe web api at a time.
      */
-    fun request(request: ApiRequest) {
+    fun request(request: ApiRequest, whichServer: String? = null) {
         if (!isNetworkAvailable()) {
             request.onResponse.offLine()
             return
         }
         var mObservable: Observable<ResponseBody>? = null
-        val apiInterface =
-            ApiClient.getClient().create(ApiInterface::class.java)
+
+        val apiInterface: ApiInterface = when (whichServer) {
+            AppConstants.PAYU_SERVER -> {
+                ApiClient.getClient(ApiConstant.PAYU_TEST_URL).create(ApiInterface::class.java)
+
+            }
+            else -> {
+                ApiClient.getClient(ApiConstant.BASE_URL).create(ApiInterface::class.java)
+
+            }
+        }
 
         when (request.request_type) {
             ApiUrl.GET -> {
@@ -79,58 +89,70 @@ class WebApiCaller {
 
             }
             ApiUrl.POST ->
-                when (request.purpose) {
-                    ApiConstant.API_AUTH_LOGIN -> {
+                when (whichServer) {
+                    AppConstants.PAYU_SERVER -> {
                         mObservable =
-                            apiInterface.postAuthDataOnServer(
-                                client_id = ApiConstant.CLIENT_ID,
-                                client_secret = ApiConstant.CLIENT_SECRET,
-                                grant_type = ApiConstant.GRANT_TYPE,
+                            apiInterface.postDataOnPayUServer(
                                 request.endpoint,
                                 request.param
                             )
-                    }
-                    ApiConstant.API_LOGIN_INIT -> {
-                        mObservable =
-                            apiInterface.postLoginInitDataOnServer(
-                                client_id = ApiConstant.CLIENT_ID,
-                                appId = ApiConstant.APP_ID,
-                                authorization = SharedPrefUtils.getString(
-                                    PockketApplication.instance,
-                                    SharedPrefUtils.SF_KEY_ACCESS_TOKEN
-                                ),
-                                one_tap = true,
-                                request.endpoint,
-                                request.param
-                            )
-
-                    }
-                    ApiConstant.API_LOGIN -> {
-                        mObservable =
-                            apiInterface.postLoginDataOnServer(
-                                client_id = ApiConstant.CLIENT_ID,
-                                appId = ApiConstant.APP_ID,
-                                one_tap = true,
-                                request.endpoint,
-                                request.param
-                            )
-
                     }
 
                     else -> {
-                        mObservable =
-                            apiInterface.postDataOnServer(
-                                client_id = ApiConstant.CLIENT_ID,
-                                appId = ApiConstant.APP_ID,
-                                authorization = SharedPrefUtils.getString(
-                                    PockketApplication.instance,
-                                    SharedPrefUtils.SF_KEY_ACCESS_TOKEN
-                                ),
-                                request.endpoint,
-                                request = request.param
-                            )
+                        when (request.purpose) {
+                            ApiConstant.API_AUTH_LOGIN -> {
+                                mObservable =
+                                    apiInterface.postAuthDataOnServer(
+                                        client_id = ApiConstant.CLIENT_ID,
+                                        client_secret = ApiConstant.CLIENT_SECRET,
+                                        grant_type = ApiConstant.GRANT_TYPE,
+                                        request.endpoint,
+                                        request.param
+                                    )
+                            }
+                            ApiConstant.API_LOGIN_INIT -> {
+                                mObservable =
+                                    apiInterface.postLoginInitDataOnServer(
+                                        client_id = ApiConstant.CLIENT_ID,
+                                        appId = ApiConstant.APP_ID,
+                                        authorization = SharedPrefUtils.getString(
+                                            PockketApplication.instance,
+                                            SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                        ),
+                                        one_tap = true,
+                                        request.endpoint,
+                                        request.param
+                                    )
+
+                            }
+                            ApiConstant.API_LOGIN -> {
+                                mObservable =
+                                    apiInterface.postLoginDataOnServer(
+                                        client_id = ApiConstant.CLIENT_ID,
+                                        appId = ApiConstant.APP_ID,
+                                        one_tap = true,
+                                        request.endpoint,
+                                        request.param
+                                    )
+
+                            }
+
+                            else -> {
+                                mObservable =
+                                    apiInterface.postDataOnServer(
+                                        client_id = ApiConstant.CLIENT_ID,
+                                        appId = ApiConstant.APP_ID,
+                                        authorization = SharedPrefUtils.getString(
+                                            PockketApplication.instance,
+                                            SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                        ),
+                                        request.endpoint,
+                                        request = request.param
+                                    )
 
 
+                            }
+                        }
                     }
                 }
             ApiUrl.PUT ->

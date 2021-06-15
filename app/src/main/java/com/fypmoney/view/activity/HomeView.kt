@@ -53,6 +53,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         checkAndAskPermission()
         setCurrentFragment(HomeScreen())
 
+
         //getUpiApps()
 
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {

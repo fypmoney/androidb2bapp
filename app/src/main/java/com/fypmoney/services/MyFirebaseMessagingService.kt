@@ -52,7 +52,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         /*  val notificationType: String = jsonRootObject.optString("notificationType").toString()
           val url: String = jsonRootObject.optString("url").toString()
   */
-        Log.d("sjghe8ts9ge_data_type", res.toString())
+        Log.d("sjghe8ts9ge_data_type", result.toString())
 
 
 

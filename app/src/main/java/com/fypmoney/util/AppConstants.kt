@@ -106,6 +106,9 @@ object AppConstants {
     const val WHICH_ACTION = "which_action"
     const val FUND_TRANSFER_TRANSACTION_TYPE = "FUND_TRANSAFER"
     const val PAYU_RESPONSE = "payu_response"
+    const val SERVER_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    const val CHANGED_DATE_TIME_FORMAT = "MMM dd,yyyy-HH:mmaa"
+    const val PAYU_SERVER = "pay u server"
 
 
 }

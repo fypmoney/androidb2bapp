@@ -147,6 +147,8 @@ dependencies {
     //phonepay
     implementation 'in.payu:phonepe-intent:1.6.1'
 
+    // upi
+    implementation 'in.payu:upisdk:1.5.2'
 
 
 }

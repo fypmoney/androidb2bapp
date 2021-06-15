@@ -21,16 +21,17 @@ class ApiClient {
          * @param baseUrl String
          * @description Method is used to get instance of Retrofit after client setup .
          */
-        fun getClient(): Retrofit {
+        fun getClient(baseUrl:String): Retrofit {
             val builder = getBuilder()
             builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             return Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(baseUrl)
                 .client(builder.build())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(getFactory())
                 .build()
         }
+
 
 
         /**

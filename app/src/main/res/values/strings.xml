@@ -526,6 +526,7 @@
     <string name="upi_id_hint">your UPI ID</string>
     <string name="upi_id_hint1">UPI ID is in the format of mobilenumber@bank or username@bank</string>
     <string name="save_upi_id">Save this UPI ID for faster payments</string>
-    <string name="add_upi_empty_error">please enter UPI ID</string>
+    <string name="add_upi_empty_error">Please enter UPI ID</string>
+    <string name="invalid_upi_error">Invalid UPI ID</string>
 
 </resources>

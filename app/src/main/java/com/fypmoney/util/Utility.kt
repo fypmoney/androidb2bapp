@@ -40,7 +40,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.math.BigDecimal
 import java.nio.charset.Charset
-import java.text.NumberFormat
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Calendar.*
@@ -725,5 +725,23 @@ object Utility {
     fun convertToRs1(amount: String): String {
         val amountValue = (amount.toInt() / 100).toString()
         return BigDecimal(amountValue).setScale(2, BigDecimal.ROUND_HALF_EVEN).toString()
+    }
+
+    /*
+    * This method is used to convert date time
+    * */
+
+    fun parseDateTime(dateTime: String? = null): String {
+        val input = SimpleDateFormat(AppConstants.SERVER_DATE_TIME_FORMAT, Locale.getDefault())
+        val output = SimpleDateFormat(AppConstants.CHANGED_DATE_TIME_FORMAT, Locale.getDefault())
+
+        var d: Date? = null
+        try {
+            d = input.parse(dateTime!!)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return output.format(d)
+
     }
 }

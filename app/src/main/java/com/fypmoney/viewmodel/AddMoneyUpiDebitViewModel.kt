@@ -13,11 +13,19 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.AddMoneyUpiAdapter
 import com.fypmoney.view.adapter.SavedCardsAdapter
 import com.payu.india.Model.PaymentParams
+import com.payu.india.Payu.PayuConstants
+import com.payu.india.Payu.PayuErrors
+import com.payu.paymentparamhelper.PostData
+import com.payu.upisdk.generatepostdata.PaymentParamsUpiSdk
 import org.json.JSONObject
+import java.security.MessageDigest
+import java.security.NoSuchAlgorithmException
+import kotlin.experimental.and
 
 class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(application),
     AddMoneyUpiAdapter.OnUpiClickListener {
@@ -34,7 +42,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var accountTxnNo = ObservableField<String>()
     var payUResponse = ObservableField<String>()
     var onStep2Response = MutableLiveData<String>()
-    var step2ApiResponse =AddMoneyStep2ResponseDetails()
+    var step2ApiResponse = AddMoneyStep2ResponseDetails()
 
     init {
         val list = ArrayList<UpiModel>()
@@ -102,7 +110,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
             }
             ApiConstant.API_ADD_MONEY_STEP2 -> {
                 if (responseData is AddMoneyStep2Response) {
-                    step2ApiResponse=responseData.addMoneyStep2ResponseDetails
+                    step2ApiResponse = responseData.addMoneyStep2ResponseDetails
                     onStep2Response.value = AppConstants.API_SUCCESS
 
                 }
@@ -167,6 +175,9 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
     }
 
+    /*
+    * return params for core sdk for debit card
+    * */
     fun getPaymentParams(addNewCardDetails: AddNewCardDetails): PaymentParams {
         val resultData = parseResponseOfStep1(requestData.get())
         val mPaymentParams = PaymentParams()
@@ -188,7 +199,10 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         mPaymentParams.udf4 = resultData.udf4
         mPaymentParams.udf5 = resultData.udf5
         mPaymentParams.hash = resultData.paymentHash
-        mPaymentParams.userCredentials = resultData.merchantKey + ":" + "abcd"
+        mPaymentParams.userCredentials = resultData.merchantKey + ":" + SharedPrefUtils.getString(
+            getApplication(),
+            SharedPrefUtils.SF_KEY_USER_ID
+        )
         mPaymentParams.cardNumber = addNewCardDetails.cardNumber
         mPaymentParams.nameOnCard = addNewCardDetails.nameOnCard
         mPaymentParams.expiryMonth = addNewCardDetails.expiryMonth// MM
@@ -206,11 +220,113 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     }
 
     /*
+      * return params for upi
+      * */
+    fun getPaymentParamsForUpi(upiId: String, isUpiSaved: Boolean): PaymentParamsUpiSdk {
+        val resultData = parseResponseOfStep1(requestData.get())
+        val mPaymentParams = PaymentParamsUpiSdk()
+        //mPaymentParams.setKey(< Your Key issued by PayU >)
+        mPaymentParams.key = resultData.merchantKey
+        mPaymentParams.txnId = resultData.txnId
+        mPaymentParams.amount = resultData.amount
+        mPaymentParams.productInfo = resultData.productName
+        mPaymentParams.firstName = resultData.userFirstName
+        mPaymentParams.phone = resultData.phone
+        mPaymentParams.email = resultData.email
+        mPaymentParams.txnId = resultData.txnId
+        mPaymentParams.surl = " https://payuresponse.firebaseapp.com/success"
+        mPaymentParams.furl = "https://payuresponse.firebaseapp.com/failure"
+
+        mPaymentParams.udf1 = resultData.udf1
+        mPaymentParams.udf2 = resultData.udf2
+        mPaymentParams.udf3 = resultData.udf3
+        mPaymentParams.udf4 = resultData.udf4
+        mPaymentParams.udf5 = resultData.udf5
+        mPaymentParams.hash = resultData.paymentHash
+        mPaymentParams.vpa = upiId
+
+        mPaymentParams.userCredentials = resultData.merchantKey + ":" + SharedPrefUtils.getString(
+            getApplication(),
+            SharedPrefUtils.SF_KEY_USER_ID
+        )
+
+
+        if (isUpiSaved) {
+            mPaymentParams.storeCard = 1
+        } else {
+            mPaymentParams.storeCard = 0
+        }
+
+        // mPaymentParams.userCredentials = "your_key:"+SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+        return mPaymentParams
+    }
+
+    /*
     * This method is used to handle on add new card
     * */
     fun onAddNewCardClicked() {
         onAddNewCardClicked.value = true
 
     }
+
+    /*
+    * This method is used to get all the user saved cards
+    * */
+
+    fun getAllSavedCardsApi() {
+        val var1 = merchantKey.get() + ":" + SharedPrefUtils.getString(
+            getApplication(),
+            SharedPrefUtils.SF_KEY_USER_ID
+        )
+        val calculatedHash =
+            calculateHash(merchantKey.get() + "|" + ApiConstant.GET_USER_CARDS + "|" + var1 + "|" + "salt")
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.PAYU_TEST_URL,
+                endpoint = NetworkUtil.endURL(ApiConstant.PAYU_TEST_URL),
+                request_type = ApiUrl.POST,
+                onResponse = this, isProgressBar = false,
+                param = GetSavedCardRequest(
+                    hash = calculatedHash,
+                    var1 = var1,
+                    command = ApiConstant.GET_USER_CARDS,
+                    key = merchantKey.get()
+
+                )
+            ), whichServer = AppConstants.PAYU_SERVER
+        )
+    }
+
+    private fun calculateHash(hashString: String): String {
+        return try {
+            val hash = StringBuilder()
+            val messageDigest = MessageDigest.getInstance("SHA-512")
+            messageDigest.update(hashString.toByteArray())
+            val mdbytes = messageDigest.digest()
+            for (hashByte in mdbytes) {
+                hash.append(
+                    Integer.toString((hashByte and 0xff.toByte()) + 0x100, 16).substring(1)
+                )
+            }
+            return hash.toString()
+            // getReturnData(PayuErrors.NO_ERROR, PayuConstants.SUCCESS, hash.toString())
+        } catch (e: NoSuchAlgorithmException) {
+            return ""
+        }
+    }
+
+    protected fun getReturnData(code: Int, status: String?, result: String?): PostData {
+        val postData = PostData()
+        postData.code = code
+        postData.status = status
+        postData.result = result
+        return postData
+    }
+
+    protected fun getReturnData(code: Int, result: String?): PostData {
+        return getReturnData(code, PayuConstants.ERROR, result)
+    }
+
+
 }
 

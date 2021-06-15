@@ -5,8 +5,6 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,15 +13,11 @@ import android.widget.CheckBox
 import android.widget.EditText
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
-import com.fypmoney.databinding.BottomSheetAddNewCardBinding
 import com.fypmoney.databinding.BottomSheetAddUpiBinding
-import com.fypmoney.model.AddNewCardDetails
 import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
+import com.payu.india.Payu.PayuConstants
 
 
 /*
@@ -72,9 +66,17 @@ class AddUpiBottomSheet(
                     Utility.showToast(getString(R.string.add_upi_empty_error))
 
                 }
+                upiId.length() > PayuConstants.MAX_VPA_SIZE -> {
+                    Utility.showToast(getString(R.string.invalid_upi_error))
+
+                }
+                !upiId.text.toString().trim().contains("@") -> {
+                    Utility.showToast(getString(R.string.invalid_upi_error))
+
+                }
                 else -> {
                     onBottomSheetClickListener.onAddUpiClickListener(
-                        upiId.text.toString()
+                        upiId.text.toString(), saveCardCheckbox.isChecked
                     )
                     dismiss()
 
@@ -88,8 +90,7 @@ class AddUpiBottomSheet(
     }
 
     interface OnAddUpiClickListener {
-        fun onAddUpiClickListener(upiId: String)
-
+        fun onAddUpiClickListener(upiId: String, isUpiSaved: Boolean)
     }
 
 }

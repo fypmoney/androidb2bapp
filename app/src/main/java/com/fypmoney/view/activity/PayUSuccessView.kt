@@ -1,6 +1,7 @@
 package com.fypmoney.view.activity
 
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -39,10 +40,10 @@ class PayUSuccessView : BaseActivity<ViewPayuSuccessBinding, PayUSuccessViewMode
         setToolbarAndTitle(
             context = this@PayUSuccessView,
             toolbar = toolbar,
-            isBackArrowVisible = true
+            isBackArrowVisible = false
         )
         mViewModel.payUResponse.set(intent.getSerializableExtra(AppConstants.PAYU_RESPONSE) as AddMoneyStep2ResponseDetails)
-
+        mViewModel.setInitialData()
         setObserver()
     }
 
@@ -50,9 +51,20 @@ class PayUSuccessView : BaseActivity<ViewPayuSuccessBinding, PayUSuccessViewMode
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-
-
+        mViewModel.onContinueClicked.observe(this) {
+            if (it) {
+                intentToActivity(HomeView::class.java)
+            }
+        }
     }
 
+    /**
+     * Method to navigate to the different activity
+     */
+    private fun intentToActivity(aClass: Class<*>) {
+        val intent = Intent(this@PayUSuccessView, aClass)
+        startActivity(intent)
+        finish()
+    }
 
 }

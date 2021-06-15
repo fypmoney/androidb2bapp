@@ -1,6 +1,7 @@
 package com.fypmoney.model
 
 import com.google.gson.annotations.SerializedName
+import com.payu.paymentparamhelper.PostData
 import java.io.Serializable
 
 data class AddMoneyModel(var name: String? = null, var imageUrl: String? = null) {
@@ -111,4 +112,12 @@ data class AddMoneyStep2Request(
     @SerializedName("pgTxnNo") val pgTxnNo: String?,
     @SerializedName("accountTxnNo") val accountTxnNo: String?,
     @SerializedName("pgResponseData") val pgResponseData: String?
+) : BaseRequest()
+
+
+data class GetSavedCardRequest(
+    @SerializedName("hash") val hash: String,
+    @SerializedName("command") val command: String?,
+    @SerializedName("key") val key: String?,
+    @SerializedName("var1") val var1: String?
 ) : BaseRequest()

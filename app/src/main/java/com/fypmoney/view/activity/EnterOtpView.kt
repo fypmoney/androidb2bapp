@@ -68,7 +68,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
             mViewModel.otp.set(otp)
         }
 
-        val ic: InputConnection = otpView.onCreateInputConnection(EditorInfo())
+        val ic: InputConnection? = otpView.onCreateInputConnection(EditorInfo())
         keyboard.setInputConnection(ic)
         // start timer get started initially
         startTimer()
