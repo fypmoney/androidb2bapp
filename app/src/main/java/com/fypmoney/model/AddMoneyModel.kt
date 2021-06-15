@@ -38,6 +38,24 @@ data class AddMoneyStep1ResponseDetails(
     @SerializedName("pgRequestData") val pgRequestData: String,
     @SerializedName("accountTxnNo") val accountTxnNo: String?
     ) : Serializable
+data class AddMoneyStep2Response(
+    @SerializedName("data") val addMoneyStep2ResponseDetails: AddMoneyStep2ResponseDetails
+) : Serializable
+
+
+data class AddMoneyStep2ResponseDetails(
+    @SerializedName("pgTxnNo") val pgTxnNo: String?=null,
+    @SerializedName("pgRequestData") val pgRequestData: String?=null,
+    @SerializedName("pgExternalId") val pgExternalId: String?=null,
+    @SerializedName("bankExternalId") val bankExternalId: String?=null,
+    @SerializedName("txnTime") val txnTime: String?=null,
+    @SerializedName("accountTxnTime") val accountTxnTime: String?=null,
+    @SerializedName("tagBalance") val tagBalance: String?=null,
+    @SerializedName("remainingLoadLimit") val remainingLoadLimit: String?=null,
+    @SerializedName("balance") val balance: String?=null,
+    @SerializedName("amount") val amount: String?=null,
+    @SerializedName("accountTxnNo") val accountTxnNo: String?=null
+) : Serializable
 
 
 data class PgRequestData(

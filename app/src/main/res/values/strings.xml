@@ -506,7 +506,26 @@
 
     <string name="test">Test</string>
     <string name="production">Production</string>
+    <string name="add_upi_text">Add UPI</string>
 
+     <!--
+     Pay u success
+     -->
 
+    <string name="payment_success_msg">Your payment was successful.</string>
+    <string name="trans_details_heading">Transaction details</string>
+    <string name="fyp_transaction_heading">FYP Money Transaction ID</string>
+    <string name="bank_transaction_heading">Bank Transaction ID</string>
+
+    <!--
+  Add upi
+    -->
+
+    <string name="add_upi_title">Add Existing UPI ID</string>
+    <string name="upi_id">UPI ID</string>
+    <string name="upi_id_hint">your UPI ID</string>
+    <string name="upi_id_hint1">UPI ID is in the format of mobilenumber@bank or username@bank</string>
+    <string name="save_upi_id">Save this UPI ID for faster payments</string>
+    <string name="add_upi_empty_error">please enter UPI ID</string>
 
 </resources>

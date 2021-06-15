@@ -18,6 +18,8 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.PayUGpayResponse
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.AddNewCardBottomSheet
+import com.fypmoney.view.fragment.AddUpiBottomSheet
+import com.fypmoney.view.fragment.TransactionFailBottomSheet
 import com.fypmoney.viewmodel.AddMoneyUpiDebitViewModel
 import com.payu.custombrowser.*
 import com.payu.custombrowser.bean.CustomBrowserConfig
@@ -45,7 +47,8 @@ import kotlin.experimental.and
 class AddMoneyUpiDebitView :
     BaseActivity<ViewAddMoneyUpiDebitBinding, AddMoneyUpiDebitViewModel>(),
     PayUGpayResponse.OnGpayResponseListener, AddNewCardBottomSheet.OnAddNewCardClickListener,
-    PaymentRelatedDetailsListener, ValueAddedServiceApiListener {
+    PaymentRelatedDetailsListener, ValueAddedServiceApiListener,
+    TransactionFailBottomSheet.OnBottomSheetClickListener, AddUpiBottomSheet.OnAddUpiClickListener {
     private lateinit var mViewModel: AddMoneyUpiDebitViewModel
     lateinit var progressBar: ProgressBar
     lateinit var payuConfig: PayuConfig
@@ -102,30 +105,46 @@ class AddMoneyUpiDebitView :
         mViewModel.onUpiClicked.observe(this) {
             when (mViewModel.clickedPositionForUpi.get()) {
                 0 -> {
-                    callGooglePayIntent()
+                    callAddUpiBottomSheet()
                 }
                 1 -> {
+                    callGooglePayIntent()
+                }
+                2 -> {
                     callPhonePayIntent()
                 }
             }
         }
         mViewModel.onAddNewCardClicked.observe(this) {
             if (it) {
-                callBottomSheet()
+                callAddNewCardBottomSheet()
                 mViewModel.onAddNewCardClicked.value = false
             }
+        }
+
+        mViewModel.onStep2Response.observe(this) {
+            when (it) {
+                AppConstants.API_SUCCESS -> {
+                    callPaymentSuccessView()
+                }
+                AppConstants.API_FAIL -> {
+                    callTransactionFailBottomSheet()
+                }
+            }
+
         }
 
     }
 
 
     /*
-   * navigate to the HomeScreen
+   * navigate to the Pay u success
    * */
-    private fun intentToActivity() {
-        val intent = Intent(this@AddMoneyUpiDebitView, CreateAccountSuccessView::class.java)
+    private fun callPaymentSuccessView() {
+        val intent = Intent(this@AddMoneyUpiDebitView, PayUSuccessView::class.java)
+        intent.putExtra(AppConstants.PAYU_RESPONSE, mViewModel.step2ApiResponse)
         startActivity(intent)
-        finish()
+        finishAffinity()
     }
 
     private fun callGooglePayIntent() {
@@ -176,7 +195,7 @@ class AddMoneyUpiDebitView :
                 this@AddMoneyUpiDebitView,
                 payUPhonePeCallback,
                 mViewModel.hash.get(),
-              "gtKFFx",
+                "gtKFFx",
                 mViewModel.merchantKey.get() + ":" + "abcd"
             )
             /* PhonePe.getInstance().makePayment(
@@ -212,7 +231,7 @@ class AddMoneyUpiDebitView :
         }
 
         override fun onPaymentOptionInitialisationFailure(errorCode: Int, description: String) {
-            Log.d("phone_pay_payment", errorCode.toString()+"  "+description)
+            Log.d("phone_pay_payment", errorCode.toString() + "  " + description)
 
             //Callback thrown in case PhonePe initialisation fails.
         }
@@ -221,7 +240,7 @@ class AddMoneyUpiDebitView :
     /*
      * This method is used to call leave member
      * */
-    private fun callBottomSheet() {
+    private fun callAddNewCardBottomSheet() {
         val bottomSheet =
             AddNewCardBottomSheet(
                 mViewModel.amountToAdd.get(),
@@ -229,6 +248,31 @@ class AddMoneyUpiDebitView :
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "AddNewCard")
+    }
+
+    /*
+         * This method is used to call transaction fail bottom sheet
+         * */
+    private fun callTransactionFailBottomSheet() {
+        val bottomSheet =
+            TransactionFailBottomSheet(
+                "",
+                mViewModel.amountToAdd.get()!!, this
+            )
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "TransactionFail")
+    }
+
+    /*
+      * This method is used to call add upi bottom sheet
+      * */
+    private fun callAddUpiBottomSheet() {
+        val bottomSheet =
+            AddUpiBottomSheet(
+                mViewModel.amountToAdd.get()!!, this
+            )
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "AddUPI")
     }
 
     override fun onAddNewCardButtonClick(addNewCardDetails: AddNewCardDetails) {
@@ -390,22 +434,18 @@ class AddMoneyUpiDebitView :
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Utility.showToast("onActivityResult")
-        Log.d("kfkoefkepo","onActivityResulttt")
         if (requestCode == PayuConstants.PAYU_REQUEST_CODE) {
-            Log.d("sjbfeufu", data.toString())
             //Lets pass the result back to previous activity
             setResult(resultCode, data)
             //   finish()
         }
+
     }
 
     override fun onPaymentRelatedDetailsResponse(payuResponse: PayuResponse?) {
-        Log.d("sjbfeufu", payuResponse.toString())
     }
 
     override fun onValueAddedServiceApiResponse(p0: PayuResponse?) {
-        Log.d("sjbfeufu", p0.toString())
     }
 
     //set callback to track important events
@@ -467,25 +507,18 @@ class AddMoneyUpiDebitView :
              * @param merchantResponse response received from Furl
              */
             override fun onPaymentFailure(payuResponse: String, merchantResponse: String) {
-                Utility.showToast("onPaymentFailure")
-
-                Log.d("onPaymentFailure", "onPaymentTerminate")
-
-                val intent = Intent()
-                intent.putExtra("result", merchantResponse)
-                intent.putExtra("payu_response", payuResponse)
-                if (null != mViewModel.hash.get()) {
-                    intent.putExtra(PayuConstants.MERCHANT_HASH, mViewModel.hash)
-                }
-                setResult(RESULT_CANCELED, intent)
+                /*   val intent = Intent()
+                   intent.putExtra("result", merchantResponse)
+                   intent.putExtra("payu_response", payuResponse)
+                   if (null != mViewModel.hash.get()) {
+                       intent.putExtra(PayuConstants.MERCHANT_HASH, mViewModel.hash)
+                   }
+                   setResult(RESULT_CANCELED, intent)*/
                 finish()
             }
 
             override fun onPaymentTerminate() {
-                Utility.showToast("onPaymentTerminate")
 
-                Log.d("kfkoefkepo", "onPaymentTerminate")
-                finish()
             }
 
             /**
@@ -495,35 +528,23 @@ class AddMoneyUpiDebitView :
              * @param merchantResponse response received from Furl
              */
             override fun onPaymentSuccess(payuResponse: String, merchantResponse: String) {
-                Utility.showToast(payuResponse)
-
-                Log.d("kfkoefkepo", "onPaymentSuccess")
-                finish()
+                mViewModel.payUResponse.set(payuResponse)
+                mViewModel.callAddMoneyStep2Api()
             }
 
             override fun onCBErrorReceived(code: Int, errormsg: String) {
-                Utility.showToast("onCBErrorReceived")
-
-                Log.d("kfkoefkepo", "onCBErrorReceived")
             }
 
             override fun setCBProperties(webview: WebView, payUCustomBrowser: Bank) {
-                Utility.showToast("setCBProperties")
-
                 webview.webChromeClient = PayUWebChromeClient(payUCustomBrowser)
-                Log.d("kfkoefkepo", "setCBProperties")
 
             }
 
             override fun onBackApprove() {
-                Utility.showToast("onBackApprove")
-
                 this@AddMoneyUpiDebitView.finish()
             }
 
             override fun onBackDismiss() {
-                Utility.showToast("onBackDismiss")
-
                 super.onBackDismiss()
             }
 
@@ -533,10 +554,16 @@ class AddMoneyUpiDebitView :
              * @param alertDialogBuilder a reference of AlertDialog.Builder to customize the dialog
              */
             override fun onBackButton(alertDialogBuilder: AlertDialog.Builder) {
-                Utility.showToast("onBackButton")
-
                 super.onBackButton(alertDialogBuilder)
             }
         }
+
+    override fun onBottomSheetButtonClick(type: String) {
+
+    }
+
+    override fun onAddUpiClickListener(upiId: String) {
+
+    }
 
 }

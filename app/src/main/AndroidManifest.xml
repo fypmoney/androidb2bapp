@@ -181,6 +181,9 @@
         <activity
             android:name=".view.activity.AddMoneyUpiDebitView"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.PayUSuccessView"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <receiver
             android:name=".receivers.SmsBroadcastReceiver"

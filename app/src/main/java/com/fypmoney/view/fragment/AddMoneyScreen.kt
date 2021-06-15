@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
-import com.fypmoney.database.entity.MemberEntity
 import com.fypmoney.databinding.ViewAddMoneyBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.activity.AddMoneyUpiDebitView

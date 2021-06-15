@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/screenMarginLeft"
+        android:paddingEnd="@dimen/screenMarginRight">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/curved_background1" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/verification_title"
+            style="@style/TextviewRegular"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="@string/add_upi_title"
+            android:textColor="@color/text_color_dark"
+            android:textSize="17dp" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/heading"
+            style="@style/TextviewRegular"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/upi_id" />
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/upiId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+            android:hint="@string/upi_id_hint"
+            android:inputType="text"
+            android:maxLength="26"
+            android:padding="10dp"
+            android:drawableEnd="@drawable/ic_dropdown__2_"
+            android:singleLine="true" />
+
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/expiry"
+            style="@style/TextviewRegular"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:text="@string/upi_id_hint1" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/verifyButton"
+            style="@style/TextviewRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:padding="15dp"
+            android:textColor="@color/text_color_dark"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="18dp"
+            android:background="@drawable/border_background2"
+            android:text="@string/verify_btn_text" />
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/saveCardCheckbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="30dp"
+            android:text="@string/save_upi_id" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnAdd"
+            style="@style/Widget.App.Button"
+            android:layout_width="299dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/curved_background1"
+            android:text="@string/add_btn_text"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/text_color_dark" />
+
+    </LinearLayout>
+</layout>
+

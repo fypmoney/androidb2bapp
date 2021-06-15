@@ -12,6 +12,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.AddMoneyUpiAdapter
 import com.fypmoney.view.adapter.SavedCardsAdapter
@@ -32,6 +33,8 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var pgTxnNo = ObservableField<String>()
     var accountTxnNo = ObservableField<String>()
     var payUResponse = ObservableField<String>()
+    var onStep2Response = MutableLiveData<String>()
+    var step2ApiResponse =AddMoneyStep2ResponseDetails()
 
     init {
         val list = ArrayList<UpiModel>()
@@ -69,8 +72,8 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     fun callAddMoneyStep2Api() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                purpose = ApiConstant.API_ADD_MONEY_STEP1,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_ADD_MONEY_STEP1),
+                purpose = ApiConstant.API_ADD_MONEY_STEP2,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_ADD_MONEY_STEP2),
                 request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = true,
                 param = AddMoneyStep2Request(
@@ -97,6 +100,14 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
                 }
             }
+            ApiConstant.API_ADD_MONEY_STEP2 -> {
+                if (responseData is AddMoneyStep2Response) {
+                    step2ApiResponse=responseData.addMoneyStep2ResponseDetails
+                    onStep2Response.value = AppConstants.API_SUCCESS
+
+                }
+
+            }
 
 
         }
@@ -105,6 +116,13 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        when (purpose) {
+            ApiConstant.API_ADD_MONEY_STEP2 -> {
+                onStep2Response.value = AppConstants.API_FAIL
+
+            }
+        }
+
     }
 
     override fun onUpiItemClicked(position: Int, upiModel: UpiModel?) {

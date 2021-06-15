@@ -66,14 +66,19 @@ class TransactionFailBottomSheet(
                 buttonRetryInCenter.visibility = View.VISIBLE
 
             }
+            else->{
+            }
         }
         buttonRetryInCenter.setOnClickListener {
             dismiss()
         }
 
-
-
-
+        changeMethod.setOnClickListener {
+            dismiss()
+        }
+        retry.setOnClickListener {
+            dismiss()
+        }
         return view
     }
 

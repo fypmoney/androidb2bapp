@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.PayUSuccessViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="80dp"
+                app:srcCompat="@drawable/ic_payment_sucessful" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/amount"
+                style="@style/TextviewBold"
+                android:layout_below="@+id/image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@{@string/Rs+viewModel.payUResponse.amount}"
+                android:textSize="42dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/payment_success"
+                style="@style/TextviewRegular"
+                android:layout_below="@id/amount"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="19dp"
+                android:text="@string/payment_success_msg"
+                android:textAlignment="center"
+                android:textColor="@color/text_color_dark"
+                android:textSize="17dp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/date"
+                style="@style/TextviewRegular"
+                android:layout_below="@id/amount"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="@{viewModel.payUResponse.txnTime}"
+                android:textAlignment="center" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/date"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/curved_background12"
+                android:orientation="vertical"
+                android:paddingStart="50dp"
+                android:paddingEnd="50dp">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewBold"
+                    android:layout_marginTop="19dp"
+                    android:text="@string/trans_details_heading"
+                    android:textAlignment="center"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/fyp_transaction_heading"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_color_dark" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_marginTop="7dp"
+                    android:text="@{viewModel.payUResponse.accountTxnNo}"
+                    android:textAlignment="center" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="25dp"
+                    android:background="@color/dividerColor" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:text="@string/bank_transaction_heading"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_color_dark" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_marginTop="7dp"
+                    android:text="@{viewModel.payUResponse.bankExternalId}"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>
