@@ -1,6 +1,7 @@
 package com.fypmoney.view.adapter
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RelativeLayout
@@ -59,6 +60,7 @@ class TransactionHistoryAdapter(var viewModel: TransactionHistoryViewModel) :
      * This will set the data in the list in adapter
      */
     fun setList(transactionList1: List<TransactionHistoryResponseDetails>?) {
+        Log.d("jfgrburo",transactionList1?.size.toString())
         try {
             transactionList!!.clear()
             transactionList1?.forEach {

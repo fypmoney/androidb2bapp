@@ -53,7 +53,7 @@ class WebApiCaller {
 
         val apiInterface: ApiInterface = when (whichServer) {
             AppConstants.PAYU_SERVER -> {
-                ApiClient.getClient(ApiConstant.PAYU_TEST_URL).create(ApiInterface::class.java)
+                ApiClient.getClient(ApiConstant.PAYU_BASE_URL).create(ApiInterface::class.java)
 
             }
             else -> {

@@ -68,8 +68,21 @@ data class TransactionHistoryResponse(
 ) : Serializable
 
 data class TransactionHistoryResponseDetails(
-    @SerializedName("amount") var amount: String?=null,
-    @SerializedName("message") var message: String?=null,
+    @SerializedName("id") var id: String?=null,
+    @SerializedName("requesterUaaId") var requesterUaaId: String?=null,
+    @SerializedName("cardId") var cardId: String?=null,
+    @SerializedName("bankTxnStatus") var bankTxnStatus: String?=null,
+    @SerializedName("txnTime") var txnTime: String?=null,
+    @SerializedName("destinationUserId") var destinationUserId: String?=null,
+    @SerializedName("destinationUserName") var destinationUserName: String?=null,
+    @SerializedName("txnAmount") var txnAmount: String?=null
 ) : Serializable
+
+
+data class TransactionHistoryRequest(
+    @SerializedName("startDate") val startDate: String? = null,
+    @SerializedName("endDate") val endDate: String? = null,
+    @SerializedName("destinationUserId") val destinationUserId: String? = null
+) : BaseRequest()
 
 

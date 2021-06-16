@@ -105,6 +105,8 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
                     //   requestData.set("{\"transactionId\":\"211654905710001\",\"amount\":\"20.00\",\"phone\":\"9873752590\",\"pgUrl\":\"https://test.payu.in/_payment\",\"userFirstName\":\"yogesh  dayma\",\"productName\":\"Pockket Product\",\"email\":null,\"merchantKey\":\"MEqEEF\",\"merchantId\":\"5004627\",\"paymentHash\":\"1ffcc5a54e8b4706c8ed85b2b37f493cc44a70da33bea4d0654e5fdf6239cf4b2c94976fed766369310c94a5b17fa2a7f57aa4c275b50529ae228528a884de90\",\"udf1\":\"FLM-211654905710001\",\"udf2\":\"\",\"udf3\":\"\",\"udf4\":\"\",\"udf5\":\"\",\"udf6\":\"\",\"udf7\":\"\",\"udf8\":\"\",\"udf9\":\"\",\"udf10\":\"\",\"surl\":\"http://10.0.1.76:9898/services/PockketService/api/pg/callback\",\"furl\":\"http://10.0.1.76:9898/services/PockketService/api/pg/callback\"}")
                     val result = requestData.get()?.replace("transactionId", "txnid")
                     requestData.set(result)
+                    parseResponseOfStep1(requestData.get())
+
 
                 }
             }
@@ -112,6 +114,14 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
                 if (responseData is AddMoneyStep2Response) {
                     step2ApiResponse = responseData.addMoneyStep2ResponseDetails
                     onStep2Response.value = AppConstants.API_SUCCESS
+
+                }
+
+            }
+
+            ApiConstant.GET_USER_CARDS -> {
+                if (responseData is SavedCardResponseDetails) {
+                    Log.d("cmckcmfci",responseData.toString())
 
                 }
 
@@ -170,6 +180,8 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         hash.set(mainObject.getString("paymentHash"))
         merchantKey.set(mainObject.getString("merchantKey"))
 
+        getAllSavedCardsApi()
+
         return pgRequestData
 
 
@@ -199,7 +211,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         mPaymentParams.udf4 = resultData.udf4
         mPaymentParams.udf5 = resultData.udf5
         mPaymentParams.hash = resultData.paymentHash
-        mPaymentParams.userCredentials = resultData.merchantKey + ":" + SharedPrefUtils.getString(
+        mPaymentParams.userCredentials = resultData.merchantKey + ":" + SharedPrefUtils.getLong(
             getApplication(),
             SharedPrefUtils.SF_KEY_USER_ID
         )
@@ -245,7 +257,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         mPaymentParams.hash = resultData.paymentHash
         mPaymentParams.vpa = upiId
 
-        mPaymentParams.userCredentials = resultData.merchantKey + ":" + SharedPrefUtils.getString(
+        mPaymentParams.userCredentials = resultData.merchantKey + ":" + SharedPrefUtils.getLong(
             getApplication(),
             SharedPrefUtils.SF_KEY_USER_ID
         )
@@ -274,12 +286,12 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     * */
 
     fun getAllSavedCardsApi() {
-        val var1 = merchantKey.get() + ":" + SharedPrefUtils.getString(
+        val var1 = merchantKey.get() + ":" + SharedPrefUtils.getLong(
             getApplication(),
             SharedPrefUtils.SF_KEY_USER_ID
         )
         val calculatedHash =
-            calculateHash(merchantKey.get() + "|" + ApiConstant.GET_USER_CARDS + "|" + var1 + "|" + "salt")
+            calculateHash(merchantKey.get() + "|" + ApiConstant.GET_USER_CARDS + "|" + var1 + "|" + "MHPoGkXk")
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.PAYU_TEST_URL,

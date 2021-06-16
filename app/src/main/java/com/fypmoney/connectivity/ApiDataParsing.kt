@@ -145,6 +145,12 @@ class ApiDataParsing {
                 ApiConstant.API_PAY_MONEY -> {
                     getObject(response, PayMoneyResponse::class.java)
                 }
+                ApiConstant.GET_USER_CARDS -> {
+                    getObject(response, SavedCardResponseDetails::class.java)
+                }
+                ApiConstant.API_TRANSACTION_HISTORY -> {
+                    getObject(response, TransactionHistoryResponse::class.java)
+                }
 
 
                 else -> response

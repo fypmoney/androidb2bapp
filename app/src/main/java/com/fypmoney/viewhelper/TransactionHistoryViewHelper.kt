@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.model.TransactionHistoryResponseDetails
+import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.TransactionHistoryViewModel
 
 
@@ -17,11 +18,22 @@ class TransactionHistoryViewHelper(
 ) {
     var availableAmount =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
-
+    var msg =
+        ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
+    var amount = ObservableField<String?>()
 
 
     fun init() {
-
+        try {
+            amount.set(
+              Utility.convertToRs(
+                    transactionHistory?.txnAmount!!
+                )
+            )
+            msg.set(PockketApplication.instance.getString(R.string.you_paid)+Utility.getDayMonth(transactionHistory?.txnTime))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     /*
@@ -30,8 +42,6 @@ class TransactionHistoryViewHelper(
     fun onItemClicked() {
 
     }
-
-
 
 
 }

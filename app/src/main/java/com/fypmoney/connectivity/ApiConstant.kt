@@ -43,6 +43,8 @@ object ApiConstant {
     const val API_ADD_MONEY_STEP1 = "/services/PockketService/api/add/money/wallet/step1/get/pgRequestData"
     const val API_ADD_MONEY_STEP2 = "/services/PockketService/api/add/money/wallet/step2/load-money"
     const val API_PAY_MONEY = "/services/PockketService/api/pay/money"
+    const val API_BANK_TRANSACTION_HISTORY = "/services/PockketService/api/bank/transaction/history"
+    const val API_TRANSACTION_HISTORY = "/services/PockketService/api/transaction/history"
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
 
  // pay u test url

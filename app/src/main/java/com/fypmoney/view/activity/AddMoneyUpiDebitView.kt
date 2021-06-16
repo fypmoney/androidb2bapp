@@ -87,7 +87,6 @@ class AddMoneyUpiDebitView :
         mViewModel.callAddMoneyStep1Api()
         payuConfig = PayuConfig()
 
-        mViewModel.getAllSavedCardsApi()
 
 
         /*  val ss = SpannableString(getString(R.string.account_verification_sub_title))
@@ -160,7 +159,7 @@ class AddMoneyUpiDebitView :
         val callback = PayUGpayResponse(this)
 
         Log.d(
-            "post data",
+            "post_dataddddd",
             mViewModel.requestData.get()!!
         )
         Log.d(
@@ -169,24 +168,24 @@ class AddMoneyUpiDebitView :
         )
 
         Log.d(
-            "hash",
-            mViewModel.parseResponseOfStep1(mViewModel.requestData.get()).paymentHash.toString()
+            "fffffffffffff",
+            mViewModel.hash.get()!!
         )
 
         GPay.getInstance().checkForPaymentAvailability(
             this@AddMoneyUpiDebitView,
             callback,
             mViewModel.hash.get(),
-            "gtKFFx",
+            mViewModel.merchantKey.get(),
             "default"
         )
-        GPay.getInstance().makePayment(
+    /*    GPay.getInstance().makePayment(
             this@AddMoneyUpiDebitView,
             mViewModel.requestData.get(),
             callback,
             mViewModel.merchantKey.get(),
             progressBar
-        )
+        )*/
 
     }
 
@@ -205,7 +204,7 @@ class AddMoneyUpiDebitView :
                 payUPhonePeCallback,
                 mViewModel.hash.get(),
                 mViewModel.merchantKey.get(),
-                mViewModel.merchantKey.get() + ":" + "abcd"
+                "default"
             )
             /* PhonePe.getInstance().makePayment(
                  payUPhonePeCallback,

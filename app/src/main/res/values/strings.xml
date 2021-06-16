@@ -528,5 +528,7 @@
     <string name="save_upi_id">Save this UPI ID for faster payments</string>
     <string name="add_upi_empty_error">Please enter UPI ID</string>
     <string name="invalid_upi_error">Invalid UPI ID</string>
+    <string name="you_paid">You paid,</string>
+    <string name="you_were_paid">You were paid,</string>
 
 </resources>
