@@ -34,6 +34,7 @@ class TransactionHistoryAdapter(var viewModel: TransactionHistoryViewModel) :
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+
         return holder.onBind(position)
     }
 

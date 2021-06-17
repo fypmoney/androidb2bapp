@@ -57,7 +57,7 @@ class AddUpiBottomSheet(
 
         btnAdd.text = getString(R.string.add_btn_text) + " " + getString(R.string.Rs) + amount
 
-
+        upiId.setText("8447169664@paytm")
 
         btnAdd.setOnClickListener {
 

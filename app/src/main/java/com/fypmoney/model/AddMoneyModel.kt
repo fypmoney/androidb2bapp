@@ -25,7 +25,7 @@ data class SavedCardResponseDetails(
 data class AddMoneyStep1Request(
     @SerializedName("remarks") val remarks: String?,
     @SerializedName("amount") val amount: String?,
-    @SerializedName("salt") val salt: String?,
+    @SerializedName("merchantSalt") val merchantSalt: String?,
     @SerializedName("merchantKey") val merchantKey: String?,
     @SerializedName("merchantId") val merchantId: String?
 ) : BaseRequest()

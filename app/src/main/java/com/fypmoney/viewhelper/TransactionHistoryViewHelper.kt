@@ -21,6 +21,7 @@ class TransactionHistoryViewHelper(
     var msg =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
     var amount = ObservableField<String?>()
+    var date = ObservableField<String?>()
 
 
     fun init() {
@@ -31,6 +32,7 @@ class TransactionHistoryViewHelper(
                 )
             )
             msg.set(PockketApplication.instance.getString(R.string.you_paid)+Utility.getDayMonth(transactionHistory?.txnTime))
+            date.set(Utility.getDayMonthTime(transactionHistory?.txnTime))
         } catch (e: Exception) {
             e.printStackTrace()
         }

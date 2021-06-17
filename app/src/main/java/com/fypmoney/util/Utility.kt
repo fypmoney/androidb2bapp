@@ -761,4 +761,22 @@ object Utility {
         return output.format(d)
 
     }
+
+    /*
+* This method is used to convert date time
+* */
+
+    fun getDayMonthTime(dateTime: String? = null): String {
+        val input = SimpleDateFormat(AppConstants.SERVER_DATE_TIME_FORMAT1, Locale.getDefault())
+        val output = SimpleDateFormat(AppConstants.CHANGED_DATE_TIME_FORMAT2, Locale.getDefault())
+
+        var d: Date? = null
+        try {
+            d = input.parse(dateTime!!)
+        } catch (e: ParseException) {
+            e.printStackTrace()
+        }
+        return output.format(d)
+
+    }
 }

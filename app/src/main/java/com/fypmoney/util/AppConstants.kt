@@ -110,6 +110,7 @@ object AppConstants {
     const val SERVER_DATE_TIME_FORMAT1 = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     const val CHANGED_DATE_TIME_FORMAT = "MMM dd,yyyy-HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT1 = "MMM dd"
+    const val CHANGED_DATE_TIME_FORMAT2 = "MMM dd HH:mmaa"
     const val PAYU_SERVER = "pay u server"
 
 

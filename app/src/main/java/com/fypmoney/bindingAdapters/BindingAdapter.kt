@@ -109,17 +109,27 @@ class BindingAdapter {
                         // add a rule to align to the left
 
                         // add a rule to align to the left
-                        textViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+                        textViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_END)
 
                         // make sure the rule was applied
 
                         // make sure the rule was applied
                         view.layoutParams = textViewLayoutParams
                     }
-                    else -> {  val params: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(
-                       200, ViewGroup.LayoutParams.WRAP_CONTENT
+                    else -> {    val textViewLayoutParams = RelativeLayout.LayoutParams(
+                        500,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
                     )
-                        params.addRule(RelativeLayout.ALIGN_LEFT, view.id)
+
+                        // add a rule to align to the left
+
+                        // add a rule to align to the left
+                        textViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_START)
+
+                        // make sure the rule was applied
+
+                        // make sure the rule was applied
+                        view.layoutParams = textViewLayoutParams
                     }
                 }
 

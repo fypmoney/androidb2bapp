@@ -150,6 +150,9 @@ dependencies {
     // upi
     implementation 'in.payu:upisdk:1.5.2'
 
+    implementation 'com.payu.samsungpay:samsungpay:1.0'
+
+
 
 }
 apollo {
