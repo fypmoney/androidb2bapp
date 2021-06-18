@@ -113,5 +113,11 @@ object AppConstants {
     const val CHANGED_DATE_TIME_FORMAT2 = "MMM dd HH:mmaa"
     const val PAYU_SERVER = "pay u server"
 
+    const val TYPE_UPI = "upi"
+    const val TYPE_DC = "debit card"
+    const val TYPE_GOOGLE_PAY = "gpay"
+    const val TYPE_PHONEPE = "phonepe"
+    const val TYPE_GENERIC = "generic"
+
 
 }
