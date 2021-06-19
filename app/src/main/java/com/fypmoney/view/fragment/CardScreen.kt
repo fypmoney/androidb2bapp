@@ -19,6 +19,7 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenCardBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.view.activity.BankTransactionHistoryView
 import com.fypmoney.view.adapter.CardListViewAdapter
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.viewmodel.CardScreenViewModel
@@ -30,7 +31,8 @@ import kotlinx.android.synthetic.main.virtual_card_front_layout.*
 /**
  * This fragment is used for handling card
  */
-class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() , MyProfileListAdapter.OnListItemClickListener{
+class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
+    MyProfileListAdapter.OnListItemClickListener {
     private lateinit var mViewModel: CardScreenViewModel
     private lateinit var mViewBinding: ScreenCardBinding
     private var mSetRightOut: AnimatorSet? = null
@@ -70,8 +72,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() , MyPr
 
         val myProfileAdapter = MyProfileListAdapter(requireContext(), this)
         list.adapter = myProfileAdapter
-
-
         myProfileAdapter.setList(
             iconList1 = drawableIds,
             textString
@@ -158,13 +158,21 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>() , MyPr
     fun onCopyClicked() {
         Utility.copyTextToClipBoard(
             requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager,
-           mViewModel.cardNumber.get()
+            mViewModel.cardNumber.get()
         )
     }
 
     override fun onItemClick(position: Int) {
 
+        when (position) {
+            2 -> {
+                intentToActivity(BankTransactionHistoryView::class.java)
+            }
+        }
     }
 
-
+    private fun intentToActivity(aClass: Class<*>) {
+        val intent = Intent(requireActivity(), aClass)
+        requireContext().startActivity(intent)
+    }
 }

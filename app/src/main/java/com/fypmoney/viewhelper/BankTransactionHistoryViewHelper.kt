@@ -2,17 +2,18 @@ package com.fypmoney.viewhelper
 
 import androidx.databinding.ObservableField
 import com.fypmoney.database.entity.ContactEntity
+import com.fypmoney.model.BankTransactionHistoryResponseDetails
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.BankTransactionHistoryViewModel
 import com.fypmoney.viewmodel.ContactListViewModel
 
 
 /*
-* This is used to display all the contacts in the list
+* This is used to display all the bank transaction history in the list
 * */
 class BankTransactionHistoryViewHelper(
     var position: Int? = -1,
-    var contactEntity: ContactEntity?,
+    var bankHistory: BankTransactionHistoryResponseDetails?,
     var viewModel: BankTransactionHistoryViewModel
 ) {
 
@@ -22,17 +23,7 @@ class BankTransactionHistoryViewHelper(
     var isApiError = ObservableField(false)
 
     fun init() {
-        when (contactEntity?.isAppUser) {
-            true -> {
-                isAppUser.set(true)
-            }
-            else -> {
-                isAppUser.set(false)
-            }
-
-        }
-       // isApiError.set(viewModel.isApiError.get())
-    }
+      }
 
     /*
      * called when any item is selected

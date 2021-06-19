@@ -151,7 +151,9 @@ class ApiDataParsing {
                 ApiConstant.API_TRANSACTION_HISTORY -> {
                     getObject(response, TransactionHistoryResponse::class.java)
                 }
-
+                ApiConstant.API_BANK_TRANSACTION_HISTORY -> {
+                    getObject(response, BankTransactionHistoryResponse::class.java)
+                }
 
                 else -> response
             }

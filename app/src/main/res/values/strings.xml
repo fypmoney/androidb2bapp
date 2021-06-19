@@ -537,5 +537,6 @@
     Bank transaction history
     -->
     <string name="recent">Recent</string>
+    <string name="trans_history_heading">Transaction History</string>
 
 </resources>

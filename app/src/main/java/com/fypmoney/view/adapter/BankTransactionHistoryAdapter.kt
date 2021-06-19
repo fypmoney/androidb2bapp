@@ -1,23 +1,23 @@
 package com.fypmoney.view.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.BankTransactionHistoryRowItemBinding
+import com.fypmoney.model.BankTransactionHistoryResponseDetails
 import com.fypmoney.viewhelper.BankTransactionHistoryViewHelper
 import com.fypmoney.viewmodel.BankTransactionHistoryViewModel
 
 
 /**
- * This adapter class is used to handle contacts
+ * This adapter class is used to handle bank transaction history
  */
 class BankTransactionHistoryAdapter(var viewModel: BankTransactionHistoryViewModel) :
     RecyclerView.Adapter<BaseViewHolder>() {
-    var contactList: ArrayList<ContactEntity>? = ArrayList()
-    var newSearchList: ArrayList<ContactEntity>? = ArrayList()
-    var newContactList: ArrayList<ContactEntity>? = ArrayList()
+    var transactionList: ArrayList<BankTransactionHistoryResponseDetails>? = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val mRowBinding = BankTransactionHistoryRowItemBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -29,7 +29,7 @@ class BankTransactionHistoryAdapter(var viewModel: BankTransactionHistoryViewMod
     }
 
     override fun getItemCount(): Int {
-        return contactList!!.size
+        return transactionList!!.size
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -44,7 +44,7 @@ class BankTransactionHistoryAdapter(var viewModel: BankTransactionHistoryViewMod
         override fun onBind(position: Int) {
             mViewHelper = BankTransactionHistoryViewHelper(
                 position,
-                contactList?.get(position), viewModel
+                transactionList?.get(position), viewModel
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             mViewHelper.init()
@@ -57,12 +57,13 @@ class BankTransactionHistoryAdapter(var viewModel: BankTransactionHistoryViewMod
     /**
      * This will set the data in the list in adapter
      */
-    fun setList(contactList1: List<ContactEntity>?) {
+    fun setList(transactionList1: List<BankTransactionHistoryResponseDetails>?) {
         try {
-            contactList!!.clear()
-            contactList1?.forEach {
-                contactList!!.add(it)
+            transactionList!!.clear()
+            transactionList1?.forEach {
+                transactionList!!.add(it)
             }
+            Log.d("akiakjdi",transactionList1?.size.toString())
             notifyDataSetChanged()
         } catch (e: Exception) {
             e.printStackTrace()

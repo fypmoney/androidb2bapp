@@ -20,8 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:background="@{viewHelper.isBackgroundHighlight?@color/buttonUnselectedColor:@color/white}"
-        android:onClick="@{()->viewHelper.onItemClicked()}"
         android:paddingTop="5dp"
         android:paddingBottom="5dp">
 
@@ -40,10 +38,9 @@
             style="@style/TextviewRegular"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_toStartOf="@+id/linear"
             android:layout_toEndOf="@+id/ivServiceLogo"
             android:gravity="start"
-            android:text="@{viewHelper.contactEntity.firstName}"
+            android:text="@{viewHelper.bankHistory.transaction_type}"
             android:textColor="@color/text_color_dark"
             android:textSize="@dimen/textSize_18" />
 
@@ -54,44 +51,17 @@
             android:layout_marginStart="@dimen/margin"
             android:layout_toEndOf="@+id/ivServiceLogo"
             android:ellipsize="end"
-            android:text="@{viewHelper.contactEntity.contactNumber}" />
+            android:text="@{viewHelper.bankHistory.transaction_date}" />
 
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/flagIdentifier"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/ivServiceLogo"
-            android:layout_marginStart="40dp"
-            android:layout_marginBottom="20dp"
-            android:visibility="@{viewHelper.isAppUser?View.VISIBLE:View.GONE,default=gone}"
-            app:srcCompat="@drawable/ic_fyper_cap" />
-
-
-        <LinearLayout
-            android:id="@+id/linear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/invite"
+            style="@style/TextviewRegular"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:visibility="@{viewHelper.isApiError?View.GONE:View.VISIBLE,default=visible}">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/fyper"
-                style="@style/TextviewRegular"
-                android:layout_marginEnd="10dp"
-                android:text="@string/fyper_txt"
-                android:textColor="@color/text_color_dark"
-                android:visibility="@{viewHelper.isAppUser?View.VISIBLE:View.GONE,default=gone}" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/invite"
-                style="@style/TextviewRegular"
-                android:layout_marginEnd="10dp"
-                android:text="@string/invite_link"
-                android:textColor="@color/color_skyblue"
-                android:visibility="@{viewHelper.isAppUser?View.GONE:View.VISIBLE,default=visible}" />
-        </LinearLayout>
+            android:layout_marginEnd="10dp"
+            android:text="@string/invite_link"
+            android:textColor="@color/color_skyblue" />
 
     </RelativeLayout>
 

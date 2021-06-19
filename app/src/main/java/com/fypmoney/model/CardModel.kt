@@ -43,3 +43,29 @@ data class TransactionTypeDetails(
     @SerializedName("ATM") val ATM: String,
     @SerializedName("CL") val CL: String
 ) : Serializable
+
+data class BankTransactionHistoryRequest(
+    @SerializedName("startDate") val startDate: String? = null,
+    @SerializedName("endDate") val endDate: String? = null
+) : BaseRequest()
+
+
+data class BankTransactionHistoryResponse(
+    @SerializedName("data") val transactions: Transactions
+) : Serializable
+
+
+data class Transactions(
+        @SerializedName("transactions") val bankTransactionHistoryResponseDetails: List<BankTransactionHistoryResponseDetails>
+) : Serializable
+
+
+data class BankTransactionHistoryResponseDetails(
+    @SerializedName("transaction_type") val transaction_type: String,
+    @SerializedName("amount") val amount: String,
+    @SerializedName("payment_mode") val payment_mode: String,
+    @SerializedName("mrn") val mrn: String,
+    @SerializedName("transaction_reference_number") val transaction_reference_number: String,
+    @SerializedName("message") val message: String,
+    @SerializedName("transaction_date") val transaction_date: String
+) : Serializable
