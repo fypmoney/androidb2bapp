@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.BankTransactionHistoryViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/screenMarginLeft"
+        android:layout_marginEnd="@dimen/screenMarginRight"
+        android:background="@color/white">
+
+        <include
+            android:id="@+id/layout"
+            layout="@layout/toolbar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/recent"
+            style="@style/TextviewRegular"
+            android:layout_marginTop="20dp"
+            android:text="@string/recent" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recent"
+            android:layout_marginTop="20dp"
+            app:adapter="@{viewModel.bankTransactionHistoryAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/AppTheme.Widget.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_data_found"
+            android:textSize="@dimen/title_size"
+            android:visibility="@{viewModel.noDataFoundVisibility?View.VISIBLE:View.GONE,default=gone}" />
+
+
+    </RelativeLayout>
+</layout>
+

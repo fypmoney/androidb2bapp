@@ -22,6 +22,7 @@ import com.payu.india.Model.PaymentParams
 import com.payu.india.Payu.PayuConstants
 import com.payu.paymentparamhelper.PostData
 import org.json.JSONObject
+import java.lang.Exception
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import kotlin.experimental.and
@@ -29,6 +30,7 @@ import kotlin.experimental.and
 class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(application),
     AddMoneyUpiAdapter.OnUpiClickListener {
     var amountToAdd = ObservableField<String>()
+    var amountToAdd1 = ObservableField<String>()
     var clickedPositionForUpi = ObservableField<Int>()
     var addMoneyUpiAdapter = AddMoneyUpiAdapter(this)
     var savedCardsAdapter = SavedCardsAdapter()
@@ -46,10 +48,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var step2ApiResponse = AddMoneyStep2ResponseDetails()
 
     init {
-        val list = ArrayList<UpiModel>()
-        list.add(UpiModel(name = "Google Pay"))
-        list.add(UpiModel(name = "Phone Pay"))
-        addMoneyUpiAdapter.setList(list)
+
 
     }
 
@@ -151,39 +150,39 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     *  used to parse the response
     * */
     private fun parseResponseOfStep1(requestData: String?): PgRequestData {
-        val pgRequestData = PgRequestData()
-        val mainObject = JSONObject(requestData)
-        pgRequestData.txnId = mainObject.getString("txnid")
-        pgRequestData.email = mainObject.getString("email")
-        pgRequestData.amount = mainObject.getString("amount")
-        pgRequestData.merchantId = mainObject.getString("merchantId")
-        //  pgRequestData.merchantKey = mainObject.getString("merchantKey")
-        pgRequestData.merchantKey = merchantKey.get()
-        pgRequestData.productName = mainObject.getString("productName")
-        pgRequestData.paymentHash = mainObject.getString("paymentHash")
-        pgRequestData.userFirstName = mainObject.getString("userFirstName")
-        pgRequestData.surl = mainObject.getString("surl")
-        pgRequestData.furl = mainObject.getString("furl")
-        pgRequestData.pgUrl = mainObject.getString("pgUrl")
-        pgRequestData.udf1 = mainObject.getString("udf1")
-        pgRequestData.udf2 = mainObject.getString("udf2")
-        pgRequestData.udf3 = mainObject.getString("udf3")
-        pgRequestData.udf4 = mainObject.getString("udf4")
-        pgRequestData.udf5 = mainObject.getString("udf5")
-        pgRequestData.udf6 = mainObject.getString("udf6")
-        pgRequestData.udf7 = mainObject.getString("udf7")
-        pgRequestData.udf8 = mainObject.getString("udf8")
+        if (!requestData.isNullOrEmpty()) {
+            val pgRequestData = PgRequestData()
+            val mainObject = JSONObject(requestData)
+            pgRequestData.txnId = mainObject.getString("txnid")
+            pgRequestData.email = mainObject.getString("email")
+            pgRequestData.amount = mainObject.getString("amount")
+            pgRequestData.merchantId = mainObject.getString("merchantId")
+            //  pgRequestData.merchantKey = mainObject.getString("merchantKey")
+            pgRequestData.merchantKey = merchantKey.get()
+            pgRequestData.productName = mainObject.getString("productName")
+            pgRequestData.paymentHash = mainObject.getString("paymentHash")
+            pgRequestData.userFirstName = mainObject.getString("userFirstName")
+            pgRequestData.surl = mainObject.getString("surl")
+            pgRequestData.furl = mainObject.getString("furl")
+            pgRequestData.pgUrl = mainObject.getString("pgUrl")
+            pgRequestData.udf1 = mainObject.getString("udf1")
+            pgRequestData.udf2 = mainObject.getString("udf2")
+            pgRequestData.udf3 = mainObject.getString("udf3")
+            pgRequestData.udf4 = mainObject.getString("udf4")
+            pgRequestData.udf5 = mainObject.getString("udf5")
+            pgRequestData.udf6 = mainObject.getString("udf6")
+            pgRequestData.udf7 = mainObject.getString("udf7")
+            pgRequestData.udf8 = mainObject.getString("udf8")
 
-        // set hash
+            // set hash
 
-        hash.set(mainObject.getString("paymentHash"))
-        // merchantKey.set(mainObject.getString("merchantKey"))
+            hash.set(mainObject.getString("paymentHash"))
+            // merchantKey.set(mainObject.getString("merchantKey"))
 
-        getAllSavedCardsApi()
-
-        return pgRequestData
-
-
+            getAllSavedCardsApi()
+            return pgRequestData
+        }
+        return PgRequestData()
     }
 
     /*
@@ -218,7 +217,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         )
 
         mPaymentParams.hash = generateHashFromSDK(mPaymentParams, merchantSalt)
-        hash.set( mPaymentParams.hash)
+        hash.set(mPaymentParams.hash)
         Log.d("hashhhhhhh", mPaymentParams.hash)
 
 
@@ -267,17 +266,15 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
     }
 
-    /*
-    * This method is used to get all the user saved cards
-    * */
+/*
+* This method is used to get all the user saved cards
+* */
 
     private fun getAllSavedCardsApi() {
         val var1 = merchantKey.get() + ":" + SharedPrefUtils.getLong(
             getApplication(),
             SharedPrefUtils.SF_KEY_USER_ID
         )
-        val calculatedHash =
-            calculateHash(merchantKey.get() + "|" + ApiConstant.GET_USER_CARDS + "|" + var1 + "|" + "MHPoGkXk")
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.PAYU_TEST_URL,
@@ -285,7 +282,12 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
                 request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = false,
                 param = GetSavedCardRequest(
-                    hash = "1ff6cab3d2d2d44bd60a4a5eed7076285a06d97e5ef9def334b01d166350346179d90395118cde10da8d78e2c69c7e154b147a6633de824696d4c34885da8f18",
+                    hash = calculateHash(
+                        merchantKey.get()!!,
+                        command = ApiConstant.GET_USER_CARDS,
+                        var1 = var1,
+                        salt = merchantSalt
+                    )!!,
                     var1 = var1,
                     command = ApiConstant.GET_USER_CARDS,
                     key = merchantKey.get()
@@ -350,5 +352,22 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         return postData.getResult()
 
     }
+
+    private fun calculateHash(key: String, command: String, var1: String, salt: String): String? {
+        val checksum = PayUChecksum()
+        checksum.setKey(key)
+        checksum.setCommand(command)
+        checksum.setVar1(var1)
+        checksum.setSalt(salt)
+        return checksum.getHash().result
+    }
+
+    /*
+    * This method is used to set the list of upi
+    * */
+    fun setUpiList() {
+
+    }
+
 }
 

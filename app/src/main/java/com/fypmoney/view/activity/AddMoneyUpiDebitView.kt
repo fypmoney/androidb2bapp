@@ -2,18 +2,30 @@ package com.fypmoney.view.activity
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
+import android.view.View
 import android.webkit.WebView
 import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAddMoneyUpiDebitBinding
 import com.fypmoney.model.AddNewCardDetails
+import com.fypmoney.model.UpiModel
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
@@ -37,6 +49,8 @@ import com.payu.phonepe.PhonePe
 import com.payu.phonepe.callbacks.PayUPhonePeCallback
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
+import kotlinx.android.synthetic.main.view_aadhaar_account_activation.tvSubTitle
+import kotlinx.android.synthetic.main.view_add_money_upi_debit.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import kotlin.experimental.and
@@ -77,28 +91,37 @@ class AddMoneyUpiDebitView :
             isBackArrowVisible = true,
             toolbarTitle = getString(R.string.add_money_screen_title)
         )
+        getListOfApps()
         progressBar = ProgressBar(this)
         setObserver()
+        mViewModel.amountToAdd1.set(
+            getString(R.string.add_money_title1) + getString(R.string.Rs) + intent.getStringExtra(
+                AppConstants.AMOUNT
+            ) + getString(R.string.add_money_title2)
+        )
         mViewModel.amountToAdd.set(intent.getStringExtra(AppConstants.AMOUNT))
+
         mViewModel.callAddMoneyStep1Api()
         payuConfig = PayuConfig()
-        payuConfig.environment=PayuConstants.PRODUCTION_ENV
+        payuConfig.environment = PayuConstants.PRODUCTION_ENV
+
+        val amountLength = intent.getStringExtra(AppConstants.AMOUNT)?.length
 
 
-        /*   val ss = SpannableString(getString(R.string.account_verification_sub_title))
-           val clickableSpan: ClickableSpan = object : ClickableSpan() {
-               override fun onClick(textView: View) {
-               }
+        val ss = SpannableString(mViewModel.amountToAdd1.get())
+        val clickableSpan: ClickableSpan = object : ClickableSpan() {
+            override fun onClick(textView: View) {
+            }
 
-               override fun updateDrawState(ds: TextPaint) {
-                   super.updateDrawState(ds)
-                   ds.isUnderlineText = false
-                   ds.color = ContextCompat.getColor(applicationContext, R.color.text_color_dark)
-               }
-           }
-           ss.setSpan(clickableSpan, 49, 52, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-           tvSubTitle.text = ss
-           tvSubTitle.movementMethod = LinkMovementMethod.getInstance()*/
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = false
+                ds.color = ContextCompat.getColor(applicationContext, R.color.text_color_dark)
+            }
+        }
+        ss.setSpan(clickableSpan, 4, amountLength!! + 6, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        balance_text.text = ss
+        balance_text.movementMethod = LinkMovementMethod.getInstance()
 
     }
 
@@ -116,6 +139,21 @@ class AddMoneyUpiDebitView :
                 }
                 2 -> {
                     callPhonePayIntent()
+                }
+                else -> {
+                    val params = mViewModel.getPaymentParams(type = AppConstants.TYPE_GENERIC)
+                    try {
+                        callCustomBrowser(
+                            com.payu.paymentparamhelper.PayuConstants.UPI_INTENT,
+                            params,
+                            params.txnId,
+                            PayuConstants.PRODUCTION_PAYMENT_URL,
+                            isSpecificAppSet = true,
+                            it.packageName
+                        )
+                    } catch (e: java.lang.Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
         }
@@ -155,7 +193,7 @@ class AddMoneyUpiDebitView :
         try {
             val params = mViewModel.getPaymentParams(type = AppConstants.TYPE_GOOGLE_PAY)
             callCustomBrowser(
-                com.payu.paymentparamhelper.PayuConstants.UPI_INTENT,
+                com.payu.paymentparamhelper.PayuConstants.TEZ,
                 params,
                 params.txnId,
                 PayuConstants.PRODUCTION_PAYMENT_URL
@@ -442,7 +480,7 @@ class AddMoneyUpiDebitView :
         mode: String,
         paymentParams: PaymentParams,
         txnId: String,
-        url: String
+        url: String, isSpecificAppSet: Boolean? = false, packageName: String? = null
     ) {
         try {
             val postData = PaymentPostParams(
@@ -462,6 +500,9 @@ class AddMoneyUpiDebitView :
                 customBrowserConfig.setDisableBackButtonDialog(false)
                 customBrowserConfig.setMerchantSMSPermission(true)
                 customBrowserConfig.enableSurePay = 3
+                if (isSpecificAppSet == true) {
+                    customBrowserConfig.packageNameForSpecificApp = packageName
+                }
                 /*customBrowserConfig.merchantCheckoutActivityPath =
                     "com.payu.testapp.MerchantCheckoutActivity"
 */
@@ -482,5 +523,33 @@ class AddMoneyUpiDebitView :
         }
     }
 
+    fun getListOfApps() {
+        val upiList = ArrayList<UpiModel>()
+        upiList.add(UpiModel(name = getString(R.string.google_pay)))
+        upiList.add(UpiModel(name = getString(R.string.phone_pay)))
+        val intent = Intent()
+        intent.data = Uri.parse("upi://pay")
+        val resolveInfos = packageManager.queryIntentActivities(
+            intent,
+            PackageManager.MATCH_DEFAULT_ONLY
+        )
+        for (resolveInfo in resolveInfos) {
+            var packageInfo: PackageInfo
+            val upiModel = UpiModel()
+            try {
+                packageInfo = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, 0)
 
+                upiModel.name =
+                    packageManager.getApplicationLabel(packageInfo.applicationInfo) as String
+                upiModel.packageName = resolveInfo.activityInfo.packageName
+                upiModel.imageUrl =
+                    packageManager.getApplicationIcon(resolveInfo.activityInfo.packageName)
+                upiList.add(upiModel)
+            } catch (e: PackageManager.NameNotFoundException) {
+                e.printStackTrace()
+            }
+        }
+        mViewModel.addMoneyUpiAdapter.setList(upiList)
+
+    }
 }

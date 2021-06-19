@@ -15,23 +15,25 @@
     </data>
 
 
-
     <LinearLayout
         android:id="@+id/serviceLayout"
         android:layout_width="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
         android:onClick="@{()->viewHelper.onItemClicked()}"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivServiceLogo"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:padding="12dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
-            android:background="@drawable/curved_background5"
             android:layout_marginStart="@dimen/_2sdp"
+            android:background="@drawable/curved_background5"
+            android:padding="5dp"
+            app:imageUrl="@{viewHelper.upi.imageUrl}"
+            app:position="@{viewHelper.position}"
             app:srcCompat="@drawable/ic_profile" />
 
 
@@ -40,8 +42,8 @@
             style="@style/TextviewRegular"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:textSize="@dimen/textSize_18"
             android:text="@{viewHelper.upi.name}"
+            android:textSize="@dimen/textSize_14"
 
             />
     </LinearLayout>

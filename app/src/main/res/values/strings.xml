@@ -467,8 +467,8 @@
     <!--
     Add money upi and debit
     -->
-    <string name="add_money_title1">Add</string>
-    <string name="add_money_title2">to your account</string>
+    <string name="add_money_title1">"Add "</string>
+    <string name="add_money_title2">" to your account"</string>
     <string name="add_money_upi_text">UPI</string>
     <string name="add_money_debit_text">Debit card</string>
     <string name="add_money_add_new_card_text">+ Add New Card</string>
@@ -508,9 +508,9 @@
     <string name="production">Production</string>
     <string name="add_upi_text">Add UPI</string>
 
-     <!--
-     Pay u success
-     -->
+    <!--
+    Pay u success
+    -->
 
     <string name="payment_success_msg">Your payment was successful.</string>
     <string name="trans_details_heading">Transaction details</string>
@@ -530,5 +530,12 @@
     <string name="invalid_upi_error">Invalid UPI ID</string>
     <string name="you_paid">You paid,</string>
     <string name="you_were_paid">You were paid,</string>
+    <string name="google_pay">Google Pay</string>
+    <string name="phone_pay">Phone Pay</string>
+
+    <!--
+    Bank transaction history
+    -->
+    <string name="recent">Recent</string>
 
 </resources>

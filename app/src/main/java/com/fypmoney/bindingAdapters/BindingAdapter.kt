@@ -2,6 +2,7 @@ package com.fypmoney.bindingAdapters
 
 
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -116,10 +117,11 @@ class BindingAdapter {
                         // make sure the rule was applied
                         view.layoutParams = textViewLayoutParams
                     }
-                    else -> {    val textViewLayoutParams = RelativeLayout.LayoutParams(
-                        500,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT
-                    )
+                    else -> {
+                        val textViewLayoutParams = RelativeLayout.LayoutParams(
+                            500,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT
+                        )
 
                         // add a rule to align to the left
 
@@ -180,6 +182,30 @@ class BindingAdapter {
                 }
                 else -> {
                     imageView.setImageResource(R.drawable.ic_ankush_bro)
+
+                }
+            }
+
+        }
+
+        /**
+         *  Method to Bind image in with the image view
+         */
+
+        @BindingAdapter(value = ["position", "imageUrl"], requireAll = false)
+        @JvmStatic
+        fun setImageInUPI(imageView: AppCompatImageView, position: Int, imageUrl: Drawable?) {
+            when (position) {
+                1 -> {
+                    imageView.setImageResource(R.drawable.google_logo)
+
+                }
+                2 -> {
+                    imageView.setImageResource(R.drawable.ic_phonepe_icon)
+
+                }
+                else -> {
+                    imageView.setImageDrawable(imageUrl)
 
                 }
             }

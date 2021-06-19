@@ -1,5 +1,6 @@
 package com.fypmoney.model
 
+import android.graphics.drawable.Drawable
 import com.google.gson.annotations.SerializedName
 import com.payu.paymentparamhelper.PostData
 import java.io.Serializable
@@ -7,7 +8,7 @@ import java.io.Serializable
 data class AddMoneyModel(var name: String? = null, var imageUrl: String? = null) {
 }
 
-data class UpiModel(var name: String? = null, var imageUrl: String? = null) {
+data class UpiModel(var name: String? = null, var imageUrl: Drawable? = null,var packageName:String?=null) {
 }
 
 data class SavedCardResponseDetails(
