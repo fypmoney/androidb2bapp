@@ -716,15 +716,15 @@ object Utility {
     /*
     * This method is used to convert amount to Rs
     * */
-    fun convertToRs(amount: String): String {
-        return (amount.toInt() / 100).toString()
+    fun convertToRs(amount: String?): String {
+        return (amount?.toInt()!! / 100).toString()
     }
 
     /*
    * This method is used to convert amount to Rs
    * */
-    fun convertToRs1(amount: String): String {
-        val amountValue = (amount.toInt() / 100).toString()
+    fun convertToRs1(amount: String?): String {
+        val amountValue = (amount?.toInt()!! / 100).toString()
         return BigDecimal(amountValue).setScale(2, BigDecimal.ROUND_HALF_EVEN).toString()
     }
 
@@ -757,10 +757,10 @@ object Utility {
     * */
     fun compareDates(
         fromDate: String, toDate: String
-    ) {
-        val input = SimpleDateFormat(DATE_FORMAT_CHANGED, Locale.getDefault())
+    ): Boolean {
+        val sdf = SimpleDateFormat(DATE_FORMAT_CHANGED, Locale.getDefault())
 
-
+        return sdf.parse(toDate).after(sdf.parse(fromDate))
 
 
     }

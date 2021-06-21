@@ -184,7 +184,8 @@ class AddMoneyUpiDebitView :
    * */
     private fun callPaymentSuccessView() {
         val intent = Intent(this@AddMoneyUpiDebitView, PayUSuccessView::class.java)
-        intent.putExtra(AppConstants.PAYU_RESPONSE, mViewModel.step2ApiResponse)
+        intent.putExtra(AppConstants.RESPONSE, mViewModel.step2ApiResponse)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.ADD_MONEY)
         startActivity(intent)
         finishAffinity()
     }

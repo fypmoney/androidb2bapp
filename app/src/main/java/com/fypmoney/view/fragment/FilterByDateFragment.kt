@@ -94,6 +94,14 @@ class FilterByDateFragment(
                     Utility.showToast(PockketApplication.instance.getString(R.string.to_date_empty_error))
                 }
 
+                !Utility.compareDates(
+                    fromDate = fromDate.text.toString(),
+                    toDate = toDate.text.toString()
+                ) -> {
+                    Utility.showToast(PockketApplication.instance.getString(R.string.to_date_bigger))
+
+                }
+
                 else -> {
                     onBottomSheetClickListener.onFilterByDateButtonClick(
                         fromDate.text.toString(),

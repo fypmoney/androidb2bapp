@@ -25,50 +25,87 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/image"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/add_money_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="80dp"
-                app:srcCompat="@drawable/ic_payment_sucessful" />
+                android:orientation="vertical"
+                android:visibility="@{viewModel.isAddMoneyLayoutVisible?View.VISIBLE:View.GONE}">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/amount"
-                style="@style/TextviewBold"
-                android:layout_below="@+id/image"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="12dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="@{@string/Rs+viewModel.availableAmount}"
-                android:textSize="42dp" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="80dp"
+                    app:srcCompat="@drawable/ic_payment_sucessful" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/payment_success"
-                style="@style/TextviewRegular"
-                android:layout_below="@id/amount"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="19dp"
-                android:text="@string/payment_success_msg"
-                android:textAlignment="center"
-                android:textColor="@color/text_color_dark"
-                android:textSize="17dp" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/amount"
+                    style="@style/TextviewBold"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@{@string/Rs+viewModel.availableAmount}"
+                    android:textSize="42dp" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/date"
-                style="@style/TextviewRegular"
-                android:layout_below="@id/payment_success"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp"
-                android:text="@{viewModel.paymentDateTime}"
-                android:textAlignment="center" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/payment_success"
+                    style="@style/TextviewRegular"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="19dp"
+                    android:text="@string/payment_success_msg"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/date"
+                    style="@style/TextviewRegular"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="@{viewModel.paymentDateTime}"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bank_transaction_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="@{viewModel.isAddMoneyLayoutVisible?View.GONE:View.VISIBLE}">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewBold"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@{@string/Rs+viewModel.availableAmount}"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="19dp"
+                    android:text="@string/payment_success_msg"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="@{viewModel.paymentDateTime}"
+                    android:textAlignment="center" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/date"
+                android:layout_below="@+id/add_money_layout"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/curved_background12"
                 android:orientation="vertical"
@@ -93,7 +130,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextviewRegular"
                     android:layout_marginTop="7dp"
-                    android:text="@{viewModel.payUResponse.accountTxnNo}"
+                    android:text="@{viewModel.fypId}"
                     android:textAlignment="center" />
 
                 <View
@@ -114,7 +151,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextviewRegular"
                     android:layout_marginTop="7dp"
-                    android:text="@{viewModel.payUResponse.bankExternalId}"
+                    android:text="@{viewModel.bankId}"
                     android:textAlignment="center" />
 
                 <com.google.android.material.button.MaterialButton

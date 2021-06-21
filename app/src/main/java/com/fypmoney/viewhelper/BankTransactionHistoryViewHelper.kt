@@ -20,7 +20,6 @@ class BankTransactionHistoryViewHelper(
     var bankHistory: BankTransactionHistoryResponseDetails?,
     var viewModel: BankTransactionHistoryViewModel,
     var adapter: BankTransactionHistoryAdapter
-
 ) {
     var date = ObservableField<String>()
     var amount = ObservableField<String>()
@@ -35,6 +34,7 @@ class BankTransactionHistoryViewHelper(
      * called when any item is selected
      * */
     fun onItemClicked() {
+        viewModel.onItemClicked.value=bankHistory
     }
 
     /*
@@ -42,49 +42,8 @@ class BankTransactionHistoryViewHelper(
     * */
     private fun setInitialData() {
         // set date value
-        val dateVal = bankHistory?.transaction_date?.split("+")
-        date.set(
-            Utility.parseDateTime(
-                dateVal!![0],
-                inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
-                outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT3
-            )
-        )
-        dateWithoutTime.set(
-            Utility.parseDateTime(
-                dateVal[0],
-                inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
-                outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT1
-            )
-        )
-        try {
-            // set line visibility
-            if (position!! > 0 && position!! < adapter.transactionList!!.size) {
-                val previousDateAfterParse = Utility.parseDateTime(
-                    adapter.transactionList!![position!! - 1].transaction_date,
-                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
-                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT1
-                )
 
-                val nextDateAfterParse = Utility.parseDateTime(
-                    adapter.transactionList!![position!! + 1].transaction_date,
-                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
-                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT1
-                )
-                if (dateWithoutTime.get() == previousDateAfterParse && dateWithoutTime.get() == nextDateAfterParse) {
-                    isLineVisible.set(false)
-                } else if (dateWithoutTime.get() != previousDateAfterParse && dateWithoutTime.get() == nextDateAfterParse) {
-                    isLineVisible.set(false)
-                } else {
-                    isLineVisible.set(true)
-
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        when (bankHistory?.transaction_type) {
+        when (bankHistory?.transactionType) {
             AppConstants.CREDITED -> {
                 isCredited.set(true)
                 amount.set(
@@ -104,6 +63,51 @@ class BankTransactionHistoryViewHelper(
             }
 
         }
+
+        try {
+            val dateVal = bankHistory?.transactionDate?.split("+")
+
+            date.set(
+                Utility.parseDateTime(
+                    dateVal!![0],
+                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
+                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT3
+                )
+            )
+            dateWithoutTime.set(
+                Utility.parseDateTime(
+                    dateVal[0],
+                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
+                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT1
+                )
+            )
+            // set line visibility
+            if (position!! > 0 && position!! < adapter.transactionList!!.size) {
+                val previousDateAfterParse = Utility.parseDateTime(
+                    adapter.transactionList!![position!! - 1].transactionDate,
+                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
+                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT1
+                )
+
+                val nextDateAfterParse = Utility.parseDateTime(
+                    adapter.transactionList!![position!! + 1].transactionDate,
+                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
+                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT1
+                )
+                if (dateWithoutTime.get() == previousDateAfterParse && dateWithoutTime.get() == nextDateAfterParse) {
+                    isLineVisible.set(false)
+                } else if (dateWithoutTime.get() != previousDateAfterParse && dateWithoutTime.get() == nextDateAfterParse) {
+                    isLineVisible.set(false)
+                } else {
+                    isLineVisible.set(true)
+
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+
 
     }
 

@@ -554,5 +554,6 @@
     <string name="date_hint">dd/MM/YYYY</string>
     <string name="from_date_empty_error">Please choose from date</string>
     <string name="to_date_empty_error">Please choose to date</string>
+    <string name="to_date_bigger">To date should be larger than from date</string>
 
 </resources>

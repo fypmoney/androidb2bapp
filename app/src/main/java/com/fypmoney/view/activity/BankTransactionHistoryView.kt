@@ -1,5 +1,6 @@
 package com.fypmoney.view.activity
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -8,6 +9,8 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewBankTransactionHistoryBinding
+import com.fypmoney.model.BankTransactionHistoryResponseDetails
+import com.fypmoney.util.AppConstants
 import com.fypmoney.view.fragment.AddUpiBottomSheet
 import com.fypmoney.view.fragment.FilterByDateFragment
 import com.fypmoney.viewmodel.BankTransactionHistoryViewModel
@@ -54,6 +57,9 @@ class BankTransactionHistoryView :
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
+        mViewModel.onItemClicked.observe(this) {
+            intentToActivity(PayUSuccessView::class.java,it)
+        }
 
 
     }
@@ -71,6 +77,20 @@ class BankTransactionHistoryView :
     }
 
     override fun onFilterByDateButtonClick(fromDate: String, toDate: String) {
+        mViewModel.callGetBankTransactionHistoryApi(fromDate, toDate)
+    }
+
+    /**
+     * Method to navigate to the different activity
+     */
+    private fun intentToActivity(
+        aClass: Class<*>,
+        bankTransactionHistoryResponseDetails: BankTransactionHistoryResponseDetails
+    ) {
+        val intent = Intent(this@BankTransactionHistoryView, aClass)
+        intent.putExtra(AppConstants.RESPONSE, bankTransactionHistoryResponseDetails)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.BANK_TRANSACTION)
+        startActivity(intent)
 
     }
 

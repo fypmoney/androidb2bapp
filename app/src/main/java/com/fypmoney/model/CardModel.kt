@@ -62,13 +62,16 @@ data class Transactions(
 
 
 data class BankTransactionHistoryResponseDetails(
-    @SerializedName("transaction_type") val transaction_type: String,
+    @SerializedName("transactionType") val transactionType: String,
     @SerializedName("amount") val amount: String,
-    @SerializedName("payment_mode") val payment_mode: String,
+    @SerializedName("paymentMode") val paymentMode: String,
     @SerializedName("mrn") val mrn: String,
-    @SerializedName("transaction_reference_number") val transaction_reference_number: String,
+    @SerializedName("bankReferenceNumber") val bankReferenceNumber: String,
     @SerializedName("message") val message: String,
-    @SerializedName("transaction_date") val transaction_date: String
+    @SerializedName("transactionDate") val transactionDate: String,
+    @SerializedName("userName") val userName: String,
+    @SerializedName("mobileNo") val mobileNo: String,
+    @SerializedName("accReferenceNumber") val accReferenceNumber: String
 ) : Serializable
 
 data class BankTransactionHistoryPagination(

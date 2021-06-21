@@ -105,7 +105,7 @@ object AppConstants {
     const val PAY = "pay"
     const val WHICH_ACTION = "which_action"
     const val FUND_TRANSFER_TRANSACTION_TYPE = "FUND_TRANSAFER"
-    const val PAYU_RESPONSE = "payu_response"
+    const val RESPONSE = "response"
     const val SERVER_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     const val SERVER_DATE_TIME_FORMAT1 = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     const val SERVER_DATE_TIME_FORMAT2 = "yyyy-MM-dd'T'HH:mm:ss.SSS"
@@ -122,6 +122,8 @@ object AppConstants {
     const val TYPE_GENERIC = "generic"
     const val CREDITED = "Credited"
     const val DEBITED = "Debited"
+    const val BANK_TRANSACTION = "bank_transaction"
+    const val ADD_MONEY = "add_money"
 
 
 }
