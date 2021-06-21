@@ -49,6 +49,8 @@
     <string name="request_btn_text">Request</string>
     <string name="withdraw_btn_text">Withdraw</string>
     <string name="approve_pay_btn_text">Approve &amp; Pay</string>
+    <string name="clear_btn_text">Clear</string>
+    <string name="apply_btn_text">Apply</string>
 
 
     <!--Login-->
@@ -541,5 +543,16 @@
     <string name="trans_history_heading">Transaction History</string>
     <string name="add">+</string>
     <string name="subtract">-</string>
+
+    <!--
+    Filter by date
+    -->
+    <string name="filter_by_date_title">Filter by date</string>
+    <string name="from_date">From date</string>
+    <string name="to_date">To date</string>
+    <string name="filter_by_date_text">You will be able to see transactions between these dates</string>
+    <string name="date_hint">dd/MM/YYYY</string>
+    <string name="from_date_empty_error">Please choose from date</string>
+    <string name="to_date_empty_error">Please choose to date</string>
 
 </resources>

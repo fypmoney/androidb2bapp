@@ -1,20 +1,27 @@
 package com.fypmoney.view.activity
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewBankTransactionHistoryBinding
+import com.fypmoney.view.fragment.AddUpiBottomSheet
+import com.fypmoney.view.fragment.FilterByDateFragment
 import com.fypmoney.viewmodel.BankTransactionHistoryViewModel
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.toolbar_bank_history.*
 import kotlinx.android.synthetic.main.view_user_feeds.*
 
 /*
 * This is used to handle contacts
 * */
 class BankTransactionHistoryView :
-    BaseActivity<ViewBankTransactionHistoryBinding, BankTransactionHistoryViewModel>(){
+    BaseActivity<ViewBankTransactionHistoryBinding, BankTransactionHistoryViewModel>(),
+    FilterByDateFragment.OnFilterByDateClickListener {
     private lateinit var mViewModel: BankTransactionHistoryViewModel
 
     override fun getBindingVariable(): Int {
@@ -37,6 +44,8 @@ class BankTransactionHistoryView :
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = getString(R.string.trans_history_heading)
         )
+
+        toolbarImage.setOnClickListener { callFilterByDateBottomSheet() }
         setObserver()
     }
 
@@ -46,6 +55,22 @@ class BankTransactionHistoryView :
      */
     private fun setObserver() {
 
+
+    }
+
+    /*
+         * This method is used to call filter by date bottom sheet
+         * */
+    private fun callFilterByDateBottomSheet() {
+        val bottomSheet =
+            FilterByDateFragment(
+                this
+            )
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "FilterByDate")
+    }
+
+    override fun onFilterByDateButtonClick(fromDate: String, toDate: String) {
 
     }
 

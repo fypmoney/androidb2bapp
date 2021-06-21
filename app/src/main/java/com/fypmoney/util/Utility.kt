@@ -30,6 +30,7 @@ import com.fypmoney.database.LogRepository
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.database.entity.LogEntity
 import com.fypmoney.model.CustomerInfoResponse
+import com.fypmoney.util.AppConstants.DATE_FORMAT_CHANGED
 import com.google.gson.Gson
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import kotlinx.coroutines.Dispatchers
@@ -727,30 +728,18 @@ object Utility {
         return BigDecimal(amountValue).setScale(2, BigDecimal.ROUND_HALF_EVEN).toString()
     }
 
-    /*
-    * This method is used to convert date time
-    * */
 
-    fun parseDateTime(dateTime: String? = null): String {
-        val input = SimpleDateFormat(AppConstants.SERVER_DATE_TIME_FORMAT, Locale.getDefault())
-        val output = SimpleDateFormat(AppConstants.CHANGED_DATE_TIME_FORMAT, Locale.getDefault())
-
-        var d: Date? = null
-        try {
-            d = input.parse(dateTime!!)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        return output.format(d)
-
-    }
     /*
  * This method is used to convert date time
  * */
 
-    fun getDayMonth(dateTime: String? = null): String {
-        val input = SimpleDateFormat(AppConstants.SERVER_DATE_TIME_FORMAT1, Locale.getDefault())
-        val output = SimpleDateFormat(AppConstants.CHANGED_DATE_TIME_FORMAT1, Locale.getDefault())
+    fun parseDateTime(
+        dateTime: String? = null,
+        inputFormat: String? = AppConstants.SERVER_DATE_TIME_FORMAT1,
+        outputFormat: String? = AppConstants.CHANGED_DATE_TIME_FORMAT1
+    ): String {
+        val input = SimpleDateFormat(inputFormat, Locale.getDefault())
+        val output = SimpleDateFormat(outputFormat, Locale.getDefault())
 
         var d: Date? = null
         try {
@@ -761,22 +750,19 @@ object Utility {
         return output.format(d)
 
     }
+
 
     /*
-* This method is used to convert date time
-* */
+    * This method is used to compare dates
+    * */
+    fun compareDates(
+        fromDate: String, toDate: String
+    ) {
+        val input = SimpleDateFormat(DATE_FORMAT_CHANGED, Locale.getDefault())
 
-    fun getDayMonthTime(dateTime: String? = null): String {
-        val input = SimpleDateFormat(AppConstants.SERVER_DATE_TIME_FORMAT1, Locale.getDefault())
-        val output = SimpleDateFormat(AppConstants.CHANGED_DATE_TIME_FORMAT2, Locale.getDefault())
 
-        var d: Date? = null
-        try {
-            d = input.parse(dateTime!!)
-        } catch (e: ParseException) {
-            e.printStackTrace()
-        }
-        return output.format(d)
+
 
     }
+
 }

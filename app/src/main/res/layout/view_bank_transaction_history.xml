@@ -20,7 +20,7 @@
 
         <include
             android:id="@+id/layout"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar_bank_history" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/recent"

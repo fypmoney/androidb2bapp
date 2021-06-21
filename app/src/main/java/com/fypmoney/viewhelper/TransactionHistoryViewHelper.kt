@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.model.TransactionHistoryResponseDetails
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.TransactionHistoryViewModel
 
@@ -31,8 +32,8 @@ class TransactionHistoryViewHelper(
                     transactionHistory?.txnAmount!!
                 )
             )
-            msg.set(PockketApplication.instance.getString(R.string.you_paid)+Utility.getDayMonth(transactionHistory?.txnTime))
-            date.set(Utility.getDayMonthTime(transactionHistory?.txnTime))
+            msg.set(PockketApplication.instance.getString(R.string.you_paid)+Utility.parseDateTime(transactionHistory?.txnTime,inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT1))
+            date.set(Utility.parseDateTime(transactionHistory?.txnTime,inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT2))
         } catch (e: Exception) {
             e.printStackTrace()
         }

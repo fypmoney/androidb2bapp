@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.model.AddMoneyStep2ResponseDetails
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 
 /*
@@ -22,7 +23,7 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
     * */
     fun setInitialData() {
         availableAmount.set(Utility.convertToRs(payUResponse.get()?.amount!!))
-        paymentDateTime.set(Utility.parseDateTime(payUResponse.get()?.accountTxnTime))
+        paymentDateTime.set(Utility.parseDateTime(payUResponse.get()?.accountTxnTime,inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT,outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT))
 
     }
 

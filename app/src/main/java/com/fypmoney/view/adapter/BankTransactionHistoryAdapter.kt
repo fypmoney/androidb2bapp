@@ -44,7 +44,7 @@ class BankTransactionHistoryAdapter(var viewModel: BankTransactionHistoryViewMod
         override fun onBind(position: Int) {
             mViewHelper = BankTransactionHistoryViewHelper(
                 position,
-                transactionList?.get(position), viewModel
+                transactionList?.get(position), viewModel,this@BankTransactionHistoryAdapter
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             mViewHelper.init()

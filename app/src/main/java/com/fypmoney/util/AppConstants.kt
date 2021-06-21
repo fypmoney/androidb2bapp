@@ -108,9 +108,11 @@ object AppConstants {
     const val PAYU_RESPONSE = "payu_response"
     const val SERVER_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     const val SERVER_DATE_TIME_FORMAT1 = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+    const val SERVER_DATE_TIME_FORMAT2 = "yyyy-MM-dd'T'HH:mm:ss.SSS"
     const val CHANGED_DATE_TIME_FORMAT = "MMM dd,yyyy-HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT1 = "MMM dd"
     const val CHANGED_DATE_TIME_FORMAT2 = "MMM dd HH:mmaa"
+    const val CHANGED_DATE_TIME_FORMAT3 = "MMM dd, HH:mmaa"
     const val PAYU_SERVER = "pay u server"
 
     const val TYPE_UPI = "upi"
