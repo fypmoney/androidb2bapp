@@ -41,7 +41,8 @@
     <color name="textColorRed1">#EF4B59</color>
     <color name="color_green">#BAE6C2</color>
     <color name="color_sky">#8ECFE3</color>
-
+    <color name="color_dark_green">#72BE80</color>
+    <color name="color_pink">#FFD3D7</color>
 
 
 </resources>

@@ -59,8 +59,6 @@ class BankTransactionHistoryViewModel(application: Application) : BaseViewModel(
                         noDataFoundVisibility.set(true)
                 }
             }
-
-
         }
 
     }

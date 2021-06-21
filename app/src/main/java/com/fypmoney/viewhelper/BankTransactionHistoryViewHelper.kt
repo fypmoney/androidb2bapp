@@ -1,11 +1,11 @@
 package com.fypmoney.viewhelper
 
 import androidx.databinding.ObservableField
-import com.fypmoney.database.entity.ContactEntity
+import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.model.BankTransactionHistoryResponseDetails
-import com.fypmoney.util.Utility
+import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.BankTransactionHistoryViewModel
-import com.fypmoney.viewmodel.ContactListViewModel
 
 
 /*
@@ -15,15 +15,14 @@ class BankTransactionHistoryViewHelper(
     var position: Int? = -1,
     var bankHistory: BankTransactionHistoryResponseDetails?,
     var viewModel: BankTransactionHistoryViewModel
+
 ) {
-
-    var isContactSelected = ObservableField(false)
-    var isAppUser = ObservableField(false)
-    var isBackgroundHighlight = ObservableField<Boolean>()
-    var isApiError = ObservableField(false)
-
+    var date = ObservableField<String>()
+    var amount = ObservableField<String>()
+    var isCredited = ObservableField<Boolean>()
     fun init() {
-      }
+        setInitialData()
+    }
 
     /*
      * called when any item is selected
@@ -31,6 +30,23 @@ class BankTransactionHistoryViewHelper(
     fun onItemClicked() {
     }
 
+    /*
+    * This is used to set initial data
+    * */
+    private fun setInitialData() {
+        when (bankHistory?.transaction_type) {
+            AppConstants.CREDITED -> {
+                isCredited.set(true)
+                amount.set(
+                    PockketApplication.instance.getString(R.string.add) + PockketApplication.instance.getString(
+                        R.string.Rs
+                    ) + bankHistory?.amount
+                )
 
+            }
+
+        }
+
+    }
 
 }

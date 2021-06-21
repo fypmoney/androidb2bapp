@@ -53,22 +53,20 @@
                     android:layout_marginTop="12dp"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:visibility="@{viewModel.isFetchBalanceVisible?View.GONE:View.VISIBLE,default=gone}"
                     android:text="@{@string/Rs+viewModel.availableAmount}"
-                    android:textSize="42dp" />
+                    android:textSize="42dp"
+                    android:visibility="@{viewModel.isFetchBalanceVisible?View.GONE:View.VISIBLE,default=gone}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/amountFetching"
                     style="@style/TextviewRegular"
                     android:layout_below="@+id/balance_text"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="12dp"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:layout_centerHorizontal="true"
-                    android:visibility="@{viewModel.isFetchBalanceVisible?View.VISIBLE:View.GONE,default=visible}"
                     android:text="@{@string/fetching_balance}"
-                    />
-
+                    android:visibility="@{viewModel.isFetchBalanceVisible?View.VISIBLE:View.GONE,default=visible}" />
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -136,8 +134,6 @@
                 </LinearLayout>
 
 
-
-
                 <EditText
                     android:id="@+id/add_money_editext"
                     style="@style/EditTextStyle"
@@ -171,7 +167,7 @@
                     android:layout_marginTop="35dp"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
-                    android:text="@string/add_money_screen_text"
+                    android:text="@{viewModel.remainingLoadLimit}"
                     android:textAlignment="center"
                     android:textColor="@color/text_color_dark" />
 

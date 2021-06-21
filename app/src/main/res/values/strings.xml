@@ -395,7 +395,8 @@
     <string name="add_money_100">\u20B9 100</string>
     <string name="add_money_500">\u20B9 500</string>
     <string name="add_money_1000">\u20B9 1000</string>
-    <string name="add_money_screen_text">You can add funds up to Rs.5,433 for the current month</string>
+    <string name="add_money_screen_text">You can add funds up to Rs.</string>
+    <string name="add_money_screen_text1">" for the current month"</string>
     <string name="add_money_empty_error">Please enter amount</string>
 
     <!--
@@ -538,5 +539,7 @@
     -->
     <string name="recent">Recent</string>
     <string name="trans_history_heading">Transaction History</string>
+    <string name="add">+</string>
+    <string name="subtract">-</string>
 
 </resources>

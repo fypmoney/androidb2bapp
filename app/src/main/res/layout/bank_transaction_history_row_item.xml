@@ -29,9 +29,9 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
-            android:background="@drawable/curved_background14"
+            android:background="@{viewHelper.isCredited?@drawable/curved_background8:@drawable/curved_background19}"
             android:padding="12dp"
-            app:srcCompat="@drawable/ic_user" />
+            android:src="@{viewHelper.isCredited?@drawable/ic_request_money:@drawable/ic_send_money}"  />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/heading"
@@ -60,8 +60,8 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
-            android:text="@string/invite_link"
-            android:textColor="@color/color_skyblue" />
+            android:text="@{viewHelper.amount}"
+            android:textColor="@{viewHelper.isCredited?@color/color_dark_green:@color/text_color_red}" />
 
     </RelativeLayout>
 

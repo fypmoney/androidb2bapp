@@ -118,6 +118,8 @@ object AppConstants {
     const val TYPE_GOOGLE_PAY = "gpay"
     const val TYPE_PHONEPE = "phonepe"
     const val TYPE_GENERIC = "generic"
+    const val CREDITED = "Credited"
+    const val DEBITED = "Debited"
 
 
 }
