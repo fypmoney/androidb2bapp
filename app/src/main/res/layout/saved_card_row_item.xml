@@ -50,7 +50,7 @@
             android:layout_below="@+id/ivServiceLogo"
             android:layout_marginTop="10dp"
             android:orientation="horizontal"
-            android:visibility="@{viewHelper.isCvvLayoutVisible?View.VISIBLE:View.GONE,default=gone}">
+            android:visibility="@{viewHelper.savedCard.isSelected?View.VISIBLE:View.GONE,default=gone}">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/add_money_editext"

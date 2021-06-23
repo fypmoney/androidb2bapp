@@ -18,7 +18,6 @@ class SavedCardViewHelper(
     var viewModel: AddMoneyUpiDebitViewModel, var savedCardsAdapter: SavedCardsAdapter
 ) {
     var amount = ObservableField<String>()
-    var isCvvLayoutVisible = ObservableField<Boolean>()
     var cvv = MutableLiveData<String>()
 
     init {
@@ -36,9 +35,8 @@ class SavedCardViewHelper(
             }
 
         }
-        // savedCardsAdapter.notifyDataSetChanged()
+        savedCardsAdapter.notifyDataSetChanged()
         savedCard?.isSelected = true
-        isCvvLayoutVisible.set(true)
     }
 
     /*

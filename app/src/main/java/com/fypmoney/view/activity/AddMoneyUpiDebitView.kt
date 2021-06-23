@@ -167,28 +167,37 @@ class AddMoneyUpiDebitView :
         }
         mViewModel.callGetCardsApi.observe(this) {
             if (it) {
+
+                callPayUApi(
+                    command = PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK,
+                    var1 = mViewModel.merchantKey.get() + ":" + SharedPrefUtils.getLong(
+                        applicationContext,
+                        SharedPrefUtils.SF_KEY_USER_ID
+                    ),
+                    hash = mViewModel.getUserCardsHash.get()
+                )
                 /**
                  * Below merchant webservice is used to get all the payment options enabled on the merchant key.
                  */
-                val merchantWebService = MerchantWebService()
-                merchantWebService.key = mViewModel.merchantKey.get()
-                merchantWebService.command = PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK
-                merchantWebService.var1 =
-                    mViewModel.merchantKey.get() + ":" + SharedPrefUtils.getLong(
-                        applicationContext,
-                        SharedPrefUtils.SF_KEY_USER_ID
-                    )
-                merchantWebService.hash = mViewModel.getCardsOrDomesticHash.get()
-                // dont fetch the data if its been called from payment activity.
-                val postData: PostData =
-                    MerchantWebServicePostParams(merchantWebService).merchantWebServicePostParams
+                /*  val merchantWebService = MerchantWebService()
+                  merchantWebService.key = mViewModel.merchantKey.get()
+                  merchantWebService.command = PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK
+                  merchantWebService.var1 =
+                      mViewModel.merchantKey.get() + ":" + SharedPrefUtils.getLong(
+                          applicationContext,
+                          SharedPrefUtils.SF_KEY_USER_ID
+                      )
+                  merchantWebService.hash = mViewModel.getUserCardsHash.get()
+                  // dont fetch the data if its been called from payment activity.
+                  val postData: PostData =
+                      MerchantWebServicePostParams(merchantWebService).merchantWebServicePostParams
 
-                // ok we got the post params, let make an api call to payu to fetch the payment related details
-                payuConfig.data = postData.result
+                  // ok we got the post params, let make an api call to payu to fetch the payment related details
+                  payuConfig.data = postData.result
 
-                val paymentRelatedDetailsForMobileSdkTask = GetPaymentRelatedDetailsTask(this)
-                paymentRelatedDetailsForMobileSdkTask.execute(payuConfig)
-
+                  val paymentRelatedDetailsForMobileSdkTask = GetPaymentRelatedDetailsTask(this)
+                  paymentRelatedDetailsForMobileSdkTask.execute(payuConfig)
+  */
             }
         }
 
@@ -343,6 +352,8 @@ class AddMoneyUpiDebitView :
     }
 
     override fun onAddNewCardButtonClick(addNewCardDetails: AddNewCardDetails) {
+        Log.d("jshf8e",addNewCardDetails.cardNumber?.take(6).toString())
+      //  callPayUApi(mViewModel.getCheckIsDomesticHash.get(),PayuConstants.CHECK_IS_DOMESTIC,var1=addNewCardDetails.cardNumber?.take(6))
         callDebitCardPaymentGateway(0, addNewCardDetails)
     }
 
@@ -605,7 +616,6 @@ class AddMoneyUpiDebitView :
         fromWhichType: Int,
         addNewCardDetails: AddNewCardDetails
     ) {
-        Log.d("jcjhde", "jdhvriuiehgri")
         try {
             val params = mViewModel.getPaymentParams(
                 type = AppConstants.TYPE_DC,
@@ -619,6 +629,28 @@ class AddMoneyUpiDebitView :
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+/*
+This method is used to call the pay u api
+*/
+
+    private fun callPayUApi(hash: String?, command: String?, var1: String?) {
+        val merchantWebService = MerchantWebService()
+        merchantWebService.key = mViewModel.merchantKey.get()
+        merchantWebService.command = command
+        merchantWebService.var1 = var1
+
+        merchantWebService.hash = hash
+        // dont fetch the data if its been called from payment activity.
+        val postData: PostData =
+            MerchantWebServicePostParams(merchantWebService).merchantWebServicePostParams
+
+        // ok we got the post params, let make an api call to payu to fetch the payment related details
+        payuConfig.data = postData.result
+
+        val paymentRelatedDetailsForMobileSdkTask = GetPaymentRelatedDetailsTask(this)
+        paymentRelatedDetailsForMobileSdkTask.execute(payuConfig)
+
     }
 }
 

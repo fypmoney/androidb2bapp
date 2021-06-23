@@ -22,9 +22,6 @@ import com.payu.india.Model.PaymentParams
 import com.payu.india.Payu.PayuConstants
 import com.payu.paymentparamhelper.PostData
 import org.json.JSONObject
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
-import kotlin.experimental.and
 
 class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(application),
     AddMoneyUpiAdapter.OnUpiClickListener {
@@ -46,12 +43,9 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var onStep2Response = MutableLiveData<String>()
     var step2ApiResponse = AddMoneyStep2ResponseDetails()
     var callGetCardsApi = MutableLiveData(false)
-    var getCardsOrDomesticHash = ObservableField<String>()
+    var getUserCardsHash = ObservableField<String>()
+    var getCheckIsDomesticHash = ObservableField<String>()
     var onAddInSaveCardClicked = MutableLiveData<AddNewCardDetails>()
-
-    init {
-
-    }
 
 
     /*
@@ -78,7 +72,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     /*
      *This method is used to call payment parameters while receiving the payment
      * */
-    fun callGetHashApi() {
+    private fun callGetHashApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_GET_HASH,
@@ -134,246 +128,230 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
             }
 
-            ApiConstant.GET_USER_CARDS -> {
-                if (responseData is SavedCardResponseDetails) {
-                    Log.d("cmckcmfci", responseData.toString())
-
-                }
-
-            }
             ApiConstant.API_GET_HASH -> {
                 if (responseData is GetHashResponse) {
                     responseData.getHashResponseDetails.hashData?.forEach()
                     {
                         if (it.command == PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK) {
-                            getCardsOrDomesticHash.set(
+                            getUserCardsHash.set(
                                 it.hashValue
                             )
                             callGetCardsApi.value = true
-                            /*getAllSavedCardsApi(
-                                GetSavedCardRequest(
-                                    hash = responseData.getHashResponseDetails.hashData?.get(
-                                        0
-                                    )?.hashValue!!,
-                                    var1 = responseData.getHashResponseDetails.hashData?.get(
-                                        0
-                                    )?.var1,
-                                    command = responseData.getHashResponseDetails.hashData?.get(
-                                        0
-                                    )?.command,
-                                    key = merchantKey.get()
-
-                                )
-                            )*/
-
+                        } else {
+                            getCheckIsDomesticHash.set(
+                                it.hashValue
+                            )
                         }
+
+
 
                     }
 
-
                 }
-            }
 
 
         }
 
+
     }
 
-    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
-        super.onError(purpose, errorResponseInfo)
-        when (purpose) {
-            ApiConstant.API_ADD_MONEY_STEP2 -> {
-                onStep2Response.value = AppConstants.API_FAIL
+}
 
+override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
+    super.onError(purpose, errorResponseInfo)
+    when (purpose) {
+        ApiConstant.API_ADD_MONEY_STEP2 -> {
+            onStep2Response.value = AppConstants.API_FAIL
+
+        }
+    }
+
+}
+
+override fun onUpiItemClicked(position: Int, upiModel: UpiModel?) {
+    clickedPositionForUpi.set(position)
+    onUpiClicked.value = upiModel
+
+}
+
+/*
+*  used to parse the response
+* */
+private fun parseResponseOfStep1(requestData: String?): PgRequestData {
+    if (!requestData.isNullOrEmpty()) {
+        val pgRequestData = PgRequestData()
+        val mainObject = JSONObject(requestData)
+        pgRequestData.txnId = mainObject.getString("txnid")
+        pgRequestData.email = mainObject.getString("email")
+        pgRequestData.amount = mainObject.getString("amount")
+        pgRequestData.merchantId = mainObject.getString("merchantId")
+        //  pgRequestData.merchantKey = mainObject.getString("merchantKey")
+        pgRequestData.merchantKey = merchantKey.get()
+        pgRequestData.productName = mainObject.getString("productName")
+        pgRequestData.paymentHash = mainObject.getString("paymentHash")
+        pgRequestData.userFirstName = mainObject.getString("userFirstName")
+        pgRequestData.surl = mainObject.getString("surl")
+        pgRequestData.furl = mainObject.getString("furl")
+        pgRequestData.pgUrl = mainObject.getString("pgUrl")
+        pgRequestData.udf1 = mainObject.getString("udf1")
+        pgRequestData.udf2 = mainObject.getString("udf2")
+        pgRequestData.udf3 = mainObject.getString("udf3")
+        pgRequestData.udf4 = mainObject.getString("udf4")
+        pgRequestData.udf5 = mainObject.getString("udf5")
+        pgRequestData.udf6 = mainObject.getString("udf6")
+        pgRequestData.udf7 = mainObject.getString("udf7")
+        pgRequestData.udf8 = mainObject.getString("udf8")
+
+        // set hash
+
+        hash.set(mainObject.getString("paymentHash"))
+        // merchantKey.set(mainObject.getString("merchantKey"))
+
+        return pgRequestData
+    }
+    return PgRequestData()
+}
+
+/*
+* return params for upi, phone pe , google pe, debit card
+* */
+fun getPaymentParams(
+    type: String,
+    upiId: String? = null,
+    isUpiSaved: Boolean? = false,
+    addNewCardDetails: AddNewCardDetails? = null, fromWhichType: Int? = 0
+): PaymentParams {
+    val resultData = parseResponseOfStep1(requestData.get())
+    val mPaymentParams = PaymentParams()
+    mPaymentParams.key = resultData.merchantKey
+    mPaymentParams.txnId = resultData.txnId
+    mPaymentParams.amount = resultData.amount
+    mPaymentParams.productInfo = resultData.productName
+    mPaymentParams.firstName = resultData.userFirstName
+    mPaymentParams.phone = resultData.phone
+    mPaymentParams.email = "poojamalik810@gmail.com"
+    mPaymentParams.txnId = resultData.txnId
+    mPaymentParams.surl = " https://payuresponse.firebaseapp.com/success"
+    mPaymentParams.furl = "https://payuresponse.firebaseapp.com/failure"
+    mPaymentParams.udf1 = resultData.udf1
+    mPaymentParams.udf2 = resultData.udf2
+    mPaymentParams.udf3 = resultData.udf3
+    mPaymentParams.udf4 = resultData.udf4
+    mPaymentParams.udf5 = resultData.udf5
+    mPaymentParams.userCredentials = resultData.merchantKey + ":" + SharedPrefUtils.getLong(
+        getApplication(),
+        SharedPrefUtils.SF_KEY_USER_ID
+    )
+
+    mPaymentParams.hash = generateHashFromSDK(mPaymentParams, merchantSalt)
+    hash.set(mPaymentParams.hash)
+
+
+    when (type) {
+        AppConstants.TYPE_DC -> {
+            if (fromWhichType == 0) {
+                mPaymentParams.cardNumber = addNewCardDetails?.cardNumber
+            } else {
+                mPaymentParams.cardToken = addNewCardDetails?.card_token
             }
+            mPaymentParams.nameOnCard = addNewCardDetails?.nameOnCard
+            mPaymentParams.expiryMonth = addNewCardDetails?.expiryMonth// MM
+            mPaymentParams.expiryYear = addNewCardDetails?.expiryYear// YYYY
+            mPaymentParams.cvv = addNewCardDetails?.cvv
+
+            if (addNewCardDetails?.isCardSaved == true) {
+                mPaymentParams.storeCard = 1
+            } else {
+                mPaymentParams.storeCard = 0
+            }
+
         }
 
-    }
+        AppConstants.TYPE_UPI -> {
+            mPaymentParams.vpa = upiId
+            if (isUpiSaved == true) {
+                mPaymentParams.storeCard = 1
+            } else {
+                mPaymentParams.storeCard = 0
+            }
 
-    override fun onUpiItemClicked(position: Int, upiModel: UpiModel?) {
-        clickedPositionForUpi.set(position)
-        onUpiClicked.value = upiModel
-
-    }
-
-    /*
-    *  used to parse the response
-    * */
-    private fun parseResponseOfStep1(requestData: String?): PgRequestData {
-        if (!requestData.isNullOrEmpty()) {
-            val pgRequestData = PgRequestData()
-            val mainObject = JSONObject(requestData)
-            pgRequestData.txnId = mainObject.getString("txnid")
-            pgRequestData.email = mainObject.getString("email")
-            pgRequestData.amount = mainObject.getString("amount")
-            pgRequestData.merchantId = mainObject.getString("merchantId")
-            //  pgRequestData.merchantKey = mainObject.getString("merchantKey")
-            pgRequestData.merchantKey = merchantKey.get()
-            pgRequestData.productName = mainObject.getString("productName")
-            pgRequestData.paymentHash = mainObject.getString("paymentHash")
-            pgRequestData.userFirstName = mainObject.getString("userFirstName")
-            pgRequestData.surl = mainObject.getString("surl")
-            pgRequestData.furl = mainObject.getString("furl")
-            pgRequestData.pgUrl = mainObject.getString("pgUrl")
-            pgRequestData.udf1 = mainObject.getString("udf1")
-            pgRequestData.udf2 = mainObject.getString("udf2")
-            pgRequestData.udf3 = mainObject.getString("udf3")
-            pgRequestData.udf4 = mainObject.getString("udf4")
-            pgRequestData.udf5 = mainObject.getString("udf5")
-            pgRequestData.udf6 = mainObject.getString("udf6")
-            pgRequestData.udf7 = mainObject.getString("udf7")
-            pgRequestData.udf8 = mainObject.getString("udf8")
-
-            // set hash
-
-            hash.set(mainObject.getString("paymentHash"))
-            // merchantKey.set(mainObject.getString("merchantKey"))
-
-            return pgRequestData
         }
-        return PgRequestData()
-    }
-
-    /*
-    * return params for upi, phone pe , google pe, debit card
-    * */
-    fun getPaymentParams(
-        type: String,
-        upiId: String? = null,
-        isUpiSaved: Boolean? = false,
-        addNewCardDetails: AddNewCardDetails? = null, fromWhichType: Int? = 0
-    ): PaymentParams {
-        val resultData = parseResponseOfStep1(requestData.get())
-        val mPaymentParams = PaymentParams()
-        mPaymentParams.key = resultData.merchantKey
-        mPaymentParams.txnId = resultData.txnId
-        mPaymentParams.amount = resultData.amount
-        mPaymentParams.productInfo = resultData.productName
-        mPaymentParams.firstName = resultData.userFirstName
-        mPaymentParams.phone = resultData.phone
-        mPaymentParams.email = "poojamalik810@gmail.com"
-        mPaymentParams.txnId = resultData.txnId
-        mPaymentParams.surl = " https://payuresponse.firebaseapp.com/success"
-        mPaymentParams.furl = "https://payuresponse.firebaseapp.com/failure"
-        mPaymentParams.udf1 = resultData.udf1
-        mPaymentParams.udf2 = resultData.udf2
-        mPaymentParams.udf3 = resultData.udf3
-        mPaymentParams.udf4 = resultData.udf4
-        mPaymentParams.udf5 = resultData.udf5
-        mPaymentParams.userCredentials = resultData.merchantKey + ":" + SharedPrefUtils.getLong(
-            getApplication(),
-            SharedPrefUtils.SF_KEY_USER_ID
-        )
-
-        mPaymentParams.hash = generateHashFromSDK(mPaymentParams, merchantSalt)
-        hash.set(mPaymentParams.hash)
-
-
-        when (type) {
-            AppConstants.TYPE_DC -> {
-                if (fromWhichType == 0) {
-                    mPaymentParams.cardNumber = addNewCardDetails?.cardNumber
-                } else {
-                    mPaymentParams.cardToken = addNewCardDetails?.card_token
-                }
-                mPaymentParams.nameOnCard = addNewCardDetails?.nameOnCard
-                mPaymentParams.expiryMonth = addNewCardDetails?.expiryMonth// MM
-                mPaymentParams.expiryYear = addNewCardDetails?.expiryYear// YYYY
-                mPaymentParams.cvv = addNewCardDetails?.cvv
-
-                if (addNewCardDetails?.isCardSaved == true) {
-                    mPaymentParams.storeCard = 1
-                } else {
-                    mPaymentParams.storeCard = 0
-                }
-
-            }
-
-            AppConstants.TYPE_UPI -> {
-                mPaymentParams.vpa = upiId
-                if (isUpiSaved == true) {
-                    mPaymentParams.storeCard = 1
-                } else {
-                    mPaymentParams.storeCard = 0
-                }
-
-            }
-            AppConstants.TYPE_GOOGLE_PAY -> {
-            }
-            AppConstants.TYPE_PHONEPE -> {
-            }
-            AppConstants.TYPE_GENERIC -> {
-            }
+        AppConstants.TYPE_GOOGLE_PAY -> {
         }
-
-
-        return mPaymentParams
-    }
-
-    /*
-    * This method is used to handle on add new card
-    * */
-    fun onAddNewCardClicked() {
-        onAddNewCardClicked.value = true
-
+        AppConstants.TYPE_PHONEPE -> {
+        }
+        AppConstants.TYPE_GENERIC -> {
+        }
     }
 
 
-    private fun generateHashFromSDK(mPaymentParams: PaymentParams, salt: String): String? {
+    return mPaymentParams
+}
 
-        var postData = PostData();
+/*
+* This method is used to handle on add new card
+* */
+fun onAddNewCardClicked() {
+    onAddNewCardClicked.value = true
+
+}
+
+
+private fun generateHashFromSDK(mPaymentParams: PaymentParams, salt: String): String? {
+
+    var postData = PostData();
 
 //        if(mPaymentParams.getBeneficiaryAccountNumber()== null){
 
-        // payment Hash;
-        val checksum = PayUChecksum()
-        checksum.setAmount(mPaymentParams.getAmount());
-        checksum.setKey(mPaymentParams.getKey());
-        checksum.setTxnid(mPaymentParams.getTxnId());
-        checksum.setEmail(mPaymentParams.getEmail());
-        checksum.setSalt(salt);
-        checksum.setProductinfo(mPaymentParams.getProductInfo());
-        checksum.setFirstname(mPaymentParams.getFirstName());
-        checksum.setUdf1(mPaymentParams.getUdf1());
-        checksum.setUdf2(mPaymentParams.getUdf2());
-        checksum.setUdf3(mPaymentParams.getUdf3());
-        checksum.setUdf4(mPaymentParams.getUdf4());
-        checksum.setUdf5(mPaymentParams.getUdf5());
+    // payment Hash;
+    val checksum = PayUChecksum()
+    checksum.setAmount(mPaymentParams.getAmount());
+    checksum.setKey(mPaymentParams.getKey());
+    checksum.setTxnid(mPaymentParams.getTxnId());
+    checksum.setEmail(mPaymentParams.getEmail());
+    checksum.setSalt(salt);
+    checksum.setProductinfo(mPaymentParams.getProductInfo());
+    checksum.setFirstname(mPaymentParams.getFirstName());
+    checksum.setUdf1(mPaymentParams.getUdf1());
+    checksum.setUdf2(mPaymentParams.getUdf2());
+    checksum.setUdf3(mPaymentParams.getUdf3());
+    checksum.setUdf4(mPaymentParams.getUdf4());
+    checksum.setUdf5(mPaymentParams.getUdf5());
 
-        postData = checksum.getHash();
-        return postData.getResult()
-
-    }
+    postData = checksum.hash
+    return postData.getResult()
 
 
-    /*
-    * This method is used to make request of hash
-    * */
-    fun makeGetHashRequest(): GetHashRequest {
-        val getHashRequest = GetHashRequest()
-        getHashRequest.merchantKey = merchantKey.get()
-        getHashRequest.merchantSalt = merchantSalt
-        Log.d("hscbusy", getHashRequest.merchantSalt!!)
-        val list = ArrayList<HashData>()
-        for (i in 1..2) {
-            var hashData = HashData()
-            hashData.var1 = merchantKey.get() + ":" + SharedPrefUtils.getLong(
-                getApplication(),
-                SharedPrefUtils.SF_KEY_USER_ID
-            )
-            if (i == 1) {
-                hashData.command = PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK
-            } else {
-                hashData.command = "validateVPA"
+}
 
-            }
-            list.add(hashData)
 
+/*
+* This method is used to make request of hash
+* */
+fun makeGetHashRequest(): GetHashRequest {
+    val getHashRequest = GetHashRequest()
+    getHashRequest.merchantKey = merchantKey.get()
+    getHashRequest.merchantSalt = merchantSalt
+    val list = ArrayList<HashData>()
+    for (i in 1..2) {
+        val hashData = HashData()
+        hashData.var1 = merchantKey.get() + ":" + SharedPrefUtils.getLong(
+            getApplication(),
+            SharedPrefUtils.SF_KEY_USER_ID
+        )
+        if (i == 1) {
+            hashData.command = PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK
+        } else {
+            hashData.command = PayuConstants.CHECK_IS_DOMESTIC
 
         }
-        getHashRequest.hashData = list
-        return getHashRequest
+        list.add(hashData)
+
+
     }
+    getHashRequest.hashData = list
+    return getHashRequest
+}
 
 }
 
