@@ -22,7 +22,6 @@ import com.payu.india.Model.PaymentParams
 import com.payu.india.Payu.PayuConstants
 import com.payu.paymentparamhelper.PostData
 import org.json.JSONObject
-import java.lang.Exception
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 import kotlin.experimental.and
@@ -33,7 +32,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var amountToAdd1 = ObservableField<String>()
     var clickedPositionForUpi = ObservableField<Int>()
     var addMoneyUpiAdapter = AddMoneyUpiAdapter(this)
-    var savedCardsAdapter = SavedCardsAdapter()
+    var savedCardsAdapter = SavedCardsAdapter(this)
     var onUpiClicked = MutableLiveData<UpiModel>()
     var onAddNewCardClicked = MutableLiveData<Boolean>()
     var requestData = ObservableField<String>()
@@ -46,9 +45,11 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var payUResponse = ObservableField<String>()
     var onStep2Response = MutableLiveData<String>()
     var step2ApiResponse = AddMoneyStep2ResponseDetails()
+    var callGetCardsApi = MutableLiveData(false)
+    var getCardsOrDomesticHash = ObservableField<String>()
+    var onAddInSaveCardClicked = MutableLiveData<AddNewCardDetails>()
 
     init {
-
 
     }
 
@@ -73,6 +74,22 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
             )
         )
     }
+
+    /*
+     *This method is used to call payment parameters while receiving the payment
+     * */
+    fun callGetHashApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_GET_HASH,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_HASH),
+                request_type = ApiUrl.POST,
+                onResponse = this, isProgressBar = false,
+                param = makeGetHashRequest()
+            )
+        )
+    }
+
 
     /*
     *This method is used to verify the payment
@@ -104,6 +121,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
                     val result = requestData.get()?.replace("transactionId", "txnid")
                     requestData.set(result)
                     parseResponseOfStep1(requestData.get())
+                    callGetHashApi()
 
                 }
             }
@@ -122,6 +140,38 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
                 }
 
+            }
+            ApiConstant.API_GET_HASH -> {
+                if (responseData is GetHashResponse) {
+                    responseData.getHashResponseDetails.hashData?.forEach()
+                    {
+                        if (it.command == PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK) {
+                            getCardsOrDomesticHash.set(
+                                it.hashValue
+                            )
+                            callGetCardsApi.value = true
+                            /*getAllSavedCardsApi(
+                                GetSavedCardRequest(
+                                    hash = responseData.getHashResponseDetails.hashData?.get(
+                                        0
+                                    )?.hashValue!!,
+                                    var1 = responseData.getHashResponseDetails.hashData?.get(
+                                        0
+                                    )?.var1,
+                                    command = responseData.getHashResponseDetails.hashData?.get(
+                                        0
+                                    )?.command,
+                                    key = merchantKey.get()
+
+                                )
+                            )*/
+
+                        }
+
+                    }
+
+
+                }
             }
 
 
@@ -179,7 +229,6 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
             hash.set(mainObject.getString("paymentHash"))
             // merchantKey.set(mainObject.getString("merchantKey"))
 
-            getAllSavedCardsApi()
             return pgRequestData
         }
         return PgRequestData()
@@ -192,7 +241,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         type: String,
         upiId: String? = null,
         isUpiSaved: Boolean? = false,
-        addNewCardDetails: AddNewCardDetails? = null
+        addNewCardDetails: AddNewCardDetails? = null, fromWhichType: Int? = 0
     ): PaymentParams {
         val resultData = parseResponseOfStep1(requestData.get())
         val mPaymentParams = PaymentParams()
@@ -218,12 +267,15 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
         mPaymentParams.hash = generateHashFromSDK(mPaymentParams, merchantSalt)
         hash.set(mPaymentParams.hash)
-        Log.d("hashhhhhhh", mPaymentParams.hash)
 
 
         when (type) {
             AppConstants.TYPE_DC -> {
-                mPaymentParams.cardNumber = addNewCardDetails?.cardNumber
+                if (fromWhichType == 0) {
+                    mPaymentParams.cardNumber = addNewCardDetails?.cardNumber
+                } else {
+                    mPaymentParams.cardToken = addNewCardDetails?.card_token
+                }
                 mPaymentParams.nameOnCard = addNewCardDetails?.nameOnCard
                 mPaymentParams.expiryMonth = addNewCardDetails?.expiryMonth// MM
                 mPaymentParams.expiryYear = addNewCardDetails?.expiryYear// YYYY
@@ -266,68 +318,8 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
     }
 
-/*
-* This method is used to get all the user saved cards
-* */
 
-    private fun getAllSavedCardsApi() {
-        val var1 = merchantKey.get() + ":" + SharedPrefUtils.getLong(
-            getApplication(),
-            SharedPrefUtils.SF_KEY_USER_ID
-        )
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.PAYU_TEST_URL,
-                endpoint = NetworkUtil.endURL(ApiConstant.PAYU_TEST_URL),
-                request_type = ApiUrl.POST,
-                onResponse = this, isProgressBar = false,
-                param = GetSavedCardRequest(
-                    hash = calculateHash(
-                        merchantKey.get()!!,
-                        command = ApiConstant.GET_USER_CARDS,
-                        var1 = var1,
-                        salt = merchantSalt
-                    )!!,
-                    var1 = var1,
-                    command = ApiConstant.GET_USER_CARDS,
-                    key = merchantKey.get()
-
-                )
-            ), whichServer = AppConstants.PAYU_SERVER
-        )
-    }
-
-    private fun calculateHash(hashString: String): String {
-        return return try {
-            val hash = StringBuilder()
-            val messageDigest = MessageDigest.getInstance("SHA-512")
-            messageDigest.update(hashString.toByteArray())
-            val mdbytes = messageDigest.digest()
-            for (hashByte in mdbytes) {
-                hash.append(
-                    Integer.toString((hashByte and 0xff.toByte()) + 0x100, 16).substring(1)
-                )
-            }
-            hash.toString()
-            // getReturnData(PayuErrors.NO_ERROR, PayuConstants.SUCCESS, hash.toString())
-        } catch (e: NoSuchAlgorithmException) {
-            ""
-        }
-    }
-
-    protected fun getReturnData(code: Int, status: String?, result: String?): PostData {
-        val postData = PostData()
-        postData.code = code
-        postData.status = status
-        postData.result = result
-        return postData
-    }
-
-    protected fun getReturnData(code: Int, result: String?): PostData {
-        return getReturnData(code, PayuConstants.ERROR, result)
-    }
-
-    fun generateHashFromSDK(mPaymentParams: PaymentParams, salt: String): String? {
+    private fun generateHashFromSDK(mPaymentParams: PaymentParams, salt: String): String? {
 
         var postData = PostData();
 
@@ -353,20 +345,34 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
     }
 
-    private fun calculateHash(key: String, command: String, var1: String, salt: String): String? {
-        val checksum = PayUChecksum()
-        checksum.setKey(key)
-        checksum.setCommand(command)
-        checksum.setVar1(var1)
-        checksum.setSalt(salt)
-        return checksum.getHash().result
-    }
 
     /*
-    * This method is used to set the list of upi
+    * This method is used to make request of hash
     * */
-    fun setUpiList() {
+    fun makeGetHashRequest(): GetHashRequest {
+        val getHashRequest = GetHashRequest()
+        getHashRequest.merchantKey = merchantKey.get()
+        getHashRequest.merchantSalt = merchantSalt
+        Log.d("hscbusy", getHashRequest.merchantSalt!!)
+        val list = ArrayList<HashData>()
+        for (i in 1..2) {
+            var hashData = HashData()
+            hashData.var1 = merchantKey.get() + ":" + SharedPrefUtils.getLong(
+                getApplication(),
+                SharedPrefUtils.SF_KEY_USER_ID
+            )
+            if (i == 1) {
+                hashData.command = PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK
+            } else {
+                hashData.command = "validateVPA"
 
+            }
+            list.add(hashData)
+
+
+        }
+        getHashRequest.hashData = list
+        return getHashRequest
     }
 
 }

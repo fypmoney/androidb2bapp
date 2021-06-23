@@ -17,7 +17,6 @@ import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -25,6 +24,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAddMoneyUpiDebitBinding
 import com.fypmoney.model.AddNewCardDetails
+import com.fypmoney.model.SavedCardResponseDetails
 import com.fypmoney.model.UpiModel
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
@@ -38,18 +38,20 @@ import com.payu.custombrowser.bean.CustomBrowserConfig
 import com.payu.custombrowser.bean.CustomBrowserResultData
 import com.payu.india.Interfaces.PaymentRelatedDetailsListener
 import com.payu.india.Interfaces.ValueAddedServiceApiListener
+import com.payu.india.Model.MerchantWebService
 import com.payu.india.Model.PayuConfig
 import com.payu.india.Model.PayuResponse
 import com.payu.india.Payu.PayuConstants
 import com.payu.india.Payu.PayuErrors
+import com.payu.india.PostParams.MerchantWebServicePostParams
 import com.payu.india.PostParams.PaymentPostParams
+import com.payu.india.Tasks.GetPaymentRelatedDetailsTask
 import com.payu.paymentparamhelper.PaymentParams
 import com.payu.paymentparamhelper.PostData
 import com.payu.phonepe.PhonePe
 import com.payu.phonepe.callbacks.PayUPhonePeCallback
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
-import kotlinx.android.synthetic.main.view_aadhaar_account_activation.tvSubTitle
 import kotlinx.android.synthetic.main.view_add_money_upi_debit.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -163,6 +165,34 @@ class AddMoneyUpiDebitView :
                 mViewModel.onAddNewCardClicked.value = false
             }
         }
+        mViewModel.callGetCardsApi.observe(this) {
+            if (it) {
+                /**
+                 * Below merchant webservice is used to get all the payment options enabled on the merchant key.
+                 */
+                val merchantWebService = MerchantWebService()
+                merchantWebService.key = mViewModel.merchantKey.get()
+                merchantWebService.command = PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK
+                merchantWebService.var1 =
+                    mViewModel.merchantKey.get() + ":" + SharedPrefUtils.getLong(
+                        applicationContext,
+                        SharedPrefUtils.SF_KEY_USER_ID
+                    )
+                merchantWebService.hash = mViewModel.getCardsOrDomesticHash.get()
+                // dont fetch the data if its been called from payment activity.
+                val postData: PostData =
+                    MerchantWebServicePostParams(merchantWebService).merchantWebServicePostParams
+
+                // ok we got the post params, let make an api call to payu to fetch the payment related details
+                payuConfig.data = postData.result
+
+                val paymentRelatedDetailsForMobileSdkTask = GetPaymentRelatedDetailsTask(this)
+                paymentRelatedDetailsForMobileSdkTask.execute(payuConfig)
+
+            }
+        }
+
+
 
         mViewModel.onStep2Response.observe(this) {
             when (it) {
@@ -176,12 +206,17 @@ class AddMoneyUpiDebitView :
 
         }
 
+        mViewModel.onAddInSaveCardClicked.observe(this) {
+            callDebitCardPaymentGateway(1, it)
+
+        }
+
     }
 
 
     /*
-   * navigate to the Pay u success
-   * */
+* navigate to the Pay u success
+* */
     private fun callPaymentSuccessView() {
         val intent = Intent(this@AddMoneyUpiDebitView, PayUSuccessView::class.java)
         intent.putExtra(AppConstants.RESPONSE, mViewModel.step2ApiResponse)
@@ -236,7 +271,7 @@ class AddMoneyUpiDebitView :
 
     }
 
-    private var payUPhonePeCallback: PayUPhonePeCallback = object : PayUPhonePeCallback() {
+    var payUPhonePeCallback: PayUPhonePeCallback = object : PayUPhonePeCallback() {
         override fun onPaymentOptionFailure(payuResponse: String, merchantResponse: String) {
             Utility.showToast("phone pe failed")
             Log.d("phone_pay_payment", "failed")
@@ -308,19 +343,7 @@ class AddMoneyUpiDebitView :
     }
 
     override fun onAddNewCardButtonClick(addNewCardDetails: AddNewCardDetails) {
-        try {
-            val params = mViewModel.getPaymentParams(
-                type = AppConstants.TYPE_DC,
-                addNewCardDetails = addNewCardDetails
-            )
-            callCustomBrowser(
-                com.payu.paymentparamhelper.PayuConstants.CC,
-                params, params.txnId,
-                PayuConstants.PRODUCTION_PAYMENT_URL
-            )
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
+        callDebitCardPaymentGateway(0, addNewCardDetails)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -334,6 +357,25 @@ class AddMoneyUpiDebitView :
     }
 
     override fun onPaymentRelatedDetailsResponse(payuResponse: PayuResponse?) {
+        val list = ArrayList<SavedCardResponseDetails>()
+        payuResponse?.storedCards?.forEach()
+        {
+            list.add(
+                SavedCardResponseDetails(
+                    card_no = it.maskedCardNumber,
+                    name_on_card = it.nameOnCard,
+                    expiry_month = it.expiryMonth,
+                    expiry_year = it.expiryYear,
+                    is_expired = it.isExpired,
+                    isDomestic = it.isDomestic,
+                    card_brand = it.cardBrand,
+                    card_token = it.cardToken,
+                    card_type = it.cardType
+                )
+            )
+        }
+        mViewModel.savedCardsAdapter.setList(list)
+
     }
 
     override fun onValueAddedServiceApiResponse(p0: PayuResponse?) {
@@ -429,7 +471,6 @@ class AddMoneyUpiDebitView :
             }
 
             override fun setCBProperties(webview: WebView, payUCustomBrowser: Bank) {
-                Utility.showToast("setCBProperties")
                 webview.webChromeClient = PayUWebChromeClient(payUCustomBrowser)
 
             }
@@ -524,7 +565,10 @@ class AddMoneyUpiDebitView :
         }
     }
 
-    fun getListOfApps() {
+    /*
+    * This is used to list the list of upi apps
+    * */
+    private fun getListOfApps() {
         val upiList = ArrayList<UpiModel>()
         upiList.add(UpiModel(name = getString(R.string.google_pay)))
         upiList.add(UpiModel(name = getString(R.string.phone_pay)))
@@ -553,4 +597,28 @@ class AddMoneyUpiDebitView :
         mViewModel.addMoneyUpiAdapter.setList(upiList)
 
     }
+
+    /*
+    * This is used to handle the debit card payment
+    * */
+    private fun callDebitCardPaymentGateway(
+        fromWhichType: Int,
+        addNewCardDetails: AddNewCardDetails
+    ) {
+        Log.d("jcjhde", "jdhvriuiehgri")
+        try {
+            val params = mViewModel.getPaymentParams(
+                type = AppConstants.TYPE_DC,
+                addNewCardDetails = addNewCardDetails, fromWhichType = fromWhichType
+            )
+            callCustomBrowser(
+                com.payu.paymentparamhelper.PayuConstants.CC,
+                params, params.txnId,
+                PayuConstants.PRODUCTION_PAYMENT_URL
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }
+

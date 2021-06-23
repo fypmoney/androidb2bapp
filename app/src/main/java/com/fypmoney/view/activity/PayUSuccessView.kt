@@ -38,18 +38,24 @@ class PayUSuccessView : BaseActivity<ViewPayuSuccessBinding, PayUSuccessViewMode
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
-        setToolbarAndTitle(
-            context = this@PayUSuccessView,
-            toolbar = toolbar,
-            isBackArrowVisible = false
-        )
+
         mViewModel.fromWhichScreen.set(intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN))
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.ADD_MONEY -> {
+                setToolbarAndTitle(
+                    context = this@PayUSuccessView,
+                    toolbar = toolbar,
+                    isBackArrowVisible = false
+                )
                 mViewModel.payUResponse.set(intent.getSerializableExtra(AppConstants.RESPONSE) as AddMoneyStep2ResponseDetails)
                 mViewModel.setInitialData()
             }
             AppConstants.BANK_TRANSACTION -> {
+                setToolbarAndTitle(
+                    context = this@PayUSuccessView,
+                    toolbar = toolbar,
+                    isBackArrowVisible = true
+                )
                 mViewModel.bankResponse.set(intent.getSerializableExtra(AppConstants.RESPONSE) as BankTransactionHistoryResponseDetails)
                 mViewModel.setInitialData()
             }

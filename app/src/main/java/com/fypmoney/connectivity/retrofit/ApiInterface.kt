@@ -78,12 +78,15 @@ interface ApiInterface {
     ): Observable<ResponseBody>
 
 
+
+
     /**
      * @param endPoint String
      * @param hashMap  HashMap<String,Object>
      * @return return response
      * @description Call POST type's web API
      */
+    @Headers("Accept: application/x-www-form-urlencoded")
     @POST
     fun postDataOnPayUServer(@Url endPoint: String, @Body request: Any): Observable<ResponseBody>
 

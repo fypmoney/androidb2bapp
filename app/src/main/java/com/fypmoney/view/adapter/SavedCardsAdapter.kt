@@ -7,12 +7,13 @@ import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.SavedCardRowItemBinding
 import com.fypmoney.model.SavedCardResponseDetails
 import com.fypmoney.viewhelper.SavedCardViewHelper
+import com.fypmoney.viewmodel.AddMoneyUpiDebitViewModel
 
 
 /**
  * This adapter class is used to handle saved card list in add money
  */
-class SavedCardsAdapter:
+class SavedCardsAdapter(var viewModel: AddMoneyUpiDebitViewModel):
     RecyclerView.Adapter<BaseViewHolder>() {
     var cardList: ArrayList<SavedCardResponseDetails>? = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -38,8 +39,8 @@ class SavedCardsAdapter:
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         private lateinit var mViewHelper: SavedCardViewHelper
         override fun onBind(position: Int) {
-            mViewHelper = SavedCardViewHelper(
-                cardList?.get(position)
+            mViewHelper = SavedCardViewHelper(position,
+                cardList?.get(position),viewModel,this@SavedCardsAdapter
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             mRowItemBinding.executePendingBindings()

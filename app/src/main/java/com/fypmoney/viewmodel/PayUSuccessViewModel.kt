@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.model.AddMoneyStep2ResponseDetails
 import com.fypmoney.model.BankTransactionHistoryResponseDetails
@@ -47,13 +48,15 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
             AppConstants.BANK_TRANSACTION -> {
                 isAddMoneyLayoutVisible.set(false)
                 availableAmount.set(Utility.convertToRs(bankResponse.get()?.amount))
-                val date= bankResponse.get()?.transactionDate?.split("+")
+                val date = bankResponse.get()?.transactionDate?.split("+")
+
                 paymentDateTime.set(
-                    Utility.parseDateTime(
-                        date!![0],
-                        inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
-                        outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT3
-                    )
+                    PockketApplication.instance.getString(R.string.received_text) +
+                            Utility.parseDateTime(
+                                date!![0],
+                                inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
+                                outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT3
+                            )
                 )
                 fypId.set(bankResponse.get()?.accReferenceNumber)
                 bankId.set(bankResponse.get()?.bankReferenceNumber)

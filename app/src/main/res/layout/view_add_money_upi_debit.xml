@@ -92,6 +92,7 @@
                     android:ellipsize="end"
                     android:textColor="@color/color_skyblue"
                     android:text="@string/add_money_add_new_card_text"
+                    android:layout_marginTop="10dp"
                     android:onClick="@{()->viewModel.onAddNewCardClicked()}"
                     android:textSize="17dp" />
 

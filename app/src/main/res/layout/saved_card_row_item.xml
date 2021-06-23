@@ -23,31 +23,76 @@
             android:id="@+id/ivServiceLogo"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:padding="12dp"
-            android:background="@drawable/curved_background5"
             android:layout_marginStart="@dimen/_2sdp"
+            android:background="@drawable/curved_background5"
+            android:padding="12dp"
             app:srcCompat="@drawable/ic_profile" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvServiceName"
             style="@style/TextviewRegular"
-            android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
             android:layout_toEndOf="@+id/ivServiceLogo"
-            android:text="@{viewHelper.savedCard.card_no}"
-            />
+            android:text="@{viewHelper.savedCard.card_no}" />
 
         <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:checked="@{viewHelper.savedCard.isSelected}"
+            android:onClick="@{()->viewHelper.onRadioClicked()}" />
+
+        <RelativeLayout
+            android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"/>
+            android:layout_below="@+id/ivServiceLogo"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:visibility="@{viewHelper.isCvvLayoutVisible?View.VISIBLE:View.GONE,default=gone}">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/add_money_editext"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/add_new_card_cvv"
+                android:inputType="numberPassword"
+                android:maxLength="3"
+                android:text="@={viewHelper.cvv}" />
+
+            <View
+                android:id="@+id/view1"
+                android:layout_width="100dp"
+                android:layout_height="2dp"
+                android:layout_below="@id/add_money_editext"
+                android:background="@color/grey" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAdd"
+                style="@style/Widget.App.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/curved_background1"
+                android:onClick="@{()->viewHelper.onAddAmountClicked()}"
+                android:padding="5dp"
+                android:text="@{@string/add_btn_text+viewHelper.amount}"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/text_color_dark" />
+
+
+        </RelativeLayout>
+
         <View
+            android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:id="@+id/view2"
+            android:layout_below="@id/linear"
             android:layout_marginTop="10dp"
-            android:layout_below="@id/ivServiceLogo"
-            android:background="@color/grey"/>
+            android:layout_marginBottom="10dp"
+            android:background="@color/grey" />
 
 
     </RelativeLayout>

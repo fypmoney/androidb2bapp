@@ -1,5 +1,6 @@
 package com.fypmoney.connectivity
 
+import android.util.Log
 import com.fypmoney.connectivity.ApiConstant.API_AUTH_LOGIN
 import com.fypmoney.connectivity.ApiConstant.API_CHECK_IS_APP_USER
 import com.fypmoney.connectivity.ApiConstant.API_FETCH_ALL_FEEDS
@@ -155,6 +156,9 @@ class ApiDataParsing {
                     getObject(response, BankTransactionHistoryResponse::class.java)
                 }
 
+                ApiConstant.API_GET_HASH -> {
+                    getObject(response, GetHashResponse::class.java)
+                }
                 else -> response
             }
         } catch (e: Exception) {

@@ -10,6 +10,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.network.NetworkUtil.Companion.isNetworkAvailable
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -204,6 +205,10 @@ class WebApiCaller {
         mObservable?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe(object : Observer<ResponseBody> {
                 override fun onSubscribe(d: Disposable) {
+                    if(request.purpose==ApiConstant.GET_USER_CARDS)
+                    {
+                        Utility.showToast("onSubscribe")
+                    }
                     if (request.isProgressBar!!) {
                         request.onResponse.progress(
                             true,
@@ -213,6 +218,10 @@ class WebApiCaller {
                 }
 
                 override fun onNext(responseBody: ResponseBody) {
+                    if(request.purpose==ApiConstant.GET_USER_CARDS)
+                    {
+                        Utility.showToast("onNext"+responseBody.string())
+                    }
                     request.onResponse.onSuccess(
                         purpose = request.purpose,
                         ApiDataParsing.getInstance().parseData(request, responseBody)!!
@@ -220,6 +229,10 @@ class WebApiCaller {
                 }
 
                 override fun onError(e: Throwable) {
+                    if(request.purpose==ApiConstant.GET_USER_CARDS)
+                    {
+                        Utility.showToast("onError")
+                    }
                     try {
                         request.onResponse.onError(
                             purpose = request.purpose,
@@ -229,12 +242,20 @@ class WebApiCaller {
                             request.onResponse.progress(false, null.toString())
                         }
                     } catch (e: Exception) {
+                        if(request.purpose==ApiConstant.GET_USER_CARDS)
+                        {
+                            Utility.showToast("Exception")
+                        }
                         request.onResponse.progress(false, null.toString())
                         e.printStackTrace()
                     }
                 }
 
                 override fun onComplete() {
+                    if(request.purpose==ApiConstant.GET_USER_CARDS)
+                    {
+                        Utility.showToast("onComplete")
+                    }
                     if (request.isProgressBar!!) {
                         request.onResponse.progress(false, null.toString())
                     }

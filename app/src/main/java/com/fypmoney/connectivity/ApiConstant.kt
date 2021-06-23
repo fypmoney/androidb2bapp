@@ -45,12 +45,12 @@ object ApiConstant {
     const val API_PAY_MONEY = "/services/PockketService/api/pay/money"
     const val API_BANK_TRANSACTION_HISTORY = "/services/PockketService/api/bank/transaction/history"
     const val API_TRANSACTION_HISTORY = "/services/PockketService/api/transaction/history"
+    const val API_GET_HASH = "/services/PockketService/api/get/hash"
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
 
  // pay u test url
 
- const val PAYU_TEST_URL="/merchant/postservice.php?form=2"
- const val PAYU_PRODUCTION_URL="https://info.payu.in/merchant/postservice.php?form=2"
+ const val PAYU_PRODUCTION_URL="/merchant/postservice.php?form=2"
 
  const val GET_USER_CARDS="get_user_cards"
 
