@@ -258,7 +258,8 @@ class AddMoneyUpiDebitView :
     private fun callAddUpiBottomSheet() {
         val bottomSheet =
             AddUpiBottomSheet(
-                mViewModel.amountToAdd.get()!!, this
+                mViewModel.amountToAdd.get()!!, merchantKey = mViewModel.merchantKey.get(),
+                merchantSalt = mViewModel.merchantSalt, this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "AddUPI")

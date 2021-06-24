@@ -171,3 +171,10 @@ data class CheckIsDomesticResponse(
     @SerializedName("cardType") var cardType: String? = null,
     @SerializedName("cardCategory") var cardCategory: String? = null,
 ) : Serializable
+
+data class ValidateVpaResponse(
+    @SerializedName("payerAccountName") var payerAccountName: String? = null,
+    @SerializedName("isVPAValid") var isVPAValid: Int? = null,
+    @SerializedName("vpa") var vpa: String? = null,
+    @SerializedName("status") var status: String? = null,
+) : Serializable

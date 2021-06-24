@@ -46,7 +46,7 @@ class WebApiCaller {
      * @param request ApiRequest
      * @description Method is used to hit singe web api at a time.
      */
-    fun request(request: ApiRequest, whichServer: String? = null) {
+    fun request(request: ApiRequest, whichServer: String? = null, command: String? = null) {
         if (!isNetworkAvailable()) {
             request.onResponse.offLine()
             return
@@ -227,7 +227,7 @@ class WebApiCaller {
                     }
                     request.onResponse.onSuccess(
                         purpose = request.purpose,
-                        ApiDataParsing.getInstance().parseData(request, responseBody)!!
+                        ApiDataParsing.getInstance().parseData(request, responseBody,command)!!
                     )
                 }
 

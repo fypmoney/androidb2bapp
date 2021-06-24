@@ -16,6 +16,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.model.*
 import com.google.gson.Gson
+import com.payu.india.Payu.PayuConstants
 import okhttp3.ResponseBody
 
 
@@ -40,7 +41,7 @@ class ApiDataParsing {
      * @param body    ResponseBody;
      * @description Method is used to parse the data.
      */
-    fun parseData(request: ApiRequest, body: ResponseBody): Any? {
+    fun parseData(request: ApiRequest, body: ResponseBody, command: String? = null): Any? {
         return try {
             val response = body.string()
             when (request.purpose) {
@@ -139,7 +140,6 @@ class ApiDataParsing {
                 ApiConstant.API_ADD_MONEY_STEP1 -> {
                     getObject(response, AddMoneyStep1Response::class.java)
                 }
-
                 ApiConstant.API_ADD_MONEY_STEP2 -> {
                     getObject(response, AddMoneyStep2Response::class.java)
                 }
@@ -155,12 +155,19 @@ class ApiDataParsing {
                 ApiConstant.API_BANK_TRANSACTION_HISTORY -> {
                     getObject(response, BankTransactionHistoryResponse::class.java)
                 }
-
                 ApiConstant.API_GET_HASH -> {
                     getObject(response, GetHashResponse::class.java)
                 }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
-                    getObject(response, CheckIsDomesticResponse::class.java)
+                    when (command) {
+                        PayuConstants.VALIDATE_VPA -> {
+                            getObject(response, ValidateVpaResponse::class.java)
+                        }
+                        else -> {
+                            getObject(response, CheckIsDomesticResponse::class.java)
+                        }
+                    }
+
                 }
                 else -> response
             }

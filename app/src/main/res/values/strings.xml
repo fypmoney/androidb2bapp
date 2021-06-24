@@ -534,6 +534,8 @@
     <string name="you_were_paid">You were paid,</string>
     <string name="google_pay">Google Pay</string>
     <string name="phone_pay">Phone Pay</string>
+    <string name="invalid_upi_id_error">InValid VPA</string>
+    <string name="verify_vpa">Please verify UPI Id</string>
 
     <!--
     Bank transaction history
