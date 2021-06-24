@@ -8,6 +8,7 @@ import com.fypmoney.connectivity.ApiUrl
 import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.network.NetworkUtil.Companion.isNetworkAvailable
+import com.fypmoney.model.PayUServerRequest
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
@@ -92,10 +93,14 @@ class WebApiCaller {
             ApiUrl.POST ->
                 when (whichServer) {
                     AppConstants.PAYU_SERVER -> {
+                        val params = request.param as PayUServerRequest
                         mObservable =
                             apiInterface.postDataOnPayUServer(
                                 request.endpoint,
-                                request.param
+                                command = params.command!!,
+                                key = params.key!!,
+                                var1 = params.var1!!,
+                                hash = params.hash
                             )
                     }
 
@@ -205,8 +210,7 @@ class WebApiCaller {
         mObservable?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe(object : Observer<ResponseBody> {
                 override fun onSubscribe(d: Disposable) {
-                    if(request.purpose==ApiConstant.GET_USER_CARDS)
-                    {
+                    if (request.purpose == ApiConstant.GET_USER_CARDS) {
                         Utility.showToast("onSubscribe")
                     }
                     if (request.isProgressBar!!) {
@@ -218,9 +222,8 @@ class WebApiCaller {
                 }
 
                 override fun onNext(responseBody: ResponseBody) {
-                    if(request.purpose==ApiConstant.GET_USER_CARDS)
-                    {
-                        Utility.showToast("onNext"+responseBody.string())
+                    if (request.purpose == ApiConstant.GET_USER_CARDS) {
+                        Utility.showToast("onNext" + responseBody.string())
                     }
                     request.onResponse.onSuccess(
                         purpose = request.purpose,
@@ -229,8 +232,7 @@ class WebApiCaller {
                 }
 
                 override fun onError(e: Throwable) {
-                    if(request.purpose==ApiConstant.GET_USER_CARDS)
-                    {
+                    if (request.purpose == ApiConstant.GET_USER_CARDS) {
                         Utility.showToast("onError")
                     }
                     try {
@@ -242,8 +244,7 @@ class WebApiCaller {
                             request.onResponse.progress(false, null.toString())
                         }
                     } catch (e: Exception) {
-                        if(request.purpose==ApiConstant.GET_USER_CARDS)
-                        {
+                        if (request.purpose == ApiConstant.GET_USER_CARDS) {
                             Utility.showToast("Exception")
                         }
                         request.onResponse.progress(false, null.toString())
@@ -252,8 +253,7 @@ class WebApiCaller {
                 }
 
                 override fun onComplete() {
-                    if(request.purpose==ApiConstant.GET_USER_CARDS)
-                    {
+                    if (request.purpose == ApiConstant.GET_USER_CARDS) {
                         Utility.showToast("onComplete")
                     }
                     if (request.isProgressBar!!) {

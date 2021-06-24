@@ -78,19 +78,22 @@ interface ApiInterface {
     ): Observable<ResponseBody>
 
 
-
-
     /**
      * @param endPoint String
      * @param hashMap  HashMap<String,Object>
      * @return return response
      * @description Call POST type's web API
      */
+    @FormUrlEncoded
     @Headers("Accept: application/x-www-form-urlencoded")
     @POST
-    fun postDataOnPayUServer(@Url endPoint: String, @Body request: Any): Observable<ResponseBody>
-
-
+    fun postDataOnPayUServer(
+        @Url endPoint: String,
+        @Field("command") command: String,
+        @Field("var1") var1: String,
+        @Field("key") key: String,
+        @Field("hash") hash: String
+    ): Observable<ResponseBody>
 
 
     /**

@@ -506,10 +506,10 @@
     <string name="card_expiry_year_valid_empty_error">Please enter valid year</string>
     <string name="card_cvv_valid_error">Please enter valid CVV</string>
     <string name="card_number_format">xxxx-xxxx-xxxx-xxxx</string>
-
     <string name="test">Test</string>
     <string name="production">Production</string>
     <string name="add_upi_text">Add UPI</string>
+    <string name="card_number_validation_error">Only Domestic Debit Cards are allowed</string>
 
     <!--
     Pay u success
@@ -523,7 +523,6 @@
     <!--
   Add upi
     -->
-
     <string name="add_upi_title">Add Existing UPI ID</string>
     <string name="upi_id">UPI ID</string>
     <string name="upi_id_hint">your UPI ID</string>

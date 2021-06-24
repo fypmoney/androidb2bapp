@@ -103,6 +103,16 @@
             android:layout_marginEnd="30dp"
             android:text="@string/add_new_card_save_option" />
 
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:scaleY="0.7"
+            android:scaleX="0.7"
+            android:layout_marginTop="20dp"/>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnContinue"
             style="@style/Widget.App.Button"

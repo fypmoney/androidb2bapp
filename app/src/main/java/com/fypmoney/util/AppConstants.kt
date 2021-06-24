@@ -57,6 +57,7 @@ object AppConstants {
     const val SPLASH_TIME = 500L
     const val FROM_WHICH_SCREEN = "from_which_screen"
     const val AMOUNT = "Amount"
+    const val REMARKS = "Remarks"
     const val LOGOUT = "logout"
     const val API_SUCCESS = "Success"
     const val API_FAIL = "Fail"

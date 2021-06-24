@@ -200,10 +200,6 @@ class BindingAdapter {
                     imageView.setImageResource(R.drawable.google_logo)
 
                 }
-                2 -> {
-                    imageView.setImageResource(R.drawable.ic_phonepe_icon)
-
-                }
                 else -> {
                     imageView.setImageDrawable(imageUrl)
 

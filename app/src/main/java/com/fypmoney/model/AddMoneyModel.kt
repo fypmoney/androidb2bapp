@@ -15,6 +15,7 @@ data class UpiModel(
 ) {
 }
 
+
 data class SavedCardResponseDetails(
     @SerializedName("name_on_card") val name_on_card: String,
     @SerializedName("card_type") val card_type: String,
@@ -108,12 +109,12 @@ data class PayMoneyResponse(
 
 
 data class AddNewCardDetails(
-    var cardNumber: String?=null,
+    var cardNumber: String? = null,
     var nameOnCard: String,
     var expiryMonth: String,
     var expiryYear: String,
     var cvv: String,
-    var card_token: String?=null,
+    var card_token: String? = null,
     var isCardSaved: Boolean? = false
 )
 
@@ -124,7 +125,7 @@ data class AddMoneyStep2Request(
 ) : BaseRequest()
 
 
-data class GetSavedCardRequest(
+data class PayUServerRequest(
     @SerializedName("hash") val hash: String,
     @SerializedName("command") val command: String?,
     @SerializedName("key") val key: String?,
@@ -162,4 +163,11 @@ data class HashDataResponse(
     @SerializedName("command") var command: String? = null,
     @SerializedName("var1") var var1: String? = null,
     @SerializedName("hashValue") val hashValue: String? = null
+) : Serializable
+
+data class CheckIsDomesticResponse(
+    @SerializedName("isDomestic") var isDomestic: String? = null,
+    @SerializedName("issuingBank") var issuingBank: String? = null,
+    @SerializedName("cardType") var cardType: String? = null,
+    @SerializedName("cardCategory") var cardCategory: String? = null,
 ) : Serializable

@@ -1,7 +1,6 @@
 package com.fypmoney.viewhelper
 
 import android.text.TextUtils
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R

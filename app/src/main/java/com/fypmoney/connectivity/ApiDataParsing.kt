@@ -159,10 +159,13 @@ class ApiDataParsing {
                 ApiConstant.API_GET_HASH -> {
                     getObject(response, GetHashResponse::class.java)
                 }
+                ApiConstant.PAYU_PRODUCTION_URL -> {
+                    getObject(response, CheckIsDomesticResponse::class.java)
+                }
                 else -> response
             }
         } catch (e: Exception) {
-            request.onResponse.onError(request.purpose,NetworkUtil.responseData(e)!!)
+            request.onResponse.onError(request.purpose, NetworkUtil.responseData(e)!!)
             e.toString()
         }
     }

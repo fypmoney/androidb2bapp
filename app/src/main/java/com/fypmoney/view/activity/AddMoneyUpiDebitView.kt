@@ -139,9 +139,6 @@ class AddMoneyUpiDebitView :
                 1 -> {
                     callGooglePayIntent()
                 }
-                2 -> {
-                    callPhonePayIntent()
-                }
                 else -> {
                     val params = mViewModel.getPaymentParams(type = AppConstants.TYPE_GENERIC)
                     try {
@@ -167,7 +164,6 @@ class AddMoneyUpiDebitView :
         }
         mViewModel.callGetCardsApi.observe(this) {
             if (it) {
-
                 callPayUApi(
                     command = PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK,
                     var1 = mViewModel.merchantKey.get() + ":" + SharedPrefUtils.getLong(
@@ -176,28 +172,6 @@ class AddMoneyUpiDebitView :
                     ),
                     hash = mViewModel.getUserCardsHash.get()
                 )
-                /**
-                 * Below merchant webservice is used to get all the payment options enabled on the merchant key.
-                 */
-                /*  val merchantWebService = MerchantWebService()
-                  merchantWebService.key = mViewModel.merchantKey.get()
-                  merchantWebService.command = PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK
-                  merchantWebService.var1 =
-                      mViewModel.merchantKey.get() + ":" + SharedPrefUtils.getLong(
-                          applicationContext,
-                          SharedPrefUtils.SF_KEY_USER_ID
-                      )
-                  merchantWebService.hash = mViewModel.getUserCardsHash.get()
-                  // dont fetch the data if its been called from payment activity.
-                  val postData: PostData =
-                      MerchantWebServicePostParams(merchantWebService).merchantWebServicePostParams
-
-                  // ok we got the post params, let make an api call to payu to fetch the payment related details
-                  payuConfig.data = postData.result
-
-                  val paymentRelatedDetailsForMobileSdkTask = GetPaymentRelatedDetailsTask(this)
-                  paymentRelatedDetailsForMobileSdkTask.execute(payuConfig)
-  */
             }
         }
 
@@ -251,75 +225,14 @@ class AddMoneyUpiDebitView :
 
 
     /*
-    * Used to call in case of phone pay
-    * */
-    private fun callPhonePayIntent() {
-        try {
-            val params = mViewModel.getPaymentParams(type = AppConstants.TYPE_PHONEPE)
-            //     mViewModel.generateHashFromSDK(params,"1b1b0")
-            PhonePe.getInstance().checkForPaymentAvailability(
-                this@AddMoneyUpiDebitView,
-                payUPhonePeCallback,
-                mViewModel.hash.get(),
-                mViewModel.merchantKey.get(),
-                mViewModel.merchantKey.get() + ":" + SharedPrefUtils.getLong(
-                    application,
-                    SharedPrefUtils.SF_KEY_USER_ID
-                )
-            )
-
-            /*   callCustomBrowser(
-                       com.payu.paymentparamhelper.PayuConstants.PHONEPE_INTENT,
-                       params,
-                       params.txnId,
-                       PayuConstants.PRODUCTION_PAYMENT_URL
-                   )*/
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
-
-    }
-
-    var payUPhonePeCallback: PayUPhonePeCallback = object : PayUPhonePeCallback() {
-        override fun onPaymentOptionFailure(payuResponse: String, merchantResponse: String) {
-            Utility.showToast("phone pe failed")
-            Log.d("phone_pay_payment", "failed")
-            //Called when Payment gets failed.
-        }
-
-        override fun onPaymentOptionInitialisationSuccess(result: Boolean) {
-            super.onPaymentOptionInitialisationSuccess(result)
-            Utility.showToast("phone pe initial success")
-
-            Log.d("phone_pay_payment", "initial success")
-
-            // Merchants are advised to show PhonePe option on their UI after this callback is called.
-        }
-
-        override fun onPaymentOptionSuccess(payuResponse: String, merchantResponse: String) {
-            Utility.showToast("phone pe success")
-
-            Log.d("phone_pay_payment", "success")
-
-            //Called when Payment gets successful.
-        }
-
-        override fun onPaymentOptionInitialisationFailure(errorCode: Int, description: String) {
-            Utility.showToast(errorCode.toString() + "  " + description)
-
-            Log.d("phone_pay_payment", errorCode.toString() + "  " + description)
-
-            //Callback thrown in case PhonePe initialisation fails.
-        }
-    }
-
-    /*
      * This method is used to call leave member
      * */
     private fun callAddNewCardBottomSheet() {
         val bottomSheet =
             AddNewCardBottomSheet(
                 mViewModel.amountToAdd.get(),
+                merchantKey = mViewModel.merchantKey.get(),
+                merchantSalt = mViewModel.merchantSalt,
                 this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
@@ -352,8 +265,6 @@ class AddMoneyUpiDebitView :
     }
 
     override fun onAddNewCardButtonClick(addNewCardDetails: AddNewCardDetails) {
-        Log.d("jshf8e",addNewCardDetails.cardNumber?.take(6).toString())
-      //  callPayUApi(mViewModel.getCheckIsDomesticHash.get(),PayuConstants.CHECK_IS_DOMESTIC,var1=addNewCardDetails.cardNumber?.take(6))
         callDebitCardPaymentGateway(0, addNewCardDetails)
     }
 
@@ -369,23 +280,26 @@ class AddMoneyUpiDebitView :
 
     override fun onPaymentRelatedDetailsResponse(payuResponse: PayuResponse?) {
         val list = ArrayList<SavedCardResponseDetails>()
-        payuResponse?.storedCards?.forEach()
-        {
-            list.add(
-                SavedCardResponseDetails(
-                    card_no = it.maskedCardNumber,
-                    name_on_card = it.nameOnCard,
-                    expiry_month = it.expiryMonth,
-                    expiry_year = it.expiryYear,
-                    is_expired = it.isExpired,
-                    isDomestic = it.isDomestic,
-                    card_brand = it.cardBrand,
-                    card_token = it.cardToken,
-                    card_type = it.cardType
+        mViewModel.isSavedCardProgressVisible.set(false)
+        if (payuResponse?.storedCards?.isNullOrEmpty() == false) {
+            payuResponse.storedCards?.forEach()
+            {
+                list.add(
+                    SavedCardResponseDetails(
+                        card_no = it.maskedCardNumber,
+                        name_on_card = it.nameOnCard,
+                        expiry_month = it.expiryMonth,
+                        expiry_year = it.expiryYear,
+                        is_expired = it.isExpired,
+                        isDomestic = it.isDomestic,
+                        card_brand = it.cardBrand,
+                        card_token = it.cardToken,
+                        card_type = it.cardType
+                    )
                 )
-            )
+            }
+            mViewModel.savedCardsAdapter.setList(list)
         }
-        mViewModel.savedCardsAdapter.setList(list)
 
     }
 
@@ -401,13 +315,11 @@ class AddMoneyUpiDebitView :
                 vpa: String,
                 packageListDialogFragment: PackageListDialogFragment
             ) {
-
-
                 //This hash should be generated from server
                 //    val input = "smsplus|validateVPA|$vpa|1b1b0"
                 val input =
                     mViewModel.merchantKey.get() + "|" + "validateVPA" + "|" + mViewModel.upiEntered.get() + "|" + mViewModel.merchantSalt
-                Log.d("kcj0souv", input)
+
                 val verifyVpaHash = calculateHash(input).result
 
                 packageListDialogFragment.verifyVpa(verifyVpaHash)
@@ -582,7 +494,6 @@ class AddMoneyUpiDebitView :
     private fun getListOfApps() {
         val upiList = ArrayList<UpiModel>()
         upiList.add(UpiModel(name = getString(R.string.google_pay)))
-        upiList.add(UpiModel(name = getString(R.string.phone_pay)))
         val intent = Intent()
         intent.data = Uri.parse("upi://pay")
         val resolveInfos = packageManager.queryIntentActivities(
@@ -594,7 +505,6 @@ class AddMoneyUpiDebitView :
             val upiModel = UpiModel()
             try {
                 packageInfo = packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, 0)
-
                 upiModel.name =
                     packageManager.getApplicationLabel(packageInfo.applicationInfo) as String
                 upiModel.packageName = resolveInfo.activityInfo.packageName
