@@ -51,6 +51,8 @@
     <string name="approve_pay_btn_text">Approve &amp; Pay</string>
     <string name="clear_btn_text">Clear</string>
     <string name="apply_btn_text">Apply</string>
+    <string name="yes_btn_text">Yes</string>
+    <string name="save_btn_text">Save</string>
 
 
     <!--Login-->
@@ -424,6 +426,9 @@
     <string name="card_details_title">Card Details</string>
     <string name="expiry_details_title">"Expiry - "</string>
     <string name="cvv_details_title">"CVV - "</string>
+    <string name="order_card">Order Card</string>
+    <string name="account_stmt">Account Statement</string>
+    <string name="set_limit">Set up Spending Limit</string>
 
 
     <string-array name="relationNameList">
@@ -557,5 +562,32 @@
     <string name="to_date_empty_error">Please choose to date</string>
     <string name="to_date_bigger">To date should be larger than from date</string>
     <string name="received_text">"Received | "</string>
+
+    <!--
+    Card settings
+    -->
+    <string name="card_settings">Card Settings</string>
+    <string name="card_settings_block">Block/Unblock Cards</string>
+    <string name="card_settings_limit">Setting Up Limit</string>
+    <string name="card_settings_channels">Manage Channels</string>
+    <string name="card_settings_pin">Set or Change Pin</string>
+
+    <!--
+  Block/Unblock Card
+  -->
+    <string name="virtual_card_text">Virtual Card</string>
+    <string name="physical_card_text">Physical Card</string>
+    <string name="block_text">All your card services will get blocked till you switch it on from the app. You can unblock it anytime you want.</string>
+
+    <!--
+     Set up Spending Limit
+    -->
+
+    <string name="set_spending_limit_text">Set up Spending Limit</string>
+    <string name="ecom">Ecommerce</string>
+    <string name="atm">ATM</string>
+    <string name="point_of_sale">Point of sale</string>
+    <string name="dummy_amount_500">\u20B9 500</string>
+    <string name="dummy_amount_10000">\u20B9 10,000</string>
 
 </resources>

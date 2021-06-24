@@ -30,6 +30,7 @@ import com.fypmoney.database.LogRepository
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.database.entity.LogEntity
 import com.fypmoney.model.CustomerInfoResponse
+import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.util.AppConstants.DATE_FORMAT_CHANGED
 import com.google.gson.Gson
 import com.google.i18n.phonenumbers.PhoneNumberUtil
@@ -634,7 +635,7 @@ object Utility {
     /*
     * This is used to store the data of customer in the preference
     * */
-    fun saveCustomerDataInPreference(responseData: CustomerInfoResponse) {
+    fun saveCustomerDataInPreference(responseData: CustomerInfoResponse?) {
         val gson = Gson()
         val json = gson.toJson(responseData)
         SharedPrefUtils.putString(

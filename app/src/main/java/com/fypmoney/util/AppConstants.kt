@@ -127,4 +127,10 @@ object AppConstants {
     const val ADD_MONEY = "add_money"
 
 
+    const val BLOCK_CARD_ACTION = "BLOCKCARD"
+    const val UNBLOCK_CARD_ACTION = "UNBLOCKCARD"
+    const val CARD_TYPE_PHYSICAL_CARD = 1
+    const val CARD_TYPE_VIRTUAL_CARD = 0
+
+
 }

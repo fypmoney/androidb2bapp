@@ -6,6 +6,8 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,6 +17,7 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenCardBinding
 import com.fypmoney.util.AppConstants
@@ -32,7 +35,8 @@ import kotlinx.android.synthetic.main.virtual_card_front_layout.*
  * This fragment is used for handling card
  */
 class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
-    MyProfileListAdapter.OnListItemClickListener {
+    MyProfileListAdapter.OnListItemClickListener,
+    CardSettingsBottomSheet.OnCardSettingsClickListener {
     private lateinit var mViewModel: CardScreenViewModel
     private lateinit var mViewBinding: ScreenCardBinding
     private var mSetRightOut: AnimatorSet? = null
@@ -59,10 +63,11 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         mViewBinding.fragment = this
 
         val textString = ArrayList<String>()
-        textString.add("Card Settings")
-        textString.add("Order Card")
-        textString.add("Account Statement")
-        textString.add("Set up Spending Limit")
+        textString.add(PockketApplication.instance.getString(R.string.card_settings))
+        textString.add(PockketApplication.instance.getString(R.string.order_card))
+        textString.add(PockketApplication.instance.getString(R.string.account_stmt))
+        textString.add(PockketApplication.instance.getString(R.string.set_limit))
+
         val drawableIds = ArrayList<Int>()
 
         drawableIds.add(R.drawable.lock)
@@ -165,6 +170,9 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     override fun onItemClick(position: Int) {
 
         when (position) {
+            0 -> {
+                callCardSettingsBottomSheet()
+            }
             2 -> {
                 intentToActivity(BankTransactionHistoryView::class.java)
             }
@@ -174,5 +182,33 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     private fun intentToActivity(aClass: Class<*>) {
         val intent = Intent(requireActivity(), aClass)
         requireContext().startActivity(intent)
+    }
+
+    /*
+    * This method is used to call card settings
+    * */
+    private fun callCardSettingsBottomSheet() {
+        val bottomSheet =
+            CardSettingsBottomSheet(this)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "CardSettings")
+    }
+
+    /*
+   * This method is used to call card block / unblock card
+   * */
+    private fun callCardBlockUnblockBottomSheet() {
+        val bottomSheet =
+            BlockUnblockCardBottomSheet()
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "BlockUnblockCard")
+    }
+
+    override fun onCardSettingsClick(position: Int) {
+        when (position) {
+            0 -> {
+                callCardBlockUnblockBottomSheet()
+            }
+        }
     }
 }

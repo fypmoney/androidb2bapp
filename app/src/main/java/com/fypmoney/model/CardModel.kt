@@ -80,3 +80,12 @@ data class BankTransactionHistoryPagination(
     @SerializedName("current_page") val current_page: Int,
     @SerializedName("total_pages") val total_pages: Int
 ) : Serializable
+
+
+data class UpDateCardSettingsRequest(
+    @SerializedName("action") val action: String? = null,
+    @SerializedName("isEnable") val isEnable: String? = null,
+    @SerializedName("channelType") val channelType: String? = null,
+    @SerializedName("kitNumber") val kitNumber: String? = null,
+    @SerializedName("cardType") val cardType: Int? = null,
+) : BaseRequest()

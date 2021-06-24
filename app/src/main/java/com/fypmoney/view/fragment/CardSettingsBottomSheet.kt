@@ -5,27 +5,26 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.ListView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
-import com.fypmoney.databinding.BottomSheetFamilyNotificationBinding
-import com.fypmoney.util.AppConstants
+import com.fypmoney.application.PockketApplication
+import com.fypmoney.databinding.BottomSheetCardSettingsBinding
+import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.android.synthetic.main.screen_card.*
 
 
 /*
 * This is used to show card settings
 * */
-class CardSettingsBottomSheet(
-    private val actionAllowed: String?,
-    private val descriptionValue: String?, private val isApprovalProcess: String? = null,
-    private var onBottomSheetClickListener: OnBottomSheetClickListener
-) : BottomSheetDialogFragment() {
+class CardSettingsBottomSheet(var onCardSettingsClickListener: OnCardSettingsClickListener) :
+    BottomSheetDialogFragment(),
+    MyProfileListAdapter.OnListItemClickListener {
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -36,74 +35,53 @@ class CardSettingsBottomSheet(
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(
-            R.layout.bottom_sheet_family_notification,
+            R.layout.bottom_sheet_card_settings,
             container,
             false
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetFamilyNotificationBinding>(
+        val bindingSheet = DataBindingUtil.inflate<BottomSheetCardSettingsBinding>(
             layoutInflater,
-            R.layout.bottom_sheet_family_notification,
+            R.layout.bottom_sheet_card_settings,
             null,
             false
         )
+        val list = view.findViewById<ListView>(R.id.list)!!
+
         bottomSheet.setContentView(bindingSheet.root)
+        val textString = ArrayList<String>()
+        textString.add(PockketApplication.instance.getString(R.string.card_settings_block))
+        textString.add(PockketApplication.instance.getString(R.string.card_settings_limit))
+        textString.add(PockketApplication.instance.getString(R.string.card_settings_channels))
+        textString.add(PockketApplication.instance.getString(R.string.card_settings_pin))
+        val drawableIds = ArrayList<Int>()
 
-        val description = view.findViewById<TextView>(R.id.description)!!
-        val btnReject = view.findViewById<TextView>(R.id.button_reject)!!
-        val btnAccept = view.findViewById<TextView>(R.id.button_accept)!!
-        val btnCancel = view.findViewById<TextView>(R.id.button_cancel)!!
+        drawableIds.add(R.drawable.lock)
+        drawableIds.add(R.drawable.order)
+        drawableIds.add(R.drawable.transaction)
+        drawableIds.add(R.drawable.set_up_limit)
 
-        when (isApprovalProcess) {
-            AppConstants.YES -> {
-                btnReject.visibility = View.GONE
-                btnAccept.visibility = View.GONE
-                btnCancel.visibility = View.GONE
-                object : CountDownTimer(10000, 1000) {
-                    override fun onTick(millisUntilFinished: Long) {
-                    }
-
-                    override fun onFinish() {
-                        dismiss()
-                    }
-                }.start()
-
-            }
-        }
-
-        val actionAllowedList = actionAllowed?.split(",")
-        if (actionAllowedList?.size!! > 1) {
-            btnCancel.visibility = View.GONE
-
-        } else {
-            btnAccept.visibility = View.GONE
-            btnReject.visibility = View.GONE
-
-        }
-
-
-        description.text = descriptionValue
-
-        btnReject.setOnClickListener {
-            onBottomSheetClickListener.onBottomSheetButtonClick(actionAllowedList[1])
-            dismiss()
-        }
-        btnAccept.setOnClickListener {
-            onBottomSheetClickListener.onBottomSheetButtonClick(actionAllowedList[0])
-            dismiss()
-        }
-
-        btnCancel.setOnClickListener {
-            onBottomSheetClickListener.onBottomSheetButtonClick(actionAllowed)
-            dismiss()
-        }
+        val myProfileAdapter = MyProfileListAdapter(
+            requireContext(),
+            this,
+            PockketApplication.instance.getString(R.string.card_settings)
+        )
+        list.adapter = myProfileAdapter
+        myProfileAdapter.setList(
+            iconList1 = drawableIds,
+            textString
+        )
         return view
     }
 
-    interface OnBottomSheetClickListener {
-        fun onBottomSheetButtonClick(actionAllowed: String?)
-
+    override fun onItemClick(position: Int) {
+        onCardSettingsClickListener.onCardSettingsClick(position)
+        dismiss()
     }
 
+
+    interface OnCardSettingsClickListener {
+        fun onCardSettingsClick(position: Int)
+    }
 }

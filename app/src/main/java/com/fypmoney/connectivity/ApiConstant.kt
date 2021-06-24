@@ -46,6 +46,7 @@ object ApiConstant {
     const val API_BANK_TRANSACTION_HISTORY = "/services/PockketService/api/bank/transaction/history"
     const val API_TRANSACTION_HISTORY = "/services/PockketService/api/transaction/history"
     const val API_GET_HASH = "/services/PockketService/api/get/hash"
+    const val API_UPDATE_CARD_SETTINGS = "/services/PockketService/api/card-infos"
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
 
  // pay u test url
