@@ -16,7 +16,6 @@ import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.TextUtils
 import android.util.DisplayMetrics
-import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.annotation.ColorInt
@@ -26,10 +25,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.database.ContactRepository
-import com.fypmoney.database.LogRepository
 import com.fypmoney.database.entity.ContactEntity
-import com.fypmoney.database.entity.LogEntity
-import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.util.AppConstants.DATE_FORMAT_CHANGED
 import com.google.gson.Gson
@@ -363,18 +359,13 @@ object Utility {
     fun getAllContactsInList(
         contentResolver: ContentResolver,
         onAllContactsAddedListener: OnAllContactsAddedListener,
-        contactRepository: ContactRepository, logRepository: LogRepository
+        contactRepository: ContactRepository
     ) {
-        insertLogs(logRepository, "getAllContactsInList", "onStart()")
         val contactList = mutableListOf<ContactEntity>()
         GlobalScope.launch(Dispatchers.Main) {
             // Switch to a background (IO) thread
             withContext(Dispatchers.IO) {
-                insertLogs(
-                    logRepository,
-                    "getAllContactsInList",
-                    "Before contact fetch query in co-routine"
-                )
+
 
                 val contacts: Cursor?
                 //  GlobalScope.launch(Dispatchers.Main) {
@@ -403,11 +394,7 @@ object Utility {
                         )
 
                     }
-                    insertLogs(
-                        logRepository,
-                        "getAllContactsInList",
-                        "After contact fetch query in co-routine"
-                    )
+
 
                     // Loop through the contacts
                     while (contacts?.moveToNext()!!) {
@@ -454,7 +441,6 @@ object Utility {
                 } catch (
                     e: Exception
                 ) {
-                    insertLogs(logRepository, "getAllContactsInList", "Exception occur")
 
                     e.printStackTrace()
                 }
@@ -467,18 +453,9 @@ object Utility {
                         SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
                     ) == null
                 ) {
-                    insertLogs(
-                        logRepository,
-                        "getAllContactsInList",
-                        "Before all contact inserted in database"
-                    )
+
 
                     contactRepository.insertAllContacts(contactList)
-                    insertLogs(
-                        logRepository,
-                        "getAllContactsInList",
-                        "After all contact inserted in database with size" + contactList.size
-                    )
 
                     //  Log.d("contacts", "step2_after_insertion")
 
@@ -488,18 +465,10 @@ object Utility {
                             contactList.forEach {
                                 contactRepository.deleteContactsBasedOnLookupKey(it.phoneBookIdentifier!!)
                             }
-                            insertLogs(
-                                logRepository,
-                                "getAllContactsInList",
-                                "Before contact inserted in database on edit or insert"
-                            )
+
 
                             contactRepository.insertAllContacts(contactList)
-                            insertLogs(
-                                logRepository,
-                                "getAllContactsInList",
-                                "After contact inserted in database on edit or insert with size " + contactList.size
-                            )
+
 
                             //    Log.d("contacts", "step3_after_insertion")
                         }
@@ -511,11 +480,7 @@ object Utility {
                 }
             }
             // switch to the main thread
-            insertLogs(
-                logRepository,
-                "getAllContactsInList",
-                "switch to main thread after insert contact"
-            )
+
 
             onAllContactsAddedListener.onAllContactsSynced(contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>)
 
@@ -525,13 +490,12 @@ object Utility {
     /*
     * set the last sink date
     * */
-    private fun setLastContactSinkDate(logRepository: LogRepository? = null) {
+    private fun setLastContactSinkDate() {
         SharedPrefUtils.putString(
             PockketApplication.instance,
             SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP,
             System.currentTimeMillis().toString()
         )
-        insertLogs(logRepository, "setLastContactSinkDate", "set last sink date")
 
     }
 
@@ -609,6 +573,49 @@ object Utility {
             false
         )
 
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_ACCESS_TOKEN,
+            ""
+        )
+
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_PROFILE_INFO,
+            ""
+        )
+
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_FIRST_NAME,
+            ""
+        )
+
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_EMAIL,
+            ""
+        )
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_LAST_NAME,
+            ""
+        )
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_MOBILE,
+            ""
+        )
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_ID,
+            ""
+        )
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USERNAME,
+            ""
+        )
     }
 
     /*
@@ -635,7 +642,7 @@ object Utility {
     /*
     * This is used to store the data of customer in the preference
     * */
-    fun saveCustomerDataInPreference(responseData: CustomerInfoResponse?) {
+    fun saveCustomerDataInPreference(responseData: CustomerInfoResponseDetails?) {
         val gson = Gson()
         val json = gson.toJson(responseData)
         SharedPrefUtils.putString(
@@ -648,14 +655,14 @@ object Utility {
     /*
         * This is used to get the data of customer from the preference
         * */
-    fun getCustomerDataFromPreference(): CustomerInfoResponse? {
+    fun getCustomerDataFromPreference(): CustomerInfoResponseDetails? {
         val gson = Gson()
         val json =
             SharedPrefUtils.getString(
                 PockketApplication.instance,
                 SharedPrefUtils.SF_KEY_USER_PROFILE_INFO
             )
-        return gson.fromJson(json, CustomerInfoResponse::class.java)
+        return gson.fromJson(json, CustomerInfoResponseDetails::class.java)
     }
 
     /*
@@ -681,7 +688,7 @@ object Utility {
     /*
     * This is used to format the amount
     * */
-    fun getFormatedAmount(amount: String): String? {
+    fun getFormatedAmount(amount: String): String {
         //return NumberFormat.getNumberInstance(Locale.US).format(amount)
         return amount
     }
@@ -696,16 +703,7 @@ object Utility {
         showToast(PockketApplication.instance.getString(R.string.copy_to_clipboard_success))
     }
 
-    /*
-    * This method is used to insert logs
-    * */
-    fun insertLogs(logRepository: LogRepository?, methodName: String, methodValue: String) {
-        val logEntity = LogEntity()
-        logEntity.methodName = methodName
-        logEntity.methodValue = methodValue
-        logEntity.timestamp = System.currentTimeMillis()
-        logRepository?.insertLog(logEntity)
-    }
+
 
     /*
     * This method is used to convert amount to paise
@@ -758,12 +756,16 @@ object Utility {
     * */
     fun compareDates(
         fromDate: String, toDate: String
-    ): Boolean {
+    ): Boolean? {
+        var compareDate: Boolean? = false
         val sdf = SimpleDateFormat(DATE_FORMAT_CHANGED, Locale.getDefault())
 
-        return sdf.parse(toDate).after(sdf.parse(fromDate))
-
-
+        if (sdf.parse(toDate) == sdf.parse(fromDate)) {
+            compareDate = true
+        } else if (sdf.parse(toDate).after(sdf.parse(fromDate))) {
+            compareDate = sdf.parse(toDate).after(sdf.parse(fromDate))
+        }
+        return compareDate
     }
 
 }

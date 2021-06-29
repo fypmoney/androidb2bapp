@@ -33,7 +33,7 @@
 
         <RelativeLayout
             android:id="@+id/relativeLayout"
-            SET_ALIGNMENT="@{viewHelper.position}"
+            SET_ALIGNMENT="@{viewHelper.transactionHistory.isSender}"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/date"

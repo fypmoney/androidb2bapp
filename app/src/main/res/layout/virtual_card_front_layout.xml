@@ -23,9 +23,9 @@
             android:id="@+id/mCardFrontLayout"
             android:layout_width="match_parent"
             android:layout_height="199dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/ic_card"
             android:padding="16dp">
 
@@ -36,12 +36,24 @@
                 app:srcCompat="@drawable/rupay" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/amountFetching"
+                style="@style/TextviewRegular"
+                android:layout_alignParentEnd="true"
+                android:text="@string/fetching_balance"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:visibility="@{viewModel.isFetchBalanceVisible?View.VISIBLE:View.GONE}" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/balance"
                 style="@style/TextviewRegular"
                 android:layout_toStartOf="@+id/balance_amount"
                 android:text="@string/balance_text1"
                 android:textAlignment="center"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:visibility="@{viewModel.isFetchBalanceVisible?View.GONE:View.VISIBLE}" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/balance_amount"
@@ -49,8 +61,8 @@
                 android:layout_alignParentEnd="true"
                 android:text="@{@string/Rs+viewModel.balance}"
                 android:textColor="@color/white"
-                android:textSize="17dp" />
-
+                android:textSize="17dp"
+                android:visibility="@{viewModel.isFetchBalanceVisible?View.GONE:View.VISIBLE}" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/name"
@@ -74,4 +86,5 @@
 
 
         </RelativeLayout>
-    </FrameLayout></layout>
+    </FrameLayout>
+</layout>

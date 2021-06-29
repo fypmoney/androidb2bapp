@@ -14,6 +14,7 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ViewUserFeedsBinding
 import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.model.CustomerInfoResponse
+import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.BASE_ACTIVITY_URL
@@ -112,7 +113,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
         val intent = Intent(context, aClass)
         intent.putExtra(FEED_RESPONSE, feedDetails)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
-        intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponse())
+        intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
         startActivity(intent)
     }
 

@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -33,8 +34,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var onAddNewCardClicked = MutableLiveData<Boolean>()
     var requestData = ObservableField<String>()
     var hash = ObservableField<String>()
-    var merchantKey = ObservableField("smsplus")
-    var merchantSalt = "1b1b0"
+    var merchantKey = ObservableField<String>()
     var pgTxnNo = ObservableField<String>()
     var accountTxnNo = ObservableField<String>()
     var upiEntered = ObservableField<String>()
@@ -63,8 +63,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
                     remarks = "amount added",
                     amount = Utility.convertToPaise(amountToAdd.get()!!),
                     merchantId = "",
-                    merchantKey = merchantKey.get(),
-                    merchantSalt = merchantSalt
+                    merchantKey = ""
                 )
             )
         )
@@ -215,8 +214,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
             pgRequestData.email = mainObject.getString("email")
             pgRequestData.amount = mainObject.getString("amount")
             pgRequestData.merchantId = mainObject.getString("merchantId")
-            //  pgRequestData.merchantKey = mainObject.getString("merchantKey")
-            pgRequestData.merchantKey = merchantKey.get()
+            pgRequestData.merchantKey = mainObject.getString("merchantKey")
             pgRequestData.productName = mainObject.getString("productName")
             pgRequestData.paymentHash = mainObject.getString("paymentHash")
             pgRequestData.userFirstName = mainObject.getString("userFirstName")
@@ -232,10 +230,9 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
             pgRequestData.udf7 = mainObject.getString("udf7")
             pgRequestData.udf8 = mainObject.getString("udf8")
 
-            // set hash
-
+            // set hash and merchant key
             hash.set(mainObject.getString("paymentHash"))
-            // merchantKey.set(mainObject.getString("merchantKey"))
+            merchantKey.set(mainObject.getString("merchantKey"))
 
             return pgRequestData
         }
@@ -259,7 +256,18 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         mPaymentParams.productInfo = resultData.productName
         mPaymentParams.firstName = resultData.userFirstName
         mPaymentParams.phone = resultData.phone
-        mPaymentParams.email = "poojamalik810@gmail.com"
+        if (SharedPrefUtils.getString(
+                getApplication(),
+                SharedPrefUtils.SF_KEY_USER_EMAIL
+            ) == null
+        ) {
+            mPaymentParams.email = ""
+        } else {
+            mPaymentParams.email = SharedPrefUtils.getString(
+                getApplication(),
+                SharedPrefUtils.SF_KEY_USER_EMAIL
+            )
+        }
         mPaymentParams.txnId = resultData.txnId
         mPaymentParams.surl = " https://payuresponse.firebaseapp.com/success"
         mPaymentParams.furl = "https://payuresponse.firebaseapp.com/failure"
@@ -273,7 +281,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
             SharedPrefUtils.SF_KEY_USER_ID
         )
 
-        mPaymentParams.hash = generateHashFromSDK(mPaymentParams, merchantSalt)
+        mPaymentParams.hash = resultData.paymentHash
         hash.set(mPaymentParams.hash)
 
 
@@ -361,7 +369,6 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     fun makeGetHashRequest(command: String, var1: String): GetHashRequest {
         val getHashRequest = GetHashRequest()
         getHashRequest.merchantKey = merchantKey.get()
-        getHashRequest.merchantSalt = merchantSalt
         val list = ArrayList<HashData>()
         val hashData = HashData()
         hashData.command = command

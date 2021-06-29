@@ -21,13 +21,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <RelativeLayout
+            android:id="@+id/mCardBackLayout"
             android:layout_width="match_parent"
             android:layout_height="199dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:id="@+id/mCardBackLayout"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/ic_card_details"
             android:padding="16dp">
 
@@ -44,44 +45,58 @@
                 android:id="@+id/copy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="80dp"
                 android:onClick="@{()->fragment.onCopyClicked()}"
+                android:tint="@color/white"
                 app:srcCompat="@drawable/ic_icon_feather_copy" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/expiry"
                 style="@style/TextviewRegular"
-                android:text="@string/expiry_details_title"
                 android:layout_alignParentBottom="true"
+                android:text="@string/expiry_details_title"
                 android:textSize="15dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/ExpiryValue"
                 style="@style/TextviewBold"
+                android:layout_alignParentBottom="true"
+                android:layout_toEndOf="@+id/expiry"
                 android:text="@{viewModel.expiry}"
                 android:textColor="@color/white"
-                android:layout_toEndOf="@+id/expiry"
-                android:layout_alignParentBottom="true"
                 android:textSize="17dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/cvv"
                 style="@style/TextviewRegular"
-                android:text="@string/cvv_details_title"
                 android:layout_alignParentBottom="true"
                 android:layout_toStartOf="@+id/cvvValue"
+                android:text="@string/cvv_details_title"
                 android:textSize="15dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/cvvValue"
                 style="@style/TextviewBold"
+                android:layout_alignParentBottom="true"
+                android:layout_toStartOf="@+id/image"
+                android:inputType="textPassword"
                 android:text="@{viewModel.cvv}"
                 android:textColor="@color/white"
+                android:textSize="17dp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:textSize="17dp" />
+                android:layout_marginStart="5dp"
+                android:onClick="@{()->fragment.onCvvEyeClicked()}"
+                android:src="@{viewModel.isCvvVisible?@drawable/ic_icon_feather_eye_off:@drawable/ic_icon_feather_eye}"
+                android:tint="@color/white" />
 
 
         </RelativeLayout>
-    </FrameLayout></layout>
+    </FrameLayout>
+</layout>

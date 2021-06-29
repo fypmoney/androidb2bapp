@@ -19,76 +19,76 @@
         <include
             android:id="@+id/layout"
             layout="@layout/toolbar_transaction_history"
-          />
+            />
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/layout"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/curved_background12">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/linear"
-            android:layout_marginStart="@dimen/screenMarginLeft"
-            android:layout_marginEnd="@dimen/screenMarginRight"
-            app:adapter="@{viewModel.transactionHistoryAdapter}"
-            android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=visible}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_below="@id/layout"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/curved_background12">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/stayTuned"
-            style="@style/TextviewRegular"
-            android:textColor="@color/text_color_little_dark"
-            android:text="@string/no_data_found"
-            android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:layout_centerInParent="true"
-            android:visibility="@{viewModel.isNoDataFoundVisible?View.VISIBLE:View.GONE,default=gone}"
-            android:textSize="@dimen/title_size" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/linear"
+                android:layout_marginStart="@dimen/screenMarginLeft"
+                android:layout_marginEnd="@dimen/screenMarginRight"
+                app:adapter="@{viewModel.transactionHistoryAdapter}"
+                android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=visible}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-
-        <LinearLayout
-            android:id="@+id/linear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true">
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/request"
-            style="@style/Widget.App.Button"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:textColor="@color/white"
-            android:background="@drawable/curved_background1"
-            android:onClick="@{(view)->viewModel.onPayOrRequestClicked(view)}"
-            android:text="@string/request_btn_text"
-           android:textAlignment="center"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            />
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/pay"
-                style="@style/Widget.App.Button"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:textColor="@color/white"
-                android:background="@drawable/curved_background1"
-                android:onClick="@{(view)->viewModel.onPayOrRequestClicked(view)}"
-                android:text="@string/pay_btn_text"
+                android:id="@+id/stayTuned"
+                style="@style/TextviewRegular"
+                android:textColor="@color/text_color_little_dark"
+                android:text="@string/no_data_found"
+                android:layout_centerHorizontal="true"
                 android:textAlignment="center"
-                android:paddingTop="10dp"
-                android:layout_marginStart="20dp"
-                android:paddingBottom="10dp"
-                />
-        </LinearLayout>
-    </RelativeLayout>
+                android:layout_centerInParent="true"
+                android:visibility="@{viewModel.isNoDataFoundVisible?View.VISIBLE:View.GONE,default=gone}"
+                android:textSize="@dimen/title_size" />
+
+
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/request"
+                    style="@style/Widget.App.Button"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/curved_background1"
+                    android:onClick="@{(view)->viewModel.onPayOrRequestClicked(view)}"
+                    android:text="@string/request_btn_text"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pay"
+                    style="@style/Widget.App.Button"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/curved_background1"
+                    android:onClick="@{(view)->viewModel.onPayOrRequestClicked(view)}"
+                    android:text="@string/pay_btn_text"
+                    android:textAlignment="center"
+                    android:paddingTop="10dp"
+                    android:layout_marginStart="20dp"
+                    android:paddingBottom="10dp"
+                    />
+            </LinearLayout>
+        </RelativeLayout>
 
     </RelativeLayout>
 </layout>

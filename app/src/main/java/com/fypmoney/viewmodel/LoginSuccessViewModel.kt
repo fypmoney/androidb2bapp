@@ -50,22 +50,22 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
         when (purpose) {
             ApiConstant.API_GET_CUSTOMER_INFO -> {
                 if (responseData is CustomerInfoResponse) {
-                    Utility.saveCustomerDataInPreference(responseData)
+                    Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
                     onApiSuccess.value=true
                     // Save the user id in shared preference
                     SharedPrefUtils.putLong(
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
-                        value = responseData.id!!
+                        value = responseData.customerInfoResponseDetails?.id!!
                     )
                     // Save the user phone in shared preference
                     SharedPrefUtils.putString(
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE,
-                        value = responseData.mobile
+                        value = responseData.customerInfoResponseDetails?.mobile
                     )
 
                     val interestList = ArrayList<String>()
-                    if (responseData.userInterests?.isNullOrEmpty() == false) {
-                        responseData.userInterests.forEach {
+                    if (responseData.customerInfoResponseDetails?.userInterests?.isNullOrEmpty() == false) {
+                        responseData.customerInfoResponseDetails?.userInterests!!.forEach {
                             interestList.add(it.name!!)
                         }
 

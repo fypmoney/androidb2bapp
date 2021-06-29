@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -13,11 +12,10 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenHomeBinding
-import com.fypmoney.model.CustomerInfoResponse
+import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.activity.*
-import com.fypmoney.viewmodel.ChoresViewModel
 import com.fypmoney.viewmodel.HomeScreenViewModel
 import com.google.android.material.card.MaterialCardView
 
@@ -147,7 +145,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         val intent = Intent(context, aClass)
         intent.putExtra(AppConstants.FEED_RESPONSE, feedDetails)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
-        intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponse())
+        intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
         startActivity(intent)
     }
 }

@@ -98,10 +98,10 @@ class BindingAdapter {
 
         @BindingAdapter("SET_ALIGNMENT")
         @JvmStatic
-        fun setLayoutAlignment(view: RelativeLayout, position: Int) {
+        fun setLayoutAlignment(view: RelativeLayout, isSender: String) {
             try {
-                when {
-                    position % 2 == 0 -> {
+                when(isSender) {
+                    AppConstants.YES-> {
                         val textViewLayoutParams = RelativeLayout.LayoutParams(
                             500,
                             RelativeLayout.LayoutParams.WRAP_CONTENT

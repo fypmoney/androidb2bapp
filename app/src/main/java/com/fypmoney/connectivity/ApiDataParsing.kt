@@ -158,6 +158,15 @@ class ApiDataParsing {
                 ApiConstant.API_GET_HASH -> {
                     getObject(response, GetHashResponse::class.java)
                 }
+                ApiConstant.API_UPDATE_CARD_LIMIT -> {
+                    getObject(response, UpdateCardLimitResponse::class.java)
+                }
+                ApiConstant.API_UPDATE_CARD_SETTINGS -> {
+                    getObject(response, UpdateCardSettingsResponse::class.java)
+                }
+                ApiConstant.API_GET_BANK_PROFILE -> {
+                    getObject(response, BankProfileResponse::class.java)
+                }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {
                         PayuConstants.VALIDATE_VPA -> {

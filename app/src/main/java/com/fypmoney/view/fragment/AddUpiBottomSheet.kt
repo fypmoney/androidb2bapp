@@ -40,7 +40,6 @@ import kotlinx.android.synthetic.main.bottom_sheet_add_upi.*
 class AddUpiBottomSheet(
     private val amount: String?,
     private val merchantKey: String?,
-    private val merchantSalt: String?,
     private var onBottomSheetClickListener: OnAddUpiClickListener
 ) : BottomSheetDialogFragment(), WebApiCaller.OnWebApiResponse {
     lateinit var name: AppCompatTextView
@@ -78,9 +77,6 @@ class AddUpiBottomSheet(
         progressBar = view.findViewById(R.id.progress)!!
 
         btnAdd.text = getString(R.string.add_btn_text) + " " + getString(R.string.Rs) + amount
-
-        upiId.setText("8447169664@paytm")
-
 
         verify.setOnClickListener {
             when {
@@ -183,7 +179,6 @@ class AddUpiBottomSheet(
     fun makeGetHashRequest(command: String, var1: String): GetHashRequest {
         val getHashRequest = GetHashRequest()
         getHashRequest.merchantKey = merchantKey
-        getHashRequest.merchantSalt = merchantSalt
         val list = ArrayList<HashData>()
         val hashData = HashData()
         hashData.command = command

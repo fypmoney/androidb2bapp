@@ -58,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:hint="@string/add_new_card_cvv"
+                android:drawableEnd="@drawable/help"
                 android:inputType="numberPassword"
                 android:maxLength="3"
                 android:text="@={viewHelper.cvv}" />

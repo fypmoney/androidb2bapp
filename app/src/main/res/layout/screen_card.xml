@@ -59,20 +59,12 @@
 
         </FrameLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/limit"
-            style="@style/TextviewRegular"
-            android:layout_gravity="center"
-            android:layout_marginTop="36dp"
-            android:layout_marginBottom="36dp"
-            android:drawableStart="@drawable/rbi_logo"
-            android:drawablePadding="5dp"
-            android:text="@string/card_transaction_limit1" />
 
         <ListView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingTop="10dp"
             android:background="@drawable/curved_background12"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp" />

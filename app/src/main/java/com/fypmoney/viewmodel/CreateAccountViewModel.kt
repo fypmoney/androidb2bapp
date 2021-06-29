@@ -15,11 +15,11 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.InterestRepository
 import com.fypmoney.model.CustomerInfoResponse
+import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.InterestEntity
 import com.fypmoney.model.UpdateProfileRequest
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.adapter.ChooseInterestAdapter
 
 /*
 * This is used to handle account creation related functionality
@@ -43,7 +43,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
     /*
     * This method is used to set data
     * */
-    fun setData(customerInfoResponse: CustomerInfoResponse) {
+    fun setData(customerInfoResponse: CustomerInfoResponseDetails) {
         firstName.value = customerInfoResponse.firstName
         lastName.value = customerInfoResponse.lastName
     }
@@ -112,11 +112,13 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
 
                     SharedPrefUtils.putString(
                         getApplication(),
-                        SharedPrefUtils.SF_KEY_USER_FIRST_NAME, responseData.firstName
+                        SharedPrefUtils.SF_KEY_USER_FIRST_NAME,
+                        responseData.customerInfoResponseDetails?.firstName
                     )
                     SharedPrefUtils.putString(
                         getApplication(),
-                        SharedPrefUtils.SF_KEY_USER_LAST_NAME, responseData.lastName
+                        SharedPrefUtils.SF_KEY_USER_LAST_NAME,
+                        responseData.customerInfoResponseDetails?.lastName
                     )
                     SharedPrefUtils.putString(
                         getApplication(),
@@ -124,7 +126,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
                     )
 
                     // again update the saved data in preference
-                    Utility.saveCustomerDataInPreference(responseData)
+                    Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
 
 
                     val interestList = ArrayList<String>()
@@ -141,7 +143,8 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
 
                     }
 
-                    onUpdateProfileSuccess.value = true                    // set the button text to continue
+                    onUpdateProfileSuccess.value =
+                        true                    // set the button text to continue
 
                 }
             }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FYP money</string>
+    <string name="app_name">Fyp</string>
     <string name="action_settings">Settings</string>
     <string name="default_notification_channel_id">fypmoney</string>
 
@@ -52,7 +52,9 @@
     <string name="clear_btn_text">Clear</string>
     <string name="apply_btn_text">Apply</string>
     <string name="yes_btn_text">Yes</string>
+    <string name="no_btn_text">No</string>
     <string name="save_btn_text">Save</string>
+    <string name="log_out_btn_text">Log out</string>
 
 
     <!--Login-->
@@ -188,7 +190,7 @@
     <string name="quick_actions_chores1">Perform task and get cash rewards</string>
     <string name="quick_actions_rewards">Rewards</string>
     <string name="quick_actions_referrals">Referrals</string>
-    <string name="fetching_balance">Fetching balance</string>
+    <string name="fetching_balance">Fetching balance…</string>
 
     <!--
    Feeds Screen
@@ -200,12 +202,16 @@
     <!--
     User profile
     -->
-    <string name="logout">Log out</string>
+    <string name="thank_you">Thank you!</string>
+    <string name="my_profile_title">My Profile</string>
+    <string name="rate_text">Take a moment and rate us on the Google Play Store</string>
+    <string name="rate_text1">Rate us on</string>
     <string name="user_profile_screen_title">Profile</string>
     <string-array name="my_profile_title_list">
-        <item>Build Community</item>
-        <item>Select your Interest</item>
-        <item>Logs</item>
+        <item>Privacy settings</item>
+        <item>Feed/ interest settings</item>
+        <item>Help?</item>
+        <item>Log out</item>
     </string-array>
     <integer-array name="my_profile_icon_list">
         <item>@drawable/ic_profile</item>
@@ -522,7 +528,7 @@
 
     <string name="payment_success_msg">Your payment was successful.</string>
     <string name="trans_details_heading">Transaction details</string>
-    <string name="fyp_transaction_heading">FYP Money Transaction ID</string>
+    <string name="fyp_transaction_heading">Fyp Transaction ID</string>
     <string name="bank_transaction_heading">Bank Transaction ID</string>
 
     <!--
@@ -560,7 +566,7 @@
     <string name="date_hint">dd/MM/YYYY</string>
     <string name="from_date_empty_error">Please choose from date</string>
     <string name="to_date_empty_error">Please choose to date</string>
-    <string name="to_date_bigger">To date should be larger than from date</string>
+    <string name="to_date_bigger">To date should be larger or equal than from date</string>
     <string name="received_text">"Received | "</string>
 
     <!--
@@ -577,6 +583,11 @@
   -->
     <string name="virtual_card_text">Virtual Card</string>
     <string name="physical_card_text">Physical Card</string>
+    <string name="card_block_confirm">"Are you sure you want to "</string>
+    <string name="block_card_text"><b>Block </b>the card</string>
+    <string name="unblock_card_text"><b>UnBlock </b>the card</string>
+    <string name="enable_card_text"><b>Enable </b>the channel</string>
+    <string name="disable_card_text"><b>Disable </b>the channel</string>
     <string name="block_text">All your card services will get blocked till you switch it on from the app. You can unblock it anytime you want.</string>
 
     <!--
@@ -586,8 +597,31 @@
     <string name="set_spending_limit_text">Set up Spending Limit</string>
     <string name="ecom">Ecommerce</string>
     <string name="atm">ATM</string>
-    <string name="point_of_sale">Point of sale</string>
+    <string name="point_of_sale">Offline Store</string>
     <string name="dummy_amount_500">\u20B9 500</string>
-    <string name="dummy_amount_10000">\u20B9 10,000</string>
+    <string name="dummy_amount_100000">\u20B9 100,000</string>
+    <string name="min">Min</string>
+    <string name="max">Max</string>
+    <string name="dummy_amount_2500">\u20B9 2,500</string>
+
+    <!--
+    Manage Channels
+    -->
+    <string name="manage_channels_heading">Manage Channels</string>
+
+    <!--
+  Activate card
+  -->
+    <string name="activate_card_heading">Activate Card</string>
+    <string name="four_digit_empty_error">Please enter four digit number provided on the card kit</string>
+    <string name="activate_card_text1">To activate your physical card enter four digit number provided on the card kit</string>
+    <string name="activate_card_text2">After entering card kit no, you will receive OTP on your registered phone number</string>
+
+    <!--
+    Log out
+    -->
+    <string name="log_out_title">Log out of Fyp?</string>
+    <string name="log_out_text">Remember my login info</string>
+
 
 </resources>

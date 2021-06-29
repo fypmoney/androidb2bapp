@@ -13,6 +13,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.util.Utility
 import org.json.JSONObject
 
 
@@ -21,6 +22,8 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         ObservableField(false)
     var balance =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
+    var isFetchBalanceVisible = ObservableField(true)
+    var isCvvVisible = ObservableField(false)
     var name =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_name))
     var cardNumber =
@@ -31,8 +34,12 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         ObservableField(PockketApplication.instance.getString(R.string.dummy_expiry))
     var onViewDetailsClicked = MutableLiveData<Boolean>()
     var onGetCardDetailsSuccess = MutableLiveData<Boolean>()
+    var onActivateCardInit = MutableLiveData<Boolean>()
+    var bankProfileResponse = ObservableField<BankProfileResponseDetails>()
 
     init {
+        callGetWalletBalanceApi()
+        callGetBankProfileApi()
     }
 
     /*
@@ -40,6 +47,21 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     * */
     fun onViewDetailsClicked() {
         onViewDetailsClicked.value = true
+    }
+
+    /*
+        * This method is used to get the balance of wallet
+        * */
+    private fun callGetWalletBalanceApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_WALLET_BALANCE,
+                NetworkUtil.endURL(ApiConstant.API_GET_WALLET_BALANCE),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
     }
 
     /*
@@ -58,9 +80,54 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     }
 
     /*
+        * This method is used to call update card settings
+        * */
+    fun callCardSettingsUpdateApi(upDateCardSettingsRequest: UpDateCardSettingsRequest) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_UPDATE_CARD_SETTINGS,
+                NetworkUtil.endURL(ApiConstant.API_UPDATE_CARD_SETTINGS),
+                ApiUrl.PUT,
+                upDateCardSettingsRequest,
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    /*
+      * This method is used to call activate card init api
+      * */
+    fun callActivateCardInitApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_ACTIVATE_CARD_INIT,
+                NetworkUtil.endURL(ApiConstant.API_ACTIVATE_CARD_INIT),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    /*
+        * This method is used to call update card limit api
+        * */
+    fun callUpdateCardLimitApi(updateCardLimitRequest: UpdateCardLimitRequest) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_UPDATE_CARD_LIMIT,
+                NetworkUtil.endURL(ApiConstant.API_UPDATE_CARD_LIMIT),
+                ApiUrl.PUT,
+                updateCardLimitRequest,
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    /*
      * This method is used to call get virtual card request
      * */
-     fun callGetVirtualRequestApi() {
+    fun callGetVirtualRequestApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_VIRTUAL_CARD_REQUEST,
@@ -82,14 +149,28 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 NetworkUtil.endURL(ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS),
                 ApiUrl.POST,
                 fetchVirtualCardRequest,
-                this, isProgressBar = true
+                this, isProgressBar = false
+            )
+        )
+    }
+
+    /*
+ * This method is used to set bank profile
+ * */
+    fun callGetBankProfileApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_BANK_PROFILE,
+                NetworkUtil.endURL(ApiConstant.API_GET_BANK_PROFILE),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
             )
         )
     }
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
-        progressDialog.value=false
         when (purpose) {
             ApiConstant.API_GET_VIRTUAL_CARD_REQUEST -> {
                 if (responseData is VirtualCardRequestResponse) {
@@ -99,13 +180,51 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
 
             ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
                 if (responseData is FetchVirtualCardResponse) {
-                    callAddCardApi()
                     cardNumber.set(responseData.fetchVirtualCardResponseDetails.card_number)
                     cvv.set(responseData.fetchVirtualCardResponseDetails.cvv)
-                    expiry.set(responseData.fetchVirtualCardResponseDetails.expiry_month+"/"+responseData.fetchVirtualCardResponseDetails.expiry_year)
-                    onGetCardDetailsSuccess.value=true
+                    expiry.set(responseData.fetchVirtualCardResponseDetails.expiry_month + "/" + responseData.fetchVirtualCardResponseDetails.expiry_year)
+                    onGetCardDetailsSuccess.value = true
+                    callAddCardApi()
 
+                }
+            }
+            ApiConstant.API_UPDATE_CARD_LIMIT -> {
+                progressDialog.value = false
+                if (responseData is UpdateCardLimitResponse) {
+                    callGetBankProfileApi()
+                    Utility.showToast(responseData.msg)
+                }
 
+            }
+
+            ApiConstant.API_UPDATE_CARD_SETTINGS -> {
+                progressDialog.value = false
+                if (responseData is UpdateCardSettingsResponse) {
+                }
+
+            }
+            ApiConstant.API_GET_BANK_PROFILE -> {
+                if (responseData is BankProfileResponse) {
+                    bankProfileResponse.set(responseData.bankProfileResponseDetails)
+                }
+
+            }
+
+            ApiConstant.API_ACTIVATE_CARD_INIT -> {
+                progressDialog.value = false
+                if (responseData is ActivateCardInitResponse) {
+                    when (responseData.msg) {
+                        ApiConstant.API_SUCCESS -> {
+                            onActivateCardInit.value = true
+                        }
+                    }
+                }
+
+            }
+            ApiConstant.API_GET_WALLET_BALANCE -> {
+                if (responseData is GetWalletBalanceResponse) {
+                    isFetchBalanceVisible.set(false)
+                    balance.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)))
 
                 }
             }
@@ -116,15 +235,15 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         super.onError(purpose, errorResponseInfo)
     }
 
-    fun makeFetchCardRequest(requestData:String):FetchVirtualCardRequest {
-        val fetchVirtualCardRequest=FetchVirtualCardRequest()
+    fun makeFetchCardRequest(requestData: String): FetchVirtualCardRequest {
+        val fetchVirtualCardRequest = FetchVirtualCardRequest()
         val mainObject = JSONObject(requestData)
-        fetchVirtualCardRequest.action_name=mainObject.getString("action_name")
-        fetchVirtualCardRequest.wlap_secret_key=mainObject.getString("wlap_secret_key")
-        fetchVirtualCardRequest.wlap_code=mainObject.getString("wlap_code")
-        fetchVirtualCardRequest.p1=mainObject.getString("p1")
-        fetchVirtualCardRequest.p2=mainObject.getString("p2")
-        fetchVirtualCardRequest.checksum=mainObject.getString("checksum")
+        fetchVirtualCardRequest.action_name = mainObject.getString("action_name")
+        fetchVirtualCardRequest.wlap_secret_key = mainObject.getString("wlap_secret_key")
+        fetchVirtualCardRequest.wlap_code = mainObject.getString("wlap_code")
+        fetchVirtualCardRequest.p1 = mainObject.getString("p1")
+        fetchVirtualCardRequest.p2 = mainObject.getString("p2")
+        fetchVirtualCardRequest.checksum = mainObject.getString("checksum")
         return fetchVirtualCardRequest
 
 

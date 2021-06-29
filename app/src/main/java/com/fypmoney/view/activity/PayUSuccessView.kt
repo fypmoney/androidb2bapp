@@ -69,11 +69,7 @@ class PayUSuccessView : BaseActivity<ViewPayuSuccessBinding, PayUSuccessViewMode
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onContinueClicked.observe(this) {
-            if (it) {
-                intentToActivity(HomeView::class.java)
-            }
-        }
+
     }
 
     /**

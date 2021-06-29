@@ -75,7 +75,8 @@ data class TransactionHistoryResponseDetails(
     @SerializedName("txnTime") var txnTime: String?=null,
     @SerializedName("destinationUserId") var destinationUserId: String?=null,
     @SerializedName("destinationUserName") var destinationUserName: String?=null,
-    @SerializedName("txnAmount") var txnAmount: String?=null
+    @SerializedName("txnAmount") var txnAmount: String?=null,
+    @SerializedName("isSender") var isSender: String?=null
 ) : Serializable
 
 

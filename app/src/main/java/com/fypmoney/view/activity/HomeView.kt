@@ -175,8 +175,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 Utility.getAllContactsInList(
                     contentResolver,
                     this,
-                    contactRepository = mViewModel.contactRepository,
-                    logRepository = mViewModel.logRepository
+                    contactRepository = mViewModel.contactRepository
                 )
             }
             else -> {
@@ -203,8 +202,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                     var list = Utility.getAllContactsInList(
                         contentResolver,
                         this,
-                        contactRepository = mViewModel.contactRepository,
-                        logRepository = mViewModel.logRepository
+                        contactRepository = mViewModel.contactRepository
                     )
 
                 } else {
@@ -222,11 +220,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     }
 
     override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {
-        Utility.insertLogs(
-            mViewModel.logRepository,
-            "onAllContactsSynced",
-            "Before api call"
-        )
         mViewModel.callContactSyncApi()
     }
 

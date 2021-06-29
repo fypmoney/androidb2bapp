@@ -9,6 +9,7 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewCreateAccountBinding
 import com.fypmoney.databinding.ViewSelectInterestBinding
 import com.fypmoney.model.CustomerInfoResponse
+import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.CreateAccountViewModel
@@ -45,7 +46,7 @@ class CreateAccountView :
             isBackArrowVisible = true
         )
         try {
-            mViewModel.setData(intent.getSerializableExtra((AppConstants.CUSTOMER_INFO_RESPONSE)) as CustomerInfoResponse)
+            mViewModel.setData(intent.getSerializableExtra((AppConstants.CUSTOMER_INFO_RESPONSE)) as CustomerInfoResponseDetails)
         } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }

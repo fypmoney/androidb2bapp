@@ -20,7 +20,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:onClick="@{()->viewHelper.onItemClicked()}"
         android:orientation="vertical">
@@ -31,9 +30,6 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_2sdp"
-            android:background="@drawable/curved_background5"
-            android:padding="5dp"
             app:srcCompat="@drawable/upi_logo" />
 
 

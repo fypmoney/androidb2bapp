@@ -84,8 +84,99 @@ data class BankTransactionHistoryPagination(
 
 data class UpDateCardSettingsRequest(
     @SerializedName("action") val action: String? = null,
-    @SerializedName("isEnable") val isEnable: String? = null,
+    @SerializedName("isEnable") val isEnable: Int? = null,
     @SerializedName("channelType") val channelType: String? = null,
     @SerializedName("kitNumber") val kitNumber: String? = null,
     @SerializedName("cardType") val cardType: Int? = null,
 ) : BaseRequest()
+
+data class UpdateCardLimitRequest(
+    @SerializedName("action") val action: String? = null,
+    @SerializedName("atmLimit") val atmLimit: String? = null,
+    @SerializedName("posLimit") val posLimit: String? = null,
+    @SerializedName("ecomLimit") val ecomLimit: String? = null
+) : BaseRequest()
+
+data class UpdateCardLimitResponse(
+    @SerializedName("msg") val msg: String? = null,
+    @SerializedName("data") val updateCardLimitResponseDetails: UpdateCardLimitResponseDetails? = null
+) : Serializable
+
+
+data class UpdateCardLimitResponseDetails(
+    @SerializedName("walletStatus") val walletStatus: String? = null,
+    @SerializedName("atmLimit") val atmLimit: String? = null,
+    @SerializedName("posLimit") val posLimit: String? = null,
+    @SerializedName("ecomLimit") val ecomLimit: String? = null,
+    @SerializedName("action") val action: String? = null,
+    @SerializedName("clLimit") val clLimit: String? = null
+) : Serializable
+
+data class UpdateCardSettingsResponse(
+    @SerializedName("msg") val msg: String? = null,
+    @SerializedName("data") val updateCardSettingsResponseDetails: UpdateCardSettingsResponseDetails? = null
+) : Serializable
+
+
+data class UpdateCardSettingsResponseDetails(
+    @SerializedName("requestData") val requestData: String? = null,
+    @SerializedName("serviceUrl") val serviceUrl: String? = null,
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("accountInfoId") val accountInfoId: String? = null,
+    @SerializedName("cardType") val cardType: String? = null,
+    @SerializedName("action") val action: String? = null,
+    @SerializedName("kitNumber") val kitNumber: String? = null,
+    @SerializedName("posEnabled") val posEnabled: String? = null,
+    @SerializedName("ecomEnabled") val ecomEnabled: String? = null,
+    @SerializedName("atmEnabled") val atmEnabled: String? = null,
+    @SerializedName("clEnabled") val clEnabled: String? = null,
+    @SerializedName("isCardBlocked") val isCardBlocked: String? = null
+) : Serializable
+
+
+data class ActivateCardInitResponse(
+    @SerializedName("msg") val msg: String? = null
+) : Serializable
+
+
+data class BankProfileResponse(
+    @SerializedName("data") val bankProfileResponseDetails: BankProfileResponseDetails? = null
+) : Serializable
+
+data class BankProfileResponseDetails(
+    @SerializedName("isAccountActive") val isAccountActive: String? = null,
+    @SerializedName("isVirtualCardIssued") val isVirtualCardIssued: String? = null,
+    @SerializedName("isPhysicardIssued") val isPhysicardIssued: String? = null,
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("accountIdentifier") val accountIdentifier: String? = null,
+    @SerializedName("isBlocked") val isBlocked: String? = null,
+    @SerializedName("initialAmount") val initialAmount: String? = null,
+    @SerializedName("isPhysicalCardIssued") val isPhysicalCardIssued: String? = null,
+    @SerializedName("mobileVerificationState") val mobileVerificationState: String? = null,
+    @SerializedName("kycVerificationState") val kycVerificationState: String? = null,
+    @SerializedName("virtualCardIssuedState") val virtualCardIssuedState: String? = null,
+    @SerializedName("physicalCardIssuedState") val physicalCardIssuedState: String? = null,
+    @SerializedName("mobileVerificationStatus") val mobileVerificationStatus: String? = null,
+    @SerializedName("kycVerificationStatus") val kycVerificationStatus: String? = null,
+    @SerializedName("virtualCardIssuedStatus") val virtualCardIssuedStatus: String? = null,
+    @SerializedName("physicalCardIssuedStatus") val physicalCardIssuedStatus: String? = null,
+    @SerializedName("posLimit") val posLimit: String? = null,
+    @SerializedName("ecomLimit") val ecomLimit: String? = null,
+    @SerializedName("atmLimit") val atmLimit: String? = null,
+    @SerializedName("clLimit") val clLimit: String? = null,
+    @SerializedName("cardInfos") val cardInfos: List<CardInfoDetails>? = null,
+) : Serializable
+
+
+data class CardInfoDetails(
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("cardNo") val cardNo: String? = null,
+    @SerializedName("cardType") val cardType: String? = null,
+    @SerializedName("nameOnCard") val nameOnCard: String? = null,
+    @SerializedName("isCardBlocked") val isCardBlocked: String? = null,
+    @SerializedName("kitNumber") val kitNumber: String? = null,
+    @SerializedName("posEnabled") val posEnabled: String? = null,
+    @SerializedName("ecomEnabled") val ecomEnabled: String? = null,
+    @SerializedName("atmEnabled") val atmEnabled: String? = null,
+    @SerializedName("clEnabled") val clEnabled: String? = null
+) : Serializable

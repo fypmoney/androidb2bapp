@@ -42,7 +42,6 @@ import kotlin.collections.ArrayList
 class AddNewCardBottomSheet(
     private val amount: String?,
     private val merchantKey: String?,
-    private val merchantSalt: String?,
     private var onBottomSheetClickListener: OnAddNewCardClickListener
 ) : BottomSheetDialogFragment(), WebApiCaller.OnWebApiResponse {
     lateinit var cardNumber: AppCompatEditText
@@ -101,11 +100,11 @@ class AddNewCardBottomSheet(
                 }
             }
         })
-        cardNumber.setText("4477468625646000")
-        cardName.setText("pooja")
-        cvv.setText("123")
-        expiry.setText("01/22")
-
+        /*   cardNumber.setText("4477468625646000")
+           cardName.setText("pooja")
+           cvv.setText("123")
+           expiry.setText("01/22")
+   */
         btnAdd.setOnClickListener {
             expiryList = expiry.text.toString().split("/") as MutableList<String>
             val df: DateFormat =
@@ -205,7 +204,6 @@ class AddNewCardBottomSheet(
     fun makeGetHashRequest(command: String, var1: String): GetHashRequest {
         val getHashRequest = GetHashRequest()
         getHashRequest.merchantKey = merchantKey
-        getHashRequest.merchantSalt = merchantSalt
         val list = ArrayList<HashData>()
         val hashData = HashData()
         hashData.command = command
@@ -216,7 +214,6 @@ class AddNewCardBottomSheet(
     }
 
     override fun onSuccess(purpose: String, responseData: Any) {
-
         when (purpose) {
             ApiConstant.API_GET_HASH -> {
                 if (responseData is GetHashResponse) {

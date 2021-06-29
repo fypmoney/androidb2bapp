@@ -30,12 +30,12 @@ data class LoginResponseDetails(
     @SerializedName("userMobile") var userMobile: String?
 ) : Serializable
 
-/*
-data class CustomerInfoResponse(
-    @SerializedName("data") var customerInfoResponseDetails: CustomerInfoResponseDetails?
-) : Serializable*/
 
 data class CustomerInfoResponse(
+    @SerializedName("data") var customerInfoResponseDetails: CustomerInfoResponseDetails?
+) : Serializable
+
+data class CustomerInfoResponseDetails(
     @SerializedName("id") val id: Long? = 0L,
     @SerializedName("login") val login: String? = null,
     @SerializedName("title") val title: String? = null,
@@ -48,6 +48,7 @@ data class CustomerInfoResponse(
     @SerializedName("userType") val userType: String? = null,
     @SerializedName("status") val status: String? = null,
     @SerializedName("countryCode") val countryCode: String? = null,
+    @SerializedName("dob") val dob: String? = null,
     @SerializedName("mobile") var mobile: String? = null,
     @SerializedName("isMobileVerified") var isMobileVerified: String? = null,
     @SerializedName("isEmailVerified") var isEmailVerified: String? = null,
@@ -78,5 +79,9 @@ data class UserInterestModel(
     @SerializedName("code") var code: String?,
     @SerializedName("description") var description: String?,
     @SerializedName("status") var status: String?
+) : Serializable
+
+data class LogOutResponse(
+    @SerializedName("msg") var msg: String?
 ) : Serializable
 

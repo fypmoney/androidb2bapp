@@ -87,20 +87,28 @@ class FilterByDateFragment(
         }
         apply.setOnClickListener {
             when {
-                fromDate.text.isEmpty() -> {
-                    Utility.showToast(PockketApplication.instance.getString(R.string.from_date_empty_error))
-                }
-                toDate.text.isEmpty() -> {
-                    Utility.showToast(PockketApplication.instance.getString(R.string.to_date_empty_error))
+                /* fromDate.text.isEmpty() -> {
+                     Utility.showToast(PockketApplication.instance.getString(R.string.from_date_empty_error))
+                 }
+                 toDate.text.isEmpty() -> {
+                     Utility.showToast(PockketApplication.instance.getString(R.string.to_date_empty_error))
+                 }*/
+                fromDate.text.isNotEmpty() && toDate.text.isNotEmpty() -> {
+                    if (Utility.compareDates(
+                            fromDate = fromDate.text.toString(),
+                            toDate = toDate.text.toString()
+                        ) == false
+                    ) {
+                        Utility.showToast(PockketApplication.instance.getString(R.string.to_date_bigger))
+                    } else {
+                        onBottomSheetClickListener.onFilterByDateButtonClick(
+                            fromDate.text.toString(),
+                            toDate.text.toString()
+                        )
+                        dismiss()
+                    }
                 }
 
-                !Utility.compareDates(
-                    fromDate = fromDate.text.toString(),
-                    toDate = toDate.text.toString()
-                ) -> {
-                    Utility.showToast(PockketApplication.instance.getString(R.string.to_date_bigger))
-
-                }
 
                 else -> {
                     onBottomSheetClickListener.onFilterByDateButtonClick(

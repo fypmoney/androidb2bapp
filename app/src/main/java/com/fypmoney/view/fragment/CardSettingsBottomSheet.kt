@@ -54,13 +54,11 @@ class CardSettingsBottomSheet(var onCardSettingsClickListener: OnCardSettingsCli
         textString.add(PockketApplication.instance.getString(R.string.card_settings_block))
         textString.add(PockketApplication.instance.getString(R.string.card_settings_limit))
         textString.add(PockketApplication.instance.getString(R.string.card_settings_channels))
-        textString.add(PockketApplication.instance.getString(R.string.card_settings_pin))
         val drawableIds = ArrayList<Int>()
 
         drawableIds.add(R.drawable.lock)
         drawableIds.add(R.drawable.order)
         drawableIds.add(R.drawable.transaction)
-        drawableIds.add(R.drawable.set_up_limit)
 
         val myProfileAdapter = MyProfileListAdapter(
             requireContext(),

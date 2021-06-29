@@ -1,11 +1,11 @@
 package com.fypmoney.connectivity
 
 object ApiConstant {
-   /* const val BASE_URL = "https://stage.services.dreamfolkstech.in"
-    const val CLIENT_ID = "wTYi02TtRcRt53Dd"
-    const val CLIENT_SECRET = "kba3BXrUPPwfcO4TFzGttoopWVyYduLV"
-    const val APP_ID = "WEBAPP"
-    const val GRANT_TYPE = "client_credentials"*/
+    /* const val BASE_URL = "https://stage.services.dreamfolkstech.in"
+     const val CLIENT_ID = "wTYi02TtRcRt53Dd"
+     const val CLIENT_SECRET = "kba3BXrUPPwfcO4TFzGttoopWVyYduLV"
+     const val APP_ID = "WEBAPP"
+     const val GRANT_TYPE = "client_credentials"*/
     const val BASE_URL = "http://54.84.197.170:9300"
     const val PAYU_BASE_URL = "https://info.payu.in"
     const val CLIENT_ID = "web_app"
@@ -40,20 +40,27 @@ object ApiConstant {
     const val API_LOGIN = "/auth/app/login"
     const val API_REQUEST_MONEY = "/services/PockketService/api/request/money"
     const val API_ADD_CARD = "/services/PockketService/api/card-infos"
-    const val API_ADD_MONEY_STEP1 = "/services/PockketService/api/add/money/wallet/step1/get/pgRequestData"
+    const val API_ADD_MONEY_STEP1 =
+        "/services/PockketService/api/add/money/wallet/step1/get/pgRequestData"
     const val API_ADD_MONEY_STEP2 = "/services/PockketService/api/add/money/wallet/step2/load-money"
     const val API_PAY_MONEY = "/services/PockketService/api/pay/money"
     const val API_BANK_TRANSACTION_HISTORY = "/services/PockketService/api/bank/transaction/history"
     const val API_TRANSACTION_HISTORY = "/services/PockketService/api/transaction/history"
     const val API_GET_HASH = "/services/PockketService/api/get/hash"
     const val API_UPDATE_CARD_SETTINGS = "/services/PockketService/api/card-infos"
+    const val API_ACTIVATE_CARD_INIT = "/services/PockketService/api/activate/physical-card/init"
+    const val API_ACTIVATE_CARD = "/services/PockketService/api/activate/physical-card"
+    const val API_LOGOUT = "/auth/logout"
+    const val API_UPDATE_CARD_LIMIT = "/services/PockketService/api/wallet-balances"
+    const val API_GET_BANK_PROFILE = "/services/PockketService/api/getBankProfile"
+
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
 
- // pay u test url
+    // pay u test url
 
- const val PAYU_PRODUCTION_URL="/merchant/postservice.php?form=2"
+    const val PAYU_PRODUCTION_URL = "/merchant/postservice.php?form=2"
 
- const val GET_USER_CARDS="get_user_cards"
+    const val GET_USER_CARDS = "get_user_cards"
 
 
 }

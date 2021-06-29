@@ -24,7 +24,7 @@ object AppConstants {
     const val REGISTRATION_MODE_GOOGLE = "GOOGLE"
     const val RESEND_OTP_DURATION = 30000L
     const val RC_SIGN_IN = 9001
-    const val DIALOG_MSG_AUTH = "Unlock FYP Money"
+    const val DIALOG_MSG_AUTH = "Unlock Fyp"
     const val DIALOG_TITLE_AUTH = "Enter phone screen lock pattern, PIN, password or fingerprint"
     const val DEVICE_SECURITY_REQUEST_CODE = 1000
     const val READ_CONTACTS_PERMISSION_CODE = 100
@@ -126,11 +126,20 @@ object AppConstants {
     const val BANK_TRANSACTION = "bank_transaction"
     const val ADD_MONEY = "add_money"
 
-
     const val BLOCK_CARD_ACTION = "BLOCKCARD"
     const val UNBLOCK_CARD_ACTION = "UNBLOCKCARD"
+    const val MOD_ONLINE_LIMIT = "MODONLINELIMIT"
     const val CARD_TYPE_PHYSICAL_CARD = 1
     const val CARD_TYPE_VIRTUAL_CARD = 0
+    const val CARD_TYPE_VIRTUAL = "VIRTUAL"
+    const val CARD_TYPE_PHYSICAL = "PHYSICAL"
+    const val OFF = 1
+    const val ON = 0
+    const val ENABLE_CHANNEL = "ENABLE_CHANNEL"
+    const val Channel_ECOM = "ECOM"
+    const val Channel_ATM = "ATM"
+    const val Channel_POS= "POS"
+    const val GPAY_PACKAGE_NAME= "com.google.android.apps.nbu.paisa.user"
 
 
 }

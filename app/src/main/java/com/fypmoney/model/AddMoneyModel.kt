@@ -33,7 +33,6 @@ data class SavedCardResponseDetails(
 data class AddMoneyStep1Request(
     @SerializedName("remarks") val remarks: String?,
     @SerializedName("amount") val amount: String?,
-    @SerializedName("merchantSalt") val merchantSalt: String?,
     @SerializedName("merchantKey") val merchantKey: String?,
     @SerializedName("merchantId") val merchantId: String?
 ) : BaseRequest()
@@ -136,7 +135,6 @@ data class PayUServerRequest(
 data class GetHashRequest(
     @SerializedName("merchantId") val merchantId: String? = null,
     @SerializedName("merchantKey") var merchantKey: String? = null,
-    @SerializedName("merchantSalt") var merchantSalt: String? = null,
     @SerializedName("hashData") var hashData: List<HashData>? = null
 ) : BaseRequest()
 
@@ -154,7 +152,6 @@ data class GetHashResponse(
 data class GetHashResponseDetails(
     @SerializedName("merchantId") val merchantId: String? = null,
     @SerializedName("merchantKey") val merchantKey: String? = null,
-    @SerializedName("merchantSalt") val merchantSalt: String? = null,
     @SerializedName("hashData") var hashData: List<HashDataResponse>? = null
 ) : Serializable
 

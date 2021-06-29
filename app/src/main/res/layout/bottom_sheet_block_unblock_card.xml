@@ -17,50 +17,32 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/curved_background1" />
 
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:visibility="gone" />
+
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/verification_title"
             style="@style/TextviewRegular"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="50dp"
             android:text="@string/card_settings_block"
             android:textColor="@color/text_color_dark"
             android:textSize="17dp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/physical_card"
-            style="@style/TextviewRegular"
-            android:layout_below="@id/verification_title"
-            android:layout_marginTop="40dp"
-            android:text="@string/physical_card_text"
-            android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
-
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/physical_card_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/verification_title"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="35dp"
-            android:checked="true"
-            android:thumb="@drawable/thumb_selector"
-            app:track="@drawable/track_selector" />
-
-        <View
-            android:id="@+id/view1"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_below="@+id/physical_card_switch"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:background="@color/dividerColor" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/virtual_card"
             style="@style/TextviewRegular"
-            android:layout_below="@id/view1"
-            android:layout_marginTop="20dp"
+            android:layout_below="@+id/verification_title"
+            android:layout_marginTop="30dp"
             android:text="@string/virtual_card_text"
             android:textColor="@color/text_color_dark"
             android:textSize="17dp" />
@@ -70,10 +52,9 @@
             android:id="@+id/virtual_card_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/view1"
+            android:layout_below="@+id/verification_title"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="15dp"
-            android:checked="true"
+            android:layout_marginTop="25dp"
             android:thumb="@drawable/thumb_selector"
             app:track="@drawable/track_selector" />
 
@@ -83,46 +64,9 @@
             android:layout_below="@id/virtual_card_switch"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="40dp"
+            android:layout_marginBottom="50dp"
             android:text="@string/block_text"
             android:textAlignment="center" />
-
-
-        <LinearLayout
-            android:id="@+id/linear_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/text"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/changeMethod"
-                style="@style/TextviewRegular"
-                android:layout_width="0dp"
-                android:layout_height="52dp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_weight="0.5"
-                android:gravity="center"
-                android:text="@string/cancel_btn_text"
-                android:textColor="@color/text_color_dark"
-                android:textSize="@dimen/textSize_18" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/button_retry"
-                style="@style/Widget.App.Button"
-                android:layout_width="0dp"
-                android:layout_height="52dp"
-                android:layout_marginStart="@dimen/_10sdp"
-                android:layout_weight="0.5"
-                android:background="@drawable/curved_background20"
-                android:text="@string/yes_btn_text"
-                android:textAllCaps="false"
-                app:backgroundTint="@color/text_color_red" />
-
-        </LinearLayout>
 
 
     </RelativeLayout>

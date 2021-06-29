@@ -23,7 +23,6 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
     var fromWhichScreen = ObservableField<String>()
     var phoneNo = ObservableField<String>()
     var isAddMoneyLayoutVisible = ObservableField<Boolean>()
-    var onContinueClicked = MutableLiveData<Boolean>()
     var payUResponse = ObservableField<AddMoneyStep2ResponseDetails>()
     var bankResponse = ObservableField<BankTransactionHistoryResponseDetails>()
 
@@ -67,10 +66,5 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
 
     }
 
-    /*
-     * This is used to handle on continue click
-     * */
-    fun onContinueClicked() {
-        onContinueClicked.value = true
-    }
+
 }

@@ -3,7 +3,6 @@ package com.fypmoney.view.fragment
 import android.animation.AnimatorInflater
 import android.animation.AnimatorSet
 import android.content.ClipboardManager
-import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.graphics.Color
@@ -11,19 +10,22 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenCardBinding
+import com.fypmoney.model.UpDateCardSettingsRequest
+import com.fypmoney.model.UpdateCardLimitRequest
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.BankTransactionHistoryView
-import com.fypmoney.view.adapter.CardListViewAdapter
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.viewmodel.CardScreenViewModel
 import kotlinx.android.synthetic.main.screen_card.*
@@ -36,7 +38,9 @@ import kotlinx.android.synthetic.main.virtual_card_front_layout.*
  */
 class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     MyProfileListAdapter.OnListItemClickListener,
-    CardSettingsBottomSheet.OnCardSettingsClickListener {
+    CardSettingsBottomSheet.OnCardSettingsClickListener,
+    SetSpendingLimitBottomSheet.OnSetSpendingLimitClickListener, CardSettingClickListener,
+    ManageChannelsBottomSheet.OnBottomSheetDismissListener {
     private lateinit var mViewModel: CardScreenViewModel
     private lateinit var mViewBinding: ScreenCardBinding
     private var mSetRightOut: AnimatorSet? = null
@@ -66,14 +70,13 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         textString.add(PockketApplication.instance.getString(R.string.card_settings))
         textString.add(PockketApplication.instance.getString(R.string.order_card))
         textString.add(PockketApplication.instance.getString(R.string.account_stmt))
-        textString.add(PockketApplication.instance.getString(R.string.set_limit))
+
 
         val drawableIds = ArrayList<Int>()
 
         drawableIds.add(R.drawable.lock)
         drawableIds.add(R.drawable.order)
         drawableIds.add(R.drawable.transaction)
-        drawableIds.add(R.drawable.set_up_limit)
 
         val myProfileAdapter = MyProfileListAdapter(requireContext(), this)
         list.adapter = myProfileAdapter
@@ -103,6 +106,11 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             if (it) {
                 flipCard()
                 mViewModel.onGetCardDetailsSuccess.value = false
+            }
+        }
+        mViewModel.onActivateCardInit.observe(viewLifecycleOwner) {
+            if (it) {
+                mViewModel.onActivateCardInit.value = false
             }
         }
 
@@ -153,7 +161,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             mSetLeftIn!!.start()
             mViewModel.isCardDetailsVisible.set(true)
             mIsBackVisible = true
-
+            btnViewDetails.visibility = View.GONE
         }
     }
 
@@ -168,7 +176,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     }
 
     override fun onItemClick(position: Int) {
-
         when (position) {
             0 -> {
                 callCardSettingsBottomSheet()
@@ -176,6 +183,8 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             2 -> {
                 intentToActivity(BankTransactionHistoryView::class.java)
             }
+
+
         }
     }
 
@@ -199,16 +208,104 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
    * */
     private fun callCardBlockUnblockBottomSheet() {
         val bottomSheet =
-            BlockUnblockCardBottomSheet()
+            BlockUnblockCardBottomSheet(mViewModel.bankProfileResponse.get()?.cardInfos, this, this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "BlockUnblockCard")
     }
+
+    /*
+   * This method is used to call set spending limit fragment
+   * */
+    private fun callSetSpendingLimitSheet() {
+        val bottomSheet =
+            SetSpendingLimitBottomSheet(mViewModel.bankProfileResponse.get(), this, this)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "SetSpendingLimit")
+    }
+
+    /*
+   * This method is used to call card block / unblock card
+   * */
+    private fun callManageChannelsBottomSheet() {
+        val bottomSheet =
+            ManageChannelsBottomSheet(mViewModel.bankProfileResponse.get()?.cardInfos, this)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "ManageChannels")
+    }
+
+    /*
+   * This method is used to call set spending limit fragment
+   * */
+    private fun callActivateCardSheet() {
+        val bottomSheet =
+            ActivateCardBottomSheet()
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "ActivateCard")
+    }
+
 
     override fun onCardSettingsClick(position: Int) {
         when (position) {
             0 -> {
                 callCardBlockUnblockBottomSheet()
             }
+            1 -> {
+                callSetSpendingLimitSheet()
+            }
+            2 -> {
+                callManageChannelsBottomSheet()
+            }
+            3 -> {
+                callActivateCardSheet()
+            }
         }
     }
+
+    override fun onSetSpendingLimitButtonClick(updateCardLimitRequest: UpdateCardLimitRequest) {
+        mViewModel.callUpdateCardLimitApi(updateCardLimitRequest)
+
+    }
+
+    override fun onCardSettingClick(
+        type: String,
+        upDateCardSettingsRequest: UpDateCardSettingsRequest,
+        fourDigitNumber: String?
+    ) {
+        when (type) {
+            AppConstants.BLOCK_CARD_ACTION -> {
+                mViewModel.callCardSettingsUpdateApi(upDateCardSettingsRequest)
+            }
+            getString(R.string.activate_card_heading) -> {
+                mViewModel.callActivateCardInitApi()
+
+            }
+        }
+    }
+
+    /*
+    * This method is used to show or hide cvv
+    * */
+    fun onCvvEyeClicked() {
+        when (mViewModel.isCvvVisible.get()) {
+            false -> {
+                cvvValue.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                mViewModel.isCvvVisible.set(true)
+
+            }
+            true -> {
+
+                cvvValue.transformationMethod = PasswordTransformationMethod.getInstance()
+                mViewModel.isCvvVisible.set(false)
+            }
+
+        }
+
+    }
+
+    override fun onBottomSheetDismiss() {
+        mViewModel.callGetBankProfileApi()
+
+    }
+
+
 }

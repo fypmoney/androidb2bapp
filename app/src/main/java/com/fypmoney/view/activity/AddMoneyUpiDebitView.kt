@@ -13,7 +13,6 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.widget.ProgressBar
@@ -48,8 +47,6 @@ import com.payu.india.PostParams.PaymentPostParams
 import com.payu.india.Tasks.GetPaymentRelatedDetailsTask
 import com.payu.paymentparamhelper.PaymentParams
 import com.payu.paymentparamhelper.PostData
-import com.payu.phonepe.PhonePe
-import com.payu.phonepe.callbacks.PayUPhonePeCallback
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 import kotlinx.android.synthetic.main.view_add_money_upi_debit.*
@@ -231,9 +228,7 @@ class AddMoneyUpiDebitView :
         val bottomSheet =
             AddNewCardBottomSheet(
                 mViewModel.amountToAdd.get(),
-                merchantKey = mViewModel.merchantKey.get(),
-                merchantSalt = mViewModel.merchantSalt,
-                this
+                merchantKey = mViewModel.merchantKey.get(), this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "AddNewCard")
@@ -258,8 +253,7 @@ class AddMoneyUpiDebitView :
     private fun callAddUpiBottomSheet() {
         val bottomSheet =
             AddUpiBottomSheet(
-                mViewModel.amountToAdd.get()!!, merchantKey = mViewModel.merchantKey.get(),
-                merchantSalt = mViewModel.merchantSalt, this
+                mViewModel.amountToAdd.get()!!, merchantKey = mViewModel.merchantKey.get(), this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "AddUPI")
@@ -277,6 +271,10 @@ class AddMoneyUpiDebitView :
             //   finish()
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
     }
 
     override fun onPaymentRelatedDetailsResponse(payuResponse: PayuResponse?) {
@@ -316,34 +314,10 @@ class AddMoneyUpiDebitView :
                 vpa: String,
                 packageListDialogFragment: PackageListDialogFragment
             ) {
-                //This hash should be generated from server
-                //    val input = "smsplus|validateVPA|$vpa|1b1b0"
-                val input =
-                    mViewModel.merchantKey.get() + "|" + "validateVPA" + "|" + mViewModel.upiEntered.get() + "|" + mViewModel.merchantSalt
 
-                val verifyVpaHash = calculateHash(input).result
+                val verifyVpaHash = mViewModel.hash.get()
 
                 packageListDialogFragment.verifyVpa(verifyVpaHash)
-            }
-
-            private fun calculateHash(hashString: String): PostData {
-                return try {
-                    val hash = StringBuilder()
-                    val messageDigest = MessageDigest.getInstance("SHA-512")
-                    messageDigest.update(hashString.toByteArray())
-                    val mdbytes = messageDigest.digest()
-                    for (hashByte in mdbytes) {
-                        hash.append(
-                            Integer.toString((hashByte and 0xff.toByte()) + 0x100, 16).substring(1)
-                        )
-                    }
-                    getReturnData(PayuErrors.NO_ERROR, PayuConstants.SUCCESS, hash.toString())
-                } catch (e: NoSuchAlgorithmException) {
-                    getReturnData(
-                        PayuErrors.NO_SUCH_ALGORITHM_EXCEPTION,
-                        PayuErrors.INVALID_ALGORITHM_SHA
-                    )
-                }
             }
 
             protected fun getReturnData(code: Int, status: String?, result: String?): PostData {
@@ -365,6 +339,7 @@ class AddMoneyUpiDebitView :
              * @param merchantResponse response received from Furl
              */
             override fun onPaymentFailure(payuResponse: String, merchantResponse: String) {
+                callTransactionFailBottomSheet()
                 /*   val intent = Intent()
                    intent.putExtra("result", merchantResponse)
                    intent.putExtra("payu_response", payuResponse)
@@ -372,7 +347,7 @@ class AddMoneyUpiDebitView :
                        intent.putExtra(PayuConstants.MERCHANT_HASH, mViewModel.hash)
                    }
                    setResult(RESULT_CANCELED, intent)*/
-                finish()
+                //   finish()
             }
 
             override fun onPaymentTerminate() {
@@ -432,13 +407,18 @@ class AddMoneyUpiDebitView :
 
     override fun onAddUpiClickListener(upiId: String, isUpiSaved: Boolean) {
         mViewModel.upiEntered.set(upiId)
-        val paymentParams = mViewModel.getPaymentParams(AppConstants.TYPE_UPI, upiId, isUpiSaved)
-        callCustomBrowser(
-            com.payu.paymentparamhelper.PayuConstants.UPI,
-            paymentParams,
-            paymentParams.txnId,
-            PayuConstants.PRODUCTION_PAYMENT_URL
-        )
+        try {
+            val paymentParams =
+                mViewModel.getPaymentParams(AppConstants.TYPE_UPI, upiId, isUpiSaved)
+            callCustomBrowser(
+                com.payu.paymentparamhelper.PayuConstants.UPI,
+                paymentParams,
+                paymentParams.txnId,
+                PayuConstants.PRODUCTION_PAYMENT_URL
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 
@@ -465,13 +445,13 @@ class AddMoneyUpiDebitView :
                 customBrowserConfig.setAutoSelectOTP(true) // set true to automatically select the OTP flow
                 customBrowserConfig.setDisableBackButtonDialog(false)
                 customBrowserConfig.setMerchantSMSPermission(true)
-                customBrowserConfig.enableSurePay = 3
+                customBrowserConfig.enableSurePay = 0
                 if (isSpecificAppSet == true) {
                     customBrowserConfig.packageNameForSpecificApp = packageName
                 }
-                /*customBrowserConfig.merchantCheckoutActivityPath =
+                customBrowserConfig.merchantCheckoutActivityPath =
                     "com.payu.testapp.MerchantCheckoutActivity"
-*/
+
                 customBrowserConfig.postURL = url
                 if (payuConfig != null) customBrowserConfig.payuPostData = payuConfig.data
 
@@ -511,7 +491,8 @@ class AddMoneyUpiDebitView :
                 upiModel.packageName = resolveInfo.activityInfo.packageName
                 upiModel.imageUrl =
                     packageManager.getApplicationIcon(resolveInfo.activityInfo.packageName)
-                upiList.add(upiModel)
+                if (!upiModel.packageName.equals(AppConstants.GPAY_PACKAGE_NAME))
+                    upiList.add(upiModel)
             } catch (e: PackageManager.NameNotFoundException) {
                 e.printStackTrace()
             }

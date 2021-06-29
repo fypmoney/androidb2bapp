@@ -14,14 +14,12 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.ContactRepository
-import com.fypmoney.database.LogRepository
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.ContactRequest
 import com.fypmoney.model.ContactRequestDetails
 import com.fypmoney.model.ContactResponse
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.ContactAdapter
-import java.lang.Exception
 
 /*
 * This is used to handle contacts
@@ -30,7 +28,6 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
     var contactAdapter = ContactAdapter(this)
     var isClickable = ObservableField(false)
     var contactRepository = ContactRepository(mDB = appDatabase)
-    var logRepository = LogRepository(mDB = appDatabase)
     var onItemClicked = MutableLiveData<ContactEntity>()
     var onIsAppUserClicked = MutableLiveData<Boolean>()
     var emptyContactListError = MutableLiveData<Boolean>()
@@ -48,18 +45,8 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
                     contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>
                 if (!sortedList.isNullOrEmpty()) {
                     contactAdapter.setList(sortedList)
-                    Utility.insertLogs(
-                        logRepository,
-                        "getAllContacts InContactView",
-                        "contacts received with size "+sortedList.size
-                    )
                     contactAdapter.newContactList?.addAll(sortedList)
                 } else {
-                    Utility.insertLogs(
-                        logRepository,
-                        "getAllContacts InContactView",
-                        "No contacts found showing popup"
-                    )
                     emptyContactListError.value = true
                 }
             } catch (e: Exception) {
@@ -99,11 +86,6 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
     /*
 * This method is used to call contact sync API
 * */ fun callContactSyncApi() {
-        Utility.insertLogs(
-            logRepository,
-            "callContactSyncApi InContactView",
-            "Before api call"
-        )
         val contactRequestDetailsList = mutableListOf<ContactRequestDetails>()
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -129,11 +111,6 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
                 if (responseData is ContactResponse) {
                     // it update the sync status of the contacts which are synced to server and also update the is app user status based on server response
                     contactRepository.updateIsSyncAndIsAppUserStatus(responseData.contactResponseDetails?.userPhoneContact)
-                    Utility.insertLogs(
-                        logRepository,
-                        "callContactSyncApi InContactView",
-                        "api call success"
-                    )
                     getAllContacts()
                 }
             }
@@ -145,11 +122,6 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
-        Utility.insertLogs(
-            logRepository,
-            "callContactSyncApi InContactView",
-            "api error  " +errorResponseInfo.msg
-        )
         progressDialog.value = false
         emptyContactListError.value = true
     }
