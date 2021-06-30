@@ -10,6 +10,7 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewPayuSuccessBinding
 import com.fypmoney.model.AddMoneyStep2ResponseDetails
 import com.fypmoney.model.BankTransactionHistoryResponseDetails
+import com.fypmoney.model.TransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.PayUSuccessViewModel
 import kotlinx.android.synthetic.main.toolbar.*
@@ -57,6 +58,16 @@ class PayUSuccessView : BaseActivity<ViewPayuSuccessBinding, PayUSuccessViewMode
                     isBackArrowVisible = true
                 )
                 mViewModel.bankResponse.set(intent.getSerializableExtra(AppConstants.RESPONSE) as BankTransactionHistoryResponseDetails)
+                mViewModel.setInitialData()
+            }
+
+            AppConstants.TRANSACTION -> {
+                setToolbarAndTitle(
+                    context = this@PayUSuccessView,
+                    toolbar = toolbar,
+                    isBackArrowVisible = true
+                )
+                mViewModel.transactionHistoryResponse.set(intent.getSerializableExtra(AppConstants.RESPONSE) as TransactionHistoryResponseDetails)
                 mViewModel.setInitialData()
             }
 

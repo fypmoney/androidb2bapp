@@ -41,7 +41,6 @@ import com.payu.india.Model.MerchantWebService
 import com.payu.india.Model.PayuConfig
 import com.payu.india.Model.PayuResponse
 import com.payu.india.Payu.PayuConstants
-import com.payu.india.Payu.PayuErrors
 import com.payu.india.PostParams.MerchantWebServicePostParams
 import com.payu.india.PostParams.PaymentPostParams
 import com.payu.india.Tasks.GetPaymentRelatedDetailsTask
@@ -50,9 +49,6 @@ import com.payu.paymentparamhelper.PostData
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 import kotlinx.android.synthetic.main.view_add_money_upi_debit.*
-import java.security.MessageDigest
-import java.security.NoSuchAlgorithmException
-import kotlin.experimental.and
 
 
 /*
@@ -238,6 +234,7 @@ class AddMoneyUpiDebitView :
          * This method is used to call transaction fail bottom sheet
          * */
     private fun callTransactionFailBottomSheet() {
+        mViewModel.isPaymentFail.set(false)
         val bottomSheet =
             TransactionFailBottomSheet(
                 "",
@@ -246,6 +243,7 @@ class AddMoneyUpiDebitView :
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "TransactionFail")
     }
+
 
     /*
       * This method is used to call add upi bottom sheet
@@ -275,6 +273,10 @@ class AddMoneyUpiDebitView :
 
     override fun onResume() {
         super.onResume()
+        if (mViewModel.isPaymentFail.get() == true) {
+            callTransactionFailBottomSheet()
+        }
+
     }
 
     override fun onPaymentRelatedDetailsResponse(payuResponse: PayuResponse?) {
@@ -339,15 +341,7 @@ class AddMoneyUpiDebitView :
              * @param merchantResponse response received from Furl
              */
             override fun onPaymentFailure(payuResponse: String, merchantResponse: String) {
-                callTransactionFailBottomSheet()
-                /*   val intent = Intent()
-                   intent.putExtra("result", merchantResponse)
-                   intent.putExtra("payu_response", payuResponse)
-                   if (null != mViewModel.hash.get()) {
-                       intent.putExtra(PayuConstants.MERCHANT_HASH, mViewModel.hash)
-                   }
-                   setResult(RESULT_CANCELED, intent)*/
-                //   finish()
+                mViewModel.isPaymentFail.set(true)
             }
 
             override fun onPaymentTerminate() {
@@ -370,6 +364,7 @@ class AddMoneyUpiDebitView :
             }
 
             override fun setCBProperties(webview: WebView, payUCustomBrowser: Bank) {
+
                 webview.webChromeClient = PayUWebChromeClient(payUCustomBrowser)
 
             }

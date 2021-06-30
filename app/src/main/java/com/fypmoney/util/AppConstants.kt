@@ -124,6 +124,7 @@ object AppConstants {
     const val CREDITED = "Credited"
     const val DEBITED = "Debited"
     const val BANK_TRANSACTION = "bank_transaction"
+    const val TRANSACTION = "transaction"
     const val ADD_MONEY = "add_money"
 
     const val BLOCK_CARD_ACTION = "BLOCKCARD"

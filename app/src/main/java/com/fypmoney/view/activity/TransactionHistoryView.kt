@@ -8,6 +8,8 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewTransactionHistoryBinding
+import com.fypmoney.model.BankTransactionHistoryResponseDetails
+import com.fypmoney.model.TransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.TransactionHistoryViewModel
 import kotlinx.android.synthetic.main.toolbar.*
@@ -52,6 +54,10 @@ class TransactionHistoryView : BaseActivity<ViewTransactionHistoryBinding, Trans
      */
     private fun setObserver() {
 
+        mViewModel.onItemClicked.observe(this) {
+            intentToPayUActivity(PayUSuccessView::class.java,it)
+        }
+
         mViewModel.onPayOrRequestClicked.observe(this) {
             when (it.id) {
                 R.id.pay -> {
@@ -81,6 +87,19 @@ class TransactionHistoryView : BaseActivity<ViewTransactionHistoryBinding, Trans
         intent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, contactEntity)
         intent.putExtra(AppConstants.WHICH_ACTION, action)
         startActivity(intent)
+    }
+    /**
+     * Method to navigate to the different activity
+     */
+    private fun intentToPayUActivity(
+        aClass: Class<*>,
+        transactionHistoryResponseDetails: TransactionHistoryResponseDetails
+    ) {
+        val intent = Intent(this@TransactionHistoryView, aClass)
+        intent.putExtra(AppConstants.RESPONSE, transactionHistoryResponseDetails)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.TRANSACTION)
+        startActivity(intent)
+
     }
 
 }

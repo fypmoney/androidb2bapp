@@ -167,6 +167,9 @@ class ApiDataParsing {
                 ApiConstant.API_GET_BANK_PROFILE -> {
                     getObject(response, BankProfileResponse::class.java)
                 }
+                ApiConstant.API_LOGOUT -> {
+                    getObject(response, LogOutResponse::class.java)
+                }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {
                         PayuConstants.VALIDATE_VPA -> {

@@ -568,6 +568,7 @@
     <string name="to_date_empty_error">Please choose to date</string>
     <string name="to_date_bigger">To date should be larger or equal than from date</string>
     <string name="received_text">"Received | "</string>
+    <string name="sent_text">"Sent | "</string>
 
     <!--
     Card settings

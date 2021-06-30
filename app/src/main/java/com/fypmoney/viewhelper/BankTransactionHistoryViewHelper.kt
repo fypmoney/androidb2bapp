@@ -34,7 +34,7 @@ class BankTransactionHistoryViewHelper(
      * called when any item is selected
      * */
     fun onItemClicked() {
-        viewModel.onItemClicked.value=bankHistory
+        viewModel.onItemClicked.value = bankHistory
     }
 
     /*
@@ -49,7 +49,7 @@ class BankTransactionHistoryViewHelper(
                 amount.set(
                     PockketApplication.instance.getString(R.string.add) + PockketApplication.instance.getString(
                         R.string.Rs
-                    ) + bankHistory?.amount
+                    ) + Utility.convertToRs(bankHistory?.amount)
                 )
 
             }
@@ -58,7 +58,7 @@ class BankTransactionHistoryViewHelper(
                 amount.set(
                     PockketApplication.instance.getString(R.string.subtract) + PockketApplication.instance.getString(
                         R.string.Rs
-                    ) + bankHistory?.amount
+                    ) + Utility.convertToRs(bankHistory?.amount)
                 )
             }
 
@@ -106,7 +106,6 @@ class BankTransactionHistoryViewHelper(
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
 
 
     }

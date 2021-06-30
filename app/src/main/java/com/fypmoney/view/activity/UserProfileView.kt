@@ -11,6 +11,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewUserProfileBinding
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.view.fragment.LogoutBottomSheet
 import com.fypmoney.viewmodel.UserProfileViewModel
@@ -104,6 +105,10 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
 
     override fun onItemClick(position: Int) {
         when (position) {
+            0 -> {
+                Utility.goToAppSettings(applicationContext)
+            }
+
             1 -> {
                 intentToActivity(SelectInterestView::class.java)
             }

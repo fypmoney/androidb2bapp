@@ -22,6 +22,8 @@ class TransactionHistoryViewModel(application: Application) : BaseViewModel(appl
     var transactionHistoryAdapter = TransactionHistoryAdapter(this)
     var contactName = ObservableField<String>()
     var isNoDataFoundVisible = ObservableField(false)
+    var onItemClicked = MutableLiveData<TransactionHistoryResponseDetails>()
+
 
     init {
         callGetTransactionHistoryApi()

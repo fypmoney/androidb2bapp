@@ -210,9 +210,6 @@ class WebApiCaller {
         mObservable?.subscribeOn(Schedulers.io())?.observeOn(AndroidSchedulers.mainThread())
             ?.subscribe(object : Observer<ResponseBody> {
                 override fun onSubscribe(d: Disposable) {
-                    if (request.purpose == ApiConstant.GET_USER_CARDS) {
-                        Utility.showToast("onSubscribe")
-                    }
                     if (request.isProgressBar!!) {
                         request.onResponse.progress(
                             true,
@@ -222,40 +219,40 @@ class WebApiCaller {
                 }
 
                 override fun onNext(responseBody: ResponseBody) {
-                    if (request.purpose == ApiConstant.GET_USER_CARDS) {
-                        Utility.showToast("onNext" + responseBody.string())
-                    }
                     request.onResponse.onSuccess(
                         purpose = request.purpose,
-                        ApiDataParsing.getInstance().parseData(request, responseBody,command)!!
+                        ApiDataParsing.getInstance().parseData(request, responseBody, command)!!
                     )
                 }
 
                 override fun onError(e: Throwable) {
-                    if (request.purpose == ApiConstant.GET_USER_CARDS) {
-                        Utility.showToast("onError")
-                    }
                     try {
-                        request.onResponse.onError(
-                            purpose = request.purpose,
-                            NetworkUtil.responseData(e)!!
-                        )
+                        if (request.purpose == ApiConstant.API_LOGOUT) {
+                            request.onResponse.onError(
+                                purpose = request.purpose,
+                                ErrorResponseInfo(
+                                    errorCode = "204",
+                                    msg = ""
+                                )
+                            )
+
+
+                        } else {
+                            request.onResponse.onError(
+                                purpose = request.purpose,
+                                NetworkUtil.responseData(e)!!
+                            )
+                        }
                         if (request.isProgressBar!!) {
                             request.onResponse.progress(false, null.toString())
                         }
                     } catch (e: Exception) {
-                        if (request.purpose == ApiConstant.GET_USER_CARDS) {
-                            Utility.showToast("Exception")
-                        }
                         request.onResponse.progress(false, null.toString())
                         e.printStackTrace()
                     }
                 }
 
                 override fun onComplete() {
-                    if (request.purpose == ApiConstant.GET_USER_CARDS) {
-                        Utility.showToast("onComplete")
-                    }
                     if (request.isProgressBar!!) {
                         request.onResponse.progress(false, null.toString())
                     }

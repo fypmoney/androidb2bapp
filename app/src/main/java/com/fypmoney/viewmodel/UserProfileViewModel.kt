@@ -32,7 +32,7 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
             ApiRequest(
                 purpose = ApiConstant.API_LOGOUT,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_LOGOUT),
-                request_type = ApiUrl.GET,
+                request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = true,
                 param = BaseRequest()
             )
@@ -42,28 +42,22 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
+
+
+    }
+
+
+    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
+        super.onError(purpose, errorResponseInfo)
         when (purpose) {
-
-            ApiConstant.API_ADD_MONEY_STEP2 -> {
-                if (responseData is LogOutResponse) {
-                    if (responseData.msg.equals(ApiConstant.API_SUCCESS)) {
-                        Utility.resetPreferenceAfterLogout()
-                        onLogoutSuccess.value=true
-                    }
-
-                }
-
+            ApiConstant.API_LOGOUT -> {
+                Utility.resetPreferenceAfterLogout()
+                onLogoutSuccess.value = true
             }
-
 
         }
 
     }
 
-    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
-        super.onError(purpose, errorResponseInfo)
-
-
-    }
 
 }
