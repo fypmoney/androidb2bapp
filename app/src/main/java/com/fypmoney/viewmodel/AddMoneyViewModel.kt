@@ -71,7 +71,7 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
                 if (responseData is GetWalletBalanceResponse) {
                     isFetchBalanceVisible.set(false)
                     availableAmount.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)))
-                    remainingLoadLimit.set(PockketApplication.instance.getString(R.string.add_money_screen_text)+responseData.getWalletBalanceResponseDetails.remainingLoadLimit+PockketApplication.instance.getString(R.string.add_money_screen_text1))
+                    remainingLoadLimit.set(PockketApplication.instance.getString(R.string.add_money_screen_text)+Utility.convertToRs(responseData.getWalletBalanceResponseDetails.remainingWalletBalanceLimit)+PockketApplication.instance.getString(R.string.add_money_screen_text1))
                 }
             }
 

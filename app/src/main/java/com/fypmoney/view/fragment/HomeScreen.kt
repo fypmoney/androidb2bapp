@@ -50,6 +50,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         chore_card.setOnClickListener {
             intentToAddMemberActivity(ChoresActivity::class.java)
             }
+
         setObservers()
 
     }
@@ -71,12 +72,6 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
             }
         }
 
-        /*mViewModel.onChoreClicked.observe(viewLifecycleOwner) {
-            if (it) {
-                intentToAddMemberActivity(ChoresActivity::class.java)
-                mViewModel.onChoreClicked.value = false
-            }
-        }*/
 
         mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
             when (it.action?.type) {

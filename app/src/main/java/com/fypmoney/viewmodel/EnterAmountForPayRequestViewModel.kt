@@ -27,9 +27,10 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
     var action = ObservableField<String>()
     var message = ObservableField<String>()
     var contactResult = ObservableField(ContactEntity())
-    var buttonText = ObservableField(application.getString(R.string.pay_btn_text))
+    var buttonText = ObservableField(application.getString(R.string.request_btn_text))
     var onApiResponse = MutableLiveData<String>()
     var sendMoneyApiResponse = ObservableField<SendMoneyResponse>()
+    var qrCodeValue = ObservableField<String>()
 
     /*
       * This method is used to handle on click of pay or request button
@@ -55,36 +56,42 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
     /*
    * This is used to set selected response
    * */
-    fun setResponseAfterContactSelected(contactEntity: ContactEntity?, actionValue: String?) {
+    fun setResponseAfterContactSelected(
+        contactEntity: ContactEntity?,
+        actionValue: String?,
+        qrCode: String?
+    ) {
         try {
-            if (contactEntity?.contactNumber != null) {
-                contactResult.set(contactEntity)
-                action.set(actionValue)
+            action.set(actionValue)
+            qrCodeValue.set(qrCode)
+            contactResult.set(contactEntity)
+            if (action.get() == AppConstants.PAY || action.get() == AppConstants.PAY_USING_QR) {
+                buttonText.set(PockketApplication.instance.getString(R.string.pay_btn_text))
+            }
 
-                if (action.get() != AppConstants.PAY) {
-                    buttonText.set(PockketApplication.instance.getString(R.string.request_btn_text))
+            if (contactResult.get()?.lastName.isNullOrEmpty()) {
+                when {
+                    action.get() == AppConstants.PAY -> contactName.set(PockketApplication.instance.getString(R.string.pay_btn_text) + " " + contactEntity?.firstName)
+                    action.get() == AppConstants.PAY_USING_QR -> contactName.set(PockketApplication.instance.getString(R.string.pay_btn_text) + " " + contactEntity?.firstName)
+                    action.get() == AppConstants.REQUEST -> {
+                        contactName.set(PockketApplication.instance.getString(R.string.request_from) + " " + contactEntity?.firstName)
+
+                    }
                 }
-
-                if (contactResult.get()?.lastName.isNullOrEmpty()) {
-                    if (action.get() == AppConstants.PAY)
-                        contactName.set(PockketApplication.instance.getString(R.string.pay_btn_text) + " " + contactEntity.firstName)
-                    else {
-                        contactName.set(PockketApplication.instance.getString(R.string.request_from) + " " + contactEntity.firstName)
-
-                    }
-                } else {
-                    if (action.get() == AppConstants.PAY)
-                        contactName.set(PockketApplication.instance.getString(R.string.pay_btn_text) + " " + contactEntity.firstName + " " + contactEntity.lastName)
-                    else {
-                        contactName.set(PockketApplication.instance.getString(R.string.request_from) + " " + contactEntity.firstName + " " + contactEntity.lastName)
+            } else {
+                when {
+                    action.get() == AppConstants.PAY -> contactName.set(PockketApplication.instance.getString(R.string.pay_btn_text) + " " + contactEntity?.firstName + " " + contactEntity?.lastName)
+                    action.get() == AppConstants.PAY_USING_QR -> contactName.set(PockketApplication.instance.getString(R.string.pay_btn_text) + " " + contactEntity?.firstName + " " + contactEntity?.lastName)
+                    action.get() == AppConstants.REQUEST -> {
+                        contactName.set(PockketApplication.instance.getString(R.string.request_from) + " " + contactEntity?.firstName + " " + contactEntity?.lastName)
 
                     }
-
-
                 }
 
 
             }
+
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -112,6 +119,26 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
     }
 
     /*
+  * This method is used to call send money api on click of pay button
+  * */
+    fun callSendMoneyUsingQrApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_QR_CODE_SCANNER,
+                NetworkUtil.endURL(ApiConstant.API_QR_CODE_SCANNER),
+                ApiUrl.POST,
+                QrCodeScannerRequest(
+                    txnType = AppConstants.FUND_TRANSFER_QR_CODE,
+                    qr = qrCodeValue.get(),
+                    amount = Utility.convertToPaise(amountSelected.get()!!),
+                    remarks = message.get()
+                ),
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    /*
    * This method is used to call send money api on click of pay button
    * */
     fun callRequestMoneyApi() {
@@ -123,7 +150,7 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
                 RequestMoneyRequest(
                     requesteeMobile = contactResult.get()?.contactNumber,
                     amount = Utility.convertToPaise(amountSelected.get()!!),
-                    remarks = message.get(),emoji = ""
+                    remarks = message.get(), emoji = ""
                 ),
                 this, isProgressBar = true
             )
@@ -135,6 +162,7 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
         when (purpose) {
             ApiConstant.API_FUND_TRANSFER -> {
                 if (responseData is SendMoneyResponse) {
+                    Utility.showToast(responseData.msg)
                     sendMoneyApiResponse.set(responseData)
                     onApiResponse.value = AppConstants.API_SUCCESS
 
@@ -142,6 +170,14 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
             }
             ApiConstant.API_REQUEST_MONEY -> {
                 if (responseData is RequestMoneyResponse) {
+                    Utility.showToast(responseData.msg)
+                    onApiResponse.value = AppConstants.API_SUCCESS
+
+                }
+            }
+            ApiConstant.API_QR_CODE_SCANNER -> {
+                if (responseData is QrCodeScannerResponse) {
+                    Utility.showToast(PockketApplication.instance.getString(R.string.qr_transaction_success))
                     onApiResponse.value = AppConstants.API_SUCCESS
 
                 }
@@ -157,5 +193,7 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
             }
         }
     }
+
+
 
 }

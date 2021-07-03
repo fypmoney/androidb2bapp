@@ -80,7 +80,7 @@ class PayRequestProfileView :
                 R.id.request -> {
                     intentToActivity(
                         contactEntity = mViewModel.contactResult.get(),
-                        aClass = EnterAmountForPayRequestView::class.java, ""
+                        aClass = EnterAmountForPayRequestView::class.java, AppConstants.REQUEST
                     )
                 }
 
@@ -96,6 +96,7 @@ class PayRequestProfileView :
         val intent = Intent(this@PayRequestProfileView, aClass)
         intent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, contactEntity)
         intent.putExtra(AppConstants.WHICH_ACTION, action)
+        intent.putExtra(AppConstants.FUND_TRANSFER_QR_CODE, "")
         startActivity(intent)
     }
 

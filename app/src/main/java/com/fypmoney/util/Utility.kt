@@ -38,6 +38,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.math.BigDecimal
 import java.nio.charset.Charset
+import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -704,19 +705,19 @@ object Utility {
     }
 
 
-
     /*
     * This method is used to convert amount to paise
     * */
     fun convertToPaise(amount: String): String {
-        return (amount.toInt() * 100).toString()
+        val format = DecimalFormat("0.#")
+        return format.format(amount.toDouble() * 100)
     }
 
     /*
     * This method is used to convert amount to Rs
     * */
     fun convertToRs(amount: String?): String {
-        return (amount?.toInt()!! / 100).toString()
+        return (amount?.toDouble()!! / 100).toString()
     }
 
     /*

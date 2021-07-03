@@ -16,7 +16,9 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.MemberRepository
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.database.entity.MemberEntity
+import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.GetMemberResponse
+import com.fypmoney.model.LeaveFamilyResponse
 import com.fypmoney.model.UpdateFamilyNameResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
@@ -34,6 +36,7 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
     var onEditFamilyNameClicked = MutableLiveData<Boolean>()
     var onChoresClicked = MutableLiveData<Boolean>()
     var username = ObservableField<String>()
+    var onLeaveFamilyClicked = MutableLiveData<Boolean>()
     var changedUserName = ObservableField<String>()
     var isNoDataFoundVisible = ObservableField(false)
     var isProgressBarVisible = ObservableField(true)
@@ -41,9 +44,8 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
     val isSwitchChecked: MutableLiveData<Boolean> = MutableLiveData()
     var memberAdapter = MemberAdapter(this)
     var pendingAdapter = MemberAdapterViewAll()
-    var memberRepository = MemberRepository(mDB = appDatabase)
-
-
+    private var memberRepository = MemberRepository(mDB = appDatabase)
+    var onLeaveFamilySuccess = MutableLiveData<Boolean>()
     init {
         if (SharedPrefUtils.getString(
                 getApplication(),
@@ -72,6 +74,13 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
     * */
     fun onViewAllClicked() {
         onViewAllClicked.value = true
+    }
+
+    /*
+* This method is used to handle view all of mobile
+* */
+    fun onLeaveFamilyClicked() {
+        onLeaveFamilyClicked.value = true
     }
 
     /*
@@ -111,6 +120,21 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
         )
 
 
+    }
+
+    /*
+  * This method is used to call leave family API
+  * */
+    fun callLeaveFamilyApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_LEAVE_FAMILY_MEMBER,
+                NetworkUtil.endURL(ApiConstant.API_LEAVE_FAMILY_MEMBER),
+                ApiUrl.PUT,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
     }
     /*
        * This method is used to call add member API
@@ -157,9 +181,9 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
                         memberAdapter.setList(approveList)
                         pendingAdapter.setList(inviteList)
 
-                } else {
-                    isNoDataFoundVisible.set(true)
-                }
+                    } else {
+                        isNoDataFoundVisible.set(true)
+                    }
                 }
             }
             ApiConstant.API_UPDATE_FAMILY_NAME -> {
@@ -175,6 +199,13 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
                             R.string.family_settings_family_fypers1
                         )
                     )
+                }
+            }
+            ApiConstant.API_LEAVE_FAMILY_MEMBER -> {
+                if (responseData is LeaveFamilyResponse) {
+                    memberRepository.deleteAllMembers()
+                    Utility.showToast(responseData.msg!!)
+                    onLeaveFamilySuccess.value=true
                 }
             }
 

@@ -175,3 +175,17 @@ data class ValidateVpaResponse(
     @SerializedName("vpa") var vpa: String? = null,
     @SerializedName("status") var status: String? = null,
 ) : Serializable
+
+data class QrCodeScannerRequest(
+    @SerializedName("txnType") val txnType: String? = null,
+    @SerializedName("amount") var amount: String? = null,
+    @SerializedName("qr") var qr: String? = null,
+    @SerializedName("emojis") var emojis: String? = null,
+    @SerializedName("remarks") var remarks: String? = null
+) : BaseRequest()
+
+data class QrCodeScannerResponse(
+    @SerializedName("accountTxnId") var accountTxnId: String? = null,
+    @SerializedName("receiverName") var receiverName: String? = null,
+    @SerializedName("txnTime") var txnTime: String? = null,
+) : Serializable

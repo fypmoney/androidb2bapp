@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -40,18 +41,17 @@ class EnterAmountForPayRequestView :
         super.onCreate(savedInstanceState)
         mViewModel.setResponseAfterContactSelected(
             intent.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE),
-            actionValue = intent.getStringExtra(AppConstants.WHICH_ACTION)
+            actionValue = intent.getStringExtra(AppConstants.WHICH_ACTION), qrCode = intent.getStringExtra(AppConstants.FUND_TRANSFER_QR_CODE)
         )
-
         when (mViewModel.action.get()) {
-            AppConstants.PAY -> {
+            AppConstants.PAY, AppConstants.PAY_USING_QR -> {
                 setToolbarAndTitle(
                     context = this@EnterAmountForPayRequestView,
                     toolbar = toolbar,
                     isBackArrowVisible = true, toolbarTitle = getString(R.string.pay_title)
                 )
             }
-            else -> {
+            AppConstants.REQUEST -> {
                 setToolbarAndTitle(
                     context = this@EnterAmountForPayRequestView,
                     toolbar = toolbar,
@@ -108,7 +108,11 @@ class EnterAmountForPayRequestView :
                                     mViewModel.callSendMoneyApi()
 
                                 }
-                                else->{
+                                AppConstants.PAY_USING_QR -> {
+                                    mViewModel.callSendMoneyUsingQrApi()
+
+                                }
+                                AppConstants.REQUEST -> {
                                     mViewModel.callRequestMoneyApi()
 
                                 }
@@ -130,6 +134,7 @@ class EnterAmountForPayRequestView :
         startActivity(Intent(this@EnterAmountForPayRequestView, aClass))
         finishAffinity()
     }
+
     /*
   * This method is used to call leave member
   * */

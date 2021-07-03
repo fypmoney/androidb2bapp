@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
@@ -23,7 +24,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 /*
 * This is used to update family name
 * */
-class InviteBottomSheet(var clipboardManager: ClipboardManager) : BottomSheetDialogFragment() {
+class InviteBottomSheet(
+    var clipboardManager: ClipboardManager,
+    var onShareClickListener: OnShareClickListener
+) : BottomSheetDialogFragment() {
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -50,18 +54,30 @@ class InviteBottomSheet(var clipboardManager: ClipboardManager) : BottomSheetDia
 
         val referralCode = view.findViewById<TextView>(R.id.title1)!!
         val referralMsg = view.findViewById<TextView>(R.id.title3)!!
+        val shareButton = view.findViewById<Button>(R.id.button_share)!!
 
         referralCode.text = Utility.getCustomerDataFromPreference()?.referralCode
         referralMsg.text = Utility.getCustomerDataFromPreference()?.referralMsg
 
 
         referralCode.setOnClickListener {
-               Utility.copyTextToClipBoard(clipboardManager,Utility.getCustomerDataFromPreference()?.referralCode)      }
+            Utility.copyTextToClipBoard(
+                clipboardManager,
+                Utility.getCustomerDataFromPreference()?.referralCode
+            )
+        }
+
+        shareButton.setOnClickListener {
+            onShareClickListener.onShareClickListener(referralCode.text.toString())
+            dismiss()
+        }
+
+
         return view
     }
 
-    interface OnUpdateFamilyClickListener {
-        fun onUpdateFamilyButtonClick(familyName:String)
+    interface OnShareClickListener {
+        fun onShareClickListener(referralCode: String)
 
     }
 

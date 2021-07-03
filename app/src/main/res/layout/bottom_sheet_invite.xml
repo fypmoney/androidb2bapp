@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <LinearLayout
@@ -68,6 +69,18 @@
             />
 
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_share"
+            style="@style/Widget.App.Button"
+            android:layout_width="299dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/curved_background1"
+            android:text="@string/share_btn_text"
+            android:textAllCaps="false"
+            android:layout_marginBottom="20dp"
+            app:backgroundTint="@color/text_color_dark" />
 
 
     </LinearLayout>

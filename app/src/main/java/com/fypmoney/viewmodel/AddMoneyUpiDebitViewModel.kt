@@ -298,11 +298,11 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
                 mPaymentParams.expiryYear = addNewCardDetails?.expiryYear// YYYY
                 mPaymentParams.cvv = addNewCardDetails?.cvv
 
-                if (addNewCardDetails?.isCardSaved == true) {
-                    mPaymentParams.storeCard = 1
-                } else {
-                    mPaymentParams.storeCard = 0
-                }
+                /* if (addNewCardDetails?.isCardSaved == true) {
+                     mPaymentParams.storeCard = 1
+                 } else {*/
+                mPaymentParams.storeCard = 0
+
 
             }
 

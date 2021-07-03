@@ -52,7 +52,6 @@ class AadhaarAccountActivationView :
         //Test Commit
 
 
-
         val ss = SpannableString(getString(R.string.account_verification_sub_title))
         val clickableSpan: ClickableSpan = object : ClickableSpan() {
             override fun onClick(textView: View) {
@@ -79,6 +78,9 @@ class AadhaarAccountActivationView :
         mViewModel.onActivateAccountSuccess.observe(this) {
             if (it.showMobileOtpVerificationScreen == AppConstants.YES)
                 intentToActivity(it.token)
+            else {
+                intentToHomeActivity(HomeView::class.java)
+            }
         }
 
 
@@ -110,5 +112,14 @@ class AadhaarAccountActivationView :
 
         startActivity(intent)
     }
+
+    /**
+     * Method to navigate to the different activity
+     */
+    private fun intentToHomeActivity(aClass: Class<*>) {
+        startActivity(Intent(this@AadhaarAccountActivationView, aClass))
+        finishAffinity()
+    }
+
 
 }

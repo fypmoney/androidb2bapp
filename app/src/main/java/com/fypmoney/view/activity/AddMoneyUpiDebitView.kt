@@ -16,6 +16,7 @@ import android.text.style.ClickableSpan
 import android.view.View
 import android.webkit.WebView
 import android.widget.ProgressBar
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -47,6 +48,8 @@ import com.payu.india.Tasks.GetPaymentRelatedDetailsTask
 import com.payu.paymentparamhelper.PaymentParams
 import com.payu.paymentparamhelper.PostData
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.toolbar_for_gateway.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 import kotlinx.android.synthetic.main.view_add_money_upi_debit.*
 
@@ -364,7 +367,6 @@ class AddMoneyUpiDebitView :
             }
 
             override fun setCBProperties(webview: WebView, payUCustomBrowser: Bank) {
-
                 webview.webChromeClient = PayUWebChromeClient(payUCustomBrowser)
 
             }
@@ -392,6 +394,7 @@ class AddMoneyUpiDebitView :
                         resultData.isPaymentOptionAvailable
                     com.payu.custombrowser.util.PaymentOption.PHONEPE -> isPhonePeSupported =
                         resultData.isPaymentOptionAvailable
+
                 }
             }
         }
@@ -441,6 +444,15 @@ class AddMoneyUpiDebitView :
                 customBrowserConfig.setDisableBackButtonDialog(false)
                 customBrowserConfig.setMerchantSMSPermission(true)
                 customBrowserConfig.enableSurePay = 0
+                customBrowserConfig.setDisableBackButtonDialog(true)
+                customBrowserConfig.internetRestoredWindowTTL = CustomBrowserConfig.ENABLE
+
+                customBrowserConfig.setViewPortWideEnable(true)
+                customBrowserConfig.progressDialogCustomView =
+                    showProgressDialogView()
+                customBrowserConfig.toolBarView =
+                    showToolBarView()
+                customBrowserConfig.disableIntentSeamlessFailure = CustomBrowserConfig.DISABLE
                 if (isSpecificAppSet == true) {
                     customBrowserConfig.packageNameForSpecificApp = packageName
                 }
@@ -471,7 +483,7 @@ class AddMoneyUpiDebitView :
         val upiList = ArrayList<UpiModel>()
         upiList.add(UpiModel(name = getString(R.string.google_pay)))
         val intent = Intent()
-        intent.data = Uri.parse("upi://pay")
+        intent.data = Uri.parse(AppConstants.UPI_APPS_FETCH)
         val resolveInfos = packageManager.queryIntentActivities(
             intent,
             PackageManager.MATCH_DEFAULT_ONLY
@@ -537,6 +549,19 @@ This method is used to call the pay u api
 
         val paymentRelatedDetailsForMobileSdkTask = GetPaymentRelatedDetailsTask(this)
         paymentRelatedDetailsForMobileSdkTask.execute(payuConfig)
+
+    }
+
+    fun showProgressDialogView(): View {
+        return layoutInflater.inflate(R.layout.progress_bar_layout, null)
+
+    }
+
+    private fun showToolBarView(): View {
+        val view = layoutInflater.inflate(R.layout.toolbar_for_gateway, null)
+        val toolbar=view.findViewById<Toolbar>(R.id.toolbar)
+        toolbar.setBackgroundColor(ContextCompat.getColor(applicationContext,R.color.color_dark_green))
+        return view
 
     }
 }

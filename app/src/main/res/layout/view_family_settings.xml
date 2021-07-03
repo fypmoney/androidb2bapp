@@ -231,6 +231,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/border_background1"
@@ -273,6 +274,24 @@
 
         </RelativeLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/verifyButton"
+            style="@style/TextviewRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_below="@id/layout"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/border_background2"
+            android:padding="15dp"
+            android:visibility="@{viewModel.isFamilyFiperVisible?View.VISIBLE:View.GONE,default=gone}"
+            android:text="@string/leave_family"
+            android:textAlignment="center"
+            android:onClick="@{()->viewModel.onLeaveFamilyClicked()}"
+            android:textColor="@color/text_color_dark"
+            android:textSize="18dp" />
 
 
 

@@ -52,7 +52,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/ivServiceLogo"
                     android:layout_marginStart="-20dp"
-                    android:layout_toEndOf="@+id/ivServiceLogo"                    app:srcCompat="@drawable/ic_fyper_cap"
+                    android:layout_toEndOf="@+id/ivServiceLogo"
+                    app:srcCompat="@drawable/ic_fyper_cap"
 
                     />
 
@@ -170,8 +171,8 @@
                     android:layout_height="52dp"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="30dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginBottom="30dp"
                     android:background="@drawable/curved_background1"
                     android:onClick="@{()->viewModel.onPayClicked()}"
                     android:text="@{viewModel.buttonText}"

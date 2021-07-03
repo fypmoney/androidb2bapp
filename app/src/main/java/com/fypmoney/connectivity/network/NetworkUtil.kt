@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.connectivity.ErrorResponseInfo
@@ -51,7 +52,9 @@ class NetworkUtil {
                 val s = throwable.response()!!.errorBody()!!.string()
                 return when (throwable.code()) {
                     //handle code 400,403,500
-                    400, 401, 402, 403, 404, 408, 500 -> getErrorData(s)
+                    400, 401, 402, 403, 404, 408, 500 -> {
+                        getErrorData(s)
+                    }
                     else -> ErrorResponseInfo(
                         msg = PockketApplication.instance.getString(R.string.something_went_wrong_error),
                         errorCode = throwable.code().toString()

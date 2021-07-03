@@ -170,6 +170,12 @@ class ApiDataParsing {
                 ApiConstant.API_LOGOUT -> {
                     getObject(response, LogOutResponse::class.java)
                 }
+                ApiConstant.API_QR_CODE_SCANNER -> {
+                    getObject(response, QrCodeScannerResponse::class.java)
+                }
+                ApiConstant.API_UPLOAD_PROFILE_PIC -> {
+                    getObject(response, ProfileImageUploadResponse::class.java)
+                }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {
                         PayuConstants.VALIDATE_VPA -> {

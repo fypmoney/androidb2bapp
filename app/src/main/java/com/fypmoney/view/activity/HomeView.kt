@@ -1,15 +1,16 @@
 package com.fypmoney.view.activity
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.telephony.PhoneNumberUtils
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.load.engine.executor.GlideExecutor.UncaughtThrowableStrategy.LOG
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -21,6 +22,10 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.*
 import com.fypmoney.viewmodel.HomeViewModel
+import com.payneteasy.tlv.BerTlvLogger
+import com.payneteasy.tlv.BerTlvParser
+import com.payneteasy.tlv.BerTlvs
+import com.payneteasy.tlv.HexUtil
 import kotlinx.android.synthetic.main.view_home.*
 
 
@@ -50,11 +55,24 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
         setObserver()
+
+    try {
+            val bytes =
+                HexUtil.parseHex("000201010211021640678410000019990415517804000000380061661000800000038200837idb345345343026411108023424234237788826390010A00000052401219344622333.QRPOS@idbi27490010A000000524013100011245377178761000800000038205204176153033565502015802IN5910testingvpa6006MUMBAI6106400001621207080000038263044C27")
+
+            val parser = BerTlvParser()
+            val tlvs: BerTlvs = parser.parse(bytes, 0, bytes.size)
+
+            Log.d("nancnncncncn", tlvs.list.get(1).textValue)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        // BerTlvLogger.log(tlvs, LOG)
+
+
         checkAndAskPermission()
         setCurrentFragment(HomeScreen())
-
-
-        //getUpiApps()
 
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.STAY_TUNED_BOTTOM_SHEET -> {
@@ -135,6 +153,12 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 mViewModel.onProfileClicked.value = false
             }
         }
+        mViewModel.onQrCodeClicked.observe(this) {
+            if (it) {
+                intentToActivity(QrCodeScannerView::class.java)
+                mViewModel.onQrCodeClicked.value = false
+            }
+        }
         mViewModel.onNotificationClicked.observe(this) {
             if (it) {
                 intentToActivity(NotificationView::class.java)
@@ -170,7 +194,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
  * This method is used to check for permissions
  * */
     private fun checkAndAskPermission() {
-        when (checkPermission()) {
+        when (checkPermission(Manifest.permission.READ_CONTACTS)) {
             true -> {
                 Utility.getAllContactsInList(
                     contentResolver,
@@ -179,7 +203,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 )
             }
             else -> {
-                requestPermission()
+                requestPermission(Manifest.permission.READ_CONTACTS)
             }
         }
     }
@@ -191,7 +215,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         for (permission in permissions) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
                 //denied
-                requestPermission()
+                requestPermission(Manifest.permission.READ_CONTACTS)
             } else {
                 if (ActivityCompat.checkSelfPermission(
                         this,

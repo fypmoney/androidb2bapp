@@ -27,7 +27,7 @@ object AppConstants {
     const val DIALOG_MSG_AUTH = "Unlock Fyp"
     const val DIALOG_TITLE_AUTH = "Enter phone screen lock pattern, PIN, password or fingerprint"
     const val DEVICE_SECURITY_REQUEST_CODE = 1000
-    const val READ_CONTACTS_PERMISSION_CODE = 100
+    const val PERMISSION_CODE = 100
     const val LOCATION_PERMISSION_REQUEST_CODE = 999
     val countryCodeList: List<CountryCode> =
         Gson().fromJson(countryCode, object : TypeToken<List<CountryCode>>() {}.type)
@@ -104,8 +104,11 @@ object AppConstants {
 
     const val COPY_LABEL = "label"
     const val PAY = "pay"
+    const val REQUEST = "request"
+    const val PAY_USING_QR = "send_money_using QR code"
     const val WHICH_ACTION = "which_action"
     const val FUND_TRANSFER_TRANSACTION_TYPE = "FUND_TRANSAFER"
+    const val FUND_TRANSFER_QR_CODE = "SPEND_BQR"
     const val RESPONSE = "response"
     const val SERVER_DATE_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
     const val SERVER_DATE_TIME_FORMAT1 = "yyyy-MM-dd'T'HH:mm:ss'Z'"
@@ -141,6 +144,8 @@ object AppConstants {
     const val Channel_ATM = "ATM"
     const val Channel_POS= "POS"
     const val GPAY_PACKAGE_NAME= "com.google.android.apps.nbu.paisa.user"
+    const val UPI_APPS_FETCH= "upi://pay"
+    const val REQUEST_IMAGE= 200
 
 
 }

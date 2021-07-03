@@ -40,7 +40,7 @@ class SelectInterestView :
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = this@SelectInterestView,
-            toolbar = toolbar,isBackArrowVisible = true
+            toolbar = toolbar, isBackArrowVisible = true
         )
 
 
@@ -55,21 +55,12 @@ Create this method for observe the viewModel fields
     private fun setObserver() {
         mViewModel.onUpdateProfileSuccess.observe(this) {
             if (it) {
-                intentToActivity(CommunityView::class.java)
+                Utility.showToast("Your interest has been updated successfully")
                 mViewModel.onUpdateProfileSuccess.value = false
+                finish()
             }
         }
 
-    }
-
-
-
-    /**
-     * Method to navigate to the different activity
-     */
-    private fun intentToActivity(aClass: Class<*>) {
-        startActivity(Intent(this@SelectInterestView, aClass))
-        finish()
     }
 
 

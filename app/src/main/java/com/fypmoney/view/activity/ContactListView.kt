@@ -1,5 +1,7 @@
 package com.fypmoney.view.activity
 
+import android.Manifest
+import android.content.ClipboardManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -18,6 +20,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.fragment.InviteBottomSheet
 import com.fypmoney.view.fragment.InviteMemberBottomSheet
 import com.fypmoney.viewmodel.ContactListViewModel
 import kotlinx.android.synthetic.main.toolbar.*
@@ -27,7 +30,8 @@ import kotlinx.android.synthetic.main.view_user_feeds.*
 * This is used to handle contacts
 * */
 class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(),
-    DialogUtils.OnAlertDialogClickListener {
+    DialogUtils.OnAlertDialogClickListener, InviteBottomSheet.OnShareClickListener,
+    InviteMemberBottomSheet.OnInviteButtonClickListener {
     private lateinit var mViewModel: ContactListViewModel
 
     override fun getBindingVariable(): Int {
@@ -75,7 +79,7 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
 
         mViewModel.onInviteClicked.observe(this) {
             if (it) {
-                inviteUser()
+                callInviteBottomSheet()
                 mViewModel.onIsAppUserClicked.value = false
             }
         }
@@ -121,7 +125,7 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
                 //denied
                 Utility.showToast(getString(R.string.permission_required))
-                requestPermission()
+                requestPermission(Manifest.permission.READ_CONTACTS)
             } else {
                 if (ActivityCompat.checkSelfPermission(
                         this,
@@ -149,13 +153,13 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
     * This method is used to check for permissions
     * */
     private fun checkAndAskPermission() {
-        when (checkPermission()) {
+        when (checkPermission(Manifest.permission.READ_CONTACTS)) {
             true -> {
                 mViewModel.progressDialog.value = true
                 mViewModel.callContactSyncApi()
             }
             else -> {
-                requestPermission()
+                requestPermission(Manifest.permission.READ_CONTACTS)
             }
         }
     }
@@ -183,13 +187,30 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
     }
 
     /*
-   * This method is used to call leave member
+   * This method is used to call invite sheet
    * */
     private fun callInviteMemberBottomSheet(type: String) {
         val bottomSheet =
-            InviteMemberBottomSheet(type, mViewModel.searchedContact.get())
+            InviteMemberBottomSheet(type, mViewModel.searchedContact.get(), this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "InviteMemberView")
     }
 
+    /*
+* This method is used to call invite sheet
+* */
+    private fun callInviteBottomSheet() {
+        val bottomSheet =
+            InviteBottomSheet(getSystemService(CLIPBOARD_SERVICE) as ClipboardManager, this)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "InviteView")
+    }
+
+    override fun onShareClickListener(referralCode: String) {
+        inviteUser()
+    }
+
+    override fun onInviteButtonClick() {
+        callInviteBottomSheet()
+    }
 }

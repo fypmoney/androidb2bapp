@@ -55,6 +55,7 @@
     <string name="no_btn_text">No</string>
     <string name="save_btn_text">Save</string>
     <string name="log_out_btn_text">Log out</string>
+    <string name="share_btn_text">Share</string>
 
 
     <!--Login-->
@@ -91,6 +92,7 @@
     <string name="contact_screen_title">Contacts</string>
     <string name="no_data_found">No Data Found</string>
     <string name="permission_required">Permission are required to access contacts</string>
+    <string name="permission_camera_required">Permission are required to access camera</string>
     <string name="invite_link">Invite</string>
     <string name="pocket_user">Pocket User</string>
     <string name="fyper_txt">Fyper</string>
@@ -237,6 +239,7 @@
     <string name="family_no_data">"Looks like you haven't added any family member yet"</string>
     <string name="set_family_name">Set your family name here</string>
     <string name="update_family_hint">Your family name</string>
+    <string name="leave_confirmation_msg">Are you sure you want to leave family?</string>
 
     <!-- Members
     -->
@@ -603,7 +606,7 @@
     <string name="dummy_amount_100000">\u20B9 100,000</string>
     <string name="min">Min</string>
     <string name="max">Max</string>
-    <string name="dummy_amount_2500">\u20B9 2,500</string>
+    <string name="dummy_amount_2500">\u20B9 0</string>
 
     <!--
     Manage Channels
@@ -623,6 +626,23 @@
     -->
     <string name="log_out_title">Log out of Fyp?</string>
     <string name="log_out_text">Remember my login info</string>
+
+    <!--
+    Qr code
+    -->
+    <string name="qr_scan_issue">Issue in scanning the QR code, please try again</string>
+    <string name="qr_transaction_success">Transaction is completed successfully</string>
+
+    <string name="dialog_permission_title">Grant Permissions</string>
+    <string name="dialog_permission_message">This app needs permission to use this feature. You can grant them in app settings.</string>
+    <string name="go_to_settings">GOTO SETTINGS</string>
+    <string name="msg_error_unable_select_profile_pic">Unable to set profile image. Please try again!</string>
+    <string name="lbl_set_profile_photo">Set profile image</string>
+    <string name="lbl_take_camera_picture">Take a picture</string>
+    <string name="lbl_choose_from_gallery">Choose from gallery</string>
+    <string name="toast_image_intent_null">Image picker option is missing!</string>
+
+
 
 
 </resources>

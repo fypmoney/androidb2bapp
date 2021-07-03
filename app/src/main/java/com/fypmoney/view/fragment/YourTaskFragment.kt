@@ -52,7 +52,7 @@ class YourTaskFragment : Fragment() ,
         recyclerViewTasks!!.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerViewTasks!!.addItemDecoration(GridItemDecoration(10, 2))
 
-        GetTasks()
+        getTasks()
     }
 
 
@@ -71,7 +71,7 @@ class YourTaskFragment : Fragment() ,
 
     }
 
-    private fun GetTasks() {
+    private fun getTasks() {
         try {
             val apiInterface = ApiClient1.getClient().create(Allapi::class.java)
             val task= TaskRequest("","","","")
@@ -79,7 +79,7 @@ class YourTaskFragment : Fragment() ,
             responseBodyCall.enqueue(object : Callback<YourTaskResponse> {
                 override fun onResponse(call: Call<YourTaskResponse>, response: Response<YourTaskResponse>) {
                     val status = response.body()?.data
-                    if (status!!.isNotEmpty()) {
+                    if (status?.isNotEmpty() == true) {
                         val taskListAdapter = YourTaskStaggeredAdapter(status)
                         recyclerViewTasks!!.adapter = taskListAdapter
                     }

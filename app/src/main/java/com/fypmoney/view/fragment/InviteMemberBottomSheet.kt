@@ -27,7 +27,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 /*
 * This is used to invite a family member
 * */
-class InviteMemberBottomSheet(var type: String, var personName: String? = null) :
+class InviteMemberBottomSheet(
+    var type: String,
+    var personName: String? = null,
+    var onInviteButtonClickListener: OnInviteButtonClickListener
+) :
     BottomSheetDialogFragment() {
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
@@ -69,30 +73,25 @@ class InviteMemberBottomSheet(var type: String, var personName: String? = null) 
                         ) + getString(R.string.invite_member_screen_sub_title1)
                 } else {
                     message.text =
-                        getString(R.string.invite_member_screen_sub_title2) + personName + getString(R.string.invite_member_screen_sub_title1)
+                        getString(R.string.invite_member_screen_sub_title2) + personName + getString(
+                            R.string.invite_member_screen_sub_title1
+                        )
                 }
             }
 
         }
 
-
-
-
         inviteBtn.setOnClickListener {
-            (context as BaseActivity<*, *>).inviteUser()
+            onInviteButtonClickListener.onInviteButtonClick()
+            dismiss()
         }
 
 
         return view
     }
 
-    /*
-* navigate to the HomeScreen
-* */
-    private fun navigateToDifferentActivity() {
-        val intent = Intent(context, FamilySettingsView::class.java)
-        startActivity(intent)
-        //  requireActivity().finish()
+    interface OnInviteButtonClickListener {
+        fun onInviteButtonClick()
     }
 
 

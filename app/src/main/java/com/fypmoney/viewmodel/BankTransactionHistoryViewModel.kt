@@ -52,7 +52,6 @@ class BankTransactionHistoryViewModel(application: Application) : BaseViewModel(
         when (purpose) {
             ApiConstant.API_BANK_TRANSACTION_HISTORY -> {
                 if (responseData is BankTransactionHistoryResponse) {
-                    Log.d("kvssknvs", responseData.toString())
                     if (!responseData.transactions.bankTransactionHistoryResponseDetails.isNullOrEmpty())
                         bankTransactionHistoryAdapter.setList(responseData.transactions.bankTransactionHistoryResponseDetails)
                     else

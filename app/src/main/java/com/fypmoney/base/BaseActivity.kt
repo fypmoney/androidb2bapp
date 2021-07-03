@@ -173,7 +173,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         {
             when (it) {
                 true -> {
-                    DialogUtils.showInternetErrorDialog(this,this)
+                    DialogUtils.showInternetErrorDialog(this, this)
                     mViewModel!!.internetError.value = false
 
                 }
@@ -281,19 +281,19 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     /*
     * This method is used to check if permission is granted or not
     * */
-    fun checkPermission(): Boolean {
-        val result = ContextCompat.checkSelfPermission(applicationContext, READ_CONTACTS)
+    fun checkPermission(permission:String): Boolean {
+        val result = ContextCompat.checkSelfPermission(applicationContext, permission)
         return result == PackageManager.PERMISSION_GRANTED
     }
 
     /*
     * This method ask for permission
     * */
-    fun requestPermission() {
+    fun requestPermission(permission:String) {
         ActivityCompat.requestPermissions(
             this,
-            arrayOf(READ_CONTACTS),
-            AppConstants.READ_CONTACTS_PERMISSION_CODE
+            arrayOf(permission),
+            AppConstants.PERMISSION_CODE
         )
     }
 
@@ -314,7 +314,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         ActivityCompat.requestPermissions(
             this,
             arrayOf(ACCESS_FINE_LOCATION, ACCESS_BACKGROUND_LOCATION),
-            AppConstants.READ_CONTACTS_PERMISSION_CODE
+            AppConstants.PERMISSION_CODE
         )
     }
 
@@ -324,7 +324,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     fun setToolbarAndTitle(
         context: Context,
         toolbar: Toolbar,
-        isBackArrowVisible: Boolean? = false,toolbarTitle:String?=null
+        isBackArrowVisible: Boolean? = false, toolbarTitle: String? = null
     ) {
         setSupportActionBar(toolbar)
         val upArrow = ContextCompat.getDrawable(
@@ -364,27 +364,6 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     override fun onTryAgainClicked() {
 
     }
-  fun getUpiApps()
-  {
-      val packageManager = applicationContext.packageManager
-      val mainIntent = Intent(Intent.ACTION_MAIN, null)
-      mainIntent.addCategory(Intent.CATEGORY_DEFAULT)
-      mainIntent.addCategory(Intent.CATEGORY_BROWSABLE)
-      mainIntent.action = Intent.ACTION_VIEW
-      val uri1: Uri = Uri.Builder().scheme("upi").authority("pay").build()
-      mainIntent.data = uri1
-      val pkgAppsList: List<*> = applicationContext.packageManager.queryIntentActivities(mainIntent, 0)
-
-      for (i in pkgAppsList.indices) {
-          val resolveInfo = pkgAppsList[i] as ResolveInfo
-          Log.d("ndcbcvhdbivu", "packageName: " + resolveInfo.activityInfo.packageName)
-          Log.d("ndcbcvhdbivu", "AppName: " + resolveInfo.loadLabel(packageManager))
-          Log.d("ndcbcvhdbivu", "AppIcon: " + resolveInfo.loadIcon(packageManager))
-      }
-  }
-
-
-
 
 
 }

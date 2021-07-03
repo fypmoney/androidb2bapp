@@ -125,6 +125,11 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
                         SharedPrefUtils.SF_KEY_USER_DOB, dobForServer.value?.trim()
                     )
 
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_USER_EMAIL, responseData.customerInfoResponseDetails?.email
+                    )
+
                     // again update the saved data in preference
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
 

@@ -11,6 +11,11 @@
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-permission
         android:name="android.permission.USE_BIOMETRIC"
         android:requiredFeature="false" />
@@ -50,10 +55,12 @@
         <activity
             android:name=".view.activity.AddTaskActivity"
             android:label="@string/title_activity_add_task"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.ChoresHistoryActivity"
             android:label="@string/title_activity_chores_history"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <meta-data
@@ -63,6 +70,7 @@
         <activity
             android:name=".view.activity.SplashView"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,108 +80,139 @@
         </activity>
         <activity
             android:name=".view.activity.FirstScreenView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <activity
             android:name=".view.activity.BankTransactionHistoryView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <activity
             android:name=".view.activity.LoginView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.SelectInterestView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.EnterOtpView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.CreateAccountView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.LoginSuccessView"
             android:noHistory="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.PermissionView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.ContactListView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.EnterAmountForPayRequestView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".view.activity.PayRequestProfileView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.ReferralCodeView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.CreateAccountSuccessView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.CommunityView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.ContactView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.HomeView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.UserProfileView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <activity
             android:name=".view.activity.NotificationView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.MemberView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.AddMemberView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.activity.UserFeedsDetailView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.ChoresActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.InviteRejectedView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.AccountActivationSuccessView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.StayTunedView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.InviteMemberView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.AadhaarAccountActivationView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.AadhaarVerificationView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-        <activity
-            android:name=".view.activity.LogView"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
         <activity
             android:name=".view.activity.TransactionHistoryView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.ActivationSuccessWithAadhaarView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-        <activity android:name=".view.activity.PushNotificationView">
+        <activity
+            android:name=".view.activity.PushNotificationView"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="Webview" />
 
@@ -183,10 +222,35 @@
 
         <activity
             android:name=".view.activity.AddMoneyUpiDebitView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.PayUSuccessView"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+        <activity
+            android:name=".view.activity.QrCodeScannerView"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+        <activity
+            android:name=".view.activity.CaptureActivityPortrait"
+            android:screenOrientation="sensorPortrait"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+
+        <activity
+            android:name=".view.activity.ImagePickerView"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            />
 
         <receiver
             android:name=".receivers.SmsBroadcastReceiver"
@@ -206,6 +270,15 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.fypmoney.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

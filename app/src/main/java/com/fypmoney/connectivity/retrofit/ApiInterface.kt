@@ -1,6 +1,7 @@
 package com.fypmoney.connectivity.retrofit
 
 import io.reactivex.Observable
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import retrofit2.http.*
 
@@ -49,6 +50,22 @@ interface ApiInterface {
         @Header("client_id") client_id: String?,
         @Header("client_secret") client_secret: String?,
         @Header("grant_type") grant_type: String?, @Url endPoint: String, @Body request: Any
+    ): Observable<ResponseBody>
+
+    /**
+     * @param endPoint String
+     * @param hashMap  HashMap<String,Object>
+     * @return return response
+     * @description Call POST type's web API
+     */
+    @Headers("Accept: multipart/form-data")
+    @Multipart
+    @POST
+    fun postImageOnServer(
+        @Header("client_id") client_id: String?,
+        @Header("appId") appId: String?,
+        @Header("Authorization") authorization: String?,
+        @Url endPoint: String, @Part image: MultipartBody.Part? = null
     ): Observable<ResponseBody>
 
     @Headers("Accept: application/json")

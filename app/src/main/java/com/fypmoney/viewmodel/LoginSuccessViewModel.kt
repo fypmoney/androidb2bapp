@@ -53,6 +53,32 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
                     onApiSuccess.value=true
                     // Save the user id in shared preference
+
+                    // save first name, last name, date of birth
+
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_USER_FIRST_NAME,
+                        responseData.customerInfoResponseDetails?.firstName
+                    )
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_USER_LAST_NAME,
+                        responseData.customerInfoResponseDetails?.lastName
+                    )
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_USER_DOB, responseData.customerInfoResponseDetails?.dob
+                    )
+
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_USER_EMAIL, responseData.customerInfoResponseDetails?.email
+                    )
+
+                    // again update the saved data in preference
+                    Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
+
                     SharedPrefUtils.putLong(
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
                         value = responseData.customerInfoResponseDetails?.id!!

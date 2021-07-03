@@ -6,7 +6,7 @@ plugins {
     id 'com.google.gms.google-services'
     // firebase crashlytics
     id 'com.google.firebase.crashlytics'
-        // Graph Ql
+    // Graph Ql
     id("com.apollographql.apollo").version("2.4.6")
 }
 
@@ -27,6 +27,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+
     buildTypes {
         release {
             debuggable false
@@ -36,8 +37,8 @@ android {
         }
         debug {
             debuggable true
-            minifyEnabled false
-            shrinkResources false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -152,6 +153,18 @@ dependencies {
 
     implementation 'com.payu.samsungpay:samsungpay:1.0'
 
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+
+    // Qr code scanner
+    implementation 'com.journeyapps:zxing-android-embedded:3.0.1@aar'
+    implementation 'com.google.zxing:core:3.3.0'
+
+    // qr code parser
+    implementation 'com.payneteasy:ber-tlv:1.0-11'
+    //dexter permissions
+    implementation "com.karumi:dexter:5.0.0"
+    // for cropping image
+    implementation 'com.github.yalantis:ucrop:2.2.6'
 
 
 }

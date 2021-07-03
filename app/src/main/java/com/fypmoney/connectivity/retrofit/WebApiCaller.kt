@@ -1,5 +1,6 @@
 package com.fypmoney.connectivity.retrofit
 
+import android.util.Log
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.connectivity.ApiConstant
@@ -17,6 +18,7 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import okhttp3.MultipartBody
 import okhttp3.ResponseBody
 import java.lang.Exception
 
@@ -46,7 +48,12 @@ class WebApiCaller {
      * @param request ApiRequest
      * @description Method is used to hit singe web api at a time.
      */
-    fun request(request: ApiRequest, whichServer: String? = null, command: String? = null) {
+    fun request(
+        request: ApiRequest,
+        whichServer: String? = null,
+        command: String? = null,
+        image: MultipartBody.Part? = null
+    ) {
         if (!isNetworkAvailable()) {
             request.onResponse.offLine()
             return
@@ -141,6 +148,18 @@ class WebApiCaller {
                                         request.param
                                     )
 
+                            }
+                            ApiConstant.API_UPLOAD_PROFILE_PIC -> {
+                                mObservable =
+                                    apiInterface.postImageOnServer(
+                                        client_id = ApiConstant.CLIENT_ID,
+                                        appId = ApiConstant.APP_ID,
+                                        authorization = SharedPrefUtils.getString(
+                                            PockketApplication.instance,
+                                            SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                        ),
+                                        request.endpoint,image
+                                    )
                             }
 
                             else -> {
@@ -238,6 +257,7 @@ class WebApiCaller {
 
 
                         } else {
+
                             request.onResponse.onError(
                                 purpose = request.purpose,
                                 NetworkUtil.responseData(e)!!

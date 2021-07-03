@@ -24,6 +24,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var onFeedClicked = MutableLiveData<Boolean>()
     var onLocationClicked = MutableLiveData<Boolean>()
     var onSubmitClicked = MutableLiveData<Boolean>()
+    var onQrCodeClicked = MutableLiveData<Boolean>()
     var onProfileClicked = MutableLiveData<Boolean>()
     var onNotificationClicked = MutableLiveData<Boolean>()
     var onNotificationListener = MutableLiveData<NotificationModel.NotificationResponseDetails?>()
@@ -62,6 +63,13 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     fun onProfileClicked() {
         onProfileClicked.value = true
 
+    }
+
+    /*
+        * This method is used to handle click of qr code
+          * */
+    fun onQrCodeClicked() {
+        onQrCodeClicked.value = true
     }
 
     /*

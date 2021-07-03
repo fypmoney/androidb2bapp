@@ -19,7 +19,8 @@ import kotlinx.android.synthetic.main.view_first_screen.*
 /*
 * This class is used to handle transaction history of a particular contact
 * */
-class TransactionHistoryView : BaseActivity<ViewTransactionHistoryBinding, TransactionHistoryViewModel>() {
+class TransactionHistoryView :
+    BaseActivity<ViewTransactionHistoryBinding, TransactionHistoryViewModel>() {
     private lateinit var mViewModel: TransactionHistoryViewModel
 
 
@@ -42,7 +43,7 @@ class TransactionHistoryView : BaseActivity<ViewTransactionHistoryBinding, Trans
         setToolbarAndTitle(
             context = this@TransactionHistoryView,
             toolbar = toolbar,
-            isBackArrowVisible = true,toolbarTitle = mViewModel.contactName.get()
+            isBackArrowVisible = true, toolbarTitle = mViewModel.contactName.get()
         )
         setObserver()
 
@@ -55,7 +56,7 @@ class TransactionHistoryView : BaseActivity<ViewTransactionHistoryBinding, Trans
     private fun setObserver() {
 
         mViewModel.onItemClicked.observe(this) {
-            intentToPayUActivity(PayUSuccessView::class.java,it)
+            intentToPayUActivity(PayUSuccessView::class.java, it)
         }
 
         mViewModel.onPayOrRequestClicked.observe(this) {
@@ -69,7 +70,7 @@ class TransactionHistoryView : BaseActivity<ViewTransactionHistoryBinding, Trans
                 R.id.request -> {
                     intentToActivity(
                         contactEntity = mViewModel.contactResult.get(),
-                        aClass = EnterAmountForPayRequestView::class.java,""
+                        aClass = EnterAmountForPayRequestView::class.java, AppConstants.REQUEST
                     )
                 }
 
@@ -88,6 +89,7 @@ class TransactionHistoryView : BaseActivity<ViewTransactionHistoryBinding, Trans
         intent.putExtra(AppConstants.WHICH_ACTION, action)
         startActivity(intent)
     }
+
     /**
      * Method to navigate to the different activity
      */

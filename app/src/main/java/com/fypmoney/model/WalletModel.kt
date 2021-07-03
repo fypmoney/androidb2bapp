@@ -18,6 +18,7 @@ data class GetWalletBalanceResponseDetails(
     @SerializedName("ecomLimit") val ecomLimit: String,
     @SerializedName("accountBalance") val accountBalance: String,
     @SerializedName("remainingLoadLimit") val remainingLoadLimit: String,
+    @SerializedName("remainingWalletBalanceLimit") val remainingWalletBalanceLimit: String,
     @SerializedName("cl") val cl: String
 ) : Serializable
 
@@ -32,6 +33,7 @@ data class SendMoneyRequest(
 ) : BaseRequest()
 
 data class SendMoneyResponse(
+    @SerializedName("msg") val msg: String? = null,
     @SerializedName("data") val sendMoneyResponseDetails: SendMoneyResponseDetails
 ) : Serializable
 
@@ -52,6 +54,7 @@ data class RequestMoneyRequest(
 ) : BaseRequest()
 
 data class RequestMoneyResponse(
+    @SerializedName("msg") val msg: String? = null,
     @SerializedName("data") val requestMoneyResponseDetails: RequestMoneyResponseDetails
 ) : Serializable
 
@@ -68,15 +71,15 @@ data class TransactionHistoryResponse(
 ) : Serializable
 
 data class TransactionHistoryResponseDetails(
-    @SerializedName("id") var id: String?=null,
-    @SerializedName("requesterUaaId") var requesterUaaId: String?=null,
-    @SerializedName("cardId") var cardId: String?=null,
-    @SerializedName("bankTxnStatus") var bankTxnStatus: String?=null,
-    @SerializedName("txnTime") var txnTime: String?=null,
-    @SerializedName("destinationUserId") var destinationUserId: String?=null,
-    @SerializedName("destinationUserName") var destinationUserName: String?=null,
-    @SerializedName("txnAmount") var txnAmount: String?=null,
-    @SerializedName("isSender") var isSender: String?=null
+    @SerializedName("id") var id: String? = null,
+    @SerializedName("requesterUaaId") var requesterUaaId: String? = null,
+    @SerializedName("cardId") var cardId: String? = null,
+    @SerializedName("bankTxnStatus") var bankTxnStatus: String? = null,
+    @SerializedName("txnTime") var txnTime: String? = null,
+    @SerializedName("destinationUserId") var destinationUserId: String? = null,
+    @SerializedName("destinationUserName") var destinationUserName: String? = null,
+    @SerializedName("txnAmount") var txnAmount: String? = null,
+    @SerializedName("isSender") var isSender: String? = null
 ) : Serializable
 
 

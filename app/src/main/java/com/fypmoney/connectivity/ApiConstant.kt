@@ -8,7 +8,7 @@ object ApiConstant {
      const val GRANT_TYPE = "client_credentials"*/
     const val BASE_URL = "http://54.84.197.170:9300"
 
-    //  const val BASE_URL = "https://techservices.fyp-e.in"
+    //const val BASE_URL = "https://techservices.fyp-e.in"
     const val PAYU_BASE_URL = "https://info.payu.in"
     const val CLIENT_ID = "web_app"
     const val CLIENT_SECRET = "user"
@@ -55,6 +55,8 @@ object ApiConstant {
     const val API_LOGOUT = "/auth/logout"
     const val API_UPDATE_CARD_LIMIT = "/services/PockketService/api/wallet-balances"
     const val API_GET_BANK_PROFILE = "/services/PockketService/api/getBankProfile"
+    const val API_QR_CODE_SCANNER = "/services/PockketService/api/spend/bharat-qr"
+    const val API_UPLOAD_PROFILE_PIC = "/services/authservice/api/upload/profile-pic"
 
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
 

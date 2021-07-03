@@ -101,6 +101,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
+            android:visibility="gone"
             android:text="@string/add_new_card_save_option" />
 
         <ProgressBar

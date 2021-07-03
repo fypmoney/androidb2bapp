@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:id="@+id/scan"
+                android:onClick="@{()->viewModel.onQrCodeClicked()}"
                 android:visibility="@{viewModel.isScanVisible?View.VISIBLE:View.GONE}"
                 app:srcCompat="@drawable/ic_scan" />
 

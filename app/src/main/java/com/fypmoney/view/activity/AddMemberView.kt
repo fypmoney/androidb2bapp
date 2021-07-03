@@ -1,5 +1,6 @@
 package com.fypmoney.view.activity
 
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -19,6 +20,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.CountryCodeArrayAdapter
+import com.fypmoney.view.fragment.InviteBottomSheet
 import com.fypmoney.view.fragment.InviteMemberBottomSheet
 import com.fypmoney.view.fragment.StayTunedBottomSheet
 import com.fypmoney.viewmodel.AddMemberViewModel
@@ -29,7 +31,7 @@ import kotlinx.android.synthetic.main.view_login.*
 * This class is used as Add member Screen
 * */
 class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
-    DialogUtils.OnAlertDialogClickListener {
+    DialogUtils.OnAlertDialogClickListener,InviteBottomSheet.OnShareClickListener ,InviteMemberBottomSheet.OnInviteButtonClickListener{
     private lateinit var mViewModel: AddMemberViewModel
     private lateinit var mViewBinding: ViewAddMemberBinding
 
@@ -162,6 +164,7 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
     }
 
     override fun onPositiveButtonClick(uniqueIdentifier: String) {
+       // callInviteBottomSheet()
         inviteUser()
     }
 
@@ -199,8 +202,26 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
 * */
     private fun callInviteMemberBottomSheet(type:String) {
         val bottomSheet =
-            InviteMemberBottomSheet(type)
+            InviteMemberBottomSheet(type,onInviteButtonClickListener = this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "InviteMemberView")
+    }
+
+    /*
+* This method is used to call leave member
+* */
+    private fun callInviteBottomSheet() {
+        val bottomSheet =
+            InviteBottomSheet(getSystemService(CLIPBOARD_SERVICE) as ClipboardManager,this)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "InviteView")
+    }
+
+    override fun onShareClickListener(referralCode: String) {
+        inviteUser()
+    }
+
+    override fun onInviteButtonClick() {
+        callInviteBottomSheet()
     }
 }

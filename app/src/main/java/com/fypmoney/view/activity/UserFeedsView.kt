@@ -172,9 +172,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
         super.onPause()
     }
 
-
-
-      override fun onTryAgainClicked() {
+    override fun onTryAgainClicked() {
           shimmerLayout.startShimmerAnimation()
           mViewModel.isRecyclerviewVisible.set(false)
           mViewModel.callFetchFeedsApi(
