@@ -186,12 +186,12 @@ class ImagePickerView : AppCompatActivity() {
     }
 
     private fun getCacheImagePath(fileName: String?): Uri {
-        val path: File = File(getExternalCacheDir(), "camera")
+        val path: File = File(externalCacheDir, "camera")
         if (!path.exists()) path.mkdirs()
         val image = File(path, fileName)
         return getUriForFile(
             this@ImagePickerView,
-            getPackageName().toString() + ".provider",
+            packageName.toString() + ".provider",
             image
         )
     }

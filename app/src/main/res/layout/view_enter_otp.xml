@@ -90,6 +90,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/otp"
+                    app:OtpItemWidth="60dp"
+                    app:OtpItemHeight="60dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="@dimen/margin"
@@ -99,8 +101,8 @@
                     android:cursorVisible="true"
                     android:focusable="false"
                     android:itemBackground="@drawable/otp_background"
-                    app:OtpItemCount="6"
-                    app:OtpItemSpacing="@dimen/_15sdp"
+                    app:OtpItemCount="4"
+                    app:OtpItemSpacing="30dp"
                     app:OtpViewType="none" />
 
                 <androidx.appcompat.widget.AppCompatTextView

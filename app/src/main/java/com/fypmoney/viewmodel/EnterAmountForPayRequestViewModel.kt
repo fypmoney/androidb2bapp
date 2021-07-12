@@ -30,7 +30,8 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
     var buttonText = ObservableField(application.getString(R.string.request_btn_text))
     var onApiResponse = MutableLiveData<String>()
     var sendMoneyApiResponse = ObservableField<SendMoneyResponse>()
-    var qrCodeValue = ObservableField<String>()
+    private var qrCodeValue = ObservableField<String>()
+    var isCircularImageVisible = ObservableField(false)
 
     /*
       * This method is used to handle on click of pay or request button
@@ -65,6 +66,15 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
             action.set(actionValue)
             qrCodeValue.set(qrCode)
             contactResult.set(contactEntity)
+
+            if (contactResult.get()?.profilePicResourceId.isNullOrEmpty()) {
+                isCircularImageVisible.set(false)
+            }
+            else
+            {
+                isCircularImageVisible.set(true)
+
+            }
             if (action.get() == AppConstants.PAY || action.get() == AppConstants.PAY_USING_QR) {
                 buttonText.set(PockketApplication.instance.getString(R.string.pay_btn_text))
             }

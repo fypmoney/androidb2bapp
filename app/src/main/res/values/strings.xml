@@ -643,6 +643,17 @@
     <string name="toast_image_intent_null">Image picker option is missing!</string>
 
 
+    <!--
+     Walk through
+     -->
+
+    <string name="walk_through_one_heading">Flaunt your \n Fyp Card</string>
+    <string name="walk_through_two_heading">Get Exciting \n Rewards</string>
+    <string name="walk_through_three_heading">Superfast \n Onboarding</string>
+    <string name="walk_through_one_text1">Coolest card for the coolest generation \n \n  We’re brewing something that’s out of the world🌍</string>
+    <string name="walk_through_two_text1">We love spoiling you🤑 \n \n Earn rewards with every transactions</string>
+    <string name="walk_through_three_text1">Fyp is superfast🚀 \n \n Complete your onboarding in less than a minute</string>
+
 
 
 </resources>

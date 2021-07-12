@@ -25,6 +25,7 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
     var dob = ObservableField<String>()
     var phone = ObservableField<String>()
     var buildVersion = ObservableField<String>()
+    var profilePic = ObservableField<String>()
     var onLogoutSuccess = MutableLiveData<Boolean>()
     var onProfileClicked = MutableLiveData<Boolean>()
 
@@ -72,6 +73,11 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
         when (purpose) {
             ApiConstant.API_UPLOAD_PROFILE_PIC -> {
                 if (responseData is ProfileImageUploadResponse) {
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_PROFILE_IMAGE,
+                        responseData.profileImageUploadResponseDetails?.accessUrl
+                    )
                 }
             }
         }

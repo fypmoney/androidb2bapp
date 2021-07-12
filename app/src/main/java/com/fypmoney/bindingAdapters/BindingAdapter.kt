@@ -17,7 +17,9 @@ import com.bumptech.glide.request.target.SizeReadyCallback
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.google.android.material.card.MaterialCardView
+import de.hdodenhof.circleimageview.CircleImageView
 
 
 /*
@@ -47,6 +49,22 @@ class BindingAdapter {
             }
 
 
+        }
+
+
+        @BindingAdapter("IMAGE")
+        @JvmStatic
+        fun setImage(imageView: AppCompatImageView, imageUrl: String?) {
+            imageUrl?.let {
+                Utility.setImageUsingGlide(PockketApplication.instance, imageUrl, imageView)
+            }
+        }
+        @BindingAdapter("CIRCULARIMAGE")
+        @JvmStatic
+        fun setImage(imageView: CircleImageView, imageUrl: String?) {
+            imageUrl?.let {
+                Utility.setImageUsingGlide(PockketApplication.instance, imageUrl, imageView)
+            }
         }
 
         @BindingAdapter("setWebViewClient")
@@ -100,8 +118,8 @@ class BindingAdapter {
         @JvmStatic
         fun setLayoutAlignment(view: RelativeLayout, isSender: String) {
             try {
-                when(isSender) {
-                    AppConstants.YES-> {
+                when (isSender) {
+                    AppConstants.YES -> {
                         val textViewLayoutParams = RelativeLayout.LayoutParams(
                             500,
                             RelativeLayout.LayoutParams.WRAP_CONTENT

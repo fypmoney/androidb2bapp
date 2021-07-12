@@ -27,6 +27,7 @@ data class ContactResponse(
 
 data class ContactResponseDetails(
     @SerializedName("userId") var userId: String?,
+    @SerializedName("profilePicResourceId") var profilePicResourceId: String?,
     @SerializedName("userPhoneContact") var userPhoneContact: ArrayList<UserPhoneContact>?
 ) : Serializable
 
@@ -35,4 +36,5 @@ data class UserPhoneContact(
     @SerializedName("contactNumber") var contactNumber: String?,
     @SerializedName("phoneBookIdentifier") var phoneBookIdentifier: String?,
     @SerializedName("isAppUser") var isAppUser: Boolean?,
-) : Serializable
+    @SerializedName("profilePicResourceId") var profilePicResourceId: String?
+    ) : Serializable

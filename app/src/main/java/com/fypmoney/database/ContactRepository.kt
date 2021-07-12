@@ -51,8 +51,8 @@ class ContactRepository(mDB: AppDatabase?) {
      */
     fun insertAllContacts(contactList: List<ContactEntity>) {
         runBlocking {
-          appDB?.contactDao()?.insertAllContacts(contactList)
-        //  Log.d("contacts","insertAllContacts")
+            appDB?.contactDao()?.insertAllContacts(contactList)
+            //  Log.d("contacts","insertAllContacts")
         }
     }
 
@@ -117,7 +117,8 @@ class ContactRepository(mDB: AppDatabase?) {
                     appDB?.contactDao()
                         ?.updateIsAppUserStatus(
                             isAppUser = true,
-                            contactNum = userPhoneContact.contactNumber
+                            contactNum = userPhoneContact.contactNumber,
+                            profilePicUrl = userPhoneContact.profilePicResourceId
                         )
 
                 }

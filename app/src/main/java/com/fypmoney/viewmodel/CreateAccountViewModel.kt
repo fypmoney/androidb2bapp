@@ -120,6 +120,12 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
                         SharedPrefUtils.SF_KEY_USER_LAST_NAME,
                         responseData.customerInfoResponseDetails?.lastName
                     )
+
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_PROFILE_IMAGE,
+                        responseData.customerInfoResponseDetails?.profilePicResourceId
+                    )
                     SharedPrefUtils.putString(
                         getApplication(),
                         SharedPrefUtils.SF_KEY_USER_DOB, dobForServer.value?.trim()
@@ -127,7 +133,8 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
 
                     SharedPrefUtils.putString(
                         getApplication(),
-                        SharedPrefUtils.SF_KEY_USER_EMAIL, responseData.customerInfoResponseDetails?.email
+                        SharedPrefUtils.SF_KEY_USER_EMAIL,
+                        responseData.customerInfoResponseDetails?.email
                     )
 
                     // again update the saved data in preference

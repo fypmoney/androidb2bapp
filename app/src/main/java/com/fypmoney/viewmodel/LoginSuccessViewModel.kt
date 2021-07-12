@@ -63,6 +63,11 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                     )
                     SharedPrefUtils.putString(
                         getApplication(),
+                        SharedPrefUtils.SF_KEY_PROFILE_IMAGE,
+                        responseData.customerInfoResponseDetails?.profilePicResourceId
+                    )
+                    SharedPrefUtils.putString(
+                        getApplication(),
                         SharedPrefUtils.SF_KEY_USER_LAST_NAME,
                         responseData.customerInfoResponseDetails?.lastName
                     )

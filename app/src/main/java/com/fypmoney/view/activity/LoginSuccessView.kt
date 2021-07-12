@@ -3,6 +3,7 @@ package com.fypmoney.view.activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -10,6 +11,9 @@ import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.LoginSuccessViewModel
+import kotlinx.android.synthetic.main.view_login_success.*
+import kotlinx.android.synthetic.main.view_walk_through_one.*
+import kotlinx.android.synthetic.main.view_walk_through_one.imageView
 
 /*
 * This class is used for show login success message
@@ -33,6 +37,8 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
+        Glide.with(applicationContext).load(R.raw.phone_verified).into(image)
+
     }
 
     /**

@@ -71,8 +71,6 @@ class AddMemberScreen : BaseFragment<ViewAddMemberBinding, AddMemberViewModel>()
         }*/
 
           setObserver()
-        setCountryCodeAdapter(requireContext(), mViewBinding.spCountryCode)
-        spCountryCode.isEnabled=false
 
     }
 

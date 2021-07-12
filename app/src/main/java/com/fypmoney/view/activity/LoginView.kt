@@ -92,8 +92,6 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
         mViewBinding.activity = this
         mViewBinding.viewModel = mViewModel
         setObservers()
-        setCountryCodeAdapter(applicationContext, mViewBinding.spCountryCode)
-        spCountryCode.isEnabled = false
 
     }
 
@@ -115,36 +113,6 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
             e.printStackTrace()
         }
     }
-
-    private fun setCountryCodeAdapter(context: Context, spCountryCode: AppCompatSpinner) {
-        val adapterCountryCode = CountryCodeArrayAdapter(
-            context,
-            R.layout.spinner_item,
-            AppConstants.countryCodeList
-        )
-        with(spCountryCode) {
-            this.adapter = adapterCountryCode
-            setSelection(0, true)
-            onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-
-                    setMobileLength(position)
-                }
-
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                }
-
-            }
-        }
-
-        setMobileLength(spCountryCode.selectedItemPosition)
-    }
-
     /**
      * Method to navigate to the different activity
      */
@@ -238,7 +206,7 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
         val intent = Intent(this, EnterOtpView::class.java)
         intent.putExtra(
             AppConstants.MOBILE_TYPE,
-            mViewModel.selectedCountryCode.get() + mViewModel.mobile.value
+            "91"+ mViewModel.mobile.value
         )
         intent.putExtra(
             AppConstants.FROM_WHICH_SCREEN, AppConstants.LOGIN_SCREEN

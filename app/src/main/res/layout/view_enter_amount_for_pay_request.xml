@@ -36,23 +36,43 @@
                 android:layout_marginStart="@dimen/screenMarginLeft"
                 android:layout_marginEnd="@dimen/screenMarginRight">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivServiceLogo"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="62dp"
-                    android:background="@drawable/curved_background14"
-                    android:padding="12dp"
-                    app:srcCompat="@drawable/ic_user" />
+                    android:layout_marginTop="62dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivServiceLogo"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="@drawable/curved_background14"
+                        android:padding="12dp"
+                        android:visibility="@{viewModel.isCircularImageVisible?View.VISIBLE:View.GONE,default=gone}"
+                        app:CIRCULARIMAGE="@{viewModel.contactResult.profilePicResourceId}" />
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivServiceLogo1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/curved_background14"
+                        android:padding="12dp"
+                        android:visibility="@{viewModel.isCircularImageVisible?View.GONE:View.VISIBLE}"
+                        app:srcCompat="@drawable/ic_user" />
+                </LinearLayout>
+
+
+
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/flagIdentifier"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/ivServiceLogo"
+                    android:layout_alignTop="@+id/linearLayout"
                     android:layout_marginStart="-20dp"
-                    android:layout_toEndOf="@+id/ivServiceLogo"
+                    android:layout_toEndOf="@+id/linearLayout"
                     app:srcCompat="@drawable/ic_fyper_cap"
 
                     />
@@ -61,7 +81,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/contactName"
                     style="@style/TextviewRegular"
-                    android:layout_below="@+id/ivServiceLogo"
+                    android:layout_below="@+id/linearLayout"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="17dp"
                     android:text="@{viewModel.contactName}"

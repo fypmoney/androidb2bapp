@@ -19,10 +19,12 @@ data class ContactEntity(
     var contactNumber: String? = null,
     @ColumnInfo(name = "phoneBookIdentifier")
     var phoneBookIdentifier: String? = null,
+    @ColumnInfo(name = "profilePicResourceId")
+    var profilePicResourceId: String? = null,
     @ColumnInfo(name = "isSync")
     var isSync: Boolean? = false,
     @ColumnInfo(name = "isAppUser")
     var isAppUser: Boolean? = false,
     @ColumnInfo(name = "isSelected")
-    var isSelected: Boolean? = false,
+    var isSelected: Boolean? = false
     ): Parcelable

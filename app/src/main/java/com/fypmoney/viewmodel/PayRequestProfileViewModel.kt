@@ -11,6 +11,7 @@ class PayRequestProfileViewModel(application: Application) : BaseViewModel(appli
     var contactName = ObservableField<String>()
     var contactResult = ObservableField(ContactEntity())
     var onPayOrRequestClicked = MutableLiveData<View>()
+    var isCircularImageVisible = ObservableField(false)
 
     /*
        * This is used to set selected response
@@ -19,6 +20,15 @@ class PayRequestProfileViewModel(application: Application) : BaseViewModel(appli
         try {
             if (contactEntity?.contactNumber != null) {
                 contactResult.set(contactEntity)
+                if (contactResult.get()?.profilePicResourceId.isNullOrEmpty()) {
+                    isCircularImageVisible.set(false)
+                }
+                else
+                {
+                    isCircularImageVisible.set(true)
+
+                }
+
                 if (contactResult.get()?.lastName.isNullOrEmpty()) {
                     contactName.set(contactEntity.firstName)
                 } else {

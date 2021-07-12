@@ -79,6 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/debit_card_text"
                     android:layout_marginTop="20dp"
+                    android:visibility="gone"
                     android:orientation="vertical">
 
                     <ProgressBar

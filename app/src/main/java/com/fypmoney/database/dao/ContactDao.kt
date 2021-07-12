@@ -20,10 +20,11 @@ abstract class ContactDao : BaseDao<ContactEntity>("contact_entity") {
     )
 
     // update contact is App user Status
-    @Query("UPDATE contact_entity  set isAppUser = :isAppUser WHERE contactNumber = :contactNum")
+    @Query("UPDATE contact_entity  set isAppUser = :isAppUser,profilePicResourceId= :profilePicUrl WHERE contactNumber = :contactNum")
     abstract suspend fun updateIsAppUserStatus(
-        contactNum: String?, isAppUser: Boolean
+        contactNum: String?, isAppUser: Boolean, profilePicUrl: String?
     )
+
     // fetch all contact and return as a list of entity
     @Query("SELECT * FROM contact_entity ORDER BY isAppUser DESC")
     abstract suspend fun getAllContacts(): List<ContactEntity>

@@ -2,11 +2,13 @@ package com.fypmoney.view.adapter
 
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ContactRowItemBinding
+import com.fypmoney.util.Utility
 import com.fypmoney.viewhelper.ContactViewHelper
 import com.fypmoney.viewmodel.ContactViewModel
 
@@ -47,6 +49,20 @@ class ContactAdapter(var viewModel: ContactViewModel) :
                 contactList?.get(position), viewModel
             )
             mRowItemBinding!!.viewHelper = mViewHelper
+            if (contactList?.get(position)?.profilePicResourceId.isNullOrEmpty()) {
+                mRowItemBinding.ivServiceLogo.visibility = View.GONE
+                mRowItemBinding.ivServiceLogo1.visibility = View.VISIBLE
+            }
+            else
+            {
+                mRowItemBinding.ivServiceLogo.visibility = View.VISIBLE
+                mRowItemBinding.ivServiceLogo1.visibility = View.GONE
+
+            }
+            Utility.setImageUsingGlide(
+                url = contactList?.get(position)?.profilePicResourceId,
+                imageView = mRowItemBinding.ivServiceLogo
+            )
             mViewHelper.init()
             mRowItemBinding.executePendingBindings()
 

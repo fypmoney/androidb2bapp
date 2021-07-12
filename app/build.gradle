@@ -166,6 +166,10 @@ dependencies {
     // for cropping image
     implementation 'com.github.yalantis:ucrop:2.2.6'
 
+    //circular imageview
+
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
 
 }
 apollo {

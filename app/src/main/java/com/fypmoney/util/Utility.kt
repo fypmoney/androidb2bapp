@@ -17,11 +17,13 @@ import android.text.InputFilter.LengthFilter
 import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.util.Patterns
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
+import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.database.ContactRepository
@@ -149,7 +151,8 @@ object Utility {
     * This method is used to show toast message
     * */
     fun showToast(message: String?) {
-        Toast.makeText(PockketApplication.instance, message, Toast.LENGTH_LONG).show()
+        if (!message.isNullOrEmpty())
+            Toast.makeText(PockketApplication.instance, message, Toast.LENGTH_LONG).show()
     }
 
 
@@ -395,8 +398,6 @@ object Utility {
                         )
 
                     }
-
-
                     // Loop through the contacts
                     while (contacts?.moveToNext()!!) {
                         val contactEntity = ContactEntity()
@@ -767,6 +768,26 @@ object Utility {
             compareDate = sdf.parse(toDate).after(sdf.parse(fromDate))
         }
         return compareDate
+    }
+
+    /*
+     * This method is used to set image using glide
+     * */
+    fun setImageUsingGlide(
+        context: Context? = PockketApplication.instance,
+        url: String?,
+        imageView: ImageView
+    ) {
+        url.let {
+            if (!url.isNullOrEmpty()) {
+                Glide.with(context!!).load(url).placeholder(R.drawable.ic_user)
+                    .into(imageView)
+            }
+            else {
+                imageView.setImageResource(R.drawable.ic_user)
+
+            }
+        }
     }
 
 }

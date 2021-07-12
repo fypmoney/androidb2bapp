@@ -47,6 +47,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var isSavedCardProgressVisible = ObservableField(true)
     var getVerifyVPAHash = ObservableField<String>()
     var onAddInSaveCardClicked = MutableLiveData<AddNewCardDetails>()
+    var onBackPress = MutableLiveData<Boolean>()
     var isPaymentFail = ObservableField(false)
 
 

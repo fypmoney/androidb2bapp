@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -73,35 +72,6 @@ class QrCodeScannerView : BaseActivity<ViewQrCodeScannerBinding, QrCodeScannerVi
         }
     }
 
-
-    /*   //Getting the scan results
-       override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-           super.onActivityResult(requestCode, resultCode, data)
-           *//*   val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-           if (result != null) {
-               //if qrcode has nothing in it
-               if (result.contents == null) {
-                   Toast.makeText(this, "Result Not Found", Toast.LENGTH_LONG).show()
-               } else {
-                   //if qr contains data
-                   try {
-                       //converting the data to json
-                       val obj = JSONObject(result.contents)
-                       //setting values to textviews
-                    } catch (e: JSONException) {
-                       e.printStackTrace()
-                       //if control comes here
-                       //that means the encoded format not matches
-                       //in this case you can display whatever data is available on the qrcode
-                       //to a toast
-                       Toast.makeText(this, result.contents, Toast.LENGTH_LONG).show()
-                   }
-               }
-           } else {
-               super.onActivityResult(requestCode, resultCode, data)
-           *//*
-    }*/
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
@@ -110,12 +80,11 @@ class QrCodeScannerView : BaseActivity<ViewQrCodeScannerBinding, QrCodeScannerVi
                 Utility.showToast(getString(R.string.qr_scan_issue))
                 finish()
             } else {
-                Log.d("sjfneji", result.contents)
                 intentToActivity(
                     contactEntity = ContactEntity(),
                     aClass = EnterAmountForPayRequestView::class.java,
                     AppConstants.PAY_USING_QR,
-                    result.contents
+                    parseQrCode(result.contents).toString()
                 )
             }
         }
@@ -181,6 +150,26 @@ class QrCodeScannerView : BaseActivity<ViewQrCodeScannerBinding, QrCodeScannerVi
         intent.putExtra(AppConstants.FUND_TRANSFER_QR_CODE, qrCode)
         startActivity(intent)
         finish()
+    }
+
+    fun parseQrCode(qrValue: String?): String? {
+        val hashMap = HashMap<String, String>()
+        var lenConsumed = 0
+        try {
+            while (lenConsumed < qrValue!!.length) {
+                val tag = qrValue.substring(lenConsumed, lenConsumed + 2)
+                lenConsumed += 2
+                val dataLength = qrValue.substring(lenConsumed, lenConsumed + 2)
+                val dataLenValue: Int = dataLength.toInt()
+                lenConsumed += 2
+                val tagValue = qrValue.substring(lenConsumed, lenConsumed + dataLenValue)
+                lenConsumed += dataLenValue
+                hashMap[tag] = tagValue
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return hashMap["59"]
     }
 
 

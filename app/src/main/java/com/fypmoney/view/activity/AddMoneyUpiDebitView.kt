@@ -57,7 +57,7 @@ import kotlinx.android.synthetic.main.view_add_money_upi_debit.*
 /*
 * This class is used to handle school name city
 * */
-class AddMoneyUpiDebitView :
+open class AddMoneyUpiDebitView :
     BaseActivity<ViewAddMoneyUpiDebitBinding, AddMoneyUpiDebitViewModel>(),
     AddNewCardBottomSheet.OnAddNewCardClickListener,
     PaymentRelatedDetailsListener, ValueAddedServiceApiListener,
@@ -158,6 +158,13 @@ class AddMoneyUpiDebitView :
                 mViewModel.onAddNewCardClicked.value = false
             }
         }
+
+        mViewModel.onAddNewCardClicked.observe(this) {
+            if (it) {
+                callAddNewCardBottomSheet()
+                mViewModel.onAddNewCardClicked.value = false
+            }
+        }
         mViewModel.callGetCardsApi.observe(this) {
             if (it) {
                 callPayUApi(
@@ -189,7 +196,10 @@ class AddMoneyUpiDebitView :
             callDebitCardPaymentGateway(1, it)
 
         }
-
+        mViewModel.onBackPress.observe(this) {
+            Utility.showToast("on back is pressedddd")
+           // callTransactionFailBottomSheet()
+        }
     }
 
 
@@ -385,6 +395,7 @@ class AddMoneyUpiDebitView :
              * @param alertDialogBuilder a reference of AlertDialog.Builder to customize the dialog
              */
             override fun onBackButton(alertDialogBuilder: AlertDialog.Builder) {
+                mViewModel.onBackPress.value = true
                 super.onBackButton(alertDialogBuilder)
             }
 
@@ -559,8 +570,13 @@ This method is used to call the pay u api
 
     private fun showToolBarView(): View {
         val view = layoutInflater.inflate(R.layout.toolbar_for_gateway, null)
-        val toolbar=view.findViewById<Toolbar>(R.id.toolbar)
-        toolbar.setBackgroundColor(ContextCompat.getColor(applicationContext,R.color.color_dark_green))
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        toolbar.setBackgroundColor(
+            ContextCompat.getColor(
+                applicationContext,
+                R.color.color_dark_green
+            )
+        )
         return view
 
     }

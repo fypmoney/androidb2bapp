@@ -58,14 +58,13 @@ interface ApiInterface {
      * @return return response
      * @description Call POST type's web API
      */
-    @Headers("Accept: multipart/form-data")
     @Multipart
     @POST
     fun postImageOnServer(
         @Header("client_id") client_id: String?,
         @Header("appId") appId: String?,
         @Header("Authorization") authorization: String?,
-        @Url endPoint: String, @Part image: MultipartBody.Part? = null
+        @Url endPoint: String, @Part file: MultipartBody.Part? = null
     ): Observable<ResponseBody>
 
     @Headers("Accept: application/json")

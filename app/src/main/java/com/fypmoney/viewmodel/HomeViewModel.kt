@@ -14,6 +14,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.ContactRepository
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 
 /*
@@ -122,10 +123,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                     isProgressBar = false
                 )
             )
-        } else {
-
         }
-
 
     }
 
@@ -173,8 +171,12 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         when (purpose) {
             ApiConstant.API_SNC_CONTACTS -> {
                 if (responseData is ContactResponse) {
-
                     // it update the sync status of the contacts which are synced to server and also update the is app user status based on server response
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_PROFILE_IMAGE,
+                        responseData.contactResponseDetails?.profilePicResourceId
+                    )
                     contactRepository.updateIsSyncAndIsAppUserStatus(responseData.contactResponseDetails?.userPhoneContact)
                 }
             }

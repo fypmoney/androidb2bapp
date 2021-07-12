@@ -58,9 +58,7 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
             toolbarTitle = getString(R.string.add_member_heading)
         )
         setObserver()
-        setCountryCodeAdapter(applicationContext, mViewBinding.spCountryCode)
-        spCountryCode.isEnabled=false
-       mViewModel.setResponseAfterContactSelected(intent.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE))
+        mViewModel.setResponseAfterContactSelected(intent.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE))
 
     }
 

@@ -2,6 +2,7 @@ package com.fypmoney.viewhelper
 
 import android.util.Log
 import androidx.databinding.ObservableField
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.ContactListViewModel
@@ -32,6 +33,7 @@ class ContactListViewHelper(
 
         }
         isApiError.set(viewModel.isApiError.get())
+
     }
 
     /*
@@ -51,7 +53,7 @@ class ContactListViewHelper(
                 }
             }
             true -> {
-               viewModel.callIsAppUserApi()
+                viewModel.callIsAppUserApi()
 
             }
         }
@@ -83,7 +85,6 @@ class ContactListViewHelper(
     * */
     fun onIsAppUserClicked() {
         viewModel.onInviteClicked.value = true
-
     }
 
 }

@@ -55,7 +55,6 @@ class PayRequestProfileView :
         val myProfileAdapter = MyProfileListAdapter(applicationContext, this)
         list.adapter = myProfileAdapter
 
-
         myProfileAdapter.setList(
             iconList1 = drawableIds,
             textString

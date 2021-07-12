@@ -54,7 +54,7 @@ object AppConstants {
     const val YES = "YES"
     const val NO = "NO"
     const val CUSTOMER_INFO_RESPONSE = "customer_info_response"
-    const val SPLASH_TIME = 500L
+    const val SPLASH_TIME = 4000L
     const val FROM_WHICH_SCREEN = "from_which_screen"
     const val AMOUNT = "Amount"
     const val REMARKS = "Remarks"

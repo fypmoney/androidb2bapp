@@ -75,7 +75,9 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
 
         when (mViewModel.fromWhichScreen.get()) {
             AppConstants.AADHAAR_VERIFICATION -> {
-                //
+                otpView.itemSpacing = 15
+                otpView.itemCount = 6
+
                 val ss = SpannableString(mViewModel.mobile.value)
                 val clickableSpan: ClickableSpan = object : ClickableSpan() {
                     override fun onClick(textView: View) {
@@ -100,6 +102,13 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
+
+
+            }
+
+            AppConstants.KYC_MOBILE_VERIFICATION -> {
+                otpView.itemSpacing = 15
+                otpView.itemCount = 6
 
 
             }
@@ -154,7 +163,10 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
             if (it) {
                 when (mViewModel.fromWhichScreen.get()) {
                     AppConstants.AADHAAR_VERIFICATION -> {
-                        intentToActivity(ActivationSuccessWithAadhaarView::class.java,isFinish = true)
+                        intentToActivity(
+                            ActivationSuccessWithAadhaarView::class.java,
+                            isFinish = true
+                        )
 
 
                     }

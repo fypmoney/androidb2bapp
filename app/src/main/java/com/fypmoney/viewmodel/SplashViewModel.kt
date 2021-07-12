@@ -78,6 +78,12 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE,
                         value = responseData.customerInfoResponseDetails?.mobile
                     )
+
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_PROFILE_IMAGE,
+                        responseData.customerInfoResponseDetails?.profilePicResourceId
+                    )
                     val interestList = ArrayList<String>()
                     if (responseData.customerInfoResponseDetails?.userInterests?.isNullOrEmpty() == false) {
                         responseData.customerInfoResponseDetails?.userInterests!!.forEach {
@@ -104,7 +110,6 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
     }
-
 
 
 }

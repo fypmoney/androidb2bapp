@@ -1,9 +1,11 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.MediaController
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -13,12 +15,14 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SplashViewModel
+import kotlinx.android.synthetic.main.view_splash.*
 
 /*
 * This class is used for show app logo and check user logged in or not
 * */
 class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     private lateinit var mViewModel: SplashViewModel
+    private var mediaControl: MediaController? = null
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -36,6 +40,13 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
+        val uri: Uri =
+            Uri.parse("android.resource://" + packageName + "/" + R.raw.splash)
+        mediaControl = MediaController(this)
+        video.setMediaController(mediaControl)
+        video.setVideoURI(uri)
+        video.start()
+
     }
 
     /**
@@ -57,21 +68,12 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     * navigate to the login screen
     * */
     private fun goToLoginScreen() {
-        val intent = Intent(this, FirstScreenView::class.java)
+        val intent = Intent(this, WalkThroughMainView::class.java)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "")
         startActivity(intent)
         finish()
     }
 
-    /*
-
-   * navigate to the HomeScreen
-   * */
-    private fun goToDashboardScreen() {
-        val intent = Intent(this@SplashView, HomeView::class.java)
-        startActivity(intent)
-        finish()
-    }
 
     /**
      * Method to navigate to the different activity
@@ -97,7 +99,6 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                     )!!
                 ) {
                     when {
-
                         Utility.getCustomerDataFromPreference()!!.isProfileCompleted == AppConstants.NO -> {
                             when (Utility.getCustomerDataFromPreference()!!.isReferralAllowed) {
                                 AppConstants.YES -> {
@@ -110,7 +111,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                             }
                         }
                         Utility.getCustomerDataFromPreference()!!.bankProfile?.isAccountActive == AppConstants.NO -> {
-                            intentToActivity(AadhaarAccountActivationView::class.java)
+                            intentToActivity(HomeView::class.java)
                         }
                         else -> {
                             intentToActivity(HomeView::class.java)
@@ -133,7 +134,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
 
                 when (intent.getStringExtra(AppConstants.NOTIFICATION_KEY_TYPE)) {
                     AppConstants.TYPE_APP_SLIDER_NOTIFICATION -> {
-                        val intent = Intent(applicationContext, HomeView::class.java)
+                        val intent = Intent(applicationContext, SplashView::class.java)
                         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.NOTIFICATION)
                         intent.putExtra(
                             AppConstants.NOTIFICATION_APRID,
@@ -154,7 +155,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                             )
                         } catch (e: Exception) {
                             e.printStackTrace()
-                            intentToActivity(HomeView::class.java)
+                            intentToActivity(SplashView::class.java)
                         }
 
                     }
@@ -162,7 +163,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
 
             }
         }
-        return Intent(applicationContext, HomeView::class.java)
+        return Intent(applicationContext, SplashView::class.java)
     }
 
 
