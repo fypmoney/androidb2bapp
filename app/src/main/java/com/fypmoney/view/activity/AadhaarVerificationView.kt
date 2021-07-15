@@ -76,6 +76,10 @@ class AadhaarVerificationView :
             AppConstants.KYC_ACTIVATION_TOKEN, token
 
         )
+        intent.putExtra(
+            AppConstants.KIT_FOUR_DIGIT,""
+
+        )
         startActivity(intent)
     }
 

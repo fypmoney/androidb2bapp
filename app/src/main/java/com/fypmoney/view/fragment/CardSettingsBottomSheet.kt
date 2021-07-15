@@ -16,7 +16,6 @@ import com.fypmoney.databinding.BottomSheetCardSettingsBinding
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.screen_card.*
 
 
 /*
@@ -54,10 +53,12 @@ class CardSettingsBottomSheet(var onCardSettingsClickListener: OnCardSettingsCli
         textString.add(PockketApplication.instance.getString(R.string.card_settings_block))
         textString.add(PockketApplication.instance.getString(R.string.card_settings_limit))
         textString.add(PockketApplication.instance.getString(R.string.card_settings_channels))
+        textString.add(PockketApplication.instance.getString(R.string.card_settings_pin))
         val drawableIds = ArrayList<Int>()
 
         drawableIds.add(R.drawable.lock)
         drawableIds.add(R.drawable.order)
+        drawableIds.add(R.drawable.transaction)
         drawableIds.add(R.drawable.transaction)
 
         val myProfileAdapter = MyProfileListAdapter(

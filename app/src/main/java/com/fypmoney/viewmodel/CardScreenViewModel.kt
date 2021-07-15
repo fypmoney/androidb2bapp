@@ -13,6 +13,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import org.json.JSONObject
 
@@ -60,6 +61,35 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
+            )
+        )
+    }
+    /*
+      * This method is used to set or change pin
+      * */
+     fun callSetOrChangeApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_SET_CHANGE_PIN,
+                NetworkUtil.endURL(ApiConstant.API_SET_CHANGE_PIN+SharedPrefUtils.getString(getApplication(),SharedPrefUtils.SF_KEY_KIT_NUMBER)),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
+    /*
+     * This method is used to set or change pin
+     * */
+    fun callCAllPhysicalCardInitApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_PHYSICAL_CARD_INIT,
+                NetworkUtil.endURL(ApiConstant.API_PHYSICAL_CARD_INIT),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
             )
         )
     }

@@ -69,6 +69,8 @@ object AppConstants {
     const val CREATE_ACCOUNT_SUCCESS = "create_account_success"
     const val LOGIN_SCREEN = "login_screen"
     const val AADHAAR_VERIFICATION = "aadhaar_verification"
+    const val ACTIVATE_CARD = "activate_card"
+    const val KIT_FOUR_DIGIT = "kit_four_digit"
     const val KYC_MOBILE_VERIFICATION = "mobile_verification"
     const val CONTACT_SELECTED_RESPONSE = "contact_selected"
     const val NOTIFICATION_TYPE_ADD_TASK = "ADD_TASK"

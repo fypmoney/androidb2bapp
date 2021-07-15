@@ -59,6 +59,7 @@
     <string name="order_premium_card_btn_text">Order Premium Card</string>
     <string name="order_eco_friendly_card_btn_text">Order Eco-Friendly Card</string>
     <string name="place_order_btn_text">Place Order</string>
+    <string name="got_it_btn_text">Got it</string>
 
 
     <!--Login-->
@@ -710,5 +711,13 @@
     <string name="dummy_amt_item_packaging">\u20B9 20</string>
     <string name="dummy_amt_delivery_fee">\u20B9 40</string>
     <string name="dummy_amt_tax">\u20B9 5</string>
+
+    <!--
+    set or change pin
+    -->
+    <string name="set_or_change_pin">Set or change pin</string>
+    <string name="set_or_change_pin1">1:   Click on the \'Change PIN button below \'</string>
+    <string name="set_or_change_pin2">2:   You will receive an SMS with a link to change PIN. Click on that link </string>
+    <string name="set_or_change_pin3">3:   Enter your new PIN and click \'Okay \'. Your PIN has been changed.</string>
 
 </resources>

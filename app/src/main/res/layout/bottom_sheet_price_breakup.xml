@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <RelativeLayout
@@ -59,6 +60,7 @@
             android:background="@color/dividerColor" />
 
         <TableLayout
+            android:id="@+id/table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/view1"
@@ -68,11 +70,13 @@
             android:paddingRight="5dp">
 
 
-            <TableRow android:padding="5dp">
+            <TableRow android:padding="5dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     style="@style/TextviewRegular"
                     android:layout_weight="1"
+                    android:textColor="@color/text_color_dark"
                     android:text="@string/item_total" />
 
                 <TextView
@@ -85,11 +89,13 @@
 
             </TableRow>
 
-            <TableRow android:padding="5dp">
+            <TableRow android:padding="5dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     style="@style/TextviewRegular"
                     android:layout_weight="1"
+                    android:textColor="@color/text_color_dark"
                     android:text="@string/packaging" />
 
                 <TextView
@@ -102,11 +108,13 @@
 
             </TableRow>
 
-            <TableRow android:padding="5dp">
+            <TableRow android:padding="5dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     style="@style/TextviewRegular"
                     android:layout_weight="1"
+                    android:textColor="@color/text_color_dark"
                     android:text="@string/delivery_fee" />
 
                 <TextView
@@ -118,11 +126,13 @@
 
             </TableRow>
 
-            <TableRow android:padding="5dp">
+            <TableRow android:padding="5dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     style="@style/TextviewRegular"
                     android:layout_weight="1"
+                    android:textColor="@color/text_color_dark"
                     android:text="@string/tax" />
 
                 <TextView
@@ -134,5 +144,21 @@
 
             </TableRow>
         </TableLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/gotBtn"
+            style="@style/Widget.App.Button"
+            android:layout_width="299dp"
+            android:layout_height="52dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/curved_background1"
+            app:backgroundTint="@color/text_color_dark"
+            android:layout_marginBottom="@dimen/button_margin"
+            android:text="@string/got_it_btn_text"
+            android:textAllCaps="false"
+            android:layout_marginTop="28dp"
+            android:layout_below="@+id/table"
+            />
+
     </RelativeLayout>
 </layout>

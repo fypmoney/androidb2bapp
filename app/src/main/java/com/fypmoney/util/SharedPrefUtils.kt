@@ -28,6 +28,7 @@ class SharedPrefUtils {
         const val SF_KEY_USER_LAST_NAME ="last name"
         const val SF_KEY_USER_EMAIL ="email"
         const val SF_KEY_PROFILE_IMAGE ="imageurl"
+        const val SF_KEY_KIT_NUMBER ="kitNo"
         const val SF_KEY_USER_FAMILY_NAME ="family name"
         const val SF_KEY_USER_DOB = "dob"
         const val SF_KEY_SELECTED_RELATION = "relation"

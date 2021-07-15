@@ -217,6 +217,11 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
             mViewModel.mobile.value
         )
 
+        intent.putExtra(
+            AppConstants.KIT_FOUR_DIGIT, ""
+
+        )
+
         startActivity(intent)
     }
 

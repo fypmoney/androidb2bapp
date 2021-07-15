@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
@@ -48,12 +49,16 @@ class PriceBreakupBottomSheet(
             false
         )
 
+        bottomSheet.setContentView(bindingSheet.root)
 
         val amount = view.findViewById<TextView>(R.id.amount)!!
         val tax = view.findViewById<TextView>(R.id.tax)!!
         val deliveryFee = view.findViewById<TextView>(R.id.delivery_fee)!!
         val packaging = view.findViewById<TextView>(R.id.packaging)!!
         val itemTotal = view.findViewById<TextView>(R.id.item_total)!!
+        val gotBtn = view.findViewById<Button>(R.id.gotBtn)!!
+
+        gotBtn.setOnClickListener { dismiss() }
 
         amount.text = getString(R.string.Rs) + amountValue
         tax.text = getString(R.string.Rs) + productResponse?.taxAmount
@@ -62,7 +67,6 @@ class PriceBreakupBottomSheet(
         itemTotal.text =
             getString(R.string.Rs) + (amountValue?.toInt()!! - (productResponse?.taxAmount?.toInt()!! + productResponse.deleivceryCharge?.toInt()!! + productResponse.taxAmount.toInt()))
 
-        bottomSheet.setContentView(bindingSheet.root)
 
         return view
     }

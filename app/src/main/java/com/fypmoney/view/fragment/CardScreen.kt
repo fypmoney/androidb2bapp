@@ -26,6 +26,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.BankTransactionHistoryView
+import com.fypmoney.view.activity.EnterOtpView
 import com.fypmoney.view.activity.OrderCardView
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.viewmodel.CardScreenViewModel
@@ -41,7 +42,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     MyProfileListAdapter.OnListItemClickListener,
     CardSettingsBottomSheet.OnCardSettingsClickListener,
     SetSpendingLimitBottomSheet.OnSetSpendingLimitClickListener, CardSettingClickListener,
-    ManageChannelsBottomSheet.OnBottomSheetDismissListener {
+    ManageChannelsBottomSheet.OnBottomSheetDismissListener ,ActivateCardBottomSheet.OnActivateCardClickListener{
     private lateinit var mViewModel: CardScreenViewModel
     private lateinit var mViewBinding: ScreenCardBinding
     private var mSetRightOut: AnimatorSet? = null
@@ -187,6 +188,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             2 -> {
                 intentToActivity(BankTransactionHistoryView::class.java)
             }
+
         }
     }
 
@@ -203,6 +205,16 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             CardSettingsBottomSheet(this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "CardSettings")
+    }
+
+    /*
+   * This method is used to call set or change pin
+   * */
+    private fun callSetPinBottomSheet() {
+        val bottomSheet =
+            SetOrChangePinBottomSheet()
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "SetPin")
     }
 
     /*
@@ -259,6 +271,8 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             }
             3 -> {
                 callActivateCardSheet()
+             /*   mViewModel.callSetOrChangeApi()
+                callSetPinBottomSheet()*/
             }
         }
     }
@@ -309,5 +323,38 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     }
 
+    override fun onActivateCardClick(kitFourDigit: String?) {
+        mViewModel.callCAllPhysicalCardInitApi()
+        goToEnterOtpScreen(kitFourDigit)
+
+    }
+    /**
+     * Method to navigate to the Feeds screen after login
+     */
+    private fun goToEnterOtpScreen(kitFourDigit: String?) {
+        val intent = Intent(requireContext(), EnterOtpView::class.java)
+        intent.putExtra(
+            AppConstants.MOBILE_TYPE,
+            ""
+        )
+        intent.putExtra(
+            AppConstants.FROM_WHICH_SCREEN, AppConstants.ACTIVATE_CARD
+        )
+
+        intent.putExtra(
+            AppConstants.MOBILE_WITHOUT_COUNTRY_CODE,
+            ""
+        )
+
+        intent.putExtra(
+            AppConstants.KYC_ACTIVATION_TOKEN, ""
+
+        )
+        intent.putExtra(
+            AppConstants.KIT_FOUR_DIGIT, kitFourDigit
+
+        )
+        startActivity(intent)
+    }
 
 }

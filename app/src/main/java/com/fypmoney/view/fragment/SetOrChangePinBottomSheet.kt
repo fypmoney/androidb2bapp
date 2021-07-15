@@ -8,24 +8,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableField
 import com.fypmoney.R
-import com.fypmoney.databinding.BottomSheetActivateCardBinding
-import com.fypmoney.databinding.BottomSheetSetSpendingLimitBinding
+import com.fypmoney.databinding.BottomSheetSetOrChangePinBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.mukesh.OtpView
-import kotlinx.android.synthetic.main.view_enter_otp.*
 
 /*
-* This is used to show activate card
+* This is used to set the pin
 * */
-class ActivateCardBottomSheet(var onActivateCardClickListener: OnActivateCardClickListener) : BottomSheetDialogFragment() {
-
+class SetOrChangePinBottomSheet : BottomSheetDialogFragment() {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
-    var otp=ObservableField<String>()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
 
@@ -34,37 +27,23 @@ class ActivateCardBottomSheet(var onActivateCardClickListener: OnActivateCardCli
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(
-            R.layout.bottom_sheet_activate_card,
+            R.layout.bottom_sheet_set_or_change_pin,
             container,
             false
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
         val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetActivateCardBinding>(
+        val bindingSheet = DataBindingUtil.inflate<BottomSheetSetOrChangePinBinding>(
             layoutInflater,
-            R.layout.bottom_sheet_activate_card,
+            R.layout.bottom_sheet_set_or_change_pin,
             null,
             false
         )
         bottomSheet.setContentView(bindingSheet.root)
-
-
-        val btnOtp = view.findViewById<Button>(R.id.button_otp)!!
-        val otpView = view.findViewById<OtpView>(R.id.otpView)!!
-        btnOtp.setOnClickListener {
-            onActivateCardClickListener.onActivateCardClick(otp.get())
-
-        }
-        otpView.setOtpCompletionListener { otp1 -> // do Stuff
-            otp.set(otp1)
-        }
+        bottomSheet.setCanceledOnTouchOutside(false)
 
         return view
-    }
-
-    interface OnActivateCardClickListener {
-        fun onActivateCardClick(kitFourDigit:String?)
-
     }
 
 

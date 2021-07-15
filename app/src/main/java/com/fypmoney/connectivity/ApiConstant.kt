@@ -60,6 +60,8 @@ object ApiConstant {
     const val API_ORDER_CARD = "/services/PockketService/api/order-card"
     const val API_GET_ALL_PRODUCTS = "/services/PockketService/api/products"
     const val API_GET_ORDER_CARD_STATUS = "/services/PockketService/api/order-card/"
+    const val API_SET_CHANGE_PIN = "/services/PockketService/api/set/pin/"
+    const val API_PHYSICAL_CARD_INIT = "/services/PockketService/api/activate/physical-card/init"
 
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
 
