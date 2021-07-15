@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.TrackOrderViewModel" />
+
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar_for_aadhaar" />
+
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/screenMarginLeft"
+                android:layout_marginEnd="@dimen/screenMarginRight"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/bill_details"
+                    style="@style/TextviewBold"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/bill_details"
+                    android:textAlignment="center"
+                    android:textSize="20dp" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/card_type"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_below="@+id/bill_details"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/card_type"
+                    android:textAlignment="center" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/amount"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_below="@+id/bill_details"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/dummy_amount1"
+                    android:textAlignment="center" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/amount"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/dividerColor" />
+
+                <TableLayout
+                    android:id="@+id/table"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view1"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp">
+
+
+                    <TableRow android:padding="5dp">
+
+                        <TextView
+                            style="@style/TextviewRegular"
+                            android:layout_weight="1"
+                            android:text="@string/item_total" />
+
+                        <TextView
+                            style="@style/TextviewRegular"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@string/item_total" />
+
+
+                    </TableRow>
+
+                    <TableRow android:padding="5dp">
+
+                        <TextView
+                            style="@style/TextviewRegular"
+                            android:layout_weight="1"
+                            android:text="@string/packaging" />
+
+                        <TextView
+                            style="@style/TextviewRegular"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@string/item_total" />
+
+
+                    </TableRow>
+
+                    <TableRow android:padding="5dp">
+
+                        <TextView
+                            style="@style/TextviewRegular"
+                            android:layout_weight="1"
+                            android:text="@string/delivery_fee" />
+
+                        <TextView
+                            style="@style/TextviewRegular"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@string/item_total" />
+
+                    </TableRow>
+
+                    <TableRow android:padding="5dp">
+
+                        <TextView
+                            style="@style/TextviewRegular"
+                            android:layout_weight="1"
+                            android:text="@string/tax" />
+
+                        <TextView
+                            style="@style/TextviewRegular"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@string/dummy_amount1" />
+
+                    </TableRow>
+                </TableLayout>
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/table"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/dividerColor" />
+
+                <TextView
+                    style="@style/TextviewRegular"
+                    android:layout_below="@id/view2"
+                    android:text="@string/paid_via"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="17dp" />
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

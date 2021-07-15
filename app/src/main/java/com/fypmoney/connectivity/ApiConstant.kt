@@ -57,6 +57,8 @@ object ApiConstant {
     const val API_GET_BANK_PROFILE = "/services/PockketService/api/getBankProfile"
     const val API_QR_CODE_SCANNER = "/services/PockketService/api/spend/bharat-qr"
     const val API_UPLOAD_PROFILE_PIC = "/services/authservice/api/upload/profile-pic"
+    const val API_ORDER_CARD = "/services/PockketService/api/order-card"
+    const val API_GET_ORDER_CARD_STATUS = "/services/PockketService/api/order-card/"
 
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
 

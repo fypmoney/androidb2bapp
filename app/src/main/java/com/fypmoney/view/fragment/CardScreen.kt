@@ -26,6 +26,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.BankTransactionHistoryView
+import com.fypmoney.view.activity.OrderCardView
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.viewmodel.CardScreenViewModel
 import kotlinx.android.synthetic.main.screen_card.*
@@ -180,11 +181,12 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             0 -> {
                 callCardSettingsBottomSheet()
             }
+            1 -> {
+                intentToActivity(OrderCardView::class.java)
+            }
             2 -> {
                 intentToActivity(BankTransactionHistoryView::class.java)
             }
-
-
         }
     }
 

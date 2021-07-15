@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.OrderCardViewModel" />
+
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/toolbar_layout"
+                layout="@layout/toolbar_for_aadhaar" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivServiceLogo1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/toolbar_layout"
+                android:layout_marginTop="20dp"
+                app:srcCompat="@drawable/premium_card_banner" />
+
+            <com.fypmoney.util.ScrollableListView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ivServiceLogo1"
+                android:layout_marginTop="20dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnContinue"
+                style="@style/Widget.App.Button"
+                android:layout_width="299dp"
+                android:layout_height="52dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/curved_background1"
+                android:onClick="@{()->viewModel.onOrderCardClicked()}"
+                android:text="@string/order_premium_card_btn_text"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/text_color_dark" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+</layout>

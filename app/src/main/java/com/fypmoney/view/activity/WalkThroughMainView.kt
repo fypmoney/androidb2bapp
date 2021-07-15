@@ -47,17 +47,9 @@ class WalkThroughMainView : BaseActivity<ViewWalkThroughMainBinding, WalkThrough
         viewPagerAdapter.addFragment(WalkThroughTwoScreen())
         viewPagerAdapter.addFragment(WalkThroughThreeScreen())
 
-        // Set Adapter for ViewPager
-
-        // Set Adapter for ViewPager
         mViewBinding.pager.adapter = viewPagerAdapter
 
-        // Setup dot's indicator
-
-        // Setup dot's indicator
-
         mViewBinding.tabLayoutIndicator.setupWithViewPager(mViewBinding.pager)
-
 
         setObserver()
     }
