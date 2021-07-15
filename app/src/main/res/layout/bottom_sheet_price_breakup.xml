@@ -76,6 +76,7 @@
                     android:text="@string/item_total" />
 
                 <TextView
+                    android:id="@+id/item_total"
                     style="@style/TextviewRegular"
                     android:layout_weight="1"
                     android:gravity="end"
@@ -92,6 +93,7 @@
                     android:text="@string/packaging" />
 
                 <TextView
+                    android:id="@+id/packaging"
                     style="@style/TextviewRegular"
                     android:layout_weight="1"
                     android:gravity="end"
@@ -108,6 +110,7 @@
                     android:text="@string/delivery_fee" />
 
                 <TextView
+                    android:id="@+id/delivery_fee"
                     style="@style/TextviewRegular"
                     android:layout_weight="1"
                     android:gravity="end"
@@ -123,6 +126,7 @@
                     android:text="@string/tax" />
 
                 <TextView
+                    android:id="@+id/tax"
                     style="@style/TextviewRegular"
                     android:layout_weight="1"
                     android:gravity="end"

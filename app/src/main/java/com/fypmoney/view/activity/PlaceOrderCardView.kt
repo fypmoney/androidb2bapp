@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -59,7 +60,8 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         mViewModel.onPlaceOrderClicked.observe(this)
         {
             if (it) {
-                askForDevicePassword()
+                // askForDevicePassword()
+                intentToActivity(TrackOrderView::class.java)
                 mViewModel.onPlaceOrderClicked.value = false
             }
         }
@@ -75,7 +77,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
    * */
     private fun callPriceBreakupBottomSheet() {
         val bottomSheet =
-            PriceBreakupBottomSheet()
+            PriceBreakupBottomSheet(mViewModel.amount.get(), mViewModel.productResponse.value)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "PlaceOrderBottomSheet")
     }
@@ -86,13 +88,13 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         when (requestCode) {
             AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
                 when (resultCode) {
-                  RESULT_OK -> {
+                    RESULT_OK -> {
                         Handler(Looper.getMainLooper()).post {
                             mViewModel.callPlaceOrderApi()
 
                         }
 
-                  }
+                    }
 
                 }
             }
@@ -103,7 +105,9 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
      * Method to navigate to the different activity
      */
     private fun intentToActivity(aClass: Class<*>) {
-        startActivity(Intent(this@PlaceOrderCardView, aClass))
+        val intent = Intent(this@PlaceOrderCardView, aClass)
+        intent.putExtra(AppConstants.GET_PRODUCT_RESPONSE, mViewModel.productResponse.value)
+        finish()
     }
 
 

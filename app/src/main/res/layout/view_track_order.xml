@@ -41,11 +41,132 @@
                 android:orientation="vertical"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageOrderPlaced"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    app:srcCompat="@drawable/ic_check_skyblue" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textOrderPlaced"
+                    style="@style/TextviewRegular"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_toEndOf="@+id/imageOrderPlaced"
+                    android:text="@string/order_placed"
+                    android:textAlignment="center"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/date"
+                    style="@style/TextviewRegular"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:text="date"
+                    android:textAlignment="center"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/view_order_placed"
+                    android:layout_width="2dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/imageOrderPlaced"
+                    android:layout_toStartOf="@+id/imageOrderPlaced"
+                    android:layout_toEndOf="@+id/imageOrderPlaced"
+                    android:background="@drawable/dotted_black"
+
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageOrderShipped"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view_order_placed"
+                    app:srcCompat="@drawable/ic_check_disabl" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textOrderShipped"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@id/view_order_placed"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/imageOrderShipped"
+                    android:text="@string/shipped"
+                    android:textAlignment="center"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/view_order_Shipped"
+                    android:layout_width="2dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/imageOrderShipped"
+                    android:layout_toStartOf="@+id/imageOrderShipped"
+                    android:layout_toEndOf="@+id/imageOrderShipped"
+                    android:background="@drawable/dotted_black"
+
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageOrderDelivery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view_order_Shipped"
+                    app:srcCompat="@drawable/ic_check_disabl" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textOrderDelivery"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@id/view_order_Shipped"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/imageOrderDelivery"
+                    android:text="@string/out_for_delivery"
+                    android:textAlignment="center"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/view_order_Delivery"
+                    android:layout_width="2dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/imageOrderDelivery"
+                    android:layout_toStartOf="@+id/imageOrderDelivery"
+                    android:layout_toEndOf="@+id/imageOrderDelivery"
+                    android:background="@drawable/dotted_black"
+                    />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageOrderDelivered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view_order_Delivery"
+                    app:srcCompat="@drawable/ic_check_disabl" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textOrderDelivered"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@id/view_order_Delivery"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/imageOrderDelivered"
+                    android:text="@string/delivered"
+                    android:textAlignment="center"
+                    android:textSize="17dp" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/imageOrderDelivered"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/dividerColor" />
+
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/bill_details"
                     style="@style/TextviewBold"
                     android:layout_width="wrap_content"
+                    android:layout_below="@id/view3"
                     android:layout_marginTop="20dp"
                     android:text="@string/bill_details"
                     android:textAlignment="center"
@@ -63,13 +184,14 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/amount"
-                    style="@style/TextviewRegular"
+                    style="@style/TextviewBold"
                     android:layout_width="wrap_content"
                     android:layout_below="@+id/bill_details"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="20dp"
                     android:text="@string/dummy_amount1"
-                    android:textAlignment="center" />
+                    android:textAlignment="center"
+                    android:textSize="17dp" />
 
                 <View
                     android:id="@+id/view1"
@@ -102,7 +224,7 @@
                             style="@style/TextviewRegular"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="@string/item_total" />
+                            android:text="@string/dummy_amt_item_total" />
 
 
                     </TableRow>
@@ -118,7 +240,7 @@
                             style="@style/TextviewRegular"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="@string/item_total" />
+                            android:text="@string/dummy_amt_item_packaging" />
 
 
                     </TableRow>
@@ -134,7 +256,7 @@
                             style="@style/TextviewRegular"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="@string/item_total" />
+                            android:text="@string/dummy_amt_delivery_fee" />
 
                     </TableRow>
 
@@ -149,7 +271,7 @@
                             style="@style/TextviewRegular"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="@string/dummy_amount1" />
+                            android:text="@string/dummy_amt_item_total" />
 
                     </TableRow>
                 </TableLayout>

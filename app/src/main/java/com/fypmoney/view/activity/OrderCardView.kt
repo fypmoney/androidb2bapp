@@ -21,7 +21,8 @@ import kotlinx.android.synthetic.main.view_order_card.*
 /*
 * This class is used to order card
 * */
-class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>(),MyProfileListAdapter.OnListItemClickListener {
+class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>(),
+    MyProfileListAdapter.OnListItemClickListener {
     private lateinit var mViewModel: OrderCardViewModel
 
     override fun getBindingVariable(): Int {

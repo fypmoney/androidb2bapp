@@ -150,4 +150,12 @@ object AppConstants {
     const val ORDER_CARD_PAYMENT_MODE = "WALLET"
 
 
+    const val ORDER_STATUS_ORDERED = "Ordered"
+    const val ORDER_STATUS_DISPATCHED = "Dispatched"
+    const val ORDER_STATUS_SHIPPED = "Shipped"
+    const val ORDER_STATUS_DELIVERED = "Delivered"
+    const val GET_PRODUCT_RESPONSE = "get_product_response"
+    const val ORDER_STATUS = "order_status"
+
+
 }

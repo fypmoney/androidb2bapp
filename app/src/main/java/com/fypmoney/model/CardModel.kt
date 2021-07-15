@@ -214,3 +214,22 @@ data class OrderCardResponseDetails(
 data class GetOrderCardStatusResponse(
     @SerializedName("data") val orderCardResponseDetails: OrderCardResponseDetails? = null
 ) : Serializable
+
+data class GetAllProductsResponse(
+    @SerializedName("data") val getAllProductsResponseDetails: List<GetAllProductsResponseDetails>? = null
+) : Serializable
+
+data class GetAllProductsResponseDetails(
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("name") val name: String? = null,
+    @SerializedName("description") val description: String? = null,
+    @SerializedName("code") val code: String? = null,
+    @SerializedName("amount") val amount: String? = null,
+    @SerializedName("taxAmount") val taxAmount: String? = null,
+    @SerializedName("taxPercentage") val taxPercentage: String? = null,
+    @SerializedName("productType") val productType: String? = null,
+    @SerializedName("deleivceryCharge") var deleivceryCharge: String? = null,
+    @SerializedName("packagingCharge") val packagingCharge: String? = null,
+    @SerializedName("loyaltyPoints") val loyaltyPoints: String? = null,
+    @SerializedName("status") val status: String? = null
+) : Serializable

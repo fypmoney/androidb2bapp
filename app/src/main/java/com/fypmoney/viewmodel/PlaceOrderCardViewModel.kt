@@ -13,9 +13,7 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.OrderCardRequest
-import com.fypmoney.model.OrderCardResponse
-import com.fypmoney.model.OrderCardResponseDetails
+import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 
@@ -34,15 +32,17 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
     var onPriceBreakupClicked = MutableLiveData<Boolean>()
     var onPlaceOrderClicked = MutableLiveData<Boolean>()
     var onOrderCardSuccess = MutableLiveData<OrderCardResponseDetails>()
+    var productResponse = MutableLiveData<GetAllProductsResponseDetails>()
 
+    init {
+        callGetAllProductsApi()
+    }
 
     /*
     * This method is used to place the order
     * */
     fun onPriceBreakupClicked() {
         onPriceBreakupClicked.value = true
-
-
     }
 
     /*
@@ -95,12 +95,36 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
         )
     }
 
+    /*
+     * This method is used to get all cards
+     * */
+    private fun callGetAllProductsApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_ALL_PRODUCTS,
+                NetworkUtil.endURL(ApiConstant.API_GET_ALL_PRODUCTS),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_ORDER_CARD -> {
                 if (responseData is OrderCardResponse) {
                     onOrderCardSuccess.value = responseData.orderCardResponseDetails
+                }
+            }
+            ApiConstant.API_GET_ALL_PRODUCTS -> {
+                if (responseData is GetAllProductsResponse) {
+                    productResponse.value = responseData.getAllProductsResponseDetails?.get(0)
+                    val amountList =
+                        Utility.convertToRs(responseData.getAllProductsResponseDetails?.get(0)?.amount)
+                            .split(".")
+                    amount.set(amountList[0])
                 }
             }
 

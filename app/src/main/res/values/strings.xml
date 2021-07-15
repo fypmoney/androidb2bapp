@@ -693,6 +693,12 @@
     price breakup
     -->
     <string name="bill_details">Bill Details</string>
+    <string name="order_placed">Order Placed</string>
+    <string name="shipped">Shipped</string>
+    <string name="out_for_delivery">Out for delivery</string>
+    <string name="delivered">Delivered</string>
+
+
     <string name="card_type">Premium Fyp Card</string>
     <string name="item_total">Item Total</string>
     <string name="packaging">Packaging</string>

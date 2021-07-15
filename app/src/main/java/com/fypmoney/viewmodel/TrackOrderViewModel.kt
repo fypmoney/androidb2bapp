@@ -21,16 +21,26 @@ import com.fypmoney.util.Utility
 * This is used for card tracking
 * */
 class TrackOrderViewModel(application: Application) : BaseViewModel(application) {
-    var kitNumber=ObservableField<String>()
+    private var kitNumber = ObservableField<String>()
+    var orderStatus = ObservableField<String>()
+    var isOrderPlaced = ObservableField<Boolean>()
+    var isOrderShipped = ObservableField<Boolean>()
+    var isOrderDelivered = ObservableField<Boolean>()
+    var isOrderOutForDelivery = ObservableField<Boolean>()
+    var productResponse = MutableLiveData<GetAllProductsResponseDetails>()
+
+    init {
+        callGetCardStatusApi()
+    }
 
     /*
     * This method is used to track order
     * */
-    fun callGetCardStatusApi() {
+    private fun callGetCardStatusApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_ORDER_CARD_STATUS,
-                NetworkUtil.endURL(ApiConstant.API_GET_ORDER_CARD_STATUS+kitNumber.get()),
+                NetworkUtil.endURL(ApiConstant.API_GET_ORDER_CARD_STATUS + kitNumber.get()),
                 ApiUrl.POST,
                 BaseRequest(),
                 this, isProgressBar = true

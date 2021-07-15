@@ -182,6 +182,9 @@ class ApiDataParsing {
                 ApiConstant.API_GET_ORDER_CARD_STATUS -> {
                     getObject(response, GetOrderCardStatusResponse::class.java)
                 }
+                ApiConstant.API_GET_ALL_PRODUCTS -> {
+                    getObject(response, GetAllProductsResponse::class.java)
+                }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {
                         PayuConstants.VALIDATE_VPA -> {

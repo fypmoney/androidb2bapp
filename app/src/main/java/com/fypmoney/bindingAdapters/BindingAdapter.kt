@@ -3,9 +3,11 @@ package com.fypmoney.bindingAdapters
 
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
@@ -59,6 +61,7 @@ class BindingAdapter {
                 Utility.setImageUsingGlide(PockketApplication.instance, imageUrl, imageView)
             }
         }
+
         @BindingAdapter("CIRCULARIMAGE")
         @JvmStatic
         fun setImage(imageView: CircleImageView, imageUrl: String?) {
@@ -225,6 +228,7 @@ class BindingAdapter {
             }
 
         }
+
     }
 
 
