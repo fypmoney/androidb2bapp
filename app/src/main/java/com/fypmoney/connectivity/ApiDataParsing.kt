@@ -176,6 +176,12 @@ class ApiDataParsing {
                 ApiConstant.API_UPLOAD_PROFILE_PIC -> {
                     getObject(response, ProfileImageUploadResponse::class.java)
                 }
+                ApiConstant.API_ORDER_CARD -> {
+                    getObject(response, OrderCardResponse::class.java)
+                }
+                ApiConstant.API_GET_ORDER_CARD_STATUS -> {
+                    getObject(response, GetOrderCardStatusResponse::class.java)
+                }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {
                         PayuConstants.VALIDATE_VPA -> {

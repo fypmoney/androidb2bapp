@@ -56,6 +56,9 @@
     <string name="save_btn_text">Save</string>
     <string name="log_out_btn_text">Log out</string>
     <string name="share_btn_text">Share</string>
+    <string name="order_premium_card_btn_text">Order Premium Card</string>
+    <string name="order_eco_friendly_card_btn_text">Order Eco-Friendly Card</string>
+    <string name="place_order_btn_text">Place Order</string>
 
 
     <!--Login-->
@@ -655,5 +658,51 @@
     <string name="walk_through_three_text1">Fyp is superfast🚀 \n \n Complete your onboarding in less than a minute</string>
 
 
+    <!--
+    Order Card
+    -->
+    <string name="order_card_tab1">Order Card</string>
+    <string name="order_card_tab2">Track Order</string>
+    <string name="premium_card">Premium Card</string>
+    <string name="price">Price-</string>
+    <string name="personalized_card">Personalised your card</string>
+    <string name="name_card">Name on the Card*</string>
+    <string name="name_card_hint">Name Surname</string>
+    <string name="customize_quote">Customise quote</string>
+    <string name="type_here">Type here</string>
+    <string name="deliver_to">Deliver to</string>
+    <string name="pin">Pin code*</string>
+    <string name="use_loc">Use my location</string>
+    <string name="home_no">House Number, Building Name*</string>
+    <string name="road_no">Road Name, Area, Colony*</string>
+    <string name="landmark">Landmark (Optional)</string>
+    <string name="pin_empty_error">Please enter pin code</string>
+    <string name="hno_empty_error">Please enter House number and Building name</string>
+    <string name="road_name_empty_error">Please enter road name, area,colony</string>
+    <string name="view_breakup"><u>View Price Breakup</u></string>
+
+    <string-array name="order_card_list">
+        <item>Set your limit</item>
+        <item>Sensitive details kept safe</item>
+        <item>Real time activity notification</item>
+        <item>Easy card locking</item>
+    </string-array>
+
+
+    <!--
+    price breakup
+    -->
+    <string name="bill_details">Bill Details</string>
+    <string name="card_type">Premium Fyp Card</string>
+    <string name="item_total">Item Total</string>
+    <string name="packaging">Packaging</string>
+    <string name="delivery_fee">Delivery Partner Fee</string>
+    <string name="tax">Taxes</string>
+    <string name="paid_via">Paid Via Fyp Cash/ Bank</string>
+    <string name="dummy_amount1">\u20B9 200</string>
+    <string name="dummy_amt_item_total">\u20B9 135</string>
+    <string name="dummy_amt_item_packaging">\u20B9 20</string>
+    <string name="dummy_amt_delivery_fee">\u20B9 40</string>
+    <string name="dummy_amt_tax">\u20B9 5</string>
 
 </resources>

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.PlaceOrderCardViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar_for_aadhaar" />
+
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/screenMarginLeft"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/screenMarginRight"
+                android:layout_marginBottom="@dimen/margin">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivServiceLogo1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/card" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/heading"
+                    style="@style/TextviewBold"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_toEndOf="@+id/ivServiceLogo1"
+                    android:gravity="start"
+                    android:text="@string/premium_card"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/price"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@+id/heading"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_toEndOf="@+id/ivServiceLogo1"
+                    android:ellipsize="end"
+                    android:text="@string/price"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/priceValue"
+                    style="@style/TextviewBold"
+                    android:layout_below="@+id/heading"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_toEndOf="@+id/price"
+                    android:ellipsize="end"
+                    android:text="@{@string/Rs+viewModel.amount}"
+                    android:textSize="17dp" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/ivServiceLogo1"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/dividerColor" />
+
+                <LinearLayout
+                    android:id="@+id/linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextviewBold"
+                        android:gravity="start"
+                        android:text="@string/personalized_card"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="17dp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/verification_title"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/name_card" />
+
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/edittextMarginTop"
+                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                        android:hint="@string/name_card_hint"
+                        android:inputType="textCapWords"
+                        android:paddingStart="@dimen/edittextHintPaddingStart"
+                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                        android:singleLine="true"
+                        android:text="@={viewModel.name}" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/customize_quote" />
+
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/edittextMarginTop"
+                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                        android:hint="@string/type_here"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/edittextHintPaddingStart"
+                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                        android:text="@={viewModel.quote}" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextviewBold"
+                        android:layout_marginTop="20dp"
+                        android:gravity="start"
+                        android:text="@string/deliver_to"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="17dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                            android:hint="@string/pin"
+                            android:inputType="number"
+                            android:paddingStart="@dimen/edittextHintPaddingStart"
+                            android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                            android:text="@={viewModel.pin}" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewBold"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin"
+                            android:layout_weight="1"
+                            android:drawableStart="@drawable/ic_location"
+                            android:drawablePadding="@dimen/margin"
+                            android:text="@string/use_loc"
+                            android:textColor="@color/color_skyblue"
+                            android:textSize="17dp" />
+
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/edittextMarginTop"
+                        android:layout_weight="1"
+                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                        android:hint="@string/home_no"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/edittextHintPaddingStart"
+                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                        android:singleLine="true"
+                        android:text="@={viewModel.houseNo}" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/edittextMarginTop"
+                        android:layout_weight="1"
+                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                        android:hint="@string/road_no"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/edittextHintPaddingStart"
+                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                        android:text="@={viewModel.roadName}" />
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/edittextMarginTop"
+                        android:layout_weight="1"
+                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                        android:hint="@string/landmark"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/edittextHintPaddingStart"
+                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                        android:text="@={viewModel.landMark}" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginStart="@dimen/margin"
+                        android:layout_marginTop="20dp"
+                        android:drawablePadding="@dimen/margin"
+                        android:onClick="@{()->viewModel.onPriceBreakupClicked()}"
+                        android:text="@string/view_breakup"
+                        android:textColor="@color/color_skyblue"
+                        android:textSize="17dp" />
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnContinue"
+                        style="@style/Widget.App.Button"
+                        android:layout_width="299dp"
+                        android:layout_height="52dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/curved_background1"
+                        android:onClick="@{()->viewModel.onPlaceOrderClicked()}"
+                        android:text="@string/place_order_btn_text"
+                        android:textAllCaps="false"
+                        app:backgroundTint="@color/text_color_dark" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

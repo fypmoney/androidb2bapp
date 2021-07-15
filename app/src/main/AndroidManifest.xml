@@ -86,6 +86,20 @@
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <activity
+            android:name=".view.activity.PlaceOrderCardView"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.OrderCardView"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+        <activity
+            android:name=".view.activity.TrackOrderView"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+        <activity
             android:name=".view.activity.FirstScreenView"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
@@ -256,8 +270,7 @@
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver
             android:name=".receivers.SmsBroadcastReceiver"

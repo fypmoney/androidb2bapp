@@ -180,3 +180,37 @@ data class CardInfoDetails(
     @SerializedName("atmEnabled") val atmEnabled: String? = null,
     @SerializedName("clEnabled") val clEnabled: String? = null
 ) : Serializable
+
+
+data class OrderCardRequest(
+    @SerializedName("nameOnCard") val nameOnCard: String? = null,
+    @SerializedName("quote") val quote: String? = null,
+    @SerializedName("paymentMode") val paymentMode: String? = null,
+    @SerializedName("pincode") val pincode: String? = null,
+    @SerializedName("houseAddress") val houseAddress: String? = null,
+    @SerializedName("areaDetail") val areaDetail: String? = null,
+    @SerializedName("landmark") val landmark: String? = null,
+    @SerializedName("amount") val amount: String? = null,
+    @SerializedName("productId") val productId: String? = null
+) : BaseRequest()
+
+data class OrderCardResponse(
+    @SerializedName("data") val orderCardResponseDetails: OrderCardResponseDetails? = null
+) : Serializable
+
+data class OrderCardResponseDetails(
+    @SerializedName("nameOnCard") val nameOnCard: String? = null,
+    @SerializedName("quote") val quote: String? = null,
+    @SerializedName("paymentMode") val paymentMode: String? = null,
+    @SerializedName("pincode") val pincode: String? = null,
+    @SerializedName("houseAddress") val houseAddress: String? = null,
+    @SerializedName("areaDetail") val areaDetail: String? = null,
+    @SerializedName("landmark") val landmark: String? = null,
+    @SerializedName("amount") val amount: String? = null,
+    @SerializedName("productId") val productId: String? = null,
+    @SerializedName("kitNumber") val kitNumber: String? = null
+) : Serializable
+
+data class GetOrderCardStatusResponse(
+    @SerializedName("data") val orderCardResponseDetails: OrderCardResponseDetails? = null
+) : Serializable
