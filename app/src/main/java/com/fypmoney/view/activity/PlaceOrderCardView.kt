@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler

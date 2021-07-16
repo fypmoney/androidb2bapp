@@ -103,6 +103,11 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        mViewModel.callGetWalletBalanceApi()
+    }
+
     /*
     * This method is used to observe the observers
     * */

@@ -209,7 +209,7 @@ data class OrderCardResponseDetails(
     @SerializedName("landmark") val landmark: String? = null,
     @SerializedName("amount") val amount: String? = null,
     @SerializedName("productId") val productId: String? = null,
-    @SerializedName("kitNumber") val kitNumber: String? = null
+    @SerializedName("kitNo") val kitNumber: String? = null
 ) : Serializable
 
 data class GetOrderCardStatusResponse(

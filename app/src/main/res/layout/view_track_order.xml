@@ -19,7 +19,7 @@
 
         <include
             android:id="@+id/toolbar_layout"
-            layout="@layout/toolbar_for_aadhaar" />
+            layout="@layout/toolbar" />
 
 
         <ScrollView

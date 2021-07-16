@@ -15,6 +15,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 
 /*
@@ -126,7 +127,13 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
         when (purpose) {
             ApiConstant.API_ORDER_CARD -> {
                 if (responseData is OrderCardResponse) {
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_KIT_NUMBER,
+                        responseData.orderCardResponseDetails?.kitNumber
+                    )
                     onOrderCardSuccess.value = responseData.orderCardResponseDetails
+
                 }
             }
             ApiConstant.API_GET_ALL_PRODUCTS -> {

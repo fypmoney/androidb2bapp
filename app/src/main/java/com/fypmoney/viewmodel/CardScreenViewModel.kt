@@ -38,12 +38,11 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var onGetCardDetailsSuccess = MutableLiveData<Boolean>()
     var onActivateCardInit = MutableLiveData<Boolean>()
     var onActivateCardClicked = MutableLiveData<Boolean>()
-    var isActivateCardVisible = ObservableField(false)
-    var isOrderCard = ObservableField(false)
+    var isActivateCardVisible = ObservableField(true)
+    var isOrderCard = ObservableField(true)
     var bankProfileResponse = ObservableField<BankProfileResponseDetails>()
 
     init {
-        callGetWalletBalanceApi()
         callGetBankProfileApi()
     }
 
@@ -64,7 +63,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     /*
         * This method is used to get the balance of wallet
         * */
-    private fun callGetWalletBalanceApi() {
+    fun callGetWalletBalanceApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_WALLET_BALANCE,

@@ -197,7 +197,6 @@ open class AddMoneyUpiDebitView :
 
         }
         mViewModel.onBackPress.observe(this) {
-            Utility.showToast("on back is pressedddd")
            // callTransactionFailBottomSheet()
         }
     }
