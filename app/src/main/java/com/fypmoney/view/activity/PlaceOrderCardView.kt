@@ -1,27 +1,34 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.location.Address
+import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewPlaceCardBinding
+import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.fragment.PriceBreakupBottomSheet
 import com.fypmoney.viewmodel.PlaceOrderCardViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_order_card.*
+import java.util.*
+
 
 /*
 * This class is used to order card
 * */
-class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardViewModel>() {
+class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardViewModel>(),
+    LocationListenerClass.GetCurrentLocationListener {
     private lateinit var mViewModel: PlaceOrderCardViewModel
 
     override fun getBindingVariable(): Int {
@@ -60,8 +67,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         mViewModel.onPlaceOrderClicked.observe(this)
         {
             if (it) {
-                // askForDevicePassword()
-                intentToActivity(TrackOrderView::class.java)
+                askForDevicePassword()
                 mViewModel.onPlaceOrderClicked.value = false
             }
         }
@@ -69,6 +75,15 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         {
             intentToActivity(TrackOrderView::class.java)
 
+        }
+        mViewModel.onUseLocationClicked.observe(this)
+        {
+            if (it) {
+                LocationListenerClass(
+                    this, this
+                ).permissions()
+                mViewModel.onUseLocationClicked.value = false
+            }
         }
     }
 
@@ -105,10 +120,55 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
      * Method to navigate to the different activity
      */
     private fun intentToActivity(aClass: Class<*>) {
-        val intent = Intent(this@PlaceOrderCardView, aClass)
-        intent.putExtra(AppConstants.GET_PRODUCT_RESPONSE, mViewModel.productResponse.value)
+        startActivity(Intent(this@PlaceOrderCardView, aClass))
         finish()
     }
 
+    override fun getCurrentLocation(
+        isInternetConnected: Boolean?,
+        latitude: Double,
+        Longitude: Double
+    ) {
 
+        val geocoder = Geocoder(this, Locale.getDefault())
+
+        val addresses = geocoder.getFromLocation(
+            latitude,
+            Longitude,
+            1
+        ) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+
+
+        val address: String =
+            addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+        mViewModel.isProgressBarVisible.set(false)
+        mViewModel.pin.value = addresses[0].postalCode
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        for (permission in permissions) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                //denied
+
+            } else {
+                if (ActivityCompat.checkSelfPermission(
+                        this,
+                        permission
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    //allow
+                    LocationListenerClass(
+                        this, this
+                    ).permissions()
+                } else {
+                    //set to never ask again
+
+
+                }
+            }
+        }
+    }
 }

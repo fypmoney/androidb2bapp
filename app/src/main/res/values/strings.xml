@@ -621,6 +621,8 @@
   Activate card
   -->
     <string name="activate_card_heading">Activate Card</string>
+    <string name="enter_otp_text">Enter the OTP sent to your registered phone number.</string>
+    <string name="card_kit_empty_error">Please enter last 4 digit provided on the card kit</string>
     <string name="four_digit_empty_error">Please enter four digit number provided on the card kit</string>
     <string name="activate_card_text1">To activate your physical card enter four digit number provided on the card kit</string>
     <string name="activate_card_text2">After entering card kit no, you will receive OTP on your registered phone number</string>
@@ -711,6 +713,7 @@
     <string name="dummy_amt_item_packaging">\u20B9 20</string>
     <string name="dummy_amt_delivery_fee">\u20B9 40</string>
     <string name="dummy_amt_tax">\u20B9 5</string>
+    <string name="track_order">Track Order</string>
 
     <!--
     set or change pin

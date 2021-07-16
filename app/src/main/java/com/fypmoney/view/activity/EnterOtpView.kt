@@ -58,7 +58,8 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
         mViewModel.setInitialData(
             intent.getStringExtra(AppConstants.MOBILE_TYPE),
             intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN),
-            intent.getStringExtra(AppConstants.KYC_ACTIVATION_TOKEN)
+            intent.getStringExtra(AppConstants.KYC_ACTIVATION_TOKEN),
+            intent.getStringExtra(AppConstants.KIT_FOUR_DIGIT),
         )
         mViewModel.mobileWithoutCountryCode.value =
             intent.getStringExtra(AppConstants.MOBILE_WITHOUT_COUNTRY_CODE)

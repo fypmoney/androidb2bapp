@@ -13,6 +13,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import org.json.JSONObject
@@ -36,6 +37,9 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var onViewDetailsClicked = MutableLiveData<Boolean>()
     var onGetCardDetailsSuccess = MutableLiveData<Boolean>()
     var onActivateCardInit = MutableLiveData<Boolean>()
+    var onActivateCardClicked = MutableLiveData<Boolean>()
+    var isActivateCardVisible = ObservableField(false)
+    var isOrderCard = ObservableField(false)
     var bankProfileResponse = ObservableField<BankProfileResponseDetails>()
 
     init {
@@ -48,6 +52,13 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     * */
     fun onViewDetailsClicked() {
         onViewDetailsClicked.value = true
+    }
+
+    /*
+    * This method is used to activate card
+    * */
+    fun onActivateCardClicked() {
+        onActivateCardClicked.value = true
     }
 
     /*
@@ -64,14 +75,20 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             )
         )
     }
+
     /*
       * This method is used to set or change pin
       * */
-     fun callSetOrChangeApi() {
+    fun callSetOrChangeApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_SET_CHANGE_PIN,
-                NetworkUtil.endURL(ApiConstant.API_SET_CHANGE_PIN+SharedPrefUtils.getString(getApplication(),SharedPrefUtils.SF_KEY_KIT_NUMBER)),
+                NetworkUtil.endURL(
+                    ApiConstant.API_SET_CHANGE_PIN + SharedPrefUtils.getString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_KIT_NUMBER
+                    )
+                ),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -80,9 +97,9 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     }
 
     /*
-     * This method is used to set or change pin
+     * This method is used to call physical card init api
      * */
-    fun callCAllPhysicalCardInitApi() {
+    fun callPhysicalCardInitApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_PHYSICAL_CARD_INIT,
@@ -236,6 +253,27 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             ApiConstant.API_GET_BANK_PROFILE -> {
                 if (responseData is BankProfileResponse) {
                     bankProfileResponse.set(responseData.bankProfileResponseDetails)
+
+                    if (bankProfileResponse.get()?.isPhysicardIssued == AppConstants.NO)
+                        isOrderCard.set(true)
+                    else {
+                        isOrderCard.set(false)
+                    }
+
+                    bankProfileResponse.get()?.cardInfos?.forEach {
+                        when (it.cardType) {
+                            AppConstants.CARD_TYPE_PHYSICAL -> {
+                                if (it.status != AppConstants.ENABLE) {
+                                    isActivateCardVisible.set(true)
+                                } else {
+                                    isActivateCardVisible.set(false)
+                                }
+
+                            }
+                        }
+
+                    }
+
                 }
 
             }

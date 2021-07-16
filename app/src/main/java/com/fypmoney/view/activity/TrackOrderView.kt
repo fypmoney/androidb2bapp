@@ -8,7 +8,6 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewTrackOrderBinding
-import com.fypmoney.model.GetAllProductsResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.TrackOrderViewModel
 import kotlinx.android.synthetic.main.toolbar.*
@@ -39,17 +38,16 @@ class TrackOrderView : BaseActivity<ViewTrackOrderBinding, TrackOrderViewModel>(
         setToolbarAndTitle(
             context = this@TrackOrderView,
             toolbar = toolbar,
-            isBackArrowVisible = true
+            isBackArrowVisible = true,toolbarTitle=getString(R.string.track_order)
         )
         setObservers()
-        mViewModel.productResponse.value=intent.getSerializableExtra(AppConstants.GET_PRODUCT_RESPONSE) as GetAllProductsResponseDetails
-        mViewModel.orderStatus.set(AppConstants.ORDER_STATUS_DELIVERED)
-        setDataInUi()
-
-
     }
 
     fun setObservers() {
+        mViewModel.productResponse.observe(this)
+        {
+            setDataInUi()
+        }
 
     }
 

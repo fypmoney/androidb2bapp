@@ -185,6 +185,13 @@ class ApiDataParsing {
                 ApiConstant.API_GET_ALL_PRODUCTS -> {
                     getObject(response, GetAllProductsResponse::class.java)
                 }
+
+                ApiConstant.API_ACTIVATE_CARD -> {
+                    getObject(response, ActivateCardResponse::class.java)
+                }
+                ApiConstant.API_PHYSICAL_CARD_INIT -> {
+                    getObject(response, PhysicalCardInitResponse::class.java)
+                }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {
                         PayuConstants.VALIDATE_VPA -> {

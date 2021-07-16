@@ -22,6 +22,7 @@ import com.fypmoney.util.Utility
 * */
 class PlaceOrderCardViewModel(application: Application) : BaseViewModel(application) {
     var isPremiumCardVisible = ObservableField(true)
+    var isProgressBarVisible = ObservableField(false)
     var amount = ObservableField(AppConstants.CARD_PRICE)
     var name = MutableLiveData<String>()
     var quote = MutableLiveData<String>()
@@ -31,11 +32,21 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
     var landMark = MutableLiveData<String>()
     var onPriceBreakupClicked = MutableLiveData<Boolean>()
     var onPlaceOrderClicked = MutableLiveData<Boolean>()
+    var onUseLocationClicked = MutableLiveData<Boolean>()
     var onOrderCardSuccess = MutableLiveData<OrderCardResponseDetails>()
     var productResponse = MutableLiveData<GetAllProductsResponseDetails>()
 
     init {
         callGetAllProductsApi()
+    }
+
+    /*
+       * This method is used to handle click of use pin
+       * */
+    fun onUseLocationClicked() {
+        isProgressBarVisible.set(true)
+        onUseLocationClicked.value = true
+
     }
 
     /*

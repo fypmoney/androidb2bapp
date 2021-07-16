@@ -150,6 +150,7 @@ object AppConstants {
     const val REQUEST_IMAGE = 200
     const val CARD_PRICE = "200"
     const val ORDER_CARD_PAYMENT_MODE = "WALLET"
+    const val ENABLE= "ENABLED"
 
 
     const val ORDER_STATUS_ORDERED = "Ordered"

@@ -178,7 +178,8 @@ data class CardInfoDetails(
     @SerializedName("posEnabled") val posEnabled: String? = null,
     @SerializedName("ecomEnabled") val ecomEnabled: String? = null,
     @SerializedName("atmEnabled") val atmEnabled: String? = null,
-    @SerializedName("clEnabled") val clEnabled: String? = null
+    @SerializedName("clEnabled") val clEnabled: String? = null,
+    @SerializedName("status") val status: String? = null
 ) : Serializable
 
 
@@ -232,4 +233,20 @@ data class GetAllProductsResponseDetails(
     @SerializedName("packagingCharge") val packagingCharge: String? = null,
     @SerializedName("loyaltyPoints") val loyaltyPoints: String? = null,
     @SerializedName("status") val status: String? = null
+) : Serializable
+
+data class ActivateCardRequest(
+    @SerializedName("otp") val otp: String? = null,
+    @SerializedName("validationNo") val validationNo: String? = null,
+    @SerializedName("cardIdentifier") val cardIdentifier: String? = null
+) : BaseRequest()
+
+
+data class ActivateCardResponse(
+    @SerializedName("data") val getAllProductsResponseDetails: List<GetAllProductsResponseDetails>? = null
+) : Serializable
+
+
+data class PhysicalCardInitResponse(
+    @SerializedName("msg") val msg: String? = null
 ) : Serializable

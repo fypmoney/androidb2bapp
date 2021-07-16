@@ -28,6 +28,7 @@ import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.BankTransactionHistoryView
 import com.fypmoney.view.activity.EnterOtpView
 import com.fypmoney.view.activity.OrderCardView
+import com.fypmoney.view.activity.TrackOrderView
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.viewmodel.CardScreenViewModel
 import kotlinx.android.synthetic.main.screen_card.*
@@ -42,7 +43,8 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     MyProfileListAdapter.OnListItemClickListener,
     CardSettingsBottomSheet.OnCardSettingsClickListener,
     SetSpendingLimitBottomSheet.OnSetSpendingLimitClickListener, CardSettingClickListener,
-    ManageChannelsBottomSheet.OnBottomSheetDismissListener ,ActivateCardBottomSheet.OnActivateCardClickListener{
+    ManageChannelsBottomSheet.OnBottomSheetDismissListener,
+    ActivateCardBottomSheet.OnActivateCardClickListener {
     private lateinit var mViewModel: CardScreenViewModel
     private lateinit var mViewBinding: ScreenCardBinding
     private var mSetRightOut: AnimatorSet? = null
@@ -70,7 +72,15 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
         val textString = ArrayList<String>()
         textString.add(PockketApplication.instance.getString(R.string.card_settings))
-        textString.add(PockketApplication.instance.getString(R.string.order_card))
+        when (mViewModel.isOrderCard.get()) {
+            true -> {
+                textString.add(PockketApplication.instance.getString(R.string.order_card))
+            }
+            else -> {
+                textString.add(PockketApplication.instance.getString(R.string.track_order))
+            }
+        }
+
         textString.add(PockketApplication.instance.getString(R.string.account_stmt))
 
 
@@ -101,6 +111,13 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             if (it) {
                 askForDevicePassword()
                 mViewModel.onViewDetailsClicked.value = false
+            }
+        }
+
+        mViewModel.onActivateCardClicked.observe(viewLifecycleOwner) {
+            if (it) {
+                callActivateCardSheet()
+                mViewModel.onActivateCardClicked.value = false
             }
         }
 
@@ -144,7 +161,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     private fun changeCameraDistance() {
         val distance = 8000
-        val scale: Float = getResources().getDisplayMetrics().density * distance
+        val scale: Float = resources.displayMetrics.density * distance
         mCardFrontLayout!!.cameraDistance = scale
         mCardBackLayout!!.cameraDistance = scale
     }
@@ -183,7 +200,14 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 callCardSettingsBottomSheet()
             }
             1 -> {
-                intentToActivity(OrderCardView::class.java)
+                when (mViewModel.isOrderCard.get()) {
+                    true -> {
+                        intentToActivity(OrderCardView::class.java)
+                    }
+                    else -> {
+                        intentToActivity(TrackOrderView::class.java)
+                    }
+                }
             }
             2 -> {
                 intentToActivity(BankTransactionHistoryView::class.java)
@@ -252,7 +276,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
    * */
     private fun callActivateCardSheet() {
         val bottomSheet =
-            ActivateCardBottomSheet()
+            ActivateCardBottomSheet(this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "ActivateCard")
     }
@@ -270,9 +294,8 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 callManageChannelsBottomSheet()
             }
             3 -> {
-                callActivateCardSheet()
-             /*   mViewModel.callSetOrChangeApi()
-                callSetPinBottomSheet()*/
+                mViewModel.callSetOrChangeApi()
+                callSetPinBottomSheet()
             }
         }
     }
@@ -324,10 +347,10 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     }
 
     override fun onActivateCardClick(kitFourDigit: String?) {
-        mViewModel.callCAllPhysicalCardInitApi()
+        mViewModel.callPhysicalCardInitApi()
         goToEnterOtpScreen(kitFourDigit)
-
     }
+
     /**
      * Method to navigate to the Feeds screen after login
      */

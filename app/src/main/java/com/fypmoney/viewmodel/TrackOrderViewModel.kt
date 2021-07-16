@@ -30,6 +30,7 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
     var productResponse = MutableLiveData<GetAllProductsResponseDetails>()
 
     init {
+        callGetAllProductsApi()
         callGetCardStatusApi()
     }
 
@@ -48,6 +49,22 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
         )
     }
 
+    /*
+    * This method is used to get all cards
+    * */
+    private fun callGetAllProductsApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_ALL_PRODUCTS,
+                NetworkUtil.endURL(ApiConstant.API_GET_ALL_PRODUCTS),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
@@ -55,11 +72,20 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
                 if (responseData is GetOrderCardStatusResponse) {
                 }
             }
+            ApiConstant.API_GET_ALL_PRODUCTS -> {
+                if (responseData is GetAllProductsResponse) {
+                    orderStatus.set(responseData.getAllProductsResponseDetails?.get(0)?.status)
+                    productResponse.value = responseData.getAllProductsResponseDetails?.get(0)
+
+
+                }
+            }
 
 
         }
 
     }
+
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
