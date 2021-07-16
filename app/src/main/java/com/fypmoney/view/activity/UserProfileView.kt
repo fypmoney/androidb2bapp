@@ -11,7 +11,9 @@ import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
+import com.freshchat.consumer.sdk.FaqOptions
+import com.freshchat.consumer.sdk.Freshchat
+import com.freshchat.consumer.sdk.FreshchatConfig
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -223,72 +225,99 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
         }
     }
 
-        /**
-         * Showing Alert Dialog with Settings option
-         * Navigates user to app settings
-         * NOTE: Keep proper title and message depending on your app
-         */
-        private fun showSettingsDialog() {
-            val builder: AlertDialog.Builder = AlertDialog.Builder(this@UserProfileView)
-            builder.setTitle(getString(R.string.dialog_permission_title))
-            builder.setMessage(getString(R.string.dialog_permission_message))
-            builder.setPositiveButton(getString(R.string.go_to_settings)) { dialog, which ->
-                dialog.cancel()
-                openSettings()
-            }
-            builder.setNegativeButton(getString(android.R.string.cancel)) { dialog, which -> dialog.cancel() }
-            builder.show()
+    /**
+     * Showing Alert Dialog with Settings option
+     * Navigates user to app settings
+     * NOTE: Keep proper title and message depending on your app
+     */
+    private fun showSettingsDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this@UserProfileView)
+        builder.setTitle(getString(R.string.dialog_permission_title))
+        builder.setMessage(getString(R.string.dialog_permission_message))
+        builder.setPositiveButton(getString(R.string.go_to_settings)) { dialog, which ->
+            dialog.cancel()
+            openSettings()
         }
-
-        // navigating user to app settings
-        private fun openSettings() {
-            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-            val uri = Uri.fromParts("package", packageName, null)
-            intent.data = uri
-            startActivityForResult(intent, 101)
-        }
-
-        /**
-         * Method to navigate to the different activity
-         */
-        private fun intentToActivity(aClass: Class<*>, isFinishAll: Boolean? = false) {
-            val intent = Intent(this@UserProfileView, aClass)
-            startActivity(intent)
-            if (isFinishAll == true) {
-                finishAffinity()
-            }
-        }
-
-        override fun onItemClick(position: Int) {
-            when (position) {
-                0 -> {
-                    Utility.goToAppSettings(applicationContext)
-                }
-
-                1 -> {
-                    intentToActivity(SelectInterestView::class.java)
-                }
-
-                3 -> {
-                    callLogOutBottomSheet()
-                }
-
-            }
-        }
-
-
-        /*
-        * This method is used to call log out
-        * */
-        private fun callLogOutBottomSheet() {
-            val bottomSheet =
-                LogoutBottomSheet(this)
-            bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-            bottomSheet.show(supportFragmentManager, "LogOutBottomSheet")
-        }
-
-        override fun onLogoutButtonClick() {
-            mViewModel.callLogOutApi()
-        }
-
+        builder.setNegativeButton(getString(android.R.string.cancel)) { dialog, which -> dialog.cancel() }
+        builder.show()
     }
+
+    // navigating user to app settings
+    private fun openSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri = Uri.fromParts("package", packageName, null)
+        intent.data = uri
+        startActivityForResult(intent, 101)
+    }
+
+    /**
+     * Method to navigate to the different activity
+     */
+    private fun intentToActivity(aClass: Class<*>, isFinishAll: Boolean? = false) {
+        val intent = Intent(this@UserProfileView, aClass)
+        startActivity(intent)
+        if (isFinishAll == true) {
+            finishAffinity()
+        }
+    }
+
+    override fun onItemClick(position: Int) {
+        when (position) {
+            0 -> {
+                Utility.goToAppSettings(applicationContext)
+            }
+
+            1 -> {
+                intentToActivity(SelectInterestView::class.java)
+            }
+            2 -> {
+                callFreshChat()
+            }
+
+            3 -> {
+                callLogOutBottomSheet()
+            }
+
+        }
+    }
+
+
+    /*
+    * This method is used to call log out
+    * */
+    private fun callLogOutBottomSheet() {
+        val bottomSheet =
+            LogoutBottomSheet(this)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "LogOutBottomSheet")
+    }
+
+    override fun onLogoutButtonClick() {
+        mViewModel.callLogOutApi()
+    }
+
+    /*
+    * This method is used to call fresh chat
+    * */
+    fun callFreshChat() {
+        val fresh = Freshchat.getInstance(applicationContext)
+        val config = FreshchatConfig(
+            AppConstants.FRESH_CHAT_APP_ID,
+            AppConstants.FRESH_CHAT_APP_KEY
+        )
+        config.domain = AppConstants.FRESH_CHAT_DOMAIN
+        config.isCameraCaptureEnabled = true
+        config.isGallerySelectionEnabled = true
+        config.isResponseExpectationEnabled = true
+        config.isTeamMemberInfoVisible = true
+        config.isUserEventsTrackingEnabled = true
+        fresh.init(config)
+        val faqOptions = FaqOptions()
+            .showFaqCategoriesAsGrid(false)
+            .showContactUsOnAppBar(true)
+            .showContactUsOnFaqScreens(true)
+            .showContactUsOnFaqNotHelpful(true)
+        Freshchat.showFAQs(this@UserProfileView, faqOptions)
+    }
+
+}

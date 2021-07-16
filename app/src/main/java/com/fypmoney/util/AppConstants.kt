@@ -12,6 +12,9 @@ import com.google.gson.reflect.TypeToken
 object AppConstants {
     const val GOOGLE_CLIENT_ID: String =
         "916744568213-gr0bfi1ued1eguo2sjr77pd45ak4796r.apps.googleusercontent.com"
+    const val FRESH_CHAT_APP_KEY="8dbdc877-4045-4b7c-8a69-1b176c41e71c"
+    const val FRESH_CHAT_APP_ID="03bfae8e-f0f7-48a9-948a-b737edd1a38b"
+    const val FRESH_CHAT_DOMAIN="msdk.in.freshchat.com"
     const val API_TIMEOUT_SECONDS: Long = 60
     const val DATE_FORMAT_CHANGED = "dd/MM/yyyy"
     const val DATE_TIME_FORMAT_SERVER = "yyyy-MM-dd'T'HH:mm:ss'Z'"

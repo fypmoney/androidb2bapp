@@ -257,7 +257,6 @@ class WebApiCaller {
 
 
                         } else {
-
                             request.onResponse.onError(
                                 purpose = request.purpose,
                                 NetworkUtil.responseData(e)!!
@@ -271,6 +270,7 @@ class WebApiCaller {
                         e.printStackTrace()
                     }
                 }
+
 
                 override fun onComplete() {
                     if (request.isProgressBar!!) {

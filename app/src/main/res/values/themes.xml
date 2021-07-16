@@ -185,6 +185,11 @@
         <item name="fontFamily">@font/product_sans_regular</item>
 
     </style>
+    <style name="FreshChatTheme">
+        <item name="android:textColor">@color/text_color_red</item>
+    </style>
+    <style name="MyCustomTextAppearance1" parent="TextAppearance.AppCompat.Medium"><item name="android:textColor">@color/textColorPrimary</item><item name="android:textColorHighlight">@color/text_color_dark</item><item name="android:textColorHint">@color/text_color_light</item><item name="android:textColorLink">@color/text_color_light</item><item name="android:textSize">16sp</item><item name="android:textStyle">bold</item></style>
 
-
+    <style name="MyCustomTheme" parent="Theme.Freshchat.Light.DarkActionBar"><item name="freshchatChannelNameTextStyle">@style/CustomChannelNameTextStyle</item></style> <style name="CustomChannelNameTextStyle" parent="Widget.Freshchat.ChannelName">    <item name="android:textAppearance">@style/MyCustomTextAppearance1</item></style>
+    <style name="Theme.Freshchat.SelectedTheme" parent="MyCustomTheme" />
 </resources>
