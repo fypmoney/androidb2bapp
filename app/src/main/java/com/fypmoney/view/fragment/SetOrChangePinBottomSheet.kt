@@ -8,9 +8,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
 import com.fypmoney.databinding.BottomSheetSetOrChangePinBinding
+import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -42,6 +44,14 @@ class SetOrChangePinBottomSheet : BottomSheetDialogFragment() {
         )
         bottomSheet.setContentView(bindingSheet.root)
         bottomSheet.setCanceledOnTouchOutside(false)
+
+        val gotBtn = view.findViewById<Button>(R.id.goToMessages)!!
+
+        gotBtn.setOnClickListener {
+            Utility.callMessagingApp(requireContext())
+            dismiss()
+        }
+
 
         return view
     }

@@ -96,6 +96,11 @@
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <activity
+            android:name=".view.activity.AddMoneyView"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+        <activity
             android:name=".view.activity.PlaceOrderCardView"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
@@ -283,16 +288,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
 
-        <activity
-            android:name="com.freshchat.consumer.sdk.activity.FAQSearchActivity"
-            android:configChanges="orientation|screenSize"
-            android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme" />
 
-      <!--  <activity
-            android:name="com.freshchat.consumer.sdk.activity.ConversationDetailActivity"
-            android:theme="@style/MyCustomTheme"
-            tools:replace="android:theme" />-->
+        <!--  <activity
+              android:name="com.freshchat.consumer.sdk.activity.ConversationDetailActivity"
+              android:theme="@style/MyCustomTheme"
+              tools:replace="android:theme" />-->
 
         <receiver
             android:name=".receivers.SmsBroadcastReceiver"

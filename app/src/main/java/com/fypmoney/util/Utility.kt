@@ -16,6 +16,7 @@ import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.TextUtils
 import android.util.DisplayMetrics
+import android.util.Log
 import android.util.Patterns
 import android.widget.ImageView
 import android.widget.Toast
@@ -23,6 +24,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -718,15 +720,17 @@ object Utility {
     * This method is used to convert amount to Rs
     * */
     fun convertToRs(amount: String?): String {
-        return (amount?.toDouble()!! / 100).toString()
-    }
+        val result = (amount?.toDouble()!! / 100).toString()
+        val list = result.split(".")
+        if (list.size > 1) {
+            if (list[1] == "0" || list[1] == "00") {
+                return list[0]
+            } else {
+                return result
+            }
 
-    /*
-   * This method is used to convert amount to Rs
-   * */
-    fun convertToRs1(amount: String?): String {
-        val amountValue = (amount?.toInt()!! / 100).toString()
-        return BigDecimal(amountValue).setScale(2, BigDecimal.ROUND_HALF_EVEN).toString()
+        }
+        return result
     }
 
 
@@ -782,12 +786,20 @@ object Utility {
             if (!url.isNullOrEmpty()) {
                 Glide.with(context!!).load(url).placeholder(R.drawable.ic_user)
                     .into(imageView)
-            }
-            else {
+            } else {
                 imageView.setImageResource(R.drawable.ic_user)
 
             }
         }
+    }
+
+    /*
+    * This is used to call messaging app
+    * */
+    fun callMessagingApp(context: Context) {
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_APP_MESSAGING)
+        context.startActivity(intent)
     }
 
 }

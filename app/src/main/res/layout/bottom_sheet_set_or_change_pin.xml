@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <RelativeLayout
@@ -30,13 +31,13 @@
 
 
         <TableLayout
+            android:id="@+id/table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/bill_details"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="40dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
 
             <TableRow android:padding="5dp"
@@ -81,5 +82,20 @@
 
 
         </TableLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/goToMessages"
+            style="@style/Widget.App.Button"
+            android:layout_width="299dp"
+            android:layout_height="52dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/curved_background1"
+            app:backgroundTint="@color/text_color_dark"
+            android:text="@string/go_to_messages_btn_text"
+            android:textAllCaps="false"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="40dp"
+            android:layout_below="@+id/table"
+            />
+
     </RelativeLayout>
 </layout>

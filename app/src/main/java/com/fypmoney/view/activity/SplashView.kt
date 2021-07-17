@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.view_splash.*
 * */
 class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     private lateinit var mViewModel: SplashViewModel
-    private var mediaControl: MediaController? = null
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -42,8 +41,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         setObserver()
         val uri: Uri =
             Uri.parse("android.resource://" + packageName + "/" + R.raw.splash)
-        mediaControl = MediaController(this)
-        video.setMediaController(mediaControl)
+        video.setMediaController(null)
         video.setVideoURI(uri)
         video.start()
 

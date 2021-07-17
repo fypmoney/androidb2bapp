@@ -27,7 +27,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
 
     private lateinit var mViewModel: HomeScreenViewModel
     private lateinit var mViewBinding: ScreenHomeBinding
-    lateinit var chore_card: MaterialCardView
+    lateinit var choreCard: MaterialCardView
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -46,10 +46,10 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
-        chore_card = view.findViewById(R.id.chore_card)
-        chore_card.setOnClickListener {
-            intentToAddMemberActivity(ChoresActivity::class.java)
-            }
+        choreCard = view.findViewById(R.id.chore_card)
+        choreCard.setOnClickListener {
+            intentToPayActivity(ChoresActivity::class.java)
+        }
 
         setObservers()
 
@@ -61,13 +61,13 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     private fun setObservers() {
         mViewModel.onAddMoneyClicked.observe(viewLifecycleOwner) {
             if (it) {
-                callFrag()
-                //intentToAddMemberActivity(ChoresActivity::class.java)
+                callActivity(AddMoneyView::class.java)
                 mViewModel.onAddMoneyClicked.value = false
             }
         }
         mViewModel.onPayClicked.observe(viewLifecycleOwner) {
-            if (it) { intentToAddMemberActivity(ContactListView::class.java,AppConstants.PAY)
+            if (it) {
+                intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
                 mViewModel.onPayClicked.value = false
             }
         }
@@ -119,15 +119,12 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     /*
     * This method is used to call add money fragment
     * */
-    private fun callFrag() {
-        val fragment2 = AddMoneyScreen()
-        val fragmentManager: FragmentManager? = fragmentManager
-        val fragmentTransaction: FragmentTransaction = fragmentManager!!.beginTransaction()
-        fragmentTransaction.replace(R.id.container, fragment2)
-        fragmentTransaction.commit()
+    private fun callActivity(aClass: Class<*>) {
+        val intent = Intent(requireActivity(), aClass)
+        requireContext().startActivity(intent)
     }
 
-    private fun intentToAddMemberActivity(aClass: Class<*>,pay:String?=null) {
+    private fun intentToPayActivity(aClass: Class<*>, pay: String? = null) {
         val intent = Intent(requireActivity(), aClass)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
         requireContext().startActivity(intent)

@@ -1,6 +1,7 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -38,6 +39,11 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
         super.onCreate(savedInstanceState)
         setObserver()
         Glide.with(applicationContext).load(R.raw.phone_verified).into(image)
+        val mp: MediaPlayer = MediaPlayer.create(
+            this,
+            R.raw.tick
+        )
+        mp.start()
 
     }
 
