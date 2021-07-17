@@ -190,6 +190,89 @@
     </style>
     <style name="MyCustomTextAppearance1" parent="TextAppearance.AppCompat.Medium"><item name="android:textColor">@color/textColorPrimary</item><item name="android:textColorHighlight">@color/text_color_dark</item><item name="android:textColorHint">@color/text_color_light</item><item name="android:textColorLink">@color/text_color_light</item><item name="android:textSize">16sp</item><item name="android:textStyle">bold</item></style>
 
+
+
     <style name="MyCustomTheme" parent="Theme.Freshchat.Light.DarkActionBar"><item name="freshchatChannelNameTextStyle">@style/CustomChannelNameTextStyle</item></style> <style name="CustomChannelNameTextStyle" parent="Widget.Freshchat.ChannelName">    <item name="android:textAppearance">@style/MyCustomTextAppearance1</item></style>
     <style name="Theme.Freshchat.SelectedTheme" parent="MyCustomTheme" />
+
+    <style name="Widget.Freshchat.FAQList">
+        <item name="android:divider">@color/freshchat_article_list_divider</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:layout_marginStart">10dp</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:minHeight">?android:attr/listPreferredItemHeight</item>
+    </style>
+
+    <style name="Widget.Freshchat.FAQListItem">
+        <item name="android:background">?attr/selectableItemBackground</item>
+        <item name="android:textAppearance">@style/TextAppearance.Freshchat.Medium</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textDirection">firstStrong</item>
+        <item name="android:textAlignment">viewStart</item>
+    </style>
+
+    <!-- This style doesn't support anything except text appearance attributes -->
+    <style name="Widget.Freshchat.UserMessage">
+        <item name="android:textAppearance">@style/TextAppearance.Freshchat.Medium</item>
+        <item name="android:textColor">@color/freshchat_black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Widget.Freshchat.FAQCategoryName">
+        <item name="android:textAppearance">@style/TextviewBold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textDirection">firstStrong</item>
+    </style>
+
+    <style name="Widget.Freshchat.FAQCategoryDescription">
+        <item name="android:textAppearance">@style/TextviewRegular</item>
+        <item name="android:textAlignment">viewStart</item>
+    </style>
+
+    <style name="Widget.Freshchat.ChannelList">
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="Widget.Freshchat.ChannelAltIcon">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/curved_background14</item>
+        <item name="android:padding">7dp</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:layout_margin">@dimen/freshchat_channel_icon_padding</item>
+        <item name="android:textDirection">firstStrong</item>
+    </style>
+
+    <style name="Widget.Freshchat.ChannelName">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">@integer/freshchat_channel_name_max_lines</item>
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:textAppearance">@style/TextviewBold</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textDirection">firstStrong</item>
+        <item name="android:textAlignment">viewStart</item>
+    </style>
+
+    <style name="Widget.Freshchat.ChannelDescription">
+        <item name="android:ellipsize">end</item>
+        <item name="android:maxLines">@integer/freshchat_channel_desc_max_lines</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingEnd">8dp</item>
+        <item name="android:textAppearance">@style/TextviewRegular</item>
+        <item name="android:textDirection">firstStrong</item>
+        <item name="android:textAlignment">viewStart</item>
+    </style>
+
+
 </resources>
