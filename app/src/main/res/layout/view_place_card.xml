@@ -50,10 +50,10 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="12dp"
                     android:layout_marginStart="@dimen/margin"
+                    android:layout_marginTop="12dp"
                     android:layout_toEndOf="@+id/ivServiceLogo1"
+                    android:gravity="center_vertical"
 
                     >
 
@@ -68,9 +68,9 @@
                         android:id="@+id/price"
                         style="@style/TextviewRegular"
                         android:layout_below="@+id/heading"
+                        android:layout_marginTop="5dp"
                         android:ellipsize="end"
                         android:text="@string/price"
-                        android:layout_marginTop="5dp"
                         android:textSize="17dp" />
 
 
@@ -78,9 +78,9 @@
                         android:id="@+id/priceValue"
                         style="@style/TextviewBold"
                         android:layout_below="@+id/heading"
+                        android:layout_marginTop="5dp"
                         android:layout_toEndOf="@+id/price"
                         android:ellipsize="end"
-                        android:layout_marginTop="5dp"
                         android:text="@{@string/Rs+viewModel.amount}"
                         android:textSize="17dp" />
 
@@ -170,10 +170,31 @@
                         android:textColor="@color/text_color_dark"
                         android:textSize="17dp" />
 
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                        android:entries="@{viewModel.stateList}"
+                        android:layout_marginTop="20dp"
+                        android:paddingStart="@dimen/edittextHintPaddingStart"
+                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                        android:selectedItemPosition="@={viewModel.selectedStatePosition}" />
+
+                    <androidx.appcompat.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                        android:entries="@{viewModel.cityList}"
+                        android:padding="5dp"
+                        android:layout_marginTop="@dimen/edittextMarginTop"
+                        android:paddingStart="@dimen/edittextHintPaddingStart"
+                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                        android:selectedItemPosition="@={viewModel.selectedCityPosition}" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="@dimen/edittextMarginTop"
                         android:orientation="horizontal"
                         android:weightSum="2">
 

@@ -2,6 +2,7 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import android.text.TextUtils
+import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -24,13 +25,20 @@ import com.fypmoney.util.Utility
 class PlaceOrderCardViewModel(application: Application) : BaseViewModel(application) {
     var isPremiumCardVisible = ObservableField(true)
     var isProgressBarVisible = ObservableField(false)
-    var amount = ObservableField(AppConstants.CARD_PRICE)
+    var amount = ObservableField("0")
     var name = MutableLiveData<String>()
     var quote = MutableLiveData<String>()
     var pin = MutableLiveData<String>()
     var houseNo = MutableLiveData<String>()
     var roadName = MutableLiveData<String>()
     var landMark = MutableLiveData<String>()
+    var selectedStatePosition = MutableLiveData(0)
+    var selectedCityPosition = MutableLiveData(0)
+    var city = ObservableField<String>()
+    var state = ObservableField<String>()
+    var stateList = ObservableField<List<GetStatesResponseDetails>>()
+    var cityList = ObservableArrayList<String>()
+    var stateCode = ObservableField<String>()
     var onPriceBreakupClicked = MutableLiveData<Boolean>()
     var onPlaceOrderClicked = MutableLiveData<Boolean>()
     var onUseLocationClicked = MutableLiveData<Boolean>()
@@ -39,6 +47,8 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
 
     init {
         callGetAllProductsApi()
+        callGetStateApi()
+
     }
 
     /*
@@ -99,6 +109,7 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
                     houseAddress = houseNo.value,
                     areaDetail = roadName.value,
                     landmark = landMark.value,
+                    city = city.get(), state = state.get(), stateCode = stateCode.get(),
                     amount = Utility.convertToPaise(amount.get()!!),
                     productId = "1"
                 ),
@@ -122,6 +133,37 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
         )
     }
 
+    /*
+    * This method is used to get all state
+    * */
+    private fun callGetStateApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_STATE,
+                NetworkUtil.endURL(ApiConstant.API_GET_STATE),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
+    /*
+        * This method is used to get all city
+        * */
+    private fun callGetAllCityApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_CITY,
+                NetworkUtil.endURL(ApiConstant.API_GET_CITY + stateCode.get()),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
@@ -133,6 +175,13 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
                         responseData.orderCardResponseDetails?.kitNumber
                     )
                     onOrderCardSuccess.value = responseData.orderCardResponseDetails
+
+                }
+            }
+
+            ApiConstant.API_GET_STATE -> {
+                if (responseData is GetStatesResponse) {
+                    stateList.set(responseData.getStatesResponseDetails)
 
                 }
             }

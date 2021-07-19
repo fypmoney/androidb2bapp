@@ -192,7 +192,10 @@ data class OrderCardRequest(
     @SerializedName("areaDetail") val areaDetail: String? = null,
     @SerializedName("landmark") val landmark: String? = null,
     @SerializedName("amount") val amount: String? = null,
-    @SerializedName("productId") val productId: String? = null
+    @SerializedName("productId") val productId: String? = null,
+    @SerializedName("city") val city: String? = null,
+    @SerializedName("state") val state: String? = null,
+    @SerializedName("stateCode") val stateCode: String? = null
 ) : BaseRequest()
 
 data class OrderCardResponse(
@@ -249,4 +252,43 @@ data class ActivateCardResponse(
 
 data class PhysicalCardInitResponse(
     @SerializedName("msg") val msg: String? = null
+) : Serializable
+
+
+data class GetStatesResponse(
+    @SerializedName("data") val getStatesResponseDetails: List<GetStatesResponseDetails>? = null
+) : Serializable
+
+data class GetStatesResponseDetails(
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("name") val name: String? = null,
+    @SerializedName("description") val description: String? = null,
+    @SerializedName("code") val code: String? = null,
+    @SerializedName("countryId") val countryId: String? = null,
+    @SerializedName("gstCode") val gstCode: String? = null,
+    @SerializedName("status") val status: String? = null,
+    @SerializedName("sortOrder") val sortOrder: String? = null
+) : Serializable
+{
+    override fun toString(): String {
+        return name!!
+    }
+}
+
+
+
+data class GetCityResponse(
+    @SerializedName("data") val getCityResponseDetails: List<GetCityResponseDetails>? = null
+) : Serializable
+
+data class GetCityResponseDetails(
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("cityName") val cityName: String? = null,
+    @SerializedName("description") val description: String? = null,
+    @SerializedName("code") val code: String? = null,
+    @SerializedName("stateId") val stateId: String? = null,
+    @SerializedName("latitude") val latitude: String? = null,
+    @SerializedName("longitude") val longitude: String? = null,
+    @SerializedName("status") val status: String? = null,
+    @SerializedName("sortOrder") val sortOrder: String? = null
 ) : Serializable

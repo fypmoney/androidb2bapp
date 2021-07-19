@@ -8,7 +8,7 @@ object ApiConstant {
      const val GRANT_TYPE = "client_credentials"*/
     const val BASE_URL = "http://54.84.197.170:9300"
 
-    //const val BASE_URL = "https://techservices.fyp-e.in"
+  //  const val BASE_URL = "https://techservices.fyp-e.in"
     const val PAYU_BASE_URL = "https://info.payu.in"
     const val CLIENT_ID = "web_app"
     const val CLIENT_SECRET = "user"
@@ -62,6 +62,8 @@ object ApiConstant {
     const val API_GET_ORDER_CARD_STATUS = "/services/PockketService/api/order-card/"
     const val API_SET_CHANGE_PIN = "/services/PockketService/api/set/pin/"
     const val API_PHYSICAL_CARD_INIT = "/services/PockketService/api/activate/physical-card/init"
+    const val API_GET_STATE = "/services/loyaltyservice/api/states"
+    const val API_GET_CITY = "/services/loyaltyservice/api/cities/"
 
     const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
 

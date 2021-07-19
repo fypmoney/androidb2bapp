@@ -13,7 +13,6 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ViewUserFeedsBinding
 import com.fypmoney.listener.LocationListenerClass
-import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
