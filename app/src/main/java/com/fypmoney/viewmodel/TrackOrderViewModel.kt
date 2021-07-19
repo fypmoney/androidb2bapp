@@ -14,6 +14,7 @@ import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.GetAllProductsResponse
 import com.fypmoney.model.GetAllProductsResponseDetails
 import com.fypmoney.model.GetOrderCardStatusResponse
+import com.fypmoney.util.SharedPrefUtils
 
 /*
 * This is used for card tracking
@@ -28,6 +29,7 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
     var productResponse = MutableLiveData<GetAllProductsResponseDetails>()
 
     init {
+        kitNumber.set(SharedPrefUtils.getString(application, SharedPrefUtils.SF_KEY_KIT_NUMBER))
         callGetAllProductsApi()
         callGetCardStatusApi()
     }
@@ -40,7 +42,7 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
             ApiRequest(
                 ApiConstant.API_GET_ORDER_CARD_STATUS,
                 NetworkUtil.endURL(ApiConstant.API_GET_ORDER_CARD_STATUS + kitNumber.get()),
-                ApiUrl.POST,
+                ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = true
             )

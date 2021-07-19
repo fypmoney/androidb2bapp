@@ -37,7 +37,7 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
     var city = ObservableField<String>()
     var state = ObservableField<String>()
     var stateList = ObservableField<List<GetStatesResponseDetails>>()
-    var cityList = ObservableArrayList<String>()
+    var cityList = ObservableField<List<GetCityResponseDetails>>()
     var stateCode = ObservableField<String>()
     var onPriceBreakupClicked = MutableLiveData<Boolean>()
     var onPlaceOrderClicked = MutableLiveData<Boolean>()
@@ -151,11 +151,11 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
     /*
         * This method is used to get all city
         * */
-    private fun callGetAllCityApi() {
+    fun callGetAllCityApi(stateId: String?) {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_CITY,
-                NetworkUtil.endURL(ApiConstant.API_GET_CITY + stateCode.get()),
+                NetworkUtil.endURL(ApiConstant.API_GET_CITY + stateId),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -182,6 +182,16 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
             ApiConstant.API_GET_STATE -> {
                 if (responseData is GetStatesResponse) {
                     stateList.set(responseData.getStatesResponseDetails)
+                    stateCode.set(stateList.get()?.get(0)?.code)
+                    state.set(stateList.get()?.get(0)?.name)
+
+                }
+            }
+            ApiConstant.API_GET_CITY -> {
+                if (responseData is GetCityResponse) {
+                    cityList.set(responseData.getCityResponseDetails)
+                    city.set(cityList.get()?.get(0)?.cityName)
+
 
                 }
             }

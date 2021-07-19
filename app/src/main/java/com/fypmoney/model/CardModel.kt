@@ -268,13 +268,11 @@ data class GetStatesResponseDetails(
     @SerializedName("gstCode") val gstCode: String? = null,
     @SerializedName("status") val status: String? = null,
     @SerializedName("sortOrder") val sortOrder: String? = null
-) : Serializable
-{
+) : Serializable {
     override fun toString(): String {
         return name!!
     }
 }
-
 
 
 data class GetCityResponse(
@@ -291,4 +289,8 @@ data class GetCityResponseDetails(
     @SerializedName("longitude") val longitude: String? = null,
     @SerializedName("status") val status: String? = null,
     @SerializedName("sortOrder") val sortOrder: String? = null
-) : Serializable
+) : Serializable {
+    override fun toString(): String {
+        return cityName!!
+    }
+}

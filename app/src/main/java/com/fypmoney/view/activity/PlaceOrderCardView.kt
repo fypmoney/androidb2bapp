@@ -35,7 +35,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
     }
 
     override fun getLayoutId(): Int {
-            return R.layout.view_place_card
+        return R.layout.view_place_card
     }
 
     override fun getViewModel(): PlaceOrderCardViewModel {
@@ -63,6 +63,16 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
             }
         }
 
+        mViewModel.selectedStatePosition.observe(this) {
+           mViewModel.stateCode.set(mViewModel.stateList.get()?.get(it)?.code)
+           mViewModel.state.set(mViewModel.stateList.get()?.get(it)?.name)
+            mViewModel.callGetAllCityApi(mViewModel.stateList.get()?.get(it)?.id)
+        }
+
+        mViewModel.selectedCityPosition.observe(this) {
+            mViewModel.city.set(mViewModel.cityList.get()?.get(it)?.cityName)
+
+        }
         mViewModel.onPlaceOrderClicked.observe(this)
         {
             if (it) {
@@ -142,9 +152,9 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
             addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
         mViewModel.isProgressBarVisible.set(false)
         mViewModel.pin.value = addresses[0].postalCode
-  /*      mViewModel.pin.value = addresses[0].locality
-        mViewModel.pin.value = addresses[0].adminArea
-*/      //  mViewModel.pin.value = addresses[0].postalCode
+        /*      mViewModel.pin.value = addresses[0].locality
+              mViewModel.pin.value = addresses[0].adminArea
+      */      //  mViewModel.pin.value = addresses[0].postalCode
     }
 
     override fun onRequestPermissionsResult(
