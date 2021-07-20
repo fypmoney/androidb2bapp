@@ -174,7 +174,7 @@ data class CardInfoDetails(
     @SerializedName("cardType") val cardType: String? = null,
     @SerializedName("nameOnCard") val nameOnCard: String? = null,
     @SerializedName("isCardBlocked") val isCardBlocked: String? = null,
-    @SerializedName("kitNumber") val kitNumber: String? = null,
+    @SerializedName("kitNo") val kitNumber: String? = null,
     @SerializedName("posEnabled") val posEnabled: String? = null,
     @SerializedName("ecomEnabled") val ecomEnabled: String? = null,
     @SerializedName("atmEnabled") val atmEnabled: String? = null,

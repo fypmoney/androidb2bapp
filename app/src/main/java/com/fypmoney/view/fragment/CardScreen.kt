@@ -44,7 +44,8 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     CardSettingsBottomSheet.OnCardSettingsClickListener,
     SetSpendingLimitBottomSheet.OnSetSpendingLimitClickListener, CardSettingClickListener,
     ManageChannelsBottomSheet.OnBottomSheetDismissListener,
-    ActivateCardBottomSheet.OnActivateCardClickListener {
+    ActivateCardBottomSheet.OnActivateCardClickListener,
+    SetOrChangePinBottomSheet.OnSetOrChangePinClickListener {
     private lateinit var mViewModel: CardScreenViewModel
     private lateinit var mViewBinding: ScreenCardBinding
     private var mSetRightOut: AnimatorSet? = null
@@ -241,7 +242,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
    * */
     private fun callSetPinBottomSheet() {
         val bottomSheet =
-            SetOrChangePinBottomSheet()
+            SetOrChangePinBottomSheet(this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "SetPin")
     }
@@ -299,7 +300,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 callManageChannelsBottomSheet()
             }
             3 -> {
-                mViewModel.callSetOrChangeApi()
                 callSetPinBottomSheet()
             }
         }
@@ -383,6 +383,10 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
         )
         startActivity(intent)
+    }
+
+    override fun setPinClick() {
+        mViewModel.callSetOrChangeApi()
     }
 
 }

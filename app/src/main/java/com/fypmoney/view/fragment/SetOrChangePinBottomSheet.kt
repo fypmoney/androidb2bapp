@@ -19,7 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 /*
 * This is used to set the pin
 * */
-class SetOrChangePinBottomSheet : BottomSheetDialogFragment() {
+class SetOrChangePinBottomSheet(val onSetOrChangePinClickListener:OnSetOrChangePinClickListener) : BottomSheetDialogFragment() {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
@@ -48,12 +48,16 @@ class SetOrChangePinBottomSheet : BottomSheetDialogFragment() {
         val gotBtn = view.findViewById<Button>(R.id.goToMessages)!!
 
         gotBtn.setOnClickListener {
-            Utility.callMessagingApp(requireContext())
+            onSetOrChangePinClickListener.setPinClick()
             dismiss()
         }
 
 
         return view
+    }
+
+    interface OnSetOrChangePinClickListener {
+        fun setPinClick()
     }
 
 

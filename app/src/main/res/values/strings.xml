@@ -723,6 +723,7 @@
     set or change pin
     -->
     <string name="set_or_change_pin">Set or change pin</string>
+    <string name="otp_sent_success_message">OTP has been sent successfully</string>
     <string name="set_or_change_pin1">1:   Click on the \'Change PIN button below \'</string>
     <string name="set_or_change_pin2">2:   You will receive an SMS with a link to change PIN. Click on that link </string>
     <string name="set_or_change_pin3">3:   Enter your new PIN and click \'Okay \'. Your PIN has been changed.</string>

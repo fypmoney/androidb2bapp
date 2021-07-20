@@ -65,6 +65,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
                     android:text="date"
+                    android:visibility="gone"
                     android:textAlignment="center"
                     android:textSize="17dp" />
 
@@ -185,11 +186,13 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/amount"
                     style="@style/TextviewBold"
-                    android:layout_width="wrap_content"
+                    android:layout_width="31dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/bill_details"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="20dp"
-                    android:text="@string/dummy_amount1"
+                    android:layout_marginEnd="14dp"
+                    android:text="@{@string/Rs+viewModel.amount}"
                     android:textAlignment="center"
                     android:textSize="17dp" />
 
@@ -224,7 +227,8 @@
                             style="@style/TextviewRegular"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="@string/dummy_amt_item_total" />
+                            android:text="@{@string/Rs+viewModel.itemTotal}"
+                            />
 
 
                     </TableRow>
@@ -240,7 +244,8 @@
                             style="@style/TextviewRegular"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="@string/dummy_amt_item_packaging" />
+                            android:text="@{@string/Rs+viewModel.packCharge}"
+                            />
 
 
                     </TableRow>
@@ -256,7 +261,8 @@
                             style="@style/TextviewRegular"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="@string/dummy_amt_delivery_fee" />
+                            android:text="@{@string/Rs+viewModel.deliveryCharge}"
+                            />
 
                     </TableRow>
 
@@ -271,7 +277,8 @@
                             style="@style/TextviewRegular"
                             android:layout_weight="1"
                             android:gravity="end"
-                            android:text="@string/dummy_amt_item_total" />
+                            android:text="@{@string/Rs+viewModel.taxAmount}"
+                            />
 
                     </TableRow>
                 </TableLayout>
@@ -282,7 +289,6 @@
                     android:layout_height="2dp"
                     android:layout_below="@+id/table"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:background="@color/dividerColor" />
 

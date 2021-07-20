@@ -90,7 +90,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 ),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
     }
@@ -262,10 +262,14 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                     bankProfileResponse.get()?.cardInfos?.forEach {
                         when (it.cardType) {
                             AppConstants.CARD_TYPE_PHYSICAL -> {
-                                if (it.status != AppConstants.ENABLE) {
-                                    isActivateCardVisible.set(true)
-                                } else {
-                                    isActivateCardVisible.set(false)
+                                when {
+                                    !it.kitNumber.isNullOrEmpty() -> {
+                                        isOrderCard.set(false)
+                                    }
+                                    it.status == AppConstants.ENABLE -> {
+                                        isActivateCardVisible.set(false)
+                                    }
+
                                 }
 
                             }
@@ -294,6 +298,9 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                     balance.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)))
 
                 }
+            }
+            ApiConstant.API_SET_CHANGE_PIN -> {
+                Utility.showToast(PockketApplication.instance.getString(R.string.otp_sent_success_message))
             }
         }
     }

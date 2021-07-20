@@ -90,7 +90,7 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/curved_background1"
             app:backgroundTint="@color/text_color_dark"
-            android:text="@string/go_to_messages_btn_text"
+            android:text="@string/get_otp_btn_text"
             android:textAllCaps="false"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="40dp"

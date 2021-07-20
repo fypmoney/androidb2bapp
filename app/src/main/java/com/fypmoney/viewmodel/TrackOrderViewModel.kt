@@ -3,6 +3,7 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fypmoney.R
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -15,6 +16,7 @@ import com.fypmoney.model.GetAllProductsResponse
 import com.fypmoney.model.GetAllProductsResponseDetails
 import com.fypmoney.model.GetOrderCardStatusResponse
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 
 /*
 * This is used for card tracking
@@ -22,6 +24,11 @@ import com.fypmoney.util.SharedPrefUtils
 class TrackOrderViewModel(application: Application) : BaseViewModel(application) {
     private var kitNumber = ObservableField<String>()
     var orderStatus = ObservableField<String>()
+    var amount = ObservableField<String>()
+    var itemTotal = ObservableField<String>()
+    var packCharge = ObservableField<String>()
+    var taxAmount = ObservableField<String>()
+    var deliveryCharge = ObservableField<String>()
     var isOrderPlaced = ObservableField<Boolean>()
     var isOrderShipped = ObservableField<Boolean>()
     var isOrderDelivered = ObservableField<Boolean>()
@@ -76,7 +83,35 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
                 if (responseData is GetAllProductsResponse) {
                     orderStatus.set(responseData.getAllProductsResponseDetails?.get(0)?.status)
                     productResponse.value = responseData.getAllProductsResponseDetails?.get(0)
-
+                    amount.set(Utility.convertToRs(responseData.getAllProductsResponseDetails?.get(0)?.amount))
+                    deliveryCharge.set(
+                        Utility.convertToRs(
+                            responseData.getAllProductsResponseDetails?.get(
+                                0
+                            )?.deleivceryCharge
+                        )
+                    )
+                    taxAmount.set(
+                        Utility.convertToRs(
+                            responseData.getAllProductsResponseDetails?.get(
+                                0
+                            )?.taxAmount
+                        )
+                    )
+                    packCharge.set(
+                        Utility.convertToRs(
+                            responseData.getAllProductsResponseDetails?.get(
+                                0
+                            )?.packagingCharge
+                        )
+                    )
+                    itemTotal.set(
+                        Utility.convertToRs(
+                            (responseData.getAllProductsResponseDetails?.get(0)?.amount?.toInt()!! - (responseData.getAllProductsResponseDetails[0].packagingCharge?.toInt()!! + responseData.getAllProductsResponseDetails.get(
+                                0
+                            ).deleivceryCharge?.toInt()!! + responseData.getAllProductsResponseDetails[0].taxAmount?.toInt()!!)).toString()
+                        )
+                    )
 
                 }
             }
