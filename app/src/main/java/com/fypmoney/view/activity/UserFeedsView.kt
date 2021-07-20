@@ -63,7 +63,37 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
      */
     private fun setObserver() {
         mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
-            when (it.action?.type) {
+            when (it.displayCard) {
+                AppConstants.FEED_TYPE_DEEPLINK -> {
+                    try {
+                        intentToActivity(
+                            Class.forName(BASE_ACTIVITY_URL + it.action?.url!!),
+                            it
+                        )
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        intentToActivity(HomeView::class.java, it)
+                    }
+                }
+                AppConstants.FEED_TYPE_INAPPWEB-> {
+                    intentToActivity(UserFeedsDetailView::class.java, it, AppConstants.FEED_TYPE_INAPPWEB)
+                }
+               AppConstants.FEED_TYPE_BLOG -> {
+                    intentToActivity(UserFeedsDetailView::class.java, it, AppConstants.FEED_TYPE_BLOG)
+                }
+                AppConstants.FEED_TYPE_EXTWEBVIEW -> {
+                    startActivity(
+                        Intent.createChooser(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(it.action?.url)
+                            ), getString(R.string.browse_with)
+                        )
+                    )
+
+                }
+            }
+          /*  when (it.action?.type) {
                 AppConstants.FEED_TYPE_IN_APP -> {
                     try {
                         intentToActivity(
@@ -89,7 +119,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                     )
 
                 }
-            }
+            }*/
 
         }
 

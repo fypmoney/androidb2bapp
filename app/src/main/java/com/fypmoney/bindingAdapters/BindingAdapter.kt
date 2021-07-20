@@ -39,7 +39,7 @@ class BindingAdapter {
         @JvmStatic
         fun setImageUrl(imageView: AppCompatImageView, imageUrl: String?) {
             imageUrl?.let {
-                Glide.with(PockketApplication.instance).load(imageUrl).override(200, 150)
+                Glide.with(PockketApplication.instance).load(imageUrl)
                     .into(imageView).getSize(
                         SizeReadyCallback { width, height ->
                             //before you load image LOG height and width that u actually got?

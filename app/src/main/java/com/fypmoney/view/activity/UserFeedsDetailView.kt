@@ -52,7 +52,7 @@ class UserFeedsDetailView : BaseActivity<ViewUserFeedsDetailBinding, FeedDetails
 
 
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
-            AppConstants.FEED_TYPE_IN_APP_WEBVIEW -> {
+            AppConstants.FEED_TYPE_INAPPWEB -> {
                 if (mViewModel.feedDetails.get()?.action?.url!!.contains("https://www.youtube.com")) {
                     webView.loadUrl(mViewModel.feedDetails.get()?.action?.url!!)
                     finish()

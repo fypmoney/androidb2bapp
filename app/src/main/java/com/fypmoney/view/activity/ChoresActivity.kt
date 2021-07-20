@@ -11,13 +11,11 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.database.entity.ContactEntity
-import com.fypmoney.database.entity.MemberEntity
 import com.fypmoney.database.entity.TaskEntity
 import com.fypmoney.databinding.ViewChoresBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.adapter.TabsAdapter
 import com.fypmoney.view.fragment.AcceptRejectTaskFragment
-import com.fypmoney.view.fragment.LeaveMemberBottomSheetFragment
 import com.fypmoney.viewmodel.ChoresViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.card_your_task.*
