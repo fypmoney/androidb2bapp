@@ -61,7 +61,6 @@ class TransactionHistoryAdapter(var viewModel: TransactionHistoryViewModel) :
      * This will set the data in the list in adapter
      */
     fun setList(transactionList1: List<TransactionHistoryResponseDetails>?) {
-        Log.d("jfgrburo",transactionList1?.size.toString())
         try {
             transactionList!!.clear()
             transactionList1?.forEach {

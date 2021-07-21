@@ -81,12 +81,19 @@ class QrCodeScannerView : BaseActivity<ViewQrCodeScannerBinding, QrCodeScannerVi
                 Utility.showToast(getString(R.string.qr_scan_issue))
                 finish()
             } else {
-                intentToActivity(
-                    contactEntity = ContactEntity(),
-                    aClass = EnterAmountForPayRequestView::class.java,
-                    AppConstants.PAY_USING_QR,
-                    parseQrCode(result.contents).toString()
-                )
+                if (parseQrCode(result.contents) != null) {
+                    intentToActivity(
+                        contactEntity = ContactEntity(),
+                        aClass = EnterAmountForPayRequestView::class.java,
+                        AppConstants.PAY_USING_QR,
+                        parseQrCode(result.contents).toString()
+
+                    )
+                } else {
+                    Utility.showToast(getString(R.string.invalid_qr_code))
+                    callScan()
+                }
+
             }
         }
     }

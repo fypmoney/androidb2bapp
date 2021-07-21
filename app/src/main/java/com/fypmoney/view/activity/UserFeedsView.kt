@@ -2,6 +2,8 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -19,6 +21,8 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.BASE_ACTIVITY_URL
 import com.fypmoney.util.AppConstants.FEED_RESPONSE
 import com.fypmoney.util.Utility
+import com.fypmoney.view.fragment.CardSettingsBottomSheet
+import com.fypmoney.view.fragment.DidUKnowBottomSheet
 import com.fypmoney.viewmodel.FeedsViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_user_feeds.*
@@ -66,7 +70,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
         mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
             when (mViewModel.selectedPosition.get()) {
                 0 -> {
-                 Utility.showToast("jhaf84e")
+                    callDiduKnowBottomSheet()
                 }
                 else -> {
                     when (it.displayCard) {
@@ -231,5 +235,14 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
             latitude = mViewModel.latitude.get(),
             longitude = mViewModel.longitude.get()
         )
+    }
+    /*
+ * This method is used to call card settings
+ * */
+    private fun callDiduKnowBottomSheet() {
+        val bottomSheet =
+            DidUKnowBottomSheet()
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "DidUKnowSheet")
     }
 }

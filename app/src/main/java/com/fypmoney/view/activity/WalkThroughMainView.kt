@@ -51,6 +51,8 @@ class WalkThroughMainView : BaseActivity<ViewWalkThroughMainBinding, WalkThrough
 
         mViewBinding.tabLayoutIndicator.setupWithViewPager(mViewBinding.pager)
 
+
+
         setObserver()
     }
 

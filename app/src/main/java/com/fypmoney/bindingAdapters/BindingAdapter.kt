@@ -233,8 +233,24 @@ class BindingAdapter {
             }
 
         }
+        /**
+         *  Method to Bind image in with the image view
+         */
 
-    }
+        @BindingAdapter("SETIMAGE")
+        @JvmStatic
+        fun setImage(imageView: AppCompatImageView, imageUrl: Int?) {
+            imageView.setImageResource(imageUrl!!)
+
+
+        }
+
+
+
+
+
+
+}
 
 
 }
