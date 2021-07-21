@@ -44,7 +44,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DreamfolksApp"
         android:usesCleartextTraffic="true"
-        tools:replace="android:usesCleartextTraffic">
+        tools:replace="android:usesCleartextTraffic"
+        tools:ignore="UnusedAttribute">
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.fypmoney.provider"

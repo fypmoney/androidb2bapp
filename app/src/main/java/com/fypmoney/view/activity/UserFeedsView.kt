@@ -18,6 +18,7 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.BASE_ACTIVITY_URL
 import com.fypmoney.util.AppConstants.FEED_RESPONSE
+import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.FeedsViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_user_feeds.*
@@ -63,63 +64,80 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
      */
     private fun setObserver() {
         mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
-            when (it.displayCard) {
-                AppConstants.FEED_TYPE_DEEPLINK -> {
-                    try {
-                        intentToActivity(
-                            Class.forName(BASE_ACTIVITY_URL + it.action?.url!!),
-                            it
-                        )
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        intentToActivity(HomeView::class.java, it)
-                    }
+            when (mViewModel.selectedPosition.get()) {
+                0 -> {
+                 Utility.showToast("jhaf84e")
                 }
-                AppConstants.FEED_TYPE_INAPPWEB-> {
-                    intentToActivity(UserFeedsDetailView::class.java, it, AppConstants.FEED_TYPE_INAPPWEB)
-                }
-               AppConstants.FEED_TYPE_BLOG -> {
-                    intentToActivity(UserFeedsDetailView::class.java, it, AppConstants.FEED_TYPE_BLOG)
-                }
-                AppConstants.FEED_TYPE_EXTWEBVIEW -> {
-                    startActivity(
-                        Intent.createChooser(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse(it.action?.url)
-                            ), getString(R.string.browse_with)
-                        )
-                    )
+                else -> {
+                    when (it.displayCard) {
+                        AppConstants.FEED_TYPE_DEEPLINK -> {
+                            try {
+                                intentToActivity(
+                                    Class.forName(BASE_ACTIVITY_URL + it.action?.url!!),
+                                    it
+                                )
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                intentToActivity(HomeView::class.java, it)
+                            }
+                        }
+                        AppConstants.FEED_TYPE_INAPPWEB -> {
+                            intentToActivity(
+                                UserFeedsDetailView::class.java,
+                                it,
+                                AppConstants.FEED_TYPE_INAPPWEB
+                            )
+                        }
+                        AppConstants.FEED_TYPE_BLOG -> {
+                            intentToActivity(
+                                UserFeedsDetailView::class.java,
+                                it,
+                                AppConstants.FEED_TYPE_BLOG
+                            )
+                        }
+                        AppConstants.FEED_TYPE_EXTWEBVIEW -> {
+                            startActivity(
+                                Intent.createChooser(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(it.action?.url)
+                                    ), getString(R.string.browse_with)
+                                )
+                            )
 
+                        }
+                    }
                 }
             }
-          /*  when (it.action?.type) {
-                AppConstants.FEED_TYPE_IN_APP -> {
-                    try {
-                        intentToActivity(
-                            Class.forName(BASE_ACTIVITY_URL + it.action?.url!!),
-                            it
-                        )
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        intentToActivity(HomeView::class.java, it)
-                    }
-                }
-                AppConstants.FEED_TYPE_IN_APP_WEBVIEW, AppConstants.FEED_TYPE_FEED -> {
-                    intentToActivity(UserFeedsDetailView::class.java, it, type = it.action?.type)
-                }
-                AppConstants.FEED_TYPE_EXTERNAL_WEBVIEW -> {
-                    startActivity(
-                        Intent.createChooser(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse(it.action?.url)
-                            ), getString(R.string.browse_with)
-                        )
-                    )
 
-                }
-            }*/
+
+            /*  when (it.action?.type) {
+                  AppConstants.FEED_TYPE_IN_APP -> {
+                      try {
+                          intentToActivity(
+                              Class.forName(BASE_ACTIVITY_URL + it.action?.url!!),
+                              it
+                          )
+                      } catch (e: Exception) {
+                          e.printStackTrace()
+                          intentToActivity(HomeView::class.java, it)
+                      }
+                  }
+                  AppConstants.FEED_TYPE_IN_APP_WEBVIEW, AppConstants.FEED_TYPE_FEED -> {
+                      intentToActivity(UserFeedsDetailView::class.java, it, type = it.action?.type)
+                  }
+                  AppConstants.FEED_TYPE_EXTERNAL_WEBVIEW -> {
+                      startActivity(
+                          Intent.createChooser(
+                              Intent(
+                                  Intent.ACTION_VIEW,
+                                  Uri.parse(it.action?.url)
+                              ), getString(R.string.browse_with)
+                          )
+                      )
+
+                  }
+              }*/
 
         }
 
@@ -163,7 +181,11 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         for (permission in permissions) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), permission)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    requireActivity(),
+                    permission
+                )
+            ) {
                 //denied
 
                 if (mViewModel.isDenied.get() == false) {
@@ -178,7 +200,8 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                 ) {
                     //allow
                     if (!isLocationPermissionAllowed.get()!!) {
-                        LocationListenerClass(requireActivity(), this
+                        LocationListenerClass(
+                            requireActivity(), this
                         ).permissions()
                     }
                     isLocationPermissionAllowed.set(true)
@@ -202,11 +225,11 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
     }
 
     override fun onTryAgainClicked() {
-          shimmerLayout.startShimmerAnimation()
-          mViewModel.isRecyclerviewVisible.set(false)
-          mViewModel.callFetchFeedsApi(
-              latitude = mViewModel.latitude.get(),
-              longitude = mViewModel.longitude.get()
-          )
-      }
-  }
+        shimmerLayout.startShimmerAnimation()
+        mViewModel.isRecyclerviewVisible.set(false)
+        mViewModel.callFetchFeedsApi(
+            latitude = mViewModel.latitude.get(),
+            longitude = mViewModel.longitude.get()
+        )
+    }
+}

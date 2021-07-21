@@ -13,11 +13,8 @@ import com.fypmoney.databinding.FeedsRowLayoutVerticalBinding
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewhelper.FeedsViewHelper
-import com.fypmoney.viewmodel.FeedsViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import java.lang.Exception
 
 
 /**
@@ -90,7 +87,7 @@ class FeedsSectionAdapter(var onFeedItemClickListener: FeedsAdapter.OnFeedItemCl
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         private lateinit var mViewHelper: FeedsViewHelper
         override fun onBind(position: Int) {
-            mViewHelper = FeedsViewHelper(
+            mViewHelper = FeedsViewHelper(position,
                 feedList?.get(position), onFeedItemClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
@@ -117,7 +114,7 @@ class FeedsSectionAdapter(var onFeedItemClickListener: FeedsAdapter.OnFeedItemCl
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         private lateinit var mViewHelper: FeedsViewHelper
         override fun onBind(position: Int) {
-            mViewHelper = FeedsViewHelper(
+            mViewHelper = FeedsViewHelper(position,
                 feedList?.get(position), onFeedItemClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
@@ -135,7 +132,7 @@ class FeedsSectionAdapter(var onFeedItemClickListener: FeedsAdapter.OnFeedItemCl
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         private lateinit var mViewHelper: FeedsViewHelper
         override fun onBind(position: Int) {
-            mViewHelper = FeedsViewHelper(
+            mViewHelper = FeedsViewHelper(position,
                 feedList?.get(position), onFeedItemClickListener
             )
             mRowItemBinding?.youtubePlayerView?.addYouTubePlayerListener(object :

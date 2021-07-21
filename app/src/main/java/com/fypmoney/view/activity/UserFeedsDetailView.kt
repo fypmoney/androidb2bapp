@@ -1,6 +1,7 @@
 package com.fypmoney.view.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -8,6 +9,7 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewUserFeedsDetailBinding
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.FeedDetailsViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_push_notification.*
@@ -49,10 +51,22 @@ class UserFeedsDetailView : BaseActivity<ViewUserFeedsDetailBinding, FeedDetails
         val mimeType = "text/html"
         val encoding = "UTF-8"
 
+        //  webView.loadUrl("https://www.google.com/")
+
+
+        mViewModel.authorAndDate.set(
+            mViewModel.feedDetails.get()?.author + "/" + Utility.parseDateTime(
+                mViewModel.feedDetails.get()?.createdDate,
+                inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT,
+                outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT4
+            )
+        )
 
 
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.FEED_TYPE_INAPPWEB -> {
+                mViewModel.isBlogFeedType.set(false)
+
                 if (mViewModel.feedDetails.get()?.action?.url!!.contains("https://www.youtube.com")) {
                     webView.loadUrl(mViewModel.feedDetails.get()?.action?.url!!)
                     finish()
@@ -60,10 +74,10 @@ class UserFeedsDetailView : BaseActivity<ViewUserFeedsDetailBinding, FeedDetails
                 } else {
                     webView.loadUrl(mViewModel.feedDetails.get()?.action?.url!!)
 
-
                 }
             }
             else -> {
+                mViewModel.isBlogFeedType.set(true)
                 webView.loadDataWithBaseURL(
                     "",
                     mViewModel.feedDetails.get()?.responsiveContent!!,

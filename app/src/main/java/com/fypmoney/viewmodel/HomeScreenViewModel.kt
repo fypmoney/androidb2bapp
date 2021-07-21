@@ -119,10 +119,6 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         isFeedVisible.set(true)
     }
 
-    override fun onFeedClick(feedDetails: FeedDetails) {
-        onFeedButtonClick.value = feedDetails
-
-    }
 
     /*
    * This is used to handle Open Chore
@@ -161,5 +157,9 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
 
         return feedRequestModel
 
+    }
+
+    override fun onFeedClick(position: Int, feedDetails: FeedDetails) {
+        onFeedButtonClick.value = feedDetails
     }
 }

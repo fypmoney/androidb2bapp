@@ -35,19 +35,24 @@ class BindingAdapter {
          *  Method to Bind image in with the image view
          */
 
-        @BindingAdapter("IMAGE_URL")
+        @BindingAdapter(value = ["position", "IMAGE_URL"], requireAll = false)
         @JvmStatic
-        fun setImageUrl(imageView: AppCompatImageView, imageUrl: String?) {
+        fun setImageUrl(imageView: AppCompatImageView, position: Int,imageUrl: String?) {
             imageUrl?.let {
-                Glide.with(PockketApplication.instance).load(imageUrl)
-                    .into(imageView).getSize(
-                        SizeReadyCallback { width, height ->
-                            //before you load image LOG height and width that u actually got?
-                            // mEditDeskLayout.setImageSize(width,height);
-                        })
-                /*   Glide.with(DreamfolksApplication.instance)
-                       .load(imageUrl)
-                       .into(imageView)*/
+                when (position) {
+                    0 -> {
+                        imageView.setImageResource(R.drawable.did_u_know_card)
+                    }
+                    else -> {
+                        Glide.with(PockketApplication.instance).load(imageUrl)
+                            .into(imageView).getSize(
+                                SizeReadyCallback { width, height ->
+                                    //before you load image LOG height and width that u actually got?
+                                    // mEditDeskLayout.setImageSize(width,height);
+                                })
+                    }
+                }
+
             }
 
 

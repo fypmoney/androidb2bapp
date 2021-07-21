@@ -128,6 +128,7 @@ object AppConstants {
     const val CHANGED_DATE_TIME_FORMAT1 = "MMM dd"
     const val CHANGED_DATE_TIME_FORMAT2 = "MMM dd HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT3 = "MMM dd, HH:mmaa"
+    const val CHANGED_DATE_TIME_FORMAT4 = "MMM dd, yyyy"
     const val PAYU_SERVER = "pay u server"
 
     const val TYPE_UPI = "upi"
