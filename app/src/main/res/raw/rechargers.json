@@ -1,0 +1,32 @@
+{
+	"stores" : [
+		{
+			"url": "Joe",
+			"title": "Paytm",
+			"image": "Jackson"
+
+		},
+		{
+			"url": "Joe",
+			"title": "Phonepe",
+			"image": "Jackson"
+		},
+		{
+			"url": "Joe",
+			"title": "Airtel",
+			"image": "Jackson"
+		}
+	,
+		{
+			"url": "Joe",
+			"title": "Amazon",
+			"image": "Jackson"
+		}
+	,
+		{
+			"url": "Joe",
+			"title": "Amazon",
+			"image": "Jackson"
+		}
+	]
+}

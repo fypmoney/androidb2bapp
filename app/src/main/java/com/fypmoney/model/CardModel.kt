@@ -180,6 +180,14 @@ data class CardInfoDetails(
     @SerializedName("atmEnabled") val atmEnabled: String? = null,
     @SerializedName("clEnabled") val clEnabled: String? = null
 ) : Serializable
+data class CardInfoDetailsBottomSheet(
+
+    @SerializedName("cardNo") var cardNo: String? = null,
+    @SerializedName("CVV") val CVV: String? = null,
+
+    @SerializedName("expiry_month") val expiry_month: String,
+    @SerializedName("expiry_year") val expiry_year: String,
+) : Serializable
 
 
 data class OrderCardRequest(

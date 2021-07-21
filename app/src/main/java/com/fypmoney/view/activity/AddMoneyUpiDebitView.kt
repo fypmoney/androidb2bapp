@@ -269,6 +269,9 @@ open class AddMoneyUpiDebitView :
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "AddUPI")
     }
+    interface OnOpenCardClickListener {
+        fun OnOpenCardClickListener()
+    }
 
     override fun onAddNewCardButtonClick(addNewCardDetails: AddNewCardDetails) {
         callDebitCardPaymentGateway(0, addNewCardDetails)
@@ -552,8 +555,7 @@ This method is used to call the pay u api
 
         merchantWebService.hash = hash
         // dont fetch the data if its been called from payment activity.
-        val postData: PostData =
-            MerchantWebServicePostParams(merchantWebService).merchantWebServicePostParams
+        val postData: PostData = MerchantWebServicePostParams(merchantWebService).merchantWebServicePostParams
 
         // ok we got the post params, let make an api call to payu to fetch the payment related details
         payuConfig.data = postData.result

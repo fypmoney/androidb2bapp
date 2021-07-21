@@ -65,7 +65,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         }
         mViewModel.onOrderCardSuccess.observe(this)
         {
-            intentToActivity(Tra)
+//            intentToActivity(Tra)
 
         }
     }

@@ -1,0 +1,32 @@
+{
+	"stores" : [
+		{
+			"url": "Joe",
+			"title": "Amazon",
+			"image": "Jackson"
+
+		},
+		{
+			"url": "Joe",
+			"title": "Myntra",
+			"image": "Jackson"
+		},
+		{
+			"url": "Joe",
+			"title": "Nyka",
+			"image": "Jackson"
+		}
+	,
+		{
+			"url": "Joe",
+			"title": "Amazon",
+			"image": "Jackson"
+		}
+	,
+		{
+			"url": "Joe",
+			"title": "Amazon",
+			"image": "Jackson"
+		}
+	]
+}
