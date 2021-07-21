@@ -199,9 +199,8 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
                 if (responseData is GetAllProductsResponse) {
                     productResponse.value = responseData.getAllProductsResponseDetails?.get(0)
                     val amountList =
-                        Utility.convertToRs(responseData.getAllProductsResponseDetails?.get(0)?.amount)
-                            .split(".")
-                    amount.set(amountList[0])
+                        Utility.convertToRs(responseData.getAllProductsResponseDetails?.get(0)?.amount)?.split(".")
+                    amount.set(amountList?.get(0))
                 }
             }
 

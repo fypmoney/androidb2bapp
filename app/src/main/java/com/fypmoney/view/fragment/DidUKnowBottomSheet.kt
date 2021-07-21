@@ -25,7 +25,7 @@ import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 /*
 * This is used to show did u know data
 * */
-class DidUKnowBottomSheet :
+class DidUKnowBottomSheet(var resourceList:ArrayList<String?>) :
     BottomSheetDialogFragment() {
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
@@ -54,7 +54,7 @@ class DidUKnowBottomSheet :
         val viewPager = view.findViewById<ViewPager>(R.id.viewPager)
 
 
-        for (i in 0 until 7) {
+        for (i in 0 until 3) {
             tabLayout.addTab(tabLayout.newTab().setText("" + (i + 1).toString()))
         }
 
@@ -62,7 +62,7 @@ class DidUKnowBottomSheet :
         tabLayout.setupWithViewPager(viewPager)
         val adapter = ViewPagerAdapter(
             childFragmentManager,
-            7, resourceId = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg"
+          3, resourceId = "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg"
         )
         viewPager.adapter = adapter
 

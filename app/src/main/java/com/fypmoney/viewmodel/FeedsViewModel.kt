@@ -39,6 +39,8 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
     val longitude = ObservableField<Double>()
     val isDenied = ObservableField(false)
     val selectedPosition = ObservableField<Int>()
+    val fromWhichScreen = ObservableField(0)
+    val onFeedsSuccess = MutableLiveData<ArrayList<String?>>()
 
 
     /*
@@ -90,6 +92,15 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
 
 
                         }
+
+                        when {
+                            fromWhichScreen.get() != 0 -> {
+                                val resultList = ArrayList<String?>()
+                                response?.feedDetails?.forEach { resultList.add(it.resourceId) }
+                                onFeedsSuccess.value = resultList
+
+                            }
+                        }
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -101,7 +112,7 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
     }
 
     override fun onFeedClick(position: Int, feedDetails: FeedDetails) {
-        selectedPosition.set(position!!)
+        selectedPosition.set(position)
         onFeedButtonClick.value = feedDetails
     }
 
@@ -151,8 +162,18 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
 
         val feedRequestModel = FeedRequestModel()
 
-        feedRequestModel.query =
-            "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],latitude:\"" + latitude + "\",longitude:\"" + longitude + "\",withinRadius:\"" + AppConstants.FEED_WITHIN_RADIUS + "\",displayCard: [\"STATICIMAGE\",\"BLOG\", \"DEEPLINK\", \"INAPPWEB\", \"EXTWEBVIEW\", \"VIDEO\"]) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+        when (fromWhichScreen.get()) {
+            0 -> {
+                feedRequestModel.query =
+                    "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],latitude:\"" + latitude + "\",longitude:\"" + longitude + "\",withinRadius:\"" + AppConstants.FEED_WITHIN_RADIUS + "\",displayCard: [\"STATICIMAGE\",\"BLOG\", \"DEEPLINK\", \"INAPPWEB\", \"EXTWEBVIEW\", \"VIDEO\"]) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+
+            }
+            else -> {
+                feedRequestModel.query =
+                    "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],latitude:\"" + latitude + "\",longitude:\"" + longitude + "\",withinRadius:\"" + AppConstants.FEED_WITHIN_RADIUS + "\",displayCard: [\"DIDYOUKNOW\"]) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+
+            }
+        }
         return feedRequestModel
 
     }

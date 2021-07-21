@@ -719,16 +719,23 @@ object Utility {
     /*
     * This method is used to convert amount to Rs
     * */
-    fun convertToRs(amount: String?): String {
-        val result = (amount?.toDouble()!! / 100).toString()
-        val list = result.split(".")
-        if (list.size > 1) {
-            if (list[1] == "0" || list[1] == "00") {
-                return list[0]
-            } else {
-                return result
-            }
+    fun convertToRs(amount: String?): String? {
+        var result:String?=null
+        try {
+             result = (amount?.toDouble()!! / 100).toString()
+            val list = result.split(".")
+            if (list.size > 1) {
+                if (list[1] == "0" || list[1] == "00") {
+                    return list[0]
+                } else {
+                    return result
+                }
 
+            }
+        }
+        catch (e:java.lang.Exception)
+        {
+            e.printStackTrace()
         }
         return result
     }

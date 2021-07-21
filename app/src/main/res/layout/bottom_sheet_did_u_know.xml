@@ -14,7 +14,7 @@
             app:tabMode="fixed"
             app:tabPaddingStart="@dimen/margin"
             app:tabIndicatorHeight="10dp"
-            app:tabBackground="@drawable/tab_indicator_color"
+            app:tabIndicatorColor="@color/colorGreen"
             app:tabTextColor="@android:color/white" />
 
         <androidx.viewpager.widget.ViewPager

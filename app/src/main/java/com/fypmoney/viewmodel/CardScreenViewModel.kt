@@ -295,7 +295,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             ApiConstant.API_GET_WALLET_BALANCE -> {
                 if (responseData is GetWalletBalanceResponse) {
                     isFetchBalanceVisible.set(false)
-                    balance.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)))
+                    balance.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)!!))
 
                 }
             }

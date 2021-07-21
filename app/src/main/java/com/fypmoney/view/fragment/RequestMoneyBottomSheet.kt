@@ -105,7 +105,7 @@ class RequestMoneyBottomSheet(
                     mainObject.getString(
                         "amount"
                     )
-                )
+                )!!
             )
 
         btnReject.setOnClickListener {

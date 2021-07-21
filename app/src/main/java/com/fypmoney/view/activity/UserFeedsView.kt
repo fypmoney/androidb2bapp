@@ -67,10 +67,23 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
+        mViewModel.onFeedsSuccess.observe(viewLifecycleOwner)
+        {
+            callDiduKnowBottomSheet(it)
+
+        }
         mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
             when (mViewModel.selectedPosition.get()) {
                 0 -> {
-                    callDiduKnowBottomSheet()
+                    mViewModel.fromWhichScreen.set(1)
+                    mViewModel.isApiLoading.set(true)
+                    mViewModel.callFetchFeedsApi(
+                        isProgressBarVisible = true,
+                        latitude = mViewModel.latitude.get(),
+                        longitude = mViewModel.longitude.get()
+                    )
+
+
                 }
                 else -> {
                     when (it.displayCard) {
@@ -211,6 +224,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                     isLocationPermissionAllowed.set(true)
                 } else {
                     //set to never ask again
+                    mViewModel.isApiLoading.set(true)
                     mViewModel.callFetchFeedsApi(false, 0.0, 0.0)
 
                 }
@@ -236,12 +250,13 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
             longitude = mViewModel.longitude.get()
         )
     }
+
     /*
  * This method is used to call card settings
  * */
-    private fun callDiduKnowBottomSheet() {
+    private fun callDiduKnowBottomSheet(list: ArrayList<String?>) {
         val bottomSheet =
-            DidUKnowBottomSheet()
+            DidUKnowBottomSheet(list)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "DidUKnowSheet")
     }

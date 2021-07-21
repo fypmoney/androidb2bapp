@@ -77,8 +77,8 @@ class SetSpendingLimitBottomSheet(
                     bankProfileResponseDetails?.posLimit
                 )
             seekbarEcom.progress =
-                Utility.convertToRs(bankProfileResponseDetails?.ecomLimit).toInt()
-            seekbarPos.progress = Utility.convertToRs(bankProfileResponseDetails?.posLimit).toInt()
+                Utility.convertToRs(bankProfileResponseDetails?.ecomLimit)!!.toInt()
+            seekbarPos.progress = Utility.convertToRs(bankProfileResponseDetails?.posLimit)!!.toInt()
         } catch (e: Exception) {
             e.printStackTrace()
         }
