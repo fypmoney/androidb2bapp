@@ -89,42 +89,7 @@
 
             </TableRow>
 
-            <TableRow android:padding="5dp"
-                android:layout_marginTop="10dp">
 
-                <TextView
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
-                    android:textColor="@color/text_color_dark"
-                    android:text="@string/packaging" />
-
-                <TextView
-                    android:id="@+id/packaging"
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/dummy_amt_item_packaging" />
-
-
-            </TableRow>
-
-            <TableRow android:padding="5dp"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
-                    android:textColor="@color/text_color_dark"
-                    android:text="@string/delivery_fee" />
-
-                <TextView
-                    android:id="@+id/delivery_fee"
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/dummy_amt_delivery_fee" />
-
-            </TableRow>
 
             <TableRow android:padding="5dp"
                 android:layout_marginTop="10dp">

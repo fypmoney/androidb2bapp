@@ -216,7 +216,27 @@ data class OrderCardResponseDetails(
 ) : Serializable
 
 data class GetOrderCardStatusResponse(
-    @SerializedName("data") val orderCardResponseDetails: OrderCardResponseDetails? = null
+    @SerializedName("data") val GetOrderCardStatusResponseDetails: GetOrderCardStatusResponseDetails? = null
+) : Serializable
+
+data class GetOrderCardStatusResponseDetails(
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("nameOnCard") val nameOnCard: String? = null,
+    @SerializedName("customerName") val customerName: String? = null,
+    @SerializedName("productId") val productId: String? = null,
+    @SerializedName("kitNo") val kitNo: String? = null,
+    @SerializedName("name") val name: String? = null,
+    @SerializedName("amount") val amount: String? = null,
+    @SerializedName("loyaltyPoints") val loyaltyPoints: String? = null,
+    @SerializedName("status") val status: String? = null,
+    @SerializedName("packageStatusList") val packageStatusList: PackageStatusList? = null
+) : Serializable
+
+data class PackageStatusList(
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("status") val status: String? = null,
+    @SerializedName("date") val date: String? = null,
+    @SerializedName("isDone") val isDone: String? = null
 ) : Serializable
 
 data class GetAllProductsResponse(

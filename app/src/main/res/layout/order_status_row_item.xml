@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewHelper"
+            type="com.fypmoney.viewhelper.OrderStatusViewHelper" />
+
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/screenMarginLeft"
+        android:layout_marginEnd="@dimen/screenMarginRight"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageOrderPlaced"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/ic_check_skyblue" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textOrderPlaced"
+            style="@style/TextviewRegular"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/imageOrderPlaced"
+            android:text="@{viewHelper.orderStatus.packageStatusList.status}"
+            android:textAlignment="center"
+            android:textSize="17dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/date"
+            style="@style/TextviewRegular"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:text="date"
+            android:textAlignment="center"
+            android:textSize="17dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/view_order_placed"
+            android:layout_width="2dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/imageOrderPlaced"
+            android:layout_toStartOf="@+id/imageOrderPlaced"
+            android:layout_toEndOf="@+id/imageOrderPlaced"
+            android:background="@drawable/dotted_black"
+
+            />
+
+    </RelativeLayout>
+</layout>

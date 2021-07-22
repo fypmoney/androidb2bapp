@@ -17,6 +17,7 @@ import com.fypmoney.model.GetAllProductsResponseDetails
 import com.fypmoney.model.GetOrderCardStatusResponse
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.adapter.OrderStatusAdapter
 
 /*
 * This is used for card tracking
@@ -26,13 +27,13 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
     var orderStatus = ObservableField<String>()
     var amount = ObservableField<String>()
     var itemTotal = ObservableField<String>()
-    var packCharge = ObservableField<String>()
+    var nameOfProduct = ObservableField<String>()
     var taxAmount = ObservableField<String>()
-    var deliveryCharge = ObservableField<String>()
     var isOrderPlaced = ObservableField<Boolean>()
     var isOrderShipped = ObservableField<Boolean>()
     var isOrderDelivered = ObservableField<Boolean>()
     var isOrderOutForDelivery = ObservableField<Boolean>()
+    var orderStatusAdapter = OrderStatusAdapter(this)
     var productResponse = MutableLiveData<GetAllProductsResponseDetails>()
 
     init {
@@ -77,6 +78,8 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
         when (purpose) {
             ApiConstant.API_GET_ORDER_CARD_STATUS -> {
                 if (responseData is GetOrderCardStatusResponse) {
+
+                    orderStatusAdapter.setList(responseData.GetOrderCardStatusResponseDetails)
                 }
             }
             ApiConstant.API_GET_ALL_PRODUCTS -> {
@@ -84,25 +87,16 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
                     orderStatus.set(responseData.getAllProductsResponseDetails?.get(0)?.status)
                     productResponse.value = responseData.getAllProductsResponseDetails?.get(0)
                     amount.set(Utility.convertToRs(responseData.getAllProductsResponseDetails?.get(0)?.amount))
-                    deliveryCharge.set(
-                        Utility.convertToRs(
-                            responseData.getAllProductsResponseDetails?.get(
-                                0
-                            )?.deleivceryCharge
-                        )
+                    nameOfProduct.set(
+                        responseData.getAllProductsResponseDetails?.get(
+                            0
+                        )?.name
                     )
                     taxAmount.set(
                         Utility.convertToRs(
                             responseData.getAllProductsResponseDetails?.get(
                                 0
                             )?.taxAmount
-                        )
-                    )
-                    packCharge.set(
-                        Utility.convertToRs(
-                            responseData.getAllProductsResponseDetails?.get(
-                                0
-                            )?.packagingCharge
                         )
                     )
                     itemTotal.set(

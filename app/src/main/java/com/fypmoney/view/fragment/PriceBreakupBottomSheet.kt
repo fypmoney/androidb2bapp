@@ -53,17 +53,15 @@ class PriceBreakupBottomSheet(
 
         val amount = view.findViewById<TextView>(R.id.amount)!!
         val tax = view.findViewById<TextView>(R.id.tax)!!
-        val deliveryFee = view.findViewById<TextView>(R.id.delivery_fee)!!
-        val packaging = view.findViewById<TextView>(R.id.packaging)!!
         val itemTotal = view.findViewById<TextView>(R.id.item_total)!!
+        val cardType = view.findViewById<TextView>(R.id.card_type)!!
         val gotBtn = view.findViewById<Button>(R.id.gotBtn)!!
 
         gotBtn.setOnClickListener { dismiss() }
 
         amount.text = getString(R.string.Rs) + amountValue
         tax.text = getString(R.string.Rs) + productResponse?.taxAmount
-        deliveryFee.text = getString(R.string.Rs) + productResponse?.deleivceryCharge
-        packaging.text = getString(R.string.Rs) + productResponse?.packagingCharge
+        cardType.text = productResponse?.name
         itemTotal.text =
             getString(R.string.Rs) + (amountValue?.toInt()!! - (productResponse?.taxAmount?.toInt()!! + productResponse.deleivceryCharge?.toInt()!! + productResponse.taxAmount.toInt()))
 

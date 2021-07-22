@@ -91,7 +91,7 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
             TextUtils.isEmpty(pin.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.pin_empty_error))
             }
-            
+
             TextUtils.isEmpty(houseNo.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.hno_empty_error))
             }

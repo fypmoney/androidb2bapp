@@ -198,6 +198,9 @@ class ApiDataParsing {
                 ApiConstant.API_GET_CITY -> {
                     getObject(response, GetCityResponse::class.java)
                 }
+                ApiConstant.API_SET_CHANGE_PIN -> {
+                    getObject(response, SetPinResponse::class.java)
+                }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {
                         PayuConstants.VALIDATE_VPA -> {
