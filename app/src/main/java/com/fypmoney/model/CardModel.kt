@@ -254,6 +254,10 @@ data class PhysicalCardInitResponse(
     @SerializedName("msg") val msg: String? = null
 ) : Serializable
 
+data class SetPinResponse(
+    @SerializedName("cardIdentifier") val cardIdentifier: String? = null,
+    @SerializedName("url") val url: String? = null
+) : Serializable
 
 data class GetStatesResponse(
     @SerializedName("data") val getStatesResponseDetails: List<GetStatesResponseDetails>? = null

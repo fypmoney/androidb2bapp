@@ -8,6 +8,7 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -64,9 +65,10 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         }
 
         mViewModel.selectedStatePosition.observe(this) {
-           mViewModel.stateCode.set(mViewModel.stateList.get()?.get(it)?.code)
-           mViewModel.state.set(mViewModel.stateList.get()?.get(it)?.name)
-            mViewModel.callGetAllCityApi(mViewModel.stateList.get()?.get(it)?.id)
+            mViewModel.stateCode.set(mViewModel.stateList.get()?.get(it)?.code)
+            mViewModel.state.set(mViewModel.stateList.get()?.get(it)?.name)
+            if (!mViewModel.stateList.get()?.get(it)?.id.isNullOrEmpty())
+                mViewModel.callGetAllCityApi(mViewModel.stateList.get()?.get(it)?.id)
         }
 
         mViewModel.selectedCityPosition.observe(this) {

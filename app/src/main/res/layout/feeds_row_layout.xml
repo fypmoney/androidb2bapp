@@ -18,18 +18,29 @@
 
     </data>
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/layoutServicePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{()->viewHelper.onFeedButtonClick()}"
+        android:background="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="@dimen/card_elevation"
+        app:layout_constraintTop_toTopOf="parent">
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:onClick="@{()->viewHelper.onFeedButtonClick()}">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardview"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
             android:background="@drawable/curved_background14"
             app:cardCornerRadius="20dp">
 
@@ -54,9 +65,11 @@
             android:text="@{viewHelper.feedDetails.title}"
             android:textAlignment="center"
             android:textSize="17dp"
+            android:padding="5dp"
+            android:textColor="@color/text_color_dark"
             android:visibility="@{viewHelper.isTitleVisible?View.VISIBLE:View.GONE,default=gone}" />
 
 
     </RelativeLayout>
-
+    </com.google.android.material.card.MaterialCardView>
 </layout>

@@ -63,6 +63,7 @@
     <string name="place_order_btn_text">Place Order</string>
     <string name="got_it_btn_text">Got it</string>
     <string name="go_to_messages_btn_text">Go to Messages</string>
+    <string name="set_or_change_pin_btn_text">Set or Change pin</string>
 
 
     <!--Login-->
@@ -684,9 +685,13 @@
     <string name="road_no">Road Name, Area, Colony*</string>
     <string name="landmark">Landmark (Optional)</string>
     <string name="pin_empty_error">Please enter pin code</string>
+    <string name="state_empty_error">Please choose state</string>
+    <string name="city_empty_error">Please choose city</string>
     <string name="hno_empty_error">Please enter House number and Building name</string>
     <string name="road_name_empty_error">Please enter road name, area,colony</string>
     <string name="view_breakup"><u>View Price Breakup</u></string>
+    <string name="city_hint_val">City*</string>
+    <string name="state_hint">State*</string>
 
     <string-array name="order_card_list">
         <item>Set your limit</item>

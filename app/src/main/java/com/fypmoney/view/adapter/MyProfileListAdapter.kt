@@ -42,13 +42,23 @@ class MyProfileListAdapter(
         return titleList.size
     }
 
-
+    /*
+    * This method is used to set data in the list
+    * */
     fun setList(iconList1: List<Int>, titleList1: List<String>) {
         iconList.clear()
         titleList.clear()
         iconList.addAll(iconList1)
         titleList.addAll(titleList1)
         notifyDataSetChanged()
+    }
+    /*
+      * This method is used to set update data in the list
+      * */
+    fun updateList(value: String) {
+        titleList[1] = value
+        notifyDataSetChanged()
+
     }
 
     interface OnListItemClickListener {

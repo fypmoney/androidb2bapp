@@ -38,7 +38,9 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var onGetCardDetailsSuccess = MutableLiveData<Boolean>()
     var onActivateCardInit = MutableLiveData<Boolean>()
     var onActivateCardClicked = MutableLiveData<Boolean>()
+    var onSetPinSuccess = MutableLiveData<SetPinResponse>()
     var isActivateCardVisible = ObservableField(true)
+    var onBankProfileSuccess = MutableLiveData(false)
     var isOrderCard = ObservableField(true)
     var bankProfileResponse = ObservableField<BankProfileResponseDetails>()
 
@@ -252,13 +254,6 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             ApiConstant.API_GET_BANK_PROFILE -> {
                 if (responseData is BankProfileResponse) {
                     bankProfileResponse.set(responseData.bankProfileResponseDetails)
-
-                    if (bankProfileResponse.get()?.isPhysicardIssued == AppConstants.NO)
-                        isOrderCard.set(true)
-                    else {
-                        isOrderCard.set(false)
-                    }
-
                     bankProfileResponse.get()?.cardInfos?.forEach {
                         when (it.cardType) {
                             AppConstants.CARD_TYPE_PHYSICAL -> {
@@ -269,13 +264,14 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                                     it.status == AppConstants.ENABLE -> {
                                         isActivateCardVisible.set(false)
                                     }
-
                                 }
+
 
                             }
                         }
 
                     }
+                    onBankProfileSuccess.value = true
 
                 }
 
@@ -300,7 +296,9 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 }
             }
             ApiConstant.API_SET_CHANGE_PIN -> {
-                Utility.showToast(PockketApplication.instance.getString(R.string.otp_sent_success_message))
+                if (responseData is SetPinResponse) {
+                    onSetPinSuccess.value = responseData
+                }
             }
         }
     }

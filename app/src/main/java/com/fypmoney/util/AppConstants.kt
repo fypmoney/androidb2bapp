@@ -169,6 +169,7 @@ object AppConstants {
     const val ORDER_STATUS_DELIVERED = "Delivered"
     const val GET_PRODUCT_RESPONSE = "get_product_response"
     const val ORDER_STATUS = "order_status"
+    const val SET_PIN_URL = "set_pin_url"
 
 
 }

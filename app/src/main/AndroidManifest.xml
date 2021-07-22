@@ -95,6 +95,10 @@
             android:name=".view.activity.WalkThroughMainView"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+        <activity
+            android:name=".view.activity.SetPinView"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <activity
             android:name=".view.activity.AddMoneyView"

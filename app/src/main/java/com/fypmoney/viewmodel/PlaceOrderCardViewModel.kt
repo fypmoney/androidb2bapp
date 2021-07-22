@@ -36,6 +36,7 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
     var selectedCityPosition = MutableLiveData(0)
     var city = ObservableField<String>()
     var state = ObservableField<String>()
+    var isCityVisible = ObservableField<Boolean>()
     var stateList = ObservableField<List<GetStatesResponseDetails>>()
     var cityList = ObservableField<List<GetCityResponseDetails>>()
     var stateCode = ObservableField<String>()
@@ -44,8 +45,14 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
     var onUseLocationClicked = MutableLiveData<Boolean>()
     var onOrderCardSuccess = MutableLiveData<OrderCardResponseDetails>()
     var productResponse = MutableLiveData<GetAllProductsResponseDetails>()
+    val stateInitialList = mutableListOf<GetStatesResponseDetails>()
+    val cityInitialList = mutableListOf<GetCityResponseDetails>()
 
     init {
+        stateInitialList.add(GetStatesResponseDetails(name = application.getString(R.string.state_hint)))
+        stateList.set(stateInitialList)
+        cityInitialList.add(GetCityResponseDetails(cityName = application.getString(R.string.city_hint_val)))
+        cityList.set(cityInitialList)
         callGetAllProductsApi()
         callGetStateApi()
 
@@ -75,9 +82,16 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
             TextUtils.isEmpty(name.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.card_name_empty_error))
             }
+            state.get()==PockketApplication.instance.getString(R.string.state_hint) -> {
+                Utility.showToast(PockketApplication.instance.getString(R.string.state_empty_error))
+            }
+            city.get()==PockketApplication.instance.getString(R.string.city_hint_val)-> {
+                Utility.showToast(PockketApplication.instance.getString(R.string.city_empty_error))
+            }
             TextUtils.isEmpty(pin.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.pin_empty_error))
             }
+            
             TextUtils.isEmpty(houseNo.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.hno_empty_error))
             }
@@ -181,7 +195,8 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
 
             ApiConstant.API_GET_STATE -> {
                 if (responseData is GetStatesResponse) {
-                    stateList.set(responseData.getStatesResponseDetails)
+                    responseData.getStatesResponseDetails?.forEach { stateInitialList.add(it) }
+                    stateList.set(stateInitialList)
                     stateCode.set(stateList.get()?.get(0)?.code)
                     state.set(stateList.get()?.get(0)?.name)
 
@@ -189,9 +204,14 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
             }
             ApiConstant.API_GET_CITY -> {
                 if (responseData is GetCityResponse) {
-                    cityList.set(responseData.getCityResponseDetails)
-                    city.set(cityList.get()?.get(0)?.cityName)
-
+                    if (!responseData.getCityResponseDetails.isNullOrEmpty()) {
+                        cityInitialList.clear()
+                        cityInitialList.add(GetCityResponseDetails(cityName = PockketApplication.instance.getString(R.string.city_hint_val)))
+                        responseData.getCityResponseDetails.forEach { cityInitialList.add(it) }
+                        cityList.set(cityInitialList)
+                        cityList.notifyChange()
+                        city.set(cityList.get()?.get(0)?.cityName)
+                    }
 
                 }
             }
@@ -199,7 +219,8 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
                 if (responseData is GetAllProductsResponse) {
                     productResponse.value = responseData.getAllProductsResponseDetails?.get(0)
                     val amountList =
-                        Utility.convertToRs(responseData.getAllProductsResponseDetails?.get(0)?.amount)?.split(".")
+                        Utility.convertToRs(responseData.getAllProductsResponseDetails?.get(0)?.amount)
+                            ?.split(".")
                     amount.set(amountList?.get(0))
                 }
             }

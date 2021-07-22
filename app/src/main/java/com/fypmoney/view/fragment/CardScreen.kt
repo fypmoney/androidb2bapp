@@ -12,6 +12,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -20,15 +21,13 @@ import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenCardBinding
+import com.fypmoney.model.SetPinResponse
 import com.fypmoney.model.UpDateCardSettingsRequest
 import com.fypmoney.model.UpdateCardLimitRequest
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.CardSettingClickListener
-import com.fypmoney.view.activity.BankTransactionHistoryView
-import com.fypmoney.view.activity.EnterOtpView
-import com.fypmoney.view.activity.OrderCardView
-import com.fypmoney.view.activity.TrackOrderView
+import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.viewmodel.CardScreenViewModel
 import kotlinx.android.synthetic.main.screen_card.*
@@ -51,7 +50,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     private var mSetRightOut: AnimatorSet? = null
     private var mSetLeftIn: AnimatorSet? = null
     private var mIsBackVisible = false
-
+    lateinit var myProfileAdapter:MyProfileListAdapter
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -73,15 +72,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
         val textString = ArrayList<String>()
         textString.add(PockketApplication.instance.getString(R.string.card_settings))
-        when (mViewModel.isOrderCard.get()) {
-            true -> {
-                textString.add(PockketApplication.instance.getString(R.string.order_card))
-            }
-            else -> {
-                textString.add(PockketApplication.instance.getString(R.string.track_order))
-            }
-        }
-
+        textString.add(PockketApplication.instance.getString(R.string.order_card))
         textString.add(PockketApplication.instance.getString(R.string.account_stmt))
 
 
@@ -91,7 +82,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         drawableIds.add(R.drawable.order)
         drawableIds.add(R.drawable.transaction)
 
-        val myProfileAdapter = MyProfileListAdapter(requireContext(), this)
+        myProfileAdapter = MyProfileListAdapter(requireContext(), this)
         list.adapter = myProfileAdapter
         myProfileAdapter.setList(
             iconList1 = drawableIds,
@@ -119,6 +110,17 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 mViewModel.onViewDetailsClicked.value = false
             }
         }
+        mViewModel.onBankProfileSuccess.observe(viewLifecycleOwner) {
+            if (it) {
+                when (mViewModel.isOrderCard.get()) {
+                    false -> {
+                        myProfileAdapter.updateList(PockketApplication.instance.getString(R.string.track_order))
+                    }
+
+                }
+                mViewModel.onBankProfileSuccess.value = false
+            }
+        }
 
         mViewModel.onActivateCardClicked.observe(viewLifecycleOwner) {
             if (it) {
@@ -139,7 +141,15 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             }
         }
 
-
+        mViewModel.onSetPinSuccess.observe(viewLifecycleOwner) {
+            it.url.let {
+                intentToActivity(
+                    SetPinView::class.java,
+                    type = AppConstants.SET_PIN_URL,
+                    url = it
+                )
+            }
+        }
     }
 
     override fun onTryAgainClicked() {
@@ -210,7 +220,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                     true -> {
                         intentToActivity(OrderCardView::class.java)
                     }
-                    else -> {
+                    false -> {
                         intentToActivity(TrackOrderView::class.java)
                     }
                 }
@@ -218,12 +228,18 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             2 -> {
                 intentToActivity(BankTransactionHistoryView::class.java)
             }
+            3 -> {
+                callActivateCardSheet()
+            }
 
         }
     }
 
-    private fun intentToActivity(aClass: Class<*>) {
+    private fun intentToActivity(aClass: Class<*>, type: String? = null, url: String? = null) {
         val intent = Intent(requireActivity(), aClass)
+        if (type == AppConstants.SET_PIN_URL) {
+            intent.putExtra(AppConstants.SET_PIN_URL, url)
+        }
         requireContext().startActivity(intent)
     }
 
