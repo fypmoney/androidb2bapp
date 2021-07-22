@@ -80,7 +80,6 @@ class LocationListenerClass(
             val addresses = geoCoder.getFromLocation(location.latitude, location.longitude, 1)
 
             GlobalScope.launch(Dispatchers.IO) {
-                Log.d("dmddjdjjdj",location.toString())
                 (context as AppCompatActivity).runOnUiThread {
                     getCurrentLocationListener.getCurrentLocation(
                         true,
@@ -137,4 +136,6 @@ class LocationListenerClass(
         )
 
     }
+
+
 }

@@ -27,6 +27,7 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
     var buildVersion = ObservableField<String>()
     var profilePic = ObservableField<String>()
     var onLogoutSuccess = MutableLiveData<Boolean>()
+    var onProfileSuccess = MutableLiveData<Boolean>()
     var onProfileClicked = MutableLiveData<Boolean>()
 
     /*
@@ -78,6 +79,8 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
                         SharedPrefUtils.SF_KEY_PROFILE_IMAGE,
                         responseData.profileImageUploadResponseDetails?.accessUrl
                     )
+                    onProfileSuccess.value=true
+
                 }
             }
         }

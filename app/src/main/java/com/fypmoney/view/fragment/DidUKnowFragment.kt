@@ -37,7 +37,9 @@ class DidUKnowFragment : BaseFragment<FragmentDidUKnowBinding, DidUKnowViewModel
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
-        mViewModel.resourceId.set(arguments?.getString(AppConstants.FEED_TYPE_DID_YOU_KNOW)!!)
+        mViewModel.position.set(arguments?.getInt("position")!!)
+        mViewModel.resourceId.set(arguments?.getStringArrayList(AppConstants.FEED_TYPE_DID_YOU_KNOW)!!)
+        mViewModel.imageUrl.set(mViewModel.resourceId.get()?.get(mViewModel.position.get()!!))
         setObservers()
 
     }

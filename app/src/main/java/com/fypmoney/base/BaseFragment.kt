@@ -1,8 +1,10 @@
 package com.fypmoney.base
 
+import android.Manifest
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -93,6 +95,38 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         viewDataBinding!!.lifecycleOwner = this
         viewDataBinding!!.executePendingBindings()
         setObservers()
+    }
+    /*
+     * This method is used to check if permission is granted or not
+     * */
+    fun checkLocationPermission(): Boolean {
+        val result = ContextCompat.checkSelfPermission(requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+        val result1 =
+            ContextCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            )
+        val result2 =
+            ContextCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED&&result2 == PackageManager.PERMISSION_GRANTED
+    }
+
+    /*
+    * This method ask for permission
+    * */
+    fun requestLocationPermissions() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION
+            ),
+            AppConstants.PERMISSION_CODE
+        )
     }
 
     /*

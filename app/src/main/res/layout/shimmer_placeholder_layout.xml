@@ -19,8 +19,8 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivServiceLogo"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@color/text_color_little_dark"
+                android:layout_height="150dp"
+                android:background="@color/editTextStrokeColor"
                />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -33,7 +33,7 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:maxLines="2"
                 android:textStyle="bold"
-                android:background="@color/text_color_little_dark"
+                android:background="@color/editTextStrokeColor"
                 android:textSize="@dimen/sub_title_size"
                 app:fontFamily="@font/poppins_medium" />
 

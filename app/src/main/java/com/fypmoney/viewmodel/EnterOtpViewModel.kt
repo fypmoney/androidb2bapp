@@ -154,6 +154,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
 * This method is used to call send otp API
 * */
     fun callSendOtpApi() {
+        otp.set("")
         when (fromWhichScreen.get()) {
             AppConstants.LOGIN_SCREEN -> {
                 if (!resendOtpTimerVisibility.get()!!) {

@@ -449,7 +449,6 @@ open class AddMoneyUpiDebitView :
                     txnId
                 )
                 customBrowserConfig.setAutoApprove(false) // set true to automatically approve the OTP
-
                 customBrowserConfig.setAutoSelectOTP(true) // set true to automatically select the OTP flow
                 customBrowserConfig.setDisableBackButtonDialog(false)
                 customBrowserConfig.setMerchantSMSPermission(true)

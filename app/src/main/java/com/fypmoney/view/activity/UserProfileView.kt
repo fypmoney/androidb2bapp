@@ -75,11 +75,6 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
             )
         )
 
-
-        // Clearing older images from cache directory
-        // don't call this line if you want to choose multiple images in the same activity
-        // call this once the bitmap(s) usage is over
-        //ImagePickerView.clearCache(this)
         mViewModel.setInitialData()
         try {
             mViewModel.buildVersion.set(
@@ -98,7 +93,6 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
         iconList.add(R.drawable.interest)
         iconList.add(R.drawable.help)
         iconList.add(R.drawable.logout)
-
         myProfileAdapter.setList(
             iconList1 = iconList,
             resources.getStringArray(R.array.my_profile_title_list).toMutableList()
@@ -113,6 +107,15 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
     private fun setObserver() {
         mViewModel.onLogoutSuccess.observe(this) {
             intentToActivity(LoginView::class.java, isFinishAll = true)
+        }
+
+        mViewModel.onProfileSuccess.observe(this) {
+            if (it) {
+                loadProfile(SharedPrefUtils.getString(applicationContext,SharedPrefUtils.SF_KEY_PROFILE_IMAGE))
+                mViewModel.onProfileSuccess.value = false
+            }
+            // loadProfile(uri.toString())
+
         }
         mViewModel.onProfileClicked.observe(this) {
             if (it) {
@@ -197,7 +200,6 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
             if (resultCode == RESULT_OK) {
                 val uri = data?.getParcelableExtra<Uri>("path")
                 try {
-                    loadProfile(uri.toString())
                     val file = File(getPath(applicationContext, uri))
                     val requestFile =
                         RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)

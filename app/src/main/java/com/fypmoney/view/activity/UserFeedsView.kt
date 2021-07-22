@@ -1,13 +1,16 @@
 package com.fypmoney.view.activity
 
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -15,6 +18,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ViewUserFeedsBinding
 import com.fypmoney.listener.LocationListenerClass
+import com.fypmoney.listener.requestCodeGPSAddress
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
@@ -56,10 +60,33 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
             toolbar = toolbar,
             isBackArrowVisible = false
         )
-        LocationListenerClass(
-            requireActivity(), this
-        ).permissions()
+
+        checkAndAskPermission()
+
+
         setObserver()
+    }
+
+    private fun checkAndAskPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(), arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ), requestCodeGPSAddress
+            )
+        } else {
+            LocationListenerClass(
+                requireActivity(), this
+            ).permissions()
+        }
+
     }
 
 
@@ -69,6 +96,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
     private fun setObserver() {
         mViewModel.onFeedsSuccess.observe(viewLifecycleOwner)
         {
+            mViewModel.fromWhichScreen.set(0)
             callDiduKnowBottomSheet(it)
 
         }
@@ -82,7 +110,6 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                         latitude = mViewModel.latitude.get(),
                         longitude = mViewModel.longitude.get()
                     )
-
 
                 }
                 else -> {
@@ -196,6 +223,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
+        Log.d("wdjf3h8r7", ",smvjg9rugy")
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         for (permission in permissions) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(
@@ -204,6 +232,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                 )
             ) {
                 //denied
+                Log.d("wdjf3h8r7", ",deny")
 
                 if (mViewModel.isDenied.get() == false) {
                     mViewModel.callFetchFeedsApi(false, 0.0, 0.0)
@@ -215,6 +244,8 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                         permission
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
+                    Log.d("wdjf3h8r7", ",allow")
+
                     //allow
                     if (!isLocationPermissionAllowed.get()!!) {
                         LocationListenerClass(
@@ -222,7 +253,14 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                         ).permissions()
                     }
                     isLocationPermissionAllowed.set(true)
+                    /*  mViewModel.callFetchFeedsApi(
+                          latitude = mViewModel.latitude.get(),
+                          longitude = mViewModel.longitude.get(),
+                          isProgressBarVisible = false
+                      )*/
                 } else {
+                    Log.d("wdjf3h8r7", ",permanent deny")
+
                     //set to never ask again
                     mViewModel.isApiLoading.set(true)
                     mViewModel.callFetchFeedsApi(false, 0.0, 0.0)
