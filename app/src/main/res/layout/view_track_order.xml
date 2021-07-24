@@ -167,7 +167,6 @@
                     android:layout_below="@+id/recycler_view"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
                     android:background="@color/dividerColor" />
 
 
@@ -194,14 +193,13 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/amount"
                     style="@style/TextviewBold"
-                    android:layout_width="31dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/bill_details"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="14dp"
                     android:text="@{@string/Rs+viewModel.amount}"
-                    android:textAlignment="center"
                     android:textSize="17dp" />
 
                 <View

@@ -241,7 +241,7 @@ data class PackageStatusList(
     @SerializedName("id") val id: String? = null,
     @SerializedName("status") val status: String? = null,
     @SerializedName("date") val date: String? = null,
-    @SerializedName("isDone") val isDone: String? = null
+    @SerializedName("isDone") var isDone: String? = null
 ) : Serializable
 
 data class GetAllProductsResponse(

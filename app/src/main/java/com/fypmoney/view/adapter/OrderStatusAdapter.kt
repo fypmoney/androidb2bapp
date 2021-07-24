@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.OrderStatusRowItemBinding
-import com.fypmoney.model.GetOrderCardStatusResponseDetails
 import com.fypmoney.model.PackageStatusList
 import com.fypmoney.viewhelper.OrderStatusViewHelper
 import com.fypmoney.viewmodel.TrackOrderViewModel
@@ -41,9 +40,23 @@ class OrderStatusAdapter(var viewModel: TrackOrderViewModel) :
         lateinit var mViewHelper: OrderStatusViewHelper
 
         override fun onBind(position: Int) {
-            mViewHelper = OrderStatusViewHelper(statusList?.get(position)
-            )
+            if (position <= statusList?.size!! - 2) {
+                mViewHelper = OrderStatusViewHelper(
+                    position,
+                    statusList?.get(position),
+                    statusList?.size,
+                    statusList?.get(position + 1)?.isDone
+                )
+            } else if (position == statusList?.size!! - 1) {
+                mViewHelper = OrderStatusViewHelper(
+                    position,
+                    statusList?.get(position),
+                    statusList?.size,
+                    statusList?.get(position)?.isDone
+                )
+            }
             mRowItemBinding!!.viewHelper = mViewHelper
+
             mRowItemBinding.executePendingBindings()
 
         }

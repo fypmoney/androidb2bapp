@@ -3,13 +3,10 @@ package com.fypmoney.bindingAdapters
 
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.ImageView
 import android.widget.RelativeLayout
-import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -37,7 +34,7 @@ class BindingAdapter {
 
         @BindingAdapter(value = ["position", "IMAGE_URL"], requireAll = false)
         @JvmStatic
-        fun setImageUrl(imageView: AppCompatImageView, position: Int,imageUrl: String?) {
+        fun setImageUrl(imageView: AppCompatImageView, position: Int, imageUrl: String?) {
             imageUrl?.let {
                 when (position) {
                     0 -> {
@@ -233,10 +230,10 @@ class BindingAdapter {
             }
 
         }
+
         /**
          *  Method to Bind image in with the image view
          */
-
         @BindingAdapter("SETIMAGE")
         @JvmStatic
         fun setImage(imageView: AppCompatImageView, imageUrl: Int?) {
@@ -245,12 +242,110 @@ class BindingAdapter {
 
         }
 
+        @BindingAdapter(value = ["SET_IMAGE_IN_TRACK_ORDER", "IS_DONE"], requireAll = false)
+        @JvmStatic
+        fun setImageInOrderStatus(imageView: AppCompatImageView, status: String?, isDone: String?) {
+
+            when (status) {
+                AppConstants.ORDER_STATUS_ORDERED -> {
+                    imageView.setImageResource(R.drawable.ic_order_placed)
+
+                }
+                AppConstants.ORDER_STATUS_IN_PROGRESS -> {
+                    if (isDone == AppConstants.YES) {
+                        imageView.setColorFilter(
+                            ContextCompat.getColor(
+                                PockketApplication.instance,
+                                R.color.color_skyblue
+                            ), android.graphics.PorterDuff.Mode.SRC_IN
+                        )
+                    }
+                    imageView.setImageResource(R.drawable.ic_in_progress)
+                }
+                AppConstants.ORDER_STATUS_SHIPPED -> {
+                    if (isDone == AppConstants.YES) {
+                        imageView.setColorFilter(
+                            ContextCompat.getColor(
+                                PockketApplication.instance,
+                                R.color.color_skyblue
+                            ), android.graphics.PorterDuff.Mode.SRC_IN
+                        )
+                    }
+                    imageView.setImageResource(R.drawable.ic_shipped)
+                }
+                AppConstants.ORDER_STATUS_OUT_FOR_DELIVERY -> {
+                    if (isDone == AppConstants.YES) {
+                        imageView.setColorFilter(
+                            ContextCompat.getColor(
+                                PockketApplication.instance,
+                                R.color.color_skyblue
+                            ), android.graphics.PorterDuff.Mode.SRC_IN
+                        )
+                    }
+                    imageView.setImageResource(R.drawable.ic_out_for_delivery)
+                }
+                AppConstants.ORDER_STATUS_DELIVERED -> {
+                    if (isDone == AppConstants.YES) {
+                        imageView.setColorFilter(
+                            ContextCompat.getColor(
+                                PockketApplication.instance,
+                                R.color.color_skyblue
+                            ), android.graphics.PorterDuff.Mode.SRC_IN
+                        )
+                    }
+                    imageView.setImageResource(R.drawable.ic_deliverd)
+                }
+            }
+        }
 
 
+        @BindingAdapter(value = ["ORDER_STATUS", "IS_DONE_VALUE"], requireAll = false)
+        @JvmStatic
+        fun setTextColorInOrderStatus(textView: AppCompatTextView, status: String?, isDone: String?) {
+            when (status) {
+                AppConstants.ORDER_STATUS_ORDERED, AppConstants.ORDER_STATUS_IN_PROGRESS, AppConstants.ORDER_STATUS_SHIPPED, AppConstants.ORDER_STATUS_OUT_FOR_DELIVERY, AppConstants.ORDER_STATUS_DELIVERED -> {
+                    if (isDone == AppConstants.YES) {
+                        textView.setTextColor(
+                            ContextCompat.getColor(
+                                PockketApplication.instance,
+                                R.color.text_color_dark
+                            )
+                        )
+
+                    }
+                }
+
+            }
+        }
+
+        @BindingAdapter(
+            value = ["SET_IMAGE_IN_TRACK_ORDER_LINE", "IS_DONE_VAL", "NEXT_IS_DONE"],
+            requireAll = false
+        )
+        @JvmStatic
+        fun setImageInLineOrderStatus(
+            imageView: AppCompatImageView,
+            status: String?,
+            isDone: String?, nextIsDone: String?
+        ) {
+            Log.d("jfbrgh5riy         ",isDone!!+"bfhghiurg    "+nextIsDone)
+            when (status) {
+                AppConstants.ORDER_STATUS_ORDERED, AppConstants.ORDER_STATUS_IN_PROGRESS, AppConstants.ORDER_STATUS_SHIPPED, AppConstants.ORDER_STATUS_OUT_FOR_DELIVERY, AppConstants.ORDER_STATUS_DELIVERED -> {
+                    if (nextIsDone == AppConstants.YES) {
+                        imageView.setImageResource(R.drawable.dotted_skyblue)
+                    }
+                    else
+                    {
+                        imageView.setImageResource(R.drawable.dotted_black)
+
+                    }
+
+                }
+            }
+        }
 
 
-
-}
+    }
 
 
 }

@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -10,10 +11,7 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.GetAllProductsResponse
-import com.fypmoney.model.GetAllProductsResponseDetails
-import com.fypmoney.model.GetOrderCardStatusResponse
+import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
@@ -79,7 +77,7 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
             ApiConstant.API_GET_ORDER_CARD_STATUS -> {
                 if (responseData is GetOrderCardStatusResponse) {
                     if (!responseData.GetOrderCardStatusResponseDetails.packageStatusList.isNullOrEmpty()) {
-                        orderStatusAdapter.setList(
+                           orderStatusAdapter.setList(
                             responseData.GetOrderCardStatusResponseDetails.packageStatusList
                         )
                     }

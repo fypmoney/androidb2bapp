@@ -164,10 +164,11 @@ object AppConstants {
     const val ENABLE= "ENABLED"
 
 
-    const val ORDER_STATUS_ORDERED = "Ordered"
-    const val ORDER_STATUS_DISPATCHED = "Dispatched"
-    const val ORDER_STATUS_SHIPPED = "Shipped"
-    const val ORDER_STATUS_DELIVERED = "Delivered"
+    const val ORDER_STATUS_ORDERED = "ORDER_PLACED"
+    const val ORDER_STATUS_IN_PROGRESS = "IN_PROGRESS"
+    const val ORDER_STATUS_SHIPPED = "SHIPPED"
+    const val ORDER_STATUS_OUT_FOR_DELIVERY = "OUT_FOR_DELIVERY"
+    const val ORDER_STATUS_DELIVERED = "DELIVERED"
     const val GET_PRODUCT_RESPONSE = "get_product_response"
     const val ORDER_STATUS = "order_status"
     const val SET_PIN_URL = "set_pin_url"
