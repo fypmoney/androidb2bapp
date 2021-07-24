@@ -640,7 +640,6 @@
     <!--
     Qr code
     -->
-    <string name="qr_scan_issue">Issue in scanning the QR code, please try again</string>
     <string name="qr_transaction_success">Transaction is completed successfully</string>
 
     <string name="dialog_permission_title">Grant Permissions</string>

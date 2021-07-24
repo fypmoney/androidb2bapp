@@ -711,18 +711,23 @@ object Utility {
     /*
     * This method is used to convert amount to paise
     * */
-    fun convertToPaise(amount: String): String {
-        val format = DecimalFormat("0.#")
-        return format.format(amount.toDouble() * 100)
+    fun convertToPaise(amount: String?): String? {
+        try {
+            val format = DecimalFormat("0.#")
+            return format.format(amount?.toDouble()!! * 100)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
     }
 
     /*
     * This method is used to convert amount to Rs
     * */
     fun convertToRs(amount: String?): String? {
-        var result:String?=null
+        var result: String? = null
         try {
-             result = (amount?.toDouble()!! / 100).toString()
+            result = (amount?.toDouble()!! / 100).toString()
             val list = result.split(".")
             if (list.size > 1) {
                 if (list[1] == "0" || list[1] == "00") {
@@ -732,9 +737,7 @@ object Utility {
                 }
 
             }
-        }
-        catch (e:java.lang.Exception)
-        {
+        } catch (e: java.lang.Exception) {
             e.printStackTrace()
         }
         return result

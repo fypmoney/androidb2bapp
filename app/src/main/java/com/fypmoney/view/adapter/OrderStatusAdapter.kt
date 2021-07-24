@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.OrderStatusRowItemBinding
 import com.fypmoney.model.GetOrderCardStatusResponseDetails
+import com.fypmoney.model.PackageStatusList
 import com.fypmoney.viewhelper.OrderStatusViewHelper
 import com.fypmoney.viewmodel.TrackOrderViewModel
 
@@ -15,7 +16,7 @@ import com.fypmoney.viewmodel.TrackOrderViewModel
  */
 class OrderStatusAdapter(var viewModel: TrackOrderViewModel) :
     RecyclerView.Adapter<BaseViewHolder>() {
-    var statusList: ArrayList<GetOrderCardStatusResponseDetails>? = ArrayList()
+    var statusList: ArrayList<PackageStatusList>? = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val mRowBinding = OrderStatusRowItemBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -52,7 +53,7 @@ class OrderStatusAdapter(var viewModel: TrackOrderViewModel) :
     /**
      * This will set the data in the list in adapter
      */
-    fun setList(statusList1: List<GetOrderCardStatusResponseDetails>?) {
+    fun setList(statusList1: List<PackageStatusList>?) {
         try {
             statusList!!.clear()
             statusList1?.forEach {

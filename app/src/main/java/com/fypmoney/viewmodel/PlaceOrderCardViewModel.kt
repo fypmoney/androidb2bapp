@@ -2,7 +2,6 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import android.text.TextUtils
-import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -44,7 +43,7 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
     var onPlaceOrderClicked = MutableLiveData<Boolean>()
     var onUseLocationClicked = MutableLiveData<Boolean>()
     var onOrderCardSuccess = MutableLiveData<OrderCardResponseDetails>()
-    var productResponse = MutableLiveData<GetAllProductsResponseDetails>()
+    var productResponse = MutableLiveData<GetAllProductsResponseDetails?>()
     val stateInitialList = mutableListOf<GetStatesResponseDetails>()
     val cityInitialList = mutableListOf<GetCityResponseDetails>()
 
@@ -82,10 +81,10 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
             TextUtils.isEmpty(name.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.card_name_empty_error))
             }
-            state.get()==PockketApplication.instance.getString(R.string.state_hint) -> {
+            state.get() == PockketApplication.instance.getString(R.string.state_hint) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.state_empty_error))
             }
-            city.get()==PockketApplication.instance.getString(R.string.city_hint_val)-> {
+            city.get() == PockketApplication.instance.getString(R.string.city_hint_val) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.city_empty_error))
             }
             TextUtils.isEmpty(pin.value) -> {
@@ -124,8 +123,12 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
                     areaDetail = roadName.value,
                     landmark = landMark.value,
                     city = city.get(), state = state.get(), stateCode = stateCode.get(),
-                    amount = Utility.convertToPaise(amount.get()!!),
-                    productId = "1"
+                    amount =productResponse.value?.mrp,
+                    productId = productResponse.value?.id,
+                    productMasterCode = productResponse.value?.code,
+                    taxMasterCode = productResponse.value?.taxMasterCode,
+                    totalTax = productResponse.value?.totalTax,
+                    discount = productResponse.value?.discount,
                 ),
                 this, isProgressBar = true
             )
@@ -139,7 +142,7 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_ALL_PRODUCTS,
-                NetworkUtil.endURL(ApiConstant.API_GET_ALL_PRODUCTS),
+                NetworkUtil.endURL(ApiConstant.API_GET_ALL_PRODUCTS+AppConstants.ORDER_CARD_PHYSICAL_CARD_CODE),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -206,7 +209,13 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
                 if (responseData is GetCityResponse) {
                     if (!responseData.getCityResponseDetails.isNullOrEmpty()) {
                         cityInitialList.clear()
-                        cityInitialList.add(GetCityResponseDetails(cityName = PockketApplication.instance.getString(R.string.city_hint_val)))
+                        cityInitialList.add(
+                            GetCityResponseDetails(
+                                cityName = PockketApplication.instance.getString(
+                                    R.string.city_hint_val
+                                )
+                            )
+                        )
                         responseData.getCityResponseDetails.forEach { cityInitialList.add(it) }
                         cityList.set(cityInitialList)
                         cityList.notifyChange()
@@ -217,18 +226,23 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
             }
             ApiConstant.API_GET_ALL_PRODUCTS -> {
                 if (responseData is GetAllProductsResponse) {
-                    productResponse.value = responseData.getAllProductsResponseDetails?.get(0)
-                    val amountList =
-                        Utility.convertToRs(responseData.getAllProductsResponseDetails?.get(0)?.amount)
-                            ?.split(".")
-                    amount.set(amountList?.get(0))
+                    if (!responseData.getAllProductsResponseDetails?.isNullOrEmpty()!!) {
+                        productResponse.value = responseData.getAllProductsResponseDetails[0]
+                        amount.set(
+                            Utility.convertToRs(productResponse.value?.basePrice)
+                                ?.split(".")?.get(0)
+                        )
+
+                    }
+                }
+
                 }
             }
 
 
         }
 
-    }
+
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)

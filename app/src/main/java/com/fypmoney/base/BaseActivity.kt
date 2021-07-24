@@ -205,7 +205,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     * Ask for device security pin, pattern or fingerprint
     * */
     fun askForDevicePassword() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
             val km =
                 applicationContext.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 

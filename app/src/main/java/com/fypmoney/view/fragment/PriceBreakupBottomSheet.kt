@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
 import com.fypmoney.databinding.BottomSheetPriceBreakupBinding
 import com.fypmoney.model.GetAllProductsResponseDetails
+import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -52,18 +53,17 @@ class PriceBreakupBottomSheet(
         bottomSheet.setContentView(bindingSheet.root)
 
         val amount = view.findViewById<TextView>(R.id.amount)!!
+        val cardType = view.findViewById<TextView>(R.id.card_type)!!
         val tax = view.findViewById<TextView>(R.id.tax)!!
         val itemTotal = view.findViewById<TextView>(R.id.item_total)!!
-        val cardType = view.findViewById<TextView>(R.id.card_type)!!
         val gotBtn = view.findViewById<Button>(R.id.gotBtn)!!
 
         gotBtn.setOnClickListener { dismiss() }
 
-        amount.text = getString(R.string.Rs) + amountValue
-        tax.text = getString(R.string.Rs) + productResponse?.taxAmount
+        amount.text = getString(R.string.Rs) + Utility.convertToRs(productResponse?.basePrice)
+        tax.text = getString(R.string.Rs) + Utility.convertToRs(productResponse?.totalTax)
         cardType.text = productResponse?.name
-        itemTotal.text =
-            getString(R.string.Rs) + (amountValue?.toInt()!! - (productResponse?.taxAmount?.toInt()!! + productResponse.deleivceryCharge?.toInt()!! + productResponse.taxAmount.toInt()))
+        itemTotal.text =Utility.convertToRs(productResponse?.mrp)
 
 
         return view

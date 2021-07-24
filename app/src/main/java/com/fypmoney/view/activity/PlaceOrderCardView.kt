@@ -17,10 +17,12 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewPlaceCardBinding
 import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.PriceBreakupBottomSheet
 import com.fypmoney.viewmodel.PlaceOrderCardViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_order_card.*
+import java.lang.Exception
 import java.util.*
 
 
@@ -150,10 +152,15 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         ) // Here 1 represent max location result to returned, by documents it recommended 1 to 5
 
 
-        val address: String =
-            addresses[0].getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+        /*    val address: String =
+                addresses[0].getAddressLine(0) */// If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
         mViewModel.isProgressBarVisible.set(false)
-        mViewModel.pin.value = addresses[0].postalCode
+        try {
+            mViewModel.pin.value = addresses[0].postalCode
+        } catch (e: Exception) {
+            Utility.showToast("Location is not enabled")
+            e.printStackTrace()
+        }
         /*      mViewModel.pin.value = addresses[0].locality
               mViewModel.pin.value = addresses[0].adminArea
       */      //  mViewModel.pin.value = addresses[0].postalCode

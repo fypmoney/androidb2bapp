@@ -3,7 +3,6 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.fypmoney.R
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -15,6 +14,7 @@ import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.GetAllProductsResponse
 import com.fypmoney.model.GetAllProductsResponseDetails
 import com.fypmoney.model.GetOrderCardStatusResponse
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.OrderStatusAdapter
@@ -64,7 +64,7 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_ALL_PRODUCTS,
-                NetworkUtil.endURL(ApiConstant.API_GET_ALL_PRODUCTS),
+                NetworkUtil.endURL(ApiConstant.API_GET_ALL_PRODUCTS + AppConstants.ORDER_CARD_PHYSICAL_CARD_CODE),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -78,35 +78,38 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
         when (purpose) {
             ApiConstant.API_GET_ORDER_CARD_STATUS -> {
                 if (responseData is GetOrderCardStatusResponse) {
-
-                    orderStatusAdapter.setList(responseData.GetOrderCardStatusResponseDetails)
+                    if (!responseData.GetOrderCardStatusResponseDetails.packageStatusList.isNullOrEmpty()) {
+                        orderStatusAdapter.setList(
+                            responseData.GetOrderCardStatusResponseDetails.packageStatusList
+                        )
+                    }
+                } else {
+                    Utility.showToast("Error in fetching order status,please try again")
                 }
             }
             ApiConstant.API_GET_ALL_PRODUCTS -> {
                 if (responseData is GetAllProductsResponse) {
-                    orderStatus.set(responseData.getAllProductsResponseDetails?.get(0)?.status)
-                    productResponse.value = responseData.getAllProductsResponseDetails?.get(0)
-                    amount.set(Utility.convertToRs(responseData.getAllProductsResponseDetails?.get(0)?.amount))
-                    nameOfProduct.set(
-                        responseData.getAllProductsResponseDetails?.get(
-                            0
-                        )?.name
-                    )
-                    taxAmount.set(
-                        Utility.convertToRs(
-                            responseData.getAllProductsResponseDetails?.get(
-                                0
-                            )?.taxAmount
+                    if (!responseData.getAllProductsResponseDetails?.isNullOrEmpty()!!) {
+                        productResponse.value = responseData.getAllProductsResponseDetails[0]
+                        amount.set(
+                            Utility.convertToRs(productResponse.value!!.mrp)
                         )
-                    )
-                    itemTotal.set(
-                        Utility.convertToRs(
-                            (responseData.getAllProductsResponseDetails?.get(0)?.amount?.toInt()!! - (responseData.getAllProductsResponseDetails[0].packagingCharge?.toInt()!! + responseData.getAllProductsResponseDetails.get(
-                                0
-                            ).deleivceryCharge?.toInt()!! + responseData.getAllProductsResponseDetails[0].taxAmount?.toInt()!!)).toString()
-                        )
-                    )
 
+                        nameOfProduct.set(
+                            responseData.getAllProductsResponseDetails[0].name
+                        )
+                        taxAmount.set(
+                            Utility.convertToRs(
+                                responseData.getAllProductsResponseDetails[0].totalTax
+                            )
+                        )
+                        itemTotal.set(
+                            Utility.convertToRs(
+                                responseData.getAllProductsResponseDetails[0].basePrice
+                            )
+                        )
+
+                    }
                 }
             }
 

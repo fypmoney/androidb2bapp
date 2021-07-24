@@ -174,7 +174,7 @@ data class CardInfoDetails(
     @SerializedName("cardType") val cardType: String? = null,
     @SerializedName("nameOnCard") val nameOnCard: String? = null,
     @SerializedName("isCardBlocked") val isCardBlocked: String? = null,
-    @SerializedName("kitNo") val kitNumber: String? = null,
+    @SerializedName("kitNumber") val kitNumber: String? = null,
     @SerializedName("posEnabled") val posEnabled: String? = null,
     @SerializedName("ecomEnabled") val ecomEnabled: String? = null,
     @SerializedName("atmEnabled") val atmEnabled: String? = null,
@@ -195,7 +195,12 @@ data class OrderCardRequest(
     @SerializedName("productId") val productId: String? = null,
     @SerializedName("city") val city: String? = null,
     @SerializedName("state") val state: String? = null,
-    @SerializedName("stateCode") val stateCode: String? = null
+    @SerializedName("stateCode") val stateCode: String? = null,
+    @SerializedName("taxMasterCode") val taxMasterCode: String? = null,
+    @SerializedName("productMasterCode") val productMasterCode: String? = null,
+    @SerializedName("totalTax") val totalTax: String? = null,
+    @SerializedName("discount") val discount: String? = null,
+
 ) : BaseRequest()
 
 data class OrderCardResponse(
@@ -212,11 +217,11 @@ data class OrderCardResponseDetails(
     @SerializedName("landmark") val landmark: String? = null,
     @SerializedName("amount") val amount: String? = null,
     @SerializedName("productId") val productId: String? = null,
-    @SerializedName("kitNo") val kitNumber: String? = null
+    @SerializedName("kitNumber") val kitNumber: String? = null
 ) : Serializable
 
 data class GetOrderCardStatusResponse(
-    @SerializedName("data") val GetOrderCardStatusResponseDetails: GetOrderCardStatusResponseDetails? = null
+    @SerializedName("data") val GetOrderCardStatusResponseDetails:GetOrderCardStatusResponseDetails
 ) : Serializable
 
 data class GetOrderCardStatusResponseDetails(
@@ -229,7 +234,7 @@ data class GetOrderCardStatusResponseDetails(
     @SerializedName("amount") val amount: String? = null,
     @SerializedName("loyaltyPoints") val loyaltyPoints: String? = null,
     @SerializedName("status") val status: String? = null,
-    @SerializedName("packageStatusList") val packageStatusList: PackageStatusList? = null
+    @SerializedName("packageStatusList") val packageStatusList: List<PackageStatusList>? = null
 ) : Serializable
 
 data class PackageStatusList(
@@ -248,13 +253,16 @@ data class GetAllProductsResponseDetails(
     @SerializedName("name") val name: String? = null,
     @SerializedName("description") val description: String? = null,
     @SerializedName("code") val code: String? = null,
-    @SerializedName("amount") val amount: String? = null,
-    @SerializedName("taxAmount") val taxAmount: String? = null,
-    @SerializedName("taxPercentage") val taxPercentage: String? = null,
-    @SerializedName("productType") val productType: String? = null,
-    @SerializedName("deleivceryCharge") var deleivceryCharge: String? = null,
-    @SerializedName("packagingCharge") val packagingCharge: String? = null,
-    @SerializedName("loyaltyPoints") val loyaltyPoints: String? = null,
+    @SerializedName("basePrice") val basePrice: String? = null,
+    @SerializedName("taxMasterCode") val taxMasterCode: String? = null,
+    @SerializedName("igst") val igst: String? = null,
+    @SerializedName("cgst") val cgst: String? = null,
+    @SerializedName("sgst") val sgst: String? = null,
+    @SerializedName("mrp") val mrp: String? = null,
+    @SerializedName("flexiblePrice") val flexiblePrice: String? = null,
+    @SerializedName("voucherAllowed") val voucherAllowed: String? = null,
+    @SerializedName("totalTax") val totalTax: String? = null,
+    @SerializedName("discount") val discount: String? = null,
     @SerializedName("status") val status: String? = null
 ) : Serializable
 

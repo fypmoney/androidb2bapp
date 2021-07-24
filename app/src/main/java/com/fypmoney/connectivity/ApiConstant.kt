@@ -58,7 +58,7 @@ object ApiConstant {
     const val API_QR_CODE_SCANNER = "/services/PockketService/api/spend/bharat-qr"
     const val API_UPLOAD_PROFILE_PIC = "/services/authservice/api/upload/profile-pic"
     const val API_ORDER_CARD = "/services/PockketService/api/order-card"
-    const val API_GET_ALL_PRODUCTS = "/services/loyaltyservice/api/product-details"
+    const val API_GET_ALL_PRODUCTS = "/services/loyaltyservice/api/product-details/product-type/"
     const val API_GET_ORDER_CARD_STATUS = "/services/PockketService/api/order-card/"
     const val API_SET_CHANGE_PIN = "/services/PockketService/api/set/pin/"
     const val API_PHYSICAL_CARD_INIT = "/services/PockketService/api/activate/physical-card/init"

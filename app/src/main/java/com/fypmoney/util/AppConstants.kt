@@ -79,6 +79,7 @@ object AppConstants {
     const val LOGIN_SCREEN = "login_screen"
     const val AADHAAR_VERIFICATION = "aadhaar_verification"
     const val ACTIVATE_CARD = "activate_card"
+    const val ORDER_CARD_PHYSICAL_CARD_CODE = "PhysicalCard"
     const val KIT_FOUR_DIGIT = "kit_four_digit"
     const val KYC_MOBILE_VERIFICATION = "mobile_verification"
     const val CONTACT_SELECTED_RESPONSE = "contact_selected"

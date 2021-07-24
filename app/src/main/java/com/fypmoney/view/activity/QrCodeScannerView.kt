@@ -77,10 +77,6 @@ class QrCodeScannerView : BaseActivity<ViewQrCodeScannerBinding, QrCodeScannerVi
         super.onActivityResult(requestCode, resultCode, data)
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
-            if (result.contents == null) {
-                Utility.showToast(getString(R.string.qr_scan_issue))
-                finish()
-            } else {
                 if (parseQrCode(result.contents) != null) {
                     intentToActivity(
                         contactEntity = ContactEntity(),
@@ -92,7 +88,7 @@ class QrCodeScannerView : BaseActivity<ViewQrCodeScannerBinding, QrCodeScannerVi
                 } else {
                     Utility.showToast(getString(R.string.invalid_qr_code))
                     callScan()
-                }
+
 
             }
         }

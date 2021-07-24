@@ -2,13 +2,11 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewTrackOrderBinding
-import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.TrackOrderViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_order_card.*
@@ -46,7 +44,7 @@ class TrackOrderView : BaseActivity<ViewTrackOrderBinding, TrackOrderViewModel>(
     fun setObservers() {
         mViewModel.productResponse.observe(this)
         {
-            setDataInUi()
+            //setDataInUi()
         }
 
     }
@@ -58,9 +56,9 @@ class TrackOrderView : BaseActivity<ViewTrackOrderBinding, TrackOrderViewModel>(
         startActivity(Intent(this@TrackOrderView, aClass))
     }
 
-    /*
+   /* *//*
     * This is used to set data
-    * */
+    * *//*
     private fun setDataInUi() {
         when (mViewModel.orderStatus.get()) {
             AppConstants.ORDER_STATUS_ORDERED -> {
@@ -119,5 +117,5 @@ class TrackOrderView : BaseActivity<ViewTrackOrderBinding, TrackOrderViewModel>(
 
 
     }
-
+*/
 }
