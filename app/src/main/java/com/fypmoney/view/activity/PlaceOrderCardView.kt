@@ -1,5 +1,8 @@
 package com.fypmoney.view.activity
 
+import android.app.KeyguardManager
+import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -8,6 +11,7 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
@@ -22,7 +26,6 @@ import com.fypmoney.view.fragment.PriceBreakupBottomSheet
 import com.fypmoney.viewmodel.PlaceOrderCardViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_order_card.*
-import java.lang.Exception
 import java.util.*
 
 
@@ -48,6 +51,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setToolbarAndTitle(
             context = this@PlaceOrderCardView,
             toolbar = toolbar,
@@ -192,4 +196,6 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
             }
         }
     }
+
+
 }

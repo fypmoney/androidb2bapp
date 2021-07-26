@@ -44,9 +44,6 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var isOrderCard = ObservableField(true)
     var bankProfileResponse = ObservableField<BankProfileResponseDetails>()
 
-    init {
-        callGetBankProfileApi()
-    }
 
     /*
     * This is used to see the card details
@@ -212,7 +209,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 NetworkUtil.endURL(ApiConstant.API_GET_BANK_PROFILE),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
     }

@@ -24,6 +24,7 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.BASE_ACTIVITY_URL
 import com.fypmoney.util.AppConstants.FEED_RESPONSE
+import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.CardSettingsBottomSheet
 import com.fypmoney.view.fragment.DidUKnowBottomSheet
@@ -35,7 +36,7 @@ import kotlinx.android.synthetic.main.view_user_feeds.*
 * This is used to show list of feeds
 * */
 class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
-    LocationListenerClass.GetCurrentLocationListener {
+    LocationListenerClass.GetCurrentLocationListener, DialogUtils.OnAlertDialogClickListener {
     private lateinit var mViewModel: FeedsViewModel
     private lateinit var mViewBinding: ViewUserFeedsBinding
     var isLocationPermissionAllowed = ObservableField(false)
@@ -155,41 +156,23 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
             }
 
 
-            /*  when (it.action?.type) {
-                  AppConstants.FEED_TYPE_IN_APP -> {
-                      try {
-                          intentToActivity(
-                              Class.forName(BASE_ACTIVITY_URL + it.action?.url!!),
-                              it
-                          )
-                      } catch (e: Exception) {
-                          e.printStackTrace()
-                          intentToActivity(HomeView::class.java, it)
-                      }
-                  }
-                  AppConstants.FEED_TYPE_IN_APP_WEBVIEW, AppConstants.FEED_TYPE_FEED -> {
-                      intentToActivity(UserFeedsDetailView::class.java, it, type = it.action?.type)
-                  }
-                  AppConstants.FEED_TYPE_EXTERNAL_WEBVIEW -> {
-                      startActivity(
-                          Intent.createChooser(
-                              Intent(
-                                  Intent.ACTION_VIEW,
-                                  Uri.parse(it.action?.url)
-                              ), getString(R.string.browse_with)
-                          )
-                      )
-
-                  }
-              }*/
-
         }
 
         mViewModel.onFeedsApiFail.observe(viewLifecycleOwner) {
             if (it) {
+                shimmerLayout.stopShimmerAnimation()
                 mViewModel.noDataFoundVisibility.set(true)
-                mViewModel.noDataText.set(getString(R.string.something_went_wrong_error1))
+                mViewModel.noDataText.set("")
                 mViewModel.onFeedsApiFail.value = false
+                DialogUtils.showConfirmationDialog(
+                    context = requireContext(),
+                    title = "",
+                    message = getString(R.string.empty_Feeds_error),
+                    positiveButtonText = getString(R.string.try_again_text),
+                    negativeButtonText = getString(R.string.cancel_btn_text),
+                    uniqueIdentifier = "",
+                    onAlertDialogClickListener = this, isNegativeButtonRequired = true
+                )
             }
 
         }
@@ -223,7 +206,6 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults: IntArray
     ) {
-        Log.d("wdjf3h8r7", ",smvjg9rugy")
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         for (permission in permissions) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(
@@ -232,9 +214,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                 )
             ) {
                 //denied
-                Log.d("wdjf3h8r7", ",deny")
-
-                if (mViewModel.isDenied.get() == false) {
+                    if (mViewModel.isDenied.get() == false) {
                     mViewModel.callFetchFeedsApi(false, 0.0, 0.0)
                     mViewModel.isDenied.set(true)
                 }
@@ -244,7 +224,6 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                         permission
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
-                    Log.d("wdjf3h8r7", ",allow")
 
                     //allow
                     if (!isLocationPermissionAllowed.get()!!) {
@@ -259,7 +238,6 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                           isProgressBarVisible = false
                       )*/
                 } else {
-                    Log.d("wdjf3h8r7", ",permanent deny")
 
                     //set to never ask again
                     mViewModel.isApiLoading.set(true)
@@ -276,7 +254,6 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
     }
 
     override fun onPause() {
-        shimmerLayout.stopShimmerAnimation()
         super.onPause()
     }
 
@@ -297,5 +274,11 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
             DidUKnowBottomSheet(list)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "DidUKnowSheet")
+    }
+
+    override fun onPositiveButtonClick(uniqueIdentifier: String) {
+        mViewModel.isRecyclerviewVisible.set(true)
+        shimmerLayout.startShimmerAnimation()
+        mViewModel.callFetchFeedsApi(false, mViewModel.latitude.get(), mViewModel.longitude.get())
     }
 }

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.app.KeyguardManager
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,6 +13,7 @@ import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -365,5 +367,14 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
 
     }
 
+    /**
+     * @param context
+     * @return true if pass or pin set
+     */
+     fun isPassOrPinSet(): Boolean {
+        val keyguardManager =
+            getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager //api 16+
+        return keyguardManager.isKeyguardSecure
+    }
 
 }

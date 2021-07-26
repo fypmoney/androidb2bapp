@@ -208,6 +208,8 @@
     <string name="feeds_screen_title">Feeds</string>
     <string name="feeds_details_screen_title">Feed Details</string>
     <string name="browse_with">Browse with</string>
+    <string name="empty_Feeds_error">Error occur , please try again</string>
+
 
     <!--
     User profile

@@ -6,11 +6,9 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.load.engine.executor.GlideExecutor.UncaughtThrowableStrategy.LOG
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -22,10 +20,6 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.*
 import com.fypmoney.viewmodel.HomeViewModel
-import com.payneteasy.tlv.BerTlvLogger
-import com.payneteasy.tlv.BerTlvParser
-import com.payneteasy.tlv.BerTlvs
-import com.payneteasy.tlv.HexUtil
 import kotlinx.android.synthetic.main.view_home.*
 
 
@@ -277,5 +271,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         mViewModel.callPayMoneyApi(actionAllowed!!)
 
     }
+
 }
 

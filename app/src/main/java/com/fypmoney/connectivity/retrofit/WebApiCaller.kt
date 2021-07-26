@@ -158,7 +158,7 @@ class WebApiCaller {
                                             PockketApplication.instance,
                                             SharedPrefUtils.SF_KEY_ACCESS_TOKEN
                                         ),
-                                        request.endpoint,image
+                                        request.endpoint, image
                                     )
                             }
 
@@ -266,6 +266,13 @@ class WebApiCaller {
                             request.onResponse.progress(false, null.toString())
                         }
                     } catch (e: Exception) {
+                        request.onResponse.onError(
+                            purpose = request.purpose,
+                            ErrorResponseInfo(
+                                errorCode = "1",
+                                msg = ""
+                            )
+                        )
                         request.onResponse.progress(false, null.toString())
                         e.printStackTrace()
                     }

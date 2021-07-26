@@ -64,7 +64,7 @@
 
 
         <activity
-            android:name=".view.activity.AddTaskActivity"
+                    android:name=".view.activity.AddTaskActivity"
             android:label="@string/title_activity_add_task"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
