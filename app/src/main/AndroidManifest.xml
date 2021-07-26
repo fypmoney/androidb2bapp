@@ -117,6 +117,7 @@
         <activity
             android:name=".view.activity.TrackOrderView"
             android:screenOrientation="portrait"
+            android:hardwareAccelerated="false"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
         <activity

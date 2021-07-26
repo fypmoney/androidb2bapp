@@ -18,6 +18,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.view.activity.*
 import com.fypmoney.viewmodel.HomeScreenViewModel
 import com.google.android.material.card.MaterialCardView
+import kotlinx.android.synthetic.main.screen_home.*
 
 
 /**

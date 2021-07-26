@@ -753,16 +753,21 @@ object Utility {
         inputFormat: String? = AppConstants.SERVER_DATE_TIME_FORMAT1,
         outputFormat: String? = AppConstants.CHANGED_DATE_TIME_FORMAT1
     ): String {
-        val input = SimpleDateFormat(inputFormat, Locale.getDefault())
-        val output = SimpleDateFormat(outputFormat, Locale.getDefault())
+        if (dateTime != null) {
+            val input = SimpleDateFormat(inputFormat, Locale.getDefault())
+            val output = SimpleDateFormat(outputFormat, Locale.getDefault())
 
-        var d: Date? = null
-        try {
-            d = input.parse(dateTime!!)
-        } catch (e: ParseException) {
-            e.printStackTrace()
+            var d: Date? = null
+            try {
+                d = input.parse(dateTime!!)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            return output.format(d)
+        } else {
+            return ""
         }
-        return output.format(d)
+
 
     }
 

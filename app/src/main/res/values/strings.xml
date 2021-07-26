@@ -222,6 +222,7 @@
     <string-array name="my_profile_title_list">
         <item>Privacy settings</item>
         <item>Feed/ interest settings</item>
+        <item>Community settings</item>
         <item>Help?</item>
         <item>Log out</item>
     </string-array>
@@ -334,6 +335,7 @@
     <string name="city_hint">Enter city</string>
     <string name="school_name_empty_error">Please enter school name</string>
     <string name="city_name_empty_error">Please enter city</string>
+    <string name="community_success_msg">Your community information added successfully</string>
 
     <!--
     create account success

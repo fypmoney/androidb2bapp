@@ -28,6 +28,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
     var noDataFoundVisibility = ObservableField(false)
     var onUpdateProfileSuccess = MutableLiveData<Boolean>()
     var onLoginClicked = MutableLiveData<Boolean>()
+    var isEnabled = MutableLiveData(false)
     var firstName = MutableLiveData<String>()
     var lastName = MutableLiveData<String>()
     var dob = MutableLiveData<String>()
@@ -38,8 +39,6 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
     var buttonColor = ObservableField(false)
     var selectedInterestList = ArrayList<InterestEntity>()
     var interestRepository = InterestRepository(mDB = appDatabase)
-
-
     /*
     * This method is used to set data
     * */
@@ -63,6 +62,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
                 Utility.showToast(PockketApplication.instance.getString(R.string.dob_empty_error))
             }
             else -> {
+                isEnabled.value=true
                 WebApiCaller.getInstance().request(
                     ApiRequest(
                         purpose = ApiConstant.API_UPDATE_PROFILE,

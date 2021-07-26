@@ -155,7 +155,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
 
         mViewModel.onLoginSuccess.observe(this) {
             if (it) {
-                intentToActivity(LoginSuccessView::class.java)
+                intentToActivity(LoginSuccessView::class.java, isFinish = true)
                 mViewModel.onLoginSuccess.value = false
             }
         }

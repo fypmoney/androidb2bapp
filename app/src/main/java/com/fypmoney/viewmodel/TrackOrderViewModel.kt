@@ -36,7 +36,11 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
 
     init {
         kitNumber.set(SharedPrefUtils.getString(application, SharedPrefUtils.SF_KEY_KIT_NUMBER))
-        callGetAllProductsApi()
+        if (Utility.getCustomerDataFromPreference()?.cardProductCode == null) {
+            callGetAllProductsApi()
+        } else {
+            callGetAllProductsByCodeApi()
+        }
         callGetCardStatusApi()
     }
 
@@ -54,6 +58,22 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
             )
         )
     }
+
+    /*
+    * This method is used to get all cards
+    * */
+    private fun callGetAllProductsByCodeApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_ALL_PRODUCTS_BY_CODE,
+                NetworkUtil.endURL(ApiConstant.API_GET_ALL_PRODUCTS_BY_CODE + Utility.getCustomerDataFromPreference()?.cardProductCode),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
 
     /*
     * This method is used to get all cards
@@ -77,7 +97,7 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
             ApiConstant.API_GET_ORDER_CARD_STATUS -> {
                 if (responseData is GetOrderCardStatusResponse) {
                     if (!responseData.GetOrderCardStatusResponseDetails.packageStatusList.isNullOrEmpty()) {
-                           orderStatusAdapter.setList(
+                        orderStatusAdapter.setList(
                             responseData.GetOrderCardStatusResponseDetails.packageStatusList
                         )
                     }
@@ -85,7 +105,7 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
                     Utility.showToast("Error in fetching order status,please try again")
                 }
             }
-            ApiConstant.API_GET_ALL_PRODUCTS -> {
+            ApiConstant.API_GET_ALL_PRODUCTS, ApiConstant.API_GET_ALL_PRODUCTS_BY_CODE -> {
                 if (responseData is GetAllProductsResponse) {
                     if (!responseData.getAllProductsResponseDetails?.isNullOrEmpty()!!) {
                         productResponse.value = responseData.getAllProductsResponseDetails[0]

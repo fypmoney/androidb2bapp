@@ -53,8 +53,8 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
     private fun setObserver() {
         mViewModel.onApiSuccess.observe(this) {
             when {
-                Utility.getCustomerDataFromPreference()!!.isProfileCompleted == AppConstants.NO -> {
-                    when (Utility.getCustomerDataFromPreference()!!.isReferralAllowed) {
+                Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
+                    when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
                         AppConstants.YES -> {
                             intentToActivity(ReferralCodeView::class.java)
                         }
@@ -64,7 +64,7 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                         }
                     }
                 }
-                Utility.getCustomerDataFromPreference()!!.bankProfile?.isAccountActive == AppConstants.NO -> {
+                Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {
                     intentToActivity(AadhaarAccountActivationView::class.java)
                 }
                 else->{

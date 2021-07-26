@@ -182,7 +182,7 @@ class ApiDataParsing {
                 ApiConstant.API_GET_ORDER_CARD_STATUS -> {
                     getObject(response, GetOrderCardStatusResponse::class.java)
                 }
-                ApiConstant.API_GET_ALL_PRODUCTS -> {
+                ApiConstant.API_GET_ALL_PRODUCTS, ApiConstant.API_GET_ALL_PRODUCTS_BY_CODE -> {
                     getObject(response, GetAllProductsResponse::class.java)
                 }
 

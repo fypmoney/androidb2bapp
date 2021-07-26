@@ -52,7 +52,12 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
         stateList.set(stateInitialList)
         cityInitialList.add(GetCityResponseDetails(cityName = application.getString(R.string.city_hint_val)))
         cityList.set(cityInitialList)
-        callGetAllProductsApi()
+        if (Utility.getCustomerDataFromPreference()?.cardProductCode == null) {
+            callGetAllProductsApi()
+        } else {
+            callGetAllProductsByCodeApi()
+        }
+
         callGetStateApi()
 
     }
@@ -123,7 +128,7 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
                     areaDetail = roadName.value,
                     landmark = landMark.value,
                     city = city.get(), state = state.get(), stateCode = stateCode.get(),
-                    amount =productResponse.value?.mrp,
+                    amount = productResponse.value?.mrp,
                     productId = productResponse.value?.id,
                     productMasterCode = productResponse.value?.code,
                     taxMasterCode = productResponse.value?.taxMasterCode,
@@ -142,13 +147,29 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_ALL_PRODUCTS,
-                NetworkUtil.endURL(ApiConstant.API_GET_ALL_PRODUCTS+AppConstants.ORDER_CARD_PHYSICAL_CARD_CODE),
+                NetworkUtil.endURL(ApiConstant.API_GET_ALL_PRODUCTS + AppConstants.ORDER_CARD_PHYSICAL_CARD_CODE),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
             )
         )
     }
+
+    /*
+    * This method is used to get all cards
+    * */
+    private fun callGetAllProductsByCodeApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_ALL_PRODUCTS_BY_CODE,
+                NetworkUtil.endURL(ApiConstant.API_GET_ALL_PRODUCTS_BY_CODE + Utility.getCustomerDataFromPreference()?.cardProductCode),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
 
     /*
     * This method is used to get all state
@@ -224,7 +245,7 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
 
                 }
             }
-            ApiConstant.API_GET_ALL_PRODUCTS -> {
+            ApiConstant.API_GET_ALL_PRODUCTS, ApiConstant.API_GET_ALL_PRODUCTS_BY_CODE -> {
                 if (responseData is GetAllProductsResponse) {
                     if (!responseData.getAllProductsResponseDetails?.isNullOrEmpty()!!) {
                         productResponse.value = responseData.getAllProductsResponseDetails[0]
@@ -236,12 +257,11 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
                     }
                 }
 
-                }
             }
-
-
         }
 
+
+    }
 
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {

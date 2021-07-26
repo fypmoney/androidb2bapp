@@ -58,13 +58,11 @@
             SET_IMAGE_IN_TRACK_ORDER_LINE="@{viewHelper.statusForImage}"
             android:layout_width="2dp"
             android:layout_height="50dp"
-            android:layout_below="@id/imageOrderPlaced"
             android:layout_toStartOf="@+id/imageOrderPlaced"
             android:layout_toEndOf="@+id/imageOrderPlaced"
+            android:layout_below="@id/imageOrderPlaced"
             android:background="@drawable/dotted_black"
-            android:visibility="@{viewHelper.isLineVisible?View.VISIBLE:View.GONE}"
-
-            />
+            android:visibility="@{viewHelper.isLineVisible?View.VISIBLE:View.GONE}" />
 
     </RelativeLayout>
 </layout>

@@ -91,6 +91,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
         val iconList = ArrayList<Int>()
         iconList.add(R.drawable.privacy)
         iconList.add(R.drawable.interest)
+        iconList.add(R.drawable.interest)
         iconList.add(R.drawable.help)
         iconList.add(R.drawable.logout)
         myProfileAdapter.setList(
@@ -111,7 +112,12 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
 
         mViewModel.onProfileSuccess.observe(this) {
             if (it) {
-                loadProfile(SharedPrefUtils.getString(applicationContext,SharedPrefUtils.SF_KEY_PROFILE_IMAGE))
+                loadProfile(
+                    SharedPrefUtils.getString(
+                        applicationContext,
+                        SharedPrefUtils.SF_KEY_PROFILE_IMAGE
+                    )
+                )
                 mViewModel.onProfileSuccess.value = false
             }
             // loadProfile(uri.toString())
@@ -273,10 +279,14 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
                 intentToActivity(SelectInterestView::class.java)
             }
             2 -> {
-                callFreshChat()
+                intentToActivity(CommunityView::class.java)
             }
 
             3 -> {
+                callFreshChat()
+            }
+
+            4 -> {
                 callLogOutBottomSheet()
             }
 

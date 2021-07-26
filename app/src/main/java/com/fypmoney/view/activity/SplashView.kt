@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.MediaController
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -97,8 +96,8 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                     )!!
                 ) {
                     when {
-                        Utility.getCustomerDataFromPreference()!!.isProfileCompleted == AppConstants.NO -> {
-                            when (Utility.getCustomerDataFromPreference()!!.isReferralAllowed) {
+                        Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
+                            when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
                                 AppConstants.YES -> {
                                     intentToActivity(ReferralCodeView::class.java)
                                 }
@@ -108,7 +107,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                 }
                             }
                         }
-                        Utility.getCustomerDataFromPreference()!!.bankProfile?.isAccountActive == AppConstants.NO -> {
+                        Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {
                             intentToActivity(AadhaarAccountActivationView::class.java)
                         }
                         else -> {

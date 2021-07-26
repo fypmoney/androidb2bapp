@@ -7,6 +7,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewCommunityBinding
+import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.CommunityViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -36,6 +37,9 @@ class CommunityView : BaseActivity<ViewCommunityBinding, CommunityViewModel>() {
             toolbar = toolbar,
             isBackArrowVisible = true
         )
+        mViewModel.schoolName.value=Utility.getCustomerDataFromPreference()?.userProfile?.schoolName
+        mViewModel.cityName.value=Utility.getCustomerDataFromPreference()?.userProfile?.cityName
+
         setObserver()
     }
 
@@ -44,7 +48,8 @@ class CommunityView : BaseActivity<ViewCommunityBinding, CommunityViewModel>() {
      */
     private fun setObserver() {
         mViewModel.onContinueClicked.observe(this) {
-            intentToActivity()
+            Utility.showToast(getString(R.string.community_success_msg))
+            finish()
         }
 
 

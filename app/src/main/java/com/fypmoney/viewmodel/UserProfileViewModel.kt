@@ -1,7 +1,6 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -11,7 +10,9 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.*
+import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.ProfileImageUploadResponse
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import okhttp3.MultipartBody
@@ -123,7 +124,7 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
             )
 
         }
-        dob.set(SharedPrefUtils.getString(getApplication(), SharedPrefUtils.SF_KEY_USER_DOB))
+        dob.set(Utility.parseDateTime(SharedPrefUtils.getString(getApplication(), SharedPrefUtils.SF_KEY_USER_DOB),inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT4))
         phone.set(
             SharedPrefUtils.getString(
                 getApplication(),
