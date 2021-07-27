@@ -256,7 +256,9 @@ class WebApiCaller {
                             )
 
 
-                        } else {
+                        }
+
+                        else {
                             request.onResponse.onError(
                                 purpose = request.purpose,
                                 NetworkUtil.responseData(e)!!

@@ -21,7 +21,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/author"
+            android:id="@+id/cross"
             style="@style/TextviewRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,6 +29,7 @@
             android:layout_marginTop="10dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/screenMarginRight"
+            android:onClick="@{()->viewModel.onCrossClicked()}"
            app:srcCompat="@drawable/ic_cross" />
 
 
@@ -36,6 +37,7 @@
             android:id="@+id/webView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/cross"
             android:layout_marginBottom="@dimen/card_padding" />
     </RelativeLayout>
 

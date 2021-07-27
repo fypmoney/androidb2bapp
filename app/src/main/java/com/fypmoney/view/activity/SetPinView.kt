@@ -42,8 +42,18 @@ class SetPinView : BaseActivity<ViewSetPinBinding, SetPinViewModel>() {
         webView.settings.javaScriptEnabled = true
         webView.isVerticalScrollBarEnabled = false
         webView.loadUrl(intent.getStringExtra(AppConstants.SET_PIN_URL)!!)
+        setObservers()
 
+    }
 
+    fun setObservers()
+    {
+        mViewModel.onCrossClicked.observe(this)
+        {if(it)
+        { finish()
+            mViewModel.onCrossClicked.value=false
+        }
+        }
     }
 
 

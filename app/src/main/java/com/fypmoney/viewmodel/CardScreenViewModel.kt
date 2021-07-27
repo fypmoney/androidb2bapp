@@ -38,7 +38,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var onGetCardDetailsSuccess = MutableLiveData<Boolean>()
     var onActivateCardInit = MutableLiveData<Boolean>()
     var onActivateCardClicked = MutableLiveData<Boolean>()
-    var onSetPinSuccess = MutableLiveData<SetPinResponse>()
+    var onSetPinSuccess = MutableLiveData<SetPinResponseDetails>()
     var isActivateCardVisible = ObservableField(true)
     var onBankProfileSuccess = MutableLiveData(false)
     var isOrderCard = ObservableField(true)
@@ -281,12 +281,14 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                                     getApplication(),
                                     SharedPrefUtils.SF_KEY_KIT_NUMBER, it.kitNumber
                                 )
+                                if (it.status == AppConstants.ENABLE) {
+                                    isActivateCardVisible.set(false)
+                                } else {
+                                    isActivateCardVisible.set(true)
+                                }
                                 when {
                                     !it.kitNumber.isNullOrEmpty() -> {
                                         isOrderCard.set(false)
-                                    }
-                                    it.status == AppConstants.ENABLE -> {
-                                        isActivateCardVisible.set(false)
                                     }
                                 }
 
@@ -321,7 +323,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             }
             ApiConstant.API_SET_CHANGE_PIN -> {
                 if (responseData is SetPinResponse) {
-                    onSetPinSuccess.value = responseData
+                    onSetPinSuccess.value = responseData.setPinResponseDetails
                 }
             }
             ApiConstant.API_ACTIVATE_CARD -> {

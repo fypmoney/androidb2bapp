@@ -274,17 +274,26 @@ data class ActivateCardRequest(
 
 
 data class ActivateCardResponse(
-    @SerializedName("data") val getAllProductsResponseDetails: List<GetAllProductsResponseDetails>? = null
+    @SerializedName("data") val activateCardResponseDetails: ActivateCardResponseDetails? = null
 ) : Serializable
 
-
+data class ActivateCardResponseDetails(
+    @SerializedName("additionalInfo") val additionalInfo: String? = null,
+    @SerializedName("validationNo") val validationNo: String? = null,
+    @SerializedName("cardIdentifier") val cardIdentifier: String? = null,
+    @SerializedName("message") val message: String? = null
+) : BaseRequest()
 data class PhysicalCardInitResponse(
     @SerializedName("msg") val msg: String? = null
 ) : Serializable
 
-data class SetPinResponse(
+data class SetPinResponseDetails(
     @SerializedName("cardIdentifier") val cardIdentifier: String? = null,
     @SerializedName("url") val url: String? = null
+) : Serializable
+
+data class SetPinResponse(
+    @SerializedName("data") val setPinResponseDetails: SetPinResponseDetails? = null
 ) : Serializable
 
 data class GetStatesResponse(
