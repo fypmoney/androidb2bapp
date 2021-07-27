@@ -370,8 +370,8 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     }
 
     override fun onActivateCardClick(kitFourDigit: String?) {
-        mViewModel.callPhysicalCardInitApi()
-        goToEnterOtpScreen(kitFourDigit)
+        mViewModel.callActivateCardApi(kitFourDigit)
+
     }
 
     /**

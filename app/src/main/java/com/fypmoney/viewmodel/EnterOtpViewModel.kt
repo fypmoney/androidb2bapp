@@ -75,9 +75,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                     AppConstants.KYC_MOBILE_VERIFICATION -> {
                         callKycMobileVerificationApi()
                     }
-                    AppConstants.ACTIVATE_CARD -> {
-                        callActivateCardApi()
-                    }
+
 
                 }
             }
@@ -225,27 +223,6 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
         )
     }
 
-    /*
-      * This method is used to call activate card api
-      * */
-    private fun callActivateCardApi() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_ACTIVATE_CARD,
-                NetworkUtil.endURL(ApiConstant.API_ACTIVATE_CARD),
-                ApiUrl.POST,
-                ActivateCardRequest(
-                    validationNo = kitFourDigit.get(),
-                    otp = otp.get()!!,
-                    cardIdentifier = SharedPrefUtils.getString(
-                        getApplication(),
-                        SharedPrefUtils.SF_KEY_KIT_NUMBER
-                    )
-                ),
-                this, isProgressBar = true
-            )
-        )
-    }
 
     /*
       * This method is used to call aadhaar verification

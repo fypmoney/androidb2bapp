@@ -37,9 +37,11 @@
     <string name="decline_btn_text">Decline</string>
     <string name="get_otp_btn_text">Get OTP</string>
     <string name="pay_btn_text">Pay</string>
+    <string name="pay_money_btn_text">Pay Money</string>
     <string name="verify_btn_text">Verify</string>
     <string name="invite_btn_text">Invite</string>
     <string name="activate_account_btn_text">Activate Account</string>
+    <string name="activate_card_btn_text">Activate Card</string>
     <string name="create_account_btn_text">Create Account</string>
     <string name="request_again_btn_text">Request again</string>
     <string name="add_btn_text">Add</string>
@@ -199,7 +201,9 @@
     <string name="quick_actions_chores">Chores</string>
     <string name="quick_actions_chores1">Perform task and get cash rewards</string>
     <string name="quick_actions_rewards">Rewards</string>
+    <string name="quick_actions_rewards1">Play games and get exciting rewards</string>
     <string name="quick_actions_referrals">Referrals</string>
+    <string name="quick_actions_referrals1">Refer a friend and get rewards</string>
     <string name="fetching_balance">Fetching balance…</string>
 
     <!--

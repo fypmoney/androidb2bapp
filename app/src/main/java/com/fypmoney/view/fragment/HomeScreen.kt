@@ -28,7 +28,6 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
 
     private lateinit var mViewModel: HomeScreenViewModel
     private lateinit var mViewBinding: ScreenHomeBinding
-    lateinit var choreCard: MaterialCardView
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -47,7 +46,6 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
-        choreCard = view.findViewById(R.id.chore_card)
         choreCard.setOnClickListener {
             intentToPayActivity(ChoresActivity::class.java)
         }

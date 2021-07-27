@@ -267,7 +267,7 @@ data class GetAllProductsResponseDetails(
 ) : Serializable
 
 data class ActivateCardRequest(
-    @SerializedName("otp") val otp: String? = null,
+    @SerializedName("additionalInfo") val additionalInfo: String? = null,
     @SerializedName("validationNo") val validationNo: String? = null,
     @SerializedName("cardIdentifier") val cardIdentifier: String? = null
 ) : BaseRequest()

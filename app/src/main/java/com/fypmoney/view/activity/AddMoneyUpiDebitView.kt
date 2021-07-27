@@ -13,6 +13,7 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.widget.ProgressBar
@@ -83,6 +84,7 @@ open class AddMoneyUpiDebitView :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("cjv","oncreate")
         setToolbarAndTitle(
             context = this@AddMoneyUpiDebitView,
             toolbar = toolbar,
@@ -197,7 +199,6 @@ open class AddMoneyUpiDebitView :
 
         }
         mViewModel.onBackPress.observe(this) {
-           // callTransactionFailBottomSheet()
         }
     }
 
@@ -285,6 +286,7 @@ open class AddMoneyUpiDebitView :
 
     override fun onResume() {
         super.onResume()
+        Log.d("cjv","oncreate")
         if (mViewModel.isPaymentFail.get() == true) {
             callTransactionFailBottomSheet()
         }
@@ -328,9 +330,7 @@ open class AddMoneyUpiDebitView :
                 vpa: String,
                 packageListDialogFragment: PackageListDialogFragment
             ) {
-
                 val verifyVpaHash = mViewModel.hash.get()
-
                 packageListDialogFragment.verifyVpa(verifyVpaHash)
             }
 
@@ -381,7 +381,7 @@ open class AddMoneyUpiDebitView :
             }
 
             override fun onBackApprove() {
-                this@AddMoneyUpiDebitView.finish()
+                callTransactionFailBottomSheet()
             }
 
             override fun onBackDismiss() {
@@ -404,6 +404,7 @@ open class AddMoneyUpiDebitView :
                         resultData.isPaymentOptionAvailable
                     com.payu.custombrowser.util.PaymentOption.PHONEPE -> isPhonePeSupported =
                         resultData.isPaymentOptionAvailable
+
 
                 }
             }
@@ -563,7 +564,6 @@ This method is used to call the pay u api
 
     fun showProgressDialogView(): View {
         return layoutInflater.inflate(R.layout.progress_bar_layout, null)
-
     }
 
     private fun showToolBarView(): View {

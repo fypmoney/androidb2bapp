@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -73,26 +74,37 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         mViewBinding.navigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
+                    relativeLayout.setBackgroundColor(ContextCompat.getColor(applicationContext,R.color.text_color_dark))
+                    ivNotificationBell.setColorFilter(ContextCompat.getColor(applicationContext, R.color.white), android.graphics.PorterDuff.Mode.MULTIPLY);
+
                     mViewModel.isScanVisible.set(true)
                     mViewModel.headerText.set("")
                     setCurrentFragment(HomeScreen())
                 }
                 R.id.feeds -> {
+                    relativeLayout.setBackgroundColor(ContextCompat.getColor(applicationContext,R.color.white))
+                    ivNotificationBell.setColorFilter(ContextCompat.getColor(applicationContext, R.color.text_color_dark), android.graphics.PorterDuff.Mode.MULTIPLY);
                     mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(getString(R.string.feeds_bottom_nav_title))
                     setCurrentFragment(UserFeedsView())
                 }
                 R.id.store -> {
+                    relativeLayout.setBackgroundColor(ContextCompat.getColor(applicationContext,R.color.white))
+                    ivNotificationBell.setColorFilter(ContextCompat.getColor(applicationContext, R.color.text_color_dark), android.graphics.PorterDuff.Mode.MULTIPLY);
                     mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(getString(R.string.store_bottom_nav_title))
                     setCurrentFragment(HomeScreen())
                 }
                 R.id.card -> {
+                    relativeLayout.setBackgroundColor(ContextCompat.getColor(applicationContext,R.color.white))
+                    ivNotificationBell.setColorFilter(ContextCompat.getColor(applicationContext, R.color.text_color_dark), android.graphics.PorterDuff.Mode.MULTIPLY);
                     mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(getString(R.string.card_details_title))
                     setCurrentFragment(CardScreen())
                 }
                 R.id.family -> {
+                    relativeLayout.setBackgroundColor(ContextCompat.getColor(applicationContext,R.color.white))
+                    ivNotificationBell.setColorFilter(ContextCompat.getColor(applicationContext, R.color.text_color_dark), android.graphics.PorterDuff.Mode.MULTIPLY);
                     mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(
                         getString(

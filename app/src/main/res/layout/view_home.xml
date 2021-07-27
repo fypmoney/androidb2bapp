@@ -20,15 +20,17 @@
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="18dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="18dp">
+            android:paddingTop="10dp"
+            android:background="@color/text_color_dark"
+          >
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:id="@+id/scan"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
                 android:onClick="@{()->viewModel.onQrCodeClicked()}"
                 android:visibility="@{viewModel.isScanVisible?View.VISIBLE:View.GONE}"
                 app:srcCompat="@drawable/ic_scan" />
@@ -39,6 +41,7 @@
                 android:layout_marginTop="19dp"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/scan"
+                android:paddingStart="18dp"
                 android:text="@{viewModel.headerText}"
                 android:textAlignment="center"
                 android:textSize="20dp" />
@@ -53,7 +56,7 @@
                 android:onClick="@{()->viewModel.onNotificationClicked()}"
                 android:layout_toStartOf="@+id/myProfile"
                 android:padding="5dp"
-                app:srcCompat="@drawable/notification" />
+                app:srcCompat="@drawable/ic_bell_icon" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/myProfile"

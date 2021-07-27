@@ -75,6 +75,29 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     }
 
     /*
+        * This method is used to call activate card api
+        * */
+    fun callActivateCardApi(kitFourDigit: String?) {
+        val additionalInfo = System.currentTimeMillis().toString()
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_ACTIVATE_CARD,
+                NetworkUtil.endURL(ApiConstant.API_ACTIVATE_CARD),
+                ApiUrl.POST,
+                ActivateCardRequest(
+                    validationNo = kitFourDigit,
+                    additionalInfo = additionalInfo,
+                    cardIdentifier = SharedPrefUtils.getString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_KIT_NUMBER
+                    )
+                ),
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    /*
       * This method is used to set or change pin
       * */
     fun callSetOrChangeApi() {
@@ -254,6 +277,10 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                     bankProfileResponse.get()?.cardInfos?.forEach {
                         when (it.cardType) {
                             AppConstants.CARD_TYPE_PHYSICAL -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_KEY_KIT_NUMBER, it.kitNumber
+                                )
                                 when {
                                     !it.kitNumber.isNullOrEmpty() -> {
                                         isOrderCard.set(false)
@@ -297,6 +324,13 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                     onSetPinSuccess.value = responseData
                 }
             }
+            ApiConstant.API_ACTIVATE_CARD -> {
+                if (responseData is ActivateCardResponse) {
+
+
+                }
+            }
+
         }
     }
 

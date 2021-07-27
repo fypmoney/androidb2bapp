@@ -284,6 +284,18 @@ class BindingAdapter {
                     }
                     imageView.setImageResource(R.drawable.ic_out_for_delivery)
                 }
+                AppConstants.ORDER_STATUS_SEND_TO_VENDOR -> {
+                    if (isDone == AppConstants.YES) {
+                        imageView.setColorFilter(
+                            ContextCompat.getColor(
+                                PockketApplication.instance,
+                                R.color.color_skyblue
+                            ), android.graphics.PorterDuff.Mode.SRC_IN
+                        )
+                    }
+                    imageView.setImageResource(R.drawable.ic_send_to_vendor)
+                }
+
                 AppConstants.ORDER_STATUS_DELIVERED -> {
                     if (isDone == AppConstants.YES) {
                         imageView.setColorFilter(
@@ -303,7 +315,7 @@ class BindingAdapter {
         @JvmStatic
         fun setTextColorInOrderStatus(textView: AppCompatTextView, status: String?, isDone: String?) {
             when (status) {
-                AppConstants.ORDER_STATUS_ORDERED, AppConstants.ORDER_STATUS_IN_PROGRESS, AppConstants.ORDER_STATUS_SHIPPED, AppConstants.ORDER_STATUS_OUT_FOR_DELIVERY, AppConstants.ORDER_STATUS_DELIVERED -> {
+                AppConstants.ORDER_STATUS_ORDERED, AppConstants.ORDER_STATUS_IN_PROGRESS, AppConstants.ORDER_STATUS_SHIPPED, AppConstants.ORDER_STATUS_OUT_FOR_DELIVERY, AppConstants.ORDER_STATUS_DELIVERED ,AppConstants.ORDER_STATUS_SEND_TO_VENDOR-> {
                     if (isDone == AppConstants.YES) {
                         textView.setTextColor(
                             ContextCompat.getColor(
@@ -328,9 +340,8 @@ class BindingAdapter {
             status: String?,
             isDone: String?, nextIsDone: String?
         ) {
-            Log.d("jfbrgh5riy         ",isDone!!+"bfhghiurg    "+nextIsDone)
             when (status) {
-                AppConstants.ORDER_STATUS_ORDERED, AppConstants.ORDER_STATUS_IN_PROGRESS, AppConstants.ORDER_STATUS_SHIPPED, AppConstants.ORDER_STATUS_OUT_FOR_DELIVERY, AppConstants.ORDER_STATUS_DELIVERED -> {
+                AppConstants.ORDER_STATUS_ORDERED, AppConstants.ORDER_STATUS_IN_PROGRESS, AppConstants.ORDER_STATUS_SHIPPED, AppConstants.ORDER_STATUS_OUT_FOR_DELIVERY, AppConstants.ORDER_STATUS_DELIVERED,AppConstants.ORDER_STATUS_SEND_TO_VENDOR -> {
                     if (nextIsDone == AppConstants.YES) {
                         imageView.setImageResource(R.drawable.dotted_skyblue)
                     }
