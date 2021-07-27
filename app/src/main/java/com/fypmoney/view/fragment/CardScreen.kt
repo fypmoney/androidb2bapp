@@ -10,8 +10,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +19,6 @@ import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenCardBinding
-import com.fypmoney.model.SetPinResponse
 import com.fypmoney.model.UpDateCardSettingsRequest
 import com.fypmoney.model.UpdateCardLimitRequest
 import com.fypmoney.util.AppConstants
@@ -71,16 +68,17 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         mViewBinding.fragment = this
 
         val textString = ArrayList<String>()
+        textString.add(PockketApplication.instance.getString(R.string.activate_card_heading))
         textString.add(PockketApplication.instance.getString(R.string.card_settings))
         textString.add(PockketApplication.instance.getString(R.string.order_card))
         textString.add(PockketApplication.instance.getString(R.string.account_stmt))
 
 
         val drawableIds = ArrayList<Int>()
-
-        drawableIds.add(R.drawable.lock)
-        drawableIds.add(R.drawable.order)
-        drawableIds.add(R.drawable.transaction)
+        drawableIds.add(R.drawable.ic_activate)
+        drawableIds.add(R.drawable.ic_card_settings)
+        drawableIds.add(R.drawable.ic_order_card)
+        drawableIds.add(R.drawable.ic_account_statement)
 
         myProfileAdapter = MyProfileListAdapter(requireContext(), this)
         list.adapter = myProfileAdapter
@@ -192,13 +190,13 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     fun flipCard() {
         if (!mIsBackVisible) {
+            Log.d("msnfi","smfgbiue")
             mSetRightOut!!.setTarget(mCardFrontLayout)
             mSetLeftIn!!.setTarget(mCardBackLayout)
             mSetRightOut!!.start()
             mSetLeftIn!!.start()
             mViewModel.isCardDetailsVisible.set(true)
             mIsBackVisible = true
-            btnViewDetails.visibility = View.GONE
         }
     }
 
@@ -350,13 +348,13 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     fun onCvvEyeClicked() {
         when (mViewModel.isCvvVisible.get()) {
             false -> {
-                cvvValue.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                //cvvValue.transformationMethod = HideReturnsTransformationMethod.getInstance()
                 mViewModel.isCvvVisible.set(true)
 
             }
             true -> {
 
-                cvvValue.transformationMethod = PasswordTransformationMethod.getInstance()
+              //  cvvValue.transformationMethod = PasswordTransformationMethod.getInstance()
                 mViewModel.isCvvVisible.set(false)
             }
 

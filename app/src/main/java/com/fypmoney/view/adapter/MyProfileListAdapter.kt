@@ -26,11 +26,9 @@ class MyProfileListAdapter(
             MyProfileListRowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.title = titleList[position]
         binding.icon = iconList[position]
-        if (fromWhichScreen == PockketApplication.instance.getString(R.string.card_settings)) {
-            binding.image.visibility = View.GONE
-        } else {
-            binding.image.setImageResource(iconList[position])
-        }
+
+        binding.image.setImageResource(iconList[position])
+
 
         binding.linear.setOnClickListener {
             onItemClickListener.onItemClick(position)
@@ -52,6 +50,7 @@ class MyProfileListAdapter(
         titleList.addAll(titleList1)
         notifyDataSetChanged()
     }
+
     /*
       * This method is used to set update data in the list
       * */

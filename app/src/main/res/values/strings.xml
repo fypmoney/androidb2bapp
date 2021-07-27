@@ -496,6 +496,7 @@
     <string name="request_from">Request from</string>
     <string name="new_number_text">New Number</string>
     <string name="copy_to_clipboard_success">Text copied to clipboard</string>
+    <string name="copy">Copy</string>
 
     <!--
     Add money upi and debit
@@ -633,6 +634,8 @@
   Activate card
   -->
     <string name="activate_card_heading">Activate Card</string>
+    <string name="rotate_card">Rotate the card to view details</string>
+    <string name="issue_by">Issued by</string>
     <string name="enter_otp_text">Enter the OTP sent to your registered phone number.</string>
     <string name="card_kit_empty_error">Please enter last 4 digit provided on the card kit</string>
     <string name="four_digit_empty_error">Please enter four digit number provided on the card kit</string>
