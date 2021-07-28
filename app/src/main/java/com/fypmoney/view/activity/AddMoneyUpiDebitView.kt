@@ -13,12 +13,12 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import android.view.View
 import android.webkit.WebView
 import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -84,7 +84,6 @@ open class AddMoneyUpiDebitView :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("ddddddddd", "oncreate")
         setToolbarAndTitle(
             context = this@AddMoneyUpiDebitView,
             toolbar = toolbar,
@@ -130,29 +129,8 @@ open class AddMoneyUpiDebitView :
      */
     private fun setObserver() {
         mViewModel.onUpiClicked.observe(this) {
-            when (mViewModel.clickedPositionForUpi.get()) {
-                0 -> {
-                    callAddUpiBottomSheet()
-                }
-                1 -> {
-                    callGooglePayIntent()
-                }
-                else -> {
-                    val params = mViewModel.getPaymentParams(type = AppConstants.TYPE_GENERIC)
-                    try {
-                        callCustomBrowser(
-                            com.payu.paymentparamhelper.PayuConstants.UPI_INTENT,
-                            params,
-                            params.txnId,
-                            PayuConstants.PRODUCTION_PAYMENT_URL,
-                            isSpecificAppSet = true,
-                            it.packageName
-                        )
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
-                    }
-                }
-            }
+            mViewModel.clickedAppPackageName.set(it.packageName)
+            callUpiIntent()
         }
         mViewModel.onAddNewCardClicked.observe(this) {
             if (it) {
@@ -271,6 +249,7 @@ open class AddMoneyUpiDebitView :
     }
 
     override fun onAddNewCardButtonClick(addNewCardDetails: AddNewCardDetails) {
+        mViewModel.modeOfPayment.set(2)
         callDebitCardPaymentGateway(0, addNewCardDetails)
     }
 
@@ -286,7 +265,6 @@ open class AddMoneyUpiDebitView :
 
     override fun onResume() {
         super.onResume()
-        Log.d("ddddddddd", "onResumeeeeeeeeeeeeee")
         if (mViewModel.isPaymentFail.get() == true) {
             callTransactionFailBottomSheet()
         }
@@ -381,12 +359,13 @@ open class AddMoneyUpiDebitView :
             }
 
             override fun onBackApprove() {
-                callTransactionFailBottomSheet()
+                super.onBackApprove()
+                mViewModel.isPaymentFail.set(true)
+
             }
 
             override fun onBackDismiss() {
                 super.onBackDismiss()
-                Utility.showToast("ONbACKDISMISS")
             }
 
             /**
@@ -396,8 +375,6 @@ open class AddMoneyUpiDebitView :
              */
             override fun onBackButton(alertDialogBuilder: AlertDialog.Builder) {
                 super.onBackButton(alertDialogBuilder)
-                Utility.showToast("ONBACK")
-
             }
 
             override fun isPaymentOptionAvailable(resultData: CustomBrowserResultData) {
@@ -413,11 +390,21 @@ open class AddMoneyUpiDebitView :
         }
 
     override fun onBottomSheetButtonClick(type: String) {
+        when (mViewModel.modeOfPayment.get()) {
+            1 -> {
+                callUpiIntent()
+
+            }
+            else -> {
+                callAddNewCardBottomSheet()
+            }
+        }
 
     }
 
     override fun onAddUpiClickListener(upiId: String, isUpiSaved: Boolean) {
         mViewModel.upiEntered.set(upiId)
+        mViewModel.modeOfPayment.set(1)
         try {
             val paymentParams =
                 mViewModel.getPaymentParams(AppConstants.TYPE_UPI, upiId, isUpiSaved)
@@ -580,5 +567,37 @@ This method is used to call the pay u api
         return view
 
     }
+
+    /*
+    * This method is used to call upi intents
+    * */
+    fun callUpiIntent() {
+        when (mViewModel.clickedPositionForUpi.get()) {
+            0 -> {
+                callAddUpiBottomSheet()
+            }
+            1 -> {
+                callGooglePayIntent()
+            }
+            else -> {
+                val params = mViewModel.getPaymentParams(type = AppConstants.TYPE_GENERIC)
+                try {
+                    callCustomBrowser(
+                        com.payu.paymentparamhelper.PayuConstants.UPI_INTENT,
+                        params,
+                        params.txnId,
+                        PayuConstants.PRODUCTION_PAYMENT_URL,
+                        isSpecificAppSet = true,
+                        packageName = mViewModel.clickedAppPackageName.get()
+                    )
+
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
+
 }
 
