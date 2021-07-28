@@ -173,6 +173,7 @@ object AppConstants {
     const val GET_PRODUCT_RESPONSE = "get_product_response"
     const val ORDER_STATUS = "order_status"
     const val SET_PIN_URL = "set_pin_url"
-
+    const val CLIENT_TYPE = "Client_Type"
+    const val CLIENT_TYPE_VALUE = "Android"
 
 }

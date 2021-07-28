@@ -40,6 +40,8 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
                     if (otpReceiveInterface != null) {
                         //String otp = message.replace("<#> Your otp code is : ", "")
                         val otp: String? = Utility.extractDigits(message)
+                        Log.d(TAG, "otp$otp")
+
                         otpReceiveInterface?.onOtpReceived(otp)
                     }
                 }
