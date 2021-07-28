@@ -60,6 +60,15 @@ class MyProfileListAdapter(
 
     }
 
+    /*
+    * This method is used to set update data in the list
+    * */
+    fun removeList(value: String) {
+        titleList[1] = value
+        notifyDataSetChanged()
+
+    }
+
     interface OnListItemClickListener {
         fun onItemClick(position: Int)
     }

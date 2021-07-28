@@ -173,6 +173,8 @@ object AppConstants {
     const val GET_PRODUCT_RESPONSE = "get_product_response"
     const val ORDER_STATUS = "order_status"
     const val SET_PIN_URL = "set_pin_url"
+    const val QR_FORMAT_NAME = "QR_CODE"
+
 
 
 }

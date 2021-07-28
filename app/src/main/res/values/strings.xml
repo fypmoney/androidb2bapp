@@ -191,8 +191,8 @@
     <string name="dummy_amount">0</string>
     <string name="dummy_name">FYP User</string>
     <string name="dummy_card">9872 7263 6538 7263</string>
-    <string name="dummy_cvv">826</string>
-    <string name="dummy_expiry">01/26</string>
+    <string name="dummy_cvv"><font size="20">***</font></string>
+    <string name="dummy_expiry">**/**</string>
 
     <string name="Rs">\u20B9</string>
     <string name="quick_actions">Quick Actions</string>
@@ -450,10 +450,11 @@
     <string name="card_transaction_limit1">Transaction Limit - 1 Lakh</string>
     <string name="card_details_title">Card Details</string>
     <string name="expiry_details_title">"Expiry - "</string>
-    <string name="cvv_details_title">"CVV - "</string>
+    <string name="cvv_details_title">CVV</string>
     <string name="order_card">Order Card</string>
     <string name="account_stmt">Account Statement</string>
     <string name="set_limit">Set up Spending Limit</string>
+    <string name="valid_thru">Valid thru</string>
 
 
     <string-array name="relationNameList">

@@ -46,6 +46,13 @@ class QrCodeScannerView : BaseActivity<ViewQrCodeScannerBinding, QrCodeScannerVi
             toolbar = toolbar,
             isBackArrowVisible = true
         )
+        integrator = IntentIntegrator(this)
+        integrator?.setPrompt("Scan a QR code")
+        integrator?.setCameraId(0) // Use a specific camera of the device
+        integrator?.setOrientationLocked(true)
+        integrator?.setBeepEnabled(false)
+        integrator?.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
+        integrator?.captureActivity = CaptureActivityPortrait::class.java
 
         checkAndAskPermission()
         setObserver()
@@ -77,17 +84,24 @@ class QrCodeScannerView : BaseActivity<ViewQrCodeScannerBinding, QrCodeScannerVi
         super.onActivityResult(requestCode, resultCode, data)
         val result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
         if (result != null) {
-                if (parseQrCode(result.contents) != null) {
-                    intentToActivity(
-                        contactEntity = ContactEntity(),
-                        aClass = EnterAmountForPayRequestView::class.java,
-                        AppConstants.PAY_USING_QR,
-                        parseQrCode(result.contents).toString()
+            if (parseQrCode(result.contents) != null) {
+                intentToActivity(
+                    contactEntity = ContactEntity(),
+                    aClass = EnterAmountForPayRequestView::class.java,
+                    AppConstants.PAY_USING_QR,
+                    parseQrCode(result.contents).toString()
 
-                    )
-                } else {
-                    Utility.showToast(getString(R.string.invalid_qr_code))
-                    callScan()
+                )
+            } else {
+                when (result.formatName) {
+                    AppConstants.QR_FORMAT_NAME -> {
+                        Utility.showToast(getString(R.string.invalid_qr_code))
+                        callScan()
+                    }
+                    else -> {
+                        finish()
+                    }
+                }
 
 
             }
@@ -129,13 +143,6 @@ class QrCodeScannerView : BaseActivity<ViewQrCodeScannerBinding, QrCodeScannerVi
     * */
 
     private fun callScan() {
-        integrator = IntentIntegrator(this)
-        integrator?.setPrompt("Scan a QR code")
-        integrator?.setCameraId(0) // Use a specific camera of the device
-        integrator?.setOrientationLocked(true)
-        integrator?.setBeepEnabled(false)
-        integrator?.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
-        integrator?.captureActivity = CaptureActivityPortrait::class.java
         integrator?.initiateScan()
     }
 

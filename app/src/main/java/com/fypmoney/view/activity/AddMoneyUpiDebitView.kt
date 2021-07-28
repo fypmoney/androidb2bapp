@@ -84,7 +84,7 @@ open class AddMoneyUpiDebitView :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("cjv","oncreate")
+        Log.d("ddddddddd", "oncreate")
         setToolbarAndTitle(
             context = this@AddMoneyUpiDebitView,
             toolbar = toolbar,
@@ -286,7 +286,7 @@ open class AddMoneyUpiDebitView :
 
     override fun onResume() {
         super.onResume()
-        Log.d("cjv","oncreate")
+        Log.d("ddddddddd", "onResumeeeeeeeeeeeeee")
         if (mViewModel.isPaymentFail.get() == true) {
             callTransactionFailBottomSheet()
         }
@@ -386,6 +386,7 @@ open class AddMoneyUpiDebitView :
 
             override fun onBackDismiss() {
                 super.onBackDismiss()
+                Utility.showToast("ONbACKDISMISS")
             }
 
             /**
@@ -394,8 +395,9 @@ open class AddMoneyUpiDebitView :
              * @param alertDialogBuilder a reference of AlertDialog.Builder to customize the dialog
              */
             override fun onBackButton(alertDialogBuilder: AlertDialog.Builder) {
-                mViewModel.onBackPress.value = true
                 super.onBackButton(alertDialogBuilder)
+                Utility.showToast("ONBACK")
+
             }
 
             override fun isPaymentOptionAvailable(resultData: CustomBrowserResultData) {
@@ -454,7 +456,7 @@ open class AddMoneyUpiDebitView :
                 customBrowserConfig.setDisableBackButtonDialog(false)
                 customBrowserConfig.setMerchantSMSPermission(true)
                 customBrowserConfig.enableSurePay = 0
-                customBrowserConfig.setDisableBackButtonDialog(true)
+                // customBrowserConfig.setDisableBackButtonDialog(true)
                 customBrowserConfig.internetRestoredWindowTTL = CustomBrowserConfig.ENABLE
 
                 customBrowserConfig.setViewPortWideEnable(true)
@@ -572,7 +574,7 @@ This method is used to call the pay u api
         toolbar.setBackgroundColor(
             ContextCompat.getColor(
                 applicationContext,
-                R.color.color_dark_green
+                R.color.white
             )
         )
         return view

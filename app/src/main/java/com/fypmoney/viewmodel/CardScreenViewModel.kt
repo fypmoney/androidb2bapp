@@ -20,12 +20,11 @@ import org.json.JSONObject
 
 
 class CardScreenViewModel(application: Application) : BaseViewModel(application) {
-    var isCardDetailsVisible =
-        ObservableField(false)
     var balance =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
     var isFetchBalanceVisible = ObservableField(true)
     var isCvvVisible = ObservableField(false)
+    var isFrontVisible = ObservableField(true)
     var name =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_name))
     var cardNumber =
@@ -117,20 +116,6 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         )
     }
 
-    /*
-     * This method is used to call physical card init api
-     * */
-    fun callPhysicalCardInitApi() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_PHYSICAL_CARD_INIT,
-                NetworkUtil.endURL(ApiConstant.API_PHYSICAL_CARD_INIT),
-                ApiUrl.GET,
-                BaseRequest(),
-                this, isProgressBar = true
-            )
-        )
-    }
 
     /*
       * This method is used to call add card

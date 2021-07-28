@@ -39,6 +39,7 @@
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="@string/balance_text"
@@ -70,10 +71,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginBottom="30dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="30dp"
                     android:weightSum="2">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -144,9 +145,9 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_gravity="center"
-                            android:padding="7dp"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/cirecular1"
+                            android:padding="7dp"
                             app:layout_constraintBottom_toBottomOf="@+id/layout1"
                             app:layout_constraintEnd_toEndOf="@+id/layout1"
                             app:layout_constraintStart_toStartOf="@+id/layout1"
@@ -183,12 +184,12 @@
 
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/choreCard"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:padding="10dp"
-                    android:id="@+id/choreCard"
                     app:cardCornerRadius="@dimen/card_corner_radius"
                     app:cardElevation="@dimen/card_elevation"
                     app:cardUseCompatPadding="true"
@@ -203,9 +204,9 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_gravity="center"
-                            android:padding="7dp"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/circular2"
+                            android:padding="7dp"
                             app:layout_constraintBottom_toBottomOf="@+id/layout1"
                             app:layout_constraintEnd_toEndOf="@+id/layout1"
                             app:layout_constraintStart_toStartOf="@+id/layout1"
@@ -269,9 +270,9 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_gravity="center"
-                            android:padding="10dp"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/circular3"
+                            android:padding="10dp"
                             app:layout_constraintBottom_toBottomOf="@+id/layout1"
                             app:layout_constraintEnd_toEndOf="@+id/layout1"
                             app:layout_constraintStart_toStartOf="@+id/layout1"
@@ -326,9 +327,9 @@
                             android:layout_width="100dp"
                             android:layout_height="100dp"
                             android:layout_gravity="center"
-                            android:padding="10dp"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/circular4"
+                            android:padding="10dp"
                             app:layout_constraintBottom_toBottomOf="@+id/layout1"
                             app:layout_constraintEnd_toEndOf="@+id/layout1"
                             app:layout_constraintStart_toStartOf="@+id/layout1"
@@ -369,20 +370,10 @@
                 style="@style/TextviewBold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginStart="18dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/recent"
                 android:textSize="20dp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                app:adapter="@{viewModel.feedsAdapter}"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
-
 
 
             <View
@@ -400,6 +391,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:indeterminateTint="@color/text_color_dark"
                 android:visibility="@{viewModel.isFeedVisible?View.GONE:View.VISIBLE,default=visible}" />
 
             <androidx.recyclerview.widget.RecyclerView

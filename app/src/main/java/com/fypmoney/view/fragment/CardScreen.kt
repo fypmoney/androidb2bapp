@@ -10,6 +10,8 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -22,6 +24,7 @@ import com.fypmoney.databinding.ScreenCardBinding
 import com.fypmoney.model.UpDateCardSettingsRequest
 import com.fypmoney.model.UpdateCardLimitRequest
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AsteriskPasswordTransformationMethod
 import com.fypmoney.util.Utility
 import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.*
@@ -47,7 +50,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     private var mSetRightOut: AnimatorSet? = null
     private var mSetLeftIn: AnimatorSet? = null
     private var mIsBackVisible = false
-    lateinit var myProfileAdapter:MyProfileListAdapter
+    lateinit var myProfileAdapter: MyProfileListAdapter
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -72,7 +75,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         textString.add(PockketApplication.instance.getString(R.string.card_settings))
         textString.add(PockketApplication.instance.getString(R.string.order_card))
         textString.add(PockketApplication.instance.getString(R.string.account_stmt))
-
 
         val drawableIds = ArrayList<Int>()
         drawableIds.add(R.drawable.ic_activate)
@@ -117,6 +119,11 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                         myProfileAdapter.updateList(PockketApplication.instance.getString(R.string.track_order))
                     }
 
+                }
+                if (mViewModel.isActivateCardVisible.get() == false) {
+                    myProfileAdapter.iconList.remove(0)
+                    myProfileAdapter.titleList.removeAt(0)
+                    myProfileAdapter.notifyDataSetChanged()
                 }
                 mViewModel.onBankProfileSuccess.value = false
             }
@@ -190,12 +197,11 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     fun flipCard() {
         if (!mIsBackVisible) {
-            Log.d("msnfi","smfgbiue")
             mSetRightOut!!.setTarget(mCardFrontLayout)
             mSetLeftIn!!.setTarget(mCardBackLayout)
             mSetRightOut!!.start()
             mSetLeftIn!!.start()
-            mViewModel.isCardDetailsVisible.set(true)
+            mViewModel.isFrontVisible.set(false)
             mIsBackVisible = true
         }
     }
@@ -348,13 +354,13 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     fun onCvvEyeClicked() {
         when (mViewModel.isCvvVisible.get()) {
             false -> {
-                //cvvValue.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                cvvValue.transformationMethod = HideReturnsTransformationMethod.getInstance()
                 mViewModel.isCvvVisible.set(true)
 
             }
             true -> {
 
-              //  cvvValue.transformationMethod = PasswordTransformationMethod.getInstance()
+                cvvValue.transformationMethod = AsteriskPasswordTransformationMethod()
                 mViewModel.isCvvVisible.set(false)
             }
 

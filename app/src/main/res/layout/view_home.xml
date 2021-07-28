@@ -21,7 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:background="@color/text_color_dark"
           >
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -31,6 +30,7 @@
                 android:id="@+id/scan"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
+                android:tint="@color/text_color_dark"
                 android:onClick="@{()->viewModel.onQrCodeClicked()}"
                 android:visibility="@{viewModel.isScanVisible?View.VISIBLE:View.GONE}"
                 app:srcCompat="@drawable/ic_scan" />
@@ -56,6 +56,7 @@
                 android:onClick="@{()->viewModel.onNotificationClicked()}"
                 android:layout_toStartOf="@+id/myProfile"
                 android:padding="5dp"
+                android:tint="@color/text_color_dark"
                 app:srcCompat="@drawable/ic_bell_icon" />
 
             <androidx.appcompat.widget.AppCompatImageView

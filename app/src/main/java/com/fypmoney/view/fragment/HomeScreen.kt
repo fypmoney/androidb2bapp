@@ -1,6 +1,8 @@
 package com.fypmoney.view.fragment
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -12,6 +14,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenHomeBinding
+import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
@@ -24,7 +27,8 @@ import kotlinx.android.synthetic.main.screen_home.*
 /**
  * This fragment is used for loyalty
  */
-class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
+class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>(),
+    LocationListenerClass.GetCurrentLocationListener {
 
     private lateinit var mViewModel: HomeScreenViewModel
     private lateinit var mViewBinding: ScreenHomeBinding
@@ -49,7 +53,9 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         choreCard.setOnClickListener {
             intentToPayActivity(ChoresActivity::class.java)
         }
-
+        LocationListenerClass(
+            requireActivity(), this
+        ).permissions()
         setObservers()
 
     }
@@ -64,6 +70,13 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
                 mViewModel.onAddMoneyClicked.value = false
             }
         }
+
+        mViewModel.onFeedsSuccess.observe(viewLifecycleOwner)
+        {
+            mViewModel.fromWhichScreen.set(0)
+            callDiduKnowBottomSheet(it)
+
+        }
         mViewModel.onPayClicked.observe(viewLifecycleOwner) {
             if (it) {
                 intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
@@ -71,37 +84,58 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
             }
         }
 
-
         mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
-            when (it.action?.type) {
-                AppConstants.FEED_TYPE_IN_APP -> {
-                    try {
-                        intentToActivity(
-                            Class.forName(AppConstants.BASE_ACTIVITY_URL + it.action?.url!!),
-                            it
-                        )
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        intentToActivity(HomeView::class.java, it)
-                    }
-                }
-                AppConstants.FEED_TYPE_IN_APP_WEBVIEW, AppConstants.FEED_TYPE_FEED -> {
-                    intentToActivity(UserFeedsDetailView::class.java, it, type = it.action?.type)
-                }
-                AppConstants.FEED_TYPE_EXTERNAL_WEBVIEW -> {
-                    startActivity(
-                        Intent.createChooser(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse(it.action?.url)
-                            ), getString(R.string.browse_with)
-                        )
-                    )
+            when (mViewModel.selectedPosition.get()) {
+                0 -> {
+                    mViewModel.fromWhichScreen.set(1)
+                    mViewModel.callFetchFeedsApi()
 
+                }
+                else -> {
+                    when (it.displayCard) {
+                        AppConstants.FEED_TYPE_DEEPLINK -> {
+                            try {
+                                intentToActivity(
+                                    Class.forName(AppConstants.BASE_ACTIVITY_URL + it.action?.url!!),
+                                    it
+                                )
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                intentToActivity(HomeView::class.java, it)
+                            }
+                        }
+                        AppConstants.FEED_TYPE_INAPPWEB -> {
+                            intentToActivity(
+                                UserFeedsDetailView::class.java,
+                                it,
+                                AppConstants.FEED_TYPE_INAPPWEB
+                            )
+                        }
+                        AppConstants.FEED_TYPE_BLOG -> {
+                            intentToActivity(
+                                UserFeedsDetailView::class.java,
+                                it,
+                                AppConstants.FEED_TYPE_BLOG
+                            )
+                        }
+                        AppConstants.FEED_TYPE_EXTWEBVIEW -> {
+                            startActivity(
+                                Intent.createChooser(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(it.action?.url)
+                                    ), getString(R.string.browse_with)
+                                )
+                            )
+
+                        }
+                    }
                 }
             }
 
+
         }
+
     }
 
     override fun onTryAgainClicked() {
@@ -139,4 +173,24 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
         startActivity(intent)
     }
+
+    override fun getCurrentLocation(
+        isInternetConnected: Boolean?,
+        latitude: Double,
+        Longitude: Double
+    ) {
+        mViewModel.latitude.set(latitude)
+        mViewModel.longitude.set(Longitude)
+        mViewModel.callFetchFeedsApi(false, latitude, Longitude)
+    }
+    /*
+   * This method is used to call card settings
+   * */
+    private fun callDiduKnowBottomSheet(list: ArrayList<String?>) {
+        val bottomSheet =
+            DidUKnowBottomSheet(list)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "DidUKnowSheet")
+    }
+
 }

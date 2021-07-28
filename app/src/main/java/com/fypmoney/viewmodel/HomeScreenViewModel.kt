@@ -31,10 +31,16 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     var isFeedVisible = ObservableField(false)
     var feedsAdapter = FeedsSectionAdapter(this)
     var onFeedButtonClick = MutableLiveData<FeedDetails>()
+    val selectedPosition = ObservableField<Int>()
+    val isApiLoading = ObservableField(true)
+    var latitude = ObservableField<Double>()
+    val longitude = ObservableField<Double>()
+    val fromWhichScreen = ObservableField(0)
+    val onFeedsSuccess = MutableLiveData<ArrayList<String?>>()
 
     init {
         callGetWalletBalanceApi()
-        callFetchFeedsApi()
+
     }
 
     /*
@@ -71,7 +77,13 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     /*
   * This method is used to call the get feeds API
   * */
-    private fun callFetchFeedsApi(
+    /*
+   * This method is used to call the get feeds API
+   * */
+    fun callFetchFeedsApi(
+        isProgressBarVisible: Boolean? = false,
+        latitude: Double? = 0.0,
+        longitude: Double? = 0.0
     ) {
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -79,6 +91,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
                 NetworkUtil.endURL(ApiConstant.API_FETCH_ALL_FEEDS),
                 ApiUrl.POST,
                 makeFetchFeedRequest(
+                    latitude = latitude.toString(), longitude = longitude.toString()
                 ),
                 this, isProgressBar = false
             )
@@ -105,7 +118,16 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
 
                     response?.feedDetails.let {
                         isFeedVisible.set(true)
-                        feedsAdapter.setList(response?.feedDetails) }
+                        feedsAdapter.setList(response?.feedDetails)
+                    }
+                    when {
+                        fromWhichScreen.get() != 0 -> {
+                            val resultList = ArrayList<String?>()
+                            response?.feedDetails?.forEach { resultList.add(it.resourceId) }
+                            onFeedsSuccess.value = resultList
+
+                        }
+                    }
 
 
                 }
@@ -160,6 +182,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     }
 
     override fun onFeedClick(position: Int, feedDetails: FeedDetails) {
+        selectedPosition.set(position)
         onFeedButtonClick.value = feedDetails
     }
 }
