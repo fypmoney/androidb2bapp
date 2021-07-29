@@ -23,18 +23,20 @@
 
         <include layout="@layout/toolbar" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fillViewport="true"
             android:scrollbars="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginEnd="@dimen/screenMarginRight"
                 android:layout_marginStart="@dimen/screenMarginLeft">
 
@@ -111,6 +113,6 @@
                     android:textColor="@color/text_color_dark" />
 
             </RelativeLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

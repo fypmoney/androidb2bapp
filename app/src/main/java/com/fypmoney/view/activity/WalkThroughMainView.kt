@@ -49,7 +49,7 @@ class WalkThroughMainView : BaseActivity<ViewWalkThroughMainBinding, WalkThrough
 
         mViewBinding.pager.adapter = viewPagerAdapter
 
-        mViewBinding.tabLayoutIndicator.setupWithViewPager(mViewBinding.pager)
+        //mViewBinding.tabLayoutIndicator.setupWithViewPager(mViewBinding.pager)
 
 
 

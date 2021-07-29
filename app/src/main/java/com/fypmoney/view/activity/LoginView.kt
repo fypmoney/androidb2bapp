@@ -66,14 +66,6 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
             isBackArrowVisible = true
         )
         requestPhoneNumberHint(this)
-
-        // spannable string
-
-
-        // auto sms read
-        //        Initialize the SmsRetriever client
-
-
         mViewBinding.activity = this
         mViewBinding.viewModel = mViewModel
         setObservers()
@@ -122,7 +114,6 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
     private fun setObservers() {
         mViewModel.onMobileClicked.observe(this) {
             if (it) {
-                requestPhoneNumberHint(this)
                 mViewModel.onMobileClicked.value = false
             }
         }
@@ -179,10 +170,6 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        //requestPhoneNumberHint(this)
-    }
 
     /**
      * Method to navigate to the Feeds screen after login

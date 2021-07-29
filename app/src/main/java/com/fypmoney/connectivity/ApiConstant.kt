@@ -74,6 +74,7 @@ object ApiConstant {
 
     const val GET_USER_CARDS = "get_user_cards"
 
+    const val CHECK_APP_UPDATE = "/app/version"
 
 }
 

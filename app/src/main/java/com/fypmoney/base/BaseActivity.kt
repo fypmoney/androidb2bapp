@@ -43,7 +43,7 @@ import java.util.concurrent.Executors.newSingleThreadExecutor
  */
 abstract class
 BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
-    AppCompatActivity(), DialogUtils.OnAlertDialogNoInternetClickListener {
+    BaseUpdateCheckActivity(), DialogUtils.OnAlertDialogNoInternetClickListener {
     private var dialog: Dialog? = null
     private var mViewDataBinding: T? = null
     private var mViewModel: V? = null
@@ -80,6 +80,9 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     }
 
 
+    override fun onStart() {
+        super.onStart()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         executor = newSingleThreadExecutor()

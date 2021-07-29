@@ -1,6 +1,7 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -11,10 +12,12 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSplashBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.NOT_ALLOWED_MSG
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SplashViewModel
 import kotlinx.android.synthetic.main.view_splash.*
+
 
 /*
 * This class is used for show app logo and check user logged in or not
@@ -42,8 +45,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
             Uri.parse("android.resource://" + packageName + "/" + R.raw.splash)
         video.setMediaController(null)
         video.setVideoURI(uri)
-        video.start()
-
+        video.setOnPreparedListener { video.start() }
     }
 
     /**
@@ -52,11 +54,44 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     private fun setObserver() {
         mViewModel.moveToNextScreen.observe(this)
         {
-            if (it) {
+            if (it && !checkUpdate.value!!) {
                 moveToNextScreen()
                 mViewModel.moveToNextScreen.value = false
             }
         }
+
+        //Todo change in single activity acrhitrcture
+        checkUpdate.observe(this, {
+            if(!it &&  mViewModel.moveToNextScreen.value!!){
+                moveToNextScreen()
+                mViewModel.moveToNextScreen.value = false
+            }
+        })
+
+        mViewModel.appUpdateState.observe(this, {
+            when(it){
+                SplashViewModel.AppUpdateState.FLEXIBLE -> {
+                    checkUpdate.value = true
+                    updateType = 0
+                    checkForAppUpdate()
+
+                }
+                SplashViewModel.AppUpdateState.FORCEUPDATE -> {
+                    checkUpdate.value = true
+                    updateType = 1
+                    checkForAppUpdate()
+                }
+                SplashViewModel.AppUpdateState.NOTALLOWED -> {
+                    checkUpdate.value = false
+                    Utility.showToast(NOT_ALLOWED_MSG)
+
+                }
+                SplashViewModel.AppUpdateState.NOTUPDATE -> {
+                    checkUpdate.value = false
+
+                }
+            }
+        })
 
 
     }
