@@ -75,6 +75,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:hint="@string/referral_code_hint"
+                    android:textAllCaps="true"
                     android:inputType="text"
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"

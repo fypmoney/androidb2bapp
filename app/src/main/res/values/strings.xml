@@ -700,5 +700,6 @@
     <string name="tax">Taxes</string>
     <string name="paid_via">Paid Via Fyp Cash/ Bank</string>
     <string name="dummy_amount1">\u20B9 200</string>
+    <string name="create_your_own_task">Create your own task</string>
 
 </resources>

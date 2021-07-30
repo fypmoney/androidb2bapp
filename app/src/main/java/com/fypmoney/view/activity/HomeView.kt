@@ -22,10 +22,6 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.*
 import com.fypmoney.viewmodel.HomeViewModel
-import com.payneteasy.tlv.BerTlvLogger
-import com.payneteasy.tlv.BerTlvParser
-import com.payneteasy.tlv.BerTlvs
-import com.payneteasy.tlv.HexUtil
 import kotlinx.android.synthetic.main.view_home.*
 
 
