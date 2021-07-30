@@ -176,5 +176,7 @@ object AppConstants {
     const val QR_FORMAT_NAME = "QR_CODE"
 
 
+    const val CLIENT_TYPE = "Client_Type"
+    const val CLIENT_TYPE_VALUE = "Android"
 
 }

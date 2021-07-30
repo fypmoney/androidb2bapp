@@ -1,5 +1,7 @@
 package com.fypmoney.connectivity.retrofit
 
+import com.fypmoney.util.AppConstants.CLIENT_TYPE
+import com.fypmoney.util.AppConstants.CLIENT_TYPE_VALUE
 import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
@@ -20,6 +22,7 @@ interface ApiInterface {
     fun getDataFromServer(
         @Header("client_id") client_id: String?,
         @Header("Authorization") authorization: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Url endPoint: String
     ): Observable<ResponseBody>
 
@@ -34,6 +37,7 @@ interface ApiInterface {
         @Header("client_id") client_id: String?,
         @Header("appId") appId: String?,
         @Header("Authorization") authorization: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Url endPoint: String
     ): Observable<ResponseBody>
 
@@ -48,6 +52,7 @@ interface ApiInterface {
     @POST
     fun postAuthDataOnServer(
         @Header("client_id") client_id: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header("client_secret") client_secret: String?,
         @Header("grant_type") grant_type: String?, @Url endPoint: String, @Body request: Any
     ): Observable<ResponseBody>
@@ -64,6 +69,7 @@ interface ApiInterface {
         @Header("client_id") client_id: String?,
         @Header("appId") appId: String?,
         @Header("Authorization") authorization: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Url endPoint: String, @Part file: MultipartBody.Part? = null
     ): Observable<ResponseBody>
 
@@ -73,6 +79,7 @@ interface ApiInterface {
         @Header("client_id") client_id: String?,
         @Header("appId") appId: String?,
         @Header("Authorization") authorization: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header("one-tap") one_tap: Boolean?, @Url endPoint: String, @Body request: Any
     ): Observable<ResponseBody>
 
@@ -82,6 +89,7 @@ interface ApiInterface {
     fun postLoginDataOnServer(
         @Header("client_id") client_id: String?,
         @Header("appId") appId: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header("one-tap") one_tap: Boolean?, @Url endPoint: String, @Body request: Any
     ): Observable<ResponseBody>
 
@@ -90,6 +98,7 @@ interface ApiInterface {
     fun postDataOnServer(
         @Header("client_id") client_id: String?,
         @Header("appId") appId: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header("Authorization") authorization: String?, @Url endPoint: String, @Body request: Any
     ): Observable<ResponseBody>
 
@@ -122,6 +131,7 @@ interface ApiInterface {
     fun putDataOnServer(
         @Header("client_id") client_id: String?,
         @Header("appId") appId: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header("Authorization") authorization: String?, @Url endPoint: String
     ): Observable<ResponseBody>
 
@@ -130,6 +140,7 @@ interface ApiInterface {
         @Header("client_id") client_id: String?,
         @Header("appId") appId: String?,
         @Body request: Any,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header("Authorization") authorization: String?, @Url endPoint: String
     ): Observable<ResponseBody>
 
@@ -144,6 +155,7 @@ interface ApiInterface {
     fun deleteDataOnServer(
         @Header("client_id") client_id: String?,
         @Header("appId") appId: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header("Authorization") authorization: String?, @Url endPoint: String
     ): Observable<ResponseBody>
 
