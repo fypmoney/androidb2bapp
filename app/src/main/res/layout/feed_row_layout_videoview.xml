@@ -7,11 +7,6 @@
 
         <import type="androidx.core.content.ContextCompat" />
 
-
-        <variable
-            name="viewHelper"
-            type="com.fypmoney.viewhelper.FeedsViewHelper" />
-
     </data>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

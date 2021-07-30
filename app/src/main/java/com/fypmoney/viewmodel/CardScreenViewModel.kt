@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -25,10 +26,19 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var isFetchBalanceVisible = ObservableField(true)
     var isCvvVisible = ObservableField(false)
     var isFrontVisible = ObservableField(true)
+    var isBackVisible = ObservableField(false)
     var name =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_name))
     var cardNumber =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_card))
+    var cardNumber1 =
+        ObservableField(PockketApplication.instance.getString(R.string.dummy_star))
+    var cardNumber2 =
+        ObservableField(PockketApplication.instance.getString(R.string.dummy_star))
+    var cardNumber3 =
+        ObservableField(PockketApplication.instance.getString(R.string.dummy_star))
+    var cardNumber4 =
+        ObservableField(PockketApplication.instance.getString(R.string.dummy_star))
     var cvv =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_cvv))
     var expiry =
@@ -41,6 +51,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var isActivateCardVisible = ObservableField(true)
     var onBankProfileSuccess = MutableLiveData(false)
     var isOrderCard = ObservableField(true)
+    var isViewDetailsVisible = ObservableField(true)
     var bankProfileResponse = ObservableField<BankProfileResponseDetails>()
 
 
@@ -234,6 +245,8 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
                 if (responseData is FetchVirtualCardResponse) {
                     cardNumber.set(responseData.fetchVirtualCardResponseDetails.card_number)
+                    setCardNumber()
+                    isViewDetailsVisible.set(false)
                     cvv.set(responseData.fetchVirtualCardResponseDetails.cvv)
                     expiry.set(responseData.fetchVirtualCardResponseDetails.expiry_month + "/" + responseData.fetchVirtualCardResponseDetails.expiry_year)
                     onGetCardDetailsSuccess.value = true
@@ -336,6 +349,17 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         fetchVirtualCardRequest.checksum = mainObject.getString("checksum")
         return fetchVirtualCardRequest
 
+
+    }
+
+    /*
+    * this is used to set the data in card numbers
+    * */
+    fun setCardNumber() {
+        cardNumber1.set(cardNumber.get()?.substring(0, 4))
+        cardNumber2.set(cardNumber.get()?.substring(5, 9))
+        cardNumber3.set(cardNumber.get()?.substring(10, 14))
+        cardNumber4.set(cardNumber.get()?.substring(15, 19))
 
     }
 

@@ -70,13 +70,6 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>(),
                 mViewModel.onAddMoneyClicked.value = false
             }
         }
-
-        mViewModel.onFeedsSuccess.observe(viewLifecycleOwner)
-        {
-            mViewModel.fromWhichScreen.set(0)
-            callDiduKnowBottomSheet(it)
-
-        }
         mViewModel.onPayClicked.observe(viewLifecycleOwner) {
             if (it) {
                 intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
@@ -85,13 +78,6 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>(),
         }
 
         mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
-            when (mViewModel.selectedPosition.get()) {
-                0 -> {
-                    mViewModel.fromWhichScreen.set(1)
-                    mViewModel.callFetchFeedsApi()
-
-                }
-                else -> {
                     when (it.displayCard) {
                         AppConstants.FEED_TYPE_DEEPLINK -> {
                             try {
@@ -130,8 +116,8 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>(),
 
                         }
                     }
-                }
-            }
+
+
 
 
         }
@@ -183,6 +169,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>(),
         mViewModel.longitude.set(Longitude)
         mViewModel.callFetchFeedsApi(false, latitude, Longitude)
     }
+
     /*
    * This method is used to call card settings
    * */

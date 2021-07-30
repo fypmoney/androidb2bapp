@@ -32,15 +32,17 @@ class BindingAdapter {
          *  Method to Bind image in with the image view
          */
 
-        @BindingAdapter(value = ["position", "IMAGE_URL"], requireAll = false)
+        @BindingAdapter(value = ["position", "IMAGE_URL", "TYPE"], requireAll = false)
         @JvmStatic
-        fun setImageUrl(imageView: AppCompatImageView, position: Int, imageUrl: String?) {
+        fun setImageUrl(
+            imageView: AppCompatImageView,
+            position: Int,
+            imageUrl: String?,
+            type: Int? = 0
+        ) {
             imageUrl?.let {
-                when (position) {
-                    0 -> {
-                        imageView.setImageResource(R.drawable.did_u_know_card)
-                    }
-                    else -> {
+                when (type) {
+                    1 -> {
                         Glide.with(PockketApplication.instance).load(imageUrl)
                             .into(imageView).getSize(
                                 SizeReadyCallback { width, height ->
@@ -48,7 +50,23 @@ class BindingAdapter {
                                     // mEditDeskLayout.setImageSize(width,height);
                                 })
                     }
+                    else -> {
+                        when (position) {
+                            0 -> {
+                                imageView.setImageResource(R.drawable.did_u_know_card)
+                            }
+                            else -> {
+                                Glide.with(PockketApplication.instance).load(imageUrl)
+                                    .into(imageView).getSize(
+                                        SizeReadyCallback { width, height ->
+                                            //before you load image LOG height and width that u actually got?
+                                            // mEditDeskLayout.setImageSize(width,height);
+                                        })
+                            }
+                        }
+                    }
                 }
+
 
             }
 
@@ -313,9 +331,13 @@ class BindingAdapter {
 
         @BindingAdapter(value = ["ORDER_STATUS", "IS_DONE_VALUE"], requireAll = false)
         @JvmStatic
-        fun setTextColorInOrderStatus(textView: AppCompatTextView, status: String?, isDone: String?) {
+        fun setTextColorInOrderStatus(
+            textView: AppCompatTextView,
+            status: String?,
+            isDone: String?
+        ) {
             when (status) {
-                AppConstants.ORDER_STATUS_ORDERED, AppConstants.ORDER_STATUS_IN_PROGRESS, AppConstants.ORDER_STATUS_SHIPPED, AppConstants.ORDER_STATUS_OUT_FOR_DELIVERY, AppConstants.ORDER_STATUS_DELIVERED ,AppConstants.ORDER_STATUS_SEND_TO_VENDOR-> {
+                AppConstants.ORDER_STATUS_ORDERED, AppConstants.ORDER_STATUS_IN_PROGRESS, AppConstants.ORDER_STATUS_SHIPPED, AppConstants.ORDER_STATUS_OUT_FOR_DELIVERY, AppConstants.ORDER_STATUS_DELIVERED, AppConstants.ORDER_STATUS_SEND_TO_VENDOR -> {
                     if (isDone == AppConstants.YES) {
                         textView.setTextColor(
                             ContextCompat.getColor(
@@ -341,12 +363,10 @@ class BindingAdapter {
             isDone: String?, nextIsDone: String?
         ) {
             when (status) {
-                AppConstants.ORDER_STATUS_ORDERED, AppConstants.ORDER_STATUS_IN_PROGRESS, AppConstants.ORDER_STATUS_SHIPPED, AppConstants.ORDER_STATUS_OUT_FOR_DELIVERY, AppConstants.ORDER_STATUS_DELIVERED,AppConstants.ORDER_STATUS_SEND_TO_VENDOR -> {
+                AppConstants.ORDER_STATUS_ORDERED, AppConstants.ORDER_STATUS_IN_PROGRESS, AppConstants.ORDER_STATUS_SHIPPED, AppConstants.ORDER_STATUS_OUT_FOR_DELIVERY, AppConstants.ORDER_STATUS_DELIVERED, AppConstants.ORDER_STATUS_SEND_TO_VENDOR -> {
                     if (nextIsDone == AppConstants.YES) {
                         imageView.setImageResource(R.drawable.dotted_skyblue)
-                    }
-                    else
-                    {
+                    } else {
                         imageView.setImageResource(R.drawable.dotted_black)
 
                     }

@@ -11,9 +11,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
-import android.util.Log
+import android.view.GestureDetector.SimpleOnGestureListener
+import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -25,6 +26,7 @@ import com.fypmoney.model.UpDateCardSettingsRequest
 import com.fypmoney.model.UpdateCardLimitRequest
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AsteriskPasswordTransformationMethod
+import com.fypmoney.util.OnSwipeTouchListener
 import com.fypmoney.util.Utility
 import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.*
@@ -71,16 +73,17 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         mViewBinding.fragment = this
 
         val textString = ArrayList<String>()
-        textString.add(PockketApplication.instance.getString(R.string.activate_card_heading))
         textString.add(PockketApplication.instance.getString(R.string.card_settings))
         textString.add(PockketApplication.instance.getString(R.string.order_card))
         textString.add(PockketApplication.instance.getString(R.string.account_stmt))
+        textString.add(PockketApplication.instance.getString(R.string.activate_card_heading))
+
 
         val drawableIds = ArrayList<Int>()
-        drawableIds.add(R.drawable.ic_activate)
         drawableIds.add(R.drawable.ic_card_settings)
         drawableIds.add(R.drawable.ic_order_card)
         drawableIds.add(R.drawable.ic_account_statement)
+        drawableIds.add(R.drawable.ic_activate)
 
         myProfileAdapter = MyProfileListAdapter(requireContext(), this)
         list.adapter = myProfileAdapter
@@ -93,6 +96,28 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         changeCameraDistance()
 
 
+        //  val gdt = GestureDetector(requireContext(),OnSwipeTouchListener())
+
+        mCardFrontLayout.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
+            override fun onSwipeTop() {
+            }
+
+            override fun onSwipeRight() {
+                flipCard()
+            }
+
+            override fun onSwipeLeft() {
+                flipCard()
+            }
+
+            override fun onSwipeBottom() {
+            }
+
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                return gestureDetector.onTouchEvent(event)
+            }
+        })
+
     }
 
     override fun onResume() {
@@ -100,6 +125,37 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         mViewModel.callGetWalletBalanceApi()
         mViewModel.callGetBankProfileApi()
 
+    }
+
+    private class GestureListener : SimpleOnGestureListener() {
+        private val SWIPE_MIN_DISTANCE = 120
+        private val SWIPE_THRESHOLD_VELOCITY = 200
+        override fun onFling(
+            e1: MotionEvent,
+            e2: MotionEvent,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            if (e1.x - e2.x > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                Utility.showToast("right")
+
+                // Right to left, your code here
+                return true
+            } else if (e2.x - e1.x > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+
+                Utility.showToast("left")
+                // Left to right, your code here
+                return true
+            }
+            if (e1.y - e2.y > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                // Bottom to top, your code here
+                return true
+            } else if (e2.y - e1.y > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                // Top to bottom, your code here
+                return true
+            }
+            return false
+        }
     }
 
     /*
@@ -121,9 +177,13 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
                 }
                 if (mViewModel.isActivateCardVisible.get() == false) {
-                    myProfileAdapter.iconList.remove(0)
-                    myProfileAdapter.titleList.removeAt(0)
-                    myProfileAdapter.notifyDataSetChanged()
+                    try {
+                        myProfileAdapter.iconList.remove(3)
+                        myProfileAdapter.titleList.removeAt(3)
+                        myProfileAdapter.notifyDataSetChanged()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
                 mViewModel.onBankProfileSuccess.value = false
             }
@@ -197,12 +257,16 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     fun flipCard() {
         if (!mIsBackVisible) {
+            mViewModel.isBackVisible.set(true)
             mSetRightOut!!.setTarget(mCardFrontLayout)
             mSetLeftIn!!.setTarget(mCardBackLayout)
             mSetRightOut!!.start()
             mSetLeftIn!!.start()
-            mViewModel.isFrontVisible.set(false)
             mIsBackVisible = true
+            val handler = Handler()
+            handler.postDelayed({
+                mViewModel.isFrontVisible.set(false)
+            }, 2000)
         }
     }
 

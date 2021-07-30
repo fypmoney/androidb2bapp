@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -36,7 +37,6 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     var latitude = ObservableField<Double>()
     val longitude = ObservableField<Double>()
     val fromWhichScreen = ObservableField(0)
-    val onFeedsSuccess = MutableLiveData<ArrayList<String?>>()
 
     init {
         callGetWalletBalanceApi()
@@ -120,14 +120,6 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
                         isFeedVisible.set(true)
                         feedsAdapter.setList(response?.feedDetails)
                     }
-                    when {
-                        fromWhichScreen.get() != 0 -> {
-                            val resultList = ArrayList<String?>()
-                            response?.feedDetails?.forEach { resultList.add(it.resourceId) }
-                            onFeedsSuccess.value = resultList
-
-                        }
-                    }
 
 
                 }
@@ -172,10 +164,11 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         }
 
         val feedRequestModel = FeedRequestModel()
-        /*  feedRequestModel.query =
-              "{getAllFeed(id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME_HOME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],latitude:\"" + latitude + "\",longitude:\"" + longitude + "\",withinRadius:\"" + AppConstants.FEED_WITHIN_RADIUS + "\") { total feedData { id name description screenName screenSection sortOrder displayCard readTime scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
-       */   feedRequestModel.query =
+        feedRequestModel.query =
             "{getAllFeed(page:0,size:null, id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME_HOME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],latitude:\"" + latitude + "\",longitude:\"" + longitude + "\",withinRadius:\"" + AppConstants.FEED_WITHIN_RADIUS + "\",displayCard: [\"STATICIMAGE\",\"STATICIMAGE1X1\",\"DEEPLINK1X1\",\"INAPPWEB1X1\",\"EXTWEBVIEW1X1\",\"BLOG\", \"DEEPLINK\", \"INAPPWEB\", \"EXTWEBVIEW\", \"VIDEO\"]) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+
+
+
 
         return feedRequestModel
 

@@ -4,7 +4,6 @@ import androidx.databinding.ObservableField
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.adapter.FeedsAdapter
-import java.text.FieldPosition
 
 /*
 * This is used to display all the feeds in the list
@@ -12,7 +11,7 @@ import java.text.FieldPosition
 class FeedsViewHelper(
     var position: Int,
     var feedDetails: FeedDetails?,
-    var onFeedItemClickListener: FeedsAdapter.OnFeedItemClickListener
+    var onFeedItemClickListener: FeedsAdapter.OnFeedItemClickListener,var type:Int?=0
 ) {
     var isButtonVisible = ObservableField(true)
     var isTitleVisible = ObservableField(true)

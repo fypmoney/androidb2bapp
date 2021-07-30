@@ -26,16 +26,8 @@ class FeedsSectionAdapter(
     private val typeWithTitle = 1
     private val typeWithoutTitle = 2
     private val typeVideo = 3
-    private val typeDiduKnow = 4
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
-            typeDiduKnow -> {
-                val mRowBinding = FeedsDidUKnowBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent, false
-                )
-                return DiduKnowViewHolder(mRowBinding)
-            }
             typeWithTitle, typeWithoutTitle -> {
                 val mRowBinding = FeedsRowLayoutBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -70,24 +62,19 @@ class FeedsSectionAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (position) {
-            0 -> {
-                typeDiduKnow
+        return when (feedList?.get(position)?.displayCard) {
+            AppConstants.FEED_TYPE_BLOG -> {
+                typeWithTitle
+            }
+            AppConstants.FEED_TYPE_VIDEO -> {
+                typeVideo
             }
             else -> {
-                when (feedList?.get(position)?.displayCard) {
-                    AppConstants.FEED_TYPE_BLOG -> {
-                        typeWithTitle
-                    }
-                    AppConstants.FEED_TYPE_VIDEO -> {
-                        typeVideo
-                    }
-                    else -> {
-                        typeWithoutTitle
-                    }
-                }
+                typeWithoutTitle
             }
         }
+
+
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -101,7 +88,7 @@ class FeedsSectionAdapter(
         override fun onBind(position: Int) {
             mViewHelper = FeedsViewHelper(
                 position,
-                feedList?.get(position), onFeedItemClickListener
+                feedList?.get(position), onFeedItemClickListener,1
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             mRowItemBinding.executePendingBindings()
@@ -111,25 +98,6 @@ class FeedsSectionAdapter(
 
     }
 
-
-    inner class DiduKnowViewHolder(
-        private val mRowItemBinding: FeedsDidUKnowBinding? = null
-    ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
-        private lateinit var mViewHelper: FeedsViewHelper
-        override fun onBind(position: Int) {
-            mViewHelper = FeedsViewHelper(
-                position,
-                feedList?.get(position), onFeedItemClickListener
-            )
-            mRowItemBinding!!.viewHelper = mViewHelper
-
-
-            mRowItemBinding.executePendingBindings()
-
-        }
-
-
-    }
 
 
     inner class VideoViewHolder(
@@ -164,6 +132,12 @@ class FeedsSectionAdapter(
 
 
     }
+
+
+    interface OnFeedItemClickListener {
+        fun onFeedClick(position:Int,feedDetails: FeedDetails)
+    }
+
 
 
 }

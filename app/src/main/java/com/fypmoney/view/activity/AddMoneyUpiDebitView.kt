@@ -366,6 +366,7 @@ open class AddMoneyUpiDebitView :
 
             override fun onBackDismiss() {
                 super.onBackDismiss()
+                Utility.showToast("onBackDismiss")
             }
 
             /**
@@ -375,6 +376,8 @@ open class AddMoneyUpiDebitView :
              */
             override fun onBackButton(alertDialogBuilder: AlertDialog.Builder) {
                 super.onBackButton(alertDialogBuilder)
+                Utility.showToast("onBackButton")
+
             }
 
             override fun isPaymentOptionAvailable(resultData: CustomBrowserResultData) {
