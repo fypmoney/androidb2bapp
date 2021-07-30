@@ -159,5 +159,13 @@ interface ApiInterface {
         @Header("Authorization") authorization: String?, @Url endPoint: String
     ): Observable<ResponseBody>
 
+    @Headers("Accept: application/json")
+    @GET
+    fun checkAppUpdate(
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header("Content-Type") content_type: String = "application/json",
+        @Url endPoint: String
+    ): Observable<ResponseBody>
+
 
 }

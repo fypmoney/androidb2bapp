@@ -84,6 +84,11 @@ class WebApiCaller {
                             client_id = ApiConstant.CLIENT_ID
                         )
                     }
+                    ApiConstant.CHECK_APP_UPDATE -> {
+                        mObservable = apiInterface.checkAppUpdate(
+                            endPoint = request.endpoint
+                        )
+                    }
                     else -> {
                         mObservable = apiInterface.getDataFromServer1(
                             endPoint = request.endpoint,

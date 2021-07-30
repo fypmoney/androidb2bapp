@@ -163,9 +163,9 @@
 
     <style name="keyview">
         <item name="android:background">@drawable/white_round</item>
-        <item name="android:padding">20dp</item>
+        <item name="android:padding">10dp</item>
         <item name="android:textColor">@color/text_color_dark</item>
-        <item name="android:textSize">28dp</item>
+        <item name="android:textSize">28sp</item>
         <item name="fontFamily">@font/product_sans_regular</item>
         <item name="android:textAlignment">center</item>
         <item name="android:layout_margin">5dp</item>

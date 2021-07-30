@@ -35,7 +35,7 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
                     // Get SMS message contents'
                     val message: String = extras.get(SmsRetriever.EXTRA_SMS_MESSAGE) as String
                     Log.d(TAG, "onReceive$message")
-                    Utility.showToast("auto read otp success")
+                    //Utility.showToast("auto read otp success")
 
                     if (otpReceiveInterface != null) {
                         //String otp = message.replace("<#> Your otp code is : ", "")
@@ -49,7 +49,7 @@ class SmsBroadcastReceiver : BroadcastReceiver() {
                     Log.d(TAG, "onReceive: failure")
                     if (otpReceiveInterface != null) {
                         otpReceiveInterface?.onOtpTimeout()
-                        Utility.showToast("auto read otp timeout")
+                        //Utility.showToast("auto read otp timeout")
                     }
                 }
 
