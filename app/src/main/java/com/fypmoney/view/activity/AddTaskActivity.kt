@@ -1,37 +1,21 @@
 package com.fypmoney.view.activity
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.connectivity.ApiConstant
-import com.fypmoney.connectivity.retrofit.Allapi
-import com.fypmoney.connectivity.retrofit.ApiClient1
 import com.fypmoney.databinding.ActivityAddTaskBinding
-import com.fypmoney.databinding.ViewAddMemberBinding
-import com.fypmoney.databinding.ViewChoresBinding
-import com.fypmoney.model.addTaskModal.AddTaskRequest
-import com.fypmoney.model.addTaskModal.AddTaskResponce
-import com.fypmoney.model.yourTaskModal.TaskRequest
-import com.fypmoney.model.yourTaskModal.YourTaskResponse
-import com.fypmoney.util.AppConstants
+import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.util.DialogUtils
-import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.view.adapter.YourTaskStaggeredAdapter
-import com.fypmoney.view.fragment.AcceptRejectTaskFragment
+import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.viewmodel.AddTaskViewModel
-import com.fypmoney.viewmodel.ChoresViewModel
+import kotlinx.android.synthetic.main.activity_add_task.*
+import kotlinx.android.synthetic.main.fragment_assigned_task.view.*
+
 import kotlinx.android.synthetic.main.toolbar.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import nearby.matchinteractmeet.groupalike.Profile.Trips.adapter.FamilyAdapter
 
 class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>() , DialogUtils.OnAlertDialogClickListener{
 
@@ -44,6 +28,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
     override fun getLayoutId(): Int {
         return R.layout.activity_add_task
     }
+    private var itemsArrayList: ArrayList<AssignedTaskResponse> = ArrayList()
 
     override fun getViewModel(): AddTaskViewModel {
         mViewModel = ViewModelProvider(this).get(AddTaskViewModel::class.java)
@@ -56,33 +41,82 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
 
 
         mViewBinding = getViewDataBinding()
+        setIntentValues(intent)
 
 
+
+  itemsArrayList.add(AssignedTaskResponse())
+        itemsArrayList.add(AssignedTaskResponse())
+        itemsArrayList.add(AssignedTaskResponse())
+        itemsArrayList.add(AssignedTaskResponse())
+        itemsArrayList.add(AssignedTaskResponse())
+
+        setRecyclerView()
         setToolbarAndTitle(
             context = this@AddTaskActivity,
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = getString(R.string.chore_history_title)
         )
 
-        mViewBinding.btnContinue.setOnClickListener {
-            addTask()
+        btnContinue.setOnClickListener {
+            if(validate()){
+                mViewModel.callSampleTask(add_money_editext.text.toString(),et_title.text.toString())
+            }
         }
 
-        setObserver()
-
-        /* findViewById<FloatingActionButton>(R.id.fab).setOnClickListener { view ->
-             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                 .setAction("Action", null).show()
-         }*/
     }
 
-    private fun setObserver() {
-        /*mViewModel.onFromContactClicked.observe(this) {
-            if (it) {
-                //intentToActivity(ContactView::class.java)
-                mViewModel.onFromContactClicked.value = false
+    private fun setIntentValues(intent: Intent?) {
+        val sampleTitle = intent?.getStringExtra("sample_title")
+        var sampleDescription = intent?.getStringExtra("sample_desc")
+        var sample_amount = intent?.getStringExtra("sample_amount")
+
+        et_title.setText(sampleTitle)
+        et_desc.setText(sampleDescription)
+        add_money_editext.setText(sample_amount)
+    }
+
+    private fun setRecyclerView() {
+
+
+        var itemClickListener2 = object : ListItemClickListener {
+
+
+            override fun onItemClicked(pos: Int) {
+                TODO("Not yet implemented")
             }
-        }*/
+
+            override fun onCallClicked(pos: Int) {
+
+            }
+
+
+        }
+
+        var typeAdapter =
+            FamilyAdapter(itemsArrayList, this, itemClickListener2!!)
+        recycler_view.adapter = typeAdapter
+
+
+    }
+     fun validate(): Boolean {
+        var success: Boolean = true
+
+        if (add_money_editext.text.toString().trim().isNullOrEmpty()) {
+            success = false
+            add_money_editext.error = "Enter Amount"
+        }
+        if (et_title.text.toString().trim().isNullOrEmpty()) {
+            success = false
+            et_title.error = "Enter Task title"
+        }
+
+
+
+
+
+
+        return success
     }
 
 
@@ -91,26 +125,5 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
         TODO("Not yet implemented")
     }
 
-    fun addTask() {
-        try {
-            val apiInterface = ApiClient1.getClient().create(Allapi::class.java)
-            val task= AddTaskRequest(10000,"mm","2021-06-15T19:12:35Z",0,"INR",28397,"2021-06-04T19:12:35Z","Gardening")
-            val responseBodyCall = apiInterface.AddTask("web_app", SharedPrefUtils.SF_KEY_ACCESS_TOKEN, task )
-            responseBodyCall.enqueue(object : Callback<AddTaskResponce> {
-                override fun onResponse(call: Call<AddTaskResponce>, response: Response<AddTaskResponce>) {
-                    val id: Int = response.body()?.data!!.id
-                    if (id!=null)
-                    {
-                        Toast.makeText(this@AddTaskActivity,"Task Added",Toast.LENGTH_LONG).show()
-                    }
-                    Log.d("Statusdata", id!!.toString())
-                    //  test!!.text= status.toString()
-                }
-                override fun onFailure(call: Call<AddTaskResponce>, t: Throwable) {
 
-                }
-            })
-        } catch (e: Exception) {
-        }
-    }
 }

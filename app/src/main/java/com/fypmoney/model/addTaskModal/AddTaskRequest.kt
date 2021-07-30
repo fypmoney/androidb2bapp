@@ -1,7 +1,7 @@
 package com.fypmoney.model.addTaskModal
 
 data class AddTaskRequest(
-    val amount: Int,
+    val amount: String,
     val description: String,
     val endDate: String,
     val isPayable: Int,

@@ -118,7 +118,6 @@
                     android:layout_marginEnd="24dp"
                     android:inputType="number"
                     android:focusableInTouchMode="true"
-                    android:focusable="false"
                     android:cursorVisible="true"
                     android:itemBackground="@drawable/otp_background"
                     app:OtpItemCount="4"

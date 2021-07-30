@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.StoreScreenViewModel" />
+
+    </data>
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="vertical"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+       android:background="@color/white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="18dp"
+            android:visibility="gone"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/ic_scan" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivNotificationBell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="18dp"
+                android:layout_toStartOf="@+id/myProfile"
+                app:srcCompat="@drawable/notification_bell_icon" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/myProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/black"
+                app:srcCompat="@drawable/ic_profile" />
+
+        </RelativeLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/recharge_text"
+            style="@style/TextviewRegular"
+            android:layout_marginLeft="@dimen/_24sdp"
+            android:layout_marginRight="@dimen/_24sdp"
+            android:layout_below="@+id/balance_text"
+            android:layout_marginTop="40dp"
+            android:ellipsize="end"
+            android:text="Recharge &amp; Bill Payments"
+            android:textColor="@color/text_color_dark"
+            android:textSize="17dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recharge_rv"
+            app:adapter="@{viewModel.rechargeItemAdapter}"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_24sdp"
+            android:layout_marginRight="@dimen/_24sdp"
+            android:layout_below="@+id/upi_text"
+            android:layout_marginTop="@dimen/margin"
+
+            app:spanCount="4"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+
+
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/upi_text"
+            style="@style/TextviewRegular"
+            android:layout_marginLeft="@dimen/_24sdp"
+            android:layout_marginRight="@dimen/_24sdp"
+            android:layout_below="@+id/balance_text"
+            android:layout_marginTop="40dp"
+            android:ellipsize="end"
+            android:text="Shopping"
+            android:textColor="@color/text_color_dark"
+            android:textSize="17dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_24sdp"
+            android:layout_marginRight="@dimen/_24sdp"
+            android:layout_below="@+id/upi_text"
+            app:adapter="@{viewModel.storeAdapter}"
+            android:layout_marginTop="@dimen/margin"
+           app:spanCount="4"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+
+
+    </LinearLayout></ScrollView>
+</layout>
