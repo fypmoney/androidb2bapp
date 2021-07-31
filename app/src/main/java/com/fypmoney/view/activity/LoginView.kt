@@ -66,29 +66,6 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
             isBackArrowVisible = true
         )
         requestPhoneNumberHint(this)
-
-        // spannable string
-
-
-        // auto sms read
-        //        Initialize the SmsRetriever client
-        val client = SmsRetriever.getClient(this)
-//        Start the SMS Retriever task
-        val task = client.startSmsRetriever()
-        task.addOnSuccessListener { aVoid ->
-//            if successfully started, then start the receiver.
-            smsBroadcastReceiver = SmsBroadcastReceiver()
-            registerReceiver(
-                smsBroadcastReceiver,
-                IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
-            )
-
-        }
-        task.addOnFailureListener { e ->
-            //            if failure print the exception.
-            Log.e("auto sms read", e.toString())
-        }
-
         mViewBinding.activity = this
         mViewBinding.viewModel = mViewModel
         setObservers()
@@ -137,7 +114,6 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
     private fun setObservers() {
         mViewModel.onMobileClicked.observe(this) {
             if (it) {
-                requestPhoneNumberHint(this)
                 mViewModel.onMobileClicked.value = false
             }
         }
@@ -194,10 +170,6 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        //requestPhoneNumberHint(this)
-    }
 
     /**
      * Method to navigate to the Feeds screen after login
@@ -225,9 +197,7 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
         startActivity(intent)
     }
 
-    companion object {
-        lateinit var smsBroadcastReceiver: SmsBroadcastReceiver
-    }
+
 
 
 }

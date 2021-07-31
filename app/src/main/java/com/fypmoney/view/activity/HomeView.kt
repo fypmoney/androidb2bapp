@@ -86,7 +86,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 R.id.store -> {
                     mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(getString(R.string.store_bottom_nav_title))
-                    setCurrentFragment(HomeScreen())
+                    setCurrentFragment(StoreScreen())
                 }
                 R.id.card -> {
                     mViewModel.isScanVisible.set(false)

@@ -118,6 +118,7 @@ class FeedsSectionAdapter(
                             feedList?.get(position)?.resourceId!!, 0f
                         )
 
+
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

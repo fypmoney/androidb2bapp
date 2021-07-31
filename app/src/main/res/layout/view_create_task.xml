@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.CreateTaskViewModel" />
+
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout"
+        app:onRefreshListener="@{() -> viewModel.onRefresh()}"
+        app:refreshing="@{viewModel.isLoading}">
+
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true"
+        android:scrollbars="vertical">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+         >
+
+            <include
+                android:id="@+id/toolbar_layout"
+                layout="@layout/toolbar" />
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:paddingLeft="@dimen/_24sdp"
+    android:paddingRight="@dimen/_24sdp"
+    android:id="@+id/layout"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/add_money"
+        style="@style/TextviewRegular"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="@string/create_your_own_task"
+        android:textColor="@color/text_color_dark"
+        android:textSize="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@id/linear"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/add_money"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewRegular"
+            android:background="@drawable/curved_background5"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/add_money_50"
+            android:textColor="@color/text_color_dark" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewRegular"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/curved_background5"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/add_money_100"
+
+            android:textColor="@color/text_color_dark" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewRegular"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/curved_background5"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/add_money_500"
+            android:textColor="@color/text_color_dark" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewRegular"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/curved_background5"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/add_money_1000"
+            android:textColor="@color/text_color_dark" />
+
+
+    </LinearLayout>
+    <EditText
+        android:id="@+id/add_money_editext"
+        style="@style/EditTextStyle"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linear"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="42dp"
+        android:background="@null"
+        app:layout_constraintTop_toBottomOf="@+id/linear"
+        android:drawableStart="@drawable/rupee_symbol"
+        android:drawablePadding="5dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:inputType="number"
+
+        android:textColor="@color/add_money_amount_color"
+        android:textSize="32dp" />
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="150dp"
+        android:layout_height="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_money_editext"
+
+        android:layout_centerHorizontal="true"
+        android:background="@color/dividerColor" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/add_money_text"
+        style="@style/TextviewRegular"
+        android:layout_below="@+id/view1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="Reward (click to edit)"
+        android:textAlignment="center"
+
+        android:textColor="@color/text_color_light"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_money_editext" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_first_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="@dimen/_34sdp"
+        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+        android:hint="@string/parent_name_hint"
+
+        android:inputType="textCapWords"
+        android:paddingStart="@dimen/edittextHintPaddingStart"
+        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+        android:singleLine="true"
+        android:text="Title"
+        android:textColor="@color/text_color_light"
+        app:layout_constraintTop_toBottomOf="@+id/add_money_text" />
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+        android:hint="@string/parent_name_hint"
+        android:minLines="2"
+
+        android:inputType="textCapWords"
+        android:paddingStart="@dimen/edittextHintPaddingStart"
+        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Description"
+        android:textColor="@color/text_color_light"
+        app:layout_constraintTop_toBottomOf="@+id/et_first_name" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:weightSum="2"
+    android:id="@+id/lin"
+    app:layout_constraintTop_toBottomOf="@+id/et_description"
+    android:layout_height="wrap_content">
+    <androidx.appcompat.widget.AppCompatEditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginRight="@dimen/_18sdp"
+
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+        android:hint="@string/parent_name_hint"
+        android:minLines="2"
+
+        android:inputType="textCapWords"
+        android:paddingStart="@dimen/edittextHintPaddingStart"
+        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Description"
+        android:textColor="@color/text_color_light"
+        app:layout_constraintTop_toBottomOf="@+id/et_first_name" />
+    <androidx.appcompat.widget.AppCompatEditText
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+        android:hint="@string/parent_name_hint"
+        android:minLines="2"
+
+        android:inputType="textCapWords"
+        android:paddingStart="@dimen/edittextHintPaddingStart"
+        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="Description"
+        android:textColor="@color/text_color_light"
+        app:layout_constraintTop_toBottomOf="@+id/et_first_name" />
+
+</LinearLayout>
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSelectRelation"
+        style="@style/TextviewRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       app:layout_constraintTop_toBottomOf="@+id/lin"
+        android:layout_marginTop="20dp"
+        android:text="@string/select_relation"
+        app:layout_constraintStart_toStartOf="parent"
+  />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+     app:layout_constraintTop_toBottomOf="@+id/tvSelectRelation"
+
+        android:layout_marginTop="@dimen/edittextMarginTop"
+
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="5" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/screenMarginLeft"
+                android:layout_marginEnd="@dimen/screenMarginRight">
+
+
+
+
+
+
+
+
+            </RelativeLayout>
+
+
+
+
+
+</RelativeLayout>
+
+
+
+    </ScrollView></androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

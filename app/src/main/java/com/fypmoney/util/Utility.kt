@@ -99,7 +99,7 @@ object Utility {
           * This method is used to extract only digits from string
           * */
     fun extractDigits(msg: String?): String? {
-        val p = Pattern.compile("(\\d{6})")
+        val p = Pattern.compile("(\\d{4,8})")
         val m = p.matcher(msg ?: "")
         return if (m.find()) {
             m.group(0)
@@ -799,7 +799,7 @@ object Utility {
     ) {
         url.let {
             if (!url.isNullOrEmpty()) {
-                Glide.with(context!!).load(url).placeholder(R.drawable.ic_user)
+                Glide.with(context!!).load(url).placeholder(R.drawable.ic_card)
                     .into(imageView)
             } else {
                 imageView.setImageResource(R.drawable.ic_user)

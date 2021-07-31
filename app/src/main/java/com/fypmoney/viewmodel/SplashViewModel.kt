@@ -2,7 +2,9 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fypmoney.BuildConfig
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -11,6 +13,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.CustomerInfoResponse
+import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
@@ -24,7 +27,12 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
     var moveToNextScreen = MutableLiveData<Boolean>()
     var splashTime = ObservableField(AppConstants.SPLASH_TIME)
 
+    val appUpdateState:LiveData<AppUpdateState>
+        get() = _appUpdateState
+    private val _appUpdateState = MutableLiveData<AppUpdateState>()
+
     init {
+        callCheckAppUpdate()
         if (SharedPrefUtils.getBoolean(
                 application,
                 SharedPrefUtils.SF_KEY_IS_LOGIN
@@ -53,6 +61,20 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
             ApiRequest(
                 purpose = ApiConstant.API_GET_CUSTOMER_INFO,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_GET_CUSTOMER_INFO),
+                request_type = ApiUrl.GET,
+                onResponse = this, isProgressBar = false,
+                param = ""
+            )
+        )
+    }
+    /*
+    *This method is used to call get customer profile API
+    * */
+    private fun callCheckAppUpdate() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.CHECK_APP_UPDATE,
+                endpoint = NetworkUtil.endURL(ApiConstant.CHECK_APP_UPDATE+"/${BuildConfig.VERSION_CODE}/"),
                 request_type = ApiUrl.GET,
                 onResponse = this, isProgressBar = false,
                 param = ""
@@ -101,6 +123,26 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
 
                 }
             }
+            ApiConstant.CHECK_APP_UPDATE->{
+                    if(responseData is CheckAppUpdateResponse){
+                        when(responseData.appUpdateData?.updateFlag){
+                            "FLEXIBLE"->{
+                                _appUpdateState.value = AppUpdateState.FLEXIBLE
+                            }
+                            "FORCE_UPDATE"->{
+                            _appUpdateState.value = AppUpdateState.FORCEUPDATE
+
+                             }
+                            "NOT_UPDATE"->{
+                                _appUpdateState.value = AppUpdateState.NOTUPDATE
+
+                            }"NOT_ALLOWED"->{
+                            _appUpdateState.value = AppUpdateState.NOTALLOWED
+
+                        }
+                        }
+                    }
+            }
 
 
         }
@@ -112,4 +154,10 @@ class SplashViewModel(application: Application) : BaseViewModel(application) {
     }
 
 
+    sealed class AppUpdateState{
+        object FLEXIBLE:AppUpdateState()
+        object FORCEUPDATE:AppUpdateState()
+        object NOTUPDATE:AppUpdateState()
+        object NOTALLOWED:AppUpdateState()
+    }
 }

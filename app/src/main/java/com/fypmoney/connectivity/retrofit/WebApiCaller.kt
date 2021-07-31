@@ -84,6 +84,11 @@ class WebApiCaller {
                             client_id = ApiConstant.CLIENT_ID
                         )
                     }
+                    ApiConstant.CHECK_APP_UPDATE -> {
+                        mObservable = apiInterface.checkAppUpdate(
+                            endPoint = request.endpoint
+                        )
+                    }
                     else -> {
                         mObservable = apiInterface.getDataFromServer1(
                             endPoint = request.endpoint,
@@ -119,8 +124,8 @@ class WebApiCaller {
                                         client_id = ApiConstant.CLIENT_ID,
                                         client_secret = ApiConstant.CLIENT_SECRET,
                                         grant_type = ApiConstant.GRANT_TYPE,
-                                        request.endpoint,
-                                        request.param
+                                        endPoint = request.endpoint,
+                                        request = request.param
                                     )
                             }
                             ApiConstant.API_LOGIN_INIT -> {
@@ -133,8 +138,8 @@ class WebApiCaller {
                                             SharedPrefUtils.SF_KEY_ACCESS_TOKEN
                                         ),
                                         one_tap = true,
-                                        request.endpoint,
-                                        request.param
+                                        endPoint = request.endpoint,
+                                        request = request.param
                                     )
 
                             }
@@ -144,8 +149,8 @@ class WebApiCaller {
                                         client_id = ApiConstant.CLIENT_ID,
                                         appId = ApiConstant.APP_ID,
                                         one_tap = true,
-                                        request.endpoint,
-                                        request.param
+                                        endPoint = request.endpoint,
+                                        request = request.param
                                     )
 
                             }
@@ -158,7 +163,8 @@ class WebApiCaller {
                                             PockketApplication.instance,
                                             SharedPrefUtils.SF_KEY_ACCESS_TOKEN
                                         ),
-                                        request.endpoint, image
+                                        endPoint = request.endpoint,
+                                        file = image
                                     )
                             }
 
@@ -171,7 +177,7 @@ class WebApiCaller {
                                             PockketApplication.instance,
                                             SharedPrefUtils.SF_KEY_ACCESS_TOKEN
                                         ),
-                                        request.endpoint,
+                                        endPoint = request.endpoint,
                                         request = request.param
                                     )
 

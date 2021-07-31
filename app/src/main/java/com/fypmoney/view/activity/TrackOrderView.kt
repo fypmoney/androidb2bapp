@@ -9,6 +9,8 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewTrackOrderBinding
 import com.fypmoney.viewmodel.TrackOrderViewModel
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
 import kotlinx.android.synthetic.main.view_order_card.*
 import kotlinx.android.synthetic.main.view_track_order.*
 
@@ -38,6 +40,10 @@ class TrackOrderView : BaseActivity<ViewTrackOrderBinding, TrackOrderViewModel>(
             toolbar = toolbar,
             isBackArrowVisible = true,toolbarTitle=getString(R.string.track_order)
         )
+        helpValue.setOnClickListener {
+            callFreshChat(applicationContext)
+
+        }
         setObservers()
     }
 

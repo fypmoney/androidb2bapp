@@ -291,7 +291,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                         intentToActivity(OrderCardView::class.java)
                     }
                     false -> {
-                        intentToActivity(TrackOrderView::class.java)
+                        intentToActivity(OrderCardView::class.java)
                     }
                 }
             }

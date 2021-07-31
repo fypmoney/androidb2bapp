@@ -19,7 +19,7 @@
 
         <include
             android:id="@+id/toolbar_layout"
-            layout="@layout/toolbar" />
+            layout="@layout/toolbar_for_aadhaar" />
 
 
         <ScrollView
@@ -251,24 +251,24 @@
                             android:text="@{@string/Rs+viewModel.taxAmount}" />
 
                     </TableRow>
+
+                    <TableRow
+                        android:padding="5dp"
+                        android:visibility="@{viewModel.isDiscountVisible?View.VISIBLE:View.GONE}">
+
+                        <TextView
+                            style="@style/TextviewRegular"
+                            android:text="@string/discount" />
+
+                        <TextView
+                            style="@style/TextviewRegular"
+                            android:layout_weight="1"
+                            android:gravity="end"
+                            android:text="@{@string/Rs+viewModel.discount}" />
+
+                    </TableRow>
                 </TableLayout>
 
-                <View
-                    android:id="@+id/view2"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_below="@+id/table"
-                    android:layout_gravity="center"
-                    android:layout_marginBottom="20dp"
-                    android:background="@color/dividerColor" />
-
-                <TextView
-                    style="@style/TextviewRegular"
-                    android:layout_below="@id/view2"
-                    android:layout_marginBottom="20dp"
-                    android:text="@string/paid_via"
-                    android:textColor="@color/text_color_dark"
-                    android:textSize="17dp" />
 
             </RelativeLayout>
         </ScrollView>

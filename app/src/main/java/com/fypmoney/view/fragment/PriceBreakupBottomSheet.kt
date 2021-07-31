@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TableRow
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
@@ -24,7 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 * */
 class PriceBreakupBottomSheet(
     val amountValue: String?,
-    val productResponse: GetAllProductsResponseDetails?
+    val productResponse: GetAllProductsResponseDetails?, var isDiscountVisible: Int? = 0
 ) :
     BottomSheetDialogFragment() {
 
@@ -55,15 +56,29 @@ class PriceBreakupBottomSheet(
         val amount = view.findViewById<TextView>(R.id.amount)!!
         val cardType = view.findViewById<TextView>(R.id.card_type)!!
         val tax = view.findViewById<TextView>(R.id.tax)!!
+        val discount = view.findViewById<TextView>(R.id.discount)!!
         val itemTotal = view.findViewById<TextView>(R.id.item_total)!!
         val gotBtn = view.findViewById<Button>(R.id.gotBtn)!!
+        val discountRow = view.findViewById<TableRow>(R.id.discountRow)!!
+
+        when (isDiscountVisible) {
+            1 -> {
+                discountRow.visibility = View.VISIBLE
+            }
+            else -> {
+                discountRow.visibility = View.GONE
+
+            }
+
+        }
 
         gotBtn.setOnClickListener { dismiss() }
 
         amount.text = getString(R.string.Rs) + Utility.convertToRs(productResponse?.basePrice)
         tax.text = getString(R.string.Rs) + Utility.convertToRs(productResponse?.totalTax)
         cardType.text = productResponse?.name
-        itemTotal.text =Utility.convertToRs(productResponse?.mrp)
+        discount.text = productResponse?.discount
+        itemTotal.text = Utility.convertToRs(productResponse?.mrp)
 
 
         return view

@@ -43,14 +43,14 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivServiceLogo1"
-                    android:layout_width="150dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="100dp"
-                    app:srcCompat="@drawable/premium_card_banner" />
+                    app:srcCompat="@drawable/place_order_img" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="12dp"
                     android:layout_toEndOf="@+id/ivServiceLogo1"
                     android:gravity="center_vertical"
@@ -195,58 +195,18 @@
                         android:paddingBottom="9dp"
                         android:selectedItemPosition="@={viewModel.selectedCityPosition}" />
 
-                    <LinearLayout
+                    <androidx.appcompat.widget.AppCompatEditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/edittextMarginTop"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                            android:orientation="horizontal">
-
-                            <androidx.appcompat.widget.AppCompatEditText
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:background="@null"
-                                android:hint="@string/pin"
-                                android:inputType="number"
-                                android:paddingStart="@dimen/edittextHintPaddingStart"
-                                android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                                android:text="@={viewModel.pin}" />
-
-                            <ProgressBar
-                                android:id="@+id/progress"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="end"
-                                android:scaleX="0.4"
-                                android:scaleY="0.4"
-                                android:visibility="@{viewModel.isProgressBarVisible?View.VISIBLE:View.GONE}" />
-
-
-                        </LinearLayout>
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/TextviewBold"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/margin"
-                            android:layout_weight="1"
-                            android:drawableStart="@drawable/ic_location"
-                            android:drawablePadding="@dimen/margin"
-                            android:onClick="@{()->viewModel.onUseLocationClicked()}"
-                            android:text="@string/use_loc"
-                            android:textColor="@color/color_skyblue"
-                            android:textSize="17dp" />
-
-
-                    </LinearLayout>
+                        android:layout_weight="1"
+                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                        android:hint="@string/pin"
+                        android:inputType="text"
+                        android:paddingStart="@dimen/edittextHintPaddingStart"
+                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                        android:singleLine="true"
+                        android:text="@={viewModel.pin}" />
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:layout_width="match_parent"

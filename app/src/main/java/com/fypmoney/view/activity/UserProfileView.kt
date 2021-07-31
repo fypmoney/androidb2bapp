@@ -283,7 +283,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
             }
 
             3 -> {
-                callFreshChat()
+                callFreshChat(applicationContext)
             }
 
             4 -> {
@@ -308,28 +308,5 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
         mViewModel.callLogOutApi()
     }
 
-    /*
-    * This method is used to call fresh chat
-    * */
-    fun callFreshChat() {
-        val fresh = Freshchat.getInstance(applicationContext)
-        val config = FreshchatConfig(
-            AppConstants.FRESH_CHAT_APP_ID,
-            AppConstants.FRESH_CHAT_APP_KEY
-        )
-        config.domain = AppConstants.FRESH_CHAT_DOMAIN
-        config.isCameraCaptureEnabled = true
-        config.isGallerySelectionEnabled = true
-        config.isResponseExpectationEnabled = true
-        config.isTeamMemberInfoVisible = true
-        config.isUserEventsTrackingEnabled = true
-        fresh.init(config)
-        val faqOptions = FaqOptions()
-            .showFaqCategoriesAsGrid(false)
-            .showContactUsOnAppBar(true)
-            .showContactUsOnFaqScreens(true)
-            .showContactUsOnFaqNotHelpful(true)
-        Freshchat.showFAQs(this@UserProfileView, faqOptions)
-    }
 
 }

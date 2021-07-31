@@ -35,6 +35,7 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
     var selectedCityPosition = MutableLiveData(0)
     var city = ObservableField<String>()
     var state = ObservableField<String>()
+    var isDiscountVisible = ObservableField(0)
     var isCityVisible = ObservableField<Boolean>()
     var stateList = ObservableField<List<GetStatesResponseDetails>>()
     var cityList = ObservableField<List<GetCityResponseDetails>>()
@@ -55,6 +56,7 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
         if (Utility.getCustomerDataFromPreference()?.cardProductCode == null) {
             callGetAllProductsApi()
         } else {
+            isDiscountVisible.set(1)
             callGetAllProductsByCodeApi()
         }
 

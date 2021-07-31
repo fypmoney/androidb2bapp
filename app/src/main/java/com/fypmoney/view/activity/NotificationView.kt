@@ -10,6 +10,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewNotificationBinding
+import com.fypmoney.model.NotificationModel
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.fragment.FamilyNotificationBottomSheet
 import com.fypmoney.view.fragment.RequestMoneyBottomSheet
@@ -59,13 +60,12 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
             if (it) {
                 when (mViewModel.notificationSelectedResponse.requestCategoryCode) {
                     AppConstants.NOTIFICATION_TYPE_ADD_FAMILY -> {
-                        callBottomSheet()
-                    }
-                    AppConstants.NOTIFICATION_TYPE_ADD_TASK -> {
-
+                        callBottomSheet(mViewModel.notificationSelectedResponse)
                     }
                     AppConstants.NOTIFICATION_TYPE_REQUEST_MONEY -> {
                         callRequestMoneyBottomSheet()
+                    }
+                    AppConstants.NOTIFICATION_TYPE_ADD_TASK -> {
 
                     }
                 }
@@ -85,33 +85,6 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     }
 
 
-    /*
-    * This method is used to call leave member
-    * */
-    private fun callBottomSheet() {
-        val bottomSheet =
-            FamilyNotificationBottomSheet(
-                mViewModel.notificationSelectedResponse.actionAllowed,
-                mViewModel.notificationSelectedResponse.description,
-                mViewModel.notificationSelectedResponse.isApprovalProcessed,
-                this
-            )
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "FamilyNotification")
-    }
-
-    /*
-      * This method is used to call leave member
-      * */
-    private fun callRequestMoneyBottomSheet() {
-        val bottomSheet =
-            RequestMoneyBottomSheet(
-                response = mViewModel.notificationSelectedResponse,
-                this
-            )
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "RequestMoneyNotification")
-    }
 
 
     override fun onBottomSheetButtonClick(actionAllowed: String?) {
@@ -132,4 +105,38 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         startActivity(Intent(this@NotificationView, aClass))
         finish()
     }
+    /*
+* This method is used to call leave member
+* */
+    private fun callBottomSheet(notificationResponse: NotificationModel.NotificationResponseDetails?) {
+        val bottomSheet =
+            FamilyNotificationBottomSheet(
+                notificationResponse?.actionAllowed,
+                notificationResponse?.description,
+                notificationResponse?.isApprovalProcessed,
+                this
+            )
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "FamilyNotification")
+    }
+
+
+
+
+
+    /*
+   * This method is used to call leave member
+   * */
+    private fun callRequestMoneyBottomSheet() {
+        val bottomSheet =
+            RequestMoneyBottomSheet(
+                response = mViewModel.notificationSelectedResponse,
+                this
+            )
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "RequestMoneyNotification")
+    }
+
+
+
 }

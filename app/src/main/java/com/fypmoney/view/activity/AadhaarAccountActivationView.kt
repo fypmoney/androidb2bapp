@@ -19,6 +19,8 @@ import com.fypmoney.databinding.ViewCommunityBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.AadhaarAccountActivationViewModel
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 import kotlinx.android.synthetic.main.view_login.*
 
@@ -49,6 +51,10 @@ class AadhaarAccountActivationView :
             toolbar = toolbar,
             isBackArrowVisible = true
         )
+        helpValue.setOnClickListener {
+            callFreshChat(applicationContext)
+
+        }
         //Test Commit
 
 

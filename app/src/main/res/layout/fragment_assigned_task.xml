@@ -3,17 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fypmoney.view.fragment.AssignedTaskFragment">
+>
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Assigned Task Fragment"
-        android:textAlignment="center"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        tools:ignore="RtlCompat" />
-
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_width="match_parent"
+    android:id="@+id/rv_assigned"
+    android:layout_height="match_parent"/>
 </FrameLayout>

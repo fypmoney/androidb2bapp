@@ -14,10 +14,19 @@
 
     </data>
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/layoutServicePrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintTop_toTopOf="parent">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
         >
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -27,17 +36,21 @@
             android:layout_gravity="center"
             android:background="@drawable/curved_background18"
             android:padding="12dp"
-            app:SET_IMAGE_IN_NOTIFICATION="@{viewHelper.notification.requestCategoryCode}"
+            app:SET_IMAGE_IN_NOTIFICATION="@{viewHelper.notification.icon}"
             />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/heading"
             style="@style/TextviewRegular"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/margin"
             android:layout_toEndOf="@+id/ivServiceLogo"
             android:gravity="start"
-            android:text="@{viewHelper.notification.description}"
+            android:textSize="18dp"
+            android:textColor="@color/text_color_dark"
+            android:layout_alignBottom="@+id/ivServiceLogo"
+            android:layout_alignTop="@+id/ivServiceLogo"
+            android:text="@{viewHelper.notification.name}"
             />
 
 
@@ -45,12 +58,19 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:id="@+id/view1"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginTop="10dp"
             android:layout_below="@id/ivServiceLogo"
             android:visibility="@{viewHelper.isDividerVisible?View.VISIBLE:View.GONE}"
             android:background="#E6E7E8"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/heading1"
+            android:layout_below="@+id/view1"
+            style="@style/TextviewRegular"
+            android:layout_marginTop="@dimen/margin"
+            android:gravity="start"
+            android:text="@{viewHelper.notification.description}"
+            />
     </RelativeLayout>
-
+    </com.google.android.material.card.MaterialCardView>
 </layout>

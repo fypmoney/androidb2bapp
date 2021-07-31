@@ -12,24 +12,25 @@
 
     </data>
 
-    <RelativeLayout
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/image2"
+            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_above="@+id/image2" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabLayoutIndicator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabGravity="center"
-            android:layout_above="@+id/image2"
-            app:tabIndicatorHeight="0dp"
-            />
+
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image2"
@@ -41,8 +42,12 @@
             android:layout_marginBottom="20dp"
             android:onClick="@{()->viewModel.onMainClicked()}"
             android:padding="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:srcCompat="@drawable/ic_black_next" />
 
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

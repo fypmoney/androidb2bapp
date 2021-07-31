@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewHelper"
+            type="com.fypmoney.viewhelper.StoreViewHelper" />
+
+    </data>
+
+
+    <LinearLayout
+        android:id="@+id/serviceLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="@{()->viewHelper.onItemClicked()}"
+        android:orientation="vertical">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivServiceLogo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/amazon_logo" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvServiceName"
+            style="@style/TextviewRegular"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="@string/add_upi_text"
+
+            android:textSize="@dimen/textSize_14"
+
+            />
+    </LinearLayout>
+
+</layout>

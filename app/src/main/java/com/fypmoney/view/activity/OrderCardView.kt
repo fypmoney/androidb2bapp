@@ -11,18 +11,20 @@ import com.fypmoney.databinding.ViewOrderCardBinding
 import com.fypmoney.databinding.ViewStayTunedBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.view.adapter.MyOrderListAdapter
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.view.adapter.TabsAdapter
 import com.fypmoney.viewmodel.OrderCardViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
 import kotlinx.android.synthetic.main.view_order_card.*
 
 /*
 * This class is used to order card
 * */
-class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>(),
-    MyProfileListAdapter.OnListItemClickListener {
+class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
     private lateinit var mViewModel: OrderCardViewModel
 
     override fun getBindingVariable(): Int {
@@ -43,24 +45,28 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>(),
         setToolbarAndTitle(
             context = this@OrderCardView,
             toolbar = toolbar,
-            isBackArrowVisible = true
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.order_card)
         )
 
-        val myProfileAdapter = MyProfileListAdapter(applicationContext, this)
-        list.adapter = myProfileAdapter
+        val myOrderListAdapter = MyOrderListAdapter(applicationContext)
+        list.adapter = myOrderListAdapter
 
         val iconList = ArrayList<Int>()
-        iconList.add(R.drawable.ic_check_skyblue)
-        iconList.add(R.drawable.ic_check_skyblue)
-        iconList.add(R.drawable.ic_check_skyblue)
-        iconList.add(R.drawable.ic_check_skyblue)
+        iconList.add(R.drawable.ic_limit)
+        iconList.add(R.drawable.ic_safe)
+        iconList.add(R.drawable.ic_real_time)
+        iconList.add(R.drawable.ic_lock__1_)
 
-        myProfileAdapter.setList(
+        myOrderListAdapter.setList(
             iconList1 = iconList,
             resources.getStringArray(R.array.order_card_list).toMutableList()
         )
-
         setObservers()
+
+        helpValue.setOnClickListener {
+            callFreshChat(applicationContext)
+
+        }
 
 
     }
@@ -75,6 +81,7 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>(),
 
 
         }
+
     }
 
     /**
@@ -84,7 +91,5 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>(),
         startActivity(Intent(this@OrderCardView, aClass))
     }
 
-    override fun onItemClick(position: Int) {
 
-    }
 }

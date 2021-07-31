@@ -31,20 +31,32 @@
                 android:id="@+id/toolbar_layout"
                 layout="@layout/toolbar_for_aadhaar" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivServiceLogo1"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardview"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_below="@+id/toolbar_layout"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                app:cardCornerRadius="15dp"
                 android:layout_marginTop="20dp"
-                app:srcCompat="@drawable/premium_card_banner" />
+                android:layout_below="@+id/toolbar_layout"
+                android:background="@drawable/curved_background14">
 
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivServiceLogo1"
+                IMAGE="@{viewModel.imageUrl}"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/premium_card_banner" />
+            </androidx.cardview.widget.CardView>
             <com.fypmoney.util.ScrollableListView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ivServiceLogo1"
                 android:layout_marginTop="20dp"
+                android:layout_below="@+id/cardview"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="0dp" />
 

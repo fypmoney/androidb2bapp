@@ -27,6 +27,8 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
     var itemTotal = ObservableField<String>()
     var nameOfProduct = ObservableField<String>()
     var taxAmount = ObservableField<String>()
+    var discount = ObservableField<String>()
+    var isDiscountVisible = ObservableField(false)
     var isOrderPlaced = ObservableField<Boolean>()
     var isOrderShipped = ObservableField<Boolean>()
     var isOrderDelivered = ObservableField<Boolean>()
@@ -39,6 +41,7 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
         if (Utility.getCustomerDataFromPreference()?.cardProductCode == null) {
             callGetAllProductsApi()
         } else {
+            isDiscountVisible.set(true)
             callGetAllProductsByCodeApi()
         }
         callGetCardStatusApi()
@@ -119,6 +122,11 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
                         taxAmount.set(
                             Utility.convertToRs(
                                 responseData.getAllProductsResponseDetails[0].totalTax
+                            )
+                        )
+                        discount.set(
+                            Utility.convertToRs(
+                                responseData.getAllProductsResponseDetails[0].discount
                             )
                         )
                         itemTotal.set(

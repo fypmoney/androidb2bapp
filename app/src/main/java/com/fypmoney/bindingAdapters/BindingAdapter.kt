@@ -215,17 +215,15 @@ class BindingAdapter {
 
         @BindingAdapter("SET_IMAGE_IN_NOTIFICATION")
         @JvmStatic
-        fun setImageInNotification(imageView: AppCompatImageView, requestCategoryCode: String) {
-            when (requestCategoryCode) {
-                AppConstants.NOTIFICATION_TYPE_ADD_TASK -> {
-                    imageView.setImageResource(R.drawable.ic_jay)
-
-                }
-                else -> {
-                    imageView.setImageResource(R.drawable.ic_ankush_bro)
-
-                }
+        fun setImageInNotification(imageView: AppCompatImageView, imageUrl: String?) {
+            if(imageUrl!=null)
+                Utility.setImageUsingGlide(PockketApplication.instance, imageUrl, imageView)
+            else
+            {
+                imageView.setImageResource(R.drawable.ic_jay)
             }
+
+
 
         }
 

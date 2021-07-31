@@ -34,9 +34,12 @@ class NotificationModel {
         @SerializedName("actionSelected") var actionSelected: String?=null,
         @SerializedName("appDisplayAction") var appDisplayAction: String?=null,
         @SerializedName("sourceUserName") var sourceUserName: String?=null,
+        @SerializedName("icon") var icon: String?=null,
         @SerializedName("destinationUserName") var destinationUserName: String?=null,
-        @SerializedName("objectJson") var objectJson: String?=null
-    ) : Serializable
+        @SerializedName("objectJson") var objectJson: String?=null,
+        @SerializedName("name") var name: String?=null
+
+        ) : Serializable
 
     data class UserTimelineResponse(
         @SerializedName("data") val notificationResponseDetails: List<UserTimelineResponseDetails>
@@ -52,5 +55,7 @@ class NotificationModel {
         @SerializedName("isApprovalProcessed") var isApprovalProcessed: String?=null,
         @SerializedName("description") var description: String?=null,
         @SerializedName("entityType") var entityType: String?=null,
+        @SerializedName("icon") var icon: String?=null,
+        @SerializedName("name") var name: String?=null,
         @SerializedName("requestCategoryCode") var requestCategoryCode: String?=null) : Serializable
 }

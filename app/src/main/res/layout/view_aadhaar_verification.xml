@@ -82,7 +82,7 @@
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:hint="@string/aadhaar_number_hint"
                     android:inputType="number"
-                    android:maxLength="16"
+                    android:maxLength="14"
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
                     android:singleLine="true"

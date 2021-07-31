@@ -17,8 +17,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/screenMarginLeft"
-        android:layout_marginEnd="@dimen/screenMarginRight"
         android:background="@color/white"
         android:orientation="vertical">
 
@@ -39,7 +37,7 @@
             android:layout_toEndOf="@+id/imageOrderPlaced"
             android:text="@{viewHelper.status}"
             android:textAlignment="center"
-            android:textSize="17dp" />
+           />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/date"
@@ -49,7 +47,7 @@
             android:layout_marginTop="10dp"
             android:text="@{viewHelper.date}"
             android:textAlignment="center"
-            android:textSize="17dp" />
+           />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/view_order_placed"
@@ -57,7 +55,7 @@
             NEXT_IS_DONE="@{viewHelper.nextIsDone}"
             SET_IMAGE_IN_TRACK_ORDER_LINE="@{viewHelper.statusForImage}"
             android:layout_width="2dp"
-            android:layout_height="50dp"
+            android:layout_height="30dp"
             android:layout_toStartOf="@+id/imageOrderPlaced"
             android:layout_toEndOf="@+id/imageOrderPlaced"
             android:layout_below="@id/imageOrderPlaced"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -17,26 +18,33 @@
 
         <include layout="@layout/toolbar" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fillViewport="true"
             android:scrollbars="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/enter_phone"
                     style="@style/TextviewBold"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:gravity="start"
                     android:layout_marginStart="25dp"
+                    android:layout_marginEnd="@dimen/dp16"
                     android:text="@{viewModel.heading}"
                      />
 
@@ -46,6 +54,9 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="25dp"
                     android:layout_marginBottom="24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:visibility="visible"
                     android:visibility="@{viewModel.isYesBankLogoVisible?View.VISIBLE:View.GONE,default=gone}"
                     app:srcCompat="@drawable/yes_bank_logo" />
 
@@ -55,8 +66,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/enter_phone"
+                    app:layout_constraintStart_toEndOf="@+id/tv_change"
+                    app:layout_constraintTop_toBottomOf="@+id/enter_phone"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:text="@{viewModel.mobile}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -65,8 +78,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/enter_phone"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:layout_marginTop="@dimen/_5sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/enter_phone"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:layout_toEndOf="@+id/tv_mobile"
                     android:textSize="@dimen/textSize_14"
                     android:onClick="@{()->viewModel.onChangeClicked()}"
@@ -80,9 +95,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_mobile"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_mobile"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="79dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
+                    tools:text="otp title"
                     android:text="@{viewModel.otpTitle}" />
 
                 <com.mukesh.OtpView
@@ -92,13 +110,14 @@
                     android:layout_below="@+id/otp"
                     app:OtpItemWidth="60dp"
                     app:OtpItemHeight="60dp"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginStart="25dp"
-                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/otp"
                     android:layout_marginEnd="24dp"
                     android:inputType="number"
                     android:focusableInTouchMode="true"
-                    android:focusable="false"
                     android:cursorVisible="true"
                     android:itemBackground="@drawable/otp_background"
                     app:OtpItemCount="4"
@@ -111,8 +130,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/otpView"
                     android:layout_alignParentStart="true"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/otpView"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="@dimen/margin"
+                    tools:text="1:59 Resend Otp In"
                     android:textColor="@color/text_color_little_dark"
                     android:visibility="@{viewModel.resendOtpTimerVisibility?View.VISIBLE:View.GONE}" />
 
@@ -122,6 +144,8 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/otpView"
                     android:layout_alignParentEnd="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/otpView"
                     android:layout_marginTop="@dimen/margin"
                     android:layout_marginEnd="24dp"
                     android:enabled="@{viewModel.isResendEnabled?true:false,default=true}"
@@ -130,36 +154,50 @@
                     android:textColor="@{viewModel.isResendEnabled?@color/text_color_dark:@color/text_color_light}" />
 
 
-                <com.fypmoney.util.MyKeyboard
-                    android:id="@+id/keyboard"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/linear"
-                    android:orientation="vertical" />
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent">
 
-                <RelativeLayout
-                    android:id="@+id/linear"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/curved_background7"
-                    android:paddingBottom="@dimen/margin_20">
+                    <com.fypmoney.util.MyKeyboard
+                        android:id="@+id/keyboard"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toTopOf="@+id/linear"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:visibility="gone"/>
 
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnSendOtp"
-                        style="@style/Widget.App.Button"
-                        android:layout_width="299dp"
-                        android:layout_height="52dp"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/curved_background1"
-                        android:onClick="@{()->viewModel.onVerifyClicked()}"
-                        android:text="@string/verify_btn_text"
-                        android:textAllCaps="false"
-                        app:backgroundTint="@color/text_color_dark" />
-                </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/linear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/keyboard"
+                        android:paddingBottom="@dimen/margin_20">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnSendOtp"
+                            style="@style/Widget.App.Button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="47dp"
+                            android:layout_marginEnd="47dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/curved_background26"
+                            android:onClick="@{()->viewModel.onVerifyClicked()}"
+                            android:text="@string/verify_btn_text"
+                            android:textAllCaps="false"
+                            app:backgroundTint="@color/text_color_dark" />
+                    </RelativeLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            </RelativeLayout>
-        </ScrollView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

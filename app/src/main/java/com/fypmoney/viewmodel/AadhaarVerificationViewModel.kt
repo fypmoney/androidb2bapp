@@ -32,7 +32,7 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
             TextUtils.isEmpty(aadhaarNumber.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.aadhaar_number_empty_error))
             }
-            aadhaarNumber.value?.length!! < 12-> {
+            aadhaarNumber.value?.length!! < 14-> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.aadhaar_number_valid_error))
             }
 
@@ -55,7 +55,7 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
                 KycInitRequest(
                     kycMode = AppConstants.KYC_MODE,
                     kycType = AppConstants.KYC_TYPE,
-                    documentIdentifier = aadhaarNumber.value!!,
+                    documentIdentifier = aadhaarNumber.value!!.replace(" ",""),
                     documentType = AppConstants.KYC_DOCUMENT_TYPE,
                     action = AppConstants.KYC_ACTION_ADHAR_AUTH
                 ), this, isProgressBar = true

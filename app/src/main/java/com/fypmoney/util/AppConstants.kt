@@ -163,7 +163,6 @@ object AppConstants {
     const val ORDER_CARD_PAYMENT_MODE = "WALLET"
     const val ENABLE= "ENABLED"
 
-
     const val ORDER_STATUS_ORDERED = "ORDER_PLACED"
     const val ORDER_STATUS_IN_PROGRESS = "IN_PROGRESS"
     const val ORDER_STATUS_SHIPPED = "SHIPPED"
@@ -176,5 +175,8 @@ object AppConstants {
     const val QR_FORMAT_NAME = "QR_CODE"
 
 
+    const val CLIENT_TYPE = "Client_Type"
+    const val CLIENT_TYPE_VALUE = "ANDROID"
+    const val NOT_ALLOWED_MSG = "Invalid Version. Please uninstall your current app and install it from Play Store again."
 
 }
