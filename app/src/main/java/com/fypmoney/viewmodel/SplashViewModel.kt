@@ -24,7 +24,7 @@ import com.fypmoney.util.Utility
 * */
 class SplashViewModel(application: Application) : BaseViewModel(application) {
     var getCustomerInfoSuccess = MutableLiveData<CustomerInfoResponse>()
-    var moveToNextScreen = MutableLiveData<Boolean>()
+    var moveToNextScreen = MutableLiveData(false)
     var splashTime = ObservableField(AppConstants.SPLASH_TIME)
 
     val appUpdateState:LiveData<AppUpdateState>

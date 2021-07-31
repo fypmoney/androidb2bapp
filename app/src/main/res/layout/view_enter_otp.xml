@@ -43,19 +43,21 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:gravity="start"
+                    android:visibility="@{viewModel.heading.length()==0?View.GONE:View.VISIBLE}"
                     android:layout_marginStart="25dp"
                     android:layout_marginEnd="@dimen/dp16"
                     android:text="@{viewModel.heading}"
                      />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/yesBankIv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="25dp"
                     android:layout_marginBottom="24dp"
+                    app:layout_constraintTop_toBottomOf="@+id/enter_phone"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     tools:visibility="visible"
                     android:visibility="@{viewModel.isYesBankLogoVisible?View.VISIBLE:View.GONE,default=gone}"
                     app:srcCompat="@drawable/yes_bank_logo" />
@@ -63,12 +65,15 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_mobile"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/enter_phone"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tv_change"
-                    app:layout_constraintTop_toBottomOf="@+id/enter_phone"
-                    android:layout_marginStart="25dp"
+                    app:layout_constraintTop_toBottomOf="@+id/yesBankIv"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    tools:text="Enter otp to reccived on this number or login with other"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="@{viewModel.mobile}" />
 
@@ -79,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/enter_phone"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/enter_phone"
+                    app:layout_constraintTop_toBottomOf="@+id/yesBankIv"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:layout_toEndOf="@+id/tv_mobile"
@@ -107,15 +112,14 @@
                     android:id="@+id/otpView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/otp"
                     app:OtpItemWidth="60dp"
                     app:OtpItemHeight="60dp"
-                    android:layout_marginStart="25dp"
+                    android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_20sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/otp"
-                    android:layout_marginEnd="24dp"
+                    android:layout_marginEnd="@dimen/_5sdp"
                     android:inputType="number"
                     android:focusableInTouchMode="true"
                     android:cursorVisible="true"
@@ -161,14 +165,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent">
 
-                    <com.fypmoney.util.MyKeyboard
+                    <!--<com.fypmoney.util.MyKeyboard
                         android:id="@+id/keyboard"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintBottom_toTopOf="@+id/linear"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:visibility="gone"/>
+                        android:visibility="gone"/>-->
 
                     <RelativeLayout
                         android:id="@+id/linear"
@@ -176,7 +180,7 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/keyboard"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         android:paddingBottom="@dimen/margin_20">
 
                         <com.google.android.material.button.MaterialButton

@@ -56,7 +56,6 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-
         mViewModel.onCreateAccountClicked.observe(this) {
             if (it) {
                 intentToActivity()
