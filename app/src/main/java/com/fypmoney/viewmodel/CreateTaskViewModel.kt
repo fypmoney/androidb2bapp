@@ -13,8 +13,6 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
-import com.fypmoney.util.AppConstants
-import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.CreateTaskAdapter
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -56,13 +54,8 @@ class CreateTaskViewModel(application: Application) : BaseViewModel(application)
                 purpose = ApiConstant.API_GET_TASKMASTER,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_GET_TASKMASTER),
                 request_type = ApiUrl.GET,
-                GetTaskResponse(
-                  1,
-                    0,
-                  10,
-                   "createdDate,desc"
-                ),
-                 onResponse = this,
+
+                param = BaseRequest(), onResponse = this,
                 isProgressBar = false
             )
 

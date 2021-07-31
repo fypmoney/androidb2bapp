@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_assigned_task.view.*
 import kotlin.collections.ArrayList
 
 
-class AssignedTasksFragment : Fragment() {
+class AssignedTaskFragment : Fragment() {
     companion object {
 
 
@@ -36,13 +36,10 @@ class AssignedTasksFragment : Fragment() {
         root = inflater.inflate(R.layout.fragment_assigned_task, container, false)
         setRecyclerView(root!!)
 
-
-
         ChoresActivity.mViewModel!!.AllCompletedTask.observe(requireActivity(), androidx.lifecycle.Observer { list ->
 
             itemsArrayList.clear()
             itemsArrayList.addAll(list)
-
 
 
             typeAdapter!!.notifyDataSetChanged()
@@ -62,13 +59,12 @@ class AssignedTasksFragment : Fragment() {
 
     private fun setRecyclerView(root: View) {
         val layoutManager = GridLayoutManager(requireContext(),2)
-root.rv_assigned!!.layoutManager = layoutManager
+        root.rv_assigned!!.layoutManager = layoutManager
 
         var itemClickListener2 = object : ListItemClickListener {
-            override fun onMenuClicked(pos: Int) {
+            override fun onItemClicked(pos: Int) {
 
 
-//            }
             }
 
             override fun onCallClicked(pos: Int) {

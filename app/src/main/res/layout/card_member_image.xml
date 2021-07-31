@@ -2,10 +2,10 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="70dp"
-    android:layout_marginLeft="6dp"
-    android:layout_marginRight="6dp"
-    android:layout_marginTop="2dp"
-    android:layout_marginBottom="2dp"
+    android:layout_marginLeft="12dp"
+
+    android:layout_marginTop="6dp"
+    android:layout_marginBottom="6dp"
     app:cardCornerRadius="@dimen/_12sdp"
     android:layout_height="70dp"
     android:foreground="?android:attr/selectableItemBackground"
@@ -21,7 +21,6 @@
             android:layout_height="70dp"
             tools:srcCompat="@tools:sample/avatars[0]"
             android:id="@+id/imageView2"
-            android:scaleType="centerCrop"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true" />
 

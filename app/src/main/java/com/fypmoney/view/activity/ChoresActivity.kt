@@ -12,18 +12,13 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.fypmoney.R
-import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.database.entity.TaskEntity
-import com.fypmoney.util.AppConstants
 import com.fypmoney.view.fragment.AcceptRejectTaskFragment
-import com.fypmoney.view.fragment.AssignedTasksFragment
-import com.fypmoney.view.fragment.CompletesTasksFragment
+import com.fypmoney.view.fragment.YourTasksFragment
+import com.fypmoney.view.fragment.AssignedTaskFragment
 import com.fypmoney.viewmodel.ChoresViewModel
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.card_your_task.*
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_chores.*
-import kotlinx.android.synthetic.main.view_user_feeds.*
 import java.util.ArrayList
 
 /*
@@ -51,11 +46,7 @@ companion object{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.view_chores)
-//        setToolbarAndTitle(
-//            context = this@ChoresActivity,
-//            toolbar = toolbar,
-//            isBackArrowVisible = true, toolbarTitle = getString(R.string.chore_title)
-//        )
+
         setObserver()
         mViewModel = ViewModelProvider(this).get(ChoresViewModel::class.java)
 
@@ -79,9 +70,7 @@ companion object{
         }
         btnSendOtp.setOnClickListener {
             val intent = Intent(this, ChoresSelectSampleActivity::class.java)
-// To pass any data to next activity
-            //intent.putExtra("keyIdentifier", value)
-// start your next activity
+
             startActivity(intent)
         }
 
@@ -115,8 +104,8 @@ companion object{
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
-        adapter.addFragment(AssignedTasksFragment(), "Assigned Task")
-        adapter.addFragment(CompletesTasksFragment(), "Completed Task")
+        adapter.addFragment(YourTasksFragment(), "Your Task")
+        adapter.addFragment(AssignedTaskFragment(), "Assigned tasks")
 
 
         viewPager.adapter = adapter
@@ -137,11 +126,6 @@ companion object{
     }
 
 
-    private fun intentToActivity(contactEntity: ContactEntity, aClass: Class<*>) {
-        val intent = Intent(this@ChoresActivity, aClass)
-        intent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, contactEntity)
-        startActivity(intent)
-    }
 
     override fun onBottomSheetButtonClick() {
         /*when (type) {

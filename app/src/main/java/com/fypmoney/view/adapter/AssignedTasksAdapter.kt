@@ -37,6 +37,9 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
        if(items[position].title!=null && items[position].title!!.isNotEmpty()) {
     holder.heading.text = items[position].title
         }
+        if(items[position].remainingTime!=null && items[position].remainingTime!!.isNotEmpty()) {
+            holder.timeleft.text = items[position].remainingTime
+        }
         if(items[position].amount!=null) {
             holder.invite.text ="₹ "+ items[position].amount.toString()
         }
@@ -55,8 +58,8 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
 
         var card=view
         var heading=view.heading
-        var invite=view.invite
-
+        var invite=view.amount
+var timeleft=view.timeleft
 
 //
 

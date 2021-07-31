@@ -18,6 +18,7 @@ import com.fypmoney.database.entity.MemberEntity
 import com.fypmoney.database.entity.TaskEntity
 import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.GetTaskResponse
 import com.fypmoney.model.SampleTaskModel
 import com.fypmoney.util.Utility
 import com.google.gson.Gson
@@ -69,7 +70,12 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
                 purpose = ApiConstant.API_ASSIGN_TASK,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_ASSIGN_TASK),
                 request_type = ApiUrl.POST,
-                param = BaseRequest(), onResponse = this,
+                GetTaskResponse(
+                    1,
+                    0,
+                    10,
+                    "createdDate,desc"
+                ), onResponse = this,
                 isProgressBar = false
             )
 
@@ -79,7 +85,12 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
                 purpose = ApiConstant.API_COMPLETED_TASK,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_COMPLETED_TASK),
                 request_type = ApiUrl.POST,
-                param = BaseRequest(), onResponse = this,
+                GetTaskResponse(
+                    0,
+                    0,
+                    10,
+                    "createdDate,desc"
+                ), onResponse = this,
                 isProgressBar = false
             )
 

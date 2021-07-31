@@ -162,8 +162,9 @@
                                 android:layout_height="match_parent"
                                 android:backgroundTint="@android:color/transparent"
                                 android:gravity="center_vertical"
-                                android:hint="@string/time_limit_hint"
+                                android:hint="Start Time"
                                 android:inputType="number"
+                                android:focusable="false"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/vDivider5"
@@ -177,14 +178,21 @@
                             android:layout_weight="1"
                             android:layout_width="0dp"
                             android:layout_height="match_parent">
-
-                            <androidx.appcompat.widget.AppCompatSpinner
-                                android:id="@+id/spCountryCode"
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/endTime"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
+                                android:backgroundTint="@android:color/transparent"
+                                android:gravity="center_vertical"
+                                android:hint="End Time"
+                                android:inputType="number"
+                                android:focusable="false"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/vDivider5"
                                 app:layout_constraintTop_toTopOf="parent" />
+
+
 
                         </LinearLayout>
 
@@ -216,11 +224,6 @@
                         android:textSize="15dp" />
 
 
-                    <ImageView
-                        android:layout_marginTop="20dp"
-                        android:layout_width="match_parent"
-                        android:background="@drawable/temp_family"
-                        android:layout_height="200dp"/>
 
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -228,7 +231,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        app:adapter="@{viewModel.relationTaskAdapter}"
                         app:spanCount="5"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
@@ -240,7 +242,7 @@
                         android:layout_height="52dp"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/curved_background1"
-                        android:text="@string/add_member_btn_text"
+                        android:text="@string/continue_txt"
                         android:textAllCaps="false"
                         android:layout_centerHorizontal="true"
                         app:backgroundTint="@color/text_color_dark" />
