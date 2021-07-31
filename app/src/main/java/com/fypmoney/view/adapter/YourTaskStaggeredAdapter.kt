@@ -1,7 +1,5 @@
 package com.fypmoney.view.adapter
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,11 +9,6 @@ import android.widget.TextView
 import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
-import com.fypmoney.database.entity.TaskEntity
-import com.fypmoney.model.YourTaskModel
-import com.fypmoney.model.yourTaskModal.YourTaskResponse
-import com.fypmoney.view.fragment.AcceptRejectTaskFragment
-import kotlinx.android.synthetic.main.card_your_task.view.*
 
 
 class YourTaskStaggeredAdapter( private var listOfTasks: List<com.fypmoney.model.yourTaskModal.Data>) :

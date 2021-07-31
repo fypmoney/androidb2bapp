@@ -10,5 +10,7 @@ import com.fypmoney.model.FeedDetails
 * */
 class FeedDetailsViewModel(application: Application) : BaseViewModel(application) {
     var feedDetails = ObservableField<FeedDetails>()
+    var authorAndDate = ObservableField<String>()
+    var isBlogFeedType = ObservableField(false)
 
 }

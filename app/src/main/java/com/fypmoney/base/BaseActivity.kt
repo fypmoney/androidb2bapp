@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.app.KeyguardManager
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,6 +13,7 @@ import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -26,6 +28,9 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.freshchat.consumer.sdk.FaqOptions
+import com.freshchat.consumer.sdk.Freshchat
+import com.freshchat.consumer.sdk.FreshchatConfig
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.util.AppConstants
@@ -41,7 +46,7 @@ import java.util.concurrent.Executors.newSingleThreadExecutor
  */
 abstract class
 BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
-    AppCompatActivity(), DialogUtils.OnAlertDialogNoInternetClickListener {
+    BaseUpdateCheckActivity(), DialogUtils.OnAlertDialogNoInternetClickListener {
     private var dialog: Dialog? = null
     private var mViewDataBinding: T? = null
     private var mViewModel: V? = null
@@ -77,6 +82,10 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         return mViewDataBinding!!
     }
 
+
+    override fun onStart() {
+        super.onStart()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -205,7 +214,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     * Ask for device security pin, pattern or fingerprint
     * */
     fun askForDevicePassword() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
             val km =
                 applicationContext.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 
@@ -281,7 +290,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     /*
     * This method is used to check if permission is granted or not
     * */
-    fun checkPermission(permission:String): Boolean {
+    fun checkPermission(permission: String): Boolean {
         val result = ContextCompat.checkSelfPermission(applicationContext, permission)
         return result == PackageManager.PERMISSION_GRANTED
     }
@@ -289,7 +298,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     /*
     * This method ask for permission
     * */
-    fun requestPermission(permission:String) {
+    fun requestPermission(permission: String) {
         ActivityCompat.requestPermissions(
             this,
             arrayOf(permission),
@@ -365,5 +374,38 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
 
     }
 
+    /**
+     * @param context
+     * @return true if pass or pin set
+     */
+    fun isPassOrPinSet(): Boolean {
+        val keyguardManager =
+            getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager //api 16+
+        return keyguardManager.isKeyguardSecure
+    }
+
+    /*
+  * This method is used to call fresh chat
+  * */
+    fun callFreshChat(context: Context) {
+        val fresh = Freshchat.getInstance(context)
+        val config = FreshchatConfig(
+            AppConstants.FRESH_CHAT_APP_ID,
+            AppConstants.FRESH_CHAT_APP_KEY
+        )
+        config.domain = AppConstants.FRESH_CHAT_DOMAIN
+        config.isCameraCaptureEnabled = true
+        config.isGallerySelectionEnabled = true
+        config.isResponseExpectationEnabled = true
+        config.isTeamMemberInfoVisible = true
+        config.isUserEventsTrackingEnabled = true
+        fresh.init(config)
+        val faqOptions = FaqOptions()
+            .showFaqCategoriesAsGrid(false)
+            .showContactUsOnAppBar(true)
+            .showContactUsOnFaqScreens(true)
+            .showContactUsOnFaqNotHelpful(true)
+        Freshchat.showFAQs(context, faqOptions)
+    }
 
 }

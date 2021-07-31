@@ -9,17 +9,23 @@ import com.fypmoney.view.adapter.FeedsAdapter
 * This is used to display all the feeds in the list
 * */
 class FeedsViewHelper(
+    var position: Int,
     var feedDetails: FeedDetails?,
-    var onFeedItemClickListener: FeedsAdapter.OnFeedItemClickListener
+    var onFeedItemClickListener: FeedsAdapter.OnFeedItemClickListener,var type:Int?=0
 ) {
     var isButtonVisible = ObservableField(true)
+    var isTitleVisible = ObservableField(true)
 
     init {
-        when (feedDetails?.action?.type) {
-            AppConstants.FEED_TYPE_NONE-> {
-                isButtonVisible.set(false)
-            }
 
+        when (feedDetails?.displayCard) {
+            AppConstants.FEED_TYPE_BLOG -> {
+                isTitleVisible.set(true)
+            }
+            else->
+            {
+                isTitleVisible.set(false)
+            }
         }
 
     }
@@ -28,7 +34,7 @@ class FeedsViewHelper(
     * This is used to handle button click
     * */
     fun onFeedButtonClick() {
-        onFeedItemClickListener.onFeedClick(feedDetails!!)
+        onFeedItemClickListener.onFeedClick(position, feedDetails!!)
 
     }
 

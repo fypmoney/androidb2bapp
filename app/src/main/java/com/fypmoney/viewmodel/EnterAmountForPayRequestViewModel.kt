@@ -2,6 +2,7 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import android.text.TextUtils
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -82,7 +83,7 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
             if (contactResult.get()?.lastName.isNullOrEmpty()) {
                 when {
                     action.get() == AppConstants.PAY -> contactName.set(PockketApplication.instance.getString(R.string.pay_btn_text) + " " + contactEntity?.firstName)
-                    action.get() == AppConstants.PAY_USING_QR -> contactName.set(PockketApplication.instance.getString(R.string.pay_btn_text) + " " + contactEntity?.firstName)
+                    action.get() == AppConstants.PAY_USING_QR -> contactName.set(PockketApplication.instance.getString(R.string.pay_btn_text) + " " + qrCodeValue.get())
                     action.get() == AppConstants.REQUEST -> {
                         contactName.set(PockketApplication.instance.getString(R.string.request_from) + " " + contactEntity?.firstName)
 
@@ -91,7 +92,7 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
             } else {
                 when {
                     action.get() == AppConstants.PAY -> contactName.set(PockketApplication.instance.getString(R.string.pay_btn_text) + " " + contactEntity?.firstName + " " + contactEntity?.lastName)
-                    action.get() == AppConstants.PAY_USING_QR -> contactName.set(PockketApplication.instance.getString(R.string.pay_btn_text) + " " + contactEntity?.firstName + " " + contactEntity?.lastName)
+                    action.get() == AppConstants.PAY_USING_QR -> contactName.set(PockketApplication.instance.getString(R.string.pay_btn_text) + " " + qrCodeValue.get())
                     action.get() == AppConstants.REQUEST -> {
                         contactName.set(PockketApplication.instance.getString(R.string.request_from) + " " + contactEntity?.firstName + " " + contactEntity?.lastName)
 

@@ -47,7 +47,6 @@ class UserTimeLineAdapter(var viewModel: NotificationViewModel) :
                 notificationList?.get(position)
             )
             mRowItemBinding!!.viewHelper = mViewHelper
-            // mRowItemBinding.viewModel = viewModel
             mViewHelper.init()
             mRowItemBinding.executePendingBindings()
 

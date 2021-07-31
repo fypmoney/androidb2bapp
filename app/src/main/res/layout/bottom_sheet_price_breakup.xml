@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
     <RelativeLayout
@@ -40,13 +41,14 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/amount"
-            style="@style/TextviewRegular"
+            style="@style/TextviewBold"
             android:layout_width="wrap_content"
             android:layout_below="@+id/bill_details"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="20dp"
             android:text="@string/dummy_amount1"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="14dp" />
 
         <View
             android:id="@+id/view1"
@@ -58,75 +60,90 @@
             android:background="@color/dividerColor" />
 
         <TableLayout
+            android:id="@+id/table"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/view1"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp">
 
 
-            <TableRow android:padding="5dp">
-
-                <TextView
-                    style="@style/TextviewRegular"
-                   android:layout_weight="1"
-                    android:text="@string/item_total" />
+            <TableRow android:padding="5dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     style="@style/TextviewRegular"
                     android:layout_weight="1"
-                    android:gravity="end"
+                    android:textColor="@color/text_color_dark"
                     android:text="@string/item_total" />
 
+                <TextView
+                    android:id="@+id/item_total"
+                    style="@style/TextviewRegular"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="@string/dummy_amt_item_total" />
 
 
             </TableRow>
 
-            <TableRow android:padding="5dp">
+
+
+            <TableRow android:padding="5dp"
+                android:layout_marginTop="10dp">
 
                 <TextView
                     style="@style/TextviewRegular"
                     android:layout_weight="1"
-                    android:text="@string/packaging" />
-
-                <TextView
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/item_total" />
-
-
-            </TableRow>
-
-            <TableRow android:padding="5dp">
-
-                <TextView
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
-                    android:text="@string/delivery_fee" />
-
-                <TextView
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/item_total" />
-
-            </TableRow>
-            <TableRow android:padding="5dp">
-
-                <TextView
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
+                    android:textColor="@color/text_color_dark"
                     android:text="@string/tax" />
 
                 <TextView
+                    android:id="@+id/tax"
                     style="@style/TextviewRegular"
                     android:layout_weight="1"
                     android:gravity="end"
-                    android:text="@string/dummy_amount1" />
+                    android:text="@string/dummy_amt_tax" />
+
+            </TableRow>
+
+
+            <TableRow android:padding="5dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/discountRow">
+
+                <TextView
+                    style="@style/TextviewRegular"
+                    android:layout_weight="1"
+                    android:textColor="@color/text_color_dark"
+                    android:text="@string/discount" />
+
+                <TextView
+                    android:id="@+id/discount"
+                    style="@style/TextviewRegular"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                   />
 
             </TableRow>
         </TableLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/gotBtn"
+            style="@style/Widget.App.Button"
+            android:layout_width="299dp"
+            android:layout_height="52dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/curved_background1"
+            app:backgroundTint="@color/text_color_dark"
+            android:layout_marginBottom="@dimen/button_margin"
+            android:text="@string/got_it_btn_text"
+            android:textAllCaps="false"
+            android:layout_marginTop="28dp"
+            android:layout_below="@+id/table"
+            />
+
     </RelativeLayout>
 </layout>

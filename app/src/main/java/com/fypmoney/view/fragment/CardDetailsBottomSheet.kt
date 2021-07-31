@@ -25,6 +25,7 @@ import com.fypmoney.databinding.BottomSheetCardDetailsBinding
 import com.fypmoney.model.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.android.synthetic.main.bottom_sheet_card_details.*
 import kotlinx.android.synthetic.main.bottom_sheet_card_details.view.*
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
 

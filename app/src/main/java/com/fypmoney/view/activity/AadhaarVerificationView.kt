@@ -2,6 +2,7 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -9,8 +10,14 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAadhaarVerificationBinding
 import com.fypmoney.databinding.ViewCommunityBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SeparatorTextWatcher
 import com.fypmoney.viewmodel.AadhaarVerificationViewModel
+import kotlinx.android.synthetic.main.bottom_sheet_block_unblock_card.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
+import kotlinx.android.synthetic.main.view_aadhaar_verification.*
+import java.lang.Exception
 
 /*
 * This class is used to handle account activation via aadhaar card
@@ -39,7 +46,22 @@ class AadhaarVerificationView :
             toolbar = toolbar,
             isBackArrowVisible = true
         )
+        helpValue.setOnClickListener {
+            callFreshChat(applicationContext)
+
+        }
+
         setObserver()
+
+        et_first_name.addTextChangedListener(object : SeparatorTextWatcher(' ', 4) {
+            override fun onAfterTextChanged(text: String) {
+                et_first_name.run {
+                    setText(text)
+                    setSelection(text.length)
+                }
+            }
+        })
+
     }
 
     /**
@@ -74,6 +96,10 @@ class AadhaarVerificationView :
 
         intent.putExtra(
             AppConstants.KYC_ACTIVATION_TOKEN, token
+
+        )
+        intent.putExtra(
+            AppConstants.KIT_FOUR_DIGIT, ""
 
         )
         startActivity(intent)

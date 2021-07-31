@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -31,10 +32,15 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     var isFeedVisible = ObservableField(false)
     var feedsAdapter = FeedsSectionAdapter(this)
     var onFeedButtonClick = MutableLiveData<FeedDetails>()
+    val selectedPosition = ObservableField<Int>()
+    val isApiLoading = ObservableField(true)
+    var latitude = ObservableField<Double>()
+    val longitude = ObservableField<Double>()
+    val fromWhichScreen = ObservableField(0)
 
     init {
         callGetWalletBalanceApi()
-        callFetchFeedsApi()
+
     }
 
     /*
@@ -71,7 +77,13 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     /*
   * This method is used to call the get feeds API
   * */
-    private fun callFetchFeedsApi(
+    /*
+   * This method is used to call the get feeds API
+   * */
+    fun callFetchFeedsApi(
+        isProgressBarVisible: Boolean? = false,
+        latitude: Double? = 0.0,
+        longitude: Double? = 0.0
     ) {
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -79,6 +91,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
                 NetworkUtil.endURL(ApiConstant.API_FETCH_ALL_FEEDS),
                 ApiUrl.POST,
                 makeFetchFeedRequest(
+                    latitude = latitude.toString(), longitude = longitude.toString()
                 ),
                 this, isProgressBar = false
             )
@@ -93,7 +106,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
             ApiConstant.API_GET_WALLET_BALANCE -> {
                 if (responseData is GetWalletBalanceResponse) {
                     isFetchBalanceVisible.set(false)
-                    availableAmount.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)))
+                    availableAmount.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)!!))
 
                 }
             }
@@ -105,7 +118,8 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
 
                     response?.feedDetails.let {
                         isFeedVisible.set(true)
-                        feedsAdapter.setList(response?.feedDetails) }
+                        feedsAdapter.setList(response?.feedDetails)
+                    }
 
 
                 }
@@ -119,10 +133,6 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         isFeedVisible.set(true)
     }
 
-    override fun onFeedClick(feedDetails: FeedDetails) {
-        onFeedButtonClick.value = feedDetails
-
-    }
 
     /*
    * This is used to handle Open Chore
@@ -154,12 +164,18 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         }
 
         val feedRequestModel = FeedRequestModel()
-        /*  feedRequestModel.query =
-              "{getAllFeed(id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME_HOME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],latitude:\"" + latitude + "\",longitude:\"" + longitude + "\",withinRadius:\"" + AppConstants.FEED_WITHIN_RADIUS + "\") { total feedData { id name description screenName screenSection sortOrder displayCard readTime scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
-       */   feedRequestModel.query =
-            "{getAllFeed(page:null, size:null, id : null, screenName:\"HOME\",screenSection:null,tags :[\"SPORTS\"],latitude:null,longitude:null,withinRadius:null) { total feedData { id name description screenName screenSection sortOrder displayCard readTime scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+        feedRequestModel.query =
+            "{getAllFeed(page:0,size:null, id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME_HOME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],latitude:\"" + latitude + "\",longitude:\"" + longitude + "\",withinRadius:\"" + AppConstants.FEED_WITHIN_RADIUS + "\",displayCard: [\"STATICIMAGE\",\"STATICIMAGE1X1\",\"DEEPLINK1X1\",\"INAPPWEB1X1\",\"EXTWEBVIEW1X1\",\"BLOG\", \"DEEPLINK\", \"INAPPWEB\", \"EXTWEBVIEW\", \"VIDEO\"]) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+
+
+
 
         return feedRequestModel
 
+    }
+
+    override fun onFeedClick(position: Int, feedDetails: FeedDetails) {
+        selectedPosition.set(position)
+        onFeedButtonClick.value = feedDetails
     }
 }

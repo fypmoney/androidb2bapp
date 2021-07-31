@@ -45,7 +45,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DreamfolksApp"
         android:usesCleartextTraffic="true"
-        tools:replace="android:usesCleartextTraffic">
+        tools:replace="android:usesCleartextTraffic"
+        tools:ignore="UnusedAttribute">
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.fypmoney.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/freshchat_file_provider_paths" />
+        </provider>
+
 
 
         <meta-data
@@ -54,7 +65,7 @@
 
 
         <activity
-            android:name=".view.activity.AddTaskActivity"
+                    android:name=".view.activity.AddTaskActivity"
             android:label="@string/title_activity_add_task"
             android:screenOrientation="portrait"
     />
@@ -84,7 +95,9 @@
         <activity
             android:name=".view.activity.WalkThroughMainView"
             android:screenOrientation="portrait"
-           />
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+        />
 
         <activity
             android:name=".view.activity.PlaceOrderCardView"
@@ -94,6 +107,25 @@
             android:name=".view.activity.OrderCardView"
             android:screenOrientation="portrait"
            />
+
+        <activity
+            android:name=".view.activity.SetPinView"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+        <activity
+            android:name=".view.activity.AddMoneyView"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
+
+
+        <activity
+            android:name=".view.activity.TrackOrderView"
+            android:screenOrientation="portrait"
+            android:hardwareAccelerated="false"
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+
 
         <activity
             android:name=".view.activity.FirstScreenView"
@@ -137,7 +169,7 @@
         <activity
             android:name=".view.activity.EnterAmountForPayRequestView"
             android:screenOrientation="portrait"
-            
+
             android:windowSoftInputMode="adjustPan" />
 
         <activity
@@ -184,7 +216,7 @@
         <activity
             android:name=".view.activity.AddMemberView"
             android:screenOrientation="portrait"
-            
+
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.activity.UserFeedsDetailView"

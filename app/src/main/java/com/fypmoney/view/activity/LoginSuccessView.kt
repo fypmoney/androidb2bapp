@@ -1,6 +1,7 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -38,6 +39,11 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
         super.onCreate(savedInstanceState)
         setObserver()
         Glide.with(applicationContext).load(R.raw.phone_verified).into(image)
+        val mp: MediaPlayer = MediaPlayer.create(
+            this,
+            R.raw.tick
+        )
+        mp.start()
 
     }
 
@@ -47,8 +53,8 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
     private fun setObserver() {
         mViewModel.onApiSuccess.observe(this) {
             when {
-                Utility.getCustomerDataFromPreference()!!.isProfileCompleted == AppConstants.NO -> {
-                    when (Utility.getCustomerDataFromPreference()!!.isReferralAllowed) {
+                Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
+                    when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
                         AppConstants.YES -> {
                             intentToActivity(ReferralCodeView::class.java)
                         }
@@ -58,11 +64,11 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                         }
                     }
                 }
-                Utility.getCustomerDataFromPreference()!!.bankProfile?.isAccountActive == AppConstants.NO -> {
+                Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {
                     intentToActivity(AadhaarAccountActivationView::class.java)
                 }
                 else->{
-                    intentToActivity(HomeView::class.java)
+                    intentToActivity(AadhaarAccountActivationView::class.java)
                 }
 
             }

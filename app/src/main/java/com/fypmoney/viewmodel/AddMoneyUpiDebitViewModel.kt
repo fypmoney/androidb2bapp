@@ -49,6 +49,8 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var onAddInSaveCardClicked = MutableLiveData<AddNewCardDetails>()
     var onBackPress = MutableLiveData<Boolean>()
     var isPaymentFail = ObservableField(false)
+    var clickedAppPackageName = ObservableField<String>()
+    var modeOfPayment = ObservableField<Int>()
 
 
     /*

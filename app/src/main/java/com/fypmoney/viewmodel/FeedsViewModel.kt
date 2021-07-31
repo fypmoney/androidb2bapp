@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -38,6 +39,9 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
     var latitude = ObservableField<Double>()
     val longitude = ObservableField<Double>()
     val isDenied = ObservableField(false)
+    val selectedPosition = ObservableField<Int>()
+    val fromWhichScreen = ObservableField(0)
+    val onFeedsSuccess = MutableLiveData<ArrayList<String?>>()
 
 
     /*
@@ -89,6 +93,15 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
 
 
                         }
+
+                        when {
+                            fromWhichScreen.get() != 0 -> {
+                                val resultList = ArrayList<String?>()
+                                response?.feedDetails?.forEach { resultList.add(it.resourceId) }
+                                onFeedsSuccess.value = resultList
+
+                            }
+                        }
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -99,7 +112,8 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
 
     }
 
-    override fun onFeedClick(feedDetails: FeedDetails) {
+    override fun onFeedClick(position: Int, feedDetails: FeedDetails) {
+        selectedPosition.set(position)
         onFeedButtonClick.value = feedDetails
     }
 
@@ -148,8 +162,19 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
         }
 
         val feedRequestModel = FeedRequestModel()
-        feedRequestModel.query =
-            "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],latitude:\"" + latitude + "\",longitude:\"" + longitude + "\",withinRadius:\"" + AppConstants.FEED_WITHIN_RADIUS + "\") { total feedData { id name description screenName screenSection sortOrder displayCard readTime scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+
+        when (fromWhichScreen.get()) {
+            0 -> {
+                feedRequestModel.query =
+                    "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],latitude:\"" + latitude + "\",longitude:\"" + longitude + "\",withinRadius:\"" + AppConstants.FEED_WITHIN_RADIUS + "\",displayCard: [\"STATICIMAGE\",\"STATICIMAGE1X1\",\"DEEPLINK1X1\",\"INAPPWEB1X1\",\"EXTWEBVIEW1X1\",\"BLOG\", \"DEEPLINK\", \"INAPPWEB\", \"EXTWEBVIEW\", \"VIDEO\"]) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+
+            }
+            else -> {
+                feedRequestModel.query =
+                    "{getAllFeed(page:0, size:null, id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],latitude:\"" + latitude + "\",longitude:\"" + longitude + "\",withinRadius:\"" + AppConstants.FEED_WITHIN_RADIUS + "\",displayCard: [\"DIDYOUKNOW\"]) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+
+            }
+        }
         return feedRequestModel
 
     }

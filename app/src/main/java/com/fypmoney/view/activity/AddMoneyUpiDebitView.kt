@@ -18,6 +18,7 @@ import android.webkit.WebView
 import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -128,29 +129,8 @@ open class AddMoneyUpiDebitView :
      */
     private fun setObserver() {
         mViewModel.onUpiClicked.observe(this) {
-            when (mViewModel.clickedPositionForUpi.get()) {
-                0 -> {
-                    callAddUpiBottomSheet()
-                }
-                1 -> {
-                    callGooglePayIntent()
-                }
-                else -> {
-                    val params = mViewModel.getPaymentParams(type = AppConstants.TYPE_GENERIC)
-                    try {
-                        callCustomBrowser(
-                            com.payu.paymentparamhelper.PayuConstants.UPI_INTENT,
-                            params,
-                            params.txnId,
-                            PayuConstants.PRODUCTION_PAYMENT_URL,
-                            isSpecificAppSet = true,
-                            it.packageName
-                        )
-                    } catch (e: java.lang.Exception) {
-                        e.printStackTrace()
-                    }
-                }
-            }
+            mViewModel.clickedAppPackageName.set(it.packageName)
+            callUpiIntent()
         }
         mViewModel.onAddNewCardClicked.observe(this) {
             if (it) {
@@ -197,8 +177,6 @@ open class AddMoneyUpiDebitView :
 
         }
         mViewModel.onBackPress.observe(this) {
-            Utility.showToast("on back is pressedddd")
-           // callTransactionFailBottomSheet()
         }
     }
 
@@ -274,6 +252,7 @@ open class AddMoneyUpiDebitView :
     }
 
     override fun onAddNewCardButtonClick(addNewCardDetails: AddNewCardDetails) {
+        mViewModel.modeOfPayment.set(2)
         callDebitCardPaymentGateway(0, addNewCardDetails)
     }
 
@@ -332,9 +311,7 @@ open class AddMoneyUpiDebitView :
                 vpa: String,
                 packageListDialogFragment: PackageListDialogFragment
             ) {
-
                 val verifyVpaHash = mViewModel.hash.get()
-
                 packageListDialogFragment.verifyVpa(verifyVpaHash)
             }
 
@@ -385,11 +362,14 @@ open class AddMoneyUpiDebitView :
             }
 
             override fun onBackApprove() {
-                this@AddMoneyUpiDebitView.finish()
+                super.onBackApprove()
+                mViewModel.isPaymentFail.set(true)
+
             }
 
             override fun onBackDismiss() {
                 super.onBackDismiss()
+                Utility.showToast("onBackDismiss")
             }
 
             /**
@@ -398,8 +378,9 @@ open class AddMoneyUpiDebitView :
              * @param alertDialogBuilder a reference of AlertDialog.Builder to customize the dialog
              */
             override fun onBackButton(alertDialogBuilder: AlertDialog.Builder) {
-                mViewModel.onBackPress.value = true
                 super.onBackButton(alertDialogBuilder)
+                Utility.showToast("onBackButton")
+
             }
 
             override fun isPaymentOptionAvailable(resultData: CustomBrowserResultData) {
@@ -409,16 +390,27 @@ open class AddMoneyUpiDebitView :
                     com.payu.custombrowser.util.PaymentOption.PHONEPE -> isPhonePeSupported =
                         resultData.isPaymentOptionAvailable
 
+
                 }
             }
         }
 
     override fun onBottomSheetButtonClick(type: String) {
+        when (mViewModel.modeOfPayment.get()) {
+            1 -> {
+                callUpiIntent()
+
+            }
+            else -> {
+                callAddNewCardBottomSheet()
+            }
+        }
 
     }
 
     override fun onAddUpiClickListener(upiId: String, isUpiSaved: Boolean) {
         mViewModel.upiEntered.set(upiId)
+        mViewModel.modeOfPayment.set(1)
         try {
             val paymentParams =
                 mViewModel.getPaymentParams(AppConstants.TYPE_UPI, upiId, isUpiSaved)
@@ -453,12 +445,11 @@ open class AddMoneyUpiDebitView :
                     txnId
                 )
                 customBrowserConfig.setAutoApprove(false) // set true to automatically approve the OTP
-
                 customBrowserConfig.setAutoSelectOTP(true) // set true to automatically select the OTP flow
                 customBrowserConfig.setDisableBackButtonDialog(false)
                 customBrowserConfig.setMerchantSMSPermission(true)
                 customBrowserConfig.enableSurePay = 0
-                customBrowserConfig.setDisableBackButtonDialog(true)
+                // customBrowserConfig.setDisableBackButtonDialog(true)
                 customBrowserConfig.internetRestoredWindowTTL = CustomBrowserConfig.ENABLE
 
                 customBrowserConfig.setViewPortWideEnable(true)
@@ -567,7 +558,6 @@ This method is used to call the pay u api
 
     fun showProgressDialogView(): View {
         return layoutInflater.inflate(R.layout.progress_bar_layout, null)
-
     }
 
     private fun showToolBarView(): View {
@@ -576,11 +566,43 @@ This method is used to call the pay u api
         toolbar.setBackgroundColor(
             ContextCompat.getColor(
                 applicationContext,
-                R.color.color_dark_green
+                R.color.white
             )
         )
         return view
 
     }
+
+    /*
+    * This method is used to call upi intents
+    * */
+    fun callUpiIntent() {
+        when (mViewModel.clickedPositionForUpi.get()) {
+            0 -> {
+                callAddUpiBottomSheet()
+            }
+            1 -> {
+                callGooglePayIntent()
+            }
+            else -> {
+                val params = mViewModel.getPaymentParams(type = AppConstants.TYPE_GENERIC)
+                try {
+                    callCustomBrowser(
+                        com.payu.paymentparamhelper.PayuConstants.UPI_INTENT,
+                        params,
+                        params.txnId,
+                        PayuConstants.PRODUCTION_PAYMENT_URL,
+                        isSpecificAppSet = true,
+                        packageName = mViewModel.clickedAppPackageName.get()
+                    )
+
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
+
 }
 

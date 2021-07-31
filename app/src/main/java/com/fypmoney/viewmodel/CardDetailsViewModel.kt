@@ -63,7 +63,9 @@ class CardDetailsViewModel(application: Application) : BaseViewModel(application
             ApiConstant.API_GET_WALLET_BALANCE -> {
                 if (responseData is GetWalletBalanceResponse) {
                     isFetchBalanceVisible.set(false)
-                    availableAmount.postValue(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)))
+                    availableAmount.postValue(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)?.let {
+                        Utility.getFormatedAmount(it)
+                    })
 
                 }
             }

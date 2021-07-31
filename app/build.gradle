@@ -46,6 +46,7 @@ android {
         dataBinding = true
     }
 
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -169,6 +170,14 @@ dependencies {
     //circular imageview
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // fresh chat
+    implementation 'com.github.freshworks:freshchat-android:4.3.2'
+
+    //play core lib
+    implementation 'com.google.android.play:core:1.6.4'
+
+
 
 
 }

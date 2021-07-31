@@ -125,7 +125,7 @@
                     android:text="@={viewModel.dob}" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnSendOtp"
+                    android:id="@+id/btnCreateAccount"
                     style="@style/Widget.App.Button"
                     android:layout_width="299dp"
                     android:layout_height="52dp"
@@ -139,37 +139,6 @@
                     android:layout_centerHorizontal="true"
                     app:backgroundTint="@color/text_color_dark" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/alreadyHaveAccount"
-                    style="@style/TextviewRegular"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="@dimen/margin_20"
-                    android:layout_toStartOf="@+id/login"
-                    android:gravity="start"
-                    android:textSize="18dp"
-                    android:text="@string/already_have_account_title"
-                  />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/login"
-                    style="@style/TextviewBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="@dimen/margin"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:layout_marginEnd="@dimen/margin_20"
-                    android:layout_marginBottom="@dimen/margin_20"
-                    android:onClick="@{()->viewModel.onLoginClicked()}"
-                    android:text="@string/login"
-                    android:textSize="18dp"
-                  />
 
 
             </RelativeLayout>

@@ -182,6 +182,31 @@ class ApiDataParsing {
                 ApiConstant.API_GET_ORDER_CARD_STATUS -> {
                     getObject(response, GetOrderCardStatusResponse::class.java)
                 }
+                ApiConstant.API_ORDER_CARD -> {
+                    getObject(response, OrderCardResponse::class.java)
+                }
+                ApiConstant.API_GET_ORDER_CARD_STATUS -> {
+                    getObject(response, GetOrderCardStatusResponse::class.java)
+                }
+                ApiConstant.API_GET_ALL_PRODUCTS, ApiConstant.API_GET_ALL_PRODUCTS_BY_CODE -> {
+                    getObject(response, GetAllProductsResponse::class.java)
+                }
+
+                ApiConstant.API_ACTIVATE_CARD -> {
+                    getObject(response, ActivateCardResponse::class.java)
+                }
+                ApiConstant.API_PHYSICAL_CARD_INIT -> {
+                    getObject(response, PhysicalCardInitResponse::class.java)
+                }
+                ApiConstant.API_GET_STATE -> {
+                    getObject(response, GetStatesResponse::class.java)
+                }
+                ApiConstant.API_GET_CITY -> {
+                    getObject(response, GetCityResponse::class.java)
+                }
+                ApiConstant.API_SET_CHANGE_PIN -> {
+                    getObject(response, SetPinResponse::class.java)
+                }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {
                         PayuConstants.VALIDATE_VPA -> {

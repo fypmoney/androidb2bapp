@@ -30,6 +30,8 @@ data class FeedDetails(
     @SerializedName("screenName") var screenName: String? = null,
     @SerializedName("screenSection") var screenSection: String? = null,
     @SerializedName("displayCard") var displayCard: String? = null,
+    @SerializedName("createdDate") var createdDate: String? = null,
+    @SerializedName("author") var author: String? = null,
     @SerializedName("readTime") var readTime: String? = null,
     @SerializedName("category") var category: Category? = null,
     @SerializedName("location") var location: Location? = null,

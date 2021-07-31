@@ -38,6 +38,8 @@ class AccountActivationSuccessView : BaseActivity<ViewAccountActivationSuccessBi
             toolbar = toolbar,
             isBackArrowVisible = true
         )
+
+
     }
 
 }

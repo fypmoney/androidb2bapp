@@ -1,6 +1,7 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.SpannableString
@@ -18,8 +19,11 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewEnterOtpBinding
+import com.fypmoney.receivers.OtpReceivedInterface
+import com.fypmoney.receivers.SmsBroadcastReceiver
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.EnterOtpViewModel
+import com.google.android.gms.auth.api.phone.SmsRetriever
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 import kotlinx.android.synthetic.main.view_enter_otp.*
@@ -47,6 +51,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
         return mViewModel
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
@@ -55,10 +60,12 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
             toolbar = toolbar,
             isBackArrowVisible = true
         )
+        callAutoReadOtpSetup()
         mViewModel.setInitialData(
             intent.getStringExtra(AppConstants.MOBILE_TYPE),
             intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN),
-            intent.getStringExtra(AppConstants.KYC_ACTIVATION_TOKEN)
+            intent.getStringExtra(AppConstants.KYC_ACTIVATION_TOKEN),
+            intent.getStringExtra(AppConstants.KIT_FOUR_DIGIT),
         )
         mViewModel.mobileWithoutCountryCode.value =
             intent.getStringExtra(AppConstants.MOBILE_WITHOUT_COUNTRY_CODE)
@@ -117,6 +124,33 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
 
     }
 
+    private fun callAutoReadOtpSetup() {
+        val client = SmsRetriever.getClient(this)
+        val task = client.startSmsRetriever()
+        task.addOnSuccessListener { aVoid ->
+            val smsBroadcastReceiver = SmsBroadcastReceiver()
+
+            smsBroadcastReceiver.setOnOtpListeners(object : OtpReceivedInterface {
+                override fun onOtpReceived(otp: String?) {
+                    otpView.setText(otp)
+                    mViewModel.onVerifyClicked()
+                }
+
+                override fun onOtpTimeout() {
+                    Log.v("Otp", "Otp time out")
+                }
+
+            })
+            registerReceiver(
+                smsBroadcastReceiver,
+                IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+            )
+        }
+        task.addOnFailureListener { e ->
+            Log.e("auto sms read", e.toString())
+        }
+    }
+
 
     /**
      * set observers for view model variables
@@ -154,7 +188,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
 
         mViewModel.onLoginSuccess.observe(this) {
             if (it) {
-                intentToActivity(LoginSuccessView::class.java)
+                intentToActivity(LoginSuccessView::class.java, isFinish = true)
                 mViewModel.onLoginSuccess.value = false
             }
         }

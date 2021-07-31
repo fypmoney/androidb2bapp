@@ -20,6 +20,8 @@ data class UpdateProfileRequest(
     @SerializedName("imageUrl") val imageUrl: String? = null,
     @SerializedName("dob") val dob: String? = null,
     @SerializedName("anniversary") val anniversary: String? = null,
+    @SerializedName("cityName") val cityName: String? = null,
+    @SerializedName("schoolName") val schoolName: String? = null,
     @SerializedName("cityId") val cityId: Int? = null,
     @SerializedName("subscribedToPromotions") val subscribedToPromotions: String? = null,
     @SerializedName("interest") val interest: ArrayList<InterestEntity>?=null,

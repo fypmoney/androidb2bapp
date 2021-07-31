@@ -1,6 +1,8 @@
 package com.fypmoney.view.fragment
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -12,22 +14,24 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenHomeBinding
+import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.activity.*
 import com.fypmoney.viewmodel.HomeScreenViewModel
 import com.google.android.material.card.MaterialCardView
+import kotlinx.android.synthetic.main.screen_home.*
 
 
 /**
  * This fragment is used for loyalty
  */
-class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
+class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>(),
+    LocationListenerClass.GetCurrentLocationListener {
 
     private lateinit var mViewModel: HomeScreenViewModel
     private lateinit var mViewBinding: ScreenHomeBinding
-    lateinit var chore_card: MaterialCardView
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -46,11 +50,12 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
-        chore_card = view.findViewById(R.id.chore_card)
-        chore_card.setOnClickListener {
-            intentToAddMemberActivity(ChoresActivity::class.java)
-            }
-
+        choreCard.setOnClickListener {
+            intentToPayActivity(ChoresActivity::class.java)
+        }
+        LocationListenerClass(
+            requireActivity(), this
+        ).permissions()
         setObservers()
 
     }
@@ -61,48 +66,62 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     private fun setObservers() {
         mViewModel.onAddMoneyClicked.observe(viewLifecycleOwner) {
             if (it) {
-                callFrag()
-                //intentToAddMemberActivity(ChoresActivity::class.java)
+                callActivity(AddMoneyView::class.java)
                 mViewModel.onAddMoneyClicked.value = false
             }
         }
         mViewModel.onPayClicked.observe(viewLifecycleOwner) {
-            if (it) { intentToAddMemberActivity(ContactListView::class.java,AppConstants.PAY)
+            if (it) {
+                intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
                 mViewModel.onPayClicked.value = false
             }
         }
 
-
         mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
-            when (it.action?.type) {
-                AppConstants.FEED_TYPE_IN_APP -> {
-                    try {
-                        intentToActivity(
-                            Class.forName(AppConstants.BASE_ACTIVITY_URL + it.action?.url!!),
-                            it
-                        )
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        intentToActivity(HomeView::class.java, it)
-                    }
-                }
-                AppConstants.FEED_TYPE_IN_APP_WEBVIEW, AppConstants.FEED_TYPE_FEED -> {
-                    intentToActivity(UserFeedsDetailView::class.java, it, type = it.action?.type)
-                }
-                AppConstants.FEED_TYPE_EXTERNAL_WEBVIEW -> {
-                    startActivity(
-                        Intent.createChooser(
-                            Intent(
-                                Intent.ACTION_VIEW,
-                                Uri.parse(it.action?.url)
-                            ), getString(R.string.browse_with)
-                        )
-                    )
+                    when (it.displayCard) {
+                        AppConstants.FEED_TYPE_DEEPLINK -> {
+                            try {
+                                intentToActivity(
+                                    Class.forName(AppConstants.BASE_ACTIVITY_URL + it.action?.url!!),
+                                    it
+                                )
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                intentToActivity(HomeView::class.java, it)
+                            }
+                        }
+                        AppConstants.FEED_TYPE_INAPPWEB -> {
+                            intentToActivity(
+                                UserFeedsDetailView::class.java,
+                                it,
+                                AppConstants.FEED_TYPE_INAPPWEB
+                            )
+                        }
+                        AppConstants.FEED_TYPE_BLOG -> {
+                            intentToActivity(
+                                UserFeedsDetailView::class.java,
+                                it,
+                                AppConstants.FEED_TYPE_BLOG
+                            )
+                        }
+                        AppConstants.FEED_TYPE_EXTWEBVIEW -> {
+                            startActivity(
+                                Intent.createChooser(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(it.action?.url)
+                                    ), getString(R.string.browse_with)
+                                )
+                            )
 
-                }
-            }
+                        }
+                    }
+
+
+
 
         }
+
     }
 
     override fun onTryAgainClicked() {
@@ -119,15 +138,12 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     /*
     * This method is used to call add money fragment
     * */
-    private fun callFrag() {
-        val fragment2 = AddMoneyScreen()
-        val fragmentManager: FragmentManager? = fragmentManager
-        val fragmentTransaction: FragmentTransaction = fragmentManager!!.beginTransaction()
-        fragmentTransaction.replace(R.id.container, fragment2)
-        fragmentTransaction.commit()
+    private fun callActivity(aClass: Class<*>) {
+        val intent = Intent(requireActivity(), aClass)
+        requireContext().startActivity(intent)
     }
 
-    private fun intentToAddMemberActivity(aClass: Class<*>,pay:String?=null) {
+    private fun intentToPayActivity(aClass: Class<*>, pay: String? = null) {
         val intent = Intent(requireActivity(), aClass)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
         requireContext().startActivity(intent)
@@ -143,4 +159,25 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
         startActivity(intent)
     }
+
+    override fun getCurrentLocation(
+        isInternetConnected: Boolean?,
+        latitude: Double,
+        Longitude: Double
+    ) {
+        mViewModel.latitude.set(latitude)
+        mViewModel.longitude.set(Longitude)
+        mViewModel.callFetchFeedsApi(false, latitude, Longitude)
+    }
+
+    /*
+   * This method is used to call card settings
+   * */
+    private fun callDiduKnowBottomSheet(list: ArrayList<String?>) {
+        val bottomSheet =
+            DidUKnowBottomSheet(list)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "DidUKnowSheet")
+    }
+
 }

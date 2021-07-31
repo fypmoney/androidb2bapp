@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -13,21 +14,31 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import org.json.JSONObject
 
 
 class CardScreenViewModel(application: Application) : BaseViewModel(application) {
-    var isCardDetailsVisible =
-        ObservableField(false)
     var balance =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
     var isFetchBalanceVisible = ObservableField(true)
     var isCvvVisible = ObservableField(false)
+    var isFrontVisible = ObservableField(true)
+    var isBackVisible = ObservableField(false)
     var name =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_name))
     var cardNumber =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_card))
+    var cardNumber1 =
+        ObservableField(PockketApplication.instance.getString(R.string.dummy_star))
+    var cardNumber2 =
+        ObservableField(PockketApplication.instance.getString(R.string.dummy_star))
+    var cardNumber3 =
+        ObservableField(PockketApplication.instance.getString(R.string.dummy_star))
+    var cardNumber4 =
+        ObservableField(PockketApplication.instance.getString(R.string.dummy_star))
     var cvv =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_cvv))
     var expiry =
@@ -35,12 +46,14 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var onViewDetailsClicked = MutableLiveData<Boolean>()
     var onGetCardDetailsSuccess = MutableLiveData<Boolean>()
     var onActivateCardInit = MutableLiveData<Boolean>()
+    var onActivateCardClicked = MutableLiveData<Boolean>()
+    var onSetPinSuccess = MutableLiveData<SetPinResponseDetails>()
+    var isActivateCardVisible = ObservableField(true)
+    var onBankProfileSuccess = MutableLiveData(false)
+    var isOrderCard = ObservableField(true)
+    var isViewDetailsVisible = ObservableField(true)
     var bankProfileResponse = ObservableField<BankProfileResponseDetails>()
 
-    init {
-        callGetWalletBalanceApi()
-        callGetBankProfileApi()
-    }
 
     /*
     * This is used to see the card details
@@ -50,9 +63,16 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     }
 
     /*
+    * This method is used to activate card
+    * */
+    fun onActivateCardClicked() {
+        onActivateCardClicked.value = true
+    }
+
+    /*
         * This method is used to get the balance of wallet
         * */
-    private fun callGetWalletBalanceApi() {
+    fun callGetWalletBalanceApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_WALLET_BALANCE,
@@ -63,6 +83,50 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             )
         )
     }
+
+    /*
+        * This method is used to call activate card api
+        * */
+    fun callActivateCardApi(kitFourDigit: String?) {
+        val additionalInfo = System.currentTimeMillis().toString()
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_ACTIVATE_CARD,
+                NetworkUtil.endURL(ApiConstant.API_ACTIVATE_CARD),
+                ApiUrl.POST,
+                ActivateCardRequest(
+                    validationNo = kitFourDigit,
+                    additionalInfo = additionalInfo,
+                    cardIdentifier = SharedPrefUtils.getString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_KIT_NUMBER
+                    )
+                ),
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    /*
+      * This method is used to set or change pin
+      * */
+    fun callSetOrChangeApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_SET_CHANGE_PIN,
+                NetworkUtil.endURL(
+                    ApiConstant.API_SET_CHANGE_PIN + SharedPrefUtils.getString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_KIT_NUMBER
+                    )
+                ),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+    }
+
 
     /*
       * This method is used to call add card
@@ -164,7 +228,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 NetworkUtil.endURL(ApiConstant.API_GET_BANK_PROFILE),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
     }
@@ -181,6 +245,8 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
                 if (responseData is FetchVirtualCardResponse) {
                     cardNumber.set(responseData.fetchVirtualCardResponseDetails.card_number)
+                    setCardNumber()
+                    isViewDetailsVisible.set(false)
                     cvv.set(responseData.fetchVirtualCardResponseDetails.cvv)
                     expiry.set(responseData.fetchVirtualCardResponseDetails.expiry_month + "/" + responseData.fetchVirtualCardResponseDetails.expiry_year)
                     onGetCardDetailsSuccess.value = true
@@ -206,6 +272,31 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             ApiConstant.API_GET_BANK_PROFILE -> {
                 if (responseData is BankProfileResponse) {
                     bankProfileResponse.set(responseData.bankProfileResponseDetails)
+                    bankProfileResponse.get()?.cardInfos?.forEach {
+                        when (it.cardType) {
+                            AppConstants.CARD_TYPE_PHYSICAL -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_KEY_KIT_NUMBER, it.kitNumber
+                                )
+                                if (it.status == AppConstants.ENABLE) {
+                                    isActivateCardVisible.set(false)
+                                } else {
+                                    isActivateCardVisible.set(true)
+                                }
+                                when {
+                                    !it.kitNumber.isNullOrEmpty() -> {
+                                        isOrderCard.set(false)
+                                    }
+                                }
+
+
+                            }
+                        }
+
+                    }
+                    onBankProfileSuccess.value = true
+
                 }
 
             }
@@ -224,10 +315,22 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             ApiConstant.API_GET_WALLET_BALANCE -> {
                 if (responseData is GetWalletBalanceResponse) {
                     isFetchBalanceVisible.set(false)
-                    balance.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)))
+                    balance.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)!!))
 
                 }
             }
+            ApiConstant.API_SET_CHANGE_PIN -> {
+                if (responseData is SetPinResponse) {
+                    onSetPinSuccess.value = responseData.setPinResponseDetails
+                }
+            }
+            ApiConstant.API_ACTIVATE_CARD -> {
+                if (responseData is ActivateCardResponse) {
+
+
+                }
+            }
+
         }
     }
 
@@ -246,6 +349,17 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         fetchVirtualCardRequest.checksum = mainObject.getString("checksum")
         return fetchVirtualCardRequest
 
+
+    }
+
+    /*
+    * this is used to set the data in card numbers
+    * */
+    fun setCardNumber() {
+        cardNumber1.set(cardNumber.get()?.substring(0, 4))
+        cardNumber2.set(cardNumber.get()?.substring(5, 9))
+        cardNumber3.set(cardNumber.get()?.substring(10, 14))
+        cardNumber4.set(cardNumber.get()?.substring(15, 19))
 
     }
 

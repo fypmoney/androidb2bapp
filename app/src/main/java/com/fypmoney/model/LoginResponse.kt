@@ -50,6 +50,7 @@ data class CustomerInfoResponseDetails(
     @SerializedName("countryCode") val countryCode: String? = null,
     @SerializedName("dob") val dob: String? = null,
     @SerializedName("mobile") var mobile: String? = null,
+    @SerializedName("userProfile") var userProfile: UserProfile? = null,
     @SerializedName("isMobileVerified") var isMobileVerified: String? = null,
     @SerializedName("isEmailVerified") var isEmailVerified: String? = null,
     @SerializedName("registrationMode") val registrationMode: String? = null,
@@ -57,16 +58,23 @@ data class CustomerInfoResponseDetails(
     @SerializedName("appId") val appId: String? = null,
     @SerializedName("token") val token: String? = null,
     @SerializedName("userInterests") val userInterests: ArrayList<UserInterestModel>? = null,
-    @SerializedName("isProfileCompleted") val isProfileCompleted: String? = null,
+    @SerializedName("isProfileCompleted") var isProfileCompleted: String? = null,
     @SerializedName("isMandatoryProfileCompleted") val isMandatoryProfileCompleted: String? = null,
-    @SerializedName("isReferralAllowed") val isReferralAllowed: String? = null,
+    @SerializedName("isReferralAllowed") var isReferralAllowed: String? = null,
     @SerializedName("idToken") val idToken: String? = null,
     @SerializedName("referralCode") val referralCode: String? = null,
     @SerializedName("referralMsg") val referralMsg: String? = null,
     @SerializedName("referredCount") val referredCount: Int? = null,
     @SerializedName("bankProfile") val bankProfile: BankProfile? = null,
     @SerializedName("profilePicResourceId") val profilePicResourceId: String? = null,
+    @SerializedName("cardProductCode") val cardProductCode: String? = null
 ) : Serializable
+
+data class UserProfile(
+    @SerializedName("cityName") val cityName: String? = null,
+    @SerializedName("schoolName") val schoolName: String? = null
+    ) : Serializable
+
 
 data class BankProfile(
     @SerializedName("isAccountActive") var isAccountActive: String?,

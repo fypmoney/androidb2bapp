@@ -3,21 +3,17 @@ package com.fypmoney.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.webkit.URLUtil
-import androidx.annotation.NonNull
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.FeedRowLayoutVideoviewBinding
-import com.fypmoney.databinding.FeedsRowLayoutHorizontalBinding
-import com.fypmoney.databinding.FeedsRowLayoutVerticalBinding
+import com.fypmoney.databinding.FeedsDidUKnowBinding
+import com.fypmoney.databinding.FeedsRowLayoutBinding
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewhelper.FeedsViewHelper
 import com.fypmoney.viewmodel.FeedsViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import java.lang.Exception
 
 
 /**
@@ -29,26 +25,25 @@ class FeedsAdapter(
 ) :
     RecyclerView.Adapter<BaseViewHolder>() {
     var feedList: ArrayList<FeedDetails>? = ArrayList()
-    private val typeVertical = 1
-    private val typeHorizontal = 2
+    private val typeWithTitle = 1
+    private val typeWithoutTitle = 2
     private val typeVideo = 3
+    private val typeDiduKnow = 4
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
-            typeVertical -> {
-                val mRowBinding = FeedsRowLayoutVerticalBinding.inflate(
+            typeDiduKnow -> {
+                val mRowBinding = FeedsDidUKnowBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent, false
                 )
-                return VerticalViewHolder(mRowBinding)
+                return DiduKnowViewHolder(mRowBinding)
             }
-            typeHorizontal -> {
-                val mRowBinding = FeedsRowLayoutHorizontalBinding.inflate(
+            typeWithTitle, typeWithoutTitle -> {
+                val mRowBinding = FeedsRowLayoutBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent, false
                 )
-                return HorizontalViewHolder(mRowBinding)
-
-
+                return ViewHolder(mRowBinding)
             }
             typeVideo -> {
                 val mRowBinding = FeedRowLayoutVideoviewBinding.inflate(
@@ -58,7 +53,7 @@ class FeedsAdapter(
                 return VideoViewHolder(mRowBinding)
             }
         }
-        return VerticalViewHolder()
+        return ViewHolder()
     }
 
     override fun getItemCount(): Int {
@@ -66,54 +61,35 @@ class FeedsAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (feedList?.get(position)?.displayCard) {
-            AppConstants.FEED_TYPE_HORIZONTAL -> {
-                typeHorizontal
-            }
-            AppConstants.FEED_TYPE_VERTICAL -> {
-                typeVertical
-            }
-            AppConstants.FEED_TYPE_VIDEO -> {
-                typeVideo
+        return when (position) {
+            0 -> {
+                typeDiduKnow
             }
             else -> {
-                typeVertical
+                when (feedList?.get(position)?.displayCard) {
+                    AppConstants.FEED_TYPE_BLOG -> {
+                        typeWithTitle
+                    }
+                    AppConstants.FEED_TYPE_VIDEO -> {
+                        typeVideo
+                    }
+                    else -> {
+                        typeWithoutTitle
+                    }
+                }
             }
         }
-
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
+        when (feedList?.get(position)?.displayCard) {
+            AppConstants.FEED_TYPE_BLOG -> {
+
+            }
+        }
         return holder.onBind(position)
     }
 
-    inner class VerticalViewHolder(
-        private val mRowItemBinding: FeedsRowLayoutVerticalBinding? = null
-    ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
-        private lateinit var mViewHelper: FeedsViewHelper
-        override fun onBind(position: Int) {
-            mViewHelper = FeedsViewHelper(
-                feedList?.get(position), onFeedItemClickListener
-            )
-            mRowItemBinding!!.viewHelper = mViewHelper
-            mRowItemBinding.viewModel = viewModel
-
-            try {
-                if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
-                    viewModel.isApiLoading.set(true)
-                    viewModel.pageValue.set(viewModel.pageValue.get()!! + 1)
-                    viewModel.callFetchFeedsApi(latitude = viewModel.latitude.get(),longitude = viewModel.longitude.get())
-
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-            mRowItemBinding.executePendingBindings()
-        }
-
-
-    }
 
     /**
      * This will set the data in the list in adapter
@@ -125,12 +101,13 @@ class FeedsAdapter(
         notifyDataSetChanged()
     }
 
-    inner class HorizontalViewHolder(
-        private val mRowItemBinding: FeedsRowLayoutHorizontalBinding? = null
+    inner class ViewHolder(
+        private val mRowItemBinding: FeedsRowLayoutBinding? = null
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         private lateinit var mViewHelper: FeedsViewHelper
         override fun onBind(position: Int) {
             mViewHelper = FeedsViewHelper(
+                position,
                 feedList?.get(position), onFeedItemClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
@@ -141,7 +118,10 @@ class FeedsAdapter(
                 if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
                     viewModel.pageValue.set(viewModel.pageValue.get()!! + 1)
-                    viewModel.callFetchFeedsApi(latitude = viewModel.latitude.get(),longitude = viewModel.longitude.get())
+                    viewModel.callFetchFeedsApi(
+                        latitude = viewModel.latitude.get(),
+                        longitude = viewModel.longitude.get()
+                    )
 
                 }
             } catch (e: Exception) {
@@ -155,27 +135,64 @@ class FeedsAdapter(
 
     }
 
+
+    inner class DiduKnowViewHolder(
+        private val mRowItemBinding: FeedsDidUKnowBinding? = null
+    ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
+        private lateinit var mViewHelper: FeedsViewHelper
+        override fun onBind(position: Int) {
+            mViewHelper = FeedsViewHelper(
+                position,
+                feedList?.get(position), onFeedItemClickListener
+            )
+            mRowItemBinding!!.viewHelper = mViewHelper
+            mRowItemBinding.viewModel = viewModel
+
+
+            try {
+                if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
+                    viewModel.isApiLoading.set(true)
+                    viewModel.pageValue.set(viewModel.pageValue.get()!! + 1)
+                    viewModel.callFetchFeedsApi(
+                        latitude = viewModel.latitude.get(),
+                        longitude = viewModel.longitude.get()
+                    )
+
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            mRowItemBinding.executePendingBindings()
+
+        }
+
+
+    }
+
+
     inner class VideoViewHolder(
         private val mRowItemBinding: FeedRowLayoutVideoviewBinding? = null,
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         private lateinit var mViewHelper: FeedsViewHelper
         override fun onBind(position: Int) {
             mViewHelper = FeedsViewHelper(
+                position,
                 feedList?.get(position), onFeedItemClickListener
             )
+
             mRowItemBinding?.youtubePlayerView?.addYouTubePlayerListener(object :
                 AbstractYouTubePlayerListener() {
-                override fun onReady(@NonNull youTubePlayer: YouTubePlayer) {
-                    if (URLUtil.isValidUrl(feedList?.get(position)?.resourceId!!)) {
-                        try {
-                            youTubePlayer.cueVideo(
-                                feedList?.get(position)?.resourceId?.split("=")?.get(1)!!, 0f
-                            )
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                        }
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    try {
+                        youTubePlayer.loadVideo(
+                            feedList?.get(position)?.resourceId!!, 0f
+                        )
 
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
+
 
                 }
             })
@@ -183,7 +200,10 @@ class FeedsAdapter(
                 if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
                     viewModel.pageValue.set(viewModel.pageValue.get()!! + 1)
-                    viewModel.callFetchFeedsApi(latitude = viewModel.latitude.get(),longitude = viewModel.longitude.get())
+                    viewModel.callFetchFeedsApi(
+                        latitude = viewModel.latitude.get(),
+                        longitude = viewModel.longitude.get()
+                    )
 
                 }
             } catch (e: Exception) {
@@ -197,7 +217,7 @@ class FeedsAdapter(
     }
 
     interface OnFeedItemClickListener {
-        fun onFeedClick(feedDetails: FeedDetails)
+        fun onFeedClick(position:Int,feedDetails: FeedDetails)
     }
 
 }

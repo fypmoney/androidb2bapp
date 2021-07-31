@@ -11,8 +11,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
+import android.view.GestureDetector.SimpleOnGestureListener
+import android.view.MotionEvent
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -23,10 +25,11 @@ import com.fypmoney.databinding.ScreenCardBinding
 import com.fypmoney.model.UpDateCardSettingsRequest
 import com.fypmoney.model.UpdateCardLimitRequest
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AsteriskPasswordTransformationMethod
+import com.fypmoney.util.OnSwipeTouchListener
 import com.fypmoney.util.Utility
 import com.fypmoney.view.CardSettingClickListener
-import com.fypmoney.view.activity.BankTransactionHistoryView
-import com.fypmoney.view.activity.OrderCardView
+import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.viewmodel.CardScreenViewModel
 import kotlinx.android.synthetic.main.screen_card.*
@@ -41,13 +44,15 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     MyProfileListAdapter.OnListItemClickListener,
     CardSettingsBottomSheet.OnCardSettingsClickListener,
     SetSpendingLimitBottomSheet.OnSetSpendingLimitClickListener, CardSettingClickListener,
-    ManageChannelsBottomSheet.OnBottomSheetDismissListener {
+    ManageChannelsBottomSheet.OnBottomSheetDismissListener,
+    ActivateCardBottomSheet.OnActivateCardClickListener,
+    SetOrChangePinBottomSheet.OnSetOrChangePinClickListener {
     private lateinit var mViewModel: CardScreenViewModel
     private lateinit var mViewBinding: ScreenCardBinding
     private var mSetRightOut: AnimatorSet? = null
     private var mSetLeftIn: AnimatorSet? = null
     private var mIsBackVisible = false
-
+    lateinit var myProfileAdapter: MyProfileListAdapter
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -71,15 +76,16 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         textString.add(PockketApplication.instance.getString(R.string.card_settings))
         textString.add(PockketApplication.instance.getString(R.string.order_card))
         textString.add(PockketApplication.instance.getString(R.string.account_stmt))
+        textString.add(PockketApplication.instance.getString(R.string.activate_card_heading))
 
 
         val drawableIds = ArrayList<Int>()
+        drawableIds.add(R.drawable.ic_card_settings)
+        drawableIds.add(R.drawable.ic_order_card)
+        drawableIds.add(R.drawable.ic_account_statement)
+        drawableIds.add(R.drawable.ic_activate)
 
-        drawableIds.add(R.drawable.lock)
-        drawableIds.add(R.drawable.order)
-        drawableIds.add(R.drawable.transaction)
-
-        val myProfileAdapter = MyProfileListAdapter(requireContext(), this)
+        myProfileAdapter = MyProfileListAdapter(requireContext(), this)
         list.adapter = myProfileAdapter
         myProfileAdapter.setList(
             iconList1 = drawableIds,
@@ -90,6 +96,66 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         changeCameraDistance()
 
 
+        //  val gdt = GestureDetector(requireContext(),OnSwipeTouchListener())
+
+        mCardFrontLayout.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
+            override fun onSwipeTop() {
+            }
+
+            override fun onSwipeRight() {
+                flipCard()
+            }
+
+            override fun onSwipeLeft() {
+                flipCard()
+            }
+
+            override fun onSwipeBottom() {
+            }
+
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                return gestureDetector.onTouchEvent(event)
+            }
+        })
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mViewModel.callGetWalletBalanceApi()
+        mViewModel.callGetBankProfileApi()
+
+    }
+
+    private class GestureListener : SimpleOnGestureListener() {
+        private val SWIPE_MIN_DISTANCE = 120
+        private val SWIPE_THRESHOLD_VELOCITY = 200
+        override fun onFling(
+            e1: MotionEvent,
+            e2: MotionEvent,
+            velocityX: Float,
+            velocityY: Float
+        ): Boolean {
+            if (e1.x - e2.x > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                Utility.showToast("right")
+
+                // Right to left, your code here
+                return true
+            } else if (e2.x - e1.x > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+
+                Utility.showToast("left")
+                // Left to right, your code here
+                return true
+            }
+            if (e1.y - e2.y > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                // Bottom to top, your code here
+                return true
+            } else if (e2.y - e1.y > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+                // Top to bottom, your code here
+                return true
+            }
+            return false
+        }
     }
 
     /*
@@ -100,6 +166,33 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             if (it) {
                 askForDevicePassword()
                 mViewModel.onViewDetailsClicked.value = false
+            }
+        }
+        mViewModel.onBankProfileSuccess.observe(viewLifecycleOwner) {
+            if (it) {
+                when (mViewModel.isOrderCard.get()) {
+                    false -> {
+                        myProfileAdapter.updateList(PockketApplication.instance.getString(R.string.track_order))
+                    }
+
+                }
+                if (mViewModel.isActivateCardVisible.get() == false) {
+                    try {
+                        myProfileAdapter.iconList.remove(3)
+                        myProfileAdapter.titleList.removeAt(3)
+                        myProfileAdapter.notifyDataSetChanged()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                mViewModel.onBankProfileSuccess.value = false
+            }
+        }
+
+        mViewModel.onActivateCardClicked.observe(viewLifecycleOwner) {
+            if (it) {
+                callActivateCardSheet()
+                mViewModel.onActivateCardClicked.value = false
             }
         }
 
@@ -115,7 +208,15 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             }
         }
 
-
+        mViewModel.onSetPinSuccess.observe(viewLifecycleOwner) {
+            it.url.let {
+                intentToActivity(
+                    SetPinView::class.java,
+                    type = AppConstants.SET_PIN_URL,
+                    url = it
+                )
+            }
+        }
     }
 
     override fun onTryAgainClicked() {
@@ -143,7 +244,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     private fun changeCameraDistance() {
         val distance = 8000
-        val scale: Float = getResources().getDisplayMetrics().density * distance
+        val scale: Float = resources.displayMetrics.density * distance
         mCardFrontLayout!!.cameraDistance = scale
         mCardBackLayout!!.cameraDistance = scale
     }
@@ -156,13 +257,16 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     fun flipCard() {
         if (!mIsBackVisible) {
+            mViewModel.isBackVisible.set(true)
             mSetRightOut!!.setTarget(mCardFrontLayout)
             mSetLeftIn!!.setTarget(mCardBackLayout)
             mSetRightOut!!.start()
             mSetLeftIn!!.start()
-            mViewModel.isCardDetailsVisible.set(true)
             mIsBackVisible = true
-            btnViewDetails.visibility = View.GONE
+            val handler = Handler()
+            handler.postDelayed({
+                mViewModel.isFrontVisible.set(false)
+            }, 2000)
         }
     }
 
@@ -182,16 +286,30 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 callCardSettingsBottomSheet()
             }
             1 -> {
-                intentToActivity(OrderCardView::class.java)
+                when (mViewModel.isOrderCard.get()) {
+                    true -> {
+                        intentToActivity(OrderCardView::class.java)
+                    }
+                    false -> {
+                        intentToActivity(OrderCardView::class.java)
+                    }
+                }
             }
             2 -> {
                 intentToActivity(BankTransactionHistoryView::class.java)
             }
+            3 -> {
+                callActivateCardSheet()
+            }
+
         }
     }
 
-    private fun intentToActivity(aClass: Class<*>) {
+    private fun intentToActivity(aClass: Class<*>, type: String? = null, url: String? = null) {
         val intent = Intent(requireActivity(), aClass)
+        if (type == AppConstants.SET_PIN_URL) {
+            intent.putExtra(AppConstants.SET_PIN_URL, url)
+        }
         requireContext().startActivity(intent)
     }
 
@@ -203,6 +321,16 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             CardSettingsBottomSheet(this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "CardSettings")
+    }
+
+    /*
+   * This method is used to call set or change pin
+   * */
+    private fun callSetPinBottomSheet() {
+        val bottomSheet =
+            SetOrChangePinBottomSheet(this)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "SetPin")
     }
 
     /*
@@ -240,7 +368,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
    * */
     private fun callActivateCardSheet() {
         val bottomSheet =
-            ActivateCardBottomSheet()
+            ActivateCardBottomSheet(this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "ActivateCard")
     }
@@ -258,7 +386,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 callManageChannelsBottomSheet()
             }
             3 -> {
-                callActivateCardSheet()
+                callSetPinBottomSheet()
             }
         }
     }
@@ -296,7 +424,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             }
             true -> {
 
-                cvvValue.transformationMethod = PasswordTransformationMethod.getInstance()
+                cvvValue.transformationMethod = AsteriskPasswordTransformationMethod()
                 mViewModel.isCvvVisible.set(false)
             }
 
@@ -309,5 +437,42 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     }
 
+    override fun onActivateCardClick(kitFourDigit: String?) {
+        mViewModel.callActivateCardApi(kitFourDigit)
+
+    }
+
+    /**
+     * Method to navigate to the Feeds screen after login
+     */
+    private fun goToEnterOtpScreen(kitFourDigit: String?) {
+        val intent = Intent(requireContext(), EnterOtpView::class.java)
+        intent.putExtra(
+            AppConstants.MOBILE_TYPE,
+            ""
+        )
+        intent.putExtra(
+            AppConstants.FROM_WHICH_SCREEN, AppConstants.ACTIVATE_CARD
+        )
+
+        intent.putExtra(
+            AppConstants.MOBILE_WITHOUT_COUNTRY_CODE,
+            ""
+        )
+
+        intent.putExtra(
+            AppConstants.KYC_ACTIVATION_TOKEN, ""
+
+        )
+        intent.putExtra(
+            AppConstants.KIT_FOUR_DIGIT, kitFourDigit
+
+        )
+        startActivity(intent)
+    }
+
+    override fun setPinClick() {
+        mViewModel.callSetOrChangeApi()
+    }
 
 }

@@ -29,8 +29,9 @@ public class AppSignatureHelper extends ContextWrapper {
     public static final int NUM_HASHED_BYTES = 9;
     public static final int NUM_BASE64_CHAR = 11;
 
-    public AppSignatureHelper(Context context) {
+    public AppSignatureHelper(Context context ) {
         super(context);
+        Log.v("hashcode",getAppSignatures().get(0));
     }
 
 

@@ -42,6 +42,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     var isResendEnabled = ObservableField(false)
     var fromWhichScreen = ObservableField<String>()
     private var kycToken = ObservableField<String>()
+    private var kitFourDigit = ObservableField<String>()
     var isYesBankLogoVisible = ObservableField(false)
     var otpTitle =
         ObservableField(PockketApplication.instance.getString(R.string.otp_title))
@@ -75,10 +76,12 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                         callKycMobileVerificationApi()
                     }
 
+
                 }
             }
         }
     }
+
 
     /*
       * This method is used to call kyc init api
@@ -149,6 +152,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
 * This method is used to call send otp API
 * */
     fun callSendOtpApi() {
+        otp.set("")
         when (fromWhichScreen.get()) {
             AppConstants.LOGIN_SCREEN -> {
                 if (!resendOtpTimerVisibility.get()!!) {
@@ -180,7 +184,24 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                     callKycInitApi()
                 }
             }
+            AppConstants.ACTIVATE_CARD -> {
+                if (!resendOtpTimerVisibility.get()!!) {
+                    callPhysicalCardInitApi()
+                }
+            }
         }
+    }
+
+    fun callPhysicalCardInitApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_PHYSICAL_CARD_INIT,
+                NetworkUtil.endURL(ApiConstant.API_PHYSICAL_CARD_INIT),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
     }
 
     /*
@@ -201,6 +222,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
             )
         )
     }
+
 
     /*
       * This method is used to call aadhaar verification
@@ -264,6 +286,14 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
 
                 }
             }
+            ApiConstant.API_PHYSICAL_CARD_INIT -> {
+                if (responseData is PhysicalCardInitResponse) {
+                    resendOtpSuccess.value = true
+                    resendOtpTimerVisibility.set(true)
+                    isResendEnabled.set(false)
+
+                }
+            }
 
             ApiConstant.API_KYC_ACTIVATE_ACCOUNT -> {
                 if (responseData is KycActivateAccountResponse) {
@@ -287,6 +317,12 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
             ApiConstant.API_KYC_VERIFICATION -> {
                 if (responseData is KycVerificationResponse) {
                     onVerificationSuccess.value = true
+
+
+                }
+            }
+            ApiConstant.API_ACTIVATE_CARD -> {
+                if (responseData is ActivateCardResponse) {
 
 
                 }
@@ -317,10 +353,9 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
 
-        when(purpose)
-        {
-            ApiConstant.API_KYC_MOBILE_VERIFICATION,ApiConstant.API_KYC_VERIFICATION->{
-                onVerificationFail.value=true
+        when (purpose) {
+            ApiConstant.API_KYC_MOBILE_VERIFICATION, ApiConstant.API_KYC_VERIFICATION -> {
+                onVerificationFail.value = true
             }
         }
 
@@ -333,11 +368,12 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     fun setInitialData(
         type: String? = null,
         fromWhichScreenValue: String? = null,
-        token: String? = null
+        token: String? = null, kitNumber: String? = null
     ) {
         mobile.value = type
         fromWhichScreen.set(fromWhichScreenValue)
         kycToken.set(token)
+        kitFourDigit.set(kitNumber)
 
         when (fromWhichScreen.get()) {
             AppConstants.AADHAAR_VERIFICATION -> {
@@ -362,6 +398,16 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
 
                 otpTitle.set("")
                 isYesBankLogoVisible.set(true)
+
+            }
+            AppConstants.ACTIVATE_CARD -> {
+                heading.value =
+                    PockketApplication.instance.resources.getString(R.string.activate_card_heading)
+                mobile.value =
+                    PockketApplication.instance.resources.getString(R.string.enter_otp_text)
+                isChangeVisible.set(false)
+
+                otpTitle.set("")
 
             }
         }

@@ -48,7 +48,7 @@ class YourTaskFragment : Fragment() ,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerViewTasks = view.findViewById<RecyclerView>(R.id.recycler_view)
+        recyclerViewTasks = view.findViewById(R.id.recycler_view)
         recyclerViewTasks!!.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerViewTasks!!.addItemDecoration(GridItemDecoration(10, 2))
 

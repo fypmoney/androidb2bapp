@@ -11,7 +11,9 @@ import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
+import com.freshchat.consumer.sdk.FaqOptions
+import com.freshchat.consumer.sdk.Freshchat
+import com.freshchat.consumer.sdk.FreshchatConfig
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -73,11 +75,6 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
             )
         )
 
-
-        // Clearing older images from cache directory
-        // don't call this line if you want to choose multiple images in the same activity
-        // call this once the bitmap(s) usage is over
-        //ImagePickerView.clearCache(this)
         mViewModel.setInitialData()
         try {
             mViewModel.buildVersion.set(
@@ -94,9 +91,9 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
         val iconList = ArrayList<Int>()
         iconList.add(R.drawable.privacy)
         iconList.add(R.drawable.interest)
+        iconList.add(R.drawable.interest)
         iconList.add(R.drawable.help)
         iconList.add(R.drawable.logout)
-
         myProfileAdapter.setList(
             iconList1 = iconList,
             resources.getStringArray(R.array.my_profile_title_list).toMutableList()
@@ -111,6 +108,20 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
     private fun setObserver() {
         mViewModel.onLogoutSuccess.observe(this) {
             intentToActivity(LoginView::class.java, isFinishAll = true)
+        }
+
+        mViewModel.onProfileSuccess.observe(this) {
+            if (it) {
+                loadProfile(
+                    SharedPrefUtils.getString(
+                        applicationContext,
+                        SharedPrefUtils.SF_KEY_PROFILE_IMAGE
+                    )
+                )
+                mViewModel.onProfileSuccess.value = false
+            }
+            // loadProfile(uri.toString())
+
         }
         mViewModel.onProfileClicked.observe(this) {
             if (it) {
@@ -195,7 +206,6 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
             if (resultCode == RESULT_OK) {
                 val uri = data?.getParcelableExtra<Uri>("path")
                 try {
-                    loadProfile(uri.toString())
                     val file = File(getPath(applicationContext, uri))
                     val requestFile =
                         RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
@@ -223,72 +233,80 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
         }
     }
 
-        /**
-         * Showing Alert Dialog with Settings option
-         * Navigates user to app settings
-         * NOTE: Keep proper title and message depending on your app
-         */
-        private fun showSettingsDialog() {
-            val builder: AlertDialog.Builder = AlertDialog.Builder(this@UserProfileView)
-            builder.setTitle(getString(R.string.dialog_permission_title))
-            builder.setMessage(getString(R.string.dialog_permission_message))
-            builder.setPositiveButton(getString(R.string.go_to_settings)) { dialog, which ->
-                dialog.cancel()
-                openSettings()
-            }
-            builder.setNegativeButton(getString(android.R.string.cancel)) { dialog, which -> dialog.cancel() }
-            builder.show()
+    /**
+     * Showing Alert Dialog with Settings option
+     * Navigates user to app settings
+     * NOTE: Keep proper title and message depending on your app
+     */
+    private fun showSettingsDialog() {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this@UserProfileView)
+        builder.setTitle(getString(R.string.dialog_permission_title))
+        builder.setMessage(getString(R.string.dialog_permission_message))
+        builder.setPositiveButton(getString(R.string.go_to_settings)) { dialog, which ->
+            dialog.cancel()
+            openSettings()
         }
-
-        // navigating user to app settings
-        private fun openSettings() {
-            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-            val uri = Uri.fromParts("package", packageName, null)
-            intent.data = uri
-            startActivityForResult(intent, 101)
-        }
-
-        /**
-         * Method to navigate to the different activity
-         */
-        private fun intentToActivity(aClass: Class<*>, isFinishAll: Boolean? = false) {
-            val intent = Intent(this@UserProfileView, aClass)
-            startActivity(intent)
-            if (isFinishAll == true) {
-                finishAffinity()
-            }
-        }
-
-        override fun onItemClick(position: Int) {
-            when (position) {
-                0 -> {
-                    Utility.goToAppSettings(applicationContext)
-                }
-
-                1 -> {
-                    intentToActivity(SelectInterestView::class.java)
-                }
-
-                3 -> {
-                    callLogOutBottomSheet()
-                }
-
-            }
-        }
-
-
-        /*
-        * This method is used to call log out
-        * */
-        private fun callLogOutBottomSheet() {
-            val bottomSheet =
-                LogoutBottomSheet(this)
-            bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-            bottomSheet.show(supportFragmentManager, "LogOutBottomSheet")
-        }
-
-        override fun onLogoutButtonClick() {
-            mViewModel.callLogOutApi()
-        }
-
+        builder.setNegativeButton(getString(android.R.string.cancel)) { dialog, which -> dialog.cancel() }
+        builder.show()
     }
+
+    // navigating user to app settings
+    private fun openSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri = Uri.fromParts("package", packageName, null)
+        intent.data = uri
+        startActivityForResult(intent, 101)
+    }
+
+    /**
+     * Method to navigate to the different activity
+     */
+    private fun intentToActivity(aClass: Class<*>, isFinishAll: Boolean? = false) {
+        val intent = Intent(this@UserProfileView, aClass)
+        startActivity(intent)
+        if (isFinishAll == true) {
+            finishAffinity()
+        }
+    }
+
+    override fun onItemClick(position: Int) {
+        when (position) {
+            0 -> {
+                Utility.goToAppSettings(applicationContext)
+            }
+
+            1 -> {
+                intentToActivity(SelectInterestView::class.java)
+            }
+            2 -> {
+                intentToActivity(CommunityView::class.java)
+            }
+
+            3 -> {
+                callFreshChat(applicationContext)
+            }
+
+            4 -> {
+                callLogOutBottomSheet()
+            }
+
+        }
+    }
+
+
+    /*
+    * This method is used to call log out
+    * */
+    private fun callLogOutBottomSheet() {
+        val bottomSheet =
+            LogoutBottomSheet(this)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "LogOutBottomSheet")
+    }
+
+    override fun onLogoutButtonClick() {
+        mViewModel.callLogOutApi()
+    }
+
+
+}

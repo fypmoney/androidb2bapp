@@ -16,6 +16,7 @@ import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.TextUtils
 import android.util.DisplayMetrics
+import android.util.Log
 import android.util.Patterns
 import android.widget.ImageView
 import android.widget.Toast
@@ -23,6 +24,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -97,7 +99,7 @@ object Utility {
           * This method is used to extract only digits from string
           * */
     fun extractDigits(msg: String?): String? {
-        val p = Pattern.compile("(\\d{6})")
+        val p = Pattern.compile("(\\d{4,8})")
         val m = p.matcher(msg ?: "")
         return if (m.find()) {
             m.group(0)
@@ -709,24 +711,36 @@ object Utility {
     /*
     * This method is used to convert amount to paise
     * */
-    fun convertToPaise(amount: String): String {
-        val format = DecimalFormat("0.#")
-        return format.format(amount.toDouble() * 100)
+    fun convertToPaise(amount: String?): String? {
+        try {
+            val format = DecimalFormat("0.#")
+            return format.format(amount?.toDouble()!! * 100)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
     }
 
     /*
     * This method is used to convert amount to Rs
     * */
-    fun convertToRs(amount: String?): String {
-        return (amount?.toDouble()!! / 100).toString()
-    }
+    fun convertToRs(amount: String?): String? {
+        var result: String? = null
+        try {
+            result = (amount?.toDouble()!! / 100).toString()
+            val list = result.split(".")
+            if (list.size > 1) {
+                if (list[1] == "0" || list[1] == "00") {
+                    return list[0]
+                } else {
+                    return result
+                }
 
-    /*
-   * This method is used to convert amount to Rs
-   * */
-    fun convertToRs1(amount: String?): String {
-        val amountValue = (amount?.toInt()!! / 100).toString()
-        return BigDecimal(amountValue).setScale(2, BigDecimal.ROUND_HALF_EVEN).toString()
+            }
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+        return result
     }
 
 
@@ -739,16 +753,21 @@ object Utility {
         inputFormat: String? = AppConstants.SERVER_DATE_TIME_FORMAT1,
         outputFormat: String? = AppConstants.CHANGED_DATE_TIME_FORMAT1
     ): String {
-        val input = SimpleDateFormat(inputFormat, Locale.getDefault())
-        val output = SimpleDateFormat(outputFormat, Locale.getDefault())
+        if (dateTime != null) {
+            val input = SimpleDateFormat(inputFormat, Locale.getDefault())
+            val output = SimpleDateFormat(outputFormat, Locale.getDefault())
 
-        var d: Date? = null
-        try {
-            d = input.parse(dateTime!!)
-        } catch (e: ParseException) {
-            e.printStackTrace()
+            var d: Date? = null
+            try {
+                d = input.parse(dateTime!!)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            return output.format(d)
+        } else {
+            return ""
         }
-        return output.format(d)
+
 
     }
 
@@ -780,14 +799,22 @@ object Utility {
     ) {
         url.let {
             if (!url.isNullOrEmpty()) {
-                Glide.with(context!!).load(url).placeholder(R.drawable.ic_user)
+                Glide.with(context!!).load(url).placeholder(R.drawable.ic_card)
                     .into(imageView)
-            }
-            else {
+            } else {
                 imageView.setImageResource(R.drawable.ic_user)
 
             }
         }
+    }
+
+    /*
+    * This is used to call messaging app
+    * */
+    fun callMessagingApp(context: Context) {
+        val intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_APP_MESSAGING)
+        context.startActivity(intent)
     }
 
 }

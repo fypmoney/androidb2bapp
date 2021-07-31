@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewHelper"
+            type="com.fypmoney.viewhelper.OrderStatusViewHelper" />
+
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageOrderPlaced"
+            IS_DONE="@{viewHelper.orderStatus.isDone}"
+            SET_IMAGE_IN_TRACK_ORDER="@{viewHelper.statusForImage}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textOrderPlaced"
+            style="@style/TextviewRegular"
+            IS_DONE_VALUE="@{viewHelper.orderStatus.isDone}"
+            ORDER_STATUS="@{viewHelper.statusForImage}"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/imageOrderPlaced"
+            android:text="@{viewHelper.status}"
+            android:textAlignment="center"
+           />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/date"
+            style="@style/TextviewRegular"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="@{viewHelper.date}"
+            android:textAlignment="center"
+           />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/view_order_placed"
+            IS_DONE_VAL="@{viewHelper.orderStatus.isDone}"
+            NEXT_IS_DONE="@{viewHelper.nextIsDone}"
+            SET_IMAGE_IN_TRACK_ORDER_LINE="@{viewHelper.statusForImage}"
+            android:layout_width="2dp"
+            android:layout_height="30dp"
+            android:layout_toStartOf="@+id/imageOrderPlaced"
+            android:layout_toEndOf="@+id/imageOrderPlaced"
+            android:layout_below="@id/imageOrderPlaced"
+            android:background="@drawable/dotted_black"
+            android:visibility="@{viewHelper.isLineVisible?View.VISIBLE:View.GONE}" />
+
+    </RelativeLayout>
+</layout>

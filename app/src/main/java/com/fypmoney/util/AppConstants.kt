@@ -12,6 +12,9 @@ import com.google.gson.reflect.TypeToken
 object AppConstants {
     const val GOOGLE_CLIENT_ID: String =
         "916744568213-gr0bfi1ued1eguo2sjr77pd45ak4796r.apps.googleusercontent.com"
+    const val FRESH_CHAT_APP_KEY="8dbdc877-4045-4b7c-8a69-1b176c41e71c"
+    const val FRESH_CHAT_APP_ID="03bfae8e-f0f7-48a9-948a-b737edd1a38b"
+    const val FRESH_CHAT_DOMAIN="msdk.in.freshchat.com"
     const val API_TIMEOUT_SECONDS: Long = 60
     const val DATE_FORMAT_CHANGED = "dd/MM/yyyy"
     const val DATE_TIME_FORMAT_SERVER = "yyyy-MM-dd'T'HH:mm:ss'Z'"
@@ -36,6 +39,12 @@ object AppConstants {
     const val FEED_TYPE_HORIZONTAL = "HORIZONTAL"
     const val FEED_TYPE_VERTICAL = "VERTICAL"
     const val FEED_TYPE_VIDEO = "VIDEO"
+    const val FEED_TYPE_DID_YOU_KNOW = "DIDYOUKNOW"
+    const val FEED_TYPE_STATIC_IMAGE = "STATICIMAGE"
+    const val FEED_TYPE_BLOG = "BLOG"
+    const val FEED_TYPE_DEEPLINK = "DEEPLINK"
+    const val FEED_TYPE_INAPPWEB = "INAPPWEB"
+    const val FEED_TYPE_EXTWEBVIEW = "EXTWEBVIEW"
     const val FEED_RESPONSE = "feed_response"
     const val FEED_TYPE_IN_APP = "INAPP"
     const val FEED_TYPE_IN_APP_WEBVIEW = "INAPPWEBVIEW"
@@ -69,6 +78,9 @@ object AppConstants {
     const val CREATE_ACCOUNT_SUCCESS = "create_account_success"
     const val LOGIN_SCREEN = "login_screen"
     const val AADHAAR_VERIFICATION = "aadhaar_verification"
+    const val ACTIVATE_CARD = "activate_card"
+    const val ORDER_CARD_PHYSICAL_CARD_CODE = "PhysicalCard"
+    const val KIT_FOUR_DIGIT = "kit_four_digit"
     const val KYC_MOBILE_VERIFICATION = "mobile_verification"
     const val CONTACT_SELECTED_RESPONSE = "contact_selected"
     const val NOTIFICATION_TYPE_ADD_TASK = "ADD_TASK"
@@ -117,6 +129,7 @@ object AppConstants {
     const val CHANGED_DATE_TIME_FORMAT1 = "MMM dd"
     const val CHANGED_DATE_TIME_FORMAT2 = "MMM dd HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT3 = "MMM dd, HH:mmaa"
+    const val CHANGED_DATE_TIME_FORMAT4 = "MMM dd, yyyy"
     const val PAYU_SERVER = "pay u server"
 
     const val TYPE_UPI = "upi"
@@ -148,6 +161,22 @@ object AppConstants {
     const val REQUEST_IMAGE = 200
     const val CARD_PRICE = "200"
     const val ORDER_CARD_PAYMENT_MODE = "WALLET"
+    const val ENABLE= "ENABLED"
 
+    const val ORDER_STATUS_ORDERED = "ORDER_PLACED"
+    const val ORDER_STATUS_IN_PROGRESS = "IN_PROGRESS"
+    const val ORDER_STATUS_SHIPPED = "SHIPPED"
+    const val ORDER_STATUS_OUT_FOR_DELIVERY = "OUT_FOR_DELIVERY"
+    const val ORDER_STATUS_DELIVERED = "DELIVERED"
+    const val ORDER_STATUS_SEND_TO_VENDOR = "SEND_TO_VENDOR"
+    const val GET_PRODUCT_RESPONSE = "get_product_response"
+    const val ORDER_STATUS = "order_status"
+    const val SET_PIN_URL = "set_pin_url"
+    const val QR_FORMAT_NAME = "QR_CODE"
+
+
+    const val CLIENT_TYPE = "Client_Type"
+    const val CLIENT_TYPE_VALUE = "ANDROID"
+    const val NOT_ALLOWED_MSG = "Invalid Version. Please uninstall your current app and install it from Play Store again."
 
 }
