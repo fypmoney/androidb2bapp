@@ -45,6 +45,7 @@
     <string name="create_account_btn_text">Create Account</string>
     <string name="request_again_btn_text">Request again</string>
     <string name="add_btn_text">Add</string>
+    <string name="add_verify_btn_text">Verify &amp; Add</string>
     <string name="retry_btn_text">Retry</string>
     <string name="view_details_btn_text">View details</string>
     <string name="dummy_star">"* * * *"</string>
@@ -751,5 +752,6 @@
 
 
      <string name="create_your_own_task">Create your own task</string>
+     <string name="amount">Recharge amount</string>
 
 </resources>

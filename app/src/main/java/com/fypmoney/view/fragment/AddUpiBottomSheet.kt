@@ -115,17 +115,12 @@ class AddUpiBottomSheet(
 
                 }
                 else -> {
-                    if (isUpiVerified.get() == true && vpaInResponse.get() == upiId.text.toString()) {
-                        onBottomSheetClickListener.onAddUpiClickListener(
-                            upiId.text.toString(), saveCardCheckbox.isChecked
-                        )
-                        dismiss()
-                    } else {
-                        name.text = ""
-                        Utility.showToast(getString(R.string.verify_vpa))
-                    }
+                    progressBar.visibility = View.VISIBLE
+                    callGetHashApi(PayuConstants.VALIDATE_VPA, var1 = upiId.text.toString())
 
                 }
+
+
             }
 
 
@@ -206,51 +201,47 @@ class AddUpiBottomSheet(
                     progressBar.visibility = View.GONE
                     when (responseData.isVPAValid) {
                         1 -> {
-                            if (responseData.vpa == upiId.text.toString()) {
-                                vpaInResponse.set(responseData.vpa)
-                                isUpiVerified.set(true)
-                                name.setTextColor(
-                                    ContextCompat.getColor(
-                                        requireContext(),
-                                        R.color.color_dark_green
-                                    )
-                                )
-                                name.text = responseData.payerAccountName
-                            }
-
-                        }
-                        else -> {
-                            name.setTextColor(
-                                ContextCompat.getColor(
-                                    requireContext(),
-                                    R.color.text_color_red
-                                )
+                            name.text = responseData.payerAccountName
+                            onBottomSheetClickListener.onAddUpiClickListener(
+                                upiId.text.toString(), saveCardCheckbox.isChecked
                             )
-                            name.text =
-                                PockketApplication.instance.getString(R.string.invalid_upi_error)
-                        }
-                    }
+                            dismiss()
 
+                        }
+
+
+                    else -> {
+                        name.setTextColor(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.text_color_red
+                            )
+                        )
+                        name.text =
+                            PockketApplication.instance.getString(R.string.invalid_upi_error)
+                    }
                 }
+
             }
         }
-
-
-    }
-
-    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
-        Utility.showToast(errorResponseInfo.msg)
-        progressBar.visibility = View.GONE
-
     }
 
 
-    override fun offLine() {
+}
 
-    }
+override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
+    Utility.showToast(errorResponseInfo.msg)
+    progressBar.visibility = View.GONE
 
-    override fun progress(isStart: Boolean, message: String) {
+}
 
-    }
+
+override fun offLine() {
+
+}
+
+override fun progress(isStart: Boolean, message: String) {
+
+}
 
 }

@@ -100,10 +100,6 @@ class AddNewCardBottomSheet(
                 }
             }
         })
-        cardNumber.setText("5419190411211587")
-        cardName.setText("ashu chaudhary")
-        cvv.setText("198")
-        expiry.setText("08/25")
         btnAdd.setOnClickListener {
             expiryList = expiry.text.toString().split("/") as MutableList<String>
             val df: DateFormat =

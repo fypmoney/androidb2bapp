@@ -36,38 +36,74 @@
                 android:layout_marginStart="@dimen/screenMarginLeft"
                 android:layout_marginEnd="@dimen/screenMarginRight">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/balance_text"
-                    style="@style/TextviewRegular"
-                    android:layout_marginTop="30dp"
-                    android:text="@{viewModel.amountToAdd1}"
-                    android:textSize="17dp" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/layoutServicePrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="@dimen/card_elevation"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/balance_texttt"
+                            style="@style/TextviewRegular"
+                            android:textSize="17dp"
+                            android:textColor="@color/text_color_dark"
+                            android:text="@string/amount"
+                            />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/balance_text1"
+                            style="@style/TextviewBold"
+                            android:layout_alignParentEnd="true"
+                            android:textSize="17dp"
+                            android:text="@{@string/Rs+viewModel.amountToAdd}"
+                            />
+                    </RelativeLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/upi_text"
                     style="@style/TextviewRegular"
-                    android:layout_below="@+id/balance_text"
+                    android:layout_below="@+id/layoutServicePrice"
                     android:layout_marginTop="40dp"
                     android:ellipsize="end"
                     android:text="@string/add_money_upi_text"
                     android:textColor="@color/text_color_dark"
                     android:textSize="17dp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/my_recycler_view"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/layoutServicePrice1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/upi_text"
-                    android:layout_marginTop="@dimen/margin"
-                    app:adapter="@{viewModel.addMoneyUpiAdapter}"
-                    app:spanCount="4"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardElevation="@dimen/card_elevation"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/my_recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/margin"
+                        app:adapter="@{viewModel.addMoneyUpiAdapter}"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="4" />
+                </com.google.android.material.card.MaterialCardView>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/debit_card_text"
                     style="@style/TextviewRegular"
-                    android:layout_below="@+id/my_recycler_view"
-                    android:layout_marginTop="40dp"
+                    android:layout_below="@+id/layoutServicePrice1"
+                    android:layout_marginTop="20dp"
                     android:ellipsize="end"
                     android:text="@string/add_money_debit_text"
                     android:textColor="@color/text_color_dark"
@@ -79,16 +115,16 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/debit_card_text"
                     android:layout_marginTop="20dp"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <ProgressBar
                         android:id="@+id/progress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:scaleY="0.4"
                         android:scaleX="0.4"
+                        android:scaleY="0.4"
                         android:visibility="@{viewModel.isSavedCardProgressVisible?View.VISIBLE:View.GONE}" />
 
                     <androidx.recyclerview.widget.RecyclerView

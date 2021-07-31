@@ -14,7 +14,6 @@ import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.LoginSuccessViewModel
 import kotlinx.android.synthetic.main.view_login_success.*
 import kotlinx.android.synthetic.main.view_walk_through_one.*
-import kotlinx.android.synthetic.main.view_walk_through_one.imageView
 
 /*
 * This class is used for show login success message
@@ -68,7 +67,7 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                     intentToActivity(AadhaarAccountActivationView::class.java)
                 }
                 else->{
-                    intentToActivity(AadhaarAccountActivationView::class.java)
+                    intentToActivity(HomeView::class.java)
                 }
 
             }
