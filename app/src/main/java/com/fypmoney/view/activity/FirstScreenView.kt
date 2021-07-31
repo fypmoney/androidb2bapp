@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.view_first_screen.*
 * This class is used to handle school name city
 * */
 class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewModel>() {
+    private lateinit var mViewBinding: ViewFirstScreenBinding
     private lateinit var mViewModel: FirstScreenViewModel
     private var mBottomSheetBehavior: BottomSheetBehavior<*>? = null
 
@@ -38,17 +39,12 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mViewBinding = getViewDataBinding()
+
         val view = findViewById<View>(R.id.bottomSheet)
         mBottomSheetBehavior = BottomSheetBehavior.from(view)
-
         setBottomSheetAndCallBackBottomSheetBehaviour()
-        image2.setOnTouchListener(object : OnSwipeTouchListener(this@FirstScreenView) {
-            override fun onSwipeTop() {
-                //mBottomSheetBehavior!!.state = BottomSheetBehavior.STATE_COLLAPSED
 
-            }
-
-        })
         setObserver()
     }
 
@@ -81,20 +77,36 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
      */
     private fun setBottomSheetAndCallBackBottomSheetBehaviour() {
         //callback
-        mBottomSheetBehavior?.setBottomSheetCallback(object :
+
+
+        mBottomSheetBehavior?.addBottomSheetCallback(object :
             BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
-                    mViewModel.isPullToRefreshVisible.set(true)
-                } else {
-                    mViewModel.isPullToRefreshVisible.set(false)
-
-
+                if (newState == BottomSheetBehavior.STATE_HALF_EXPANDED) {
+                    mViewBinding.ivLogoCollasped.visibility = View.VISIBLE
+                    mViewBinding.image2.visibility = View.VISIBLE
+                    mViewBinding.tvPull.visibility = View.VISIBLE
+                    mViewBinding.llExpanededView.visibility = View.GONE
+                }else if(newState == BottomSheetBehavior.STATE_EXPANDED){
+                    mViewBinding.ivLogoCollasped.visibility = View.GONE
+                    mViewBinding.tvPull.visibility = View.GONE
+                    mViewBinding.image2.visibility = View.GONE
+                    mViewBinding.llExpanededView.visibility = View.VISIBLE
                 }
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
-                mViewModel.isPullToRefreshVisible.set(false)
+                val upperState = 0.66
+                val lowerState = 0.33
+                if (mBottomSheetBehavior?.state == BottomSheetBehavior.STATE_SETTLING ) {
+                    if(slideOffset >= upperState){
+                        mBottomSheetBehavior?.isDraggable =false
+                        mBottomSheetBehavior?.state = BottomSheetBehavior.STATE_EXPANDED
+                    }
+                    if(slideOffset > lowerState && slideOffset < upperState){
+                        mBottomSheetBehavior?.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+                    }
+                }
             }
         })
     }
