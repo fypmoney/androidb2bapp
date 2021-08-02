@@ -76,7 +76,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
         }
 
         val ic: InputConnection? = otpView.onCreateInputConnection(EditorInfo())
-        keyboard.setInputConnection(ic)
+        //keyboard.setInputConnection(ic)
         // start timer get started initially
         startTimer()
 
@@ -116,7 +116,6 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
             AppConstants.KYC_MOBILE_VERIFICATION -> {
                 otpView.itemSpacing = 15
                 otpView.itemCount = 6
-
 
             }
         }

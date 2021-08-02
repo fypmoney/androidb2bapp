@@ -25,8 +25,7 @@ import java.util.*
 * */
 class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     var mobile = MutableLiveData<String>()
-    var heading =
-        MutableLiveData(application.resources.getString(R.string.enter_code_title))
+    var heading = MutableLiveData(application.resources.getString(R.string.enter_code_title))
     var changeOrEditText =
         MutableLiveData(application.resources.getString(R.string.change_text))
     var mobileWithoutCountryCode = MutableLiveData<String>()

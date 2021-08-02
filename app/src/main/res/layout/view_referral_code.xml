@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -23,22 +24,15 @@
 
         <include layout="@layout/toolbar" />
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scroll_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:fillViewport="true"
-            android:scrollbars="vertical"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
-
-            <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/screenMarginRight"
-                android:layout_marginStart="@dimen/screenMarginLeft">
+                android:layout_height="0dp"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
+                android:padding="16dp">
 
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -46,16 +40,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="67dp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/ic_referral_code" />
+
+
 
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/enter_phone"
                     style="@style/TextviewBold"
+                    app:layout_constraintTop_toBottomOf="@+id/ivServiceLogo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:layout_below="@+id/ivServiceLogo"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:text="@string/referral_code_title"
                     android:textAlignment="center"
                     android:textColor="@color/text_color_dark"
@@ -65,55 +67,66 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/verification_title"
                     style="@style/TextviewRegular"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:layout_below="@+id/enter_phone"
-                    android:layout_marginTop="55dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/enter_phone"
                     android:text="@string/code_text" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etReferralCode"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/verification_title"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                    android:hint="@string/referral_code_hint"
-                    android:textAllCaps="true"
-                    android:inputType="text"
-                    android:paddingStart="@dimen/edittextHintPaddingStart"
-                    android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                    android:text="@={viewModel.referralCode}"
-                    />
 
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etReferralCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/verification_title"
+                android:layout_margin="@dimen/_16sdp"
+                android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                android:hint="@string/referral_code_hint"
+                android:inputType="text"
+                android:paddingStart="@dimen/edittextHintPaddingStart"
+                android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                android:text="@={viewModel.referralCode}"
+                android:textAllCaps="true"
+                app:layout_constraintBottom_toTopOf="@+id/btnContinue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.219"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/verification_title"
+                app:layout_constraintVertical_bias="0.061" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnContinue"
-                    style="@style/Widget.App.Button"
-                    android:layout_width="299dp"
-                    android:layout_height="52dp"
-                    android:layout_below="@+id/etReferralCode"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/curved_background1"
-                    android:onClick="@{()->viewModel.callVerifyReferralCode()}"
-                    android:text="@string/continue_btn_text"
-                    android:textAllCaps="false"
-                    android:layout_centerHorizontal="true"
-                    app:backgroundTint="@color/text_color_dark" />
+            <com.google.android.material.button.MaterialButton
+                     android:id="@+id/btnContinue"
+                     style="@style/Widget.App.Button"
+                     android:layout_width="0dp"
+                     android:layout_height="wrap_content"
+                     android:layout_below="@+id/etReferralCode"
+                     app:layout_constraintStart_toStartOf="parent"
+                     app:layout_constraintEnd_toEndOf="parent"
+                     app:layout_constraintBottom_toTopOf="@+id/back_to_login"
+                     android:layout_marginHorizontal="@dimen/_47sdp"
+                     android:background="@drawable/curved_background26"
+                     android:layout_marginBottom="@dimen/_16sdp"
+                     android:onClick="@{()->viewModel.callVerifyReferralCode()}"
+                     android:text="@string/continue_btn_text"
+                     android:textAllCaps="false"
+                     android:layout_centerHorizontal="true"
+                     app:backgroundTint="@color/text_color_dark" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/back_to_login"
                     style="@style/TextviewRegular"
-                    android:textSize="18dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/margin_20"
-                    android:layout_marginBottom="@dimen/margin_20"
+                    android:layout_marginBottom="@dimen/_16sdp"
                     android:onClick="@{()->viewModel.onSkipClicked()}"
                     android:text="@string/skip_title"
-                    android:textColor="@color/text_color_dark" />
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="18dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/btnContinue"
+                    app:layout_constraintStart_toStartOf="@+id/btnContinue" />
 
-            </RelativeLayout>
-        </androidx.core.widget.NestedScrollView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

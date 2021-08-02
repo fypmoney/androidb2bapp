@@ -11,7 +11,6 @@ import com.fypmoney.base.BaseViewModel
 class FirstScreenViewModel(application: Application) : BaseViewModel(application) {
     var onCreateAccountClicked = MutableLiveData<Boolean>()
     var isLogoVisible = ObservableField(true)
-    var isPullToRefreshVisible = ObservableField(true)
 
 
     /*

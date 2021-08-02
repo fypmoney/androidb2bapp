@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
+import com.fypmoney.FirstFragment
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewWalkThroughMainBinding
@@ -46,13 +47,10 @@ class WalkThroughMainView : BaseActivity<ViewWalkThroughMainBinding, WalkThrough
         viewPagerAdapter.addFragment(WalkThroughOneScreen())
         viewPagerAdapter.addFragment(WalkThroughTwoScreen())
         viewPagerAdapter.addFragment(WalkThroughThreeScreen())
-
+        mViewBinding.pager.offscreenPageLimit = 3
         mViewBinding.pager.adapter = viewPagerAdapter
 
         //mViewBinding.tabLayoutIndicator.setupWithViewPager(mViewBinding.pager)
-
-
-
         setObserver()
     }
 
@@ -65,7 +63,7 @@ class WalkThroughMainView : BaseActivity<ViewWalkThroughMainBinding, WalkThrough
             if (mViewBinding.pager.currentItem < 2)
                 mViewBinding.pager.currentItem = mViewBinding.pager.currentItem + 1
             else {
-                intentToActivity(LoginView::class.java)
+                intentToActivity(FirstScreenView::class.java)
 
             }
 

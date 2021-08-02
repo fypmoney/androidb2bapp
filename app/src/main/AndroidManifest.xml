@@ -130,7 +130,9 @@
         <activity
             android:name=".view.activity.FirstScreenView"
             android:screenOrientation="portrait"
-          />
+            >
+
+        </activity>
 
         <activity
             android:name=".view.activity.BankTransactionHistoryView"
