@@ -20,6 +20,7 @@
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/text_color_dark"
             android:paddingTop="10dp"
           >
 
@@ -30,7 +31,6 @@
                 android:id="@+id/scan"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
-                android:tint="@color/text_color_dark"
                 android:onClick="@{()->viewModel.onQrCodeClicked()}"
                 android:visibility="@{viewModel.isScanVisible?View.VISIBLE:View.GONE}"
                 app:srcCompat="@drawable/ic_scan" />
@@ -56,7 +56,6 @@
                 android:onClick="@{()->viewModel.onNotificationClicked()}"
                 android:layout_toStartOf="@+id/myProfile"
                 android:padding="5dp"
-                android:tint="@color/text_color_dark"
                 app:srcCompat="@drawable/ic_bell_icon" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -81,7 +80,12 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/navigationView"
             android:layout_below="@+id/relativeLayout"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+
+            <include
+                layout="@layout/screen_home"
+                />
+        </FrameLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/navigationView"

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,24 +13,28 @@
 
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:scrollbars="vertical">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="vertical">
 
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/top_View_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/_100sdp"
+                android:paddingHorizontal="18dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 android:background="@drawable/curved_background23"
                 android:orientation="vertical">
 
@@ -39,7 +44,10 @@
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:text="@string/balance_text"
@@ -52,9 +60,14 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="7dp"
                     android:ellipsize="end"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_balance"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:text="@{@string/Rs+viewModel.availableAmount}"
                     android:textColor="@color/white"
-                    android:textSize="38dp"
+                    android:textSize="30sp"
+                    tools:visiblity="visible"
+                    tools:text ="₹8,954"
                     android:visibility="@{viewModel.isFetchBalanceVisible?View.GONE:View.VISIBLE,default=gone}" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -65,10 +78,13 @@
                     android:ellipsize="end"
                     android:text="@{@string/fetching_balance}"
                     android:textColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_balance"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     android:visibility="@{viewModel.isFetchBalanceVisible?View.VISIBLE:View.GONE,default=visible}" />
 
 
-                <LinearLayout
+               <!-- <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
@@ -110,10 +126,10 @@
                         android:textColor="@color/text_color_dark"
                         android:textSize="16dp" />
 
-                </LinearLayout>
-            </LinearLayout>
+                </LinearLayout>-->
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+           <!-- <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
@@ -404,9 +420,9 @@
                 android:layout_marginEnd="24dp"
                 android:visibility="@{viewModel.isFeedVisible?View.VISIBLE:View.GONE,default=gone}"
                 app:adapter="@{viewModel.feedsAdapter}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
 
 
-        </LinearLayout>
-    </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
