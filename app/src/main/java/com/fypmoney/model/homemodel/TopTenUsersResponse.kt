@@ -1,10 +1,10 @@
 package com.fypmoney.model.homemodel
 
-data class RecentTransaction(
-    val data: List<RecentTransactionUser>
+data class TopTenUsersResponse(
+    val data: List<Users>
 )
 
-data class RecentTransactionUser(
+data class Users(
     val name: String,
     val profilePicResourceId: String,
     val userId: Int,

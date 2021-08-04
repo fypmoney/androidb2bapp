@@ -83,6 +83,8 @@ object ApiConstant {
 
     const val CHECK_APP_UPDATE = "/app/version"
 
+    const val TOP_TEN_USER_API = "/services/PockketService/api/recent/wallet/transaction"
+
 }
 
 

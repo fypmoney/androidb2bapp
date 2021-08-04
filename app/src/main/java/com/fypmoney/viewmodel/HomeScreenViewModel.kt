@@ -3,6 +3,7 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -14,11 +15,15 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.model.homemodel.TopTenUsersResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.adapter.FeedsSectionAdapter
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import java.lang.Exception
 
 class HomeScreenViewModel(application: Application) : BaseViewModel(application),
@@ -39,9 +44,13 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     val longitude = ObservableField<Double>()
     val fromWhichScreen = ObservableField(0)
 
+    val topTenUsersResponse:LiveData<TopTenUsersResponse>
+        get() = _topTenUserResponse
+    private val _topTenUserResponse = MutableLiveData<TopTenUsersResponse>()
+
     init {
         callGetWalletBalanceApi()
-
+        callTopTenUsersApi()
     }
 
     /*
@@ -68,6 +77,17 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
             ApiRequest(
                 ApiConstant.API_GET_WALLET_BALANCE,
                 NetworkUtil.endURL(ApiConstant.API_GET_WALLET_BALANCE),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+    private fun callTopTenUsersApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.TOP_TEN_USER_API,
+                NetworkUtil.endURL(ApiConstant.TOP_TEN_USER_API),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -110,6 +130,12 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
                     fetchBalanceLoading.value = true
                     availableAmount.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)!!))
 
+                }
+            }
+            ApiConstant.TOP_TEN_USER_API -> {
+                val data =  Gson().fromJson(responseData.toString(), TopTenUsersResponse::class.java)
+                if (data is TopTenUsersResponse) {
+                    _topTenUserResponse.value = data
                 }
             }
             ApiConstant.API_FETCH_ALL_FEEDS -> {

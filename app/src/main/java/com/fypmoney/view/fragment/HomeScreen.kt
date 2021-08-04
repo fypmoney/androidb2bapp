@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -19,6 +21,7 @@ import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.activity.*
+import com.fypmoney.view.adapter.TopTenUsersAdapter
 import com.fypmoney.viewmodel.HomeScreenViewModel
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.screen_home.*
@@ -57,13 +60,35 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>(),
             requireActivity(), this
         ).permissions()
         setObservers()
+        setUpRecyclerView()
+    }
 
+    private fun setUpRecyclerView() {
+        val topTenUsersAdapter = TopTenUsersAdapter(
+            viewLifecycleOwner
+        )
+        with(mViewBinding.recentRv){
+            adapter = topTenUsersAdapter
+            layoutManager =  LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+        }
     }
 
     /*
     * This method is used to observe the observers
     * */
     private fun setObservers() {
+        mViewModel.topTenUsersResponse.observe(viewLifecycleOwner,{
+            if(it.data.isNullOrEmpty()){
+                mViewBinding.recentTv.visibility = View.GONE
+                mViewBinding.recentRv.visibility = View.GONE
+            }else{
+                mViewBinding.recentTv.visibility = View.VISIBLE
+                mViewBinding.recentRv.visibility = View.VISIBLE
+                (mViewBinding.recentRv.adapter as TopTenUsersAdapter).run {
+                    submitList(it.data)
+                }
+            }
+        })
         mViewModel.onAddMoneyClicked.observe(viewLifecycleOwner) {
             if (it) {
                 callActivity(AddMoneyView::class.java)

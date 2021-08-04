@@ -85,13 +85,13 @@
 
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="30dp"
                     android:weightSum="2"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -105,30 +105,29 @@
                         android:layout_weight="1"
                         android:background="@drawable/curved_background24"
                         android:drawableStart="@drawable/ic_add_money"
-                        android:drawablePadding="4dp"
                         android:gravity="center"
                         android:onClick="@{()->viewModel.onAddMoneyClicked()}"
-                        android:padding="10dp"
+                        android:paddingVertical="10dp"
+                        android:paddingHorizontal="5dp"
                         android:text="@string/add_money_btn_text"
                         android:textColor="@color/text_color_dark"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextviewBold"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginStart="20dp"
                         android:layout_weight="1"
                         android:background="@drawable/curved_background25"
                         android:drawableStart="@drawable/ic_pay"
-                        android:drawablePadding="4dp"
                         android:gravity="center"
+                        android:layout_marginStart="9dp"
                         android:onClick="@{()->viewModel.onPayClicked()}"
-                        android:padding="10dp"
-                        android:text="@string/pay_money_btn_text"
+                        android:paddingVertical="10dp"
+                        android:paddingHorizontal="5dp"                        android:text="@string/pay_money_btn_text"
                         android:textColor="@color/text_color_dark"
-                        android:textSize="16sp" />
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 
@@ -152,7 +151,6 @@
                     android:id="@+id/choreCard"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:padding="10dp"
                     app:cardCornerRadius="@dimen/card_corner_radius"
@@ -186,19 +184,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="18dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/quick_actions_chores"
-                            android:textSize="17sp" />
+                            android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/TextviewRegular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="15dp"
-                            android:paddingStart="15dp"
-                            android:paddingEnd="15dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:paddingStart="4dp"
+                            android:paddingEnd="4dp"
                             android:text="@string/quick_actions_chores1"
                             android:textAlignment="center"
                             android:textColor="@color/text_color_dark"
@@ -212,7 +210,6 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:padding="10dp"
                     app:cardCornerRadius="@dimen/card_corner_radius"
@@ -246,19 +243,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="18dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/quick_actions_rewards"
-                            android:textSize="17sp" />
+                            android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/TextviewRegular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="15dp"
-                            android:paddingStart="15dp"
-                            android:paddingEnd="15dp"
+                            android:paddingStart="5dp"
+                            android:paddingEnd="5dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
                             android:text="@string/quick_actions_rewards1"
                             android:textAlignment="center"
                             android:textColor="@color/text_color_dark"
@@ -284,7 +281,6 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:padding="10dp"
                     app:cardCornerRadius="@dimen/card_corner_radius"
@@ -319,19 +315,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="18dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/quick_actions_referrals"
-                            android:textSize="17sp" />
+                            android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/TextviewRegular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="15dp"
-                            android:paddingStart="15dp"
-                            android:paddingEnd="15dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:paddingStart="4dp"
+                            android:paddingEnd="4dp"
                             android:text="@string/quick_actions_rewards1"
                             android:textAlignment="center"
                             android:textColor="@color/text_color_dark"
@@ -345,7 +341,6 @@
                     android:id="@+id/layoutServicePrice"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:padding="10dp"
                     app:cardCornerRadius="@dimen/card_corner_radius"
@@ -379,19 +374,19 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="18dp"
+                            android:layout_marginTop="8dp"
                             android:text="@string/quick_actions_split_bill"
-                            android:textSize="17sp" />
+                            android:textSize="14sp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             style="@style/TextviewRegular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="15dp"
-                            android:paddingStart="15dp"
-                            android:paddingEnd="15dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:paddingStart="4dp"
+                            android:paddingEnd="4dp"
                             android:text="@string/quick_actions_split_bill1"
                             android:textAlignment="center"
                             android:textColor="@color/text_color_dark"
@@ -418,6 +413,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/ll_second_card" />
 
 
+
+
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -437,16 +434,15 @@
                 android:id="@+id/recent_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp10"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
-                android:visibility="@{viewModel.isFeedVisible?View.VISIBLE:View.GONE,default=gone}"
-                app:adapter="@{viewModel.feedsAdapter}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:visibility="visible"
-                tools:listitem="@layout/home_recent_row_item"
+                tools:listitem="@layout/item_top_ten_user"
                 app:layout_constraintTop_toBottomOf="@+id/recent_tv" />
 
             <androidx.recyclerview.widget.RecyclerView
