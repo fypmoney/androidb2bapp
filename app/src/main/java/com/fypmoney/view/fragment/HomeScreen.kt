@@ -116,10 +116,15 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>(),
 
                         }
                     }
+        }
 
 
-
-
+        mViewModel.fetchBalanceLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                mViewBinding.amountFetching.clearAnimation()
+                mViewBinding.amountFetching.visibility = View.GONE
+                mViewModel.fetchBalanceLoading.value = false
+            }
         }
 
     }

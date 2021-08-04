@@ -17,7 +17,7 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/relativeLayout"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/text_color_dark"
@@ -36,7 +36,7 @@
                 app:srcCompat="@drawable/ic_scan" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvCreateAccount"
+                android:id="@+id/toolbar_title"
                 style="@style/TextviewBold"
                 android:layout_marginTop="19dp"
                 android:layout_centerVertical="true"
@@ -60,15 +60,13 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/myProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="5dp"
-                android:paddingEnd="5dp"
                 android:onClick="@{()->viewModel.onProfileClicked()}"
                 android:layout_marginEnd="10dp"
-                android:backgroundTint="@color/black"
                 app:srcCompat="@drawable/ic_profile" />
 
         </RelativeLayout>
@@ -79,12 +77,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/navigationView"
-            android:layout_below="@+id/relativeLayout"
+            android:layout_below="@+id/toolbar"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" >
 
-            <include
-                layout="@layout/screen_home"
-                />
+
         </FrameLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView

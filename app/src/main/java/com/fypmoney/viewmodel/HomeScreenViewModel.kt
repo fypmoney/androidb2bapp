@@ -29,6 +29,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     var onPayClicked = MutableLiveData(false)
     var onChoreClicked = MutableLiveData(false)
     var isFetchBalanceVisible = ObservableField(true)
+    var fetchBalanceLoading = MutableLiveData<Boolean>()
     var isFeedVisible = ObservableField(false)
     var feedsAdapter = FeedsSectionAdapter(this)
     var onFeedButtonClick = MutableLiveData<FeedDetails>()
@@ -106,6 +107,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
             ApiConstant.API_GET_WALLET_BALANCE -> {
                 if (responseData is GetWalletBalanceResponse) {
                     isFetchBalanceVisible.set(false)
+                    fetchBalanceLoading.value = true
                     availableAmount.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)!!))
 
                 }
