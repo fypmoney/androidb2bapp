@@ -61,55 +61,6 @@
                     />
 
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/layoutServicePrice"
-                    android:layout_width="wrap_content"
-
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:backgroundTint="#BAE6C2"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
-                    app:cardElevation="@dimen/card_elevation"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                         android:padding="@dimen/_6sdp"
-                        android:id="@+id/createTask"
-                        android:layout_height="match_parent">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-
-                            android:layout_width="50dp"
-
-                            android:layout_marginTop="@dimen/_30sdp"
-                            android:layout_height="50dp"
-                             android:id="@+id/add"
-                            android:layout_gravity="center"
-                            android:layout_centerHorizontal="true"
-
-                            app:srcCompat="@drawable/ic_add"
-
-                            />
-
-                        <TextView
-                            android:layout_below="@+id/add"
-                            android:layout_width="wrap_content"
-                            android:layout_marginTop="@dimen/_12sdp"
-                            android:text="Create your own \ntask"
-                            android:textColor="@color/text_color_dark"
-                            android:gravity="center"
-                           android:layout_height="wrap_content"/>
-
-
-
-
-                    </RelativeLayout>
-
-                </com.google.android.material.card.MaterialCardView>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerview"
@@ -118,7 +69,7 @@
                     android:paddingStart="@dimen/screenMarginLeft"
 
                     android:paddingEnd="@dimen/screenMarginRight"
-                    app:adapter="@{viewModel.sampleTaskAdapter}"
+
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="2" />
 
@@ -164,7 +115,22 @@
                     android:visibility="@{viewModel.isTimeLineNoDataVisible?View.VISIBLE:View.GONE,default=gone}" />
 
 
-            </LinearLayout></RelativeLayout>
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/loader"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_70sdp"
+                android:layout_centerHorizontal="true"
+
+                android:elevation="@dimen/_6sdp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_centerInParent="true"
+                app:layout_constraintVertical_bias=".7" />
+
+        </RelativeLayout>
 
 
 

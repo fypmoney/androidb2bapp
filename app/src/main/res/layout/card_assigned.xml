@@ -1,63 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_marginLeft="@dimen/_12sdp"
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/layoutServicePrice"
-            android:layout_width="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_weight="1"
 
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_weight="1"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="@dimen/_26sdp"
+            android:text="New"
+            android:textColor="@color/white"
+            android:elevation="@dimen/_2sdp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/_20sdp"
+
+            android:gravity="center"
+            android:id="@+id/new_tv"
+
+            android:textSize="10sp"
+            android:layout_marginBottom="-15dp"
+            android:background="@drawable/circular_red"
+            android:layout_height="@dimen/_26sdp" />
+
+        <androidx.cardview.widget.CardView
+            android:background="#5AAFC9"
+            android:alpha=".2"
+            android:id="@+id/card_bg"
             app:cardCornerRadius="@dimen/card_corner_radius"
-            app:cardElevation="@dimen/card_elevation"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_below="@+id/new_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_160sdp" />
 
-            <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_160sdp"
+            android:layout_below="@+id/new_tv"
+            android:elevation="@dimen/_2sdp">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/heading"
+                style="@style/TextviewRegular"
                 android:layout_width="wrap_content"
-                android:padding="5dp"
-                android:layout_height="match_parent">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivServiceLogo"
-                    android:layout_width="50dp"
-                    android:visibility="gone"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/curved_background14"
-                    android:padding="12dp"
-                    />
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:text="Mom"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/heading"
-                    style="@style/TextviewRegular"
+            <TextView
+                android:id="@+id/title_task"
+                style="@style/TextviewRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_below="@+id/heading"
+                android:layout_marginLeft="@dimen/_14sdp"
+
+                android:layout_marginRight="@dimen/_14sdp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="Make your bed after getting up"
+                android:textColor="@color/text_color_dark"
+
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+                app:layout_constraintTop_toBottomOf="@+id/heading"
+                app:layout_constraintVertical_bias=".4"
+                tools:layout_editor_absoluteX="23dp" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title_task"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:gravity="center"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:weightSum="2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="5dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
-                    android:layout_marginStart="@dimen/margin"
-                    android:layout_marginTop="@dimen/_5sdp"
-                    android:textSize="18sp"
-                    android:gravity="start"
-                    android:layout_centerHorizontal="true"
-                    android:text="@{viewHelper.notification.description}"
-                    android:textColor="@color/black"
-                    />
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/_4sdp"
+                    android:layout_weight="1">
 
+                    <RelativeLayout
+                        android:id="@+id/bg_text"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:alpha=".20"
+                        android:background="@drawable/round_backgorund_20"
+                        app:layout_constraintBottom_toBottomOf="@+id/timeleft"
+                        app:layout_constraintEnd_toEndOf="@+id/timeleft"
+                        app:layout_constraintStart_toStartOf="@+id/timeleft"
+                        app:layout_constraintTop_toTopOf="@+id/timeleft" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/invite"
+                    <TextView
+                        android:id="@+id/timeleft"
+                        style="@style/TextviewRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:elevation="@dimen/_1sdp"
+                        android:gravity="center"
+                        android:maxLines="1"
+
+                        android:paddingLeft="@dimen/_4sdp"
+                        android:paddingTop="@dimen/_7sdp"
+                        android:paddingRight="@dimen/_4sdp"
+                        android:paddingBottom="@dimen/_7sdp"
+                        android:text="1d left"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/amount"
                     style="@style/TextviewRegular"
-                    android:layout_alignParentEnd="true"
-                    android:text="@{viewHelper.notification.amount}"
-                    android:layout_below="@+id/heading"
-                    android:textColor="@color/color_skyblue" />
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_backgorund_20"
+                    android:backgroundTint="@color/white"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingLeft="@dimen/_4sdp"
+                    android:paddingTop="@dimen/_7sdp"
+                    android:paddingRight="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_7sdp"
+                    android:text="₹70"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
 
 
-            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.google.android.material.card.MaterialCardView>
 
+    </RelativeLayout>
 
 
 </RelativeLayout>

@@ -32,7 +32,8 @@ object ApiConstant {
     const val API_USER_TIMELINE = "/services/PockketService/api/user-timeline"
     const val API_GET_TASKMASTER = "/services/loyaltyservice/api/taskMaster"
     const val API_ASSIGN_TASK = "/services/loyaltyservice/api/task/assign/search"
-    const val API_COMPLETED_TASK = "/services/loyaltyservice/api/task/search"
+  const val API_YOUR_TASK =
+    "/services/loyaltyservice/api/task/assign/search?page=0&size=20&sort=createdDate,desc"
 
 
 
@@ -73,15 +74,19 @@ object ApiConstant {
     const val API_GET_STATE = "/services/loyaltyservice/api/states"
     const val API_GET_CITY = "/services/loyaltyservice/api/cities/"
 
-    const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
+  const val API_CHECK_USER_ERROR_CODE = "LOY_5035"
 
-    // pay u test url
+  // pay u test url
 
-    const val PAYU_PRODUCTION_URL = "/merchant/postservice.php?form=2"
+  const val PAYU_PRODUCTION_URL = "/merchant/postservice.php?form=2"
 
-    const val GET_USER_CARDS = "get_user_cards"
+  const val GET_USER_CARDS = "get_user_cards"
 
-    const val CHECK_APP_UPDATE = "/app/version"
+  const val CHECK_APP_UPDATE = "/app/version"
+  const val API_TASK_DETAIL = "/services/PockketService/internal/approval-request/"
+  const val API_TASK_UPDATE = "/services/loyaltyservice/api/task"
+  const val API_HISTORY_TASK =
+    "/services/loyaltyservice/api/task/history?page=0&size=10&sort=createdDate,desc"
 
 }
 

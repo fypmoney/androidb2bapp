@@ -81,7 +81,7 @@
         android:layout_height="27dp"
         android:gravity="center_vertical|center_horizontal"
         android:layout_alignParentRight="true"
-        android:background="@drawable/ic_new_tag"
+
         android:elevation="8dp">
 
         <TextView

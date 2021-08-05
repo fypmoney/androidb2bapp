@@ -59,26 +59,7 @@ class ContactViewHelper(
         }
     }
 
-    /*
- * This method will check the size of selected radio and allow single selection
- * */
-    private fun checkSelectedSizeOfContactList() {
-        when (viewModel.selectedContactList.size) {
-            0, 1 -> {
-                isContactSelected.set(true)
-                if (viewModel.selectedContactList.isNullOrEmpty())
-                    viewModel.selectedContactList.let {
-                    }
 
-            }
-
-            else -> {
-                isContactSelected.set(false)
-                Utility.showToast("Limit reached")
-            }
-        }
-
-    }
 
     /*
     * This method will handle the click of invite option

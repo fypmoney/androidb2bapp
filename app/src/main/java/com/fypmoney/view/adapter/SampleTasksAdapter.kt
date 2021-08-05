@@ -6,29 +6,41 @@ import android.view.View
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import com.fypmoney.R
+import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.AssignedTaskResponse
+import com.fypmoney.util.Utility
 import com.fypmoney.view.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.card_member_image.view.*
 
 import java.util.*
 
-class FamilyAdapter(
-    val items: ArrayList<AssignedTaskResponse>,
+class SampleTasksAdapter(
+    val items: ArrayList<ContactEntity>,
     val context: Context,
-    itemClickListener2: ListItemClickListener
-) : androidx.recyclerview.widget.RecyclerView.Adapter<FamilyAdapter.BaseViewHolder<*>>() {
+   var itemClickListener2: ListItemClickListener
+) : androidx.recyclerview.widget.RecyclerView.Adapter<SampleTasksAdapter.BaseViewHolder<*>>() {
 
-    override fun onBindViewHolder(baseHolder: FamilyAdapter.BaseViewHolder<*>, position: Int) {
+    override fun onBindViewHolder(baseHolder: SampleTasksAdapter.BaseViewHolder<*>, position: Int) {
 
         when (baseHolder) {
-            is FamilyAdapter.ViewHolderAdd -> {
+            is SampleTasksAdapter.ViewHolderAdd -> {
                 var i = 0
             }
-            is FamilyAdapter.ViewHolder -> {
-
+            is SampleTasksAdapter.ViewHolder -> {
+                if (items?.get(position-1)?.profilePicResourceId.isNullOrEmpty()) {
+                    Utility.setImageUsingGlide(
+                        url = items?.get(position-1)?.profilePicResourceId,
+                        imageView = baseHolder.imagee
+                    )
+                }
+                else
+                {
                     Glide.with(context)
-                            .load("https://cdn.shopify.com/s/files/1/2166/2727/products/AAW30010_1024x1024.png?v=1503906545")
-                            .into(baseHolder.imagee)
+                        .load("https://cdn.shopify.com/s/files/1/2166/2727/products/AAW30010_1024x1024.png?v=1503906545")
+                        .into(baseHolder.imagee)
+                }
+
+
 
             }
             else -> throw IllegalArgumentException()
@@ -43,16 +55,16 @@ class FamilyAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) {
-            FamilyAdapter.Companion.TYPE_ADD
+            SampleTasksAdapter.Companion.TYPE_ADD
         } else {
-            FamilyAdapter.Companion.TYPE_IMAGE
+            SampleTasksAdapter.Companion.TYPE_IMAGE
         }
 
 
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FamilyAdapter.BaseViewHolder<*> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SampleTasksAdapter.BaseViewHolder<*> {
 
       return  when (viewType) {
            TYPE_ADD -> {
@@ -82,7 +94,7 @@ class FamilyAdapter(
         abstract fun bind(item: T)
     }
 
-    inner class ViewHolder(view: View) : FamilyAdapter.BaseViewHolder<String>(view), View.OnClickListener {
+    inner class ViewHolder(view: View) : SampleTasksAdapter.BaseViewHolder<String>(view), View.OnClickListener {
 
         val imagee = view.imageView2!!
 
@@ -91,7 +103,7 @@ class FamilyAdapter(
         }
 
         override fun onClick(v: View?) {
-            // Holds the TextView that will add each animal to
+
 
 
         }
@@ -106,11 +118,12 @@ class FamilyAdapter(
 
     }
 
-    inner class ViewHolderAdd(view: View) : FamilyAdapter.BaseViewHolder<String>(view), View.OnClickListener {
+    inner class ViewHolderAdd(view: View) : SampleTasksAdapter.BaseViewHolder<String>(view), View.OnClickListener {
         override fun bind(item: String) {
         }
 
         override fun onClick(v: View?) {
+            itemClickListener2.onCallClicked(0)
 
         }
         init {

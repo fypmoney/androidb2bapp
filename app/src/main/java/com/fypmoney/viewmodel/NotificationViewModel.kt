@@ -1,7 +1,6 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -17,6 +16,9 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.NotificationAdapter
 import com.fypmoney.view.adapter.UserTimeLineAdapter
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 
 /*
 * This class is used for handling notification
@@ -39,6 +41,9 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
         callGetFamilyNotificationApi()
         callUserTimeLineApi()
     }
+
+    var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
+
 
     /*
       * This method is used to refresh on swipe
@@ -64,7 +69,24 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
         )
     }
 
+    fun callTaskAccept(state: String, entityId: String?) {
 
+
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_TASK_UPDATE,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_TASK_UPDATE),
+                request_type = ApiUrl.PUT,
+                SendTaskResponse(
+                    state = state, taskId = entityId,
+                    emojis = "\u1F600",
+                    comments = "ACCEPTED the task"
+                ), onResponse = this,
+                isProgressBar = false
+            )
+
+        )
+    }
     /*
       * This method is used to call user timeline API
       * */
@@ -123,7 +145,15 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
 
                 }
             }
+            ApiConstant.API_TASK_UPDATE -> {
 
+                val json = JsonParser().parse(responseData.toString()) as JsonObject
+                val task = Gson().fromJson(json.get("data"), UpdateTaskGetResponse::class.java)
+
+                bottomSheetStatus.postValue(task)
+
+
+            }
             ApiConstant.API_PAY_MONEY -> {
                 if (responseData is PayMoneyResponse) {
                     Utility.showToast(responseData.msg)

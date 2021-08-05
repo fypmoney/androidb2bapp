@@ -303,6 +303,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.WebpageOpener" />
         <activity android:name=".view.activity.ChoresSelectSampleActivity" />
+        <activity android:name=".view.activity.ContactViewAddMember" />
 
         <receiver
             android:name=".receivers.SmsBroadcastReceiver"

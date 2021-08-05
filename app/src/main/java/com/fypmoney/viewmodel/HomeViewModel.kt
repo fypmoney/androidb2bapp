@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -16,6 +17,9 @@ import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 
 /*
 * This is used as a home screen
@@ -57,6 +61,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     fun onSubmitClicked() {
         onSubmitClicked.value = true
     }
+
+    var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
+
 
     /*
      * This method is used to handle click of user profile
@@ -127,6 +134,25 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     }
 
+    fun callTaskAccept(state: String, entityId: String?) {
+
+
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_TASK_UPDATE,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_TASK_UPDATE),
+                request_type = ApiUrl.PUT,
+                SendTaskResponse(
+                    state = state, taskId = entityId,
+                    emojis = "\u1F600",
+                    comments = "ACCEPTED the task"
+                ), onResponse = this,
+                isProgressBar = false
+            )
+
+        )
+    }
+
     fun callUpdateApprovalRequestApi(
         actionAllowed: String
     ) {
@@ -171,6 +197,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         when (purpose) {
             ApiConstant.API_SNC_CONTACTS -> {
                 if (responseData is ContactResponse) {
+                    Log.d("chacknotification0", responseData.toString())
                     // it update the sync status of the contacts which are synced to server and also update the is app user status based on server response
                     SharedPrefUtils.putString(
                         getApplication(),
@@ -180,7 +207,19 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                     contactRepository.updateIsSyncAndIsAppUserStatus(responseData.contactResponseDetails?.userPhoneContact)
                 }
             }
+            ApiConstant.API_TASK_UPDATE -> {
+
+                val json = JsonParser().parse(responseData.toString()) as JsonObject
+                val task = Gson().fromJson(json.get("data"), UpdateTaskGetResponse::class.java)
+
+                bottomSheetStatus.postValue(task)
+
+
+            }
+
             ApiConstant.API_GET_NOTIFICATION_LIST -> {
+
+                Log.d("chacknotification1", responseData.toString())
                 if (responseData is NotificationModel.NotificationResponse) {
                     notificationSelectedResponse = responseData.notificationResponseDetails[0]
                     onNotificationListener.value = responseData.notificationResponseDetails[0]
@@ -189,12 +228,14 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             }
 
             ApiConstant.API_UPDATE_APPROVAL_REQUEST -> {
+                Log.d("chacknotification4", responseData.toString())
                 if (responseData is UpdateFamilyApprovalResponse) {
                     Utility.showToast("Your action completed successfully")
                 }
             }
 
             ApiConstant.API_PAY_MONEY -> {
+                Log.d("chacknotification2", responseData.toString())
                 if (responseData is PayMoneyResponse) {
                     Utility.showToast("Your action completed successfully")
 

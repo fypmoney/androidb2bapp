@@ -22,6 +22,7 @@ import com.fypmoney.model.yourTaskModal.YourTaskResponse
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.adapter.YourTaskStaggeredAdapter
 import com.fypmoney.viewhelper.GridItemDecoration
+import kotlinx.android.synthetic.main.view_chores.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -52,43 +53,16 @@ class YourTaskFragment : Fragment() ,
         recyclerViewTasks!!.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerViewTasks!!.addItemDecoration(GridItemDecoration(10, 2))
 
-        getTasks()
+
     }
 
 
 
 
-    private fun callAcceptRjectSheet(taskEntity: TaskEntity?) {
-        val bottomSheet =
-            AcceptRejectTaskFragment(
-                taskEntity, this
-            )
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        activity?.let { bottomSheet.show(it.supportFragmentManager, "AcceptRejectBottomSheet") }
-    }
 
     override fun onBottomSheetButtonClick() {
 
     }
 
-    private fun getTasks() {
-        try {
-            val apiInterface = ApiClient1.getClient().create(Allapi::class.java)
-            val task= TaskRequest("","","","")
-            val responseBodyCall = apiInterface.getTask("FYPMONEY","web_app", SharedPrefUtils.SF_KEY_ACCESS_TOKEN,task )
-            responseBodyCall.enqueue(object : Callback<YourTaskResponse> {
-                override fun onResponse(call: Call<YourTaskResponse>, response: Response<YourTaskResponse>) {
-                    val status = response.body()?.data
-                    if (status?.isNotEmpty() == true) {
-                        val taskListAdapter = YourTaskStaggeredAdapter(status)
-                        recyclerViewTasks!!.adapter = taskListAdapter
-                    }
-                }
-                override fun onFailure(call: Call<YourTaskResponse>, t: Throwable) {
-                }
-            })
-        } catch (e: Exception) {
-        }
-    }
 
 }
