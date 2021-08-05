@@ -114,11 +114,9 @@ class FeedsSectionAdapter(
                 AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     try {
-                        youTubePlayer.loadVideo(
+                        youTubePlayer.cueVideo(
                             feedList?.get(position)?.resourceId!!, 0f
                         )
-
-
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

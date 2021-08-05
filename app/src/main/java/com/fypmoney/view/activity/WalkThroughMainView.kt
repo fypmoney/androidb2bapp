@@ -47,7 +47,7 @@ class WalkThroughMainView : BaseActivity<ViewWalkThroughMainBinding, WalkThrough
         viewPagerAdapter.addFragment(WalkThroughOneScreen())
         viewPagerAdapter.addFragment(WalkThroughTwoScreen())
         viewPagerAdapter.addFragment(WalkThroughThreeScreen())
-        mViewBinding.pager.offscreenPageLimit = 3
+        mViewBinding.pager.offscreenPageLimit = 1
         mViewBinding.pager.adapter = viewPagerAdapter
 
         //mViewBinding.tabLayoutIndicator.setupWithViewPager(mViewBinding.pager)
