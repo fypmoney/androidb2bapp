@@ -27,7 +27,6 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
     * */
     fun onContinueClicked() {
         callGetCustomerProfileApi()
-
     }
 
     /*
@@ -73,7 +72,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                     )
                     SharedPrefUtils.putString(
                         getApplication(),
-                        SharedPrefUtils.SF_KEY_USER_DOB, responseData.customerInfoResponseDetails?.dob
+                        SharedPrefUtils.SF_KEY_USER_DOB, responseData.customerInfoResponseDetails?.userProfile?.dob
                     )
 
                     SharedPrefUtils.putString(

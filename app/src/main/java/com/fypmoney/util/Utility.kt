@@ -753,23 +753,22 @@ object Utility {
         inputFormat: String? = AppConstants.SERVER_DATE_TIME_FORMAT1,
         outputFormat: String? = AppConstants.CHANGED_DATE_TIME_FORMAT1
     ): String {
-        if (dateTime != null) {
+        return if (dateTime != null) {
             val input = SimpleDateFormat(inputFormat, Locale.getDefault())
             val output = SimpleDateFormat(outputFormat, Locale.getDefault())
 
             var d: Date? = null
             try {
-                d = input.parse(dateTime!!)
+                d = input.parse(dateTime)
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
-            return output.format(d)
+            output.format(d)
         } else {
-            return ""
+            ""
         }
-
-
     }
+
 
 
     /*

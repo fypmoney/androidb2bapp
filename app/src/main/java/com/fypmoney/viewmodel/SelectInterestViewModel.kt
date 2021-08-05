@@ -29,16 +29,16 @@ class SelectInterestViewModel(application: Application) : BaseViewModel(applicat
     var chooseInterestAdapter = ChooseInterestAdapter(this)
     var noDataFoundVisibility = ObservableField(false)
     var onUpdateProfileSuccess = MutableLiveData<Boolean>()
-    var dobForServer = MutableLiveData<String>()
     var selectedInterestList = ArrayList<InterestEntity>()
-    var interestRepository = InterestRepository(mDB = appDatabase)
-
+    val onAnswerLater = MutableLiveData<Boolean>()
     init {
         callGetInterestApi()
 
     }
 
-
+    fun answerLaterClicked(){
+        onAnswerLater.value = true
+    }
     /*
        * This method is used to call get interest API
        * */
@@ -104,6 +104,11 @@ class SelectInterestViewModel(application: Application) : BaseViewModel(applicat
 
             ApiConstant.API_GET_INTEREST -> {
                 if (responseData is InterestResponse) {
+                    val userInterest =
+                        SharedPrefUtils.getArrayList(getApplication(), SharedPrefUtils.SF_KEY_USER_INTEREST)
+                    responseData.interestDetails?.forEach {
+                        it.isSelected = userInterest?.contains(it.name) == true
+                    }
                     chooseInterestAdapter.setList(responseData.interestDetails)
                     if (chooseInterestAdapter.itemCount == 0) {
                         noDataFoundVisibility.set(true)
