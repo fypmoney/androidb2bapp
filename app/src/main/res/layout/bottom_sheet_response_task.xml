@@ -21,8 +21,8 @@
             android:id="@+id/verification_title"
             style="@style/TextviewRegular"
             android:layout_gravity="center"
-            android:layout_marginTop="96dp"
-            android:text="Water the plants"
+            android:layout_marginTop="66dp"
+            android:text=""
             android:textColor="@color/text_color_dark"
             android:textSize="17dp" />
 
@@ -32,7 +32,7 @@
             android:layout_marginTop="20dp"
             android:id="@+id/descrip"
 
-            android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
+            android:text=""
             android:textAlignment="center" />
 
 
@@ -42,7 +42,7 @@
             android:layout_marginTop="20dp"
 
             android:id="@+id/bywhom"
-            android:text="By Ankush Bro"
+
             android:textColor="@color/text_color_dark"
             android:textAlignment="center" />
 

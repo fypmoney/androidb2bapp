@@ -62,7 +62,8 @@ class TaskMessageBottomSheet2(
         if (model?.currentState == "REJECT") {
             view.card_title.text = "Task Rejected!"
             btnOtp.text = "Continue"
-            view.task_details.text = "You have rejected the task assigned"
+            view.task_details.text =
+                "You have rejected the task assigned by ${model?.requesterName}"
 
             view.message_image.setImageDrawable(
                 ContextCompat.getDrawable(
@@ -74,7 +75,7 @@ class TaskMessageBottomSheet2(
             view.card_title.text = "Task Accepted"
             btnOtp.text = "Continue"
             view.task_details.text =
-                "You have accepted the task assigned by your mom. All the best!"
+                "You have accepted the task assigned by ${model?.requesterName}. All the best!"
             view.message_image.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(),

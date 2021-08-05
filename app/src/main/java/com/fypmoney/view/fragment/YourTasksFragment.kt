@@ -40,7 +40,7 @@ class YourTasksFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        root = inflater.inflate(R.layout.fragment_assigned_task, container, false)
+        root = inflater.inflate(R.layout.fragment_your_task, container, false)
         setRecyclerView(root!!)
 
         ChoresActivity.mViewModel!!.YourAssigned.observe(

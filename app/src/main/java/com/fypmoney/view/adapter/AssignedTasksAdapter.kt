@@ -38,14 +38,17 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        if (items[position].requesterName != null && items[position].requesterName!!.isNotEmpty()) {
+            holder.heading.text = items[position].requesterName
+        }
         if (items[position].title != null && items[position].title!!.isNotEmpty()) {
-            holder.heading.text = items[position].title
+            holder.title_task.text = items[position].title
         }
         if (items[position].remainingTime != null && items[position].remainingTime!!.isNotEmpty()) {
             holder.timeleft.text = items[position].remainingTime
         }
         if (items[position].amount != null) {
-            holder.invite.text = "₹ " + items[position].amount.toString()
+            holder.invite.text = "₹" + items[position].amount.toString()
         }
         holder.card.setOnClickListener(View.OnClickListener {
             clickInterface.onItemClicked(position)
@@ -126,6 +129,7 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
         var invite = view.amount
         var bg_text = view.bg_text
         var timeleft = view.timeleft
+        var title_task = view.title_task
 
 //
 

@@ -96,6 +96,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         mViewModel!!.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
             bottomSheetMessage?.dismiss()
             taskMessageBottomSheet3?.dismiss()
+            bottomSheet?.dismiss()
             if (list.currentState == "ACCEPT") {
 
                 callTaskMessageSheet(list)

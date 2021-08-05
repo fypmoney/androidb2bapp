@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -260,6 +261,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
                 val returnValue: ContactEntity? = data?.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE)
                 if (returnValue != null) {
                     var member = MemberEntity()
+                    Log.d("chackid", returnValue.id.toString())
                     member.id = returnValue.id
                     member.mobileNo = returnValue.contactNumber
                     member.name = returnValue.firstName

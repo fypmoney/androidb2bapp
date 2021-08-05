@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.fypmoney.R
 import com.fypmoney.model.SampleTaskModel
+import com.fypmoney.util.Utility
 import com.fypmoney.view.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.card_sample_item.view.*
 
@@ -31,22 +32,28 @@ class SampleTaskAdapter(
                 })
             }
             is ViewHolder -> {
-                if (!items[position - 1].description.isNullOrEmpty()) {
+                if (!items[position - 1].name.isNullOrEmpty()) {
 
-                    baseHolder.heading.text = items[position - 1].description
+                    baseHolder.heading.text = items[position - 1].name
 
 
                 }
                 if (!items[position - 1].amount.isNullOrEmpty()) {
 
-                    baseHolder.amount.text = "₹" + items[position - 1].amount
+                    baseHolder.amount.text =
+                        "₹" + Utility.convertToRs(items[position - 1].amount.toString())
 
                 }
 
                 baseHolder.view.setOnClickListener(View.OnClickListener {
                     itemClickListener2.onItemClicked(position - 1)
                 })
-                baseHolder.days.text = items[position - 1].numberOfDays.toString() + " day"
+                if (items[position - 1].numberOfDays!! > 1) {
+                    baseHolder.days.text = items[position - 1].numberOfDays.toString() + " days"
+                } else {
+                    baseHolder.days.text = items[position - 1].numberOfDays.toString() + " day"
+                }
+
 
                 if (position % 4 == 0) {
                     baseHolder.card_bg.background.setTint(

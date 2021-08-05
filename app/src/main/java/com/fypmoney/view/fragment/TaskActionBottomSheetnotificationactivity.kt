@@ -16,6 +16,7 @@ import com.fypmoney.databinding.BottomSheetResponseTaskBinding
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.*
 
 
 class TaskActionBottomSheetnotificationactivity(
@@ -51,6 +52,9 @@ class TaskActionBottomSheetnotificationactivity(
         val btnOtp = view.findViewById<Button>(R.id.accept)!!
         btnOtp.setOnClickListener(View.OnClickListener {
             onClickListener.onAcceptClicked(0)
+        })
+        view.reject.setOnClickListener(View.OnClickListener {
+            onClickListener.onRejectClicked(0)
         })
 //        view.amount.text="₹"+list.additionalAttributes?.amount
 //        view.days_left.text=list.additionalAttributes?.numberOfDays.toString()+" days"

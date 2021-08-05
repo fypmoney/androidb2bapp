@@ -106,6 +106,9 @@ class TaskActionBottomSheet(
         } else if (list.actionAllowed?.isEmpty() == true) {
             view.comment.visibility = View.GONE
             view.lin.visibility = View.GONE
+            view.bywhom.visibility = View.VISIBLE
+            view.bywhom.text = "By " + list.sourceUserName
+
         }
         view.amount.text = "₹" + list.additionalAttributes?.amount
         view.days_left.text = list.additionalAttributes?.numberOfDays.toString() + " days"
