@@ -34,7 +34,10 @@ import com.freshchat.consumer.sdk.FreshchatConfig
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.CASHBACK_AMOUNT
+import com.fypmoney.util.AppConstants.PLAY_STORE_URL
 import com.fypmoney.util.DialogUtils
+import com.fypmoney.util.Utility
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.concurrent.Executor
@@ -356,6 +359,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
 
     }
 
+
     /*
        * This is used to share the app
        * */
@@ -364,7 +368,9 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         sendIntent.action = Intent.ACTION_SEND
         sendIntent.putExtra(
             Intent.EXTRA_TEXT,
-            "Hey check out my app at: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID
+            getString(R.string.share_refral_code,
+                Utility.getCustomerDataFromPreference()?.referralCode,CASHBACK_AMOUNT,PLAY_STORE_URL
+            )
         )
         sendIntent.type = "text/plain"
         startActivity(sendIntent)

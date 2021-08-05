@@ -178,5 +178,6 @@ object AppConstants {
     const val CLIENT_TYPE = "Client_Type"
     const val CLIENT_TYPE_VALUE = "ANDROID"
     const val NOT_ALLOWED_MSG = "Invalid Version. Please uninstall your current app and install it from Play Store again."
-
+    const val PLAY_STORE_URL = "http://onelink.to/fypmoney"
+    const val CASHBACK_AMOUNT = "25"
 }

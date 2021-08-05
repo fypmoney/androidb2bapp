@@ -3,81 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.fypmoney">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-    <uses-permission
-        android:name="android.permission.USE_BIOMETRIC"
-        android:requiredFeature="false" />
-
-
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.VIEW" />
-
-            <category android:name="android.intent.category.DEFAULT" />
-            <category android:name="android.intent.category.BROWSABLE" />
-
-            <data
-                android:host="pay"
-                android:scheme="upi" />
-        </intent>
-    </queries>
     <application
         android:name=".application.PockketApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DreamfolksApp"
         android:usesCleartextTraffic="true"
-        tools:replace="android:usesCleartextTraffic"
-        tools:ignore="UnusedAttribute">
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.fypmoney.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/freshchat_file_provider_paths" />
-        </provider>
-
-
-
-        <meta-data
-            android:name="payu_debug_mode_enabled"
-            android:value="false" />
-
+        tools:ignore="UnusedAttribute"
+        tools:replace="android:usesCleartextTraffic">
+        <activity
+            android:name=".view.referandearn.view.ReferAndEarnActivity"
+            android:exported="true" />
 
         <activity
-                    android:name=".view.activity.AddTaskActivity"
+            android:name=".view.activity.AddTaskActivity"
             android:label="@string/title_activity_add_task"
-            android:screenOrientation="portrait"
-    />
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".view.activity.ChoresHistoryActivity"
             android:label="@string/title_activity_chores_history"
-            android:screenOrientation="portrait"
-         />
-
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id" />
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.SplashView"
@@ -91,176 +42,127 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.activity.WalkThroughMainView"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
 
-        />
-
         <activity
             android:name=".view.activity.PlaceOrderCardView"
-            android:screenOrientation="portrait"
-          />
+            android:screenOrientation="portrait" />
+
         <activity
             android:name=".view.activity.OrderCardView"
-            android:screenOrientation="portrait"
-           />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.SetPinView"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
         <activity
             android:name=".view.activity.AddMoneyView"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
-
-
         <activity
             android:name=".view.activity.TrackOrderView"
-            android:screenOrientation="portrait"
             android:hardwareAccelerated="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
-
-
         <activity
             android:name=".view.activity.FirstScreenView"
-            android:screenOrientation="portrait"
-            >
-
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".view.activity.BankTransactionHistoryView"
-            android:screenOrientation="portrait"
-        />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.LoginView"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.SelectInterestView"
-            android:screenOrientation="portrait"
-           />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.EnterOtpView"
-            android:screenOrientation="portrait"
-       />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CreateAccountView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.LoginSuccessView"
             android:noHistory="true"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.PermissionView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ContactListView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.EnterAmountForPayRequestView"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="adjustPan" />
-
         <activity
             android:name=".view.activity.PayRequestProfileView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ReferralCodeView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CreateAccountSuccessView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CommunityView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.MainActivity"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ContactView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.HomeView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.UserProfileView"
-            android:screenOrientation="portrait"
-             />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.NotificationView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.MemberView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.AddMemberView"
             android:screenOrientation="portrait"
-
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.activity.UserFeedsDetailView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ChoresActivity"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.InviteRejectedView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.AccountActivationSuccessView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.StayTunedView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.InviteMemberView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.AadhaarAccountActivationView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.AadhaarVerificationView"
-            android:screenOrientation="portrait"
-             />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.TransactionHistoryView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ActivationSuccessWithAadhaarView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.PushNotificationView"
             android:screenOrientation="portrait">
@@ -270,40 +172,55 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".view.activity.AddMoneyUpiDebitView"
-            android:screenOrientation="portrait"
-             />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.PayUSuccessView"
-            android:screenOrientation="portrait"
-             />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.QrCodeScannerView"
-            android:screenOrientation="portrait"
-             />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CaptureActivityPortrait"
             android:screenOrientation="sensorPortrait"
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
-
         <activity
             android:name=".view.activity.ImagePickerView"
-            android:screenOrientation="portrait"
-             />
-
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.WebpageOpener" />
         <activity android:name=".view.activity.ChoresSelectSampleActivity" />
+        <meta-data
+            android:name="payu_debug_mode_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.fypmoney.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/freshchat_file_provider_paths" />
+        </provider>
 
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.fypmoney.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
         <receiver
             android:name=".receivers.SmsBroadcastReceiver"
             android:exported="true">
@@ -311,6 +228,7 @@
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
             </intent-filter>
         </receiver>
+
         <receiver android:name=".receivers.GeofenceBroadcastReceiver" />
 
         <service
@@ -322,15 +240,35 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="com.fypmoney.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
     </application>
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+
+            <data
+                android:host="pay"
+                android:scheme="upi" />
+        </intent>
+    </queries>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission
+        android:name="android.permission.USE_BIOMETRIC"
+        android:requiredFeature="false" />
 
 </manifest>

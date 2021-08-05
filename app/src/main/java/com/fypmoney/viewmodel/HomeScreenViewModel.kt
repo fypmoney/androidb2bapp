@@ -43,6 +43,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     var latitude = ObservableField<Double>()
     val longitude = ObservableField<Double>()
     val fromWhichScreen = ObservableField(0)
+    var onReferalAndCodeClicked = MutableLiveData<Boolean>()
 
     val topTenUsersResponse:LiveData<TopTenUsersResponse>
         get() = _topTenUserResponse
@@ -67,6 +68,12 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     fun onPayClicked() {
         onPayClicked.value = true
 
+    }
+
+
+
+    fun onReferralAndCodeClicked() {
+        onReferalAndCodeClicked.value = true
     }
 
     /*

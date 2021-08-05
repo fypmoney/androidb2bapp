@@ -22,6 +22,7 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.TopTenUsersAdapter
+import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
 import com.fypmoney.viewmodel.HomeScreenViewModel
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.screen_home.*
@@ -93,6 +94,12 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>(),
             if (it) {
                 callActivity(AddMoneyView::class.java)
                 mViewModel.onAddMoneyClicked.value = false
+            }
+        }
+        mViewModel.onReferalAndCodeClicked.observe(viewLifecycleOwner) {
+            if (it) {
+                callActivity(ReferAndEarnActivity::class.java)
+                mViewModel.onReferalAndCodeClicked.value = false
             }
         }
         mViewModel.onPayClicked.observe(viewLifecycleOwner) {

@@ -36,6 +36,7 @@
     <dimen name="textViewMarginTop">11dp</dimen>
     <dimen name="dp16">16dp</dimen>
     <dimen name="dp10">10dp</dimen>
+    <dimen name="dp20">20dp</dimen>
 
 
 </resources>
