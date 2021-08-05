@@ -22,7 +22,9 @@ import com.google.gson.JsonParser
 class CreateTaskViewModel(application: Application) : BaseViewModel(application),
     CreateTaskAdapter.OnSampleTaskClickListener {
     var sampleTaskAdapter = CreateTaskAdapter(this, this)
-
+    var sampleTaskList: MutableLiveData<ArrayList<SampleTaskModel.SampleTaskDetails>> =
+        MutableLiveData()
+    var loading = MutableLiveData(true)
     var noDataFoundVisibility = ObservableField(false)
     var isPreviousVisible = ObservableField(false)
     var isTimeLineNoDataVisible = ObservableField(false)
@@ -65,6 +67,7 @@ class CreateTaskViewModel(application: Application) : BaseViewModel(application)
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         isLoading.set(false)
+        loading.postValue(false)
       when (purpose) {
 
             ApiConstant.API_GET_TASKMASTER -> {
@@ -75,7 +78,7 @@ class CreateTaskViewModel(application: Application) : BaseViewModel(application)
 
                 val array =  Gson().fromJson<Array<SampleTaskModel.SampleTaskDetails>>(json.get("data").toString(), Array<SampleTaskModel.SampleTaskDetails>::class.java)
                 val arrayList = ArrayList(array.toMutableList())
-                sampleTaskAdapter.setList(arrayList)
+                sampleTaskList.postValue(arrayList)
 
             }
 
@@ -91,7 +94,8 @@ class CreateTaskViewModel(application: Application) : BaseViewModel(application)
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         isLoading.set(false)
-        Log.d("chacksample",errorResponseInfo.msg)
+        loading.postValue(false)
+        Log.d("chacksample", errorResponseInfo.msg)
 
     }
 

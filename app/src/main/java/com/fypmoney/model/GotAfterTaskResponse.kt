@@ -25,5 +25,6 @@ data class GotAfterTaskResponse(
 	val isPayable: String? = null,
 	val isPaymentCompleted: String? = null,
 	val status: String? = null
+
 )
 

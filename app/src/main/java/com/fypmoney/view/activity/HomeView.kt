@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -16,10 +15,13 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewHomeBinding
 import com.fypmoney.model.NotificationModel
+import com.fypmoney.model.UpdateTaskGetResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.*
+import com.fypmoney.view.interfaces.AcceptRejectClickListener
+import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.view_home.*
 
@@ -30,6 +32,8 @@ import kotlinx.android.synthetic.main.view_home.*
 class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     Utility.OnAllContactsAddedListener, FamilyNotificationBottomSheet.OnBottomSheetClickListener,
     RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener {
+    private var taskMessageBottomSheet3: TaskActionBottomSheetnotification? = null
+    private var bottomSheetMessage: TaskMessageBottomSheet3? = null
     private lateinit var mViewModel: HomeViewModel
     private lateinit var mViewBinding: ViewHomeBinding
 
@@ -154,14 +158,84 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                     callRequestMoneyBottomSheet()
                 }
                 AppConstants.NOTIFICATION_TYPE_ADD_TASK -> {
-
+                    if (it.actionAllowed == "ACCEPTED,REJECTED") {
+                        callTaskActionSheet(it)
+                    } else if (it.actionAllowed == "CANCEL") {
+                        callTaskMessageSheet(it)
+                    }
                 }
             }
 
         }
+        mViewModel!!.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
+            bottomSheetMessage?.dismiss()
+            taskMessageBottomSheet3?.dismiss()
+            if (list.currentState == "ACCEPT") {
+
+                callTaskMessageSheet(list)
+            }
+            if (list.currentState == "REJECT") {
+
+                callTaskMessageSheet(list)
+            }
+            if (list.currentState == "CANCEL") {
+
+                callTaskMessageSheet(list)
+            }
+        })
 
     }
 
+    private fun callTaskMessageSheet(list: NotificationModel.NotificationResponseDetails?) {
+        var itemClickListener2 = object : MessageSubmitClickListener {
+            override fun onSubmit() {
+
+            }
+
+        }
+        bottomSheetMessage =
+            TaskMessageBottomSheet3(itemClickListener2, list, list?.entityId)
+        bottomSheetMessage?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetMessage?.show(supportFragmentManager, "TASKMESSAGE")
+    }
+
+    private fun callTaskMessageSheet(list: UpdateTaskGetResponse?) {
+        var itemClickListener2 = object : MessageSubmitClickListener {
+            override fun onSubmit() {
+
+            }
+
+        }
+        val bottomSheet =
+            TaskMessageBottomSheet2(itemClickListener2, list, list?.id?.toString())
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "TASKMESSAGE")
+    }
+
+
+    private fun callTaskActionSheet(list: NotificationModel.NotificationResponseDetails?) {
+        var itemClickListener2 = object : AcceptRejectClickListener {
+            override fun onAcceptClicked(pos: Int) {
+                mViewModel!!.callTaskAccept("ACCEPT", list?.entityId)
+
+
+            }
+
+            override fun onRejectClicked(pos: Int) {
+                mViewModel!!.callTaskAccept("REJECT", list?.entityId)
+
+
+            }
+
+            override fun ondimiss() {
+
+            }
+        }
+        taskMessageBottomSheet3 =
+            TaskActionBottomSheetnotification(itemClickListener2, list)
+        taskMessageBottomSheet3?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        taskMessageBottomSheet3?.show(supportFragmentManager, "TASKACCEPTREJECT")
+    }
     /**
      * Method to navigate to the different activity
      */

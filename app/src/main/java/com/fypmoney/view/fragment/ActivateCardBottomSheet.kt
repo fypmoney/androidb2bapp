@@ -22,9 +22,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mukesh.OtpView
 import kotlinx.android.synthetic.main.view_enter_otp.*
 
-/*
-* This is used to show activate card
-* */
+
 class ActivateCardBottomSheet(var onActivateCardClickListener: OnActivateCardClickListener) :
     BottomSheetDialogFragment() {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme

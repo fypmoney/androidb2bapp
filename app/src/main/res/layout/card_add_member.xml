@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="70dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
     android:layout_marginLeft="12dp"
 
     android:layout_marginTop="6dp"
     android:layout_marginBottom="6dp"
-    app:cardCornerRadius="@dimen/_12sdp"
-    android:layout_height="70dp"
-    android:backgroundTint="#BAE6C2"
-
-    app:cardElevation="@dimen/card_elevation"
-
+    android:orientation="vertical"
+    android:layout_height="wrap_content"
     android:foreground="?android:attr/selectableItemBackground"
-    android:clickable="true"
->
+    android:clickable="true">
+
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="@dimen/_18sdp"
+        android:backgroundTint="#BAE6C2"
+
+        app:cardElevation="@dimen/card_elevation"
 
 
+        android:layout_width="@dimen/_54sdp"
+        android:layout_height="@dimen/_54sdp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -35,12 +43,35 @@
 
                 />
 
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/imageView2"
+        android:id="@+id/name_tv"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_gravity="center_horizontal"
+        style="@style/TextviewRegular"
+        android:textColor="@color/text_color_light"
+        android:layout_centerHorizontal="true"
+        android:text="Add"
+        android:layout_height="wrap_content" />
+</LinearLayout>
 
 
 
 
 
-    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+
+
+
+
+
 
 
 

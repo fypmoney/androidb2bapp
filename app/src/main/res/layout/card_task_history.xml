@@ -1,120 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_marginLeft="@dimen/_8sdp"
+    android:layout_marginRight="@dimen/_8sdp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_weight="1"
+    app:cardCornerRadius="@dimen/card_corner_radius"
+    app:cardElevation="@dimen/card_elevation"
+    app:cardUseCompatPadding="true"
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_main"
-        android:layout_width="match_parent"
-        app:cardElevation="6dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        app:cardCornerRadius="14dp"
-        android:layout_height="wrap_content">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-        <LinearLayout
-            android:gravity="center_horizontal|center_vertical"
-            android:orientation="vertical"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivServiceLogo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:background="@drawable/curved_background18"
+            android:padding="12dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/heading"
+            style="@style/TextviewRegular"
+            android:layout_alignTop="@+id/ivServiceLogo"
+            android:layout_alignBottom="@+id/ivServiceLogo"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_toEndOf="@+id/ivServiceLogo"
+            android:layout_toLeftOf="@+id/amount"
+            android:gravity="start"
+
+            android:textColor="@color/text_color_dark"
+            android:textSize="18dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/amount"
+            android:layout_alignParentRight="true"
+            style="@style/TextviewRegular"
+            android:layout_alignTop="@+id/ivServiceLogo"
+            android:layout_alignBottom="@+id/ivServiceLogo"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+
+            android:gravity="start"
+
+            android:textColor="@color/text_color_dark"
+            android:textSize="18dp" />
+
+        <View
+            android:id="@+id/view1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="2dp"
+            android:layout_below="@id/ivServiceLogo"
+            android:layout_marginTop="10dp"
+            android:background="@color/dividerColor" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_marginTop="5dp"
-                android:id="@+id/label"
-                android:layout_marginRight="@dimen/_12sdp"
-                android:layout_marginLeft="@dimen/_12sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:textAlignment="textStart"
-                android:gravity="left"
-                android:fontFamily="@font/product_sans_regular"
-                android:textColor="@android:color/black"
-                tools:text="Random image name"
-                tools:ignore="RtlCompat" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/heading1"
+            style="@style/TextviewRegular"
+            android:layout_below="@+id/view1"
+            android:layout_marginTop="@dimen/margin"
+            android:gravity="start" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_marginTop="25dp"
-                android:id="@+id/amount"
-                android:layout_marginRight="@dimen/_12sdp"
-                android:layout_marginLeft="@dimen/_12sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:textAlignment="textEnd"
-                android:gravity="right"
-                android:fontFamily="@font/product_sans_regular"
-                android:textColor="@color/color_skyblue"
-                tools:ignore="RtlCompat" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/givenby"
+            style="@style/TextviewRegular"
+            android:layout_below="@+id/heading1"
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_marginTop="-15dp"
-                android:id="@+id/relation"
-                android:layout_marginRight="@dimen/_12sdp"
-                android:layout_marginLeft="@dimen/_12sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:textAlignment="textEnd"
-                android:gravity="right"
-                android:fontFamily="@font/product_sans_regular"
-                android:textColor="@color/black"
-                tools:text="Mom"
-                tools:ignore="RtlCompat" />
+            android:layout_alignParentEnd="true"
 
-        </LinearLayout>
+            android:textColor="@color/text_color_dark" />
 
-    </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
-    <androidx.cardview.widget.CardView
-        android:visibility="gone"
-        android:id="@+id/card_add"
-        android:layout_width="match_parent"
-        app:cardElevation="6dp"
-        app:cardBackgroundColor="@color/split_bills_background"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp"
-        app:cardCornerRadius="14dp"
-        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:gravity="center_horizontal|center_vertical"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_marginTop="30dp"
-                android:background="@drawable/ic_plus"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_50sdp"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/ttl"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="30dp"
-                android:layout_marginRight="@dimen/_12sdp"
-                android:layout_marginLeft="@dimen/_12sdp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="8dp"
-                android:textAlignment="center"
-                android:gravity="left"
-                android:textSize="16sp"
-                android:fontFamily="@font/product_sans_regular"
-                android:textColor="@android:color/black"
-                tools:text="@string/create_own_task"
-                tools:ignore="RtlCompat" />
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

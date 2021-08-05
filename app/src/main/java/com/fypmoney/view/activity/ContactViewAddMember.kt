@@ -94,14 +94,6 @@ class ContactViewAddMember : BaseActivity<ViewContactsBinding, ContactViewModel>
 
     }
 
-    /**
-     * Method to navigate to the different activity
-     */
-    private fun intentToActivity(contactEntity: ContactEntity, aClass: Class<*>) {
-        val intent = Intent(this@ContactViewAddMember, aClass)
-        intent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, contactEntity)
-        startActivity(intent)
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int, permissions: Array<String>, grantResults: IntArray

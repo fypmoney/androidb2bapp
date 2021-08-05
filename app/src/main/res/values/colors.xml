@@ -47,6 +47,10 @@
     <color name="color_pink">#FFD3D7</color>
     <color name="color_orange">#F7AA11</color>
     <color name="color_little_light_green">#DEF7E3</color>
+    <color name="color_task_card_blue">#5AAFC9</color>
+    <color name="color_task_card_pink">#FF4856</color>
+    <color name="color_task_card_orange">#F7AA11</color>
+    <color name="color_task_card_green">#8ECC9A</color>
 
 
 </resources>

@@ -1,48 +1,42 @@
 package com.fypmoney.view.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.connectivity.retrofit.Allapi
-import com.fypmoney.connectivity.retrofit.ApiClient1
 import com.fypmoney.database.entity.TaskEntity
 import com.fypmoney.databinding.ActivityChoresHistoryBinding
 import com.fypmoney.databinding.ViewChoresBinding
-import com.fypmoney.model.chaoseHistory.ChoresHistoryResponse
+import com.fypmoney.model.HistoryModelResponse
 import com.fypmoney.util.AppConstants
-import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.view.adapter.TaskHistoryStaggeredAdapter
+import com.fypmoney.view.adapter.CompletedTasksAdapter
 import com.fypmoney.view.fragment.*
-import com.fypmoney.viewhelper.GridItemDecoration
-import com.fypmoney.viewmodel.ChoresViewModel
+import com.fypmoney.view.interfaces.ListItemClickListener
+import com.fypmoney.viewmodel.ChoresHistoryViewModel
 import kotlinx.android.synthetic.main.toolbar.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.android.synthetic.main.view_add_task.*
 
-class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>() ,
+class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresHistoryViewModel>(),
     ProcessCompleteBSFragment.OnPBottomSheetClickListener,
     GoodJobBSFragment.OnGjBottomSheetClickListener,
     WellDoneBSFragment.OnWDBottomSheetClickListener,
     WhoopsBSFragment.OnWPBottomSheetClickListener,
-    YayBSFragment.OnYyBottomSheetClickListener{
-    private lateinit var mViewModel: ChoresViewModel
-    var mbindign: ActivityChoresHistoryBinding?=null
+    YayBSFragment.OnYyBottomSheetClickListener {
+    private var itemsArrayList: ArrayList<HistoryModelResponse> = ArrayList()
+
+
+    private var typeAdapter: CompletedTasksAdapter? = null
+    private lateinit var mViewModel: ChoresHistoryViewModel
+    var mbindign: ActivityChoresHistoryBinding? = null
     var taskDetailsData = ObservableField<TaskEntity>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mbindign= ActivityChoresHistoryBinding.inflate(layoutInflater)
+        mbindign = ActivityChoresHistoryBinding.inflate(layoutInflater)
         setContentView(mbindign!!.root)
 
         setToolbarAndTitle(
@@ -54,9 +48,7 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>()
 
 
 
-        mbindign!!.btnContinue.setOnClickListener {
-            callYaySheet(taskDetailsData.get())
-        }
+
 
         mbindign!!.cardCreate.setOnClickListener {
             intentToAddMemberActivity(AddTaskActivity::class.java)
@@ -78,10 +70,12 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>()
             callWhoopSheet(taskDetailsData.get())
         }
 
-        mbindign!!.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        mbindign!!.recyclerView.addItemDecoration(GridItemDecoration(10, 2))
-
-        getHistory()
+        mViewModel!!.TaskHistory.observe(this, androidx.lifecycle.Observer { list ->
+            itemsArrayList.clear()
+            itemsArrayList.addAll(list)
+            typeAdapter!!.notifyDataSetChanged()
+        })
+        setRecyclerView()
 
     }
 
@@ -112,6 +106,29 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>()
 
     }
 
+    private fun setRecyclerView() {
+
+
+        var itemClickListener2 = object : ListItemClickListener {
+
+
+            override fun onItemClicked(pos: Int) {
+
+
+            }
+
+            override fun onCallClicked(pos: Int) {
+
+            }
+        }
+
+
+        typeAdapter =
+            CompletedTasksAdapter(itemsArrayList, this, itemClickListener2!!)
+        mbindign!!.recyclerView.adapter = typeAdapter
+
+
+    }
 
     private fun callProcessSheet(taskEntity: TaskEntity?) {
         val bottomSheet =
@@ -149,14 +166,6 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>()
         bottomSheet.show(supportFragmentManager, "AcceptRejectBottomSheet")
     }
 
-    private fun callYaySheet(taskEntity: TaskEntity?) {
-        val bottomSheet =
-            YayBSFragment(
-                taskEntity, this
-            )
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "AcceptRejectBottomSheet")
-    }
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -166,32 +175,9 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>()
         return R.layout.activity_chores_history
     }
 
-    override fun getViewModel(): ChoresViewModel {
-        mViewModel = ViewModelProvider(this).get(ChoresViewModel::class.java)
+    override fun getViewModel(): ChoresHistoryViewModel {
+        mViewModel = ViewModelProvider(this).get(ChoresHistoryViewModel::class.java)
         return mViewModel
-    }
-
-    private fun getHistory() {
-        try {
-            val apiInterface = ApiClient1.getClient().create(Allapi::class.java)
-            val responseBodyCall = apiInterface.getChoresHistory("web_app", SharedPrefUtils.SF_KEY_ACCESS_TOKEN)
-            responseBodyCall.enqueue(object : Callback<ChoresHistoryResponse> {
-                override fun onResponse(call: Call<ChoresHistoryResponse>, response: Response<ChoresHistoryResponse>) {
-                    val status = response.body()?.data
-                    val adapter = status?.let {
-                        TaskHistoryStaggeredAdapter(
-                            this@ChoresHistoryActivity,
-                            it
-                        )
-                    }
-                    mbindign!!.recyclerView.adapter = adapter
-                }
-                override fun onFailure(call: Call<ChoresHistoryResponse>, t: Throwable) {
-
-                }
-            })
-        } catch (e: Exception) {
-        }
     }
 
 

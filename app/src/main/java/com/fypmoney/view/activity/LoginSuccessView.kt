@@ -68,7 +68,7 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                     intentToActivity(AadhaarAccountActivationView::class.java)
                 }
                 else->{
-                    intentToActivity(AadhaarAccountActivationView::class.java)
+                    intentToActivity(HomeView::class.java)
                 }
 
             }

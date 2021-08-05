@@ -1,119 +1,168 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_marginLeft="@dimen/_12sdp"
-    android:layout_marginRight="@dimen/_12sdp"
-    android:layout_height="@dimen/_160sdp"
+
     android:layout_marginTop="10dp"
     android:layout_weight="1"
-    app:cardCornerRadius="@dimen/card_corner_radius"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="@dimen/_26sdp"
+            android:text="New"
+            android:textColor="@color/white"
+            android:elevation="@dimen/_2sdp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/_20sdp"
+
+            android:gravity="center"
+            android:id="@+id/new_tv"
+
+            android:textSize="10sp"
+            android:layout_marginBottom="-15dp"
+            android:background="@drawable/circular_red"
+            android:layout_height="@dimen/_26sdp" />
+
+        <androidx.cardview.widget.CardView
+            android:background="#5AAFC9"
+            android:alpha=".2"
+            android:id="@+id/card_bg"
+            app:cardCornerRadius="@dimen/card_corner_radius"
+            android:layout_below="@+id/new_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_160sdp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_160sdp"
+            android:layout_below="@+id/new_tv"
+            android:elevation="@dimen/_2sdp">
 
 
-<androidx.cardview.widget.CardView
-    android:backgroundTint="#5AAFC9"
-    android:alpha=".2"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/heading"
+                style="@style/TextviewRegular"
+                android:layout_width="wrap_content"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:text="Mom"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title_task"
+                style="@style/TextviewRegular"
                 android:layout_width="match_parent"
-                android:elevation="@dimen/_2sdp"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
 
+                android:layout_below="@+id/heading"
+                android:layout_marginLeft="@dimen/_14sdp"
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/heading"
-                    style="@style/TextviewRegular"
-                    android:layout_marginTop="20dp"
+                android:layout_marginRight="@dimen/_14sdp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:text="Make your bed after getting up"
+                android:textColor="@color/text_color_dark"
 
+                android:textSize="18sp"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+                app:layout_constraintTop_toBottomOf="@+id/heading"
+                app:layout_constraintVertical_bias=".4"
+                tools:layout_editor_absoluteX="23dp" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/title_task"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:gravity="center"
+                android:paddingLeft="@dimen/_10sdp"
+                android:paddingRight="@dimen/_10sdp"
+                android:weightSum="2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="5dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="start"
-                    android:text="Mom"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/title_task"
-                    style="@style/TextviewRegular"
-                    android:ellipsize="end"
-                    android:layout_width="match_parent"
-
                     android:layout_height="wrap_content"
-                    app:layout_constraintVertical_bias=".4"
+                    android:layout_marginRight="@dimen/_4sdp"
+                    android:layout_weight="1">
 
-                    android:layout_below="@+id/heading"
-                    android:gravity="center"
-                    android:layout_marginLeft="@dimen/_14sdp"
-                    android:layout_marginRight="@dimen/_14sdp"
-                    android:text="Make your bed after getting up"
-
-                    android:textColor="@color/text_color_dark"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-                    app:layout_constraintTop_toBottomOf="@+id/heading"
-                    tools:layout_editor_absoluteX="23dp" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayout2"
-                    android:paddingLeft="@dimen/_10sdp"
-                    android:paddingRight="@dimen/_10sdp"
-                    android:layout_marginBottom="@dimen/_14sdp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/title_task"
-                    android:gravity="center"
-                    android:weightSum="2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    tools:layout_editor_absoluteX="5dp">
+                    <RelativeLayout
+                        android:id="@+id/bg_text"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:alpha=".20"
+                        android:background="@drawable/round_backgorund_20"
+                        app:layout_constraintBottom_toBottomOf="@+id/timeleft"
+                        app:layout_constraintEnd_toEndOf="@+id/timeleft"
+                        app:layout_constraintStart_toStartOf="@+id/timeleft"
+                        app:layout_constraintTop_toTopOf="@+id/timeleft" />
 
                     <TextView
-                        style="@style/TextviewRegular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/_4sdp"
-                        android:layout_weight="1"
-                        android:textSize="14sp"
                         android:id="@+id/timeleft"
-                        android:background="@drawable/round_backgorund_20"
+                        style="@style/TextviewRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:elevation="@dimen/_1sdp"
                         android:gravity="center"
+                        android:maxLines="1"
+
                         android:paddingLeft="@dimen/_4sdp"
                         android:paddingTop="@dimen/_7sdp"
                         android:paddingRight="@dimen/_4sdp"
                         android:paddingBottom="@dimen/_7sdp"
                         android:text="1d left"
-                        android:textColor="@color/text_color_dark" />
-
-                    <TextView
-                        style="@style/TextviewRegular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_4sdp"
-                       android:layout_weight="1"
+                        android:textColor="@color/text_color_dark"
                         android:textSize="14sp"
-                        android:background="@drawable/round_backgorund_20"
-                        android:backgroundTint="@color/white"
-                        android:gravity="center"
-                        android:paddingLeft="@dimen/_4sdp"
-                        android:paddingTop="@dimen/_7sdp"
-                        android:paddingRight="@dimen/_4sdp"
-                        android:paddingBottom="@dimen/_7sdp"
-                        android:id="@+id/amount"
-                        android:text="₹70"
-                        android:textColor="@color/text_color_dark" />
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
 
-                </LinearLayout>
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/amount"
+                    style="@style/TextviewRegular"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/round_backgorund_20"
+                    android:backgroundTint="@color/white"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:paddingLeft="@dimen/_4sdp"
+                    android:paddingTop="@dimen/_7sdp"
+                    android:paddingRight="@dimen/_4sdp"
+                    android:paddingBottom="@dimen/_7sdp"
+                    android:text="₹70"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
 
 
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+    </RelativeLayout>
 
 
-</androidx.cardview.widget.CardView>
+</RelativeLayout>

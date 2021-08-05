@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.CreateTaskViewModel" />
+
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/layout"
+        app:onRefreshListener="@{() -> viewModel.onRefresh()}"
+        app:refreshing="@{viewModel.isLoading}">
+
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:fillViewport="true"
+            android:scrollbars="vertical">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <include
+                    android:id="@+id/toolbar_layout"
+                    layout="@layout/toolbar" />
+
+
+                <LinearLayout
+
+                    android:id="@+id/layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/toolbar_layout"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/ivServiceLogo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#231F20"
+                        android:textSize="@dimen/textSize_14"
+                        android:gravity="center"
+                        android:text="Choose a task or create one"
+                        android:layout_gravity="center" />
+
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/layoutServicePrice"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="@dimen/_16sdp"
+                        android:backgroundTint="#BAE6C2"
+                        app:cardCornerRadius="@dimen/card_corner_radius"
+                        app:cardElevation="@dimen/card_elevation"
+                        app:cardUseCompatPadding="true"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:padding="@dimen/_6sdp"
+                            android:id="@+id/createTask"
+                            android:layout_height="match_parent">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+
+                                android:layout_width="50dp"
+
+                                android:layout_marginTop="@dimen/_30sdp"
+                                android:layout_height="50dp"
+                                android:id="@+id/add"
+                                android:layout_gravity="center"
+                                android:layout_centerHorizontal="true"
+
+                                app:srcCompat="@drawable/ic_add"
+
+                                />
+
+                            <TextView
+                                android:layout_below="@+id/add"
+                                android:layout_width="wrap_content"
+                                android:layout_marginTop="@dimen/_12sdp"
+                                android:text="Create your own \ntask"
+                                android:textColor="@color/text_color_dark"
+                                android:gravity="center"
+                                android:layout_height="wrap_content" />
+
+
+                        </RelativeLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/screenMarginLeft"
+
+                        android:paddingEnd="@dimen/screenMarginRight"
+                        app:adapter="@{viewModel.sampleTaskAdapter}"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="2" />
+
+                </LinearLayout>
+
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@id/layout"
+                    android:layout_marginStart="@dimen/screenMarginLeft"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/screenMarginRight"
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/dividerColor"
+                    android:visibility="@{viewModel.isPreviousVisible?View.VISIBLE:View.GONE,default=gone}" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/view1"
+                    android:background="@color/screenBackground"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp"
+                    android:visibility="@{viewModel.isPreviousVisible?View.VISIBLE:View.GONE,default=gone}">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center"
+                        android:visibility="@{viewModel.isTimeLineNoDataVisible?View.VISIBLE:View.GONE,default=gone}"
+                        app:srcCompat="@drawable/ic_oops" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextviewRegular"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/user_timeline_api_error"
+                        android:textColor="@color/text_color_dark"
+                        android:visibility="@{viewModel.isTimeLineNoDataVisible?View.VISIBLE:View.GONE,default=gone}" />
+
+
+                </LinearLayout>
+            </RelativeLayout>
+
+
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

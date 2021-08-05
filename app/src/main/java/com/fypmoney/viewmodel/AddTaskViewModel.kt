@@ -14,9 +14,11 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
+import com.fypmoney.database.MemberRepository
+import com.fypmoney.database.entity.MemberEntity
 import com.fypmoney.model.*
 import com.fypmoney.model.addTaskModal.AddTaskRequest
-import com.fypmoney.view.adapter.RelationTaskAdapter
+import com.fypmoney.util.AppConstants
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -26,28 +28,56 @@ import com.google.gson.JsonParser
 * */
 class AddTaskViewModel(application: Application) : BaseViewModel(application) {
     var onAddMoneyClicked = MutableLiveData(false)
+    var familyMemberList: MutableLiveData<ArrayList<MemberEntity>> = MutableLiveData()
 
     var selectedRelationList = ObservableArrayList<RelationModel>()
     var onFromContactClicked = MutableLiveData<Boolean>()
-
+    private var memberRepository = MemberRepository(mDB = appDatabase)
+    var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
 
     init {
         val list = PockketApplication.instance.resources.getStringArray(R.array.relationNameList)
         val iconList = PockketApplication.instance.resources.getIntArray(R.array.relationIconList)
 
+        callGetMemberApi()
+    }
+
+    fun callGetMemberApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_ADD_FAMILY_MEMBER,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_ADD_FAMILY_MEMBER),
+                request_type = ApiUrl.GET,
+                param = "", onResponse = this,
+                isProgressBar = false
+            )
+        )
+
 
     }
-     fun callSampleTask(amount: String, title: String) {
 
+    fun callAddTask(
+        amount: String,
+        title: String,
+        userId: String?,
+        desc: String,
+        startdate: String,
+        enddate: String
+    ) {
 
+//yogesh =28369
+        // ranjeet =28448
+        var send = AddTaskRequest(
+            amount, desc, enddate, 0,
+            "INR", userId!!, startdate, title
+        )
+        Log.d("chackadd", send.toString())
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_CREATE_TASK,
                 NetworkUtil.endURL(ApiConstant.API_CREATE_TASK),
                 ApiUrl.POST,
-                AddTaskRequest(amount,"mm","2021-08-15T19:12:35Z",0,
-                    "INR",28397,"2021-08-04T19:12:35Z",title)
-                ,
+                send,
                 this, isProgressBar = true
             )
         )
@@ -58,19 +88,49 @@ class AddTaskViewModel(application: Application) : BaseViewModel(application) {
         when (purpose) {
 
             ApiConstant.API_CREATE_TASK -> {
-                Log.d("chacksample",responseData.toString())
 
+                Log.d("chackadddata", responseData.toString())
 
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
 
-                Toast.makeText(getApplication(),json.get("msg").toString(),Toast.LENGTH_SHORT).show()
-
-                val array =  Gson().fromJson<GotAfterTaskResponse>(json.get("data").toString(), GotAfterTaskResponse::class.java)
-
+                var array = Gson().fromJson<UpdateTaskGetResponse>(
+                    json.get("data").toString(),
+                    UpdateTaskGetResponse::class.java
+                )
+                array.msg = json.get("msg").toString()
+                bottomSheetStatus.postValue(array)
 
             }
 
+            ApiConstant.API_ADD_FAMILY_MEMBER -> {
+                Log.d("chackfamilylist", responseData.toString())
+                if (responseData is GetMemberResponse) {
 
+                    val approveList: ArrayList<MemberEntity> = ArrayList()
+                    val inviteList = mutableListOf<MemberEntity>()
+                    memberRepository.deleteAllMembers()
+                    if (!responseData.GetMemberResponseDetails.isNullOrEmpty()) {
+
+                        memberRepository.insertAllMembers(responseData.GetMemberResponseDetails)
+                        memberRepository.getAllMembersFromDatabase()?.forEach {
+                            when (it.status) {
+                                AppConstants.ADD_MEMBER_STATUS_APPROVED -> {
+                                    approveList.add(it)
+                                }
+                                AppConstants.ADD_MEMBER_STATUS_INVITED -> {
+                                    inviteList.add(it)
+                                }
+                            }
+
+                        }
+                        familyMemberList.postValue(approveList)
+
+
+                    } else {
+
+                    }
+                }
+            }
 
 
         }

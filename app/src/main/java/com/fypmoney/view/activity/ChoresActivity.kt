@@ -4,20 +4,31 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
+import com.bumptech.glide.Glide
+import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.base.BaseActivity
 import com.fypmoney.database.entity.TaskEntity
-import com.fypmoney.view.fragment.AcceptRejectTaskFragment
-import com.fypmoney.view.fragment.YourTasksFragment
-import com.fypmoney.view.fragment.AssignedTaskFragment
+import com.fypmoney.databinding.ViewChoresBinding
+import com.fypmoney.model.TaskDetailResponse
+import com.fypmoney.model.UpdateTaskGetResponse
+import com.fypmoney.util.AppConstants
+import com.fypmoney.view.fragment.*
+import com.fypmoney.view.interfaces.AcceptRejectClickListener
+import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.ChoresViewModel
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_chores.*
 import java.util.ArrayList
 
@@ -27,9 +38,14 @@ import java.util.ArrayList
 
 
 
-class ChoresActivity :AppCompatActivity(),
+class ChoresActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>(),
     AcceptRejectTaskFragment.OnBottomSheetClickListener {
 
+    private var bottomsheetInsufficient: TaskMessageInsuficientFuntBottomSheet? = null
+    private var loader_icon: ImageView? = null
+    private var bottomSheetcancel: TaskMessageBottomSheet? = null
+    private var bottomSheetMessage: TaskMessageBottomSheet2? = null
+    private var bottomSheetTaskAction: TaskActionBottomSheet? = null
     lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
     lateinit var ll_show_history: LinearLayout
@@ -45,27 +61,37 @@ companion object{
 }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.view_chores)
+
+
+        toolbar_image.visibility = View.VISIBLE
+        setToolbarAndTitle(
+            context = this,
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.chore_title)
+        )
 
         setObserver()
-        mViewModel = ViewModelProvider(this).get(ChoresViewModel::class.java)
-
-
 
         tabLayout = findViewById(R.id.tabLayout)
         viewPager = findViewById(R.id.viewPager)
-        initializeTabs(viewPager,tabLayout)
+        loader_icon = findViewById(R.id.loader)
+        initializeTabs(viewPager, tabLayout)
         ll_show_history = findViewById(R.id.ll_show_history)
 
+        swipetorefresh.setOnRefreshListener {
+
+            mViewModel?.loading?.postValue(true)
+            mViewModel?.onRefresh()
+
+        }
+        Glide.with(this).load(R.drawable.rocket_loader).into(loader_icon!!);
 
 
 
 
         ll_show_history.setOnClickListener {
             val intent = Intent(this, ChoresHistoryActivity::class.java)
-// To pass any data to next activity
-            //intent.putExtra("keyIdentifier", value)
-// start your next activity
+
             startActivity(intent)
         }
         btnSendOtp.setOnClickListener {
@@ -122,10 +148,126 @@ companion object{
         mViewModel?.onAddMoneyClicked?.observe(this) {
             //intentToActivity()
         }
+        mViewModel?.loading?.observe(this) {
+            if (it) {
 
+                loader_icon?.visibility = View.VISIBLE
+            } else {
+                loader_icon?.visibility = View.GONE
+                layout2.visibility = View.VISIBLE
+                swipetorefresh!!.isRefreshing = it
+            }
+
+
+        }
+
+        mViewModel!!.TaskDetailResponse.observe(this, androidx.lifecycle.Observer { list ->
+            Log.d("chacksample22", list.actionAllowed.toString())
+
+            if (list.actionAllowed == "REJECT,ACCEPT" || list.actionAllowed == "COMPLETE" || list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY" || list.actionAllowed == "") {
+                callTaskActionSheet(list)
+            } else if (list.actionAllowed == "CANCEL") {
+
+                callTaskMessageSheet(list)
+            } else if (list.actionAllowed == "COMPLETE") {
+                callTaskMessageSheet(list)
+            }
+        })
+        mViewModel!!.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
+            bottomSheetTaskAction?.dismiss()
+            bottomSheetcancel?.dismiss()
+            bottomSheetMessage?.dismiss()
+            if (list.currentState == "ACCEPT") {
+
+                callTaskMessageSheet(list)
+            }
+            if (list.currentState == "REJECT") {
+
+                callTaskMessageSheet(list)
+            }
+            if (list.currentState == "CANCEL") {
+
+                callTaskMessageSheet(list)
+            }
+            if (list.currentState == "COMPLETE") {
+
+                callTaskMessageSheet(list)
+            }
+        })
+        mViewModel!!.error.observe(this, androidx.lifecycle.Observer { list ->
+            if (list == "Something went wrong in fund transfer. Please Try Again.") {
+
+                callInsuficientFundMessageSheet()
+            }
+
+
+        })
     }
 
+    private fun callTaskActionSheet(list: TaskDetailResponse) {
+        var itemClickListener2 = object : AcceptRejectClickListener {
+            override fun onAcceptClicked(pos: Int) {}
+            override fun onRejectClicked(pos: Int) {}
 
+            override fun ondimiss() {
+                bottomSheetTaskAction?.dismiss()
+            }
+        }
+        bottomSheetTaskAction =
+            TaskActionBottomSheet(itemClickListener2, list)
+        bottomSheetTaskAction?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetTaskAction?.show(supportFragmentManager, "TASKACCEPTREJECT")
+    }
+
+    private fun callTaskMessageSheet(list: TaskDetailResponse) {
+        var itemClickListener2 = object : MessageSubmitClickListener {
+            override fun onSubmit() {
+
+            }
+
+        }
+        bottomSheetcancel =
+            TaskMessageBottomSheet(itemClickListener2, list, list.entityId)
+        bottomSheetcancel?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetcancel?.show(supportFragmentManager, "TASKMESSAGE")
+    }
+
+    private fun callTaskMessageSheet(list: UpdateTaskGetResponse) {
+        var itemClickListener2 = object : MessageSubmitClickListener {
+
+
+            override fun onSubmit() {
+                bottomSheetMessage?.dismiss()
+
+            }
+        }
+        bottomSheetMessage =
+            TaskMessageBottomSheet2(itemClickListener2, list, list.id.toString())
+        bottomSheetMessage?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetMessage?.show(supportFragmentManager, "TASKMESSAGE")
+    }
+
+    private fun callInsuficientFundMessageSheet() {
+        var itemClickListener2 = object : AcceptRejectClickListener {
+            override fun onAcceptClicked(pos: Int) {
+                bottomsheetInsufficient?.dismiss()
+                intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
+            }
+
+            override fun onRejectClicked(pos: Int) {
+                bottomsheetInsufficient?.dismiss()
+                callActivity(AddMoneyView::class.java)
+            }
+
+            override fun ondimiss() {
+
+            }
+        }
+        bottomsheetInsufficient =
+            TaskMessageInsuficientFuntBottomSheet(itemClickListener2)
+        bottomsheetInsufficient?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomsheetInsufficient?.show(supportFragmentManager, "TASKMESSAGE")
+    }
 
     override fun onBottomSheetButtonClick() {
         /*when (type) {
@@ -139,16 +281,40 @@ companion object{
         }*/
     }
 
-
-    private fun callAcceptRjectSheet(taskEntity: TaskEntity?) {
-        val bottomSheet =
-            AcceptRejectTaskFragment(
-                taskEntity, this
-            )
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "CeeptRejectBottomSheet")
+    private fun intentToPayActivity(aClass: Class<*>, pay: String? = null) {
+        val intent = Intent(this, aClass)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
+        startActivity(intent)
     }
 
 
+    private fun callActivity(aClass: Class<*>) {
+        val intent = Intent(this, aClass)
+        startActivity(intent)
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == 89) {
+
+            if (mViewModel != null) {
+                mViewModel?.callSampleTask()
+            }
+
+        }
+    }
+
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
+    }
+
+    override fun getLayoutId(): Int {
+        return R.layout.view_chores
+    }
+
+    override fun getViewModel(): ChoresViewModel {
+        mViewModel = ViewModelProvider(this).get(ChoresViewModel::class.java)
+
+        return mViewModel!!
+    }
 }
