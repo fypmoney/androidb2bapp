@@ -142,7 +142,7 @@
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/etMobileNo1"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="network_security_config.xml"
                         android:backgroundTint="@android:color/transparent"
                         android:gravity="center_vertical"
                         android:hint="@string/mobile_no"

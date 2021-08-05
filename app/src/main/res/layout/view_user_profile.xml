@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -25,48 +26,38 @@
                 android:id="@+id/layout"
                 layout="@layout/toolbar" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <FrameLayout
                 android:id="@+id/ivServiceLogo"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
                 android:layout_below="@id/layout"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
+                android:padding="4dp"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/curved_background5"
-                android:padding="10dp"
-                app:srcCompat="@drawable/ic_user" />
+                app:customBackgroundColor="@{@color/dividerColor}"
+                app:customIsRounded="@{true}"
+                app:customStrokeColor="@{@color/text_color_dark}"
+                app:customStrokeWidth="@{@dimen/dp1}"
+                >
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/layout"
-                android:layout_gravity="center"
-                android:layout_marginStart="-10dp"
-                android:layout_marginTop="70dp"
-                android:onClick="@{()->viewModel.onProfileClicked()}"
-                android:layout_toEndOf="@+id/ivServiceLogo"
-                app:srcCompat="@drawable/ic_edit" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/user_iv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="center"
+                    app:srcCompat="@drawable/ic_profile_img"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/triangle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/layout"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_triangle" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/edit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|bottom"
+                    android:onClick="@{()->viewModel.onProfileClicked()}"
+                    app:srcCompat="@drawable/ic_edit" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/triangle1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/layout"
-                android:layout_alignParentStart="true"
-                android:layout_gravity="center"
-                android:layout_marginTop="80dp"
-                app:srcCompat="@drawable/ic_pattern_traingle" />
+
+            </FrameLayout>
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -76,11 +67,11 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/ivServiceLogo"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:maxEms="20"
                 android:text='@{viewModel.userNameValue ?? ""}'
                 android:textColor="@color/text_color_dark"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
 
             <LinearLayout
@@ -98,12 +89,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:drawableStart="@drawable/birthday_icon"
+                    android:drawableStart="@drawable/ic_birthdate"
                     android:maxEms="20"
+                    tools:text ="6/7/1993"
+                    android:gravity="center"
                     android:drawablePadding="10dp"
                     android:text='@{viewModel.dob ?? ""}'
                     android:textColor="@color/text_color_dark"
-                    android:textSize="20dp" />
+                    android:textSize="14sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/phone"
@@ -112,12 +105,14 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="25dp"
-                    android:drawableStart="@drawable/ic_phone_no"
+                    android:drawableStart="@drawable/ic_call"
                     android:maxEms="20"
+                    android:gravity="center"
+                    tools:text ="7737947610"
                     android:drawablePadding="10dp"
                     android:text='@{viewModel.phone ?? ""}'
                     android:textColor="@color/text_color_dark"
-                    android:textSize="20dp" />
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -134,7 +129,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@android:color/transparent"
+                    android:layout_marginHorizontal="@dimen/dp24"
                     android:dividerHeight="0dp" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="25dp"
+                    app:srcCompat="@drawable/ic_rate_us" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextviewBold"
@@ -144,14 +147,7 @@
                     android:layout_marginTop="20dp"
                     android:maxEms="20"
                     android:text="@string/thank_you"
-                    android:textSize="22dp" />
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="25dp"
-                    app:srcCompat="@drawable/ic_rate_us" />
+                    android:textSize="22sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextviewRegular"
@@ -180,7 +176,6 @@
                     android:textColor="@color/white"
                     android:textSize="16dp" />
 
-
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
@@ -188,6 +183,9 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:text="@{viewModel.buildVersion}" />
+
+
+
 
             </LinearLayout>
 

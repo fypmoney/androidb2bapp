@@ -11,12 +11,10 @@ import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import com.freshchat.consumer.sdk.FaqOptions
-import com.freshchat.consumer.sdk.Freshchat
-import com.freshchat.consumer.sdk.FreshchatConfig
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.ViewUserProfileBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
@@ -31,6 +29,8 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.yalantis.ucrop.util.FileUtils.getPath
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.view_home.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -89,11 +89,11 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
         mViewBinding.profileList.adapter = myProfileAdapter
 
         val iconList = ArrayList<Int>()
-        iconList.add(R.drawable.privacy)
-        iconList.add(R.drawable.interest)
-        iconList.add(R.drawable.interest)
-        iconList.add(R.drawable.help)
-        iconList.add(R.drawable.logout)
+        iconList.add(R.drawable.ic_privacy)
+        iconList.add(R.drawable.ic_interest)
+        iconList.add(R.drawable.ic_community)
+        iconList.add(R.drawable.ic_help)
+        iconList.add(R.drawable.ic_log_out)
         myProfileAdapter.setList(
             iconList1 = iconList,
             resources.getStringArray(R.array.my_profile_title_list).toMutableList()
@@ -221,14 +221,13 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
     }
 
     private fun loadProfile(url: String?) {
-        url.let {
-            Utility.setImageUsingGlide(this, url = url, imageView = mViewBinding.ivServiceLogo)
-            mViewBinding.ivServiceLogo.setColorFilter(
+        url?.let {
+            loadImage(mViewBinding.userIv,it,ContextCompat.getDrawable(this,R.drawable.ic_profile_img),true)
+            mViewBinding.userIv.setColorFilter(
                 ContextCompat.getColor(
                     this,
                     android.R.color.transparent
-                )
-            )
+                ))
 
         }
     }

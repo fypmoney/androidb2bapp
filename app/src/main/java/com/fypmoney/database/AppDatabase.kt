@@ -17,7 +17,7 @@ import com.fypmoney.model.InterestEntity
 // Annotates class to be a Room Database with a table (entity) of the Word class
 @Database(
     entities = [ContactEntity::class, MemberEntity::class, InterestEntity::class],
-    version = 1
+    version = 3
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -41,7 +41,7 @@ abstract class AppDatabase : RoomDatabase() {
                         PockketApplication.instance.getString(
                             R.string.dreamFolksDb
                         )
-                    )
+                    ).fallbackToDestructiveMigration()
                         //.addMigrations(MIGRATION_1_2) // For recover all data from data base after migration
                         //.fallbackToDestructiveMigration()   // For delete all data from data base after migration
                         .build()

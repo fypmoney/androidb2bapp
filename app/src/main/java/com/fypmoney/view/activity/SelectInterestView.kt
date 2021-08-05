@@ -1,14 +1,11 @@
 package com.fypmoney.view.activity
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.fypmoney.R
 import com.fypmoney.BR
+import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSelectInterestBinding
-import com.fypmoney.model.CustomerInfoResponse
-import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SelectInterestViewModel
 import kotlinx.android.synthetic.main.toolbar.*
@@ -57,6 +54,12 @@ Create this method for observe the viewModel fields
             if (it) {
                 Utility.showToast("Your interest has been updated successfully")
                 mViewModel.onUpdateProfileSuccess.value = false
+                finish()
+            }
+        }
+        mViewModel.onAnswerLater.observe(this) {
+            if (it) {
+                mViewModel.onAnswerLater.value = false
                 finish()
             }
         }

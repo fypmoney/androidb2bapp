@@ -178,7 +178,7 @@
 
     <string name="otp_title">OTP</string>
     <string name="resend_timer_text">"Resend OTP in "</string>
-    <string name="choose_interest_title">Tell us about your interests</string>
+    <string name="choose_interest_title">Tell us about your \ninterests</string>
     <string name="fill_details">Fill your details</string>
     <string name="minor_text">Minor</string>
     <string name="major_text">Major</string>

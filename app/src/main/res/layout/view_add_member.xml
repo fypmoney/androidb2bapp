@@ -158,7 +158,7 @@
 
                 <!--     <androidx.appcompat.widget.AppCompatSpinner
                          android:id="@+id/spNameTitle"
-                         android:layout_width="match_parent"
+                         android:layout_width="network_security_config.xml"
                          android:layout_height="wrap_content"
                          android:layout_below="@+id/tvSelectRelation"
                          android:layout_marginTop="@dimen/edittextMarginTop"

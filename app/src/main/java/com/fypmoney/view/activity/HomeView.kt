@@ -14,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewHomeBinding
 import com.fypmoney.model.NotificationModel
@@ -142,6 +143,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     private fun loadProfile(url: String?) {
         url?.let {
             Glide.with(this).load(it).apply(RequestOptions().circleCrop()).into(myProfile)
+            loadImage(mViewBinding.myProfile,it,ContextCompat.getDrawable(this,R.drawable.ic_profile),true)
 
         }
     }
