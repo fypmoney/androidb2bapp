@@ -89,6 +89,7 @@ object ApiConstant {
     "/services/loyaltyservice/api/task/history?page=0&size=10&sort=createdDate,desc"
 
     const val TOP_TEN_USER_API = "/services/PockketService/api/recent/wallet/transaction"
+    const val TOTAL_REFERRAL_CASHBACK_API = "/services/PockketService/api/total/referral/points"
 
 }
 
