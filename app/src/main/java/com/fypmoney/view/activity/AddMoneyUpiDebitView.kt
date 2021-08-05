@@ -107,20 +107,6 @@ open class AddMoneyUpiDebitView :
         val amountLength = intent.getStringExtra(AppConstants.AMOUNT)?.length
 
 
-        val ss = SpannableString(mViewModel.amountToAdd1.get())
-        val clickableSpan: ClickableSpan = object : ClickableSpan() {
-            override fun onClick(textView: View) {
-            }
-
-            override fun updateDrawState(ds: TextPaint) {
-                super.updateDrawState(ds)
-                ds.isUnderlineText = false
-                ds.color = ContextCompat.getColor(applicationContext, R.color.text_color_dark)
-            }
-        }
-        ss.setSpan(clickableSpan, 4, amountLength!! + 6, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        balance_text.text = ss
-        balance_text.movementMethod = LinkMovementMethod.getInstance()
 
     }
 

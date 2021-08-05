@@ -4,7 +4,6 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -13,8 +12,9 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.LoginSuccessViewModel
 import kotlinx.android.synthetic.main.view_login_success.*
+import java.util.*
+import kotlin.concurrent.schedule
 import kotlinx.android.synthetic.main.view_walk_through_one.*
-import kotlinx.android.synthetic.main.view_walk_through_one.imageView
 
 /*
 * This class is used for show login success message
@@ -38,7 +38,12 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
-        Glide.with(applicationContext).load(R.raw.phone_verified).into(image)
+        image.gifResource = R.raw.phone_verified
+        Timer().schedule(1000){
+            runOnUiThread {
+                image.pause()
+            }
+        }
         val mp: MediaPlayer = MediaPlayer.create(
             this,
             R.raw.tick

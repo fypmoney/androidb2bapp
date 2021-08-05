@@ -72,6 +72,7 @@ data class CustomerInfoResponseDetails(
 
 data class UserProfile(
     @SerializedName("cityName") val cityName: String? = null,
+    @SerializedName("dob") val dob: String? = null,
     @SerializedName("schoolName") val schoolName: String? = null
     ) : Serializable
 

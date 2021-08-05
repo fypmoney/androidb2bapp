@@ -40,7 +40,7 @@
             app:layout_constraintTop_toBottomOf="@+id/logo"
             app:layout_constraintBottom_toTopOf="@+id/guideline">
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <com.fypmoney.view.customview.GifView
                 android:id="@+id/imageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

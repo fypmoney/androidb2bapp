@@ -9,7 +9,9 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ViewWalkThroughThreeBinding
 import com.fypmoney.viewmodel.WalkThroughThreeViewModel
-import kotlinx.android.synthetic.main.view_walk_through_one.*
+import kotlinx.android.synthetic.main.view_walk_through_three.*
+import kotlinx.android.synthetic.main.view_walk_through_three.imageView
+import kotlinx.android.synthetic.main.view_walk_through_two.*
 
 /*
 * This class is used as Add member Screen
@@ -37,7 +39,7 @@ class WalkThroughThreeScreen : BaseFragment<ViewWalkThroughThreeBinding, WalkThr
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
-        Glide.with(requireContext()).load(R.raw.walk_through_three).into(imageView)
+        imageView.gifResource = R.raw.walk_through_three
     }
 
     override fun onTryAgainClicked() {

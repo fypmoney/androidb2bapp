@@ -7,11 +7,15 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewHomeBinding
 import com.fypmoney.model.NotificationModel
@@ -57,8 +61,17 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         checkAndAskPermission()
         setCurrentFragment(HomeScreen())
 
+        loadProfile(
+            SharedPrefUtils.getString(
+                applicationContext,
+                SharedPrefUtils.SF_KEY_PROFILE_IMAGE
+            )
+        )
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.STAY_TUNED_BOTTOM_SHEET -> {
+                mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+                mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
+                mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
                 mViewModel.isScanVisible.set(false)
                 mViewModel.headerText.set(
                     getString(
@@ -78,26 +91,41 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         mViewBinding.navigationView.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
+                    mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.text_color_dark))
+                    mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.text_color_dark))
+                    mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon)
                     mViewModel.isScanVisible.set(true)
                     mViewModel.headerText.set("")
                     setCurrentFragment(HomeScreen())
                 }
                 R.id.feeds -> {
+                    mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.white))
+                    mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
+                    mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
                     mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(getString(R.string.feeds_bottom_nav_title))
                     setCurrentFragment(UserFeedsView())
                 }
                 R.id.store -> {
+                    mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.white))
+                    mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
+                    mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
                     mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(getString(R.string.store_bottom_nav_title))
                     setCurrentFragment(StoreScreen())
                 }
                 R.id.card -> {
+                    mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.white))
+                    mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
+                    mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
                     mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(getString(R.string.card_details_title))
                     setCurrentFragment(CardScreen())
                 }
                 R.id.family -> {
+                    mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.white))
+                    mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
+                    mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
                     mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(
                         getString(
@@ -111,6 +139,14 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             true
         }
 
+    }
+
+    private fun loadProfile(url: String?) {
+        url?.let {
+            Glide.with(this).load(it).apply(RequestOptions().circleCrop()).into(myProfile)
+            loadImage(mViewBinding.myProfile,it,ContextCompat.getDrawable(this,R.drawable.ic_profile),true)
+
+        }
     }
 
     /**

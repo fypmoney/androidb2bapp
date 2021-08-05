@@ -327,4 +327,7 @@
         <item name="tabMode">fixed</item>
     </style>
 
+    <style name="Widget.GifView" parent="@android:style/Widget"/>
+
+
 </resources>

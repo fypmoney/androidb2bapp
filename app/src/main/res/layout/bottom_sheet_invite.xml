@@ -34,6 +34,7 @@
             android:layout_marginTop="26dp"
             android:text="@string/invite_member_text1"
             android:layout_gravity="center"
+            android:gravity="center"
             android:textColor="@color/text_color_dark"
             android:drawableEnd="@drawable/ic_icon_feather_copy"
             android:drawablePadding="10dp"

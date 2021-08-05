@@ -124,7 +124,7 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
             )
 
         }
-        dob.set(Utility.parseDateTime(SharedPrefUtils.getString(getApplication(), SharedPrefUtils.SF_KEY_USER_DOB),inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT4))
+        dob.set(Utility.parseDateTime(SharedPrefUtils.getString(getApplication(), SharedPrefUtils.SF_KEY_USER_DOB),inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT5))
         phone.set(
             SharedPrefUtils.getString(
                 getApplication(),

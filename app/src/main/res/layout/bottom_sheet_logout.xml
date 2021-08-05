@@ -19,7 +19,7 @@
             android:id="@+id/verification_title"
             style="@style/TextviewBold"
             android:layout_gravity="center"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="25dp"
             android:text="@string/log_out_title" />
 
 
@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="43dp"
+            android:layout_marginTop="23dp"
             app:srcCompat="@drawable/ic_sign_out" />
 
 

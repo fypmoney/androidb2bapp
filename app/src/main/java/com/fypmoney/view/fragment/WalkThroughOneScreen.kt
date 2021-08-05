@@ -2,8 +2,6 @@ package com.fypmoney.view.fragment
 
 import android.os.Bundle
 import android.view.View
-import android.view.animation.TranslateAnimation
-import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.fypmoney.BR
@@ -39,7 +37,8 @@ class WalkThroughOneScreen : BaseFragment<ViewWalkThroughOneBinding, WalkThrough
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
-        Glide.with(requireContext()).load(R.raw.walk_through_one).into(imageView)
+        //Glide.with(requireContext()).load(R.raw.walk_through_one).into(imageView)
+        imageView.gifResource = R.raw.walk_through_one
 
     }
 

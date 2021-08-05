@@ -41,13 +41,22 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivServiceLogo"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_marginTop="@dimen/dp16"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline"
                     app:srcCompat="@drawable/ic_get_otp" />
+
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/guideline"
+                    app:layout_constraintGuide_percent=".4"
+                    android:orientation="horizontal"/>
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -119,6 +128,7 @@
                         android:hint="@string/mobile_no"
                         android:inputType="phone"
                         android:maxLength="10"
+                        android:imeOptions="actionDone"
                         android:onClick="@{()->viewModel.onMobileClick()}"
                         android:text="@={viewModel.mobile}"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -132,7 +142,7 @@
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/etMobileNo1"
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="network_security_config.xml"
                         android:backgroundTint="@android:color/transparent"
                         android:gravity="center_vertical"
                         android:hint="@string/mobile_no"

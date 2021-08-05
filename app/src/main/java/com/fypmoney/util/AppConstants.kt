@@ -58,8 +58,8 @@ object AppConstants {
     const val CONTACT_BROADCAST_NAME = "Contact Broadcast"
     const val AFTER_ADD_MEMBER_BROADCAST_NAME = "After Add Member Broadcast"
     const val CONTACT_BROADCAST_KEY = "Contact Broadcast key"
-    const val ADD_MEMBER_STATUS_APPROVED = "APPROVED"
-    const val ADD_MEMBER_STATUS_INVITED = "INVITED"
+    const val ADD_MEMBER_STATUS_APPROVED = "APPROVE"
+    const val ADD_MEMBER_STATUS_INVITED = "INVITE"
     const val YES = "YES"
     const val NO = "NO"
     const val CUSTOMER_INFO_RESPONSE = "customer_info_response"
@@ -130,6 +130,7 @@ object AppConstants {
     const val CHANGED_DATE_TIME_FORMAT2 = "MMM dd HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT3 = "MMM dd, HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT4 = "MMM dd, yyyy"
+    const val CHANGED_DATE_TIME_FORMAT5 = " dd/MM/yyyy"
     const val PAYU_SERVER = "pay u server"
 
     const val TYPE_UPI = "upi"
@@ -178,5 +179,6 @@ object AppConstants {
     const val CLIENT_TYPE = "Client_Type"
     const val CLIENT_TYPE_VALUE = "ANDROID"
     const val NOT_ALLOWED_MSG = "Invalid Version. Please uninstall your current app and install it from Play Store again."
-
+    const val PLAY_STORE_URL = "http://onelink.to/fypmoney"
+    const val CASHBACK_AMOUNT = "25"
 }

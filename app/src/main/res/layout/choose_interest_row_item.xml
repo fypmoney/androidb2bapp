@@ -9,50 +9,65 @@
         <import type="androidx.core.content.ContextCompat" />
 
         <variable
-            name="viewHelper"
-            type="com.fypmoney.viewhelper.ChooseInterestViewHelper" />
-
-        <variable
             name="viewModel"
             type="com.fypmoney.viewmodel.SelectInterestViewModel" />
 
     </data>
 
-    <LinearLayout
-        android:id="@+id/serviceLayout"
-        android:paddingStart="@dimen/_4sdp"
-        android:paddingEnd="@dimen/_4sdp"
-        android:layout_width="@dimen/_120sdp"
+
+    <FrameLayout
+        android:id="@+id/fl_outer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/curved_background3"
+        android:padding="2dp"
         android:layout_margin="@dimen/_5sdp"
-        android:onClick="@{()->viewHelper.onItemClicked()}"
-        android:background="@{viewHelper.isBackgroundHighlight?@drawable/curved_background4:@drawable/curved_background3}"
-        android:elevation="@dimen/_5sdp"
-        android:padding="@dimen/_5sdp"
-        android:layout_height="@dimen/_45sdp">
+        android:elevation="@dimen/_5sdp">
+
+        <LinearLayout
+            android:id="@+id/serviceLayout"
+            android:paddingStart="@dimen/_4sdp"
+            android:paddingEnd="@dimen/_4sdp"
+            android:layout_width="@dimen/_120sdp"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/curved_background3"
+            android:layout_height="@dimen/_45sdp">
 
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivServiceLogo"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_gravity="center"
-            android:padding="@dimen/_15sdp"
-            android:background="@drawable/curved_background4"
-            android:layout_marginStart="@dimen/_2sdp"
-            app:srcCompat="@drawable/ic_sports" />
+            <FrameLayout
+                android:id="@+id/intrest_icon_fl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:background="@drawable/curved_background4"
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivServiceLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_sports" />
+
+            </FrameLayout>
 
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvServiceName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_5sdp"
-            android:layout_marginEnd="@dimen/_5sdp"
-            android:textColor="@color/text_color_dark"
-            android:fontFamily="@font/poppins_regular"
-            android:text="@{viewHelper.interestResponseDetails.name}"
-            android:textSize="@dimen/edit_text_size"
 
-            />
-    </LinearLayout></layout>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvServiceName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:textColor="@color/text_color_dark"
+                android:fontFamily="@font/poppins_regular"
+                android:textSize="@dimen/edit_text_size"
+
+                />
+        </LinearLayout>
+
+    </FrameLayout>
+</layout>

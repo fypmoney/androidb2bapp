@@ -19,6 +19,10 @@ data class InterestEntity(
     var name: String?,
     @ColumnInfo(name = "code")
     var code: String?,
+    @ColumnInfo(name = "resourceId")
+    var resourceId: String?,
+    @ColumnInfo(name = "backgroundColor")
+    var backgroundColor: String?,
     @ColumnInfo(name = "description")
     var description: String?,
     @ColumnInfo(name = "status")

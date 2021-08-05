@@ -1,28 +1,41 @@
 <resources>
+    <integer-array name="my_profile_icon_list">
+        <item>@drawable/ic_profile</item>
+        <item>@drawable/ic_profile</item>
+    </integer-array>
+    <integer-array name="relationIconList">
+        <item>@drawable/ic_parent</item>
+        <item>@drawable/ic_siblings</item>
+        <item>@drawable/ic_spouse</item>
+        <item>@drawable/ic_kid</item>
+        <item>@drawable/ic_grand_parents</item>
+        <item>@drawable/ic_grand_child</item>
+        <item>@drawable/ic_other</item>
+    </integer-array>
     <string name="app_name">Fyp</string>
     <string name="action_settings">Settings</string>
-    <string name="default_notification_channel_id">fypmoney</string>
-    <string name="freshchat_file_provider_authority">com.fypmoney.provider</string>
 
 
     <!-- Strings used for fragments for navigation -->
+    <string name="default_notification_channel_id">fypmoney</string>
+    <string name="freshchat_file_provider_authority">com.fypmoney.provider</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
+
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="please_wait">Please wait</string>
     <string name="dreamFolksDb">pockket.db</string>
     <string name="no_internet">No internet! Please check internet connection.</string>
     <string name="try_again_text"><u>Try Again</u></string>
-    <string name="something_went_wrong_error">Something went wrong</string>
-    <string name="something_went_wrong_error1">Something went wrong, please try again</string>
 
     <!--
     Button Text
     -->
+    <string name="something_went_wrong_error">Something went wrong</string>
+    <string name="something_went_wrong_error1">Something went wrong, please try again</string>
     <string name="continue_btn_text">Continue</string>
     <string name="submit_btn_text">Submit</string>
     <string name="add_money_btn_text">Add Money</string>
@@ -45,6 +58,7 @@
     <string name="create_account_btn_text">Create Account</string>
     <string name="request_again_btn_text">Request again</string>
     <string name="add_btn_text">Add</string>
+    <string name="add_verify_btn_text">Verify &amp; Add</string>
     <string name="retry_btn_text">Retry</string>
     <string name="view_details_btn_text">View details</string>
     <string name="dummy_star">"* * * *"</string>
@@ -65,10 +79,10 @@
     <string name="order_eco_friendly_card_btn_text">Order Eco-Friendly Card</string>
     <string name="place_order_btn_text">Place Order</string>
     <string name="got_it_btn_text">Got it</string>
-    <string name="go_to_messages_btn_text">Go to Messages</string>
-    <string name="set_or_change_pin_btn_text">Set or Change pin</string>
 
     <!--Login-->
+    <string name="go_to_messages_btn_text">Go to Messages</string>
+    <string name="set_or_change_pin_btn_text">Set or Change pin</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="otp">OTP</string>
     <string name="sign_in_sign_up">Sign In/Sign Up</string>
@@ -86,17 +100,17 @@
     <string name="phone_number">Phone number</string>
     <string name="no_internet_try_again">Not connected with internet, please try again</string>
     <string name="google_sign_in_failure">Google sign in failed.</string>
-    <string name="back_to_login"><font fgcolor='#9CA3A5'>Back to &#032;</font>Log in</string>
-    <string name="login"><font fgcolor='#231F20'>Log in</font></string>
 
     <!--
     Device Security
     -->
-    <string name="dialog_title_auth">Enter phone screen lock pattern, PIN, password or fingerprint</string>
-    <string name="dialog_msg_auth">Unlock DreamFolks</string>
+    <string name="back_to_login"><font fgcolor='#9CA3A5'>Back to &#032;</font>Log in</string>
+    <string name="login"><font fgcolor='#231F20'>Log in</font></string>
 
     <!--contact activity
     -->
+    <string name="dialog_title_auth">Enter phone screen lock pattern, PIN, password or fingerprint</string>
+    <string name="dialog_msg_auth">Unlock DreamFolks</string>
     <string name="name_title">Name :</string>
     <string name="contact_title">Contact : </string>
     <string name="contact_screen_title">Contacts</string>
@@ -107,11 +121,11 @@
     <string name="pocket_user">Pocket User</string>
     <string name="fyper_txt">Fyper</string>
     <string name="contact_error">Please choose any contact to add as a member</string>
-    <string name="empty_contact_error">Unable to fetch contacts. Add member by entering the contact number</string>
-    <string name="select_member">Select a member</string>
 
     <!--chores activity
     -->
+    <string name="empty_contact_error">Unable to fetch contacts. Add member by entering the contact number</string>
+    <string name="select_member">Select a member</string>
     <string name="chore_title">Chores</string>
     <string name="chore_history_title">Chores History</string>
     <string name="assign_task">Assign tasks or participate to get cash.</string>
@@ -141,44 +155,40 @@
     <string name="title_hint">Title</string>
     <string name="desc_hint">Description</string>
     <string name="time_limit_hint">Time limit</string>
-    <string name="assign_to">Assign a task to</string>
-    <string name="create_own">Create your own task</string>
 
     <!--
     Sign in
     -->
+    <string name="assign_to">Assign a task to</string>
+    <string name="create_own">Create your own task</string>
     <string name="enter_phone_title">Phone number \n verification</string>
-    <string name="send_verification_title">We will send you SMS verification code</string>
-    <string name="mobile_no">Mobile No.</string>
 
     <!--
     Enter OTP screen
     -->
+    <string name="send_verification_title">We will send you SMS verification code</string>
+    <string name="mobile_no">Mobile No.</string>
     <string name="enter_code_title">Enter OTP here</string>
     <string name="change_text">Change</string>
     <string name="reading_otp_text">Reading OTP</string>
     <string name="empty_otp_error">Please fill OTP</string>
-    <string name="otp_title">OTP</string>
-    <string name="resend_timer_text">"Resend OTP in "</string>
 
     <!-- Select interest
     -->
 
-    <string name="choose_interest_title">Tell us about your interests</string>
+    <string name="otp_title">OTP</string>
+    <string name="resend_timer_text">"Resend OTP in "</string>
+    <string name="choose_interest_title">Tell us about your \ninterests</string>
     <string name="fill_details">Fill your details</string>
     <string name="minor_text">Minor</string>
     <string name="major_text">Major</string>
-    <string name="answer_later">Answer later</string>
-    <string name="interest_error">Please select interest</string>
 
-    <string-array name="person_category_array">
-        <item>Minor</item>
-        <item>Major</item>
-    </string-array>
+    <string name="answer_later">Answer later</string>
 
 
     <!--Home Screen-->
 
+    <string name="interest_error">Please select interest</string>
     <string name="balance_text">Available Balance</string>
     <string name="set_upi_id_text">Set up your UPI ID</string>
     <string name="register_for_upi_title">Register now and start UPI payments</string>
@@ -192,8 +202,8 @@
     <string name="dummy_name">FYP User</string>
     <string name="dummy_card">9872 7263 6538 7263</string>
     <string name="dummy_cvv"><font size="20">***</font></string>
-    <string name="dummy_expiry">**/**</string>
 
+    <string name="dummy_expiry">**/**</string>
     <string name="Rs">\u20B9</string>
     <string name="quick_actions">Quick Actions</string>
     <string name="quick_actions_split_bill">Split Bills</string>
@@ -204,39 +214,28 @@
     <string name="quick_actions_rewards1">Play games and get exciting rewards</string>
     <string name="quick_actions_referrals">Referrals</string>
     <string name="quick_actions_referrals1">Refer a friend and get rewards</string>
-    <string name="fetching_balance">Fetching balance…</string>
 
     <!--
    Feeds Screen
    -->
+    <string name="fetching_balance">Fetching balance…</string>
     <string name="feeds_screen_title">Feeds</string>
     <string name="feeds_details_screen_title">Feed Details</string>
     <string name="browse_with">Browse with</string>
-    <string name="empty_Feeds_error">Error occur , please try again</string>
 
 
     <!--
     User profile
     -->
+    <string name="empty_Feeds_error">Error occur , please try again</string>
     <string name="thank_you">Thank you!</string>
     <string name="my_profile_title">My Profile</string>
     <string name="rate_text">Take a moment and rate us on the Google Play Store</string>
     <string name="rate_text1">Rate us on</string>
     <string name="user_profile_screen_title">Profile</string>
-    <string-array name="my_profile_title_list">
-        <item>Privacy settings</item>
-        <item>Feed/ interest settings</item>
-        <item>Community settings</item>
-        <item>Help?</item>
-        <item>Log out</item>
-    </string-array>
-    <integer-array name="my_profile_icon_list">
-        <item>@drawable/ic_profile</item>
-        <item>@drawable/ic_profile</item>
-    </integer-array>
+    <string name="family_settings_screen_title">Family Settings</string>
 
     <!-- Family Settings-->
-    <string name="family_settings_screen_title">Family Settings</string>
     <string name="view_all">View All</string>
     <string name="members_heading">Members</string>
     <string name="add_member_heading">Add a member</string>
@@ -255,27 +254,27 @@
     <string name="set_family_name">Set your family name here</string>
     <string name="update_family_hint">Your family name</string>
     <string name="leave_confirmation_msg">Are you sure you want to leave family?</string>
+    <string name="adult_title">Adult</string>
 
     <!-- Members
     -->
-    <string name="adult_title">Adult</string>
     <string name="invites_title">Invites</string>
     <string name="leave_family">Leave family</string>
     <string name="remove_txt">Remove</string>
     <string name="edit_txt">Edit</string>
+    <string name="remove_title">Are you sure u want to remove?</string>
 
     <!--
     Leave member
     -->
 
-    <string name="remove_title">Are you sure u want to remove?</string>
     <string name="cancel_title">Are you sure u want to cancel?</string>
     <string name="leave_title">Are you sure u want to leave family?</string>
+    <string name="from_contact"><u>Choose From Contact</u></string>
 
 
     <!--Add member
     -->
-    <string name="from_contact"><u>Choose From Contact</u></string>
     <string name="search">Search from your contacts</string>
     <string name="select_relation">Relation*</string>
     <string name="invite_user_dialog_title">is not the App User. Please send invite.</string>
@@ -287,39 +286,39 @@
     <string name="relation_drop_down_hint">Your relation with parent</string>
     <string name="relation_empty_error">Please choose your relation</string>
     <string name="member_name_empty_error">Please enter your family member name</string>
+    <string name="enable_permission">Enable location and contact permission for better experience</string>
 
 
     <!--
     Permission View
     -->
-    <string name="enable_permission">Enable location and contact permission for better experience</string>
     <string name="contact_permission">Contact</string>
     <string name="location_permission">Location</string>
+    <string name="family_notification_screen_title">Family Notification</string>
 
     <!--
      Notification
     -->
-    <string name="family_notification_screen_title">Family Notification</string>
     <string name="previous_txt">Previous</string>
     <string name="user_timeline_api_error">Your No previous actions found</string>
     <string name="get_notification_api_error">Your No current actions found</string>
+    <string name="login_success_msg">Your phone number verification \n is successfully done!</string>
 
     <!--
     Login success
     -->
-    <string name="login_success_msg">Your phone number verification \n is successfully done!</string>
+    <string name="skip_title">Skip</string>
 
     <!-- Referral code
     -->
-    <string name="skip_title">Skip</string>
     <string name="referral_code_title">Do you have \n A referral code?</string>
     <string name="code_text">Code</string>
     <string name="referral_code_empty_error">Please enter Referral Code</string>
     <string name="referral_code_hint">Your referral code</string>
+    <string name="first_name_label">First Name*</string>
 
     <!--Create Account-->
 
-    <string name="first_name_label">First Name*</string>
     <string name="last_name_label">Last Name*</string>
     <string name="first_name_hint">Your name</string>
     <string name="last_name_hint">Your last name</string>
@@ -327,11 +326,11 @@
     <string name="dd_mm_yyyy">dd/mm/yyyy</string>
     <string name="create_account_title">Create Account</string>
     <string name="already_have_account_title">Already have an account?</string>
+    <string name="community_screen_title">"Let's build a \n community together"</string>
 
     <!--
     Community
     -->
-    <string name="community_screen_title">"Let's build a \n community together"</string>
     <string name="community_screen_sub_title">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod</string>
     <string name="school_name_title"> School name*</string>
     <string name="school_name_hint">Your School name</string>
@@ -340,50 +339,50 @@
     <string name="school_name_empty_error">Please enter school name</string>
     <string name="city_name_empty_error">Please enter city</string>
     <string name="community_success_msg">Your community information added successfully</string>
+    <string name="congratulation_title">Congratulations!</string>
 
     <!--
     create account success
     -->
-    <string name="congratulation_title">Congratulations!</string>
     <string name="create_account_success_title">Your account has been created \n successfully.</string>
+    <string name="pull_up_to_start">Pull up to start</string>
 
 
     <!--
     First screen
     -->
-    <string name="pull_up_to_start">Pull up to start</string>
     <string name="welcome">Welcome to</string>
     <string name="create_account_terms">"By tapping Create Account you agree to the Terms of Services &amp; Privacy Policy"</string>
+    <string name="stay_tuned_screen_title">Stay tuned!</string>
 
     <!-- stay tuned
     -->
-    <string name="stay_tuned_screen_title">Stay tuned!</string>
     <string name="stay_tuned_screen_sub_title">"Hang in there, we have sent an invite to your "</string>
     <string name="stay_tuned_screen_sub_title1">, to activate your account</string>
+    <string name="invite_member_screen_title">Oops!</string>
 
 
     <!-- Invite member
     -->
-    <string name="invite_member_screen_title">Oops!</string>
     <string name="invite_member_screen_sub_title">"Looks like your "</string>
     <string name="invite_member_screen_sub_title2">"Looks like "</string>
     <string name="invite_member_screen_sub_title1">" is not a FYP user. \n No worries you can invite them right now.</string>
+    <string name="account_activation_success_screen_title">Kuddos!</string>
 
 
     <!-- Account activation success
   -->
-    <string name="account_activation_success_screen_title">Kuddos!</string>
     <string name="account_activation_success_screen_sub_title">Your account has activated</string>
+    <string name="invite_rejected_screen_title">Uh-Oh!</string>
 
     <!--  invite rejected
   -->
-    <string name="invite_rejected_screen_title">Uh-Oh!</string>
     <string name="invite_rejected_screen_sub_title">Seems like your parent has rejected your request.</string>
+    <string name="aadhaar_screen_title">Enter your Aadhaar number</string>
 
     <!-- Aadhaar verification
     -->
 
-    <string name="aadhaar_screen_title">Enter your Aadhaar number</string>
     <string name="aadhaar_screen_sub_title">We will send you a One Time Password on your registered mobile number for the given Aadhaar number</string>
     <string name="aadhaar_number_title">Aadhaar number</string>
     <string name="aadhaar_number_hint">Your Aadhaar number</string>
@@ -393,32 +392,32 @@
     <string name="aadhaar_number_help_text">Help?</string>
     <string name="aadhaar_number_empty_error">Please enter Aadhaar number</string>
     <string name="aadhaar_number_valid_error">Please enter valid Aadhaar number</string>
+    <string name="account_verification_screen_title">Account Activation</string>
 
 
     <!-- Account verification for Aadhaar
  -->
 
-    <string name="account_verification_screen_title">Account Activation</string>
     <string name="account_verification_sub_title"><font fgcolor='#9CA3A5'>Complete your Aadhaar KYC now. And have fun with &#032;</font>Fyp</string>
     <string name="account_verification_sub_title1">Within just 1 minute unlock the FYP benefits now.</string>
     <string name="account_verification_sub_title2">FYP is in association with &#032;</string>
+    <string name="aadhaar_otp_screen_title">Activate Account</string>
 
     <!-- Account verification for Aadhaar
 -->
 
-    <string name="aadhaar_otp_screen_title">Activate Account</string>
     <string name="aadhaar_otp_sub_title">"Enter the OTP send to your phone number linked to "</string>
     <string name="aadhaar_mobile_otp_sub_title">Please enter the OTP received from Yes bank</string>
     <string name="aadhaar_otp_edit">. Edit Aadhaar number </string>
+    <string name="account_activation_success_aadhaar_title">Your account is Successfully created. You can now enjoy all the benefits of being a FYP user.</string>
 
     <!-- Account verification success with Aadhaar
  -->
 
-    <string name="account_activation_success_aadhaar_title">Your account is Successfully created. You can now enjoy all the benefits of being a FYP user.</string>
+    <string name="add_money_screen_title">Add Money</string>
     <!--
     Add money
     -->
-    <string name="add_money_screen_title">Add Money</string>
     <string name="add_money_to_account">Add money to your Account</string>
     <string name="add_money_50">\u20B9 50</string>
     <string name="add_money_100">\u20B9 100</string>
@@ -427,26 +426,26 @@
     <string name="add_money_screen_text">You can add funds up to Rs.</string>
     <string name="add_money_screen_text1">" for the current month"</string>
     <string name="add_money_empty_error">Please enter amount</string>
+    <string name="add_money_trans_success_title">Money Added successfully</string>
 
     <!--
     add money transaction success
     -->
-    <string name="add_money_trans_success_title">Money Added successfully</string>
     <string name="updated_balance">Updated Account Balance: </string>
+    <string name="add_money_trans_fail_title">Transaction Failed!</string>
 
     <!--
     add money transaction fail
     -->
-    <string name="add_money_trans_fail_title">Transaction Failed!</string>
     <string name="add_money_trans_fail_text">Any amount deducted will be refunded within 3–5 days. How would you like to proceed?</string>
     <string name="add_money_trans_fail_change">Change Method</string>
     <string name="add_money_trans_fail_add">"Add "</string>
+    <string name="balance_text1">"Balance - "</string>
 
     <!--
    Card screen
    -->
 
-    <string name="balance_text1">"Balance - "</string>
     <string name="card_transaction_limit1">Transaction Limit - 1 Lakh</string>
     <string name="card_details_title">Card Details</string>
     <string name="expiry_details_title">"Expiry - "</string>
@@ -455,84 +454,66 @@
     <string name="account_stmt">Account Statement</string>
     <string name="set_limit">Set up Spending Limit</string>
     <string name="valid_thru">Valid thru</string>
-
-
-    <string-array name="relationNameList">
-        <item>Parent</item>
-        <item>Sibling</item>
-        <item>Spouse</item>
-        <item>Kids</item>
-        <item>Grand parents</item>
-        <item>Grand Child</item>
-        <item>Other</item>
-    </string-array>
-
-    <integer-array name="relationIconList">
-        <item>@drawable/ic_parent</item>
-        <item>@drawable/ic_siblings</item>
-        <item>@drawable/ic_spouse</item>
-        <item>@drawable/ic_kid</item>
-        <item>@drawable/ic_grand_parents</item>
-        <item>@drawable/ic_grand_child</item>
-        <item>@drawable/ic_other</item>
-    </integer-array>
     <string name="title_activity_chores_history">ChoresHistoryActivity</string>
-    <string name="title_activity_add_task">AddTaskActivity</string>
 
-    <!--
-    Invite member
-    -->
+
+    <string name="title_activity_add_task">AddTaskActivity</string>
 
     <string name="invite_member_text1">Invite new Fypers</string>
     <string name="invite_member_text2">Share this link with your friend and after they install both of you will get 50 cash rewards.</string>
     <string name="invite_member_text3">Or Invite via</string>
 
+    <!--
+    Invite member
+    -->
+
+    <string name="type_msg">Type your message here</string>
+    <string name="pay_title">Pay</string>
+    <string name="request_title">Request</string>
+
 
     <!--
     Pay or Request Money
     -->
-    <string name="type_msg">Type your message here</string>
-    <string name="pay_title">Pay</string>
-    <string name="request_title">Request</string>
     <string name="request_from">Request from</string>
     <string name="new_number_text">New Number</string>
     <string name="copy_to_clipboard_success">Text copied to clipboard</string>
     <string name="copy">Copy</string>
+    <string name="add_money_title1">"Add "</string>
+    <string name="add_money_title2">" to your account"</string>
+    <string name="add_money_upi_text">UPI</string>
 
     <!--
     Add money upi and debit
     -->
-    <string name="add_money_title1">"Add "</string>
-    <string name="add_money_title2">" to your account"</string>
-    <string name="add_money_upi_text">UPI</string>
     <string name="add_money_debit_text">Debit card</string>
     <string name="add_money_add_new_card_text">+ Add New Card</string>
     <string name="add_money_add_upi_text">Add UPI</string>
+    <string name="add_new_card_title">Add New Card</string>
+    <string name="add_new_card_enter_card">Enter Card Number</string>
+    <string name="add_new_card_name">Name on Card</string>
 
     <!--
     Add new card
     -->
-    <string name="add_new_card_title">Add New Card</string>
-    <string name="add_new_card_enter_card">Enter Card Number</string>
-    <string name="add_new_card_name">Name on Card</string>
     <string name="add_new_card_expiry">Expiry date</string>
     <string name="add_new_card_cvv">CVV</string>
     <string name="add_new_card_expiry_hint">MM/YY</string>
     <string name="add_new_card_save_option">Save this option for faster payments</string>
-
-    <!--
-    Request money
-    -->
     <string name="request_money_title">Request Money</string>
     <string name="request_money_by">Money Request by</string>
     <string name="request_money_to">Money Request to</string>
 
     <!--
-    Add new card
+    Request money
     -->
     <string name="card_number_empty_error">Please enter card number</string>
     <string name="card_name_empty_error">Please enter name on card</string>
     <string name="card_expiry_empty_error">Please enter expiry date</string>
+
+    <!--
+    Add new card
+    -->
     <string name="card_expiry_valid_empty_error">Please enter valid expiry date</string>
     <string name="card_expiry_month_valid_empty_error">Please enter valid month</string>
     <string name="card_expiry_year_valid_empty_error">Please enter valid year</string>
@@ -542,22 +523,22 @@
     <string name="production">Production</string>
     <string name="add_upi_text">Add UPI</string>
     <string name="card_number_validation_error">Only Domestic Debit Cards are allowed</string>
+    <string name="payment_success_msg">Your payment was successful.</string>
+    <string name="trans_details_heading">Transaction details</string>
+    <string name="fyp_transaction_heading">Fyp Transaction ID</string>
 
     <!--
     Pay u success
     -->
 
-    <string name="payment_success_msg">Your payment was successful.</string>
-    <string name="trans_details_heading">Transaction details</string>
-    <string name="fyp_transaction_heading">Fyp Transaction ID</string>
     <string name="bank_transaction_heading">Bank Transaction ID</string>
+    <string name="add_upi_title">Add Existing UPI ID</string>
+    <string name="upi_id">UPI ID</string>
+    <string name="upi_id_hint">your UPI ID</string>
 
     <!--
   Add upi
     -->
-    <string name="add_upi_title">Add Existing UPI ID</string>
-    <string name="upi_id">UPI ID</string>
-    <string name="upi_id_hint">your UPI ID</string>
     <string name="upi_id_hint1">UPI ID is in the format of mobilenumber@bank or username@bank</string>
     <string name="save_upi_id">Save this UPI ID for faster payments</string>
     <string name="add_upi_empty_error">Please enter UPI ID</string>
@@ -568,21 +549,21 @@
     <string name="phone_pay">Phone Pay</string>
     <string name="invalid_upi_id_error">InValid VPA</string>
     <string name="verify_vpa">Please verify UPI Id</string>
+    <string name="recent">Recent</string>
+    <string name="trans_history_heading">Transaction History</string>
+    <string name="add">+</string>
 
     <!--
     Bank transaction history
     -->
-    <string name="recent">Recent</string>
-    <string name="trans_history_heading">Transaction History</string>
-    <string name="add">+</string>
     <string name="subtract">-</string>
+    <string name="filter_by_date_title">Filter by date</string>
+    <string name="from_date">From date</string>
+    <string name="to_date">To date</string>
 
     <!--
     Filter by date
     -->
-    <string name="filter_by_date_title">Filter by date</string>
-    <string name="from_date">From date</string>
-    <string name="to_date">To date</string>
     <string name="filter_by_date_text">You will be able to see transactions between these dates</string>
     <string name="date_hint">dd/MM/YYYY</string>
     <string name="from_date_empty_error">Please choose from date</string>
@@ -590,100 +571,100 @@
     <string name="to_date_bigger">To date should be larger or equal than from date</string>
     <string name="received_text">"Received | "</string>
     <string name="sent_text">"Sent | "</string>
+    <string name="card_settings">Card Settings</string>
+    <string name="card_settings_block">Block/Unblock Cards</string>
+    <string name="card_settings_limit">Setting Up Limit</string>
 
     <!--
     Card settings
     -->
-    <string name="card_settings">Card Settings</string>
-    <string name="card_settings_block">Block/Unblock Cards</string>
-    <string name="card_settings_limit">Setting Up Limit</string>
     <string name="card_settings_channels">Manage Channels</string>
     <string name="card_settings_pin">Set or Change Pin</string>
+    <string name="virtual_card_text">Virtual Card</string>
+    <string name="physical_card_text">Physical Card</string>
+    <string name="card_block_confirm">"Are you sure you want to "</string>
 
     <!--
   Block/Unblock Card
   -->
-    <string name="virtual_card_text">Virtual Card</string>
-    <string name="physical_card_text">Physical Card</string>
-    <string name="card_block_confirm">"Are you sure you want to "</string>
     <string name="block_card_text"><b>Block </b>the card</string>
     <string name="unblock_card_text"><b>UnBlock </b>the card</string>
     <string name="enable_card_text"><b>Enable </b>the channel</string>
     <string name="disable_card_text"><b>Disable </b>the channel</string>
     <string name="block_text">All your card services will get blocked till you switch it on from the app. You can unblock it anytime you want.</string>
+    <string name="set_spending_limit_text">Set up Spending Limit</string>
+    <string name="ecom">Ecommerce</string>
+    <string name="atm">ATM</string>
 
     <!--
      Set up Spending Limit
     -->
 
-    <string name="set_spending_limit_text">Set up Spending Limit</string>
-    <string name="ecom">Ecommerce</string>
-    <string name="atm">ATM</string>
     <string name="point_of_sale">Offline Store</string>
     <string name="dummy_amount_500">\u20B9 500</string>
     <string name="dummy_amount_100000">\u20B9 100,000</string>
     <string name="min">Min</string>
     <string name="max">Max</string>
     <string name="dummy_amount_2500">\u20B9 0</string>
+    <string name="manage_channels_heading">Manage Channels</string>
+    <string name="activate_card_heading">Activate Card</string>
+    <string name="rotate_card">Rotate the card to view details</string>
 
     <!--
     Manage Channels
     -->
-    <string name="manage_channels_heading">Manage Channels</string>
+    <string name="issue_by">Issued by</string>
 
     <!--
   Activate card
   -->
-    <string name="activate_card_heading">Activate Card</string>
-    <string name="rotate_card">Rotate the card to view details</string>
-    <string name="issue_by">Issued by</string>
     <string name="enter_otp_text">Enter the OTP sent to your registered phone number.</string>
     <string name="card_kit_empty_error">Please enter last 4 digit provided on the card kit</string>
     <string name="four_digit_empty_error">Please enter four digit number provided on the card kit</string>
     <string name="activate_card_text1">To activate your physical card enter four digit number provided on the card kit</string>
     <string name="activate_card_text2">After entering card kit no, you will receive OTP on your registered phone number</string>
+    <string name="log_out_title">Log out of Fyp?</string>
+    <string name="log_out_text">Remember my login info</string>
+    <string name="qr_scan_issue">Issue in scanning the QR code, please try again</string>
 
     <!--
     Log out
     -->
-    <string name="log_out_title">Log out of Fyp?</string>
-    <string name="log_out_text">Remember my login info</string>
+    <string name="qr_transaction_success">Transaction is completed successfully</string>
+    <string name="dialog_permission_title">Grant Permissions</string>
 
     <!--
     Qr code
     -->
-    <string name="qr_scan_issue">Issue in scanning the QR code, please try again</string>
-    <string name="qr_transaction_success">Transaction is completed successfully</string>
-
-    <string name="dialog_permission_title">Grant Permissions</string>
     <string name="dialog_permission_message">This app needs permission to use this feature. You can grant them in app settings.</string>
     <string name="go_to_settings">GOTO SETTINGS</string>
+
     <string name="msg_error_unable_select_profile_pic">Unable to set profile image. Please try again!</string>
     <string name="lbl_set_profile_photo">Set profile image</string>
     <string name="lbl_take_camera_picture">Take a picture</string>
     <string name="lbl_choose_from_gallery">Choose from gallery</string>
     <string name="toast_image_intent_null">Image picker option is missing!</string>
     <string name="invalid_qr_code">Invalid QR code</string>
+    <string name="walk_through_one_heading">Flaunt your \n Fyp Card</string>
+    <string name="walk_through_two_heading">Get Exciting \n Rewards</string>
+    <string name="walk_through_three_heading">Superfast \n Onboarding</string>
 
 
     <!--
      Walk through
      -->
 
-    <string name="walk_through_one_heading">Flaunt your \n Fyp Card</string>
-    <string name="walk_through_two_heading">Get Exciting \n Rewards</string>
-    <string name="walk_through_three_heading">Superfast \n Onboarding</string>
     <string name="walk_through_one_text1">Coolest card for the coolest generation \n We’re brewing something that’s out of the world🌍</string>
     <string name="walk_through_two_text1">We love spoiling you🤑 \n  Earn rewards with every transactions</string>
     <string name="walk_through_three_text1">Fyp is superfast🚀 \n  Complete your onboarding in less than a minute</string>
+    <string name="order_card_tab1">Order Card</string>
+    <string name="order_card_tab2">Track Order</string>
+    <string name="premium_card">Premium Card</string>
 
 
     <!--
     Order Card
     -->
-    <string name="order_card_tab1">Order Card</string>
-    <string name="order_card_tab2">Track Order</string>
-    <string name="premium_card">Premium Card</string>
     <string name="price">Price-</string>
     <string name="personalized_card">Personalised your card</string>
     <string name="name_card">Name on the Card*</string>
@@ -704,29 +685,23 @@
     <string name="view_breakup"><u>View Price Breakup</u></string>
     <string name="city_hint_val">City*</string>
     <string name="state_hint">State*</string>
+    <string name="bill_details">Bill Details</string>
+    <string name="order_placed">Order Placed</string>
+    <string name="shipped">Shipped</string>
 
-    <string-array name="order_card_list">
-        <item>Set your limit</item>
-        <item>Sensitive details kept safe</item>
-        <item>Real time activity notification</item>
-        <item>Easy card locking</item>
-    </string-array>
+    <string name="out_for_delivery">Out for delivery</string>
 
 
     <!--
     price breakup
     -->
-    <string name="bill_details">Bill Details</string>
-    <string name="order_placed">Order Placed</string>
-    <string name="shipped">Shipped</string>
-    <string name="out_for_delivery">Out for delivery</string>
     <string name="delivered">Delivered</string>
-
-
     <string name="card_type">Premium Fyp Card</string>
     <string name="item_total">Item Total</string>
     <string name="packaging">Packaging</string>
     <string name="delivery_fee">Delivery Partner Fee</string>
+
+
     <string name="tax">Taxes</string>
     <string name="discount">Discount</string>
     <string name="paid_via">Paid Via Fyp Cash/ Bank</string>
@@ -737,19 +712,57 @@
     <string name="dummy_amt_tax">\u20B9 5</string>
     <string name="track_order">Track Order</string>
     <string name="fetching_price">Fetching Price…</string>
-
-    <!--
-    set or change pin
-    -->
     <string name="set_or_change_pin">Set or change pin</string>
     <string name="otp_sent_success_message">OTP has been sent successfully</string>
     <string name="set_or_change_pin1">1:   Click on the \'Change PIN button below \'</string>
     <string name="set_or_change_pin2">2:   You will receive an SMS with a link to change PIN. Click on that link </string>
+
+    <!--
+    set or change pin
+    -->
     <string name="set_or_change_pin3">3:   Enter your new PIN and click \'Okay \'. Your PIN has been changed.</string>
     <string name="an_update_has_just_been_downloaded">An update has downloaded</string>
     <string name="app_update_title">App Updated</string>
+    <string name="create_your_own_task">Create your own task</string>
+    <string name="amount">Recharge amount</string>
+    <string name="refer_and_earn"><![CDATA[Refer & Earn]]></string>
+    <string name="refer_to_your_friend_and_get_a_cash_reward_of_50">Refer to your friend and get a cash reward of ₹50</string>
+    <string name="share_referral_code_with_your_friend_and_after_they_install_both_of_you_will_get_50_cash_rewards">Share referral code with your friend and after they install, both of you will get ₹50 cash rewards.</string>
+    <string name="your_referral_code">Your referral code</string>
+    <string name="copy_text">Copy Text</string>
+    <string name="total_referral_won">Total Referral won</string>
+    <string-array name="person_category_array">
+        <item>Minor</item>
+        <item>Major</item>
+    </string-array>
+    <string-array name="my_profile_title_list">
+        <item>Privacy settings</item>
+        <item>Feed/ interest settings</item>
+        <item>Community settings</item>
+        <item>Help?</item>
+        <item>Log out</item>
+    </string-array>
 
 
-     <string name="create_your_own_task">Create your own task</string>
+    <string-array name="relationNameList">
+        <item>Parent</item>
+        <item>Sibling</item>
+        <item>Spouse</item>
+        <item>Kids</item>
+        <item>Grand parents</item>
+        <item>Grand Child</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="order_card_list">
+        <item>Set your limit</item>
+        <item>Sensitive details kept safe</item>
+        <item>Real time activity notification</item>
+        <item>Easy card locking</item>
+    </string-array>
+
+
+    <string name="share_refral_code">
+        "Hey there👋 \n\nI’m inviting you to use Fyp, India's most rewarding app for teenagers that helps you build smart money habits🤑 \nHere’s my code %1$s - just enter it on the referral code screen and complete your KYC to earn INR %2$s💰 Easy- peasey! \nDownload the app- %3$s"
+    </string>
 
 </resources>

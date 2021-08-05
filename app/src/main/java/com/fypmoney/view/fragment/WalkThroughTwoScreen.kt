@@ -10,6 +10,8 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ViewWalkThroughTwoBinding
 import com.fypmoney.viewmodel.WalkThroughTwoViewModel
 import kotlinx.android.synthetic.main.view_walk_through_one.*
+import kotlinx.android.synthetic.main.view_walk_through_two.*
+import kotlinx.android.synthetic.main.view_walk_through_two.imageView
 
 /*
 * This class is used as walk through screen
@@ -36,7 +38,7 @@ class WalkThroughTwoScreen : BaseFragment<ViewWalkThroughTwoBinding, WalkThrough
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
-        Glide.with(requireContext()).load(R.raw.walk_through_two).into(imageView)
+        imageView.gifResource = R.raw.walk_through_two
 
 
     }
