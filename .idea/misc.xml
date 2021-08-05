@@ -19,7 +19,7 @@
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/activity_refer_and_earn.xml" value="0.275474349964863" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/bottom_sheet_invite.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/bottom_sheet_logout.xml" value="0.12894736842105264" />
-        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/choose_interest_row_item.xml" value="0.5" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/choose_interest_row_item.xml" value="0.25" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/feeds_row_layout.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/home_recent_row_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/item_top_ten_user.xml" value="0.22" />
@@ -35,6 +35,7 @@
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_home.xml" value="0.18" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_invite_rejected.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_login_success.xml" value="0.12894736842105264" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_notification.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_pay_request_profile.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_referral_code.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_select_interest.xml" value="0.12894736842105264" />

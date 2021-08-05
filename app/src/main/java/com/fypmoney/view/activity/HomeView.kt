@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -68,7 +69,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         )
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.STAY_TUNED_BOTTOM_SHEET -> {
-                mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.white))
+                mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
                 mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
                 mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
                 mViewModel.isScanVisible.set(false)

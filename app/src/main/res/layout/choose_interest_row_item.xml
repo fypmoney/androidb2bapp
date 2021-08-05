@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/curved_background3"
-        android:padding="5dp"
+        android:padding="2dp"
         android:layout_margin="@dimen/_5sdp"
         android:elevation="@dimen/_5sdp">
 
@@ -39,6 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/_2sdp"
                 android:background="@drawable/curved_background4"
                 >

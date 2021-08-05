@@ -48,7 +48,7 @@ class ReferAndEarnActivity : BaseActivity<ActivityReferAndEarnBinding,ReferAndEa
                 is ReferAndEarnActivityVM.ReferAndEarnState.PopulateData -> {
                     mViewBinding.loadingAmountHdp.clearAnimation()
                     mViewBinding.loadingAmountHdp.visibility = View.GONE
-                    mViewBinding.totalRefralWonValueTv.text =  "₹${it.totalAmount}"
+                    mViewBinding.totalRefralWonValueTv.text =  Utility.convertToRs("${it.totalAmount}")
 
                 }
             }

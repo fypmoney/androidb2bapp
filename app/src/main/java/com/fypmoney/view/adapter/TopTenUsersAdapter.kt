@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.databinding.ItemTopTenUserBinding
 import com.fypmoney.extension.executeAfter
 import com.fypmoney.model.homemodel.Users
+import com.fypmoney.util.Utility
 
 class TopTenUsersAdapter(
     private val lifecycleOwner: LifecycleOwner,
@@ -38,7 +39,7 @@ class TopTenUsersVH(
         binding.executeAfter {
             lifecycleOwner = this@TopTenUsersVH.lifecycleOwner
             item = user
-
+            userNameTv.text = Utility.getFirstName(user.name)
         }
     }
 

@@ -816,4 +816,15 @@ object Utility {
         context.startActivity(intent)
     }
 
+
+    fun getFirstName(fullName:String): String {
+        val split = fullName.split(" ")
+        if(split.isEmpty()){
+            return fullName;
+        }else if(split.size>1){
+            return split[0];
+
+        }
+        return fullName
+    }
 }
