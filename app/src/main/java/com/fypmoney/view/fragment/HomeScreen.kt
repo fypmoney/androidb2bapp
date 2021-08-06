@@ -28,9 +28,7 @@ import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.screen_home.*
 
 
-/**
- * This fragment is used for loyalty
- */
+
 class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>(),
     LocationListenerClass.GetCurrentLocationListener {
 

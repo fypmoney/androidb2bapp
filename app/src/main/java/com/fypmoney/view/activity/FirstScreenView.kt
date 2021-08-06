@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.view_first_screen.*
 class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewModel>() {
     private lateinit var mViewBinding: ViewFirstScreenBinding
     private lateinit var mViewModel: FirstScreenViewModel
-    private var mBottomSheetBehavior: BottomSheetBehavior<*>? = null
+    //private var mBottomSheetBehavior: BottomSheetBehavior<*>? = null
 
 
     override fun getBindingVariable(): Int {
@@ -41,9 +41,9 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
 
-        val view = findViewById<View>(R.id.bottomSheet)
-        mBottomSheetBehavior = BottomSheetBehavior.from(view)
-        setBottomSheetAndCallBackBottomSheetBehaviour()
+       // val view = findViewById<View>(R.id.bottomSheet)
+       // mBottomSheetBehavior = BottomSheetBehavior.from(view)
+        //setBottomSheetAndCallBackBottomSheetBehaviour()
 
         setObserver()
     }
@@ -52,14 +52,22 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onCreateAccountClicked.observe(this) {
-            if (it) {
-                intentToActivity()
-                mViewModel.onCreateAccountClicked.value = false
-            }
+        mViewModel.event.observe(this) {
+           handelEvents(it)
 
         }
 
+    }
+
+    private fun handelEvents(it: FirstScreenViewModel.FirstScreenEvent?) {
+        when(it){
+            FirstScreenViewModel.FirstScreenEvent.BackToLogin -> {
+                intentToActivity()
+            }
+            FirstScreenViewModel.FirstScreenEvent.CreateAccount -> {
+                intentToActivity()
+            }
+        }
     }
 
 
@@ -75,6 +83,7 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
     /**
      * set bottom sheet behavior and state
      */
+/*
     private fun setBottomSheetAndCallBackBottomSheetBehaviour() {
         //callback
 
@@ -110,4 +119,5 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
             }
         })
     }
+*/
 }
