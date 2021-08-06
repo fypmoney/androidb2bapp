@@ -20,6 +20,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.MyProfileListAdapter
+import com.fypmoney.view.community.SocialCommunityActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
 import com.fypmoney.viewmodel.UserProfileViewModel
 import com.karumi.dexter.Dexter
@@ -278,7 +279,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
                 intentToActivity(SelectInterestView::class.java)
             }
             2 -> {
-                intentToActivity(CommunityView::class.java)
+                intentToActivity(SocialCommunityActivity::class.java)
             }
 
             3 -> {

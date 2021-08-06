@@ -731,10 +731,18 @@
     <string name="your_referral_code">Your referral code</string>
     <string name="copy_text">Copy Text</string>
     <string name="total_referral_won">Total Referral won</string>
+    <string name="share_refral_code">
+        "Hey there👋 \n\nI’m inviting you to use Fyp, India's most rewarding app for teenagers that helps you build smart money habits🤑 \nHere’s my code %1$s - just enter it on the referral code screen and complete your KYC to earn INR %2$s💰 Easy- peasey! \nDownload the app- %3$s"
+    </string>
+    <string name="let_s_build_a_n_community_together">Let’s build a \n community together</string>
+    <string name="we_can_sense_your_excitement">We can sense your excitement 🤩</string>
+    <string name="join_the_community">Join the community</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
     </string-array>
+
+
     <string-array name="my_profile_title_list">
         <item>Privacy settings</item>
         <item>Feed/ interest settings</item>
@@ -742,8 +750,6 @@
         <item>Help?</item>
         <item>Log out</item>
     </string-array>
-
-
     <string-array name="relationNameList">
         <item>Parent</item>
         <item>Sibling</item>
@@ -753,16 +759,13 @@
         <item>Grand Child</item>
         <item>Other</item>
     </string-array>
+
+
     <string-array name="order_card_list">
         <item>Set your limit</item>
         <item>Sensitive details kept safe</item>
         <item>Real time activity notification</item>
         <item>Easy card locking</item>
     </string-array>
-
-
-    <string name="share_refral_code">
-        "Hey there👋 \n\nI’m inviting you to use Fyp, India's most rewarding app for teenagers that helps you build smart money habits🤑 \nHere’s my code %1$s - just enter it on the referral code screen and complete your KYC to earn INR %2$s💰 Easy- peasey! \nDownload the app- %3$s"
-    </string>
 
 </resources>

@@ -181,4 +181,7 @@ object AppConstants {
     const val NOT_ALLOWED_MSG = "Invalid Version. Please uninstall your current app and install it from Play Store again."
     const val PLAY_STORE_URL = "http://onelink.to/fypmoney"
     const val CASHBACK_AMOUNT = "25"
+    const val INSTAGRAM_PAGE = "https://www.instagram.com/fypmoney.in/?hl=en"
+    const val FACEBOOK_PAGE = "https://www.facebook.com/fypmoney.in/"
+    const val YOUTUBE_PAGE = "https://www.youtube.com/channel/UCDoPH4GT9fP8Sp2bgr_95LA/about"
 }

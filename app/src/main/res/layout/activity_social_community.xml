@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.fypmoney.view.community.SocialCommunityActivityVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/social_community_gradient"
+        tools:context=".view.community.SocialCommunityActivity">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:navigationIcon="@drawable/ic_back_arrow"
+            app:navigationIconTint="@color/white"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title_tv"
+            style="@style/TextviewBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:textSize="31sp"
+            android:text="@string/let_s_build_a_n_community_together"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sub_title_tv"
+            style="@style/TextviewRegular"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_tv"
+            android:textColor="@color/text_color_faded"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="@string/we_can_sense_your_excitement"/>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/graphics_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            app:layout_constraintTop_toBottomOf="@+id/sub_title_tv"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp16"
+            app:srcCompat="@drawable/ic_social_community_image"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/insta_cv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/graphics_iv"
+            app:layout_constraintEnd_toEndOf="@+id/graphics_iv"
+            app:layout_constraintTop_toBottomOf="@+id/graphics_iv"
+            android:layout_marginTop="@dimen/_30sdp"
+            app:cardBackgroundColor="#424242"
+            app:cardCornerRadius="14dp"
+            android:onClick="@{()->viewmodel.joinOnInstagramClick()}"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:srcCompat="@drawable/ic_inssta" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:gravity="center"
+                    android:text="@string/join_the_community"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/arrow"
+                    app:layout_constraintStart_toEndOf="@+id/image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/arrow"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="18dp"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_dropdown" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/facebook_cv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/graphics_iv"
+            app:layout_constraintEnd_toEndOf="@+id/graphics_iv"
+            app:layout_constraintTop_toBottomOf="@+id/insta_cv"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:cardBackgroundColor="#424242"
+            app:cardCornerRadius="14dp"
+            android:onClick="@{()->viewmodel.joinOnFacebookClick()}"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/fb_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:srcCompat="@drawable/ic_facebook" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:gravity="center"
+                    android:text="@string/join_the_community"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/fb_arrow"
+                    app:layout_constraintStart_toEndOf="@+id/fb_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/fb_arrow"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="18dp"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_dropdown" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/youtube_cv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/graphics_iv"
+            app:layout_constraintEnd_toEndOf="@+id/graphics_iv"
+            app:layout_constraintTop_toBottomOf="@+id/facebook_cv"
+            android:layout_marginTop="@dimen/_20sdp"
+            app:cardBackgroundColor="#424242"
+            app:cardCornerRadius="14dp"
+            android:onClick="@{()->viewmodel.joinOnYoutubeClick()}"
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/youtube_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:srcCompat="@drawable/ic_youtube" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:gravity="center"
+                    android:text="@string/join_the_community"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/youtube_arrow"
+                    app:layout_constraintStart_toEndOf="@+id/youtube_image"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/youtube_arrow"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginEnd="18dp"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_dropdown" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
