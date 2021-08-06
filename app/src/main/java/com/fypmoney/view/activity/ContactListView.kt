@@ -24,7 +24,6 @@ import com.fypmoney.view.fragment.InviteBottomSheet
 import com.fypmoney.view.fragment.InviteMemberBottomSheet
 import com.fypmoney.viewmodel.ContactListViewModel
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_user_feeds.*
 
 /*
 * This is used to handle contacts

@@ -65,7 +65,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
         checkAndAskPermission()
 
 
-        setObserver()
+        setObserver()k
     }
 
     private fun checkAndAskPermission() {

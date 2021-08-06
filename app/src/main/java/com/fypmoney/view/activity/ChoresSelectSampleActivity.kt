@@ -1,27 +1,21 @@
 package com.fypmoney.view.activity
 
+
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAddTaskBinding
-import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.model.SampleTaskModel
+import com.fypmoney.view.adapter.SampleTaskAdapter
 import com.fypmoney.view.interfaces.ListItemClickListener
-
-
 import com.fypmoney.viewmodel.CreateTaskViewModel
 import kotlinx.android.synthetic.main.activity_add_task.*
-
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_user_feeds.*
-import kotlinx.android.synthetic.main.view_user_feeds.recycler_view
-import com.fypmoney.view.adapter.SampleTaskAdapter
 import kotlinx.android.synthetic.main.view_add_task.*
 import kotlinx.android.synthetic.main.view_add_task.loader
 import kotlinx.android.synthetic.main.view_chores.*

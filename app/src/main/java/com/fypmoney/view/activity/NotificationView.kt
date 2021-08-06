@@ -18,7 +18,6 @@ import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.NotificationViewModel
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_user_feeds.*
 
 /*
 * This is used to show list of notification
