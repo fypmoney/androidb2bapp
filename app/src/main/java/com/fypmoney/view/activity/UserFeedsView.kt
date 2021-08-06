@@ -56,16 +56,16 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
-        setToolbarAndTitle(
+        /*setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar,
             isBackArrowVisible = false
-        )
+        )*/
 
         checkAndAskPermission()
 
 
-        setObserver()k
+        setObserver()
     }
 
     private fun checkAndAskPermission() {
