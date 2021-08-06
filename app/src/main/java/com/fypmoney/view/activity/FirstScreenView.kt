@@ -1,7 +1,11 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -9,6 +13,12 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewFirstScreenBinding
 import com.fypmoney.listener.OnSwipeTouchListener
+import com.fypmoney.util.textview.ClickableSpanListener
+import com.fypmoney.util.textview.MyStoreClickableSpan
+import com.fypmoney.view.WebpageOpener
+import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+import com.fypmoney.view.webview.WebViewActivity
 import com.fypmoney.viewmodel.FirstScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.toolbar.*
@@ -45,6 +55,7 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
        // mBottomSheetBehavior = BottomSheetBehavior.from(view)
         //setBottomSheetAndCallBackBottomSheetBehaviour()
 
+        showPrivacyPolicyAndTermsAndConditions()
         setObserver()
     }
 
@@ -120,4 +131,46 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
         })
     }
 */
+
+    private fun showPrivacyPolicyAndTermsAndConditions() {
+        val text = resources.getString(R.string.create_account_terms, resources.getString(R.string.privacy_policy), resources.getString(R.string.terms_and_conditions))
+        val privacyPolicyText = resources.getString(R.string.privacy_policy)
+        val tAndCText = resources.getString(R.string.terms_and_conditions)
+        val privacyPolicyStarIndex = text.indexOf(privacyPolicyText)
+        val privacyPolicyEndIndex = privacyPolicyStarIndex + privacyPolicyText.length
+        val tAndCStartIndex = text.indexOf(tAndCText)
+        val tAndCEndIndex = tAndCStartIndex + tAndCText.length
+        val ss = SpannableString(text);
+        ss.setSpan(
+            MyStoreClickableSpan(1, object : ClickableSpanListener {
+                override fun onPositionClicked(pos: Int) {
+                    openWebPageFor(getString(R.string.privacy_policy),"https://www.fypmoney.in/fyp/privacy-policy/")
+
+                }
+            }),
+            privacyPolicyStarIndex,
+            privacyPolicyEndIndex,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        ss.setSpan(
+            MyStoreClickableSpan(2, object : ClickableSpanListener {
+                override fun onPositionClicked(pos: Int) {
+                    openWebPageFor(getString(R.string.terms_and_conditions),"https://www.fypmoney.in/fyp/terms-of-use/")
+                }
+            }),
+            tAndCStartIndex,
+            tAndCEndIndex,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        mViewBinding.tvTerms.text = ss
+        mViewBinding.tvTerms.highlightColor = Color.TRANSPARENT
+        mViewBinding.tvTerms.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    private fun openWebPageFor(title: String, url: String) {
+        val intent = Intent(this@FirstScreenView, WebViewActivity::class.java)
+        intent.putExtra(ARG_WEB_URL_TO_OPEN, url)
+        intent.putExtra(ARG_WEB_PAGE_TITLE, title)
+        startActivity(intent)
+    }
 }
