@@ -9,6 +9,10 @@
             type="com.fypmoney.view.community.SocialCommunityActivityVM" />
     </data>
 
+    <androidx.core.widget.NestedScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,8 +40,8 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             android:textColor="@color/white"
             android:gravity="center"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:textSize="31sp"
+            android:layout_marginTop="@dimen/dp16"
+            android:textSize="28sp"
             android:text="@string/let_s_build_a_n_community_together"/>
 
         <com.google.android.material.textview.MaterialTextView
@@ -191,6 +195,7 @@
             app:layout_constraintEnd_toEndOf="@+id/graphics_iv"
             app:layout_constraintTop_toBottomOf="@+id/facebook_cv"
             android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/dp16"
             app:cardBackgroundColor="#424242"
             app:cardCornerRadius="14dp"
             android:onClick="@{()->viewmodel.joinOnYoutubeClick()}"
@@ -244,4 +249,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
