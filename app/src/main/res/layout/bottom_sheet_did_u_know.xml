@@ -15,9 +15,11 @@
             android:layout_height="5dp"
             app:tabIndicatorFullWidth="false"
             app:tabMode="fixed"
+            app:tabPaddingStart="8dp"
+            app:tabPaddingEnd="8dp"
             app:tabBackground="@drawable/story_tab_selector"
             app:tabGravity="fill"
-            app:tabIndicatorHeight="0dp"/>
+            app:tabIndicatorHeight="5dp"/>
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"

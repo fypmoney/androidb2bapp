@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable-ldpi/ic_rate_us.xml" value="1.321875" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable-v24/round_dark_grey_backgroud_6.xml" value="0.1" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/button_interest_background.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/curved_background1.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/curved_background24.xml" value="0.13914473684210527" />
@@ -22,6 +23,7 @@
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/selected_dot.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/selected_story_tab.xml" value="0.13778501628664494" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/social_community_gradient.xml" value="0.13778501628664494" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/stories_bg.xml" value="0.13778501628664494" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/story_tab_indicator.xml" value="0.13778501628664494" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/story_tab_selector.xml" value="0.13778501628664494" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/tab_selector.xml" value="0.13914473684210527" />
@@ -32,11 +34,16 @@
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/bottom_sheet_did_u_know.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/bottom_sheet_invite.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/bottom_sheet_logout.xml" value="0.12894736842105264" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/bottomsheet_stories.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/choose_interest_row_item.xml" value="0.25" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/feed_row_layout_videoview.xml" value="0.12894736842105264" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/feeds_did_u_know.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/feeds_row_layout.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/fragment_did_u_know.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/home_recent_row_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/item_top_ten_user.xml" value="0.22" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/my_profile_list_row_item.xml" value="0.12894736842105264" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/pausable_progress.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/refer_and_earn_fragment.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/screen_home.xml" value="0.18" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/toolbar.xml" value="0.12894736842105264" />
