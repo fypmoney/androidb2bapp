@@ -352,7 +352,8 @@
     First screen
     -->
     <string name="welcome">Welcome to</string>
-    <string name="create_account_terms">"By tapping Create Account you agree to the Terms of Services &amp; Privacy Policy"</string>
+
+    <string name="create_account_terms">"By tapping Create Account you agree to the %1$s &amp; %2$s"</string>
     <string name="stay_tuned_screen_title">Stay tuned!</string>
 
     <!-- stay tuned
@@ -731,6 +732,16 @@
     <string name="your_referral_code">Your referral code</string>
     <string name="copy_text">Copy Text</string>
     <string name="total_referral_won">Total Referral won</string>
+    <string name="share_refral_code">
+        "Hey there👋 \n\nI’m inviting you to use Fyp, India's most rewarding app for teenagers that helps you build smart money habits🤑 \nHere’s my code %1$s - just enter it on the referral code screen and complete your KYC to earn INR %2$s💰 Easy- peasey! \nDownload the app- %3$s"
+    </string>
+    <string name="coming_soon">Coming Soon \n</string>
+
+
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_and_conditions">Terms Of Use</string>
+
+
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
@@ -742,8 +753,6 @@
         <item>Help?</item>
         <item>Log out</item>
     </string-array>
-
-
     <string-array name="relationNameList">
         <item>Parent</item>
         <item>Sibling</item>
@@ -759,10 +768,5 @@
         <item>Real time activity notification</item>
         <item>Easy card locking</item>
     </string-array>
-
-
-    <string name="share_refral_code">
-        "Hey there👋 \n\nI’m inviting you to use Fyp, India's most rewarding app for teenagers that helps you build smart money habits🤑 \nHere’s my code %1$s - just enter it on the referral code screen and complete your KYC to earn INR %2$s💰 Easy- peasey! \nDownload the app- %3$s"
-    </string>
 
 </resources>

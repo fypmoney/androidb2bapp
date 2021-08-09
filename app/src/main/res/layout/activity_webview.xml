@@ -35,11 +35,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/titleToolbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:text=""
-            android:layout_centerHorizontal="true"
+            android:layout_toEndOf="@+id/toolbar_backImage"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,11 +63,9 @@
             app:tint="@color/cb_grey" />
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
-
             android:layout_centerVertical="true"
             android:background="@drawable/round_dark_grey_backgroud_6"
             android:paddingRight="@dimen/_18sdp"
-
             android:layout_marginEnd="@dimen/_12sdp"
             android:id="@+id/card_details"
             android:layout_alignParentEnd="true"
@@ -80,7 +79,6 @@
                 android:id="@+id/amount_tv"
                 android:text="Loading.."
                 android:textColor="@color/cb_grey"
-
                 android:gravity="center"
                 android:layout_height="match_parent"/>
 
