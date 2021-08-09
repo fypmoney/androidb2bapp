@@ -10,6 +10,12 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatTextView
 import com.fypmoney.R
+import android.graphics.drawable.BitmapDrawable
+
+import android.graphics.drawable.Drawable
+
+import android.graphics.Bitmap
+import com.fypmoney.util.Utility.fastblur
 
 
 /**
@@ -23,10 +29,10 @@ class DialogUtils {
         fun showProgressDialog(context: Activity) {
             dialog = Dialog(context)
             dialog?.setCancelable(false)
-            dialog?.show()
-            dialog?.setContentView(R.layout.progress_bar)
-            dialog?.window!!.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            dialog?.setContentView(R.layout.roket_loader)
+            dialog?.window!!.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             dialog?.window!!.setBackgroundDrawableResource(android.R.color.transparent)
+            dialog?.show()
         }
 
         /**

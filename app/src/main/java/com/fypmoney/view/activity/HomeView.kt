@@ -122,9 +122,9 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                     setCurrentFragment(StoreScreen())
                 }
                 R.id.card -> {
-                    mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.white))
-                    mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
-                    mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
+                    mViewBinding.toolbar.background = ( ContextCompat.getDrawable(this,R.drawable.social_community_gradient))
+                    mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.white))
+                    mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon)
                     mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(getString(R.string.card_details_title))
                     setCurrentFragment(CardScreen())

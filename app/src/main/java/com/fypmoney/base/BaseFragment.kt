@@ -1,5 +1,6 @@
 package com.fypmoney.base
 
+
 import android.Manifest
 import android.app.KeyguardManager
 import android.content.Context
@@ -21,6 +22,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.fypmoney.R
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.DEVICE_SECURITY_REQUEST_CODE
 import com.fypmoney.util.DialogUtils
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.concurrent.Executor
@@ -193,7 +195,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
    * Ask for device security pin, pattern or fingerprint
    * */
     fun askForDevicePassword() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             val km =
                 requireContext().getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
 
@@ -202,28 +204,39 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
                     AppConstants.DIALOG_TITLE_AUTH,
                     AppConstants.DIALOG_MSG_AUTH
                 )
-                ActivityCompat.startActivityForResult(
-                    requireActivity(),
-                    authIntent,
+                requireParentFragment().onActivityResult(
                     AppConstants.DEVICE_SECURITY_REQUEST_CODE,
-                    null
+                    AppCompatActivity.RESULT_OK,
+                    authIntent
                 )
             }
         } else {
             askForDeviceSecurity(executor)
+        }*/
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            val km = requireContext().getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager?
+            if (km!!.isKeyguardSecure) {
+                val authIntent = km!!.createConfirmDeviceCredentialIntent(
+                    getString(com.fypmoney.R.string.dialog_title_auth),
+                    getString(com.fypmoney.R.string.dialog_msg_auth)
+                )
+                startActivityForResult(authIntent, DEVICE_SECURITY_REQUEST_CODE)
+            }
+        }else {
+            askForDeviceSecurity(executor)
         }
     }
 
-    /*
+        /*
         * Ask for device security pin, pattern or fingerprint greater than OS pie
         * */
-    fun askForDeviceSecurity(executor: Executor) {
-        val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle(AppConstants.DIALOG_TITLE_AUTH)
-            .setDescription(AppConstants.DIALOG_MSG_AUTH)
-            .setDeviceCredentialAllowed(true)
-            .build()
+        fun askForDeviceSecurity(executor: Executor) {
+            val promptInfo = BiometricPrompt.PromptInfo.Builder()
+                .setTitle(AppConstants.DIALOG_TITLE_AUTH)
+                .setDescription(AppConstants.DIALOG_MSG_AUTH)
+                .setDeviceCredentialAllowed(true)
+                .build()
         // 1
         val biometricPrompt = BiometricPrompt(this, executor,
             object : BiometricPrompt.AuthenticationCallback() {
@@ -237,7 +250,6 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
                         Intent()
                     )
                     super.onAuthenticationSucceeded(result)
-
                 }
 
                 // 3
@@ -255,9 +267,9 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     }
 
 
+
     // call back when password is correct or incorrect
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == AppConstants.DEVICE_SECURITY_REQUEST_CODE) {
             when (resultCode) {
                 AppCompatActivity.RESULT_OK -> {

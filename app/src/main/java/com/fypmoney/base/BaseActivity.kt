@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -336,13 +337,15 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     fun setToolbarAndTitle(
         context: Context,
         toolbar: Toolbar,
-        isBackArrowVisible: Boolean? = false, toolbarTitle: String? = null
+        isBackArrowVisible: Boolean? = false, toolbarTitle: String? = null,backArrowTint:Int = Color.BLACK,
+        titleColor:Int = Color.BLACK
     ) {
         setSupportActionBar(toolbar)
         val upArrow = ContextCompat.getDrawable(
             context,
             R.drawable.ic_back_arrow
         )
+        upArrow?.setTint(backArrowTint)
 
         supportActionBar?.let {
             if (isBackArrowVisible!!) {
@@ -353,6 +356,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
             it.setDisplayShowTitleEnabled(false)
             if (toolbarTitle != null) {
                 toolbar_title.text = toolbarTitle
+                toolbar_title.setTextColor(titleColor)
 
             }
         }

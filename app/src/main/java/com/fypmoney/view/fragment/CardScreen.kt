@@ -1,11 +1,11 @@
 package com.fypmoney.view.fragment
 
-import android.animation.AnimatorInflater
-import android.animation.AnimatorSet
+import android.animation.*
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.Path
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
@@ -14,6 +14,8 @@ import android.text.method.HideReturnsTransformationMethod
 import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.MotionEvent
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -94,7 +96,8 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         setObservers()
         loadAnimations()
         changeCameraDistance()
-
+        mViewModel.callGetWalletBalanceApi()
+        mViewModel.callGetBankProfileApi()
 
         //  val gdt = GestureDetector(requireContext(),OnSwipeTouchListener())
 
@@ -103,11 +106,35 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             }
 
             override fun onSwipeRight() {
-                flipCard()
+                flipCardRight()
             }
 
+
             override fun onSwipeLeft() {
-                flipCard()
+                //flipCardRight()
+               flipCardLeft()
+
+            }
+
+            override fun onSwipeBottom() {
+            }
+
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                return gestureDetector.onTouchEvent(event)
+            }
+        })
+        mCardBackLayout.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
+            override fun onSwipeTop() {
+            }
+
+            override fun onSwipeRight() {
+                flipCardRight()
+            }
+
+
+            override fun onSwipeLeft() {
+                flipCardLeft()
+
             }
 
             override fun onSwipeBottom() {
@@ -122,41 +149,10 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     override fun onResume() {
         super.onResume()
-        mViewModel.callGetWalletBalanceApi()
-        mViewModel.callGetBankProfileApi()
+
 
     }
 
-    private class GestureListener : SimpleOnGestureListener() {
-        private val SWIPE_MIN_DISTANCE = 120
-        private val SWIPE_THRESHOLD_VELOCITY = 200
-        override fun onFling(
-            e1: MotionEvent,
-            e2: MotionEvent,
-            velocityX: Float,
-            velocityY: Float
-        ): Boolean {
-            if (e1.x - e2.x > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                Utility.showToast("right")
-
-                // Right to left, your code here
-                return true
-            } else if (e2.x - e1.x > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-
-                Utility.showToast("left")
-                // Left to right, your code here
-                return true
-            }
-            if (e1.y - e2.y > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                // Bottom to top, your code here
-                return true
-            } else if (e2.y - e1.y > SWIPE_MIN_DISTANCE && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
-                // Top to bottom, your code here
-                return true
-            }
-            return false
-        }
-    }
 
     /*
     * This method is used to observe the observers
@@ -198,7 +194,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
         mViewModel.onGetCardDetailsSuccess.observe(viewLifecycleOwner) {
             if (it) {
-                flipCard()
                 mViewModel.onGetCardDetailsSuccess.value = false
             }
         }
@@ -220,7 +215,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     }
 
     override fun onTryAgainClicked() {
-
     }
 
     override
@@ -232,7 +226,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                     AppCompatActivity.RESULT_OK -> {
                         Handler(Looper.getMainLooper()).post(Runnable {
                             mViewModel.callGetVirtualRequestApi()
-
                         })
 
                     }
@@ -255,7 +248,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         mSetLeftIn = AnimatorInflater.loadAnimator(context, R.animator.in_animation) as AnimatorSet
     }
 
-    fun flipCard() {
+    fun flipCardRight() {
         if (!mIsBackVisible) {
             mViewModel.isBackVisible.set(true)
             mSetRightOut!!.setTarget(mCardFrontLayout)
@@ -263,10 +256,36 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             mSetRightOut!!.start()
             mSetLeftIn!!.start()
             mIsBackVisible = true
-            val handler = Handler()
-            handler.postDelayed({
-                mViewModel.isFrontVisible.set(false)
-            }, 2000)
+            mViewModel.isFrontVisible.set(false)
+
+        }else{
+            mViewModel.isFrontVisible.set(true)
+            mSetLeftIn!!.setTarget(mCardFrontLayout)
+            mSetRightOut!!.setTarget(mCardBackLayout)
+            mSetLeftIn!!.start()
+            mSetRightOut!!.start()
+            mIsBackVisible = false
+
+        }
+    }
+    fun flipCardLeft() {
+        if (!mIsBackVisible) {
+            mViewModel.isBackVisible.set(true)
+            mSetRightOut!!.setTarget(mCardFrontLayout)
+            mSetLeftIn!!.setTarget(mCardBackLayout)
+            mSetLeftIn!!.start()
+            mSetRightOut!!.start()
+            mIsBackVisible = true
+            mViewModel.isFrontVisible.set(false)
+
+
+        }else{
+            mViewModel.isFrontVisible.set(true)
+            mSetLeftIn!!.setTarget(mCardFrontLayout)
+            mSetRightOut!!.setTarget(mCardBackLayout)
+            mSetLeftIn!!.start()
+            mSetRightOut!!.start()
+            mIsBackVisible = false
         }
     }
 

@@ -18,25 +18,27 @@
 
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
-    <LinearLayout
+        android:fillViewport="true"><LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="vertical"
+        android:background="@drawable/social_community_gradient"
         app:layout_constraintTop_toTopOf="parent">
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp16"
+            >
 
 
             <FrameLayout
                 android:id="@+id/card_back"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
                 android:layout_height="match_parent">
 
                 <include
@@ -49,8 +51,9 @@
 
             <FrameLayout
                 android:id="@+id/card_front"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
                 android:gravity="center">
 
                 <include
@@ -65,10 +68,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-           >
+            android:layout_height="wrap_content">
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -79,15 +79,16 @@
                 android:layout_centerHorizontal="true"
                 android:drawableStart="@drawable/ic_rotate"
                 android:drawablePadding="10dp"
+                android:layout_marginTop="5dp"
                 android:text="@string/rotate_card"
-                android:textColor="@color/text_color_dark"
-                android:textSize="17dp" />
+                android:textColor="@color/text_color_light"
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/rotate"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
                 android:layout_centerHorizontal="true"
                 android:orientation="horizontal">
             <androidx.appcompat.widget.AppCompatTextView
@@ -97,15 +98,15 @@
                 android:layout_height="wrap_content"
                 android:text="@string/issue_by"
                 android:layout_gravity="center"
-                android:textColor="@color/text_color_dark"
-                android:textSize="17dp" />
+                android:textColor="@color/text_color_light"
+                android:textSize="14sp" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 style="@style/TextviewRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/yes_bank_logo"
+                app:srcCompat="@drawable/yes_bank_logo"
                 android:drawablePadding="10dp"
                 android:textColor="@color/text_color_dark"
                 />
@@ -127,6 +128,6 @@
 
     </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

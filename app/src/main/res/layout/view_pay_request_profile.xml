@@ -34,12 +34,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <RelativeLayout
+                    android:id="@+id/upper_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="62dp">
+                    android:layout_marginTop="22dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/ivServiceLogo"
@@ -127,16 +132,25 @@
 
                 </LinearLayout>
 
+                </RelativeLayout>
 
-                <com.fypmoney.util.ScrollableListView
-                    android:id="@+id/list"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/layout"
-                    android:layout_marginTop="50dp"
+                <FrameLayout
                     android:background="@drawable/curved_background12"
-                    android:divider="@android:color/transparent"
-                    android:dividerHeight="0dp" />
+                    android:layout_marginTop="50dp"
+                    android:layout_below="@+id/upper_rl"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <com.fypmoney.util.ScrollableListView
+                        android:id="@+id/list"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/screenMarginLeft"
+                        android:layout_marginEnd="@dimen/screenMarginLeft"
+                        android:background="@drawable/curved_background12"
+                        android:divider="@android:color/transparent"
+                        android:dividerHeight="0dp" />
+                </FrameLayout>
+
 
 
             </RelativeLayout>

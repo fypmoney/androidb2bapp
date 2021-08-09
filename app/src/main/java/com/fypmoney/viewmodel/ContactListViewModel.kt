@@ -40,7 +40,13 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
     var selectedContactList = ObservableArrayList<ContactEntity>()
     var onSelectClicked = MutableLiveData<Boolean>()
     var inviteMember= MutableLiveData<Boolean>()
-
+    var isFetchBalanceVisible = ObservableField(true)
+    var fetchBalanceLoading = MutableLiveData<Boolean>()
+    var availableAmount =
+        ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
+    init {
+        callGetWalletBalanceApi()
+    }
     /*
 * This method is used to get all the contacts
 * */
@@ -126,6 +132,20 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
     }
 
 
+    /*
+     * This method is used to get the balance of wallet
+     * */
+    private fun callGetWalletBalanceApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_WALLET_BALANCE,
+                NetworkUtil.endURL(ApiConstant.API_GET_WALLET_BALANCE),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
@@ -154,6 +174,14 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
                     }
                 }
             }
+            ApiConstant.API_GET_WALLET_BALANCE -> {
+            if (responseData is GetWalletBalanceResponse) {
+                isFetchBalanceVisible.set(false)
+                fetchBalanceLoading.value = true
+                availableAmount.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)!!))
+
+            }
+        }
 
 
         }

@@ -7,7 +7,9 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.fypmoney.BR
@@ -24,6 +26,8 @@ import com.fypmoney.view.fragment.InviteBottomSheet
 import com.fypmoney.view.fragment.InviteMemberBottomSheet
 import com.fypmoney.viewmodel.ContactListViewModel
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_contact_list.*
+import kotlinx.android.synthetic.main.view_contacts.*
 
 /*
 * This is used to handle contacts
@@ -51,8 +55,12 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
         setToolbarAndTitle(
             context = this@ContactListView,
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = getString(R.string.pay_title)
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.pay_title),
+            backArrowTint = Color.WHITE,
+            titleColor = Color.WHITE
         )
+        toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.text_color_dark))
+
         setObserver()
         checkAndAskPermission()
     }
@@ -104,7 +112,13 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
                 mViewModel.emptyContactListError.value = false
             }
         }
-
+        mViewModel.fetchBalanceLoading.observe(this) {
+            if (it) {
+                amountFetching.clearAnimation()
+                amountFetching.visibility = View.GONE
+                mViewModel.fetchBalanceLoading.value = false
+            }
+        }
     }
 
     /**
