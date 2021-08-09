@@ -16,6 +16,7 @@ import com.fypmoney.databinding.BottomSheetTaskAddedMessageBinding
 import com.fypmoney.databinding.BottomSheetTaskMessageBinding
 import com.fypmoney.model.UpdateTaskGetResponse
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.button.MaterialButton
@@ -57,7 +58,38 @@ class taskAddedMessageBottomSheet(
         bottomSheet.setContentView(bindingSheet.root)
 
 
-
+//        var bottomSheetBehavior = BottomSheetBehavior.from(bindingSheet.root)
+//
+//        bottomSheetBehavior!!.addBottomSheetCallback(object :
+//            BottomSheetBehavior.BottomSheetCallback() {
+//            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+//
+//            }
+//            override fun onStateChanged(bottomSheet: View, newState: Int) {
+//                when (newState) {
+//
+//
+//                    BottomSheetBehavior.STATE_COLLAPSED -> {
+//                        requireActivity().  setResult(88)
+//                        requireActivity().  finish()
+//
+//                    }
+//                    BottomSheetBehavior.STATE_DRAGGING -> {
+//
+//                    }
+//                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+//
+//
+//
+//                    }
+//                    BottomSheetBehavior.STATE_HIDDEN -> {
+//
+//                    }
+//
+//                }
+//            }
+//
+//        })
         view.message.text = list.msg
         view.continuebtn.setOnClickListener(View.OnClickListener {
             onClickListener.onSubmit()

@@ -86,11 +86,11 @@ class FamilyNotificationBottomSheet(
         description.text = descriptionValue
 
         btnReject.setOnClickListener {
-            onBottomSheetClickListener.onBottomSheetButtonClick(actionAllowedList[1])
+            onBottomSheetClickListener.onBottomSheetButtonClick(actionAllowedList[0])
             dismiss()
         }
         btnAccept.setOnClickListener {
-            onBottomSheetClickListener.onBottomSheetButtonClick(actionAllowedList[0])
+            onBottomSheetClickListener.onBottomSheetButtonClick(actionAllowedList[1])
             dismiss()
         }
 

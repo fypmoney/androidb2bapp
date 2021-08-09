@@ -19,7 +19,7 @@ import com.fypmoney.view.fragment.*
 import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.viewmodel.ChoresHistoryViewModel
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_add_task.*
+
 
 class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresHistoryViewModel>(),
     ProcessCompleteBSFragment.OnPBottomSheetClickListener,

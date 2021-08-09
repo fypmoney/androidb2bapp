@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -30,6 +31,14 @@ import nearby.matchinteractmeet.groupalike.Profile.Trips.adapter.addmemberAdapte
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+
+import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+
+import android.R.string.no
+import androidx.annotation.NonNull
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.*
+import kotlinx.android.synthetic.main.bottom_sheet_task_added_message.*
 
 
 class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>() , DialogUtils.OnAlertDialogClickListener{
@@ -83,7 +92,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
         setToolbarAndTitle(
             context = this@AddTaskActivity,
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = getString(R.string.chore_history_title)
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.chore_title)
         )
 
         btnContinue.setOnClickListener {
@@ -91,7 +100,12 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
 
 
                 val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+if (et_start.text?.trim().toString() == endTime.text?.trim().toString()) {
+    myCalendar?.set(Calendar.HOUR_OF_DAY, 0);
+    myCalendar2?.set(Calendar.HOUR_OF_DAY, 23);
+    myCalendar2?.set(Calendar.MINUTE, 50);
 
+}
                 val startdate = outputFormat.format(myCalendar?.time)
                 val enddate = outputFormat.format(myCalendar2?.time)
                 if (selectedmember != null) {
@@ -115,7 +129,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
     }
 
     private fun setObserver() {
-        mViewModel!!.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
+        mViewModel.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
 
             callTaskMessageSheet(list)
 
@@ -136,8 +150,10 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
 
             }
         }
+
         val bottomSheet =
             taskAddedMessageBottomSheet(itemClickListener2, list)
+
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "TASKMESSAGE")
     }
@@ -166,12 +182,15 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
                 updateLabel()
             }
 
-        mViewBinding.etMobileNo.setOnClickListener {
-            DatePickerDialog(
+        et_start.setOnClickListener {
+            var dialog = DatePickerDialog(
                 this@AddTaskActivity, date, myCalendar!!
                     .get(Calendar.YEAR), myCalendar!!.get(Calendar.MONTH),
                 myCalendar!!.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            )
+
+            dialog.datePicker.setMinDate(myCalendar?.timeInMillis!!);
+            dialog.show()
         }
         val date2 =
             OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
@@ -181,18 +200,20 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
                 updateLabel2()
             }
         mViewBinding.endTime.setOnClickListener {
-            DatePickerDialog(
+            var dialog = DatePickerDialog(
                 this@AddTaskActivity, date2, myCalendar2!!
                     .get(Calendar.YEAR), myCalendar2!!.get(Calendar.MONTH),
                 myCalendar2!!.get(Calendar.DAY_OF_MONTH)
-            ).show()
+            )
+            dialog.datePicker.setMinDate(myCalendar?.timeInMillis!!);
+            dialog.show()
         }
     }
 
     private fun updateLabel() {
         val myFormat = "dd/MM/yyyy" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
-        mViewBinding.etMobileNo.setText(sdf.format(myCalendar?.time))
+        et_start.setText(sdf.format(myCalendar?.time))
     }
     private fun updateLabel2() {
         val myFormat = "dd/MM/yyyy" //In which you need put here
@@ -203,11 +224,15 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
         val sampleTitle = intent?.getStringExtra("sample_title")
         var sampleDescription = intent?.getStringExtra("sample_desc")
         var sample_amount = intent?.getStringExtra("sample_amount")
+        if (sample_amount != null) {
+            var amount1 = sample_amount?.toInt()?.div(100)
+            add_money_editext.setText(amount1.toString())
+        }
 
 
         et_title.setText(sampleTitle)
         et_desc.setText(sampleDescription)
-        add_money_editext.setText(sample_amount)
+
     }
 
     private fun setRecyclerView() {
@@ -218,13 +243,15 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
 
 
             override fun onItemClicked(pos: Int) {
+
                 selectedmember = itemsArrayList[pos]
 
             }
 
             override fun onCallClicked(pos: Int) {
-
-                intentToActivity(ContactViewAddMember::class.java)
+                if (validate()) {
+                    intentToActivity(ContactViewAddMember::class.java)
+                }
             }
         }
 
@@ -239,7 +266,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
         startActivityForResult(Intent(this, aClass),13)
     }
      fun validate(): Boolean {
-        var success: Boolean = true
+         var success: Boolean = true
 
          if (add_money_editext.text.toString().trim().isEmpty()) {
              success = false
@@ -249,10 +276,13 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
              success = false
              et_title.error = "Enter Task title"
          }
+         if (et_desc.text.toString().trim().isEmpty()) {
+             success = false
+             et_desc.error = "Enter Task Details"
+         }
 
-
-        return success
-    }
+         return success
+     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -260,12 +290,16 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
                 val returnValue: ContactEntity? = data?.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE)
                 if (returnValue != null) {
                     var member = MemberEntity()
-                    member.id = returnValue.id
+
+                    member.userId = returnValue.userId?.toDouble()
                     member.mobileNo = returnValue.contactNumber
                     member.name = returnValue.firstName
 
                     itemsArrayList.add(member)
                     typeAdapter?.notifyDataSetChanged()
+                    typeAdapter?.selectedPos = itemsArrayList.size - 1
+                    Log.d("chackid", (itemsArrayList.size - 1).toString())
+                    typeAdapter?.notifyItemChanged(itemsArrayList.size - 2)
                 }
 
 

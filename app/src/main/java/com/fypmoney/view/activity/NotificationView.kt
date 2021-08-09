@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -17,6 +18,7 @@ import com.fypmoney.view.fragment.*
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.NotificationViewModel
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_user_feeds.*
 
@@ -26,10 +28,18 @@ import kotlinx.android.synthetic.main.view_user_feeds.*
 class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewModel>(),
     FamilyNotificationBottomSheet.OnBottomSheetClickListener,
     RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener {
+    private var commentstr: String? = null
+    private var choresModel: NotificationModel.NotificationResponseDetails? = null
+    private var bottomsheetInsufficient: TaskMessageInsuficientFuntBottomSheet? = null
     private var bottomSheet: TaskActionBottomSheetnotificationactivity? = null
     private var taskMessageBottomSheet3: TaskMessageBottomSheet3? = null
     private var bottomSheetMessage: TaskMessageBottomSheet2? = null
-    private lateinit var mViewModel: NotificationViewModel
+
+    companion object {
+        lateinit var mViewModel: NotificationViewModel
+
+    }
+
     private lateinit var mViewBinding: ViewNotificationBinding
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -72,9 +82,17 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
                         callRequestMoneyBottomSheet()
                     }
                     AppConstants.NOTIFICATION_TYPE_ADD_TASK -> {
+                        Log.d(
+                            "chacknoticlicked",
+                            mViewModel.notificationSelectedResponse.toString()
+                        )
+                        if (mViewModel.notificationSelectedResponse.actionAllowed == "REJECT,ACCEPT" || mViewModel.notificationSelectedResponse.actionAllowed == "CANCEL" || mViewModel.notificationSelectedResponse.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY" || mViewModel.notificationSelectedResponse.actionAllowed == "COMPLETE" || mViewModel.notificationSelectedResponse.actionAllowed == "") {
 
-                        if (mViewModel.notificationSelectedResponse.actionAllowed == "REJECT,ACCEPT") {
-                            callTaskActionSheet(mViewModel.notificationSelectedResponse.entityId)
+                            if (mViewModel.notificationSelectedResponse.actionAllowed == "" && mViewModel.notificationSelectedResponse.actionAllowed == "DEPRECIATE") {
+                                callTaskMessageSheet(mViewModel.notificationSelectedResponse)
+                            } else {
+                                callTaskActionSheet(mViewModel.notificationSelectedResponse)
+                            }
                         } else if (mViewModel.notificationSelectedResponse.actionAllowed == "CANCEL") {
                             callTaskMessageSheet(mViewModel.notificationSelectedResponse)
                         }
@@ -93,9 +111,19 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
             }
 
         }
+        mViewModel!!.error.observe(this, androidx.lifecycle.Observer { list ->
+            if (list == "Something went wrong in fund transfer. Please Try Again.") {
+
+                callInsuficientFundMessageSheet()
+            }
+
+
+        })
         mViewModel!!.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
             bottomSheetMessage?.dismiss()
             taskMessageBottomSheet3?.dismiss()
+            bottomSheet?.dismiss()
+            mViewModel.onRefresh()
             if (list.currentState == "ACCEPT") {
 
                 callTaskMessageSheet(list)
@@ -108,21 +136,36 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
 
                 callTaskMessageSheet(list)
             }
+            if (list.currentState == "COMPLETE") {
+
+                callTaskMessageSheet(list)
+            }
+            if (list.currentState == "DEPRECIATE") {
+
+                callTaskMessageSheet(list)
+            }
+            if (list.currentState == "APPRECIATEANDPAY") {
+
+                callTaskMessageSheet(list)
+            }
         })
     }
 
 
-    private fun callTaskActionSheet(list: String?) {
+    private fun callTaskActionSheet(list: NotificationModel.NotificationResponseDetails) {
         var itemClickListener2 = object : AcceptRejectClickListener {
-            override fun onAcceptClicked(pos: Int) {
-                mViewModel!!.callTaskAccept("ACCEPT", list)
+            override fun onAcceptClicked(pos: Int, str: String) {
+                if (pos == 66) {
+                    choresModel = list
+                    commentstr = str
+                    askForDevicePassword()
+
+                }
 
 
             }
 
             override fun onRejectClicked(pos: Int) {
-                mViewModel!!.callTaskAccept("REJECT", list)
-
 
             }
 
@@ -148,7 +191,38 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         taskMessageBottomSheet3?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         taskMessageBottomSheet3?.show(supportFragmentManager, "TASKMESSAGE")
     }
+    private fun callInsuficientFundMessageSheet() {
+        var itemClickListener2 = object : AcceptRejectClickListener {
+            override fun onAcceptClicked(pos: Int, str: String) {
+                bottomsheetInsufficient?.dismiss()
+                intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
+            }
 
+            override fun onRejectClicked(pos: Int) {
+                bottomsheetInsufficient?.dismiss()
+                callActivity(AddMoneyView::class.java)
+            }
+
+            override fun ondimiss() {
+
+            }
+        }
+        bottomsheetInsufficient =
+            TaskMessageInsuficientFuntBottomSheet(itemClickListener2)
+        bottomsheetInsufficient?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomsheetInsufficient?.show(supportFragmentManager, "TASKMESSAGE")
+    }
+    private fun intentToPayActivity(aClass: Class<*>, pay: String? = null) {
+        val intent = Intent(this, aClass)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
+        startActivity(intent)
+    }
+
+
+    private fun callActivity(aClass: Class<*>) {
+        val intent = Intent(this, aClass)
+        startActivity(intent)
+    }
     private fun callTaskMessageSheet(list: UpdateTaskGetResponse) {
         var itemClickListener2 = object : MessageSubmitClickListener {
 
@@ -212,6 +286,25 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         bottomSheet.show(supportFragmentManager, "RequestMoneyNotification")
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
+                when (resultCode) {
+                    RESULT_OK -> {
+                        if (commentstr == null) {
+                            commentstr = ""
+                        }
+                        mViewModel!!.callTaskAccept(
+                            "APPRECIATEANDPAY", choresModel?.entityId.toString(), commentstr!!
+                        )
 
+
+                    }
+
+                }
+            }
+        }
+    }
 
 }

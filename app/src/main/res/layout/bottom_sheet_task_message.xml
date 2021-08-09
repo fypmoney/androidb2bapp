@@ -21,7 +21,7 @@
             android:id="@+id/card_title"
             style="@style/TextviewBold"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_46sdp"
+            android:layout_marginTop="@dimen/_26sdp"
             android:text="Task Accepted"
             android:textColor="@color/text_color_dark"
             android:textSize="31sp" />
@@ -74,6 +74,7 @@
                 android:id="@+id/continuebtn"
                 android:textSize="18sp"
                 android:textAllCaps="false"
+                android:fontFamily="@font/product_sans_regular"
 
                 app:backgroundTint="@color/text_color_dark" />
 

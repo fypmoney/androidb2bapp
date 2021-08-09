@@ -2,6 +2,7 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
@@ -12,19 +13,15 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAddTaskBinding
 import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.model.SampleTaskModel
+import com.fypmoney.view.adapter.SampleTaskAdapter
 import com.fypmoney.view.interfaces.ListItemClickListener
-
+import kotlinx.android.synthetic.main.toolbar.*
 
 import com.fypmoney.viewmodel.CreateTaskViewModel
-import kotlinx.android.synthetic.main.activity_add_task.*
 
-import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_user_feeds.*
-import kotlinx.android.synthetic.main.view_user_feeds.recycler_view
-import com.fypmoney.view.adapter.SampleTaskAdapter
+
 import kotlinx.android.synthetic.main.view_add_task.*
-import kotlinx.android.synthetic.main.view_add_task.loader
-import kotlinx.android.synthetic.main.view_chores.*
+
 
 /*
 * This is used to show list of notification
@@ -50,7 +47,7 @@ class ChoresSelectSampleActivity : BaseActivity<ViewAddTaskBinding, CreateTaskVi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
-        toolbar_image.visibility = View.VISIBLE
+
         setToolbarAndTitle(
             context = this@ChoresSelectSampleActivity,
             toolbar = toolbar,
@@ -116,6 +113,7 @@ class ChoresSelectSampleActivity : BaseActivity<ViewAddTaskBinding, CreateTaskVi
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == 88) {
+
             setResult(99)
             finish()
         }
@@ -123,6 +121,6 @@ class ChoresSelectSampleActivity : BaseActivity<ViewAddTaskBinding, CreateTaskVi
 
     private fun intentToActivity(aClass: Class<*>) {
         startActivity(Intent(this@ChoresSelectSampleActivity, aClass))
-        finish()
+
     }
 }

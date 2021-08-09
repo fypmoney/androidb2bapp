@@ -58,28 +58,22 @@ class TaskActionBottomSheet(
         accept.setOnClickListener(View.OnClickListener {
             if (accept.text == "Accept") {
                 ChoresActivity.mViewModel!!.callTaskAccept("ACCEPT", list.entityId.toString(), "")
-            } else if (accept.text == "Completed") {
-                ChoresActivity.mViewModel!!.callTaskAccept(
-                    "COMPLETE", list.entityId.toString(), comment.text?.trim()
+            } else if (accept.text == "Appreciate") {
+
+                onClickListener.onAcceptClicked(
+                    56, comment.text?.trim()
                         .toString()
                 )
 
-            } else if (accept.text == "Appreciate") {
-                ChoresActivity.mViewModel!!.callTaskAccept(
-                    "APPRECIATEANDPAY", list.entityId.toString(), comment.text?.trim()
-                        .toString()
-                )
 
             }
 
 
         })
         view.reject.setOnClickListener(View.OnClickListener {
-            if (reject.text == "Reject") {
+            if (view.reject.text == "Reject") {
                 ChoresActivity.mViewModel!!.callTaskAccept("REJECT", list.entityId.toString(), "")
-            } else if (reject.text == "In process") {
-                onClickListener.ondimiss()
-            } else if (accept.text == "Appreciate") {
+            } else if (view.reject.text == "Depreciate") {
                 ChoresActivity.mViewModel!!.callTaskAccept(
                     "DEPRECIATE", list.entityId.toString(), comment.text?.trim()
                         .toString()
@@ -88,13 +82,37 @@ class TaskActionBottomSheet(
             }
 
         })
+        view.cancel.setOnClickListener(View.OnClickListener {
+
+
+            if (list.actionAllowed == "CANCEL") {
+                ChoresActivity.mViewModel!!.callTaskAccept(
+                    "CANCEL", list.entityId.toString(), comment.text?.trim()
+                        .toString()
+                )
+            } else if (cancel.text == "Complete") {
+                ChoresActivity.mViewModel!!.callTaskAccept(
+                    "COMPLETE", list.entityId.toString(), comment.text?.trim()
+                        .toString()
+                )
+
+            }
+
+        })
         if (list.actionAllowed == "COMPLETE") {
-            accept.text = "Completed"
-            view.reject.text = "In process"
+
+            view.reject.text = "In process2"
+
+            view.cancel.text = "Complete"
+            view.accept.text = "Complete"
+            view.lin.visibility = View.GONE
+            view.cancel.visibility = View.VISIBLE
             view.comment.visibility = View.VISIBLE
         } else if (list.actionAllowed == "REJECT,ACCEPT") {
             accept.text = "Accept"
             view.reject.text = "Reject"
+            view.bywhom.visibility = View.VISIBLE
+            view.bywhom.text = "By " + list.sourceUserName
             view.comment.visibility = View.GONE
         } else if (list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY") {
             accept.text = "Appreciate"
@@ -106,8 +124,21 @@ class TaskActionBottomSheet(
         } else if (list.actionAllowed?.isEmpty() == true) {
             view.comment.visibility = View.GONE
             view.lin.visibility = View.GONE
+            view.bywhom.visibility = View.VISIBLE
+            view.bywhom.text = "By " + list.sourceUserName
+
+        } else if (list.actionAllowed == "CANCEL") {
+            view.comment.visibility = View.VISIBLE
+            view.lin.visibility = View.VISIBLE
+
+            view.lin.visibility = View.GONE
+            view.bywhom.visibility = View.VISIBLE
+            view.bywhom.text = "To " + list.destinationUserName
+            view.cancel.visibility = View.VISIBLE
+
         }
-        view.amount.text = "₹" + list.additionalAttributes?.amount
+        var amount1 = list.additionalAttributes?.amount!! / 100
+        view.amount.text = "₹" + amount1
         view.days_left.text = list.additionalAttributes?.numberOfDays.toString() + " days"
         view.descrip.text = list.additionalAttributes?.description
         view.verification_title.text = list.additionalAttributes?.title

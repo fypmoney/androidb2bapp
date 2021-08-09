@@ -118,7 +118,8 @@ class ContactRepository(mDB: AppDatabase?) {
                         ?.updateIsAppUserStatus(
                             isAppUser = true,
                             contactNum = userPhoneContact.contactNumber,
-                            profilePicUrl = userPhoneContact.profilePicResourceId
+                            profilePicUrl = userPhoneContact.profilePicResourceId,
+                            userId = userPhoneContact.userId
                         )
 
                 }

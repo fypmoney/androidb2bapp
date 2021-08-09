@@ -1,20 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.fypmoney.view.fragment.YourTaskFragment">
+    android:layout_height="match_parent">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:clipToPadding="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/rv_assigned"
+        android:layout_marginRight="@dimen/_12sdp"
+        android:layout_height="match_parent" />
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/empty_screen"
+        android:layout_marginTop="@dimen/_90sdp"
+        android:layout_gravity="center_horizontal"
+
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_194sdp"
+            android:id="@+id/image"
+            android:layout_height="@dimen/_142sdp"
+            android:layout_centerHorizontal="true"
+
+            app:srcCompat="@drawable/ic_no_task" />
+
+        <TextView
+            android:layout_width="match_parent"
+            style="@style/TextviewRegular"
+            android:layout_below="@+id/image"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:paddingLeft="@dimen/_34sdp"
+            android:paddingRight="@dimen/_34sdp"
+            android:textColor="#9CA3A5"
+            android:gravity="center"
+            android:text="Looks like you haven’t been assigned any task yet. 😅"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
 </FrameLayout>

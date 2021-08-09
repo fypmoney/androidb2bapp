@@ -67,8 +67,9 @@ class AddTaskViewModel(application: Application) : BaseViewModel(application) {
 
 //yogesh =28369
         // ranjeet =28448
+       var amountf = amount.toLong() * 100
         var send = AddTaskRequest(
-            amount, desc, enddate, 0,
+            amountf.toString(), desc, enddate, 0,
             "INR", userId!!, startdate, title
         )
         Log.d("chackadd", send.toString())
@@ -117,9 +118,9 @@ class AddTaskViewModel(application: Application) : BaseViewModel(application) {
                                 AppConstants.ADD_MEMBER_STATUS_APPROVED -> {
                                     approveList.add(it)
                                 }
-                                AppConstants.ADD_MEMBER_STATUS_INVITED -> {
-                                    inviteList.add(it)
-                                }
+//                                AppConstants.ADD_MEMBER_STATUS_INVITED -> {
+//                                    inviteList.add(it)
+//                                }
                             }
 
                         }

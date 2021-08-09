@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.view_user_feeds.*
 * */
 class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(),
     DialogUtils.OnAlertDialogClickListener, InviteBottomSheet.OnShareClickListener,
-    InviteMemberBottomSheet.OnInviteButtonClickListener {
+    InviteMemberBottomSheet.OnInviteButtonClickListener, Utility.OnAllContactsAddedListener {
     private lateinit var mViewModel: ContactListViewModel
 
     override fun getBindingVariable(): Int {
@@ -134,7 +134,11 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
                 ) {
                     //allow
                     mViewModel.progressDialog.value = true
-                    mViewModel.callContactSyncApi()
+                    Utility.getAllContactsInList(
+                        contentResolver,
+                        this,
+                        contactRepository = mViewModel.contactRepository
+                    )
                 } else {
                     //set to never ask again
                     SharedPrefUtils.putBoolean(
@@ -157,6 +161,7 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
             true -> {
                 mViewModel.progressDialog.value = true
                 mViewModel.callContactSyncApi()
+
             }
             else -> {
                 requestPermission(Manifest.permission.READ_CONTACTS)
@@ -212,5 +217,9 @@ class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(
 
     override fun onInviteButtonClick() {
         callInviteBottomSheet()
+    }
+
+    override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {
+        mViewModel.callContactSyncApi()
     }
 }

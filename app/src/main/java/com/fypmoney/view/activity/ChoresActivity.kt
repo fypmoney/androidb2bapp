@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -18,7 +17,6 @@ import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.database.entity.TaskEntity
 import com.fypmoney.databinding.ViewChoresBinding
 import com.fypmoney.model.TaskDetailResponse
 import com.fypmoney.model.UpdateTaskGetResponse
@@ -28,7 +26,7 @@ import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.ChoresViewModel
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.*
 import kotlinx.android.synthetic.main.view_chores.*
 import java.util.ArrayList
 
@@ -41,6 +39,8 @@ import java.util.ArrayList
 class ChoresActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>(),
     AcceptRejectTaskFragment.OnBottomSheetClickListener {
 
+    private var commentstr: String? = null
+    private var choresModel: TaskDetailResponse? = null
     private var bottomsheetInsufficient: TaskMessageInsuficientFuntBottomSheet? = null
     private var loader_icon: ImageView? = null
     private var bottomSheetcancel: TaskMessageBottomSheet? = null
@@ -63,19 +63,14 @@ companion object{
         super.onCreate(savedInstanceState)
 
 
-        toolbar_image.visibility = View.VISIBLE
-        setToolbarAndTitle(
-            context = this,
-            toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = getString(R.string.chore_title)
-        )
+
 
         setObserver()
 
         tabLayout = findViewById(R.id.tabLayout)
         viewPager = findViewById(R.id.viewPager)
         loader_icon = findViewById(R.id.loader)
-        initializeTabs(viewPager, tabLayout)
+        initializeTabs(tabLayout)
         ll_show_history = findViewById(R.id.ll_show_history)
 
         swipetorefresh.setOnRefreshListener {
@@ -94,6 +89,15 @@ companion object{
 
             startActivity(intent)
         }
+        ivNotificationBell.setOnClickListener(View.OnClickListener {
+            intentToActivity(NotificationView::class.java)
+
+        })
+        back.setOnClickListener(View.OnClickListener { super.onBackPressed() })
+        myProfile.setOnClickListener(View.OnClickListener {
+            intentToActivity(UserProfileView::class.java)
+        })
+
         btnSendOtp.setOnClickListener {
             val intent = Intent(this, ChoresSelectSampleActivity::class.java)
 
@@ -101,6 +105,11 @@ companion object{
         }
 
     }
+
+    private fun intentToActivity(aClass: Class<*>) {
+        startActivity(Intent(this, aClass))
+    }
+
     internal class ViewPagerAdapter(manager: FragmentManager?) :
         FragmentPagerAdapter(manager!!) {
         private val mFragmentList: MutableList<Fragment> = ArrayList()
@@ -123,9 +132,7 @@ companion object{
         }
     }
 
-    private fun initializeTabs(viewPager: ViewPager, tabLayout: TabLayout) {
-
-
+    private fun initializeTabs(tabLayout: TabLayout) {
 
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
@@ -164,19 +171,15 @@ companion object{
         mViewModel!!.TaskDetailResponse.observe(this, androidx.lifecycle.Observer { list ->
             Log.d("chacksample22", list.actionAllowed.toString())
 
-            if (list.actionAllowed == "REJECT,ACCEPT" || list.actionAllowed == "COMPLETE" || list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY" || list.actionAllowed == "") {
+            if (list.actionAllowed == "REJECT,ACCEPT" || list.actionAllowed == "CANCEL" || list.actionAllowed == "COMPLETE" || list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY" || list.actionAllowed == "") {
                 callTaskActionSheet(list)
-            } else if (list.actionAllowed == "CANCEL") {
-
-                callTaskMessageSheet(list)
-            } else if (list.actionAllowed == "COMPLETE") {
-                callTaskMessageSheet(list)
             }
         })
         mViewModel!!.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
             bottomSheetTaskAction?.dismiss()
             bottomSheetcancel?.dismiss()
             bottomSheetMessage?.dismiss()
+            mViewModel?.callSampleTask()
             if (list.currentState == "ACCEPT") {
 
                 callTaskMessageSheet(list)
@@ -193,6 +196,14 @@ companion object{
 
                 callTaskMessageSheet(list)
             }
+            if (list.currentState == "DEPRECIATE") {
+
+                callTaskMessageSheet(list)
+            }
+            if (list.currentState == "APPRECIATEANDPAY") {
+
+                callTaskMessageSheet(list)
+            }
         })
         mViewModel!!.error.observe(this, androidx.lifecycle.Observer { list ->
             if (list == "Something went wrong in fund transfer. Please Try Again.") {
@@ -206,13 +217,23 @@ companion object{
 
     private fun callTaskActionSheet(list: TaskDetailResponse) {
         var itemClickListener2 = object : AcceptRejectClickListener {
-            override fun onAcceptClicked(pos: Int) {}
+            override fun onAcceptClicked(pos: Int, str: String) {
+                if (pos == 56) {
+                    commentstr = str
+                    choresModel = list
+                    askForDevicePassword()
+                }
+
+
+            }
+
             override fun onRejectClicked(pos: Int) {}
 
             override fun ondimiss() {
                 bottomSheetTaskAction?.dismiss()
             }
         }
+
         bottomSheetTaskAction =
             TaskActionBottomSheet(itemClickListener2, list)
         bottomSheetTaskAction?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
@@ -249,7 +270,7 @@ companion object{
 
     private fun callInsuficientFundMessageSheet() {
         var itemClickListener2 = object : AcceptRejectClickListener {
-            override fun onAcceptClicked(pos: Int) {
+            override fun onAcceptClicked(pos: Int, str: String) {
                 bottomsheetInsufficient?.dismiss()
                 intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
             }
@@ -295,12 +316,35 @@ companion object{
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == 89) {
+        if (resultCode == 99) {
 
             if (mViewModel != null) {
+
                 mViewModel?.callSampleTask()
             }
 
+            viewPager.currentItem = 1
+
+
+        }
+
+        when (requestCode) {
+            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
+                when (resultCode) {
+                    RESULT_OK -> {
+                        if (commentstr == null) {
+                            commentstr = ""
+                        }
+                        ChoresActivity.mViewModel!!.callTaskAccept(
+                            "APPRECIATEANDPAY", choresModel?.entityId.toString(), commentstr!!
+
+                        )
+
+
+                    }
+
+                }
+            }
         }
     }
 

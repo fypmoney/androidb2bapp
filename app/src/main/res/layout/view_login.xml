@@ -120,7 +120,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/etMobileNo"
+                        android:id="@+id/et_start"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:backgroundTint="@android:color/transparent"

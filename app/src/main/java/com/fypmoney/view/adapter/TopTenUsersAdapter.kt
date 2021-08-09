@@ -39,6 +39,7 @@ class TopTenUsersVH(
         binding.executeAfter {
             lifecycleOwner = this@TopTenUsersVH.lifecycleOwner
             item = user
+
             userNameTv.text = Utility.getFirstName(user.name)
         }
     }

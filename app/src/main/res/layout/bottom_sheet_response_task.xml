@@ -21,8 +21,9 @@
             android:id="@+id/verification_title"
             style="@style/TextviewRegular"
             android:layout_gravity="center"
-            android:layout_marginTop="96dp"
-            android:text="Water the plants"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/_26sdp"
+            android:text=""
             android:textColor="@color/text_color_dark"
             android:textSize="17dp" />
 
@@ -32,7 +33,7 @@
             android:layout_marginTop="20dp"
             android:id="@+id/descrip"
 
-            android:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod"
+            android:text=""
             android:textAlignment="center" />
 
 
@@ -42,7 +43,8 @@
             android:layout_marginTop="20dp"
 
             android:id="@+id/bywhom"
-            android:text="By Ankush Bro"
+
+
             android:textColor="@color/text_color_dark"
             android:textAlignment="center" />
 
@@ -60,7 +62,7 @@
                 android:textSize="22sp"
                 android:id="@+id/amount"
 
-                android:text="₹70"
+
                 android:textColor="@color/color_skyblue" />
 
             <View
@@ -76,7 +78,7 @@
                 android:layout_gravity="center"
                 android:textSize="22sp"
                 android:id="@+id/days_left"
-                android:text="1 day"
+
                 android:textColor="@color/color_skyblue" />
 
         </LinearLayout>
@@ -96,8 +98,6 @@
                 android:backgroundTint="@android:color/transparent"
                 android:gravity="center_vertical"
                 android:hint="Comment"
-                android:inputType="number"
-                android:focusable="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/vDivider5"
@@ -109,6 +109,7 @@
             android:layout_width="match_parent"
             android:weightSum="2"
             android:id="@+id/lin"
+
             android:layout_marginBottom="@dimen/_30sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_height="wrap_content">
@@ -116,14 +117,18 @@
             <com.google.android.material.button.MaterialButton
 
                 style="@style/Widget.App.Button"
-                android:layout_width="299dp"
+                android:layout_width="0dp"
                 android:layout_height="52dp"
-                android:layout_weight="1.2"
+                android:layout_weight="0.8"
                 android:textColor="@color/text_color_dark"
+
                 android:layout_gravity="center"
                 android:text="Reject"
                 android:id="@+id/reject"
                 android:textSize="16sp"
+                android:fontFamily="@font/product_sans_regular"
+
+
                 android:textStyle="bold"
                 android:textAllCaps="false"
                 android:background="@android:color/transparent"
@@ -133,13 +138,16 @@
             <com.google.android.material.button.MaterialButton
 
                 style="@style/Widget.App.Button"
-                android:layout_width="299dp"
-                android:layout_weight=".8"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
                 android:layout_height="52dp"
                 android:layout_gravity="center"
                 android:background="@drawable/curved_background1"
                 android:text="Accept"
                 android:textSize="16sp"
+                android:fontFamily="@font/product_sans_regular"
+
+
                 android:id="@+id/accept"
                 android:textAllCaps="false"
 
@@ -147,6 +155,24 @@
 
         </LinearLayout>
 
+        <com.google.android.material.button.MaterialButton
+
+            style="@style/Widget.App.Button"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_height="52dp"
+            android:id="@+id/cancel"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:background="@drawable/curved_background1"
+            android:text="Cancel"
+            android:textSize="16sp"
+            android:fontFamily="@font/product_sans_regular"
+
+            android:textAllCaps="false"
+
+            app:backgroundTint="@color/text_color_dark" />
 
     </LinearLayout>
 

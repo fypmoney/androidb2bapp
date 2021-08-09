@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -30,6 +31,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     var noDataFoundVisibility = ObservableField(false)
     var isPreviousVisible = ObservableField(false)
     var isTimeLineNoDataVisible = ObservableField(false)
+    var error: MutableLiveData<String> = MutableLiveData()
     var isGetNotificationsRecyclerVisible = ObservableField(true)
     var positionSelected = ObservableField<Int>()
     var onNotificationClicked = MutableLiveData<Boolean>()
@@ -69,7 +71,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
         )
     }
 
-    fun callTaskAccept(state: String, entityId: String?) {
+    fun callTaskAccept(state: String, entityId: String?, msg: String) {
 
 
         WebApiCaller.getInstance().request(
@@ -80,7 +82,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                 SendTaskResponse(
                     state = state, taskId = entityId,
                     emojis = "\u1F600",
-                    comments = "ACCEPTED the task"
+                    comments = msg
                 ), onResponse = this,
                 isProgressBar = false
             )
@@ -146,6 +148,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                 }
             }
             ApiConstant.API_TASK_UPDATE -> {
+                Log.d("chackupdate", responseData.toString())
 
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
                 val task = Gson().fromJson(json.get("data"), UpdateTaskGetResponse::class.java)
@@ -214,6 +217,13 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         isLoading.set(false)
+        when (purpose) {
+            ApiConstant.API_TASK_UPDATE -> {
+                error.postValue(errorResponseInfo.msg)
+            }
+        }
+
+
     }
 
     override fun onNotificationClick(
