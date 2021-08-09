@@ -2,20 +2,13 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewOrderCardBinding
-import com.fypmoney.databinding.ViewStayTunedBinding
-import com.fypmoney.util.AppConstants
-import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.adapter.MyOrderListAdapter
-import com.fypmoney.view.adapter.MyProfileListAdapter
-import com.fypmoney.view.adapter.TabsAdapter
 import com.fypmoney.viewmodel.OrderCardViewModel
-import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*

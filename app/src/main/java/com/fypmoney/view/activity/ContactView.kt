@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -27,7 +28,8 @@ import kotlinx.android.synthetic.main.view_user_feeds.*
 * This is used to handle contacts
 * */
 class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
-    DialogUtils.OnAlertDialogClickListener,InviteBottomSheet.OnShareClickListener {
+    DialogUtils.OnAlertDialogClickListener, InviteBottomSheet.OnShareClickListener,
+    Utility.OnAllContactsAddedListener {
     private lateinit var mViewModel: ContactViewModel
 
     override fun getBindingVariable(): Int {
@@ -52,6 +54,7 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
         )
         setObserver()
         checkAndAskPermission()
+        Log.d("contactlist", "1ee0")
     }
 
 
@@ -74,6 +77,7 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
         }
         mViewModel.emptyContactListError.observe(this) {
             if (it) {
+
                 DialogUtils.showConfirmationDialog(
                     context = this,
                     title = "",
@@ -95,6 +99,7 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
     private fun intentToActivity(contactEntity: ContactEntity, aClass: Class<*>) {
         val intent = Intent(this@ContactView, aClass)
         intent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, contactEntity)
+        intent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, contactEntity)
         startActivity(intent)
     }
 
@@ -114,8 +119,13 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     //allow
+                    Utility.getAllContactsInList(
+                        contentResolver,
+                        this,
+                        contactRepository = mViewModel.contactRepository
+                    )
                     mViewModel.progressDialog.value = true
-                    mViewModel.callContactSyncApi()
+
                 } else {
                     //set to never ask again
                     SharedPrefUtils.putBoolean(
@@ -137,7 +147,12 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
         when (checkPermission(android.Manifest.permission.READ_CONTACTS)) {
             true -> {
                 mViewModel.progressDialog.value = true
-                mViewModel.callContactSyncApi()
+                Utility.getAllContactsInList(
+                    contentResolver,
+                    this,
+                    contactRepository = mViewModel.contactRepository
+                )
+
             }
             else -> {
                 requestPermission(android.Manifest.permission.READ_CONTACTS)
@@ -179,5 +194,9 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
 
     override fun onShareClickListener(referralCode: String) {
         inviteUser()
+    }
+
+    override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {
+        mViewModel.callContactSyncApi()
     }
 }

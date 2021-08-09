@@ -58,6 +58,10 @@ class TaskMessageBottomSheet3(
 //        }else if(status=="CANCEL"){
 //            btnOtp.text = "Withdrawal"
 //        }
+        if (model?.actionAllowed == "CANCEL") {
+            btnOtp.text = "Cancel"
+
+        }
         btnOtp.setOnClickListener(View.OnClickListener {
             if (btnOtp.text == "WITHDRAWAL") {
                 ChoresActivity.mViewModel!!.callTaskAccept("CANCEL", entityId, "")

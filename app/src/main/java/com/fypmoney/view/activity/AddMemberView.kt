@@ -92,12 +92,6 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
     /*
       * Method to set the length of mobile field
       * */
-    fun setMobileLength(position: Int) {
-        mViewModel.minTextLength = AppConstants.countryCodeList[position].minLen
-        mViewModel.maxTextLength = AppConstants.countryCodeList[position].maxLen
-        Utility.setEditTextMaxLength(mViewBinding.etMobileNo, mViewModel.maxTextLength)
-        mViewModel.selectedCountryCode.set(AppConstants.countryCodeList[position].dialCode)
-    }
 
 
     /**

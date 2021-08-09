@@ -47,6 +47,7 @@ class addmemberAdapter(
                     notifyDataSetChanged()
                 })
                 if (selectedPos == position - 1) {
+                    itemClickListener2.onItemClicked(position - 1)
                     baseHolder.cardbackground.background =
                         ContextCompat.getDrawable(context, R.drawable.strokebutton_green_middle_18)
 
@@ -71,6 +72,7 @@ class addmemberAdapter(
     companion object {
         private const val TYPE_IMAGE = 0
         private const val TYPE_ADD = 1
+        var selectedPos = -1
     }
 
     override fun getItemViewType(position: Int): Int {

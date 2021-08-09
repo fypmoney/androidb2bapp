@@ -60,7 +60,7 @@
                 android:textSize="22sp"
                 android:id="@+id/amount"
 
-                android:text="₹70"
+
                 android:textColor="@color/color_skyblue" />
 
             <View
@@ -76,7 +76,7 @@
                 android:layout_gravity="center"
                 android:textSize="22sp"
                 android:id="@+id/days_left"
-                android:text="1 day"
+
                 android:textColor="@color/color_skyblue" />
 
         </LinearLayout>
@@ -109,6 +109,7 @@
             android:layout_width="match_parent"
             android:weightSum="2"
             android:id="@+id/lin"
+
             android:layout_marginBottom="@dimen/_30sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_height="wrap_content">
@@ -116,14 +117,16 @@
             <com.google.android.material.button.MaterialButton
 
                 style="@style/Widget.App.Button"
-                android:layout_width="299dp"
+                android:layout_width="0dp"
                 android:layout_height="52dp"
-                android:layout_weight="1.2"
+                android:layout_weight="0.8"
                 android:textColor="@color/text_color_dark"
+
                 android:layout_gravity="center"
                 android:text="Reject"
                 android:id="@+id/reject"
                 android:textSize="16sp"
+
                 android:textStyle="bold"
                 android:textAllCaps="false"
                 android:background="@android:color/transparent"
@@ -133,8 +136,8 @@
             <com.google.android.material.button.MaterialButton
 
                 style="@style/Widget.App.Button"
-                android:layout_width="299dp"
-                android:layout_weight=".8"
+                android:layout_width="0dp"
+                android:layout_weight="1.2"
                 android:layout_height="52dp"
                 android:layout_gravity="center"
                 android:background="@drawable/curved_background1"
@@ -147,6 +150,23 @@
 
         </LinearLayout>
 
+        <com.google.android.material.button.MaterialButton
+
+            style="@style/Widget.App.Button"
+            android:layout_width="match_parent"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_height="52dp"
+            android:id="@+id/cancel"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:background="@drawable/curved_background1"
+            android:text="Cancel"
+            android:textSize="16sp"
+
+            android:textAllCaps="false"
+
+            app:backgroundTint="@color/text_color_dark" />
 
     </LinearLayout>
 

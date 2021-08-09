@@ -29,7 +29,8 @@ import kotlinx.android.synthetic.main.view_user_feeds.*
 * This is used to handle contacts
 * */
 class ContactViewAddMember : BaseActivity<ViewContactsBinding, ContactViewModel>(),
-    DialogUtils.OnAlertDialogClickListener,InviteBottomSheet.OnShareClickListener {
+    DialogUtils.OnAlertDialogClickListener, InviteBottomSheet.OnShareClickListener,
+    Utility.OnAllContactsAddedListener {
     private lateinit var mViewModel: ContactViewModel
 
     override fun getBindingVariable(): Int {
@@ -64,7 +65,7 @@ class ContactViewAddMember : BaseActivity<ViewContactsBinding, ContactViewModel>
             val resultIntent = Intent()
 
 
-            Toast.makeText(this,mViewModel.selectedContactList[0].firstName,Toast.LENGTH_SHORT).show()
+//            Toast.makeText(this,mViewModel.selectedContactList[0].firstName,Toast.LENGTH_SHORT).show()
             resultIntent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, mViewModel.selectedContactList[0])
             setResult(13, resultIntent)
             finish()
@@ -112,7 +113,11 @@ class ContactViewAddMember : BaseActivity<ViewContactsBinding, ContactViewModel>
                 ) {
                     //allow
                     mViewModel.progressDialog.value = true
-                    mViewModel.callContactSyncApi()
+                    Utility.getAllContactsInList(
+                        contentResolver,
+                        this,
+                        contactRepository = mViewModel.contactRepository
+                    )
                 } else {
                     //set to never ask again
                     SharedPrefUtils.putBoolean(
@@ -165,5 +170,9 @@ class ContactViewAddMember : BaseActivity<ViewContactsBinding, ContactViewModel>
 
     override fun onShareClickListener(referralCode: String) {
         inviteUser()
+    }
+
+    override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {
+        mViewModel.callContactSyncApi()
     }
 }

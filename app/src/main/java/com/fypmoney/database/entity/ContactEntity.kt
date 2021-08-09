@@ -23,8 +23,10 @@ data class ContactEntity(
     var profilePicResourceId: String? = null,
     @ColumnInfo(name = "isSync")
     var isSync: Boolean? = false,
+    @ColumnInfo(name = "userId")
+    var userId: String? = null,
     @ColumnInfo(name = "isAppUser")
     var isAppUser: Boolean? = false,
     @ColumnInfo(name = "isSelected")
     var isSelected: Boolean? = false
-    ): Parcelable
+): Parcelable

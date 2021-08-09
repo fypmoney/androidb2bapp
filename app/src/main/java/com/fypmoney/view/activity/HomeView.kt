@@ -36,15 +36,20 @@ import kotlinx.android.synthetic.main.view_home.*
 class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     Utility.OnAllContactsAddedListener, FamilyNotificationBottomSheet.OnBottomSheetClickListener,
     RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener {
+    private var bottomsheetInsufficient: TaskMessageInsuficientFuntBottomSheet? = null
+    private var bottomSheetMessage2: TaskMessageBottomSheet2? = null
     private var taskMessageBottomSheet3: TaskActionBottomSheetnotification? = null
     private var bottomSheetMessage: TaskMessageBottomSheet3? = null
-    private lateinit var mViewModel: HomeViewModel
+
     private lateinit var mViewBinding: ViewHomeBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
+    companion object {
+        lateinit var mViewModel: HomeViewModel
+    }
     override fun getLayoutId(): Int {
         return R.layout.view_home
     }
@@ -194,15 +199,24 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                     callRequestMoneyBottomSheet()
                 }
                 AppConstants.NOTIFICATION_TYPE_ADD_TASK -> {
-                    if (it.actionAllowed == "ACCEPTED,REJECTED") {
+
+                    if (it.actionAllowed == "REJECT,ACCEPT" || it.actionAllowed == "CANCEL" || it.actionAllowed == "COMPLETE" || it.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY" || it.actionAllowed == "") {
                         callTaskActionSheet(it)
-                    } else if (it.actionAllowed == "CANCEL") {
+                    } else if (it.actionAllowed == "COMPLETE") {
                         callTaskMessageSheet(it)
                     }
                 }
             }
 
         }
+        mViewModel!!.error.observe(this, androidx.lifecycle.Observer { list ->
+            if (list == "Something went wrong in fund transfer. Please Try Again.") {
+
+                callInsuficientFundMessageSheet()
+            }
+
+
+        })
         mViewModel!!.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
             bottomSheetMessage?.dismiss()
             taskMessageBottomSheet3?.dismiss()
@@ -218,8 +232,54 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
                 callTaskMessageSheet(list)
             }
+            if (list.currentState == "COMPLETE") {
+
+                callTaskMessageSheet(list)
+            }
+            if (list.currentState == "DEPRECIATE") {
+
+                callTaskMessageSheet(list)
+            }
+            if (list.currentState == "APPRECIATEANDPAY") {
+
+                callTaskMessageSheet(list)
+            }
         })
 
+    }
+
+    private fun callInsuficientFundMessageSheet() {
+        var itemClickListener2 = object : AcceptRejectClickListener {
+            override fun onAcceptClicked(pos: Int) {
+                bottomsheetInsufficient?.dismiss()
+                intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
+            }
+
+            override fun onRejectClicked(pos: Int) {
+                bottomsheetInsufficient?.dismiss()
+                callActivity(AddMoneyView::class.java)
+            }
+
+            override fun ondimiss() {
+
+            }
+        }
+        bottomsheetInsufficient =
+            TaskMessageInsuficientFuntBottomSheet(itemClickListener2)
+        bottomsheetInsufficient?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomsheetInsufficient?.show(supportFragmentManager, "TASKMESSAGE")
+    }
+
+    private fun intentToPayActivity(aClass: Class<*>, pay: String? = null) {
+        val intent = Intent(this, aClass)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
+        startActivity(intent)
+    }
+
+
+    private fun callActivity(aClass: Class<*>) {
+        val intent = Intent(this, aClass)
+        startActivity(intent)
     }
 
     private fun callTaskMessageSheet(list: NotificationModel.NotificationResponseDetails?) {
@@ -238,33 +298,32 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     private fun callTaskMessageSheet(list: UpdateTaskGetResponse?) {
         var itemClickListener2 = object : MessageSubmitClickListener {
             override fun onSubmit() {
-
+                bottomSheetMessage2?.dismiss()
             }
 
         }
-        val bottomSheet =
+        bottomSheetMessage2 =
             TaskMessageBottomSheet2(itemClickListener2, list, list?.id?.toString())
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "TASKMESSAGE")
+        bottomSheetMessage2?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetMessage2?.show(supportFragmentManager, "TASKMESSAGE")
     }
 
 
     private fun callTaskActionSheet(list: NotificationModel.NotificationResponseDetails?) {
         var itemClickListener2 = object : AcceptRejectClickListener {
             override fun onAcceptClicked(pos: Int) {
-                mViewModel!!.callTaskAccept("ACCEPT", list?.entityId)
 
 
             }
 
             override fun onRejectClicked(pos: Int) {
-                mViewModel!!.callTaskAccept("REJECT", list?.entityId)
+
 
 
             }
 
             override fun ondimiss() {
-
+                taskMessageBottomSheet3?.dismiss()
             }
         }
         taskMessageBottomSheet3 =

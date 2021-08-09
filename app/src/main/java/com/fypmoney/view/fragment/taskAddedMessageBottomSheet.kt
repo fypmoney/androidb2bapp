@@ -9,10 +9,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import com.fypmoney.R
-import com.fypmoney.databinding.BottomSheetTaskAddedMessageBinding
+
 import com.fypmoney.databinding.BottomSheetTaskMessageBinding
 import com.fypmoney.model.UpdateTaskGetResponse
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
@@ -24,6 +25,8 @@ import kotlinx.android.synthetic.main.bottom_sheet_task_added_message.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_task_message.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_task_message.view.continuebtn
 import kotlinx.android.synthetic.main.bottom_sheet_task_message.view.task_details
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 
 
 class taskAddedMessageBottomSheet(
@@ -48,16 +51,53 @@ class taskAddedMessageBottomSheet(
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetTaskAddedMessageBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_task_added_message,
-            null,
-            false
-        )
-        bottomSheet.setContentView(bindingSheet.root)
+
+        bottomSheet.setContentView(view)
+        var bottomSheetBehavior = BottomSheetBehavior.from(view)
+
+        bottomSheetBehavior!!.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
 
 
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        requireActivity().setResult(88)
+                        requireActivity().finish()
 
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+
+
+                    }
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+
+                    }
+
+                }
+            }
+
+        })
+
+//        val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(view.parent as View)
+//        behavior.setBottomSheetCallback(object : BottomSheetCallback() {
+//            override fun onStateChanged(@NonNull bottomSheet: View, newState: Int) {
+//                if (newState == BottomSheetBehavior.STATE_COLLAPSED ) {
+//                    onClickListener.onSubmit()
+//                }
+//            }
+//
+//            override fun onSlide(@NonNull bottomSheet: View, slideOffset: Float) {
+//                // React to dragging events
+//            }
+//        })
         view.message.text = list.msg
         view.continuebtn.setOnClickListener(View.OnClickListener {
             onClickListener.onSubmit()

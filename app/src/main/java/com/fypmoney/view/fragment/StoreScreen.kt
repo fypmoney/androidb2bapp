@@ -126,37 +126,5 @@ return upiList
     }
 
 
-    private fun setCurrentFragment(fragment: Fragment) =
-        childFragmentManager.beginTransaction().apply {
-            replace(R.id.container, fragment)
-            commit()
-        }
 
-    /*
-    * This method is used to call add money fragment
-    * */
-    private fun callFrag() {
-        val fragment2 = AddMoneyScreen()
-        val fragmentManager: FragmentManager? = fragmentManager
-        val fragmentTransaction: FragmentTransaction = fragmentManager!!.beginTransaction()
-        fragmentTransaction.replace(R.id.container, fragment2)
-        fragmentTransaction.commit()
-    }
-
-    private fun intentToAddMemberActivity(aClass: Class<*>,pay:String?=null) {
-        val intent = Intent(requireActivity(), aClass)
-        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
-        requireContext().startActivity(intent)
-    }
-
-    /**
-     * Method to navigate to the different activity
-     */
-    private fun intentToActivity(aClass: Class<*>, feedDetails: FeedDetails, type: String? = null) {
-        val intent = Intent(context, aClass)
-        intent.putExtra(AppConstants.FEED_RESPONSE, feedDetails)
-        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
-        intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
-        startActivity(intent)
-    }
 }

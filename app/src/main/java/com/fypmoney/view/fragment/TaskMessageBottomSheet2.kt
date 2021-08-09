@@ -84,16 +84,15 @@ class TaskMessageBottomSheet2(
             )
 
         } else if (model?.currentState == "COMPLETE") {
-            view.card_title.text = "Yay!"
+            view.card_title.text = "Good job!"
             view.task_details.text =
-                "Hey Champ you have done a great job! I am proud of you. \uD83D\uDC4F"
-            btnOtp.visibility = View.GONE
-            view.amount.visibility = View.VISIBLE
-            view.amount.text = "₹" + model?.amount.toString()
+                "You have successfully completed your task. Stay tuned you will get your cash soon."
+
+            btnOtp.text = "Continue"
             view.message_image.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(),
-                    R.drawable.ic_task_completed
+                    R.drawable.ic_task_completed_graphic
                 )
             )
 
@@ -107,8 +106,37 @@ class TaskMessageBottomSheet2(
                 )
             )
 
-            view.task_details.text = "Opps! Your task has been withdrawn."
+            view.task_details.text = "You have withdrawn your task."
+        } else if (model?.currentState == "DEPRECIATE") {
+            btnOtp.text = "Continue"
+            view.card_title.text = "Oops!"
+            view.message_image.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.ic_task_depreciate
+                )
+            )
+
+            view.task_details.text =
+                "We are sorry buddy! Your task has been Depreciated by ${model?.requesterName}.n"
+        } else if (model?.currentState == "APPRECIATEANDPAY") {
+            btnOtp.text = "Continue"
+            btnOtp.visibility = View.GONE
+            view.card_title.text = "Yay!"
+            view.message_image.setImageDrawable(
+                ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.task_appretiate
+                )
+            )
+            view.amount.visibility = View.VISIBLE
+            var amount = model?.amount!! / 100
+            view.amount.text = "₹" + amount
+
+            view.task_details.text =
+                "Hey Champ you have done a great job! I am proud of you. \uD83D\uDC4F"
         }
+
 
 
         btnOtp.setOnClickListener(View.OnClickListener {

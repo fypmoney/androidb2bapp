@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -38,18 +39,23 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
 * This method is used to get all the contacts
 * */
     private fun getAllContacts() {
+        Log.d("contactlist", "-1")
         contactRepository.getContactsFromDatabase().let {
+            Log.d("contactlist", "0")
             try {
                 progressDialog.value = false
                 val sortedList =
                     contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>
                 if (!sortedList.isNullOrEmpty()) {
+                    Log.d("contactlist", "1")
                     contactAdapter.setList(sortedList)
                     contactAdapter.newContactList?.addAll(sortedList)
                 } else {
+                    Log.d("contactlist", "2")
                     emptyContactListError.value = true
                 }
             } catch (e: Exception) {
+                Log.d("contactlist", e.message.toString())
                 e.printStackTrace()
             }
 
@@ -86,6 +92,8 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
     /*
 * This method is used to call contact sync API
 * */ fun callContactSyncApi() {
+
+        Log.d("contactlist", "1ee")
         val contactRequestDetailsList = mutableListOf<ContactRequestDetails>()
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -108,6 +116,7 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_SNC_CONTACTS -> {
+                Log.d("contactlist", responseData.toString())
                 if (responseData is ContactResponse) {
                     // it update the sync status of the contacts which are synced to server and also update the is app user status based on server response
                     contactRepository.updateIsSyncAndIsAppUserStatus(responseData.contactResponseDetails?.userPhoneContact)
@@ -123,6 +132,8 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         progressDialog.value = false
+        Log.d("contactlist", "addc")
+        Log.d("contactlist", errorResponseInfo.toString())
         emptyContactListError.value = true
     }
 

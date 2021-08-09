@@ -27,6 +27,7 @@ import com.google.gson.JsonParser
 class HomeViewModel(application: Application) : BaseViewModel(application) {
     var mobile = MutableLiveData<String>()
     var onFeedClicked = MutableLiveData<Boolean>()
+    var error: MutableLiveData<String> = MutableLiveData()
     var onLocationClicked = MutableLiveData<Boolean>()
     var onSubmitClicked = MutableLiveData<Boolean>()
     var onQrCodeClicked = MutableLiveData<Boolean>()
@@ -134,7 +135,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
     }
 
-    fun callTaskAccept(state: String, entityId: String?) {
+    fun callTaskAccept(state: String, entityId: String?, s: String) {
 
 
         WebApiCaller.getInstance().request(
@@ -250,6 +251,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
             ApiConstant.API_SNC_CONTACTS -> {
+            }
+            ApiConstant.API_TASK_UPDATE -> {
+                error.postValue(errorResponseInfo.msg)
             }
         }
     }

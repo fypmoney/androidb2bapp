@@ -101,37 +101,36 @@
             android:layout_below="@id/view2"
             android:text="@string/family_fyper_txt"
             android:textColor="@color/text_color_dark"
-            android:textSize="17dp"
-            />
+            android:textSize="17dp" />
 
 
-            <RelativeLayout
-                android:id="@id/relativeLayout"
-                android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/heading"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=visible}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/heading"
-                android:layout_marginTop="10dp"
-                android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=visible}"
-                android:layout_marginBottom="10dp"
-                >
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    app:adapter="@{viewModel.memberAdapter}"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="2"
+                android:layout_centerVertical="true"
+                app:adapter="@{viewModel.memberAdapter}"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
 
-                    />
-            </RelativeLayout>
+                />
+        </RelativeLayout>
 
 
-<View
-    android:layout_width="match_parent"
-    android:layout_height="2dp"
-    android:id="@+id/view1"
-    android:layout_marginBottom="10dp"
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:id="@+id/view1"
+            android:layout_marginBottom="10dp"
     android:visibility="@{viewModel.isFamilyFiperVisible?View.VISIBLE:View.GONE,default=gone}"
     android:layout_below="@id/relativeLayout"
     android:background="@color/dividerColor"/>
@@ -142,28 +141,28 @@
             android:text="@string/family_fyper_pending_approval"
             android:visibility="@{viewModel.isFamilyFiperVisible?View.VISIBLE:View.GONE,default=gone}"
             android:textColor="@color/text_color_dark"
-            android:textSize="17dp"
+            android:textSize="17dp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/heading1"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="10dp"
+            app:adapter="@{viewModel.pendingAdapter}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+
             />
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_below="@id/heading1"
-                android:layout_marginTop="10dp"
-                app:adapter="@{viewModel.pendingAdapter}"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-
-                />
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/view2"
-            android:visibility="@{viewModel.isProgressBarVisible?View.VISIBLE:View.GONE,default=visible}"/>
+            android:visibility="@{viewModel.isProgressBarVisible?View.VISIBLE:View.GONE,default=visible}" />
 
 
         <LinearLayout

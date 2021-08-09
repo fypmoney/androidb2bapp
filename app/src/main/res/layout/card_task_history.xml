@@ -30,11 +30,15 @@
             android:id="@+id/heading"
             style="@style/TextviewRegular"
             android:layout_alignTop="@+id/ivServiceLogo"
+
             android:layout_alignBottom="@+id/ivServiceLogo"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
+
+            android:layout_marginRight="@dimen/_4sdp"
+            android:layout_toStartOf="@+id/amount"
+            android:layout_marginTop="@dimen/_2sdp"
             android:layout_toEndOf="@+id/ivServiceLogo"
-            android:layout_toLeftOf="@+id/amount"
+            android:ellipsize="end"
             android:gravity="start"
 
             android:textColor="@color/text_color_dark"
@@ -42,10 +46,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/amount"
-            android:layout_alignParentRight="true"
             style="@style/TextviewRegular"
             android:layout_alignTop="@+id/ivServiceLogo"
             android:layout_alignBottom="@+id/ivServiceLogo"
+            android:layout_alignParentRight="true"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
 

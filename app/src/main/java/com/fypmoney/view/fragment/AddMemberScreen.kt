@@ -109,7 +109,7 @@ class AddMemberScreen : BaseFragment<ViewAddMemberBinding, AddMemberViewModel>()
     fun setMobileLength(position: Int) {
         mViewModel.minTextLength = AppConstants.countryCodeList[position].minLen
         mViewModel.maxTextLength = AppConstants.countryCodeList[position].maxLen
-        Utility.setEditTextMaxLength(mViewBinding.etMobileNo, mViewModel.maxTextLength)
+        Utility.setEditTextMaxLength(et_start, mViewModel.maxTextLength)
         mViewModel.selectedCountryCode.set(AppConstants.countryCodeList[position].dialCode)
     }
 
