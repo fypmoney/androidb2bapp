@@ -73,10 +73,11 @@ class TaskActionBottomSheetnotification(
                 )
 
             } else if (accept.text == "Appreciate") {
-                HomeView.mViewModel!!.callTaskAccept(
-                    "APPRECIATEANDPAY", list?.entityId.toString(), view.comment.text?.trim()
+                onClickListener.onAcceptClicked(
+                    96, view.comment.text?.trim()
                         .toString()
                 )
+
 
             }
 
@@ -104,6 +105,8 @@ class TaskActionBottomSheetnotification(
         } else if (list?.actionAllowed == "REJECT,ACCEPT") {
             accept.text = "Accept"
             view.reject.text = "Reject"
+            view.bywhom.visibility = View.VISIBLE
+            view.bywhom.text = "By " + list?.sourceUserName
             view.comment.visibility = View.GONE
         } else if (list?.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY") {
             view.accept.text = "Appreciate"
@@ -117,6 +120,7 @@ class TaskActionBottomSheetnotification(
             view.lin.visibility = View.GONE
             view.bywhom.visibility = View.VISIBLE
             view.bywhom.text = "By " + list?.sourceUserName
+
 
         }
 
@@ -140,7 +144,7 @@ class TaskActionBottomSheetnotification(
             json,
             NotificationTaskObjectModel::class.java
         )
-        view.amount.text = "₹" + task.amount
+        view.amount.text = "₹" + task.amount?.div(100)
         view.descrip.text = list?.description
         view.verification_title.text = task.title
     }

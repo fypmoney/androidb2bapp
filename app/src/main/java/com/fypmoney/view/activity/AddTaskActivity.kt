@@ -100,12 +100,12 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
 
 
                 val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-                if (et_start.text?.trim().toString() == endTime.text?.trim().toString()) {
-                    myCalendar?.set(Calendar.HOUR_OF_DAY, 0);
-                    myCalendar2?.set(Calendar.HOUR_OF_DAY, 23);
-                    myCalendar2?.set(Calendar.MINUTE, 50);
+if (et_start.text?.trim().toString() == endTime.text?.trim().toString()) {
+    myCalendar?.set(Calendar.HOUR_OF_DAY, 0);
+    myCalendar2?.set(Calendar.HOUR_OF_DAY, 23);
+    myCalendar2?.set(Calendar.MINUTE, 50);
 
-                }
+}
                 val startdate = outputFormat.format(myCalendar?.time)
                 val enddate = outputFormat.format(myCalendar2?.time)
                 if (selectedmember != null) {
@@ -224,11 +224,15 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
         val sampleTitle = intent?.getStringExtra("sample_title")
         var sampleDescription = intent?.getStringExtra("sample_desc")
         var sample_amount = intent?.getStringExtra("sample_amount")
+        if (sample_amount != null) {
+            var amount1 = sample_amount?.toInt()?.div(100)
+            add_money_editext.setText(amount1.toString())
+        }
 
 
         et_title.setText(sampleTitle)
         et_desc.setText(sampleDescription)
-        add_money_editext.setText(sample_amount)
+
     }
 
     private fun setRecyclerView() {

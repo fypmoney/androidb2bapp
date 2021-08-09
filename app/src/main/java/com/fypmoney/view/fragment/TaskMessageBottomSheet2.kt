@@ -109,16 +109,15 @@ class TaskMessageBottomSheet2(
             view.task_details.text = "You have withdrawn your task."
         } else if (model?.currentState == "DEPRECIATE") {
             btnOtp.text = "Continue"
-            view.card_title.text = "Oops!"
+            view.card_title.text = "Task Depreciated"
             view.message_image.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(),
-                    R.drawable.ic_task_depreciate
+                    R.drawable.ic_whoops_depriciated
                 )
             )
 
-            view.task_details.text =
-                "We are sorry buddy! Your task has been Depreciated by ${model?.requesterName}.n"
+            view.task_details.text = "Task has been depreciated"
         } else if (model?.currentState == "APPRECIATEANDPAY") {
             btnOtp.text = "Continue"
             btnOtp.visibility = View.GONE

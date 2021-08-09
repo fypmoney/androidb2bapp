@@ -103,24 +103,38 @@
 
 
                     </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_marginTop="34dp"
+    android:layout_height="wrap_content">
 
-                    <EditText
-                        android:id="@+id/add_money_editext"
-                        style="@style/EditTextStyle"
-                        android:layout_width="150dp"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/linear"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="34dp"
-                        android:background="@null"
-                        android:drawableStart="@drawable/rupee_symbol"
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/linear"
+        android:src="@drawable/rupee_symbol"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_height="wrap_content" />
 
-                        android:drawablePadding="5dp"
-                        android:textColorHint="@color/text_color_light"
-                        android:inputType="number"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/add_money_editext"
+        style="@style/EditTextStyle2"
+        android:layout_width="wrap_content"
+        android:minWidth="@dimen/_80sdp"
 
-                        android:textColor="@color/add_money_amount_color"
-                        android:textSize="32dp" />
+        android:layout_height="wrap_content"
+
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="-2dp"
+
+
+        android:textColorHint="@color/text_color_light"
+        android:inputType="number"
+
+        android:textColor="@color/add_money_amount_color"
+        android:textSize="32dp" />
+
+</LinearLayout>
 
 
 
@@ -170,7 +184,7 @@
                             android:layout_height="match_parent">
 
                             <androidx.appcompat.widget.AppCompatEditText
-                                android:id="@+id/etMobileNo"
+                                android:id="@+id/et_start"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:backgroundTint="@android:color/transparent"

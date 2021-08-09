@@ -48,7 +48,7 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
             holder.timeleft.text = items[position].remainingTime
         }
         if (items[position].amount != null) {
-            holder.invite.text = "₹" + items[position].amount.toString()
+            holder.invite.text = "₹" + items[position].amount?.div(100)
         }
         holder.card.setOnClickListener(View.OnClickListener {
             clickInterface.onItemClicked(position)

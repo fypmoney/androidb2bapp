@@ -56,7 +56,10 @@ class TaskMessageInsuficientFuntBottomSheet(
 
         })
         view.reject.setOnClickListener(View.OnClickListener {
-            onClickListener.onAcceptClicked(0)
+            onClickListener.onAcceptClicked(
+                0, comment.text?.trim()
+                    .toString()
+            )
 
         })
 

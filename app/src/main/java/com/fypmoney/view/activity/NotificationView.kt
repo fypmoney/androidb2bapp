@@ -18,6 +18,7 @@ import com.fypmoney.view.fragment.*
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.NotificationViewModel
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_user_feeds.*
 
@@ -27,6 +28,8 @@ import kotlinx.android.synthetic.main.view_user_feeds.*
 class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewModel>(),
     FamilyNotificationBottomSheet.OnBottomSheetClickListener,
     RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener {
+    private var commentstr: String? = null
+    private var choresModel: NotificationModel.NotificationResponseDetails? = null
     private var bottomsheetInsufficient: TaskMessageInsuficientFuntBottomSheet? = null
     private var bottomSheet: TaskActionBottomSheetnotificationactivity? = null
     private var taskMessageBottomSheet3: TaskMessageBottomSheet3? = null
@@ -84,7 +87,12 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
                             mViewModel.notificationSelectedResponse.toString()
                         )
                         if (mViewModel.notificationSelectedResponse.actionAllowed == "REJECT,ACCEPT" || mViewModel.notificationSelectedResponse.actionAllowed == "CANCEL" || mViewModel.notificationSelectedResponse.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY" || mViewModel.notificationSelectedResponse.actionAllowed == "COMPLETE" || mViewModel.notificationSelectedResponse.actionAllowed == "") {
-                            callTaskActionSheet(mViewModel.notificationSelectedResponse)
+
+                            if (mViewModel.notificationSelectedResponse.actionAllowed == "" && mViewModel.notificationSelectedResponse.actionAllowed == "DEPRECIATE") {
+                                callTaskMessageSheet(mViewModel.notificationSelectedResponse)
+                            } else {
+                                callTaskActionSheet(mViewModel.notificationSelectedResponse)
+                            }
                         } else if (mViewModel.notificationSelectedResponse.actionAllowed == "CANCEL") {
                             callTaskMessageSheet(mViewModel.notificationSelectedResponse)
                         }
@@ -115,6 +123,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
             bottomSheetMessage?.dismiss()
             taskMessageBottomSheet3?.dismiss()
             bottomSheet?.dismiss()
+            mViewModel.onRefresh()
             if (list.currentState == "ACCEPT") {
 
                 callTaskMessageSheet(list)
@@ -127,13 +136,32 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
 
                 callTaskMessageSheet(list)
             }
+            if (list.currentState == "COMPLETE") {
+
+                callTaskMessageSheet(list)
+            }
+            if (list.currentState == "DEPRECIATE") {
+
+                callTaskMessageSheet(list)
+            }
+            if (list.currentState == "APPRECIATEANDPAY") {
+
+                callTaskMessageSheet(list)
+            }
         })
     }
 
 
     private fun callTaskActionSheet(list: NotificationModel.NotificationResponseDetails) {
         var itemClickListener2 = object : AcceptRejectClickListener {
-            override fun onAcceptClicked(pos: Int) {
+            override fun onAcceptClicked(pos: Int, str: String) {
+                if (pos == 66) {
+                    choresModel = list
+                    commentstr = str
+                    askForDevicePassword()
+
+                }
+
 
             }
 
@@ -163,10 +191,9 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         taskMessageBottomSheet3?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         taskMessageBottomSheet3?.show(supportFragmentManager, "TASKMESSAGE")
     }
-
     private fun callInsuficientFundMessageSheet() {
         var itemClickListener2 = object : AcceptRejectClickListener {
-            override fun onAcceptClicked(pos: Int) {
+            override fun onAcceptClicked(pos: Int, str: String) {
                 bottomsheetInsufficient?.dismiss()
                 intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
             }
@@ -185,7 +212,6 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         bottomsheetInsufficient?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomsheetInsufficient?.show(supportFragmentManager, "TASKMESSAGE")
     }
-
     private fun intentToPayActivity(aClass: Class<*>, pay: String? = null) {
         val intent = Intent(this, aClass)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
@@ -197,7 +223,6 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         val intent = Intent(this, aClass)
         startActivity(intent)
     }
-
     private fun callTaskMessageSheet(list: UpdateTaskGetResponse) {
         var itemClickListener2 = object : MessageSubmitClickListener {
 
@@ -261,6 +286,25 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         bottomSheet.show(supportFragmentManager, "RequestMoneyNotification")
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
+                when (resultCode) {
+                    RESULT_OK -> {
+                        if (commentstr == null) {
+                            commentstr = ""
+                        }
+                        mViewModel!!.callTaskAccept(
+                            "APPRECIATEANDPAY", choresModel?.entityId.toString(), commentstr!!
+                        )
 
+
+                    }
+
+                }
+            }
+        }
+    }
 
 }

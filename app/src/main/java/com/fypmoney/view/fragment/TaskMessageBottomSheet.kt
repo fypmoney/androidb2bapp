@@ -60,7 +60,7 @@ class TaskMessageBottomSheet(
 //            btnOtp.text = "Withdrawal"
 //        }
         btnOtp.text = model.actionAllowed
-        view.task_details.text = model.listDescription
+        view.task_details.text = model.description
         view.card_title.text = model.name
         btnOtp.setOnClickListener(View.OnClickListener {
             if (btnOtp.text == "CANCEL") {

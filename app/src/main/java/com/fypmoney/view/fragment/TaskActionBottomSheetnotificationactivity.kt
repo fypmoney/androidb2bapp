@@ -65,7 +65,7 @@ class TaskActionBottomSheetnotificationactivity(
         accept.setOnClickListener(View.OnClickListener {
             if (accept.text == "Accept") {
                 NotificationView.mViewModel!!.callTaskAccept("ACCEPT", list.entityId.toString(), "")
-            } else if (accept.text == "Completed") {
+            } else if (accept.text == "Complete") {
                 NotificationView.mViewModel!!.callTaskAccept(
                     "COMPLETE", list.entityId.toString(), view.comment.text?.trim()
                         .toString()
@@ -96,13 +96,34 @@ class TaskActionBottomSheetnotificationactivity(
             }
 
         })
+        view.cancel.setOnClickListener(View.OnClickListener {
+            if (view.cancel.text == "Cancel") {
+                NotificationView.mViewModel!!.callTaskAccept(
+                    "CANCEL",
+                    list.entityId.toString(),
+                    comment.text?.trim().toString()
+                )
+            } else if (cancel.text == "Complete") {
+                NotificationView.mViewModel!!.callTaskAccept(
+                    "COMPLETE", list.entityId.toString(), comment.text?.trim()
+                        .toString()
+                )
+            }
 
+        })
         if (list.actionAllowed == "COMPLETE") {
-            accept.text = "Completed"
+            accept.text = "Complete"
+            view.lin.visibility = View.GONE
+            view.cancel.visibility = View.VISIBLE
+            view.cancel.text = "Complete"
             view.reject.text = "In process"
+            view.bywhom.visibility = View.VISIBLE
+            view.bywhom.text = "By " + list.destinationUserName
             view.comment.visibility = View.VISIBLE
         } else if (list.actionAllowed == "REJECT,ACCEPT") {
             accept.text = "Accept"
+            view.bywhom.visibility = View.VISIBLE
+            view.bywhom.text = "By " + list.destinationUserName
             view.reject.text = "Reject"
             view.comment.visibility = View.GONE
         } else if (list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY") {
@@ -129,13 +150,7 @@ class TaskActionBottomSheetnotificationactivity(
 
         }
 
-//        view.days_left.text = list.additionalAttributes?.numberOfDays.toString() + " days"
-//
-//
-//        view.amount.text="₹"+list.additionalAttributes?.amount
-//        view.days_left.text=list.additionalAttributes?.numberOfDays.toString()+" days"
-//        view.descrip.text=list.additionalAttributes?.description
-//        view.verification_title.text=list.additionalAttributes?.title
+
         view.days_left.visibility = View.GONE
         view.viewdiv.visibility = View.GONE
         return view
@@ -149,8 +164,8 @@ class TaskActionBottomSheetnotificationactivity(
             json,
             NotificationTaskObjectModel::class.java
         )
-        view.amount.text = "₹" + task.amount
-        view.descrip.text = list?.description
+        view.amount.text = "₹" + task.amount?.div(100)
+        view.descrip.text = task?.description
         view.verification_title.text = task.title
     }
 

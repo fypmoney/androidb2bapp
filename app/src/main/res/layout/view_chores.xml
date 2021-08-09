@@ -18,16 +18,69 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include
-            android:id="@+id/toolbar_layout"
-            layout="@layout/toolbar" />
+        <RelativeLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:paddingTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+
+                android:padding="5dp"
+                app:srcCompat="@drawable/arrow_back" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/toolbar_title"
+                style="@style/TextviewBold"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="19dp"
+                android:layout_toRightOf="@+id/back"
+
+                android:text="Chores"
+                android:textAlignment="center"
+                android:textSize="20dp" />
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivNotificationBell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:tint="@color/text_color_dark"
+                android:layout_marginEnd="12dp"
+                android:layout_toStartOf="@+id/myProfile"
+
+                android:padding="5dp"
+                app:srcCompat="@drawable/ic_bell_icon" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/myProfile"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="18dp"
+
+                app:srcCompat="@drawable/ic_profile" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/relativeLayout3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
 
             <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -194,8 +247,7 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
-            app:layout_constraintVertical_bias=".7" />
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

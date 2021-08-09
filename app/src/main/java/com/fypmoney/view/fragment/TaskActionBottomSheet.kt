@@ -59,10 +59,12 @@ class TaskActionBottomSheet(
             if (accept.text == "Accept") {
                 ChoresActivity.mViewModel!!.callTaskAccept("ACCEPT", list.entityId.toString(), "")
             } else if (accept.text == "Appreciate") {
-                ChoresActivity.mViewModel!!.callTaskAccept(
-                    "APPRECIATEANDPAY", list.entityId.toString(), comment.text?.trim()
+
+                onClickListener.onAcceptClicked(
+                    56, comment.text?.trim()
                         .toString()
                 )
+
 
             }
 
@@ -88,7 +90,7 @@ class TaskActionBottomSheet(
                     "CANCEL", list.entityId.toString(), comment.text?.trim()
                         .toString()
                 )
-            } else if (cancel.text == "Completed") {
+            } else if (cancel.text == "Complete") {
                 ChoresActivity.mViewModel!!.callTaskAccept(
                     "COMPLETE", list.entityId.toString(), comment.text?.trim()
                         .toString()
@@ -101,14 +103,16 @@ class TaskActionBottomSheet(
 
             view.reject.text = "In process2"
 
-            view.cancel.text = "Completed"
-            view.accept.text = "Completed"
+            view.cancel.text = "Complete"
+            view.accept.text = "Complete"
             view.lin.visibility = View.GONE
             view.cancel.visibility = View.VISIBLE
             view.comment.visibility = View.VISIBLE
         } else if (list.actionAllowed == "REJECT,ACCEPT") {
             accept.text = "Accept"
             view.reject.text = "Reject"
+            view.bywhom.visibility = View.VISIBLE
+            view.bywhom.text = "By " + list.sourceUserName
             view.comment.visibility = View.GONE
         } else if (list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY") {
             accept.text = "Appreciate"
@@ -133,8 +137,8 @@ class TaskActionBottomSheet(
             view.cancel.visibility = View.VISIBLE
 
         }
-        var amount = list.additionalAttributes?.amount!! / 100
-        view.amount.text = "₹" + amount
+        var amount1 = list.additionalAttributes?.amount!! / 100
+        view.amount.text = "₹" + amount1
         view.days_left.text = list.additionalAttributes?.numberOfDays.toString() + " days"
         view.descrip.text = list.additionalAttributes?.description
         view.verification_title.text = list.additionalAttributes?.title

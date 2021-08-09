@@ -29,4 +29,4 @@ data class ContactEntity(
     var isAppUser: Boolean? = false,
     @ColumnInfo(name = "isSelected")
     var isSelected: Boolean? = false
-): Parcelable
+) : Parcelable

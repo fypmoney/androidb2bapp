@@ -36,6 +36,8 @@ import kotlinx.android.synthetic.main.view_home.*
 class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     Utility.OnAllContactsAddedListener, FamilyNotificationBottomSheet.OnBottomSheetClickListener,
     RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener {
+    private var commentstr: String? = null
+    private var choresModel: NotificationModel.NotificationResponseDetails? = null
     private var bottomsheetInsufficient: TaskMessageInsuficientFuntBottomSheet? = null
     private var bottomSheetMessage2: TaskMessageBottomSheet2? = null
     private var taskMessageBottomSheet3: TaskActionBottomSheetnotification? = null
@@ -201,9 +203,12 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 AppConstants.NOTIFICATION_TYPE_ADD_TASK -> {
 
                     if (it.actionAllowed == "REJECT,ACCEPT" || it.actionAllowed == "CANCEL" || it.actionAllowed == "COMPLETE" || it.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY" || it.actionAllowed == "") {
-                        callTaskActionSheet(it)
-                    } else if (it.actionAllowed == "COMPLETE") {
-                        callTaskMessageSheet(it)
+
+                        if (it.actionAllowed == "" && it.requestStatus == "DEPRECIATE") {
+                            callTaskMessageSheet(it)
+                        } else {
+                            callTaskActionSheet(it)
+                        }
                     }
                 }
             }
@@ -247,10 +252,9 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         })
 
     }
-
     private fun callInsuficientFundMessageSheet() {
         var itemClickListener2 = object : AcceptRejectClickListener {
-            override fun onAcceptClicked(pos: Int) {
+            override fun onAcceptClicked(pos: Int, str: String) {
                 bottomsheetInsufficient?.dismiss()
                 intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
             }
@@ -269,7 +273,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         bottomsheetInsufficient?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomsheetInsufficient?.show(supportFragmentManager, "TASKMESSAGE")
     }
-
     private fun intentToPayActivity(aClass: Class<*>, pay: String? = null) {
         val intent = Intent(this, aClass)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
@@ -281,11 +284,10 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         val intent = Intent(this, aClass)
         startActivity(intent)
     }
-
     private fun callTaskMessageSheet(list: NotificationModel.NotificationResponseDetails?) {
         var itemClickListener2 = object : MessageSubmitClickListener {
             override fun onSubmit() {
-
+                bottomSheetMessage?.dismiss()
             }
 
         }
@@ -311,13 +313,17 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
     private fun callTaskActionSheet(list: NotificationModel.NotificationResponseDetails?) {
         var itemClickListener2 = object : AcceptRejectClickListener {
-            override fun onAcceptClicked(pos: Int) {
+            override fun onAcceptClicked(pos: Int, str: String) {
+                if (pos == 56) {
+                    commentstr = str
+                    choresModel = list
+                    askForDevicePassword()
+                }
 
 
             }
 
             override fun onRejectClicked(pos: Int) {
-
 
 
             }
@@ -352,6 +358,28 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             }
             else -> {
                 requestPermission(Manifest.permission.READ_CONTACTS)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
+                when (resultCode) {
+                    RESULT_OK -> {
+                        if (commentstr == null) {
+                            commentstr = ""
+                        }
+                        mViewModel!!.callTaskAccept(
+                            "APPRECIATEANDPAY", choresModel?.entityId.toString(), commentstr!!
+
+                        )
+
+
+                    }
+
+                }
             }
         }
     }
