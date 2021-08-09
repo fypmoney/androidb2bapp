@@ -8,6 +8,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.database.entity.ContactEntity
+import com.fypmoney.databinding.ViewPayRequestProfileBinding
 import com.fypmoney.databinding.ViewPayRequestProfileBindingImpl
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.adapter.CardListViewAdapter
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.view_pay_request_profile.view.*
 * This class is used to display pay, request for a particular contact
 * */
 class PayRequestProfileView :
-    BaseActivity<ViewPayRequestProfileBindingImpl, PayRequestProfileViewModel>(),
+    BaseActivity<ViewPayRequestProfileBinding, PayRequestProfileViewModel>(),
     MyProfileListAdapter.OnListItemClickListener {
     private lateinit var mViewModel: PayRequestProfileViewModel
 
@@ -46,11 +47,11 @@ class PayRequestProfileView :
             isBackArrowVisible = true
         )
         val textString = ArrayList<String>()
-        textString.add("Set up automatic pay money")
-        textString.add("Transactions/chat")
+        //textString.add("Set up automatic pay money")
+        textString.add(getString(R.string.transaction_chat))
         val drawableIds = ArrayList<Int>()
-        drawableIds.add(R.drawable.auto)
-        drawableIds.add(R.drawable.transsactions)
+        drawableIds.add(R.drawable.ic_chat)
+        //drawableIds.add(R.drawable.transsactions)
 
         val myProfileAdapter = MyProfileListAdapter(applicationContext, this)
         list.adapter = myProfileAdapter
@@ -102,7 +103,7 @@ class PayRequestProfileView :
     override fun onItemClick(position: Int) {
         when (position) {
 
-            1 -> {
+            0 -> {
                 intentToActivity(
                     contactEntity = mViewModel.contactResult.get(),
                     TransactionHistoryView::class.java, ""

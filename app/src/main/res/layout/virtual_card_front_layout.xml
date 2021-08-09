@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -17,20 +18,23 @@
     </data>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:duplicateParentState="false"
+        android:padding="3dp"
+        android:background="@drawable/card_shape"
         android:visibility="@{viewModel.isFrontVisible?View.VISIBLE:View.GONE,default=visible}">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/mCardFrontLayout"
             android:layout_width="239dp"
-            android:layout_height="400dp"
+            android:layout_height="350dp"
             android:layout_gravity="center"
-            android:background="@drawable/card"
-            android:padding="16dp">
-
+            android:background="@drawable/ic_card_new"
+            >
 
         </androidx.appcompat.widget.AppCompatImageView>
+
     </FrameLayout>
 </layout>

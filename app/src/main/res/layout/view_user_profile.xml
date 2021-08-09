@@ -124,14 +124,6 @@
                 android:orientation="vertical"
                 android:paddingBottom="20dp">
 
-                <com.fypmoney.util.ScrollableListView
-                    android:id="@+id/profileList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@android:color/transparent"
-                    android:layout_marginHorizontal="@dimen/dp24"
-                    android:dividerHeight="0dp" />
-
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -184,7 +176,13 @@
                     android:layout_marginTop="20dp"
                     android:text="@{viewModel.buildVersion}" />
 
-
+                <com.fypmoney.util.ScrollableListView
+                    android:id="@+id/profileList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp24"
+                    android:divider="@android:color/transparent"
+                    android:dividerHeight="0dp" />
 
 
             </LinearLayout>

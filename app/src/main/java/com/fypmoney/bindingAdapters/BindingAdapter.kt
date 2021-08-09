@@ -1,6 +1,7 @@
 package com.fypmoney.bindingAdapters
 
 
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -153,7 +154,12 @@ class BindingAdapter {
                         // add a rule to align to the left
                         textViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_END)
 
+                        setBackgroundDrawable(view = view,
+                            backgroundColor = ContextCompat.getColor(view.context,R.color.color_orange),
+                            cornerRadius = 18.0f,isRounded = false,alpha = 20,strokeColor = null,strokeWidth = null)
                         // make sure the rule was applied
+                        //2131362978
+                        view.getChildAt(0).background = ContextCompat.getDrawable(view.context,R.drawable.ic_check_yellow)
 
                         // make sure the rule was applied
                         view.layoutParams = textViewLayoutParams
@@ -168,8 +174,11 @@ class BindingAdapter {
 
                         // add a rule to align to the left
                         textViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_START)
-
                         // make sure the rule was applied
+                        setBackgroundDrawable(view = view,
+                            backgroundColor = ContextCompat.getColor(view.context,R.color.color_task_card_green),
+                            cornerRadius = 18.0f,isRounded = false,alpha = 20,strokeColor = null,strokeWidth = null)
+                        view.getChildAt(0).background = ContextCompat.getDrawable(view.context,R.drawable.ic_check_with_background)
 
                         // make sure the rule was applied
                         view.layoutParams = textViewLayoutParams

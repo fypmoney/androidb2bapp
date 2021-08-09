@@ -737,6 +737,7 @@
     <string name="let_s_build_a_n_community_together">Let’s build a \n community together</string>
     <string name="we_can_sense_your_excitement">We can sense your excitement 🤩</string>
     <string name="join_the_community">Join the community</string>
+    <string name="transaction_chat">Transactions/chat</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
