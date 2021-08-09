@@ -6,12 +6,12 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewContactsBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
