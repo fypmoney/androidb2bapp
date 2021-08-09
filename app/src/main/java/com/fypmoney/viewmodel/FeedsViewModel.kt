@@ -84,24 +84,22 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
                     // check total count and if greater than 0 set list else set no data found
                     try {
                         when {
-                            totalCount.get()!! > 0 -> {
+                            totalCount.get()!! > 0 && fromWhichScreen.get() == 0-> {
                                 response?.feedDetails.let { feedsAdapter.setList(response?.feedDetails) }
                             }
-                            else -> {
-                                noDataFoundVisibility.set(true)
-                            }
-
-
-                        }
-
-                        when {
                             fromWhichScreen.get() != 0 -> {
                                 val resultList = ArrayList<String?>()
                                 response?.feedDetails?.forEach { resultList.add(it.resourceId) }
                                 onFeedsSuccess.value = resultList
 
                             }
+                            else -> {
+                                noDataFoundVisibility.set(true)
+                            }
                         }
+
+
+
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

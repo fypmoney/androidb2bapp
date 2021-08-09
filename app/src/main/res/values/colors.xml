@@ -51,6 +51,10 @@
     <color name="color_task_card_pink">#FF4856</color>
     <color name="color_task_card_orange">#F7AA11</color>
     <color name="color_task_card_green">#8ECC9A</color>
+    <color name="progress_primary">@color/white</color>
+    <color name="progress_secondary">@color/gray_scale</color>
+    <color name="progress_max_active">@color/white</color>
 
+    <color name="gray_scale">#707070</color>
 
 </resources>

@@ -1,6 +1,6 @@
 package com.fypmoney.view.activity
 
-import android.content.Intent
+
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -8,12 +8,8 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewCreateTaskBinding
-
-
 import com.fypmoney.viewmodel.CreateTaskViewModel
-
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_user_feeds.*
 
 /*
 * This is used to show list of notification

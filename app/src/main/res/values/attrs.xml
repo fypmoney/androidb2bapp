@@ -8,5 +8,8 @@
     <declare-styleable name="CustomTheme">
         <attr name="gifViewStyle" format="reference" />
     </declare-styleable>
+    <declare-styleable name="FypStoriesView">
+        <attr name="progressCount" format="integer|reference" />
+    </declare-styleable>
 
 </resources>

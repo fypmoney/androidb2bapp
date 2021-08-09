@@ -11,13 +11,11 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewBankTransactionHistoryBinding
 import com.fypmoney.model.BankTransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.fragment.AddUpiBottomSheet
 import com.fypmoney.view.fragment.FilterByDateFragment
 import com.fypmoney.viewmodel.BankTransactionHistoryViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_bank_history.*
-import kotlinx.android.synthetic.main.view_user_feeds.*
 
 /*
 * This is used to handle contacts

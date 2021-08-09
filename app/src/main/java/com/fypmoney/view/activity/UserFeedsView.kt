@@ -28,6 +28,7 @@ import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.CardSettingsBottomSheet
 import com.fypmoney.view.fragment.DidUKnowBottomSheet
+import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.viewmodel.FeedsViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_user_feeds.*
@@ -56,11 +57,11 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
-        setToolbarAndTitle(
+        /*setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar,
             isBackArrowVisible = false
-        )
+        )*/
 
         checkAndAskPermission()
 
@@ -253,9 +254,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
         shimmerLayout.startShimmerAnimation()
     }
 
-    override fun onPause() {
-        super.onPause()
-    }
+
 
     override fun onTryAgainClicked() {
         shimmerLayout.startShimmerAnimation()
@@ -271,7 +270,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
  * */
     private fun callDiduKnowBottomSheet(list: ArrayList<String?>) {
         val bottomSheet =
-            DidUKnowBottomSheet(list)
+            StoriesBottomSheet(list)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "DidUKnowSheet")
     }
