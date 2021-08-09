@@ -22,6 +22,9 @@
             android:name=".view.webview.WebViewActivity"
             android:exported="true" />
         <activity
+            android:name=".view.community.SocialCommunityActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.referandearn.view.ReferAndEarnActivity"
             android:exported="true" />
         <activity

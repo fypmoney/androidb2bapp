@@ -742,10 +742,16 @@
     <string name="terms_and_conditions">Terms Of Use</string>
 
 
+
+    <string name="let_s_build_a_n_community_together">Let’s build a \n community together</string>
+    <string name="we_can_sense_your_excitement">We can sense your excitement 🤩</string>
+    <string name="join_the_community">Join the community</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
     </string-array>
+
+
     <string-array name="my_profile_title_list">
         <item>Privacy settings</item>
         <item>Feed/ interest settings</item>
@@ -762,6 +768,8 @@
         <item>Grand Child</item>
         <item>Other</item>
     </string-array>
+
+
     <string-array name="order_card_list">
         <item>Set your limit</item>
         <item>Sensitive details kept safe</item>
