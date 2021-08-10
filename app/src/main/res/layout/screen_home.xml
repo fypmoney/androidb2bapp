@@ -90,42 +90,48 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="30dp"
                     android:weightSum="2"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/amount">
 
+
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/btnAddMoney"
                         style="@style/TextviewBold"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/curved_background24"
                         android:drawableStart="@drawable/ic_add_money"
-                        android:gravity="center"
+                        android:gravity="start|center"
+                        android:drawablePadding="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/dp10"
                         android:onClick="@{()->viewModel.onAddMoneyClicked()}"
                         android:paddingVertical="10dp"
-                        android:paddingHorizontal="5dp"
+                        android:paddingHorizontal="10dp"
                         android:text="@string/add_money_btn_text"
                         android:textColor="@color/text_color_dark"
                         android:textSize="14sp" />
 
+
+
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextviewBold"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_weight="1"
+                        android:layout_marginStart="@dimen/dp10"
                         android:background="@drawable/curved_background25"
                         android:drawableStart="@drawable/ic_pay"
-                        android:gravity="center"
-                        android:layout_marginStart="9dp"
+                        android:gravity="start|center"
+                        android:drawablePadding="@dimen/_8sdp"
                         android:onClick="@{()->viewModel.onPayClicked()}"
                         android:paddingVertical="10dp"
-                        android:paddingHorizontal="5dp"                        android:text="@string/pay_money_btn_text"
+                        android:paddingHorizontal="10dp"                        android:text="@string/pay_money_btn_text"
                         android:textColor="@color/text_color_dark"
                         android:textSize="14sp" />
 
@@ -153,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dp"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardCornerRadius="18dp"
                     app:cardElevation="@dimen/card_elevation"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintTop_toTopOf="parent">
@@ -161,7 +167,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="15dp"                        android:orientation="vertical">
 
                         <FrameLayout
                             android:layout_width="@dimen/_75sdp"
@@ -196,8 +203,6 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="4dp"
                             android:layout_marginHorizontal="15dp"
-                            android:paddingStart="4dp"
-                            android:paddingEnd="4dp"
                             android:text="@string/quick_actions_chores1"
                             android:textAlignment="center"
                             android:textColor="@color/text_color_dark"
@@ -213,7 +218,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dp"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardCornerRadius="18dp"
                     app:cardElevation="@dimen/card_elevation"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintTop_toTopOf="parent">
@@ -221,7 +226,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="15dp"                        android:orientation="vertical">
 
                         <FrameLayout
                             android:layout_width="@dimen/_75sdp"
@@ -253,8 +259,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:paddingStart="5dp"
-                            android:paddingEnd="5dp"
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="4dp"
                             android:layout_marginHorizontal="15dp"
@@ -286,7 +290,7 @@
                     android:layout_weight="1"
                     android:padding="10dp"
                     android:onClick="@{()->viewModel.onReferralAndCodeClicked()}"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardCornerRadius="18dp"
                     app:cardElevation="@dimen/card_elevation"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintTop_toTopOf="parent">
@@ -295,7 +299,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="15dp"                        android:orientation="vertical">
 
                         <FrameLayout
                             android:layout_width="@dimen/_75sdp"
@@ -329,10 +334,8 @@
                             android:layout_gravity="center"
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="4dp"
-                            android:paddingStart="4dp"
-                            android:paddingEnd="4dp"
                             android:layout_marginHorizontal="10dp"
-                            android:text="@string/quick_actions_rewards1"
+                            android:text="@string/quick_actions_referrals1"
                             android:textAlignment="center"
                             android:textColor="@color/text_color_dark"
                             android:textSize="12sp" />
@@ -347,7 +350,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dp"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardCornerRadius="18dp"
                     app:cardElevation="@dimen/card_elevation"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintTop_toTopOf="parent">
@@ -355,6 +358,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="15dp"
                         android:orientation="vertical">
 
                         <FrameLayout

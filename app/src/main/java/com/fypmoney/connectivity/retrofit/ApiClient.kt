@@ -1,5 +1,9 @@
 package com.fypmoney.connectivity.retrofit
 
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.fypmoney.BuildConfig
+import com.fypmoney.application.PockketApplication
+import com.fypmoney.connectivity.retrofit.ApiClient1.context
 import com.fypmoney.util.AppConstants.API_TIMEOUT_SECONDS
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -30,10 +34,14 @@ class ApiClient {
          */
         fun getClient(baseUrl:String): Retrofit {
             val builder = getBuilder()
-            builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            if (BuildConfig.DEBUG) {
+                // Added interceptor for http logging
+                builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+                builder.addInterceptor(ChuckerInterceptor(PockketApplication.instance))
+            }
             return Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .client(getUnsafeOkHttpClient()!!)
+                .client(builder.build())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(getFactory())
                 .build()
@@ -45,7 +53,7 @@ class ApiClient {
          * @description Method is used to set the timeout time and return OkHttpClient.Builder.
          */
         private fun getBuilder(): OkHttpClient.Builder {
-            return OkHttpClient().newBuilder()
+            return OkHttpClient.Builder()
                 .connectTimeout(API_TIMEOUT_SECONDS, TimeUnit.SECONDS)
                 .readTimeout(API_TIMEOUT_SECONDS, TimeUnit.SECONDS)
                 .writeTimeout(API_TIMEOUT_SECONDS, TimeUnit.SECONDS)

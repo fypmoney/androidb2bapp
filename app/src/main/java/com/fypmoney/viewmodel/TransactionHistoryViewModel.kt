@@ -26,7 +26,6 @@ class TransactionHistoryViewModel(application: Application) : BaseViewModel(appl
 
 
     init {
-        callGetTransactionHistoryApi()
     }
     /*
   * This is used to handle pay or request button click
@@ -40,13 +39,13 @@ class TransactionHistoryViewModel(application: Application) : BaseViewModel(appl
       * This method is used to call get transaction history
       * */
 
-    private fun callGetTransactionHistoryApi() {
+     fun callGetTransactionHistoryApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_TRANSACTION_HISTORY,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_TRANSACTION_HISTORY),
-                request_type = ApiUrl.POST,
-                param = TransactionHistoryRequest(), onResponse = this,
+                request_type = ApiUrl.POST,//TODO Remove country code from model
+                param = TransactionHistoryRequest(destinationUserId = contactResult.get()?.contactNumber?.substring(3,13)), onResponse = this,
                 isProgressBar = true
             )
         )

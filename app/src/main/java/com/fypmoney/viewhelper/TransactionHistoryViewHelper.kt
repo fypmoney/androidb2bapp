@@ -32,13 +32,27 @@ class TransactionHistoryViewHelper(
                     transactionHistory?.txnAmount!!
                 )
             )
-            msg.set(
-                PockketApplication.instance.getString(R.string.you_paid) + Utility.parseDateTime(
-                    transactionHistory?.txnTime,
-                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
-                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT1
-                )
-            )
+            when(transactionHistory?.isSender){
+                AppConstants.YES->{
+                    msg.set(
+                        PockketApplication.instance.getString(R.string.you_paid) + Utility.parseDateTime(
+                            transactionHistory?.txnTime,
+                            inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
+                            outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT1
+                        )
+                    )
+                }
+                AppConstants.NO->{
+                    msg.set(
+                        PockketApplication.instance.getString(R.string.you_were_paid) + Utility.parseDateTime(
+                            transactionHistory?.txnTime,
+                            inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
+                            outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT1
+                        )
+                    )
+                }
+            }
+
             date.set(
                 Utility.parseDateTime(
                     transactionHistory?.txnTime,
@@ -55,7 +69,7 @@ class TransactionHistoryViewHelper(
      * called when any item is selected
      * */
     fun onItemClicked() {
-        //viewModel.onItemClicked.value = transactionHistory
+        viewModel.onItemClicked.value = transactionHistory
     }
 
 

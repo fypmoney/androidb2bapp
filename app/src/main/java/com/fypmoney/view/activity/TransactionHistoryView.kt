@@ -40,6 +40,8 @@ class TransactionHistoryView :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewModel.setResponseAfterContactSelected(intent.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE))
+        mViewModel.callGetTransactionHistoryApi()
+
         setToolbarAndTitle(
             context = this@TransactionHistoryView,
             toolbar = toolbar,

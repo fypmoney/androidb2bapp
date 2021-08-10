@@ -145,9 +145,9 @@ class BindingAdapter {
                 when (isSender) {
                     AppConstants.YES -> {
                         val textViewLayoutParams = RelativeLayout.LayoutParams(
-                            500,
-                            RelativeLayout.LayoutParams.WRAP_CONTENT
-                        )
+                            view.context.resources.getDimension(R.dimen._150sdp).toInt(),
+                            view.context.resources.getDimension(R.dimen._80sdp).toInt(),
+                            )
 
                         // add a rule to align to the left
 
@@ -156,29 +156,28 @@ class BindingAdapter {
 
                         setBackgroundDrawable(view = view,
                             backgroundColor = ContextCompat.getColor(view.context,R.color.color_orange),
-                            cornerRadius = 18.0f,isRounded = false,alpha = 20,strokeColor = null,strokeWidth = null)
+                            cornerRadius = 56.0f,isRounded = false,alpha = 20,strokeColor = null,strokeWidth = null)
                         // make sure the rule was applied
                         //2131362978
-                        view.getChildAt(0).background = ContextCompat.getDrawable(view.context,R.drawable.ic_check_yellow)
+                        (view.getChildAt(0) as AppCompatImageView).setImageResource(0)
+                        (view.getChildAt(0) as AppCompatImageView).setImageResource(R.drawable.ic_check_yellow)
 
                         // make sure the rule was applied
                         view.layoutParams = textViewLayoutParams
                     }
                     else -> {
                         val textViewLayoutParams = RelativeLayout.LayoutParams(
-                            500,
-                            RelativeLayout.LayoutParams.WRAP_CONTENT
-                        )
+                            view.context.resources.getDimension(R.dimen._150sdp).toInt(),
+                            view.context.resources.getDimension(R.dimen._80sdp).toInt(),
+                            )
 
-                        // add a rule to align to the left
-
-                        // add a rule to align to the left
                         textViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_START)
                         // make sure the rule was applied
                         setBackgroundDrawable(view = view,
                             backgroundColor = ContextCompat.getColor(view.context,R.color.color_task_card_green),
-                            cornerRadius = 18.0f,isRounded = false,alpha = 20,strokeColor = null,strokeWidth = null)
-                        view.getChildAt(0).background = ContextCompat.getDrawable(view.context,R.drawable.ic_check_with_background)
+                            cornerRadius = 56.0f,isRounded = false,alpha = 20,strokeColor = null,strokeWidth = null)
+                        (view.getChildAt(0) as AppCompatImageView).setImageResource(0)
+                        (view.getChildAt(0) as AppCompatImageView).setImageResource(R.drawable.ic_check_with_background)
 
                         // make sure the rule was applied
                         view.layoutParams = textViewLayoutParams
