@@ -112,7 +112,7 @@ class TaskActionBottomSheet(
             accept.text = "Accept"
             view.reject.text = "Reject"
             view.bywhom.visibility = View.VISIBLE
-            view.bywhom.text = "By " + list.sourceUserName
+            view.bywhom.text = "By " + list.destinationUserName
             view.comment.visibility = View.GONE
         } else if (list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY") {
             accept.text = "Appreciate"

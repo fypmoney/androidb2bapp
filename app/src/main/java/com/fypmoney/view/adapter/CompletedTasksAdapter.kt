@@ -2,6 +2,7 @@ package com.fypmoney.view.adapter
 
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -39,6 +40,7 @@ class CompletedTasksAdapter(
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        Log.d("chackhistory", items[position].id.toString())
 
         if (items[position].historyTitle != null && items[position].historyTitle!!.isNotEmpty()) {
             holder.heading.text = items[position].historyTitle

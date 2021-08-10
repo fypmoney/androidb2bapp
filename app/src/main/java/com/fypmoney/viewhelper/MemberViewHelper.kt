@@ -9,7 +9,8 @@ import com.fypmoney.view.adapter.MemberAdapter
 class MemberViewHelper(
     var position: Int,
     var memberEntity: MemberEntity?,
-    var onMemberItemClickListener: MemberAdapter.OnMemberItemClickListener
+    var onMemberItemClickListener: MemberAdapter.OnMemberItemClickListener,
+    var OnFamilyMemberClickListener: MemberAdapter.OnFamilyMemberClickListener?
 ) {
 
     fun init() {
@@ -18,6 +19,12 @@ class MemberViewHelper(
 
     fun onItemClicked() {
         onMemberItemClickListener.onItemClick(position)
+
+    }
+
+    fun onFamilyMemberClicked() {
+
+        OnFamilyMemberClickListener?.onItemClick(memberEntity)
     }
 
 }

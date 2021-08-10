@@ -1,4 +1,4 @@
-package nearby.matchinteractmeet.groupalike.Profile.Trips.adapter
+package com.fypmoney.view.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,11 +8,9 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.fypmoney.database.entity.MemberEntity
-import com.fypmoney.util.Utility
 import com.fypmoney.view.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.card_member_image.view.*
 
-import java.util.*
 import kotlin.collections.ArrayList
 
 class addmemberAdapter(
@@ -21,13 +19,13 @@ class addmemberAdapter(
     var itemClickListener2: ListItemClickListener
 ) : androidx.recyclerview.widget.RecyclerView.Adapter<addmemberAdapter.BaseViewHolder<*>>() {
     var selectedPos = -1
-    override fun onBindViewHolder(baseHolder: addmemberAdapter.BaseViewHolder<*>, position: Int) {
+    override fun onBindViewHolder(baseHolder: BaseViewHolder<*>, position: Int) {
 
         when (baseHolder) {
-            is addmemberAdapter.ViewHolderAdd -> {
+            is ViewHolderAdd -> {
                 var i = 0
             }
-            is addmemberAdapter.ViewHolder -> {
+            is ViewHolder -> {
 //                if (!items?.get(position-1)?.profilePicResourceId.isNullOrEmpty()) {
 //                    Utility.setImageUsingGlide(
 //                        url = items?.get(position-1)?.profilePicResourceId,
@@ -77,9 +75,9 @@ class addmemberAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return if (position == 0) {
-            addmemberAdapter.Companion.TYPE_ADD
+            TYPE_ADD
         } else {
-            addmemberAdapter.Companion.TYPE_IMAGE
+            TYPE_IMAGE
         }
 
 
@@ -89,7 +87,7 @@ class addmemberAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): addmemberAdapter.BaseViewHolder<*> {
+    ): BaseViewHolder<*> {
 
         return when (viewType) {
             TYPE_ADD -> {
@@ -121,7 +119,7 @@ class addmemberAdapter(
         abstract fun bind(item: T)
     }
 
-    inner class ViewHolder(view: View) : addmemberAdapter.BaseViewHolder<String>(view),
+    inner class ViewHolder(view: View) : BaseViewHolder<String>(view),
         View.OnClickListener {
 
         val imagee = view.imageView2!!
@@ -147,7 +145,7 @@ class addmemberAdapter(
 
     }
 
-    inner class ViewHolderAdd(view: View) : addmemberAdapter.BaseViewHolder<String>(view),
+    inner class ViewHolderAdd(view: View) : BaseViewHolder<String>(view),
         View.OnClickListener {
         override fun bind(item: String) {
         }

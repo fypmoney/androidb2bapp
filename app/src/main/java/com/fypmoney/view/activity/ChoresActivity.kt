@@ -205,8 +205,8 @@ companion object{
                 callTaskMessageSheet(list)
             }
         })
-        mViewModel!!.error.observe(this, androidx.lifecycle.Observer { list ->
-            if (list == "Something went wrong in fund transfer. Please Try Again.") {
+        mViewModel!!.error.observe(this, androidx.lifecycle.Observer { code ->
+            if (code == "PKT_2037") {
 
                 callInsuficientFundMessageSheet()
             }

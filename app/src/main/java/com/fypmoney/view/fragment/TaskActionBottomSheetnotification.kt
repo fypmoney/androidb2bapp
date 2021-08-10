@@ -74,7 +74,7 @@ class TaskActionBottomSheetnotification(
 
             } else if (accept.text == "Appreciate") {
                 onClickListener.onAcceptClicked(
-                    96, view.comment.text?.trim()
+                    56, view.comment.text?.trim()
                         .toString()
                 )
 
@@ -101,12 +101,14 @@ class TaskActionBottomSheetnotification(
         if (list?.actionAllowed == "COMPLETE") {
             accept.text = "Completed"
             view.reject.text = "In process"
+            view.bywhom.visibility = View.VISIBLE
+            view.bywhom.text = "By " + list?.destinationUserName
             view.comment.visibility = View.VISIBLE
         } else if (list?.actionAllowed == "REJECT,ACCEPT") {
             accept.text = "Accept"
             view.reject.text = "Reject"
             view.bywhom.visibility = View.VISIBLE
-            view.bywhom.text = "By " + list?.sourceUserName
+            view.bywhom.text = "By " + list?.destinationUserName
             view.comment.visibility = View.GONE
         } else if (list?.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY") {
             view.accept.text = "Appreciate"
@@ -119,7 +121,7 @@ class TaskActionBottomSheetnotification(
             view.comment.visibility = View.GONE
             view.lin.visibility = View.GONE
             view.bywhom.visibility = View.VISIBLE
-            view.bywhom.text = "By " + list?.sourceUserName
+            view.bywhom.text = "By " + list?.destinationUserName
 
 
         }

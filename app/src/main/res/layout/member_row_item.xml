@@ -23,7 +23,9 @@
         android:layout_width="@dimen/_120sdp"
         android:layout_margin="@dimen/_5sdp"
         android:padding="@dimen/_5sdp"
+        android:onClick="@{()->viewHelper.onFamilyMemberClicked()}"
         android:elevation="2dp"
+
         android:background="@drawable/curved_background3"
         android:layout_height="@dimen/_45sdp">
 

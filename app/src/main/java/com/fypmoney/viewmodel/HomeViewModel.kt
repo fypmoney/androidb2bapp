@@ -253,7 +253,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             ApiConstant.API_SNC_CONTACTS -> {
             }
             ApiConstant.API_TASK_UPDATE -> {
-                error.postValue(errorResponseInfo.msg)
+                error.postValue(errorResponseInfo.errorCode)
             }
         }
     }

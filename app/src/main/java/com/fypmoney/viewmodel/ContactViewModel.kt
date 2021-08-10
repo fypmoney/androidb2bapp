@@ -16,9 +16,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.ContactRepository
 import com.fypmoney.database.entity.ContactEntity
-import com.fypmoney.model.ContactRequest
-import com.fypmoney.model.ContactRequestDetails
-import com.fypmoney.model.ContactResponse
+import com.fypmoney.model.*
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.ContactAdapter
 
@@ -27,6 +25,7 @@ import com.fypmoney.view.adapter.ContactAdapter
 * */
 class ContactViewModel(application: Application) : BaseViewModel(application) {
     var contactAdapter = ContactAdapter(this)
+
     var isClickable = ObservableField(false)
     var contactRepository = ContactRepository(mDB = appDatabase)
     var onItemClicked = MutableLiveData<ContactEntity>()
@@ -34,6 +33,8 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
     var emptyContactListError = MutableLiveData<Boolean>()
     var selectedContactList = ObservableArrayList<ContactEntity>()
     var onSelectClicked = MutableLiveData<Boolean>()
+    var searchedContact = ObservableField<String>()
+    var countCheckIsAppUserApiCall: Int? = 0
 
     /*
 * This method is used to get all the contacts
@@ -82,10 +83,29 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        searchedContact.set(s.toString())
         val list = contactAdapter.newContactList?.filter {
             it.firstName!!.contains(s, ignoreCase = true) || it.contactNumber?.contains(s)!!
         }
-        contactAdapter.setList(list!!)
+        if (list?.size != 0) {
+            contactAdapter.setList(list)
+        } else {
+            contactAdapter.newSearchList?.clear()
+            val contactEntity = ContactEntity()
+            contactEntity.contactNumber = searchedContact.get()
+            contactEntity.firstName =
+                PockketApplication.instance.getString(R.string.new_number_text)
+
+            contactAdapter.newSearchList?.add(contactEntity)
+            contactAdapter.setList(contactAdapter.newSearchList)
+            if (searchedContact.get()?.length == 10) {
+                callIsAppUserApi()
+            }
+        }
+//        val list = contactAdapter.newContactList?.filter {
+//            it.firstName!!.contains(s, ignoreCase = true) || it.contactNumber?.contains(s)!!
+//        }
+//        contactAdapter.setList(list!!)
     }
 
 
@@ -124,8 +144,44 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
                 }
             }
 
+            ApiConstant.API_CHECK_IS_APP_USER -> {
+                if (responseData is IsAppUserResponse) {
+                    if (responseData.isAppUserResponseDetails.isAppUser!!) {
+                        contactAdapter.newSearchList?.clear()
+                        val contactEntity = ContactEntity()
+                        contactEntity.contactNumber = searchedContact.get()
+                        contactEntity.firstName = responseData.isAppUserResponseDetails.name
+                        contactEntity.isAppUser = true
+                        contactEntity.userId = responseData.isAppUserResponseDetails.userId
+                        emptyContactListError.value = false
+                        contactAdapter.newSearchList?.add(contactEntity)
+                        contactAdapter.setList(contactAdapter.newSearchList)
 
+
+                    } else {
+                        onIsAppUserClicked.value = true
+                    }
+                }
+            }
         }
+
+    }
+
+    fun callIsAppUserApi() {
+        countCheckIsAppUserApiCall = countCheckIsAppUserApiCall?.plus(1)
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_CHECK_IS_APP_USER,
+                endpoint = NetworkUtil.endURL(
+                    ApiConstant.API_CHECK_IS_APP_USER + searchedContact.get()?.trim()
+                ),
+                request_type = ApiUrl.GET,
+                onResponse = this,
+                isProgressBar = true,
+                param = BaseRequest()
+            )
+        )
+
 
     }
 
@@ -134,7 +190,22 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
         progressDialog.value = false
         Log.d("contactlist", "addc")
         Log.d("contactlist", errorResponseInfo.toString())
-        emptyContactListError.value = true
+
+        when (purpose) {
+            ApiConstant.API_CHECK_IS_APP_USER -> {
+                if (countCheckIsAppUserApiCall == 1) {
+                    callIsAppUserApi()
+                } else {
+                    Utility.showToast("Please try again")
+                }
+
+
+            }
+            ApiConstant.API_SNC_CONTACTS -> {
+                emptyContactListError.value = true
+                getAllContacts()
+            }
+        }
     }
 
 }

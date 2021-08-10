@@ -20,6 +20,8 @@ class ContactAdapter(var viewModel: ContactViewModel) :
     RecyclerView.Adapter<BaseViewHolder>() {
     var contactList: ArrayList<ContactEntity>? = ArrayList()
     var newContactList: ArrayList<ContactEntity>? = ArrayList()
+    var newSearchList: ArrayList<ContactEntity>? = ArrayList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val mRowBinding = ContactRowItemBinding.inflate(
             LayoutInflater.from(parent.context),
