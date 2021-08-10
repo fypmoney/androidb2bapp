@@ -256,7 +256,10 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             mSetRightOut!!.start()
             mSetLeftIn!!.start()
             mIsBackVisible = true
-            mViewModel.isFrontVisible.set(false)
+            val handler = Handler()
+            handler.postDelayed({
+                mViewModel.isFrontVisible.set(false)
+            }, 500)
 
         }else{
             mViewModel.isFrontVisible.set(true)
@@ -276,8 +279,10 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             mSetLeftIn!!.start()
             mSetRightOut!!.start()
             mIsBackVisible = true
-            mViewModel.isFrontVisible.set(false)
-
+            val handler = Handler()
+            handler.postDelayed({
+                mViewModel.isFrontVisible.set(false)
+            }, 500)
 
         }else{
             mViewModel.isFrontVisible.set(true)
