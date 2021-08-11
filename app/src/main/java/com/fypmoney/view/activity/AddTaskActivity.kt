@@ -27,21 +27,20 @@ import com.fypmoney.viewmodel.AddTaskViewModel
 import kotlinx.android.synthetic.main.activity_add_task.*
 import kotlinx.android.synthetic.main.fragment_assigned_task.view.*
 import kotlinx.android.synthetic.main.toolbar.*
-import nearby.matchinteractmeet.groupalike.Profile.Trips.adapter.addmemberAdapter
+import com.fypmoney.view.adapter.addmemberAdapter
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
-
-import android.R.string.no
-import androidx.annotation.NonNull
 import kotlinx.android.synthetic.main.bottom_sheet_response_task.*
 import kotlinx.android.synthetic.main.bottom_sheet_task_added_message.*
+import android.text.Editable
+
+import android.text.TextWatcher
 
 
-class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>() , DialogUtils.OnAlertDialogClickListener{
+class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>(),
+    DialogUtils.OnAlertDialogClickListener {
 
     private var selectedmember: MemberEntity? = null
     private var myCalendar: Calendar? = null
@@ -85,15 +84,25 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
         calendarListners()
         setamount()
 
-
-
-
+        add_money_editext.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+//                if (s.toString().length == 1 && s.toString().startsWith("0")) {
+//                    s.clear()
+//                }
+                if (s.toString().startsWith("0")) {
+                    s.clear()
+                }
+            }
+        })
         setRecyclerView()
         setToolbarAndTitle(
             context = this@AddTaskActivity,
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = getString(R.string.chore_title)
         )
+
 
         btnContinue.setOnClickListener {
             if (validate()) {
@@ -271,6 +280,8 @@ if (et_start.text?.trim().toString() == endTime.text?.trim().toString()) {
          if (add_money_editext.text.toString().trim().isEmpty()) {
              success = false
              add_money_editext.error = "Enter Amount"
+         } else {
+
          }
          if (et_title.text.toString().trim().isEmpty()) {
              success = false
@@ -298,7 +309,7 @@ if (et_start.text?.trim().toString() == endTime.text?.trim().toString()) {
                     itemsArrayList.add(member)
                     typeAdapter?.notifyDataSetChanged()
                     typeAdapter?.selectedPos = itemsArrayList.size - 1
-                    Log.d("chackid", (itemsArrayList.size - 1).toString())
+                    Log.d("chackid", returnValue.userId.toString())
                     typeAdapter?.notifyItemChanged(itemsArrayList.size - 2)
                 }
 

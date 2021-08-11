@@ -4,11 +4,16 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.base.PaginationListener
 import com.fypmoney.database.entity.TaskEntity
 import com.fypmoney.databinding.ActivityChoresHistoryBinding
 import com.fypmoney.databinding.ViewChoresBinding
@@ -18,10 +23,12 @@ import com.fypmoney.view.adapter.CompletedTasksAdapter
 import com.fypmoney.view.fragment.*
 import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.viewmodel.ChoresHistoryViewModel
+import kotlinx.android.synthetic.main.activity_chores_history.*
+import kotlinx.android.synthetic.main.fragment_assigned_task.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresHistoryViewModel>(),
+class ChoresHistoryActivity : BaseActivity<ActivityChoresHistoryBinding, ChoresHistoryViewModel>(),
     ProcessCompleteBSFragment.OnPBottomSheetClickListener,
     GoodJobBSFragment.OnGjBottomSheetClickListener,
     WellDoneBSFragment.OnWDBottomSheetClickListener,
@@ -32,8 +39,11 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresHistoryViewM
 
     private var typeAdapter: CompletedTasksAdapter? = null
     private lateinit var mViewModel: ChoresHistoryViewModel
+    private var isLoading = false
+    var page = 0
+
     var mbindign: ActivityChoresHistoryBinding? = null
-    var taskDetailsData = ObservableField<TaskEntity>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mbindign = ActivityChoresHistoryBinding.inflate(layoutInflater)
@@ -50,30 +60,17 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresHistoryViewM
 
 
 
-        mbindign!!.cardCreate.setOnClickListener {
-            intentToAddMemberActivity(AddTaskActivity::class.java)
-        }
 
-        mbindign!!.cardPlantWater.setOnClickListener{
-            callProcessSheet(taskDetailsData.get())
-        }
-
-        mbindign!!.cardPlantWater1.setOnClickListener{
-            callGoodJSheet(taskDetailsData.get())
-        }
-
-        mbindign!!.cardCleanBed.setOnClickListener {
-            callWellDSheet(taskDetailsData.get())
-        }
-
-        mbindign!!.cardMakeBed.setOnClickListener {
-            callWhoopSheet(taskDetailsData.get())
-        }
 
         mViewModel!!.TaskHistory.observe(this, androidx.lifecycle.Observer { list ->
-            itemsArrayList.clear()
-            itemsArrayList.addAll(list)
-            typeAdapter!!.notifyDataSetChanged()
+            if (list != null) {
+                page = page + 1
+                isLoading = false
+                mbindign?.LoadProgressBar?.visibility = View.GONE
+                itemsArrayList.addAll(list)
+                typeAdapter!!.notifyDataSetChanged()
+            }
+
         })
         setRecyclerView()
 
@@ -110,18 +107,28 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresHistoryViewM
 
 
         var itemClickListener2 = object : ListItemClickListener {
-
-
             override fun onItemClicked(pos: Int) {
-
-
             }
 
             override fun onCallClicked(pos: Int) {
-
             }
         }
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        mbindign!!.recyclerView!!.layoutManager = layoutManager
+        mbindign!!.recyclerView.addOnScrollListener(object : PaginationListener(layoutManager) {
+            override fun loadMoreItems() {
+                Log.d("chackpaginat", "dc")
+                loadMore()
+            }
 
+            override fun loadMoreTopItems() {
+
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+        })
 
         typeAdapter =
             CompletedTasksAdapter(itemsArrayList, this, itemClickListener2!!)
@@ -130,40 +137,11 @@ class ChoresHistoryActivity : BaseActivity<ViewChoresBinding, ChoresHistoryViewM
 
     }
 
-    private fun callProcessSheet(taskEntity: TaskEntity?) {
-        val bottomSheet =
-            ProcessCompleteBSFragment(
-                taskEntity, this
-            )
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "AcceptRejectBottomSheet")
-    }
+    private fun loadMore() {
+        mbindign?.LoadProgressBar?.visibility = View.VISIBLE
+        mViewModel.callSampleTask(page)
+        isLoading = true
 
-    private fun callGoodJSheet(taskEntity: TaskEntity?) {
-        val bottomSheet =
-            GoodJobBSFragment(
-                taskEntity, this
-            )
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "AcceptRejectBottomSheet")
-    }
-
-    private fun callWellDSheet(taskEntity: TaskEntity?) {
-        val bottomSheet =
-            WellDoneBSFragment(
-                taskEntity, this
-            )
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "AcceptRejectBottomSheet")
-    }
-
-    private fun callWhoopSheet(taskEntity: TaskEntity?) {
-        val bottomSheet =
-            WhoopsBSFragment(
-                taskEntity, this
-            )
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "AcceptRejectBottomSheet")
     }
 
 

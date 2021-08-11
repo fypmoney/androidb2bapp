@@ -26,6 +26,7 @@ interface ApiInterface {
         @Url endPoint: String
     ): Observable<ResponseBody>
 
+
     /**
      * @param endPoint String
      * @return return ResponseBody
@@ -83,6 +84,17 @@ interface ApiInterface {
         @Header("one-tap") one_tap: Boolean?, @Url endPoint: String, @Body request: Any
     ): Observable<ResponseBody>
 
+    @Headers("Accept: application/json")
+    @POST
+    fun getPaginationApiCalling(
+        @Url endPoint: String,
+        @Header("client_id") client_id: String?,
+        @Header("Authorization") authorization: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Query("page") page: Int,
+        @Query("size") size: Int,
+        @Query("sort") sort: String
+    ): Observable<ResponseBody>
 
     @Headers("Accept: application/json")
     @POST
@@ -119,7 +131,6 @@ interface ApiInterface {
         @Field("key") key: String,
         @Field("hash") hash: String
     ): Observable<ResponseBody>
-
 
     /**
      * @param endPoint String

@@ -111,7 +111,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
 
         }
         mViewModel!!.error.observe(this, androidx.lifecycle.Observer { list ->
-            if (list == "Something went wrong in fund transfer. Please Try Again.") {
+            if (list == "PKT_2037") {
 
                 callInsuficientFundMessageSheet()
             }
@@ -154,7 +154,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     private fun callTaskActionSheet(list: NotificationModel.NotificationResponseDetails) {
         var itemClickListener2 = object : AcceptRejectClickListener {
             override fun onAcceptClicked(pos: Int, str: String) {
-                if (pos == 66) {
+                if (pos == 56) {
                     choresModel = list
                     commentstr = str
                     askForDevicePassword()

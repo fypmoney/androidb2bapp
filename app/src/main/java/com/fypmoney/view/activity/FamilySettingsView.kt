@@ -10,14 +10,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
+import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewFamilySettingsBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.view.customview.GifView
 import com.fypmoney.view.fragment.LeaveFamilyBottomSheet
 import com.fypmoney.view.fragment.UpdateFamilyNameBottomSheet
 import com.fypmoney.viewmodel.FamilySettingsViewModel
+import kotlinx.android.synthetic.main.view_walk_through_three.*
 
 
 /*
@@ -46,6 +50,8 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
 
+//        mViewBinding.image.gifResource = R.raw.family
+        Glide.with(requireActivity()).asGif().load(R.raw.family).into(mViewBinding.image)
         mViewModel.callGetMemberApi()
         val lbm = LocalBroadcastManager.getInstance(requireContext())
         lbm.registerReceiver(receiver, IntentFilter(AppConstants.AFTER_ADD_MEMBER_BROADCAST_NAME))
@@ -72,9 +78,24 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
 
         mViewModel.onAddMemberClicked.observe(viewLifecycleOwner) {
             if (it) {
-                intentToAddMemberActivity(AddMemberView::class.java)
+                intentToAddMemberActivity(ContactView::class.java)
                 mViewModel.onAddMemberClicked.value = false
             }
+        }
+        mViewModel.onFamilyMemberClicked.observe(viewLifecycleOwner) {
+            var contact = ContactEntity()
+            contact.userId = it.userId.toString()
+            contact.contactNumber = it.mobileNo
+            contact.firstName = it.name
+//            contact.lastName=it.familyName
+
+
+            intentToActivity(
+                contactEntity = contact,
+                aClass = TransactionHistoryView::class.java, ""
+            )
+
+
         }
 
         mViewModel.onChoresClicked.observe(viewLifecycleOwner) {
@@ -120,6 +141,14 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
         val intent = Intent(requireActivity(), aClass)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, "")
         requireContext().startActivity(intent)
+    }
+
+    private fun intentToActivity(contactEntity: ContactEntity?, aClass: Class<*>, action: String) {
+        val intent = Intent(requireContext(), aClass)
+        intent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, contactEntity)
+        intent.putExtra(AppConstants.WHICH_ACTION, action)
+        intent.putExtra(AppConstants.FUND_TRANSFER_QR_CODE, "")
+        startActivity(intent)
     }
 
     override fun onDestroy() {

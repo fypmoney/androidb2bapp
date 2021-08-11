@@ -234,7 +234,7 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
         loading.postValue(false)
 //        isLoading.set(false)
         Log.d("chacksample", errorResponseInfo.msg)
-        error.postValue(errorResponseInfo.msg)
+        error.postValue(errorResponseInfo.errorCode)
         loading?.postValue(false)
     }
 

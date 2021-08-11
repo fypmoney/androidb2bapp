@@ -219,7 +219,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
         isLoading.set(false)
         when (purpose) {
             ApiConstant.API_TASK_UPDATE -> {
-                error.postValue(errorResponseInfo.msg)
+                error.postValue(errorResponseInfo.errorCode)
             }
         }
 

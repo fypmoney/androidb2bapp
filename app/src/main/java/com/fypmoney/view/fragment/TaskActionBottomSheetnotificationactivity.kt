@@ -72,8 +72,8 @@ class TaskActionBottomSheetnotificationactivity(
                 )
 
             } else if (accept.text == "Appreciate") {
-                NotificationView.mViewModel!!.callTaskAccept(
-                    "APPRECIATEANDPAY", list.entityId.toString(), view.comment.text?.trim()
+                onClickListener.onAcceptClicked(
+                    56, view.comment.text?.trim()
                         .toString()
                 )
 

@@ -14,7 +14,6 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.MemberRepository
-import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.database.entity.MemberEntity
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.GetMemberResponse
@@ -30,9 +29,10 @@ import com.fypmoney.view.adapter.MemberAdapterViewAll
 * This is used as a family settings
 * */
 class FamilySettingsViewModel(application: Application) : BaseViewModel(application),
-    MemberAdapter.OnMemberItemClickListener {
+    MemberAdapter.OnMemberItemClickListener, MemberAdapter.OnFamilyMemberClickListener {
     var onViewAllClicked = MutableLiveData<Boolean>()
     var onAddMemberClicked = MutableLiveData<Boolean>()
+    var onFamilyMemberClicked = MutableLiveData<MemberEntity>()
     var onEditFamilyNameClicked = MutableLiveData<Boolean>()
     var onChoresClicked = MutableLiveData<Boolean>()
     var username = ObservableField<String>()
@@ -41,8 +41,9 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
     var isNoDataFoundVisible = ObservableField(false)
     var isProgressBarVisible = ObservableField(true)
     var isFamilyFiperVisible = ObservableField(false)
+    var isFamilyFiperVisiblePending = ObservableField(false)
     val isSwitchChecked: MutableLiveData<Boolean> = MutableLiveData()
-    var memberAdapter = MemberAdapter(this)
+    var memberAdapter = MemberAdapter(this, this)
     var pendingAdapter = MemberAdapterViewAll()
     private var memberRepository = MemberRepository(mDB = appDatabase)
     var onLeaveFamilySuccess = MutableLiveData<Boolean>()
@@ -164,18 +165,26 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
                     val inviteList = mutableListOf<MemberEntity>()
                     memberRepository.deleteAllMembers()
                     if (!responseData.GetMemberResponseDetails.isNullOrEmpty()) {
-                        isFamilyFiperVisible.set(true)
+
                         memberRepository.insertAllMembers(responseData.GetMemberResponseDetails)
                         memberRepository.getAllMembersFromDatabase()?.forEach {
                             when (it.status) {
                                 AppConstants.ADD_MEMBER_STATUS_APPROVED -> {
                                     approveList.add(it)
+
                                 }
                                 AppConstants.ADD_MEMBER_STATUS_INVITED -> {
                                     inviteList.add(it)
+
                                 }
                             }
 
+                        }
+                        if (approveList.size > 0) {
+                            isFamilyFiperVisible.set(true)
+                        }
+                        if (inviteList.size > 0) {
+                            isFamilyFiperVisiblePending.set(true)
                         }
 
                         memberAdapter.setList(approveList)
@@ -220,10 +229,10 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
 
     }
 
-    override fun onItemClick(position: Int) {
-        if (position == 0) {
-            onAddMemberClicked.value = true
-        }
+    override fun onItemClick(position: MemberEntity?) {
+
+        onFamilyMemberClicked.value = position!!
+
     }
 
     /*
@@ -232,6 +241,12 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
     fun onEditFamilyNameClicked() {
         onEditFamilyNameClicked.value = true
 
+    }
+
+    override fun onItemClick(position: Int) {
+        if (position == 0) {
+            onAddMemberClicked.value = true
+        }
     }
 
 

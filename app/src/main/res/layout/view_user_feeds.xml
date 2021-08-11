@@ -13,62 +13,61 @@
     </data>
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            app:onRefreshListener="@{() -> viewModel.onRefresh()}"
+            app:refreshing="@{viewModel.isLoading}">
 
-
-
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_container"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:onRefreshListener="@{() -> viewModel.onRefresh()}"
-                app:refreshing="@{viewModel.isLoading}">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <LinearLayout
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent"
+                    android:visibility="@{viewModel.isRecyclerviewVisible?View.GONE:View.VISIBLE,default=visible}"
+                    tools:visibility="gone">
 
-                    <com.facebook.shimmer.ShimmerFrameLayout
-                        android:id="@+id/shimmerLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        tools:visibility="gone"
-                        android:visibility="@{viewModel.isRecyclerviewVisible?View.GONE:View.VISIBLE,default=visible}">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <include layout="@layout/shimmer_placeholder_layout" />
-
-                            <include layout="@layout/shimmer_placeholder_layout" />
-
-                            <include layout="@layout/shimmer_placeholder_layout" />
-
-                            <include layout="@layout/shimmer_placeholder_layout" />
-
-                            <include layout="@layout/shimmer_placeholder_layout" />
-
-                            <include layout="@layout/shimmer_placeholder_layout" />
-                        </LinearLayout>
-                    </com.facebook.shimmer.ShimmerFrameLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_view"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:visibility="visible"
-                        android:layout_marginStart="@dimen/margin"
-                        android:layout_marginEnd="@dimen/margin"
-                        android:visibility="@{viewModel.isRecyclerviewVisible?View.VISIBLE:View.GONE,default=gone}"
-                        app:adapter="@{viewModel.feedsAdapter}"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-                </LinearLayout>
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                        android:orientation="vertical">
+
+                        <include layout="@layout/shimmer_placeholder_layout" />
+
+                        <include layout="@layout/shimmer_placeholder_layout" />
+
+                        <include layout="@layout/shimmer_placeholder_layout" />
+
+                        <include layout="@layout/shimmer_placeholder_layout" />
+
+                        <include layout="@layout/shimmer_placeholder_layout" />
+
+                        <include layout="@layout/shimmer_placeholder_layout" />
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:visibility="@{viewModel.isRecyclerviewVisible?View.VISIBLE:View.GONE,default=gone}"
+                    app:adapter="@{viewModel.feedsAdapter}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:visibility="visible" />
+            </LinearLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                 style="@style/AppTheme.Widget.TextView"

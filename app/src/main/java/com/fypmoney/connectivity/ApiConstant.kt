@@ -86,7 +86,7 @@ object ApiConstant {
   const val API_TASK_DETAIL = "/services/PockketService/internal/approval-request/"
   const val API_TASK_UPDATE = "/services/loyaltyservice/api/task"
   const val API_HISTORY_TASK =
-    "/services/loyaltyservice/api/task/history?page=0&size=10&sort=createdDate,desc"
+    "/services/loyaltyservice/api/task/history"
 
     const val TOP_TEN_USER_API = "/services/PockketService/api/recent/wallet/transaction"
     const val TOTAL_REFERRAL_CASHBACK_API = "/services/PockketService/api/total/referral/points"

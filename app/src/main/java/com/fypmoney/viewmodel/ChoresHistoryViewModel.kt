@@ -46,6 +46,23 @@ class ChoresHistoryViewModel(application: Application) : BaseViewModel(applicati
       * */
 
     private fun callSampleTask() {
+
+
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_HISTORY_TASK,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_HISTORY_TASK),
+                request_type = ApiUrl.POST,
+                GetTaskResponse(page = 0, size = 10, sort = "createdDate,desc"), onResponse = this,
+                isProgressBar = false
+            )
+
+        )
+
+
+    }
+
+    fun callSampleTask(page: Int) {
         Log.d("chacksample", "called")
 
         WebApiCaller.getInstance().request(
@@ -53,7 +70,8 @@ class ChoresHistoryViewModel(application: Application) : BaseViewModel(applicati
                 purpose = ApiConstant.API_HISTORY_TASK,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_HISTORY_TASK),
                 request_type = ApiUrl.POST,
-                GetTaskResponseIsassign(1), onResponse = this,
+                GetTaskResponse(page = page, size = 10, sort = "createdDate,desc"),
+                onResponse = this,
                 isProgressBar = false
             )
 

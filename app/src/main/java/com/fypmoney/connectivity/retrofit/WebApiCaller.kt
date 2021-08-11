@@ -9,7 +9,9 @@ import com.fypmoney.connectivity.ApiUrl
 import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.network.NetworkUtil.Companion.isNetworkAvailable
+import com.fypmoney.model.GetTaskResponse
 import com.fypmoney.model.PayUServerRequest
+import com.fypmoney.model.SendTaskResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
@@ -84,6 +86,7 @@ class WebApiCaller {
                             client_id = ApiConstant.CLIENT_ID
                         )
                     }
+
                     ApiConstant.CHECK_APP_UPDATE -> {
                         mObservable = apiInterface.checkAppUpdate(
                             endPoint = request.endpoint
@@ -118,6 +121,22 @@ class WebApiCaller {
 
                     else -> {
                         when (request.purpose) {
+                            ApiConstant.API_HISTORY_TASK -> {
+
+                                val params = request.param as GetTaskResponse
+                                Log.d("chackhistorypage", request.param.page.toString())
+                                mObservable = apiInterface.getPaginationApiCalling(
+                                    endPoint = request.endpoint,
+                                    authorization = SharedPrefUtils.getString(
+                                        PockketApplication.instance,
+                                        SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                    ),
+                                    client_id = ApiConstant.CLIENT_ID,
+                                    page = params.page!!,
+                                    size = params.size!!,
+                                    sort = params.sort!!
+                                )
+                            }
                             ApiConstant.API_AUTH_LOGIN -> {
                                 mObservable =
                                     apiInterface.postAuthDataOnServer(

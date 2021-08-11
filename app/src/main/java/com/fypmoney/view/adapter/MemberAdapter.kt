@@ -15,7 +15,10 @@ import com.fypmoney.viewhelper.MemberViewHelper
 /**
  * This adapter class is used to handle members
  */
-class MemberAdapter(var onMemberItemClickListener: OnMemberItemClickListener) :
+class MemberAdapter(
+    var onMemberItemClickListener: OnMemberItemClickListener,
+    var familyMember: OnFamilyMemberClickListener
+) :
     RecyclerView.Adapter<BaseViewHolder>() {
     var memberList: ArrayList<MemberEntity>? = ArrayList()
     private val typeAdd = 1
@@ -57,7 +60,7 @@ class MemberAdapter(var onMemberItemClickListener: OnMemberItemClickListener) :
         override fun onBind(position: Int) {
             mViewHelper = MemberViewHelper(
                 position,
-                memberList?.get(position), onMemberItemClickListener
+                memberList?.get(position), onMemberItemClickListener, familyMember
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             mViewHelper.init()
@@ -73,7 +76,7 @@ class MemberAdapter(var onMemberItemClickListener: OnMemberItemClickListener) :
         override fun onBind(position: Int) {
             mViewHelper = MemberViewHelper(
                 position,
-                memberList?.get(position), onMemberItemClickListener
+                memberList?.get(position), onMemberItemClickListener, familyMember
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             mViewHelper.init()
@@ -111,6 +114,10 @@ class MemberAdapter(var onMemberItemClickListener: OnMemberItemClickListener) :
 
     interface OnMemberItemClickListener {
         fun onItemClick(position: Int)
+    }
+
+    interface OnFamilyMemberClickListener {
+        fun onItemClick(position: MemberEntity?)
     }
 
     /**
