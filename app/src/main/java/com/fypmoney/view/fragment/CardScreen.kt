@@ -259,7 +259,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             val handler = Handler()
             handler.postDelayed({
                 mViewModel.isFrontVisible.set(false)
-            }, 1000)
+            }, 500)
 
         }else{
             mViewModel.isFrontVisible.set(true)
@@ -282,8 +282,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             val handler = Handler()
             handler.postDelayed({
                 mViewModel.isFrontVisible.set(false)
-            }, 1000)
-
+            }, 500)
 
         }else{
             mViewModel.isFrontVisible.set(true)
