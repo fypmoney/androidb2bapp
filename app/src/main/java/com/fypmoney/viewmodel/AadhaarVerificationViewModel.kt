@@ -22,6 +22,7 @@ import com.fypmoney.util.Utility
 * */
 class AadhaarVerificationViewModel(application: Application) : BaseViewModel(application) {
     var aadhaarNumber = MutableLiveData<String>()
+    var clickHere = MutableLiveData<Boolean>()
     var onKycInitSuccess = MutableLiveData<KycInitResponseDetails>()
 
     /*
@@ -43,6 +44,9 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
 
     }
 
+    fun clickHere(){
+        clickHere.value = true
+    }
     /*
       * This method is used to call kyc init api
       * */

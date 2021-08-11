@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -15,7 +16,7 @@
 
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp">
 
@@ -38,9 +39,10 @@
             android:layout_height="90dp"
             android:layout_below="@+id/date"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="@dimen/_150sdp"
             android:background="@drawable/border_background2"
             android:onClick="@{()->viewHelper.onItemClicked()}"
-            android:padding="10dp">
+            android:padding="16dp">
 
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -56,37 +58,43 @@
                 android:id="@+id/ivServiceLogo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/amount"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="10dp"
+                android:layout_alignParentBottom="true"
                 android:layout_marginTop="10dp"
-                app:srcCompat="@drawable/ic_next" />
+                android:padding="4dp"
+                app:srcCompat="@drawable/ic_next"
+                app:tint="@color/text_color_dark" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvServiceName"
                 style="@style/TextviewRegular"
-                android:layout_below="@+id/amount"
+                android:layout_alignParentBottom="true"
                 android:layout_gravity="center"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="34dp"
                 android:layout_marginEnd="@dimen/_5sdp"
+                android:alpha="60"
                 android:text="@{viewHelper.msg}"
                 android:textAlignment="center"
                 android:textColor="@color/text_color_dark"
-                android:alpha="80"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="you were paid" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/amount"
                 style="@style/TextviewBold"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="start"
+                android:layout_marginStart="0dp"
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@+id/check_iv"
+                android:autoSizeTextType="uniform"
                 android:text="@{@string/Rs+viewHelper.amount}"
-                android:textAlignment="center"
+                android:textAlignment="viewStart"
                 android:textColor="@color/text_color_dark"
-                android:textSize="28dp" />
+                android:textSize="28sp"
+                tools:text="₹1,500" />
 
         </RelativeLayout>
     </RelativeLayout>

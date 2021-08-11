@@ -19,7 +19,7 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/logo"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/_40sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +30,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="@dimen/_40sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo"
@@ -76,7 +76,7 @@
                     style="@style/TextviewBold"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/_16sdp"
                     android:layout_marginBottom="17dp"
                     android:layout_weight="1"
                     android:text="@string/walk_through_two_heading"
@@ -85,7 +85,7 @@
                     android:textSize="@dimen/main_title_size"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/title2"  />
+                    app:layout_constraintTop_toBottomOf="@+id/guideline"/>
 
            <androidx.appcompat.widget.AppCompatTextView
                android:id="@+id/title2"
@@ -96,10 +96,10 @@
                android:paddingStart="30dp"
                android:paddingEnd="30dp"
                android:text="@string/walk_through_two_text1"
-                android:layout_marginBottom="16dp"
+               android:layout_marginTop="17dp"
                app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintStart_toStartOf="parent"
-               app:layout_constraintBottom_toBottomOf="parent"
+               app:layout_constraintTop_toBottomOf="@+id/title1"
                android:textAlignment="center" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

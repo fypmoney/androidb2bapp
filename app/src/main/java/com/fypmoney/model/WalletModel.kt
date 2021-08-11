@@ -86,7 +86,8 @@ data class TransactionHistoryResponseDetails(
 data class TransactionHistoryRequest(
     @SerializedName("startDate") val startDate: String? = null,
     @SerializedName("endDate") val endDate: String? = null,
-    @SerializedName("destinationUserId") val destinationUserId: String? = null
+    @SerializedName("destinationUserIdentifier") val destinationUserId: String? = null,
+    @SerializedName("isbankTxnStatusSuccess") val isbankTxnStatusSuccess: Int? = 2
 ) : BaseRequest()
 
 

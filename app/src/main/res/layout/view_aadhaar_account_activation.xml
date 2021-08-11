@@ -40,6 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
+                    android:gravity="center"
                     android:text="@string/account_verification_screen_title"
                     android:textAlignment="center" />
 
@@ -49,10 +50,10 @@
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
                     android:layout_below="@+id/community_title"
                     android:layout_marginTop="@dimen/margin"
+                    android:gravity="center"
+                    android:layout_centerHorizontal="true"
                     android:text="@string/account_verification_sub_title"
                     android:textAlignment="center" />
 
@@ -63,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tvSubTitle"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="@dimen/_20sdp"
                     app:srcCompat="@drawable/ic_account_activation" />
 
 
@@ -73,9 +74,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ivServiceLogo"
-                    android:layout_marginTop="40dp"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_20sdp"
                     android:text="@string/account_verification_sub_title1"
                     android:textAlignment="center" />
 
@@ -84,14 +84,12 @@
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:layout_centerHorizontal="true"
-                    android:drawableEnd="@drawable/yes_bank_logo"
                     android:layout_below="@+id/click_here_title"
-                    android:layout_marginTop="40dp"
-                    android:text="@string/account_verification_sub_title2"
-                    android:gravity="center" />
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:drawableEnd="@drawable/yes_bank_logo"
+                    android:gravity="center"
+                    android:text="@string/account_verification_sub_title2" />
 
 
                 <com.google.android.material.button.MaterialButton
@@ -100,8 +98,9 @@
                     android:layout_width="299dp"
                     android:layout_height="52dp"
                     android:layout_below="@+id/association_with"
-                    android:layout_marginTop="50dp"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_30sdp"
                     android:background="@drawable/curved_background1"
                     android:onClick="@{()->viewModel.callKycAccountActivationApi()}"
                     android:text="@string/activate_account_btn_text"
