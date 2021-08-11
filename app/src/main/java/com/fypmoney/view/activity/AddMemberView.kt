@@ -62,6 +62,7 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
 
     }
 
+/*
     private fun setCountryCodeAdapter(context: Context, spCountryCode: AppCompatSpinner) {
         val adapterCountryCode = CountryCodeArrayAdapter(
             context,
@@ -88,6 +89,7 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
         }
 
     }
+*/
 
     /*
       * Method to set the length of mobile field

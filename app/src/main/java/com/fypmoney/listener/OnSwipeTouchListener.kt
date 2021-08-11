@@ -55,8 +55,8 @@ open class OnSwipeTouchListener(ctx: Context?) : OnTouchListener {
 
     }
     companion object {
-        private const val SWIPE_THRESHOLD = 200
-        private const val SWIPE_VELOCITY_THRESHOLD = 200
+        private const val SWIPE_THRESHOLD = 50
+        private const val SWIPE_VELOCITY_THRESHOLD = 50
     }
     open fun onSwipeRight() {}
     open fun onSwipeLeft() {}

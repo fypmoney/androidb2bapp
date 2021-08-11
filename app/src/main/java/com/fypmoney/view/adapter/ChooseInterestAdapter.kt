@@ -1,9 +1,6 @@
 package com.fypmoney.view.adapter
 
 
-import android.animation.ArgbEvaluator
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.view.LayoutInflater
@@ -16,12 +13,6 @@ import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.ChooseInterestRowItemBinding
 import com.fypmoney.model.InterestEntity
 import com.fypmoney.viewmodel.SelectInterestViewModel
-import android.animation.ValueAnimator
-import android.animation.ValueAnimator.AnimatorUpdateListener
-import android.graphics.drawable.TransitionDrawable
-
-import android.graphics.drawable.ColorDrawable
-import com.fypmoney.util.SharedPrefUtils
 
 
 /**

@@ -101,7 +101,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
         //  val gdt = GestureDetector(requireContext(),OnSwipeTouchListener())
 
-        mCardFrontLayout.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
+        front_fl.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
             override fun onSwipeTop() {
             }
 
@@ -123,7 +123,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 return gestureDetector.onTouchEvent(event)
             }
         })
-        mCardBackLayout.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
+        back_fl.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
             override fun onSwipeTop() {
             }
 
@@ -259,7 +259,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             val handler = Handler()
             handler.postDelayed({
                 mViewModel.isFrontVisible.set(false)
-            }, 500)
+            }, 100)
 
         }else{
             mViewModel.isFrontVisible.set(true)
@@ -282,7 +282,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             val handler = Handler()
             handler.postDelayed({
                 mViewModel.isFrontVisible.set(false)
-            }, 500)
+            }, 100)
 
         }else{
             mViewModel.isFrontVisible.set(true)
