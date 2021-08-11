@@ -104,7 +104,7 @@ class YourTasksFragment : Fragment() {
 
     private fun loadMore(root: View) {
 
-//        LoadProgressBar?.visibility = View.VISIBLE
+        //LoadProgressBar?.visibility = View.VISIBLE
         isLoading = true
 
     }

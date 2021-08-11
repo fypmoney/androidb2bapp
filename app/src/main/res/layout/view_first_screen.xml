@@ -31,183 +31,180 @@
             android:layout_gravity="end"
             app:srcCompat="@drawable/ic_pattern_reflect" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".2"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/guideline"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
 
 
 
-
-
-
-
-
-
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:translationZ="1dp"
+                android:visibility="visible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/card_graphic" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lay1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/_100sdp"
+                android:background="@drawable/curved_background2"
+                android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
 
-                <!--<androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_pattern2"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintEnd_toStartOf="@+id/image1"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/image1"
-                    app:srcCompat="@drawable/ic_pull_to_start_pattern" />
--->
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/image1"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:visibility="visible"
-                    android:translationZ="1dp"
-                    app:srcCompat="@drawable/card_graphic" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/lay1"
+                <LinearLayout
+                    android:id="@+id/ll_expaneded_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_100sdp"
-                    android:background="@drawable/curved_background2"
-                    android:padding="20dp"
+                    android:orientation="vertical"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/image2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="@dimen/dp16"
+                    tools:visibility="visible">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvWelcome"
+                        style="@style/TextviewRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="50dp"
-                        android:padding="10dp"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_pull_up_icon" />
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:text="@string/welcome"
+                        android:textSize="16sp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/image3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/margin_20"
+                        app:srcCompat="@drawable/ic_fyp_logo" />
+
+
+
+
+
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSendOtp"
+                        style="@style/Widget.App.Button"
+                        android:layout_width="299dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:background="@drawable/curved_background26"
+                        android:onClick="@{()->viewModel.onCreateAccountClicked()}"
+                        android:text="@string/create_account_btn_text"
+                        android:textAllCaps="false"
+                        app:backgroundTint="@color/text_color_dark" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_pull"
+                        android:id="@+id/tvTerms"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="@dimen/_11sdp"
+                        android:text="@string/create_account_terms"
+                        android:textAlignment="center" />
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/cl_login"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:padding="10dp"
-                        android:visibility="gone"
-                        android:text="@string/pull_up_to_start"
-                        android:textAlignment="center"
-                        android:textColor="@color/text_color_light"
-                        android:textSize="@dimen/textSize_18"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image2" />
+                        android:layout_marginBottom="@dimen/dp16"
+                        android:layout_marginTop="@dimen/_35sdp">
 
-                    <LinearLayout
-                        android:id="@+id/ll_expaneded_view"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:orientation="vertical"
-                        android:visibility="visible"
-                        tools:visibility="visible"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_pull">
-
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvWelcome"
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/back_to_login"
                             style="@style/TextviewRegular"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/_20sdp"
-                            android:text="@string/welcome"
-                            android:textSize="16sp" />
+                            android:layout_marginStart="34dp"
+                            android:gravity="end"
+                            android:text="@string/already_have_account_title"
+                            android:textColor="@color/text_color_light"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/image3"
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/login_tv"
+                            style="@style/TextviewBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/margin_20"
-                            app:srcCompat="@drawable/ic_fyp_logo" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnSendOtp"
-                            style="@style/Widget.App.Button"
-                            android:layout_width="299dp"
-                            android:layout_height="52dp"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="54dp"
-                            android:background="@drawable/curved_background26"
-                            android:onClick="@{()->viewModel.onCreateAccountClicked()}"
-                            android:text="@string/create_account_btn_text"
-                            android:textAllCaps="false"
-                            app:backgroundTint="@color/text_color_dark" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvTerms"
-                            style="@style/TextviewRegular"
-                            android:layout_width="299dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="22dp"
-                            android:text="@string/create_account_terms"
-                            android:textAlignment="center" />
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_marginTop="@dimen/_25sdp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <com.google.android.material.textview.MaterialTextView
-                                style="@style/TextviewRegular"
-                                android:id="@+id/back_to_login"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/already_have_account_title"
-                                android:layout_marginStart="34dp"
-                                android:textSize="16sp"
-                                android:textColor="@color/text_color_light"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toStartOf="parent"/>
-                            <com.google.android.material.textview.MaterialTextView
-                                style="@style/TextviewBold"
-                                android:id="@+id/login_tv"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/login"
-                                android:layout_marginStart="50dp"
-                                android:textSize="16sp"
-                                android:onClick="@{()->viewModel.onBackToLoginClicked()}"
-                                android:textColor="@color/text_color_dark"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintStart_toEndOf="@+id/back_to_login"/>
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                            android:layout_marginStart="50dp"
+                            android:layout_marginEnd="22dp"
+                            android:gravity="end"
+                            android:onClick="@{()->viewModel.onBackToLoginClicked()}"
+                            android:text="@string/login"
+                            android:textColor="@color/text_color_dark"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-                    </LinearLayout>
+                </LinearLayout>
+
+               <!-- <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="50dp"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_pull_up_icon" />-->
+
+                <!--<androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_pull"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:padding="10dp"
+                    android:text="@string/pull_up_to_start"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="@dimen/textSize_18"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/image2" />-->
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

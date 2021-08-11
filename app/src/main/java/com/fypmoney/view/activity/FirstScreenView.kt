@@ -133,7 +133,7 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
 */
 
     private fun showPrivacyPolicyAndTermsAndConditions() {
-        val text = resources.getString(R.string.create_account_terms, resources.getString(R.string.privacy_policy), resources.getString(R.string.terms_and_conditions))
+        val text = resources.getString(R.string.create_account_terms,  resources.getString(R.string.terms_and_conditions),resources.getString(R.string.privacy_policy))
         val privacyPolicyText = resources.getString(R.string.privacy_policy)
         val tAndCText = resources.getString(R.string.terms_and_conditions)
         val privacyPolicyStarIndex = text.indexOf(privacyPolicyText)

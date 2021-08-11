@@ -71,6 +71,12 @@ class AadhaarVerificationView :
         mViewModel.onKycInitSuccess.observe(this) {
             goToEnterOtpScreen(token = it.token)
         }
+        mViewModel.clickHere.observe(this) {
+            if(it){
+                callFreshChat(applicationContext)
+                mViewModel.clickHere.value = false
+            }
+        }
 
 
     }
