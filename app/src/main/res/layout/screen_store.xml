@@ -68,8 +68,8 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/recharge_text"
             style="@style/TextviewRegular"
-            android:layout_marginLeft="@dimen/_24sdp"
-            android:layout_marginRight="@dimen/_24sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
             android:layout_below="@+id/balance_text"
             android:layout_marginTop="40dp"
             android:ellipsize="end"
@@ -83,8 +83,8 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_24sdp"
-            android:layout_marginRight="@dimen/_24sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
             android:layout_below="@+id/upi_text"
             android:layout_marginTop="@dimen/margin"
 
@@ -92,14 +92,11 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
 
-
-
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/upi_text"
             style="@style/TextviewRegular"
-            android:layout_marginLeft="@dimen/_24sdp"
-            android:layout_marginRight="@dimen/_24sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
             android:layout_below="@+id/balance_text"
             android:layout_marginTop="40dp"
             android:ellipsize="end"
@@ -111,12 +108,12 @@
             android:id="@+id/my_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_24sdp"
-            android:layout_marginRight="@dimen/_24sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginRight="@dimen/_16sdp"
             android:layout_below="@+id/upi_text"
             app:adapter="@{viewModel.storeAdapter}"
             android:layout_marginTop="@dimen/margin"
-           app:spanCount="4"
+            app:spanCount="4"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
 

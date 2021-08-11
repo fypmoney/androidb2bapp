@@ -29,6 +29,7 @@
             android:id="@+id/ivServiceLogo"
             android:layout_width="60dp"
             android:layout_height="60dp"
+            SET_IMAGE_RECHARGES="@{viewHelper.position}"
             android:layout_gravity="center"
             app:srcCompat="@drawable/airtel_logo" />
 

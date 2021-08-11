@@ -33,7 +33,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <TextView
             android:id="@+id/titleToolbar"
             android:layout_width="wrap_content"
@@ -49,40 +48,77 @@
 
         <ImageView
             android:id="@+id/toolbar_backImage"
+            android:layout_centerVertical="true"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?selectableItemBackgroundBorderless"
             android:paddingStart="8dp"
-            android:paddingTop="8dp"
+            android:paddingTop="@dimen/_10sdp"
             android:paddingEnd="8dp"
-            android:paddingBottom="8dp"
+            android:paddingBottom="@dimen/_10sdp"
             android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/arrow_back"
+            app:srcCompat="@drawable/ic_back_arrow"
             app:tint="@color/cb_grey" />
-        <androidx.appcompat.widget.LinearLayoutCompat
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewBold"
             android:layout_width="wrap_content"
+            android:id="@+id/title_tv"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:background="@drawable/round_dark_grey_backgroud_6"
-            android:paddingRight="@dimen/_18sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_toRightOf="@+id/toolbar_backImage"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sdp"
+
+            tools:text="Amazon" />
+
+        <ImageView
+            android:id="@+id/refresh"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:padding="@dimen/_9sdp"
+            android:src="@drawable/ic_baseline_refresh_24"
+            app:tint="@color/white" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/card_details"
-            android:layout_alignParentEnd="true"
-            android:layout_height="@dimen/_24sdp">
+            android:layout_width="wrap_content"
+            android:layout_toLeftOf="@+id/refresh"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_toStartOf="@id/refresh"
+
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/_2sdp"
+            android:background="@drawable/round_dark_grey_backgroud_6"
+            android:paddingRight="@dimen/_18sdp">
+
             <ImageView
                 android:layout_width="@dimen/_24sdp"
+                android:layout_height="match_parent"
+                android:layout_marginRight="-6dp"
+                android:layout_toLeftOf="@+id/amount_tv"
                 android:src="@drawable/logo_white"
-                android:layout_height="match_parent"/>
+                app:layout_constraintRight_toLeftOf="@+id/amount_tv" />
+
             <TextView
-                android:layout_width="wrap_content"
                 android:id="@+id/amount_tv"
+
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:elevation="1dp"
+
+                android:gravity="center"
                 android:text="Loading.."
                 android:textColor="@color/cb_grey"
-                android:gravity="center"
-                android:layout_height="match_parent"/>
+                app:layout_constraintEnd_toEndOf="parent" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
 

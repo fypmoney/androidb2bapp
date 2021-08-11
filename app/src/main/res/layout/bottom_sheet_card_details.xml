@@ -11,7 +11,7 @@
 
         <variable
             name="activity"
-            type="com.fypmoney.view.WebpageOpener" />
+            type="com.fypmoney.view.StoreWebpageOpener" />
 
     </data>
 

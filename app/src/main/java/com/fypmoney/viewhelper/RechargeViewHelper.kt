@@ -13,6 +13,6 @@ class RechargeViewHelper(
 ) {
 
     fun onItemClicked() {
-        onUpiClickListener.onStoreItemClicked(position, upiModel = upi!!)
+        onUpiClickListener.onRechargeItemClicked(position, upiModel = upi!!)
     }
 }

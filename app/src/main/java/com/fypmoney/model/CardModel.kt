@@ -146,8 +146,8 @@ data class BankProfileResponse(
 data class CardInfoDetailsBottomSheet(
     @SerializedName("cardNo") var cardNo: String? = null,
     @SerializedName("CVV") val CVV: String? = null,
-    @SerializedName("expiry_month") val expiry_month: String,
-    @SerializedName("expiry_year") val expiry_year: String,
+    @SerializedName("expiry_month") val expiry_month: String? = null,
+    @SerializedName("expiry_year") val expiry_year: String? = null,
 ) : Serializable
 data class BankProfileResponseDetails(
     @SerializedName("isAccountActive") val isAccountActive: String? = null,

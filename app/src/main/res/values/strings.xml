@@ -12,6 +12,21 @@
         <item>@drawable/ic_grand_child</item>
         <item>@drawable/ic_other</item>
     </integer-array>
+
+    <integer-array name="rechargeIconList">
+        <item>@drawable/airtel_logo</item>
+        <item>@drawable/vi_logo</item>
+        <item>@drawable/jio_logo</item>
+
+    </integer-array>
+    <integer-array name="shoppingIconList">
+        <item>@drawable/amazon_logo</item>
+        <item>@drawable/myntra_logo</item>
+        <item>@drawable/zara_logo</item>
+        <item>@drawable/nykaa_logo</item>
+        <item>@drawable/bewakoof_logo</item>
+
+    </integer-array>
     <string name="app_name">Fyp</string>
     <string name="action_settings">Settings</string>
 

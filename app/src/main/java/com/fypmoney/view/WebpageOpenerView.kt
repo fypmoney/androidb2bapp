@@ -34,21 +34,27 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
-class WebpageOpener : AppCompatActivity() {
-    private var card: CardInfoDetailsBottomSheet?=null
-    private var executor: ExecutorService?=null
-    private var mViewModel: CardDetailsViewModel?=null
-    private var load_progress: ImageView?=null
-    private var webView: WebView?=null
+class StoreWebpageOpener : AppCompatActivity() {
+    private var card: CardInfoDetailsBottomSheet? = null
+    private var executor: ExecutorService? = null
+    private var mViewModel: CardDetailsViewModel? = null
+    private var load_progress: ImageView? = null
+    private var webView: WebView? = null
 
-    companion object{
-        var url=""
+    companion object {
+        var url = ""
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         window.requestFeature(Window.FEATURE_PROGRESS);
         setContentView(R.layout.activity_webview)
+        var title = intent.getStringExtra("title")
+
+        if (title != null) {
+            title_tv.text = title
+        }
         mViewModel = ViewModelProvider(this).get(CardDetailsViewModel::class.java)
         executor = Executors.newSingleThreadExecutor()
         load_progress = findViewById<ImageView>(R.id.load_progress_bar)
@@ -70,7 +76,7 @@ class WebpageOpener : AppCompatActivity() {
             this,
             androidx.lifecycle.Observer { amount ->
                 CoroutineScope(Dispatchers.Main).launch {
-                    amount_tv.text=amount
+                    amount_tv.text = " ₹" + amount
                 }
 
             })
@@ -97,6 +103,11 @@ class WebpageOpener : AppCompatActivity() {
         toolbar_backImage.setOnClickListener {
             onBackPressed()
         }
+        refresh.setOnClickListener(View.OnClickListener {
+
+            webView?.reload()
+
+        })
 
 
     }

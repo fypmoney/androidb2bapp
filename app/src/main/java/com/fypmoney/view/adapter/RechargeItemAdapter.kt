@@ -58,9 +58,6 @@ class RechargeItemAdapter(var onStoreClickListener: OnRechargeItemClick) :
      */
     fun setList(addMoneyList1: List<StoreDataModel>?) {
         storeList!!.clear()
-        val upiModel = StoreDataModel()
-
-        storeList?.add(upiModel)
 
         addMoneyList1!!.forEach {
             storeList!!.add(it)
@@ -69,7 +66,7 @@ class RechargeItemAdapter(var onStoreClickListener: OnRechargeItemClick) :
     }
 
     interface OnRechargeItemClick {
-        fun onStoreItemClicked(position: Int, upiModel: StoreDataModel?)
+        fun onRechargeItemClicked(position: Int, upiModel: StoreDataModel?)
     }
 
 }

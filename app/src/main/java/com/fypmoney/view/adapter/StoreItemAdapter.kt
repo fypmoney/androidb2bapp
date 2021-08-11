@@ -1,7 +1,9 @@
 package com.fypmoney.view.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.*
@@ -9,17 +11,17 @@ import com.fypmoney.model.StoreDataModel
 import com.fypmoney.viewhelper.StoreViewHelper
 
 
-class StoreItemAdapter(var onStoreClickListener: OnStoreItemClick) :
+class StoreItemAdapter(var onStoreClickListener: OnStoreItemClick, var context: Context) :
     RecyclerView.Adapter<BaseViewHolder>() {
     var storeList: ArrayList<StoreDataModel>? = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
 
 
-                val mRowBinding = StoreItemLayoutBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent, false
-            )
+        val mRowBinding = StoreItemLayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent, false
+        )
             return AddUpiViewHolder(mRowBinding)
 
     }
@@ -43,7 +45,9 @@ class StoreItemAdapter(var onStoreClickListener: OnStoreItemClick) :
                 position,
                 storeList?.get(position), onStoreClickListener
             )
-    mRowItemBinding?.tvServiceName?.text= storeList?.get(position)?.title
+            mRowItemBinding?.tvServiceName?.text = storeList?.get(position)?.title
+
+
 
             mRowItemBinding!!.viewHelper = mViewHelper
             mRowItemBinding.executePendingBindings()
@@ -57,9 +61,7 @@ class StoreItemAdapter(var onStoreClickListener: OnStoreItemClick) :
      */
     fun setList(addMoneyList1: List<StoreDataModel>?) {
         storeList!!.clear()
-        val upiModel = StoreDataModel()
 
-        storeList?.add(upiModel)
 
         addMoneyList1!!.forEach {
             storeList!!.add(it)

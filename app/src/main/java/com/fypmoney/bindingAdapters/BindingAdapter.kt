@@ -218,6 +218,38 @@ class BindingAdapter {
 
         }
 
+        @BindingAdapter("SET_IMAGE_STORE")
+        @JvmStatic
+        fun SET_IMAGE_STORE(imageView: AppCompatImageView, position: Int) {
+            if (position == 0) {
+                imageView.setImageResource(R.drawable.amazon_logo)
+            } else if (position == 1) {
+                imageView.setImageResource(R.drawable.myntra_logo)
+            } else if (position == 2) {
+                imageView.setImageResource(R.drawable.zara_logo)
+            } else if (position == 3) {
+                imageView.setImageResource(R.drawable.nykaa_logo)
+            } else if (position == 4) {
+                imageView.setImageResource(R.drawable.bewakoof_logo)
+            }
+            // imageView.setImageResource(imageUrl)
+
+        }
+
+        @BindingAdapter("SET_IMAGE_RECHARGES")
+        @JvmStatic
+        fun SET_IMAGE_RECHARGES(imageView: AppCompatImageView, position: Int) {
+            if (position == 0) {
+                imageView.setImageResource(R.drawable.airtel_logo)
+            } else if (position == 1) {
+                imageView.setImageResource(R.drawable.vi_logo)
+            } else if (position == 2) {
+                imageView.setImageResource(R.drawable.jio_logo)
+            }
+            // imageView.setImageResource(imageUrl)
+
+        }
+
         /**
          *  Method to Bind image in with the image view
          */
@@ -225,7 +257,7 @@ class BindingAdapter {
         @BindingAdapter("SET_IMAGE_IN_NOTIFICATION")
         @JvmStatic
         fun setImageInNotification(imageView: AppCompatImageView, imageUrl: String?) {
-            if(imageUrl!=null)
+            if (imageUrl != null)
                 Utility.setImageUsingGlide(PockketApplication.instance, imageUrl, imageView)
             else
             {
