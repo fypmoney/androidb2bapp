@@ -17,6 +17,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.database.entity.ContactEntity
+import com.fypmoney.databinding.ViewContactListBinding
 import com.fypmoney.databinding.ViewContactsBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
@@ -32,7 +33,7 @@ import kotlinx.android.synthetic.main.view_contacts.*
 /*
 * This is used to handle contacts
 * */
-class ContactListView : BaseActivity<ViewContactsBinding, ContactListViewModel>(),
+class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewModel>(),
     DialogUtils.OnAlertDialogClickListener, InviteBottomSheet.OnShareClickListener,
     InviteMemberBottomSheet.OnInviteButtonClickListener, Utility.OnAllContactsAddedListener {
     private lateinit var mViewModel: ContactListViewModel

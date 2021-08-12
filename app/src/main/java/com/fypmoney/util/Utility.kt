@@ -312,7 +312,11 @@ object Utility {
                     val number = contacts.getString(
                         contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
                     )
-                    contactEntity.contactNumber = number.replace(" ", "").trim()
+                    var updatedNumber = number.replace(" ", "").trim()
+                    if(updatedNumber.length>10){
+                        updatedNumber = updatedNumber.takeLast(10)
+                    }
+                    contactEntity.contactNumber = updatedNumber
 
 
                     /*  // Get the current contact lookup key
@@ -430,9 +434,13 @@ object Utility {
                         contactEntity.lastName = lastName?.trim()
 
                         // Get the current contact phone number
-                        contactEntity.contactNumber = contacts.getString(
-                            contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-                        ).replace(" ", "").trim()
+                        val number = contacts.getString(
+                            contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                        var updatedNumber = number.replace(" ", "").trim()
+                        if(updatedNumber.length>10){
+                            updatedNumber = updatedNumber.takeLast(10)
+                        }
+                        contactEntity.contactNumber = updatedNumber
 
                         // Get the current contact id
                         contactEntity.phoneBookIdentifier = contacts.getString(
@@ -454,7 +462,6 @@ object Utility {
                     e.printStackTrace()
                 }
 
-                //  Log.d("contacts", "step1_before_insertion")
 
 
                 if (SharedPrefUtils.getString(
@@ -462,12 +469,7 @@ object Utility {
                         SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
                     ) == null
                 ) {
-
-
                     contactRepository.insertAllContacts(contactList)
-
-                    //  Log.d("contacts", "step2_after_insertion")
-
                 } else {
                     when {
                         !contactList.isNullOrEmpty() -> {

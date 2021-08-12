@@ -128,8 +128,8 @@
                     android:id="@+id/profileList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dp16"
                     android:layout_marginTop="25dp"
-                    android:layout_marginHorizontal="@dimen/dp24"
                     android:divider="@android:color/transparent"
                     android:dividerHeight="0dp" />
 

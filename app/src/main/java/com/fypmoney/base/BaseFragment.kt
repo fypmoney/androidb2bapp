@@ -14,7 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricManager.Authenticators.*
 import androidx.biometric.BiometricPrompt
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.finishAffinity
@@ -197,47 +197,36 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
    * Ask for device security pin, pattern or fingerprint
    * */
     fun askForDevicePassword() {
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            val km =
-                requireContext().getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-
-            if (km.isKeyguardSecure) {
+        val km = requireContext().getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager?
+        if (km!!.isKeyguardSecure) {
+            if(requireContext().packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
+                && Build.VERSION.SDK_INT > Build.VERSION_CODES.Q){
+                askForDeviceSecurity(executor,true)
+            }else{
                 val authIntent = km.createConfirmDeviceCredentialIntent(
-                    AppConstants.DIALOG_TITLE_AUTH,
-                    AppConstants.DIALOG_MSG_AUTH
-                )
-                requireParentFragment().onActivityResult(
-                    AppConstants.DEVICE_SECURITY_REQUEST_CODE,
-                    AppCompatActivity.RESULT_OK,
-                    authIntent
-                )
-            }
-        } else {
-            askForDeviceSecurity(executor)
-        }*/
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            val km = requireContext().getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager?
-            if (km!!.isKeyguardSecure) {
-                val authIntent = km!!.createConfirmDeviceCredentialIntent(
                     getString(com.fypmoney.R.string.dialog_title_auth),
                     getString(R.string.dialog_msg_auth)
                 )
                 startActivityForResult(authIntent, DEVICE_SECURITY_REQUEST_CODE)
+
             }
-        }else {
-            askForDeviceSecurity(executor)
+
         }
     }
 
         /*
         * Ask for device security pin, pattern or fingerprint greater than OS pie
         * */
-        fun askForDeviceSecurity(executor: Executor) {
+        fun askForDeviceSecurity(executor: Executor, isFingerPrintAllowed: Boolean) {
+
             val promptInfo = BiometricPrompt.PromptInfo.Builder()
                 .setTitle(AppConstants.DIALOG_TITLE_AUTH)
                 .setDescription(AppConstants.DIALOG_MSG_AUTH)
-                .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
+                .setAllowedAuthenticators(if(!isFingerPrintAllowed){
+                    DEVICE_CREDENTIAL
+                }else{
+                    BIOMETRIC_WEAK or DEVICE_CREDENTIAL
+                })
                 .build()
         // 1
         val biometricPrompt = BiometricPrompt(this, executor,
@@ -258,13 +247,43 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
                 override fun onAuthenticationError(
                     errorCode: Int, errString: CharSequence
                 ) {
+                    when(errorCode){
+                        BiometricPrompt.ERROR_HW_NOT_PRESENT->{
+
+                        }
+                        BiometricPrompt.ERROR_CANCELED -> {
+
+                        }
+                        BiometricPrompt.ERROR_HW_UNAVAILABLE -> {
+                        }
+                        BiometricPrompt.ERROR_LOCKOUT or BiometricPrompt.ERROR_LOCKOUT_PERMANENT  -> {
+                            //Too Many Attempts, plese try after some time.
+                        }
+                        BiometricPrompt.ERROR_NEGATIVE_BUTTON -> {
+
+                        }
+                        BiometricPrompt.ERROR_NO_BIOMETRICS -> {
+                        }
+                        BiometricPrompt.ERROR_NO_DEVICE_CREDENTIAL -> {
+                        }
+                        BiometricPrompt.ERROR_NO_SPACE -> {
+                        }
+                        BiometricPrompt.ERROR_TIMEOUT -> {
+                        }
+                        BiometricPrompt.ERROR_UNABLE_TO_PROCESS -> {
+                        }
+                        BiometricPrompt.ERROR_USER_CANCELED -> {
+                        }
+                        BiometricPrompt.ERROR_VENDOR -> {
+                        }
+                    }
                     Log.d(TAG,"Authentication error with $errorCode and $errString")
+                    /**/
                     super.onAuthenticationError(errorCode, errString)
                 }
 
                 override fun onAuthenticationFailed() {
                     Log.d(TAG,"onAuthenticationFailed")
-
                     super.onAuthenticationFailed()
                 }
             })

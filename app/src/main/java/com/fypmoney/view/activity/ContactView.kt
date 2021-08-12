@@ -74,6 +74,7 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
                 mViewModel.onIsAppUserClicked.value = false
             }
         }
+
         mViewModel.emptyContactListError.observe(this) {
             if (it) {
 

@@ -5,20 +5,12 @@ import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Path
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.os.Looper
 import android.text.method.HideReturnsTransformationMethod
-import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.MotionEvent
 import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.DecelerateInterpolator
-import android.widget.FrameLayout
-import android.widget.Toast
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
@@ -41,8 +33,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
 import kotlinx.android.synthetic.main.virtual_card_front_layout.*
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
-import com.google.android.material.bottomsheet.BottomSheetBehavior.PEEK_HEIGHT_AUTO
 
 
 /**
@@ -108,20 +98,9 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
         val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from<View>(mViewBinding.clBottomsheet)
         BottomSheetBehavior.from<ConstraintLayout>(mViewBinding.clBottomsheet)
-        //resources.getDimension(R.dimen._150sdp).toInt()
         behavior.state =
             BottomSheetBehavior.STATE_COLLAPSED
-       /* behavior.addBottomSheetCallback(object : BottomSheetCallback() {
-            override fun onStateChanged(@NonNull bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_COLLAPSED ) {
-                    behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-                }
-            }
 
-            override fun onSlide(@NonNull bottomSheet: View, slideOffset: Float) {
-                // React to dragging events
-            }
-        })  */      //  val gdt = GestureDetector(requireContext(),OnSwipeTouchListener())
 
         front_fl.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
             override fun onSwipeTop() {
@@ -133,7 +112,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
 
             override fun onSwipeLeft() {
-                //flipCardRight()
                flipCardLeft()
 
             }
@@ -191,9 +169,15 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 }
                 if (mViewModel.isActivateCardVisible.get() == false) {
                     try {
-                        myProfileAdapter.iconList.remove(3)
-                        myProfileAdapter.titleList.removeAt(3)
-                        myProfileAdapter.notifyDataSetChanged()
+                        val textString = ArrayList<String>()
+                        textString.add(PockketApplication.instance.getString(R.string.card_settings))
+                        textString.add(PockketApplication.instance.getString(R.string.order_card))
+                        textString.add(PockketApplication.instance.getString(R.string.account_stmt))
+                        val drawableIds = ArrayList<Int>()
+                        drawableIds.add(R.drawable.ic_card_settings)
+                        drawableIds.add(R.drawable.ic_order_card)
+                        drawableIds.add(R.drawable.ic_account_statement)
+                        myProfileAdapter.setList(drawableIds,textString)
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -330,7 +314,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                         intentToActivity(OrderCardView::class.java)
                     }
                     false -> {
-                        intentToActivity(OrderCardView::class.java)
+                        intentToActivity(TrackOrderView::class.java)
                     }
                 }
             }
@@ -357,7 +341,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     * */
     private fun callCardSettingsBottomSheet() {
         val bottomSheet =
-            CardSettingsBottomSheet(this)
+            CardSettingsBottomSheet(mViewModel.bankProfileResponse.get(),this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "CardSettings")
     }

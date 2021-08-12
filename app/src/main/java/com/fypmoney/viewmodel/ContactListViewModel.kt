@@ -42,6 +42,7 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
     var inviteMember= MutableLiveData<Boolean>()
     var isFetchBalanceVisible = ObservableField(true)
     var fetchBalanceLoading = MutableLiveData<Boolean>()
+    var contactNotFound = MutableLiveData<Boolean>(false)
     var availableAmount =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
     init {
@@ -60,7 +61,7 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
                     contactAdapter.setList(sortedList)
                     contactAdapter.newContactList?.addAll(sortedList)
                 } else {
-                    emptyContactListError.value = true
+                    contactNotFound.value = true
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

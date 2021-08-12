@@ -13,7 +13,8 @@ import com.fypmoney.databinding.MyProfileListRowItemBinding
 class MyProfileListAdapter(
     context: Context? = null,
     var onItemClickListener: OnListItemClickListener,
-    var fromWhichScreen: String? = null
+    var fromWhichScreen: String? = null,
+    var elevationValue:Float = 2.0f
 ) :
     ArrayAdapter<LauncherActivity.ListItem>(context!!, 0) {
 
@@ -24,10 +25,13 @@ class MyProfileListAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding =
             MyProfileListRowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding.linear.cardElevation = elevationValue
+        if(iconList.size==0){
+            binding.image.visibility = View.GONE
+        }else{
+            binding.image.setImageResource(iconList[position])
+        }
         binding.title = titleList[position]
-        binding.icon = iconList[position]
-
-        binding.image.setImageResource(iconList[position])
 
 
         binding.linear.setOnClickListener {

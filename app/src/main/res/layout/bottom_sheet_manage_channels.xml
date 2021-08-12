@@ -38,14 +38,14 @@
             android:textSize="17dp" />
 
 
-          <androidx.appcompat.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/point_sale"
             style="@style/TextviewRegular"
             android:layout_below="@id/verification_title"
             android:layout_marginTop="30dp"
             android:text="@string/point_of_sale"
             android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+            android:textSize="17sp" />
 
 
         <androidx.appcompat.widget.SwitchCompat

@@ -795,4 +795,6 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
         <item>Easy card locking</item>
     </string-array>
 
+    <string name="contact_not_found">Please add contact in your phone book or enter the number in search textbox.</string>
+
 </resources>

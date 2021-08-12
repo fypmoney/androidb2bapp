@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
@@ -31,6 +32,7 @@ import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.android.synthetic.main.bottom_sheet_manage_channels.*
 
 /*
 * This is used to manage channels
@@ -42,6 +44,7 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,var onBotto
     var isEnable = ObservableField<Int>()
     var isApiHit = ObservableField<Boolean>(true)
     lateinit var pPointSaleSwitch: SwitchCompat
+    lateinit var pointSale: TextView
     lateinit var vEcomSwitch: SwitchCompat
     lateinit var progressBar: ProgressBar
     var whichSwitch = ObservableField<String>()
@@ -70,7 +73,9 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,var onBotto
 
         pPointSaleSwitch = view.findViewById(R.id.point_sale_switch)!!
         vEcomSwitch = view.findViewById(R.id.ecom_virtual_switch)!!
+        pointSale = view.findViewById(R.id.point_sale)!!
         progressBar = view.findViewById(R.id.progress)!!
+
 
         cardInfo?.forEach {
             when (it.cardType) {
@@ -80,10 +85,15 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,var onBotto
                     } else if (it.ecomEnabled == AppConstants.NO) {
                         vEcomSwitch.isChecked = false
                     }
+                    hideOfflineStore()
+
 
                 }
                 AppConstants.CARD_TYPE_PHYSICAL -> {
-                    if (it.posEnabled == AppConstants.YES) {
+                    if(it.status=="INACTIVE"){
+                        hideOfflineStore()
+                    }
+                    else if (it.posEnabled == AppConstants.YES) {
                         pPointSaleSwitch.isChecked = true
                     } else if (it.posEnabled == AppConstants.NO) {
                         pPointSaleSwitch.isChecked = false
@@ -152,6 +162,11 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,var onBotto
         }
 
         return view
+    }
+
+    private fun hideOfflineStore() {
+        pointSale.visibility = View.GONE
+        pPointSaleSwitch.visibility = View.GONE
     }
 
     override fun onPositiveButtonClick(uniqueIdentifier: String) {

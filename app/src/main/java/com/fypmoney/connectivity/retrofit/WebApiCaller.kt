@@ -71,7 +71,7 @@ class WebApiCaller {
             }
         }
 
-        when (request.request_type) {
+         when (request.request_type) {
             ApiUrl.GET -> {
                 when (request.purpose) {
                     ApiConstant.API_CHECK_IS_APP_USER -> {

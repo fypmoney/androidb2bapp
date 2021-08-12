@@ -25,6 +25,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -60,7 +61,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     private lateinit var biometricManager: BiometricManager
     val PERMISSION_READ_CONTACTS = 1
     val PERMISSION_WRITE_EXTERNAL_STORAGE = 2
-
+    private val TAG = BaseActivity::class.java.simpleName
 
     /**
      * Override for set binding variable
@@ -215,39 +216,39 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     }
 
     /*
-    * Ask for device security pin, pattern or fingerprint
-    * */
+   * Ask for device security pin, pattern or fingerprint
+   * */
     fun askForDevicePassword() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.P) {
-            val km =
-                applicationContext.getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-
-            if (km.isKeyguardSecure) {
+        val km = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager?
+        if (km!!.isKeyguardSecure) {
+            if(packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
+                && Build.VERSION.SDK_INT > Build.VERSION_CODES.Q){
+                askForDeviceSecurity(executor,true)
+            }else{
                 val authIntent = km.createConfirmDeviceCredentialIntent(
-                    AppConstants.DIALOG_TITLE_AUTH,
-                    AppConstants.DIALOG_MSG_AUTH
+                    getString(com.fypmoney.R.string.dialog_title_auth),
+                    getString(R.string.dialog_msg_auth)
                 )
-                ActivityCompat.startActivityForResult(
-                    this,
-                    authIntent,
-                    AppConstants.DEVICE_SECURITY_REQUEST_CODE,
-                    null
-                )
+                startActivityForResult(authIntent, AppConstants.DEVICE_SECURITY_REQUEST_CODE)
+
             }
-        } else {
-            askForDeviceSecurity(executor)
 
         }
     }
 
     /*
-      * Ask for device security pin, pattern or fingerprint greater than OS pie
-      * */
-    private fun askForDeviceSecurity(executor: Executor) {
+    * Ask for device security pin, pattern or fingerprint greater than OS pie
+    * */
+    fun askForDeviceSecurity(executor: Executor, isFingerPrintAllowed: Boolean) {
+
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(AppConstants.DIALOG_TITLE_AUTH)
             .setDescription(AppConstants.DIALOG_MSG_AUTH)
-            .setDeviceCredentialAllowed(true)
+            .setAllowedAuthenticators(if(!isFingerPrintAllowed){
+                BiometricManager.Authenticators.DEVICE_CREDENTIAL
+            }else{
+                BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+            })
             .build()
         // 1
         val biometricPrompt = BiometricPrompt(this, executor,
@@ -256,24 +257,62 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
                 override fun onAuthenticationSucceeded(
                     result: BiometricPrompt.AuthenticationResult
                 ) {
-                    onActivityResult(AppConstants.DEVICE_SECURITY_REQUEST_CODE, RESULT_OK, Intent())
+                    onActivityResult(
+                        AppConstants.DEVICE_SECURITY_REQUEST_CODE,
+                        AppCompatActivity.RESULT_OK,
+                        Intent()
+                    )
                     super.onAuthenticationSucceeded(result)
-
                 }
 
                 // 3
                 override fun onAuthenticationError(
                     errorCode: Int, errString: CharSequence
                 ) {
+                    when(errorCode){
+                        BiometricPrompt.ERROR_HW_NOT_PRESENT->{
+
+                        }
+                        BiometricPrompt.ERROR_CANCELED -> {
+
+                        }
+                        BiometricPrompt.ERROR_HW_UNAVAILABLE -> {
+                        }
+                        BiometricPrompt.ERROR_LOCKOUT or BiometricPrompt.ERROR_LOCKOUT_PERMANENT  -> {
+                            //Too Many Attempts, plese try after some time.
+                        }
+                        BiometricPrompt.ERROR_NEGATIVE_BUTTON -> {
+
+                        }
+                        BiometricPrompt.ERROR_NO_BIOMETRICS -> {
+                        }
+                        BiometricPrompt.ERROR_NO_DEVICE_CREDENTIAL -> {
+                        }
+                        BiometricPrompt.ERROR_NO_SPACE -> {
+                        }
+                        BiometricPrompt.ERROR_TIMEOUT -> {
+                        }
+                        BiometricPrompt.ERROR_UNABLE_TO_PROCESS -> {
+                        }
+                        BiometricPrompt.ERROR_USER_CANCELED -> {
+                        }
+                        BiometricPrompt.ERROR_VENDOR -> {
+                        }
+                    }
+                    Log.d(TAG,"Authentication error with $errorCode and $errString")
+                    /**/
                     super.onAuthenticationError(errorCode, errString)
                 }
 
                 override fun onAuthenticationFailed() {
+                    Log.d(TAG,"onAuthenticationFailed")
                     super.onAuthenticationFailed()
                 }
             })
         biometricPrompt.authenticate(promptInfo)
     }
+
+
 
 
     // call back when password is correct or incorrect
