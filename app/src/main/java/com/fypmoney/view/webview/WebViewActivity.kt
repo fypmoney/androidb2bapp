@@ -8,8 +8,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
 import com.fypmoney.R
-import com.fypmoney.base.BaseActivity
-import com.fypmoney.view.WebpageOpener
+import com.fypmoney.view.StoreWebpageOpener
 import kotlinx.android.synthetic.main.activity_webview.*
 
 const val ARG_WEB_URL_TO_OPEN = "web_url_to_open"
@@ -38,7 +37,7 @@ class WebViewActivity : AppCompatActivity() {
 
         }
 
-        webView!!.webViewClient = WebpageOpener.CustomWebViewClient()
+        webView!!.webViewClient = StoreWebpageOpener.CustomWebViewClient()
         webView!!.settings.javaScriptEnabled = true
 
 

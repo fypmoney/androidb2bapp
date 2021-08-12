@@ -6,18 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
-import com.fypmoney.connectivity.ApiConstant
-import com.fypmoney.connectivity.ApiUrl
-import com.fypmoney.connectivity.network.NetworkUtil
-import com.fypmoney.connectivity.retrofit.ApiRequest
-import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
-import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.view.adapter.AddMoneyUpiAdapter
 import com.fypmoney.view.adapter.RechargeItemAdapter
 import com.fypmoney.view.adapter.StoreItemAdapter
-import java.io.IOException
-import java.io.InputStream
 
 class StoreScreenViewModel(application: Application) : BaseViewModel(application),
    StoreItemAdapter.OnStoreItemClick,RechargeItemAdapter.OnRechargeItemClick {
@@ -32,7 +23,7 @@ class StoreScreenViewModel(application: Application) : BaseViewModel(application
     var onRechargeClicked = MutableLiveData<StoreDataModel>()
 
     var onFeedButtonClick = MutableLiveData<FeedDetails>()
-    var storeAdapter = StoreItemAdapter(this)
+    var storeAdapter = StoreItemAdapter(this, application.applicationContext)
     var rechargeItemAdapter = RechargeItemAdapter(this)
     init {
 
@@ -76,7 +67,12 @@ class StoreScreenViewModel(application: Application) : BaseViewModel(application
 
     override fun onStoreItemClicked(position: Int, upiModel: StoreDataModel?) {
         clickedPositionForUpi.set(position)
-        onUpiClicked.value = upiModel
+        onUpiClicked.value = upiModel!!
     }
 
+
+    override fun onRechargeItemClicked(position: Int, upiModel: StoreDataModel?) {
+        clickedPositionForUpi.set(position)
+        onRechargeClicked.value = upiModel!!
+    }
 }

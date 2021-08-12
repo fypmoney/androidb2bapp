@@ -2,18 +2,22 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.base.PaginationListener
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewTransactionHistoryBinding
-import com.fypmoney.model.BankTransactionHistoryResponseDetails
 import com.fypmoney.model.TransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.TransactionHistoryViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_first_screen.*
+import kotlinx.android.synthetic.main.view_transaction_history.*
 
 
 /*
@@ -32,15 +36,18 @@ class TransactionHistoryView :
         return R.layout.view_transaction_history
     }
 
+    var isLoading: Boolean = false
+
     override fun getViewModel(): TransactionHistoryViewModel {
         mViewModel = ViewModelProvider(this).get(TransactionHistoryViewModel::class.java)
         return mViewModel
     }
 
+    var page = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewModel.setResponseAfterContactSelected(intent.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE))
-        mViewModel.callGetTransactionHistoryApi()
+        mViewModel.callGetTransactionHistoryApi(0)
 
         setToolbarAndTitle(
             context = this@TransactionHistoryView,
@@ -48,9 +55,60 @@ class TransactionHistoryView :
             isBackArrowVisible = true, toolbarTitle = mViewModel.contactName.get()
         )
         setObserver()
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
+
+        recycler_view.layoutManager = layoutManager
+
+        recycler_view.addOnScrollListener(object : PaginationListener(layoutManager) {
+            override fun loadMoreItems() {
+                Log.d("chackpaginat", "dc")
+
+            }
+
+            override fun loadMoreTopItems() {
+
+                loadMore()
+                Log.d("chackpaginat", "upar")
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+        })
+        mViewModel!!.LoadedList.observe(this, androidx.lifecycle.Observer { list ->
+            if (list != null) {
+
+
+                LoadProgressBar?.visibility = View.GONE
+                Log.d("chackhistory1", "9" + list.toString())
+                if (list.isNotEmpty()) {
+                    var arraylist = list
+
+                    mViewModel.transactionHistoryAdapter.setList(arraylist)
+                }
+                page = page + 1
+                isLoading = false
+
+            } else {
+                if (page == 0) {
+                    mViewModel.isNoDataFoundVisible.set(true)
+                }
+            }
+
+        })
+
 
     }
 
+    private fun loadMore() {
+
+        LoadProgressBar?.visibility = View.VISIBLE
+
+        isLoading = true
+        mViewModel.callGetTransactionHistoryApi(page)
+
+
+    }
 
     /**
      * Create this method for observe the viewModel fields

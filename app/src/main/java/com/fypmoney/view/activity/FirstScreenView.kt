@@ -6,21 +6,17 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewFirstScreenBinding
-import com.fypmoney.listener.OnSwipeTouchListener
 import com.fypmoney.util.textview.ClickableSpanListener
 import com.fypmoney.util.textview.MyStoreClickableSpan
-import com.fypmoney.view.WebpageOpener
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.view.webview.WebViewActivity
 import com.fypmoney.viewmodel.FirstScreenViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_first_screen.*
 

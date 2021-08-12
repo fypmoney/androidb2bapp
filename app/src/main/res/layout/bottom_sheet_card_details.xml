@@ -11,7 +11,7 @@
 
         <variable
             name="activity"
-            type="com.fypmoney.view.WebpageOpener" />
+            type="com.fypmoney.view.StoreWebpageOpener" />
 
     </data>
 
@@ -20,7 +20,8 @@
         android:background="@android:color/transparent"
         android:layout_height="wrap_content"
 
-       >
+        >
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:paddingBottom="@dimen/_8sdp"
@@ -29,109 +30,116 @@
             android:layout_height="wrap_content">
 
 
-        <View
-            android:layout_width="40dp"
-            android:id="@+id/view"
-            android:layout_height="4dp"
-            android:layout_centerHorizontal="true"
-            android:alpha=".6"
-            android:layout_marginTop="14dp"
-            android:background="@drawable/curved_background2" />
+            <View
+                android:layout_width="40dp"
+                android:id="@+id/view"
+                android:layout_height="4dp"
+                android:layout_centerHorizontal="true"
+                android:alpha=".6"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/curved_background2" />
 
-
-
-
-        <RelativeLayout
-            android:id="@+id/mCardBackLayout"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/view"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-             android:padding="16dp">
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/card_details"
-                style="@style/TextviewRegular"
-                android:layout_marginBottom="@dimen/_18sdp"
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="@dimen/_80sdp"
+                android:layout_marginLeft="-20dp"
+                android:layout_below="@+id/view"
                 android:layout_marginTop="20dp"
 
-                android:textColor="@color/white"
-                android:textSize="17dp" />
+                android:src="@drawable/logo_white" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/copy"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/mCardBackLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="20dp"
-                android:tint="@color/white"
-                app:srcCompat="@drawable/ic_icon_feather_copy" />
+                android:layout_below="@+id/logo"
+                android:layout_marginStart="10dp"
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/expiry"
-                android:layout_below="@+id/card_details"
-                style="@style/TextviewRegular"
-
-                android:text="@string/expiry_details_title"
-                android:textSize="15dp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/ExpiryValue"
-                style="@style/TextviewBold"
+                android:layout_marginEnd="10dp"
+                android:padding="16dp">
 
 
-                android:layout_below="@+id/card_details"
-                android:layout_toEndOf="@+id/expiry"
-                android:text="06/26"
-                android:textColor="@color/white"
-                android:textSize="17dp" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/card_details"
+                    style="@style/TextviewRegular"
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/cvv"
-                style="@style/TextviewRegular"
-                android:layout_below="@+id/card_details"
-
-                android:layout_toStartOf="@+id/cvvValue"
-                android:text="@string/cvv_details_title"
-                android:textSize="15dp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/cvvValue"
-                style="@style/TextviewBold"
-
-                android:layout_toStartOf="@+id/image"
-                android:inputType="textPassword"
-                android:layout_below="@+id/card_details"
-
-                android:textColor="@color/white"
-                android:textSize="17dp" />
+                    android:layout_marginBottom="@dimen/_18sdp"
 
 
-            <CheckBox
-                android:id="@+id/image"
-                android:buttonTint="#dedede"
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
 
-                android:layout_alignParentEnd="true"
-                android:layout_below="@+id/card_details"
-                android:layout_marginStart="5dp"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/copy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
 
-                android:layout_gravity="end|center_vertical"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/ic_icon_feather_copy" />
 
-                android:layout_alignParentRight="true"
-                android:button="@drawable/password"
-                android:checked="false"
-                android:elevation="3dp"
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/expiry"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@+id/card_details"
 
-                android:paddingStart="8dp"
-                android:paddingEnd="0dp"
-                />
+                    android:text="@string/expiry_details_title"
+                    android:textSize="15dp" />
 
-        </RelativeLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/ExpiryValue"
+                    style="@style/TextviewBold"
+
+
+                    android:layout_below="@+id/card_details"
+                    android:layout_toEndOf="@+id/expiry"
+
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cvv"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@+id/card_details"
+
+                    android:layout_toStartOf="@+id/cvvValue"
+                    android:text="@string/cvv_details_title"
+                    android:textSize="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cvvValue"
+                    style="@style/TextviewBold"
+
+                    android:layout_below="@+id/card_details"
+                    android:layout_toStartOf="@+id/image"
+                    android:inputType="textPassword"
+
+                    android:textColor="@color/white"
+                    android:textSize="17dp" />
+
+
+                <CheckBox
+                    android:id="@+id/image"
+                    android:layout_width="20dp"
+
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/card_details"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="end|center_vertical"
+
+                    android:layout_marginStart="5dp"
+
+                    android:button="@drawable/password"
+                    android:buttonTint="#dedede"
+                    android:checked="false"
+                    android:elevation="3dp"
+
+                    android:paddingStart="8dp"
+                    android:paddingEnd="0dp" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
 

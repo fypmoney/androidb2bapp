@@ -197,7 +197,7 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.WebpageOpener" />
+        <activity android:name=".view.StoreWebpageOpener" />
         <activity android:name=".view.activity.ChoresSelectSampleActivity" />
         <activity android:name=".view.activity.ContactViewAddMember" />
 
@@ -251,8 +251,9 @@
         <intent>
             <action android:name="android.intent.action.VIEW" />
 
-            <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
+
+            <category android:name="android.intent.category.DEFAULT" />
 
             <data
                 android:host="pay"

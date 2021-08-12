@@ -97,7 +97,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/view1"
-                android:background="@color/screenBackground"
+
                 android:orientation="vertical"
                 android:layout_marginTop="8dp"
                 android:visibility="@{viewModel.isPreviousVisible?View.VISIBLE:View.GONE,default=gone}">
@@ -131,9 +131,10 @@
 
                     />
 
-            </LinearLayout></RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
 
 
-
-    </ScrollView></androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>

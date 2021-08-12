@@ -85,6 +85,7 @@ Create this method for observe the viewModel fields
         }
         mViewModel.onUpdateProfileSuccess.observe(this) {
             if (it) {
+
                 intentToActivity(CreateAccountSuccessView::class.java)
                 mViewModel.onUpdateProfileSuccess.value = false
             }

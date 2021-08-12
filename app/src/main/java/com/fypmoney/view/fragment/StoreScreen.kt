@@ -1,22 +1,17 @@
 package com.fypmoney.view.fragment
 
-import com.fypmoney.view.WebpageOpener
+import com.fypmoney.view.StoreWebpageOpener
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenStoreBinding
-import com.fypmoney.model.CustomerInfoResponseDetails
-import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.StoreDataModel
-import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.StoreScreenViewModel
 import org.json.JSONException
 import org.json.JSONObject
@@ -45,8 +40,11 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
         mViewModel = ViewModelProvider(this).get(StoreScreenViewModel::class.java)
         return mViewModel
     }
-    private fun getListOfApps(stores: Int): ArrayList<StoreDataModel> {
+
+    private fun getListOfApps(stores: Int, rechargeIconList: Int): ArrayList<StoreDataModel> {
         val upiList = ArrayList<StoreDataModel>()
+        val iconList = PockketApplication.instance.resources.getIntArray(rechargeIconList)
+
         try {
             val obj = JSONObject(loadJSONFromAsset(stores))
             val m_jArry = obj.getJSONArray("stores")
@@ -57,9 +55,11 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
 
                 val formula_value = jo_inside.getString("title")
                 val url_value = jo_inside.getString("url")
-                var model=StoreDataModel()
-                model.title=formula_value
-                model.url=url_value
+                var model = StoreDataModel()
+                model.title = formula_value
+                model.url = url_value
+                model.Icon = iconList[i]
+
                 upiList.add(model)
             }
         } catch (e: JSONException) {
@@ -90,8 +90,18 @@ return upiList
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
 
-        mViewModel.storeAdapter.setList(getListOfApps(R.raw.stores))
-        mViewModel.rechargeItemAdapter.setList(getListOfApps(R.raw.rechargers))
+        mViewModel.rechargeItemAdapter.setList(
+            getListOfApps(
+                R.raw.recharges_json,
+                R.array.rechargeIconList
+            )
+        )
+        mViewModel.storeAdapter.setList(
+            getListOfApps(
+                R.raw.shopping_json,
+                R.array.shoppingIconList
+            )
+        )
 
         setObservers(requireContext())
 
@@ -105,18 +115,22 @@ return upiList
             mViewModel.onUpiClicked.observe(requireActivity()) {
 
 
-    val intent2 = Intent(requireContext, WebpageOpener::class.java)
-                    WebpageOpener.url = "https://www.amazon.in"
-                            requireContext.startActivity(intent2)
-
+                val intent2 = Intent(requireContext, StoreWebpageOpener::class.java)
+                StoreWebpageOpener.url = it.url!!
+                intent2.putExtra("title", it.title)
+                requireContext.startActivity(intent2)
 
 
             }
         mViewModel.onRechargeClicked.observe(requireActivity()) {
-            when (mViewModel.clickedPositionForUpi.get()) {
 
 
-            }
+            val intent2 = Intent(requireContext, StoreWebpageOpener::class.java)
+            StoreWebpageOpener.url = it.url!!
+            intent2.putExtra("title", it.title)
+            requireContext.startActivity(intent2)
+
+
         }
 
     }
