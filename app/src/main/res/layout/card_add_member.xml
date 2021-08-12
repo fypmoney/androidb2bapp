@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_marginLeft="12dp"
-
-    android:layout_marginTop="6dp"
-    android:layout_marginBottom="6dp"
+    android:padding="4dp"
     android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:clickable="true">
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
 
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="@dimen/_18sdp"
         android:backgroundTint="#BAE6C2"
-
         app:cardElevation="@dimen/card_elevation"
-
-
         android:layout_width="@dimen/_54sdp"
         android:layout_height="@dimen/_54sdp">
 
@@ -30,17 +24,13 @@
 
             <androidx.appcompat.widget.AppCompatImageView
 
-                android:layout_width="50dp"
+                android:layout_width="54dp"
                 android:layout_centerInParent="true"
-
-
-                android:layout_height="50dp"
+                android:layout_height="54dp"
                 android:id="@+id/add"
                 android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
-
                 app:srcCompat="@drawable/ic_add"
-
                 />
 
         </RelativeLayout>
@@ -50,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_below="@+id/imageView2"
         android:id="@+id/name_tv"
-        android:layout_marginTop="@dimen/_4sdp"
+        android:layout_marginTop="4dp"
         android:layout_gravity="center_horizontal"
         style="@style/TextviewRegular"
         android:textColor="@color/text_color_light"

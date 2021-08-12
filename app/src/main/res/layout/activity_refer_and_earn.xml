@@ -27,6 +27,7 @@
                 android:id="@+id/upper_part_cl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/guideline"
                 app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent">
@@ -111,21 +112,22 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/refer_iv" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/referal_code_value_tv"
-                    style="@style/TextviewBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="11dp"
-                    android:textColor="@color/text_color_dark"
-                    android:textSize="24sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/referal_code_tv"
-                    tools:text="FYP2D4"
-                    android:text="FYP2D4"/>
+             <com.google.android.material.textview.MaterialTextView
+                 android:id="@+id/referal_code_value_tv"
+                 style="@style/TextviewBold"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_marginStart="20dp"
+                 android:layout_marginTop="11dp"
+                 android:textColor="@color/text_color_dark"
+                 android:textSize="24sp"
+                 app:layout_constraintBottom_toBottomOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintTop_toBottomOf="@+id/referal_code_tv"
+                 app:layout_constraintVertical_bias="0.01"
+                 tools:text="FYP2D4" />
 
-                <com.google.android.material.textview.MaterialTextView
+             <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/copy_code_tv"
                     style="@style/TextviewBold"
                     android:layout_width="wrap_content"
@@ -141,26 +143,31 @@
                     app:layout_constraintBottom_toBottomOf="@+id/referal_code_value_tv"
                     app:layout_constraintEnd_toStartOf="@+id/share_iv"
                     app:layout_constraintStart_toEndOf="@+id/referal_code_value_tv"
-                    app:layout_constraintTop_toBottomOf="@+id/referal_code_tv"
+                    app:layout_constraintTop_toTopOf="@+id/referal_code_value_tv"
                     android:text="@string/copy_text" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent=".7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/bootom_part_cl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:paddingHorizontal="16dp"
-            android:paddingVertical="30dp"
-            app:customBackgroundColor="@{@color/color_green}"
+            android:paddingVertical="40dp"
+            app:customBackgroundColor="@{@color/color_gift}"
             app:customCornerRadius="@{@dimen/textSize_14}"
             app:customIsRounded="@{false}"
             android:layout_marginHorizontal="@dimen/dp16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/upper_part_cl">
+            app:layout_constraintTop_toBottomOf="@+id/guideline">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/total_refral_won_tv"
@@ -201,8 +208,8 @@
                 android:id="@+id/gift_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/total_refral_won_tv"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:srcCompat="@drawable/ic_gift" />
         </androidx.constraintlayout.widget.ConstraintLayout>

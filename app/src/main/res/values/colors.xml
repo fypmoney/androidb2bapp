@@ -56,5 +56,6 @@
     <color name="progress_max_active">@color/white</color>
 
     <color name="gray_scale">#707070</color>
+    <color name="color_gift">#EDFFF1</color>
 
 </resources>

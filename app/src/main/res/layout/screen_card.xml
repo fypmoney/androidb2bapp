@@ -18,14 +18,16 @@
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"><LinearLayout
+        android:background="@drawable/social_community_gradient"
+        >
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/social_community_gradient"
+            android:layout_gravity="top"
         app:layout_constraintTop_toTopOf="parent">
 
         <FrameLayout
@@ -37,12 +39,13 @@
 
             <FrameLayout
                 android:id="@+id/card_back"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_gravity="center"
                 android:layout_height="match_parent">
 
                 <include
                     layout="@layout/virtual_card_back_layout"
+
                     bind:fragment="@{fragment}"
                     bind:viewModel="@{viewModel}" />
 
@@ -51,9 +54,10 @@
 
             <FrameLayout
                 android:id="@+id/card_front"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+
                 android:gravity="center">
 
                 <include
@@ -67,6 +71,7 @@
         </FrameLayout>
 
         <RelativeLayout
+            android:layout_marginTop="@dimen/dp16"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -115,19 +120,44 @@
 
         </RelativeLayout>
 
+        </LinearLayout>
 
-        <com.fypmoney.util.ScrollableListView
-            android:id="@+id/list"
-            android:background="@drawable/curved_background12"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_bottomsheet"
             android:layout_width="match_parent"
-            android:padding="20dp"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="wrap_content"
+            android:clipToPadding="true"
+            app:behavior_hideable="false"
+            app:behavior_peekHeight ="@dimen/_90sdp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            android:background="@drawable/curved_background12"
+            >
 
-    </LinearLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/up_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:rotation="90"
+                android:layout_marginTop="@dimen/_2sdp"
+                app:srcCompat="@drawable/ic_back_arrow"/>
 
-    </androidx.core.widget.NestedScrollView>
+            <com.fypmoney.util.ScrollableListView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:paddingHorizontal="20dp"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/up_iv"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

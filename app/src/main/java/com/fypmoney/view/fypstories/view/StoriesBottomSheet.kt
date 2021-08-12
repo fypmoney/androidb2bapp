@@ -8,6 +8,7 @@ import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.fypmoney.bindingAdapters.loadImage
 import androidx.fragment.app.DialogFragment
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -56,8 +57,10 @@ class StoriesBottomSheet(var resourceList: ArrayList<String?>):
         binding!!.stories.setStoriesListener(this)
         binding!!.stories.startStories(counter)
 
-        Utility.setImageUsingGlide(PockketApplication.instance, resourceList[counter], binding!!.storiesIv)
-
+        //Utility.setImageUsingGlide(PockketApplication.instance, resourceList[counter], binding!!.storiesIv)
+        loadImage(view = binding!!.storiesIv,imageUrl = resourceList[counter] , null,
+            rounded = false
+        )
 
         binding!!.reverse.setOnClickListener { binding!!.stories.reverse() }
         binding!!.reverse.setOnTouchListener(onTouchListener)

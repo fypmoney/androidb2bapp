@@ -16,8 +16,11 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -34,9 +37,12 @@ import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.viewmodel.CardScreenViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
 import kotlinx.android.synthetic.main.virtual_card_front_layout.*
+import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
+import com.google.android.material.bottomsheet.BottomSheetBehavior.PEEK_HEIGHT_AUTO
 
 
 /**
@@ -99,9 +105,25 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         mViewModel.callGetWalletBalanceApi()
         mViewModel.callGetBankProfileApi()
 
-        //  val gdt = GestureDetector(requireContext(),OnSwipeTouchListener())
 
-        mCardFrontLayout.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
+        val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from<View>(mViewBinding.clBottomsheet)
+        BottomSheetBehavior.from<ConstraintLayout>(mViewBinding.clBottomsheet)
+        //resources.getDimension(R.dimen._150sdp).toInt()
+        behavior.state =
+            BottomSheetBehavior.STATE_COLLAPSED
+       /* behavior.addBottomSheetCallback(object : BottomSheetCallback() {
+            override fun onStateChanged(@NonNull bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_COLLAPSED ) {
+                    behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+            }
+
+            override fun onSlide(@NonNull bottomSheet: View, slideOffset: Float) {
+                // React to dragging events
+            }
+        })  */      //  val gdt = GestureDetector(requireContext(),OnSwipeTouchListener())
+
+        front_fl.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
             override fun onSwipeTop() {
             }
 
@@ -123,7 +145,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 return gestureDetector.onTouchEvent(event)
             }
         })
-        mCardBackLayout.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
+        back_fl.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
             override fun onSwipeTop() {
             }
 
@@ -147,11 +169,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     }
 
-    override fun onResume() {
-        super.onResume()
-
-
-    }
 
 
     /*
@@ -224,9 +241,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
                 when (resultCode) {
                     AppCompatActivity.RESULT_OK -> {
-                        Handler(Looper.getMainLooper()).post(Runnable {
                             mViewModel.callGetVirtualRequestApi()
-                        })
 
                     }
 
@@ -259,7 +274,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             val handler = Handler()
             handler.postDelayed({
                 mViewModel.isFrontVisible.set(false)
-            }, 500)
+            }, 100)
 
         }else{
             mViewModel.isFrontVisible.set(true)
@@ -282,7 +297,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             val handler = Handler()
             handler.postDelayed({
                 mViewModel.isFrontVisible.set(false)
-            }, 500)
+            }, 100)
 
         }else{
             mViewModel.isFrontVisible.set(true)

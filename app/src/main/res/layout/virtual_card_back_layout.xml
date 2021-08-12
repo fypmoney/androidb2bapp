@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -18,161 +20,201 @@
     </data>
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/back_fl"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/card_shape"
-        android:padding="3dp"
         >
 
 
         <RelativeLayout
             android:id="@+id/mCardBackLayout"
-            android:layout_width="239dp"
-            android:layout_height="350dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:visibility="@{viewModel.isBackVisible?View.VISIBLE:View.GONE}"
-            android:background="@drawable/ic_card__2_"
-            android:padding="20dp">
-
-
-            <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:background="@drawable/ic_line_break"
-                android:orientation="vertical">
-
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextviewRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:letterSpacing="0.15"
-                    android:text="@{viewModel.cardNumber1}"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
-
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextviewRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:letterSpacing="0.15"
-                    android:text="@{viewModel.cardNumber2}"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextviewRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:letterSpacing="0.15"
-                    android:text="@{viewModel.cardNumber3}"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextviewRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:letterSpacing="0.15"
-                    android:text="@{viewModel.cardNumber4}"
-                    android:textColor="@color/white"
-                    android:textSize="20sp" />
-
-
-            </LinearLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/copy"
-                style="@style/TextviewRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/linearLayout"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="10dp"
-                android:drawableEnd="@drawable/ic_icon_feather_copy"
-                android:drawablePadding="10dp"
-                android:onClick="@{()->fragment.onCopyClicked()}"
-                android:text="@string/copy"
-                android:textColor="@color/white" />
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextviewRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/copy"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/curved_background26"
-                android:onClick="@{()->viewModel.onViewDetailsClicked()}"
-                android:padding="10dp"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
-                android:text="@string/view_details_btn_text"
-                android:textColor="@color/white"
-                android:visibility="@{viewModel.isViewDetailsVisible?View.VISIBLE:View.GONE}"
-                android:focusable="true" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/valid_through"
-                style="@style/TextviewRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/expiry"
-                android:layout_marginBottom="20dp"
-                android:drawablePadding="10dp"
-                android:onClick="@{()->fragment.onCopyClicked()}"
-                android:text="@string/valid_thru"
-                android:textColor="@color/white" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/expiry"
-                style="@style/TextviewBold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="10dp"
-                android:text="@{viewModel.expiry}"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/cvv"
-                style="@style/TextviewRegular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/cvvValue"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                android:text="@string/cvv_details_title"
-                android:textColor="@color/white" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/cvvValue"
-                style="@style/TextviewBold"
-                android:layout_alignParentBottom="true"
-                android:layout_centerVertical="true"
-                android:layout_toStartOf="@+id/image"
-                android:text="@{viewModel.cvv}"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
+            >
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/image"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginStart="5dp"
-                android:onClick="@{()->fragment.onCvvEyeClicked()}"
-                android:src="@{viewModel.isCvvVisible?@drawable/ic_icon_feather_eye_off:@drawable/ic_icon_feather_eye}"
-                android:tint="@color/white" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:background="@drawable/card_shape"
+                android:padding="3dp"
+                app:srcCompat="@drawable/ic_card__2_" />
+
+            <RelativeLayout
+                android:layout_width="240dp"
+                android:layout_height="380dp"
+                android:layout_centerHorizontal="true">
+
+                <LinearLayout
+                    android:id="@+id/linearLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/ic_line_break"
+                    android:orientation="vertical">
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
+                        android:letterSpacing="0.15"
+                        android:text="@{viewModel.cardNumber1}"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="1234" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="1"
+
+                        android:letterSpacing="0.15"
+                        android:text="@{viewModel.cardNumber2}"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="1234" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="1"
+
+                        android:letterSpacing="0.15"
+                        android:text="@{viewModel.cardNumber3}"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="1234" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="6dp"
+                        android:layout_weight="1"
+                        android:letterSpacing="0.15"
+                        android:text="@{viewModel.cardNumber4}"
+                        android:textColor="@color/white"
+                        android:textSize="20sp"
+                        tools:text="1234" />
+
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:onClick="@{()->fragment.onCvvEyeClicked()}"
+                    android:src="@{viewModel.isCvvVisible?@drawable/ic_icon_feather_eye_off:@drawable/ic_icon_feather_eye}"
+                    android:tint="@color/white" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/copy"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/curved_background26"
+                    android:focusable="true"
+                    android:onClick="@{()->viewModel.onViewDetailsClicked()}"
+                    android:padding="10dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@string/view_details_btn_text"
+                    android:textColor="@color/white"
+                    android:visibility="@{viewModel.isViewDetailsVisible?View.VISIBLE:View.GONE}" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/valid_through"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/expiry"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="20dp"
+                    android:drawablePadding="10dp"
+                    android:onClick="@{()->fragment.onCopyClicked()}"
+                    android:text="@string/valid_thru"
+                    android:textColor="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/expiry"
+                    style="@style/TextviewBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@{viewModel.expiry}"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cvv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/cvvValue"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/cvv_details_title"
+                    android:textColor="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cvvValue"
+                    style="@style/TextviewBold"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_toStartOf="@+id/image"
+                    android:text="@{viewModel.cvv}"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/copy"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearLayout"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="16dp"
+                    android:visibility="@{viewModel.isViewDetailsVisible?View.GONE:View.VISIBLE}"
+                    android:drawableEnd="@drawable/ic_icon_feather_copy"
+                    android:drawablePadding="10dp"
+                    android:onClick="@{()->fragment.onCopyClicked()}"
+                    android:text="@string/copy"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+
 
         </RelativeLayout>
     </FrameLayout>

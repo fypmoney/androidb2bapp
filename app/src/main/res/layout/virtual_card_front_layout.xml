@@ -18,21 +18,21 @@
     </data>
 
     <FrameLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/front_fl"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:duplicateParentState="false"
-        android:padding="3dp"
-        android:background="@drawable/card_shape"
         android:visibility="@{viewModel.isFrontVisible?View.VISIBLE:View.GONE,default=visible}">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/mCardFrontLayout"
-            android:layout_width="239dp"
-            android:layout_height="350dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/ic_card_new"
-            >
+            android:padding="3dp"
+            android:background="@drawable/card_shape"
+            app:srcCompat="@drawable/ic_card_new">
 
         </androidx.appcompat.widget.AppCompatImageView>
 

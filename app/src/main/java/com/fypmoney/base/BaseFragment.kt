@@ -8,11 +8,13 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.finishAffinity
@@ -40,7 +42,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     private var viewDataBinding: T? = null
     private var mViewModel: V? = null
     private lateinit var executor: Executor
-
+    private val TAG = BaseFragment::class.java.simpleName
 
     fun getViewDataBinding(): T {
         return viewDataBinding!!
@@ -219,7 +221,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
             if (km!!.isKeyguardSecure) {
                 val authIntent = km!!.createConfirmDeviceCredentialIntent(
                     getString(com.fypmoney.R.string.dialog_title_auth),
-                    getString(com.fypmoney.R.string.dialog_msg_auth)
+                    getString(R.string.dialog_msg_auth)
                 )
                 startActivityForResult(authIntent, DEVICE_SECURITY_REQUEST_CODE)
             }
@@ -235,7 +237,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
             val promptInfo = BiometricPrompt.PromptInfo.Builder()
                 .setTitle(AppConstants.DIALOG_TITLE_AUTH)
                 .setDescription(AppConstants.DIALOG_MSG_AUTH)
-                .setDeviceCredentialAllowed(true)
+                .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG)
                 .build()
         // 1
         val biometricPrompt = BiometricPrompt(this, executor,
@@ -256,10 +258,13 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
                 override fun onAuthenticationError(
                     errorCode: Int, errString: CharSequence
                 ) {
+                    Log.d(TAG,"Authentication error with $errorCode and $errString")
                     super.onAuthenticationError(errorCode, errString)
                 }
 
                 override fun onAuthenticationFailed() {
+                    Log.d(TAG,"onAuthenticationFailed")
+
                     super.onAuthenticationFailed()
                 }
             })

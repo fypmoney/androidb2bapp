@@ -92,7 +92,8 @@
                         android:background="@drawable/curved_background29"
                         android:gravity="center_vertical"
                         android:onClick="@{()->viewModel.onAmountSelected(50)}"
-                        android:padding="10dp"
+                        android:paddingVertical="5dp"
+                        android:paddingHorizontal="16dp"
                         android:text="@string/add_money_50"
                         android:textColor="@color/text_color_dark" />
 
@@ -103,7 +104,8 @@
                         android:background="@drawable/curved_background28"
                         android:gravity="center_vertical"
                         android:onClick="@{()->viewModel.onAmountSelected(100)}"
-                        android:padding="10dp"
+                        android:paddingVertical="5dp"
+                        android:paddingHorizontal="16dp"
                         android:text="@string/add_money_100"
 
                         android:textColor="@color/text_color_dark" />
@@ -115,7 +117,8 @@
                         android:background="@drawable/curved_background27"
                         android:gravity="center_vertical"
                         android:onClick="@{()->viewModel.onAmountSelected(500)}"
-                        android:padding="10dp"
+                        android:paddingVertical="5dp"
+                        android:paddingHorizontal="16dp"
                         android:text="@string/add_money_500"
                         android:textColor="@color/text_color_dark" />
 
@@ -126,7 +129,8 @@
                         android:background="@drawable/curved_background25"
                         android:gravity="center_vertical"
                         android:onClick="@{()->viewModel.onAmountSelected(1000)}"
-                        android:padding="10dp"
+                        android:paddingVertical="5dp"
+                        android:paddingHorizontal="16dp"
                         android:text="@string/add_money_1000"
                         android:textColor="@color/text_color_dark" />
 
