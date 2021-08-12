@@ -13,6 +13,7 @@ import com.fypmoney.util.Utility
 
 class TopTenUsersAdapter(
     private val lifecycleOwner: LifecycleOwner,
+    val onRecentUserClick: (model: Users) -> Unit
 ) : ListAdapter<Users, TopTenUsersVH>(TopTenUsersDiffUtils) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopTenUsersVH {
@@ -20,7 +21,8 @@ class TopTenUsersAdapter(
         val binding = ItemTopTenUserBinding.inflate(inflater, parent, false)
         return TopTenUsersVH(
             binding,
-            lifecycleOwner
+            lifecycleOwner,
+            onRecentUserClick
         )
 
     }
@@ -33,13 +35,16 @@ class TopTenUsersAdapter(
 
 class TopTenUsersVH(
     private val binding: ItemTopTenUserBinding,
-    private val lifecycleOwner: LifecycleOwner
+    private val lifecycleOwner: LifecycleOwner,
+    val onRecentUserClick: (model: Users) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(user: Users) {
         binding.executeAfter {
             lifecycleOwner = this@TopTenUsersVH.lifecycleOwner
             item = user
-
+            recentUserCl.setOnClickListener {
+                onRecentUserClick(user)
+            }
             userNameTv.text = Utility.getFirstName(user.name)
         }
     }

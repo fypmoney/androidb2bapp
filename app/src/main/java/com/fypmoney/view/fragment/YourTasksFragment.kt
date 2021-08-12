@@ -48,6 +48,7 @@ class YourTasksFragment : Fragment() {
             androidx.lifecycle.Observer { list ->
                 itemsArrayList.clear()
                 itemsArrayList.addAll(list)
+                isLoading = false
                 typeAdapter!!.notifyDataSetChanged()
                 if (list.size > 0) {
                     root?.empty_screen?.visibility = View.GONE
@@ -67,6 +68,7 @@ class YourTasksFragment : Fragment() {
     private fun setRecyclerView(root: View) {
         val layoutManager = GridLayoutManager(requireContext(), 2)
         root.rv_assigned!!.layoutManager = layoutManager
+
         root.rv_assigned!!.addOnScrollListener(object : PaginationListener(layoutManager) {
             override fun loadMoreItems() {
                 loadMore(root)

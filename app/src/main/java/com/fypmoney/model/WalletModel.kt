@@ -71,15 +71,113 @@ data class TransactionHistoryResponse(
 ) : Serializable
 
 data class TransactionHistoryResponseDetails(
-    @SerializedName("id") var id: String? = null,
-    @SerializedName("requesterUaaId") var requesterUaaId: String? = null,
-    @SerializedName("cardId") var cardId: String? = null,
-    @SerializedName("bankTxnStatus") var bankTxnStatus: String? = null,
-    @SerializedName("txnTime") var txnTime: String? = null,
-    @SerializedName("destinationUserId") var destinationUserId: String? = null,
-    @SerializedName("destinationUserName") var destinationUserName: String? = null,
-    @SerializedName("txnAmount") var txnAmount: String? = null,
-    @SerializedName("isSender") var isSender: String? = null
+
+    @field:SerializedName("pgTxnNo")
+    val pgTxnNo: String? = null,
+    @field:SerializedName("destinationUserIdentifier")
+    val destinationUserIdentifier: String? = null,
+
+    @field:SerializedName("initiator")
+    val initiator: Any? = null,
+
+    @field:SerializedName("description")
+    val description: Any? = null,
+
+    @field:SerializedName("txnType")
+    val txnType: String? = null,
+
+    @field:SerializedName("destinationAccountIdentifier")
+    val destinationAccountIdentifier: String? = null,
+
+    @field:SerializedName("destinationUserName")
+    val destinationUserName: String? = null,
+
+    @field:SerializedName("isSender")
+    val isSender: String? = null,
+
+    @field:SerializedName("candidateForReversal")
+    val candidateForReversal: Any? = null,
+
+    @field:SerializedName("bankTxnTime")
+    val bankTxnTime: Any? = null,
+
+    @field:SerializedName("iFSCCode")
+    val iFSCCode: Any? = null,
+
+    @field:SerializedName("txnTime")
+    val txnTime: String? = null,
+
+    @field:SerializedName("id")
+    val id: Int? = null,
+
+    @field:SerializedName("bankTxnReversalNo")
+    val bankTxnReversalNo: Any? = null,
+
+    @field:SerializedName("destinationUserId")
+    val destinationUserId: Int? = null,
+
+    @field:SerializedName("emojis")
+    val emojis: String? = null,
+
+    @field:SerializedName("comments")
+    val comments: String? = null,
+
+    @field:SerializedName("sourceUserName")
+    val sourceUserName: String? = null,
+
+    @field:SerializedName("txnMode")
+    val txnMode: Any? = null,
+
+    @field:SerializedName("bankResponseMessage")
+    val bankResponseMessage: String? = null,
+
+    @field:SerializedName("bankTxnId")
+    val bankTxnId: String? = null,
+
+    @field:SerializedName("sourceUserIdentifier")
+    val sourceUserIdentifier: Any? = null,
+
+    @field:SerializedName("requesterUaaId")
+    val requesterUaaId: Int? = null,
+
+    @field:SerializedName("accountTxnNo")
+    val accountTxnNo: String? = null,
+
+    @field:SerializedName("pgTxnState")
+    val pgTxnState: Any? = null,
+
+    @field:SerializedName("sourceAccountIdentifier")
+    val sourceAccountIdentifier: String? = null,
+
+    @field:SerializedName("bankTxnStatus")
+    val bankTxnStatus: String? = null,
+
+    @field:SerializedName("pgTxnReversalNo")
+    val pgTxnReversalNo: Any? = null,
+
+    @field:SerializedName("bankId")
+    val bankId: String? = null,
+
+    @field:SerializedName("cardId")
+    val cardId: Any? = null,
+
+    @field:SerializedName("pgTxnStatus")
+    val pgTxnStatus: Any? = null,
+
+    @field:SerializedName("sourceUserId")
+    val sourceUserId: Int? = null,
+
+    @field:SerializedName("bankResponseCode")
+    val bankResponseCode: String? = null,
+
+    @field:SerializedName("txnAmount")
+    val txnAmount: String? = null,
+
+    @field:SerializedName("bankTxnState")
+    val bankTxnState: String? = null,
+
+    @field:SerializedName("isReversed")
+    val isReversed: Any? = null
 ) : Serializable
 
 

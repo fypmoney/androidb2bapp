@@ -68,6 +68,11 @@ class ChoresHistoryActivity : BaseActivity<ActivityChoresHistoryBinding, ChoresH
                 isLoading = false
                 mbindign?.LoadProgressBar?.visibility = View.GONE
                 itemsArrayList.addAll(list)
+                if (itemsArrayList.size > 0) {
+                    mbindign!!.emptyscreen.visibility = View.GONE
+                } else {
+                    mbindign!!.emptyscreen.visibility = View.VISIBLE
+                }
                 typeAdapter!!.notifyDataSetChanged()
             }
 

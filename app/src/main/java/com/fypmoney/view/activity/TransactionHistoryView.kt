@@ -80,7 +80,7 @@ class TransactionHistoryView :
 
 
                 LoadProgressBar?.visibility = View.GONE
-                Log.d("chackhistory1", "9" + list.toString())
+
                 if (list.isNotEmpty()) {
                     var arraylist = list
 
@@ -116,7 +116,8 @@ class TransactionHistoryView :
     private fun setObserver() {
 
         mViewModel.onItemClicked.observe(this) {
-            intentToPayUActivity(PayUSuccessView::class.java, it)
+
+        intentToPayUActivity(PayUSuccessView::class.java, it)
         }
 
         mViewModel.onPayOrRequestClicked.observe(this) {
@@ -157,6 +158,7 @@ class TransactionHistoryView :
         aClass: Class<*>,
         transactionHistoryResponseDetails: TransactionHistoryResponseDetails
     ) {
+        Log.d("chacktrans", transactionHistoryResponseDetails.toString())
         val intent = Intent(this@TransactionHistoryView, aClass)
         intent.putExtra(AppConstants.RESPONSE, transactionHistoryResponseDetails)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.TRANSACTION)

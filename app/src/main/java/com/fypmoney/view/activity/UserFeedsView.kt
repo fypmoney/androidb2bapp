@@ -37,7 +37,7 @@ import kotlinx.android.synthetic.main.view_user_feeds.*
 * This is used to show list of feeds
 * */
 class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
-    LocationListenerClass.GetCurrentLocationListener, DialogUtils.OnAlertDialogClickListener {
+    DialogUtils.OnAlertDialogClickListener {
     private lateinit var mViewModel: FeedsViewModel
     private lateinit var mViewBinding: ViewUserFeedsBinding
     var isLocationPermissionAllowed = ObservableField(false)
@@ -62,34 +62,12 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
             toolbar = toolbar,
             isBackArrowVisible = false
         )*/
-
-        checkAndAskPermission()
+        mViewModel.callFetchFeedsApi(false, 0.0, 0.0)
 
 
         setObserver()
     }
 
-    private fun checkAndAskPermission() {
-        if (ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                requireActivity(), Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                requireActivity(), arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ), requestCodeGPSAddress
-            )
-        } else {
-            LocationListenerClass(
-                requireActivity(), this
-            ).permissions()
-        }
-
-    }
 
 
     /**
@@ -192,62 +170,9 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
         startActivity(intent)
     }
 
-    override fun getCurrentLocation(
-        isInternetConnected: Boolean?,
-        latitude: Double,
-        Longitude: Double
-    ) {
-        mViewModel.latitude.set(latitude)
-        mViewModel.longitude.set(Longitude)
-        mViewModel.callFetchFeedsApi(false, latitude, Longitude)
 
 
-    }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        for (permission in permissions) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    requireActivity(),
-                    permission
-                )
-            ) {
-                //denied
-                    if (mViewModel.isDenied.get() == false) {
-                    mViewModel.callFetchFeedsApi(false, 0.0, 0.0)
-                    mViewModel.isDenied.set(true)
-                }
-            } else {
-                if (ActivityCompat.checkSelfPermission(
-                        requireContext(),
-                        permission
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-
-                    //allow
-                    if (!isLocationPermissionAllowed.get()!!) {
-                        LocationListenerClass(
-                            requireActivity(), this
-                        ).permissions()
-                    }
-                    isLocationPermissionAllowed.set(true)
-                    /*  mViewModel.callFetchFeedsApi(
-                          latitude = mViewModel.latitude.get(),
-                          longitude = mViewModel.longitude.get(),
-                          isProgressBarVisible = false
-                      )*/
-                } else {
-
-                    //set to never ask again
-                    mViewModel.isApiLoading.set(true)
-                    mViewModel.callFetchFeedsApi(false, 0.0, 0.0)
-
-                }
-            }
-        }
-    }
 
     override fun onResume() {
         super.onResume()

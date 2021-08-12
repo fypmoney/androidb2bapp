@@ -35,19 +35,19 @@ class TransactionHistoryViewHelper(
             when(transactionHistory?.isSender){
                 AppConstants.YES->{
                     msg.set(
-                        PockketApplication.instance.getString(R.string.you_paid) + Utility.parseDateTime(
+                        PockketApplication.instance.getString(R.string.paid_on) + " " + Utility.parseDateTime(
                             transactionHistory?.txnTime,
                             inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
-                            outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT1
+                            outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT6
                         )
                     )
                 }
                 AppConstants.NO->{
                     msg.set(
-                        PockketApplication.instance.getString(R.string.you_were_paid) + Utility.parseDateTime(
+                        PockketApplication.instance.getString(R.string.received_on) + Utility.parseDateTime(
                             transactionHistory?.txnTime,
                             inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
-                            outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT1
+                            outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT6
                         )
                     )
                 }

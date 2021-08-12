@@ -128,6 +128,18 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
             selectedRelationList.get(0).relationName
         )
         progressDialog.value = true
+        var relation = selectedRelationList.get(0).relationName?.toUpperCase(Locale.getDefault())!!
+        if (relation == "KIDS") {
+            relation = "CHILD"
+
+        } else if (relation == "GRAND CHILD") {
+            relation = "GRANDCHILD"
+
+        } else if (relation == "GRAND PARENTS") {
+            relation = "GRANDPARENT"
+
+        }
+
         WebApiCaller.getInstance().request(
             ApiRequest(
                 API_ADD_FAMILY_MEMBER,
@@ -136,7 +148,7 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
                 AddFamilyMemberRequest(
                     mobileNo = mobile.value!!.trim(),
                     name = parentName.get(),
-                    relation = selectedRelationList.get(0).relationName?.toUpperCase(Locale.getDefault())!!
+                    relation = relation
                 ),
                 this,
                 isProgressBar = false
