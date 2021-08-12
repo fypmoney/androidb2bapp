@@ -2,7 +2,10 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
+import com.appsflyer.AFInAppEventType
+import com.appsflyer.AppsFlyerLib
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -11,6 +14,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.CreateAccountSuccessViewModel
 import kotlinx.android.synthetic.main.toolbar.*
+import java.util.HashMap
 
 /*
 * This class is used for show create account success
@@ -40,6 +44,12 @@ class CreateAccountSuccessView :
             isBackArrowVisible = true
         )
         setObserver()
+        val eventValue: MutableMap<String, Any> = HashMap()
+//                eventValue[AFInAppEventParameterName.CUSTOMER_USER_ID] = it
+
+        AppsFlyerLib.getInstance()
+            .trackEvent(applicationContext, AFInAppEventType.COMPLETE_REGISTRATION, eventValue)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     /**

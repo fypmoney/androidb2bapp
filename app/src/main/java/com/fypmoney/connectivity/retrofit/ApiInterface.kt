@@ -93,7 +93,8 @@ interface ApiInterface {
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Query("page") page: Int,
         @Query("size") size: Int,
-        @Query("sort") sort: String
+        @Query("sort") sort: String,
+        @Body request: Any
     ): Observable<ResponseBody>
 
     @Headers("Accept: application/json")

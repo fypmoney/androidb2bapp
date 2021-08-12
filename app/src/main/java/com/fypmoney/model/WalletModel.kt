@@ -91,5 +91,13 @@ data class TransactionHistoryRequest(
 ) : BaseRequest()
 
 
+data class TransactionHistoryRequestwithPage(
+    @SerializedName("startDate") val startDate: String? = null,
+    @SerializedName("endDate") val endDate: String? = null,
+    @SerializedName("destinationUserIdentifier") val destinationUserId: String? = null,
+    @SerializedName("isbankTxnStatusSuccess") val isbankTxnStatusSuccess: Int? = 2,
+    @SerializedName("page") val page: Int? = null
+) : BaseRequest()
+
 
 

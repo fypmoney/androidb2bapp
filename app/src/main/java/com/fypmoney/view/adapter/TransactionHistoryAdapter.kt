@@ -52,6 +52,7 @@ class TransactionHistoryAdapter(var viewModel: TransactionHistoryViewModel) :
             mRowItemBinding!!.viewHelper = mViewHelper
             mViewHelper.init()
             mRowItemBinding.executePendingBindings()
+            Log.d("chackhistory", transactionList?.get(position)?.id.toString())
 
         }
 
@@ -62,10 +63,11 @@ class TransactionHistoryAdapter(var viewModel: TransactionHistoryViewModel) :
      */
     fun setList(transactionList1: List<TransactionHistoryResponseDetails>?) {
         try {
-            transactionList!!.clear()
+
             transactionList1?.forEach {
                 transactionList!!.add(it)
             }
+
             notifyDataSetChanged()
         } catch (e: Exception) {
             e.printStackTrace()

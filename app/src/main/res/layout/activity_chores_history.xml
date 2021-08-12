@@ -16,8 +16,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="#F2F2F2"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#F4F4F4">
+
         <include layout="@layout/toolbar" />
 
         <RelativeLayout
@@ -32,8 +33,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/LoadProgressBar"
+                android:layout_alignParentTop="true"
 
                 android:orientation="vertical"
+
 
                 android:padding="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -41,15 +44,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_marginBottom="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:visibility="gone"
-                android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
+            <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/LoadProgressBar"
-                android:layout_height="wrap_content" />
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/_4sdp"
+
+                android:visibility="gone"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/dots_animation" />
 
 
         </RelativeLayout>
