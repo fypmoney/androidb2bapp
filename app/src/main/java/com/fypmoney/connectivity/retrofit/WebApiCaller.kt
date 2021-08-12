@@ -267,6 +267,9 @@ class WebApiCaller {
                         purpose = request.purpose,
                         ApiDataParsing.getInstance().parseData(request, responseBody, command)!!
                     )
+
+                    request.onResponse.progress(false, null.toString())
+
                 }
 
                 override fun onError(e: Throwable) {

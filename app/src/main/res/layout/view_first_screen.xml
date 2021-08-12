@@ -15,6 +15,10 @@
 
     </data>
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,10 +56,12 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/image1"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_gravity="center_horizontal"
                 android:translationZ="1dp"
                 android:visibility="visible"
+                android:layout_marginBottom="-20dp"
+                app:layout_constraintBottom_toTopOf="@+id/lay1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -77,7 +83,7 @@
                 <LinearLayout
                     android:id="@+id/ll_expaneded_view"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:orientation="vertical"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -98,15 +104,11 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/image3"
-                        android:layout_width="wrap_content"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="@dimen/margin_20"
                         app:srcCompat="@drawable/ic_fyp_logo" />
-
-
-
-
 
 
 
@@ -129,9 +131,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_11sdp"
+                        android:layout_marginTop="@dimen/_15sdp"
                         android:text="@string/create_account_terms"
                         android:textAlignment="center" />
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/cl_login"
                         android:layout_width="match_parent"
@@ -210,4 +213,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>

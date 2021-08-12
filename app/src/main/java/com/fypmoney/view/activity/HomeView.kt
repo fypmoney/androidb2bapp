@@ -150,8 +150,8 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
     private fun loadProfile(url: String?) {
         url?.let {
-            Glide.with(this).load(it).apply(RequestOptions().circleCrop()).into(myProfile)
-            loadImage(mViewBinding.myProfile,it,ContextCompat.getDrawable(this,R.drawable.ic_profile),true)
+           // Glide.with(this).load(it).apply(RequestOptions().circleCrop()).into(myProfile)
+            loadImage(mViewBinding.myProfile,it,ContextCompat.getDrawable(this,R.drawable.ic_profile_img),true)
 
         }
     }
