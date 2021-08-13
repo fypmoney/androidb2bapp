@@ -96,6 +96,8 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 SharedPrefUtils.SF_KEY_PROFILE_IMAGE
             )
         )
+        mViewBinding.navigationView.itemIconTintList = null;
+
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.STAY_TUNED_BOTTOM_SHEET -> {
                 mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
@@ -112,7 +114,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             }
             AppConstants.NOTIFICATION -> {
                 mViewModel.callGetFamilyNotificationApi(intent.getStringExtra(AppConstants.NOTIFICATION_APRID))
-
             }
 
         }

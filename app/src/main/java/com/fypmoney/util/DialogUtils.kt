@@ -27,6 +27,9 @@ class DialogUtils {
         private var dialog: Dialog? = null
          var mAlertDialog: AlertDialog? = null
         fun showProgressDialog(context: Activity) {
+            if (dialog != null && dialog!!.isShowing) {
+                dialog?.dismiss()
+            }
             dialog = Dialog(context)
             dialog?.setCancelable(false)
             dialog?.setContentView(R.layout.roket_loader)

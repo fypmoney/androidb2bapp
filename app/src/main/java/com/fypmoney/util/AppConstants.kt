@@ -186,4 +186,28 @@ object AppConstants {
     const val INSTAGRAM_PAGE = "https://www.instagram.com/fypmoney.in/?hl=en"
     const val FACEBOOK_PAGE = "https://www.facebook.com/fypmoney.in/"
     const val YOUTUBE_PAGE = "https://www.youtube.com/channel/UCDoPH4GT9fP8Sp2bgr_95LA/about"
+
+    //DeepLinks constants
+    const val HOMEVIEW = "HomeView"
+    const val ReferralScreen = "ReferralScrren"
+    const val CardScreen = "CardScreen"
+    const val StoreScreen = "StoreScreen"
+    const val FyperScreen = "FyperScreen"
+   /* Home : "HomeView, 0"
+
+    Refereal Screen : "ReferralScrren, 1"
+
+    Card Screen : "CardScreen, 2"
+
+    Stores : "StoreScreen, 3"
+
+    Fyper : "FyperScreen, 4"
+
+    Feed : "FeedScreen, 5"
+
+    Track Order : "TrackOrderScreen, 6"
+
+    Chores :" ChoresScreen, 7"*/
+
+
 }

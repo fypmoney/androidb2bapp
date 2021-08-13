@@ -1059,4 +1059,8 @@ object Utility {
         bitmap.setPixels(pix, 0, w, 0, 0, w, h)
         return bitmap
     }
+
+    fun deeplinkRedirection(screenName:String){
+
+    }
 }

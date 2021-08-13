@@ -78,17 +78,17 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/answer_later_tv"
                     style="@style/TextviewRegular"
-                    android:textSize="18sp"
-                    android:textColor="@color/text_color_dark"
-                    android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="@dimen/margin_20"
                     android:layout_marginEnd="@dimen/margin_20"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:onClick="@{()->viewModel.answerLaterClicked()}"
-                    android:text="@string/answer_later"/>
+                    android:text="@string/answer_later"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="14sp" />
 
 
             </RelativeLayout>

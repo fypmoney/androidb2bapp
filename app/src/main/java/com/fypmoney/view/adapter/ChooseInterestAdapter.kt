@@ -82,24 +82,21 @@ class ChooseInterestAdapter(var viewModel: SelectInterestViewModel) :
                         Color.parseColor(chooseInterestList?.get(position)?.backgroundColor),
                         PorterDuff.Mode.SRC_ATOP
                     )
-                    mRowItemBinding.intrestIconFl.background.setColorFilter(
+                    mRowItemBinding.intrestIconFl.setBackgroundResource(0)
+                    mRowItemBinding.intrestIconFl.setBackgroundColor(Color.parseColor
+                        (chooseInterestList?.get(position)?.backgroundColor))
+                    /*mRowItemBinding.intrestIconFl.background.setColorFilter(
                         Color.parseColor(chooseInterestList?.get(position)?.backgroundColor),
                         PorterDuff.Mode.SRC_ATOP
-                    )
-                    /* val color = arrayOf(ColorDrawable(Color.WHITE), ColorDrawable(Color.parseColor(chooseInterestList?.get(position)?.backgroundColor)))
-                    val trans = TransitionDrawable(color)
-                    mRowItemBinding.serviceLayout.background = trans
-                    trans.startTransition(3000)*/
+                    )*/
+
                     chooseInterestList?.get(position)?.let { viewModel.selectedInterestList.add(it) }
                 } else {
                     mRowItemBinding.serviceLayout.background.setColorFilter(
                         Color.WHITE,
                         PorterDuff.Mode.SRC_ATOP
                     )
-                    mRowItemBinding.intrestIconFl.background.setColorFilter(
-                        Color.parseColor("#f4f4f4"),
-                        PorterDuff.Mode.SRC_ATOP
-                    )
+                    mRowItemBinding.intrestIconFl.background = ContextCompat.getDrawable(mRowItemBinding.intrestIconFl.context,R.drawable.curved_background4)
                     chooseInterestList?.get(position)?.let { viewModel.selectedInterestList.remove(it) }
                 }
             }
