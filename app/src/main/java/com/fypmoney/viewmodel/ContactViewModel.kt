@@ -31,6 +31,7 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
     var onItemClicked = MutableLiveData<ContactEntity>()
     var onIsAppUserClicked = MutableLiveData<Boolean>()
     var emptyContactListError = MutableLiveData<Boolean>()
+    var contactNotFound = MutableLiveData<Boolean>(false)
     var selectedContactList = ObservableArrayList<ContactEntity>()
     var onSelectClicked = MutableLiveData<Boolean>()
     var searchedContact = ObservableField<String>()
@@ -53,7 +54,7 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
                     contactAdapter.newContactList?.addAll(sortedList)
                 } else {
                     Log.d("contactlist", "2")
-                    emptyContactListError.value = true
+                    contactNotFound.value = true
                 }
             } catch (e: Exception) {
                 Log.d("contactlist", e.message.toString())
@@ -198,8 +199,6 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
                 } else {
                     Utility.showToast("Please try again")
                 }
-
-
             }
             ApiConstant.API_SNC_CONTACTS -> {
                 emptyContactListError.value = true

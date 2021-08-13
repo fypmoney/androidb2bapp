@@ -40,7 +40,21 @@
             android:padding="10dp"
             android:textColor="@color/text_color_dark"
             android:textColorHint="@color/text_color_dark"
-            android:textSize="14dp" />
+            android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewRegular"
+            android:textColor="@color/text_color_dark"
+            android:gravity="center"
+            android:id="@+id/not_data_in_phone_book_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search"
+            android:layout_marginTop="50dp"
+            android:visibility="@{viewModel.contactNotFound?View.VISIBLE:View.GONE,default=gone}"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp16"
+            android:text="@string/contact_not_found"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

@@ -24,7 +24,6 @@ class CardListViewAdapter(
         val binding =
             MyProfileListRowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.title = titleList[position]
-        binding.icon = iconList[position]
         binding.image.setImageResource(iconList[position])
 
         binding.linear.setOnClickListener {

@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
@@ -67,6 +68,20 @@ class SetSpendingLimitBottomSheet(
         val amountPos = view.findViewById<AppCompatTextView>(R.id.amount_pos)!!
         val seekbarEcom = view.findViewById<SeekBar>(R.id.seekBar_ecom)!!
         val seekbarPos = view.findViewById<SeekBar>(R.id.seekBar_point_sale)!!
+        val offLineStores = view.findViewById<RelativeLayout>(R.id.rl_offline_store)!!
+
+        //Offline status
+         bankProfileResponseDetails?.cardInfos?.forEach {
+             when(it.cardType){
+                 AppConstants.CARD_TYPE_PHYSICAL->{
+                     if(it.status==AppConstants.ENABLE){
+                         offLineStores.visibility = View.VISIBLE
+                     }
+                 }
+             }
+        }
+
+
         try {
             amountEcom.text =
                 PockketApplication.instance.getString(R.string.Rs) + Utility.convertToRs(

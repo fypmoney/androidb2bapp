@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -25,12 +24,8 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.BASE_ACTIVITY_URL
 import com.fypmoney.util.AppConstants.FEED_RESPONSE
 import com.fypmoney.util.DialogUtils
-import com.fypmoney.util.Utility
-import com.fypmoney.view.fragment.CardSettingsBottomSheet
-import com.fypmoney.view.fragment.DidUKnowBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.viewmodel.FeedsViewModel
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_user_feeds.*
 
 /*

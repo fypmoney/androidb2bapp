@@ -10,9 +10,10 @@
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/curved_background3.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/curved_background4.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/curved_background5.xml" value="0.13914473684210527" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/dasda.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_card.xml" value="0.2203125" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_card__2_.xml" value="0.13914473684210527" />
-        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_card_new.xml" value="0.13914473684210527" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_card_new.xml" value="0.14" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_edit.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_icon_feather_copy.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_line_break.xml" value="0.13914473684210527" />
@@ -26,8 +27,12 @@
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/activity_refer_and_earn.xml" value="0.22" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/activity_web_view.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/activity_webview.xml" value="0.12894736842105264" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/bottom_sheet_block_unblock_card.xml" value="0.12894736842105264" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/bottom_sheet_card_settings.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/bottom_sheet_invite.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/bottom_sheet_logout.xml" value="0.12894736842105264" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/bottom_sheet_manage_channels.xml" value="0.12894736842105264" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/bottom_sheet_set_spending_limit.xml" value="0.2" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/bottomsheet_stories.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/card_add_member.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/card_member_image.xml" value="0.20416666666666666" />
@@ -37,7 +42,8 @@
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/item_top_ten_user.xml" value="0.22" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/my_profile_list_row_item.xml" value="0.25" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/refer_and_earn_fragment.xml" value="0.12894736842105264" />
-        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/screen_card.xml" value="0.16" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/screen_card.xml" value="0.33" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/screen_card1.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/screen_home.xml" value="0.18" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/toolbar.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/toolbar_for_aadhaar.xml" value="0.12894736842105264" />
@@ -45,7 +51,8 @@
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_add_member.xml" value="0.22" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_add_money.xml" value="0.25" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_add_task.xml" value="0.12894736842105264" />
-        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_contacts.xml" value="0.12894736842105264" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_contact_list.xml" value="0.12894736842105264" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_contacts.xml" value="0.18" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_create_account.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_enter_amount_for_pay_request.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_first_screen.xml" value="0.14" />
@@ -54,7 +61,9 @@
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_invite_rejected.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_login_success.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_notification.xml" value="0.12894736842105264" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_order_card.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_pay_request_profile.xml" value="0.12894736842105264" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_place_card.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_referral_code.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_select_interest.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_stay_tuned.xml" value="0.20416666666666666" />

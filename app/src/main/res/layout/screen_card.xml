@@ -147,7 +147,7 @@
             <com.fypmoney.util.ScrollableListView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
-                android:paddingHorizontal="20dp"
+                android:paddingHorizontal="16dp"
                 android:divider="@null"
                 android:dividerHeight="0dp"
                 android:layout_height="0dp"

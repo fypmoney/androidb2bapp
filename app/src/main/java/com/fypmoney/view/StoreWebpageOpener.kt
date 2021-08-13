@@ -4,11 +4,13 @@ package com.fypmoney.view
 import android.app.KeyguardManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.Window
@@ -17,6 +19,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
@@ -40,7 +43,7 @@ class StoreWebpageOpener : AppCompatActivity() {
     private var mViewModel: CardDetailsViewModel? = null
     private var load_progress: ImageView? = null
     private var webView: WebView? = null
-
+    private val TAG = StoreWebpageOpener::class.java.simpleName
     companion object {
         var url = ""
     }
@@ -111,33 +114,40 @@ class StoreWebpageOpener : AppCompatActivity() {
 
 
     }
+    /*
+  * Ask for device security pin, pattern or fingerprint
+  * */
     fun askForDevicePassword() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
-            val km =
-                getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager
-
-            if (km.isKeyguardSecure) {
+        val km = getSystemService(Context.KEYGUARD_SERVICE) as KeyguardManager?
+        if (km!!.isKeyguardSecure) {
+            if(packageManager.hasSystemFeature(PackageManager.FEATURE_FINGERPRINT)
+                && Build.VERSION.SDK_INT > Build.VERSION_CODES.Q){
+                executor?.let { askForDeviceSecurity(it,true) }
+            }else{
                 val authIntent = km.createConfirmDeviceCredentialIntent(
-                    AppConstants.DIALOG_TITLE_AUTH,
-                    AppConstants.DIALOG_MSG_AUTH
+                    getString(com.fypmoney.R.string.dialog_title_auth),
+                    getString(R.string.dialog_msg_auth)
                 )
-                ActivityCompat.startActivityForResult(
-                   this,
-                    authIntent,
-                    AppConstants.DEVICE_SECURITY_REQUEST_CODE,
-                    null
-                )
+                startActivityForResult(authIntent, AppConstants.DEVICE_SECURITY_REQUEST_CODE)
+
             }
-        } else {
-            askForDeviceSecurity(executor!!)
 
         }
     }
-    fun askForDeviceSecurity(executor: Executor) {
+
+    /*
+    * Ask for device security pin, pattern or fingerprint greater than OS pie
+    * */
+    private fun askForDeviceSecurity(executor: Executor, isFingerPrintAllowed: Boolean) {
+
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(AppConstants.DIALOG_TITLE_AUTH)
             .setDescription(AppConstants.DIALOG_MSG_AUTH)
-            .setDeviceCredentialAllowed(true)
+            .setAllowedAuthenticators(if(!isFingerPrintAllowed){
+                BiometricManager.Authenticators.DEVICE_CREDENTIAL
+            }else{
+                BiometricManager.Authenticators.BIOMETRIC_WEAK or BiometricManager.Authenticators.DEVICE_CREDENTIAL
+            })
             .build()
         // 1
         val biometricPrompt = BiometricPrompt(this, executor,
@@ -148,26 +158,62 @@ class StoreWebpageOpener : AppCompatActivity() {
                 ) {
                     onActivityResult(
                         AppConstants.DEVICE_SECURITY_REQUEST_CODE,
-                        RESULT_OK,
+                        AppCompatActivity.RESULT_OK,
                         Intent()
                     )
                     super.onAuthenticationSucceeded(result)
-
                 }
 
                 // 3
                 override fun onAuthenticationError(
                     errorCode: Int, errString: CharSequence
                 ) {
+                    when(errorCode){
+                        BiometricPrompt.ERROR_HW_NOT_PRESENT->{
+
+                        }
+                        BiometricPrompt.ERROR_CANCELED -> {
+
+                        }
+                        BiometricPrompt.ERROR_HW_UNAVAILABLE -> {
+                        }
+                        BiometricPrompt.ERROR_LOCKOUT or BiometricPrompt.ERROR_LOCKOUT_PERMANENT  -> {
+                            //Too Many Attempts, plese try after some time.
+                        }
+                        BiometricPrompt.ERROR_NEGATIVE_BUTTON -> {
+
+                        }
+                        BiometricPrompt.ERROR_NO_BIOMETRICS -> {
+                        }
+                        BiometricPrompt.ERROR_NO_DEVICE_CREDENTIAL -> {
+                        }
+                        BiometricPrompt.ERROR_NO_SPACE -> {
+                        }
+                        BiometricPrompt.ERROR_TIMEOUT -> {
+                        }
+                        BiometricPrompt.ERROR_UNABLE_TO_PROCESS -> {
+                        }
+                        BiometricPrompt.ERROR_USER_CANCELED -> {
+                        }
+                        BiometricPrompt.ERROR_VENDOR -> {
+                        }
+                    }
+                    Log.d(TAG,"Authentication error with $errorCode and $errString")
+                    /**/
                     super.onAuthenticationError(errorCode, errString)
                 }
 
                 override fun onAuthenticationFailed() {
+                    Log.d(TAG,"onAuthenticationFailed")
                     super.onAuthenticationFailed()
                 }
             })
         biometricPrompt.authenticate(promptInfo)
     }
+
+
+
+
     private fun callCardSettingsBottomSheet() {
 
 

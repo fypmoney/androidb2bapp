@@ -97,86 +97,94 @@
             android:paddingEnd="20dp"
             android:text="@string/dummy_amount_2500"
             android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+            android:textSize="17sp" />
+
+        <RelativeLayout
+            android:layout_below="@id/amount_ecom"
+            android:id="@+id/rl_offline_store"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/point_sale"
-            style="@style/TextviewRegular"
-            android:layout_below="@id/amount_ecom"
-            android:layout_marginTop="20dp"
-            android:text="@string/point_of_sale"
-            android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+                android:id="@+id/point_sale"
+                style="@style/TextviewRegular"
+                android:layout_marginTop="20dp"
+                android:text="@string/point_of_sale"
+                android:textColor="@color/text_color_dark"
+                android:textSize="17sp" />
 
-        <SeekBar
-            android:id="@+id/seekBar_point_sale"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/point_sale"
-            android:layout_marginTop="15dp"
-            android:max="100000"
-            android:min="500"
-            android:progressDrawable="@drawable/custom_seekbar"
-            android:thumb="@drawable/seekbar_thumb"/>
+            <SeekBar
+                android:id="@+id/seekBar_point_sale"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/point_sale"
+                android:layout_marginTop="15dp"
+                android:max="100000"
+                android:min="500"
+                android:progressDrawable="@drawable/custom_seekbar"
+                android:thumb="@drawable/seekbar_thumb"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/amount5"
-            style="@style/TextviewRegular"
-            android:layout_below="@id/seekBar_point_sale"
-            android:layout_marginTop="10dp"
-            android:text="@string/dummy_amount_500"
-            android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/amount5"
+                style="@style/TextviewRegular"
+                android:layout_below="@id/seekBar_point_sale"
+                android:layout_marginTop="10dp"
+                android:text="@string/dummy_amount_500"
+                android:textColor="@color/text_color_dark"
+                android:textSize="17dp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/amount6"
-            style="@style/TextviewRegular"
-            android:layout_below="@id/seekBar_point_sale"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:text="@string/dummy_amount_100000"
-            android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/amount6"
+                style="@style/TextviewRegular"
+                android:layout_below="@id/seekBar_point_sale"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/dummy_amount_100000"
+                android:textColor="@color/text_color_dark"
+                android:textSize="17dp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/min3"
-            style="@style/TextviewRegular"
-            android:layout_below="@id/amount5"
-            android:layout_marginTop="10dp"
-            android:text="@string/min"
-            android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/min3"
+                style="@style/TextviewRegular"
+                android:layout_below="@id/amount5"
+                android:layout_marginTop="10dp"
+                android:text="@string/min"
+                android:textColor="@color/text_color_dark"
+                android:textSize="17dp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/max3"
-            style="@style/TextviewRegular"
-            android:layout_below="@id/amount5"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:text="@string/max"
-            android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/max3"
+                style="@style/TextviewRegular"
+                android:layout_below="@id/amount5"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:text="@string/max"
+                android:textColor="@color/text_color_dark"
+                android:textSize="17dp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/amount_pos"
-            style="@style/TextviewRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/max3"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/border_background2"
-            android:padding="15dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/dummy_amount_2500"
-            android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/amount_pos"
+                style="@style/TextviewRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/max3"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/border_background2"
+                android:padding="15dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/dummy_amount_2500"
+                android:textColor="@color/text_color_dark"
+                android:textSize="17dp" />
+        </RelativeLayout>
+
 
         <LinearLayout
             android:id="@+id/linear_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/amount_pos"
+            android:layout_below="@id/rl_offline_store"
             android:layout_marginBottom="20dp"
             android:layout_marginTop="40dp"
             android:orientation="horizontal"
