@@ -31,6 +31,7 @@ import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.viewmodel.CardScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.screen_card.*
+import kotlinx.android.synthetic.main.screen_card.view.*
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
 import kotlinx.android.synthetic.main.virtual_card_front_layout.*
 
@@ -100,7 +101,22 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         BottomSheetBehavior.from<ConstraintLayout>(mViewBinding.clBottomsheet)
         behavior.state =
             BottomSheetBehavior.STATE_COLLAPSED
+        behavior.addBottomSheetCallback(object: BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if(newState == BottomSheetBehavior.STATE_EXPANDED){
+                    mViewBinding.upIv.rotation = 270.0f
+                }else if(newState == BottomSheetBehavior.STATE_COLLAPSED){
+                    mViewBinding.upIv.rotation = 90.0f
+                }
+            }
 
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        })
+
+        /*up_iv.setOnClickListener {
+
+        }*/
 
         front_fl.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
             override fun onSwipeTop() {

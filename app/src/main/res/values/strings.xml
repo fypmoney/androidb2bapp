@@ -799,5 +799,10 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     </string-array>
 
     <string name="contact_not_found">Please add contact in your phone book or enter the number in search textbox.</string>
+    <string name="redeem_mynts">Redeem Mynts</string>
+    <string name="convert_your_earned_n_mynts_into_cashback">Convert your earned \n mynts into cashback</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">Ok</string>
+    <string name="get_help">Get Help</string>
 
 </resources>

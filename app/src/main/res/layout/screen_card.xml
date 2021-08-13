@@ -126,35 +126,32 @@
             android:id="@+id/cl_bottomsheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/curved_background12"
             android:clipToPadding="true"
             app:behavior_hideable="false"
-            app:behavior_peekHeight ="@dimen/_90sdp"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            android:background="@drawable/curved_background12"
-            >
+            app:behavior_peekHeight="@dimen/_90sdp"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/up_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:rotation="90"
                 android:layout_marginTop="@dimen/_2sdp"
-                app:srcCompat="@drawable/ic_back_arrow"/>
+                android:rotation="90"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_back_arrow" />
 
             <com.fypmoney.util.ScrollableListView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
-                android:paddingHorizontal="16dp"
+                android:layout_height="0dp"
                 android:divider="@null"
                 android:dividerHeight="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/up_iv"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/up_iv" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

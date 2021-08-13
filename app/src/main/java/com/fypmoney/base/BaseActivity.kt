@@ -382,7 +382,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         setSupportActionBar(toolbar)
         val upArrow = ContextCompat.getDrawable(
             context,
-            R.drawable.ic_back_arrow
+            R.drawable.ic_back_new
         )
         upArrow?.setTint(backArrowTint)
 

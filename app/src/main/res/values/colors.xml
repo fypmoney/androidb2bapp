@@ -58,5 +58,6 @@
     <color name="gray_scale">#707070</color>
     <color name="color_gift">#EDFFF1</color>
     <color name="background_light_dark">#f2f2f2</color>
+    <color name="yellow">#F2A100</color>
 
 </resources>

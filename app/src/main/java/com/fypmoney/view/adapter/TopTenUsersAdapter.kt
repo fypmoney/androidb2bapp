@@ -2,10 +2,13 @@ package com.fypmoney.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.fypmoney.R
+import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.ItemTopTenUserBinding
 import com.fypmoney.extension.executeAfter
 import com.fypmoney.model.homemodel.Users
@@ -42,6 +45,9 @@ class TopTenUsersVH(
         binding.executeAfter {
             lifecycleOwner = this@TopTenUsersVH.lifecycleOwner
             item = user
+            loadImage(recentIv,user.profilePicResourceId,
+                ContextCompat.getDrawable(this.recentIv.context, R.drawable.ic_profile_img),true)
+
             recentUserCl.setOnClickListener {
                 onRecentUserClick(user)
             }
