@@ -19,27 +19,38 @@ class BankTransactionHistoryViewModel(application: Application) : BaseViewModel(
     var noDataFoundVisibility = ObservableField(false)
     var bankTransactionHistoryAdapter = BankTransactionHistoryAdapter(this)
     var onItemClicked = MutableLiveData<BankTransactionHistoryResponseDetails>()
+    var LoadedList: MutableLiveData<List<BankTransactionHistoryResponseDetails>> = MutableLiveData()
 
     /*
       * This method is used to call get transaction history
       * */
 
     init {
-        callGetBankTransactionHistoryApi()
+        callGetBankTransactionHistoryApi(page = 0)
     }
 
     /*
     * This method is used to bank transaction history
     * */
-    fun callGetBankTransactionHistoryApi(fromDate: String? = null, toDate: String? = null) {
+    fun callGetBankTransactionHistoryApi(
+        fromDate: String? = null,
+        toDate: String? = null,
+        page: Int? = null
+    ) {
+        var progressbar = false
+        progressbar = page == 0
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_BANK_TRANSACTION_HISTORY,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_BANK_TRANSACTION_HISTORY),
                 request_type = ApiUrl.POST,
-                param = BankTransactionHistoryRequest(startDate = fromDate, endDate = toDate),
+                param = BankTransactionHistoryRequestwithpage(
+                    startDate = fromDate,
+                    endDate = toDate,
+                    page = page
+                ),
                 onResponse = this,
-                isProgressBar = true
+                isProgressBar = progressbar
             )
         )
 
@@ -53,9 +64,9 @@ class BankTransactionHistoryViewModel(application: Application) : BaseViewModel(
             ApiConstant.API_BANK_TRANSACTION_HISTORY -> {
                 if (responseData is BankTransactionHistoryResponse) {
                     if (!responseData.transactions.bankTransactionHistoryResponseDetails.isNullOrEmpty())
-                        bankTransactionHistoryAdapter.setList(responseData.transactions.bankTransactionHistoryResponseDetails)
-                    else
-                        noDataFoundVisibility.set(true)
+                        LoadedList.postValue(responseData.transactions.bankTransactionHistoryResponseDetails)
+
+
                 }
             }
         }

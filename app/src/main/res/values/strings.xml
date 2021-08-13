@@ -570,12 +570,12 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="verify_vpa">Please verify UPI Id</string>
     <string name="recent">Recent</string>
     <string name="trans_history_heading">Transaction History</string>
-    <string name="add">+</string>
+    <string name="add">+ </string>
 
     <!--
     Bank transaction history
     -->
-    <string name="subtract">-</string>
+    <string name="subtract">- </string>
     <string name="filter_by_date_title">Filter by date</string>
     <string name="from_date">From date</string>
     <string name="to_date">To date</string>
