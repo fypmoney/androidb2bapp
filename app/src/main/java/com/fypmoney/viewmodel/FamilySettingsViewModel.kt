@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import android.widget.CompoundButton
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -161,6 +162,7 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
         when (purpose) {
             ApiConstant.API_ADD_FAMILY_MEMBER -> {
                 if (responseData is GetMemberResponse) {
+                    Log.d("chackfamily", responseData.toString())
                     val approveList = mutableListOf<MemberEntity>()
                     val inviteList = mutableListOf<MemberEntity>()
                     memberRepository.deleteAllMembers()

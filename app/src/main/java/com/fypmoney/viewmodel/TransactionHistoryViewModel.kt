@@ -98,7 +98,7 @@ class TransactionHistoryViewModel(application: Application) : BaseViewModel(appl
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_TRANSACTION_HISTORY -> {
-
+                Log.d("chackhistory1", "9" + responseData.toString())
                 if (responseData is TransactionHistoryResponse) {
                     LoadedList.postValue(responseData.transactionHistoryResponseDetails)
 //                    if (!responseData.transactionHistoryResponseDetails.isNullOrEmpty()){

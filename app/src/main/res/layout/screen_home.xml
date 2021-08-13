@@ -168,7 +168,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="10dp"
-                        android:paddingVertical="15dp"                        android:orientation="vertical">
+                        android:paddingVertical="15dp"
+                        android:orientation="vertical">
 
                         <FrameLayout
                             android:layout_width="@dimen/_75sdp"
@@ -461,6 +462,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/dp16"
                 android:layout_marginEnd="@dimen/dp16"
+                android:layout_marginBottom="@dimen/_8sdp"
                 android:visibility="@{viewModel.isFeedVisible?View.VISIBLE:View.GONE,default=gone}"
                 app:adapter="@{viewModel.feedsAdapter}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

@@ -15,10 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
+import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ScreenHomeBinding
 import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
+import com.fypmoney.model.TransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.TopTenUsersAdapter
@@ -28,9 +30,7 @@ import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.screen_home.*
 
 
-
-class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>(),
-    LocationListenerClass.GetCurrentLocationListener {
+class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
 
     private lateinit var mViewModel: HomeScreenViewModel
     private lateinit var mViewBinding: ScreenHomeBinding
@@ -55,32 +55,53 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>(),
         choreCard.setOnClickListener {
             intentToPayActivity(ChoresActivity::class.java)
         }
-        LocationListenerClass(
-            requireActivity(), this
-        ).permissions()
+
         setObservers()
         setUpRecyclerView()
+        mViewModel.callFetchFeedsApi(false, 0.0, 0.0)
     }
 
     private fun setUpRecyclerView() {
         val topTenUsersAdapter = TopTenUsersAdapter(
-            viewLifecycleOwner
+            viewLifecycleOwner, onRecentUserClick = {
+                var contact = ContactEntity()
+                contact.userId = it.userId.toString()
+                contact.contactNumber = it.userMobile
+                contact.profilePicResourceId = it.profilePicResourceId
+                contact.firstName = it.name
+//            contact.lastName=it.familyName
+
+
+                intentToActivity2(
+                    contactEntity = contact,
+                    aClass = TransactionHistoryView::class.java, ""
+                )
+
+            }
         )
-        with(mViewBinding.recentRv){
+        with(mViewBinding.recentRv) {
             adapter = topTenUsersAdapter
-            layoutManager =  LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         }
+    }
+
+    private fun intentToActivity2(contactEntity: ContactEntity?, aClass: Class<*>, action: String) {
+        val intent = Intent(requireContext(), aClass)
+        intent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, contactEntity)
+        intent.putExtra(AppConstants.WHICH_ACTION, action)
+        intent.putExtra(AppConstants.FUND_TRANSFER_QR_CODE, "")
+        startActivity(intent)
     }
 
     /*
     * This method is used to observe the observers
     * */
     private fun setObservers() {
-        mViewModel.topTenUsersResponse.observe(viewLifecycleOwner,{
-            if(it.data.isNullOrEmpty()){
+        mViewModel.topTenUsersResponse.observe(viewLifecycleOwner, {
+            if (it.data.isNullOrEmpty()) {
                 mViewBinding.recentTv.visibility = View.GONE
                 mViewBinding.recentRv.visibility = View.GONE
-            }else{
+            } else {
                 mViewBinding.recentTv.visibility = View.VISIBLE
                 mViewBinding.recentRv.visibility = View.VISIBLE
                 (mViewBinding.recentRv.adapter as TopTenUsersAdapter).run {
@@ -195,15 +216,6 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>(),
         startActivity(intent)
     }
 
-    override fun getCurrentLocation(
-        isInternetConnected: Boolean?,
-        latitude: Double,
-        Longitude: Double
-    ) {
-        mViewModel.latitude.set(latitude)
-        mViewModel.longitude.set(Longitude)
-        mViewModel.callFetchFeedsApi(false, latitude, Longitude)
-    }
 
     /*
    * This method is used to call card settings

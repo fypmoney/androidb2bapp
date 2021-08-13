@@ -63,16 +63,16 @@
             app:tint="@color/cb_grey" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title_tv"
             style="@style/TextviewBold"
             android:layout_width="wrap_content"
-            android:id="@+id/title_tv"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/toolbar_backImage"
             android:textColor="@color/white"
-            android:textSize="@dimen/_20sdp"
+            android:textSize="@dimen/_18sdp"
 
-            tools:text="Amazon" />
+            tools:text="" />
 
         <ImageView
             android:id="@+id/refresh"

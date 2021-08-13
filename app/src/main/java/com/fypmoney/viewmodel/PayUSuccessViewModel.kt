@@ -11,6 +11,7 @@ import com.fypmoney.model.BankTransactionHistoryResponseDetails
 import com.fypmoney.model.TransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import java.text.SimpleDateFormat
 
 /*
 * This class is used to pay u success response
@@ -83,25 +84,35 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
             AppConstants.TRANSACTION -> {
                 isAddMoneyLayoutVisible.set(false)
                 availableAmount.set(Utility.convertToRs(transactionHistoryResponse.get()?.txnAmount))
-                val date = transactionHistoryResponse.get()?.txnTime?.split("+")
 
+                val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                val date = outputFormat.parse(transactionHistoryResponse.get()?.txnTime)
+                val postFormater = SimpleDateFormat(AppConstants.CHANGED_DATE_TIME_FORMAT7)
+
+                val newDateStr = postFormater.format(date)
                 when (transactionHistoryResponse.get()?.isSender) {
                     AppConstants.YES -> {
-
+                        paymentDateTime.set(
+                            PockketApplication.instance.getString(R.string.sent_text) +
+                                    newDateStr
+                        )
+                    }
+                    AppConstants.NO -> {
+                        paymentDateTime.set(
+                            PockketApplication.instance.getString(R.string.received_text) +
+                                    newDateStr
+                        )
                     }
                 }
-                paymentDateTime.set(
-                    PockketApplication.instance.getString(R.string.received_text) +
-                            Utility.parseDateTime(
-                                date!![0],
-                                inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
-                                outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT3
-                            )
-                )
-                fypId.set(bankResponse.get()?.accReferenceNumber)
-                bankId.set(bankResponse.get()?.bankReferenceNumber)
-                userName.set(bankResponse.get()?.userName)
-                phoneNo.set(bankResponse.get()?.mobileNo)
+
+
+
+
+
+                fypId.set(transactionHistoryResponse.get()?.accountTxnNo)
+                bankId.set(transactionHistoryResponse.get()?.bankTxnId)
+                userName.set(transactionHistoryResponse.get()?.destinationUserName)
+                phoneNo.set(transactionHistoryResponse.get()?.destinationAccountIdentifier)
             }
         }
 
