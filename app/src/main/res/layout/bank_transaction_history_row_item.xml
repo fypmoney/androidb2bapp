@@ -18,21 +18,21 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginBottom="@dimen/_5sdp"
         android:paddingTop="5dp"
         android:onClick="@{()->viewHelper.onItemClicked()}"
         android:paddingBottom="5dp">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivServiceLogo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/_34sdp"
+            android:layout_height="@dimen/_34sdp"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
-            android:background="@{viewHelper.isCredited?@drawable/curved_background8:@drawable/curved_background19}"
-            android:padding="12dp"
-            android:src="@{viewHelper.isCredited?@drawable/ic_request_money:@drawable/ic_send_money}"  />
+            android:background="@{viewHelper.isCredited?@drawable/ic_circle_green:@drawable/ic_circle_pink}"
+            android:padding="10dp"
+            android:src="@{viewHelper.isCredited?@drawable/ic_green_arrow:@drawable/ic_red_arrow}" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/heading"
@@ -51,8 +51,10 @@
             android:layout_below="@+id/heading"
             android:layout_marginStart="@dimen/margin"
             android:layout_toEndOf="@+id/ivServiceLogo"
+
+            android:layout_marginTop="@dimen/_2sdp"
             android:ellipsize="end"
-            android:text="@{viewHelper.date}"/>
+            android:text="@{viewHelper.date}" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -60,6 +62,7 @@
             style="@style/TextviewRegular"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
+            android:textSize="16sp"
             android:layout_marginEnd="10dp"
             android:text="@{viewHelper.amount}"
             android:textColor="@{viewHelper.isCredited?@color/color_dark_green:@color/text_color_red}" />
@@ -67,10 +70,10 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
+            android:visibility="invisible"
             android:layout_below="@id/ivServiceLogo"
             android:background="@color/dividerColor"
-            android:layout_marginTop="20dp"
-            android:visibility="@{viewHelper.isLineVisible?View.VISIBLE:View.GONE}"/>
+            android:layout_marginTop="20dp" />
 
     </RelativeLayout>
 
