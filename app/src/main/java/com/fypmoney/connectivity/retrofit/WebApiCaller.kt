@@ -158,6 +158,31 @@ class WebApiCaller {
 
                                 )
                             }
+                            ApiConstant.API_BANK_TRANSACTION_HISTORY -> {
+
+                                val params1 = request.param as BankTransactionHistoryRequestwithpage
+                                val params =
+                                    BankTransactionHistoryRequest(
+                                        startDate = params1.startDate,
+                                        endDate = params1.endDate
+                                    )
+
+                                Log.d("chackhistorypage", request.param.page.toString())
+                                mObservable = apiInterface.getPaginationApiCalling(
+                                    endPoint = request.endpoint,
+                                    authorization = SharedPrefUtils.getString(
+                                        PockketApplication.instance,
+                                        SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                    ),
+                                    client_id = ApiConstant.CLIENT_ID,
+                                    page = params1.page!!,
+                                    size = 10,
+                                    sort = "createdDate,desc",
+                                    request = params
+
+
+                                )
+                            }
                             ApiConstant.API_AUTH_LOGIN -> {
                                 mObservable =
                                     apiInterface.postAuthDataOnServer(

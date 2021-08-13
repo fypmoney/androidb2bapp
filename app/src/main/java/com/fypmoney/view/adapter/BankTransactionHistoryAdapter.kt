@@ -59,7 +59,7 @@ class BankTransactionHistoryAdapter(var viewModel: BankTransactionHistoryViewMod
      */
     fun setList(transactionList1: List<BankTransactionHistoryResponseDetails>?) {
         try {
-            transactionList!!.clear()
+
             transactionList1?.forEach {
                 transactionList!!.add(it)
             }

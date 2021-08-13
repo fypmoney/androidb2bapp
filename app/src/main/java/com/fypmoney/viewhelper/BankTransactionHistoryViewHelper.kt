@@ -47,7 +47,7 @@ class BankTransactionHistoryViewHelper(
             AppConstants.CREDITED -> {
                 isCredited.set(true)
                 amount.set(
-                    PockketApplication.instance.getString(R.string.add) + PockketApplication.instance.getString(
+                    PockketApplication.instance.getString(R.string.add) + " " + PockketApplication.instance.getString(
                         R.string.Rs
                     ) + Utility.convertToRs(bankHistory?.amount)
                 )
@@ -56,7 +56,7 @@ class BankTransactionHistoryViewHelper(
             AppConstants.DEBITED -> {
                 isCredited.set(false)
                 amount.set(
-                    PockketApplication.instance.getString(R.string.subtract) + PockketApplication.instance.getString(
+                    PockketApplication.instance.getString(R.string.subtract) + " " + PockketApplication.instance.getString(
                         R.string.Rs
                     ) + Utility.convertToRs(bankHistory?.amount)
                 )

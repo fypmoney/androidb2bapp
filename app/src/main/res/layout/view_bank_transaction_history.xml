@@ -14,8 +14,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/screenMarginLeft"
-        android:layout_marginEnd="@dimen/screenMarginRight"
+
         android:background="@color/white">
 
         <include
@@ -25,20 +24,40 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/recent"
             style="@style/TextviewRegular"
-            android:layout_marginTop="20dp"
             android:layout_below="@id/layout"
+            android:visibility="gone"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
             android:text="@string/recent" />
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_above="@+id/LoadProgressBar"
             android:layout_below="@+id/recent"
-            android:layout_marginTop="20dp"
-            app:adapter="@{viewModel.bankTransactionHistoryAdapter}"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_10sdp"
 
+            android:layout_marginEnd="@dimen/_6sdp"
+            app:adapter="@{viewModel.bankTransactionHistoryAdapter}" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/LoadProgressBar"
+
+            android:layout_alignParentBottom="true"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_4sdp"
+
+            android:visibility="gone"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/dots_animation" />
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/AppTheme.Widget.TextView"
             android:layout_width="wrap_content"

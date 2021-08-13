@@ -55,6 +55,12 @@ class TransactionHistoryView :
             isBackArrowVisible = true, toolbarTitle = mViewModel.contactName.get()
         )
         setObserver()
+        setRecylerView()
+
+
+    }
+
+    private fun setRecylerView() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
 
         recycler_view.layoutManager = layoutManager
@@ -66,7 +72,6 @@ class TransactionHistoryView :
             }
 
             override fun loadMoreTopItems() {
-
                 loadMore()
                 Log.d("chackpaginat", "upar")
             }
@@ -96,8 +101,6 @@ class TransactionHistoryView :
             }
 
         })
-
-
     }
 
     private fun loadMore() {

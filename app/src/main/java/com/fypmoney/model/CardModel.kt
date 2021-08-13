@@ -49,6 +49,11 @@ data class BankTransactionHistoryRequest(
     @SerializedName("endDate") val endDate: String? = null
 ) : BaseRequest()
 
+data class BankTransactionHistoryRequestwithpage(
+    @SerializedName("startDate") val startDate: String? = null,
+    @SerializedName("endDate") val endDate: String? = null,
+    @SerializedName("page") val page: Int? = null
+) : BaseRequest()
 
 data class BankTransactionHistoryResponse(
     @SerializedName("data") val transactions: Transactions
