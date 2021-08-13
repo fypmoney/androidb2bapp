@@ -39,6 +39,7 @@ class BankTransactionHistoryViewModel(application: Application) : BaseViewModel(
     ) {
         var progressbar = false
         progressbar = page == 0
+
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_BANK_TRANSACTION_HISTORY,

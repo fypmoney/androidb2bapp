@@ -39,7 +39,9 @@ class WalkThroughThreeScreen : BaseFragment<ViewWalkThroughThreeBinding, WalkThr
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
-        imageView.gifResource = R.raw.walk_through_three
+//        imageView.gifResource = R.raw.walk_through_three
+        Glide.with(requireContext()).load(R.raw.walk_through_three).into(imageView)
+
     }
 
     override fun onTryAgainClicked() {

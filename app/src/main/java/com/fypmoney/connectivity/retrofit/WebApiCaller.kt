@@ -166,6 +166,12 @@ class WebApiCaller {
                                         startDate = params1.startDate,
                                         endDate = params1.endDate
                                     )
+                                var page = params1.page
+                                if (page == null) {
+
+
+                                    page = 0
+                                }
 
                                 Log.d("chackhistorypage", request.param.page.toString())
                                 mObservable = apiInterface.getPaginationApiCalling(
@@ -175,7 +181,7 @@ class WebApiCaller {
                                         SharedPrefUtils.SF_KEY_ACCESS_TOKEN
                                     ),
                                     client_id = ApiConstant.CLIENT_ID,
-                                    page = params1.page!!,
+                                    page = page,
                                     size = 10,
                                     sort = "createdDate,desc",
                                     request = params

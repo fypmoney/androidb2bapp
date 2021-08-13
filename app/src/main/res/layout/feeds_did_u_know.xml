@@ -18,10 +18,14 @@
 
     </data>
 
-    <RelativeLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_marginBottom="@dimen/_5sdp"
+
+        app:cardCornerRadius="20dp"
         android:layout_marginTop="@dimen/_5sdp"
         android:onClick="@{()->viewHelper.onFeedButtonClick()}">
 
@@ -30,9 +34,9 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/did_u_know_card" />
+            app:srcCompat="@drawable/didyouknow" />
 
 
-    </RelativeLayout>
+    </androidx.cardview.widget.CardView>
 
 </layout>

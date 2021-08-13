@@ -10,6 +10,6 @@
         android:color="@color/editTextStrokeColor" />
 
     <!-- Round Corners -->
-    <corners android:radius="@dimen/corner_radius" />
+    <corners android:radius="@dimen/_6sdp" />
 
 </shape>

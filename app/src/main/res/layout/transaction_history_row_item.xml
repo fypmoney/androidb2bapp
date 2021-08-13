@@ -39,7 +39,7 @@
             android:layout_height="90dp"
             android:layout_below="@+id/date"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="@dimen/_150sdp"
+            android:layout_marginEnd="@dimen/_140sdp"
             android:background="@drawable/border_background2"
             android:onClick="@{()->viewHelper.onItemClicked()}"
             android:padding="16dp">

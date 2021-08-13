@@ -38,6 +38,7 @@
                     android:id="@+id/ivServiceLogo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/_14sdp"
                     android:layout_centerHorizontal="true"
                     app:srcCompat="@drawable/ic_create_account" />
 
@@ -68,13 +69,14 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/verification_title"
                     android:layout_marginTop="@dimen/edittextMarginTop"
-                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray_8"
                     android:hint="@string/first_name_hint"
                     android:inputType="textCapWords"
-                    android:singleLine="true"
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                    android:text="@={viewModel.firstName}" />
+                    android:singleLine="true"
+                    android:text="@={viewModel.firstName}"
+                    android:textSize="@dimen/_14sdp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/et_last_name_label"
@@ -94,6 +96,7 @@
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:hint="@string/last_name_hint"
                     android:inputType="textCapWords"
+                    android:textSize="@dimen/_14sdp"
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
                     android:text="@={viewModel.lastName}" />
@@ -117,10 +120,10 @@
                     android:drawableEnd="@drawable/birthday_icon"
                     android:focusable="false"
                     android:hint="@string/dd_mm_yyyy"
-                    android:paddingStart="@dimen/edittextHintPaddingStart"
-                    android:paddingEnd="@dimen/edittextHintPaddingEnd"
                     android:inputType="none"
                     android:onClick="@{()->viewModel.onDobClicked()}"
+                    android:paddingStart="@dimen/edittextHintPaddingStart"
+                    android:paddingEnd="@dimen/edittextHintPaddingEnd"
                     android:singleLine="true"
                     android:text="@={viewModel.dob}" />
 
