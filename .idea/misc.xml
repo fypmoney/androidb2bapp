@@ -5,16 +5,21 @@
       <map>
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable-ldpi/ic_rate_us.xml" value="1.321875" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/button_interest_background.xml" value="0.13914473684210527" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/card_selector.xml" value="0.1" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/curved_background24.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/curved_background25.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/curved_background3.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/curved_background4.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/curved_background5.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/dasda.xml" value="0.13914473684210527" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/feeds_selector.xml" value="0.13914473684210527" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/fyper_selector.xml" value="0.1" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/home_selector.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_card.xml" value="0.2203125" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_card__2_.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_card_new.xml" value="0.14" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_edit.xml" value="0.13914473684210527" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_home.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_icon_feather_copy.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_line_break.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_pay.xml" value="0.13914473684210527" />
@@ -22,8 +27,10 @@
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_profile_img.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/ic_sports.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/social_community_gradient.xml" value="0.20555555555555555" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/store_selector.xml" value="0.13914473684210527" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/drawable/total_won_gradient.xml" value="0.20555555555555555" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/activity_add_task.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/activity_chores_history.xml" value="0.1" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/activity_refer_and_earn.xml" value="0.22" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/activity_web_view.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/activity_webview.xml" value="0.12894736842105264" />
@@ -67,10 +74,12 @@
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_referral_code.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_select_interest.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_stay_tuned.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_user_feeds.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_user_profile.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/view_walk_through_one.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/virtual_card_back_layout.xml" value="0.25" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/layout/virtual_card_front_layout.xml" value="0.12894736842105264" />
+        <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/menu/navigation.xml" value="0.12894736842105264" />
         <entry key="..\:/Users/Pawankumar/AndroidStudioProjects/FypAndroidApp/app/src/main/res/xml/match_parent.xml" value="0.12894736842105264" />
       </map>
     </option>

@@ -185,7 +185,8 @@ data class CardInfoDetails(
     @SerializedName("ecomEnabled") val ecomEnabled: String? = null,
     @SerializedName("atmEnabled") val atmEnabled: String? = null,
     @SerializedName("clEnabled") val clEnabled: String? = null,
-    @SerializedName("status") val status: String? = null
+    @SerializedName("status") val status: String? = null,
+    @SerializedName("isPinSet") val isPinSet: String? = null
 ) : Serializable
 
 

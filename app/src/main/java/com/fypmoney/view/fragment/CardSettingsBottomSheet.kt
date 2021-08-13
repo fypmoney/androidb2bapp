@@ -60,8 +60,10 @@ class CardSettingsBottomSheet(
         textString.add(PockketApplication.instance.getString(R.string.card_settings_channels))
         bankProfileResponse?.cardInfos?.forEach {
             when(it.cardType){
-                AppConstants.CARD_TYPE_PHYSICAL->{
-                    textString.add(PockketApplication.instance.getString(R.string.card_settings_pin))
+                AppConstants.CARD_TYPE_PHYSICAL ->{
+                    if(it.isPinSet.isNullOrEmpty() && it.isPinSet.equals("NO")){
+                        textString.add(PockketApplication.instance.getString(R.string.card_settings_pin))
+                    }
                 }
             }
         }

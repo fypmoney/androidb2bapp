@@ -255,7 +255,6 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 }
             }
             ApiConstant.API_UPDATE_CARD_LIMIT -> {
-                progressDialog.value = false
                 if (responseData is UpdateCardLimitResponse) {
                     callGetBankProfileApi()
                     Utility.showToast(responseData.msg)
@@ -289,8 +288,6 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                                         isOrderCard.set(false)
                                     }
                                 }
-
-
                             }
                         }
 
@@ -321,7 +318,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             }
             ApiConstant.API_SET_CHANGE_PIN -> {
                 if (responseData is SetPinResponse) {
-                    onSetPinSuccess.value = responseData.setPinResponseDetails
+                    onSetPinSuccess.value = responseData.setPinResponseDetails!!
                 }
             }
             ApiConstant.API_ACTIVATE_CARD -> {

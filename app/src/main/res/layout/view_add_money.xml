@@ -84,8 +84,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:weightSum="4"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginEnd="@dimen/dp16"
                     android:layout_below="@id/add_money"
-
                     android:layout_marginTop="22dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -95,7 +96,6 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
-
                         android:onClick="@{()->viewModel.onAmountSelected(50)}"
                         android:paddingVertical="5dp"
                         android:layout_width="0dp"
@@ -112,10 +112,8 @@
                         android:gravity="center"
                         android:onClick="@{()->viewModel.onAmountSelected(100)}"
                         android:paddingVertical="5dp"
-
                         android:text="@string/add_money_100"
-
-                        android:textColor="@color/text_color_dark" />
+                         android:textColor="@color/text_color_dark" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextviewRegular"
@@ -123,13 +121,10 @@
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
                         android:layout_width="0dp"
-
                         android:background="@drawable/curved_background27"
                         android:gravity="center"
                         android:onClick="@{()->viewModel.onAmountSelected(500)}"
                         android:paddingVertical="5dp"
-
-
                         android:text="@string/add_money_500"
                         android:textColor="@color/text_color_dark" />
 
@@ -143,7 +138,6 @@
                         android:gravity="center"
                         android:onClick="@{()->viewModel.onAmountSelected(1000)}"
                         android:paddingVertical="5dp"
-
                         android:text="@string/add_money_1000"
                         android:textColor="@color/text_color_dark" />
 

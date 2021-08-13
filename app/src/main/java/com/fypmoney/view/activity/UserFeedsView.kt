@@ -35,7 +35,6 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
     DialogUtils.OnAlertDialogClickListener {
     private lateinit var mViewModel: FeedsViewModel
     private lateinit var mViewBinding: ViewUserFeedsBinding
-    var isLocationPermissionAllowed = ObservableField(false)
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -90,15 +89,18 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                 else -> {
                     when (it.displayCard) {
                         AppConstants.FEED_TYPE_DEEPLINK -> {
-                            try {
+                                when(it.action?.type){
+                                    AppConstants.FEED_TYPE_IN_APP->{
+                                        when(it.action?.url?.contains("")){
+
+                                        }
+                                    }
+                                }
                                 intentToActivity(
                                     Class.forName(BASE_ACTIVITY_URL + it.action?.url!!),
                                     it
                                 )
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                                intentToActivity(HomeView::class.java, it)
-                            }
+
                         }
                         AppConstants.FEED_TYPE_INAPPWEB -> {
                             intentToActivity(

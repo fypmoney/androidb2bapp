@@ -85,8 +85,7 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,var onBotto
                     } else if (it.ecomEnabled == AppConstants.NO) {
                         vEcomSwitch.isChecked = false
                     }
-                    hideOfflineStore()
-
+                    //hideOfflineStore()
 
                 }
                 AppConstants.CARD_TYPE_PHYSICAL -> {

@@ -3,25 +3,25 @@
 
     <item
         android:id="@+id/home"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/home_selector"
         android:title="@string/home_bottom_nav_title" />
 
     <item
         android:id="@+id/feeds"
-        android:icon="@drawable/ic_feed"
+        android:icon="@drawable/feeds_selector"
         android:title="@string/feeds_bottom_nav_title"/>
 
     <item
         android:id="@+id/card"
-        android:icon="@drawable/ic_card_icon"
+        android:icon="@drawable/card_selector"
         android:title="@string/card_bottom_nav_title"/>
     <item
         android:id="@+id/store"
-        android:icon="@drawable/ic_store"
+        android:icon="@drawable/store_selector"
         android:title="@string/store_bottom_nav_title"/>
     <item
         android:id="@+id/family"
-        android:icon="@drawable/ic_family"
+        android:icon="@drawable/fyper_selector"
         android:title="@string/fyper_bottom_nav_title"/>
 
 </menu>
