@@ -15,6 +15,8 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 
 import android.graphics.Bitmap
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import com.fypmoney.util.Utility.fastblur
 
 
@@ -145,11 +147,12 @@ class DialogUtils {
 
             mAlertDialog = alertDialogBuilder.create()
             mAlertDialog?.setCancelable(false)
+            mAlertDialog?.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
 
             mAlertDialog?.show()
             mAlertDialog?.window!!.setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
             )
             val tryAgain =
                 (mAlertDialog?.window!!.findViewById(R.id.try_again) as AppCompatTextView)

@@ -58,5 +58,7 @@
     <color name="gray_scale">#707070</color>
     <color name="color_gift">#EDFFF1</color>
     <color name="background_light_dark">#f2f2f2</color>
+    <color name="green_winnings">#62AA70</color>
+    <color name="grey_heading">#9EA5A7</color>
 
 </resources>

@@ -32,16 +32,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginEnd="8dp"
 
                 android:padding="5dp"
-                app:srcCompat="@drawable/arrow_back" />
+                app:srcCompat="@drawable/ic_back_arrow" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/toolbar_title"
                 style="@style/TextviewBold"
                 android:layout_centerVertical="true"
                 android:layout_marginTop="19dp"
+                android:layout_marginStart="@dimen/_4sdp"
                 android:layout_toRightOf="@+id/back"
 
                 android:text="Chores"
@@ -229,7 +231,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@drawable/ic_dropdown" />
+                    android:background="@drawable/ic_dropdown__2_"
+                    app:tint="@color/text_color_light" />
 
 
             </LinearLayout>

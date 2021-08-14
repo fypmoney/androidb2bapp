@@ -315,7 +315,7 @@
      Notification
     -->
     <string name="previous_txt">Previous</string>
-    <string name="user_timeline_api_error">Your No previous actions found</string>
+    <string name="user_timeline_api_error">Looks like you don’t have any \nnotifications yet</string>
     <string name="get_notification_api_error">Your No current actions found</string>
     <string name="login_success_msg">Your phone number verification \n is successfully done!</string>
 
@@ -799,5 +799,6 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     </string-array>
 
     <string name="contact_not_found">Please add contact in your phone book or enter the number in search textbox.</string>
+    <string name="oh_no">Oh No!</string>
 
 </resources>
