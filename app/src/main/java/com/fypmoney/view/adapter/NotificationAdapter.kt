@@ -64,6 +64,7 @@ class NotificationAdapter(var viewModel: NotificationViewModel,var onNotificatio
             notificationList1?.forEach {
                 notificationList!!.add(it)
             }
+
             notifyDataSetChanged()
         } catch (e: Exception) {
             e.printStackTrace()

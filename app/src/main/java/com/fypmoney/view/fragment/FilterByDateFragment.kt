@@ -84,6 +84,11 @@ class FilterByDateFragment(
         clear.setOnClickListener {
             fromDate.text = ""
             toDate.text = ""
+            onBottomSheetClickListener.onFilterByDateButtonClick(
+                fromDate.text.toString(),
+                toDate.text.toString()
+            )
+            dismiss()
         }
         apply.setOnClickListener {
             when {

@@ -24,6 +24,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.BASE_ACTIVITY_URL
 import com.fypmoney.util.AppConstants.FEED_RESPONSE
 import com.fypmoney.util.DialogUtils
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.viewmodel.FeedsViewModel
 import kotlinx.android.synthetic.main.view_user_feeds.*
@@ -56,6 +57,9 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
             toolbar = toolbar,
             isBackArrowVisible = false
         )*/
+
+
+
         mViewModel.callFetchFeedsApi(false, 0.0, 0.0)
 
 

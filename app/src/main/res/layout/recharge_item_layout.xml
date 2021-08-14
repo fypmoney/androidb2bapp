@@ -39,6 +39,7 @@
             style="@style/TextviewRegular"
             android:layout_gravity="center"
             android:visibility="visible"
+            android:textStyle="bold"
             android:layout_marginTop="10dp"
 
             android:textSize="@dimen/textSize_14"

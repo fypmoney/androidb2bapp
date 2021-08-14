@@ -54,7 +54,7 @@ class ChoresHistoryViewModel(application: Application) : BaseViewModel(applicati
                 endpoint = NetworkUtil.endURL(ApiConstant.API_HISTORY_TASK),
                 request_type = ApiUrl.POST,
                 GetTaskResponse(page = 0, size = 10, sort = "createdDate,desc"), onResponse = this,
-                isProgressBar = false
+                isProgressBar = true
             )
 
         )

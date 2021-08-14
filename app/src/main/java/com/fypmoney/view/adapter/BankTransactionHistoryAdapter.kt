@@ -59,11 +59,16 @@ class BankTransactionHistoryAdapter(var viewModel: BankTransactionHistoryViewMod
      */
     fun setList(transactionList1: List<BankTransactionHistoryResponseDetails>?) {
         try {
+            if (transactionList1 != null) {
+                transactionList1?.forEach {
+                    transactionList!!.add(it)
+                }
+            } else {
 
-            transactionList1?.forEach {
-                transactionList!!.add(it)
+                transactionList!!.clear()
             }
-            Log.d("akiakjdi",transactionList1?.size.toString())
+
+            Log.d("akiakjdi", transactionList1?.size.toString())
             notifyDataSetChanged()
         } catch (e: Exception) {
             e.printStackTrace()

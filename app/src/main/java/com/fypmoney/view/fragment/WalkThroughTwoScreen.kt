@@ -38,7 +38,7 @@ class WalkThroughTwoScreen : BaseFragment<ViewWalkThroughTwoBinding, WalkThrough
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
-        imageView.gifResource = R.raw.walk_through_two
+        Glide.with(requireContext()).load(R.raw.walk_through_two).into(imageView)
 
 
     }

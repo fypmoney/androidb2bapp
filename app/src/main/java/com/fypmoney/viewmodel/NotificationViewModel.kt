@@ -126,7 +126,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                     if (responseData.notificationResponseDetails.isNullOrEmpty()) {
                         isTimeLineNoDataVisible.set(true)
                     } else {
-                        isTimeLineNoDataVisible.set(false)
+
                         userTimeLineAdapter.setList(responseData.notificationResponseDetails)
                     }
                 }
@@ -140,7 +140,8 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                             position = positionSelected.get()!!
                         )
                         if (notificationAdapter.itemCount == 0) {
-                            noDataFoundVisibility.set(true)
+
+                            isTimeLineNoDataVisible.set(true)
                         }
                     }
 

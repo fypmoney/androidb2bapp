@@ -138,6 +138,7 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
         val tAndCEndIndex = tAndCStartIndex + tAndCText.length
         val ss = SpannableString(text);
         ss.setSpan(
+
             MyStoreClickableSpan(1, object : ClickableSpanListener {
                 override fun onPositionClicked(pos: Int) {
                     openWebPageFor(getString(R.string.privacy_policy),"https://www.fypmoney.in/fyp/privacy-policy/")

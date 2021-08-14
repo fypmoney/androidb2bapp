@@ -145,9 +145,9 @@ class BindingAdapter {
                 when (isSender) {
                     AppConstants.YES -> {
                         val textViewLayoutParams = RelativeLayout.LayoutParams(
-                            view.context.resources.getDimension(R.dimen._150sdp).toInt(),
+                            view.context.resources.getDimension(R.dimen._160sdp).toInt(),
                             view.context.resources.getDimension(R.dimen._80sdp).toInt(),
-                            )
+                        )
 
                         // add a rule to align to the left
 
@@ -167,9 +167,9 @@ class BindingAdapter {
                     }
                     else -> {
                         val textViewLayoutParams = RelativeLayout.LayoutParams(
-                            view.context.resources.getDimension(R.dimen._150sdp).toInt(),
+                            view.context.resources.getDimension(R.dimen._160sdp).toInt(),
                             view.context.resources.getDimension(R.dimen._80sdp).toInt(),
-                            )
+                        )
 
                         textViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_START)
                         // make sure the rule was applied

@@ -11,13 +11,43 @@
             type="com.fypmoney.viewmodel.NotificationViewModel" />
 
     </data>
+<RelativeLayout
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="@dimen/_210sdp"
+        android:layout_height="@dimen/_160sdp"
+        android:elevation="@dimen/_2sdp"
+        android:id="@+id/illustration"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:visibility="@{viewModel.isTimeLineNoDataVisible?View.VISIBLE:View.GONE,default=gone}"
+        app:srcCompat="@drawable/ic_no_notifications" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        style="@style/TextviewRegular"
+        android:layout_gravity="center"
+        android:textSize="@dimen/_14sdp"
+        android:layout_marginStart="@dimen/_28sdp"
+        android:layout_marginEnd="@dimen/_28sdp"
+        android:gravity="center"
+        android:visibility="@{viewModel.isTimeLineNoDataVisible?View.VISIBLE:View.GONE,default=gone}"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/illustration"
+        android:elevation="@dimen/_2sdp"
+        android:text="@string/user_timeline_api_error"
+        android:textColor="@color/text_color_light" />
+
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_light_dark"
-        android:layout_below="@+id/layout"
+
         app:onRefreshListener="@{() -> viewModel.onRefresh()}"
         app:refreshing="@{viewModel.isLoading}">
 
@@ -33,110 +63,78 @@
 
 
             <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-         >
-
-            <include
-                android:id="@+id/toolbar_layout"
-                layout="@layout/toolbar" />
-
-
-
-            <LinearLayout
-                android:id="@+id/layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/toolbar_layout"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivServiceLogo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:visibility="@{viewModel.isGetNotificationsRecyclerVisible?View.GONE:View.VISIBLE,default=gone}"
-                    app:srcCompat="@drawable/ic_oops" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextviewRegular"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/get_notification_api_error"
-                    android:textColor="@color/text_color_dark"
-                    android:visibility="@{viewModel.isGetNotificationsRecyclerVisible?View.GONE:View.VISIBLE,default=gone}" />
+                <include
+                    android:id="@+id/toolbar_layout"
+                    layout="@layout/toolbar" />
 
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerview"
+                <LinearLayout
+                    android:id="@+id/layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/margin"
-                    android:paddingTop="@dimen/screenMarginRight"
-                    android:paddingEnd="@dimen/margin"
-                    app:adapter="@{viewModel.notificationAdapter}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:spanCount="2" />
-
-            </LinearLayout>
+                    android:layout_below="@+id/toolbar_layout"
+                    android:orientation="vertical">
 
 
-            <View
-                android:id="@+id/view1"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@id/layout"
-                android:layout_marginStart="@dimen/screenMarginLeft"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="@dimen/screenMarginRight"
-                android:layout_marginBottom="16dp"
-                android:background="@color/dividerColor"
-                android:visibility="@{viewModel.isPreviousVisible?View.VISIBLE:View.GONE,default=gone}" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/margin"
+                        android:paddingTop="@dimen/screenMarginRight"
+                        android:paddingEnd="@dimen/margin"
+                        app:adapter="@{viewModel.notificationAdapter}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:spanCount="2" />
+
+                </LinearLayout>
 
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/view1"
-
-                android:orientation="vertical"
-
-                android:visibility="@{viewModel.isPreviousVisible?View.VISIBLE:View.GONE,default=gone}">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_gravity="center"
-                    android:visibility="@{viewModel.isTimeLineNoDataVisible?View.VISIBLE:View.GONE,default=gone}"
-                    app:srcCompat="@drawable/ic_oops" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    style="@style/TextviewRegular"
-                    android:layout_gravity="center"
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@id/layout"
+                    android:layout_marginStart="@dimen/screenMarginLeft"
                     android:layout_marginTop="10dp"
-                    android:text="@string/user_timeline_api_error"
-                    android:textColor="@color/text_color_dark"
-                    android:visibility="@{viewModel.isTimeLineNoDataVisible?View.VISIBLE:View.GONE,default=gone}" />
+                    android:layout_marginEnd="@dimen/screenMarginRight"
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/dividerColor"
+                    android:visibility="@{viewModel.isPreviousVisible?View.VISIBLE:View.GONE,default=gone}" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view1"
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:paddingStart="10dp"
+                    android:layout_below="@id/view1"
 
-                    android:paddingEnd="10dp"
-                    android:paddingBottom="@dimen/screenMarginRight"
-                    app:adapter="@{viewModel.userTimeLineAdapter}"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    android:orientation="vertical"
 
-                    />
+                    >
 
-            </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingStart="10dp"
+
+                        android:paddingEnd="10dp"
+                        android:paddingBottom="@dimen/screenMarginRight"
+                        app:adapter="@{viewModel.userTimeLineAdapter}"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+
+                        />
+
+                </LinearLayout>
             </RelativeLayout>
 
 
         </androidx.core.widget.NestedScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</RelativeLayout>
 </layout>

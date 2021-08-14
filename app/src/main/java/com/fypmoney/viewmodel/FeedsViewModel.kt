@@ -6,6 +6,7 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -18,6 +19,7 @@ import com.fypmoney.model.FeedRequestModel
 import com.fypmoney.model.FeedResponseModel
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.FeedsAdapter
 import java.lang.Exception
 
@@ -30,6 +32,7 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
     var noDataFoundVisibility = ObservableField(false)
     var noDataText = ObservableField(application.getString(R.string.no_data_found))
     var isRecyclerviewVisible = ObservableField(false)
+    var username = ObservableField<String>()
     var totalCount = ObservableField(0)
     var onFeedButtonClick = MutableLiveData<FeedDetails>()
     var onFeedsApiFail = MutableLiveData<Boolean>()
@@ -42,6 +45,13 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
     val selectedPosition = ObservableField<Int>()
     val fromWhichScreen = ObservableField(0)
     val onFeedsSuccess = MutableLiveData<ArrayList<String?>>()
+
+    init {
+        username.set(
+            "Hey, " + Utility.getCustomerDataFromPreference()?.firstName + " 👋"
+        )
+
+    }
 
 
     /*

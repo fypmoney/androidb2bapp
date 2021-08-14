@@ -88,6 +88,7 @@ companion object{
             val intent = Intent(this, ChoresHistoryActivity::class.java)
 
             startActivity(intent)
+
         }
         ivNotificationBell.setOnClickListener(View.OnClickListener {
             intentToActivity(NotificationView::class.java)
@@ -102,6 +103,7 @@ companion object{
             val intent = Intent(this, ChoresSelectSampleActivity::class.java)
 
             startActivity(intent)
+            overridePendingTransition(R.anim.slide_out_righ_slow, R.anim.slide_in_right_slow);
         }
 
     }

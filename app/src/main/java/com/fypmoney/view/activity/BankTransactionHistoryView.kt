@@ -29,6 +29,8 @@ import kotlinx.android.synthetic.main.view_bank_transaction_history.*
 class BankTransactionHistoryView :
     BaseActivity<ViewBankTransactionHistoryBinding, BankTransactionHistoryViewModel>(),
     FilterByDateFragment.OnFilterByDateClickListener {
+    private var toDatestr: String = ""
+    private var fromDatestr: String = ""
     private lateinit var mViewModel: BankTransactionHistoryViewModel
 
     override fun getBindingVariable(): Int {
@@ -112,7 +114,10 @@ class BankTransactionHistoryView :
         LoadProgressBar?.visibility = View.VISIBLE
 
         isLoading = true
-        mViewModel.callGetBankTransactionHistoryApi(page = page)
+
+        if (fromDatestr.isNotEmpty() || toDatestr.isNotEmpty()) {
+            mViewModel.callGetBankTransactionHistoryApi(fromDatestr, toDatestr, page = page)
+        }
 
 
     }
@@ -141,7 +146,12 @@ class BankTransactionHistoryView :
     }
 
     override fun onFilterByDateButtonClick(fromDate: String, toDate: String) {
-        mViewModel.callGetBankTransactionHistoryApi(fromDate, toDate)
+        page = 1
+        mViewModel.bankTransactionHistoryAdapter.setList(null)
+
+        fromDatestr = fromDate
+        toDatestr = toDate
+        mViewModel.callGetBankTransactionHistoryApi(fromDate, toDate, 1)
     }
 
     /**
