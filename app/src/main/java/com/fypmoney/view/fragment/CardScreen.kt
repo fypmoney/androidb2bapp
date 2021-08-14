@@ -28,9 +28,11 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.MyProfileListAdapter
+import com.fypmoney.view.notifymeordercard.NotifyMeOrderCardActivity
 import com.fypmoney.viewmodel.CardScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.screen_card.*
+import kotlinx.android.synthetic.main.screen_card.view.*
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
 import kotlinx.android.synthetic.main.virtual_card_front_layout.*
 
@@ -100,7 +102,22 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         BottomSheetBehavior.from<ConstraintLayout>(mViewBinding.clBottomsheet)
         behavior.state =
             BottomSheetBehavior.STATE_COLLAPSED
+        behavior.addBottomSheetCallback(object: BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if(newState == BottomSheetBehavior.STATE_EXPANDED){
+                    mViewBinding.upIv.rotation = 270.0f
+                }else if(newState == BottomSheetBehavior.STATE_COLLAPSED){
+                    mViewBinding.upIv.rotation = 90.0f
+                }
+            }
 
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+        })
+
+        /*up_iv.setOnClickListener {
+
+        }*/
 
         front_fl.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
             override fun onSwipeTop() {
@@ -161,12 +178,12 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         }
         mViewModel.onBankProfileSuccess.observe(viewLifecycleOwner) {
             if (it) {
-                when (mViewModel.isOrderCard.get()) {
+                /*when (mViewModel.isOrderCard.get()) {
                     false -> {
                         myProfileAdapter.updateList(PockketApplication.instance.getString(R.string.track_order))
                     }
 
-                }
+                }*/
                 if (mViewModel.isActivateCardVisible.get() == false) {
                     try {
                         val textString = ArrayList<String>()
@@ -309,14 +326,16 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 callCardSettingsBottomSheet()
             }
             1 -> {
-                when (mViewModel.isOrderCard.get()) {
+                /*when (mViewModel.isOrderCard.get()) {
                     true -> {
                         intentToActivity(OrderCardView::class.java)
                     }
                     false -> {
                         intentToActivity(TrackOrderView::class.java)
                     }
-                }
+                }*/
+                intentToActivity(NotifyMeOrderCardActivity::class.java)
+
             }
             2 -> {
                 intentToActivity(BankTransactionHistoryView::class.java)

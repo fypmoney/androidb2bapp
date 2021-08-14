@@ -26,11 +26,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/toolbar_title"
-            style="@style/TextviewRegular"
             android:layout_width="wrap_content"
             android:layout_marginStart="30dp"
+            style="@style/TextviewBold"
             android:textColor="@color/text_color_dark"
-            android:textSize="17dp"
+            android:textSize="16sp"
             android:layout_height="wrap_content"
             />
 

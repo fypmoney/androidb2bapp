@@ -74,6 +74,10 @@ class PayUSuccessView : BaseActivity<ViewPayuSuccessBinding, PayUSuccessViewMode
         }
 
         setObserver()
+
+        mViewBinding.getHelpButton.setOnClickListener {
+            callFreshChat(applicationContext)
+        }
     }
 
     /**

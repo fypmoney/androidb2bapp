@@ -25,9 +25,10 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
-            app:imageUrl="@{item.profilePicResourceId}"
-            app:rounded="@{true}"
-            app:placeHolderDrawable="@{@drawable/ic_profile}"
+            android:padding="2dp"
+            app:customIsRounded="@{true}"
+            app:customStrokeWidth="@{@dimen/dp5}"
+            app:customStrokeColor="@{@color/grey}"
             app:srcCompat="@drawable/ic_profile" />
 
         <TextView

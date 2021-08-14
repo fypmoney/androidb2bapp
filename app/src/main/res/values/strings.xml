@@ -367,7 +367,7 @@
     First screen
     -->
     <string name="welcome">Welcome to</string>
-<!--
+    <!--
 By tapping on Create Account, you agree to the Terms of Service & Privacy Policy.
 -->
     <string name="create_account_terms">"By tapping on Create Account, you agree to the \n %1$s &amp; %2$s"</string>
@@ -761,18 +761,34 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="terms_and_conditions">Terms of Service</string>
 
 
-
     <string name="let_s_build_a_n_community_together">Let’s build a \n community together</string>
     <string name="we_can_sense_your_excitement">We can sense your excitement 🤩</string>
     <string name="join_the_community">Join the community</string>
     <string name="transaction_chat">Transactions/chat</string>
     <string name="chores_history_empty">Looks like you haven’t performed any task yet.</string>
+
+
+    <string name="redeem_mynts">Redeem Mynts</string>
+    <string name="convert_your_earned_n_mynts_into_cashback">Convert your earned \n mynts into cashback</string>
+
+
+    <string name="cancel">Cancel</string>
+
+    <string name="ok">Ok</string>
+    <string name="get_help">Get Help</string>
+    <string name="awesomeness_loading">Awesomeness Loading…</string>
+    <string name="we_want_to_give_you_the_best">We want to give you the best.</string>
+    <string name="keeping_everyone_s_safety_in_mind_physical_fyp_card_orders_will_resume_once_we_all_have_crossed_the_pandemic_you_can_hit_the_notify_me_button_to_receive_the_notification_when_we_begin_this_service">
+        Keeping everyone’s safety in mind, physical Fyp \n
+        card orders will resume once we all have crossed \n
+        the pandemic. You can hit the ‘Notify Me‘ button \n
+        to receive the notification when we begin this \n
+        service.</string>
+    <string name="notify_me">Notify Me</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
     </string-array>
-
-
     <string-array name="my_profile_title_list">
         <item>Privacy settings</item>
         <item>Feed/ interest settings</item>
@@ -789,8 +805,6 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
         <item>Grand Child</item>
         <item>Other</item>
     </string-array>
-
-
     <string-array name="order_card_list">
         <item>Set your limit</item>
         <item>Sensitive details kept safe</item>

@@ -7,8 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,16 +15,14 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ScreenHomeBinding
-import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
-import com.fypmoney.model.TransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.TopTenUsersAdapter
+import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
 import com.fypmoney.viewmodel.HomeScreenViewModel
-import com.google.android.material.card.MaterialCardView
 import kotlinx.android.synthetic.main.screen_home.*
 
 
@@ -55,6 +51,10 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         choreCard.setOnClickListener {
             intentToPayActivity(ChoresActivity::class.java)
         }
+        mViewBinding.splitBillsCv.setOnClickListener {
+            mViewModel.callSplitBillsStories()
+
+        }
 
         setObservers()
         setUpRecyclerView()
@@ -64,7 +64,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     private fun setUpRecyclerView() {
         val topTenUsersAdapter = TopTenUsersAdapter(
             viewLifecycleOwner, onRecentUserClick = {
-                var contact = ContactEntity()
+                val contact = ContactEntity()
                 contact.userId = it.userId.toString()
                 contact.contactNumber = it.userMobile
                 contact.profilePicResourceId = it.profilePicResourceId
@@ -107,6 +107,11 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
                 (mViewBinding.recentRv.adapter as TopTenUsersAdapter).run {
                     submitList(it.data)
                 }
+            }
+        })
+        mViewModel.splitBillsResponse.observe(viewLifecycleOwner, {
+            if(!it.listOfArrays.isNullOrEmpty()) {
+                callStory(it.listOfArrays)
             }
         })
         mViewModel.onAddMoneyClicked.observe(viewLifecycleOwner) {
@@ -220,11 +225,13 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     /*
    * This method is used to call card settings
    * */
-    private fun callDiduKnowBottomSheet(list: ArrayList<String?>) {
+    private fun callStory(list: List<String>) {
         val bottomSheet =
-            DidUKnowBottomSheet(list)
+            StoriesBottomSheet(list)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "DidUKnowSheet")
     }
+
+
 
 }

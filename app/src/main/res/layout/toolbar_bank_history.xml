@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/toolbar_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -14,9 +15,12 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/toolbar_title"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+            style="@style/TextviewBold"
+            android:textColor="@color/text_color_dark"
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            tools:text="title"
             android:layout_gravity="start" />
 
 
@@ -27,14 +31,14 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/toolbarImage"
+                style="@style/TextviewRegular"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/TextviewRegular"
-                android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_alignParentEnd="true"
-                app:srcCompat="@drawable/filter"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:paddingStart="10dp"
-                android:paddingEnd="10dp" />
+                android:paddingEnd="10dp"
+                app:srcCompat="@drawable/ic_filter" />
         </RelativeLayout>
 
 

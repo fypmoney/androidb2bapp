@@ -90,8 +90,8 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="30dp"
                     android:weightSum="2"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -108,9 +108,9 @@
                         android:drawableStart="@drawable/ic_add_money"
                         android:gravity="start|center"
                         android:drawablePadding="@dimen/_8sdp"
-                        android:layout_marginStart="@dimen/dp10"
+                        android:layout_marginEnd="@dimen/dp10"
                         android:onClick="@{()->viewModel.onAddMoneyClicked()}"
-                        android:paddingVertical="10dp"
+                        android:paddingVertical="8dp"
                         android:paddingHorizontal="10dp"
                         android:text="@string/add_money_btn_text"
                         android:textColor="@color/text_color_dark"
@@ -130,7 +130,7 @@
                         android:gravity="start|center"
                         android:drawablePadding="@dimen/_8sdp"
                         android:onClick="@{()->viewModel.onPayClicked()}"
-                        android:paddingVertical="10dp"
+                        android:paddingVertical="8dp"
                         android:paddingHorizontal="10dp"                        android:text="@string/pay_money_btn_text"
                         android:textColor="@color/text_color_dark"
                         android:textSize="14sp" />
@@ -145,9 +145,7 @@
                 android:id="@+id/ll_upper_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp16"
                 android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/dp16"
                 android:weightSum="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -164,14 +162,24 @@
                     app:cardUseCompatPadding="true"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="15dp"
+                        android:background="@drawable/ic_chores"
                         android:orientation="vertical">
 
-                        <FrameLayout
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="@string/quick_actions_chores"
+                            android:textSize="17sp" />
+                        <!--<FrameLayout
                             android:layout_width="@dimen/_75sdp"
                             android:layout_height="@dimen/_75sdp"
                             android:layout_gravity="center"
@@ -185,9 +193,9 @@
                                 android:layout_gravity="center"
                                 android:background="@drawable/ic_chores" />
 
-                        </FrameLayout>
+                        </FrameLayout>-->
 
-                        <androidx.appcompat.widget.AppCompatTextView
+                        <!--<androidx.appcompat.widget.AppCompatTextView
                             style="@style/TextviewBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -207,8 +215,8 @@
                             android:text="@string/quick_actions_chores1"
                             android:textAlignment="center"
                             android:textColor="@color/text_color_dark"
-                            android:textSize="12sp" />
-                    </LinearLayout>
+                            android:textSize="12sp" />-->
+                    </FrameLayout>
 
 
                 </com.google.android.material.card.MaterialCardView>
@@ -224,13 +232,24 @@
                     app:cardUseCompatPadding="true"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="10dp"
-                        android:paddingVertical="15dp"                        android:orientation="vertical">
+                        android:paddingVertical="15dp"
+                        android:background="@drawable/ic_rewards"
+                        android:orientation="vertical">
 
-                        <FrameLayout
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="@string/quick_actions_rewards"
+                            android:textSize="17sp" />
+                        <!--<FrameLayout
                             android:layout_width="@dimen/_75sdp"
                             android:layout_height="@dimen/_75sdp"
                             android:layout_gravity="center"
@@ -266,8 +285,8 @@
                             android:text="@string/quick_actions_rewards1"
                             android:textAlignment="center"
                             android:textColor="@color/text_color_dark"
-                            android:textSize="12sp" />
-                    </LinearLayout>
+                            android:textSize="12sp" />-->
+                    </FrameLayout>
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -278,13 +297,83 @@
                 android:id="@+id/ll_second_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp16"
-                android:layout_marginEnd="@dimen/dp16"
                 android:weightSum="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_upper_card">
 
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/split_bills_cv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:padding="10dp"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="@dimen/card_elevation"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="15dp"
+                        android:orientation="vertical"
+                        android:background="@drawable/ic_split_bills">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:text="@string/quick_actions_split_bill"
+                            android:textSize="17sp" />
+
+                        <!-- <FrameLayout
+                             android:layout_width="@dimen/_75sdp"
+                             android:layout_height="@dimen/_75sdp"
+                             android:layout_gravity="center"
+                             android:layout_marginTop="10dp"
+                             android:background="@drawable/cirecular1"
+                             app:layout_constraintTop_toTopOf="parent">
+
+                             <androidx.appcompat.widget.AppCompatImageView
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:layout_gravity="center"
+                                 android:background="@drawable/ic_split_bills" />
+
+                         </FrameLayout>
+
+                         <androidx.appcompat.widget.AppCompatTextView
+                             style="@style/TextviewBold"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_gravity="center"
+                             android:layout_marginTop="8dp"
+                             android:text="@string/quick_actions_split_bill"
+                             android:textSize="14sp" />
+
+                         <androidx.appcompat.widget.AppCompatTextView
+                             style="@style/TextviewRegular"
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_gravity="center"
+                             android:layout_marginTop="4dp"
+                             android:layout_marginBottom="4dp"
+                             android:paddingStart="4dp"
+                             android:paddingEnd="4dp"
+                             android:layout_marginHorizontal="10dp"
+                             android:text="@string/coming_soon"
+                             android:textAlignment="center"
+                             android:textColor="@color/text_color_dark"
+                             android:textSize="12sp" />-->
+                    </FrameLayout>
+
+
+                </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -297,13 +386,24 @@
                     app:layout_constraintTop_toTopOf="parent">
 
 
-                    <LinearLayout
+                    <FrameLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="10dp"
-                        android:paddingVertical="15dp"                        android:orientation="vertical">
+                        android:paddingVertical="15dp"
+                        android:orientation="vertical"
+                        android:background="@drawable/ic_referral">
 
-                        <FrameLayout
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginStart="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:text="@string/quick_actions_referrals"
+                            android:textSize="17sp" />
+                        <!--<FrameLayout
                             android:layout_width="@dimen/_75sdp"
                             android:layout_height="@dimen/_75sdp"
                             android:layout_gravity="center"
@@ -339,73 +439,13 @@
                             android:text="@string/quick_actions_referrals1"
                             android:textAlignment="center"
                             android:textColor="@color/text_color_dark"
-                            android:textSize="12sp" />
-                    </LinearLayout>
+                            android:textSize="12sp" />-->
+                    </FrameLayout>
 
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/layoutServicePrice"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:padding="10dp"
-                    app:cardCornerRadius="18dp"
-                    app:cardElevation="@dimen/card_elevation"
-                    app:cardUseCompatPadding="true"
-                    app:layout_constraintTop_toTopOf="parent">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="15dp"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="@dimen/_75sdp"
-                            android:layout_height="@dimen/_75sdp"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="10dp"
-                            android:background="@drawable/cirecular1"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:background="@drawable/ic_split_bills" />
-
-                        </FrameLayout>
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/TextviewBold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="8dp"
-                            android:text="@string/quick_actions_split_bill"
-                            android:textSize="14sp" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/TextviewRegular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:paddingStart="4dp"
-                            android:paddingEnd="4dp"
-                            android:layout_marginHorizontal="10dp"
-                            android:text="@string/coming_soon"
-                            android:textAlignment="center"
-                            android:textColor="@color/text_color_dark"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-
-                </com.google.android.material.card.MaterialCardView>
 
 
             </LinearLayout>
@@ -415,7 +455,7 @@
                 style="@style/TextviewBold"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp16"
+                android:layout_marginStart="@dimen/dp10"
                 android:layout_marginTop="20dp"
                 android:text="@string/recent"
                 android:textSize="20sp"
@@ -436,7 +476,8 @@
                 android:visibility="@{viewModel.isFeedVisible?View.GONE:View.VISIBLE,default=visible}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recent_rv" />
+                android:layout_marginTop="@dimen/dp10"
+                app:layout_constraintTop_toBottomOf="@+id/reedem_mynts_rl" />
 
 
 
@@ -446,8 +487,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp10"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -456,20 +497,57 @@
                 tools:listitem="@layout/item_top_ten_user"
                 app:layout_constraintTop_toBottomOf="@+id/recent_tv" />
 
+            <RelativeLayout
+                android:id="@+id/reedem_mynts_rl"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recent_rv"
+                android:layout_marginTop="@dimen/dp20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_redeem_mynts">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/title_mynts_tv"
+                    style="@style/TextviewBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:text="@string/redeem_mynts"
+                    android:textColor="@color/yellow"
+                    android:textSize="17sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/sub_title_mynts_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/title_mynts_tv"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:text="@string/convert_your_earned_n_mynts_into_cashback"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="12sp" />
+
+            </RelativeLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/dp16"
-                android:layout_marginEnd="@dimen/dp16"
                 android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/dp10"
                 android:visibility="@{viewModel.isFeedVisible?View.VISIBLE:View.GONE,default=gone}"
                 app:adapter="@{viewModel.feedsAdapter}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@+id/recent_rv" />
+                app:layout_constraintTop_toBottomOf="@+id/reedem_mynts_rl" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

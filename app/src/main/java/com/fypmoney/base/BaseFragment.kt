@@ -175,7 +175,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         activity!!.setSupportActionBar(toolbar)
         val upArrow = ContextCompat.getDrawable(
             context,
-            R.drawable.ic_back_arrow
+            R.drawable.ic_back_new
         )
 
         activity.supportActionBar?.let {

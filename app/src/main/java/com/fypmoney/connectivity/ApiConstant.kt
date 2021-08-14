@@ -91,6 +91,7 @@ object ApiConstant {
 
     const val TOP_TEN_USER_API = "/services/PockketService/api/recent/wallet/transaction"
     const val TOTAL_REFERRAL_CASHBACK_API = "/services/PockketService/api/total/referral/points"
+    const val API_STORY = "/services/loyaltyservice/api/story/split"
 
 }
 
