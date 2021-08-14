@@ -32,6 +32,7 @@ import java.util.ArrayList
 
 
 import android.app.ActivityOptions
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 /*
@@ -70,7 +71,11 @@ companion object{
 
 
         setObserver()
-
+        setToolbarAndTitle(
+            context = this,
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.chore_title)
+        )
         tabLayout = findViewById(R.id.tabLayout)
         viewPager = findViewById(R.id.viewPager)
         loader_icon = findViewById(R.id.loader)
@@ -104,7 +109,7 @@ companion object{
             intentToActivity(NotificationView::class.java)
 
         })
-        back.setOnClickListener(View.OnClickListener { super.onBackPressed() })
+
         myProfile.setOnClickListener(View.OnClickListener {
             intentToActivity(UserProfileView::class.java)
         })

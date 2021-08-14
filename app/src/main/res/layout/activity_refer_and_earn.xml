@@ -192,11 +192,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/total_refral_won_tv"/>
 
-            <com.fypmoney.view.customview.HorizontalDottedProgress
+            <com.fypmoney.view.customview.HorizontalDottedProgressBlack
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/loading_amount_hdp"
                 android:layout_gravity="center"
+
                 android:layout_marginTop="10dp"
                 tools:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@+id/total_refral_won_tv"

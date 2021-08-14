@@ -103,7 +103,7 @@
                     android:layout_marginEnd="@dimen/screenMarginRight"
                     android:layout_marginBottom="16dp"
                     android:background="@color/dividerColor"
-                    android:visibility="@{viewModel.isPreviousVisible?View.VISIBLE:View.GONE,default=gone}" />
+                    android:visibility="gone" />
 
 
                 <LinearLayout
@@ -120,7 +120,6 @@
                         android:id="@+id/recycler_view1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:paddingStart="10dp"
 
                         android:paddingEnd="10dp"
