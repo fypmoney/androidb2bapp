@@ -229,12 +229,12 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     /*
    * This method is used to call card settings
    * */
-    private fun callDiduKnowBottomSheet(list: ArrayList<Drawable?>) {
+   /* private fun callDiduKnowBottomSheet(list: ArrayList<Drawable?>) {
         val bottomSheet =
             StoriesBottomSheet(staticResources = list)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "DidUKnowSheet")
-    }
+    }*/
 
 
 
