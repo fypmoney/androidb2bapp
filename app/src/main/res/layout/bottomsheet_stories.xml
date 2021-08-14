@@ -26,8 +26,7 @@
                android:layout_height="match_parent"
                android:contentDescription="@null"
                android:scaleType="center"
-               app:shapeAppearanceOverlay="@style/roundedCorners"
-               tools:src="@drawable/did_u_know_card" />
+               app:shapeAppearanceOverlay="@style/roundedCorners" />
        </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -60,4 +60,10 @@
     <color name="background_light_dark">#f2f2f2</color>
     <color name="yellow">#F2A100</color>
 
+    <color name="color1">#40E0D0</color>
+    <color name="color2">#9FCD9A</color>
+    <color name="color3">#FFB964</color>
+    <color name="color4">#F7797D</color>
+    <color name="color5">#F7797D</color>
+
 </resources>

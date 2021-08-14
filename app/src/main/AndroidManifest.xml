@@ -19,6 +19,9 @@
         tools:ignore="UnusedAttribute"
         tools:replace="android:usesCleartextTraffic">
         <activity
+            android:name=".view.notifymeordercard.NotifyMeOrderCardActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.webview.WebViewActivity"
             android:exported="true" />
         <activity
@@ -252,7 +255,6 @@
             <action android:name="android.intent.action.VIEW" />
 
             <category android:name="android.intent.category.BROWSABLE" />
-
             <category android:name="android.intent.category.DEFAULT" />
 
             <data

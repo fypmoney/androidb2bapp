@@ -28,6 +28,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.MyProfileListAdapter
+import com.fypmoney.view.notifymeordercard.NotifyMeOrderCardActivity
 import com.fypmoney.viewmodel.CardScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.screen_card.*
@@ -177,12 +178,12 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         }
         mViewModel.onBankProfileSuccess.observe(viewLifecycleOwner) {
             if (it) {
-                when (mViewModel.isOrderCard.get()) {
+                /*when (mViewModel.isOrderCard.get()) {
                     false -> {
                         myProfileAdapter.updateList(PockketApplication.instance.getString(R.string.track_order))
                     }
 
-                }
+                }*/
                 if (mViewModel.isActivateCardVisible.get() == false) {
                     try {
                         val textString = ArrayList<String>()
@@ -325,14 +326,16 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 callCardSettingsBottomSheet()
             }
             1 -> {
-                when (mViewModel.isOrderCard.get()) {
+                /*when (mViewModel.isOrderCard.get()) {
                     true -> {
                         intentToActivity(OrderCardView::class.java)
                     }
                     false -> {
                         intentToActivity(TrackOrderView::class.java)
                     }
-                }
+                }*/
+                intentToActivity(NotifyMeOrderCardActivity::class.java)
+
             }
             2 -> {
                 intentToActivity(BankTransactionHistoryView::class.java)

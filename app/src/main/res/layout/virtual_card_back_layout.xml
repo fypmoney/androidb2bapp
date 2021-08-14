@@ -146,10 +146,10 @@
                     android:paddingEnd="15dp"
                     android:text="@string/view_details_btn_text"
                     android:textColor="@color/white"
-                    app:customCornerRadius="@{@dimen/dp24}"
                     android:visibility="@{viewModel.isViewDetailsVisible?View.VISIBLE:View.GONE}"
                     app:customBackgroundAlpha="@{10}"
                     app:customBackgroundColor="@{@color/white}"
+                    app:customCornerRadius="@{@dimen/dp24}"
                     app:customIsRounded="@{false}" />
 
                 <androidx.appcompat.widget.AppCompatTextView

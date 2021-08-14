@@ -3,11 +3,9 @@ package com.fypmoney.view.fragment
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,14 +52,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
             intentToPayActivity(ChoresActivity::class.java)
         }
         mViewBinding.splitBillsCv.setOnClickListener {
-            /*var data = arrayListOf(ContextCompat.getDrawable(requireContext(),R.drawable.split_bill_01),
-                ContextCompat.getDrawable(requireContext(),R.drawable.split_bill_02),ContextCompat.getDrawable(requireContext(),R.drawable.split_bill_03)
-            )
-            data.let {
-                callDiduKnowBottomSheet(
-                    it
-                )
-            }*/
+            mViewModel.callSplitBillsStories()
 
         }
 
@@ -73,7 +64,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     private fun setUpRecyclerView() {
         val topTenUsersAdapter = TopTenUsersAdapter(
             viewLifecycleOwner, onRecentUserClick = {
-                var contact = ContactEntity()
+                val contact = ContactEntity()
                 contact.userId = it.userId.toString()
                 contact.contactNumber = it.userMobile
                 contact.profilePicResourceId = it.profilePicResourceId
@@ -116,6 +107,11 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
                 (mViewBinding.recentRv.adapter as TopTenUsersAdapter).run {
                     submitList(it.data)
                 }
+            }
+        })
+        mViewModel.splitBillsResponse.observe(viewLifecycleOwner, {
+            if(!it.listOfArrays.isNullOrEmpty()) {
+                callStory(it.listOfArrays)
             }
         })
         mViewModel.onAddMoneyClicked.observe(viewLifecycleOwner) {
@@ -229,12 +225,12 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     /*
    * This method is used to call card settings
    * */
-   /* private fun callDiduKnowBottomSheet(list: ArrayList<Drawable?>) {
+    private fun callStory(list: List<String>) {
         val bottomSheet =
-            StoriesBottomSheet(staticResources = list)
+            StoriesBottomSheet(list)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "DidUKnowSheet")
-    }*/
+    }
 
 
 
