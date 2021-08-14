@@ -23,10 +23,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="@dimen/_5sdp"
-
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         app:cardCornerRadius="20dp"
-        android:layout_marginTop="@dimen/_5sdp"
+
         android:onClick="@{()->viewHelper.onFeedButtonClick()}">
 
         <androidx.appcompat.widget.AppCompatImageView

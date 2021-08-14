@@ -49,7 +49,7 @@ class ChoresHistoryActivity : BaseActivity<ActivityChoresHistoryBinding, ChoresH
         mbindign = ActivityChoresHistoryBinding.inflate(layoutInflater)
 
         setContentView(mbindign!!.root)
-        overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+
         setToolbarAndTitle(
             context = this@ChoresHistoryActivity,
             toolbar = toolbar,

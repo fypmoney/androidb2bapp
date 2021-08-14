@@ -9,16 +9,21 @@
 
     </data>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
+        app:cardCornerRadius="20dp"
+        android:layout_marginEnd="@dimen/_10sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:layout_height="wrap_content">
 
         <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
             android:id="@+id/youtubePlayerView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_200sdp"
-            android:layout_margin="@dimen/margin"
+
             app:autoPlay="false"
             app:showFullScreenButton="false" />
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </layout>

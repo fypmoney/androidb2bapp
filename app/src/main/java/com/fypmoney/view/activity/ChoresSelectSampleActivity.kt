@@ -1,6 +1,7 @@
 package com.fypmoney.view.activity
 
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -75,7 +76,14 @@ class ChoresSelectSampleActivity : BaseActivity<ViewAddTaskBinding, CreateTaskVi
                 intent.putExtra("sample_desc", task.description.toString())
                 intent.putExtra("sample_amount", task.amount.toString())
                 intent.putExtra("numberofdays", task.numberOfDays)
-                startActivityForResult(intent, 23)
+                val bndlAnimation = ActivityOptions.makeCustomAnimation(
+                    applicationContext,
+                    com.fypmoney.R.anim.slideinleft,
+                    com.fypmoney.R.anim.slideinright
+                ).toBundle()
+
+
+                startActivityForResult(intent, 23, bndlAnimation)
                 mViewModel.onNotificationClicked.value = false
             }
 

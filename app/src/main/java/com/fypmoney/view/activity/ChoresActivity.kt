@@ -30,6 +30,10 @@ import kotlinx.android.synthetic.main.bottom_sheet_response_task.*
 import kotlinx.android.synthetic.main.view_chores.*
 import java.util.ArrayList
 
+
+import android.app.ActivityOptions
+
+
 /*
 * This is used to handle chores
 * */
@@ -86,8 +90,14 @@ companion object{
 
         ll_show_history.setOnClickListener {
             val intent = Intent(this, ChoresHistoryActivity::class.java)
+            val bndlAnimation = ActivityOptions.makeCustomAnimation(
+                applicationContext,
+                com.fypmoney.R.anim.slide_in_up,
+                com.fypmoney.R.anim.slide_out_up
+            ).toBundle()
 
-            startActivity(intent)
+            startActivity(intent, bndlAnimation)
+
 
         }
         ivNotificationBell.setOnClickListener(View.OnClickListener {
@@ -101,9 +111,14 @@ companion object{
 
         btnSendOtp.setOnClickListener {
             val intent = Intent(this, ChoresSelectSampleActivity::class.java)
+            val bndlAnimation = ActivityOptions.makeCustomAnimation(
+                applicationContext,
+                com.fypmoney.R.anim.slideinleft,
+                com.fypmoney.R.anim.slideinright
+            ).toBundle()
 
-            startActivity(intent)
-            overridePendingTransition(R.anim.slide_out_righ_slow, R.anim.slide_in_right_slow);
+            startActivity(intent, bndlAnimation)
+
         }
 
     }
