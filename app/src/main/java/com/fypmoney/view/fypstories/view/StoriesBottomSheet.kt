@@ -17,8 +17,19 @@ import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import android.graphics.drawable.Drawable
+import androidx.annotation.Nullable
+import androidx.core.content.ContextCompat
 
-class StoriesBottomSheet(var resourceList: ArrayList<String?>):
+import com.bumptech.glide.load.engine.GlideException
+
+import com.bumptech.glide.request.RequestListener
+
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+
+
+class StoriesBottomSheet(var resourceList: List<String?>):
     BottomSheetDialogFragment(), FypStoriesView.StoriesListener {
     private var binding : BottomsheetStoriesBinding? = null
     private lateinit var bottomSheetDialog : BottomSheetDialog
@@ -57,8 +68,8 @@ class StoriesBottomSheet(var resourceList: ArrayList<String?>):
         binding!!.stories.setStoriesListener(this)
         binding!!.stories.startStories(counter)
 
-        //Utility.setImageUsingGlide(PockketApplication.instance, resourceList[counter], binding!!.storiesIv)
-        loadImage(view = binding!!.storiesIv,imageUrl = resourceList[counter] , null,
+        loadImage(view = binding!!.storiesIv,imageUrl = resourceList[counter] ,
+            ContextCompat.getDrawable(binding!!.storiesIv.context,R.drawable.progress_bar_drawable),
             rounded = false
         )
 
@@ -89,13 +100,20 @@ class StoriesBottomSheet(var resourceList: ArrayList<String?>):
     }
 
     override fun onNext() {
-        Utility.setImageUsingGlide(PockketApplication.instance, resourceList.get(++counter), binding!!.storiesIv)
+        loadImage(view = binding!!.storiesIv,imageUrl = resourceList[++counter],
+            ContextCompat.getDrawable(binding!!.storiesIv.context,R.drawable.progress_bar_drawable),
+            rounded = false
+        )
 
     }
 
     override fun onPrev() {
         if (counter - 1 < 0) return
-        Utility.setImageUsingGlide(PockketApplication.instance, resourceList[--counter], binding!!.storiesIv)
+        loadImage(view = binding!!.storiesIv,imageUrl = resourceList[--counter],
+            ContextCompat.getDrawable(binding!!.storiesIv.context,R.drawable.progress_bar_drawable),
+            rounded = false
+        )
+
 
     }
 

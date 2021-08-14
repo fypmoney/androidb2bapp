@@ -1,7 +1,6 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,9 +21,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.adapter.FeedsSectionAdapter
 import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
-import java.lang.Exception
+
 
 class HomeScreenViewModel(application: Application) : BaseViewModel(application),
     FeedsAdapter.OnFeedItemClickListener {
@@ -42,6 +39,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     val isApiLoading = ObservableField(true)
     var latitude = ObservableField<Double>()
     val longitude = ObservableField<Double>()
+    val splitBillsResponse = MutableLiveData<SplitBillsResponse>()
     val fromWhichScreen = ObservableField(0)
     var onReferalAndCodeClicked = MutableLiveData<Boolean>()
 
@@ -127,7 +125,17 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
 
     }
 
-
+    fun callSplitBillsStories(){
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_STORY,
+                NetworkUtil.endURL(ApiConstant.API_STORY),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+    }
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
@@ -143,6 +151,12 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
                 val data =  Gson().fromJson(responseData.toString(), TopTenUsersResponse::class.java)
                 if (data is TopTenUsersResponse) {
                     _topTenUserResponse.value = data
+                }
+            }
+            ApiConstant.API_STORY -> {
+                val data =  Gson().fromJson(responseData.toString(), SplitBillsResponse::class.java)
+                if (data is SplitBillsResponse) {
+                    splitBillsResponse.value = data
                 }
             }
             ApiConstant.API_FETCH_ALL_FEEDS -> {

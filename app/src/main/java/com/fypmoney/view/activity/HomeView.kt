@@ -13,8 +13,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.appsflyer.AFInAppEventParameterName
 import com.appsflyer.AppsFlyerLib
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -39,6 +37,7 @@ import kotlinx.android.synthetic.main.view_home.*
 class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     Utility.OnAllContactsAddedListener, FamilyNotificationBottomSheet.OnBottomSheetClickListener,
     RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener {
+    private var startingPosition  = 0
     private var commentstr: String? = null
     private var choresModel: NotificationModel.NotificationResponseDetails? = null
     private var bottomsheetInsufficient: TaskMessageInsuficientFuntBottomSheet? = null
@@ -69,7 +68,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         mViewBinding = getViewDataBinding()
         setObserver()
         checkAndAskPermission()
-        setCurrentFragment(HomeScreen())
+        loadFragment(HomeScreen(),1)
         try {
             val eventValue: MutableMap<String, Any> = HashMap()
 
@@ -109,7 +108,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                         R.string.family_settings_toolbar_heading
                     )
                 )
-                setCurrentFragment(FamilySettingsView())
+                loadFragment(FamilySettingsView(),5)
 
             }
             AppConstants.NOTIFICATION -> {
@@ -119,50 +118,51 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         }
 
         mViewBinding.navigationView.setOnNavigationItemSelectedListener {
+            val newPosition = 0
             when (it.itemId) {
                 R.id.home -> {
+                    loadFragment(HomeScreen(),1)
                     mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.text_color_dark))
                     mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.text_color_dark))
                     mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon)
-                    mViewModel.isScanVisible.set(true)
+                    //mViewModel.isScanVisible.set(true)
                     mViewModel.headerText.set("")
-                    setCurrentFragment(HomeScreen())
                 }
                 R.id.feeds -> {
+                    loadFragment(UserFeedsView(),2)
                     mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.white))
                     mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
                     mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
-                    mViewModel.isScanVisible.set(false)
+                    //mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(getString(R.string.feeds_bottom_nav_title))
-                    setCurrentFragment(UserFeedsView())
                 }
                 R.id.store -> {
+                    loadFragment(StoreScreen(),4)
                     mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.white))
                     mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
                     mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
-                    mViewModel.isScanVisible.set(false)
+                    //mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(getString(R.string.store_bottom_nav_title))
-                    setCurrentFragment(StoreScreen())
                 }
                 R.id.card -> {
+                    loadFragment(CardScreen(),3)
                     mViewBinding.toolbar.background = ( ContextCompat.getDrawable(this,R.drawable.social_community_gradient))
                     mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.white))
                     mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon)
-                    mViewModel.isScanVisible.set(false)
+                   // mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(getString(R.string.card_details_title))
-                    setCurrentFragment(CardScreen())
                 }
                 R.id.family -> {
+                    loadFragment(FamilySettingsView(),5)
                     mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.white))
                     mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
                     mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
-                    mViewModel.isScanVisible.set(false)
+                    //mViewModel.isScanVisible.set(false)
                     mViewModel.headerText.set(
                         getString(
                             R.string.family_settings_toolbar_heading
                         )
                     )
-                    setCurrentFragment(FamilySettingsView())
                 }
 
             }
@@ -448,9 +448,35 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
     private fun setCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
+            setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_righ)
             replace(R.id.container, fragment)
             commit()
         }
+
+    private fun loadFragment(fragment: Fragment?, newPosition: Int): Boolean {
+        if (fragment != null) {
+            if (newPosition == 0) {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.container, fragment).commit()
+            }
+            if (startingPosition > newPosition) {
+                supportFragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_righ)
+                    .replace(R.id.container, fragment).commit()
+            }
+            if (startingPosition < newPosition) {
+                supportFragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                    .replace(R.id.container, fragment).commit()
+            }
+            startingPosition = newPosition
+            return true
+        }
+        return false
+    }
 
     /*
   * This method is used to call leave member

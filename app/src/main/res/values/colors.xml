@@ -58,6 +58,13 @@
     <color name="gray_scale">#707070</color>
     <color name="color_gift">#EDFFF1</color>
     <color name="background_light_dark">#f2f2f2</color>
+    <color name="yellow">#F2A100</color>
+
+    <color name="color1">#40E0D0</color>
+    <color name="color2">#9FCD9A</color>
+    <color name="color3">#FFB964</color>
+    <color name="color4">#F7797D</color>
+    <color name="color5">#F7797D</color>
     <color name="green_winnings">#62AA70</color>
     <color name="grey_heading">#9EA5A7</color>
 

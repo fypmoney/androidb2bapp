@@ -202,7 +202,7 @@ object Utility {
                 val date: Date? =
                     simpleDateFormat.parse("$year ${monthOfYear + 1} $dayOfMonth")
                 val simpleDateFormatDate =
-                    SimpleDateFormat(AppConstants.DATE_FORMAT_CHANGED, Locale.ROOT)
+                    SimpleDateFormat(DATE_FORMAT_CHANGED, Locale.ROOT)
                 // calculateDifferenceBetweenDates(date,getInstance().time)
                 date?.let {
                     onDateSelected.onDateSelected(
