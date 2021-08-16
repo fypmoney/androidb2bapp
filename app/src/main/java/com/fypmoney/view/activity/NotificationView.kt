@@ -109,42 +109,42 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
             }
 
         }
-        mViewModel!!.error.observe(this, androidx.lifecycle.Observer { list ->
-            if (list == "PKT_2037") {
+        mViewModel!!.error.observe(this, androidx.lifecycle.Observer { errorcode ->
+            if (errorcode == "LOY_5104") {
 
                 callInsuficientFundMessageSheet()
             }
 
 
         })
-        mViewModel!!.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
+        mViewModel!!.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { status ->
             bottomSheetMessage?.dismiss()
             taskMessageBottomSheet3?.dismiss()
             bottomSheet?.dismiss()
             mViewModel.onRefresh()
-            if (list.currentState == "ACCEPT") {
+            if (status.currentState == "ACCEPT") {
 
-                callTaskMessageSheet(list)
+                callTaskMessageSheet(status)
             }
-            if (list.currentState == "REJECT") {
+            if (status.currentState == "REJECT") {
 
-                callTaskMessageSheet(list)
+                callTaskMessageSheet(status)
             }
-            if (list.currentState == "CANCEL") {
+            if (status.currentState == "CANCEL") {
 
-                callTaskMessageSheet(list)
+                callTaskMessageSheet(status)
             }
-            if (list.currentState == "COMPLETE") {
+            if (status.currentState == "COMPLETE") {
 
-                callTaskMessageSheet(list)
+                callTaskMessageSheet(status)
             }
-            if (list.currentState == "DEPRECIATE") {
+            if (status.currentState == "DEPRECIATE") {
 
-                callTaskMessageSheet(list)
+                callTaskMessageSheet(status)
             }
-            if (list.currentState == "APPRECIATEANDPAY") {
+            if (status.currentState == "APPRECIATEANDPAY") {
 
-                callTaskMessageSheet(list)
+                callTaskMessageSheet(status)
             }
         })
     }

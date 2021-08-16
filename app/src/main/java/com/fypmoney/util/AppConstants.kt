@@ -20,6 +20,7 @@ object AppConstants {
     const val DATE_TIME_FORMAT_SERVER = "yyyy-MM-dd'T'HH:mm:ss'Z'"
     const val APP_SETTINGS_PACKAGE_TEXT = "package:"
     const val EMAIL_TYPE = "EMAIL"
+    const val ERROR_TYPE_SPIN_ALLOWED = "spinAllowed"
     const val MOBILE_TYPE = "MOBILE"
     const val PLATFORM = "ANDROID"
     const val DEFAULT_COUNTRY_CODE = "+91"
@@ -208,6 +209,7 @@ object AppConstants {
     Track Order : "TrackOrderScreen, 6"
 
     Chores :" ChoresScreen, 7"*/
+   const val ERROR_TYPE_AFTER_SPIN = "AfterSpin"
 
 
 }

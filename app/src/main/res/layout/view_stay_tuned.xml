@@ -59,14 +59,14 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/stayTuned"
             style="@style/TextviewRegular"
-             android:layout_below="@id/image"
+            android:layout_below="@id/image"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="28dp"
-            android:textColor="@color/text_color_little_dark"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:text='@{@string/stay_tuned_screen_sub_title.concat(viewModel.relation)}'
-            android:layout_centerHorizontal="true"
             android:textAlignment="center"
+            android:textColor="@color/text_color_light"
             android:textSize="@dimen/title_size" />
 
         <com.google.android.material.button.MaterialButton

@@ -151,8 +151,8 @@ class DialogUtils {
 
             mAlertDialog?.show()
             mAlertDialog?.window!!.setLayout(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
             )
             val tryAgain =
                 (mAlertDialog?.window!!.findViewById(R.id.try_again) as AppCompatTextView)

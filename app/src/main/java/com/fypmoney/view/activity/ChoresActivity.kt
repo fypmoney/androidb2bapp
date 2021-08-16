@@ -228,7 +228,7 @@ companion object{
             }
         })
         mViewModel!!.error.observe(this, androidx.lifecycle.Observer { code ->
-            if (code == "PKT_2037") {
+            if (code == "LOY_5104") {
 
                 callInsuficientFundMessageSheet()
             }

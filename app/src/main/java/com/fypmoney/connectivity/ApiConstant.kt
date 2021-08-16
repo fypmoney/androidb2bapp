@@ -83,15 +83,19 @@ object ApiConstant {
 
   const val GET_USER_CARDS = "get_user_cards"
 
-  const val CHECK_APP_UPDATE = "/app/version"
-  const val API_TASK_DETAIL = "/services/PockketService/internal/approval-request/"
-  const val API_TASK_UPDATE = "/services/loyaltyservice/api/task"
-  const val API_HISTORY_TASK =
-    "/services/loyaltyservice/api/task/history"
+    const val CHECK_APP_UPDATE = "/app/version"
+    const val API_TASK_DETAIL = "/services/PockketService/internal/approval-request/"
+    const val API_TASK_UPDATE = "/services/loyaltyservice/api/task"
+    const val API_HISTORY_TASK =
+        "/services/loyaltyservice/api/task/history"
 
     const val TOP_TEN_USER_API = "/services/PockketService/api/recent/wallet/transaction"
     const val TOTAL_REFERRAL_CASHBACK_API = "/services/PockketService/api/total/referral/points"
     const val API_STORY = "/services/loyaltyservice/api/story/split"
+    const val API_GET_REWARDS_API = "/services/authservice/api/rewards"
+    const val API_SPIN_WHEEL = "/services/authservice/api/spin-wheel/1"
+    const val API_GET_REWARDS_HISTORY = "/services/authservice/api/all/rewards"
+
 
 }
 

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -14,7 +16,8 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.view.fragment.TransactionFailBottomSheet
 import com.fypmoney.viewmodel.EnterAmountForPayRequestViewModel
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_add_money.*
+import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.*
+
 
 /*
 * This class is used to handle school name city
@@ -41,8 +44,20 @@ class EnterAmountForPayRequestView :
         super.onCreate(savedInstanceState)
         mViewModel.setResponseAfterContactSelected(
             intent.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE),
-            actionValue = intent.getStringExtra(AppConstants.WHICH_ACTION), qrCode = intent.getStringExtra(AppConstants.FUND_TRANSFER_QR_CODE)
+            actionValue = intent.getStringExtra(AppConstants.WHICH_ACTION),
+            qrCode = intent.getStringExtra(AppConstants.FUND_TRANSFER_QR_CODE)
         )
+
+        add_money_editext.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+
+                if (s.toString().startsWith("0")) {
+                    s.clear()
+                }
+            }
+        })
         when (mViewModel.action.get()) {
             AppConstants.PAY, AppConstants.PAY_USING_QR -> {
                 setToolbarAndTitle(
@@ -69,7 +84,7 @@ class EnterAmountForPayRequestView :
     private fun setObserver() {
         mViewModel.setEdittextLength.observe(this) {
             if (it) {
-                add_money_editext.setSelection(add_money_editext.text.length);
+                add_money_editext.text?.length?.let { it1 -> add_money_editext.setSelection(it1) };
                 mViewModel.setEdittextLength.value = false
             }
         }

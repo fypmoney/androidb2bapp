@@ -257,7 +257,7 @@ class BindingAdapter {
         @JvmStatic
         fun setImageInNotification(imageView: AppCompatImageView, imageUrl: String?) {
             if (imageUrl != null)
-                Utility.setImageUsingGlide(PockketApplication.instance, imageUrl, imageView)
+                Utility.setImageUsingGlide2(PockketApplication.instance, imageUrl, imageView)
             else
             {
                 imageView.setImageResource(R.drawable.ic_jay)

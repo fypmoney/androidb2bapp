@@ -220,6 +220,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
         isLoading.set(false)
         when (purpose) {
             ApiConstant.API_TASK_UPDATE -> {
+                Log.d("chacksample", errorResponseInfo.errorCode)
                 error.postValue(errorResponseInfo.errorCode)
             }
         }

@@ -42,6 +42,9 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
             TextUtils.isEmpty(amountSelected.get()) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.add_money_empty_error))
             }
+            amountSelected.get().isNullOrEmpty() -> {
+                Utility.showToast(PockketApplication.instance.getString(R.string.enter_valid_amount))
+            }
             else -> {
                 onPayClicked.value = true
 

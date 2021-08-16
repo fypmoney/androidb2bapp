@@ -43,8 +43,16 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="please_wait">Please wait</string>
     <string name="dreamFolksDb">pockket.db</string>
-    <string name="no_internet">No internet! Please check internet connection.</string>
-    <string name="try_again_text"><u>Try Again</u></string>
+    <string name="no_internet">Your internet connection is down. Check it and connect again.</string>
+    <string name="try_again_text">Try Again</string>
+    <string name="fetching_reward">Fetching Rewards…</string>
+    <string name="oo_error">Oh-Oh!</string>
+    <string name="spin_wheel_heading">Spin the Wheel!🤑</string>
+    <string name="spin_to_win">Spin</string>
+    <string name="spin_wheel_error">Thank you for playing, we \'re sorry that you didn\'t win any Fyp Mynts today. Come back tomorrow and try your luck🤞. We\'re rooting for you!</string>
+    <string name="rewards_history_view">Rewards History</string>
+    <string name="better_luck_emoji">🤮</string>
+    <string name="oops">You have already used your daily spin for today.\n\n Come back <b>TOMORROW</b> for another chance to win 💰</string>
 
     <!--
     Button Text
@@ -159,6 +167,14 @@
     <string name="good_job">Good job!</string>
     <string name="yay">Yay!</string>
     <string name="whoop">Whoops!</string>
+    <string name="oop">Ooops!</string>
+    <string name="spin_wheel_text1">FypMynts you have won</string>
+    <string name="spin_wheel_text2">How to use FypMynts?</string>
+    <string name="spin_wheel_text3">Show FypMynts history</string>
+    <string name="fyp_coin_value">1 Fyp Mynt = ₹1</string>
+    <string name="spin_wheel_text4">When the app is live! Total Fyp Mynts won would be converted into rupees and credited to your app wallet💸</string>
+    <string name="show_fyp_history">Show FypMynts history</string>
+    <string name="better_luck">You have already used your daily spin for today.\n Come back <b>TOMORROW</b> for another chance to win 💰</string>
     <string name="well_done">Well done!</string>
     <string name="request_again">Request Again</string>
     <string name="succesfully_assigned">You have successfully assigned the task to Ankush bro.</string>
@@ -411,6 +427,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="aadhaar_number_empty_error">Please enter Aadhaar number</string>
     <string name="aadhaar_number_valid_error">Please enter valid Aadhaar number</string>
     <string name="account_verification_screen_title">Account Activation</string>
+    <string name="enter_valid_amount">Enter a valid amount</string>
 
 
     <!-- Account verification for Aadhaar

@@ -54,6 +54,9 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         choreCard.setOnClickListener {
             intentToPayActivity(ChoresActivity::class.java)
         }
+        mViewBinding.spinwheel.setOnClickListener {
+            intentToPayActivity(SpinWheelView::class.java)
+        }
         mViewBinding.splitBillsCv.setOnClickListener {
             mViewModel.callSplitBillsStories()
 

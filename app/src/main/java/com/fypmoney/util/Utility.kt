@@ -806,6 +806,22 @@ object Utility {
         }
     }
 
+    fun setImageUsingGlide2(
+        context: Context? = PockketApplication.instance,
+        url: String?,
+        imageView: ImageView
+    ) {
+        url.let {
+            if (!url.isNullOrEmpty()) {
+                Glide.with(context!!).load(url)
+                    .into(imageView)
+            } else {
+                imageView.setImageResource(R.drawable.ic_user)
+
+            }
+        }
+    }
+
     /*
     * This is used to call messaging app
     * */
