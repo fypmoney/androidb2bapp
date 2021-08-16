@@ -43,8 +43,8 @@
                 android:id="@+id/logo"
                 android:layout_width="@dimen/_120sdp"
                 android:layout_height="@dimen/_80sdp"
-                android:layout_marginLeft="-20dp"
                 android:layout_below="@+id/view"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
 
                 android:src="@drawable/logo_white" />
@@ -75,7 +75,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-
                     android:tint="@color/white"
                     app:srcCompat="@drawable/ic_icon_feather_copy" />
 
@@ -83,7 +82,6 @@
                     android:id="@+id/expiry"
                     style="@style/TextviewRegular"
                     android:layout_below="@+id/card_details"
-
                     android:text="@string/expiry_details_title"
                     android:textSize="15dp" />
 
