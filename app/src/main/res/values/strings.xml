@@ -815,4 +815,6 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="contact_not_found">Please add contact in your phone book or enter the number in search textbox.</string>
     <string name="oh_no">Oh No!</string>
 
+    <string name="first_name_last_name">%1$s, %2$s</string>
+
 </resources>

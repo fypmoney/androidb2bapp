@@ -476,12 +476,7 @@ object Utility {
                             contactList.forEach {
                                 contactRepository.deleteContactsBasedOnLookupKey(it.phoneBookIdentifier!!)
                             }
-
-
                             contactRepository.insertAllContacts(contactList)
-
-
-                            //    Log.d("contacts", "step3_after_insertion")
                         }
                         else -> {
                         }
@@ -490,9 +485,6 @@ object Utility {
 
                 }
             }
-            // switch to the main thread
-
-
             onAllContactsAddedListener.onAllContactsSynced(contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>)
 
         }
