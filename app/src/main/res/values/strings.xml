@@ -816,5 +816,8 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="oh_no">Oh No!</string>
 
     <string name="first_name_last_name">%1$s, %2$s</string>
+    <string name="udpated_account_balance">Updated Account Balance: ₹ %1$s</string>
+    <string name="money_added_successfully">Money Added successfully</string>
+    <string name="view_details">View Details</string>
 
 </resources>

@@ -1,13 +1,15 @@
 package com.fypmoney.model
 
 import android.graphics.drawable.Drawable
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import com.payu.paymentparamhelper.PostData
 import java.io.Serializable
 
+@Keep
 data class AddMoneyModel(var name: String? = null, var imageUrl: String? = null) {
 }
-
+@Keep
 data class UpiModel(
     var name: String? = null,
     var imageUrl: Drawable? = null,
@@ -15,7 +17,7 @@ data class UpiModel(
 ) {
 }
 
-
+@Keep
 data class SavedCardResponseDetails(
     @SerializedName("name_on_card") val name_on_card: String,
     @SerializedName("card_type") val card_type: String,
@@ -29,29 +31,29 @@ data class SavedCardResponseDetails(
     var isSelected: Boolean? = false
 ) : Serializable
 
-
+@Keep
 data class AddMoneyStep1Request(
     @SerializedName("remarks") val remarks: String?,
     @SerializedName("amount") val amount: String?,
     @SerializedName("merchantKey") val merchantKey: String?,
     @SerializedName("merchantId") val merchantId: String?
 ) : BaseRequest()
-
+@Keep
 data class AddMoneyStep1Response(
     @SerializedName("data") val addMoneyStep1ResponseDetails: AddMoneyStep1ResponseDetails
 ) : Serializable
-
+@Keep
 data class AddMoneyStep1ResponseDetails(
     @SerializedName("pgTxnNo") val pgTxnNo: String,
     @SerializedName("pgRequestData") val pgRequestData: String,
     @SerializedName("accountTxnNo") val accountTxnNo: String?
 ) : Serializable
-
+@Keep
 data class AddMoneyStep2Response(
     @SerializedName("data") val addMoneyStep2ResponseDetails: AddMoneyStep2ResponseDetails
 ) : Serializable
 
-
+@Keep
 data class AddMoneyStep2ResponseDetails(
     @SerializedName("pgTxnNo") val pgTxnNo: String? = null,
     @SerializedName("pgRequestData") val pgRequestData: String? = null,
@@ -66,7 +68,7 @@ data class AddMoneyStep2ResponseDetails(
     @SerializedName("accountTxnNo") val accountTxnNo: String? = null
 ) : Serializable
 
-
+@Keep
 data class PgRequestData(
     @SerializedName("txnId") var txnId: String? = null,
     @SerializedName("amount") var amount: String? = null,
@@ -92,7 +94,7 @@ data class PgRequestData(
     @SerializedName("udf1") var udf1: String? = null
 ) : Serializable
 
-
+@Keep
 data class PayMoneyRequest(
     @SerializedName("txnType") val txnType: String?,
     @SerializedName("approvalId") val approvalId: String?,
@@ -101,12 +103,12 @@ data class PayMoneyRequest(
     @SerializedName("remarks") val remarks: String?
 ) : BaseRequest()
 
-
+@Keep
 data class PayMoneyResponse(
     @SerializedName("msg") val msg: String? = null
 ) : Serializable
 
-
+@Keep
 data class AddNewCardDetails(
     var cardNumber: String? = null,
     var nameOnCard: String,
@@ -116,14 +118,14 @@ data class AddNewCardDetails(
     var card_token: String? = null,
     var isCardSaved: Boolean? = false
 )
-
+@Keep
 data class AddMoneyStep2Request(
     @SerializedName("pgTxnNo") val pgTxnNo: String?,
     @SerializedName("accountTxnNo") val accountTxnNo: String?,
     @SerializedName("pgResponseData") val pgResponseData: String?
 ) : BaseRequest()
 
-
+@Keep
 data class PayUServerRequest(
     @SerializedName("hash") val hash: String,
     @SerializedName("command") val command: String?,
@@ -131,51 +133,51 @@ data class PayUServerRequest(
     @SerializedName("var1") val var1: String?
 ) : BaseRequest()
 
-
+@Keep
 data class GetHashRequest(
     @SerializedName("merchantId") val merchantId: String? = null,
     @SerializedName("merchantKey") var merchantKey: String? = null,
     @SerializedName("hashData") var hashData: List<HashData>? = null
 ) : BaseRequest()
 
-
+@Keep
 data class HashData(
     @SerializedName("command") var command: String? = null,
     @SerializedName("var1") var var1: String? = null,
     @SerializedName("hashValue") val hashValue: String? = null
 ) : BaseRequest()
-
+@Keep
 data class GetHashResponse(
     @SerializedName("data") val getHashResponseDetails: GetHashResponseDetails
 ) : Serializable
-
+@Keep
 data class GetHashResponseDetails(
     @SerializedName("merchantId") val merchantId: String? = null,
     @SerializedName("merchantKey") val merchantKey: String? = null,
     @SerializedName("hashData") var hashData: List<HashDataResponse>? = null
 ) : Serializable
 
-
+@Keep
 data class HashDataResponse(
     @SerializedName("command") var command: String? = null,
     @SerializedName("var1") var var1: String? = null,
     @SerializedName("hashValue") val hashValue: String? = null
 ) : Serializable
-
+@Keep
 data class CheckIsDomesticResponse(
     @SerializedName("isDomestic") var isDomestic: String? = null,
     @SerializedName("issuingBank") var issuingBank: String? = null,
     @SerializedName("cardType") var cardType: String? = null,
     @SerializedName("cardCategory") var cardCategory: String? = null,
 ) : Serializable
-
+@Keep
 data class ValidateVpaResponse(
     @SerializedName("payerAccountName") var payerAccountName: String? = null,
     @SerializedName("isVPAValid") var isVPAValid: Int? = null,
     @SerializedName("vpa") var vpa: String? = null,
     @SerializedName("status") var status: String? = null,
 ) : Serializable
-
+@Keep
 data class QrCodeScannerRequest(
     @SerializedName("txnType") val txnType: String? = null,
     @SerializedName("amount") var amount: String? = null,
@@ -184,6 +186,8 @@ data class QrCodeScannerRequest(
     @SerializedName("remarks") var remarks: String? = null
 ) : BaseRequest()
 
+
+@Keep
 data class QrCodeScannerResponse(
     @SerializedName("accountTxnId") var accountTxnId: String? = null,
     @SerializedName("receiverName") var receiverName: String? = null,

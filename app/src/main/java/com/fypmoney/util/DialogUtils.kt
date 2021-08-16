@@ -123,7 +123,7 @@ class DialogUtils {
 
             (mAlertDialog.window!!.findViewById(R.id.message) as TextView).text = message
             mAlertDialog.window!!.setGravity(Gravity.CENTER_HORIZONTAL)
-            mAlertDialog.window!!.setBackgroundDrawableResource(R.color.white)
+            //mAlertDialog.window!!.setBackgroundDrawableResource(R.color.white)
             mAlertDialog.setCanceledOnTouchOutside(false)
             return mAlertDialog
         }

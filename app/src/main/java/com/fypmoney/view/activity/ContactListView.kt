@@ -60,7 +60,7 @@ class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewMode
             backArrowTint = Color.WHITE,
             titleColor = Color.WHITE
         )
-        toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.text_color_dark))
+        toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.black))
 
         setObserver()
         checkAndAskPermission()

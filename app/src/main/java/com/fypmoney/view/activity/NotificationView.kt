@@ -56,7 +56,6 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
-        toolbar_image.visibility = View.VISIBLE
         setToolbarAndTitle(
             context = this@NotificationView,
             toolbar = toolbar,

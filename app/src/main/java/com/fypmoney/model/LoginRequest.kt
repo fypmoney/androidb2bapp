@@ -1,16 +1,17 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 open class BaseRequest
-
+@Keep
 data class LoginInitRequest(
     @SerializedName("identifierType") val identifierType: String,
     @SerializedName("identifier") val identifier: String
 ) : BaseRequest()
 
-
+@Keep
 data class UpdateProfileRequest(
     @SerializedName("userId") val userId: Long? = 0,
     @SerializedName("firstName") val firstName: String? = null,
@@ -27,7 +28,7 @@ data class UpdateProfileRequest(
     @SerializedName("interest") val interest: ArrayList<InterestEntity>?=null,
     ) : BaseRequest()
 
-
+@Keep
 data class AppLoginApiRequest(
     @SerializedName("identifierType") val identifierType: String? = null,
     @SerializedName("identifier") val identifier: String? = null,
@@ -39,7 +40,7 @@ data class AppLoginApiRequest(
     @SerializedName("profile") val profile: UpdateProfileRequest? = null,
     @SerializedName("userDeviceInfo") val userDeviceInfo: UserDeviceInfo? = null
 ) : BaseRequest()
-
+@Keep
 data class UserDeviceInfo(
     @SerializedName("make") val make: String,
     @SerializedName("model") val model: String,
@@ -51,7 +52,7 @@ data class UserDeviceInfo(
     @SerializedName("platformVersion") val platformVersion: String,
     @SerializedName("dtoken") val dtoken: String
 ) : Serializable
-
+@Keep
 data class ReferralCodeResponse(
     @SerializedName("msg") var msg: String?
 ) : Serializable

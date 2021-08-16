@@ -1,5 +1,8 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class RelationModel(
     var relationName: String? = null,
     var relationImage: Int? = null,

@@ -1,6 +1,6 @@
 package com.fypmoney.viewmodel
 
-import android.app.Application
+ import android.app.Application
 import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -37,7 +37,7 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
       * */
     fun onAddClicked() {
         when {
-            TextUtils.isEmpty(amountSelected.get()) -> {
+            TextUtils.isEmpty(amountSelected.get()) or (amountSelected.get()?.toInt()!!<=0)-> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.add_money_empty_error))
             }
             else -> {

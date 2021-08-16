@@ -1,5 +1,8 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class NotificationTaskObjectModel(
 	val requesteeName: String? = null,
 	val msg: Any? = null,
@@ -26,12 +29,12 @@ data class NotificationTaskObjectModel(
 	val isPaymentCompleted: String? = null,
 	val status: String? = null
 )
-
+@Keep
 data class StartDate(
 	val nano: Int? = null,
 	val epochSecond: Int? = null
 )
-
+@Keep
 data class EndDate(
 	val nano: Int? = null,
 	val epochSecond: Int? = null

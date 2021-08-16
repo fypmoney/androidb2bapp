@@ -1,5 +1,8 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class HistoryModelResponse(
     val requesteeName: String? = null,
     val msg: Any? = null,

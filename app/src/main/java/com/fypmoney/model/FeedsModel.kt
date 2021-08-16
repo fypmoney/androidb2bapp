@@ -1,28 +1,29 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 import java.lang.reflect.Array
-
+@Keep
 data class FeedRequestModel(
     @SerializedName("query") var query: String? = null
 ) : BaseRequest()
 
-
+@Keep
 data class FeedResponseModel(
     @SerializedName("data") var getAllFeed: FeedResponseModelDetails?,
 ) : Serializable
-
+@Keep
 data class FeedResponseModelDetails(
     @SerializedName("getAllFeed") var getAllFeed: GetAllFeed?,
 ) : Serializable
-
+@Keep
 data class GetAllFeed(
     @SerializedName("total") var total: Int? = 0,
     @SerializedName("feedData") var feedDetails: List<FeedDetails>?
 ) : Serializable
-
+@Keep
 data class FeedDetails(
     @SerializedName("id") var id: String? = null,
     @SerializedName("name") var name: String? = null,
@@ -43,19 +44,19 @@ data class FeedDetails(
     @SerializedName("action") var action: Action? = null,
     @SerializedName("scope") var scope: String?
 ) : Serializable
-
+@Keep
 data class Action(
     @SerializedName("url") var url: String,
     @SerializedName("type") var type: String?,
     @SerializedName("buttonText") var buttonText: String?,
 ) : Serializable
-
+@Keep
 data class Category(
     @SerializedName("name") var name: String?,
     @SerializedName("code") var code: String?,
     @SerializedName("description") var description: String?
 ) : Serializable
-
+@Keep
 data class Location(
     @SerializedName("type") var type: String?,
     @SerializedName("coordinates") var coordinates: ArrayList<String>?,

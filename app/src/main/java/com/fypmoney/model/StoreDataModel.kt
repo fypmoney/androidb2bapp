@@ -1,5 +1,8 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class StoreDataModel(
     val image: String? = null,
     var title: String? = null,

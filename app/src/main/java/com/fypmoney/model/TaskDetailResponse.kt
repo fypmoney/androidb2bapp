@@ -1,5 +1,8 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class TaskDetailResponse(
     val processStatus: Int? = null,
     val icon: String? = null,
@@ -35,7 +38,7 @@ data class TaskDetailResponse(
 
 
 )
-
+@Keep
 data class AdditionalAttributes(
     val amount: Int? = null,
     val endDate: String? = null,

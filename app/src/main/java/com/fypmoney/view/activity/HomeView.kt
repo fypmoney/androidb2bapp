@@ -89,12 +89,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         }
 
 
-        loadProfile(
-            SharedPrefUtils.getString(
-                applicationContext,
-                SharedPrefUtils.SF_KEY_PROFILE_IMAGE
-            )
-        )
+
         mViewBinding.navigationView.itemIconTintList = null;
 
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
@@ -122,7 +117,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             when (it.itemId) {
                 R.id.home -> {
                     loadFragment(HomeScreen(),1)
-                    mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.text_color_dark))
+                    mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.black))
                     mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.text_color_dark))
                     mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon)
                     //mViewModel.isScanVisible.set(true)
@@ -146,7 +141,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 }
                 R.id.card -> {
                     loadFragment(CardScreen(),3)
-                    mViewBinding.toolbar.background = ( ContextCompat.getDrawable(this,R.drawable.social_community_gradient))
+                    mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.black))
                     mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.white))
                     mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon)
                    // mViewModel.isScanVisible.set(false)
@@ -171,6 +166,15 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        loadProfile(
+            SharedPrefUtils.getString(
+                applicationContext,
+                SharedPrefUtils.SF_KEY_PROFILE_IMAGE
+            )
+        )
+    }
     private fun loadProfile(url: String?) {
         url?.let {
            // Glide.with(this).load(it).apply(RequestOptions().circleCrop()).into(myProfile)
