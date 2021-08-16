@@ -97,10 +97,10 @@ class DialogUtils {
 
             mAlertDialog.show()
             mAlertDialog.setCancelable(false)
-            mAlertDialog.window!!.setLayout(
+            /*mAlertDialog.window!!.setLayout(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
-            )
+            )*/
             val linearLayout =
                 mAlertDialog.window!!.findViewById(R.id.linear_layout) as LinearLayout
 

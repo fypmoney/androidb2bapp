@@ -133,7 +133,7 @@
     <!--contact activity
     -->
     <string name="dialog_title_auth">Enter phone screen lock pattern, PIN, password or fingerprint</string>
-    <string name="dialog_msg_auth">Unlock DreamFolks</string>
+    <string name="dialog_msg_auth">Unlock Fyp</string>
     <string name="name_title">Name :</string>
     <string name="contact_title">Contact : </string>
     <string name="contact_screen_title">Contacts</string>
