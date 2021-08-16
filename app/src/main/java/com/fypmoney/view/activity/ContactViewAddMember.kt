@@ -57,13 +57,13 @@ class ContactViewAddMember : BaseActivity<ViewContactsBinding, ContactViewModel>
 
 
     private fun setObserver() {
-        mViewModel.onSelectClicked.observe(this) {
+        mViewModel.onItemClicked.observe(this) {
 
             val resultIntent = Intent()
 
 
 //            Toast.makeText(this,mViewModel.selectedContactList[0].firstName,Toast.LENGTH_SHORT).show()
-            resultIntent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, mViewModel.selectedContactList[0])
+            resultIntent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, it)
             setResult(13, resultIntent)
             finish()
 

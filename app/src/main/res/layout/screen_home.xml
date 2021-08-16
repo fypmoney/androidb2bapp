@@ -227,6 +227,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:padding="10dp"
+                    android:id="@+id/spinwheel"
                     app:cardCornerRadius="18dp"
                     app:cardElevation="@dimen/card_elevation"
                     app:cardUseCompatPadding="true"

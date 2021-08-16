@@ -2,24 +2,25 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    app:cardCornerRadius="@dimen/_12sdp"
-    android:layout_marginStart="@dimen/_32sdp"
-    android:layout_marginEnd="@dimen/_32sdp"
     android:background="@drawable/round_backgorund_20"
     android:backgroundTint="@color/white"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_gravity="center_vertical"
+            android:paddingBottom="@dimen/_36sdp"
+            android:layout_height="match_parent">
 
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/no_internet"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_38sdp"
+                    android:layout_above="@+id/sub_heading"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_38sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
 
                     app:srcCompat="@drawable/ic_internet_broke" />
 
@@ -28,21 +29,24 @@
                     style="@style/TextviewBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/_26sdp"
-                    android:layout_below="@id/no_internet"
+
+                    android:layout_above="@+id/heading"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/_24sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
                     android:fontFamily="@font/poppins_medium"
                     android:gravity="center"
-                    android:text="@string/oh_no"
-                    android:textAlignment="center" />
+                    android:text="@string/whoop"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/_26sdp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/heading"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/sub_heading"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_above="@+id/try_again"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:layout_marginBottom="@dimen/_130sdp"
 
                     android:fontFamily="@font/poppins_medium"
                     android:gravity="center"
@@ -58,15 +62,17 @@
 
                     android:layout_height="wrap_content"
 
-                    android:layout_below="@id/heading"
+
+                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
+                    android:layout_marginBottom="@dimen/_4sdp"
                     android:layout_marginStart="@dimen/_38sdp"
+
                     android:layout_marginTop="@dimen/_38sdp"
-                    android:layout_marginBottom="@dimen/_32sdp"
+
                     android:background="@drawable/curved_background26"
 
-                    android:gravity="center"
+
                     android:text="@string/try_again_text"
                     android:textAllCaps="false"
                     android:textColor="@color/white"

@@ -238,7 +238,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
         }
         mViewModel!!.error.observe(this, androidx.lifecycle.Observer { list ->
-            if (list == "PKT_2037") {
+            if (list == "LOY_5104") {
 
                 callInsuficientFundMessageSheet()
             }

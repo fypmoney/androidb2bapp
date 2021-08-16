@@ -61,16 +61,18 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onSelectClicked.observe(this) {
+
+        mViewModel.onItemClicked.observe(this) {
+
             intentToActivity(
-                contactEntity = mViewModel.selectedContactList[0]!!,
+                contactEntity = it,
                 aClass = AddMemberView::class.java
             )
-        }
 
+        }
         mViewModel.onIsAppUserClicked.observe(this) {
             if (it) {
-             callInviteBottomSheet()
+                callInviteBottomSheet()
                 mViewModel.onIsAppUserClicked.value = false
             }
         }

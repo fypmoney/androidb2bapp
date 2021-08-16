@@ -17,70 +17,66 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/curved_background1" />
 
+        <ImageView
+            android:layout_width="@dimen/_184sdp"
+            android:layout_marginTop="@dimen/_26sdp"
+            android:id="@+id/message_image"
+            app:srcCompat="@drawable/ic_wallet_updated"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="@dimen/_164sdp" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/card_title"
             style="@style/TextviewBold"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_46sdp"
-            android:text="Uh oh!"
+            android:layout_marginTop="@dimen/_26sdp"
+            android:text="Task Accepted"
             android:textColor="@color/text_color_dark"
             android:textSize="31sp" />
 
-        <ImageView
-            android:layout_width="@dimen/_184sdp"
-            android:layout_marginTop="@dimen/_26sdp"
-            app:srcCompat="@drawable/ic_low_balance"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="@dimen/_108sdp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextviewRegular"
             android:layout_gravity="center"
             android:layout_marginTop="26dp"
 
-            android:text="Insufficient bank balance"
-            android:textColor="@color/text_color_dark"
+            android:text=""
             android:id="@+id/task_details"
             android:textAlignment="center" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewBold"
+            android:layout_gravity="center_horizontal"
+
+            android:textSize="22sp"
+            android:id="@+id/amount"
+
+            android:text=""
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:textColor="@color/color_skyblue" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:weightSum="2"
-            android:id="@+id/lin"
             android:layout_marginBottom="@dimen/_30sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_24sdp"
             android:layout_height="wrap_content">
 
             <com.google.android.material.button.MaterialButton
 
                 style="@style/Widget.App.Button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".8"
-                android:textColor="@color/text_color_dark"
-                android:layout_gravity="center"
-                android:text="Request Money"
-                android:id="@+id/reject"
-                android:textSize="16sp"
-
-                android:textAllCaps="false"
-                android:background="@android:color/transparent"
-
-                />
-
-            <com.google.android.material.button.MaterialButton
-
-                style="@style/Widget.App.Button"
-                android:layout_width="0dp"
-                android:layout_weight="1.2"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
                 android:layout_height="52dp"
                 android:layout_gravity="center"
                 android:background="@drawable/curved_background1"
-                android:text="Add Money"
-                android:textSize="16sp"
-                android:id="@+id/accept"
+                android:text="Continue"
+                android:id="@+id/continuebtn"
+                android:textSize="18sp"
                 android:textAllCaps="false"
+                android:fontFamily="@font/product_sans_regular"
+
                 app:backgroundTint="@color/text_color_dark" />
 
         </LinearLayout>

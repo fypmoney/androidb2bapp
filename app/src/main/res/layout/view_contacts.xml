@@ -60,26 +60,13 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/btnContinue"
             android:layout_below="@+id/search"
+            android:layout_alignParentBottom="true"
             android:layout_marginTop="@dimen/margin"
             app:adapter="@{viewModel.contactAdapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnContinue"
-            style="@style/Widget.App.Button"
-            android:layout_width="299dp"
-            android:layout_height="52dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/curved_background1"
-            android:onClick="@{()->viewModel.onSelectClicked()}"
-            android:text="@string/select_btn_text"
-            android:textAllCaps="false"
-            app:backgroundTint="@color/text_color_dark" />
 
     </RelativeLayout>
 </layout>

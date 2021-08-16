@@ -38,21 +38,8 @@ class ContactViewHelper(
      * */
     fun onItemClicked() {
         if (isAppUser.get() == true) {
-            if (viewModel.selectedContactList.size < 1) {
-                contactEntity?.isSelected = contactEntity?.isSelected != true
-                viewModel.selectedContactList.add(contactEntity!!)
-                isBackgroundHighlight.set(true)
-            } else if (viewModel.selectedContactList.size == 1) {
-                if (viewModel.selectedContactList[0].contactNumber == contactEntity?.contactNumber) {
-                    contactEntity?.isSelected = contactEntity?.isSelected != true
-                    isBackgroundHighlight.set(false)
-                    contactEntity?.let {
-                        viewModel.selectedContactList.remove(it)
+            viewModel.onItemClicked.value = contactEntity
 
-                    }
-                }
-
-            }
         } else {
             onIsAppUserClicked()
 
