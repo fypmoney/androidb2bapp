@@ -361,7 +361,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     private fun callCardSettingsBottomSheet() {
         val bottomSheet =
             CardSettingsBottomSheet(mViewModel.bankProfileResponse.get(),this)
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "CardSettings")
     }
 

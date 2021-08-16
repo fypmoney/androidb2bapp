@@ -142,10 +142,6 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
                 when (responseData) {
 
                 }
-
-
-
-
                 if (responseData is AddMoneyStep2Response) {
                     step2ApiResponse = responseData.addMoneyStep2ResponseDetails
                     onStep2Response.value = AppConstants.API_SUCCESS

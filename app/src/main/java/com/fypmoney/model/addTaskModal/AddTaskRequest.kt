@@ -1,5 +1,8 @@
 package com.fypmoney.model.addTaskModal
 
+import androidx.annotation.Keep
+
+@Keep
 data class AddTaskRequest(
     val amount: String,
     val description: String,

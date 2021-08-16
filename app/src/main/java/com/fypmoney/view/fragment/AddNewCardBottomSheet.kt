@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
+import android.text.Selection.setSelection
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -26,10 +27,13 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.databinding.BottomSheetAddNewCardBinding
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SeparatorTextWatcher
 import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.payu.india.Payu.PayuConstants
+import kotlinx.android.synthetic.main.bottom_sheet_add_new_card.*
+import kotlinx.android.synthetic.main.view_aadhaar_verification.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -80,10 +84,19 @@ class AddNewCardBottomSheet(
         cvv = view.findViewById(R.id.cvv)!!
         saveCardCheckbox = view.findViewById(R.id.saveCardCheckbox)!!
         val btnAdd = view.findViewById<Button>(R.id.btnContinue)!!
+        //val enterCardNumebr = view.findViewById<AppCompatEditText>(R.id.enter_card)!!
         progressBar = view.findViewById(R.id.progress)!!
 
         btnAdd.text = getString(R.string.add_btn_text) + " " + getString(R.string.Rs) + amount
 
+        cardNumber.addTextChangedListener(object : SeparatorTextWatcher(' ', 4) {
+            override fun onAfterTextChanged(text: String) {
+                cardNumber.run {
+                    setText(text)
+                    setSelection(text.length)
+                }
+            }
+        })
         expiry.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {}
 

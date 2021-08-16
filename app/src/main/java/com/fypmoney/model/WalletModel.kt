@@ -1,13 +1,14 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-
+@Keep
 data class GetWalletBalanceResponse(
     @SerializedName("data") val getWalletBalanceResponseDetails: GetWalletBalanceResponseDetails
 ) : Serializable
-
+@Keep
 data class GetWalletBalanceResponseDetails(
     @SerializedName("requestData") val requestData: String,
     @SerializedName("cardType") val cardType: String,
@@ -21,7 +22,7 @@ data class GetWalletBalanceResponseDetails(
     @SerializedName("remainingWalletBalanceLimit") val remainingWalletBalanceLimit: String,
     @SerializedName("cl") val cl: String
 ) : Serializable
-
+@Keep
 data class SendMoneyRequest(
     @SerializedName("txnType") val txnType: String? = null,
     @SerializedName("amount") val amount: String? = null,
@@ -31,12 +32,12 @@ data class SendMoneyRequest(
     @SerializedName("iFSCCode") val iFSCCode: String? = null,
     @SerializedName("accountNo") val accountNo: String? = null
 ) : BaseRequest()
-
+@Keep
 data class SendMoneyResponse(
     @SerializedName("msg") val msg: String? = null,
     @SerializedName("data") val sendMoneyResponseDetails: SendMoneyResponseDetails
 ) : Serializable
-
+@Keep
 data class SendMoneyResponseDetails(
     @SerializedName("currentBalance") val currentBalance: String,
     @SerializedName("accountTxnId") val accountTxnId: String,
@@ -45,19 +46,19 @@ data class SendMoneyResponseDetails(
     @SerializedName("reveiverMobile") val reveiverMobile: String,
     @SerializedName("txnTime") val txnTime: String
 ) : Serializable
-
+@Keep
 data class RequestMoneyRequest(
     @SerializedName("requesteeMobile") val requesteeMobile: String? = null,
     @SerializedName("amount") val amount: String? = null,
     @SerializedName("emoji") val emoji: String? = null,
     @SerializedName("remarks") val remarks: String? = null
 ) : BaseRequest()
-
+@Keep
 data class RequestMoneyResponse(
     @SerializedName("msg") val msg: String? = null,
     @SerializedName("data") val requestMoneyResponseDetails: RequestMoneyResponseDetails
 ) : Serializable
-
+@Keep
 data class RequestMoneyResponseDetails(
     @SerializedName("requesteeMobile") val requesteeMobile: String? = null,
     @SerializedName("amount") val amount: String? = null,
@@ -65,11 +66,11 @@ data class RequestMoneyResponseDetails(
     @SerializedName("remarks") val remarks: String? = null
 ) : Serializable
 
-
+@Keep
 data class TransactionHistoryResponse(
     @SerializedName("data") val transactionHistoryResponseDetails: List<TransactionHistoryResponseDetails>
 ) : Serializable
-
+@Keep
 data class TransactionHistoryResponseDetails(
 
     @field:SerializedName("pgTxnNo")
@@ -180,7 +181,7 @@ data class TransactionHistoryResponseDetails(
     val isReversed: Any? = null
 ) : Serializable
 
-
+@Keep
 data class TransactionHistoryRequest(
     @SerializedName("startDate") val startDate: String? = null,
     @SerializedName("endDate") val endDate: String? = null,
@@ -188,7 +189,7 @@ data class TransactionHistoryRequest(
     @SerializedName("isbankTxnStatusSuccess") val isbankTxnStatusSuccess: Int? = 2
 ) : BaseRequest()
 
-
+@Keep
 data class TransactionHistoryRequestwithPage(
     @SerializedName("startDate") val startDate: String? = null,
     @SerializedName("endDate") val endDate: String? = null,
