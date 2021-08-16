@@ -30,7 +30,7 @@
             style="@style/TextviewBold"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/_26sdp"
-            android:text="Task Accepted"
+            android:text="Congratulations!"
             android:textColor="@color/text_color_dark"
             android:textSize="31sp" />
 
@@ -40,21 +40,10 @@
             android:layout_gravity="center"
             android:layout_marginTop="26dp"
 
-            android:text=""
+            android:text="It's raining money today. Your wallet has\n been updated."
             android:id="@+id/task_details"
             android:textAlignment="center" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextviewBold"
-            android:layout_gravity="center_horizontal"
-
-            android:textSize="22sp"
-            android:id="@+id/amount"
-
-            android:text=""
-            android:visibility="gone"
-            android:layout_marginTop="@dimen/_14sdp"
-            android:textColor="@color/color_skyblue" />
 
         <LinearLayout
             android:layout_width="match_parent"
