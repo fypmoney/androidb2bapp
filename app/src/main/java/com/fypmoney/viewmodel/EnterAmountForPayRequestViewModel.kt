@@ -17,6 +17,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.INSUFFICIENT_ERROR_CODE
 import com.fypmoney.util.Utility
 
 class EnterAmountForPayRequestViewModel(application: Application) : BaseViewModel(application) {
@@ -30,9 +31,10 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
     var contactResult = ObservableField(ContactEntity())
     var buttonText = ObservableField(application.getString(R.string.request_btn_text))
     var onApiResponse = MutableLiveData<String>()
-    var sendMoneyApiResponse = ObservableField<SendMoneyResponse>()
+    var sendMoneyApiResponse = MutableLiveData<SendMoneyResponse>()
     private var qrCodeValue = ObservableField<String>()
     var isCircularImageVisible = ObservableField(false)
+    var inSufficientAmount = MutableLiveData<String>()
 
     /*
       * This method is used to handle on click of pay or request button
@@ -47,8 +49,6 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
             }
             else -> {
                 onPayClicked.value = true
-
-
             }
         }
     }
@@ -176,9 +176,9 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
         when (purpose) {
             ApiConstant.API_FUND_TRANSFER -> {
                 if (responseData is SendMoneyResponse) {
-                    Utility.showToast(responseData.msg)
-                    sendMoneyApiResponse.set(responseData)
-                    onApiResponse.value = AppConstants.API_SUCCESS
+                    //Utility.showToast(responseData.msg)
+                    sendMoneyApiResponse.value = responseData
+                    //onApiResponse.value = AppConstants.API_SUCCESS
 
                 }
             }
@@ -203,7 +203,12 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
             ApiConstant.API_FUND_TRANSFER -> {
-                onApiResponse.value = AppConstants.API_FAIL
+                if(errorResponseInfo.errorCode == INSUFFICIENT_ERROR_CODE){
+                    onApiResponse.value = INSUFFICIENT_ERROR_CODE
+                }else{
+                    onApiResponse.value = AppConstants.API_FAIL
+
+                }
             }
         }
     }

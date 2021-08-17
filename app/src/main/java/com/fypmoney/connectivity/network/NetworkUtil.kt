@@ -60,8 +60,12 @@ class NetworkUtil {
                         errorCode = throwable.code().toString()
                     )
                 }
+            }else{
+                return ErrorResponseInfo(
+                    msg = PockketApplication.instance.getString(R.string.something_went_wrong_error),
+                    errorCode = throwable.toString()
+                )
             }
-            return null
         }
 
         fun endURL(endpoint: String): String {

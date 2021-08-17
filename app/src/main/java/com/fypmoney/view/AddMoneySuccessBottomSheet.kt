@@ -18,7 +18,9 @@ import kotlin.concurrent.schedule
 
 class AddMoneySuccessBottomSheet(var amountAdded:String,
                                  var balanceAmount:String,
-                                 val onViewDetailsClick:()->Unit
+                                 var successTitle:String = "Money Added successfully",
+                                 val onViewDetailsClick:(()->Unit)? = null,
+                                 val onHomeViewClick:()->Unit,
 ):BottomSheetDialogFragment() {
     private lateinit var binding:BottomsheetAddMoneySuccessViewBinding
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
@@ -36,15 +38,21 @@ class AddMoneySuccessBottomSheet(var amountAdded:String,
     }
 
     private fun setupViews() {
-        binding.amountTv.text = """${resources.getString(R.string.Rs)} ${Utility.convertToRs(amountAdded)}"""
-        binding.updatedBalanceTv.text = String.format(resources.getString(R.string.udpated_account_balance),Utility.convertToRs(balanceAmount))
+        binding.verificationTitle.text = successTitle
+        binding.amountTv.text = """${resources.getString(R.string.Rs)} ${amountAdded}"""
+
+        if(balanceAmount.isEmpty()){
+            binding.updatedBalanceTv.visibility = View.GONE
+        }else{
+            binding.updatedBalanceTv.text = String.format(resources.getString(R.string.udpated_account_balance),balanceAmount)
+
+        }
+        if(onViewDetailsClick == null){
+            binding.viewDetailsBtn.visibility = View.GONE
+        }
 
         binding.image.gifResource = R.raw.add_money_transaction_successful
-        /*Timer().schedule(1000){
-            requireActivity().runOnUiThread {
-                image.pause()
-            }
-        }*/
+
         val mp: MediaPlayer = MediaPlayer.create(
             requireContext(),
             R.raw.tick
@@ -52,7 +60,10 @@ class AddMoneySuccessBottomSheet(var amountAdded:String,
         mp.start()
 
         binding.viewDetailsBtn.setOnClickListener {
-            onViewDetailsClick()
+                onViewDetailsClick?.let { it1 -> it1() }
+        }
+        binding.continueBtn.setOnClickListener {
+            onHomeViewClick()
         }
     }
 

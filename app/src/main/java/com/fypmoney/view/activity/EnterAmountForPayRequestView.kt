@@ -6,26 +6,29 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewEnterAmountForPayRequestBinding
+import com.fypmoney.model.SendMoneyResponse
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
+import com.fypmoney.view.AddMoneySuccessBottomSheet
+import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
 import com.fypmoney.view.fragment.TransactionFailBottomSheet
+import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.viewmodel.EnterAmountForPayRequestViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.*
 
 
-/*
-* This class is used to handle school name city
-* */
+
 class EnterAmountForPayRequestView :
     BaseActivity<ViewEnterAmountForPayRequestBinding, EnterAmountForPayRequestViewModel>(),
     TransactionFailBottomSheet.OnBottomSheetClickListener {
     private lateinit var mViewModel: EnterAmountForPayRequestViewModel
+    private var bottomsheetInsufficient: TaskMessageInsuficientFuntBottomSheet? = null
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -97,7 +100,13 @@ class EnterAmountForPayRequestView :
                 AppConstants.API_SUCCESS -> {
                     intentToActivity(HomeView::class.java)
                 }
+                AppConstants.INSUFFICIENT_ERROR_CODE -> {
+                    callInsuficientFundMessageSheet()
+                }
             }
+        }
+        mViewModel.sendMoneyApiResponse.observe(this) {
+            callTransactionSuccessBottomSheet(it)
         }
 
         mViewModel.onPayClicked.observe(this) {
@@ -106,9 +115,70 @@ class EnterAmountForPayRequestView :
                 mViewModel.onPayClicked.value = false
             }
         }
-
-
     }
+
+    private fun callInsuficientFundMessageSheet() {
+         bottomsheetInsufficient =
+            TaskMessageInsuficientFuntBottomSheet(object : AcceptRejectClickListener {
+                override fun onAcceptClicked(pos: Int, str: String) {
+                    bottomsheetInsufficient?.dismiss()
+                    /*intentToPayActivity(ContactListView::class.java, AppConstants.PAY)*/
+                }
+
+                override fun onRejectClicked(pos: Int) {
+                    bottomsheetInsufficient?.dismiss()
+                    callActivity(AddMoneyView::class.java)
+                }
+
+                override fun ondimiss() {
+                }
+            },title = resources.getString(R.string.insufficient_bank_balance),
+                subTitle =  resources.getString(R.string.insufficient_bank_body),
+                amount = resources.getString(R.string.add_money_title1)+resources.getString(R.string.Rs)+mViewModel.amountSelected.get()
+            )
+
+
+        bottomsheetInsufficient?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomsheetInsufficient?.show(supportFragmentManager, "INSUFFIECIENT")
+    }
+
+    private fun callActivity(aClass: Class<*>) {
+        val intent = Intent(this, aClass)
+        startActivity(intent)
+    }
+    private fun intentToPayActivity(aClass: Class<*>, pay: String? = null) {
+        val intent = Intent(this, aClass)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
+        startActivity(intent)
+    }
+    private fun callTransactionSuccessBottomSheet(sendMoneyResponse: SendMoneyResponse) {
+        val bottomSheet =
+            mViewModel.amountSelected.get()?.let {
+                Utility.convertToRs(sendMoneyResponse.sendMoneyResponseDetails.currentBalance)?.let { it1 ->
+                    AddMoneySuccessBottomSheet(
+                        it,
+                        it1,onViewDetailsClick=null,successTitle = "Payment Made Successfully to ${sendMoneyResponse.sendMoneyResponseDetails.receiverName}",onHomeViewClick = {
+                            intentToHomeActivity(HomeView::class.java)
+                        }
+                    )
+                }
+            }
+        bottomSheet?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet?.show(supportFragmentManager, "TransactionSuccess")
+    }
+
+    private fun intentToHomeActivity(aClass: Class<*>) {
+        startActivity(Intent(this, aClass))
+        finishAffinity()
+    }
+
+    /*private fun callViewPaymentDetails() {
+        val intent = Intent(this, PayUSuccessView::class.java)
+        intent.putExtra(AppConstants.RESPONSE, mViewModel.step2ApiResponse)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.ADD_MONEY)
+        startActivity(intent)
+        finish()
+    }*/
 
     override
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

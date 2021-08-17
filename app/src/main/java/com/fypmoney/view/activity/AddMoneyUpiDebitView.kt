@@ -219,14 +219,25 @@ open class AddMoneyUpiDebitView :
 
     private fun callTransactionSuccessBottomSheet() {
         val bottomSheet =
-            AddMoneySuccessBottomSheet(
-                mViewModel.step2ApiResponse.amount!!,
-                mViewModel.step2ApiResponse.balance!!,onViewDetailsClick={
-                    callViewPaymentDetails()
+            Utility.convertToRs(mViewModel.step2ApiResponse.amount!!)?.let {
+                Utility.convertToRs(mViewModel.step2ApiResponse.balance!!)?.let { it1 ->
+                    AddMoneySuccessBottomSheet(
+                        it,
+                        it1,onViewDetailsClick={
+                            callViewPaymentDetails()
+                        },onHomeViewClick = {
+                            intentToHomeActivity(HomeView::class.java)
+                        }
+                    )
                 }
-            )
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "TransactionFail")
+            }
+        bottomSheet?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet?.show(supportFragmentManager, "TransactionSuccess")
+    }
+
+    private fun intentToHomeActivity(aClass: Class<*>) {
+        startActivity(Intent(this, aClass))
+        finishAffinity()
     }
 
 

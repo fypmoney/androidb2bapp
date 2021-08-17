@@ -797,7 +797,7 @@ object Utility {
     ) {
         url.let {
             if (!url.isNullOrEmpty()) {
-                Glide.with(context!!).load(url).placeholder(R.drawable.ic_card)
+                Glide.with(context!!).load(url).placeholder(R.drawable.ic_fyp_logo)
                     .into(imageView)
             } else {
                 imageView.setImageResource(R.drawable.ic_user)

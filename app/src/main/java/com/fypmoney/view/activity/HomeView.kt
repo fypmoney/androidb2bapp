@@ -6,6 +6,8 @@ import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -29,6 +31,7 @@ import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.view_home.*
+import java.util.concurrent.atomic.AtomicBoolean
 
 
 /*
@@ -46,6 +49,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     private var bottomSheetMessage: TaskMessageBottomSheet3? = null
 
     private lateinit var mViewBinding: ViewHomeBinding
+    private val doubleBackPressed = AtomicBoolean(false)
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -177,7 +181,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     }
     private fun loadProfile(url: String?) {
         url?.let {
-           // Glide.with(this).load(it).apply(RequestOptions().circleCrop()).into(myProfile)
             loadImage(mViewBinding.myProfile,it,ContextCompat.getDrawable(this,R.drawable.ic_profile_img),true)
 
         }
@@ -521,6 +524,17 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     override fun onRequestMoneyBottomSheetButtonClick(actionAllowed: String?) {
         mViewModel.callPayMoneyApi(actionAllowed!!)
 
+    }
+
+    override fun onBackPressed() {
+
+        if (doubleBackPressed.get()) {
+            finish()
+            return
+        }
+        doubleBackPressed.compareAndSet(false, true)
+        Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show()
+        Handler().postDelayed({ doubleBackPressed.set(false) }, 2000)
     }
 
 }

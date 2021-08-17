@@ -111,7 +111,6 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         }
         mViewModel!!.error.observe(this, androidx.lifecycle.Observer { errorcode ->
             if (errorcode == "LOY_5104") {
-
                 callInsuficientFundMessageSheet()
             }
 

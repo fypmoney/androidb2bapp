@@ -1,6 +1,7 @@
 package com.fypmoney.view.activity
 
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
+import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.bindingAdapters.loadImage
@@ -76,6 +78,13 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
             )
         )
 
+        mViewBinding.playStoreTv.setOnClickListener {
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+            } catch (e: ActivityNotFoundException) {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}")))
+            }
+        }
         mViewModel.setInitialData()
         try {
             mViewModel.buildVersion.set(

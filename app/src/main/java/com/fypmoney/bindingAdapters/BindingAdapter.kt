@@ -276,7 +276,7 @@ class BindingAdapter {
         fun setImageInUPI(imageView: AppCompatImageView, position: Int, imageUrl: Drawable?) {
             when (position) {
                 1 -> {
-                    imageView.setImageResource(R.drawable.google_logo)
+                    imageView.setImageResource(R.drawable.ic_google_pay)
 
                 }
                 else -> {

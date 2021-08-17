@@ -16,13 +16,16 @@ import com.fypmoney.databinding.BottomSheetInsuficientFundBinding
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.android.synthetic.main.bottom_sheet_insuficient_fund.*
 import kotlinx.android.synthetic.main.bottom_sheet_response_task.*
 import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.*
 
 
 class TaskMessageInsuficientFuntBottomSheet(
     var onClickListener: AcceptRejectClickListener,
-
+    var title:String? = null,
+    var subTitle:String? = null,
+    var amount:String? = null
     ) :
     BottomSheetDialogFragment() {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
@@ -49,26 +52,37 @@ class TaskMessageInsuficientFuntBottomSheet(
         )
         bottomSheet.setContentView(bindingSheet.root)
 
-        val accept = view.findViewById<Button>(R.id.accept)!!
-        accept.setOnClickListener(View.OnClickListener {
-
+        val accept = view.findViewById<Button>(R.id.add_money_btn)!!
+        val reject = view.findViewById<Button>(R.id.reject)!!
+        accept.setOnClickListener {
             onClickListener.onRejectClicked(0)
-
-        })
-        view.reject.setOnClickListener(View.OnClickListener {
+        }
+        reject.setOnClickListener {
             onClickListener.onAcceptClicked(
                 0, ""
             )
-
-        })
-
-
-
-
-
-
+        }
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+            title?.let {
+                card_title.text = title
+            }
+
+        subTitle?.let {
+                sub_title_tv.text = it
+            }
+
+        if(amount.isNullOrEmpty()){
+            add_money_tv.visibility = View.GONE
+        }else{
+            add_money_tv.text = amount
+        }
+
+
+
+    }
 }
