@@ -210,6 +210,7 @@ object AppConstants {
 
     Chores :" ChoresScreen, 7"*/
    const val ERROR_TYPE_AFTER_SPIN = "AfterSpin"
+   const val INSUFFICIENT_ERROR_CODE = "PKT_2037"
 
 
 }

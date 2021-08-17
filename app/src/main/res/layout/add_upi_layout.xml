@@ -31,9 +31,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:padding="2dp"
-            app:customIsRounded="@{true}"
-            app:customStrokeWidth="@{@dimen/dp5}"
-            app:customStrokeColor="@{@color/grey}"
+            android:background="@color/white"
             app:srcCompat="@drawable/upi_logo" />
 
 
@@ -43,7 +41,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="@string/add_upi_text"
-            android:textSize="@dimen/textSize_14"
+            android:textSize="14sp"
 
             />
     </LinearLayout>

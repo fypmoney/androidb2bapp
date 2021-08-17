@@ -30,6 +30,7 @@ class ReferAndEarnActivity : BaseActivity<ActivityReferAndEarnBinding,ReferAndEa
 
     private fun setUpViews() {
         mViewBinding.referalCodeValueTv.text =  Utility.getCustomerDataFromPreference()?.referralCode
+       // mViewBinding.ref.text =  Utility.getCustomerDataFromPreference()?.referralMsg
     }
 
     private fun setUpObserver() {

@@ -90,7 +90,7 @@
             android:visibility="gone"
             android:textAlignment="center"
             android:textColor="@color/text_color_dark"
-            android:textSize="18dp" />
+            android:textSize="18sp" />
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/saveCardCheckbox"
@@ -99,6 +99,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp"
+            android:visibility="gone"
             android:text="@string/save_upi_id" />
 
         <com.google.android.material.button.MaterialButton

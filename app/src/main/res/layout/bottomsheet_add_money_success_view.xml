@@ -8,13 +8,13 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="16dp">
         <View
             android:id="@+id/view"
             android:layout_width="40dp"
             android:layout_height="4dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -23,7 +23,10 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/verification_title"
             style="@style/TextviewRegular"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center"
             android:text="@string/money_added_successfully"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,12 +51,12 @@
 
         <com.fypmoney.view.customview.GifView
             android:id="@+id/image"
-            android:layout_width="156dp"
-            android:layout_height="142dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:layout_centerHorizontal="true"
             android:adjustViewBounds="true"
             android:cropToPadding="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/amount_tv" />
@@ -85,12 +88,30 @@
             android:background="@drawable/curved_background26"
             android:text="@string/view_details"
             android:textAllCaps="false"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="20dp"
             app:backgroundTint="@color/text_color_dark"
             app:layout_constraintTop_toBottomOf="@+id/updated_balance_tv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/continue_btn"
+            style="@style/Widget.App.Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="@dimen/_40sdp"
+            android:layout_marginBottom="@dimen/dp26"
+            android:background="@drawable/curved_background26"
+            android:paddingHorizontal="45dp"
+            android:text="@string/continue_txt"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/text_color_dark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/view_details_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/updated_balance_tv" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

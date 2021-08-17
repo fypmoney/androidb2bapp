@@ -63,6 +63,11 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        mViewModel.callGetWalletBalanceApi()
+
+    }
     private fun setUpRecyclerView() {
         val topTenUsersAdapter = TopTenUsersAdapter(
             viewLifecycleOwner, onRecentUserClick = {

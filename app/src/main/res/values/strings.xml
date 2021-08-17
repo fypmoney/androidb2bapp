@@ -569,7 +569,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="bank_transaction_heading">Bank Transaction ID</string>
     <string name="add_upi_title">Add Existing UPI ID</string>
     <string name="upi_id">UPI ID</string>
-    <string name="upi_id_hint">your UPI ID</string>
+    <string name="upi_id_hint">Your UPI ID</string>
 
     <!--
   Add upi
@@ -832,9 +832,20 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="contact_not_found">Please add contact in your phone book or enter the number in search textbox.</string>
     <string name="oh_no">Oh No!</string>
 
-    <string name="first_name_last_name">%1$s, %2$s</string>
+    <string name="first_name_last_name">%1$s %2$s</string>
     <string name="udpated_account_balance">Updated Account Balance: ₹ %1$s</string>
-    <string name="money_added_successfully">Money Added successfully</string>
+    <string name="money_added_successfully">Money Added Successfully</string>
+    <string name="payment_made_successfully">Payment Made Successfully</string>
     <string name="view_details">View Details</string>
+
+    <string name="press_again_to_exit">Press BACK again to exit.</string>
+    <string name="load_money">Load Money</string>
+    <string name="insufficient_bank_balance">Insufficient bank balance</string>
+    <string name="insufficient_bank_body">You have Insufficient bank balance, to make \n this payment you have to add money</string>
+    <string name="uh_oh">Uh oh!</string>
+    <string name="add_money">Add Money</string>
+    <string name="request_money">Request Money</string>
+    <string name="thanks_we_will_keep_you_notify">Thanks,We will keep you notify</string>
+
 
 </resources>

@@ -33,15 +33,15 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/screenMarginLeft"
-                android:layout_marginEnd="@dimen/screenMarginRight">
+                android:layout_marginStart="@dimen/dp12"
+                android:layout_marginEnd="@dimen/dp12">
 
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/layoutServicePrice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardCornerRadius="16dp"
                     app:cardElevation="@dimen/card_elevation"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintTop_toTopOf="parent">
@@ -54,18 +54,16 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/balance_texttt"
                             style="@style/TextviewRegular"
-                            android:textSize="17dp"
+                            android:text="@string/load_money"
                             android:textColor="@color/text_color_dark"
-                            android:text="@string/amount"
-                            />
+                            android:textSize="17sp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/balance_text1"
                             style="@style/TextviewBold"
                             android:layout_alignParentEnd="true"
-                            android:textSize="17dp"
                             android:text="@{@string/Rs+viewModel.amountToAdd}"
-                            />
+                            android:textSize="17sp" />
                     </RelativeLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -73,18 +71,19 @@
                     android:id="@+id/upi_text"
                     style="@style/TextviewRegular"
                     android:layout_below="@+id/layoutServicePrice"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="40dp"
                     android:ellipsize="end"
                     android:text="@string/add_money_upi_text"
                     android:textColor="@color/text_color_dark"
-                    android:textSize="17dp" />
+                    android:textSize="17sp" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/layoutServicePrice1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/upi_text"
-                    app:cardCornerRadius="@dimen/card_corner_radius"
+                    app:cardCornerRadius="16dp"
                     app:cardElevation="@dimen/card_elevation"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintTop_toTopOf="parent">
@@ -103,11 +102,12 @@
                     android:id="@+id/debit_card_text"
                     style="@style/TextviewRegular"
                     android:layout_below="@+id/layoutServicePrice1"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="20dp"
                     android:ellipsize="end"
                     android:text="@string/add_money_debit_text"
                     android:textColor="@color/text_color_dark"
-                    android:textSize="17dp" />
+                    android:textSize="17sp" />
 
                 <LinearLayout
                     android:id="@+id/linear"
@@ -138,14 +138,15 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/add_debit_card_text"
-                    style="@style/TextviewBold"
+                    style="@style/TextviewRegular"
                     android:layout_below="@+id/linear"
+                    android:layout_marginStart="@dimen/dp8"
                     android:layout_marginTop="10dp"
                     android:ellipsize="end"
                     android:onClick="@{()->viewModel.onAddNewCardClicked()}"
                     android:text="@string/add_money_add_new_card_text"
                     android:textColor="@color/color_skyblue"
-                    android:textSize="17dp" />
+                    android:textSize="17sp" />
 
 
             </RelativeLayout>
