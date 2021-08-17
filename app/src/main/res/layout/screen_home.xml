@@ -17,7 +17,7 @@
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
+
         android:scrollbars="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -478,7 +478,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/dp10"
-                app:layout_constraintTop_toBottomOf="@+id/reedem_mynts_rl" />
+                app:layout_constraintTop_toBottomOf="@+id/reedem_mynts_rlt" />
 
 
 
@@ -499,13 +499,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/recent_tv" />
 
             <RelativeLayout
-                android:id="@+id/reedem_mynts_rl"
+                android:id="@+id/reedem_mynts_rlt"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="11dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recent_rv"
                 android:layout_marginTop="@dimen/dp20"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_redeem_mynts">
@@ -548,7 +549,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@+id/reedem_mynts_rl" />
+                app:layout_constraintTop_toBottomOf="@+id/reedem_mynts_rlt" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

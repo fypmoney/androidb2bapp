@@ -93,7 +93,7 @@ class BankTransactionHistoryView :
 
                     mViewModel.bankTransactionHistoryAdapter.setList(arraylist)
                 } else {
-                    if (page == 0) {
+                    if (page == 1) {
                         mViewModel.noDataFoundVisibility.set(true)
                     }
                 }
@@ -101,7 +101,7 @@ class BankTransactionHistoryView :
                 isLoading = false
 
             } else {
-                if (page == 0) {
+                if (page == 1) {
                     mViewModel.noDataFoundVisibility.set(true)
                 }
             }
@@ -114,9 +114,12 @@ class BankTransactionHistoryView :
         LoadProgressBar?.visibility = View.VISIBLE
 
         isLoading = true
+        Log.d("chackpage", page.toString())
 
         if (fromDatestr.isNotEmpty() || toDatestr.isNotEmpty()) {
             mViewModel.callGetBankTransactionHistoryApi(fromDatestr, toDatestr, page = page)
+        } else {
+            mViewModel.callGetBankTransactionHistoryApi(page = page)
         }
 
 

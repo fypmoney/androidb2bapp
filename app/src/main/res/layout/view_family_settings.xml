@@ -173,7 +173,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/ic_add_a_member_no_data" />
+                app:srcCompat="@drawable/ic_family_tab_illustration" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -240,7 +240,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
-                app:srcCompat="@drawable/ic_tak_graphic" />
+                app:srcCompat="@drawable/ic_family_tab_illustration" />
 
 
             <LinearLayout

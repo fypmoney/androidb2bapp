@@ -2,6 +2,8 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -47,11 +49,20 @@ class AddMoneyView : BaseActivity<ViewAddMemberBinding, AddMoneyViewModel>(){
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
+        add_money_editext.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
 
-            mViewModel.setEdittextLength.observe(this) {
-                if (it) {
-                    add_money_editext.setSelection(add_money_editext.text.length);
-                    mViewModel.setEdittextLength.value = false
+                if (s.toString().startsWith("0")) {
+                    s.clear()
+                }
+            }
+        })
+        mViewModel.setEdittextLength.observe(this) {
+            if (it) {
+                add_money_editext.setSelection(add_money_editext.text.length);
+                mViewModel.setEdittextLength.value = false
                 }
             }
 

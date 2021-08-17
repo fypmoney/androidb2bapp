@@ -26,7 +26,7 @@ class BankTransactionHistoryViewModel(application: Application) : BaseViewModel(
       * */
 
     init {
-        callGetBankTransactionHistoryApi(page = 0)
+        callGetBankTransactionHistoryApi(page = 1)
     }
 
     /*
@@ -38,7 +38,7 @@ class BankTransactionHistoryViewModel(application: Application) : BaseViewModel(
         page: Int? = null
     ) {
         var progressbar = false
-        progressbar = page == 0
+        progressbar = page == 1
 
         WebApiCaller.getInstance().request(
             ApiRequest(

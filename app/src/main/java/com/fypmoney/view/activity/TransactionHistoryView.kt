@@ -90,6 +90,8 @@ class TransactionHistoryView :
                     var arraylist = list
 
                     mViewModel.transactionHistoryAdapter.setList(arraylist)
+                } else if (page == 0) {
+                    mViewModel.isNoDataFoundVisible.set(true)
                 }
                 page = page + 1
                 isLoading = false
