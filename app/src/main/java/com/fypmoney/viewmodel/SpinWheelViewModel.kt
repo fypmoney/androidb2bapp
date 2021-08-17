@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -29,15 +30,18 @@ class SpinWheelViewModel(application: Application) : BaseViewModel(application) 
     var luckyItemList: ArrayList<LuckyItem> = ArrayList()
     var getRewardsResponseList = ObservableField<GetRewardsResponseDetails>()
     var spinWheelResponseList = MutableLiveData<SpinWheelResponseDetails>()
+    var redeemCallBackResponse = MutableLiveData<RedeemRequestedResponse>()
+    var redeemDetailsResponse = MutableLiveData<RedeemDetailsResponse>()
     val onGetRewardsSuccess = MutableLiveData<Boolean>()
     val spinAllowed = MutableLiveData<String>()
     val onSpinDone = MutableLiveData<Boolean>()
     val enableSpin = MutableLiveData<Boolean>()
     val coinVisibilty = ObservableField(true)
+    val screenopen = ObservableField(false)
     val spinnerClickable = ObservableField(true)
     val onRewardsHistoryClicked = MutableLiveData<Boolean>()
     val onPlayClicked = MutableLiveData<Boolean>()
-    val onError = MutableLiveData<String>()
+    val onError = MutableLiveData<ErrorResponseInfo>()
     private val fromWhich = ObservableField<String>()
     val totalRewards =
         ObservableField(PockketApplication.instance.getString(R.string.fetching_reward))
@@ -110,6 +114,34 @@ class SpinWheelViewModel(application: Application) : BaseViewModel(application) 
                 NetworkUtil.endURL(ApiConstant.API_GET_REWARDS_API),
                 ApiUrl.GET,
                 BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+
+
+    }
+
+    fun callRedeemCoins() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_REDEEM_COINS_API,
+                NetworkUtil.endURL(ApiConstant.API_REDEEM_COINS_API),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+
+
+    }
+
+    fun callGetCoinsToRedeem() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_REDEEM_DETAILS_API,
+                NetworkUtil.endURL(ApiConstant.API_GET_REDEEM_DETAILS_API),
+                ApiUrl.GET,
+                BaseRequest(),
                 this, isProgressBar = false
             )
         )
@@ -162,6 +194,33 @@ class SpinWheelViewModel(application: Application) : BaseViewModel(application) 
                 callGetRewardsApi()
 
             }
+            ApiConstant.API_REDEEM_COINS_API -> {
+
+
+                val json = JsonParser().parse(responseData.toString()) as JsonObject
+
+                val redeemDetails = Gson().fromJson(
+                    json.get("data"),
+                    com.fypmoney.model.RedeemDetailsResponse::class.java
+                )
+
+                redeemDetailsResponse.postValue(redeemDetails)
+
+            }
+
+            ApiConstant.API_GET_REDEEM_DETAILS_API -> {
+
+
+                val json = JsonParser().parse(responseData.toString()) as JsonObject
+
+                val redeemDetails = Gson().fromJson(
+                    json.get("data"),
+                    com.fypmoney.model.RedeemDetailsResponse::class.java
+                )
+
+                redeemDetailsResponse.postValue(redeemDetails)
+
+            }
             ApiConstant.API_GET_REWARDS_API -> {
 
 
@@ -199,7 +258,13 @@ class SpinWheelViewModel(application: Application) : BaseViewModel(application) 
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
-        onError.value = errorResponseInfo.msg
+        Log.d("chackpass", errorResponseInfo.errorCode)
+        when (purpose) {
+            ApiConstant.API_SPIN_WHEEL -> {
+                onError.value = errorResponseInfo
+            }
+        }
+
 
     }
 

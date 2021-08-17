@@ -29,19 +29,47 @@
             android:id="@+id/card_title"
             style="@style/TextviewBold"
             android:layout_gravity="center"
+            android:visibility="gone"
             android:layout_marginTop="@dimen/_26sdp"
             android:text="Congratulations!"
             android:textColor="@color/text_color_dark"
             android:textSize="31sp" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:id="@+id/lin_coins"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="@dimen/_20sdp"
+                android:src="@drawable/ic_mynt_coin"
+                android:layout_gravity="center_vertical"
+                android:layout_height="@dimen/_20sdp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+
+                style="@style/TextviewBold"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:id="@+id/redeem_mynts"
+
+                android:textColor="@color/text_color_dark"
+                android:textSize="26sp" />
+
+        </LinearLayout>
+
 
         <androidx.appcompat.widget.AppCompatTextView
             style="@style/TextviewRegular"
             android:layout_gravity="center"
+
             android:layout_marginTop="26dp"
 
             android:text="It's raining money today. Your wallet has\n been updated."
-            android:id="@+id/task_details"
+            android:id="@+id/dialog_details"
             android:textAlignment="center" />
 
 
@@ -65,7 +93,8 @@
                 android:textSize="18sp"
                 android:textAllCaps="false"
                 android:fontFamily="@font/product_sans_regular"
-
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_4sdp"
                 app:backgroundTint="@color/text_color_dark" />
 
         </LinearLayout>

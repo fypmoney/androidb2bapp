@@ -34,7 +34,7 @@
             android:background="#5AAFC9"
             android:alpha=".2"
             android:id="@+id/card_bg"
-            app:cardCornerRadius="@dimen/card_corner_radius"
+            app:cardCornerRadius="18dp"
             android:layout_below="@+id/new_tv"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_160sdp" />
@@ -54,7 +54,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:gravity="start"
-                android:text="Mom"
+
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -73,7 +73,7 @@
                 android:layout_marginRight="@dimen/_14sdp"
                 android:ellipsize="end"
                 android:gravity="center"
-                android:text="Make your bed after getting up"
+
                 android:textColor="@color/text_color_dark"
 
                 android:textSize="18sp"
@@ -126,7 +126,7 @@
                         android:paddingTop="@dimen/_7sdp"
                         android:paddingRight="@dimen/_4sdp"
                         android:paddingBottom="@dimen/_7sdp"
-                        android:text="1d left"
+
                         android:textColor="@color/text_color_dark"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -152,7 +152,7 @@
                     android:paddingTop="@dimen/_7sdp"
                     android:paddingRight="@dimen/_4sdp"
                     android:paddingBottom="@dimen/_7sdp"
-                    android:text="₹70"
+
                     android:textColor="@color/text_color_dark"
                     android:textSize="14sp" />
 

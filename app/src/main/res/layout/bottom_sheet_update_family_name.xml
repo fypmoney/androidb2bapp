@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="43dp"
-            app:srcCompat="@drawable/ic_family_name_update" />
+            app:srcCompat="@drawable/ic_family_name" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/verification_title"

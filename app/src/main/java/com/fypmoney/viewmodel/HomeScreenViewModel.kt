@@ -21,6 +21,8 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.adapter.FeedsSectionAdapter
 import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 
 
 class HomeScreenViewModel(application: Application) : BaseViewModel(application),
@@ -32,10 +34,13 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     var onChoreClicked = MutableLiveData(false)
     var isFetchBalanceVisible = ObservableField(true)
     var fetchBalanceLoading = MutableLiveData<Boolean>()
+
     var isFeedVisible = ObservableField(false)
+    var clicked = ObservableField(false)
     var feedsAdapter = FeedsSectionAdapter(this)
     var onFeedButtonClick = MutableLiveData<FeedDetails>()
     val selectedPosition = ObservableField<Int>()
+    var redeemDetailsResponse = MutableLiveData<RedeemDetailsResponse>()
     val isApiLoading = ObservableField(true)
     var latitude = ObservableField<Double>()
     val longitude = ObservableField<Double>()
@@ -49,6 +54,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
 
     init {
         callTopTenUsersApi()
+        callGetCoinsToRedeem()
     }
 
     /*
@@ -99,6 +105,34 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         )
     }
 
+    fun callRedeemCoins() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_REDEEM_COINS_API,
+                NetworkUtil.endURL(ApiConstant.API_REDEEM_COINS_API),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+
+
+    }
+
+    fun callGetCoinsToRedeem() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_REDEEM_DETAILS_API,
+                NetworkUtil.endURL(ApiConstant.API_GET_REDEEM_DETAILS_API),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+
+
+    }
+
     /*
   * This method is used to call the get feeds API
   * */
@@ -146,14 +180,41 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
 
                 }
             }
+            ApiConstant.API_REDEEM_COINS_API -> {
+
+
+                val json = JsonParser().parse(responseData.toString()) as JsonObject
+
+                val redeemDetails = Gson().fromJson(
+                    json.get("data"),
+                    com.fypmoney.model.RedeemDetailsResponse::class.java
+                )
+
+                redeemDetailsResponse.postValue(redeemDetails)
+
+            }
+
+            ApiConstant.API_GET_REDEEM_DETAILS_API -> {
+
+
+                val json = JsonParser().parse(responseData.toString()) as JsonObject
+
+                val redeemDetails = Gson().fromJson(
+                    json.get("data"),
+                    com.fypmoney.model.RedeemDetailsResponse::class.java
+                )
+
+                redeemDetailsResponse.postValue(redeemDetails)
+
+            }
             ApiConstant.TOP_TEN_USER_API -> {
-                val data =  Gson().fromJson(responseData.toString(), TopTenUsersResponse::class.java)
+                val data = Gson().fromJson(responseData.toString(), TopTenUsersResponse::class.java)
                 if (data is TopTenUsersResponse) {
                     _topTenUserResponse.value = data
                 }
             }
             ApiConstant.API_STORY -> {
-                val data =  Gson().fromJson(responseData.toString(), SplitBillsResponse::class.java)
+                val data = Gson().fromJson(responseData.toString(), SplitBillsResponse::class.java)
                 if (data is SplitBillsResponse) {
                     splitBillsResponse.value = data
                 }

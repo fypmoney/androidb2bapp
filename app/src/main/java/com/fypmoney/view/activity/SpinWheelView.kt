@@ -14,12 +14,11 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSpinWheelBinding
-import com.fypmoney.model.UpdateTaskGetResponse
+import com.fypmoney.model.RedeemDetailsResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.fragment.ErrorBottomSheet
 import com.fypmoney.view.fragment.RedeemMyntsBottomSheet
-import com.fypmoney.view.fragment.TaskMessageBottomSheet2
-import com.fypmoney.view.interfaces.MessageSubmitClickListener
+import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.viewmodel.SpinWheelViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_spin_wheel.*
@@ -77,24 +76,30 @@ class SpinWheelView : BaseActivity<ViewSpinWheelBinding, SpinWheelViewModel>(),
 
         }
         btnSendOtp.setOnClickListener(View.OnClickListener {
-            callTaskMessageSheet()
+
+            mViewModel.callGetCoinsToRedeem()
 
         })
         mViewModel.enableSpin.value = false
 
     }
 
-    private fun callTaskMessageSheet() {
-        var itemClickListener2 = object : MessageSubmitClickListener {
+    private fun callRedeemMyntsSheet(redeemDetails: RedeemDetailsResponse) {
+        var itemClickListener2 = object : ListItemClickListener {
 
 
-            override fun onSubmit() {
+            override fun onItemClicked(pos: Int) {
+                bottomSheetMessage?.dismiss()
+            }
+
+            override fun onCallClicked(pos: Int) {
+                mViewModel.callRedeemCoins()
                 bottomSheetMessage?.dismiss()
 
             }
         }
         bottomSheetMessage =
-            RedeemMyntsBottomSheet()
+            RedeemMyntsBottomSheet(itemClickListener2, redeemDetails)
         bottomSheetMessage?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheetMessage?.show(supportFragmentManager, "TASKMESSAGE")
     }
@@ -127,18 +132,26 @@ class SpinWheelView : BaseActivity<ViewSpinWheelBinding, SpinWheelViewModel>(),
 
 
         }
+        mViewModel.redeemDetailsResponse.observe(this) {
+            callRedeemMyntsSheet(it)
+        }
+
 
         mViewModel.onError.observe(this)
         {
-            callErrorBottomSheet(AppConstants.ERROR_TYPE_SPIN_ALLOWED, message = it)
+            if (it.errorCode != "UAA_1058") {
+                callErrorBottomSheet(AppConstants.ERROR_TYPE_SPIN_ALLOWED, message = it.msg)
+
+            }
+
         }
 
         mViewModel.onPlayClicked.observe(this)
         {
-            Log.d("chackpass", "0")
+
             when (mViewModel.spinAllowed.value) {
                 AppConstants.NO -> {
-                    Log.d("chackpass", "1")
+
                     callErrorBottomSheet(
                         AppConstants.ERROR_TYPE_SPIN_ALLOWED,
                         message = getString(R.string.better_luck)

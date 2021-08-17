@@ -20,6 +20,37 @@
             android:id="@+id/layout"
             layout="@layout/toolbar_transaction_history" />
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+
+            android:visibility="@{viewModel.isNoDataFoundVisible?View.VISIBLE:View.GONE,default=gone}"
+            android:id="@+id/empty_screen"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:elevation="@dimen/_2sdp"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_194sdp"
+                android:id="@+id/image"
+                android:layout_height="@dimen/_142sdp"
+                android:layout_centerHorizontal="true"
+
+                app:srcCompat="@drawable/ic_no_transactions" />
+
+            <TextView
+                android:layout_width="match_parent"
+                style="@style/TextviewRegular"
+                android:layout_below="@+id/image"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:paddingLeft="@dimen/_34sdp"
+                android:paddingRight="@dimen/_34sdp"
+                android:textColor="#9CA3A5"
+                android:gravity="center"
+                android:text="Looks like you haven’t done any transaction yet."
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -52,19 +83,8 @@
                 android:layout_marginBottom="@dimen/dp16"
 
 
-                android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=visible}"
                 app:adapter="@{viewModel.transactionHistoryAdapter}" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/stayTuned"
-                style="@style/TextviewRegular"
-                android:layout_centerInParent="true"
-                android:layout_centerHorizontal="true"
-                android:text="@string/no_data_found"
-                android:textAlignment="center"
-                android:textColor="@color/text_color_little_dark"
-                android:textSize="@dimen/title_size"
-                android:visibility="@{viewModel.isNoDataFoundVisible?View.VISIBLE:View.GONE,default=gone}" />
 
 
             <LinearLayout

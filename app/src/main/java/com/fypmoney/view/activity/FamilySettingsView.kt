@@ -92,7 +92,7 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
 
             intentToActivity(
                 contactEntity = contact,
-                aClass = TransactionHistoryView::class.java, ""
+                aClass = PayRequestProfileView::class.java, ""
             )
 
 

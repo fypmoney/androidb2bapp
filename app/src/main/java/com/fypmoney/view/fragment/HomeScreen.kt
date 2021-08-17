@@ -17,10 +17,12 @@ import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ScreenHomeBinding
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
+import com.fypmoney.model.RedeemDetailsResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.TopTenUsersAdapter
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
+import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
 import com.fypmoney.viewmodel.HomeScreenViewModel
 import kotlinx.android.synthetic.main.screen_home.*
@@ -28,6 +30,8 @@ import kotlinx.android.synthetic.main.screen_home.*
 
 class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
 
+
+    private var bottomSheetMessage: RedeemMyntsBottomSheet? = null
     private lateinit var mViewModel: HomeScreenViewModel
     private lateinit var mViewBinding: ScreenHomeBinding
 
@@ -116,8 +120,32 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
                 }
             }
         })
+        mViewModel.redeemDetailsResponse.observe(viewLifecycleOwner, {
+
+
+            if (it.pointsToRedeem != null && it.pointsToRedeem > 0) {
+                mViewBinding.reedemMyntsRlt.visibility = View.VISIBLE
+            } else {
+
+                mViewBinding.reedemMyntsRlt.visibility = View.GONE
+            }
+            if (mViewModel.clicked.get() == true) {
+                mViewModel.clicked.set(false)
+                callTaskMessageSheet(it)
+
+            } else if (it.pointsToRedeem == null) {
+                callTaskMessageSheet(it)
+            }
+
+        })
+
+        mViewBinding.reedemMyntsRlt.setOnClickListener(View.OnClickListener {
+            mViewModel.clicked.set(true)
+            mViewModel.callGetCoinsToRedeem()
+
+        })
         mViewModel.splitBillsResponse.observe(viewLifecycleOwner, {
-            if(!it.listOfArrays.isNullOrEmpty()) {
+            if (!it.listOfArrays.isNullOrEmpty()) {
                 callStory(it.listOfArrays)
             }
         })
@@ -194,6 +222,26 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
 
     override fun onTryAgainClicked() {
 
+    }
+
+    private fun callTaskMessageSheet(redeemDetails: RedeemDetailsResponse) {
+        var itemClickListener2 = object : ListItemClickListener {
+
+
+            override fun onItemClicked(pos: Int) {
+                bottomSheetMessage?.dismiss()
+            }
+
+            override fun onCallClicked(pos: Int) {
+                mViewModel.callRedeemCoins()
+                bottomSheetMessage?.dismiss()
+
+            }
+        }
+        bottomSheetMessage =
+            RedeemMyntsBottomSheet(itemClickListener2, redeemDetails)
+        bottomSheetMessage?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetMessage?.show(childFragmentManager, "TASKMESSAGE")
     }
 
 
