@@ -17,6 +17,8 @@ import com.fypmoney.viewmodel.NotificationViewModel
 class NotificationAdapter(var viewModel: NotificationViewModel,var onNotificationClickListener:OnNotificationClickListener) :
     RecyclerView.Adapter<BaseViewHolder>() {
     var notificationList: ArrayList<NotificationModel.NotificationResponseDetails>? = ArrayList()
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val mRowBinding = NotificationRowItemBinding.inflate(
             LayoutInflater.from(parent.context),
