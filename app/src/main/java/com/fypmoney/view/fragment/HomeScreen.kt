@@ -52,6 +52,9 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
+        setObservers()
+        setUpRecyclerView()
+        mViewModel.callFetchFeedsApi(false, 0.0, 0.0)
         choreCard.setOnClickListener {
             intentToPayActivity(ChoresActivity::class.java)
         }
@@ -62,12 +65,13 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
             mViewModel.callSplitBillsStories()
 
         }
-
-        setObservers()
-        setUpRecyclerView()
-        mViewModel.callFetchFeedsApi(false, 0.0, 0.0)
     }
 
+    override fun onResume() {
+        super.onResume()
+        mViewModel.callGetWalletBalanceApi()
+
+    }
     private fun setUpRecyclerView() {
         val topTenUsersAdapter = TopTenUsersAdapter(
             viewLifecycleOwner, onRecentUserClick = {

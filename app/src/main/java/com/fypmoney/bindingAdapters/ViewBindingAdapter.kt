@@ -4,9 +4,11 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.fypmoney.R
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 
@@ -64,5 +66,15 @@ fun setBackgroundDrawable(
         backgroundColor?.let {
             view.setBackgroundColor(it)
         }
+    }
+
+}
+
+@BindingAdapter("app:customFirstName","app:customLastName",requireAll = false)
+fun setFirstNameLastName(view: TextView, firstname: String?,lastname:String?) {
+    if(lastname.isNullOrBlank()){
+        view.text = firstname
+    }else{
+        view.text = String.format(view.context.resources.getString(R.string.first_name_last_name),firstname,lastname)
     }
 }

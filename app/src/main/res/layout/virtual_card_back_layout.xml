@@ -40,7 +40,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center"
                 android:background="@drawable/card_shape"
-                android:padding="3dp"
+                android:padding="1dp"
                 app:srcCompat="@drawable/ic_card__2_" />
 
             <RelativeLayout

@@ -1,5 +1,6 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -8,6 +9,7 @@ const val countryCode =
 /*
 const val nameTitle="[{value=\"MR\",key=\"Mr.\"},{value=\"MS\",key=\"Ms.\"},{value=\"MRS\",key=\"Mrs.\"},{value=\"MISS\",key=\"Miss.\"},{value=\"DR\",key=\"Dr.\"}]"
 */
+@Keep
 data class CountryCode(
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,

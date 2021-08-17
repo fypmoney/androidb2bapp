@@ -43,6 +43,7 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
 
     private lateinit var mViewModel: LoginViewModel
     private lateinit var mViewBinding: ViewLoginBinding
+
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -69,7 +70,6 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
         mViewBinding.activity = this
         mViewBinding.viewModel = mViewModel
         setObservers()
-
     }
 
     /*

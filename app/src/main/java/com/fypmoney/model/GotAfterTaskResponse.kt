@@ -1,5 +1,8 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class GotAfterTaskResponse(
 	val requesteeName: String? = null,
 	val msg: String? = null,

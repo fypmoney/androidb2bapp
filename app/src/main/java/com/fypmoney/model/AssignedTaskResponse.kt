@@ -1,5 +1,8 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class AssignedTaskResponse(
 	val requesteeName: String? = null,
 	val amount: Int? = null,

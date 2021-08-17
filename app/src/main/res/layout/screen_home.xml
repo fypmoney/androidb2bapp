@@ -23,8 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical">
+            android:background="@color/white">
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -156,11 +155,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:clickable="true"
                     android:padding="10dp"
                     app:cardCornerRadius="18dp"
                     app:cardElevation="@dimen/card_elevation"
                     app:cardUseCompatPadding="true"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:focusable="true">
 
                     <FrameLayout
                         android:layout_width="match_parent"
@@ -540,7 +541,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/dp10"
                 android:visibility="@{viewModel.isFeedVisible?View.VISIBLE:View.GONE,default=gone}"

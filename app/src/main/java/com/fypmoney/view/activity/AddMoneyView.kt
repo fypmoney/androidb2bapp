@@ -9,6 +9,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAddMemberBinding
+import com.fypmoney.databinding.ViewAddMoneyBinding
 import com.fypmoney.databinding.ViewInviteRejectedBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.AddMoneyViewModel
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.view_add_money.*
 /*
 * This class is used to add money
 * */
-class AddMoneyView : BaseActivity<ViewAddMemberBinding, AddMoneyViewModel>(){
+class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
     private lateinit var mViewModel: AddMoneyViewModel
 
     override fun getBindingVariable(): Int {

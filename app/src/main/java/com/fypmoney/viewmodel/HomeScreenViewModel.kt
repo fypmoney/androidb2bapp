@@ -53,7 +53,6 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     private val _topTenUserResponse = MutableLiveData<TopTenUsersResponse>()
 
     init {
-        callGetWalletBalanceApi()
         callTopTenUsersApi()
         callGetCoinsToRedeem()
     }
@@ -83,7 +82,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     /*
      * This method is used to get the balance of wallet
      * */
-    private fun callGetWalletBalanceApi() {
+     fun callGetWalletBalanceApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_WALLET_BALANCE,

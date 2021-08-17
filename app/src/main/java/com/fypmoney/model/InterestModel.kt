@@ -1,10 +1,11 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-
+@Keep
 data class InterestResponse(
     @SerializedName("data") var interestDetails: List<InterestEntity>?
 )

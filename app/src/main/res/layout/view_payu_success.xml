@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -30,8 +31,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="80dp"
                 app:srcCompat="@drawable/ic_payment_sucessful" />
@@ -44,7 +45,7 @@
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="@{@string/Rs+viewModel.availableAmount}"
-                android:textSize="42dp" />
+                android:textSize="42sp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/payment_success"

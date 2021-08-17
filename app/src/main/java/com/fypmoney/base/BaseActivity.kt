@@ -204,7 +204,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         val params = Bundle()
         params.putString("button_name", "Login")
         params.putString("button_text", "Login clicked")
-        firebaseAnalytics.logEvent("dreamFolks_login", params)
+        firebaseAnalytics.logEvent("fyp_login", params)
 
         val bundle = Bundle()
         bundle.putString(FirebaseAnalytics.Param.ITEM_ID, "100")

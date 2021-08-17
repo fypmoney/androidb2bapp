@@ -1,5 +1,8 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class GetTaskResponse(
     val isAssignTask: Int? = null,
     val page: Int? = null,
@@ -7,7 +10,7 @@ data class GetTaskResponse(
     val sort: String? = null
 
 )
-
+@Keep
 data class GetTaskResponseIsassign(
     val isAssignTask: Int? = null,
 

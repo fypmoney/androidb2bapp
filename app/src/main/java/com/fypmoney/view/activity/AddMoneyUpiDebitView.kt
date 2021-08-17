@@ -30,6 +30,7 @@ import com.fypmoney.model.UpiModel
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.AddMoneySuccessBottomSheet
 import com.fypmoney.view.fragment.AddNewCardBottomSheet
 import com.fypmoney.view.fragment.AddUpiBottomSheet
 import com.fypmoney.view.fragment.TransactionFailBottomSheet
@@ -55,9 +56,7 @@ import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 import kotlinx.android.synthetic.main.view_add_money_upi_debit.*
 
 
-/*
-* This class is used to handle school name city
-* */
+
 open class AddMoneyUpiDebitView :
     BaseActivity<ViewAddMoneyUpiDebitBinding, AddMoneyUpiDebitViewModel>(),
     AddNewCardBottomSheet.OnAddNewCardClickListener,
@@ -100,13 +99,10 @@ open class AddMoneyUpiDebitView :
         )
         mViewModel.amountToAdd.set(intent.getStringExtra(AppConstants.AMOUNT))
 
-        mViewModel.callAddMoneyStep1Api()
         payuConfig = PayuConfig()
         payuConfig.environment = PayuConstants.PRODUCTION_ENV
 
         val amountLength = intent.getStringExtra(AppConstants.AMOUNT)?.length
-
-
 
     }
 
@@ -149,7 +145,7 @@ open class AddMoneyUpiDebitView :
         mViewModel.onStep2Response.observe(this) {
             when (it) {
                 AppConstants.API_SUCCESS -> {
-                    callPaymentSuccessView()
+                    callTransactionSuccessBottomSheet()
                 }
                 AppConstants.API_FAIL -> {
                     callTransactionFailBottomSheet()
@@ -170,12 +166,12 @@ open class AddMoneyUpiDebitView :
     /*
 * navigate to the Pay u success
 * */
-    private fun callPaymentSuccessView() {
+    private fun callViewPaymentDetails() {
         val intent = Intent(this@AddMoneyUpiDebitView, PayUSuccessView::class.java)
         intent.putExtra(AppConstants.RESPONSE, mViewModel.step2ApiResponse)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.ADD_MONEY)
         startActivity(intent)
-        finishAffinity()
+        finish()
     }
 
     private fun callGooglePayIntent() {
@@ -221,6 +217,29 @@ open class AddMoneyUpiDebitView :
         bottomSheet.show(supportFragmentManager, "TransactionFail")
     }
 
+    private fun callTransactionSuccessBottomSheet() {
+        val bottomSheet =
+            Utility.convertToRs(mViewModel.step2ApiResponse.amount!!)?.let {
+                Utility.convertToRs(mViewModel.step2ApiResponse.balance!!)?.let { it1 ->
+                    AddMoneySuccessBottomSheet(
+                        it,
+                        it1,onViewDetailsClick={
+                            callViewPaymentDetails()
+                        },onHomeViewClick = {
+                            intentToHomeActivity(HomeView::class.java)
+                        }
+                    )
+                }
+            }
+        bottomSheet?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet?.show(supportFragmentManager, "TransactionSuccess")
+    }
+
+    private fun intentToHomeActivity(aClass: Class<*>) {
+        startActivity(Intent(this, aClass))
+        finishAffinity()
+    }
+
 
     /*
       * This method is used to call add upi bottom sheet
@@ -256,7 +275,10 @@ open class AddMoneyUpiDebitView :
         super.onResume()
         if (mViewModel.isPaymentFail.get() == true) {
             callTransactionFailBottomSheet()
+
         }
+        mViewModel.callAddMoneyStep1Api()
+
 
     }
 

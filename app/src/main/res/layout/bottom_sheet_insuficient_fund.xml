@@ -20,9 +20,12 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/card_title"
             style="@style/TextviewBold"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_46sdp"
-            android:text="Uh oh!"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_26sdp"
+            android:text="@string/uh_oh"
             android:textColor="@color/text_color_dark"
             android:textSize="31sp" />
 
@@ -37,16 +40,24 @@
             style="@style/TextviewRegular"
             android:layout_gravity="center"
             android:layout_marginTop="26dp"
+            android:text="@string/insufficient_bank_balance"
+            android:textColor="@color/text_color_light"
+            android:id="@+id/sub_title_tv"
+            android:textAlignment="center" />
 
-            android:text="Insufficient bank balance"
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewRegular"
+            android:layout_gravity="center"
+            android:layout_marginTop="26dp"
+            android:textSize="18sp"
+            android:text="@string/insufficient_bank_balance"
             android:textColor="@color/text_color_dark"
-            android:id="@+id/task_details"
+            android:id="@+id/add_money_tv"
             android:textAlignment="center" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:weightSum="2"
             android:id="@+id/lin"
             android:layout_marginBottom="@dimen/_30sdp"
             android:layout_marginTop="@dimen/_20sdp"
@@ -60,10 +71,10 @@
                 android:layout_weight=".8"
                 android:textColor="@color/text_color_dark"
                 android:layout_gravity="center"
-                android:text="Request Money"
+                android:text="@string/request_money"
                 android:id="@+id/reject"
                 android:textSize="16sp"
-
+                android:visibility="gone"
                 android:textAllCaps="false"
                 android:background="@android:color/transparent"
 
@@ -77,9 +88,9 @@
                 android:layout_height="52dp"
                 android:layout_gravity="center"
                 android:background="@drawable/curved_background1"
-                android:text="Add Money"
+                android:text="@string/add_money"
                 android:textSize="16sp"
-                android:id="@+id/accept"
+                android:id="@+id/add_money_btn"
                 android:textAllCaps="false"
                 app:backgroundTint="@color/text_color_dark" />
 

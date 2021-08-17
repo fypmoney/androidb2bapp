@@ -97,10 +97,10 @@ class DialogUtils {
 
             mAlertDialog.show()
             mAlertDialog.setCancelable(false)
-            mAlertDialog.window!!.setLayout(
+            /*mAlertDialog.window!!.setLayout(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
-            )
+            )*/
             val linearLayout =
                 mAlertDialog.window!!.findViewById(R.id.linear_layout) as LinearLayout
 
@@ -123,7 +123,7 @@ class DialogUtils {
 
             (mAlertDialog.window!!.findViewById(R.id.message) as TextView).text = message
             mAlertDialog.window!!.setGravity(Gravity.CENTER_HORIZONTAL)
-            mAlertDialog.window!!.setBackgroundDrawableResource(R.color.white)
+            //mAlertDialog.window!!.setBackgroundDrawableResource(R.color.white)
             mAlertDialog.setCanceledOnTouchOutside(false)
             return mAlertDialog
         }

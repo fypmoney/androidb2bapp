@@ -138,21 +138,17 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
             }
 
-            ApiConstant.PAYU_PRODUCTION_URL -> {
+           /* ApiConstant.PAYU_PRODUCTION_URL -> {
                 when (responseData) {
 
                 }
-
-
-
-
                 if (responseData is AddMoneyStep2Response) {
                     step2ApiResponse = responseData.addMoneyStep2ResponseDetails
                     onStep2Response.value = AppConstants.API_SUCCESS
 
                 }
 
-            }
+            }*/
 
             ApiConstant.API_GET_HASH -> {
                 if (responseData is GetHashResponse) {
@@ -203,7 +199,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
     override fun onUpiItemClicked(position: Int, upiModel: UpiModel?) {
         clickedPositionForUpi.set(position)
-        onUpiClicked.value = upiModel
+        onUpiClicked.value = upiModel!!
 
     }
 
@@ -385,7 +381,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     /*
         *This method is used to call payment parameters while receiving the payment
         * */
-    fun callPayUApi(var1: String) {
+   /* fun callPayUApi(var1: String) {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.PAYU_PRODUCTION_URL,
@@ -400,7 +396,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
                 )
             ), whichServer = AppConstants.PAYU_SERVER
         )
-    }
+    }*/
 
 }
 

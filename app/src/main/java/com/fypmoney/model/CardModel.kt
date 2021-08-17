@@ -1,19 +1,20 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-
+@Keep
 data class VirtualCardRequestResponse(
     @SerializedName("data") val virtualCardRequestResponseDetails: VirtualCardRequestResponseDetails
 ) : Serializable
 
-
+@Keep
 data class VirtualCardRequestResponseDetails(
     @SerializedName("requestData") val requestData: String,
     @SerializedName("serviceUrl") val serviceUrl: String
 ) : Serializable
-
+@Keep
 data class FetchVirtualCardRequest(
     @SerializedName("action_name") var action_name: String? = null,
     @SerializedName("wlap_code") var wlap_code: String? = null,
@@ -22,12 +23,12 @@ data class FetchVirtualCardRequest(
     @SerializedName("p1") var p1: String? = null,
     @SerializedName("p2") var p2: String? = null
 ) : BaseRequest()
-
+@Keep
 data class FetchVirtualCardResponse(
     @SerializedName("data") val fetchVirtualCardResponseDetails: FetchVirtualCardResponseDetails
 ) : Serializable
 
-
+@Keep
 data class FetchVirtualCardResponseDetails(
     @SerializedName("message") val message: String,
     @SerializedName("card_number") val card_number: String,
@@ -36,36 +37,36 @@ data class FetchVirtualCardResponseDetails(
     @SerializedName("cvv") val cvv: String,
     @SerializedName("transaction_type") val transactionTypeDetails: TransactionTypeDetails
 ) : Serializable
-
+@Keep
 data class TransactionTypeDetails(
     @SerializedName("ECOM") val ECOM: String,
     @SerializedName("POS") val POS: String,
     @SerializedName("ATM") val ATM: String,
     @SerializedName("CL") val CL: String
 ) : Serializable
-
+@Keep
 data class BankTransactionHistoryRequest(
     @SerializedName("startDate") val startDate: String? = null,
     @SerializedName("endDate") val endDate: String? = null
 ) : BaseRequest()
-
+@Keep
 data class BankTransactionHistoryRequestwithpage(
     @SerializedName("startDate") val startDate: String? = null,
     @SerializedName("endDate") val endDate: String? = null,
     @SerializedName("page") val page: Int? = null
 ) : BaseRequest()
-
+@Keep
 data class BankTransactionHistoryResponse(
     @SerializedName("data") val transactions: Transactions
 ) : Serializable
 
-
+@Keep
 data class Transactions(
     @SerializedName("transactions") val bankTransactionHistoryResponseDetails: List<BankTransactionHistoryResponseDetails>,
     @SerializedName("pagination") val bankTransactionHistoryPagination: BankTransactionHistoryPagination
 ) : Serializable
 
-
+@Keep
 data class BankTransactionHistoryResponseDetails(
     @SerializedName("transactionType") val transactionType: String,
     @SerializedName("amount") val amount: String,
@@ -78,7 +79,7 @@ data class BankTransactionHistoryResponseDetails(
     @SerializedName("mobileNo") val mobileNo: String,
     @SerializedName("accReferenceNumber") val accReferenceNumber: String
 ) : Serializable
-
+@Keep
 data class BankTransactionHistoryPagination(
     @SerializedName("total_record") val total_record: Int,
     @SerializedName("per_page") val per_page: Int,
@@ -86,7 +87,7 @@ data class BankTransactionHistoryPagination(
     @SerializedName("total_pages") val total_pages: Int
 ) : Serializable
 
-
+@Keep
 data class UpDateCardSettingsRequest(
     @SerializedName("action") val action: String? = null,
     @SerializedName("isEnable") val isEnable: Int? = null,
@@ -94,20 +95,20 @@ data class UpDateCardSettingsRequest(
     @SerializedName("kitNumber") val kitNumber: String? = null,
     @SerializedName("cardType") val cardType: Int? = null,
 ) : BaseRequest()
-
+@Keep
 data class UpdateCardLimitRequest(
     @SerializedName("action") val action: String? = null,
     @SerializedName("atmLimit") val atmLimit: String? = null,
     @SerializedName("posLimit") val posLimit: String? = null,
     @SerializedName("ecomLimit") val ecomLimit: String? = null
 ) : BaseRequest()
-
+@Keep
 data class UpdateCardLimitResponse(
     @SerializedName("msg") val msg: String? = null,
     @SerializedName("data") val updateCardLimitResponseDetails: UpdateCardLimitResponseDetails? = null
 ) : Serializable
 
-
+@Keep
 data class UpdateCardLimitResponseDetails(
     @SerializedName("walletStatus") val walletStatus: String? = null,
     @SerializedName("atmLimit") val atmLimit: String? = null,
@@ -116,13 +117,13 @@ data class UpdateCardLimitResponseDetails(
     @SerializedName("action") val action: String? = null,
     @SerializedName("clLimit") val clLimit: String? = null
 ) : Serializable
-
+@Keep
 data class UpdateCardSettingsResponse(
     @SerializedName("msg") val msg: String? = null,
     @SerializedName("data") val updateCardSettingsResponseDetails: UpdateCardSettingsResponseDetails? = null
 ) : Serializable
 
-
+@Keep
 data class UpdateCardSettingsResponseDetails(
     @SerializedName("requestData") val requestData: String? = null,
     @SerializedName("serviceUrl") val serviceUrl: String? = null,
@@ -138,22 +139,23 @@ data class UpdateCardSettingsResponseDetails(
     @SerializedName("isCardBlocked") val isCardBlocked: String? = null
 ) : Serializable
 
-
+@Keep
 data class ActivateCardInitResponse(
     @SerializedName("msg") val msg: String? = null
 ) : Serializable
 
-
+@Keep
 data class BankProfileResponse(
     @SerializedName("data") val bankProfileResponseDetails: BankProfileResponseDetails? = null
 ) : Serializable
-
+@Keep
 data class CardInfoDetailsBottomSheet(
     @SerializedName("cardNo") var cardNo: String? = null,
     @SerializedName("CVV") val CVV: String? = null,
     @SerializedName("expiry_month") val expiry_month: String? = null,
     @SerializedName("expiry_year") val expiry_year: String? = null,
 ) : Serializable
+@Keep
 data class BankProfileResponseDetails(
     @SerializedName("isAccountActive") val isAccountActive: String? = null,
     @SerializedName("isVirtualCardIssued") val isVirtualCardIssued: String? = null,
@@ -178,7 +180,7 @@ data class BankProfileResponseDetails(
     @SerializedName("cardInfos") val cardInfos: List<CardInfoDetails>? = null,
 ) : Serializable
 
-
+@Keep
 data class CardInfoDetails(
     @SerializedName("id") val id: String? = null,
     @SerializedName("cardNo") val cardNo: String? = null,
@@ -194,7 +196,7 @@ data class CardInfoDetails(
     @SerializedName("isPinSet") val isPinSet: String? = null
 ) : Serializable
 
-
+@Keep
 data class OrderCardRequest(
     @SerializedName("nameOnCard") val nameOnCard: String? = null,
     @SerializedName("quote") val quote: String? = null,
@@ -214,11 +216,11 @@ data class OrderCardRequest(
     @SerializedName("discount") val discount: String? = null,
 
 ) : BaseRequest()
-
+@Keep
 data class OrderCardResponse(
     @SerializedName("data") val orderCardResponseDetails: OrderCardResponseDetails? = null
 ) : Serializable
-
+@Keep
 data class OrderCardResponseDetails(
     @SerializedName("nameOnCard") val nameOnCard: String? = null,
     @SerializedName("quote") val quote: String? = null,
@@ -231,11 +233,11 @@ data class OrderCardResponseDetails(
     @SerializedName("productId") val productId: String? = null,
     @SerializedName("kitNumber") val kitNumber: String? = null
 ) : Serializable
-
+@Keep
 data class GetOrderCardStatusResponse(
     @SerializedName("data") val GetOrderCardStatusResponseDetails:GetOrderCardStatusResponseDetails
 ) : Serializable
-
+@Keep
 data class GetOrderCardStatusResponseDetails(
     @SerializedName("id") val id: String? = null,
     @SerializedName("nameOnCard") val nameOnCard: String? = null,
@@ -248,18 +250,18 @@ data class GetOrderCardStatusResponseDetails(
     @SerializedName("status") val status: String? = null,
     @SerializedName("packageStatusList") val packageStatusList: List<PackageStatusList>? = null
 ) : Serializable
-
+@Keep
 data class PackageStatusList(
     @SerializedName("id") val id: String? = null,
     @SerializedName("status") val status: String? = null,
     @SerializedName("date") val date: String? = null,
     @SerializedName("isDone") var isDone: String? = null
 ) : Serializable
-
+@Keep
 data class GetAllProductsResponse(
     @SerializedName("data") val getAllProductsResponseDetails: List<GetAllProductsResponseDetails>? = null
 ) : Serializable
-
+@Keep
 data class GetAllProductsResponseDetails(
     @SerializedName("id") val id: String? = null,
     @SerializedName("name") val name: String? = null,
@@ -278,41 +280,42 @@ data class GetAllProductsResponseDetails(
     @SerializedName("discount") val discount: String? = null,
     @SerializedName("status") val status: String? = null
 ) : Serializable
-
+@Keep
 data class ActivateCardRequest(
     @SerializedName("additionalInfo") val additionalInfo: String? = null,
     @SerializedName("validationNo") val validationNo: String? = null,
     @SerializedName("cardIdentifier") val cardIdentifier: String? = null
 ) : BaseRequest()
 
-
+@Keep
 data class ActivateCardResponse(
     @SerializedName("data") val activateCardResponseDetails: ActivateCardResponseDetails? = null
 ) : Serializable
-
+@Keep
 data class ActivateCardResponseDetails(
     @SerializedName("additionalInfo") val additionalInfo: String? = null,
     @SerializedName("validationNo") val validationNo: String? = null,
     @SerializedName("cardIdentifier") val cardIdentifier: String? = null,
     @SerializedName("message") val message: String? = null
 ) : BaseRequest()
+@Keep
 data class PhysicalCardInitResponse(
     @SerializedName("msg") val msg: String? = null
 ) : Serializable
-
+@Keep
 data class SetPinResponseDetails(
     @SerializedName("cardIdentifier") val cardIdentifier: String? = null,
     @SerializedName("url") val url: String? = null
 ) : Serializable
-
+@Keep
 data class SetPinResponse(
     @SerializedName("data") val setPinResponseDetails: SetPinResponseDetails? = null
 ) : Serializable
-
+@Keep
 data class GetStatesResponse(
     @SerializedName("data") val getStatesResponseDetails: List<GetStatesResponseDetails>? = null
 ) : Serializable
-
+@Keep
 data class GetStatesResponseDetails(
     @SerializedName("id") val id: String? = null,
     @SerializedName("name") val name: String? = null,
@@ -328,11 +331,11 @@ data class GetStatesResponseDetails(
     }
 }
 
-
+@Keep
 data class GetCityResponse(
     @SerializedName("data") val getCityResponseDetails: List<GetCityResponseDetails>? = null
 ) : Serializable
-
+@Keep
 data class GetCityResponseDetails(
     @SerializedName("id") val id: String? = null,
     @SerializedName("cityName") val cityName: String? = null,
