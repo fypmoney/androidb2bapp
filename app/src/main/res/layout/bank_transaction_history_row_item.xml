@@ -31,11 +31,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
-            tools:background="@drawable/ic_circle_green"
             android:background="@{viewHelper.isCredited?@drawable/ic_circle_green:@drawable/ic_circle_pink}"
             android:paddingHorizontal="18dp"
             android:paddingVertical="15dp"
-            android:src="@{viewHelper.isCredited?@drawable/ic_green_arrow:@drawable/ic_red_arrow}" />
+            android:src="@{viewHelper.isCredited?@drawable/ic_green_arrow:@drawable/ic_red_arrow}"
+            tools:background="@drawable/ic_circle_green" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/heading"
@@ -43,10 +43,13 @@
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_toEndOf="@+id/ivServiceLogo"
+            android:layout_toStartOf="@+id/invite"
+            android:layout_marginEnd="@dimen/dp16"
             android:gravity="start"
+            tools:text = "Pawan kumar Sharma FYP Technology"
             android:text='@{viewHelper.bankHistory.userName ?? ""}'
             android:textColor="@color/text_color_dark"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/number_relation"
@@ -65,10 +68,11 @@
             style="@style/TextviewRegular"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:textSize="16sp"
             android:layout_marginEnd="10dp"
             android:text="@{viewHelper.amount}"
-            android:textColor="@{viewHelper.isCredited?@color/color_dark_green:@color/text_color_red}" />
+            android:textColor="@{viewHelper.isCredited?@color/color_dark_green:@color/text_color_red}"
+            android:textSize="16sp"
+            tools:text="5000" />
 
         <View
             android:layout_width="match_parent"

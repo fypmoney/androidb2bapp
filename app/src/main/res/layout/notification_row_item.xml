@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -18,7 +19,7 @@
         android:id="@+id/layoutServicePrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardCornerRadius="@dimen/dp16"
         app:cardElevation="@dimen/card_elevation"
         app:cardUseCompatPadding="true"
         app:layout_constraintTop_toTopOf="parent">
@@ -32,10 +33,10 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivServiceLogo"
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
                 android:layout_gravity="center"
-
+                tools:src="@drawable/ic_fyp_logo"
                 app:SET_IMAGE_IN_NOTIFICATION="@{viewHelper.notification.icon}" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -74,8 +75,10 @@
                 style="@style/TextviewRegular"
                 android:layout_below="@+id/heading1"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/dp16"
                 android:text="@{viewHelper.notification.appDisplayAction}"
-                android:textColor="@color/color_skyblue" />
+                android:textColor="@color/color_skyblue"
+                tools:text="Approve" />
 
         </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>

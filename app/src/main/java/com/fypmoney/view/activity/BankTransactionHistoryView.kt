@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.view_bank_transaction_history.*
 
 /*
 * This is used to handle contacts
+*
 * */
 class BankTransactionHistoryView :
     BaseActivity<ViewBankTransactionHistoryBinding, BankTransactionHistoryViewModel>(),
