@@ -178,7 +178,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     }
 
     private fun callTaskMessageSheet(list: NotificationModel.NotificationResponseDetails) {
-        var itemClickListener2 = object : MessageSubmitClickListener {
+        val itemClickListener2 = object : MessageSubmitClickListener {
             override fun onSubmit() {
                 taskMessageBottomSheet3?.dismiss()
             }

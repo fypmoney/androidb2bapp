@@ -194,6 +194,9 @@ object AppConstants {
     const val CardScreen = "CardScreen"
     const val StoreScreen = "StoreScreen"
     const val FyperScreen = "FyperScreen"
+    const val FEEDSCREEN = "FeedScreen"
+    const val TRACK_ORDER = "TrackOrderScreen"
+    const val CHORES = "ChoresScreen"
    /* Home : "HomeView, 0"
 
     Refereal Screen : "ReferralScrren, 1"
