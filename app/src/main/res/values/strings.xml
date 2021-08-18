@@ -387,11 +387,12 @@
 By tapping on Create Account, you agree to the Terms of Service & Privacy Policy.
 -->
     <string name="create_account_terms">"By tapping on Create Account, you agree to the \n %1$s &amp; %2$s"</string>
+    <string name="permissions_terms">"By continuing. I agree to Fyp’s \n %1$s &amp; %2$s"</string>
     <string name="stay_tuned_screen_title">Stay tuned!</string>
 
     <!-- stay tuned
     -->
-    <string name="stay_tuned_screen_sub_title">"Hang in there, we have sent an invite to your "</string>
+    <string name="stay_tuned_screen_sub_title">"Hang in there, we have sent an invite to user"</string>
     <string name="stay_tuned_screen_sub_title1">, to activate your account</string>
     <string name="invite_member_screen_title">Oops!</string>
 

@@ -1,11 +1,13 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -20,8 +22,10 @@ import com.fypmoney.view.fragment.TransactionFailBottomSheet
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.viewmodel.EnterAmountForPayRequestViewModel
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_add_money.*
 import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.*
-
+import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.add_money_editext
+import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.btnSendOtp
 
 
 class EnterAmountForPayRequestView :
@@ -58,7 +62,28 @@ class EnterAmountForPayRequestView :
 
                 if (s.toString().startsWith("0")) {
                     s.clear()
+                } else {
+                    if (s.toString().isNotEmpty()) {
+                        btnSendOtp.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.text_color_dark)));
+                        btnSendOtp.setTextColor(
+                            ContextCompat.getColor(
+                                this@EnterAmountForPayRequestView,
+                                R.color.white
+                            )
+                        )
+                    } else {
+                        btnSendOtp.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.cb_grey)));
+                        btnSendOtp.setTextColor(
+                            ContextCompat.getColor(
+                                this@EnterAmountForPayRequestView,
+                                R.color.grey_heading
+                            )
+                        )
+
+                    }
                 }
+
+
             }
         })
         when (mViewModel.action.get()) {

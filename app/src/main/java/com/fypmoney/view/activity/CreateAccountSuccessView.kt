@@ -1,5 +1,6 @@
 package com.fypmoney.view.activity
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
@@ -60,7 +61,11 @@ class CreateAccountSuccessView :
             if (Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO)
                 intentToActivity(AadhaarAccountActivationView::class.java)
             else {
-                intentToActivity(HomeView::class.java)
+                if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+                    intentToActivity(HomeView::class.java)
+                } else {
+                    intentToActivity(PermissionsActivity::class.java)
+                }
 
             }
         }

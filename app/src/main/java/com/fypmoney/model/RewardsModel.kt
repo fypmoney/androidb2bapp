@@ -44,6 +44,7 @@ data class GetRewardsHistoryResponseDetails(
     @SerializedName("sectionName") var sectionName: String?,
     @SerializedName("sectionValue") var sectionValue: String?,
     @SerializedName("playedOn") var playedOn: String?,
-    @SerializedName("rewardType") var rewardType: String?
+    @SerializedName("rewardType") var rewardType: String?,
+    @SerializedName("rewardTxnType") var rewardTxnType: String?
 ) : Serializable
 

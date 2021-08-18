@@ -64,7 +64,7 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
                 SharedPrefUtils.getString(
                     getApplication(),
                     SharedPrefUtils.SF_KEY_USER_FAMILY_NAME
-                ) + PockketApplication.instance.resources.getString(
+                ) + " " + PockketApplication.instance.resources.getString(
                     R.string.family_settings_family_fypers1
                 )
             )
@@ -206,7 +206,7 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
                         responseData.updateFamilyNameDetails.name
                     )
                     username.set(
-                        responseData.updateFamilyNameDetails.name + PockketApplication.instance.resources.getString(
+                        responseData.updateFamilyNameDetails.name + " " + PockketApplication.instance.resources.getString(
                             R.string.family_settings_family_fypers1
                         )
                     )

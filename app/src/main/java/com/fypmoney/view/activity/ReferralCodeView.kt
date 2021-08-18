@@ -1,5 +1,6 @@
 package com.fypmoney.view.activity
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -84,8 +85,15 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
                 finishAffinity()
             }
             else -> {
-                startActivity(Intent(this@ReferralCodeView, HomeView::class.java))
+                if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+                    startActivity(Intent(this@ReferralCodeView, HomeView::class.java))
+
+                } else {
+                    startActivity(Intent(this@ReferralCodeView, PermissionsActivity::class.java))
+
+                }
                 finishAffinity()
+
             }
         }
     }

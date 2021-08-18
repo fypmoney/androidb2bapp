@@ -1,5 +1,6 @@
 package com.fypmoney.view.activity
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -47,7 +48,12 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
         mViewModel.onContinueClicked.observe(this)
         {
             if (it) {
-                intentToActivity(HomeView::class.java)
+                if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+                    intentToActivity(HomeView::class.java)
+                } else {
+                    intentToActivity(PermissionsActivity::class.java)
+                }
+
                 mViewModel.onContinueClicked.value = false
             }
 

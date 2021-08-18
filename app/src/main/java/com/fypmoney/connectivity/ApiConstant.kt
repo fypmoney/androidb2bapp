@@ -93,8 +93,8 @@ object ApiConstant {
   const val TOTAL_REFERRAL_CASHBACK_API = "/services/PockketService/api/total/referral/points"
   const val API_STORY = "/services/loyaltyservice/api/story/split"
   const val API_GET_REWARDS_API = "/services/authservice/api/rewards/v2"
-  const val API_SPIN_WHEEL = "/services/authservice/api/spin-wheel/1"
-  const val API_GET_REWARDS_HISTORY = "/services/authservice/api/all/rewards"
+    const val API_SPIN_WHEEL = "/services/authservice/api/spin-wheel/v2"
+    const val API_GET_REWARDS_HISTORY = "/services/authservice/api/all/rewards"
   const val API_GET_REDEEM_DETAILS_API = "/services/authservice/api/rewards/details"
   const val API_REDEEM_COINS_API = "/services/authservice/api/redeem/rewards"
 

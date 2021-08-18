@@ -1,12 +1,16 @@
 package com.fypmoney.view.activity
 
+import android.Manifest
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.appsflyer.AFInAppEventParameterName
 import com.appsflyer.AppsFlyerLib
@@ -31,6 +35,10 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
+
+    var PERMISSIONS = arrayOf(
+        Manifest.permission.READ_CONTACTS
+    )
 
     override fun getLayoutId(): Int {
         return R.layout.view_splash
@@ -169,7 +177,12 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                             intentToActivity(AadhaarAccountActivationView::class.java)
                         }
                         else -> {
-                            intentToActivity(HomeView::class.java)
+                            if (hasPermissions(this, *PERMISSIONS)) {
+                                intentToActivity(HomeView::class.java)
+                            } else {
+                                intentToActivity(PermissionsActivity::class.java)
+                            }
+
                         }
                     }
 

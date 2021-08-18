@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-20dp"
+        android:background="@drawable/ic_welcome_fyp_permissions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            style="@style/TextviewBold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_48sdp"
+            android:textColor="@color/white"
+            android:text="Welcome to Fyp!"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/_16sdp"
+        android:paddingRight="@dimen/_16sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout4">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/read_contacts"
+            android:layout_marginTop="@dimen/_54sdp">
+
+            <CheckBox
+                android:id="@+id/permission2_cb"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/permission2_tv"
+                style="@style/TextviewRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_toRightOf="@+id/permission2_cb"
+                android:text="Read Contacts"
+                android:textColor="@color/text_color_dark"
+                android:textSize="16sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextviewRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/permission2_tv"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:textColor="@color/text_color_light"
+                android:layout_toRightOf="@+id/permission2_cb"
+                android:text="We use your location to check if your current city is serviceable by us." />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/location_permissions"
+            android:layout_marginTop="@dimen/_24sdp">
+
+            <CheckBox
+                android:id="@+id/permission1_cb"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/permission1_tv"
+                style="@style/TextviewRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:textSize="16sp"
+                android:layout_toRightOf="@+id/permission1_cb"
+                android:text="Location Permission"
+                android:textColor="@color/text_color_dark" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextviewRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/permission1_tv"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:textColor="@color/text_color_light"
+                android:layout_toRightOf="@+id/permission1_cb"
+                android:text="We use your location to check if your current city is serviceable by us." />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTerms"
+        style="@style/TextviewRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+
+        android:layout_marginBottom="@dimen/_12sdp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/btnAllow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAllow"
+        style="@style/Widget.App.Button"
+        android:layout_marginStart="@dimen/_24sdp"
+        android:layout_marginEnd="@dimen/_24sdp"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:elevation="0dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/grey_heading"
+
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:background="@drawable/curved_background14"
+        android:text="Allow"
+        android:textAllCaps="false"
+        android:layout_marginBottom="@dimen/_28sdp"
+        app:backgroundTint="@color/cb_grey"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
