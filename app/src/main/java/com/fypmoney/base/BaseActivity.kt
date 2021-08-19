@@ -92,6 +92,10 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         super.onStart()
     }
 
+    fun hasPermissions(context: Context, vararg permissions: String): Boolean = permissions.all {
+        ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         executor = newSingleThreadExecutor()

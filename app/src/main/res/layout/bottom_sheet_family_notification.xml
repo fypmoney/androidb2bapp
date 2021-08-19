@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="43dp"
-            app:srcCompat="@drawable/ic_add_family_member" />
+            app:srcCompat="@drawable/ic_family_tab_illustration" />
 
 
         <androidx.appcompat.widget.AppCompatTextView

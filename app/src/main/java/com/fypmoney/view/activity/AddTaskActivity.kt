@@ -42,6 +42,7 @@ import android.text.TextWatcher
 class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>(),
     DialogUtils.OnAlertDialogClickListener {
 
+    private var currentDate: Calendar? = null
     private var selectedmember: MemberEntity? = null
     private var myCalendar: Calendar? = null
     private var myCalendar2: Calendar? = null
@@ -70,6 +71,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
         setIntentValues(intent)
         var numberOfdays = intent?.getIntExtra("numberofdays", -1)
         myCalendar2 = Calendar.getInstance()
+        currentDate = myCalendar2
         if (numberOfdays != null && numberOfdays > 0) {
             var dt = Date()
 
@@ -109,23 +111,28 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
 
 
                 val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-if (et_start.text?.trim().toString() == endTime.text?.trim().toString()) {
-    myCalendar?.set(Calendar.HOUR_OF_DAY, 0);
-    myCalendar2?.set(Calendar.HOUR_OF_DAY, 23);
-    myCalendar2?.set(Calendar.MINUTE, 50);
+                if (et_start.text?.trim().toString() == endTime.text?.trim().toString()) {
+                    myCalendar?.set(Calendar.HOUR_OF_DAY, 0);
 
-}
+                }
+                myCalendar2?.set(Calendar.HOUR_OF_DAY, 23);
+                myCalendar2?.set(Calendar.MINUTE, 59);
+                myCalendar2?.set(Calendar.SECOND, 59);
+
                 val startdate = outputFormat.format(myCalendar?.time)
                 val enddate = outputFormat.format(myCalendar2?.time)
                 if (selectedmember != null) {
-                    mViewModel.callAddTask(
-                        add_money_editext.text.toString(),
-                        et_title.text.toString(),
-                        selectedmember?.userId?.toInt().toString(),
-                        et_desc.text.toString(),
-                        startdate,
-                        enddate
-                    )
+
+                    Log.d("chackdate", startdate)
+                    Log.d("chackenddate", enddate)
+//                    mViewModel.callAddTask(
+//                        add_money_editext.text.toString(),
+//                        et_title.text.toString(),
+//                        selectedmember?.userId?.toInt().toString(),
+//                        et_desc.text.toString(),
+//                        startdate,
+//                        enddate
+//                    )
                 } else {
                     Toast.makeText(this, "Select any contact", Toast.LENGTH_SHORT).show()
                 }
@@ -185,6 +192,20 @@ if (et_start.text?.trim().toString() == endTime.text?.trim().toString()) {
     private fun calendarListners() {
         val date =
             OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+
+
+                if (year == currentDate?.get(Calendar.YEAR) && monthOfYear == currentDate?.get(
+                        Calendar.MONTH
+                    ) && dayOfMonth == currentDate?.get(Calendar.DAY_OF_MONTH)
+                ) {
+                    myCalendar = currentDate
+
+                } else {
+                    myCalendar?.set(Calendar.HOUR_OF_DAY, 0);
+                    myCalendar?.set(Calendar.MINUTE, 0)
+                    myCalendar?.set(Calendar.SECOND, 0)
+                }
+
                 myCalendar?.set(Calendar.YEAR, year)
                 myCalendar?.set(Calendar.MONTH, monthOfYear)
                 myCalendar?.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -224,11 +245,19 @@ if (et_start.text?.trim().toString() == endTime.text?.trim().toString()) {
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         et_start.setText(sdf.format(myCalendar?.time))
     }
+
+    private fun getDateString(time: Date): String? {
+        val myFormat = "dd/MM/yyyy" //In which you need put here
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+        return sdf.format(time)
+    }
+
     private fun updateLabel2() {
         val myFormat = "dd/MM/yyyy" //In which you need put here
         val sdf = SimpleDateFormat(myFormat, Locale.US)
         mViewBinding.endTime.setText(sdf.format(myCalendar2?.time))
     }
+
     private fun setIntentValues(intent: Intent?) {
         val sampleTitle = intent?.getStringExtra("sample_title")
         var sampleDescription = intent?.getStringExtra("sample_desc")

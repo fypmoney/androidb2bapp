@@ -31,7 +31,9 @@
             android:layout_marginStart="10dp"
             android:background="@drawable/curved_background14"
             android:padding="12dp"
-            app:srcCompat="@drawable/coin" />
+            android:src="@{viewHelper.credit?@drawable/ic_note_credit:@drawable/coin}"
+
+            />
 
 
         <androidx.appcompat.widget.AppCompatTextView

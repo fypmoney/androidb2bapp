@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.databinding.BottomSheetFamilyNotificationBinding
 import com.fypmoney.databinding.BottomSheetUpdateFamilyNameBinding
 import com.fypmoney.util.SharedPrefUtils
@@ -54,11 +55,21 @@ class UpdateFamilyNameBottomSheet(
         val btnUpdate = view.findViewById<Button>(R.id.button_update)!!
         val btnCancel = view.findViewById<TextView>(R.id.button_cancel)!!
 
-        familyName.setText(SharedPrefUtils.getString(requireContext(),SharedPrefUtils.SF_KEY_USERNAME))
+        familyName.setText(
+            SharedPrefUtils.getString(
+                requireContext(),
+                SharedPrefUtils.SF_KEY_USER_FAMILY_NAME
+            )
+        )
 
         btnUpdate.setOnClickListener {
-            onBottomSheetClickListener.onUpdateFamilyButtonClick(familyName.text.toString())
-            dismiss()
+            if (!familyName.text.toString().isNullOrEmpty()) {
+                onBottomSheetClickListener.onUpdateFamilyButtonClick(familyName.text.toString())
+                dismiss()
+            } else {
+                familyName.error = "Please enter family name"
+            }
+
         }
 
         btnCancel.setOnClickListener {

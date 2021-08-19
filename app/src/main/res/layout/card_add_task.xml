@@ -23,34 +23,34 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
 
             <androidx.appcompat.widget.AppCompatImageView
 
-                android:layout_width="44dp"
-                android:layout_centerInParent="true"
-                android:tint="@color/text_color_dark"
-
-                android:layout_height="44dp"
                 android:id="@+id/add"
+                android:layout_width="@dimen/_84sdp"
+
+                android:layout_height="@dimen/_84sdp"
+                android:layout_centerInParent="true"
+
                 android:layout_gravity="center"
-                android:layout_centerHorizontal="true"
 
-                app:srcCompat="@drawable/ic_add"
-
-                />
+                android:tint="@color/text_color_dark"
+                app:srcCompat="@drawable/ic_add" />
 
             <TextView
-                android:layout_width="match_parent"
                 style="@style/TextviewRegular"
-                android:layout_marginTop="@dimen/_32sdp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentBottom="true"
                 android:gravity="center"
-                android:layout_below="@+id/add"
+                android:paddingBottom="@dimen/_12sdp"
+                android:text="Create your own task"
                 android:textColor="@color/text_color_dark"
                 android:textSize="14sp"
-                android:text="Create your own task"
-                android:layout_height="wrap_content" />
+                android:textStyle="bold" />
 
 
         </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.fypmoney.view.activity
 
+import android.Manifest
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -72,8 +73,13 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                 Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {
                     intentToActivity(AadhaarAccountActivationView::class.java)
                 }
-                else->{
-                    intentToActivity(HomeView::class.java)
+                else-> {
+                    if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+                        intentToActivity(HomeView::class.java)
+                    } else {
+                        intentToActivity(PermissionsActivity::class.java)
+                    }
+
                 }
 
             }

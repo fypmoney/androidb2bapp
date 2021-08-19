@@ -205,6 +205,7 @@
         <activity android:name=".view.activity.ContactViewAddMember" />
         <activity android:name=".view.activity.SpinWheelView" />
         <activity android:name=".view.activity.RewardsHistoryView" />
+        <activity android:name=".view.activity.PermissionsActivity" />
 
         <meta-data
             android:name="payu_debug_mode_enabled"

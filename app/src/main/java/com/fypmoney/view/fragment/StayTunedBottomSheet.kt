@@ -54,10 +54,7 @@ class StayTunedBottomSheet : BottomSheetDialogFragment() {
         val stayTuned = view.findViewById<TextView>(R.id.stayTuned)!!
         val continueButton = view.findViewById<Button>(R.id.btnContinue)!!
         stayTuned.text =
-            getString(R.string.stay_tuned_screen_sub_title) + SharedPrefUtils.getString(
-                requireContext(),
-                SharedPrefUtils.SF_KEY_SELECTED_RELATION
-            )
+            getString(R.string.stay_tuned_screen_sub_title)
 
         continueButton.setOnClickListener {
             navigateToDifferentActivity()

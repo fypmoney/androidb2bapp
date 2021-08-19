@@ -38,7 +38,7 @@ class TransactionHistoryViewHelper(
                         PockketApplication.instance.getString(R.string.paid_on) + " " + Utility.parseDateTime(
                             transactionHistory?.txnTime,
                             inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
-                            outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT6
+                            outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT8
                         )
                     )
                 }
@@ -47,7 +47,7 @@ class TransactionHistoryViewHelper(
                         PockketApplication.instance.getString(R.string.received_on) + Utility.parseDateTime(
                             transactionHistory?.txnTime,
                             inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
-                            outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT6
+                            outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT8
                         )
                     )
                 }

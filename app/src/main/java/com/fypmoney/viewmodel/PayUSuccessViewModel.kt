@@ -59,7 +59,7 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
                                     Utility.parseDateTime(
                                         date!![0],
                                         inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
-                                        outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT3
+                                        outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT9
                                     )
                         )
                     }
@@ -69,7 +69,7 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
                                     Utility.parseDateTime(
                                         date!![0],
                                         inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
-                                        outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT3
+                                        outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT9
                                     )
                         )
                     }

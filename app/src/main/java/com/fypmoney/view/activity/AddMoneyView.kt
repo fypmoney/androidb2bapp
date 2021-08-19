@@ -1,9 +1,11 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -13,6 +15,7 @@ import com.fypmoney.databinding.ViewAddMoneyBinding
 import com.fypmoney.databinding.ViewInviteRejectedBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.AddMoneyViewModel
+import kotlinx.android.synthetic.main.bottom_sheet_redeem_coins.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_add_money.*
 
@@ -57,7 +60,27 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
 
                 if (s.toString().startsWith("0")) {
                     s.clear()
+                } else {
+                    if (s.toString().isNotEmpty()) {
+                        btnSendOtp.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.text_color_dark)));
+                        btnSendOtp.setTextColor(
+                            ContextCompat.getColor(
+                                this@AddMoneyView,
+                                R.color.white
+                            )
+                        )
+                    } else {
+                        btnSendOtp.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.cb_grey)));
+                        btnSendOtp.setTextColor(
+                            ContextCompat.getColor(
+                                this@AddMoneyView,
+                                R.color.grey_heading
+                            )
+                        )
+
+                    }
                 }
+
             }
         })
         mViewModel.setEdittextLength.observe(this) {

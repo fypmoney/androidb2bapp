@@ -9,7 +9,7 @@ import java.util.*
 class RewardsHistoryViewHelper(var rewardsHistory: GetRewardsHistoryResponseDetails?) {
     var coins = ObservableField<String>()
     var date = ObservableField<String>()
-    var isLineVisible = ObservableField<Boolean>()
+    var credit = ObservableField<Boolean>()
 
     init {
 
@@ -35,9 +35,21 @@ class RewardsHistoryViewHelper(var rewardsHistory: GetRewardsHistoryResponseDeta
             val dtt = sf.parse(rewardsHistory?.playedOn)
 
             println(outDate.format(dtt))
-            date.set(
-                "Won on " + outDate.format(dtt)
-            )
+            if (rewardsHistory!!.rewardTxnType == "CREDIT") {
+                credit.set(false)
+
+                date.set(
+                    "Won on " + outDate.format(dtt)
+                )
+            } else {
+                date.set(
+                    "Credited on " + outDate.format(dtt)
+                )
+                credit.set(true)
+
+            }
+
+
         } catch (e: Exception) {
 
         }
