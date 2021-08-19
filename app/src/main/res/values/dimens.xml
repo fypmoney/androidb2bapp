@@ -43,6 +43,7 @@
     <dimen name="dp6">6dp</dimen>
     <dimen name="dp12">12dp</dimen>
     <dimen name="dp26">26dp</dimen>
+    <dimen name="dp_40">40dp</dimen>
 
 
 </resources>

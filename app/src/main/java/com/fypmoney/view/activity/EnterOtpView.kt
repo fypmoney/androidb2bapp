@@ -2,6 +2,7 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.SpannableString
@@ -14,6 +15,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputConnection
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -27,6 +29,8 @@ import com.google.android.gms.auth.api.phone.SmsRetriever
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 import kotlinx.android.synthetic.main.view_enter_otp.*
+import kotlinx.android.synthetic.main.view_enter_otp.btnSendOtp
+import kotlinx.android.synthetic.main.view_login.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -75,7 +79,6 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
             mViewModel.otp.set(otp)
         }
 
-        val ic: InputConnection? = otpView.onCreateInputConnection(EditorInfo())
         //keyboard.setInputConnection(ic)
         // start timer get started initially
         startTimer()
@@ -117,6 +120,35 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                 otpView.itemSpacing = 15
                 otpView.itemCount = 6
 
+            }
+        }
+
+        mViewBinding.otpView.doOnTextChanged { text, start, before, count ->
+            if((text?.length)!! <4){
+                btnSendOtp.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(
+                    this,
+                    R.color.buttonUnselectedColor
+                ))
+                btnSendOtp.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.text_color_little_dark
+                    )
+                )
+                btnSendOtp.isEnabled = false
+            }else{
+                btnSendOtp.isEnabled = true
+
+                btnSendOtp.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(
+                    this,
+                    R.color.black
+                ))
+                btnSendOtp.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.white
+                    )
+                )
             }
         }
 

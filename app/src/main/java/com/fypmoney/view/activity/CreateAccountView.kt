@@ -1,6 +1,7 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.core.content.ContextCompat
@@ -9,8 +10,6 @@ import com.fypmoney.R
 import com.fypmoney.BR
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewCreateAccountBinding
-import com.fypmoney.databinding.ViewSelectInterestBinding
-import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
@@ -19,6 +18,7 @@ import kotlinx.android.synthetic.main.screen_home.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.view_create_account.*
+import kotlinx.android.synthetic.main.view_enter_otp.*
 
 /*
 * This is used to handle create account functionality
@@ -68,7 +68,11 @@ Create this method for observe the viewModel fields
         mViewModel.onDobClicked.observe(this) {
             if (it) {
                 try {
-                    Utility.showDatePickerDialog(context = this, this)
+                    Utility.showDatePickerDialog(
+                        context = this,
+                        onDateSelected = this,
+                        isDateOfBirth = false
+                    )
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -77,10 +81,17 @@ Create this method for observe the viewModel fields
         }
         mViewModel.isEnabled.observe(this) {
                     if (it) {
-                        btnCreateAccount.backgroundTintList =
-                            ContextCompat.getColorStateList(applicationContext, R.color.text_color_dark)
 
-                        mViewModel.isEnabled.value = false
+                        btnCreateAccount.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(
+                            this,
+                            R.color.black
+                        ))
+                        btnCreateAccount.setTextColor(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.white
+                            )
+                        )
             }
         }
         mViewModel.onUpdateProfileSuccess.observe(this) {
@@ -100,8 +111,16 @@ Create this method for observe the viewModel fields
 
             }
             else{
-                btnCreateAccount.backgroundTintList =
-                    ContextCompat.getColorStateList(applicationContext, R.color.buttonUnselectedColor)
+                btnCreateAccount.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(
+                    this,
+                    R.color.buttonUnselectedColor
+                ))
+                btnCreateAccount.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.text_color_little_dark
+                    )
+                )
 
             }
         }
@@ -115,8 +134,16 @@ Create this method for observe the viewModel fields
 
             }
             else{
-                btnCreateAccount.backgroundTintList =
-                    ContextCompat.getColorStateList(applicationContext, R.color.buttonUnselectedColor)
+                btnCreateAccount.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(
+                    this,
+                    R.color.buttonUnselectedColor
+                ))
+                btnCreateAccount.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.text_color_little_dark
+                    )
+                )
 
             }
         }
@@ -131,9 +158,16 @@ Create this method for observe the viewModel fields
 
             }
             else{
-                btnCreateAccount.backgroundTintList =
-                    ContextCompat.getColorStateList(applicationContext, R.color.buttonUnselectedColor)
-
+                btnCreateAccount.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(
+                    this,
+                    R.color.buttonUnselectedColor
+                ))
+                btnCreateAccount.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.text_color_little_dark
+                    )
+                )
             }
         }
 

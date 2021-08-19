@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.IntentSender.SendIntentException
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -17,6 +18,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -33,7 +35,9 @@ import com.google.android.gms.auth.api.credentials.CredentialsClient
 import com.google.android.gms.auth.api.credentials.HintRequest
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_add_money.*
 import kotlinx.android.synthetic.main.view_login.*
+import kotlinx.android.synthetic.main.view_login.btnSendOtp
 
 
 /**
@@ -125,6 +129,34 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
             }
         }
 
+        mViewBinding.etStart.doOnTextChanged { text, start, before, count ->
+            if(text?.length!=10){
+                btnSendOtp.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(
+                    this,
+                    R.color.buttonUnselectedColor
+                ))
+                btnSendOtp.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.text_color_little_dark
+                    )
+                )
+                btnSendOtp.isEnabled = false
+            }else{
+                btnSendOtp.isEnabled = true
+
+                btnSendOtp.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(
+                    this,
+                    R.color.black
+                ))
+                btnSendOtp.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.white
+                    )
+                )
+            }
+        }
 
     }
 

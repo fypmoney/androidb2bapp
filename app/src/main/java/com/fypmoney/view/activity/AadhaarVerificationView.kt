@@ -1,8 +1,11 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -17,6 +20,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
 import kotlinx.android.synthetic.main.view_aadhaar_verification.*
+import kotlinx.android.synthetic.main.view_enter_otp.*
 import java.lang.Exception
 
 /*
@@ -61,6 +65,41 @@ class AadhaarVerificationView :
                 }
             }
         })
+
+        mViewModel.aadhaarNumber.observe(this,{
+            if(it?.length!! <=12){
+                btnGetOtp.backgroundTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.buttonUnselectedColor
+                    ))
+                btnGetOtp.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.text_color_little_dark
+                    )
+                )
+                btnGetOtp.isEnabled = false
+            }else{
+                btnGetOtp.isEnabled = true
+
+                btnGetOtp.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(
+                    this,
+                    R.color.black
+                ))
+                btnGetOtp.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.white
+                    )
+                )
+            }
+        })
+/*
+        et_first_name.doOnTextChanged { text, start, before, count ->
+
+        }
+*/
 
     }
 

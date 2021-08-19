@@ -162,7 +162,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.AadhaarVerificationView"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"/>
         <activity
             android:name=".view.activity.TransactionHistoryView"
             android:screenOrientation="portrait" />

@@ -21,7 +21,6 @@ import androidx.annotation.ColorInt
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatEditText
-import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -37,7 +36,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.io.InputStream
-import java.math.BigDecimal
 import java.nio.charset.Charset
 import java.text.DecimalFormat
 import java.text.ParseException
@@ -189,7 +187,11 @@ object Utility {
     /*
      * This method is used to show the date picker dialog
      * */
-    fun showDatePickerDialog(context: Context, onDateSelected: OnDateSelected) {
+    fun showDatePickerDialog(
+        context: Context,
+        onDateSelected: OnDateSelected,
+        isDateOfBirth: Boolean = false
+    ) {
         val c: Calendar = getInstance()
         val mYear = c.get(YEAR)
         val mMonth = c.get(MONTH)
@@ -200,7 +202,7 @@ object Utility {
                 val simpleDateFormat =
                     SimpleDateFormat("yyyy MM dd", Locale.ROOT)
                 val date: Date? =
-                    simpleDateFormat.parse("$year ${monthOfYear + 1} $dayOfMonth")
+                    simpleDateFormat.parse("${year} ${monthOfYear + 1} $dayOfMonth")
                 val simpleDateFormatDate =
                     SimpleDateFormat(DATE_FORMAT_CHANGED, Locale.ROOT)
                 // calculateDifferenceBetweenDates(date,getInstance().time)
@@ -218,7 +220,12 @@ object Utility {
             mMonth,
             mDay
         )
-        datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+        if(isDateOfBirth){
+            datePickerDialog.datePicker.maxDate = (System.currentTimeMillis() - 31556926000)
+
+        }else{
+            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+        }
         datePickerDialog.show()
 
     }
