@@ -41,7 +41,6 @@ class GoodJobBSFragment(
             container,
             false
         )
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val bottomSheet = BottomSheetDialog(requireContext())
         val bindingSheet = DataBindingUtil.inflate<BottomGoodJobBinding>(
             layoutInflater,

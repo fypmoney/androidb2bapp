@@ -47,7 +47,6 @@ class FilterByDateFragment(
             container,
             false
         )
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val bottomSheet = BottomSheetDialog(requireContext())
         bottomSheet.setCancelable(false)
         val bindingSheet = DataBindingUtil.inflate<BottomSheetFilterByDateBinding>(
