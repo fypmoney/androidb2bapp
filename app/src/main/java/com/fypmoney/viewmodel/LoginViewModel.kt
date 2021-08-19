@@ -71,7 +71,7 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
  * */
     fun callSendOtpApi() {
         when {
-            TextUtils.isEmpty(mobile.value) -> {
+            TextUtils.isEmpty(mobile.value) or (mobile.value?.length!=10)-> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.phone_email_empty_error))
             }
             else -> {

@@ -444,7 +444,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
 
     <string name="aadhaar_otp_sub_title">"Enter the OTP send to your phone number linked to "</string>
     <string name="aadhaar_mobile_otp_sub_title">Please enter the OTP received from Yes bank</string>
-    <string name="aadhaar_otp_edit">. Edit Aadhaar number </string>
+    <string name="aadhaar_otp_edit"><b>. Edit Aadhaar number</b> </string>
     <string name="account_activation_success_aadhaar_title">Your account is successfully created.\n Enjoy all the benefits of \n being a Fyper.</string>
 
     <!-- Account verification success with Aadhaar

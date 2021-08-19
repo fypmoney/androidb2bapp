@@ -70,10 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/LoadProgressBar"
                 android:layout_alignParentTop="true"
-
                 android:orientation="vertical"
-
-
                 android:padding="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -87,7 +84,6 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/_4sdp"
-
                 android:visibility="gone"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"

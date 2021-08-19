@@ -73,6 +73,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/yesBankIv"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_2sdp"
+                    android:onClick="@{()->viewModel.onChangeClicked()}"
                     tools:text="Enter otp to reccived on this number or login with other"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:text="@{viewModel.mobile}" />
@@ -122,7 +123,7 @@
                     android:layout_marginEnd="@dimen/_5sdp"
                     android:inputType="number"
                     android:focusableInTouchMode="true"
-                    android:cursorVisible="true"
+                    android:cursorVisible="false"
                     android:itemBackground="@drawable/otp_background"
                     app:OtpItemCount="4"
                     app:OtpItemSpacing="30dp"
@@ -173,30 +174,25 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:visibility="gone"/>-->
-
-                    <RelativeLayout
-                        android:id="@+id/linear"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:paddingBottom="@dimen/_32sdp">
-
-                        <com.google.android.material.button.MaterialButton
+                    <Button
                             android:id="@+id/btnSendOtp"
-                            style="@style/Widget.App.Button"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginStart="47dp"
                             android:layout_marginEnd="47dp"
-                            android:background="@drawable/curved_background26"
                             android:onClick="@{()->viewModel.onVerifyClicked()}"
                             android:text="@string/verify_btn_text"
                             android:textAllCaps="false"
-                            app:backgroundTint="@color/text_color_dark" />
-                    </RelativeLayout>
+                            android:textSize="18sp"
+                            android:enabled="false"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginBottom="@dimen/_40sdp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:textColor="@color/text_color_little_dark"
+                            app:backgroundTint="@color/buttonUnselectedColor"
+                            android:paddingVertical="@dimen/dp16" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
