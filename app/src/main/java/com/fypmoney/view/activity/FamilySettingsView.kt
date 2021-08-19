@@ -87,6 +87,8 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
             contact.userId = it.userId.toString()
             contact.contactNumber = it.mobileNo
             contact.firstName = it.name
+            contact.profilePicResourceId = it.profilePicResourceId
+
 //            contact.lastName=it.familyName
 
 

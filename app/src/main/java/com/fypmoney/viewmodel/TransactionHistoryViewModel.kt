@@ -19,6 +19,7 @@ import com.fypmoney.view.adapter.TransactionHistoryAdapter
 class TransactionHistoryViewModel(application: Application) : BaseViewModel(application) {
     var onPayOrRequestClicked = MutableLiveData<View>()
     var contactResult = ObservableField(ContactEntity())
+    var profilepic = ObservableField(ContactEntity())
     var transactionHistoryAdapter = TransactionHistoryAdapter(this)
     var contactName = ObservableField<String>()
 
@@ -87,6 +88,7 @@ class TransactionHistoryViewModel(application: Application) : BaseViewModel(appl
                 } else {
                     contactName.set(contactEntity.firstName + " " + contactEntity.lastName)
                 }
+                profilepic.set(contactEntity)
 
             }
         } catch (e: Exception) {

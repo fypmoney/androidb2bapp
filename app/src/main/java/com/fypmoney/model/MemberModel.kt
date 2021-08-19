@@ -49,8 +49,13 @@ data class GetMemberResponseDetails(
     @SerializedName("userId") var userId: Double?,
     @SerializedName("relationDisplayName") var relationDisplayName: String?,
     @SerializedName("familyName") var familyName: String?,
-    @SerializedName("status") var status: String?
-) : Serializable
+    @SerializedName("status") var status: String?,
+    @SerializedName("profilePicResourceId") var profilePicResourceId: String?,
+    @SerializedName("isGuarantor") var isGuarantor: String?,
+    @SerializedName("iconNo") var iconNo: String?,
+
+
+    ) : Serializable
 
 data class LeaveFamilyResponse(
     @SerializedName("msg") var msg: String?

@@ -29,9 +29,10 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
-            android:background="@drawable/curved_background14"
-            android:padding="12dp"
-            android:src="@{viewHelper.credit?@drawable/ic_note_credit:@drawable/coin}"
+            android:background="@drawable/circular4"
+            android:backgroundTint="@color/grey"
+            android:padding="9dp"
+            android:src="@{viewHelper.credit?@drawable/ic_cash_coin:@drawable/ic_mynt_coin}"
 
             />
 

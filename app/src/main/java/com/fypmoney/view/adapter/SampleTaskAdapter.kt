@@ -166,28 +166,20 @@ class SampleTaskAdapter(
         abstract fun bind(item: T)
     }
 
-    inner class ViewHolder(view: View) : BaseViewHolder<String>(view), View.OnClickListener {
+    inner class ViewHolder(view: View) : BaseViewHolder<String>(view) {
 
         val heading = view.heading!!
 
         val amount = view.amount!!
         val days = view.days
         val bg_text = view.bg_text
-        val view = view
+        val view = view.card
         val card_bg = view.card_bg
         override fun bind(item: String) {
 
         }
 
-        override fun onClick(v: View?) {
 
-
-        }
-
-        init {
-            heading.setOnClickListener(this)
-
-        }
 
 
     }

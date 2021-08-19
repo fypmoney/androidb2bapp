@@ -97,6 +97,7 @@ class RedeemMyntsBottomSheet(
                     R.color.grey_heading
                 )
             )
+            view.redeem_mynts.text = "0"
             var amount = spinWheelResponseDetails.pointsToRedeem!! / 100
             view.continuebtn.text = "Redeem ${amount} Mynt(s)"
 

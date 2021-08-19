@@ -122,7 +122,7 @@ companion object{
                 com.fypmoney.R.anim.slideinright
             ).toBundle()
 
-            startActivity(intent, bndlAnimation)
+            startActivityForResult(intent, 12, bndlAnimation)
 
         }
 
@@ -339,7 +339,8 @@ companion object{
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == 99) {
-
+            Log.d("chackback3", resultCode.toString())
+            Log.d("chackback4", resultCode.toString())
             if (mViewModel != null) {
 
                 mViewModel?.callSampleTask()
@@ -367,6 +368,7 @@ companion object{
 
                 }
             }
+
         }
     }
 

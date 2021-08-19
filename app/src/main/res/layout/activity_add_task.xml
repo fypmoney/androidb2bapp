@@ -156,14 +156,13 @@
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_desc"
                         android:layout_width="match_parent"
-                        android:layout_height="140dp"
-                        android:gravity="top"
-                        android:lines="3"
+                        android:layout_height="wrap_content"
+
+                        android:lines="4"
                         android:maxLength="200"
+                        android:gravity="top"
                         android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                         android:hint="@string/desc_hint"
-                        android:inputType="text"
-
                         android:paddingStart="@dimen/edittextHintPaddingStart"
                         android:textColorHint="@color/text_color_light"
                         android:paddingEnd="@dimen/edittextHintPaddingEnd"

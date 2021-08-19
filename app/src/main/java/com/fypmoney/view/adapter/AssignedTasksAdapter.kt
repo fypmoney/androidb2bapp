@@ -38,8 +38,8 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        if (items[position].requesterName != null && items[position].requesterName!!.isNotEmpty()) {
-            holder.heading.text = items[position].requesterName
+        if (items[position].requesteeName != null && items[position].requesteeName!!.isNotEmpty()) {
+            holder.heading.text = items[position].requesteeName
         }
         if (items[position].title != null && items[position].title!!.isNotEmpty()) {
             holder.title_task.text = items[position].title
