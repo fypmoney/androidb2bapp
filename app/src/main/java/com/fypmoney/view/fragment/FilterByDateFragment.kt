@@ -2,23 +2,17 @@ package com.fypmoney.view.fragment
 
 
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.databinding.BottomSheetFilterByDateBinding
-import com.fypmoney.databinding.BottomSheetTransactionFailBinding
-import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -65,7 +59,11 @@ class FilterByDateFragment(
         fromDate.setOnClickListener {
             whichOption.set(true)
             try {
-                Utility.showDatePickerDialog(context = requireContext(), this)
+                Utility.showDatePickerDialog(
+                    context = requireContext(),
+                    onDateSelected = this,
+                    isDateOfBirth = false
+                )
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -73,7 +71,11 @@ class FilterByDateFragment(
         toDate.setOnClickListener {
             whichOption.set(false)
             try {
-                Utility.showDatePickerDialog(context = requireContext(), this)
+                Utility.showDatePickerDialog(
+                    context = requireContext(),
+                    onDateSelected = this,
+                    isDateOfBirth = false
+                )
             } catch (e: Exception) {
                 e.printStackTrace()
             }

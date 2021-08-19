@@ -65,8 +65,7 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
                     s.clear()
                 } else {
                     if (s.toString().isNotEmpty()) {
-
-                        btnSendOtp.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.text_color_dark)));
+                        btnSendOtp.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.text_color_dark));
                         btnSendOtp.setTextColor(
                             ContextCompat.getColor(
                                 this@AddMoneyView,

@@ -19,7 +19,7 @@
 
         <include layout="@layout/toolbar_for_aadhaar" />
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -103,9 +103,9 @@
                     style="@style/TextviewBold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/et_first_name"
+                    android:layout_above="@+id/aadhaar_not_linked"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
                     android:onClick="@{()->viewModel.clickHere()}"
                     android:text="@string/aadhaar_number_click_here"
                     android:textAlignment="center"
@@ -117,32 +117,36 @@
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/click_here_title"
+                    android:layout_above="@+id/btnGetOtp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/textViewMarginTop"
+                    android:layout_marginBottom="@dimen/_30sdp"
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:text="@string/aadhaar_number_not_linked"
                     android:textAlignment="center" />
 
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btnGetOtp"
-                    style="@style/Widget.App.Button"
-                    android:layout_width="299dp"
-                    android:layout_height="52dp"
-                    android:layout_below="@+id/aadhaar_not_linked"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/_17sdp"
                     android:layout_marginTop="@dimen/_25sdp"
-                    android:layout_marginBottom="@dimen/_25sdp"
-                    android:background="@drawable/curved_background1"
+                    android:layout_marginEnd="@dimen/_17sdp"
+                    android:layout_marginBottom="@dimen/_35sdp"
+                    android:enabled="false"
                     android:onClick="@{()->viewModel.onGetOtpClicked()}"
+                    android:paddingVertical="@dimen/dp16"
                     android:text="@string/get_otp_btn_text"
                     android:textAllCaps="false"
-                    app:backgroundTint="@color/text_color_dark" />
+                    android:textColor="@color/text_color_little_dark"
+                    android:textSize="18sp"
+                    app:backgroundTint="@color/buttonUnselectedColor" />
 
 
             </RelativeLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

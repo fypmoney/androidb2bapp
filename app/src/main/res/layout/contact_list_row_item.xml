@@ -62,13 +62,13 @@
             android:layout_marginEnd="@dimen/_46sdp"
             android:layout_toStartOf="@+id/linear"
             android:layout_toEndOf="@+id/linearLayout"
-            android:gravity="start"
             android:ellipsize="end"
+            android:gravity="start"
             android:singleLine="true"
-            app:customFirstName="@{viewHelper.contactEntity.firstName}"
-            app:customLastName="@{viewHelper.contactEntity.lastName}"
             android:textColor="@color/text_color_dark"
             android:textSize="18sp"
+            app:customFirstName="@{viewHelper.contactEntity.firstName}"
+            app:customLastName="@{viewHelper.contactEntity.lastName}"
             tools:text="dasdhjahdkjahdjads asdasdasasas" />
 
         <androidx.appcompat.widget.AppCompatTextView

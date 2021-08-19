@@ -70,7 +70,8 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
      */
     private fun intentToActivity() {
         when {
-            intent.getStringExtra(AppConstants.IS_PROFILE_COMPLETED) == AppConstants.NO -> {
+            (intent.getStringExtra(AppConstants.IS_PROFILE_COMPLETED) == AppConstants.NO) or
+                    (Utility.getCustomerDataFromPreference()?.isProfileCompleted==AppConstants.NO)-> {
                 startActivity(Intent(this@ReferralCodeView, CreateAccountView::class.java))
                 finishAffinity()
 
