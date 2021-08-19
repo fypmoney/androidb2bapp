@@ -35,7 +35,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:padding="12dp"
+            android:padding="6dp"
             android:background="@drawable/curved_background14"
             android:layout_marginStart="@dimen/_2sdp"
             app:srcCompat="@drawable/ic_profile" />
