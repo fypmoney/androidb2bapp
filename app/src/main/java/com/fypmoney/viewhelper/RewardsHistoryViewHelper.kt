@@ -13,13 +13,7 @@ class RewardsHistoryViewHelper(var rewardsHistory: GetRewardsHistoryResponseDeta
 
     init {
 
-        if ((rewardsHistory?.sectionValue) == "0") {
-            coins.set("Oops! No Fyp Mynts")
 
-        } else {
-            coins.set(((rewardsHistory?.sectionValue)?.toInt()!! / 100).toString() + " Fyp Mynts")
-
-        }
 
 //        val sf = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.m'Z'",Locale.US)
 //        val outDate = SimpleDateFormat("MMM dd' ,'hh:mm a",Locale.US)
@@ -41,7 +35,16 @@ class RewardsHistoryViewHelper(var rewardsHistory: GetRewardsHistoryResponseDeta
                 date.set(
                     "Won on " + outDate.format(dtt)
                 )
+                if ((rewardsHistory?.sectionValue) == "0") {
+                    coins.set("Oops! No Fyp Mynts")
+
+                } else {
+                    coins.set(((rewardsHistory?.sectionValue)?.toInt()!! / 100).toString() + " Fyp Mynts")
+
+                }
             } else {
+                coins.set("₹" + ((rewardsHistory?.sectionValue)?.toInt()!! / 100).toString() + " Redeemed")
+
                 date.set(
                     "Credited on " + outDate.format(dtt)
                 )

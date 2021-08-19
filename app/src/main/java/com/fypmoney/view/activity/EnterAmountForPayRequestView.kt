@@ -21,6 +21,7 @@ import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
 import com.fypmoney.view.fragment.TransactionFailBottomSheet
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.viewmodel.EnterAmountForPayRequestViewModel
+import kotlinx.android.synthetic.main.activity_add_task.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_add_money.*
 import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.*
@@ -71,6 +72,10 @@ class EnterAmountForPayRequestView :
                                 R.color.white
                             )
                         )
+                        if (s.toString().toInt() > 9999) {
+                            add_money_editext.setText(getString(R.string.amount_limit))
+                            add_money_editext.text?.length?.let { add_money_editext.setSelection(it) };
+                        }
                     } else {
                         btnSendOtp.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.cb_grey)));
                         btnSendOtp.setTextColor(

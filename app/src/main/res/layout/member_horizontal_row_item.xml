@@ -29,7 +29,7 @@
 
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivServiceLogo"
+            android:id="@+id/member_profile_pic"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"

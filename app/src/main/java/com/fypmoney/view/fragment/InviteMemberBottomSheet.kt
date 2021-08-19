@@ -67,10 +67,7 @@ class InviteMemberBottomSheet(
             else -> {
                 if (personName.isNullOrEmpty()) {
                     message.text =
-                        getString(R.string.invite_member_screen_sub_title) + SharedPrefUtils.getString(
-                            requireContext(),
-                            SharedPrefUtils.SF_KEY_SELECTED_RELATION
-                        ) + getString(R.string.invite_member_screen_sub_title1)
+                        getString(R.string.invite_member_screen_sub_title) + getString(R.string.invite_member_screen_sub_title12)
                 } else {
                     message.text =
                         getString(R.string.invite_member_screen_sub_title2) + personName + getString(

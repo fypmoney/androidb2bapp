@@ -388,20 +388,22 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
 -->
     <string name="create_account_terms">"By tapping on Create Account, you agree to the \n %1$s &amp; %2$s"</string>
     <string name="permissions_terms">"By continuing. I agree to Fyp’s \n %1$s &amp; %2$s"</string>
-    <string name="stay_tuned_screen_title">Stay tuned!</string>
+    <string name="stay_tuned_screen_title">Hang in there!</string>
 
     <!-- stay tuned
     -->
-    <string name="stay_tuned_screen_sub_title">"Hang in there, we have sent an invite to user"</string>
+    <string name="stay_tuned_screen_sub_title">We have sent an invite to your pal.</string>
     <string name="stay_tuned_screen_sub_title1">, to activate your account</string>
     <string name="invite_member_screen_title">Oops!</string>
 
 
     <!-- Invite member
     -->
-    <string name="invite_member_screen_sub_title">"Looks like your "</string>
+    <string name="invite_member_screen_sub_title">"Looks like user is not a Fyper"</string>
     <string name="invite_member_screen_sub_title2">"Looks like "</string>
     <string name="invite_member_screen_sub_title1">" is not a FYP user. \n No worries you can invite them right now.</string>
+    <string name="invite_member_screen_sub_title12">"\n No worries you can invite them right now.</string>
+
     <string name="account_activation_success_screen_title">Kuddos!</string>
 
 
@@ -847,6 +849,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="add_money">Add Money</string>
     <string name="request_money">Request Money</string>
     <string name="thanks_we_will_keep_you_notify">Thanks,We will keep you notified</string>
+    <string name="amount_limit">9999</string>
 
 
 </resources>

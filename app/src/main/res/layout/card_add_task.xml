@@ -9,6 +9,7 @@
     android:layout_marginBottom="6dp"
     app:cardCornerRadius="@dimen/_12sdp"
     android:layout_height="@dimen/_140sdp"
+    android:id="@+id/card"
 
     app:cardElevation="@dimen/card_elevation"
 

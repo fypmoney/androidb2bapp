@@ -2,10 +2,12 @@ package com.fypmoney.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewHolder
+import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.database.entity.MemberEntity
 import com.fypmoney.databinding.AddMemberLayoutBinding
 import com.fypmoney.databinding.MemberRowItemBinding
@@ -62,6 +64,18 @@ class MemberAdapter(
                 position,
                 memberList?.get(position), onMemberItemClickListener, familyMember
             )
+            mRowItemBinding?.memberProfilePic?.let {
+                loadImage(
+                    it, memberList?.get(position)?.profilePicResourceId,
+                    this.mRowItemBinding?.memberProfilePic?.let {
+                        ContextCompat.getDrawable(
+                            it.context,
+                            R.drawable.ic_profile_img
+                        )
+                    }, true
+                )
+            }
+
             mRowItemBinding!!.viewHelper = mViewHelper
             mViewHelper.init()
             mRowItemBinding.executePendingBindings()

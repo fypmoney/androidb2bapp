@@ -26,6 +26,7 @@
             android:layout_width="match_parent"
             android:layout_marginLeft="@dimen/_8sdp"
             android:layout_marginRight="@dimen/_8sdp"
+
             android:layout_height="@dimen/_140sdp"
             android:layout_marginTop="10dp"
 
@@ -44,6 +45,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:elevation="@dimen/_2sdp"
+                android:id="@+id/card"
                 android:layout_height="match_parent">
 
 
@@ -59,6 +61,7 @@
 
 
                     android:ellipsize="end"
+                    android:duplicateParentState="true"
                     android:gravity="center"
 
                     android:textColor="@color/text_color_dark"

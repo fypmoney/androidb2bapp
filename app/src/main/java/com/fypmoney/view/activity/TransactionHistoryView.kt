@@ -15,7 +15,7 @@ import com.fypmoney.databinding.ViewTransactionHistoryBinding
 import com.fypmoney.model.TransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.TransactionHistoryViewModel
-import kotlinx.android.synthetic.main.toolbar.*
+
 import kotlinx.android.synthetic.main.view_first_screen.*
 import kotlinx.android.synthetic.main.view_transaction_history.*
 

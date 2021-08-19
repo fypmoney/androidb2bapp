@@ -28,10 +28,13 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
     var amountSelected = ObservableField<String>()
     var isFetchBalanceVisible = ObservableField(true)
     var remainingLoadLimit = ObservableField<String>()
+    var remainingLoadLimitAmount = ObservableField<String>()
+
 
     init {
         callGetWalletBalanceApi()
     }
+
     /*
       * This method is used to handle on click of add
       * */
@@ -72,7 +75,12 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
                 if (responseData is GetWalletBalanceResponse) {
                     isFetchBalanceVisible.set(false)
                     availableAmount.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)!!))
-                    remainingLoadLimit.set(PockketApplication.instance.getString(R.string.add_money_screen_text)+Utility.convertToRs(responseData.getWalletBalanceResponseDetails.remainingWalletBalanceLimit)+PockketApplication.instance.getString(R.string.add_money_screen_text1))
+                    remainingLoadLimitAmount.set(responseData.getWalletBalanceResponseDetails.remainingWalletBalanceLimit)
+                    remainingLoadLimit.set(
+                        PockketApplication.instance.getString(R.string.add_money_screen_text) + Utility.convertToRs(
+                            responseData.getWalletBalanceResponseDetails.remainingWalletBalanceLimit
+                        ) + PockketApplication.instance.getString(R.string.add_money_screen_text1)
+                    )
                 }
             }
 

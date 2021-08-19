@@ -83,9 +83,9 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
 //            contact.lastName=it.familyName
 
 
-                intentToActivity2(
+                intentToActivity(
                     contactEntity = contact,
-                    aClass = TransactionHistoryView::class.java, ""
+                    aClass = PayRequestProfileView::class.java, ""
                 )
 
             }
@@ -276,6 +276,13 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         startActivity(intent)
     }
 
+    private fun intentToActivity(contactEntity: ContactEntity?, aClass: Class<*>, action: String) {
+        val intent = Intent(requireContext(), aClass)
+        intent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, contactEntity)
+        intent.putExtra(AppConstants.WHICH_ACTION, action)
+        intent.putExtra(AppConstants.FUND_TRANSFER_QR_CODE, "")
+        startActivity(intent)
+    }
 
     /*
    * This method is used to call card settings

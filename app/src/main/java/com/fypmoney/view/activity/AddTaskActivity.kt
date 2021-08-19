@@ -37,6 +37,9 @@ import kotlinx.android.synthetic.main.bottom_sheet_task_added_message.*
 import android.text.Editable
 
 import android.text.TextWatcher
+import com.fypmoney.util.Utility.removePlusOrNineOneFromNo
+import kotlinx.android.synthetic.main.activity_add_task.add_money_editext
+import kotlinx.android.synthetic.main.view_add_money.*
 
 
 class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>(),
@@ -95,6 +98,9 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
 //                }
                 if (s.toString().startsWith("0")) {
                     s.clear()
+                } else if (s.toString().toInt() > 9999) {
+                    add_money_editext.setText(getString(R.string.amount_limit))
+                    add_money_editext.text?.length?.let { add_money_editext.setSelection(it) };
                 }
             }
         })
@@ -125,14 +131,14 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
 
                     Log.d("chackdate", startdate)
                     Log.d("chackenddate", enddate)
-//                    mViewModel.callAddTask(
-//                        add_money_editext.text.toString(),
-//                        et_title.text.toString(),
-//                        selectedmember?.userId?.toInt().toString(),
-//                        et_desc.text.toString(),
-//                        startdate,
-//                        enddate
-//                    )
+                    mViewModel.callAddTask(
+                        add_money_editext.text.toString(),
+                        et_title.text.toString(),
+                        selectedmember?.userId?.toInt().toString(),
+                        et_desc.text.toString(),
+                        startdate,
+                        enddate
+                    )
                 } else {
                     Toast.makeText(this, "Select any contact", Toast.LENGTH_SHORT).show()
                 }
@@ -327,20 +333,48 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-                val returnValue: ContactEntity? = data?.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE)
-                if (returnValue != null) {
-                    var member = MemberEntity()
+        val returnValue: ContactEntity? =
+            data?.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE)
+        if (requestCode == 13 && resultCode != RESULT_CANCELED && returnValue != null) {
+            var arrayList: ArrayList<MemberEntity> = ArrayList()
+            var searched = false
+            var searchposition = -1
+            arrayList.addAll(itemsArrayList)
+            if (arrayList.size > 0) {
+                arrayList.forEachIndexed { pos, item ->
+                    if (removePlusOrNineOneFromNo(returnValue.contactNumber) == removePlusOrNineOneFromNo(
+                            item.mobileNo
+                        )
+                    ) {
+                        searched = true
+                        searchposition = pos
 
-                    member.userId = returnValue.userId?.toDouble()
-                    member.mobileNo = returnValue.contactNumber
-                    member.name = returnValue.firstName
-
-                    itemsArrayList.add(member)
-                    typeAdapter?.notifyDataSetChanged()
-                    typeAdapter?.selectedPos = itemsArrayList.size - 1
-                    Log.d("chackid", returnValue.userId.toString())
-                    typeAdapter?.notifyItemChanged(itemsArrayList.size - 2)
+                    }
                 }
+            }
+            if (!searched) {
+                var member = MemberEntity()
+
+                member.userId = returnValue.userId?.toDouble()
+                member.mobileNo = returnValue.contactNumber
+                member.name = returnValue.firstName
+
+                itemsArrayList.add(member)
+                typeAdapter?.notifyDataSetChanged()
+                typeAdapter?.selectedPos = itemsArrayList.size - 1
+                Log.d("chackid", returnValue.userId.toString())
+                typeAdapter?.notifyItemChanged(itemsArrayList.size - 2)
+
+            } else {
+                typeAdapter?.selectedPos = searchposition
+
+//                      typeAdapter?.notifyItemChanged(searchposition+1)
+                typeAdapter?.notifyDataSetChanged()
+
+            }
+
+
+        }
 
 
     }

@@ -11,15 +11,18 @@ data class MemberEntity(
     @ColumnInfo(name = "name")
     var name: String?=null,
     @ColumnInfo(name = "mobileNo")
-    var mobileNo: String?=null,
+    var mobileNo: String? = null,
     @ColumnInfo(name = "relation")
-    var relation: String?=null,
+    var relation: String? = null,
     @ColumnInfo(name = "userId")
-    var userId: Double?=null,
+    var userId: Double? = null,
     @ColumnInfo(name = "relationDisplayName")
-    var relationDisplayName: String?=null,
+    var relationDisplayName: String? = null,
     @ColumnInfo(name = "familyName")
-    var familyName: String?=null,
+    var familyName: String? = null,
     @ColumnInfo(name = "status")
-    var status: String?=null
-)
+    var status: String? = null,
+    @ColumnInfo(name = "profilePicResourceId")
+    var profilePicResourceId: String? = null,
+
+    )

@@ -18,6 +18,9 @@ import com.fypmoney.viewmodel.AddMoneyViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_redeem_coins.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_add_money.*
+import kotlinx.android.synthetic.main.view_add_money.add_money_editext
+import kotlinx.android.synthetic.main.view_add_money.btnSendOtp
+import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.*
 
 /*
 * This class is used to add money
@@ -62,6 +65,7 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
                     s.clear()
                 } else {
                     if (s.toString().isNotEmpty()) {
+
                         btnSendOtp.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.text_color_dark)));
                         btnSendOtp.setTextColor(
                             ContextCompat.getColor(
@@ -69,6 +73,17 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
                                 R.color.white
                             )
                         )
+                        if (!mViewModel.remainingLoadLimitAmount.get()
+                                .isNullOrEmpty() && s.toString()
+                                .toInt() > mViewModel.remainingLoadLimitAmount.get()!!.toInt() / 100
+                        ) {
+                            add_money_editext.setText(
+                                (mViewModel.remainingLoadLimitAmount.get()!!
+                                    .toInt() / 100).toString()
+                            )
+                            add_money_editext.setSelection(add_money_editext.text.length);
+                        }
+
                     } else {
                         btnSendOtp.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.cb_grey)));
                         btnSendOtp.setTextColor(
