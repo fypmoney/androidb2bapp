@@ -3,61 +3,34 @@ package com.fypmoney.view.activity
 import android.Manifest
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.databinding.ViewChoresBinding
-import com.fypmoney.model.TaskDetailResponse
-import com.fypmoney.model.UpdateTaskGetResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.fragment.*
-import com.fypmoney.view.interfaces.AcceptRejectClickListener
-import com.fypmoney.view.interfaces.MessageSubmitClickListener
-import com.fypmoney.viewmodel.ChoresViewModel
 
-import java.util.ArrayList
-
-
-import android.app.ActivityOptions
-import android.content.Context
-import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
-import android.widget.RadioGroup
-import com.fypmoney.base.BaseViewModel
 import com.fypmoney.util.textview.ClickableSpanListener
 import com.fypmoney.util.textview.MyStoreClickableSpan
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.view.webview.WebViewActivity
-import com.fypmoney.viewmodel.AddTaskViewModel
 import com.fypmoney.viewmodel.PermissionViewModel
-import com.fypmoney.viewmodel.SplashViewModel
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_permissions.*
-import android.widget.CompoundButton
+
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.fypmoney.databinding.ViewPermissionBinding
+import com.fypmoney.databinding.ViewPermissionActivityBinding
+
 import com.fypmoney.util.Utility
 import kotlinx.android.synthetic.main.bottom_sheet_redeem_coins.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.view_permission_activity.*
 
 
 /*
@@ -66,7 +39,7 @@ import kotlinx.coroutines.launch
 
 
 
-class PermissionsActivity : BaseActivity<ViewPermissionBinding, PermissionViewModel>() {
+class PermissionsActivity : BaseActivity<ViewPermissionActivityBinding, PermissionViewModel>() {
     private lateinit var mViewModel: PermissionViewModel
     var PERMISSIONS = arrayOf(
         Manifest.permission.READ_CONTACTS
@@ -153,7 +126,7 @@ class PermissionsActivity : BaseActivity<ViewPermissionBinding, PermissionViewMo
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_permissions
+        return R.layout.view_permission_activity
     }
 
     override fun getViewModel(): PermissionViewModel {

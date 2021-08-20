@@ -15,6 +15,7 @@ class SharedPrefUtils {
 
     companion object {
         const val SF_KEY_FIREBASE_TOKEN = "firebase_token"
+        const val SF_KEY_NEW_MESSAGE = "new_message"
         const val SF_KEY_ACCESS_TOKEN = "access_token"
         const val SF_KEY_STORAGE_PERMANENTLY_DENY = "sf_key_storage_permanently_deny"
         const val SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP = "last_contacts_sink_timestamp"

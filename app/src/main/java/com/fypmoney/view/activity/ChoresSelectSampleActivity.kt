@@ -56,7 +56,7 @@ class ChoresSelectSampleActivity : BaseActivity<ViewAddTaskBinding, CreateTaskVi
             isBackArrowVisible = true, toolbarTitle = getString(R.string.chore_title)
         )
         setObserver()
-        Glide.with(this).load(R.drawable.rocket_loader).into(loader!!);
+//        Glide.with(this).load(R.drawable.rocket_loader).into(loader!!);
 
         setRecyclerView()
     }

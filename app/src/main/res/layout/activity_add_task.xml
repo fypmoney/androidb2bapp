@@ -26,20 +26,20 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
 
             <androidx.core.widget.NestedScrollView
-                android:layout_marginBottom="@dimen/_40sdp"
                 android:id="@+id/scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+
                 android:fillViewport="true"
                 android:scrollbars="vertical">
 
                 <LinearLayout
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/screenMarginLeft"
-                    android:layout_marginEnd="@dimen/screenMarginRight">
+                    android:layout_marginEnd="@dimen/screenMarginRight"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/balance_text"
@@ -59,15 +59,16 @@
                         android:layout_marginTop="21dp">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/amount1"
                             style="@style/TextviewRegular"
                             android:background="@drawable/curved_background_8"
                             android:gravity="center_vertical"
                             android:padding="10dp"
                             android:text="@string/add_money_50"
-                            android:id="@+id/amount1"
                             android:textColor="@color/text_color_dark" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/amount2"
                             style="@style/TextviewRegular"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
@@ -75,26 +76,25 @@
                             android:gravity="center_vertical"
                             android:padding="10dp"
                             android:text="@string/add_money_100"
-                            android:id="@+id/amount2"
 
                             android:textColor="@color/text_color_dark" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/amount3"
                             style="@style/TextviewRegular"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
                             android:background="@drawable/curved_background_8"
                             android:gravity="center_vertical"
                             android:padding="10dp"
-                            android:id="@+id/amount3"
                             android:text="@string/add_money_500"
                             android:textColor="@color/text_color_dark" />
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/amount4"
                             style="@style/TextviewRegular"
                             android:layout_marginStart="10dp"
                             android:layout_marginEnd="10dp"
-                            android:id="@+id/amount4"
                             android:background="@drawable/curved_background_8"
                             android:gravity="center_vertical"
                             android:padding="10dp"
@@ -103,53 +103,53 @@
 
 
                     </LinearLayout>
-<LinearLayout
-    android:layout_width="match_parent"
-    android:gravity="center"
-    android:layout_marginTop="34dp"
-    android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/linear"
-        android:src="@drawable/rupee_symbol"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_height="wrap_content" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="34dp"
+                        android:gravity="center">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/add_money_editext"
-        style="@style/EditTextStyle2"
-        android:layout_width="wrap_content"
-        android:minWidth="@dimen/_80sdp"
-        android:maxLength="6"
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/linear"
+                            android:layout_marginTop="@dimen/_8sdp"
+                            android:src="@drawable/rupee_symbol" />
 
-        android:layout_height="wrap_content"
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/add_money_editext"
+                            style="@style/EditTextStyle2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
 
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="-2dp"
+                            android:layout_marginLeft="-2dp"
+
+                            android:inputType="number"
+                            android:maxLength="6"
 
 
-        android:textColorHint="@color/text_color_light"
-        android:inputType="number"
+                            android:minWidth="@dimen/_80sdp"
+                            android:textColor="@color/add_money_amount_color"
 
-        android:textColor="@color/add_money_amount_color"
-        android:textSize="32dp" />
+                            android:textColorHint="@color/text_color_light"
+                            android:textSize="32dp" />
 
-</LinearLayout>
-
+                    </LinearLayout>
 
 
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_title"
                         android:layout_width="match_parent"
-                        android:maxLength="30"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
                         android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                         android:hint="@string/title_hint"
                         android:inputType="textCapWords"
+                        android:maxLength="30"
                         android:paddingStart="@dimen/edittextHintPaddingStart"
                         android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                        android:layout_marginTop="20dp"
                         android:singleLine="true"
                         android:text="" />
 
@@ -158,42 +158,42 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
 
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                        android:gravity="top"
+                        android:hint="@string/desc_hint"
                         android:lines="4"
                         android:maxLength="200"
-                        android:gravity="top"
-                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                        android:hint="@string/desc_hint"
                         android:paddingStart="@dimen/edittextHintPaddingStart"
-                        android:textColorHint="@color/text_color_light"
                         android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                        android:layout_marginTop="@dimen/_20sdp"
+                        android:text=""
 
-                        android:text="" />
+                        android:textColorHint="@color/text_color_light" />
 
 
                     <LinearLayout
-                        android:weightSum="2"
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp">
+                        android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
                         <LinearLayout
-                            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
+                            android:layout_height="match_parent"
                             android:layout_marginRight="12dp"
-                            android:layout_height="match_parent">
+                            android:layout_weight="1"
+                            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray">
 
                             <androidx.appcompat.widget.AppCompatEditText
                                 android:id="@+id/et_start"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:backgroundTint="@android:color/transparent"
+                                android:focusable="false"
                                 android:gravity="center_vertical"
                                 android:hint="Start Time"
                                 android:inputType="number"
-                                android:focusable="false"
                                 android:textColorHint="@color/text_color_light"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -203,26 +203,26 @@
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_marginLeft="12dp"
-                            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                            android:layout_weight="1"
                             android:layout_width="0dp"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="12dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray">
+
                             <androidx.appcompat.widget.AppCompatEditText
                                 android:id="@+id/endTime"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:backgroundTint="@android:color/transparent"
+                                android:focusable="false"
                                 android:gravity="center_vertical"
                                 android:hint="End Time"
                                 android:inputType="number"
                                 android:textColorHint="@color/text_color_light"
-                                android:focusable="false"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toEndOf="@id/vDivider5"
                                 app:layout_constraintTop_toTopOf="parent" />
-
 
 
                         </LinearLayout>
@@ -247,10 +247,10 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextviewRegular"
+                        android:layout_width="match_parent"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="20dp"
                         android:text="@string/assign_to"
-                        android:layout_width="match_parent"
                         android:textColor="@color/text_color_dark"
                         android:textSize="15dp" />
 
@@ -259,24 +259,26 @@
                         android:id="@+id/recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_marginTop="20dp"
+                        android:orientation="horizontal"
 
                         />
 
 
-                    <com.google.android.material.button.MaterialButton
+                    <Button
                         android:id="@+id/btnContinue"
-                        style="@style/Widget.App.Button"
-                        android:layout_width="299dp"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_16sdp"
+                        android:layout_marginRight="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+
+                        android:layout_marginBottom="@dimen/_30sdp"
                         android:background="@drawable/curved_background1"
+                        android:paddingVertical="15dp"
                         android:text="@string/continue_txt"
                         android:textAllCaps="false"
-                        android:layout_centerHorizontal="true"
                         app:backgroundTint="@color/text_color_dark" />
-
 
 
                 </LinearLayout>

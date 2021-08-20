@@ -113,7 +113,7 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
         if (items[position].isNewTask != null && items[position].isNewTask == "YES") {
             holder.new_tv.visibility = View.VISIBLE
         } else {
-            holder.new_tv.visibility = View.GONE
+            holder.new_tv.visibility = View.INVISIBLE
         }
 
     }

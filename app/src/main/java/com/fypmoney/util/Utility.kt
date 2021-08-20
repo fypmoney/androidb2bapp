@@ -320,9 +320,9 @@ object Utility {
                         contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
                     )
                     var updatedNumber = number.replace(" ", "").trim()
-                    if(updatedNumber.length>10){
-                        updatedNumber = updatedNumber.takeLast(10)
-                    }
+//                    if(updatedNumber.length>10){
+//                        updatedNumber = updatedNumber.takeLast(10)
+//                    }
                     contactEntity.contactNumber = updatedNumber
 
 

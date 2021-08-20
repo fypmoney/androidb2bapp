@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -53,7 +52,7 @@ class SpinWheelView : BaseActivity<ViewSpinWheelBinding, SpinWheelViewModel>(),
         setToolbarAndTitle(
             context = this@SpinWheelView,
             toolbar = toolbar,
-            isBackArrowVisible = false
+            isBackArrowVisible = true
         )
 
         Glide.with(applicationContext).load(R.raw.coin).into(coin)
@@ -156,6 +155,7 @@ class SpinWheelView : BaseActivity<ViewSpinWheelBinding, SpinWheelViewModel>(),
                         AppConstants.ERROR_TYPE_SPIN_ALLOWED,
                         message = getString(R.string.better_luck)
                     )
+
                     Handler(Looper.getMainLooper()).postDelayed({
                         mViewModel.spinnerClickable.set(true)
                     }, 1500)
@@ -232,7 +232,7 @@ class SpinWheelView : BaseActivity<ViewSpinWheelBinding, SpinWheelViewModel>(),
     private fun callErrorBottomSheet(type: String?, message: String? = null) {
         Handler().post {
             val bottomSheet =
-                ErrorBottomSheet(type!!, message, this)
+                ErrorBottomSheet(type!!, message, this, mViewModel)
             bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
             bottomSheet.show(supportFragmentManager, "ErrorBottomSheet")
         }

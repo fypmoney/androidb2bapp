@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
@@ -179,9 +180,33 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             )
         )
     }
+
+    override fun onStart() {
+        super.onStart()
+        showNewMessage()
+
+    }
+
+    private fun showNewMessage() {
+        if (SharedPrefUtils.getString(
+                applicationContext,
+                SharedPrefUtils.SF_KEY_NEW_MESSAGE
+            ).isNullOrEmpty()
+        ) {
+            mViewBinding.newNotification.visibility = View.GONE
+        } else {
+            mViewBinding.newNotification.visibility = View.VISIBLE
+        }
+    }
+
     private fun loadProfile(url: String?) {
         url?.let {
-            loadImage(mViewBinding.myProfile,it,ContextCompat.getDrawable(this,R.drawable.ic_profile_img),true)
+            loadImage(
+                mViewBinding.myProfile,
+                it,
+                ContextCompat.getDrawable(this, R.drawable.ic_profile_img),
+                true
+            )
 
         }
     }
@@ -197,12 +222,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             }
         }
 
-        mViewModel.onLocationClicked.observe(this) {
-            if (it) {
-                intentToActivity(PermissionView::class.java)
-                mViewModel.onLocationClicked.value = false
-            }
-        }
+
         mViewModel.onProfileClicked.observe(this) {
             if (it) {
                 intentToActivity(UserProfileView::class.java)

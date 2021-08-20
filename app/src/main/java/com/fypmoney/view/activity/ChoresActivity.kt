@@ -88,7 +88,7 @@ companion object{
             mViewModel?.onRefresh()
 
         }
-        Glide.with(this).load(R.drawable.rocket_loader).into(loader_icon!!);
+//        Glide.with(this).load(R.drawable.rocket_loader).into(loader_icon!!);
 
 
 
