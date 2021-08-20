@@ -33,11 +33,11 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivServiceLogo"
-                android:layout_width="34dp"
-                android:layout_height="34dp"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:layout_gravity="center"
-                tools:src="@drawable/ic_fyp_logo"
-                app:SET_IMAGE_IN_NOTIFICATION="@{viewHelper.notification.icon}" />
+                app:SET_IMAGE_IN_NOTIFICATION="@{viewHelper.notification.icon}"
+                tools:src="@drawable/ic_fyp_logo" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/heading"
@@ -50,7 +50,7 @@
                 android:gravity="start"
                 android:text="@{viewHelper.notification.name}"
                 android:textColor="@color/text_color_dark"
-                android:textSize="18dp" />
+                android:textSize="17sp" />
 
 
             <View

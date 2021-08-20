@@ -111,8 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                app:srcCompat="@drawable/yes_bank_logo"
-                android:drawablePadding="10dp"
+                android:background="@drawable/yes_bank_logo"
                 android:textColor="@color/text_color_dark"
                 />
 

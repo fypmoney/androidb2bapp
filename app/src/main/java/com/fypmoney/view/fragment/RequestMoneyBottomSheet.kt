@@ -9,9 +9,12 @@ import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
+import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.BottomSheetFamilyNotificationBinding
 import com.fypmoney.databinding.BottomSheetRequestMoneyBinding
 import com.fypmoney.model.NotificationModel
@@ -56,6 +59,7 @@ class RequestMoneyBottomSheet(
         val description = view.findViewById<TextView>(R.id.description)!!
         val title = view.findViewById<TextView>(R.id.verification_title)!!
         val name = view.findViewById<TextView>(R.id.name)!!
+        val ivServiceLogo = view.findViewById<ImageView>(R.id.ivServiceLogo)!!
         val phone = view.findViewById<TextView>(R.id.number)!!
         val amount = view.findViewById<TextView>(R.id.amount)!!
         val btnReject = view.findViewById<TextView>(R.id.button_reject)!!
@@ -98,6 +102,8 @@ class RequestMoneyBottomSheet(
 
         description.text = response.description
         name.text = response.destinationUserName
+        phone.text = response.destinationUserMobile
+        loadImage(ivServiceLogo,response.destinationUserProfilePic,ContextCompat.getDrawable(ivServiceLogo.context,R.drawable.ic_user),true)
       //  number.text = mainObject.getString("requesteeMobile")
         amount.text =
             getString(R.string.Rs) + Utility.getFormatedAmount(

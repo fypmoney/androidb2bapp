@@ -42,7 +42,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-            android:drawableEnd="@drawable/ic_dropdown__2_"
             android:hint="@string/upi_id_hint"
             android:inputType="text"
             android:maxLength="26"

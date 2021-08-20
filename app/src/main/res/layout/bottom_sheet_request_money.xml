@@ -21,7 +21,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="36dp"
             android:text="@string/request_money_title"
-            android:textSize="17dp" />
+            android:textSize="17sp" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivServiceLogo"

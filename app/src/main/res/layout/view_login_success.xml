@@ -51,20 +51,20 @@
             app:layout_constraintTop_toBottomOf="@+id/image"
             />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/btnSendOtp"
-            style="@style/Widget.App.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/_40sdp"
-            android:background="@drawable/curved_background26"
             android:onClick="@{()->viewModel.onContinueClicked()}"
             android:text="@string/continue_btn_text"
             android:textAllCaps="false"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginStart="47dp"
+            android:layout_marginEnd="47dp"
+            android:paddingVertical="16dp"
+            android:textSize="18sp"
             app:backgroundTint="@color/text_color_dark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
