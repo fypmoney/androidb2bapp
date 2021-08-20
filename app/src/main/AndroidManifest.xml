@@ -20,15 +20,19 @@
         tools:replace="android:usesCleartextTraffic">
         <activity
             android:name=".view.notifymeordercard.NotifyMeOrderCardActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".view.webview.WebViewActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".view.community.SocialCommunityActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".view.referandearn.view.ReferAndEarnActivity"
+            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
             android:name=".view.activity.AddTaskActivity"
@@ -201,12 +205,18 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.StoreWebpageOpener" />
-        <activity android:name=".view.activity.ChoresSelectSampleActivity" />
-        <activity android:name=".view.activity.ContactViewAddMember" />
-        <activity android:name=".view.activity.SpinWheelView" />
-        <activity android:name=".view.activity.RewardsHistoryView" />
-        <activity android:name=".view.activity.PermissionsActivity" />
+        <activity android:name=".view.StoreWebpageOpener"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ChoresSelectSampleActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ContactViewAddMember"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.activity.SpinWheelView"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.RewardsHistoryView"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.activity.PermissionsActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="payu_debug_mode_enabled"

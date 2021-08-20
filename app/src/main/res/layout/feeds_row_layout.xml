@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -59,16 +60,17 @@
                 android:id="@+id/titleValue"
                 style="@style/TextviewRegular"
                 android:layout_below="@+id/cardview"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/margin"
-                android:layout_marginBottom="10dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:padding="5dp"
+                android:padding="10dp"
                 android:text="@{viewHelper.feedDetails.title}"
-                android:textAlignment="center"
-                android:textColor="@color/text_color_dark"
-                android:textSize="17dp"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:gravity="start"
+                tools:text="Ten areas where Apple Music’s user experience is still lacking"
+                tools:visibility = "visible"
+                android:layout_marginStart="@dimen/dp5"
                 android:visibility="@{viewHelper.isTitleVisible?View.VISIBLE:View.GONE,default=gone}" />
 
 

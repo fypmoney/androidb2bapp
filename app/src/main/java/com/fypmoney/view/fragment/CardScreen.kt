@@ -11,6 +11,7 @@ import android.os.Handler
 import android.text.method.HideReturnsTransformationMethod
 import android.view.MotionEvent
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
@@ -66,8 +67,23 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         return mViewModel
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        activity?.window?.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE);
+        super.onCreate(savedInstanceState)
+
+    }
+
+    override fun onPause() {
+        activity?.window?.clearFlags(
+            WindowManager.LayoutParams.FLAG_SECURE);
+        super.onPause()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
         mViewBinding.fragment = this

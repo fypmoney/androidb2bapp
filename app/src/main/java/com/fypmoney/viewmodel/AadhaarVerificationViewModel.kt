@@ -24,6 +24,7 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
     var aadhaarNumber = MutableLiveData<String>()
     var clickHere = MutableLiveData<Boolean>()
     var onKycInitSuccess = MutableLiveData<KycInitResponseDetails>()
+    var onVerificationFailed = MutableLiveData<String>()
 
     /*
 * This method is used to handle click of get otp
@@ -89,6 +90,9 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        if(errorResponseInfo.errorCode.equals(AppConstants.AADHAR_VERIFICATION_ERROR_CODE)){
+            onVerificationFailed.value = AppConstants.API_FAIL
+        }
     }
 
 }

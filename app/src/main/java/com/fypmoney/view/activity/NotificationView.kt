@@ -24,6 +24,9 @@ import kotlinx.android.synthetic.main.toolbar.*
 /*
 * This is used to show list of notification
 * */
+
+const val FOR_APPRICATE_AND_PAY = "appricate_and_pay"
+const val FOR_REQUEST_AND_PAY = "request_and_pay"
 class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewModel>(),
     FamilyNotificationBottomSheet.OnBottomSheetClickListener,
     RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener {
@@ -33,7 +36,8 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     private var bottomSheet: TaskActionBottomSheetnotificationactivity? = null
     private var taskMessageBottomSheet3: TaskMessageBottomSheet3? = null
     private var bottomSheetMessage: TaskMessageBottomSheet2? = null
-
+    private var deviceSecurityAskedFor:String? = null
+    private var actionAllowed:String? = null
     companion object {
         lateinit var mViewModel: NotificationViewModel
 
@@ -156,6 +160,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
                 if (pos == 56) {
                     choresModel = list
                     commentstr = str
+                    deviceSecurityAskedFor  = FOR_APPRICATE_AND_PAY
                     askForDevicePassword()
 
                 }
@@ -241,7 +246,9 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     }
 
     override fun onRequestMoneyBottomSheetButtonClick(actionAllowed: String?) {
-        mViewModel.callPayMoneyApi(actionAllowed!!)
+        deviceSecurityAskedFor  = FOR_REQUEST_AND_PAY
+        this.actionAllowed = actionAllowed
+        askForDevicePassword()
 
     }
 
@@ -290,12 +297,20 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
             AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
                 when (resultCode) {
                     RESULT_OK -> {
-                        if (commentstr == null) {
-                            commentstr = ""
+                        when(deviceSecurityAskedFor){
+                            FOR_APPRICATE_AND_PAY->{
+
+                                if (commentstr == null) {
+                                    commentstr = ""
+                                }
+                                mViewModel.callTaskAccept(
+                                    "APPRECIATEANDPAY", choresModel?.entityId.toString(), commentstr!!
+                                )
+                            }
+                            FOR_REQUEST_AND_PAY->{
+                                mViewModel.callPayMoneyApi(actionAllowed!!)
+                            }
                         }
-                        mViewModel!!.callTaskAccept(
-                            "APPRECIATEANDPAY", choresModel?.entityId.toString(), commentstr!!
-                        )
 
 
                     }

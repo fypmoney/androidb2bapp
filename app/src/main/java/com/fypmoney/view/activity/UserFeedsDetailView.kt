@@ -1,7 +1,12 @@
 package com.fypmoney.view.activity
 
+import android.graphics.Bitmap
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.webkit.WebView
+import android.webkit.WebViewClient
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -11,10 +16,12 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.FeedDetailsViewModel
+import kotlinx.android.synthetic.main.activity_webview.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_push_notification.*
 import kotlinx.android.synthetic.main.view_push_notification.webView
 import kotlinx.android.synthetic.main.view_user_feeds_detail.*
+import kotlinx.android.synthetic.main.view_user_feeds_detail.load_progress_bar
 
 /*
 * This is used to show feed details
@@ -41,13 +48,36 @@ class UserFeedsDetailView : BaseActivity<ViewUserFeedsDetailBinding, FeedDetails
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = this@UserFeedsDetailView,
-            toolbar = toolbar,
+            toolbar = toolbar1,
             isBackArrowVisible = true
         )
+
+
 
         mViewModel.feedDetails.set(intent.getSerializableExtra(AppConstants.FEED_RESPONSE) as FeedDetails?)
         webView.settings.javaScriptEnabled = true
         webView.isVerticalScrollBarEnabled = false
+
+        webView!!.webViewClient = object : WebViewClient() {
+            override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
+                webView!!.loadUrl(url)
+                return true
+            }
+
+            override fun onPageFinished(view: WebView, url: String) {
+                super.onPageFinished(view, url)
+                load_progress_bar.visibility = View.GONE
+            }
+
+            override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
+                super.onPageStarted(view, url, favicon)
+                load_progress_bar.visibility = View.VISIBLE
+
+            }
+
+        }
+
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
         val mimeType = "text/html"
         val encoding = "UTF-8"
 
@@ -90,16 +120,9 @@ class UserFeedsDetailView : BaseActivity<ViewUserFeedsDetailBinding, FeedDetails
         }
 
 
-        setObserver()
     }
 
 
-    /**
-     * Create this method for observe the viewModel fields
-     */
-    private fun setObserver() {
 
-
-    }
 
 }

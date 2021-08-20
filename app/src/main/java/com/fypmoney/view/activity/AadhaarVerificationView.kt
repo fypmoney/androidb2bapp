@@ -116,6 +116,15 @@ class AadhaarVerificationView :
                 mViewModel.clickHere.value = false
             }
         }
+        mViewModel.onVerificationFailed.observe(this) {
+            when(it){
+                AppConstants.API_FAIL->{
+                    finish()
+                }
+            }
+
+
+        }
 
 
     }

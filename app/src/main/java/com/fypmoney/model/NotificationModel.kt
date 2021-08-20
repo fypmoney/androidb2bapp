@@ -25,6 +25,8 @@ class NotificationModel {
         @SerializedName("id") var id: String?=null,
         @SerializedName("sourceUserId") var sourceUserId: Int?=null,
         @SerializedName("destinationUserId") var destinationUserId: Int?=null,
+        @SerializedName("destinationUserMobile") var destinationUserMobile: String?=null,
+        @SerializedName("destinationUserProfilePic") var destinationUserProfilePic: String?=null,
         @SerializedName("requestStatus") var requestStatus: String?=null,
         @SerializedName("isParentRequest") var isParentRequest: String?=null,
         @SerializedName("entityId") var entityId: String?=null,

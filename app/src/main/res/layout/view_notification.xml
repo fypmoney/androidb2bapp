@@ -46,7 +46,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_light_dark"
-
         app:onRefreshListener="@{() -> viewModel.onRefresh()}"
         app:refreshing="@{viewModel.isLoading}">
 
@@ -56,7 +55,6 @@
             android:layout_width="match_parent"
             android:background="@color/background_light_dark"
             android:layout_height="match_parent"
-
             android:fillViewport="true"
             android:scrollbars="vertical">
 
@@ -67,7 +65,8 @@
 
                 <include
                     android:id="@+id/toolbar_layout"
-                    layout="@layout/toolbar" />
+                    layout="@layout/toolbar"
+                    />
 
 
                 <LinearLayout
@@ -82,9 +81,9 @@
                         android:id="@+id/recyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/margin"
-                        android:paddingTop="@dimen/screenMarginRight"
-                        android:paddingEnd="@dimen/margin"
+                        android:paddingStart="@dimen/dp8"
+                        android:paddingTop="@dimen/dp5"
+                        android:paddingEnd="@dimen/dp8"
                         app:adapter="@{viewModel.notificationAdapter}"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:spanCount="2" />
@@ -117,8 +116,8 @@
                         android:id="@+id/recycler_view1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="10dp"
+                        android:paddingStart="@dimen/dp8"
+                        android:paddingEnd="@dimen/dp8"
                         android:paddingBottom="@dimen/screenMarginRight"
                         app:adapter="@{viewModel.userTimeLineAdapter}"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
