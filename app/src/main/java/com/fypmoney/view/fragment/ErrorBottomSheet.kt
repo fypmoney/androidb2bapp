@@ -14,7 +14,6 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
 import com.fypmoney.databinding.BottomSheetErrorBinding
-import com.fypmoney.databinding.BottomSheetLogoutBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.SpinWheelViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -26,6 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class ErrorBottomSheet(
     private var type: String, private var message: String?,
     private var onSpinErrorClickListener: OnSpinErrorClickListener,
+    var mViewModel: SpinWheelViewModel,
 
     ) : BottomSheetDialogFragment() {
 
@@ -62,10 +62,14 @@ class ErrorBottomSheet(
             AppConstants.ERROR_TYPE_SPIN_ALLOWED -> {
                 text.text = getString(R.string.oops)
                 heading.text = getString(R.string.oop)
+                mViewModel.coinVisibilty.set(true)
+                mViewModel.spinnerClickable.set(true)
 
             }
             else -> {
                 heading.text = getString(R.string.oo_error)
+                mViewModel.coinVisibilty.set(true)
+
             }
         }
 

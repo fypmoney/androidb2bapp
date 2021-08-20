@@ -28,7 +28,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var mobile = MutableLiveData<String>()
     var onFeedClicked = MutableLiveData<Boolean>()
     var error: MutableLiveData<String> = MutableLiveData()
-    var onLocationClicked = MutableLiveData<Boolean>()
     var onSubmitClicked = MutableLiveData<Boolean>()
     var onQrCodeClicked = MutableLiveData<Boolean>()
     var onProfileClicked = MutableLiveData<Boolean>()
@@ -52,9 +51,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     /*
   * This method is used to handle click of mobile
   * */
-    fun onLocationClicked() {
-        onLocationClicked.value = true
-    }
+
 
     /*
        * This method is used to handle click of submit

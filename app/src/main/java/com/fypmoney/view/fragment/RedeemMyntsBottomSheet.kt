@@ -100,6 +100,8 @@ class RedeemMyntsBottomSheet(
             view.redeem_mynts.text = "0"
             var amount = spinWheelResponseDetails.pointsToRedeem!! / 100
             view.continuebtn.text = "Redeem ${amount} Mynt(s)"
+            view.dialog_details.text =
+                "Oops! No Mynts available right now.\n Try your luck tomorrow!"
 
             view.continuebtn.isEnabled = false
 

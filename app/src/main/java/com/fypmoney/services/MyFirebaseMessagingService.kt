@@ -45,6 +45,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d("FCMToken", remoteMessage.data.toString())
 
         val result = remoteMessage.data
+        SharedPrefUtils.putString(applicationContext, SharedPrefUtils.SF_KEY_NEW_MESSAGE, "new")
 
 
         val res = remoteMessage.data["notificationType"]

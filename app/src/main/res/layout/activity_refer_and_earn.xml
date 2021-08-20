@@ -203,14 +203,6 @@
 
 
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/gift_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:srcCompat="@drawable/ic_gift" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

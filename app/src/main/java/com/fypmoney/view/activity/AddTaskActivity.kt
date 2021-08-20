@@ -98,7 +98,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
 //                }
                 if (s.toString().startsWith("0")) {
                     s.clear()
-                } else if (s.toString().toInt() > 9999) {
+                } else if (s.toString().isNotEmpty() && s.toString().toInt() > 9999) {
                     add_money_editext.setText(getString(R.string.amount_limit))
                     add_money_editext.text?.length?.let { add_money_editext.setSelection(it) };
                 }

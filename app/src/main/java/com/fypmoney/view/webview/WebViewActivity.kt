@@ -40,7 +40,11 @@ class WebViewActivity : AppCompatActivity() {
         webView!!.webViewClient = StoreWebpageOpener.CustomWebViewClient()
         webView!!.settings.javaScriptEnabled = true
 
+        refresh.setOnClickListener(View.OnClickListener {
 
+            webView?.reload()
+
+        })
 
 
         toolbar_backImage.setOnClickListener {

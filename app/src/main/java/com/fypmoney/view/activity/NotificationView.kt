@@ -14,6 +14,7 @@ import com.fypmoney.databinding.ViewNotificationBinding
 import com.fypmoney.model.NotificationModel
 import com.fypmoney.model.UpdateTaskGetResponse
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.fragment.*
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
@@ -66,6 +67,8 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
             isBackArrowVisible = true, toolbarTitle = getString(R.string.notification_text)
         )
         setObserver()
+        SharedPrefUtils.putString(applicationContext, SharedPrefUtils.SF_KEY_NEW_MESSAGE, null)
+
     }
 
 
