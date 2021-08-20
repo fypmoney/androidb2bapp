@@ -171,10 +171,8 @@
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/valid_through"
                     android:layout_alignStart="@+id/cvvValue"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_alignTop="@+id/valid_through"
                     android:text="@string/cvv_details_title"
                     android:textColor="@color/white" />
 
