@@ -100,9 +100,6 @@
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.PermissionView"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.activity.ContactListView"
             android:screenOrientation="portrait" />
         <activity
@@ -223,6 +220,7 @@
             android:value="false" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:resource="@drawable/ic_notification"
             android:value="@string/default_notification_channel_id" />
 
         <provider

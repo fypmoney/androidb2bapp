@@ -38,6 +38,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     var onPaySuccess = MutableLiveData<Boolean>()
     var notificationSelectedResponse = NotificationModel.NotificationResponseDetails()
     val isLoading = ObservableBoolean()
+    val showShimmerEffect = MutableLiveData<Boolean>()
 
     init {
         callGetFamilyNotificationApi()
@@ -60,13 +61,16 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
       * */
 
     private fun callGetFamilyNotificationApi() {
+        if(!isLoading.get()){
+            showShimmerEffect.value = true
+        }
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_GET_NOTIFICATION_LIST,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_GET_NOTIFICATION_LIST),
                 request_type = ApiUrl.POST,
                 param = NotificationModel.NotificationRequest(), onResponse = this,
-                isProgressBar = true
+                isProgressBar = false
             )
         )
     }
@@ -94,6 +98,9 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
       * */
 
     private fun callUserTimeLineApi() {
+        if(!isLoading.get()){
+            showShimmerEffect.value = true
+        }
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_USER_TIMELINE,
@@ -108,6 +115,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         isLoading.set(false)
+        showShimmerEffect.value = false
 
         when (purpose) {
             ApiConstant.API_GET_NOTIFICATION_LIST -> {
@@ -218,6 +226,8 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         isLoading.set(false)
+        showShimmerEffect.value = false
+
         when (purpose) {
             ApiConstant.API_TASK_UPDATE -> {
                 Log.d("chacksample", errorResponseInfo.errorCode)

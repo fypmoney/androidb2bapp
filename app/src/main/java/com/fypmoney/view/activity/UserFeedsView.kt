@@ -25,6 +25,7 @@ import com.fypmoney.util.AppConstants.BASE_ACTIVITY_URL
 import com.fypmoney.util.AppConstants.FEED_RESPONSE
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.viewmodel.FeedsViewModel
 import kotlinx.android.synthetic.main.view_user_feeds.*
@@ -93,17 +94,15 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                 else -> {
                     when (it.displayCard) {
                         AppConstants.FEED_TYPE_DEEPLINK -> {
-                                when(it.action?.type){
-                                    AppConstants.FEED_TYPE_IN_APP->{
-                                        when(it.action?.url?.contains("")){
 
-                                        }
-                                    }
-                                }
-                                intentToActivity(
+                               /* intentToActivity(
                                     Class.forName(BASE_ACTIVITY_URL + it.action?.url!!),
                                     it
-                                )
+                                )*/
+                            it.action?.url?.let {
+                                deeplinkRedirection(it.split(",")[0],requireContext())
+
+                            }
 
                         }
                         AppConstants.FEED_TYPE_INAPPWEB -> {

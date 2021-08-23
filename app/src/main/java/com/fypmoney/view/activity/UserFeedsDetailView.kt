@@ -55,7 +55,9 @@ class UserFeedsDetailView : BaseActivity<ViewUserFeedsDetailBinding, FeedDetails
 
 
         mViewModel.feedDetails.set(intent.getSerializableExtra(AppConstants.FEED_RESPONSE) as FeedDetails?)
-        webView.settings.javaScriptEnabled = true
+        webView.settings.apply {
+            javaScriptEnabled = true
+        }
         webView.isVerticalScrollBarEnabled = false
 
         webView!!.webViewClient = object : WebViewClient() {

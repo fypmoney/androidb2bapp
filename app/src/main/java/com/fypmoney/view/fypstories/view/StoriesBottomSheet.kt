@@ -7,26 +7,16 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.View.OnTouchListener
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import com.fypmoney.bindingAdapters.loadImage
 import androidx.fragment.app.DialogFragment
 import com.fypmoney.R
-import com.fypmoney.application.PockketApplication
+import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.BottomsheetStoriesBinding
-import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import android.graphics.drawable.Drawable
-import androidx.annotation.Nullable
-import androidx.core.content.ContextCompat
-
-import com.bumptech.glide.load.engine.GlideException
-
-import com.bumptech.glide.request.RequestListener
-
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
+import kotlinx.android.synthetic.main.bottomsheet_stories.*
 
 
 class StoriesBottomSheet(var resourceList: List<String?>):
@@ -63,7 +53,7 @@ class StoriesBottomSheet(var resourceList: List<String?>):
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding!!.stories.setStoriesCount(PROGRESS_COUNT)
-        binding!!.stories.setStoryDuration(3000L)
+        binding!!.stories.setStoryDuration(7000L)
 
         binding!!.stories.setStoriesListener(this)
         binding!!.stories.startStories(counter)
@@ -72,6 +62,23 @@ class StoriesBottomSheet(var resourceList: List<String?>):
             ContextCompat.getDrawable(binding!!.storiesIv.context,R.drawable.progress_bar_drawable),
             rounded = false
         )
+
+        /*context?.let {
+            Glide.with(it)
+                .load(resourceList[counter])
+                .listener(object : RequestListener<Drawable> {
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        cli.visibility = View.GONE
+                        return false
+                    }
+
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        cli.visibility = View.VISIBLE
+                        return false
+                    }
+                })
+                .into(binding!!.storiesIv)
+        }*/
 
         binding!!.reverse.setOnClickListener { binding!!.stories.reverse() }
         binding!!.reverse.setOnTouchListener(onTouchListener)
@@ -104,6 +111,23 @@ class StoriesBottomSheet(var resourceList: List<String?>):
             ContextCompat.getDrawable(binding!!.storiesIv.context,R.drawable.progress_bar_drawable),
             rounded = false
         )
+       /* context?.let {
+            Glide.with(it)
+                .load(resourceList[++counter])
+                .listener(object : RequestListener<Drawable> {
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        cli.visibility = View.GONE
+                        return false
+                    }
+
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        cli.visibility = View.VISIBLE
+                        return false
+                    }
+                })
+                .into(binding!!.storiesIv)
+        }*/
+
 
     }
 
@@ -114,6 +138,25 @@ class StoriesBottomSheet(var resourceList: List<String?>):
             rounded = false
         )
 
+
+
+       /* context?.let {
+            Glide.with(it)
+                .load(resourceList[--counter])
+                .listener(object : RequestListener<Drawable> {
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        cli.visibility = View.GONE
+                        return false
+                    }
+
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        cli.visibility = View.VISIBLE
+                        return false
+                    }
+                })
+                .into(binding!!.storiesIv)
+        }
+*/
 
     }
 

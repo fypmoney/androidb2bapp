@@ -71,7 +71,7 @@ Create this method for observe the viewModel fields
                     Utility.showDatePickerDialog(
                         context = this,
                         onDateSelected = this,
-                        isDateOfBirth = false
+                        isDateOfBirth = true
                     )
                 } catch (e: Exception) {
                     e.printStackTrace()

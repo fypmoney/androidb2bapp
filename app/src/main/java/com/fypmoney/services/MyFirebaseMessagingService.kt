@@ -76,7 +76,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     .setContentText(it.notification?.body.toString())
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setStyle(NotificationCompat.BigTextStyle())
-                    .setSmallIcon(R.drawable.ic_notification_png)
+                    .setSmallIcon(R.drawable.ic_notification)
                     .setTicker(resources.getString(R.string.app_name))
                     .setAutoCancel(true)
 

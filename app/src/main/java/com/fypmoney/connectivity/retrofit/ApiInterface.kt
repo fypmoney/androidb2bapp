@@ -1,5 +1,7 @@
 package com.fypmoney.connectivity.retrofit
 
+import com.fypmoney.BuildConfig
+import com.fypmoney.util.AppConstants.APP_VERSION
 import com.fypmoney.util.AppConstants.CLIENT_TYPE
 import com.fypmoney.util.AppConstants.CLIENT_TYPE_VALUE
 import io.reactivex.Observable
@@ -54,6 +56,7 @@ interface ApiInterface {
     fun postAuthDataOnServer(
         @Header("client_id") client_id: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Header("client_secret") client_secret: String?,
         @Header("grant_type") grant_type: String?, @Url endPoint: String, @Body request: Any
     ): Observable<ResponseBody>
@@ -71,6 +74,7 @@ interface ApiInterface {
         @Header("appId") appId: String?,
         @Header("Authorization") authorization: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Url endPoint: String, @Part file: MultipartBody.Part? = null
     ): Observable<ResponseBody>
 
@@ -81,6 +85,7 @@ interface ApiInterface {
         @Header("appId") appId: String?,
         @Header("Authorization") authorization: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Header("one-tap") one_tap: Boolean?, @Url endPoint: String, @Body request: Any
     ): Observable<ResponseBody>
 
@@ -91,6 +96,7 @@ interface ApiInterface {
         @Header("client_id") client_id: String?,
         @Header("Authorization") authorization: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Query("page") page: Int,
         @Query("size") size: Int,
         @Query("sort") sort: String,
@@ -103,6 +109,7 @@ interface ApiInterface {
         @Header("client_id") client_id: String?,
         @Header("appId") appId: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Header("one-tap") one_tap: Boolean?, @Url endPoint: String, @Body request: Any
     ): Observable<ResponseBody>
 
@@ -112,6 +119,7 @@ interface ApiInterface {
         @Header("client_id") client_id: String?,
         @Header("appId") appId: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Header("Authorization") authorization: String?, @Url endPoint: String, @Body request: Any
     ): Observable<ResponseBody>
 
@@ -144,6 +152,7 @@ interface ApiInterface {
         @Header("client_id") client_id: String?,
         @Header("appId") appId: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Header("Authorization") authorization: String?, @Url endPoint: String
     ): Observable<ResponseBody>
 
@@ -153,6 +162,7 @@ interface ApiInterface {
         @Header("appId") appId: String?,
         @Body request: Any,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Header("Authorization") authorization: String?, @Url endPoint: String
     ): Observable<ResponseBody>
 
@@ -168,6 +178,7 @@ interface ApiInterface {
         @Header("client_id") client_id: String?,
         @Header("appId") appId: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Header("Authorization") authorization: String?, @Url endPoint: String
     ): Observable<ResponseBody>
 
@@ -175,6 +186,7 @@ interface ApiInterface {
     @GET
     fun checkAppUpdate(
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Header("Content-Type") content_type: String = "application/json",
         @Url endPoint: String
     ): Observable<ResponseBody>
@@ -184,6 +196,7 @@ interface ApiInterface {
     fun getTopTenUsers(
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header("Content-Type") content_type: String = "application/json",
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Url endPoint: String
     ): Observable<ResponseBody>
 

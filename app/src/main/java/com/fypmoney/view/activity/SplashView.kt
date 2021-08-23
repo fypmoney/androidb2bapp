@@ -234,5 +234,8 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         return Intent(applicationContext, SplashView::class.java)
     }
 
+    override fun onTryAgainClicked() {
+        mViewModel.setUpApp()
+    }
 
 }
