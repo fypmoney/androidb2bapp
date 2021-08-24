@@ -36,17 +36,7 @@
 
         </androidx.appcompat.widget.AppCompatImageView>
 
-        <androidx.appcompat.widget.AppCompatImageView
-            style="@style/TextviewRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="100dp"
-            android:layout_marginTop="@dimen/dp20"
-            android:background="@drawable/yes_bank_logo"
-            android:textColor="@color/text_color_dark"
-            />
+
 
     </FrameLayout>
 </layout>

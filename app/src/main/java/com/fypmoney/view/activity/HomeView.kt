@@ -99,7 +99,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.STAY_TUNED_BOTTOM_SHEET -> {
-                mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
+               /* mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
                 mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
                 mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
                 mViewModel.isScanVisible.set(false)
@@ -108,67 +108,105 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                         R.string.family_settings_toolbar_heading
                     )
                 )
-                loadFragment(FamilySettingsView(),5)
+                loadFragment(FamilySettingsView(),5)*/
+                setupFamily()
 
             }
             AppConstants.NOTIFICATION -> {
                 mViewModel.callGetFamilyNotificationApi(intent.getStringExtra(AppConstants.NOTIFICATION_APRID))
             }
+            AppConstants.CardScreen->{
+                setupcard()
+            }
+            AppConstants.StoreScreen->{
+                setupStore()
+            }
+            AppConstants.FEEDSCREEN->{
+                setupFeeds()
+            }
+            AppConstants.FyperScreen->{
+                setupFamily()
+            }
 
         }
 
         mViewBinding.navigationView.setOnNavigationItemSelectedListener {
-            val newPosition = 0
             when (it.itemId) {
                 R.id.home -> {
-                    loadFragment(HomeScreen(),1)
-                    mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.black))
-                    mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.text_color_dark))
-                    mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon)
-                    //mViewModel.isScanVisible.set(true)
-                    mViewModel.headerText.set("")
+                    setupHome()
                 }
                 R.id.feeds -> {
-                    loadFragment(UserFeedsView(),2)
-                    mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.white))
-                    mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
-                    mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
-                    //mViewModel.isScanVisible.set(false)
-                    mViewModel.headerText.set(getString(R.string.feeds_bottom_nav_title))
+                    setupFeeds()
                 }
                 R.id.store -> {
-                    loadFragment(StoreScreen(),4)
-                    mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.white))
-                    mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
-                    mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
-                    //mViewModel.isScanVisible.set(false)
-                    mViewModel.headerText.set(getString(R.string.store_bottom_nav_title))
+                    setupStore()
                 }
                 R.id.card -> {
-                    loadFragment(CardScreen(),3)
-                    mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.black))
-                    mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.white))
-                    mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon)
-                   // mViewModel.isScanVisible.set(false)
-                    mViewModel.headerText.set(getString(R.string.card_details_title))
+                    setupcard()
                 }
                 R.id.family -> {
-                    loadFragment(FamilySettingsView(),5)
-                    mViewBinding.toolbar.setBackgroundColor( ContextCompat.getColor(this,R.color.white))
-                    mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
-                    mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
-                    //mViewModel.isScanVisible.set(false)
-                    mViewModel.headerText.set(
-                        getString(
-                            R.string.family_settings_toolbar_heading
-                        )
-                    )
+                    setupFamily()
                 }
 
             }
             true
         }
 
+    }
+
+    private fun setupFamily() {
+        loadFragment(FamilySettingsView(), 5)
+        mViewBinding.navigationView.menu.findItem(R.id.family).isChecked = true;
+        mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+        mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this, R.color.black))
+        mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
+        mViewModel.headerText.set(
+            getString(
+                R.string.family_settings_toolbar_heading
+            )
+        )
+    }
+
+    private fun setupcard() {
+        loadFragment(CardScreen(), 3)
+        mViewBinding.navigationView.menu.findItem(R.id.card).isChecked = true;
+        mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.black))
+        mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this, R.color.white))
+        mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon)
+        mViewModel.headerText.set(getString(R.string.card_details_title))
+    }
+
+    private fun setupStore() {
+        loadFragment(StoreScreen(), 4)
+        mViewBinding.navigationView.menu.findItem(R.id.store).isChecked = true;
+        mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+        mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this, R.color.black))
+        mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
+        mViewModel.headerText.set(getString(R.string.store_bottom_nav_title))
+    }
+
+    private fun setupFeeds() {
+        loadFragment(UserFeedsView(), 2)
+        mViewBinding.navigationView.menu.findItem(R.id.feeds).isChecked = true;
+
+        mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
+        mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this, R.color.black))
+        mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
+        mViewModel.headerText.set(getString(R.string.feeds_bottom_nav_title))
+    }
+
+    private fun setupHome() {
+        loadFragment(HomeScreen(), 1)
+        mViewBinding.navigationView.menu.findItem(R.id.home).isChecked = true;
+        mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.black))
+        mViewBinding.toolbarTitle.setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.text_color_dark
+            )
+        )
+        mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon)
+        mViewModel.headerText.set("")
     }
 
     override fun onResume() {

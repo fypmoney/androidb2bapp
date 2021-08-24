@@ -22,36 +22,41 @@ import com.fypmoney.util.Utility
 /*
 * This class is launcher screen
 * */
-class SplashViewModel(application: Application) : BaseViewModel(application) {
+class SplashViewModel(val  app: Application) : BaseViewModel(app) {
     var getCustomerInfoSuccess = MutableLiveData<CustomerInfoResponse>()
     var moveToNextScreen = MutableLiveData(false)
-    var splashTime = ObservableField(AppConstants.SPLASH_TIME)
 
     val appUpdateState:LiveData<AppUpdateState>
         get() = _appUpdateState
     private val _appUpdateState = MutableLiveData<AppUpdateState>()
 
     init {
+        setUpApp()
+    }
+
+     fun setUpApp() {
         callCheckAppUpdate()
         if (SharedPrefUtils.getBoolean(
-                application,
+                app,
                 SharedPrefUtils.SF_KEY_IS_LOGIN
             )!!
         ) {
             // api call in case preference not contains the data
-            if (SharedPrefUtils.getString(
+            /*if (SharedPrefUtils.getString(
                     getApplication(),
                     SharedPrefUtils.SF_KEY_USER_PROFILE_INFO
                 ) == null
             ) {
-                callGetCustomerProfileApi()
             } else {
                 moveToNextScreen.value = true
-            }
+            }*/
+            callGetCustomerProfileApi()
+
         } else {
             moveToNextScreen.value = true
         }
     }
+
 
     /*
     *This method is used to call get customer profile API

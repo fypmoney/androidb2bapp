@@ -4,6 +4,9 @@ import android.app.DatePickerDialog
 import android.content.*
 import android.content.res.Resources
 import android.database.Cursor
+import android.graphics.BlendMode
+import android.graphics.BlendModeColorFilter
+import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
@@ -13,7 +16,6 @@ import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.TextUtils
 import android.util.DisplayMetrics
-import android.util.Log
 import android.util.Patterns
 import android.widget.ImageView
 import android.widget.Toast
@@ -27,7 +29,19 @@ import com.fypmoney.application.PockketApplication
 import com.fypmoney.database.ContactRepository
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.CustomerInfoResponseDetails
+import com.fypmoney.util.AppConstants.CHORES
+import com.fypmoney.util.AppConstants.CardScreen
 import com.fypmoney.util.AppConstants.DATE_FORMAT_CHANGED
+import com.fypmoney.util.AppConstants.FEEDSCREEN
+import com.fypmoney.util.AppConstants.FyperScreen
+import com.fypmoney.util.AppConstants.HOMEVIEW
+import com.fypmoney.util.AppConstants.ReferralScreen
+import com.fypmoney.util.AppConstants.StoreScreen
+import com.fypmoney.util.AppConstants.TRACKORDER
+import com.fypmoney.view.activity.ChoresActivity
+import com.fypmoney.view.activity.HomeView
+import com.fypmoney.view.activity.TrackOrderView
+import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
 import com.google.gson.Gson
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import kotlinx.coroutines.Dispatchers
@@ -44,14 +58,6 @@ import java.util.*
 import java.util.Calendar.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-
-import android.app.Activity
-import android.graphics.*
-import android.view.View
-import android.graphics.Bitmap
-
-
-
 
 
 /*
@@ -221,7 +227,8 @@ object Utility {
             mDay
         )
         if(isDateOfBirth){
-            datePickerDialog.datePicker.maxDate = (System.currentTimeMillis() - 31556926000)
+            datePickerDialog.datePicker.maxDate = (System.currentTimeMillis() - 347039786000)//11 years //Todo
+            datePickerDialog.datePicker.minDate = (System.currentTimeMillis() - 2208984820000)//70
 
         }else{
             datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
@@ -852,230 +859,45 @@ object Utility {
         return fullName
     }
 
-     fun takeScreenShot(activity: Activity): Bitmap? {
-        val view: View = activity.window.decorView
-        view.isDrawingCacheEnabled = true
-        view.buildDrawingCache()
-        val b1: Bitmap = view.getDrawingCache()
-        val frame = Rect()
-        activity.window.decorView.getWindowVisibleDisplayFrame(frame)
-        val statusBarHeight: Int = frame.top
-        val width = activity.windowManager.defaultDisplay.width
-        val height = activity.windowManager.defaultDisplay.height
-        val b = Bitmap.createBitmap(b1, 0, statusBarHeight, width, height - statusBarHeight)
-        view.destroyDrawingCache()
-        return b
-    }
 
-    fun fastblur(sentBitmap: Bitmap, radius: Int): Bitmap? {
-        val bitmap = sentBitmap.copy(sentBitmap.config, true)
-        if (radius < 1) {
-            return null
-        }
-        val w = bitmap.width
-        val h = bitmap.height
-        val pix = IntArray(w * h)
-        Log.e("pix", w.toString() + " " + h + " " + pix.size)
-        bitmap.getPixels(pix, 0, w, 0, 0, w, h)
-        val wm = w - 1
-        val hm = h - 1
-        val wh = w * h
-        val div = radius + radius + 1
-        val r = IntArray(wh)
-        val g = IntArray(wh)
-        val b = IntArray(wh)
-        var rsum: Int
-        var gsum: Int
-        var bsum: Int
-        var x: Int
-        var y: Int
-        var i: Int
-        var p: Int
-        var yp: Int
-        var yi: Int
-        var yw: Int
-        val vmin = IntArray(Math.max(w, h))
-        var divsum = div + 1 shr 1
-        divsum *= divsum
-        val dv = IntArray(256 * divsum)
-        i = 0
-        while (i < 256 * divsum) {
-            dv[i] = i / divsum
-            i++
-        }
-        yi = 0
-        yw = yi
-        val stack = Array(div) { IntArray(3) }
-        var stackpointer: Int
-        var stackstart: Int
-        var sir: IntArray
-        var rbs: Int
-        val r1 = radius + 1
-        var routsum: Int
-        var goutsum: Int
-        var boutsum: Int
-        var rinsum: Int
-        var ginsum: Int
-        var binsum: Int
-        y = 0
-        while (y < h) {
-            bsum = 0
-            gsum = bsum
-            rsum = gsum
-            boutsum = rsum
-            goutsum = boutsum
-            routsum = goutsum
-            binsum = routsum
-            ginsum = binsum
-            rinsum = ginsum
-            i = -radius
-            while (i <= radius) {
-                p = pix[yi + Math.min(wm, Math.max(i, 0))]
-                sir = stack[i + radius]
-                sir[0] = p and 0xff0000 shr 16
-                sir[1] = p and 0x00ff00 shr 8
-                sir[2] = p and 0x0000ff
-                rbs = r1 - Math.abs(i)
-                rsum += sir[0] * rbs
-                gsum += sir[1] * rbs
-                bsum += sir[2] * rbs
-                if (i > 0) {
-                    rinsum += sir[0]
-                    ginsum += sir[1]
-                    binsum += sir[2]
-                } else {
-                    routsum += sir[0]
-                    goutsum += sir[1]
-                    boutsum += sir[2]
-                }
-                i++
-            }
-            stackpointer = radius
-            x = 0
-            while (x < w) {
-                r[yi] = dv[rsum]
-                g[yi] = dv[gsum]
-                b[yi] = dv[bsum]
-                rsum -= routsum
-                gsum -= goutsum
-                bsum -= boutsum
-                stackstart = stackpointer - radius + div
-                sir = stack[stackstart % div]
-                routsum -= sir[0]
-                goutsum -= sir[1]
-                boutsum -= sir[2]
-                if (y == 0) {
-                    vmin[x] = Math.min(x + radius + 1, wm)
-                }
-                p = pix[yw + vmin[x]]
-                sir[0] = p and 0xff0000 shr 16
-                sir[1] = p and 0x00ff00 shr 8
-                sir[2] = p and 0x0000ff
-                rinsum += sir[0]
-                ginsum += sir[1]
-                binsum += sir[2]
-                rsum += rinsum
-                gsum += ginsum
-                bsum += binsum
-                stackpointer = (stackpointer + 1) % div
-                sir = stack[stackpointer % div]
-                routsum += sir[0]
-                goutsum += sir[1]
-                boutsum += sir[2]
-                rinsum -= sir[0]
-                ginsum -= sir[1]
-                binsum -= sir[2]
-                yi++
-                x++
-            }
-            yw += w
-            y++
-        }
-        x = 0
-        while (x < w) {
-            bsum = 0
-            gsum = bsum
-            rsum = gsum
-            boutsum = rsum
-            goutsum = boutsum
-            routsum = goutsum
-            binsum = routsum
-            ginsum = binsum
-            rinsum = ginsum
-            yp = -radius * w
-            i = -radius
-            while (i <= radius) {
-                yi = Math.max(0, yp) + x
-                sir = stack[i + radius]
-                sir[0] = r[yi]
-                sir[1] = g[yi]
-                sir[2] = b[yi]
-                rbs = r1 - Math.abs(i)
-                rsum += r[yi] * rbs
-                gsum += g[yi] * rbs
-                bsum += b[yi] * rbs
-                if (i > 0) {
-                    rinsum += sir[0]
-                    ginsum += sir[1]
-                    binsum += sir[2]
-                } else {
-                    routsum += sir[0]
-                    goutsum += sir[1]
-                    boutsum += sir[2]
-                }
-                if (i < hm) {
-                    yp += w
-                }
-                i++
-            }
-            yi = x
-            stackpointer = radius
-            y = 0
-            while (y < h) {
 
-                // Preserve alpha channel: ( 0xff000000 & pix[yi] )
-                pix[yi] =
-                    -0x1000000 and pix[yi] or (dv[rsum] shl 16) or (dv[gsum] shl 8) or dv[bsum]
-                rsum -= routsum
-                gsum -= goutsum
-                bsum -= boutsum
-                stackstart = stackpointer - radius + div
-                sir = stack[stackstart % div]
-                routsum -= sir[0]
-                goutsum -= sir[1]
-                boutsum -= sir[2]
-                if (x == 0) {
-                    vmin[y] = Math.min(y + r1, hm) * w
-                }
-                p = x + vmin[y]
-                sir[0] = r[p]
-                sir[1] = g[p]
-                sir[2] = b[p]
-                rinsum += sir[0]
-                ginsum += sir[1]
-                binsum += sir[2]
-                rsum += rinsum
-                gsum += ginsum
-                bsum += binsum
-                stackpointer = (stackpointer + 1) % div
-                sir = stack[stackpointer]
-                routsum += sir[0]
-                goutsum += sir[1]
-                boutsum += sir[2]
-                rinsum -= sir[0]
-                ginsum -= sir[1]
-                binsum -= sir[2]
-                yi += w
-                y++
+
+    fun deeplinkRedirection(screenName:String,context: Context){
+        var intent:Intent? = null
+
+        when(screenName){
+            HOMEVIEW->{
+                intent = Intent(context,HomeView::class.java)
+            }ReferralScreen->{
+                intent = Intent(context,ReferAndEarnActivity::class.java)
+
+            }CardScreen->{
+                intent = Intent(context,HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN,CardScreen)
+
+            }StoreScreen->{
+                intent = Intent(context,HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN,StoreScreen)
+
+            }FEEDSCREEN->{
+                intent = Intent(context,HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN,FEEDSCREEN)
+
+            }FyperScreen->{
+                intent = Intent(context,HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN,FyperScreen)
+
+            }TRACKORDER->{
+                intent = Intent(context,TrackOrderView::class.java)
+
+            }CHORES->{
+                 intent = Intent(context,ChoresActivity::class.java)
+
             }
-            x++
         }
-        Log.e("pix", w.toString() + " " + h + " " + pix.size)
-        bitmap.setPixels(pix, 0, w, 0, 0, w, h)
-        return bitmap
-    }
+        intent?.let {
+            context.startActivity(intent)
 
-    fun deeplinkRedirection(screenName:String){
-
+        }
     }
 }

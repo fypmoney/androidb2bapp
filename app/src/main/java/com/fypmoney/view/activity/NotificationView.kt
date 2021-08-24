@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.databinding.Observable
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -21,6 +22,7 @@ import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.NotificationViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_user_feeds.*
 
 /*
 * This is used to show list of notification
@@ -66,6 +68,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = getString(R.string.notification_text)
         )
+        mViewBinding.shimmerLayout.startShimmerAnimation()
         setObserver()
         SharedPrefUtils.putString(applicationContext, SharedPrefUtils.SF_KEY_NEW_MESSAGE, null)
 
@@ -116,7 +119,13 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
             }
 
         }
-        mViewModel!!.error.observe(this, androidx.lifecycle.Observer { errorcode ->
+        mViewModel.showShimmerEffect.observe(this) {
+            if (!it) {
+                mViewBinding.shimmerLayout.stopShimmerAnimation()
+            }
+
+        }
+        mViewModel.error.observe(this, { errorcode ->
             if (errorcode == "PKT_2037") {
 
                 callInsuficientFundMessageSheet()

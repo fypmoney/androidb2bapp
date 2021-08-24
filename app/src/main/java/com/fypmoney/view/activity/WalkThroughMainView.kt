@@ -7,11 +7,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
-import com.fypmoney.FirstFragment
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewWalkThroughMainBinding
-import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.WalkThroughOneScreen
 import com.fypmoney.view.fragment.WalkThroughThreeScreen
 import com.fypmoney.view.fragment.WalkThroughTwoScreen

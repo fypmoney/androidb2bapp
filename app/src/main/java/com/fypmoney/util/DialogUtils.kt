@@ -3,6 +3,8 @@ package com.fypmoney.util
 import android.app.Activity
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.view.*
 import android.widget.Button
 import android.widget.LinearLayout
@@ -10,14 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatTextView
 import com.fypmoney.R
-import android.graphics.drawable.BitmapDrawable
-
-import android.graphics.drawable.Drawable
-
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import com.fypmoney.util.Utility.fastblur
+import com.fypmoney.connectivity.network.NetworkUtil
 
 
 /**
@@ -157,8 +152,12 @@ class DialogUtils {
             val tryAgain =
                 (mAlertDialog?.window!!.findViewById(R.id.try_again) as AppCompatTextView)
             tryAgain.setOnClickListener {
-                mAlertDialog?.dismiss()
-                onAlertDialogNoInternetClickListener.onTryAgainClicked()
+
+                if (NetworkUtil.isNetworkAvailable()) {
+                    mAlertDialog?.dismiss()
+                    onAlertDialogNoInternetClickListener.onTryAgainClicked()
+
+                }
             }
         }
 

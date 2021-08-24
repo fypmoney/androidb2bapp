@@ -182,6 +182,7 @@ object AppConstants {
 
 
     const val CLIENT_TYPE = "Client_Type"
+    const val APP_VERSION = "app_version"
     const val CLIENT_TYPE_VALUE = "ANDROID"
     const val NOT_ALLOWED_MSG = "Invalid Version. Please uninstall your current app and install it from Play Store again."
     const val PLAY_STORE_URL = "http://onelink.to/fypmoney"
@@ -197,7 +198,7 @@ object AppConstants {
     const val StoreScreen = "StoreScreen"
     const val FyperScreen = "FyperScreen"
     const val FEEDSCREEN = "FeedScreen"
-    const val TRACK_ORDER = "TrackOrderScreen"
+    const val TRACKORDER = "TrackOrderScreen"
     const val CHORES = "ChoresScreen"
    /* Home : "HomeView, 0"
 
