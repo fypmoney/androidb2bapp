@@ -27,6 +27,7 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
     var AssignedByYouTask: MutableLiveData<ArrayList<AssignedTaskResponse>> = MutableLiveData()
     var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
     var bottomtaskwithdrawn: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
+    var selectedPosition = MutableLiveData(-1)
 
     var TaskDetailResponse: MutableLiveData<TaskDetailResponse> = MutableLiveData()
 

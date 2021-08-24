@@ -10,17 +10,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
+import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.R
 import com.fypmoney.databinding.BottomSheetResponseTaskBinding
+import com.fypmoney.model.AssignedTaskResponse
+import com.fypmoney.model.ChoresTimeLineItem
 import com.fypmoney.model.TaskDetailResponse
+import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.ChoresActivity
+import com.fypmoney.view.adapter.ChoresStatusAdapter
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_response_task.*
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.accept
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.amount
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.bywhom
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.cancel
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.comment
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.days_left
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.descrip
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.lin
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.reject
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.verification_title
+import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.viewdiv
+import kotlinx.android.synthetic.main.bottom_sheet_response_task2.view.*
+import kotlinx.android.synthetic.main.chores_status_row_item.view.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class TaskActionBottomSheet(
@@ -29,32 +51,125 @@ class TaskActionBottomSheet(
 ) :
     BottomSheetDialogFragment() {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
+    private var bottomSheetDialog: BottomSheetDialog? = null
     var otp = ObservableField<String>()
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
-        BottomSheetDialog(requireContext(), theme)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
+    }
+
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        bottomSheetDialog =
+            (super.onCreateDialog(savedInstanceState) as BottomSheetDialog).apply {
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+
+            }
+        return bottomSheetDialog!!
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(
-            R.layout.bottom_sheet_response_task,
+            R.layout.bottom_sheet_response_task2,
             container,
             false
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val bottomSheet = BottomSheetDialog(requireContext())
+
         Log.d("chackbottomsheet", list.toString())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetResponseTaskBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_response_task,
-            null,
-            false
+        if (ChoresActivity.mViewModel?.selectedPosition?.value == 0) {
+            view.top_bg.background.setTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_task_card_blue
+                )
+            )
+            view.bg_middle.background.setTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_task_card_blue
+                )
+            )
+            view.viewdiv.background.setTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_task_card_blue
+                )
+            )
+        } else if (ChoresActivity.mViewModel?.selectedPosition?.value == 1) {
+            view.top_bg.background.setTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_task_card_pink
+                )
+            )
+            view.viewdiv.background.setTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_task_card_pink
+                )
+            )
+            view.bg_middle.background.setTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_task_card_pink
+                )
+            )
+        } else if (ChoresActivity.mViewModel?.selectedPosition?.value == 2) {
+            view.top_bg.background.setTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_task_card_green
+                )
+            )
+            view.bg_middle.background.setTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_task_card_green
+                )
+            )
+            view.viewdiv.background.setTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_task_card_green
+                )
+            )
+
+        } else {
+            view.top_bg.background.setTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_task_card_orange
+                )
+            )
+            view.bg_middle.background.setTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_task_card_orange
+                )
+            )
+            view.viewdiv.background.setTint(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.color_task_card_orange
+                )
+            )
+        }
+
+        setRecyclerView(view, list.choresTimeLine)
+        view.back_close.setOnClickListener(View.OnClickListener {
+            bottomSheetDialog?.dismiss()
+        })
+        Utility.setImageUsingGlide(
+            requireContext(),
+            list.destinationUserProfilePic,
+            view.profile_pic
         )
-        bottomSheet.setContentView(bindingSheet.root)
-
-
         val accept = view.findViewById<Button>(R.id.accept)!!
+
+
         accept.setOnClickListener(View.OnClickListener {
             if (accept.text == "Accept") {
                 ChoresActivity.mViewModel!!.callTaskAccept("ACCEPT", list.entityId.toString(), "")
@@ -112,12 +227,14 @@ class TaskActionBottomSheet(
             accept.text = "Accept"
             view.reject.text = "Reject"
             view.bywhom.visibility = View.VISIBLE
-            view.bywhom.text = "By " + list.destinationUserName
+            view.assigned.text = "Assigned By"
+            view.bywhom.text = list.destinationUserName
             view.comment.visibility = View.GONE
         } else if (list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY") {
             accept.text = "Appreciate"
             view.reject.text = "Depreciate"
-            view.bywhom.visibility = View.GONE
+            view.assigned.text = "Assigned To"
+            view.bywhom.text = list.destinationUserName
             view.days_left.visibility = View.GONE
             view.viewdiv.visibility = View.GONE
             view.comment.visibility = View.VISIBLE
@@ -125,7 +242,8 @@ class TaskActionBottomSheet(
             view.comment.visibility = View.GONE
             view.lin.visibility = View.GONE
             view.bywhom.visibility = View.VISIBLE
-            view.bywhom.text = "By " + list.sourceUserName
+            view.bywhom.text = list.sourceUserName
+            view.assigned.text = "Assigned By"
 
         } else if (list.actionAllowed == "CANCEL") {
             view.comment.visibility = View.VISIBLE
@@ -133,7 +251,8 @@ class TaskActionBottomSheet(
 
             view.lin.visibility = View.GONE
             view.bywhom.visibility = View.VISIBLE
-            view.bywhom.text = "To " + list.destinationUserName
+            view.assigned.text = "Assigned To"
+            view.bywhom.text = list.destinationUserName
             view.cancel.visibility = View.VISIBLE
 
         }
@@ -146,5 +265,21 @@ class TaskActionBottomSheet(
         return view
     }
 
+    private fun setRecyclerView(root: View, choresTimeLine: List<ChoresTimeLineItem?>?) {
+        val layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        root.recycler_view!!.layoutManager = layoutManager
+
+        var itemsArrayList: ArrayList<ChoresTimeLineItem> = ArrayList()
+        choresTimeLine?.forEach { it ->
+            if (it != null) {
+                itemsArrayList.add(it)
+            }
+        }
+
+        var typeAdapter =
+            ChoresStatusAdapter(itemsArrayList)
+        root.recycler_view!!.adapter = typeAdapter
+    }
 
 }

@@ -84,8 +84,8 @@ object ApiConstant {
   const val GET_USER_CARDS = "get_user_cards"
 
     const val CHECK_APP_UPDATE = "/app/version"
-    const val API_TASK_DETAIL = "/services/PockketService/internal/approval-request/"
-  const val API_TASK_UPDATE = "/services/loyaltyservice/api/task"
+    const val API_TASK_DETAIL = "/services/PockketService/internal/approval-request/V1/"
+    const val API_TASK_UPDATE = "/services/loyaltyservice/api/task"
   const val API_HISTORY_TASK =
     "/services/loyaltyservice/api/task/history"
 

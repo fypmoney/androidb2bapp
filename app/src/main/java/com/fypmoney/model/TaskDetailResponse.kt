@@ -34,10 +34,24 @@ data class TaskDetailResponse(
     val requestStatus: String? = null,
     val actionAllowed: String? = null,
     val status: String? = null,
-    val additionalAttributes: AdditionalAttributes? = null
+    val additionalAttributes: AdditionalAttributes? = null,
+    val choresTimeLine: List<ChoresTimeLineItem?>? = null,
+    val sourceUserProfilePic: Any? = null,
 
+    val createdDate: String? = null,
+
+    val destinationUserProfilePic: String? = null
 
 )
+
+@Keep
+data class ChoresTimeLineItem(
+    val date: String? = null,
+    val name: String? = null,
+    val description: String? = null,
+    val isDone: String? = null
+)
+
 @Keep
 data class AdditionalAttributes(
     val amount: Int? = null,

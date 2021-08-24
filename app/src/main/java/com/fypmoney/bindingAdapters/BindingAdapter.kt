@@ -366,6 +366,51 @@ class BindingAdapter {
             }
         }
 
+        @BindingAdapter(value = ["SET_IMAGE_IN_CHORES_STATUS", "IS_DONE"], requireAll = false)
+        @JvmStatic
+        fun setImageInChoresStatus(
+            imageView: AppCompatImageView,
+            status: String?,
+            isDone: String?
+        ) {
+
+            when (status) {
+                AppConstants.NEW -> {
+                    if (isDone == AppConstants.YES) {
+                        imageView.setImageResource(R.drawable.ic_check_green_tick)
+                    } else {
+                        imageView.setImageResource(R.drawable.ic_chores_unselected)
+                    }
+                }
+                AppConstants.Accepted -> {
+                    if (isDone == AppConstants.YES) {
+
+                        imageView.setImageResource(R.drawable.ic_check_green_tick)
+                    } else {
+                        imageView.setImageResource(R.drawable.ic_chores_unselected)
+                    }
+
+                }
+                AppConstants.Completed -> {
+                    if (isDone == AppConstants.YES) {
+
+                        imageView.setImageResource(R.drawable.ic_check_green_tick)
+                    } else {
+                        imageView.setImageResource(R.drawable.ic_chores_unselected)
+                    }
+                }
+                AppConstants.Pay -> {
+                    if (isDone == AppConstants.YES) {
+
+                        imageView.setImageResource(R.drawable.ic_check_green_tick)
+                    } else {
+                        imageView.setImageResource(R.drawable.ic_chores_unselected)
+                    }
+                }
+
+
+            }
+        }
 
         @BindingAdapter(value = ["ORDER_STATUS", "IS_DONE_VALUE"], requireAll = false)
         @JvmStatic

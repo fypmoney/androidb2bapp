@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
 import com.fypmoney.model.AssignedTaskResponse
+import com.fypmoney.view.activity.ChoresActivity
 import com.fypmoney.view.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.card_assigned.view.*
 
@@ -51,9 +52,19 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
             holder.invite.text = "₹" + items[position].amount?.div(100)
         }
         holder.card.setOnClickListener(View.OnClickListener {
+            if (position % 4 == 0) {
+                ChoresActivity.mViewModel?.selectedPosition?.value = 0
+            } else if (position % 4 == 1) {
+                ChoresActivity.mViewModel?.selectedPosition?.value = 1
+            } else if (position % 4 == 2) {
+                ChoresActivity.mViewModel?.selectedPosition?.value = 2
+            } else if (position % 4 == 3) {
+                ChoresActivity.mViewModel?.selectedPosition?.value = 3
+            }
             clickInterface.onItemClicked(position)
         })
         if (position % 4 == 0) {
+
             holder.card_bg.background.setTint(
                 ContextCompat.getColor(
                     context,
@@ -68,6 +79,7 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
             )
 
         } else if (position % 4 == 1) {
+
             holder.card_bg.background.setTint(
                 ContextCompat.getColor(
                     context,
@@ -82,6 +94,7 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
             )
 
         } else if (position % 4 == 2) {
+
             holder.card_bg.background.setTint(
                 ContextCompat.getColor(
                     context,
@@ -96,6 +109,7 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
             )
 
         } else if (position % 4 == 3) {
+
             holder.card_bg.background.setTint(
                 ContextCompat.getColor(
                     context,
