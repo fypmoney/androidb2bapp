@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.fypmoney.database.entity.MemberEntity
+import com.fypmoney.util.Utility
 import com.fypmoney.view.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.card_member_image.view.*
 
@@ -26,18 +27,13 @@ class addmemberAdapter(
                 var i = 0
             }
             is ViewHolder -> {
-//                if (!items?.get(position-1)?.profilePicResourceId.isNullOrEmpty()) {
-//                    Utility.setImageUsingGlide(
-//                        url = items?.get(position-1)?.profilePicResourceId,
-//                        imageView = baseHolder.imagee
-//                    )
-//                }
-//                else
-//                {
-//                    Glide.with(context)
-//                        .load("https://cdn.shopify.com/s/files/1/2166/2727/products/AAW30010_1024x1024.png?v=1503906545")
-//                        .into(baseHolder.imagee)
-//                }
+                if (!items?.get(position - 1)?.profilePicResourceId.isNullOrEmpty()) {
+                    Utility.setImageUsingGlide(
+                        url = items?.get(position - 1)?.profilePicResourceId,
+                        imageView = baseHolder.imagee
+                    )
+                }
+
                 baseHolder.view.setOnClickListener(View.OnClickListener {
                     selectedPos = position - 1
 
