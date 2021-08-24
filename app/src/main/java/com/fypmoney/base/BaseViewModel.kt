@@ -51,6 +51,6 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
     }
 
     override fun progress(isStart: Boolean, message: String) {
-        progressDialog.value = isStart
+        progressDialog.postValue(isStart)
     }
 }

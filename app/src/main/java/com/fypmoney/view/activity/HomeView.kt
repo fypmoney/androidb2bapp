@@ -25,6 +25,7 @@ import com.fypmoney.databinding.ViewHomeBinding
 import com.fypmoney.model.NotificationModel
 import com.fypmoney.model.UpdateTaskGetResponse
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.INSUFFICIENT_ERROR_CODE
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.*
@@ -302,15 +303,14 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             }
 
         }
-        mViewModel!!.error.observe(this, androidx.lifecycle.Observer { list ->
-            if (list == "PKT_2037") {
-
-                callInsuficientFundMessageSheet()
+        mViewModel.error.observe(this, { list ->
+            if (list == INSUFFICIENT_ERROR_CODE) {
+                callInsuficientFundMessageSheet(Utility.convertToRs(mViewModel.amountToBeAdded))
             }
 
 
         })
-        mViewModel!!.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
+        mViewModel.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
             bottomSheetMessage?.dismiss()
             taskMessageBottomSheet3?.dismiss()
             if (list.currentState == "ACCEPT") {
@@ -340,7 +340,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         })
 
     }
-    private fun callInsuficientFundMessageSheet() {
+    private fun callInsuficientFundMessageSheet(amount:String?) {
         var itemClickListener2 = object : AcceptRejectClickListener {
             override fun onAcceptClicked(pos: Int, str: String) {
                 bottomsheetInsufficient?.dismiss()
@@ -357,7 +357,9 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             }
         }
         bottomsheetInsufficient =
-            TaskMessageInsuficientFuntBottomSheet(itemClickListener2)
+            TaskMessageInsuficientFuntBottomSheet(itemClickListener2,title = resources.getString(R.string.insufficient_bank_balance),
+                subTitle =  resources.getString(R.string.insufficient_bank_body),
+                amount = resources.getString(R.string.add_money_title1)+resources.getString(R.string.Rs)+amount)
         bottomsheetInsufficient?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomsheetInsufficient?.show(supportFragmentManager, "TASKMESSAGE")
     }

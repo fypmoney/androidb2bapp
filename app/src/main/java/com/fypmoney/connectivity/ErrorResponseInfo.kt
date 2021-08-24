@@ -6,7 +6,8 @@ package com.fypmoney.connectivity
  */
 data class ErrorResponseInfo(
     val errorCode: String,
-    val msg: String
+    val msg: String,
+    val data: String?= null
 ) {
     override fun toString(): String {
         return ""
