@@ -33,12 +33,11 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var onProfileClicked = MutableLiveData<Boolean>()
     var onNotificationClicked = MutableLiveData<Boolean>()
     var onNotificationListener = MutableLiveData<NotificationModel.NotificationResponseDetails?>()
-    var balanceAmount = ObservableField(application.getString(R.string.balance_default_value))
     var otp = ObservableField<String>()
     var headerText = ObservableField<String>()
-    var isScanVisible = ObservableField(true)
     var contactRepository = ContactRepository(mDB = appDatabase)
     var notificationSelectedResponse = NotificationModel.NotificationResponseDetails()
+    var amountToBeAdded:String? = ""
 
 
     /*
@@ -251,6 +250,10 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             }
             ApiConstant.API_TASK_UPDATE -> {
                 error.postValue(errorResponseInfo.errorCode)
+            }
+            ApiConstant.API_PAY_MONEY -> {
+                error.postValue(errorResponseInfo.errorCode)
+                amountToBeAdded = errorResponseInfo.data
             }
         }
     }

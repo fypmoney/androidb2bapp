@@ -34,7 +34,7 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
     var sendMoneyApiResponse = MutableLiveData<SendMoneyResponse>()
     private var qrCodeValue = ObservableField<String>()
     var isCircularImageVisible = ObservableField(false)
-    var inSufficientAmount = MutableLiveData<String>()
+    var amountToBeAdded:String = ""
 
     /*
       * This method is used to handle on click of pay or request button
@@ -204,7 +204,9 @@ class EnterAmountForPayRequestViewModel(application: Application) : BaseViewMode
         when (purpose) {
             ApiConstant.API_FUND_TRANSFER -> {
                 if(errorResponseInfo.errorCode == INSUFFICIENT_ERROR_CODE){
+                    amountToBeAdded = errorResponseInfo.data.toString()
                     onApiResponse.value = INSUFFICIENT_ERROR_CODE
+
                 }else{
                     onApiResponse.value = AppConstants.API_FAIL
 

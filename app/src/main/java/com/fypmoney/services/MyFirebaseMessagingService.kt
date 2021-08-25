@@ -143,6 +143,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         val intent = Intent(applicationContext, aClass)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
         intent.putExtra(AppConstants.NOTIFICATION_APRID, aprid)
+        intent.flags =
+            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
 
     }
@@ -159,15 +161,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                             AppConstants.NOTIFICATION_APRID,
                             remoteMessage.data[AppConstants.NOTIFICATION_KEY_APRID]
                         )
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+
                         return intent
 
                     }
                     AppConstants.TYPE_NONE_NOTIFICATION -> {
                         try {
-                            return Intent(
+                            val intent = Intent(
                                 applicationContext,
                                 Class.forName(AppConstants.BASE_ACTIVITY_URL + remoteMessage.data["url"])
                             )
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                            return intent
+
                         } catch (e: Exception) {
                             e.printStackTrace()
                             intentToActivity(HomeView::class.java)

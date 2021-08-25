@@ -131,7 +131,7 @@ class EnterAmountForPayRequestView :
                     intentToActivity(HomeView::class.java)
                 }
                 AppConstants.INSUFFICIENT_ERROR_CODE -> {
-                    callInsuficientFundMessageSheet()
+                    callInsuficientFundMessageSheet(Utility.convertToRs(mViewModel.amountToBeAdded))
                 }
             }
         }
@@ -147,7 +147,7 @@ class EnterAmountForPayRequestView :
         }
     }
 
-    private fun callInsuficientFundMessageSheet() {
+    private fun callInsuficientFundMessageSheet(amount:String?) {
          bottomsheetInsufficient =
             TaskMessageInsuficientFuntBottomSheet(object : AcceptRejectClickListener {
                 override fun onAcceptClicked(pos: Int, str: String) {
@@ -164,7 +164,7 @@ class EnterAmountForPayRequestView :
                 }
             },title = resources.getString(R.string.insufficient_bank_balance),
                 subTitle =  resources.getString(R.string.insufficient_bank_body),
-                amount = resources.getString(R.string.add_money_title1)+resources.getString(R.string.Rs)+mViewModel.amountSelected.get()
+                amount = resources.getString(R.string.add_money_title1)+resources.getString(R.string.Rs)+amount
             )
 
 
