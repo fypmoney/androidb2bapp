@@ -78,7 +78,6 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
         )
 
     }
-
     fun callSampleTask() {
 
         loading.postValue(true)

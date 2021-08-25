@@ -8,7 +8,7 @@ object ApiConstant {
      const val GRANT_TYPE = "client_credentials"*/
     const val BASE_URL = "http://54.84.197.170:9300"
 
-    //    const val BASE_URL = "https://techservices.fyp-e.in"
+//    const val BASE_URL = "https://techservices.fyp-e.in"
     const val PAYU_BASE_URL = "https://info.payu.in"
     const val CLIENT_ID = "web_app"
     const val CLIENT_SECRET = "user"
@@ -36,7 +36,6 @@ object ApiConstant {
         "/services/loyaltyservice/api/task/assign/search/V1?page=0&sort=createdDate,desc"
     const val API_YOUR_TASK =
         "/services/loyaltyservice/api/task/assign/search/V1"
-
 
 
     const val API_UPDATE_FAMILY_NAME = "/services/authservice/api/family-detail?name="

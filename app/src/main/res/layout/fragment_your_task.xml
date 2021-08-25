@@ -11,7 +11,6 @@
         android:layout_above="@+id/LoadProgressBar"
         android:layout_marginRight="@dimen/_12sdp"
         android:layout_height="match_parent" />
-
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/LoadProgressBar"
         android:layout_width="wrap_content"

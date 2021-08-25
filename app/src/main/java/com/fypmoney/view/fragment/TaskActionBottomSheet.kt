@@ -168,7 +168,7 @@ class TaskActionBottomSheet(
             view.profile_pic
         )
         val accept = view.findViewById<Button>(R.id.accept)!!
-        view.emoji.text = list.emojis
+               view.emoji.text = list.emojis
 
         accept.setOnClickListener(View.OnClickListener {
             if (accept.text == "Accept") {
