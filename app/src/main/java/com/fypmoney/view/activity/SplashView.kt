@@ -153,10 +153,10 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     * */
     private fun moveToNextScreen(delayTime: Long = AppConstants.SPLASH_TIME) {
         Handler(Looper.getMainLooper()).postDelayed({
-            if (intent.hasExtra(AppConstants.NOTIFICATION_KEY_NOTIFICATION_TYPE)) {
+            /*if (intent.hasExtra(AppConstants.NOTIFICATION_KEY_NOTIFICATION_TYPE)) {
                 startActivity(onNotificationClick(intent))
-            } else {
-                if (SharedPrefUtils.getBoolean(
+            } else{*/
+            if (SharedPrefUtils.getBoolean(
                         applicationContext,
                         SharedPrefUtils.SF_KEY_IS_LOGIN
                     )!!
@@ -191,7 +191,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                 }
 
 
-            }
+
         }, delayTime)
     }
 

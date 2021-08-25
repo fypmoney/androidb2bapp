@@ -20,6 +20,7 @@ import com.fypmoney.util.Utility
 * */
 class AadhaarAccountActivationViewModel(application: Application) : BaseViewModel(application) {
     var onActivateAccountSuccess = MutableLiveData<KycActivateAccountResponseDetails>()
+    var onLogoutSuccess = MutableLiveData<Boolean>()
 
     /*
 * This method is used to handle click of activate account using Aadhaar card
@@ -29,6 +30,17 @@ class AadhaarAccountActivationViewModel(application: Application) : BaseViewMode
 
     }
 
+    fun callLogOutApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_LOGOUT,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_LOGOUT),
+                request_type = ApiUrl.POST,
+                onResponse = this, isProgressBar = true,
+                param = BaseRequest()
+            )
+        )
+    }
     /*
     * This method is used to call auth login API
     * */
@@ -58,6 +70,14 @@ class AadhaarAccountActivationViewModel(application: Application) : BaseViewMode
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        when (purpose) {
+            ApiConstant.API_LOGOUT -> {
+                Utility.resetPreferenceAfterLogout()
+                onLogoutSuccess.value = true
+            }
+
+
+        }
     }
 
 }

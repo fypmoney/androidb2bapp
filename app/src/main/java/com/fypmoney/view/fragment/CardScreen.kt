@@ -6,6 +6,7 @@ import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.method.HideReturnsTransformationMethod
@@ -32,7 +33,10 @@ import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.view.notifymeordercard.NotifyMeOrderCardActivity
 import com.fypmoney.viewmodel.CardScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.activity_notify_me_order_card.*
 import kotlinx.android.synthetic.main.screen_card.*
+import kotlinx.android.synthetic.main.screen_card.notify_btn
+import kotlinx.android.synthetic.main.screen_card.video
 import kotlinx.android.synthetic.main.screen_card.view.*
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
 import kotlinx.android.synthetic.main.virtual_card_front_layout.*
@@ -73,12 +77,13 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             WindowManager.LayoutParams.FLAG_SECURE);
         super.onCreate(savedInstanceState)
 
+
     }
 
-    override fun onPause() {
+    override fun onDestroy() {
+        super.onDestroy()
         activity?.window?.clearFlags(
             WindowManager.LayoutParams.FLAG_SECURE);
-        super.onPause()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,6 +93,16 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         mViewBinding.viewModel = mViewModel
         mViewBinding.fragment = this
 
+        if(true){
+            showNotifyCardLayout()
+        }else{
+            mViewBinding.notifyOrderCardNsv.visibility = View.GONE
+            showCardLayout()
+        }
+
+    }
+
+    private fun showCardLayout() {
         val textString = ArrayList<String>()
         textString.add(PockketApplication.instance.getString(R.string.card_settings))
         textString.add(PockketApplication.instance.getString(R.string.order_card))
@@ -114,15 +129,16 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         mViewModel.callGetBankProfileApi()
 
 
-        val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from<View>(mViewBinding.clBottomsheet)
+        val behavior: BottomSheetBehavior<*> =
+            BottomSheetBehavior.from<View>(mViewBinding.clBottomsheet)
         BottomSheetBehavior.from<ConstraintLayout>(mViewBinding.clBottomsheet)
         behavior.state =
             BottomSheetBehavior.STATE_COLLAPSED
-        behavior.addBottomSheetCallback(object: BottomSheetBehavior.BottomSheetCallback() {
+        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if(newState == BottomSheetBehavior.STATE_EXPANDED){
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
                     mViewBinding.upIv.rotation = 270.0f
-                }else if(newState == BottomSheetBehavior.STATE_COLLAPSED){
+                } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     mViewBinding.upIv.rotation = 90.0f
                 }
             }
@@ -145,7 +161,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
 
             override fun onSwipeLeft() {
-               flipCardLeft()
+                flipCardLeft()
 
             }
 
@@ -177,9 +193,22 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 return gestureDetector.onTouchEvent(event)
             }
         })
-
     }
 
+    private fun showNotifyCardLayout() {
+        val uri: Uri =
+            Uri.parse("android.resource://" + context?.packageName + "/" + R.raw.notify_order_card)
+        mViewBinding.video.setMediaController(null)
+        mViewBinding.video.setVideoURI(uri)
+        mViewBinding.video.setOnPreparedListener {
+            it.isLooping = true
+            mViewBinding.video.start()
+        }
+        notify_btn.setOnClickListener {
+            Utility.showToast(resources.getString(R.string.thanks_we_will_keep_you_notify))
+        }
+        mViewBinding.notifyOrderCardNsv.visibility = View.VISIBLE
+    }
 
 
     /*

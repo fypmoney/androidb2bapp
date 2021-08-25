@@ -22,18 +22,25 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewHomeBinding
+import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.model.NotificationModel
+import com.fypmoney.model.SendMoneyResponseDetails
 import com.fypmoney.model.UpdateTaskGetResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.INSUFFICIENT_ERROR_CODE
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.AddMoneySuccessBottomSheet
 import com.fypmoney.view.fragment.*
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.view_home.*
 import java.util.concurrent.atomic.AtomicBoolean
+import com.google.firebase.analytics.FirebaseAnalytics
+
+
+
 
 
 /*
@@ -41,7 +48,9 @@ import java.util.concurrent.atomic.AtomicBoolean
 * */
 class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     Utility.OnAllContactsAddedListener, FamilyNotificationBottomSheet.OnBottomSheetClickListener,
-    RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener {
+    RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener,
+    LocationListenerClass.GetCurrentLocationListener {
+    private var actionAllowed: String? = null
     private var startingPosition  = 0
     private var commentstr: String? = null
     private var choresModel: NotificationModel.NotificationResponseDetails? = null
@@ -49,7 +58,8 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     private var bottomSheetMessage2: TaskMessageBottomSheet2? = null
     private var taskMessageBottomSheet3: TaskActionBottomSheetnotification? = null
     private var bottomSheetMessage: TaskMessageBottomSheet3? = null
-
+    private var deviceSecurityAskedFor:String? = null
+    private var mFirebaseAnalytics: FirebaseAnalytics? = null
     private lateinit var mViewBinding: ViewHomeBinding
     private val doubleBackPressed = AtomicBoolean(false)
 
@@ -75,12 +85,14 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         setObserver()
         checkAndAskPermission()
         loadFragment(HomeScreen(),1)
+        mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
+        mFirebaseAnalytics!!.logEvent("Home_Screen",null)
         try {
             val eventValue: MutableMap<String, Any> = HashMap()
 
 //        eventValue[AFInAppEventParameterName.CONTENT_TYPE] = "category_a"
 
-            var userId = SharedPrefUtils.getLong(
+            val userId = SharedPrefUtils.getLong(
                 applicationContext,
                 SharedPrefUtils.SF_KEY_USER_ID
             )
@@ -94,7 +106,9 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
         }
 
-
+        LocationListenerClass(
+            this, this
+        ).permissions()
 
         mViewBinding.navigationView.itemIconTintList = null;
 
@@ -261,7 +275,9 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             }
         }
 
-
+        mViewModel.sendMoneyApiResponse.observe(this) {
+            callTransactionSuccessBottomSheet(it)
+        }
         mViewModel.onProfileClicked.observe(this) {
             if (it) {
                 intentToActivity(UserProfileView::class.java)
@@ -407,6 +423,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 if (pos == 56) {
                     commentstr = str
                     choresModel = list
+                    deviceSecurityAskedFor  = FOR_APPRICATE_AND_PAY
                     askForDevicePassword()
                 }
 
@@ -458,14 +475,20 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
                 when (resultCode) {
                     RESULT_OK -> {
-                        if (commentstr == null) {
-                            commentstr = ""
+                        when(deviceSecurityAskedFor) {
+                            FOR_APPRICATE_AND_PAY-> {
+                                if (commentstr == null) {
+                                    commentstr = ""
+                                }
+                                mViewModel!!.callTaskAccept(
+                                    "APPRECIATEANDPAY", choresModel?.entityId.toString(), commentstr!!
+
+                                )
+                            }
+                            FOR_REQUEST_AND_PAY->{
+                                mViewModel.callPayMoneyApi(actionAllowed!!)                            }
+
                         }
-                        mViewModel!!.callTaskAccept(
-                            "APPRECIATEANDPAY", choresModel?.entityId.toString(), commentstr!!
-
-                        )
-
 
                     }
 
@@ -581,8 +604,29 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         bottomSheet.show(supportFragmentManager, "RequestMoneyNotification")
     }
 
+    private fun callTransactionSuccessBottomSheet(sendMoneyResponse: SendMoneyResponseDetails) {
+        val bottomSheet =
+            mViewModel.notificationSelectedResponse.additionalAttributes?.amount?.let {
+                Utility.convertToRs(sendMoneyResponse.currentBalance)?.let { it1 ->
+                    Utility.convertToRs(it)?.let { it2 ->
+                        AddMoneySuccessBottomSheet(
+                            it2,
+                            it1,onViewDetailsClick=null,successTitle = "Payment Made Successfully to ${sendMoneyResponse.receiverName}",onHomeViewClick = {
+                                intentToActivity(HomeView::class.java)
+                            }
+                        )
+                    }
+                }
+            }
+        bottomSheet?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet?.show(supportFragmentManager, "TransactionSuccess")
+    }
+
     override fun onRequestMoneyBottomSheetButtonClick(actionAllowed: String?) {
-        mViewModel.callPayMoneyApi(actionAllowed!!)
+        deviceSecurityAskedFor  = FOR_REQUEST_AND_PAY
+        this.actionAllowed = actionAllowed
+        askForDevicePassword()
+
 
     }
 
@@ -595,6 +639,16 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         doubleBackPressed.compareAndSet(false, true)
         Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show()
         Handler().postDelayed({ doubleBackPressed.set(false) }, 2000)
+    }
+
+    override fun getCurrentLocation(
+        isInternetConnected: Boolean?,
+        latitude: Double,
+        Longitude: Double
+    ) {
+        mViewModel.postLatlong("$latitude","$Longitude",SharedPrefUtils.getLong(
+            getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID
+        ))
     }
 
 }

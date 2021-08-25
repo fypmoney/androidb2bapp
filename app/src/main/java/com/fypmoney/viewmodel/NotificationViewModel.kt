@@ -35,10 +35,10 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     var isGetNotificationsRecyclerVisible = ObservableField(true)
     var positionSelected = ObservableField<Int>()
     var onNotificationClicked = MutableLiveData<Boolean>()
-    var onPaySuccess = MutableLiveData<Boolean>()
     var notificationSelectedResponse = NotificationModel.NotificationResponseDetails()
     val isLoading = ObservableBoolean()
     val showShimmerEffect = MutableLiveData<Boolean>()
+    var sendMoneyApiResponse = MutableLiveData<SendMoneyResponseDetails>()
 
     init {
         callGetFamilyNotificationApi()
@@ -169,8 +169,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
             ApiConstant.API_PAY_MONEY -> {
                 if (responseData is PayMoneyResponse) {
                     Utility.showToast(responseData.msg)
-
-                    onPaySuccess.value = true
+                    sendMoneyApiResponse.value = responseData.sendMoneyResponseDetails
 
 
                 }

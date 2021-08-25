@@ -4,7 +4,6 @@ import android.app.Application
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.fypmoney.R
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -38,7 +37,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var contactRepository = ContactRepository(mDB = appDatabase)
     var notificationSelectedResponse = NotificationModel.NotificationResponseDetails()
     var amountToBeAdded:String? = ""
-
+    var sendMoneyApiResponse = MutableLiveData<SendMoneyResponseDetails>()
 
     /*
     * This method is used to handle click of mobile
@@ -103,6 +102,22 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             )
         }
 
+    }
+    fun postLatlong(latitude: String, longitude: String,userId:Long) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_USER_DEVICE_INFO,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_USER_DEVICE_INFO),
+                request_type = ApiUrl.PUT,
+                param = UserDeviceInfo(
+                    latitude = latitude,
+                    longitude = longitude,
+                    userId =  userId
+
+                ), onResponse = this,
+                isProgressBar = false
+            )
+        )
     }
 
 
@@ -216,7 +231,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
 
             }
-
             ApiConstant.API_GET_NOTIFICATION_LIST -> {
 
 
@@ -237,8 +251,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             ApiConstant.API_PAY_MONEY -> {
 
                 if (responseData is PayMoneyResponse) {
-                    Utility.showToast("Your action completed successfully")
 
+                    sendMoneyApiResponse.value = responseData.sendMoneyResponseDetails
 
                 }
             }

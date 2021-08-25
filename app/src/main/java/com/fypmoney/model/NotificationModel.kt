@@ -21,7 +21,7 @@ class NotificationModel {
         @SerializedName("data") val notificationResponseDetails: NotificationResponseDetails
     ) : Serializable
     @Keep
-    data class NotificationResponseDetails(
+    data class  NotificationResponseDetails(
         @SerializedName("id") var id: String?=null,
         @SerializedName("sourceUserId") var sourceUserId: Int?=null,
         @SerializedName("destinationUserId") var destinationUserId: Int?=null,
@@ -41,7 +41,8 @@ class NotificationModel {
         @SerializedName("icon") var icon: String?=null,
         @SerializedName("destinationUserName") var destinationUserName: String?=null,
         @SerializedName("objectJson") var objectJson: String?=null,
-        @SerializedName("name") var name: String?=null
+        @SerializedName("name") var name: String?=null,
+        @SerializedName("additionalAttributes") var additionalAttributes: AdditionalAttributes?=null
 
         ) : Serializable
     @Keep
@@ -62,4 +63,17 @@ class NotificationModel {
         @SerializedName("icon") var icon: String?=null,
         @SerializedName("name") var name: String?=null,
         @SerializedName("requestCategoryCode") var requestCategoryCode: String?=null) : Serializable
+
+    @Keep
+    data class AdditionalAttributes(
+        val amount: String,
+        val description: String,
+        val endDate: String,
+        val is_payable: String,
+        val list_details: String,
+        val numberOfDays: Int,
+        val startDate: String,
+        val title: String,
+        val worth_price: String
+    ): Serializable
 }

@@ -4,9 +4,11 @@ package com.fypmoney.view.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.fypmoney.R
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.NotificationRowItemBinding
 import com.fypmoney.model.NotificationModel
+import com.fypmoney.util.Utility
 import com.fypmoney.viewhelper.NotificationViewHelper
 import com.fypmoney.viewmodel.NotificationViewModel
 
@@ -49,6 +51,11 @@ class NotificationAdapter(var viewModel: NotificationViewModel,var onNotificatio
                 notificationList?.get(position),onNotificationClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
+
+            mRowItemBinding.amount.text =
+                """${mRowItemBinding.amount.context.resources.getString(R.string.Rs)}${
+                    Utility.convertToRs(notificationList?.get(position)?.additionalAttributes?.amount)
+                }"""
            // mRowItemBinding.viewModel = viewModel
             mViewHelper.init()
             mRowItemBinding.executePendingBindings()

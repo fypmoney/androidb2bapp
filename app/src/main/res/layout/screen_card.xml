@@ -126,7 +126,113 @@
                 app:layout_constraintTop_toBottomOf="@+id/up_iv" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/notify_order_card_nsv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            android:fillViewport="true">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black">
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/main_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/title_tv"
+                        style="@style/TextviewBold"
+                        android:textSize="26sp"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/awesomeness_loading"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/sub_title_tv"
+                        style="@style/TextviewRegular"
+                        android:textSize="17sp"
+                        android:textColor="@color/white"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/title_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/we_want_to_give_you_the_best"/>
+
+
+                    <VideoView
+                        android:id="@+id/video"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:maxHeight="363dp"
+                        android:minHeight="200dp"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        app:layout_constraintTop_toBottomOf="@+id/sub_title_tv"
+                        app:layout_constraintBottom_toTopOf="@+id/body_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/body_tv"
+                        style="@style/TextviewRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/dp16"
+                        android:gravity="center"
+                        app:layout_constraintTop_toBottomOf="@+id/video"
+                        android:layout_marginStart="@dimen/dp16"
+                        android:layout_marginEnd="@dimen/dp16"
+                        android:text="@string/keeping_everyone_s_safety_in_mind_physical_fyp_card_orders_will_resume_once_we_all_have_crossed_the_pandemic_you_can_hit_the_notify_me_button_to_receive_the_notification_when_we_begin_this_service"
+                        android:textColor="@color/text_color_light"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toTopOf="@+id/notify_btn"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/notify_btn"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="30dp"
+                        android:paddingHorizontal="34dp"
+                        android:paddingVertical="10dp"
+                        android:text="@string/notify_me"
+                        android:background="@drawable/curved_background20"
+                        android:textSize="18sp"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

@@ -10,8 +10,10 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.LoginSuccessViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.view_login_success.*
 import java.util.*
 import kotlin.concurrent.schedule
@@ -39,6 +41,14 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
+        val mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
+        var bundle = Bundle()
+        bundle.putString("user_id",  SharedPrefUtils.getString(
+            getApplication(),
+            SharedPrefUtils.SF_KEY_USER_ID
+        ))
+        mFirebaseAnalytics.logEvent("login_success_view",bundle)
+
         image.gifResource = R.raw.phone_verified
         Timer().schedule(1000){
             runOnUiThread {

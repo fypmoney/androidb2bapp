@@ -5,7 +5,6 @@
 
     <application
         android:name=".application.PockketApplication"
-        android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,20 +19,16 @@
         tools:replace="android:usesCleartextTraffic">
         <activity
             android:name=".view.notifymeordercard.NotifyMeOrderCardActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.webview.WebViewActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.community.SocialCommunityActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.referandearn.view.ReferAndEarnActivity"
-            android:screenOrientation="portrait"
-            android:exported="true" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.AddTaskActivity"
             android:label="@string/title_activity_add_task"
@@ -48,7 +43,8 @@
             android:noHistory="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -124,21 +120,11 @@
         <activity
             android:name=".view.activity.CreateAccountSuccessView"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-            </intent-filter>
 
         </activity>
         <activity
             android:name=".view.activity.CommunityView"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-            </intent-filter>
 
         </activity>
         <activity
@@ -194,15 +180,7 @@
         <activity
             android:name=".view.activity.ActivationSuccessWithAadhaarView"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.activity.PushNotificationView"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="Webview" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".view.activity.AddMoneyUpiDebitView"
             android:screenOrientation="portrait" />
@@ -267,12 +245,13 @@
 
         <receiver
             android:name=".receivers.SmsBroadcastReceiver"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.GeofenceBroadcastReceiver" />
+        <receiver android:name=".receivers.GeofenceBroadcastReceiver"
+            android:exported="false"/>
 
         <service
             android:name=".services.MyFirebaseMessagingService"

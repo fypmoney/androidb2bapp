@@ -105,7 +105,9 @@ data class PayMoneyRequest(
 
 @Keep
 data class PayMoneyResponse(
-    @SerializedName("msg") val msg: String? = null
+    @SerializedName("msg") val msg: String? = null,
+    @SerializedName("data") val sendMoneyResponseDetails: SendMoneyResponseDetails
+
 ) : Serializable
 
 @Keep
