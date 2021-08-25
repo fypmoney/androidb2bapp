@@ -57,7 +57,6 @@ class TaskActionBottomSheetnotification(
         )
         bottomSheet.setContentView(bindingSheet.root)
 
-        Log.d("chackbottomnoti", list.toString())
 
         val accept = view.findViewById<Button>(R.id.accept)!!
 
@@ -89,7 +88,7 @@ class TaskActionBottomSheetnotification(
             } else if (view.reject.text == "In process") {
                 onClickListener.ondimiss()
             } else if (view.reject.text == "Depreciate") {
-                Log.d("chackupdate", "depriciateclicked")
+
                 HomeView.mViewModel!!.callTaskAccept(
                     "DEPRECIATE", list?.entityId.toString(), comment.text?.trim()
                         .toString()

@@ -16,6 +16,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:id="@+id/rootView"
         android:layout_height="match_parent">
         <include layout="@layout/toolbar" />
 
@@ -152,7 +153,18 @@
                         android:paddingEnd="@dimen/edittextHintPaddingEnd"
                         android:singleLine="true"
                         android:text="" />
+                    <com.vanniktech.emoji.EmojiEditText
+                        android:id="@+id/emojiEditText"
+                        android:layout_width="match_parent"
 
+                        android:focusable="false"
+
+                        android:hint="Emoji"
+                        android:focusableInTouchMode="false"
+
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:layout_height="wrap_content"
+                        android:imeOptions="actionSend" />
                     <androidx.appcompat.widget.AppCompatEditText
                         android:id="@+id/et_desc"
                         android:layout_width="match_parent"

@@ -90,10 +90,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
                         callRequestMoneyBottomSheet()
                     }
                     AppConstants.NOTIFICATION_TYPE_ADD_TASK -> {
-                        Log.d(
-                            "chacknoticlicked",
-                            mViewModel.notificationSelectedResponse.toString()
-                        )
+
                         if (mViewModel.notificationSelectedResponse.actionAllowed == "REJECT,ACCEPT" || mViewModel.notificationSelectedResponse.actionAllowed == "CANCEL" || mViewModel.notificationSelectedResponse.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY" || mViewModel.notificationSelectedResponse.actionAllowed == "COMPLETE" || mViewModel.notificationSelectedResponse.actionAllowed == "") {
 
                             if (mViewModel.notificationSelectedResponse.actionAllowed == "" && mViewModel.notificationSelectedResponse.actionAllowed == "DEPRECIATE") {

@@ -12,7 +12,7 @@ data class GetTaskResponse(
 )
 @Keep
 data class GetTaskResponseIsassign(
-    val isAssignTask: Int? = null,
+    var isAssignTask: Int? = null,
 
     )
 

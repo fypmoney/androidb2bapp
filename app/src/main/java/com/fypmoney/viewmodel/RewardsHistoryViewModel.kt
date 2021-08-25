@@ -49,7 +49,7 @@ class RewardsHistoryViewModel(application: Application) : BaseViewModel(applicat
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_GET_REWARDS_HISTORY -> {
-                Log.d("chackspin", responseData.toString())
+
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
 
                 val array = Gson().fromJson<Array<GetRewardsHistoryResponseDetails>>(
@@ -69,7 +69,7 @@ class RewardsHistoryViewModel(application: Application) : BaseViewModel(applicat
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
-        Log.d("chackspin", errorResponseInfo.msg)
+
 
     }
 

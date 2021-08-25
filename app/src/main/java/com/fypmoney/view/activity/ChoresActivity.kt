@@ -48,7 +48,7 @@ class ChoresActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>(),
     private var choresModel: TaskDetailResponse? = null
     private var bottomsheetInsufficient: TaskMessageInsuficientFuntBottomSheet? = null
     private var loader_icon: ImageView? = null
-    private var bottomSheetcancel: TaskMessageBottomSheet? = null
+
     private var bottomSheetMessage: TaskMessageBottomSheet2? = null
     private var bottomSheetTaskAction: TaskActionBottomSheet? = null
     lateinit var tabLayout: TabLayout
@@ -191,7 +191,7 @@ companion object{
         }
 
         mViewModel!!.TaskDetailResponse.observe(this, androidx.lifecycle.Observer { list ->
-            Log.d("chacksample22", list.actionAllowed.toString())
+
 
             if (list.actionAllowed == "REJECT,ACCEPT" || list.actionAllowed == "CANCEL" || list.actionAllowed == "COMPLETE" || list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY" || list.actionAllowed == "") {
                 callTaskActionSheet(list)
@@ -199,7 +199,7 @@ companion object{
         })
         mViewModel!!.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
             bottomSheetTaskAction?.dismiss()
-            bottomSheetcancel?.dismiss()
+
             bottomSheetMessage?.dismiss()
             mViewModel?.callSampleTask()
             if (list.currentState == "ACCEPT") {
@@ -262,18 +262,7 @@ companion object{
         bottomSheetTaskAction?.show(supportFragmentManager, "TASKACCEPTREJECT")
     }
 
-    private fun callTaskMessageSheet(list: TaskDetailResponse) {
-        var itemClickListener2 = object : MessageSubmitClickListener {
-            override fun onSubmit() {
 
-            }
-
-        }
-        bottomSheetcancel =
-            TaskMessageBottomSheet(itemClickListener2, list, list.entityId)
-        bottomSheetcancel?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheetcancel?.show(supportFragmentManager, "TASKMESSAGE")
-    }
 
     private fun callTaskMessageSheet(list: UpdateTaskGetResponse) {
         var itemClickListener2 = object : MessageSubmitClickListener {
@@ -339,8 +328,7 @@ companion object{
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == 99) {
-            Log.d("chackback3", resultCode.toString())
-            Log.d("chackback4", resultCode.toString())
+
             if (mViewModel != null) {
 
                 mViewModel?.callSampleTask()

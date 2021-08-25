@@ -123,7 +123,7 @@ class ChoresHistoryActivity : BaseActivity<ActivityChoresHistoryBinding, ChoresH
         mbindign!!.recyclerView!!.layoutManager = layoutManager
         mbindign!!.recyclerView.addOnScrollListener(object : PaginationListener(layoutManager) {
             override fun loadMoreItems() {
-                Log.d("chackpaginat", "dc")
+
                 loadMore()
             }
 

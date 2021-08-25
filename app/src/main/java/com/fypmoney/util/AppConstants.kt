@@ -170,6 +170,7 @@ object AppConstants {
     const val ENABLE= "ENABLED"
 
     const val ORDER_STATUS_ORDERED = "ORDER_PLACED"
+
     const val ORDER_STATUS_IN_PROGRESS = "IN_PROGRESS"
     const val ORDER_STATUS_SHIPPED = "SHIPPED"
     const val ORDER_STATUS_OUT_FOR_DELIVERY = "OUT_FOR_DELIVERY"
@@ -216,8 +217,11 @@ object AppConstants {
 
     Chores :" ChoresScreen, 7"*/
    const val ERROR_TYPE_AFTER_SPIN = "AfterSpin"
-   const val INSUFFICIENT_ERROR_CODE = "PKT_2037"
-   const val AADHAR_VERIFICATION_ERROR_CODE = "PKT_2006"
-
+    const val INSUFFICIENT_ERROR_CODE = "PKT_2037"
+    const val AADHAR_VERIFICATION_ERROR_CODE = "PKT_2006"
+    const val NEW = "Received"
+    const val Accepted = "Accepted"
+    const val Completed = "Complete"
+    const val Pay = "Pay"
 
 }

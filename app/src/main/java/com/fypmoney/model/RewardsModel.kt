@@ -11,7 +11,9 @@ data class GetRewardsResponseDetails(
     @SerializedName("uaaId") var uaaId: String?,
     @SerializedName("spinAllowedToday") var spinAllowedToday: String?,
     @SerializedName("totalReward") var totalReward: String?,
-    @SerializedName("rewards") var rewards: Rewards?
+    @SerializedName("rewards") var rewards: Rewards?,
+    @SerializedName("pointsToRedeem") var pointsToRedeem: String?
+
 ) : Serializable
 
 data class Rewards(

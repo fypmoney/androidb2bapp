@@ -67,13 +67,13 @@ class TransactionHistoryView :
 
         recycler_view.addOnScrollListener(object : PaginationListener(layoutManager) {
             override fun loadMoreItems() {
-                Log.d("chackpaginat", "dc")
+
 
             }
 
             override fun loadMoreTopItems() {
                 loadMore()
-                Log.d("chackpaginat", "upar")
+
             }
 
             override fun isLoading(): Boolean {
@@ -163,7 +163,7 @@ class TransactionHistoryView :
         aClass: Class<*>,
         transactionHistoryResponseDetails: TransactionHistoryResponseDetails
     ) {
-        Log.d("chacktrans", transactionHistoryResponseDetails.toString())
+
         val intent = Intent(this@TransactionHistoryView, aClass)
         intent.putExtra(AppConstants.RESPONSE, transactionHistoryResponseDetails)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.TRANSACTION)

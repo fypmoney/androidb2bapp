@@ -68,7 +68,7 @@
 
             android:layout_marginTop="26dp"
 
-            android:text="It's raining money today. Your wallet has\n been updated."
+            android:text="Oops! No Mynts available right now.\nTry your luck tomorrow"
             android:id="@+id/dialog_details"
             android:textAlignment="center" />
 

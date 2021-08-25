@@ -1,7 +1,5 @@
 package com.fypmoney.view.fragment
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,13 +10,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.fypmoney.R
 import com.fypmoney.base.PaginationListener
 import com.fypmoney.model.AssignedTaskResponse
-import com.fypmoney.model.TaskDetailResponse
 import com.fypmoney.view.activity.ChoresActivity
 import com.fypmoney.view.adapter.AssignedTasksAdapter
-import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.fragment_assigned_task.view.*
-import kotlinx.android.synthetic.main.view_chores.view.*
+import kotlinx.android.synthetic.main.fragment_assigned_task.view.empty_screen
+import kotlinx.android.synthetic.main.fragment_assigned_task.view.rv_assigned
+import kotlinx.android.synthetic.main.fragment_your_task.view.*
+import kotlinx.android.synthetic.main.view_transaction_history.*
 
 
 import kotlin.collections.ArrayList
@@ -26,7 +25,7 @@ import kotlin.collections.ArrayList
 
 class YourTasksFragment : Fragment() {
     companion object {
-
+        var page = 0
 
     }
 
@@ -46,14 +45,19 @@ class YourTasksFragment : Fragment() {
         ChoresActivity.mViewModel!!.YourAssigned.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
-                itemsArrayList.clear()
+                root?.LoadProgressBar?.visibility = View.GONE
+
+                if (page == 0) {
+                    itemsArrayList.clear()
+                }
                 itemsArrayList.addAll(list)
                 isLoading = false
                 typeAdapter!!.notifyDataSetChanged()
+                page += 1
                 if (list.size > 0) {
                     root?.empty_screen?.visibility = View.GONE
 
-                } else {
+                } else if (page == 0) {
                     root?.empty_screen?.visibility = View.VISIBLE
                 }
             })
@@ -86,7 +90,7 @@ class YourTasksFragment : Fragment() {
 
 
             override fun onItemClicked(pos: Int) {
-                Log.d("chacktask", itemsArrayList[pos].toString())
+
 
                 ChoresActivity.mViewModel!!.callTaskDetail(itemsArrayList[pos].id.toString())
 
@@ -105,8 +109,10 @@ class YourTasksFragment : Fragment() {
     }
 
     private fun loadMore(root: View) {
-
+        ChoresActivity.mViewModel?.callLoadMoreTask(page)
         //LoadProgressBar?.visibility = View.VISIBLE
+        root.LoadProgressBar?.visibility = View.VISIBLE
+        Log.d("chorespage", page.toString())
         isLoading = true
 
     }

@@ -91,15 +91,18 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
   * */
 
     fun callGetFamilyNotificationApi(aprid: String?) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_GET_NOTIFICATION_LIST,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_NOTIFICATION_LIST),
-                request_type = ApiUrl.POST,
-                param = NotificationModel.NotificationRequest(id = aprid), onResponse = this,
-                isProgressBar = true
+        if (!aprid.isNullOrEmpty()) {
+            WebApiCaller.getInstance().request(
+                ApiRequest(
+                    purpose = ApiConstant.API_GET_NOTIFICATION_LIST,
+                    endpoint = NetworkUtil.endURL(ApiConstant.API_GET_NOTIFICATION_LIST),
+                    request_type = ApiUrl.POST,
+                    param = NotificationModel.NotificationRequest(id = aprid), onResponse = this,
+                    isProgressBar = true
+                )
             )
-        )
+        }
+
     }
 
 
@@ -194,7 +197,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
         when (purpose) {
             ApiConstant.API_SNC_CONTACTS -> {
                 if (responseData is ContactResponse) {
-                    Log.d("chacknotification0", responseData.toString())
+
                     // it update the sync status of the contacts which are synced to server and also update the is app user status based on server response
                     SharedPrefUtils.putString(
                         getApplication(),
@@ -216,7 +219,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
             ApiConstant.API_GET_NOTIFICATION_LIST -> {
 
-                Log.d("chacknotification1", responseData.toString())
+
                 if (responseData is NotificationModel.NotificationResponse) {
                     notificationSelectedResponse = responseData.notificationResponseDetails[0]
                     onNotificationListener.value = responseData.notificationResponseDetails[0]
@@ -225,14 +228,14 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             }
 
             ApiConstant.API_UPDATE_APPROVAL_REQUEST -> {
-                Log.d("chacknotification4", responseData.toString())
+
                 if (responseData is UpdateFamilyApprovalResponse) {
                     Utility.showToast("Your action completed successfully")
                 }
             }
 
             ApiConstant.API_PAY_MONEY -> {
-                Log.d("chacknotification2", responseData.toString())
+
                 if (responseData is PayMoneyResponse) {
                     Utility.showToast("Your action completed successfully")
 

@@ -63,7 +63,7 @@ class ChoresHistoryViewModel(application: Application) : BaseViewModel(applicati
     }
 
     fun callSampleTask(page: Int) {
-        Log.d("chacksample", "called")
+
 
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -87,7 +87,7 @@ class ChoresHistoryViewModel(application: Application) : BaseViewModel(applicati
         when (purpose) {
 
             ApiConstant.API_HISTORY_TASK -> {
-                Log.d("chacksample", responseData.toString())
+
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
 
                 val array = Gson().fromJson<Array<HistoryModelResponse>>(
@@ -109,7 +109,7 @@ class ChoresHistoryViewModel(application: Application) : BaseViewModel(applicati
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
 //        isLoading.set(false)
-        Log.d("chacksample", errorResponseInfo.msg)
+
 
     }
 

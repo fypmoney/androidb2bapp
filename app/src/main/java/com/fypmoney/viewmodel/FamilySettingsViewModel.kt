@@ -162,7 +162,7 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
         when (purpose) {
             ApiConstant.API_ADD_FAMILY_MEMBER -> {
                 if (responseData is GetMemberResponse) {
-                    Log.d("chackfamily", responseData.toString())
+
                     val approveList = mutableListOf<MemberEntity>()
                     val inviteList = mutableListOf<MemberEntity>()
                     memberRepository.deleteAllMembers()

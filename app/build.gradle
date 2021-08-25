@@ -92,7 +92,8 @@ dependencies {
     implementation("com.intuit.sdp:sdp-android:1.0.6")
     // Multidex
     implementation("com.android.support:multidex:1.0.3")
-
+    implementation 'com.vanniktech:emoji-material:0.7.0'
+    implementation 'com.vanniktech:emoji-google:0.7.0'
     //Retrofit and RxJava, RxAndroid
     implementation("com.squareup.retrofit2:converter-gson:2.3.0")
     implementation("com.squareup.retrofit2:retrofit:2.3.0")

@@ -38,13 +38,21 @@ import android.text.Editable
 
 import android.text.TextWatcher
 import com.fypmoney.util.Utility.removePlusOrNineOneFromNo
+import com.vanniktech.emoji.EmojiImageView
+import com.vanniktech.emoji.EmojiPopup
+import com.vanniktech.emoji.emoji.Emoji
+import com.vanniktech.emoji.listeners.*
 import kotlinx.android.synthetic.main.activity_add_task.add_money_editext
 import kotlinx.android.synthetic.main.view_add_money.*
+import android.app.Activity
+import android.view.inputmethod.InputMethodManager
 
 
 class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>(),
     DialogUtils.OnAlertDialogClickListener {
 
+    private var emojiPopup: EmojiPopup? = null
+    private var emojifilled: Boolean = false
     private var currentDate: Calendar? = null
     private var selectedmember: MemberEntity? = null
     private var myCalendar: Calendar? = null
@@ -72,6 +80,33 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
 
         mViewBinding = getViewDataBinding()
         setIntentValues(intent)
+
+        emojiPopup = EmojiPopup.Builder.fromRootView(rootView)
+            .setOnEmojiBackspaceClickListener { ignore: View? ->
+                emojifilled = false
+
+            }
+            .setOnEmojiClickListener { ignore: EmojiImageView?, ignore2: Emoji? ->
+                emojifilled = true
+                emojiPopup?.dismiss()
+                et_desc.requestFocus()
+
+            }.setOnSoftKeyboardOpenListener { ignore ->
+
+            }
+
+            .setKeyboardAnimationStyle(R.style.emoji_fade_animation_style)
+            .build(emojiEditText)
+        emojiEditText.forceSingleEmoji()
+        emojiEditText.setOnClickListener(View.OnClickListener {
+            emojiEditText.disableKeyboardInput(emojiPopup)
+            emojiPopup?.show()
+            emojiEditText.disableKeyboardInput(emojiPopup)
+            emojiEditText.clearFocus()
+
+
+        })
+
         var numberOfdays = intent?.getIntExtra("numberofdays", -1)
         myCalendar2 = Calendar.getInstance()
         currentDate = myCalendar2
@@ -129,15 +164,17 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
                 val enddate = outputFormat.format(myCalendar2?.time)
                 if (selectedmember != null) {
 
-                    Log.d("chackdate", startdate)
-                    Log.d("chackenddate", enddate)
+
                     mViewModel.callAddTask(
                         add_money_editext.text.toString(),
                         et_title.text.toString(),
                         selectedmember?.userId?.toInt().toString(),
                         et_desc.text.toString(),
                         startdate,
-                        enddate
+                        enddate,
+
+                        emojiEditText.getText().toString().trim()
+
                     )
                 } else {
                     Toast.makeText(this, "Select any contact", Toast.LENGTH_SHORT).show()
@@ -318,6 +355,10 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
          } else {
 
          }
+         if (emojiEditText.text.toString().trim().isEmpty()) {
+             success = false
+             emojiEditText.error = "Add emoji"
+         }
          if (et_title.text.toString().trim().isEmpty()) {
              success = false
              et_title.error = "Enter Task title"
@@ -363,7 +404,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
                 itemsArrayList.add(member)
                 typeAdapter?.notifyDataSetChanged()
                 typeAdapter?.selectedPos = itemsArrayList.size - 1
-                Log.d("chackid", returnValue.userId.toString())
+
                 typeAdapter?.notifyItemChanged(itemsArrayList.size - 2)
 
             } else {

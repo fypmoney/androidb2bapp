@@ -2,7 +2,6 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -62,7 +61,8 @@ class AddTaskViewModel(application: Application) : BaseViewModel(application) {
         userId: String?,
         desc: String,
         startdate: String,
-        enddate: String
+        enddate: String,
+        trim: String
     ) {
 
 //yogesh =28369
@@ -70,9 +70,9 @@ class AddTaskViewModel(application: Application) : BaseViewModel(application) {
        var amountf = amount.toLong() * 100
         var send = AddTaskRequest(
             amountf.toString(), desc, enddate, 0,
-            "INR", userId!!, startdate, title
+            "INR", userId!!, startdate, title, trim
         )
-        Log.d("chackadd", send.toString())
+
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_CREATE_TASK,
@@ -90,7 +90,6 @@ class AddTaskViewModel(application: Application) : BaseViewModel(application) {
 
             ApiConstant.API_CREATE_TASK -> {
 
-                Log.d("chackadddata", responseData.toString())
 
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
 
@@ -104,7 +103,7 @@ class AddTaskViewModel(application: Application) : BaseViewModel(application) {
             }
 
             ApiConstant.API_ADD_FAMILY_MEMBER -> {
-                Log.d("chackfamilylist", responseData.toString())
+
                 if (responseData is GetMemberResponse) {
 
                     val approveList: ArrayList<MemberEntity> = ArrayList()
@@ -143,7 +142,6 @@ class AddTaskViewModel(application: Application) : BaseViewModel(application) {
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
 
-        Log.d("chacksample",errorResponseInfo.msg)
 
     }
 

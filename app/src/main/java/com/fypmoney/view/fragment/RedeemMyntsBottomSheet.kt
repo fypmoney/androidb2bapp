@@ -101,7 +101,7 @@ class RedeemMyntsBottomSheet(
             var amount = spinWheelResponseDetails.pointsToRedeem!! / 100
             view.continuebtn.text = "Redeem ${amount} Mynt(s)"
             view.dialog_details.text =
-                "Oops! No Mynts available right now.\n Try your luck tomorrow!"
+                "Oops! No Mynts available right now. \nTry your luck tomorrow!"
 
             view.continuebtn.isEnabled = false
 
@@ -122,7 +122,7 @@ class RedeemMyntsBottomSheet(
                 )
             )
 
-            view.dialog_details.text = "It's raining money today. Your wallet has\\n been updated."
+            view.dialog_details.text = "It's raining money today. Your wallet\n has been updated."
         }
 
         view.continuebtn.setOnClickListener(View.OnClickListener {

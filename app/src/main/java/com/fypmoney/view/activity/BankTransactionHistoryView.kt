@@ -69,14 +69,13 @@ class BankTransactionHistoryView :
 
         recycler_view.addOnScrollListener(object : PaginationListener(layoutManager) {
             override fun loadMoreItems() {
-                Log.d("chackpaginat", "dc")
+
                 loadMore()
             }
 
             override fun loadMoreTopItems() {
 
 
-                Log.d("chackpaginat", "upar")
             }
 
             override fun isLoading(): Boolean {
@@ -89,8 +88,10 @@ class BankTransactionHistoryView :
 
                 LoadProgressBar?.visibility = View.GONE
 
+
                 if (list.isNotEmpty()) {
                     var arraylist = list
+
 
                     mViewModel.bankTransactionHistoryAdapter.setList(arraylist)
                 } else {
@@ -115,7 +116,7 @@ class BankTransactionHistoryView :
         LoadProgressBar?.visibility = View.VISIBLE
 
         isLoading = true
-        Log.d("chackpage", page.toString())
+
 
         if (fromDatestr.isNotEmpty() || toDatestr.isNotEmpty()) {
             mViewModel.callGetBankTransactionHistoryApi(fromDatestr, toDatestr, page = page)
