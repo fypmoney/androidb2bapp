@@ -1,6 +1,8 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -17,6 +19,7 @@ import com.fypmoney.databinding.ViewAadhaarAccountActivationBinding
 import com.fypmoney.databinding.ViewAadhaarVerificationBinding
 import com.fypmoney.databinding.ViewCommunityBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.view.fragment.LogoutBottomSheet
 import com.fypmoney.viewmodel.AadhaarAccountActivationViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
@@ -28,7 +31,8 @@ import kotlinx.android.synthetic.main.view_login.*
 * This class is used to handle school name city
 * */
 class AadhaarAccountActivationView :
-    BaseActivity<ViewAadhaarAccountActivationBinding, AadhaarAccountActivationViewModel>() {
+    BaseActivity<ViewAadhaarAccountActivationBinding, AadhaarAccountActivationViewModel>(),
+    LogoutBottomSheet.OnLogoutClickListener {
     private lateinit var mViewModel: AadhaarAccountActivationViewModel
 
     override fun getBindingVariable(): Int {
@@ -52,8 +56,8 @@ class AadhaarAccountActivationView :
             isBackArrowVisible = true
         )
         helpValue.setOnClickListener {
-            callFreshChat(applicationContext)
-
+            //callFreshChat(applicationContext)
+            callLogOutBottomSheet()
         }
         //Test Commit
 
@@ -88,10 +92,32 @@ class AadhaarAccountActivationView :
                 intentToHomeActivity(HomeView::class.java)
             }
         }
+        mViewModel.onLogoutSuccess.observe(this) {
+            intentToActivity(LoginView::class.java, isFinishAll = true)
+        }
 
 
     }
 
+    /*
+* This method is used to call log out
+* */
+    private fun callLogOutBottomSheet() {
+        val bottomSheet =
+            LogoutBottomSheet(this)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "LogOutBottomSheet")
+    }
+    /**
+     * Method to navigate to the different activity
+     */
+    private fun intentToActivity(aClass: Class<*>, isFinishAll: Boolean? = false) {
+        val intent = Intent(this@AadhaarAccountActivationView, aClass)
+        startActivity(intent)
+        if (isFinishAll == true) {
+            finishAffinity()
+        }
+    }
 
     /*
    * navigate to the different screen
@@ -128,6 +154,10 @@ class AadhaarAccountActivationView :
     private fun intentToHomeActivity(aClass: Class<*>) {
         startActivity(Intent(this@AadhaarAccountActivationView, aClass))
         finishAffinity()
+    }
+
+    override fun onLogoutButtonClick() {
+        mViewModel.callLogOutApi()
     }
 
 

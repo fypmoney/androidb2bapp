@@ -13,9 +13,13 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewNotificationBinding
 import com.fypmoney.model.NotificationModel
+import com.fypmoney.model.SendMoneyResponse
+import com.fypmoney.model.SendMoneyResponseDetails
 import com.fypmoney.model.UpdateTaskGetResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
+import com.fypmoney.view.AddMoneySuccessBottomSheet
 import com.fypmoney.view.fragment.*
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
@@ -112,12 +116,8 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
 
         }
 
-        mViewModel.onPaySuccess.observe(this) {
-            if (it) {
-                intentToActivity(NotificationView::class.java)
-                mViewModel.onPaySuccess.value = false
-            }
-
+        mViewModel.sendMoneyApiResponse.observe(this) {
+            callTransactionSuccessBottomSheet(it)
         }
         mViewModel.showShimmerEffect.observe(this) {
             if (!it) {
@@ -166,8 +166,27 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     }
 
 
+    private fun callTransactionSuccessBottomSheet(sendMoneyResponse: SendMoneyResponseDetails) {
+        val bottomSheet =
+            mViewModel.notificationSelectedResponse.additionalAttributes?.amount?.let {
+                Utility.convertToRs(sendMoneyResponse.currentBalance)?.let { it1 ->
+                    Utility.convertToRs(it)?.let { it2 ->
+                        AddMoneySuccessBottomSheet(
+                            it2,
+                            it1,onViewDetailsClick=null,successTitle = "Payment Made Successfully to ${sendMoneyResponse.receiverName}",onHomeViewClick = {
+                                intentToActivity(HomeView::class.java)
+                            }
+                        )
+                    }
+                }
+            }
+        bottomSheet?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet?.show(supportFragmentManager, "TransactionSuccess")
+    }
+
+
     private fun callTaskActionSheet(list: NotificationModel.NotificationResponseDetails) {
-        var itemClickListener2 = object : AcceptRejectClickListener {
+        val itemClickListener2 = object : AcceptRejectClickListener {
             override fun onAcceptClicked(pos: Int, str: String) {
                 if (pos == 56) {
                     choresModel = list

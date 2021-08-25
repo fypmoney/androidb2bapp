@@ -42,15 +42,18 @@ data class AppLoginApiRequest(
 ) : BaseRequest()
 @Keep
 data class UserDeviceInfo(
-    @SerializedName("make") val make: String,
-    @SerializedName("model") val model: String,
-    @SerializedName("modelVersion") val modelVersion: String,
-    @SerializedName("timezone") val timezone: String,
-    @SerializedName("locale") val locale: String,
-    @SerializedName("appVersion") val appVersion: String,
-    @SerializedName("platform") val platform: String,
-    @SerializedName("platformVersion") val platformVersion: String,
-    @SerializedName("dtoken") val dtoken: String
+    @SerializedName("make") val make: String? = null,
+    @SerializedName("model") val model: String? = null,
+    @SerializedName("modelVersion") val modelVersion: String? = null,
+    @SerializedName("timezone") val timezone: String? = null,
+    @SerializedName("locale") val locale: String? = null,
+    @SerializedName("appVersion") val appVersion: String? = null,
+    @SerializedName("platform") val platform: String? = null,
+    @SerializedName("platformVersion") val platformVersion: String? = null,
+    @SerializedName("dtoken") val dtoken: String? = null,
+    @SerializedName("lat") val latitude: String? = null,
+    @SerializedName("long") val longitude: String? = null,
+    @SerializedName("userId") val userId: Long? = null,
 ) : Serializable
 @Keep
 data class ReferralCodeResponse(

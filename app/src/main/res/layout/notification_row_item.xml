@@ -46,11 +46,9 @@
                 android:layout_alignBottom="@+id/ivServiceLogo"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginTop="@dimen/margin"
-                android:layout_toEndOf="@+id/ivServiceLogo"
-
-
-                android:text="@{viewHelper.notification.name}"
+                android:layout_alignParentEnd="true"
                 android:textColor="@color/text_color_dark"
+                tools:text = "Amount"
                 android:textSize="17sp" />
 
             <androidx.appcompat.widget.AppCompatTextView

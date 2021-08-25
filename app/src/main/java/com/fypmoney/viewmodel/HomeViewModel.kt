@@ -4,7 +4,6 @@ import android.app.Application
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.fypmoney.R
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -38,7 +37,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
     var contactRepository = ContactRepository(mDB = appDatabase)
     var notificationSelectedResponse = NotificationModel.NotificationResponseDetails()
     var amountToBeAdded:String? = ""
-
+    var sendMoneyApiResponse = MutableLiveData<SendMoneyResponseDetails>()
 
     /*
     * This method is used to handle click of mobile
@@ -98,6 +97,22 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 request_type = ApiUrl.POST,
                 param = NotificationModel.NotificationRequest(id = aprid), onResponse = this,
                 isProgressBar = true
+            )
+        )
+    }
+    fun postLatlong(latitude: String, longitude: String,userId:Long) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_USER_DEVICE_INFO,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_USER_DEVICE_INFO),
+                request_type = ApiUrl.PUT,
+                param = UserDeviceInfo(
+                    latitude = latitude,
+                    longitude = longitude,
+                    userId =  userId
+
+                ), onResponse = this,
+                isProgressBar = false
             )
         )
     }
@@ -213,10 +228,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
 
             }
-
             ApiConstant.API_GET_NOTIFICATION_LIST -> {
-
-                Log.d("chacknotification1", responseData.toString())
                 if (responseData is NotificationModel.NotificationResponse) {
                     notificationSelectedResponse = responseData.notificationResponseDetails[0]
                     onNotificationListener.value = responseData.notificationResponseDetails[0]
@@ -225,7 +237,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             }
 
             ApiConstant.API_UPDATE_APPROVAL_REQUEST -> {
-                Log.d("chacknotification4", responseData.toString())
                 if (responseData is UpdateFamilyApprovalResponse) {
                     Utility.showToast("Your action completed successfully")
                 }
@@ -234,8 +245,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             ApiConstant.API_PAY_MONEY -> {
                 Log.d("chacknotification2", responseData.toString())
                 if (responseData is PayMoneyResponse) {
-                    Utility.showToast("Your action completed successfully")
 
+                    sendMoneyApiResponse.value = responseData.sendMoneyResponseDetails
 
                 }
             }
