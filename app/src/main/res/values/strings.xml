@@ -149,7 +149,7 @@
     -->
     <string name="empty_contact_error">Unable to fetch contacts. Add member by entering the contact number</string>
     <string name="select_member">Select a member</string>
-    <string name="chore_title">Chores</string>
+    <string name="chore_title">Missions</string>
     <string name="chore_history_title">Chores History</string>
     <string name="assign_task">Assign tasks or participate to get cash.</string>
     <string name="btn_text">Assign A Task</string>
@@ -158,7 +158,7 @@
     <string name="chores_error">Something went wrong.</string>
     <string name="sub_title1">Your tasks</string>
     <string name="sub_title2">Assigned tasks</string>
-    <string name="chores_history">Show chores history</string>
+    <string name="chores_history">Show missions history</string>
     <string name="chores_accept">Accept</string>
     <string name="chores_reject">Reject</string>
     <string name="in_process">In process</string>
@@ -239,7 +239,7 @@
     <string name="quick_actions">Quick Actions</string>
     <string name="quick_actions_split_bill">Split Bills</string>
     <string name="quick_actions_split_bill1">Split expenses with friends &amp; Family</string>
-    <string name="quick_actions_chores">Chores</string>
+    <string name="quick_actions_chores">Mission</string>
     <string name="quick_actions_chores1">Perform task and get cash rewards</string>
     <string name="quick_actions_rewards">Rewards</string>
     <string name="quick_actions_rewards1">Play games and get exciting rewards</string>

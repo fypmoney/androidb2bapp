@@ -49,7 +49,7 @@ class CreateTaskViewModel(application: Application) : BaseViewModel(application)
 
 
     private fun callSampleTask() {
-        Log.d("chacksample","called")
+
 
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -71,7 +71,6 @@ class CreateTaskViewModel(application: Application) : BaseViewModel(application)
       when (purpose) {
 
             ApiConstant.API_GET_TASKMASTER -> {
-                Log.d("chacksample",responseData.toString())
 
 
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
@@ -95,7 +94,7 @@ class CreateTaskViewModel(application: Application) : BaseViewModel(application)
         super.onError(purpose, errorResponseInfo)
         isLoading.set(false)
         loading.postValue(false)
-        Log.d("chacksample", errorResponseInfo.msg)
+
 
     }
 

@@ -51,7 +51,6 @@ class TaskMessageBottomSheet(
             false
         )
         bottomSheet.setContentView(bindingSheet.root)
-        Log.d("chackbottomsheet", model.toString())
 
         val btnOtp = view.findViewById<MaterialButton>(R.id.continuebtn)!!
 //        if(status=="ACCEPTED"){

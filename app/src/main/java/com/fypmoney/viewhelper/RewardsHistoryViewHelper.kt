@@ -25,7 +25,7 @@ class RewardsHistoryViewHelper(var rewardsHistory: GetRewardsHistoryResponseDeta
             val outDate = SimpleDateFormat("MMM dd' ,'hh:mm a", Locale.US)
             sf.timeZone = TimeZone.getTimeZone("IST")
 
-            Log.d("chack", rewardsHistory?.playedOn.toString())
+
             val dtt = sf.parse(rewardsHistory?.playedOn)
 
             println(outDate.format(dtt))

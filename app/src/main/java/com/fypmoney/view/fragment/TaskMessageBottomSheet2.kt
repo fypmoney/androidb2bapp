@@ -52,7 +52,6 @@ class TaskMessageBottomSheet2(
             false
         )
         bottomSheet.setContentView(bindingSheet.root)
-        Log.d("chackbottomsheet2", model.toString())
 
 
         val btnOtp = view.findViewById<MaterialButton>(R.id.continuebtn)!!

@@ -78,7 +78,7 @@ class TaskActionBottomSheet(
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        Log.d("chackbottomsheet", list.toString())
+
         if (ChoresActivity.mViewModel?.selectedPosition?.value == 0) {
             view.top_bg.background.setTint(
                 ContextCompat.getColor(
@@ -168,7 +168,7 @@ class TaskActionBottomSheet(
             view.profile_pic
         )
         val accept = view.findViewById<Button>(R.id.accept)!!
-
+        view.emoji.text = list.emojis
 
         accept.setOnClickListener(View.OnClickListener {
             if (accept.text == "Accept") {

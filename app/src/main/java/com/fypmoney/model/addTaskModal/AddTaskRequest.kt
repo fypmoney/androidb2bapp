@@ -11,5 +11,6 @@ data class AddTaskRequest(
     val paymentCurrency: String,
     val requesteeUuaId: String,
     val startDate: String,
-    val title: String
+    val title: String,
+    val emojis: String
 )

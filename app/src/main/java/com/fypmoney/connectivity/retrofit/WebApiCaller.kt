@@ -122,7 +122,7 @@ class WebApiCaller {
                             ApiConstant.API_HISTORY_TASK -> {
 
                                 val params = request.param as GetTaskResponse
-                                Log.d("chackhistorypage", request.param.page.toString())
+
                                 mObservable = apiInterface.getPaginationApiCalling(
                                     endPoint = request.endpoint,
                                     authorization = SharedPrefUtils.getString(
@@ -136,13 +136,32 @@ class WebApiCaller {
                                     request = BaseRequest()
                                 )
                             }
+                            ApiConstant.API_YOUR_TASK -> {
+
+                                val params = request.param as GetTaskResponse
+                                val params1 = GetTaskResponseIsassign()
+                                params1.isAssignTask = params.isAssignTask
+
+                                mObservable = apiInterface.getPaginationApiCalling(
+                                    endPoint = request.endpoint,
+                                    authorization = SharedPrefUtils.getString(
+                                        PockketApplication.instance,
+                                        SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                    ),
+                                    client_id = ApiConstant.CLIENT_ID,
+                                    page = params.page!!,
+                                    size = params.size!!,
+                                    sort = params.sort!!,
+                                    request = params1
+                                )
+                            }
                             ApiConstant.API_TRANSACTION_HISTORY -> {
 
                                 val params1 = request.param as TransactionHistoryRequestwithPage
                                 val params =
                                     TransactionHistoryRequest(destinationUserId = params1.destinationUserId)
 
-                                Log.d("chackhistorypage", request.param.page.toString())
+
                                 mObservable = apiInterface.getPaginationApiCalling(
                                     endPoint = request.endpoint,
                                     authorization = SharedPrefUtils.getString(
@@ -173,7 +192,7 @@ class WebApiCaller {
                                     page = 0
                                 }
 
-                                Log.d("chackhistorypage", request.param.page.toString())
+
                                 mObservable = apiInterface.getPaginationApiCalling(
                                     endPoint = request.endpoint,
                                     authorization = SharedPrefUtils.getString(

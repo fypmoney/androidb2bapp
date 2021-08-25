@@ -30,29 +30,29 @@
                 >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
                     android:id="@+id/toolbar"
-                    android:elevation="@dimen/_1sdp"
-                    android:layout_height="@dimen/_42sdp">
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_42sdp"
+                    android:elevation="@dimen/_1sdp">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_20sdp"
-                        android:src="@drawable/ic_back_arrow"
-                        android:layout_gravity="center_vertical"
                         android:id="@+id/back_close"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_4sdp"
                         android:paddingVertical="@dimen/_10sdp"
-                        android:layout_height="@dimen/_32sdp" />
+                        android:src="@drawable/ic_back_arrow" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:text="Mission"
                         style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_6sdp"
-                        android:textSize="20sp"
+                        android:text="Mission"
 
-                        android:layout_height="wrap_content" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
@@ -64,6 +64,19 @@
                     android:alpha=".2"
                     android:background="@drawable/round_bottom_background_44dp"
                     app:cardCornerRadius="18dp" />
+
+                <TextView
+                    android:id="@+id/emoji"
+                    style="@style/TextviewBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/_28sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_24sdp"
+                    android:layout_marginBottom="@dimen/_46sdp"
+                    android:textSize="27sp" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -78,13 +91,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginEnd="@dimen/_6sdp"
                         android:layout_marginStart="@dimen/_28sdp"
+                        android:layout_alignParentStart="true"
                         android:layout_marginBottom="@dimen/_46sdp"
+                        android:layout_toStartOf="@+id/active"
                         android:textSize="27sp"
                         tools:text="Water\n the plants" />
 
+
                     <TextView
                         style="@style/TextviewRegular"
+                        android:id="@+id/active"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -107,203 +125,214 @@
                 </RelativeLayout>
             </RelativeLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:layout_marginRight="@dimen/_20sdp"
-
-
-                >
-
-                <RelativeLayout
-                    android:id="@+id/bg_middle"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:alpha=".2"
-                    android:background="@drawable/curved_background18"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:id="@+id/linearLayout5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginStart="@dimen/_24sdp"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/viewdiv"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextviewBold"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="@dimen/_14sdp"
-                        android:layout_marginBottom="@dimen/_4sdp"
-                        android:alpha=".60"
-                        android:text="Cash Reward"
-
-                        android:textColor="@color/text_color_dark"
-
-                        android:textSize="14sp" />
-
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/amount"
-                        style="@style/TextviewBold"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/_14sdp"
-                        android:textColor="@color/text_color_dark"
-                        android:textSize="22sp"
-                        tools:text="1 day" />
-                </LinearLayout>
-
-                <View
-                    android:id="@+id/viewdiv"
-                    android:layout_width="1dp"
-                    android:alpha=".6"
-                    android:layout_height="@dimen/_40sdp"
-                    android:background="#FFBDC2"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <LinearLayout
-                    android:id="@+id/linearLayout6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginLeft="@dimen/_24sdp"
-                    android:orientation="vertical"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextviewBold"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginTop="@dimen/_14sdp"
-                        android:layout_marginBottom="@dimen/_4sdp"
-                        android:alpha=".60"
-
-                        android:text="Time"
-                        android:textColor="@color/text_color_dark"
-
-                        android:textSize="14sp" />
-
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/days_left"
-                        style="@style/TextviewBold"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginBottom="@dimen/_14sdp"
-                        android:textColor="@color/text_color_dark"
-                        android:textSize="22sp"
-                        tools:text="₹709" />
-                </LinearLayout>
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextviewRegular"
-
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="20dp"
-
-                android:text="Description"
-                android:textAlignment="center" />
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/descrip"
-
-                style="@style/TextviewRegular"
-                android:layout_marginLeft="@dimen/_22sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:ellipsize="end"
-
-                android:maxLines="3"
-                android:text=""
-                android:textColor="@color/text_color_dark"
-                tools:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam…" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                style="@style/TextviewRegular"
-
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:layout_marginTop="20dp"
-                android:id="@+id/assigned"
-
-                android:text="Assigned By"
-                android:textAlignment="center" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_22sdp"
-                android:layout_marginTop="@dimen/_8sdp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_pic"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/ic_profile" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/bywhom"
-                    style="@style/TextviewRegular"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/_22sdp"
-
-                    android:textColor="@color/text_color_dark" />
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_18sdp"
-                android:background="@drawable/curved_background18"
-                android:padding="@dimen/_8sdp"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:backgroundTint="#F8F8F8"
-                android:layout_marginEnd="@dimen/_18sdp"
-
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-
-                android:layout_marginEnd="@dimen/_22sdp"
-                android:layout_marginStart="@dimen/_22sdp"
-                android:layout_marginTop="@dimen/_18sdp"
-                android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray_8">
-
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/comment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@android:color/transparent"
-                    android:gravity="center_vertical"
-                    android:hint="Comment"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginRight="@dimen/_20sdp"
 
 
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/vDivider5"
-                    app:layout_constraintTop_toTopOf="parent" />
+                        >
 
-            </LinearLayout>
+                        <RelativeLayout
+                            android:id="@+id/bg_middle"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:alpha=".2"
+                            android:background="@drawable/curved_background18"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginStart="@dimen/_24sdp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/viewdiv"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/TextviewBold"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="@dimen/_14sdp"
+                                android:layout_marginBottom="@dimen/_4sdp"
+                                android:alpha=".60"
+                                android:text="Cash Reward"
+
+                                android:textColor="@color/text_color_dark"
+
+                                android:textSize="14sp" />
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/amount"
+                                style="@style/TextviewBold"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginBottom="@dimen/_14sdp"
+                                android:textColor="@color/text_color_dark"
+                                android:textSize="22sp"
+                                tools:text="1 day" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/viewdiv"
+                            android:layout_width="1dp"
+                            android:layout_height="@dimen/_40sdp"
+                            android:alpha=".6"
+                            android:background="#FFBDC2"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <LinearLayout
+                            android:id="@+id/linearLayout6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginLeft="@dimen/_24sdp"
+                            android:orientation="vertical"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                style="@style/TextviewBold"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="@dimen/_14sdp"
+                                android:layout_marginBottom="@dimen/_4sdp"
+                                android:alpha=".60"
+
+                                android:text="Time"
+                                android:textColor="@color/text_color_dark"
+
+                                android:textSize="14sp" />
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/days_left"
+                                style="@style/TextviewBold"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginBottom="@dimen/_14sdp"
+                                android:textColor="@color/text_color_dark"
+                                android:textSize="22sp"
+                                tools:text="₹709" />
+                        </LinearLayout>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextviewRegular"
+
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginTop="20dp"
+
+                        android:text="Description"
+                        android:textAlignment="center" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/descrip"
+
+                        style="@style/TextviewRegular"
+                        android:layout_marginLeft="@dimen/_22sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:scrollHorizontally="true"
+
+                        android:text=""
+                        android:textColor="@color/text_color_dark"
+
+                        tools:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam…" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/assigned"
+
+                        style="@style/TextviewRegular"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginTop="20dp"
+
+                        android:text="Assigned By"
+                        android:textAlignment="center" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_22sdp"
+                        android:layout_marginTop="@dimen/_8sdp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/profile_pic"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            android:src="@drawable/ic_profile" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/bywhom"
+                            style="@style/TextviewRegular"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/_14sdp"
+
+                            android:textColor="@color/text_color_dark" />
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_18sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_18sdp"
+                        android:background="@drawable/curved_background18"
+                        android:backgroundTint="#F8F8F8"
+                        android:padding="@dimen/_8sdp"
+
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginStart="@dimen/_22sdp"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:layout_marginEnd="@dimen/_22sdp"
+                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray_8">
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/comment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@android:color/transparent"
+                            android:gravity="center_vertical"
+                            android:hint="Comment"
+
+
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/vDivider5"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
 
         </LinearLayout>

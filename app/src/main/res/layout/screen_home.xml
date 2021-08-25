@@ -167,7 +167,7 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="15dp"
-                        android:background="@drawable/ic_chores"
+                        android:background="@drawable/ic_mission"
                         android:orientation="vertical">
 
                         <androidx.appcompat.widget.AppCompatTextView

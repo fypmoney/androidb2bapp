@@ -120,9 +120,9 @@ class ChoresSelectSampleActivity : BaseActivity<ViewAddTaskBinding, CreateTaskVi
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("chackback1", resultCode.toString())
+
         if (resultCode == 88) {
-            Log.d("chackback2", resultCode.toString())
+
             setResult(99)
             finish()
         }

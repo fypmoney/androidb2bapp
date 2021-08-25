@@ -56,7 +56,7 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
                 purpose = ApiConstant.API_UPLOAD_PROFILE_PIC,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_UPLOAD_PROFILE_PIC),
                 request_type = ApiUrl.POST,
-                onResponse = this, isProgressBar = false,
+                onResponse = this, isProgressBar = true,
                 param = BaseRequest()
             ), image = image
         )

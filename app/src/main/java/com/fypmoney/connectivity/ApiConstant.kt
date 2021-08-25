@@ -6,9 +6,9 @@ object ApiConstant {
      const val CLIENT_SECRET = "kba3BXrUPPwfcO4TFzGttoopWVyYduLV"
      const val APP_ID = "WEBAPP"
      const val GRANT_TYPE = "client_credentials"*/
-    //const val BASE_URL = "http://54.84.197.170:9300"
+    const val BASE_URL = "http://54.84.197.170:9300"
 
-    const val BASE_URL = "https://techservices.fyp-e.in"
+    //    const val BASE_URL = "https://techservices.fyp-e.in"
     const val PAYU_BASE_URL = "https://info.payu.in"
     const val CLIENT_ID = "web_app"
     const val CLIENT_SECRET = "user"
@@ -32,9 +32,10 @@ object ApiConstant {
     const val API_USER_TIMELINE =
         "/services/PockketService/api/user-timeline?page=0&size=80&sort=createdDate,desc"
     const val API_GET_TASKMASTER = "/services/loyaltyservice/api/taskMaster"
-    const val API_ASSIGN_TASK = "/services/loyaltyservice/api/task/assign/search"
-  const val API_YOUR_TASK =
-    "/services/loyaltyservice/api/task/assign/search?page=0&size=20&sort=createdDate,desc"
+    const val API_ASSIGN_TASK =
+        "/services/loyaltyservice/api/task/assign/search/V1?page=0&sort=createdDate,desc"
+    const val API_YOUR_TASK =
+        "/services/loyaltyservice/api/task/assign/search/V1"
 
 
 

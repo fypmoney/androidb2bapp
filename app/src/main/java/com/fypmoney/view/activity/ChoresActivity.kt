@@ -191,7 +191,7 @@ companion object{
         }
 
         mViewModel!!.TaskDetailResponse.observe(this, androidx.lifecycle.Observer { list ->
-            Log.d("chacksample22", list.actionAllowed.toString())
+
 
             if (list.actionAllowed == "REJECT,ACCEPT" || list.actionAllowed == "CANCEL" || list.actionAllowed == "COMPLETE" || list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY" || list.actionAllowed == "") {
                 callTaskActionSheet(list)
@@ -328,8 +328,7 @@ companion object{
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == 99) {
-            Log.d("chackback3", resultCode.toString())
-            Log.d("chackback4", resultCode.toString())
+
             if (mViewModel != null) {
 
                 mViewModel?.callSampleTask()

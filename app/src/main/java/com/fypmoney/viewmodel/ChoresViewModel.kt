@@ -11,6 +11,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.view.fragment.YourTasksFragment
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -54,21 +55,45 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
       * */
 
 
-
-
     /*
       * This method is used to call user timeline API
       * */
 
-    fun callSampleTask() {
-        Log.d("chacksample", "called")
-        loading.postValue(true)
+    fun callLoadMoreTask(page: Int) {
+
+
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_YOUR_TASK,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_YOUR_TASK),
                 request_type = ApiUrl.POST,
-                GetTaskResponseIsassign(1), onResponse = this,
+                GetTaskResponse(
+                    1,
+                    page,
+                    10,
+                    "createdDate,desc"
+                ), onResponse = this,
+                isProgressBar = false
+            )
+        )
+
+    }
+
+    fun callSampleTask() {
+
+        loading.postValue(true)
+        YourTasksFragment.page = 0
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_YOUR_TASK,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_YOUR_TASK),
+                request_type = ApiUrl.POST,
+                GetTaskResponse(
+                    1,
+                    0,
+                    10,
+                    "createdDate,desc"
+                ), onResponse = this,
                 isProgressBar = false
             )
 
@@ -78,12 +103,7 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
                 purpose = ApiConstant.API_ASSIGN_TASK,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_ASSIGN_TASK),
                 request_type = ApiUrl.POST,
-                GetTaskResponse(
-                    0,
-                    0,
-                    20,
-                    "createdDate,desc"
-                ), onResponse = this,
+                GetTaskResponseIsassign(0), onResponse = this,
                 isProgressBar = false
             )
 
@@ -92,7 +112,6 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun callTaskDetail(id: String) {
-        Log.d("chacksample", "called")
 
         loading.postValue(true)
         WebApiCaller.getInstance().request(
@@ -171,7 +190,7 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
 
             ApiConstant.API_YOUR_TASK -> {
                 loading?.postValue(false)
-                Log.d("chacksample", responseData.toString())
+
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
 
                 val array = Gson().fromJson<Array<AssignedTaskResponse>>(
@@ -185,7 +204,7 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
 
             }
             ApiConstant.API_TASK_DETAIL -> {
-                Log.d("chacksample2", responseData.toString())
+
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
 
                 val task = Gson().fromJson(
@@ -198,7 +217,6 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
 
             }
             ApiConstant.API_TASK_UPDATE -> {
-                Log.d("chacksampleupdate", responseData.toString())
 
 
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
@@ -211,7 +229,7 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
 
 
             ApiConstant.API_ASSIGN_TASK -> {
-                Log.d("chacksample2", responseData.toString())
+
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
 
                 val array = Gson().fromJson<Array<AssignedTaskResponse>>(

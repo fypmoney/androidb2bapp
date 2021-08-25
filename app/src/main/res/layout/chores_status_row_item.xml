@@ -41,6 +41,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:visibility="@{viewHelper.greenTick?View.VISIBLE:View.INVISIBLE}"
             android:text="@{viewHelper.date}"
             android:textAlignment="center" />
 

@@ -60,7 +60,7 @@ class AssignedTaskFragment : Fragment() {
 
             })
 //        ChoresActivity.mViewModel!!.TaskDetailResponse.observe(requireActivity(), androidx.lifecycle.Observer { list ->
-//            Log.d("chacksample", list.actionAllowed.toString())
+
 //            if(list.actionAllowed=="ACCEPTED,REJECTED") {
 //                callTaskActionSheet(list)
 //            }
@@ -94,7 +94,7 @@ class AssignedTaskFragment : Fragment() {
 
 
             override fun onItemClicked(pos: Int) {
-                Log.d("chacktask", itemsArrayList[pos].toString())
+
 
                 ChoresActivity.mViewModel!!.callTaskDetail(itemsArrayList[pos].id.toString())
 

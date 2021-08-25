@@ -17,7 +17,7 @@ data class TaskDetailResponse(
     val id: String? = null,
     val appDisplayAction: String? = null,
     val destinationUserId: Int? = null,
-    val emojis: Any? = null,
+    val emojis: String? = null,
     val comments: Any? = null,
     val appScreenId: Any? = null,
     val sourceUserName: String? = null,

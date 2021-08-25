@@ -52,7 +52,7 @@ class TransactionHistoryAdapter(var viewModel: TransactionHistoryViewModel) :
             mRowItemBinding!!.viewHelper = mViewHelper
             mViewHelper.init()
             mRowItemBinding.executePendingBindings()
-            Log.d("chackhistory", transactionList?.get(position)?.id.toString())
+
 
         }
 

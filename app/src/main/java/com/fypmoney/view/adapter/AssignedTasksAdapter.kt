@@ -129,6 +129,7 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
         } else {
             holder.new_tv.visibility = View.INVISIBLE
         }
+        holder.emoji.text = items[position].emojis
 
     }
 
@@ -144,7 +145,7 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
         var bg_text = view.bg_text
         var timeleft = view.timeleft
         var title_task = view.title_task
-
+        var emoji = view.emoji
 //
 
 

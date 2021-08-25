@@ -5,6 +5,9 @@ import android.util.Log
 import com.appsflyer.AppsFlyerConversionListener
 import com.appsflyer.AppsFlyerLib
 import com.appsflyer.AppsFlyerLibCore
+import com.vanniktech.emoji.google.GoogleEmojiProvider
+
+import com.vanniktech.emoji.EmojiManager
 
 
 /**
@@ -13,6 +16,7 @@ import com.appsflyer.AppsFlyerLibCore
 
 class PockketApplication : Application() {
     private val AF_DEV_KEY = "xLiRBq3f8fimR7F9zbzzcE"
+
     companion object {
         lateinit var instance: PockketApplication
             private set
@@ -21,6 +25,7 @@ class PockketApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        EmojiManager.install(GoogleEmojiProvider())
         val conversionListener: AppsFlyerConversionListener =
             object : AppsFlyerConversionListener {
                 /* Returns the attribution data. Note - the same conversion data is returned every time per install */

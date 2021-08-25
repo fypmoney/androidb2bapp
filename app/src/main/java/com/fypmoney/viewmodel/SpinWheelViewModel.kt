@@ -243,8 +243,8 @@ class SpinWheelViewModel(application: Application) : BaseViewModel(application) 
                         }
                     }
                 }
-                if (!spinDetails.totalReward.isNullOrEmpty())
-                    totalRewards.set(((spinDetails.totalReward)!!.toInt() / 100).toString())
+                if (!spinDetails.pointsToRedeem.isNullOrEmpty())
+                    totalRewards.set(((spinDetails.pointsToRedeem)!!.toInt() / 100).toString())
                 else {
                     totalRewards.set("0")
                 }
@@ -258,7 +258,7 @@ class SpinWheelViewModel(application: Application) : BaseViewModel(application) 
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
-        Log.d("chackpass", errorResponseInfo.errorCode)
+
         when (purpose) {
             ApiConstant.API_SPIN_WHEEL -> {
                 onError.value = errorResponseInfo

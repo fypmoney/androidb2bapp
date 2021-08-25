@@ -157,7 +157,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                 }
             }
             ApiConstant.API_TASK_UPDATE -> {
-                Log.d("chackupdate", responseData.toString())
+
 
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
                 val task = Gson().fromJson(json.get("data"), UpdateTaskGetResponse::class.java)
@@ -230,7 +230,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
 
         when (purpose) {
             ApiConstant.API_TASK_UPDATE -> {
-                Log.d("chacksample", errorResponseInfo.errorCode)
+
                 error.postValue(errorResponseInfo.errorCode)
             }
         }

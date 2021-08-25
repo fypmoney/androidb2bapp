@@ -232,7 +232,12 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
 
     private fun loadProfile(url: String?) {
         url?.let {
-            loadImage(mViewBinding.userIv,it,ContextCompat.getDrawable(this,R.drawable.ic_profile_img),true)
+            loadImage(
+                mViewBinding.userIv,
+                it,
+                ContextCompat.getDrawable(this, R.drawable.progress_bar_drawable),
+                true
+            )
             /*mViewBinding.userIv.setColorFilter(
                 ContextCompat.getColor(
                     this,
