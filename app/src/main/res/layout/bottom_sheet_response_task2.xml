@@ -101,8 +101,8 @@
 
 
                     <TextView
-                        style="@style/TextviewRegular"
                         android:id="@+id/active"
+                        style="@style/TextviewRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -119,7 +119,7 @@
                         android:paddingTop="@dimen/_4sdp"
                         android:paddingRight="@dimen/_8sdp"
                         android:paddingBottom="@dimen/_4sdp"
-                        android:text="Active"
+                        android:text="In Progress"
 
                         android:textColor="@color/white" />
                 </RelativeLayout>
@@ -254,10 +254,11 @@
 
                         style="@style/TextviewRegular"
                         android:layout_marginLeft="@dimen/_22sdp"
+                        android:layout_marginRight="@dimen/_22sdp"
                         android:layout_marginTop="@dimen/_8sdp"
                         android:scrollHorizontally="true"
 
-                        android:text=""
+
                         android:textColor="@color/text_color_dark"
 
                         tools:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam…" />
@@ -359,6 +360,7 @@
                 android:textColor="@color/text_color_dark"
 
                 android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/_2sdp"
                 android:text="Reject"
                 android:id="@+id/reject"
                 android:textSize="16sp"
@@ -377,6 +379,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1.2"
                 android:layout_height="52dp"
+                android:layout_marginBottom="@dimen/_2sdp"
                 android:layout_gravity="center"
                 android:background="@drawable/curved_background1"
                 android:text="Accept"
@@ -393,27 +396,38 @@
 
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-
-            style="@style/Widget.App.Button"
+        <LinearLayout
+            android:layout_marginBottom="@dimen/_16sdp"
             android:layout_width="match_parent"
-
-            android:layout_marginTop="@dimen/_20sdp"
-            android:layout_height="52dp"
             android:layout_marginStart="@dimen/_22sdp"
+
             android:layout_marginEnd="@dimen/_22sdp"
-            android:id="@+id/cancel"
-            android:visibility="gone"
             android:layout_alignParentBottom="true"
-            android:layout_gravity="center"
-            android:background="@drawable/curved_background1"
-            android:text="Cancel"
-            android:textSize="16sp"
-            android:fontFamily="@font/product_sans_regular"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_height="wrap_content">
 
-            android:textAllCaps="false"
+            <com.google.android.material.button.MaterialButton
 
-            app:backgroundTint="@color/text_color_dark" />
+                style="@style/Widget.App.Button"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="@dimen/_2sdp"
+
+                android:layout_height="52dp"
+
+                android:id="@+id/cancel"
+                android:visibility="gone"
+
+                android:layout_gravity="center"
+                android:background="@drawable/curved_background1"
+                android:text="Cancel"
+                android:textSize="16sp"
+                android:fontFamily="@font/product_sans_regular"
+
+                android:textAllCaps="false"
+
+                app:backgroundTint="@color/text_color_dark" />
+
+        </LinearLayout>
     </RelativeLayout>
 
 

@@ -87,7 +87,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.BankTransactionHistoryView"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="your.custom.ACTION" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.activity.LoginView"
             android:screenOrientation="portrait" />

@@ -76,6 +76,7 @@ class ChoresSelectSampleActivity : BaseActivity<ViewAddTaskBinding, CreateTaskVi
                 intent.putExtra("sample_desc", task.description.toString())
                 intent.putExtra("sample_amount", task.amount.toString())
                 intent.putExtra("numberofdays", task.numberOfDays)
+                intent.putExtra("emoji", task.emojis)
                 val bndlAnimation = ActivityOptions.makeCustomAnimation(
                     applicationContext,
                     com.fypmoney.R.anim.slideinleft,

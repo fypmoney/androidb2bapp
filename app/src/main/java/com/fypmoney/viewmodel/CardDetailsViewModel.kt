@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -24,15 +25,17 @@ class CardDetailsViewModel(application: Application) : BaseViewModel(application
         MutableLiveData<String>()
     var isFetchBalanceVisible = ObservableField(true)
     var isCvvVisible = ObservableField(false)
+    var carderror = ObservableField(false)
+    var carderrormsg = ObservableField("")
     var name =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_name))
 
     var cardNumber =
-        ObservableField(PockketApplication.instance.getString(R.string.dummy_card))
+        ObservableField("")
     var cvv =
-        ObservableField(PockketApplication.instance.getString(R.string.dummy_cvv))
+        ObservableField("")
     var expiry =
-        ObservableField(PockketApplication.instance.getString(R.string.dummy_expiry))
+        ObservableField("")
     var onViewDetailsClicked = MutableLiveData<Boolean>()
     var onGetCardDetailsSuccess = MutableLiveData<Boolean>()
     var onActivateCardInit = MutableLiveData<Boolean>()
@@ -160,6 +163,14 @@ class CardDetailsViewModel(application: Application) : BaseViewModel(application
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        when (purpose) {
+            ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
+                carderror.set(true)
+                carderrormsg.set(errorResponseInfo.msg)
+            }
+        }
+
+
     }
 
     fun makeFetchCardRequest(requestData: String): FetchVirtualCardRequest {

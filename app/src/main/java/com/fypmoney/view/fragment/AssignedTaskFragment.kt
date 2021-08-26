@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fypmoney.R
+import com.fypmoney.base.PaginationListener
 import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.model.TaskDetailResponse
 import com.fypmoney.view.activity.ChoresActivity
@@ -17,6 +18,10 @@ import com.fypmoney.view.adapter.AssignedTasksAdapter
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.fragment_assigned_task.view.*
+import kotlinx.android.synthetic.main.fragment_assigned_task.view.LoadProgressBar
+import kotlinx.android.synthetic.main.fragment_assigned_task.view.empty_screen
+import kotlinx.android.synthetic.main.fragment_assigned_task.view.rv_assigned
+import kotlinx.android.synthetic.main.fragment_your_task.view.*
 
 
 import kotlin.collections.ArrayList
@@ -24,14 +29,14 @@ import kotlin.collections.ArrayList
 
 class AssignedTaskFragment : Fragment() {
     companion object {
-
+        var page = 0
 
     }
     private var itemsArrayList: ArrayList<AssignedTaskResponse> = ArrayList()
 
     private var typeAdapter: AssignedTasksAdapter?=null
-    private var root: View?=null
-
+    private var root: View? = null
+    private var isLoading = false
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
@@ -43,20 +48,24 @@ class AssignedTaskFragment : Fragment() {
         ChoresActivity.mViewModel!!.AssignedByYouTask.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
+                root?.LoadProgressBar?.visibility = View.GONE
 
-                itemsArrayList.clear()
+                if (page == 0) {
+                    itemsArrayList.clear()
+                }
                 itemsArrayList.addAll(list)
-
-
+                isLoading = false
                 typeAdapter!!.notifyDataSetChanged()
-
-
-                if (list.size > 0) {
+                if (itemsArrayList.size > 0) {
                     root?.empty_screen?.visibility = View.GONE
 
                 } else {
-                    root?.empty_screen?.visibility = View.VISIBLE
+                    if (page == 0) {
+                        root?.empty_screen?.visibility = View.VISIBLE
+                    }
+
                 }
+                page += 1
 
             })
 //        ChoresActivity.mViewModel!!.TaskDetailResponse.observe(requireActivity(), androidx.lifecycle.Observer { list ->
@@ -87,9 +96,21 @@ class AssignedTaskFragment : Fragment() {
 
 
     private fun setRecyclerView(root: View) {
-        val layoutManager = GridLayoutManager(requireContext(),2)
+        val layoutManager = GridLayoutManager(requireContext(), 2)
         root.rv_assigned!!.layoutManager = layoutManager
+        root.rv_assigned!!.addOnScrollListener(object : PaginationListener(layoutManager) {
+            override fun loadMoreItems() {
+                loadMore(root)
+            }
 
+            override fun loadMoreTopItems() {
+
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+        })
         var itemClickListener2 = object : ListItemClickListener {
 
 
@@ -111,5 +132,12 @@ class AssignedTaskFragment : Fragment() {
         root.rv_assigned!!.adapter = typeAdapter
     }
 
+    private fun loadMore(root: View) {
+        ChoresActivity.mViewModel?.callLoadMoreAssignedTask(page)
+        //LoadProgressBar?.visibility = View.VISIBLE
+        root.LoadProgressBar?.visibility = View.VISIBLE
 
+        isLoading = true
+
+    }
 }

@@ -22,26 +22,17 @@ import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.model.ChoresTimeLineItem
 import com.fypmoney.model.TaskDetailResponse
 import com.fypmoney.util.Utility
+import com.fypmoney.util.Utility.makeTextViewResizable
 import com.fypmoney.view.activity.ChoresActivity
 import com.fypmoney.view.adapter.ChoresStatusAdapter
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.*
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.accept
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.amount
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.bywhom
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.cancel
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.comment
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.days_left
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.descrip
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.lin
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.reject
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.verification_title
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.viewdiv
+import kotlinx.android.synthetic.main.bottom_sheet_response_task2.*
+
 import kotlinx.android.synthetic.main.bottom_sheet_response_task2.view.*
-import kotlinx.android.synthetic.main.chores_status_row_item.view.*
+
 import kotlinx.android.synthetic.main.toolbar.*
 
 
@@ -159,9 +150,16 @@ class TaskActionBottomSheet(
         }
 
         setRecyclerView(view, list.choresTimeLine)
+        if (list != null && list.choresTimeLine != null && list.choresTimeLine!!.isNotEmpty()) {
+            view.active.text =
+                list.choresTimeLine!![list.choresTimeLine!!.size - 1]?.name.toString()
+
+        }
+
         view.back_close.setOnClickListener(View.OnClickListener {
             bottomSheetDialog?.dismiss()
         })
+
         Utility.setImageUsingGlide(
             requireContext(),
             list.destinationUserProfilePic,
@@ -185,6 +183,7 @@ class TaskActionBottomSheet(
 
 
         })
+
         view.reject.setOnClickListener(View.OnClickListener {
             if (view.reject.text == "Reject") {
                 ChoresActivity.mViewModel!!.callTaskAccept("REJECT", list.entityId.toString(), "")
@@ -235,7 +234,7 @@ class TaskActionBottomSheet(
             view.reject.text = "Depreciate"
             view.assigned.text = "Assigned To"
             view.bywhom.text = list.destinationUserName
-            view.days_left.visibility = View.GONE
+
             view.viewdiv.visibility = View.GONE
             view.comment.visibility = View.VISIBLE
         } else if (list.actionAllowed?.isEmpty() == true) {
@@ -261,6 +260,11 @@ class TaskActionBottomSheet(
         view.days_left.text = list.additionalAttributes?.numberOfDays.toString() + " days"
         view.descrip.text = list.additionalAttributes?.description
         view.verification_title.text = list.additionalAttributes?.title
+        if (!list.additionalAttributes?.description.isNullOrEmpty()) {
+            makeTextViewResizable(view.descrip, 3, "view more", true);
+
+        }
+
 
         return view
     }

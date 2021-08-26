@@ -287,7 +287,7 @@
 
                         android:layout_marginBottom="@dimen/_30sdp"
                         android:background="@drawable/curved_background1"
-                        android:paddingVertical="15dp"
+                        android:paddingVertical="@dimen/_8sdp"
                         android:text="@string/continue_txt"
                         android:textAllCaps="false"
                         app:backgroundTint="@color/text_color_dark" />

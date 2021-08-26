@@ -55,7 +55,7 @@ class SpinWheelView : BaseActivity<ViewSpinWheelBinding, SpinWheelViewModel>(),
             isBackArrowVisible = true
         )
 
-        Glide.with(applicationContext).load(R.raw.coin).into(coin)
+//        Glide.with(applicationContext).load(R.raw.coin).into(coin)
         luckyWheelView.setData(mViewModel.luckyItemList)
         luckyWheelView.setRound(4)
         mViewModel.callGetRewardsApi()

@@ -64,8 +64,9 @@ class BankTransactionHistoryViewModel(application: Application) : BaseViewModel(
         when (purpose) {
             ApiConstant.API_BANK_TRANSACTION_HISTORY -> {
                 if (responseData is BankTransactionHistoryResponse) {
-                    if (!responseData.transactions.bankTransactionHistoryResponseDetails.isNullOrEmpty())
-                        LoadedList.postValue(responseData.transactions.bankTransactionHistoryResponseDetails)
+                    LoadedList.postValue(responseData.transactions.bankTransactionHistoryResponseDetails)
+
+//                    if (!responseData.transactions.bankTransactionHistoryResponseDetails.isNullOrEmpty())
 
 
                 }

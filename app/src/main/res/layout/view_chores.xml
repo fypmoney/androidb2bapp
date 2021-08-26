@@ -72,7 +72,7 @@
                 android:layout_height="match_parent"
 
 
-                android:layout_above="@+id/ll_show_history">
+                >
 
                 <com.google.android.material.appbar.AppBarLayout
                     android:id="@+id/appbar"
@@ -199,6 +199,7 @@
                 android:id="@+id/ll_show_history"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:visibility="gone"
                 android:layout_alignParentBottom="true"
                 android:gravity="center_vertical|center_horizontal"
                 android:orientation="horizontal">

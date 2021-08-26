@@ -100,7 +100,7 @@
                     android:id="@+id/cvv"
                     style="@style/TextviewRegular"
                     android:layout_below="@+id/card_details"
-
+                    android:layout_marginEnd="@dimen/_4sdp"
                     android:layout_toStartOf="@+id/cvvValue"
                     android:text="@string/cvv_details_title"
                     android:textSize="15dp" />
@@ -108,6 +108,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/cvvValue"
                     style="@style/TextviewBold"
+
 
                     android:layout_below="@+id/card_details"
                     android:layout_toStartOf="@+id/image"

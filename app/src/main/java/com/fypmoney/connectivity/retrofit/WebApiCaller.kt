@@ -155,6 +155,25 @@ class WebApiCaller {
                                     request = params1
                                 )
                             }
+                            ApiConstant.API_ASSIGN_TASK -> {
+
+                                val params = request.param as GetTaskResponse
+                                val params1 = GetTaskResponseIsassign()
+                                params1.isAssignTask = params.isAssignTask
+
+                                mObservable = apiInterface.getPaginationApiCalling(
+                                    endPoint = request.endpoint,
+                                    authorization = SharedPrefUtils.getString(
+                                        PockketApplication.instance,
+                                        SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                    ),
+                                    client_id = ApiConstant.CLIENT_ID,
+                                    page = params.page!!,
+                                    size = params.size!!,
+                                    sort = null,
+                                    request = params1
+                                )
+                            }
                             ApiConstant.API_TRANSACTION_HISTORY -> {
 
                                 val params1 = request.param as TransactionHistoryRequestwithPage

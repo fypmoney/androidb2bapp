@@ -24,7 +24,8 @@ class SampleTaskModel {
         @SerializedName("numberOfDays") var numberOfDays: Int? = null,
         @SerializedName("resourceId") var resourceId: String? = null,
         @SerializedName("backgroundColor") var backgroundColor: String? = null,
-        @SerializedName("status") var status: String? = null
+        @SerializedName("status") var status: String? = null,
+        @SerializedName("emojis") var emojis: String? = null
     ) : Serializable
 
 }

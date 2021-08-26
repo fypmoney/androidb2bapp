@@ -48,15 +48,17 @@ class NotificationAdapter(var viewModel: NotificationViewModel,var onNotificatio
             mViewHelper = NotificationViewHelper(
                 notificationList?.size!!,
                 position,
-                notificationList?.get(position),onNotificationClickListener
+                notificationList?.get(position), onNotificationClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
+            if (!notificationList?.get(position)?.additionalAttributes?.amount.isNullOrEmpty()) {
+                mRowItemBinding.amount.text =
+                    """${mRowItemBinding.amount.context.resources.getString(R.string.Rs)}${
+                        Utility.convertToRs(notificationList?.get(position)?.additionalAttributes?.amount)
+                    }"""
+            }
 
-            mRowItemBinding.amount.text =
-                """${mRowItemBinding.amount.context.resources.getString(R.string.Rs)}${
-                    Utility.convertToRs(notificationList?.get(position)?.additionalAttributes?.amount)
-                }"""
-           // mRowItemBinding.viewModel = viewModel
+            // mRowItemBinding.viewModel = viewModel
             mViewHelper.init()
             mRowItemBinding.executePendingBindings()
 

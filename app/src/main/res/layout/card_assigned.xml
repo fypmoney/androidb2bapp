@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_marginLeft="@dimen/_12sdp"
 
-    android:layout_marginTop="8dp"
+    android:layout_marginTop="@dimen/_4sdp"
+    android:layout_marginBottom="@dimen/_4sdp"
     android:layout_weight="1"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -17,6 +18,7 @@
         <TextView
             android:id="@+id/new_tv"
             android:layout_width="@dimen/_26sdp"
+            android:visibility="gone"
             android:layout_height="@dimen/_26sdp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/_20sdp"
@@ -62,18 +64,18 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/heading"
-                android:layout_marginStart="@dimen/_6sdp"
                 style="@style/TextviewRegular"
                 android:layout_width="0dp"
-                android:layout_marginEnd="@dimen/_8sdp"
-                android:maxLines="2"
                 android:layout_centerHorizontal="true"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="@dimen/_6sdp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:gravity="start"
-
+                android:maxLines="2"
                 android:textColor="@color/black"
+
                 android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/emoji"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -141,11 +143,11 @@
                         android:paddingLeft="@dimen/_4sdp"
                         android:paddingTop="@dimen/_7sdp"
                         android:paddingRight="@dimen/_4sdp"
-                        android:textStyle="bold"
+
                         android:paddingBottom="@dimen/_7sdp"
 
                         android:textColor="@color/text_color_dark"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
 
@@ -171,7 +173,7 @@
                     android:paddingBottom="@dimen/_7sdp"
 
                     android:textColor="@color/text_color_dark"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 

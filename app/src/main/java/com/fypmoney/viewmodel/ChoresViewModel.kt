@@ -11,6 +11,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.view.fragment.AssignedTaskFragment
 import com.fypmoney.view.fragment.YourTasksFragment
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -78,10 +79,33 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
         )
 
     }
+
+    fun callLoadMoreAssignedTask(page: Int) {
+
+
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_ASSIGN_TASK,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_ASSIGN_TASK),
+                request_type = ApiUrl.POST,
+                GetTaskResponse(
+                    0,
+                    page,
+                    10,
+                    "createdDate,desc"
+                ), onResponse = this,
+                isProgressBar = false
+            )
+
+        )
+
+    }
+
     fun callSampleTask() {
 
         loading.postValue(true)
         YourTasksFragment.page = 0
+        AssignedTaskFragment.page = 0
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_YOUR_TASK,
@@ -102,7 +126,12 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
                 purpose = ApiConstant.API_ASSIGN_TASK,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_ASSIGN_TASK),
                 request_type = ApiUrl.POST,
-                GetTaskResponseIsassign(0), onResponse = this,
+                GetTaskResponse(
+                    0,
+                    0,
+                    10,
+                    "createdDate,desc"
+                ), onResponse = this,
                 isProgressBar = false
             )
 
