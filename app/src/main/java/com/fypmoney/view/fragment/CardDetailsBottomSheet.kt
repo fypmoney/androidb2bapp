@@ -80,10 +80,27 @@ class CardDetailsBottomSheet(var cardInfoDetails: CardInfoDetailsBottomSheet?) :
             }
         }
         bottomSheet.setContentView(bindingSheet.root)
-      view.  card_details.text=cardInfoDetails?.cardNo
-        view.    ExpiryValue.text=cardInfoDetails?.expiry_month + "/" + cardInfoDetails?.expiry_year
+        if (!cardInfoDetails?.cardNo.isNullOrEmpty()) {
+            view.card_details.text = cardInfoDetails?.cardNo
+        } else {
+            view.copy.visibility = View.GONE
+        }
+        if (!cardInfoDetails?.expiry_month.isNullOrEmpty()) {
+            view.ExpiryValue.text =
+                cardInfoDetails?.expiry_month + "/" + cardInfoDetails?.expiry_year
 
-view.cvvValue.text=cardInfoDetails?.CVV
+        } else {
+            view.expiry.visibility = View.INVISIBLE
+            view.ExpiryValue.visibility = View.INVISIBLE
+        }
+        if (!cardInfoDetails?.CVV.isNullOrEmpty()) {
+            view.cvvValue.text = cardInfoDetails?.CVV
+        } else {
+            view.cvv.visibility = View.INVISIBLE
+            view.cvvValue.visibility = View.INVISIBLE
+            view.image.visibility = View.INVISIBLE
+        }
+
 
 
 

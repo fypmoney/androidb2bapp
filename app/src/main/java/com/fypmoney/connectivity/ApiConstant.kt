@@ -33,7 +33,7 @@ object ApiConstant {
         "/services/PockketService/api/user-timeline?page=0&size=80&sort=createdDate,desc"
     const val API_GET_TASKMASTER = "/services/loyaltyservice/api/taskMaster"
     const val API_ASSIGN_TASK =
-        "/services/loyaltyservice/api/task/assign/search/V1?page=0&sort=createdDate,desc"
+        "/services/loyaltyservice/api/task/assign/search/V1?sort=createdDate,desc"
     const val API_YOUR_TASK =
         "/services/loyaltyservice/api/task/assign/search/V1"
 

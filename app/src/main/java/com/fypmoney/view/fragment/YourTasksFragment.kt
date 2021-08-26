@@ -13,11 +13,8 @@ import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.view.activity.ChoresActivity
 import com.fypmoney.view.adapter.AssignedTasksAdapter
 import com.fypmoney.view.interfaces.ListItemClickListener
-import kotlinx.android.synthetic.main.fragment_assigned_task.view.*
-import kotlinx.android.synthetic.main.fragment_assigned_task.view.empty_screen
-import kotlinx.android.synthetic.main.fragment_assigned_task.view.rv_assigned
+
 import kotlinx.android.synthetic.main.fragment_your_task.view.*
-import kotlinx.android.synthetic.main.view_transaction_history.*
 
 
 import kotlin.collections.ArrayList

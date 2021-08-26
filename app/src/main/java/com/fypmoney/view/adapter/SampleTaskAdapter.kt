@@ -38,6 +38,12 @@ class SampleTaskAdapter(
 
 
                 }
+                if (!items[position - 1].emojis.isNullOrEmpty()) {
+
+                    baseHolder.emoji.text = items[position - 1].emojis
+
+
+                }
                 if (!items[position - 1].amount.isNullOrEmpty()) {
 
                     baseHolder.amount.text =
@@ -175,6 +181,7 @@ class SampleTaskAdapter(
         val bg_text = view.bg_text
         val view = view.card
         val card_bg = view.card_bg
+        val emoji = view.emoji
         override fun bind(item: String) {
 
         }

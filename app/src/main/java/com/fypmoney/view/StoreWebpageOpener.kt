@@ -18,6 +18,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -26,6 +27,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.R
 import com.fypmoney.model.CardInfoDetailsBottomSheet
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.CardDetailsBottomSheet
 import com.fypmoney.viewmodel.CardDetailsViewModel
 import kotlinx.android.synthetic.main.activity_webview.*
@@ -85,16 +87,27 @@ class StoreWebpageOpener : AppCompatActivity() {
             })
         mViewModel?.carddetails?.observe(
             this,
-            androidx.lifecycle.Observer { amount ->
+            androidx.lifecycle.Observer { carddetails ->
                 CoroutineScope(Dispatchers.Main).launch {
-                  card=amount
+                    card = carddetails
                 }
 
             })
 
         card_details.setOnClickListener {
+            if (mViewModel?.carderror?.get() == true) {
 
-            askForDevicePassword()
+                Utility.showToast(mViewModel?.carderrormsg?.get())
+
+            } else {
+                if (card != null) {
+                    askForDevicePassword()
+                } else {
+                    Toast.makeText(this, "Fetching card details", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+
         }
         webView!!.webViewClient = CustomWebViewClient()
         webView!!.settings.javaScriptEnabled = true

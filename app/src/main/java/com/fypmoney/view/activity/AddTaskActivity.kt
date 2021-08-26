@@ -99,6 +99,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
             .build(emojiEditText)
         emojiEditText.forceSingleEmoji()
         emojiEditText.setOnClickListener(View.OnClickListener {
+
             emojiEditText.disableKeyboardInput(emojiPopup)
             emojiPopup?.show()
             emojiEditText.disableKeyboardInput(emojiPopup)
@@ -305,6 +306,9 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
         val sampleTitle = intent?.getStringExtra("sample_title")
         var sampleDescription = intent?.getStringExtra("sample_desc")
         var sample_amount = intent?.getStringExtra("sample_amount")
+        var emoji = intent?.getStringExtra("emoji")
+        emojiEditText.setText(emoji)
+
         if (sample_amount != null) {
             var amount1 = sample_amount?.toInt()?.div(100)
             add_money_editext.setText(amount1.toString())

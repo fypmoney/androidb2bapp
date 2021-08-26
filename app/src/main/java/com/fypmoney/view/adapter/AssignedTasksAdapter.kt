@@ -45,8 +45,8 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
         if (items[position].title != null && items[position].title!!.isNotEmpty()) {
             holder.title_task.text = items[position].title
         }
-        if (items[position].remainingTime != null && items[position].remainingTime!!.isNotEmpty()) {
-            holder.timeleft.text = items[position].remainingTime
+        if (items[position].displayState != null && items[position].displayState!!.isNotEmpty()) {
+            holder.timeleft.text = items[position].displayState
         }
         if (items[position].amount != null) {
             holder.invite.text = "₹" + items[position].amount?.div(100)

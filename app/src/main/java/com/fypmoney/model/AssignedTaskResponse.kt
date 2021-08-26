@@ -21,6 +21,7 @@ data class AssignedTaskResponse(
     val currentState: String? = null,
     val requesterMobile: String? = null,
     val startDate: String? = null,
-    val emojis: String? = null
+    val emojis: String? = null,
+    val displayState: String? = null
 )
 

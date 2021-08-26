@@ -97,9 +97,23 @@ interface ApiInterface {
         @Header("Authorization") authorization: String?,
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
-        @Query("page") page: Int,
+        @Query("page") page: Int? = null,
         @Query("size") size: Int,
-        @Query("sort") sort: String,
+        @Query("sort") sort: String? = null,
+        @Body request: Any
+    ): Observable<ResponseBody>
+
+    @Headers("Accept: application/json")
+    @POST
+    fun getPaginationApiCalling2(
+        @Url endPoint: String,
+        @Header("client_id") client_id: String?,
+        @Header("Authorization") authorization: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
+
+        @Query("size") size: Int,
+
         @Body request: Any
     ): Observable<ResponseBody>
 

@@ -141,11 +141,11 @@
                         android:paddingLeft="@dimen/_4sdp"
                         android:paddingTop="@dimen/_7sdp"
                         android:paddingRight="@dimen/_4sdp"
-                        android:textStyle="bold"
+
                         android:paddingBottom="@dimen/_7sdp"
 
                         android:textColor="@color/text_color_dark"
-                        android:textSize="12sp"
+                        android:textSize="11sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
 
@@ -171,7 +171,7 @@
                     android:paddingBottom="@dimen/_7sdp"
 
                     android:textColor="@color/text_color_dark"
-                    android:textSize="14sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
