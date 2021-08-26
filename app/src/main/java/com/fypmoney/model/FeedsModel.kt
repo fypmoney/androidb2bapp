@@ -42,7 +42,8 @@ data class FeedDetails(
     @SerializedName("responsiveContent") var responsiveContent: String? = null,
     @SerializedName("resourceId") var resourceId: String? = null,
     @SerializedName("action") var action: Action? = null,
-    @SerializedName("scope") var scope: String?
+    @SerializedName("scope") var scope: String?,
+    @SerializedName("resourceArr") var resourceArr: List<String> = arrayListOf()
 ) : Serializable
 @Keep
 data class Action(

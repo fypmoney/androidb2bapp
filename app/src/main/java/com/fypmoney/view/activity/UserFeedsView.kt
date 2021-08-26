@@ -73,32 +73,15 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onFeedsSuccess.observe(viewLifecycleOwner)
+       /* mViewModel.onFeedsSuccess.observe(viewLifecycleOwner)
         {
             mViewModel.fromWhichScreen.set(0)
             callDiduKnowBottomSheet(it)
 
-        }
+        }*/
         mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
-            when (mViewModel.selectedPosition.get()) {
-                0 -> {
-                    mViewModel.fromWhichScreen.set(1)
-                    mViewModel.isApiLoading.set(true)
-                    mViewModel.callFetchFeedsApi(
-                        isProgressBarVisible = true,
-                        latitude = mViewModel.latitude.get(),
-                        longitude = mViewModel.longitude.get()
-                    )
-
-                }
-                else -> {
-                    when (it.displayCard) {
+            when (it.displayCard) {
                         AppConstants.FEED_TYPE_DEEPLINK -> {
-
-                               /* intentToActivity(
-                                    Class.forName(BASE_ACTIVITY_URL + it.action?.url!!),
-                                    it
-                                )*/
                             it.action?.url?.let {
                                 deeplinkRedirection(it.split(",")[0],requireContext())
 
@@ -130,9 +113,15 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                             )
 
                         }
+                        AppConstants.FEED_TYPE_STORIES -> {
+                            if (!it.resourceArr.isNullOrEmpty()) {
+                                callDiduKnowBottomSheet(it.resourceArr)
+                            }
+
+                        }
                     }
-                }
-            }
+
+
 
 
         }
@@ -193,7 +182,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
     /*
  * This method is used to call card settings
  * */
-    private fun callDiduKnowBottomSheet(list: ArrayList<String?>) {
+    private fun callDiduKnowBottomSheet(list: List<String>) {
         val bottomSheet =
             StoriesBottomSheet(list)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))

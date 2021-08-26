@@ -16,6 +16,7 @@ import com.appsflyer.AFInAppEventParameterName
 import com.appsflyer.AppsFlyerLib
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSplashBinding
 import com.fypmoney.util.AppConstants
@@ -102,15 +103,27 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         mViewModel.appUpdateState.observe(this, {
             when(it){
                 SplashViewModel.AppUpdateState.FLEXIBLE -> {
-                    checkUpdate.value = true
+                    /*checkUpdate.value = true
                     updateType = 0
-                    checkForAppUpdate()
+                    checkForAppUpdate()*/
+                    PockketApplication.instance.appUpdateRequired = true
+                    SharedPrefUtils.putInt(
+                        applicationContext,
+                        SharedPrefUtils.SF_KEY_APP_UPDATE_TYPE,
+                        0
+                    )
 
                 }
                 SplashViewModel.AppUpdateState.FORCEUPDATE -> {
-                    checkUpdate.value = true
+                    /*checkUpdate.value = true
                     updateType = 1
-                    checkForAppUpdate()
+                    checkForAppUpdate()*/
+                    PockketApplication.instance.appUpdateRequired = true
+                    SharedPrefUtils.putInt(
+                        applicationContext,
+                        SharedPrefUtils.SF_KEY_APP_UPDATE_TYPE,
+                        1
+                    )
                 }
                 SplashViewModel.AppUpdateState.NOTALLOWED -> {
                     checkUpdate.value = false
@@ -119,7 +132,6 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                 }
                 SplashViewModel.AppUpdateState.NOTUPDATE -> {
                     checkUpdate.value = false
-
                 }
             }
         })

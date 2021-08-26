@@ -34,6 +34,9 @@ class SharedPrefUtils {
         const val SF_KEY_USER_DOB = "dob"
         const val SF_KEY_SELECTED_RELATION = "relation"
         const val SF_KEY_AADHAAR_NUMBER = "aadhaar_number"
+        const val SF_KEY_APP_UPDATE_TYPE = "in_app_update_type"
+        const val SF_KEY_APP_UPDATE_STATUS = "in_app_update_status"
+        const val SF_KEY_CARD_FLAG = "card_screen_flag"
 
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {

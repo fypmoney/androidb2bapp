@@ -201,7 +201,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/video"
                         android:layout_marginStart="@dimen/dp16"
                         android:layout_marginEnd="@dimen/dp16"
-                        android:text="@string/keeping_everyone_s_safety_in_mind_physical_fyp_card_orders_will_resume_once_we_all_have_crossed_the_pandemic_you_can_hit_the_notify_me_button_to_receive_the_notification_when_we_begin_this_service"
+                        android:text="@string/notifiy_card_screen_subtitle"
                         android:textColor="@color/text_color_light"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toTopOf="@+id/notify_btn"
