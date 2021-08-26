@@ -18,8 +18,10 @@ import com.fypmoney.view.adapter.AssignedTasksAdapter
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.fragment_assigned_task.view.*
+import kotlinx.android.synthetic.main.fragment_assigned_task.view.LoadProgressBar
 import kotlinx.android.synthetic.main.fragment_assigned_task.view.empty_screen
 import kotlinx.android.synthetic.main.fragment_assigned_task.view.rv_assigned
+import kotlinx.android.synthetic.main.fragment_your_task.view.*
 
 
 import kotlin.collections.ArrayList
@@ -54,13 +56,16 @@ class AssignedTaskFragment : Fragment() {
                 itemsArrayList.addAll(list)
                 isLoading = false
                 typeAdapter!!.notifyDataSetChanged()
-                page += 1
-                if (list.size > 0) {
+                if (itemsArrayList.size > 0) {
                     root?.empty_screen?.visibility = View.GONE
 
-                } else if (page == 0) {
-                    root?.empty_screen?.visibility = View.VISIBLE
+                } else {
+                    if (page == 0) {
+                        root?.empty_screen?.visibility = View.VISIBLE
+                    }
+
                 }
+                page += 1
 
             })
 //        ChoresActivity.mViewModel!!.TaskDetailResponse.observe(requireActivity(), androidx.lifecycle.Observer { list ->

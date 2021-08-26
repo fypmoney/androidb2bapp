@@ -1,7 +1,6 @@
 package com.fypmoney.view.adapter
 
 
-
 import android.content.Context
 import android.os.Build
 import android.view.LayoutInflater
@@ -21,12 +20,18 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val context: Context, val clickInterface: ListItemClickListener) : RecyclerView.Adapter<AssignedTasksAdapter.ViewHolder>() {
+class YourTasksAdapter(
+    val items: ArrayList<AssignedTaskResponse>,
+    val context: Context,
+    val clickInterface: ListItemClickListener
+) : RecyclerView.Adapter<YourTasksAdapter.ViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        return ViewHolder(LayoutInflater.from(context).inflate(R.layout.card_assigned, parent, false))
+        return ViewHolder(
+            LayoutInflater.from(context).inflate(R.layout.card_assigned, parent, false)
+        )
 
     }
 
@@ -39,8 +44,8 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        if (items[position].requesteeName != null && items[position].requesteeName!!.isNotEmpty()) {
-            holder.heading.text = items[position].requesteeName
+        if (items[position].requesterName != null && items[position].requesterName!!.isNotEmpty()) {
+            holder.heading.text = items[position].requesterName
         }
         if (items[position].title != null && items[position].title!!.isNotEmpty()) {
             holder.title_task.text = items[position].title

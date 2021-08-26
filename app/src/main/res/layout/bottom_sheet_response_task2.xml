@@ -119,7 +119,7 @@
                         android:paddingTop="@dimen/_4sdp"
                         android:paddingRight="@dimen/_8sdp"
                         android:paddingBottom="@dimen/_4sdp"
-                        android:text="Active"
+                        android:text="In Progress"
 
                         android:textColor="@color/white" />
                 </RelativeLayout>

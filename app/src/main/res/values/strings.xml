@@ -151,7 +151,7 @@
     <string name="select_member">Select a member</string>
     <string name="chore_title">Missions</string>
     <string name="chore_history_title">Chores History</string>
-    <string name="assign_task">Assign tasks or participate to get cash.</string>
+    <string name="assign_task">Assign missions and participate to get cash.</string>
     <string name="btn_text">Assign A Task</string>
     <string name="btn_cont">Continue</string>
     <string name="create_task">Choose a task or create one</string>

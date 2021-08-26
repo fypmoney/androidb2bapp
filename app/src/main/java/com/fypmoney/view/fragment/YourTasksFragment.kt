@@ -11,7 +11,8 @@ import com.fypmoney.R
 import com.fypmoney.base.PaginationListener
 import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.view.activity.ChoresActivity
-import com.fypmoney.view.adapter.AssignedTasksAdapter
+
+import com.fypmoney.view.adapter.YourTasksAdapter
 import com.fypmoney.view.interfaces.ListItemClickListener
 
 import kotlinx.android.synthetic.main.fragment_your_task.view.*
@@ -28,8 +29,8 @@ class YourTasksFragment : Fragment() {
 
     private var itemsArrayList: ArrayList<AssignedTaskResponse> = ArrayList()
     private var isLoading = false
-    private var typeAdapter: AssignedTasksAdapter? = null
-    private var root: View?=null
+    private var typeAdapter: YourTasksAdapter? = null
+    private var root: View? = null
 
 
     override fun onCreateView(
@@ -50,13 +51,17 @@ class YourTasksFragment : Fragment() {
                 itemsArrayList.addAll(list)
                 isLoading = false
                 typeAdapter!!.notifyDataSetChanged()
-                page += 1
-                if (list.size > 0) {
+
+                if (itemsArrayList.size > 0) {
                     root?.empty_screen?.visibility = View.GONE
 
-                } else if (page == 0) {
-                    root?.empty_screen?.visibility = View.VISIBLE
+                } else {
+                    if (page == 0) {
+                        root?.empty_screen?.visibility = View.VISIBLE
+                    }
+
                 }
+                page += 1
             })
 
 
@@ -101,7 +106,7 @@ class YourTasksFragment : Fragment() {
 
         }
 
-        typeAdapter = AssignedTasksAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
+        typeAdapter = YourTasksAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
         root.rv_assigned!!.adapter = typeAdapter
     }
 

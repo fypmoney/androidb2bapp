@@ -91,19 +91,23 @@ class BankTransactionHistoryView :
 
                 if (list.isNotEmpty()) {
                     var arraylist = list
+                    page = page + 1
 
-
+                    mViewModel.noDataFoundVisibility.set(false)
                     mViewModel.bankTransactionHistoryAdapter.setList(arraylist)
                 } else {
+
                     if (page == 1) {
                         mViewModel.noDataFoundVisibility.set(true)
                     }
                 }
-                page = page + 1
+
                 isLoading = false
 
             } else {
+
                 if (page == 1) {
+
                     mViewModel.noDataFoundVisibility.set(true)
                 }
             }

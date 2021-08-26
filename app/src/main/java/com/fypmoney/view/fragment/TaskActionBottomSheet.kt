@@ -150,10 +150,16 @@ class TaskActionBottomSheet(
         }
 
         setRecyclerView(view, list.choresTimeLine)
+        if (list != null && list.choresTimeLine != null && list.choresTimeLine!!.isNotEmpty()) {
+            view.active.text =
+                list.choresTimeLine!![list.choresTimeLine!!.size - 1]?.name.toString()
+
+        }
+
         view.back_close.setOnClickListener(View.OnClickListener {
             bottomSheetDialog?.dismiss()
         })
-        view.active.text = list.appDisplayAction
+
         Utility.setImageUsingGlide(
             requireContext(),
             list.destinationUserProfilePic,
