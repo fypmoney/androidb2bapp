@@ -46,6 +46,7 @@ object AppConstants {
     const val FEED_TYPE_DEEPLINK = "DEEPLINK"
     const val FEED_TYPE_INAPPWEB = "INAPPWEB"
     const val FEED_TYPE_EXTWEBVIEW = "EXTWEBVIEW"
+    const val FEED_TYPE_STORIES = "STORIES"
     const val FEED_RESPONSE = "feed_response"
     const val FEED_TYPE_IN_APP = "INAPP"
     const val FEED_TYPE_IN_APP_WEBVIEW = "INAPPWEBVIEW"
@@ -187,7 +188,7 @@ object AppConstants {
     const val CLIENT_TYPE_VALUE = "ANDROID"
     const val NOT_ALLOWED_MSG = "Invalid Version. Please uninstall your current app and install it from Play Store again."
     const val PLAY_STORE_URL = "http://onelink.to/fypmoney"
-    const val CASHBACK_AMOUNT = "25"
+    const val CASHBACK_AMOUNT = "50"
     const val INSTAGRAM_PAGE = "https://www.instagram.com/fypmoney.in/?hl=en"
     const val FACEBOOK_PAGE = "https://www.facebook.com/fypmoney.in/"
     const val YOUTUBE_PAGE = "https://www.youtube.com/channel/UCDoPH4GT9fP8Sp2bgr_95LA/about"
@@ -223,5 +224,6 @@ object AppConstants {
     const val Accepted = "Accepted"
     const val Completed = "Complete"
     const val Pay = "Pay"
+    const val CARD_ORDER_FLAG = "CARD_ORDER_FLAG"
 
 }

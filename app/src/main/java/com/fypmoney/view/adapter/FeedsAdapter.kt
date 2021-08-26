@@ -31,13 +31,13 @@ class FeedsAdapter(
     private val typeDiduKnow = 4
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
-            typeDiduKnow -> {
+            /*typeDiduKnow -> {
                 val mRowBinding = FeedsDidUKnowBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent, false
                 )
                 return DiduKnowViewHolder(mRowBinding)
-            }
+            }*/
             typeWithTitle, typeWithoutTitle -> {
                 val mRowBinding = FeedsRowLayoutBinding.inflate(
                     LayoutInflater.from(parent.context),
@@ -61,12 +61,7 @@ class FeedsAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (position) {
-            0 -> {
-                typeDiduKnow
-            }
-            else -> {
-                when (feedList?.get(position)?.displayCard) {
+        return when (feedList?.get(position)?.displayCard) {
                     AppConstants.FEED_TYPE_BLOG -> {
                         typeWithTitle
                     }
@@ -76,8 +71,6 @@ class FeedsAdapter(
                     else -> {
                         typeWithoutTitle
                     }
-                }
-            }
         }
     }
 

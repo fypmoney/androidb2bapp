@@ -98,6 +98,7 @@ object ApiConstant {
   const val API_GET_REDEEM_DETAILS_API = "/services/authservice/api/rewards/details"
   const val API_REDEEM_COINS_API = "/services/authservice/api/redeem/rewards"
   const val API_USER_DEVICE_INFO = "/services/authservice/api/users/device-info"
+  const val API_SETTINGS = "/services/PockketService/api/get/system-properties/by-keys"
 
 }
 

@@ -17,6 +17,9 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
         tools:replace="android:usesCleartextTraffic">
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+
         <activity
             android:name=".view.notifymeordercard.NotifyMeOrderCardActivity"
             android:screenOrientation="portrait"/>
@@ -219,10 +222,10 @@
         <meta-data
             android:name="payu_debug_mode_enabled"
             android:value="false" />
-        <meta-data
+        <!--<meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:resource="@drawable/ic_notification"
-            android:value="@string/default_notification_channel_id" />
+            android:value="@string/default_notification_channel_id" />-->
 
         <provider
             android:name="androidx.core.content.FileProvider"

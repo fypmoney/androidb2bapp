@@ -172,7 +172,7 @@
     <string name="spin_wheel_text2">How to use FypMynts?</string>
     <string name="spin_wheel_text3">Show FypMynts history</string>
     <string name="fyp_coin_value">1 Fyp Mynt = ₹1</string>
-    <string name="spin_wheel_text4">When the app is live! Total Fyp Mynts won would be converted into rupees and credited to your app wallet💸</string>
+    <string name="spin_wheel_text4">Total Mynts won will be converted into rupees once you redeem it</string>
     <string name="show_fyp_history">Show FypMynts history</string>
     <string name="better_luck">You have already used your daily spin for today.\n Come back <b>TOMORROW</b> for another chance to win 💰</string>
     <string name="well_done">Well done!</string>
@@ -767,8 +767,8 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="create_your_own_task">Create your own task</string>
     <string name="amount">Recharge amount</string>
     <string name="refer_and_earn"><![CDATA[Refer & Earn]]></string>
-    <string name="refer_to_your_friend_and_get_a_cash_reward_of_50">Fyp is better with friends! \n Invite your friends and earn ₹50</string>
-    <string name="share_referral_code_with_your_friend_and_after_they_install_both_of_you_will_get_50_cash_rewards">Share referral code with your friend and after they install, both of you will get ₹50 cash rewards.</string>
+    <string name="refer_to_your_friend_and_get_a_cash_reward_of_50">Fyp is better with friends! \n Invite your friends and earn ₹%1$s</string>
+    <string name="share_referral_code_with_your_friend_and_after_they_install_both_of_you_will_get_50_cash_rewards">Share referral code with your friend and after they install, both of you will get ₹%1$s cash rewards.</string>
     <string name="your_referral_code">Your referral code</string>
     <string name="copy_text">Copy Text</string>
     <string name="total_referral_won">Total Referral won</string>
@@ -805,6 +805,10 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
         the pandemic. You can hit the ‘Notify Me‘ button \n
         to receive the notification when we begin this \n
         service.</string>
+    <string name="notifiy_card_screen_subtitle">Planning to order a physical Fyp card? Make heads turn as the card stands out from the crowd. You’ll know why once you get it.
+
+Coming really soon!
+</string>
     <string name="notify_me">Notify Me</string>
     <string-array name="person_category_array">
         <item>Minor</item>
@@ -852,6 +856,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="thanks_we_will_keep_you_notify">Thanks,We will keep you notified</string>
     <string name="amount_limit">9999</string>
     <string name="logout">Logout</string>
-
+    <string name="facebook_app_id">393472762006028</string>
+    <string name="facebook_client_token">Facebook Client ID</string>
 
 </resources>

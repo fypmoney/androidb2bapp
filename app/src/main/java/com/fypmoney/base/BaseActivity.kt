@@ -35,10 +35,12 @@ import com.freshchat.consumer.sdk.Freshchat
 import com.freshchat.consumer.sdk.FreshchatConfig
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.CASHBACK_AMOUNT
 import com.fypmoney.util.AppConstants.PLAY_STORE_URL
 import com.fypmoney.util.DialogUtils
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.toolbar.*
@@ -90,6 +92,17 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
 
     override fun onStart() {
         super.onStart()
+        if(PockketApplication.instance.appUpdateRequired){
+             SharedPrefUtils.getInt(
+                applicationContext,
+                SharedPrefUtils.SF_KEY_APP_UPDATE_TYPE
+            )?.let {
+                 updateType = it
+                 checkForAppUpdate()
+                 PockketApplication.instance.appUpdateRequired = false
+            }
+
+        }
     }
 
     fun hasPermissions(context: Context, vararg permissions: String): Boolean = permissions.all {

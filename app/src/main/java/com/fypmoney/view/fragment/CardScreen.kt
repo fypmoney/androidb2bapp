@@ -23,10 +23,7 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenCardBinding
 import com.fypmoney.model.UpDateCardSettingsRequest
 import com.fypmoney.model.UpdateCardLimitRequest
-import com.fypmoney.util.AppConstants
-import com.fypmoney.util.AsteriskPasswordTransformationMethod
-import com.fypmoney.util.OnSwipeTouchListener
-import com.fypmoney.util.Utility
+import com.fypmoney.util.*
 import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.MyProfileListAdapter
@@ -93,7 +90,10 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         mViewBinding.viewModel = mViewModel
         mViewBinding.fragment = this
 
-        if(true){
+        if(SharedPrefUtils.getString(
+                requireContext(),
+                SharedPrefUtils.SF_KEY_CARD_FLAG
+            )=="1"){
             showNotifyCardLayout()
         }else{
             mViewBinding.notifyOrderCardNsv.visibility = View.GONE

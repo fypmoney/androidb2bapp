@@ -42,7 +42,7 @@ open class BaseUpdateCheckActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-       /* if (checkUpdate.value!!) {
+        /*if (checkUpdate.value!!) {
             checkForAppUpdate()
         }*/
     }

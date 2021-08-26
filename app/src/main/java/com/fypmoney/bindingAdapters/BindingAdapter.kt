@@ -52,19 +52,14 @@ class BindingAdapter {
                                 })
                     }
                     else -> {
-                        when (position) {
-                            0 -> {
-                                imageView.setImageResource(R.drawable.did_u_know_card)
-                            }
-                            else -> {
                                 Glide.with(PockketApplication.instance).load(imageUrl)
                                     .into(imageView).getSize(
                                         SizeReadyCallback { width, height ->
                                             //before you load image LOG height and width that u actually got?
                                             // mEditDeskLayout.setImageSize(width,height);
                                         })
-                            }
-                        }
+
+
                     }
                 }
 

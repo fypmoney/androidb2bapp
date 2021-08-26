@@ -5,6 +5,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Handler
@@ -77,6 +78,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setStyle(NotificationCompat.BigTextStyle())
                     .setSmallIcon(R.drawable.ic_notification)
+                    .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round))
                     .setTicker(resources.getString(R.string.app_name))
                     .setAutoCancel(true)
 

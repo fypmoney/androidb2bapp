@@ -13,10 +13,15 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.CustomerInfoResponse
+import com.fypmoney.model.SettingsRequest
+import com.fypmoney.model.SettingsResponse
 import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
+import com.fypmoney.model.homemodel.TopTenUsersResponse
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.google.gson.Gson
 
 
 /*
@@ -36,6 +41,7 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
      fun setUpApp() {
         callCheckAppUpdate()
+         callSettingsApi()
         if (SharedPrefUtils.getBoolean(
                 app,
                 SharedPrefUtils.SF_KEY_IS_LOGIN
@@ -87,6 +93,19 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
             )
         )
     }
+    private fun callSettingsApi() {
+        val request = SettingsRequest()
+        request.keyList = listOf("CARD_ORDER_FLAG")
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_SETTINGS,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_SETTINGS),
+                request_type = ApiUrl.POST,
+                onResponse = this, isProgressBar = false,
+                param = request
+            )
+        )
+    }
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
@@ -130,8 +149,9 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 }
             }
             ApiConstant.CHECK_APP_UPDATE->{
-                    if(responseData is CheckAppUpdateResponse){
-                        when(responseData.appUpdateData?.updateFlag){
+                val data = Gson().fromJson(responseData.toString(), CheckAppUpdateResponse::class.java)
+                if(data is CheckAppUpdateResponse){
+                        when(data.appUpdateData?.updateFlag){
                             "FLEXIBLE"->{
                                 _appUpdateState.value = AppUpdateState.FLEXIBLE
                             }
@@ -148,7 +168,23 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                         }
                         }
                     }
-            }
+            }ApiConstant.API_SETTINGS->{
+                val data = Gson().fromJson(responseData.toString(), SettingsResponse::class.java)
+                if(data is SettingsResponse){
+                    data.data.keysFound.forEach {
+                        when(it.key){
+                            CARD_ORDER_FLAG->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_KEY_CARD_FLAG,
+                                    it.value
+                                )
+                            }
+                        }
+                    }
+                }
+
+        }
 
 
         }

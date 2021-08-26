@@ -16,6 +16,7 @@ import com.vanniktech.emoji.EmojiManager
 
 class PockketApplication : Application() {
     private val AF_DEV_KEY = "xLiRBq3f8fimR7F9zbzzcE"
+    var appUpdateRequired:Boolean = false
     companion object {
         lateinit var instance: PockketApplication
             private set
