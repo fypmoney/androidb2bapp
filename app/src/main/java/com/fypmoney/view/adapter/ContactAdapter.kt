@@ -16,7 +16,7 @@ import com.fypmoney.viewmodel.ContactViewModel
 /**
  * This adapter class is used to handle contacts
  */
-class ContactAdapter(var viewModel: ContactViewModel) :
+class ContactAdapter(var viewModel: ContactViewModel, var userId: Long) :
     RecyclerView.Adapter<BaseViewHolder>() {
     var contactList: ArrayList<ContactEntity>? = ArrayList()
     var newContactList: ArrayList<ContactEntity>? = ArrayList()
@@ -48,7 +48,8 @@ class ContactAdapter(var viewModel: ContactViewModel) :
         override fun onBind(position: Int) {
             mViewHelper = ContactViewHelper(
                 position,
-                contactList?.get(position), viewModel
+                contactList?.get(position), viewModel,
+                userId
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             if (contactList?.get(position)?.profilePicResourceId.isNullOrEmpty()) {

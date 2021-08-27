@@ -16,9 +16,8 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.ContactRepository
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.*
-import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.adapter.ContactAdapter
 import com.fypmoney.view.adapter.ContactListAdapter
 import java.lang.Exception
 
@@ -26,7 +25,11 @@ import java.lang.Exception
 * This is used to handle contacts
 * */
 class ContactListViewModel(application: Application) : BaseViewModel(application) {
-    var contactAdapter = ContactListAdapter(this)
+    var userId = SharedPrefUtils.getLong(
+        application,
+        SharedPrefUtils.SF_KEY_USER_ID
+    )
+    var contactAdapter = ContactListAdapter(this, userId)
     var isClickable = ObservableField(false)
     var countCheckIsAppUserApiCall: Int? = 0
     var searchedContact = ObservableField<String>()

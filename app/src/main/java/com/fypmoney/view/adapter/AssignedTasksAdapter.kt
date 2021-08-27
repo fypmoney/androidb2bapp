@@ -4,6 +4,7 @@ package com.fypmoney.view.adapter
 
 import android.content.Context
 import android.os.Build
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +24,7 @@ import java.util.*
 
 class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val context: Context, val clickInterface: ListItemClickListener) : RecyclerView.Adapter<AssignedTasksAdapter.ViewHolder>() {
 
-
+    private var mLastClickTime: Long = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.card_assigned, parent, false))
@@ -52,6 +53,10 @@ class AssignedTasksAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
             holder.invite.text = "₹" + items[position].amount?.div(100)
         }
         holder.card.setOnClickListener(View.OnClickListener {
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
+                return@OnClickListener;
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
             if (position % 4 == 0) {
                 ChoresActivity.mViewModel?.selectedPosition?.value = 0
             } else if (position % 4 == 1) {

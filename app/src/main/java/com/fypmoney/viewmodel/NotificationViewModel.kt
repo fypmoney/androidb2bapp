@@ -30,6 +30,8 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     var userTimeLineAdapter = UserTimeLineAdapter(this)
     var noDataFoundVisibility = ObservableField(false)
     var isPreviousVisible = ObservableField(false)
+    var notificationstatus = ObservableField(-1)
+    var timelinestatus = ObservableField(-1)
     var isTimeLineNoDataVisible = ObservableField(false)
     var error: MutableLiveData<String> = MutableLiveData()
     var isGetNotificationsRecyclerVisible = ObservableField(true)
@@ -85,7 +87,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                 request_type = ApiUrl.PUT,
                 SendTaskResponse(
                     state = state, taskId = entityId,
-                    emojis = "\u1F600",
+                    emojis = "",
                     comments = msg
                 ), onResponse = this,
                 isProgressBar = false
@@ -120,21 +122,38 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
         when (purpose) {
             ApiConstant.API_GET_NOTIFICATION_LIST -> {
                 if (responseData is NotificationModel.NotificationResponse) {
+
                     if (responseData.notificationResponseDetails.isNullOrEmpty()) {
                         isGetNotificationsRecyclerVisible.set(false)
+                        if (timelinestatus.get()!! == 0) {
+                            isTimeLineNoDataVisible.set(true)
+                        } else if (notificationstatus.get()!! == 1 || timelinestatus.get()!! == 1) {
+                            isTimeLineNoDataVisible.set(false)
+                        }
+                        notificationAdapter.setList(null)
+                        notificationstatus.set(0)
                     } else {
+                        notificationstatus.set(1)
                         isGetNotificationsRecyclerVisible.set(true)
                         notificationAdapter.setList(responseData.notificationResponseDetails)
                     }
                 }
             }
             ApiConstant.API_USER_TIMELINE -> {
+
                 if (responseData is NotificationModel.UserTimelineResponse) {
                     isPreviousVisible.set(true)
                     if (responseData.notificationResponseDetails.isNullOrEmpty()) {
-                        isTimeLineNoDataVisible.set(true)
-                    } else {
 
+                        if (notificationstatus.get()!! == 0) {
+                            isTimeLineNoDataVisible.set(true)
+                        } else if (notificationstatus.get()!! == 1 || timelinestatus.get()!! == 1) {
+                            isTimeLineNoDataVisible.set(false)
+                        }
+                        timelinestatus.set(0)
+                        userTimeLineAdapter.setList(null)
+                    } else {
+                        timelinestatus.set(1)
                         userTimeLineAdapter.setList(responseData.notificationResponseDetails)
                     }
                 }
@@ -147,7 +166,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                             notification = responseData.notificationResponseDetails,
                             position = positionSelected.get()!!
                         )
-                        if (notificationAdapter.itemCount == 0) {
+                        if (notificationAdapter.itemCount == 0 && userTimeLineAdapter.itemCount == 0) {
 
                             isTimeLineNoDataVisible.set(true)
                         }

@@ -59,9 +59,13 @@ class UserTimeLineAdapter(var viewModel: NotificationViewModel) :
      */
     fun setList(notificationList1: List<NotificationModel.UserTimelineResponseDetails>?) {
         try {
-            notificationList!!.clear()
-            notificationList1?.forEach {
-                notificationList!!.add(it)
+            if (notificationList1 == null) {
+                notificationList!!.clear()
+            } else {
+                notificationList!!.clear()
+                notificationList1?.forEach {
+                    notificationList!!.add(it)
+                }
             }
             notifyDataSetChanged()
         } catch (e: Exception) {

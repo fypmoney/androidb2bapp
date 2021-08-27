@@ -22,13 +22,13 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
                 style="@style/TextviewBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/_48sdp"
-                android:textColor="@color/white"
-                android:text="Welcome to Fyp!"
-                android:layout_height="wrap_content" />
+                android:text="@string/welcome_to_fyp"
+                android:textColor="@color/white" />
 
         </RelativeLayout>
 
@@ -75,9 +75,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/permission2_tv"
                     android:layout_marginStart="@dimen/_6sdp"
-                    android:textColor="@color/text_color_light"
                     android:layout_toRightOf="@+id/permission2_cb"
-                    android:text="We use your location to check if your current city is serviceable by us." />
+                    android:text="@string/_1_we_read_contacts_to_verify_your_mobile_number_and_inviting_friends_from_phonebook"
+                    android:textColor="@color/text_color_light" />
 
             </RelativeLayout>
 
@@ -100,10 +100,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_6sdp"
                     android:layout_marginTop="@dimen/_4sdp"
-                    android:textSize="16sp"
                     android:layout_toRightOf="@+id/permission1_cb"
-                    android:text="Location Permission"
-                    android:textColor="@color/text_color_dark" />
+                    android:text="@string/location_permission1"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="16sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     style="@style/TextviewRegular"
@@ -111,9 +111,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/permission1_tv"
                     android:layout_marginStart="@dimen/_6sdp"
-                    android:textColor="@color/text_color_light"
                     android:layout_toRightOf="@+id/permission1_cb"
-                    android:text="We use your location to check if your current city is serviceable by us." />
+                    android:text="@string/we_use_your_location_to_check_if_your_current_city_is_serviceable_by_us"
+                    android:textColor="@color/text_color_light" />
 
             </RelativeLayout>
 

@@ -15,5 +15,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/loader_card" />
+        app:lottie_rawRes="@raw/loader_final" />
 </androidx.constraintlayout.widget.ConstraintLayout>
