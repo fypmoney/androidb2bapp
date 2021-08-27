@@ -41,16 +41,16 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
-        val mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
+        val mFirebaseAnalytics = FirebaseAnalytics.getInstance(applicationContext)
         var bundle = Bundle()
-        bundle.putLong("user_id",  SharedPrefUtils.getLong(
-            application,
-            SharedPrefUtils.SF_KEY_USER_ID
-        ))
-        mFirebaseAnalytics.logEvent("login_success_view",bundle)
+//        bundle.putLong("user_id",  SharedPrefUtils.getLong(
+//            application,
+//            SharedPrefUtils.SF_KEY_USER_ID
+//        ))
+        mFirebaseAnalytics.logEvent("login_success_view", bundle)
 
         image.gifResource = R.raw.phone_verified
-        Timer().schedule(1000){
+        Timer().schedule(1000) {
             runOnUiThread {
                 image.pause()
             }

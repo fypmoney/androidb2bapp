@@ -210,6 +210,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         {
             if(it) {
                 Utility.showToast(resources.getString(R.string.unauthrized_msg))
+                Utility.resetPreferenceAfterLogout()
                 val intent = Intent(this@BaseActivity , LoginView::class.java)
                     startActivity(intent)
                     finishAffinity()
