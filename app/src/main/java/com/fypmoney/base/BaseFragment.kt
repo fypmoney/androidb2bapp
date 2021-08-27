@@ -143,6 +143,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         {
             if(it) {
                 Utility.showToast(resources.getString(R.string.unauthrized_msg))
+                Utility.resetPreferenceAfterLogout()
                 val intent = Intent(requireActivity() , LoginView::class.java)
                 startActivity(intent)
                 requireActivity().finishAffinity()
