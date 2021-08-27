@@ -18,8 +18,8 @@ android {
         applicationId "com.fypmoney"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 12
-        versionName "1.0.8"
+        versionCode 10
+        versionName "1.0.6"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
         // Stops the Gradle plugin�s automatic rasterization of vectors
@@ -28,17 +28,12 @@ android {
     }
 
 
+
     buildTypes {
         release {
             debuggable false
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        debug {
-            debuggable true
-            minifyEnabled false
-            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -186,6 +181,7 @@ dependencies {
     //play core lib
     implementation 'com.google.android.play:core:1.10.0'
     debugImplementation "com.github.chuckerteam.chucker:library:3.2.0"
+    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.2.0"
 
 
 

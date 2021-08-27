@@ -41,7 +41,6 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
      fun setUpApp() {
         callCheckAppUpdate()
-         callSettingsApi()
         if (SharedPrefUtils.getBoolean(
                 app,
                 SharedPrefUtils.SF_KEY_IS_LOGIN
@@ -57,6 +56,7 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 moveToNextScreen.value = true
             }*/
             callGetCustomerProfileApi()
+            callSettingsApi()
 
         } else {
             moveToNextScreen.value = true

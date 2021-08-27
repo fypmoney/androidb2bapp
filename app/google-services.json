@@ -1,42 +1,57 @@
 {
   "project_info": {
-    "project_number": "151097545281",
-    "project_id": "fypmoney-1c56f",
-    "storage_bucket": "fypmoney-1c56f.appspot.com"
+    "project_number": "1016008416953",
+    "project_id": "fyp-money-d9711",
+    "storage_bucket": "fyp-money-d9711.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:151097545281:android:6319e731ceb3dd8b862cc0",
+        "mobilesdk_app_id": "1:1016008416953:android:232fc15a7e81ff85d34568",
         "android_client_info": {
           "package_name": "com.fypmoney"
         }
       },
       "oauth_client": [
         {
-          "client_id": "151097545281-reksnvvucat5l11nea7tiftutlqrmt79.apps.googleusercontent.com",
+          "client_id": "1016008416953-0eu4fva2i7ijdsof80mqcciv9iulnlcu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.fypmoney",
-            "certificate_hash": "a5a4fc011ad2caaffec5ce8defd9d42df3151ccb"
+            "certificate_hash": "7aabec94788be0e2c5e8a4a2b0358e763afb0b62"
           }
         },
         {
-          "client_id": "151097545281-qtt0eiovqmicksdf7d6j0ui8ohu07qsf.apps.googleusercontent.com",
+          "client_id": "1016008416953-anib52mljrli1h82lrkk580dc6mv5sdf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fypmoney",
+            "certificate_hash": "77dd33e3e9c4dca59cd6ca7f87fa45afee920b50"
+          }
+        },
+        {
+          "client_id": "1016008416953-c613ffpp8g2bkvjmvjpkba3thietrmn3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDL5_qA7-Qjkh8UT_Ti7EYD-A7UMh_Ta3c"
+          "current_key": "AIzaSyCyhNOQ_Np-jlYfKOK-z4g6Dn3cBCVwPj4"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "151097545281-qtt0eiovqmicksdf7d6j0ui8ohu07qsf.apps.googleusercontent.com",
+              "client_id": "1016008416953-c613ffpp8g2bkvjmvjpkba3thietrmn3.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1016008416953-ighjaoh5ohdn3kodqp96fal4rcq7s08o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fypmoney"
+              }
             }
           ]
         }
