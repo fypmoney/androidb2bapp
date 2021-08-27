@@ -41,7 +41,6 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
      fun setUpApp() {
         callCheckAppUpdate()
-         callSettingsApi()
         if (SharedPrefUtils.getBoolean(
                 app,
                 SharedPrefUtils.SF_KEY_IS_LOGIN
@@ -57,6 +56,7 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 moveToNextScreen.value = true
             }*/
             callGetCustomerProfileApi()
+            callSettingsApi()
 
         } else {
             moveToNextScreen.value = true
@@ -158,22 +158,24 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                             "FORCE_UPDATE"->{
                             _appUpdateState.value = AppUpdateState.FORCEUPDATE
 
-                             }
-                            "NOT_UPDATE"->{
+                            }
+                            "NOT_UPDATE" -> {
                                 _appUpdateState.value = AppUpdateState.NOTUPDATE
 
-                            }"NOT_ALLOWED"->{
-                            _appUpdateState.value = AppUpdateState.NOTALLOWED
+                            }
+                            "NOT_ALLOWED" -> {
+                                _appUpdateState.value = AppUpdateState.NOTALLOWED
 
+                            }
                         }
-                        }
-                    }
-            }ApiConstant.API_SETTINGS->{
+                }
+            }
+            ApiConstant.API_SETTINGS -> {
                 val data = Gson().fromJson(responseData.toString(), SettingsResponse::class.java)
-                if(data is SettingsResponse){
+                if (data is SettingsResponse) {
                     data.data.keysFound.forEach {
-                        when(it.key){
-                            CARD_ORDER_FLAG->{
+                        when (it.key) {
+                            CARD_ORDER_FLAG -> {
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_KEY_CARD_FLAG,

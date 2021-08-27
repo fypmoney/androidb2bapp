@@ -10,8 +10,12 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.CustomerInfoResponse
+import com.fypmoney.model.SettingsRequest
+import com.fypmoney.model.SettingsResponse
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.google.gson.Gson
 
 /*
 * This class is used to show login success
@@ -27,6 +31,21 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
     * */
     fun onContinueClicked() {
         callGetCustomerProfileApi()
+        callSettingsApi()
+    }
+
+    private fun callSettingsApi() {
+        val request = SettingsRequest()
+        request.keyList = listOf("CARD_ORDER_FLAG")
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_SETTINGS,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_SETTINGS),
+                request_type = ApiUrl.POST,
+                onResponse = this, isProgressBar = false,
+                param = request
+            )
+        )
     }
 
     /*
@@ -111,7 +130,23 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                 }
             }
 
+            ApiConstant.API_SETTINGS -> {
+                val data = Gson().fromJson(responseData.toString(), SettingsResponse::class.java)
+                if (data is SettingsResponse) {
+                    data.data.keysFound.forEach {
+                        when (it.key) {
+                            AppConstants.CARD_ORDER_FLAG -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_KEY_CARD_FLAG,
+                                    it.value
+                                )
+                            }
+                        }
+                    }
+                }
 
+            }
         }
 
     }
