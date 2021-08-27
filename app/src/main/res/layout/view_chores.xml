@@ -232,7 +232,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/relativeLayout3"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/loader_card"
+            app:lottie_rawRes="@raw/loader_final"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar2" />

@@ -858,6 +858,10 @@ Coming really soon!
     <string name="logout">Logout</string>
     <string name="facebook_app_id">393472762006028</string>
     <string name="facebook_client_token">Facebook Client ID</string>
+    <string name="_1_we_read_contacts_to_verify_your_mobile_number_and_inviting_friends_from_phonebook">We read contacts to verify your mobile number and inviting friends from phonebook.</string>
+    <string name="we_use_your_location_to_check_if_your_current_city_is_serviceable_by_us">We use your location to check if your current city is serviceable by us.</string>
+    <string name="location_permission1">Location Permission</string>
+    <string name="welcome_to_fyp">Welcome to Fyp!</string>
     <string name="for_the_next_step_please_do_keep_following_things_handy">For the next step, please do keep following things \n handy</string>
     <string name="aadhaar_card_for_verification">Aadhaar card for verification</string>
     <string name="mobile_phone_that_is_linked_to_aadhaar_card">Mobile phone that is linked to Aadhaar Card.</string>

@@ -16,11 +16,12 @@ import com.fypmoney.viewmodel.ContactListViewModel
 /**
  * This adapter class is used to handle contacts
  */
-class ContactListAdapter(var viewModel: ContactListViewModel) :
+class ContactListAdapter(var viewModel: ContactListViewModel, var userId: Long) :
     RecyclerView.Adapter<BaseViewHolder>() {
     var contactList: ArrayList<ContactEntity>? = ArrayList()
     var newSearchList: ArrayList<ContactEntity>? = ArrayList()
     var newContactList: ArrayList<ContactEntity>? = ArrayList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val mRowBinding = ContactListRowItemBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -47,7 +48,8 @@ class ContactListAdapter(var viewModel: ContactListViewModel) :
         override fun onBind(position: Int) {
             mViewHelper = ContactListViewHelper(
                 position,
-                contactList?.get(position), viewModel
+                contactList?.get(position), viewModel,
+                userId
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             if (contactList?.get(position)?.profilePicResourceId.isNullOrEmpty()) {

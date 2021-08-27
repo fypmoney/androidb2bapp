@@ -45,6 +45,7 @@ import com.vanniktech.emoji.listeners.*
 import kotlinx.android.synthetic.main.activity_add_task.add_money_editext
 import kotlinx.android.synthetic.main.view_add_money.*
 import android.app.Activity
+import android.os.SystemClock
 import android.view.inputmethod.InputMethodManager
 
 
@@ -63,7 +64,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
-
+    private var mLastClickTime: Long = 0
     override fun getLayoutId(): Int {
         return R.layout.activity_add_task
     }
@@ -149,6 +150,10 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
 
 
         btnContinue.setOnClickListener {
+            if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
+                return@setOnClickListener
+            }
+            mLastClickTime = SystemClock.elapsedRealtime();
             if (validate()) {
 
 

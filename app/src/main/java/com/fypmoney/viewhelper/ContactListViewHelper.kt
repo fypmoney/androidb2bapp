@@ -1,8 +1,6 @@
 package com.fypmoney.viewhelper
 
-import android.util.Log
 import androidx.databinding.ObservableField
-import com.fypmoney.application.PockketApplication
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.ContactListViewModel
@@ -14,7 +12,8 @@ import com.fypmoney.viewmodel.ContactListViewModel
 class ContactListViewHelper(
     var position: Int? = -1,
     var contactEntity: ContactEntity?,
-    var viewModel: ContactListViewModel
+    var viewModel: ContactListViewModel,
+    var userId: Long
 ) {
 
     var isContactSelected = ObservableField(false)
@@ -40,23 +39,29 @@ class ContactListViewHelper(
      * called when any item is selected
      * */
     fun onItemClicked() {
-        viewModel.searchedContact.set(contactEntity?.contactNumber)
-        viewModel.searchedName.set(contactEntity?.firstName)
-        when (isApiError.get()) {
-            false -> {
-                if (isAppUser.get() == true) {
-                    viewModel.onItemClicked.value = contactEntity
 
-                } else {
-                    onIsAppUserClicked()
+        if (userId.toString() != contactEntity?.userId) {
+            viewModel.searchedContact.set(contactEntity?.contactNumber)
+            viewModel.searchedName.set(contactEntity?.firstName)
+            when (isApiError.get()) {
+                false -> {
+                    if (isAppUser.get() == true) {
+                        viewModel.onItemClicked.value = contactEntity
+
+                    } else {
+                        onIsAppUserClicked()
+
+                    }
+                }
+                true -> {
+                    viewModel.callIsAppUserApi()
 
                 }
             }
-            true -> {
-                viewModel.callIsAppUserApi()
-
-            }
+        } else {
+            Utility.showToast("User cannot select itself")
         }
+
     }
 
     /*

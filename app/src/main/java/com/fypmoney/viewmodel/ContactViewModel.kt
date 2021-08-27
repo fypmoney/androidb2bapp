@@ -17,6 +17,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.ContactRepository
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.*
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.ContactAdapter
 
@@ -24,7 +25,12 @@ import com.fypmoney.view.adapter.ContactAdapter
 * This is used to handle contacts
 * */
 class ContactViewModel(application: Application) : BaseViewModel(application) {
-    var contactAdapter = ContactAdapter(this)
+    var userId = SharedPrefUtils.getLong(
+        application,
+        SharedPrefUtils.SF_KEY_USER_ID
+    )
+
+    var contactAdapter = ContactAdapter(this, userId)
 
     var isClickable = ObservableField(false)
     var contactRepository = ContactRepository(mDB = appDatabase)

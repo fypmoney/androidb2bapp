@@ -3,9 +3,7 @@ package com.fypmoney.viewhelper
 import androidx.databinding.ObservableField
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.util.Utility
-import com.fypmoney.view.adapter.ContactAdapter
 import com.fypmoney.viewmodel.ContactViewModel
-import java.lang.Exception
 
 
 /*
@@ -14,7 +12,8 @@ import java.lang.Exception
 class ContactViewHelper(
     var position: Int? = -1,
     var contactEntity: ContactEntity?,
-    var viewModel: ContactViewModel
+    var viewModel: ContactViewModel,
+    var userId: Long
 ) {
 
     var isContactSelected = ObservableField(false)
@@ -37,12 +36,16 @@ class ContactViewHelper(
      * called when any item is selected
      * */
     fun onItemClicked() {
-        if (isAppUser.get() == true) {
-            viewModel.onItemClicked.value = contactEntity
+        if (userId.toString() != contactEntity?.userId) {
+            if (isAppUser.get() == true) {
+                viewModel.onItemClicked.value = contactEntity
 
+            } else {
+                onIsAppUserClicked()
+
+            }
         } else {
-            onIsAppUserClicked()
-
+            Utility.showToast("User cannot select itself")
         }
     }
 

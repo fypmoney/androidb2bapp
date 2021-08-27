@@ -159,7 +159,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 request_type = ApiUrl.PUT,
                 SendTaskResponse(
                     state = state, taskId = entityId,
-                    emojis = "\u1F600",
+                    emojis = "",
                     comments = "ACCEPTED the task"
                 ), onResponse = this,
                 isProgressBar = false
