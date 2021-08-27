@@ -67,7 +67,8 @@ class AadhaarVerificationView :
         })
 
         mViewModel.aadhaarNumber.observe(this,{
-            if(it?.length!! <=12){
+            val text =it?.filter { !it.isWhitespace() }
+            if(text?.length!! < 12){
                 btnGetOtp.backgroundTintList = ColorStateList.valueOf(
                     ContextCompat.getColor(
                         this,
@@ -95,11 +96,6 @@ class AadhaarVerificationView :
                 )
             }
         })
-/*
-        et_first_name.doOnTextChanged { text, start, before, count ->
-
-        }
-*/
 
     }
 

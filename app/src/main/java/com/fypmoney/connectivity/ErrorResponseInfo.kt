@@ -5,7 +5,7 @@ package com.fypmoney.connectivity
  * To store all error type API response  data
  */
 data class ErrorResponseInfo(
-    val errorCode: String,
+    var errorCode: String,
     val msg: String,
     val data: String?= null
 ) {

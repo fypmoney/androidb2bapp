@@ -52,17 +52,20 @@ class NetworkUtil {
                 val s = throwable.response()!!.errorBody()!!.string()
                 return when (throwable.code()) {
                     //handle code 400,403,500
-                    400, 401, 402, 403, 404, 408, 500 -> {
+                    401->{
+                        getUnAuthorized(s)
+                    }
+                    400, 402, 403, 404, 408, 500 -> {
                         getErrorData(s)
                     }
                     else -> ErrorResponseInfo(
-                        msg = PockketApplication.instance.getString(R.string.something_went_wrong_error),
+                        msg = PockketApplication.instance.getString(R.string.something_went_wrong_error1),
                         errorCode = throwable.code().toString()
                     )
                 }
             }else{
                 return ErrorResponseInfo(
-                    msg = PockketApplication.instance.getString(R.string.something_went_wrong_error),
+                    msg = PockketApplication.instance.getString(R.string.something_went_wrong_error1),
                     errorCode = throwable.toString()
                 )
             }
@@ -79,6 +82,12 @@ class NetworkUtil {
         private fun getErrorData(response: String?): ErrorResponseInfo? {
             val replace = response?.replace("\n", "")
             return Gson().fromJson(replace, ErrorResponseInfo::class.java)
+        }
+        private fun getUnAuthorized(response: String?): ErrorResponseInfo? {
+            val replace = response?.replace("\n", "")
+            val data = Gson().fromJson(replace, ErrorResponseInfo::class.java)
+            data.errorCode = "401"
+            return data
         }
     }
 

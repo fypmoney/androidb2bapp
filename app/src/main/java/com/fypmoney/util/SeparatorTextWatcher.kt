@@ -38,7 +38,6 @@ abstract class SeparatorTextWatcher(
                 stringBuilder.insert(length - 1, separator)
             }
         }
-
         return stringBuilder.toString()
     }
 

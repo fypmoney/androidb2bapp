@@ -172,6 +172,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:text="@string/we_want_to_give_you_the_best"/>
 
 
@@ -184,7 +185,7 @@
                         android:layout_marginStart="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_20sdp"
                         android:layout_marginTop="@dimen/_16sdp"
-                        app:layout_constraintTop_toBottomOf="@+id/sub_title_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/title_tv"
                         app:layout_constraintBottom_toTopOf="@+id/body_tv"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />

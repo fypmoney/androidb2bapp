@@ -34,7 +34,7 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
             TextUtils.isEmpty(aadhaarNumber.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.aadhaar_number_empty_error))
             }
-            aadhaarNumber.value?.length!! < 14-> {
+            aadhaarNumber.value?.length!! < 12-> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.aadhaar_number_valid_error))
             }
 

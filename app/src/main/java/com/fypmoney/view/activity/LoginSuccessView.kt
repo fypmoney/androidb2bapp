@@ -43,8 +43,8 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
         setObserver()
         val mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
         var bundle = Bundle()
-        bundle.putString("user_id",  SharedPrefUtils.getString(
-            getApplication(),
+        bundle.putLong("user_id",  SharedPrefUtils.getLong(
+            application,
             SharedPrefUtils.SF_KEY_USER_ID
         ))
         mFirebaseAnalytics.logEvent("login_success_view",bundle)

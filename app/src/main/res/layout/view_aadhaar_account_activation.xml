@@ -86,18 +86,66 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/click_here_title"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:drawableEnd="@drawable/yes_bank_logo"
                     android:gravity="center"
                     android:text="@string/account_verification_sub_title2" />
 
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/association_with"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@color/dividerColor" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/next_step_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:text="@string/for_the_next_step_please_do_keep_following_things_handy"
+                    android:textAlignment="center" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/step_one_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/next_step_tv"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:drawableStart="@drawable/ic_check_green_tick"
+                    android:drawablePadding="20dp"
+                    android:text="@string/aadhaar_card_for_verification"
+                    android:textAlignment="viewStart"
+                    android:layout_alignStart="@+id/next_step_tv"
+
+                    android:textColor="@color/text_color_dark" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/step_two_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/step_one_tv"
+                    android:layout_alignStart="@+id/next_step_tv"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:drawableStart="@drawable/ic_check_green_tick"
+                    android:drawablePadding="20dp"
+                    android:text="@string/mobile_phone_that_is_linked_to_aadhaar_card"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/text_color_dark" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnGetOtp"
                     style="@style/Widget.App.Button"
                     android:layout_width="299dp"
                     android:layout_height="52dp"
-                    android:layout_below="@+id/association_with"
+                    android:layout_below="@+id/step_two_tv"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_30sdp"

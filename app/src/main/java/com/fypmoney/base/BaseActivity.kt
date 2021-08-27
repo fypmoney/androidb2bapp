@@ -5,16 +5,12 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.app.KeyguardManager
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.graphics.Color
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -25,7 +21,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -33,7 +28,6 @@ import androidx.fragment.app.Fragment
 import com.freshchat.consumer.sdk.FaqOptions
 import com.freshchat.consumer.sdk.Freshchat
 import com.freshchat.consumer.sdk.FreshchatConfig
-import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.util.AppConstants
@@ -42,6 +36,7 @@ import com.fypmoney.util.AppConstants.PLAY_STORE_URL
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.activity.LoginView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.concurrent.Executor
@@ -209,6 +204,15 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
 
                 }
 
+            }
+        }
+        mViewModel?.logoutUser?.observe(this)
+        {
+            if(it) {
+                Utility.showToast(resources.getString(R.string.unauthrized_msg))
+                val intent = Intent(this@BaseActivity , LoginView::class.java)
+                    startActivity(intent)
+                    finishAffinity()
             }
         }
 

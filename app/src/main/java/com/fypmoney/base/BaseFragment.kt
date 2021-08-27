@@ -26,6 +26,8 @@ import com.fypmoney.R
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.DEVICE_SECURITY_REQUEST_CODE
 import com.fypmoney.util.DialogUtils
+import com.fypmoney.util.Utility
+import com.fypmoney.view.activity.LoginView
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -137,6 +139,16 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
    * Observer to observe the live data
    * */
     private fun setObservers() {
+        mViewModel?.logoutUser?.observe(this)
+        {
+            if(it) {
+                Utility.showToast(resources.getString(R.string.unauthrized_msg))
+                val intent = Intent(requireActivity() , LoginView::class.java)
+                startActivity(intent)
+                requireActivity().finishAffinity()
+
+            }
+        }
         mViewModel?.progressDialog?.observe(viewLifecycleOwner)
         {
             when (it) {

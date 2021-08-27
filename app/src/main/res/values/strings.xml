@@ -438,7 +438,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
  -->
     //TODO need to confirm
     <string name="account_verification_sub_title">Complete your Aadhaar KYC now.\n &#032; And have fun with Fyp</string>
-    <string name="account_verification_sub_title1">Within a minute unlock the Fyp benefits.</string>
+    <string name="account_verification_sub_title1">Within a minute unlock the Fyp benefits now</string>
     <string name="account_verification_sub_title2">FYP is in association with &#032;</string>
     <string name="aadhaar_otp_screen_title">Activate Account</string>
 
@@ -858,5 +858,9 @@ Coming really soon!
     <string name="logout">Logout</string>
     <string name="facebook_app_id">393472762006028</string>
     <string name="facebook_client_token">Facebook Client ID</string>
+    <string name="for_the_next_step_please_do_keep_following_things_handy">For the next step, please do keep following things \n handy</string>
+    <string name="aadhaar_card_for_verification">Aadhaar card for verification</string>
+    <string name="mobile_phone_that_is_linked_to_aadhaar_card">Mobile phone that is linked to Aadhaar Card.</string>
+    <string name="unauthrized_msg">Your session has expired. Please login again..</string>
 
 </resources>
