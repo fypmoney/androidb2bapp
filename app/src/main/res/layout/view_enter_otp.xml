@@ -191,8 +191,7 @@
                             android:layout_marginBottom="@dimen/_40sdp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:textColor="@color/text_color_little_dark"
-                            app:backgroundTint="@color/buttonUnselectedColor"
-                            android:paddingVertical="@dimen/dp16" />
+                            app:backgroundTint="@color/buttonUnselectedColor" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
