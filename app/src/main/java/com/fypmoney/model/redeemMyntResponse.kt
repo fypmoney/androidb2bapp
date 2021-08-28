@@ -1,5 +1,8 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class RedeemMyntResponse(
     val displayCard: String? = null,
     val totalPoints: Int? = null,

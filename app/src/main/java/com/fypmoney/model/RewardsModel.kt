@@ -1,12 +1,13 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
-
+@Keep
 data class GetRewardsResponse(
     @SerializedName("data") val getRewardsResponseDetails: GetRewardsResponseDetails,
 ) : Serializable
-
+@Keep
 data class GetRewardsResponseDetails(
     @SerializedName("uaaId") var uaaId: String?,
     @SerializedName("spinAllowedToday") var spinAllowedToday: String?,
@@ -15,7 +16,7 @@ data class GetRewardsResponseDetails(
     @SerializedName("pointsToRedeem") var pointsToRedeem: String?
 
 ) : Serializable
-
+@Keep
 data class Rewards(
     @SerializedName("uaaId") var uaaId: String?,
     @SerializedName("sectionId") var sectionId: String?,
@@ -24,21 +25,21 @@ data class Rewards(
     @SerializedName("playedOn") var playedOn: String?,
     @SerializedName("rewardType") var rewardType: String?
 ) : Serializable
-
+@Keep
 data class SpinWheelResponse(
     @SerializedName("data") val spinWheelResponseDetails: SpinWheelResponseDetails
 ) : Serializable
-
+@Keep
 data class SpinWheelResponseDetails(
     @SerializedName("sectionId") var sectionId: Int?,
     @SerializedName("sectionName") var sectionName: String?,
     @SerializedName("colorCode") var colorCode: String?
 ) : Serializable
-
+@Keep
 data class GetRewardsHistoryResponse(
     @SerializedName("data") val getRewardsResponseDetails: List<GetRewardsHistoryResponseDetails>
 ) : Serializable
-
+@Keep
 data class GetRewardsHistoryResponseDetails(
     @SerializedName("id") var id: Int?,
     @SerializedName("uaaId") var uaaId: String?,
