@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.R
+import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.BottomSheetResponseTaskBinding
 import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.model.ChoresTimeLineItem
@@ -160,13 +161,15 @@ class TaskActionBottomSheet(
             bottomSheetDialog?.dismiss()
         })
 
-        Utility.setImageUsingGlide(
-            requireContext(),
+
+        loadImage(
+            view.profile_pic,
             list.destinationUserProfilePic,
-            view.profile_pic
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_user),
+            true
         )
         val accept = view.findViewById<Button>(R.id.accept)!!
-               view.emoji.text = list.emojis
+        view.emoji.text = list.emojis
 
         accept.setOnClickListener(View.OnClickListener {
             if (accept.text == "Accept") {
