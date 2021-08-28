@@ -408,6 +408,7 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
                 member.userId = returnValue.userId?.toDouble()
                 member.mobileNo = returnValue.contactNumber
                 member.name = returnValue.firstName
+
                 member.profilePicResourceId = returnValue.profilePicResourceId
 
                 itemsArrayList.add(member)

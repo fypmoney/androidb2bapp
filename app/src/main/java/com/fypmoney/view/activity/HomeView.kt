@@ -14,9 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.appsflyer.AFInAppEventParameterName
-import com.appsflyer.AppsFlyerLib
-import com.facebook.appevents.AppEventsLogger
+
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -86,24 +84,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
         mFirebaseAnalytics!!.logEvent("Home_Screen",null)
         logSentFriendRequestEvent()
-        try {
-            val eventValue: MutableMap<String, Any> = HashMap()
 
-//        eventValue[AFInAppEventParameterName.CONTENT_TYPE] = "category_a"
-
-            val userId = SharedPrefUtils.getLong(
-                applicationContext,
-                SharedPrefUtils.SF_KEY_USER_ID
-            )
-            if (userId != null) {
-                eventValue[AFInAppEventParameterName.CUSTOMER_USER_ID] = userId
-            }
-            AppsFlyerLib.getInstance()
-                .trackEvent(applicationContext, "Home Opened", eventValue)
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        } catch (e: Exception) {
-
-        }
 
         LocationListenerClass(
             this, this
