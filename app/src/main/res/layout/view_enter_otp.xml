@@ -176,16 +176,16 @@
                         android:visibility="gone"/>-->
                     <Button
                             android:id="@+id/btnSendOtp"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginStart="47dp"
                             android:layout_marginEnd="47dp"
                             android:onClick="@{()->viewModel.onVerifyClicked()}"
                             android:text="@string/verify_btn_text"
                             android:textAllCaps="false"
-                            android:textSize="18sp"
-                            android:enabled="false"
+
+                        android:enabled="false"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             android:layout_marginBottom="@dimen/_40sdp"

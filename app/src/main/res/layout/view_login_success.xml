@@ -53,19 +53,17 @@
 
         <Button
             android:id="@+id/btnSendOtp"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/_40sdp"
             android:onClick="@{()->viewModel.onContinueClicked()}"
             android:text="@string/continue_btn_text"
-            android:textAllCaps="false"
+
             android:layout_marginStart="47dp"
             android:layout_marginEnd="47dp"
-            android:paddingVertical="16dp"
-            android:textSize="18sp"
-            app:backgroundTint="@color/text_color_dark"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

@@ -122,15 +122,13 @@
                 android:fontFamily="@font/product_sans_regular"
                 app:backgroundTint="@color/fragmentBackgroundColor" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/button_accept"
-                style="@style/Widget.App.Button"
+
                 android:layout_width="0dp"
-                android:background="@drawable/curved_background1"
                 android:layout_height="@dimen/main_button_height"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_weight="0.5"
-                android:fontFamily="@font/product_sans_regular"
                 android:text="@string/complete_btn"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/black" />

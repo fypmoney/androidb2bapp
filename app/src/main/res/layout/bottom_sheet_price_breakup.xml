@@ -130,20 +130,18 @@
             </TableRow>
         </TableLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/gotBtn"
-            style="@style/Widget.App.Button"
-            android:layout_width="299dp"
-            android:layout_height="52dp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/table"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/curved_background1"
-            app:backgroundTint="@color/text_color_dark"
+            android:layout_marginTop="28dp"
             android:layout_marginBottom="@dimen/button_margin"
             android:text="@string/got_it_btn_text"
             android:textAllCaps="false"
-            android:layout_marginTop="28dp"
-            android:layout_below="@+id/table"
-            />
+            app:backgroundTint="@color/text_color_dark" />
 
     </RelativeLayout>
 </layout>

@@ -91,9 +91,9 @@
                         app:srcCompat="@drawable/cirular_ring" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btnSpinWheel"
-                    style="@style/Widget.App.Button"
+
                     android:layout_width="200dp"
                     android:layout_below="@+id/luckylayout"
                     android:layout_height="52dp"
@@ -191,16 +191,16 @@
                     android:text="@string/spin_wheel_text4"
                     android:textAlignment="center" />
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btnSendOtp"
-                    style="@style/Widget.App.Button"
-                    android:layout_width="299dp"
-                    android:layout_height="52dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/text3"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/curved_background1"
+
                     android:text="Redeem Mynts"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/text_color_dark" />

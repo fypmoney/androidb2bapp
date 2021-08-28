@@ -139,8 +139,8 @@
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/curved_background1"
                     android:onClick="@{(view)->viewModel.onPayOrRequestClicked(view)}"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
                     android:text="@string/request_btn_text"
                     android:textAlignment="center"
                     android:textColor="@color/white" />
@@ -155,8 +155,8 @@
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/curved_background1"
                     android:onClick="@{(view)->viewModel.onPayOrRequestClicked(view)}"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
+                    android:paddingTop="12dp"
+                    android:paddingBottom="12dp"
                     android:text="@string/pay_btn_text"
                     android:textAlignment="center"
                     android:textColor="@color/white" />

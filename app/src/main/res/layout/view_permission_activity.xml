@@ -15,7 +15,7 @@
             android:id="@+id/relativeLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-20dp"
+            android:layout_marginTop="-30dp"
             android:background="@drawable/ic_welcome_fyp_permissions"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
                 android:id="@+id/read_contacts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_54sdp">
+                android:layout_marginTop="@dimen/_50sdp">
 
                 <CheckBox
                     android:id="@+id/permission2_cb"
@@ -140,20 +140,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/btnAllow"
-            style="@style/Widget.App.Button"
+
             android:layout_marginStart="@dimen/_24sdp"
             android:layout_marginEnd="@dimen/_24sdp"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:elevation="0dp"
+
             android:layout_centerHorizontal="true"
             android:textColor="@color/grey_heading"
 
             android:textSize="16sp"
             android:textStyle="bold"
-            android:background="@drawable/curved_background14"
             android:text="Allow"
             android:textAllCaps="false"
             android:layout_marginBottom="@dimen/_28sdp"

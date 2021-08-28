@@ -69,20 +69,18 @@
                 android:textColor="@color/text_color_light"
                 android:textSize="@dimen/title_size" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/inviteBtn"
-                style="@style/Widget.App.Button"
-                android:layout_width="299dp"
-                android:layout_height="52dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/message"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/curved_background1"
-                app:backgroundTint="@color/text_color_dark"
+                android:layout_marginTop="28dp"
                 android:layout_marginBottom="@dimen/button_margin"
                 android:text="@string/invite_btn_text"
                 android:textAllCaps="false"
-                android:layout_marginTop="28dp"
-                android:layout_below="@+id/message"
-                />
+                app:backgroundTint="@color/text_color_dark" />
 
 
 

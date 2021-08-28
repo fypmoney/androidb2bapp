@@ -59,7 +59,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_ok"
-                style="@style/Widget.App.Button"
+
                 android:layout_width="0dp"
                 app:customCornerRadius="@{@dimen/_30sdp}"
                 android:layout_height="@dimen/main_button_height"

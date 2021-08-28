@@ -101,15 +101,14 @@
             android:visibility="gone"
             android:text="@string/save_upi_id" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/btnAdd"
-            style="@style/Widget.App.Button"
-            android:layout_width="299dp"
-            android:layout_height="52dp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
-            android:background="@drawable/curved_background1"
             android:text="@string/add_verify_btn_text"
             android:textAllCaps="false"
             app:backgroundTint="@color/text_color_dark" />

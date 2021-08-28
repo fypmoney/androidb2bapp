@@ -73,14 +73,13 @@
             />
 
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/button_share"
-            style="@style/Widget.App.Button"
-            android:layout_width="299dp"
-            android:layout_height="52dp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="30dp"
-            android:background="@drawable/curved_background1"
             android:text="@string/share_btn_text"
             android:textAllCaps="false"
             android:layout_marginBottom="20dp"

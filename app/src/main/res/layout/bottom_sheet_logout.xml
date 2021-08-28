@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
 
                 android:layout_marginStart="@dimen/_10sdp"
-                android:paddingVertical="15dp"
+
                 android:layout_weight="0.5"
                 android:text="@string/log_out_btn_text"
                 android:textAllCaps="false"

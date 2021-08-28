@@ -91,17 +91,16 @@
                         android:layout_marginTop="@dimen/margin"
                         android:background="@color/dividerColor" />
 
-                    <com.google.android.material.button.MaterialButton
+                    <Button
                         android:id="@+id/btnSendOtp"
-                        style="@style/Widget.App.Button"
+
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/main_button_height"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/view1"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/_12sdp"
                         android:onClick="@{()->viewModel.onSendLinkClicked()}"
-                        android:paddingStart="@dimen/margin"
-                        android:paddingEnd="@dimen/margin"
+
                         android:text="@string/send_link_btn_text"
                         android:textAllCaps="false"
                         app:backgroundTint="@color/color_light_green" />
@@ -199,10 +198,10 @@
                 android:layout_marginBottom="@dimen/_20sdp"
                 android:background="@drawable/edit_text_border_background"
                 android:gravity="center"
-                android:visibility="@{viewModel.isMemberCardVisible?View.VISIBLE:View.GONE}"
                 android:onClick="@{(view)->viewModel.onLeaveMemberClicked(view)}"
                 android:text="@string/leave_family"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:visibility="@{viewModel.isMemberCardVisible?View.VISIBLE:View.GONE}" />
 
 
         </RelativeLayout>

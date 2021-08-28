@@ -73,18 +73,16 @@
                 android:text="@string/cancel_btn_text"
                 />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/button_update"
-                style="@style/Widget.App.Button"
+
                 android:layout_width="0dp"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_weight="0.5"
                 android:text="@string/update_btn_text"
-                android:background="@drawable/curved_background1"
                 android:textAllCaps="false"
-                app:backgroundTint="@color/text_color_dark"
-                />
+                app:backgroundTint="@color/text_color_dark" />
 
 
         </LinearLayout>

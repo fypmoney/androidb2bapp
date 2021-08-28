@@ -182,16 +182,15 @@
                     app:spanCount="5" />
 
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btnContinue"
-                    style="@style/Widget.App.Button"
-                    android:layout_width="299dp"
-                    android:layout_height="52dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/recycler_view"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginBottom="20dp"
-                    android:background="@drawable/curved_background1"
                     android:onClick="@{()->viewModel.onAddMemberClicked()}"
                     android:text="@string/add_member_btn_text"
                     android:textAllCaps="false"

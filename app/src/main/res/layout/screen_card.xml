@@ -178,10 +178,9 @@
 
                     <VideoView
                         android:id="@+id/video"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:maxHeight="363dp"
-                        android:minHeight="200dp"
+                        app:layout_constraintDimensionRatio="700:1080"
                         android:layout_marginStart="@dimen/_20sdp"
                         android:layout_marginEnd="@dimen/_20sdp"
                         android:layout_marginTop="@dimen/_16sdp"
@@ -202,7 +201,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/video"
                         android:layout_marginStart="@dimen/dp16"
                         android:layout_marginEnd="@dimen/dp16"
-                        android:text="@string/notifiy_card_screen_subtitle"
+                        android:text="Here’s a cool sneak peek of your virtual card that is going to roll out in a couple of days. Shopping clothes, ordering food, or recharging are just a piece of cake now. Savor it!"
                         android:textColor="@color/text_color_light"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toTopOf="@+id/notify_btn"
