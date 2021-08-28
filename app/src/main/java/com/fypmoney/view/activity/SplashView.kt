@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +17,7 @@ import com.appsflyer.AFInAppEventParameterName
 import com.appsflyer.AppsFlyerLib
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.application.AppSignatureHelper
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSplashBinding
@@ -53,6 +55,8 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
+       //val appSignatureHelper =  AppSignatureHelper(this)
+        //Log.d("Data","Chutiya "+appSignatureHelper.appSignatures)
         val uri: Uri =
             Uri.parse("android.resource://" + packageName + "/" + R.raw.splash)
         video.setMediaController(null)

@@ -32,8 +32,10 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:srcCompat="@drawable/didyouknow" />
+            android:layout_height="wrap_content"
+            app:IMAGE_URL="@{viewHelper.feedDetails.resourceId}"
+            app:TYPE="@{viewHelper.type}"
+            app:position="@{viewHelper.position}" />
 
 
     </androidx.cardview.widget.CardView>

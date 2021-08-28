@@ -11,13 +11,21 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    signingConfigs {
+        config {
+            storeFile file('C:\\Users\\Pawankumar\\Desktop\\jks\\FypKeystore.jks')
+            storePassword 'WjfUzYjN8bem6bX6'
+            keyAlias 'Fyp'
+            keyPassword 'WjfUzYjN8bem6bX6'
+        }
+    }
+    compileSdkVersion rootProject.compileSdkVersion
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.fypmoney"
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdkVersion rootProject.minSdkVersion
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 10
         versionName "1.0.6"
         multiDexEnabled = true
@@ -32,15 +40,21 @@ android {
     buildTypes {
         release {
             debuggable true
-            minifyEnabled true
-            shrinkResources true
+            //minifyEnabled true
+            //shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     buildFeatures {
         dataBinding = true
     }
 
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "${rootProject.appName}-${variant.name}-v${variant.versionName}.apk"
+        }
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -55,6 +69,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
 
 }
 

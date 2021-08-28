@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.appsflyer.AFInAppEventParameterName
 import com.appsflyer.AppsFlyerLib
+import com.facebook.appevents.AppEventsLogger
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -35,12 +36,9 @@ import com.fypmoney.view.fragment.*
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.HomeViewModel
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.view_home.*
 import java.util.concurrent.atomic.AtomicBoolean
-import com.google.firebase.analytics.FirebaseAnalytics
-
-
-
 
 
 /*
@@ -87,6 +85,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         loadFragment(HomeScreen(),1)
         mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
         mFirebaseAnalytics!!.logEvent("Home_Screen",null)
+        logSentFriendRequestEvent()
         try {
             val eventValue: MutableMap<String, Any> = HashMap()
 
@@ -169,6 +168,13 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
     }
 
+    /**
+     * This function assumes logger is an instance of AppEventsLogger and has been
+     * created using AppEventsLogger.newLogger() call.
+     */
+    fun logSentFriendRequestEvent() {
+        AppEventsLogger.newLogger(applicationContext).logEvent("home_screen")
+    }
     private fun setupFamily() {
         loadFragment(FamilySettingsView(), 5)
         mViewBinding.navigationView.menu.findItem(R.id.family).isChecked = true;

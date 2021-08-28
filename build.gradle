@@ -34,3 +34,12 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext{
+    appName = 'Fyp'
+    // Sdk and tools
+    minSdkVersion = 21
+    targetSdkVersion = 30
+    compileSdkVersion = 30
+
+}
