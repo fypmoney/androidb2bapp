@@ -78,7 +78,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 
     //Appsfyler
-    implementation 'com.appsflyer:af-android-sdk:5.0.0@aar'
+
     implementation 'com.android.installreferrer:installreferrer:1.0'
 
     implementation 'com.airbnb.android:lottie:3.4.0'

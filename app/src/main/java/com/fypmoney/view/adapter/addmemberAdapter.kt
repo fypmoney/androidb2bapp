@@ -50,9 +50,6 @@ class addmemberAdapter(
                         ContextCompat.getDrawable(context, R.drawable.white_round)
 
                 }
-                Glide.with(context)
-                    .load(R.drawable.ic_profile)
-                    .into(baseHolder.imagee)
 
                 if (!items?.get(position - 1)?.name.isNullOrEmpty()) {
                     baseHolder.name_tv.text = items[position - 1].name

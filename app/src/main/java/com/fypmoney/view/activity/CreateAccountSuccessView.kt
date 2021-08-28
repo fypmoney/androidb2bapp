@@ -5,8 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
-import com.appsflyer.AFInAppEventType
-import com.appsflyer.AppsFlyerLib
+
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -48,8 +47,7 @@ class CreateAccountSuccessView :
         val eventValue: MutableMap<String, Any> = HashMap()
 //                eventValue[AFInAppEventParameterName.CUSTOMER_USER_ID] = it
 
-        AppsFlyerLib.getInstance()
-            .trackEvent(applicationContext, AFInAppEventType.COMPLETE_REGISTRATION, eventValue)
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 

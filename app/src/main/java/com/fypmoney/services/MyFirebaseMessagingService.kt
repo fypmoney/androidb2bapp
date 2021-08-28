@@ -12,7 +12,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.appsflyer.AppsFlyerLib
+
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -35,7 +35,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     override fun onNewToken(s: String) {
         super.onNewToken(s)
         Log.d("FCMToken", s)
-        AppsFlyerLib.getInstance().updateServerUninstallToken(getApplicationContext(), s);
 
         SharedPrefUtils.putString(applicationContext, SharedPrefUtils.SF_KEY_FIREBASE_TOKEN, s)
 
