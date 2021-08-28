@@ -117,15 +117,14 @@
                                     android:text="@string/assign_task"
                                     android:textAlignment="center" />
 
-                                <com.google.android.material.button.MaterialButton
+                                <Button
                                     android:id="@+id/btnSendOtp"
-                                    style="@style/Widget.App.Button"
-                                    android:layout_width="299dp"
-                                    android:layout_height="52dp"
+
+                                    android:layout_width="wrap_content"
+
+                                    android:layout_height="wrap_content"
                                     android:layout_marginTop="26dp"
                                     android:layout_marginBottom="@dimen/_20sdp"
-                                    android:background="@drawable/curved_background1"
-                                    android:fontFamily="@font/product_sans_regular"
                                     android:gravity="center_horizontal|center_vertical"
                                     android:text="@string/btn_text"
                                     android:textAllCaps="false"

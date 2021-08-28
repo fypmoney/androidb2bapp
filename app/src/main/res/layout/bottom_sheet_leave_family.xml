@@ -41,7 +41,7 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/no"
-                style="@style/TextviewRegular"
+
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="@dimen/_10sdp"
@@ -51,14 +51,13 @@
                 android:textColor="@color/text_color_dark"
                 android:textSize="@dimen/textSize_18" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/yes"
-                style="@style/Widget.App.Button"
+
                 android:layout_width="0dp"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_weight="0.5"
-                android:background="@drawable/curved_background1"
                 android:text="@string/yes_btn_text"
                 android:textAllCaps="false"
                 app:backgroundTint="@color/text_color_dark" />

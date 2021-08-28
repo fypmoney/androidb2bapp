@@ -87,11 +87,7 @@ class UserFeedsDetailView : BaseActivity<ViewUserFeedsDetailBinding, FeedDetails
 
 
         mViewModel.authorAndDate.set(
-            mViewModel.feedDetails.get()?.author + "/" + Utility.parseDateTime(
-                mViewModel.feedDetails.get()?.createdDate,
-                inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT,
-                outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT4
-            )
+            mViewModel.feedDetails.get()?.author + " . " + mViewModel.feedDetails.get()?.readTime + " min"
         )
 
 

@@ -135,14 +135,13 @@
 
                 />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
 
-                style="@style/Widget.App.Button"
+
                 android:layout_width="0dp"
                 android:layout_weight="1.2"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/curved_background1"
                 android:text="Accept"
                 android:textSize="16sp"
                 android:fontFamily="@font/product_sans_regular"
@@ -155,20 +154,17 @@
 
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
+        <Button
 
-            style="@style/Widget.App.Button"
-            android:layout_width="match_parent"
+
+            android:layout_width="wrap_content"
             android:layout_marginBottom="@dimen/_30sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:id="@+id/cancel"
             android:visibility="gone"
             android:layout_gravity="center"
-            android:background="@drawable/curved_background1"
             android:text="Cancel"
-            android:textSize="16sp"
-            android:fontFamily="@font/product_sans_regular"
 
             android:textAllCaps="false"
 

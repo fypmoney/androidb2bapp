@@ -15,7 +15,7 @@
             android:id="@+id/relativeLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-20dp"
+            android:layout_marginTop="-30dp"
             android:background="@drawable/ic_welcome_fyp_permissions"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,30 +31,37 @@
                 android:textColor="@color/white" />
 
         </RelativeLayout>
+<ScrollView
+    android:layout_width="match_parent"
+    android:paddingLeft="@dimen/_16sdp"
+    android:layout_marginBottom="@dimen/_6sdp"
+    android:layout_height="0dp"
+    android:paddingRight="@dimen/_16sdp"
+    app:layout_constraintBottom_toTopOf="@+id/tvTerms"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/relativeLayout4"
+   >
+
 
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/_16sdp"
-            android:paddingRight="@dimen/_16sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/relativeLayout4">
+          >
 
             <RelativeLayout
+                android:id="@+id/read_contacts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/read_contacts"
-                android:layout_marginTop="@dimen/_54sdp">
+                android:layout_marginTop="@dimen/_50sdp">
 
                 <CheckBox
                     android:id="@+id/permission2_cb"
-                    android:buttonTint="@color/black"
                     android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp" />
+                    android:layout_height="@dimen/_24sdp"
+                    android:buttonTint="@color/black" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/permission2_tv"
@@ -82,16 +89,16 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/location_permissions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/location_permissions"
                 android:layout_marginTop="@dimen/_24sdp">
 
                 <CheckBox
                     android:id="@+id/permission1_cb"
                     android:layout_width="@dimen/_24sdp"
-                    android:buttonTint="@color/black"
-                    android:layout_height="@dimen/_24sdp" />
+                    android:layout_height="@dimen/_24sdp"
+                    android:buttonTint="@color/black" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/permission1_tv"
@@ -119,7 +126,7 @@
 
 
         </LinearLayout>
-
+</ScrollView>
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTerms"
             style="@style/TextviewRegular"
@@ -133,25 +140,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/btnAllow"
-            style="@style/Widget.App.Button"
+
             android:layout_marginStart="@dimen/_24sdp"
             android:layout_marginEnd="@dimen/_24sdp"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="wrap_content"
             android:elevation="0dp"
+
             android:layout_centerHorizontal="true"
             android:textColor="@color/grey_heading"
 
             android:textSize="16sp"
             android:textStyle="bold"
-            android:background="@drawable/curved_background14"
             android:text="Allow"
             android:textAllCaps="false"
             android:layout_marginBottom="@dimen/_28sdp"
             app:backgroundTint="@color/cb_grey"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout4"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

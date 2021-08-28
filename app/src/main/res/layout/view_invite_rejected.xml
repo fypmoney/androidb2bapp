@@ -55,20 +55,18 @@
             android:textAlignment="center"
             />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/btnSendOtp"
-            style="@style/Widget.App.Button"
-            android:layout_width="299dp"
-            android:layout_height="52dp"
-            android:layout_centerHorizontal="true"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-             android:background="@drawable/curved_background1"
-            app:backgroundTint="@color/text_color_dark"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/button_margin"
             android:onClick="@{()->viewModel.onRequestAgainClicked()}"
             android:text="@string/request_again_btn_text"
             android:textAllCaps="false"
-            />
+            app:backgroundTint="@color/text_color_dark" />
     </RelativeLayout>
     </LinearLayout>
 </layout>

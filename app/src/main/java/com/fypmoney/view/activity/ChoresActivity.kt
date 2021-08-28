@@ -41,8 +41,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 
 
-class ChoresActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>(),
-    AcceptRejectTaskFragment.OnBottomSheetClickListener {
+class ChoresActivity : BaseActivity<ViewChoresBinding, ChoresViewModel>() {
 
     private var commentstr: String? = null
     private var choresModel: TaskDetailResponse? = null
@@ -301,17 +300,7 @@ companion object{
         bottomsheetInsufficient?.show(supportFragmentManager, "TASKMESSAGE")
     }
 
-    override fun onBottomSheetButtonClick() {
-        /*when (type) {
-            AppConstants.LEAVE_MEMBER -> {
-                //mViewModel.callLeaveFamilyApi()
-            }
-            AppConstants.REMOVE_MEMBER -> {
-                //mViewModel.callRemoveMemberApi()
 
-            }
-        }*/
-    }
 
     private fun intentToPayActivity(aClass: Class<*>, pay: String? = null) {
         val intent = Intent(this, aClass)

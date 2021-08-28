@@ -56,15 +56,14 @@
                 android:text="@string/account_activation_success_aadhaar_title"
                 android:textAlignment="center" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/btnSendOtp"
-                style="@style/Widget.App.Button"
-                android:layout_width="299dp"
-                android:layout_height="52dp"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/_40sdp"
-                android:background="@drawable/curved_background1"
                 android:onClick="@{()->viewModel.onContinueClicked()}"
                 android:text="@string/continue_btn_text"
                 android:textAllCaps="false"

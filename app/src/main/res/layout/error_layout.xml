@@ -55,10 +55,9 @@
                     android:textSize="@dimen/_12sdp" />
 
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <Button
                     android:id="@+id/try_again"
-                    style="@style/Widget.App.Button"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
 
                     android:layout_height="wrap_content"
 
@@ -70,13 +69,12 @@
 
                     android:layout_marginTop="@dimen/_38sdp"
 
-                    android:background="@drawable/curved_background26"
 
 
                     android:text="@string/try_again_text"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/title_size"
+
                     app:backgroundTint="@color/text_color_dark" />
 
         </RelativeLayout>

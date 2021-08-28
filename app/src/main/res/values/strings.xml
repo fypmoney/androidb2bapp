@@ -152,7 +152,7 @@
     <string name="chore_title">Missions</string>
     <string name="chore_history_title">Chores History</string>
     <string name="assign_task">Assign missions and participate to get cash.</string>
-    <string name="btn_text">Assign A Task</string>
+    <string name="btn_text">Assign A Mission</string>
     <string name="btn_cont">Continue</string>
     <string name="create_task">Choose a task or create one</string>
     <string name="chores_error">Something went wrong.</string>
@@ -239,7 +239,7 @@
     <string name="quick_actions">Quick Actions</string>
     <string name="quick_actions_split_bill">Split Bills</string>
     <string name="quick_actions_split_bill1">Split expenses with friends &amp; Family</string>
-    <string name="quick_actions_chores">Mission</string>
+    <string name="quick_actions_chores">Missions</string>
     <string name="quick_actions_chores1">Perform task and get cash rewards</string>
     <string name="quick_actions_rewards">Rewards</string>
     <string name="quick_actions_rewards1">Play games and get exciting rewards</string>
@@ -866,5 +866,6 @@ Coming really soon!
     <string name="aadhaar_card_for_verification">Aadhaar card for verification</string>
     <string name="mobile_phone_that_is_linked_to_aadhaar_card">Mobile phone that is linked to Aadhaar Card.</string>
     <string name="unauthrized_msg">Your session has expired. Please login again..</string>
+    <string name="planning_to_order_a_physical_fyp_card_make_heads_turn_as_the_card_stands_out_from_the_crowd_you_ll_know_why_once_you_get_it">Planning to order a physical Fyp card? Make heads turn as the card stands out from the crowd.\n You’ll know why once you get it.\n\nComing really soon!</string>
 
 </resources>

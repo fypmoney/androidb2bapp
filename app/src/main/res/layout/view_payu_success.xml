@@ -161,15 +161,14 @@
                 android:textAlignment="center" />
 
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/get_help_button"
-                style="@style/Widget.App.Button"
+
                 android:layout_width="wrap_content"
-                android:paddingHorizontal="30dp"
-                android:layout_height="42dp"
+
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_40sdp"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/curved_background1"
                 android:text="@string/get_help"
                 android:textAllCaps="false"
                 app:backgroundTint="@color/text_color_dark" />

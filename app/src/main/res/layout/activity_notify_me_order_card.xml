@@ -63,12 +63,13 @@
 
             <VideoView
                 android:id="@+id/video"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:maxHeight="363dp"
-                android:minHeight="200dp"
-                android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
+                app:layout_constraintDimensionRatio="700:1080"
+
+
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_16sdp"
                 app:layout_constraintTop_toBottomOf="@+id/sub_title_tv"
                 app:layout_constraintBottom_toTopOf="@+id/body_tv"
@@ -85,14 +86,14 @@
                 android:layout_marginTop="@dimen/dp16"
                 android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@+id/video"
-                android:layout_marginStart="@dimen/dp16"
-                android:layout_marginEnd="@dimen/dp16"
-                android:text="@string/keeping_everyone_s_safety_in_mind_physical_fyp_card_orders_will_resume_once_we_all_have_crossed_the_pandemic_you_can_hit_the_notify_me_button_to_receive_the_notification_when_we_begin_this_service"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:text="@string/planning_to_order_a_physical_fyp_card_make_heads_turn_as_the_card_stands_out_from_the_crowd_you_ll_know_why_once_you_get_it"
                 android:textColor="@color/text_color_light"
                 android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@+id/notify_btn"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
 
             <androidx.appcompat.widget.AppCompatTextView

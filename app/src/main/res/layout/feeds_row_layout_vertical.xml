@@ -79,13 +79,12 @@
                 android:text="@{viewHelper.feedDetails.subTitle}"
                 android:textSize="@dimen/edit_text_size" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/button_cancel"
                 android:layout_width="@dimen/_150sdp"
                 android:layout_height="@dimen/main_button_height"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/margin"
-                android:background="@drawable/curved_background1"
                 android:gravity="center"
                 android:onClick="@{()->viewHelper.onFeedButtonClick()}"
                 android:text="@{viewHelper.feedDetails.action.buttonText}"

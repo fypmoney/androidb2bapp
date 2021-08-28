@@ -133,18 +133,17 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/etDateOfBirth"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/_47sdp"
                     android:layout_marginStart="@dimen/_17sdp"
+                    android:layout_marginTop="@dimen/_47sdp"
                     android:layout_marginEnd="@dimen/_17sdp"
                     android:layout_marginBottom="@dimen/_47sdp"
-                    android:background="@drawable/curved_background1"
                     android:enabled="@{viewModel.isEnabled()}"
                     android:onClick="@{()->viewModel.onContinueClicked()}"
-                    android:paddingVertical="@dimen/dp16"
+
                     android:text="@string/continue_btn_text"
                     android:textAllCaps="false"
                     android:textColor="@color/text_color_little_dark"
-                    android:textSize="18sp"
+
                     app:backgroundTint="@color/buttonUnselectedColor" />
 
 

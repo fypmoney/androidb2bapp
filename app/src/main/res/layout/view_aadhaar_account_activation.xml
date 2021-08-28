@@ -140,16 +140,15 @@
                     android:textAlignment="viewStart"
                     android:textColor="@color/text_color_dark" />
 
-                <com.google.android.material.button.MaterialButton
+                <Button
                     android:id="@+id/btnGetOtp"
-                    style="@style/Widget.App.Button"
-                    android:layout_width="299dp"
-                    android:layout_height="52dp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/step_two_tv"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_30sdp"
-                    android:background="@drawable/curved_background1"
                     android:onClick="@{()->viewModel.callKycAccountActivationApi()}"
                     android:text="@string/activate_account_btn_text"
                     android:textAllCaps="false"
