@@ -73,8 +73,8 @@
 
                     android:ellipsize="end"
                     android:duplicateParentState="true"
-                    android:gravity="center"
-
+                    android:gravity="start"
+                    tools:text="dummy text data dsaghdgha dajgsgdjas dbjashdjas daghsda "
                     android:textColor="@color/text_color_dark"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toTopOf="@+id/linearLayout2"

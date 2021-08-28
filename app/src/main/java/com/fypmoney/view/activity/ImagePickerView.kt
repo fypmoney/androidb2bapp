@@ -150,7 +150,7 @@ class ImagePickerView : AppCompatActivity() {
             Uri.fromFile(File(cacheDir, queryName(contentResolver, sourceUri)))
         val options = UCrop.Options()
         options.setCompressionQuality(IMAGE_COMPRESSION)
-        options.setCircleDimmedLayer(false)
+        options.setCircleDimmedLayer(true)
         options.setShowCropGrid(false)
         options.setShowCropFrame(false)
         // applying UI theme

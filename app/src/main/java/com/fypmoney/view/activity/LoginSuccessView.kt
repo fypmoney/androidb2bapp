@@ -5,6 +5,8 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.adjust.sdk.Adjust
+import com.adjust.sdk.AdjustEvent
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -68,7 +70,9 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
      */
     private fun setObserver() {
         mViewModel.onApiSuccess.observe(this) {
+            Adjust.trackEvent(AdjustEvent("vp1kxg"));
             when {
+
                 Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
                     when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
                         AppConstants.YES -> {

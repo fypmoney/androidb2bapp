@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.adjust.sdk.Adjust
+import com.adjust.sdk.AdjustEvent
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -37,6 +39,7 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
             toolbar = toolbar,
             isBackArrowVisible = true
         )
+        Adjust.trackEvent(AdjustEvent("m64ei2"))
         setObserver()
 
     }

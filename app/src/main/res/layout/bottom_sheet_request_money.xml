@@ -98,8 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_weight="0.5"
-
-                android:text="@string/approve_pay_btn_text"
+                android:text="@string/pay"
                 android:textAllCaps="false"
                 app:backgroundTint="@color/text_color_dark" />
 

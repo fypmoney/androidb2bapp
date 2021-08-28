@@ -87,10 +87,10 @@
 
                 android:layout_below="@+id/heading"
                 android:layout_marginLeft="@dimen/_14sdp"
-
+                tools:text="dummy text data dsaghdgha dajgsgdjas dbjashdjas daghsda "
                 android:layout_marginRight="@dimen/_14sdp"
                 android:ellipsize="end"
-                android:gravity="center"
+                android:gravity="start"
 
                 android:textColor="@color/text_color_dark"
 

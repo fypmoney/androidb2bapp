@@ -150,7 +150,7 @@ class DialogUtils {
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
             val tryAgain =
-                (mAlertDialog?.window!!.findViewById(R.id.try_again) as AppCompatTextView)
+                (mAlertDialog?.window!!.findViewById(R.id.try_again) as Button)
             tryAgain.setOnClickListener {
 
                 if (NetworkUtil.isNetworkAvailable()) {

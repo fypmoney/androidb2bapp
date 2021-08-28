@@ -146,7 +146,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                        android:hint="@string/title_hint"
+                        android:hint="@string/mission_name"
                         android:inputType="textCapWords"
                         android:maxLength="30"
                         android:paddingStart="@dimen/edittextHintPaddingStart"
@@ -156,12 +156,9 @@
                     <com.vanniktech.emoji.EmojiEditText
                         android:id="@+id/emojiEditText"
                         android:layout_width="match_parent"
-
                         android:focusable="false"
-
-                        android:hint="Emoji"
+                        android:hint="@string/emoji"
                         android:focusableInTouchMode="false"
-
                         android:layout_marginTop="@dimen/_14sdp"
                         android:layout_height="wrap_content"
                         android:imeOptions="actionSend" />
@@ -169,11 +166,10 @@
                         android:id="@+id/et_desc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
                         android:layout_marginTop="@dimen/_20sdp"
                         android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                         android:gravity="top"
-                        android:hint="@string/desc_hint"
+                        android:hint="@string/mission_desc"
                         android:lines="4"
                         android:maxLength="200"
                         android:paddingStart="@dimen/edittextHintPaddingStart"

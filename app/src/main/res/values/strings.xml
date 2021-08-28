@@ -867,5 +867,9 @@ Coming really soon!
     <string name="mobile_phone_that_is_linked_to_aadhaar_card">Mobile phone that is linked to Aadhaar Card.</string>
     <string name="unauthrized_msg">Your session has expired. Please login again..</string>
     <string name="planning_to_order_a_physical_fyp_card_make_heads_turn_as_the_card_stands_out_from_the_crowd_you_ll_know_why_once_you_get_it">Planning to order a physical Fyp card? Make heads turn as the card stands out from the crowd.\n You’ll know why once you get it.\n\nComing really soon!</string>
+    <string name="mission_name">Mission name</string>
+    <string name="mission_desc">Mission description</string>
+    <string name="emoji">Emoji</string>
+    <string name="pay">Pay</string>
 
 </resources>
