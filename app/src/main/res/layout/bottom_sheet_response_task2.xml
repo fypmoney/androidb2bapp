@@ -279,11 +279,14 @@
                         android:layout_marginStart="@dimen/_22sdp"
                         android:layout_marginTop="@dimen/_8sdp">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
+                        <ImageView
                             android:id="@+id/profile_pic"
+                            app:civ_border_color="@color/grey"
+                            android:padding="2dp"
+                            app:civ_border_width="1dp"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
-                            android:src="@drawable/ic_profile" />
+                            android:src="@drawable/ic_user" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/bywhom"

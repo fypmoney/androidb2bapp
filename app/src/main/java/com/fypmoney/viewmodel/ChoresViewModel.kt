@@ -117,7 +117,7 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
                     10,
                     "createdDate,desc"
                 ), onResponse = this,
-                isProgressBar = true
+                isProgressBar = false
             )
 
         )
