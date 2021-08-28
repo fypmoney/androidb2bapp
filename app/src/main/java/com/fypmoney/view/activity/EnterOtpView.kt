@@ -42,6 +42,8 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
     private lateinit var mViewModel: EnterOtpViewModel
     private lateinit var mViewBinding: ViewEnterOtpBinding
     lateinit var timer: CountDownTimer
+    val smsBroadcastReceiver = SmsBroadcastReceiver()
+    var isRegistered:Boolean = false
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -159,16 +161,21 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
         val client = SmsRetriever.getClient(this)
         val task = client.startSmsRetriever()
         task.addOnSuccessListener { aVoid ->
-            val smsBroadcastReceiver = SmsBroadcastReceiver()
-
+            isRegistered = true
             smsBroadcastReceiver.setOnOtpListeners(object : OtpReceivedInterface {
                 override fun onOtpReceived(otp: String?) {
                     otpView.setText(otp)
                     mViewModel.onVerifyClicked()
+                    this@EnterOtpView.unregisterReceiver(smsBroadcastReceiver)
+                    isRegistered = false
+
                 }
 
                 override fun onOtpTimeout() {
                     Log.v("Otp", "Otp time out")
+                    this@EnterOtpView.unregisterReceiver(smsBroadcastReceiver)
+                    isRegistered = false
+
                 }
 
             })
@@ -179,6 +186,8 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
         }
         task.addOnFailureListener { e ->
             Log.e("auto sms read", e.toString())
+            isRegistered = false
+
         }
     }
 
@@ -304,4 +313,12 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
     }
 
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if(isRegistered){
+            this@EnterOtpView.unregisterReceiver(smsBroadcastReceiver)
+
+        }
+
+    }
 }
