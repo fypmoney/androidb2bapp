@@ -218,7 +218,6 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         taskMessageBottomSheet3?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         taskMessageBottomSheet3?.show(supportFragmentManager, "TASKMESSAGE")
     }
-
     private fun callInsuficientFundMessageSheet(amount: String?) {
         var itemClickListener2 = object : AcceptRejectClickListener {
             override fun onAcceptClicked(pos: Int, str: String) {
@@ -256,7 +255,6 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         intent.putExtra("amountshouldbeadded", amount)
         startActivity(intent)
     }
-
     private fun callTaskMessageSheet(list: UpdateTaskGetResponse) {
         var itemClickListener2 = object : MessageSubmitClickListener {
 

@@ -125,7 +125,7 @@ class TransactionHistoryView :
 
         mViewModel.onItemClicked.observe(this) {
 
-            intentToPayUActivity(PayUSuccessView::class.java, it)
+        intentToPayUActivity(PayUSuccessView::class.java, it)
         }
         mViewModel.profilepic.observe(this) {
 
