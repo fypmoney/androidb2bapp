@@ -115,7 +115,7 @@ class AssignedTaskFragment : Fragment() {
 
 
             override fun onItemClicked(pos: Int) {
-
+                ChoresActivity.mViewModel?.yourtask?.set(false)
 
                 ChoresActivity.mViewModel!!.callTaskDetail(itemsArrayList[pos].id.toString())
 

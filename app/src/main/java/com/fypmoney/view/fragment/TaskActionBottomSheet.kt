@@ -5,24 +5,19 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.fragment.app.DialogFragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.R
 import com.fypmoney.bindingAdapters.loadImage
-import com.fypmoney.databinding.BottomSheetResponseTaskBinding
-import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.model.ChoresTimeLineItem
 import com.fypmoney.model.TaskDetailResponse
-import com.fypmoney.util.Utility
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility.makeTextViewResizable
 import com.fypmoney.view.activity.ChoresActivity
 import com.fypmoney.view.adapter.ChoresStatusAdapter
@@ -34,12 +29,11 @@ import kotlinx.android.synthetic.main.bottom_sheet_response_task2.*
 
 import kotlinx.android.synthetic.main.bottom_sheet_response_task2.view.*
 
-import kotlinx.android.synthetic.main.toolbar.*
-
 
 class TaskActionBottomSheet(
     var onClickListener: AcceptRejectClickListener,
-    var list: TaskDetailResponse
+    var list: TaskDetailResponse,
+    val value: Boolean?
 ) :
     BottomSheetDialogFragment() {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
@@ -174,7 +168,7 @@ class TaskActionBottomSheet(
         accept.setOnClickListener(View.OnClickListener {
             if (accept.text == "Accept") {
                 ChoresActivity.mViewModel!!.callTaskAccept("ACCEPT", list.entityId.toString(), "")
-            } else if (accept.text == "Appreciate") {
+            } else if (accept.text == "Pay") {
 
                 onClickListener.onAcceptClicked(
                     56, comment.text?.trim()
@@ -218,8 +212,9 @@ class TaskActionBottomSheet(
         })
         if (list.actionAllowed == "COMPLETE") {
 
-            view.reject.text = "In process2"
+            view.reject.text = "In process"
 
+            view.bywhom.text = list.destinationUserName
             view.cancel.text = "Complete"
             view.accept.text = "Complete"
             view.lin.visibility = View.GONE
@@ -229,13 +224,13 @@ class TaskActionBottomSheet(
             accept.text = "Accept"
             view.reject.text = "Reject"
             view.bywhom.visibility = View.VISIBLE
-            view.assigned.text = "Assigned By"
+
             view.bywhom.text = list.destinationUserName
             view.comment.visibility = View.GONE
         } else if (list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY") {
-            accept.text = "Appreciate"
+            accept.text = "Pay"
             view.reject.text = "Depreciate"
-            view.assigned.text = "Assigned To"
+
             view.bywhom.text = list.destinationUserName
 
             view.viewdiv.visibility = View.GONE
@@ -244,8 +239,9 @@ class TaskActionBottomSheet(
             view.comment.visibility = View.GONE
             view.lin.visibility = View.GONE
             view.bywhom.visibility = View.VISIBLE
-            view.bywhom.text = list.sourceUserName
-            view.assigned.text = "Assigned By"
+
+            view.bywhom.text = list.destinationUserName
+
 
         } else if (list.actionAllowed == "CANCEL") {
             view.comment.visibility = View.VISIBLE
@@ -253,10 +249,15 @@ class TaskActionBottomSheet(
 
             view.lin.visibility = View.GONE
             view.bywhom.visibility = View.VISIBLE
-            view.assigned.text = "Assigned To"
+
             view.bywhom.text = list.destinationUserName
             view.cancel.visibility = View.VISIBLE
 
+        }
+        if (value!!) {
+            view.assigned.text = "Assigned By"
+        } else {
+            view.assigned.text = "Assigned To"
         }
         var amount1 = list.additionalAttributes?.amount!! / 100
         view.amount.text = "₹" + amount1

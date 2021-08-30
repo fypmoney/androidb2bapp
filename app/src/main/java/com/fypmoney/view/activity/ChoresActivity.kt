@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -13,7 +12,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -26,7 +24,6 @@ import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.ChoresViewModel
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.*
 import kotlinx.android.synthetic.main.view_chores.*
 import java.util.ArrayList
 
@@ -256,7 +253,7 @@ companion object{
         }
 
         bottomSheetTaskAction =
-            TaskActionBottomSheet(itemClickListener2, list)
+            TaskActionBottomSheet(itemClickListener2, list, mViewModel?.yourtask?.get())
         bottomSheetTaskAction?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheetTaskAction?.show(supportFragmentManager, "TASKACCEPTREJECT")
     }
