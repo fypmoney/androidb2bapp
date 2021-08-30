@@ -44,12 +44,12 @@
                 style="@style/TextviewRegular"
                 android:layout_alignTop="@+id/ivServiceLogo"
                 android:layout_alignBottom="@+id/ivServiceLogo"
+                android:layout_alignParentEnd="true"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginTop="@dimen/_4sdp"
-                android:layout_alignParentEnd="true"
                 android:textColor="@color/text_color_dark"
-                tools:text = "Amount"
-                android:textSize="17sp" />
+                android:textSize="17sp"
+                tools:text="Amount" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/heading"

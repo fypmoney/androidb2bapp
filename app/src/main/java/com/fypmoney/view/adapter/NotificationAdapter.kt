@@ -56,6 +56,8 @@ class NotificationAdapter(var viewModel: NotificationViewModel,var onNotificatio
                     """${mRowItemBinding.amount.context.resources.getString(R.string.Rs)}${
                         Utility.convertToRs(notificationList?.get(position)?.additionalAttributes?.amount)
                     }"""
+            }else{
+                mRowItemBinding.amount.text =""
             }
 
             // mRowItemBinding.viewModel = viewModel
