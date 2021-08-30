@@ -157,7 +157,7 @@ class EnterAmountForPayRequestView :
 
                 override fun onRejectClicked(pos: Int) {
                     bottomsheetInsufficient?.dismiss()
-                    callActivity(AddMoneyView::class.java)
+                    callActivity(AddMoneyView::class.java,amount)
                 }
 
                 override fun ondimiss() {
@@ -172,8 +172,9 @@ class EnterAmountForPayRequestView :
         bottomsheetInsufficient?.show(supportFragmentManager, "INSUFFIECIENT")
     }
 
-    private fun callActivity(aClass: Class<*>) {
+    private fun callActivity(aClass: Class<*>,amount:String?) {
         val intent = Intent(this, aClass)
+        intent.putExtra("amountshouldbeadded", amount)
         startActivity(intent)
     }
     private fun intentToPayActivity(aClass: Class<*>, pay: String? = null) {

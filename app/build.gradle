@@ -39,9 +39,9 @@ android {
 
     buildTypes {
         release {
-            debuggable true
-            //minifyEnabled true
-            //shrinkResources true
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
@@ -202,7 +202,7 @@ dependencies {
     //play core lib
     implementation 'com.google.android.play:core:1.10.0'
     debugImplementation "com.github.chuckerteam.chucker:library:3.2.0"
-    releaseImplementation "com.github.chuckerteam.chucker:library:3.2.0"
+    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.2.0"
 //"com.github.chuckerteam.chucker:library-no-op:3.2.0"
 
     implementation 'com.adjust.sdk:adjust-android:4.28.4'

@@ -191,7 +191,7 @@ object AppConstants {
     const val CASHBACK_AMOUNT = "50"
     const val INSTAGRAM_PAGE = "https://www.instagram.com/fypmoney.in/?hl=en"
     const val FACEBOOK_PAGE = "https://www.facebook.com/fypmoney.in/"
-    const val YOUTUBE_PAGE = "https://www.youtube.com/channel/UCDoPH4GT9fP8Sp2bgr_95LA/about"
+    const val YOUTUBE_PAGE = "https://www.youtube.com/channel/UCDoPH4GT9fP8Sp2bgr_95LA"
 
     //DeepLinks constants
     const val HOMEVIEW = "HomeView"
