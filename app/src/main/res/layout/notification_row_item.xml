@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/dp16"
-        app:cardElevation="@dimen/card_elevation"
+        app:cardElevation="@dimen/_3sdp"
         app:cardUseCompatPadding="true"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -33,8 +33,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivServiceLogo"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_gravity="center"
                 app:SET_IMAGE_IN_NOTIFICATION="@{viewHelper.notification.icon}"
                 tools:src="@drawable/ic_fyp_logo" />
@@ -45,7 +45,7 @@
                 android:layout_alignTop="@+id/ivServiceLogo"
                 android:layout_alignBottom="@+id/ivServiceLogo"
                 android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:layout_alignParentEnd="true"
                 android:textColor="@color/text_color_dark"
                 tools:text = "Amount"
@@ -57,12 +57,12 @@
                 android:layout_alignTop="@+id/ivServiceLogo"
                 android:layout_alignBottom="@+id/ivServiceLogo"
                 android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:layout_toEndOf="@+id/ivServiceLogo"
                 android:gravity="start"
                 android:text="@{viewHelper.notification.name}"
                 android:textColor="@color/text_color_dark"
-                android:textSize="17sp" />
+                android:textSize="16sp" />
 
             <View
                 android:id="@+id/view1"
@@ -86,7 +86,7 @@
                 style="@style/TextviewRegular"
                 android:layout_below="@+id/heading1"
                 android:layout_alignParentEnd="true"
-                android:layout_marginTop="@dimen/dp16"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:text="@{viewHelper.notification.appDisplayAction}"
                 android:textColor="@color/color_skyblue"
                 tools:text="Approve" />

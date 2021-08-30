@@ -31,8 +31,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivServiceLogo"
-            android:layout_width="@dimen/_32sdp"
-            android:layout_height="@dimen/_32sdp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center"
 
             app:SET_IMAGE_IN_NOTIFICATION="@{viewHelper.notification.icon}" />
@@ -41,10 +41,10 @@
             android:id="@+id/heading"
             style="@style/TextviewRegular"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="@dimen/_4sdp"
             android:layout_toEndOf="@+id/ivServiceLogo"
             android:gravity="start"
-            android:textSize="18dp"
+            android:textSize="16sp"
             android:textColor="@color/text_color_dark"
             android:layout_alignBottom="@+id/ivServiceLogo"
             android:layout_alignTop="@+id/ivServiceLogo"
@@ -65,10 +65,10 @@
             android:id="@+id/heading1"
             android:layout_below="@+id/view1"
             style="@style/TextviewRegular"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
             android:gravity="start"
-            android:text="@{viewHelper.notification.description}"
-            />
+            android:text="@{viewHelper.notification.description}" />
     </RelativeLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

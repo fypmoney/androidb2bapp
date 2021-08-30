@@ -82,7 +82,6 @@
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_weight="1"
                 android:text="@string/cancel_btn_text"
-                android:background="@drawable/curved_background1"
                 android:textAllCaps="false"
                 app:backgroundTint="@color/text_color_dark"
                 />

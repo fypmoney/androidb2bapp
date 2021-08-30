@@ -4,16 +4,12 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import androidx.databinding.Observable
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewNotificationBinding
 import com.fypmoney.model.NotificationModel
-import com.fypmoney.model.SendMoneyResponse
 import com.fypmoney.model.SendMoneyResponseDetails
 import com.fypmoney.model.UpdateTaskGetResponse
 import com.fypmoney.util.AppConstants
@@ -123,9 +119,8 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
 
         }
         mViewModel.error.observe(this, { errorcode ->
-            if (errorcode == "PKT_2037") {
-
-                callInsuficientFundMessageSheet()
+            if (errorcode == AppConstants.INSUFFICIENT_ERROR_CODE) {
+                callInsuficientFundMessageSheet(Utility.convertToRs(mViewModel.amountToBeAdded))
             }
 
 
@@ -135,6 +130,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
             taskMessageBottomSheet3?.dismiss()
             bottomSheet?.dismiss()
             mViewModel.onRefresh()
+
             if (status.currentState == "ACCEPT") {
 
                 callTaskMessageSheet(status)
@@ -222,7 +218,8 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         taskMessageBottomSheet3?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         taskMessageBottomSheet3?.show(supportFragmentManager, "TASKMESSAGE")
     }
-    private fun callInsuficientFundMessageSheet() {
+
+    private fun callInsuficientFundMessageSheet(amount: String?) {
         var itemClickListener2 = object : AcceptRejectClickListener {
             override fun onAcceptClicked(pos: Int, str: String) {
                 bottomsheetInsufficient?.dismiss()
@@ -231,7 +228,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
 
             override fun onRejectClicked(pos: Int) {
                 bottomsheetInsufficient?.dismiss()
-                callActivity(AddMoneyView::class.java)
+                callActivity(AddMoneyView::class.java, amount)
             }
 
             override fun ondimiss() {
@@ -239,7 +236,11 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
             }
         }
         bottomsheetInsufficient =
-            TaskMessageInsuficientFuntBottomSheet(itemClickListener2)
+            TaskMessageInsuficientFuntBottomSheet(
+                itemClickListener2, title = resources.getString(R.string.insufficient_bank_balance),
+                subTitle = resources.getString(R.string.insufficient_bank_body),
+                amount = resources.getString(R.string.add_money_title1) + resources.getString(R.string.Rs) + amount
+            )
         bottomsheetInsufficient?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomsheetInsufficient?.show(supportFragmentManager, "TASKMESSAGE")
     }
@@ -250,10 +251,12 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     }
 
 
-    private fun callActivity(aClass: Class<*>) {
+    private fun callActivity(aClass: Class<*>, amount: String?) {
         val intent = Intent(this, aClass)
+        intent.putExtra("amountshouldbeadded", amount)
         startActivity(intent)
     }
+
     private fun callTaskMessageSheet(list: UpdateTaskGetResponse) {
         var itemClickListener2 = object : MessageSubmitClickListener {
 

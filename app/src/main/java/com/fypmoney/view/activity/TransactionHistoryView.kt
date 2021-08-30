@@ -4,16 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.PaginationListener
+import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewTransactionHistoryBinding
 import com.fypmoney.model.TransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.viewmodel.TransactionHistoryViewModel
 
 import kotlinx.android.synthetic.main.view_first_screen.*
@@ -122,7 +125,18 @@ class TransactionHistoryView :
 
         mViewModel.onItemClicked.observe(this) {
 
-        intentToPayUActivity(PayUSuccessView::class.java, it)
+            intentToPayUActivity(PayUSuccessView::class.java, it)
+        }
+        mViewModel.profilepic.observe(this) {
+
+            loadImage(
+                ivServiceLogo,
+                it.profilePicResourceId,
+                ContextCompat.getDrawable(this, R.drawable.ic_user),
+                true
+            )
+
+
         }
 
         mViewModel.onPayOrRequestClicked.observe(this) {

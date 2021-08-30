@@ -27,7 +27,7 @@
         android:elevation="2dp"
 
         android:background="@drawable/curved_background3"
-        android:layout_height="@dimen/_45sdp">
+        android:layout_height="wrap_content">
 
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -35,8 +35,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
+            android:backgroundTint="@color/grey"
             android:padding="6dp"
-            android:background="@drawable/curved_background14"
+            android:background="@drawable/circular_red"
             android:layout_marginStart="@dimen/_2sdp"
             app:srcCompat="@drawable/ic_profile" />
 
