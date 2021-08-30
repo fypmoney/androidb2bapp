@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -46,9 +47,15 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
         setToolbarAndTitle(
             context = this@AddMoneyView,
             toolbar = toolbar,
-            isBackArrowVisible = true,toolbarTitle =getString(R.string.add_money_screen_title)
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.add_money_screen_title)
         )
+        var amount = intent.getStringExtra("amountshouldbeadded")
+        Log.d("camount", amount.toString())
         setObserver()
+        if (!amount.isNullOrEmpty()) {
+            add_money_editext.setText(amount)
+        }
+
 
     }
 

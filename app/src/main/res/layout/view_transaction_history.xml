@@ -24,6 +24,8 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
+                app:titleMarginStart="0dp"
+                app:contentInsetStartWithNavigation="0dp"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:theme="@style/ToolbarTheme"
@@ -34,13 +36,12 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivServiceLogo"
-                    android:layout_width="@dimen/_32sdp"
-                    android:layout_height="@dimen/_32sdp"
+                    android:layout_width="@dimen/_34sdp"
+                    android:layout_height="@dimen/_34sdp"
                     android:background="@drawable/curved_background14"
-                    android:padding="10dp"
-                    android:layout_marginTop="10dp"
-                    app:IMAGE="@{viewModel.profilepic.profilePicResourceId}"
-                    app:srcCompat="@drawable/ic_ankush_bro" />
+                    android:padding="6dp"
+
+                    android:layout_marginTop="10dp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/toolbar_title"

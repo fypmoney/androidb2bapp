@@ -15,6 +15,8 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.view.activity.HomeView
+import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.adapter.NotificationAdapter
 import com.fypmoney.view.adapter.UserTimeLineAdapter
 import com.google.gson.Gson
@@ -41,7 +43,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     val isLoading = ObservableBoolean()
     val showShimmerEffect = MutableLiveData<Boolean>()
     var sendMoneyApiResponse = MutableLiveData<SendMoneyResponseDetails>()
-
+    var amountToBeAdded: String? = ""
     init {
         callGetFamilyNotificationApi()
         callUserTimeLineApi()
@@ -62,8 +64,8 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
       * This method is used to call get family notification API
       * */
 
-    private fun callGetFamilyNotificationApi() {
-        if(!isLoading.get()){
+    fun callGetFamilyNotificationApi() {
+        if (!isLoading.get()) {
             showShimmerEffect.value = true
         }
         WebApiCaller.getInstance().request(
@@ -99,8 +101,8 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
       * This method is used to call user timeline API
       * */
 
-    private fun callUserTimeLineApi() {
-        if(!isLoading.get()){
+    fun callUserTimeLineApi() {
+        if (!isLoading.get()) {
             showShimmerEffect.value = true
         }
         WebApiCaller.getInstance().request(
@@ -162,6 +164,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                 if (responseData is UpdateFamilyApprovalResponse) {
                     Utility.showToast(responseData.msg)
                     responseData.notificationResponseDetails.let {
+                        onRefresh()
                         notificationAdapter.updateList(
                             notification = responseData.notificationResponseDetails,
                             position = positionSelected.get()!!
@@ -187,6 +190,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
             }
             ApiConstant.API_PAY_MONEY -> {
                 if (responseData is PayMoneyResponse) {
+                    onRefresh()
                     Utility.showToast(responseData.msg)
                     sendMoneyApiResponse.value = responseData.sendMoneyResponseDetails
 
@@ -250,6 +254,11 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
             ApiConstant.API_TASK_UPDATE -> {
 
                 error.postValue(errorResponseInfo.errorCode)
+            }
+            ApiConstant.API_PAY_MONEY -> {
+
+                error.postValue(errorResponseInfo.errorCode)
+                amountToBeAdded = errorResponseInfo.data
             }
         }
 

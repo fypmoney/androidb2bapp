@@ -260,7 +260,7 @@ class TaskActionBottomSheet(
         }
         var amount1 = list.additionalAttributes?.amount!! / 100
         view.amount.text = "₹" + amount1
-        view.days_left.text = list.additionalAttributes?.numberOfDays.toString() + " days"
+        view.days_left.text = list.additionalAttributes?.numberOfDays.toString() + " day(s)"
         view.descrip.text = list.additionalAttributes?.description
         view.verification_title.text = list.additionalAttributes?.title
         if (!list.additionalAttributes?.description.isNullOrEmpty()) {

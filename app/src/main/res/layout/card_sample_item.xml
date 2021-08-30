@@ -66,11 +66,13 @@
 
                 <TextView
                     android:id="@+id/heading"
+                    android:paddingLeft="@dimen/_6sdp"
+                    android:paddingRight="@dimen/_6sdp"
                     style="@style/TextviewRegular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
-
+                    android:maxLines="3"
                     android:ellipsize="end"
                     android:duplicateParentState="true"
                     android:gravity="start"

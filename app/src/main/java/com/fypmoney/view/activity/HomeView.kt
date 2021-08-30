@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -37,7 +36,6 @@ import com.fypmoney.viewmodel.HomeViewModel
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.view_home.*
 import java.util.concurrent.atomic.AtomicBoolean
-import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
 /*
@@ -353,7 +351,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
             override fun onRejectClicked(pos: Int) {
                 bottomsheetInsufficient?.dismiss()
-                callActivity(AddMoneyView::class.java)
+                callActivity(AddMoneyView::class.java, amount)
             }
 
             override fun ondimiss() {
@@ -374,10 +372,12 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     }
 
 
-    private fun callActivity(aClass: Class<*>) {
+    private fun callActivity(aClass: Class<*>, amount: String?) {
         val intent = Intent(this, aClass)
+        intent.putExtra("amountshouldbeadded", amount)
         startActivity(intent)
     }
+
     private fun callTaskMessageSheet(list: NotificationModel.NotificationResponseDetails?) {
         var itemClickListener2 = object : MessageSubmitClickListener {
             override fun onSubmit() {

@@ -114,15 +114,16 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/step_one_tv"
                     style="@style/TextviewRegular"
+                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/next_step_tv"
+                    android:layout_alignStart="@+id/next_step_tv"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:drawableStart="@drawable/ic_check_green_tick"
                     android:drawablePadding="20dp"
                     android:text="@string/aadhaar_card_for_verification"
                     android:textAlignment="viewStart"
-                    android:layout_alignStart="@+id/next_step_tv"
 
                     android:textColor="@color/text_color_dark" />
 
@@ -133,6 +134,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/step_one_tv"
                     android:layout_alignStart="@+id/next_step_tv"
+                    android:layout_centerVertical="true"
                     android:layout_marginTop="@dimen/_10sdp"
                     android:drawableStart="@drawable/ic_check_green_tick"
                     android:drawablePadding="20dp"
