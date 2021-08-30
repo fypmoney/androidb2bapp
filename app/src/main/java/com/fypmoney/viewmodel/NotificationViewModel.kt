@@ -252,8 +252,9 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
 
         when (purpose) {
             ApiConstant.API_TASK_UPDATE -> {
-
                 error.postValue(errorResponseInfo.errorCode)
+                amountToBeAdded = errorResponseInfo.data
+
             }
             ApiConstant.API_PAY_MONEY -> {
 

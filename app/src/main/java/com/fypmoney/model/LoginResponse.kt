@@ -1,26 +1,28 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
+@Keep
 data class AuthLoginResponse(
     @SerializedName("data") var authLoginResponseDetails: AuthLoginResponseDetails?
 ) : Serializable
-
+@Keep
 data class AuthLoginResponseDetails(
     @SerializedName("access_token") var access_token: String?,
     @SerializedName("token_type") var token_type: String?,
     @SerializedName("expires_in") var expires_in: String?
 ) : Serializable
-
+@Keep
 data class LoginInitResponse(
     @SerializedName("msg") var msg: String?
 ) : Serializable
-
+@Keep
 data class LoginResponse(
     @SerializedName("data") var loginResponseDetails: LoginResponseDetails?
 ) : Serializable
-
+@Keep
 data class LoginResponseDetails(
     @SerializedName("access_token") var access_token: String?,
     @SerializedName("token_type") var token_type: String?,
@@ -30,11 +32,11 @@ data class LoginResponseDetails(
     @SerializedName("userMobile") var userMobile: String?
 ) : Serializable
 
-
+@Keep
 data class CustomerInfoResponse(
     @SerializedName("data") var customerInfoResponseDetails: CustomerInfoResponseDetails?
 ) : Serializable
-
+@Keep
 data class CustomerInfoResponseDetails(
     @SerializedName("id") val id: Long? = 0L,
     @SerializedName("login") val login: String? = null,
@@ -69,20 +71,20 @@ data class CustomerInfoResponseDetails(
     @SerializedName("profilePicResourceId") val profilePicResourceId: String? = null,
     @SerializedName("cardProductCode") val cardProductCode: String? = null
 ) : Serializable
-
+@Keep
 data class UserProfile(
     @SerializedName("cityName") val cityName: String? = null,
     @SerializedName("dob") val dob: String? = null,
     @SerializedName("schoolName") val schoolName: String? = null
     ) : Serializable
 
-
+@Keep
 data class BankProfile(
     @SerializedName("isAccountActive") var isAccountActive: String?,
     @SerializedName("isVirtualCardIssued") var isVirtualCardIssued: String?,
     @SerializedName("isPhysicardIssued") var isPhysicardIssued: String?
 ) : Serializable
-
+@Keep
 data class UserInterestModel(
     @SerializedName("id") var id: String?,
     @SerializedName("name") var name: String?,
@@ -90,7 +92,7 @@ data class UserInterestModel(
     @SerializedName("description") var description: String?,
     @SerializedName("status") var status: String?
 ) : Serializable
-
+@Keep
 data class LogOutResponse(
     @SerializedName("msg") var msg: String?
 ) : Serializable

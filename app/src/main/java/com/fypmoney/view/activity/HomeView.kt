@@ -309,8 +309,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             if (list == INSUFFICIENT_ERROR_CODE) {
                 callInsuficientFundMessageSheet(Utility.convertToRs(mViewModel.amountToBeAdded))
             }
-
-
         })
         mViewModel.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
             bottomSheetMessage?.dismiss()

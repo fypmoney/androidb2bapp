@@ -1,5 +1,8 @@
 package com.fypmoney.model.yourTaskModal
 
+import androidx.annotation.Keep
+
+@Keep
 data class Data(
     val actionAllowed: String,
     val additionalAttributes: AdditionalAttributes,

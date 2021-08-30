@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -13,7 +12,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -32,6 +30,7 @@ import java.util.ArrayList
 
 
 import android.app.ActivityOptions
+import com.fypmoney.util.Utility
 import kotlinx.android.synthetic.main.toolbar.*
 
 
@@ -226,10 +225,10 @@ companion object{
                 callTaskMessageSheet(list)
             }
         })
-        mViewModel!!.error.observe(this, androidx.lifecycle.Observer { code ->
-            if (code == "PKT_2037") {
+        mViewModel!!.error.observe(this, { code ->
 
-                callInsuficientFundMessageSheet()
+            if (code == AppConstants.INSUFFICIENT_ERROR_CODE) {
+                callInsuficientFundMessageSheet(Utility.convertToRs(mViewModel!!.amountToBeAdded))
             }
 
 
@@ -278,8 +277,8 @@ companion object{
         bottomSheetMessage?.show(supportFragmentManager, "TASKMESSAGE")
     }
 
-    private fun callInsuficientFundMessageSheet() {
-        var itemClickListener2 = object : AcceptRejectClickListener {
+    private fun callInsuficientFundMessageSheet(amount: String?) {
+        val itemClickListener2 = object : AcceptRejectClickListener {
             override fun onAcceptClicked(pos: Int, str: String) {
                 bottomsheetInsufficient?.dismiss()
                 intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
@@ -287,15 +286,16 @@ companion object{
 
             override fun onRejectClicked(pos: Int) {
                 bottomsheetInsufficient?.dismiss()
-                callActivity(AddMoneyView::class.java)
+                callActivity(AddMoneyView::class.java,amount)
             }
 
             override fun ondimiss() {
 
             }
         }
-        bottomsheetInsufficient =
-            TaskMessageInsuficientFuntBottomSheet(itemClickListener2)
+        bottomsheetInsufficient = TaskMessageInsuficientFuntBottomSheet(itemClickListener2,title = resources.getString(R.string.insufficient_bank_balance),
+                subTitle =  resources.getString(R.string.insufficient_bank_body),
+                amount = resources.getString(R.string.add_money_title1)+resources.getString(R.string.Rs)+amount)
         bottomsheetInsufficient?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomsheetInsufficient?.show(supportFragmentManager, "TASKMESSAGE")
     }
@@ -309,8 +309,12 @@ companion object{
     }
 
 
-    private fun callActivity(aClass: Class<*>) {
+    private fun callActivity(aClass: Class<*>,amount:String?) {
         val intent = Intent(this, aClass)
+        intent.putExtra("amountshouldbeadded", amount)
+
+
+
         startActivity(intent)
     }
 

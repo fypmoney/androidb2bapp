@@ -30,6 +30,7 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
     var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
     var bottomtaskwithdrawn: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
     var selectedPosition = MutableLiveData(-1)
+    var amountToBeAdded:String? = ""
 
     var TaskDetailResponse: MutableLiveData<TaskDetailResponse> = MutableLiveData()
 
@@ -279,10 +280,17 @@ class ChoresViewModel(application: Application) : BaseViewModel(application) {
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         loading.postValue(false)
-//        isLoading.set(false)
+        when(purpose){
+            ApiConstant.API_TASK_UPDATE -> {
+                error.postValue(errorResponseInfo.errorCode)
+                amountToBeAdded = errorResponseInfo.data
+            }
+            else->{
+                error.postValue(errorResponseInfo.errorCode)
+            }
+        }
 
-        error.postValue(errorResponseInfo.errorCode)
-        loading?.postValue(false)
+
     }
 
 

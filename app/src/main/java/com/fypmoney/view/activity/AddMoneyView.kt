@@ -49,7 +49,7 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = getString(R.string.add_money_screen_title)
         )
-        var amount = intent.getStringExtra("amountshouldbeadded")
+        val amount = intent.getStringExtra("amountshouldbeadded")
         Log.d("camount", amount.toString())
         setObserver()
         if (!amount.isNullOrEmpty()) {
