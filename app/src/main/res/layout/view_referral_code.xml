@@ -83,7 +83,7 @@
                 android:layout_margin="@dimen/_16sdp"
                 android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                 android:hint="@string/referral_code_hint"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:paddingStart="@dimen/edittextHintPaddingStart"
                 android:paddingEnd="@dimen/edittextHintPaddingEnd"
                 android:text="@={viewModel.referralCode}"

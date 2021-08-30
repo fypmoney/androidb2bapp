@@ -63,7 +63,9 @@
                 android:layout_marginStart="@dimen/dp5"
                 android:ellipsize="end"
                 android:gravity="start"
+                android:minLines="2"
                 android:maxLines="2"
+
                 android:padding="10dp"
                 android:text="@{viewHelper.feedDetails.title}"
                 android:textAlignment="viewStart"
