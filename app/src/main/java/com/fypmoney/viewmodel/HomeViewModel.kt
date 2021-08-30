@@ -267,6 +267,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
             }
             ApiConstant.API_TASK_UPDATE -> {
                 error.postValue(errorResponseInfo.errorCode)
+                amountToBeAdded = errorResponseInfo.data
+
             }
             ApiConstant.API_PAY_MONEY -> {
                 error.postValue(errorResponseInfo.errorCode)

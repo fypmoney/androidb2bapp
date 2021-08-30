@@ -84,6 +84,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                     .setStyle(NotificationCompat.BigTextStyle())
                     .setSmallIcon(R.drawable.ic_notification)
+                    .setSound(Uri.parse(
+                        ContentResolver.SCHEME_ANDROID_RESOURCE
+                                + "://" + BuildConfig.APPLICATION_ID + "/" + R.raw.notification_sound))
                     .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round))
                     .setTicker(resources.getString(R.string.app_name))
                     .setAutoCancel(true)
@@ -124,12 +127,12 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "fypmoney"
+            val channelId = "fypmoney_new"
             val name: CharSequence = "FypMoney"
-            var description = "Fypmoney notification"
+            val description1 = "Fypmoney notification"
             val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(channelId, name, importance).apply {
-                description = description
+                description = description1
                 setShowBadge(true)
             }
             val audioAttributes = AudioAttributes.Builder()
