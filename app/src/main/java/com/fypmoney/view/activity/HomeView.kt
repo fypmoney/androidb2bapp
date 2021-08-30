@@ -377,7 +377,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         intent.putExtra("amountshouldbeadded", amount)
         startActivity(intent)
     }
-
     private fun callTaskMessageSheet(list: NotificationModel.NotificationResponseDetails?) {
         var itemClickListener2 = object : MessageSubmitClickListener {
             override fun onSubmit() {
