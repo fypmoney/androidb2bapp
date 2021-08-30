@@ -32,6 +32,11 @@ class addmemberAdapter(
                         url = items?.get(position - 1)?.profilePicResourceId,
                         imageView = baseHolder.imagee
                     )
+                    baseHolder.imageViewempty.visibility = View.INVISIBLE
+                    baseHolder.imagee.visibility = View.VISIBLE
+                } else {
+                    baseHolder.imageViewempty.visibility = View.VISIBLE
+                    baseHolder.imagee.visibility = View.INVISIBLE
                 }
 
                 baseHolder.view.setOnClickListener(View.OnClickListener {
@@ -116,6 +121,7 @@ class addmemberAdapter(
         View.OnClickListener {
 
         val imagee = view.imageView2!!
+        val imageViewempty = view.imageViewempty
         var name_tv = view.name_tv
         var view = view.imageView2
         var cardbackground = view.cardbackground

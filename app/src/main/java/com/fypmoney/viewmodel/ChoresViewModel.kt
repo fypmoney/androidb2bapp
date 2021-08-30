@@ -2,6 +2,8 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import android.util.Log
+import androidx.databinding.Observable
+import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -23,6 +25,7 @@ import com.google.gson.JsonParser
 class ChoresViewModel(application: Application) : BaseViewModel(application) {
     var onAddMoneyClicked = MutableLiveData(false)
     var loading = MutableLiveData(false)
+    var yourtask = ObservableField(false)
     var YourAssigned: MutableLiveData<ArrayList<AssignedTaskResponse>> = MutableLiveData()
     var error: MutableLiveData<String> = MutableLiveData()
 

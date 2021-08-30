@@ -93,7 +93,7 @@ class YourTasksFragment : Fragment() {
 
             override fun onItemClicked(pos: Int) {
 
-
+                ChoresActivity.mViewModel?.yourtask?.set(true)
                 ChoresActivity.mViewModel!!.callTaskDetail(itemsArrayList[pos].id.toString())
 
 

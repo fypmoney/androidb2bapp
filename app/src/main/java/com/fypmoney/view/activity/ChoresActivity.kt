@@ -24,7 +24,6 @@ import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.ChoresViewModel
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.*
 import kotlinx.android.synthetic.main.view_chores.*
 import java.util.ArrayList
 
@@ -255,7 +254,7 @@ companion object{
         }
 
         bottomSheetTaskAction =
-            TaskActionBottomSheet(itemClickListener2, list)
+            TaskActionBottomSheet(itemClickListener2, list, mViewModel?.yourtask?.get())
         bottomSheetTaskAction?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheetTaskAction?.show(supportFragmentManager, "TASKACCEPTREJECT")
     }

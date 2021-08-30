@@ -89,7 +89,17 @@ class ChoresSelectSampleActivity : BaseActivity<ViewAddTaskBinding, CreateTaskVi
             }
 
             override fun onCallClicked(pos: Int) {
-                intentToActivity(AddTaskActivity::class.java)
+                val intent = Intent(this@ChoresSelectSampleActivity, AddTaskActivity::class.java)
+
+
+                val bndlAnimation = ActivityOptions.makeCustomAnimation(
+                    applicationContext,
+                    com.fypmoney.R.anim.slideinleft,
+                    com.fypmoney.R.anim.slideinright
+                ).toBundle()
+
+
+                startActivityForResult(intent, 23, bndlAnimation)
 
             }
         }

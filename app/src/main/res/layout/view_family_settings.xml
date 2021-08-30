@@ -270,11 +270,12 @@
         <Button
             android:id="@+id/verifyButton"
 
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_below="@id/layout"
             android:layout_marginStart="20dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:visibility="@{viewModel.isFamilyFiperVisible?View.VISIBLE:View.GONE,default=gone}"

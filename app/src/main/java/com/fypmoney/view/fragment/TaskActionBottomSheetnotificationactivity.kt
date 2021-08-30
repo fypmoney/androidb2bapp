@@ -71,7 +71,7 @@ class TaskActionBottomSheetnotificationactivity(
                         .toString()
                 )
 
-            } else if (accept.text == "Appreciate") {
+            } else if (accept.text == "Pay") {
                 onClickListener.onAcceptClicked(
                     56, view.comment.text?.trim()
                         .toString()
@@ -127,7 +127,7 @@ class TaskActionBottomSheetnotificationactivity(
             view.reject.text = "Reject"
             view.comment.visibility = View.GONE
         } else if (list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY") {
-            view.accept.text = "Appreciate"
+            view.accept.text = "Pay"
             view.reject.text = "Depreciate"
             view.bywhom.visibility = View.GONE
             view.days_left.visibility = View.GONE

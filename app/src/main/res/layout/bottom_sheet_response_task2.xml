@@ -314,7 +314,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
+                        android:layout_marginBottom="@dimen/_16sdp"
                         android:layout_marginStart="@dimen/_22sdp"
                         android:layout_marginTop="@dimen/_18sdp"
                         android:layout_marginEnd="@dimen/_22sdp"
@@ -398,29 +398,31 @@
         </LinearLayout>
 
         <LinearLayout
-            android:paddingBottom="@dimen/_16sdp"
             android:layout_width="match_parent"
-            android:layout_marginStart="@dimen/_22sdp"
-
-            android:layout_marginEnd="@dimen/_22sdp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+
+            android:layout_marginStart="@dimen/_22sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:layout_height="wrap_content">
+            android:layout_marginEnd="@dimen/_22sdp"
+            android:gravity="center"
+            android:paddingBottom="@dimen/_16sdp">
 
             <Button
 
-                android:layout_width="match_parent"
-                android:layout_marginBottom="@dimen/_2sdp"
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
 
                 android:layout_height="wrap_content"
 
-                android:id="@+id/cancel"
-                android:visibility="gone"
-
                 android:layout_gravity="center"
-                android:text="Cancel"
+                android:layout_marginBottom="@dimen/_2sdp"
 
+
+                android:text="Cancel"
                 android:textAllCaps="false"
+
+                android:visibility="gone"
 
                 app:backgroundTint="@color/text_color_dark" />
 
