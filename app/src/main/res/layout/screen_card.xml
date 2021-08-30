@@ -101,7 +101,7 @@
             android:background="@drawable/curved_background12"
             android:clipToPadding="true"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="@dimen/_90sdp"
+            app:behavior_peekHeight="@dimen/_130sdp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -130,7 +130,7 @@
             android:id="@+id/notify_order_card_nsv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
+            android:visibility="gone"
             android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout

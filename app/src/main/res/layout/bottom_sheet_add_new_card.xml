@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:maxLength="16"
+            android:maxLength="19"
             android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
             android:hint="@string/card_number_format"
             android:inputType="number"

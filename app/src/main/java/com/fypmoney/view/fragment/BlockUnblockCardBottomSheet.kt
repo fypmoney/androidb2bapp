@@ -80,9 +80,11 @@ class BlockUnblockCardBottomSheet(
             when (it.cardType) {
                 AppConstants.CARD_TYPE_VIRTUAL -> {
                     if (it.isCardBlocked == AppConstants.YES) {
-                        vSwitch.isChecked = true
-                    } else if (it.isCardBlocked == AppConstants.NO) {
                         vSwitch.isChecked = false
+
+                    } else if (it.isCardBlocked == AppConstants.NO) {
+                        vSwitch.isChecked = true
+
                     }
                 }
 
@@ -94,15 +96,16 @@ class BlockUnblockCardBottomSheet(
             cardType.set(AppConstants.CARD_TYPE_VIRTUAL_CARD)
             val message: String = if (vSwitch.isChecked) {
                 vSwitch.isChecked = !vSwitch.isChecked
-                action.set(AppConstants.BLOCK_CARD_ACTION)
-                PockketApplication.instance.getString(R.string.card_block_confirm) + PockketApplication.instance.getString(
-                    R.string.block_card_text
-                )
-            } else {
-                vSwitch.isChecked = !vSwitch.isChecked
                 action.set(AppConstants.UNBLOCK_CARD_ACTION)
                 PockketApplication.instance.getString(R.string.card_block_confirm) + PockketApplication.instance.getString(
                     R.string.unblock_card_text
+                )
+
+            } else {
+                vSwitch.isChecked = !vSwitch.isChecked
+                action.set(AppConstants.BLOCK_CARD_ACTION)
+                PockketApplication.instance.getString(R.string.card_block_confirm) + PockketApplication.instance.getString(
+                    R.string.block_card_text
                 )
 
 
@@ -182,10 +185,10 @@ class BlockUnblockCardBottomSheet(
             AppConstants.CARD_TYPE_VIRTUAL -> {
                 when (updateCardSettingsResponseDetails.isCardBlocked) {
                     AppConstants.YES -> {
-                        vSwitch.isChecked = true
+                        vSwitch.isChecked = false
                     }
                     AppConstants.NO -> {
-                        vSwitch.isChecked = false
+                        vSwitch.isChecked = true
                     }
                 }
             }

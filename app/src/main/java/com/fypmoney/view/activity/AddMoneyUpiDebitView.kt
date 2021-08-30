@@ -63,7 +63,6 @@ open class AddMoneyUpiDebitView :
     PaymentRelatedDetailsListener, ValueAddedServiceApiListener,
     TransactionFailBottomSheet.OnBottomSheetClickListener, AddUpiBottomSheet.OnAddUpiClickListener {
     private lateinit var mViewModel: AddMoneyUpiDebitViewModel
-    lateinit var progressBar: ProgressBar
     lateinit var payuConfig: PayuConfig
     private var isSamsungPaySupported = false
     private var isPhonePeSupported = false
@@ -90,7 +89,6 @@ open class AddMoneyUpiDebitView :
             toolbarTitle = getString(R.string.add_money_screen_title)
         )
         getListOfApps()
-        progressBar = ProgressBar(this)
         setObserver()
         mViewModel.amountToAdd1.set(
             getString(R.string.add_money_title1) + getString(R.string.Rs) + intent.getStringExtra(

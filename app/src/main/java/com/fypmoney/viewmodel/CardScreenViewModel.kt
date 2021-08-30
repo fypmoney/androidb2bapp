@@ -21,6 +21,7 @@ import org.json.JSONObject
 
 
 class CardScreenViewModel(application: Application) : BaseViewModel(application) {
+    var cvvNumber: String? = "***"
     var balance =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
     var isFetchBalanceVisible = ObservableField(true)
@@ -247,7 +248,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                     cardNumber.set(responseData.fetchVirtualCardResponseDetails.card_number)
                     setCardNumber()
                     isViewDetailsVisible.set(false)
-                    cvv.set(responseData.fetchVirtualCardResponseDetails.cvv)
+                    cvvNumber = responseData.fetchVirtualCardResponseDetails.cvv
                     expiry.set(responseData.fetchVirtualCardResponseDetails.expiry_month + "/" + responseData.fetchVirtualCardResponseDetails.expiry_year)
                     onGetCardDetailsSuccess.value = true
                     callAddCardApi()

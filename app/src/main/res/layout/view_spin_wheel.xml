@@ -177,7 +177,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/fyp_coin_value"
                     android:textColor="@color/text_color_dark"
-                    android:textSize="17dp" />
+                    android:textSize="17sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/text3"

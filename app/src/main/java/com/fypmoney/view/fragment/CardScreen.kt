@@ -506,6 +506,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             false -> {
                 cvvValue.transformationMethod = HideReturnsTransformationMethod.getInstance()
                 mViewModel.isCvvVisible.set(true)
+                mViewModel.cvv.set(mViewModel.cvvNumber)
 
             }
             true -> {

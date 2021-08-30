@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -125,6 +126,7 @@
                         android:layout_gravity="center"
                         android:scaleX="0.4"
                         android:scaleY="0.4"
+                        tools:visibility="visible"
                         android:visibility="@{viewModel.isSavedCardProgressVisible?View.VISIBLE:View.GONE}" />
 
                     <androidx.recyclerview.widget.RecyclerView

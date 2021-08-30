@@ -61,15 +61,15 @@
 
                 <Button
                     android:id="@+id/btnContinue"
-                    android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/main_button_height"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginStart="@dimen/margin_20"
                     android:layout_marginEnd="@dimen/margin_20"
                     android:layout_marginBottom="@dimen/_40sdp"
                     android:onClick="@{()->viewModel.onSubmitClicked()}"
-                    android:text="@string/continue_btn_text"
+                    android:text="@string/save_btn_text"
                     android:textAllCaps="false"
                     android:visibility="@{viewModel.noDataFoundVisibility?View.GONE:View.VISIBLE,default=visible}"
                     app:backgroundTint="@color/text_color_dark" />
@@ -79,6 +79,7 @@
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="@dimen/margin_20"
