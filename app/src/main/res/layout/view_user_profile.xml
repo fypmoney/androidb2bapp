@@ -108,17 +108,36 @@
                     android:drawableStart="@drawable/ic_call"
                     android:maxEms="20"
                     android:gravity="center"
-                    tools:text ="7737947610"
+                    tools:text="7737947610"
                     android:drawablePadding="10dp"
                     android:text='@{viewModel.phone ?? ""}'
                     android:textColor="@color/text_color_dark"
                     android:textSize="14sp" />
             </LinearLayout>
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/kycverified"
+                style="@style/TextviewRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linear_layout"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="24dp"
+                android:drawableStart="@drawable/ic_verified"
+                android:drawablePadding="10dp"
+                android:gravity="center"
+                android:maxEms="20"
+                android:text="KYC verified"
+                android:textColor="@color/text_color_dark"
+                android:textSize="14sp"
+                android:visibility="@{viewModel.verified?View.VISIBLE:View.GONE}" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/linear_layout"
+                android:layout_below="@id/kycverified"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/curved_background12"
                 android:orientation="vertical"

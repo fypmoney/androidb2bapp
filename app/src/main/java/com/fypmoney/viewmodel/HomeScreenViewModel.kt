@@ -205,6 +205,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
                 )
 
                 redeemDetailsResponse.postValue(redeemDetails)
+                callGetCoinsToRedeem()
 
             }
             ApiConstant.TOP_TEN_USER_API -> {

@@ -46,6 +46,10 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         return R.layout.screen_home
     }
 
+    public fun HomeScreen() {
+
+    }
+
     override fun getViewModel(): HomeScreenViewModel {
         mViewModel = ViewModelProvider(this).get(HomeScreenViewModel::class.java)
         return mViewModel

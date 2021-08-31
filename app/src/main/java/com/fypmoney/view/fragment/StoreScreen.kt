@@ -36,6 +36,10 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
         return R.layout.screen_store
     }
 
+    public fun StoreScreen() {
+
+    }
+
     override fun getViewModel(): StoreScreenViewModel {
         mViewModel = ViewModelProvider(this).get(StoreScreenViewModel::class.java)
         return mViewModel

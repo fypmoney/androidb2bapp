@@ -108,6 +108,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
             iconList1 = iconList,
             resources.getStringArray(R.array.my_profile_title_list).toMutableList()
         )
+        mViewModel.callGetCustomerProfileApi()
 
         setObserver()
     }
