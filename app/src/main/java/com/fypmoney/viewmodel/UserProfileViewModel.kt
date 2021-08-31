@@ -11,6 +11,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.ProfileImageUploadResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
@@ -25,6 +26,8 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
     var lastName = ObservableField<String>()
     var dob = ObservableField<String>()
     var phone = ObservableField<String>()
+    var verified = ObservableField(false)
+
     var buildVersion = ObservableField<String>()
     var profilePic = ObservableField<String>()
     var onLogoutSuccess = MutableLiveData<Boolean>()
@@ -80,7 +83,81 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
                         SharedPrefUtils.SF_KEY_PROFILE_IMAGE,
                         responseData.profileImageUploadResponseDetails?.accessUrl
                     )
-                    onProfileSuccess.value=true
+                    onProfileSuccess.value = true
+
+                }
+            }
+            ApiConstant.API_GET_CUSTOMER_INFO -> {
+                if (responseData is CustomerInfoResponse) {
+
+
+                    Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
+
+                    // Save the user id in shared preference
+
+                    // save first name, last name, date of birth
+
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_USER_FIRST_NAME,
+                        responseData.customerInfoResponseDetails?.firstName
+                    )
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_PROFILE_IMAGE,
+                        responseData.customerInfoResponseDetails?.profilePicResourceId
+                    )
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_USER_LAST_NAME,
+                        responseData.customerInfoResponseDetails?.lastName
+                    )
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_USER_DOB,
+                        responseData.customerInfoResponseDetails?.userProfile?.dob
+                    )
+
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_USER_EMAIL,
+                        responseData.customerInfoResponseDetails?.email
+                    )
+
+                    // again update the saved data in preference
+                    Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
+
+                    SharedPrefUtils.putLong(
+                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
+                        value = responseData.customerInfoResponseDetails?.id!!
+                    )
+                    // Save the user phone in shared preference
+                    SharedPrefUtils.putString(
+                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE,
+                        value = responseData.customerInfoResponseDetails?.mobile
+                    )
+
+                    val interestList = ArrayList<String>()
+                    if (responseData.customerInfoResponseDetails?.userInterests?.isNullOrEmpty() == false) {
+                        responseData.customerInfoResponseDetails?.userInterests!!.forEach {
+                            interestList.add(it.name!!)
+                        }
+
+                        SharedPrefUtils.putArrayList(
+                            getApplication(),
+                            SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
+
+                        )
+
+                    }
+
+                    if (responseData.customerInfoResponseDetails?.bankProfile?.isAccountActive == "YES") {
+                        verified.set(true)
+                    } else {
+                        verified.set(false)
+
+                    }
+                    setInitialData()
 
                 }
             }
@@ -99,6 +176,18 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
 
         }
 
+    }
+
+    fun callGetCustomerProfileApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_GET_CUSTOMER_INFO,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_CUSTOMER_INFO),
+                request_type = ApiUrl.GET,
+                onResponse = this, isProgressBar = true,
+                param = ""
+            )
+        )
     }
 
     fun setInitialData() {

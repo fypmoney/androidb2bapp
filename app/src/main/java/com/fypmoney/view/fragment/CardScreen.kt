@@ -59,6 +59,10 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         return BR.viewModel
     }
 
+    public fun CardScreen() {
+
+    }
+
     override fun getLayoutId(): Int {
         return R.layout.screen_card
     }
