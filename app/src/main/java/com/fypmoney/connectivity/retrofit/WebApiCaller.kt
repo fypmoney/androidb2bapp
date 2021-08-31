@@ -55,6 +55,8 @@ class WebApiCaller {
         image: MultipartBody.Part? = null
     ) {
         if (!isNetworkAvailable()) {
+            Log.d(NetworkUtil.TAGN,"hasTransport wifi")
+
             request.onResponse.offLine()
             return
         }

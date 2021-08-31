@@ -15,6 +15,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.Window
 import android.webkit.WebChromeClient
+import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
@@ -24,6 +25,7 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
+import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.model.CardInfoDetailsBottomSheet
 import com.fypmoney.util.AppConstants
@@ -65,21 +67,33 @@ class StoreWebpageOpener : AppCompatActivity() {
         load_progress = findViewById<ImageView>(R.id.load_progress_bar)
         webView = findViewById<WebView>(R.id.webView1)
         window.setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            webView!!.setRendererPriorityPolicy(WebView.RENDERER_PRIORITY_IMPORTANT, false)
+        }
+        webView!!.webViewClient = CustomWebViewClient()
+        webView!!.settings.javaScriptEnabled = true
+        webView!!.settings.domStorageEnabled = true
+        webView!!.settings.allowFileAccess = true;
+        webView!!.setInitialScale(1)
+        webView!!.settings.loadWithOverviewMode = true
+        webView!!.settings.useWideViewPort = true
+        webView!!.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK;
+
+        if (BuildConfig.DEBUG) {
+            WebView.setWebContentsDebuggingEnabled(true)
+        }
+
         webView!!.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, progress: Int) {
-                //Make the bar disappear after URL is loaded, and changes string to Loading...
                 title = "Loading..."
-//                setProgress(progress * 100) //Make the bar disappear after URL is loaded
-
-                // Return the app name after finish loading
                 if (progress == 100) load_progress_bar.visibility = View.GONE
             }
 
         }
-
         mViewModel?.availableAmount?.observe(
             this,
-            androidx.lifecycle.Observer { amount ->
+            { amount ->
                 CoroutineScope(Dispatchers.Main).launch {
                     amount_tv.text = " ₹" + amount
                 }
@@ -87,7 +101,7 @@ class StoreWebpageOpener : AppCompatActivity() {
             })
         mViewModel?.carddetails?.observe(
             this,
-            androidx.lifecycle.Observer { carddetails ->
+            { carddetails ->
                 CoroutineScope(Dispatchers.Main).launch {
                     card = carddetails
                 }
@@ -109,8 +123,6 @@ class StoreWebpageOpener : AppCompatActivity() {
             }
 
         }
-        webView!!.webViewClient = CustomWebViewClient()
-        webView!!.settings.javaScriptEnabled = true
 
 
 
@@ -119,7 +131,7 @@ class StoreWebpageOpener : AppCompatActivity() {
         toolbar_backImage.setOnClickListener {
             onBackPressed()
         }
-        refresh.setOnClickListener(View.OnClickListener {
+        refresh.setOnClickListener({
 
             webView?.reload()
 
@@ -228,17 +240,12 @@ class StoreWebpageOpener : AppCompatActivity() {
 
 
     private fun callCardSettingsBottomSheet() {
-
-
-
-
         val bottomSheet =
             CardDetailsBottomSheet(card)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "CardSettings")
     }
     open class CustomWebViewClient() : WebViewClient() {
-
 
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
             view.loadUrl(url)

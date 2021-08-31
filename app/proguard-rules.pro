@@ -137,6 +137,10 @@
 ##--- End:GSON ----
 ##--- End:GSON ----
 
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception
+
 
 
 

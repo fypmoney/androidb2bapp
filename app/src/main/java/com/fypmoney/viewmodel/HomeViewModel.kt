@@ -112,7 +112,11 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 param = UserDeviceInfo(
                     latitude = latitude,
                     longitude = longitude,
-                    userId =  userId
+                    userId =  userId,
+                    dtoken = SharedPrefUtils.getString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_FIREBASE_TOKEN
+                    )
 
                 ), onResponse = this,
                 isProgressBar = false

@@ -38,9 +38,7 @@ import kotlinx.android.synthetic.main.view_home.*
 import java.util.concurrent.atomic.AtomicBoolean
 import com.facebook.appevents.AppEventsLogger;
 
-/*
-* This class is used as Home Screen
-* */
+
 class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     Utility.OnAllContactsAddedListener, FamilyNotificationBottomSheet.OnBottomSheetClickListener,
     RequestMoneyBottomSheet.OnRequestMoneyBottomSheetClickListener,
@@ -93,16 +91,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.STAY_TUNED_BOTTOM_SHEET -> {
-               /* mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this,R.color.white))
-                mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this,R.color.black))
-                mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
-                mViewModel.isScanVisible.set(false)
-                mViewModel.headerText.set(
-                    getString(
-                        R.string.family_settings_toolbar_heading
-                    )
-                )
-                loadFragment(FamilySettingsView(),5)*/
                 setupFamily()
 
             }
@@ -452,6 +440,17 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 requestPermission(Manifest.permission.READ_CONTACTS)
             }
         }
+        when (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            false -> {
+                mViewModel.postLatlong("","",SharedPrefUtils.getLong(
+                    application, key = SharedPrefUtils.SF_KEY_USER_ID
+                ))
+            }
+            else -> {
+                requestPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -632,7 +631,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         Longitude: Double
     ) {
         mViewModel.postLatlong("$latitude","$Longitude",SharedPrefUtils.getLong(
-            getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID
+            application, key = SharedPrefUtils.SF_KEY_USER_ID
         ))
     }
 
