@@ -49,6 +49,7 @@ class AddNewCardBottomSheet(
     private var onBottomSheetClickListener: OnAddNewCardClickListener
 ) : BottomSheetDialogFragment(), WebApiCaller.OnWebApiResponse {
     lateinit var cardNumber: AppCompatEditText
+    lateinit var cardNumberValue: String
     lateinit var cardName: AppCompatEditText
     lateinit var expiry: AppCompatEditText
     lateinit var cvv: AppCompatEditText
@@ -115,11 +116,12 @@ class AddNewCardBottomSheet(
         })
         btnAdd.setOnClickListener {
             expiryList = expiry.text.toString().split("/") as MutableList<String>
+            cardNumberValue = cardNumber.text?.trim().toString().filter { !it.isWhitespace() }
             val df: DateFormat =
                 SimpleDateFormat("yy", Locale.getDefault()) // Just the year, with 2 digits
             val formattedDate: String = df.format(Calendar.getInstance().time)
             when {
-                cardNumber.length() == 0 -> {
+                cardNumberValue.isEmpty() -> {
                     Utility.showToast(getString(R.string.card_number_empty_error))
 
                 }
@@ -154,7 +156,7 @@ class AddNewCardBottomSheet(
                     progressBar.visibility = View.VISIBLE
                     callGetHashApi(
                         command = PayuConstants.CHECK_IS_DOMESTIC,
-                        var1 = cardNumber.text.toString().take(6)
+                        var1 = cardNumberValue.take(6)
                     )
 
                 }
@@ -226,7 +228,7 @@ class AddNewCardBottomSheet(
             ApiConstant.API_GET_HASH -> {
                 if (responseData is GetHashResponse) {
                     callPayUApi(
-                        cardNumber.text.toString().take(6),
+                        cardNumberValue.take(6),
                         responseData.getHashResponseDetails.hashData?.get(0)?.hashValue!!
                     )
 
@@ -236,10 +238,10 @@ class AddNewCardBottomSheet(
             ApiConstant.PAYU_PRODUCTION_URL -> {
                 if (responseData is CheckIsDomesticResponse) {
                     progressBar.visibility = View.GONE
-                    if (responseData.isDomestic == "Y" && responseData.cardCategory == "DC") {
+                    if (responseData.cardCategory == "DC") {
                         onBottomSheetClickListener.onAddNewCardButtonClick(
                             AddNewCardDetails(
-                                cardNumber = cardNumber.text.toString(),
+                                cardNumber = cardNumberValue,
                                 nameOnCard = cardName.text.toString(),
                                 expiryMonth = expiryList[0],
                                 expiryYear = "20" + expiryList[1],

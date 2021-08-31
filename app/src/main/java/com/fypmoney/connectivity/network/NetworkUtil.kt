@@ -17,8 +17,9 @@ import retrofit2.HttpException
  */
 class NetworkUtil {
 
-
     companion object {
+        val TAGN = NetworkUtil::class.java.simpleName
+
         /**
          * @return boolean
          * @description This method is used to check internet connection.
@@ -30,15 +31,25 @@ class NetworkUtil {
                 val nw = connectivityManager.activeNetwork ?: return false
                 val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
                 return when {
-                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
+                        Log.d(TAGN,"hasTransport wifi")
+                        true
+                    }
+                    actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
+                        Log.d(TAGN,"hasTransport TRANSPORT_CELLULAR")
+                        true
+                    }
                     //for other device how are able to connect with Ethernet
                     //   actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
                     //for check internet over Bluetooth
                     //   actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
-                    else -> false
+                    else -> {
+                        Log.d(TAGN,"hasTransport false")
+                        false
+                    }
                 }
             } else {
+                Log.d(TAGN,"else false "+connectivityManager.activeNetworkInfo?.isConnected )
                 return connectivityManager.activeNetworkInfo?.isConnected ?: false
             }
         }

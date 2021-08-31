@@ -212,6 +212,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.StoreWebpageOpener"
+            android:hardwareAccelerated="false"
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.ChoresSelectSampleActivity"
             android:screenOrientation="portrait"/>

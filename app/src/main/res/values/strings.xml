@@ -561,7 +561,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="test">Test</string>
     <string name="production">Production</string>
     <string name="add_upi_text">Add UPI</string>
-    <string name="card_number_validation_error">Only Domestic Debit Cards are allowed</string>
+    <string name="card_number_validation_error">Only Debit Cards are allowed</string>
     <string name="payment_success_msg">Your payment was successful.</string>
     <string name="trans_details_heading">Transaction details</string>
     <string name="fyp_transaction_heading">Fyp Transaction ID</string>
