@@ -37,7 +37,6 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     private var bottomSheetMessage: RedeemMyntsBottomSheet? = null
     private lateinit var mViewModel: HomeScreenViewModel
     private lateinit var mViewBinding: ScreenHomeBinding
-
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }

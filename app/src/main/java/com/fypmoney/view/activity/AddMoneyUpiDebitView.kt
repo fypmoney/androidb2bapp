@@ -119,12 +119,6 @@ open class AddMoneyUpiDebitView :
             }
         }
 
-        mViewModel.onAddNewCardClicked.observe(this) {
-            if (it) {
-                callAddNewCardBottomSheet()
-                mViewModel.onAddNewCardClicked.value = false
-            }
-        }
         mViewModel.callGetCardsApi.observe(this) {
             if (it) {
                 callPayUApi(
@@ -509,8 +503,9 @@ open class AddMoneyUpiDebitView :
                 upiModel.packageName = resolveInfo.activityInfo.packageName
                 upiModel.imageUrl =
                     packageManager.getApplicationIcon(resolveInfo.activityInfo.packageName)
-                if (!upiModel.packageName.equals(AppConstants.GPAY_PACKAGE_NAME))
+                if (!upiModel.packageName.equals(AppConstants.GPAY_PACKAGE_NAME) && !upiModel.packageName.equals(AppConstants.FAMPAY_PACKAGE_NAME)){
                     upiList.add(upiModel)
+                }
             } catch (e: PackageManager.NameNotFoundException) {
                 e.printStackTrace()
             }

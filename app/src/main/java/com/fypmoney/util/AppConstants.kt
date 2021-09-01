@@ -164,6 +164,7 @@ object AppConstants {
     const val Channel_ATM = "ATM"
     const val Channel_POS = "POS"
     const val GPAY_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user"
+    const val FAMPAY_PACKAGE_NAME = "com.fampay.in"
     const val UPI_APPS_FETCH = "upi://pay"
     const val REQUEST_IMAGE = 200
     const val CARD_PRICE = "200"

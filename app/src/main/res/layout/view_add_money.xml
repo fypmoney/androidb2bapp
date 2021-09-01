@@ -161,6 +161,7 @@
                     android:drawableStart="@drawable/rupee_symbol"
                     android:drawablePadding="5dp"
                     android:inputType="number"
+                    android:longClickable="false"
                     android:text="@={viewModel.amountSelected}"
                     android:textColor="@color/add_money_amount_color"
                     android:textSize="32dp" />
