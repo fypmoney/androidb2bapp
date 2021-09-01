@@ -28,6 +28,7 @@ import androidx.fragment.app.Fragment
 import com.freshchat.consumer.sdk.FaqOptions
 import com.freshchat.consumer.sdk.Freshchat
 import com.freshchat.consumer.sdk.FreshchatConfig
+import com.freshchat.consumer.sdk.FreshchatUser
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.util.AppConstants
@@ -470,6 +471,25 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         config.isResponseExpectationEnabled = true
         config.isTeamMemberInfoVisible = true
         config.isUserEventsTrackingEnabled = true
+
+        val user = fresh.user.apply {
+            firstName = SharedPrefUtils.getString(
+                application,
+                SharedPrefUtils.SF_KEY_USER_FIRST_NAME
+            )
+            lastName = SharedPrefUtils.getString(
+                application,
+                SharedPrefUtils.SF_KEY_USER_LAST_NAME
+            )
+
+        }
+        user.setPhone(
+            "+91",SharedPrefUtils.getString(
+                application,
+                SharedPrefUtils.SF_KEY_USER_MOBILE)
+
+        )
+        fresh.user = user
         fresh.init(config)
         val faqOptions = FaqOptions()
             .showFaqCategoriesAsGrid(false)
