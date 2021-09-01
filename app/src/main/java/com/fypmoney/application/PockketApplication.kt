@@ -11,6 +11,8 @@ import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
 import android.app.Activity
 import android.app.Application.ActivityLifecycleCallbacks
+import android.content.pm.ActivityInfo
+import android.os.Build
 import android.os.Bundle
 
 
@@ -34,11 +36,15 @@ class PockketApplication : Application() {
         val config = AdjustConfig(this, appToken, environment)
         Adjust.onCreate(config)
         registerActivityLifecycleCallbacks(AdjustLifecycleCallbacks())
-
+        //var appSignature = AppSignatureHelper(this)
+        //appSignature.appSignatures
 
     }
     private class AdjustLifecycleCallbacks : ActivityLifecycleCallbacks {
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            }
         }
 
         override fun onActivityStarted(activity: Activity) {

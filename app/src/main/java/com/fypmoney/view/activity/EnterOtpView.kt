@@ -1,7 +1,6 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -10,10 +9,7 @@ import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import android.view.View
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputConnection
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
@@ -21,11 +17,9 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewEnterOtpBinding
-import com.fypmoney.receivers.OtpReceivedInterface
-import com.fypmoney.receivers.SmsBroadcastReceiver
+import com.fypmoney.receivers.AutoReadOtpUtils
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.EnterOtpViewModel
-import com.google.android.gms.auth.api.phone.SmsRetriever
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 import kotlinx.android.synthetic.main.view_enter_otp.*
@@ -42,7 +36,9 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
     private lateinit var mViewModel: EnterOtpViewModel
     private lateinit var mViewBinding: ViewEnterOtpBinding
     lateinit var timer: CountDownTimer
-    val smsBroadcastReceiver = SmsBroadcastReceiver()
+    //val smsBroadcastReceiver = SmsBroadcastReceiver()
+    lateinit var autoReadOtpUtils:AutoReadOtpUtils
+
     var isRegistered:Boolean = false
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -66,6 +62,13 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
             toolbar = toolbar,
             isBackArrowVisible = true
         )
+        autoReadOtpUtils = AutoReadOtpUtils(this)
+        autoReadOtpUtils.initialise()
+
+        autoReadOtpUtils.registerOtpReceiver {
+            otpView.setText(it)
+            mViewModel.onVerifyClicked()
+        }
         callAutoReadOtpSetup()
         mViewModel.setInitialData(
             intent.getStringExtra(AppConstants.MOBILE_TYPE),
@@ -158,7 +161,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
     }
 
     private fun callAutoReadOtpSetup() {
-        val client = SmsRetriever.getClient(this)
+       /* val client = SmsRetriever.getClient(this)
         val task = client.startSmsRetriever()
         task.addOnSuccessListener { aVoid ->
             isRegistered = true
@@ -188,7 +191,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
             Log.e("auto sms read", e.toString())
             isRegistered = false
 
-        }
+        }*/
     }
 
 
@@ -315,10 +318,12 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if(isRegistered){
+        /*if(isRegistered){
             this@EnterOtpView.unregisterReceiver(smsBroadcastReceiver)
 
-        }
+        }*/
+        autoReadOtpUtils.unregisterOtpReceiver()
+
 
     }
 }

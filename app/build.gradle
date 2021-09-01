@@ -26,8 +26,8 @@ android {
         applicationId "com.fypmoney"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 15
-        versionName "1.0.11"
+        versionCode 16
+        versionName "1.0.12"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
         // Stops the Gradle plugin�s automatic rasterization of vectors
