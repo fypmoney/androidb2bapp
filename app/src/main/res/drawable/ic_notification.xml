@@ -15,25 +15,8 @@
     <clip-path
         android:pathData="M333.9,214l-147.5,49c-7.4,2.4 -9,12.2 -2.7,16.8l147.4,105.8c6.3,4.5 15,0 15,-7.7l0.1,-154.8c0,-5.4 -4.4,-9.5 -9.5,-9.5C335.9,213.6 334.9,213.7 333.9,214"/>
     <path
+        android:fillColor="#FFF5BC1A"
         android:pathData="M177.4,213.6h168.9v176.5h-168.9z">
-      <aapt:attr name="android:fillColor">
-        <gradient 
-            android:startY="301.81464"
-            android:startX="179.73384"
-            android:endY="301.81464"
-            android:endX="346.26392"
-            android:type="linear">
-          <item android:offset="0" android:color="#FFF4DE13"/>
-          <item android:offset="0.00893984" android:color="#FFF4DE13"/>
-          <item android:offset="0.03998927" android:color="#FFF4DA14"/>
-          <item android:offset="0.1693" android:color="#FFF5C918"/>
-          <item android:offset="0.3123" android:color="#FFF5BC1A"/>
-          <item android:offset="0.4742" android:color="#FFF6B21B"/>
-          <item android:offset="0.6709" android:color="#FFF6AC1B"/>
-          <item android:offset="1" android:color="#FFF6AB1B"/>
-          <item android:offset="1" android:color="#FFF6AB1B"/>
-        </gradient>
-      </aapt:attr>
     </path>
   </group>
 </vector>

@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
+import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.fypmoney.databinding.BottomSheetRedeemCoinsBinding
 import com.fypmoney.model.RedeemDetailsResponse
@@ -63,10 +64,7 @@ class RedeemMyntsBottomSheet(
                     R.drawable.ic_redeem_mynts_illustration
                 )
             )
-            view.continuebtn.background = ContextCompat.getDrawable(
-                requireContext(),
-                R.drawable.curved_background1
-            )
+
 
             view.continuebtn.text = "Redeem ${amount} Mynt(s)"
             view.dialog_details.text = "will be added to your wallet in form of cash"
@@ -86,10 +84,7 @@ class RedeemMyntsBottomSheet(
                     R.drawable.ic_redeem_mynts_illustration
                 )
             )
-            view.continuebtn.background = ContextCompat.getDrawable(
-                requireContext(),
-                R.drawable.curved_background14
-            )
+
             view.continuebtn.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.cb_grey)));
             view.continuebtn.setTextColor(
                 ContextCompat.getColor(
@@ -107,12 +102,9 @@ class RedeemMyntsBottomSheet(
 
         } else if (spinWheelResponseDetails.pointsToRedeem == null) {
             view.lin_coins.visibility = View.GONE
-            view.message_image.setImageDrawable(
-                ContextCompat.getDrawable(
-                    requireContext(),
-                    R.drawable.ic_wallet_updated
-                )
-            )
+            view.gif_redeem.visibility = View.VISIBLE
+            view.message_image.visibility = View.GONE
+            Glide.with(requireContext()).asGif().load(R.raw.redeemmynts_2).into(view.gif_redeem)
             view.continuebtn.text = "Continue"
             view.continuebtn.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.text_color_dark)));
             view.continuebtn.setTextColor(

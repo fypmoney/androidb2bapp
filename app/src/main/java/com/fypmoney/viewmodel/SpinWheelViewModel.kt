@@ -205,7 +205,7 @@ class SpinWheelViewModel(application: Application) : BaseViewModel(application) 
                 )
 
                 redeemDetailsResponse.postValue(redeemDetails)
-
+                callGetRewardsApi()
             }
 
             ApiConstant.API_GET_REDEEM_DETAILS_API -> {
