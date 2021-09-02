@@ -217,7 +217,7 @@ class TaskActionBottomSheet(
             view.bywhom.text = list.destinationUserName
             view.cancel.text = "Complete"
             view.accept.text = "Complete"
-            view.lin.visibility = View.GONE
+            view.lin.visibility = View.INVISIBLE
             view.cancel.visibility = View.VISIBLE
             view.comment.visibility = View.VISIBLE
         } else if (list.actionAllowed == "REJECT,ACCEPT") {
@@ -237,7 +237,7 @@ class TaskActionBottomSheet(
             view.comment.visibility = View.VISIBLE
         } else if (list.actionAllowed?.isEmpty() == true) {
             view.comment.visibility = View.GONE
-            view.lin.visibility = View.GONE
+            view.lin.visibility = View.INVISIBLE
             view.bywhom.visibility = View.VISIBLE
 
             view.bywhom.text = list.destinationUserName
@@ -245,9 +245,8 @@ class TaskActionBottomSheet(
 
         } else if (list.actionAllowed == "CANCEL") {
             view.comment.visibility = View.VISIBLE
-            view.lin.visibility = View.VISIBLE
 
-            view.lin.visibility = View.GONE
+            view.lin.visibility = View.INVISIBLE
             view.bywhom.visibility = View.VISIBLE
 
             view.bywhom.text = list.destinationUserName

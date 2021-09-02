@@ -187,7 +187,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
 
                 val redeemDetails = Gson().fromJson(
                     json.get("data"),
-                    com.fypmoney.model.RedeemDetailsResponse::class.java
+                    RedeemDetailsResponse::class.java
                 )
 
                 redeemDetailsResponse.postValue(redeemDetails)
@@ -202,7 +202,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
 
                 val redeemDetails = Gson().fromJson(
                     json.get("data"),
-                    com.fypmoney.model.RedeemDetailsResponse::class.java
+                    RedeemDetailsResponse::class.java
                 )
 
                 redeemDetailsResponse.postValue(redeemDetails)

@@ -201,7 +201,7 @@ object Utility {
     /*
           * This method is used to extract only digits from string
           * */
-    fun extractDigits(msg: String?): String? {
+    fun extractDigits(msg: String): String {
         val p = Pattern.compile("(\\d{4,8})")
         val m = p.matcher(msg ?: "")
         return if (m.find()) {

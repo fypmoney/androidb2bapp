@@ -110,6 +110,7 @@
 
 
     </LinearLayout>
+
     <EditText
         android:id="@+id/add_money_editext"
         style="@style/EditTextStyle"
@@ -117,17 +118,19 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linear"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
+        android:layout_marginTop="40dp"
         android:background="@null"
-        app:layout_constraintTop_toBottomOf="@+id/linear"
+        android:longClickable="false"
         android:drawableStart="@drawable/rupee_symbol"
         android:drawablePadding="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:inputType="number"
-
         android:textColor="@color/add_money_amount_color"
-        android:textSize="32dp" />
+        android:textSize="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linear" />
 
     <View
         android:id="@+id/view1"

@@ -252,15 +252,9 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <receiver
-            android:name=".receivers.SmsBroadcastReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.android.gms.auth.api.phone.SMS_RETRIEVED" />
-            </intent-filter>
-        </receiver>
-        <receiver android:name=".receivers.GeofenceBroadcastReceiver"
-            android:exported="false"/>
+
+        <!--<receiver android:name=".receivers.GeofenceBroadcastReceiver"
+            android:exported="false"/>-->
 
         <service
             android:name=".services.MyFirebaseMessagingService"

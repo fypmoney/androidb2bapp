@@ -101,9 +101,6 @@ class LocationListenerClass(
 
 
     override fun onProviderEnabled(provider: String) {
-        super.onProviderEnabled(provider)
-
-
     }
 
     override fun onProviderDisabled(provider: String) {

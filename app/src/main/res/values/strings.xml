@@ -156,8 +156,8 @@
     <string name="btn_cont">Continue</string>
     <string name="create_task">Choose a task or create one</string>
     <string name="chores_error">Something went wrong.</string>
-    <string name="sub_title1">Your tasks</string>
-    <string name="sub_title2">Assigned tasks</string>
+    <string name="sub_title1">Your Missions</string>
+    <string name="sub_title2">Assigned Missions</string>
     <string name="chores_history">Show missions history</string>
     <string name="chores_accept">Accept</string>
     <string name="chores_reject">Reject</string>
@@ -182,7 +182,7 @@
     <string name="hey_champ">Hey Champ you have done a great job! I am proud of you. 👏</string>
     <string name="can_see">You can see this in your rewards section.</string>
     <string name="looks_like">Looks like your dad has rejected your task completion reward.</string>
-    <string name="create_own_task">Create your own task</string>
+    <string name="create_own_task">Create your own Mission</string>
     <string name="title_hint">Title</string>
     <string name="desc_hint">Description</string>
     <string name="time_limit_hint">Time limit</string>
@@ -190,8 +190,8 @@
     <!--
     Sign in
     -->
-    <string name="assign_to">Assign a task to</string>
-    <string name="create_own">Create your own task</string>
+    <string name="assign_to">Assign a mission to</string>
+    <string name="create_own">Create your own Mission</string>
     <string name="enter_phone_title">Phone number \n verification</string>
 
     <!--
@@ -277,7 +277,7 @@
     <string name="family_fyper_txt">Family Fypers</string>
     <string name="family_fyper_pending_approval">Pending Approval</string>
     <string name="ongoing_chores_txt">Ongoing Missions</string>
-    <string name="ongoing_chores_txt1">Perform task and exciting cash rewards</string>
+    <string name="ongoing_chores_txt1">Perform missions and get exciting cash rewards</string>
     <string name="family_settings_toolbar_heading">My Fypers</string>
     <string name="family_settings_family_fypers">"'s Fypers"</string>
     <string name="family_settings_family_fypers1">Fypers</string>
