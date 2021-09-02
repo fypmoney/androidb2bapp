@@ -131,11 +131,11 @@ class StoreWebpageOpener : AppCompatActivity() {
         toolbar_backImage.setOnClickListener {
             onBackPressed()
         }
-        refresh.setOnClickListener({
+        refresh.setOnClickListener {
 
             webView?.reload()
 
-        })
+        }
 
 
     }

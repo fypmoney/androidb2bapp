@@ -17,6 +17,8 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewFamilySettingsBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.fypmoney.view.customview.GifView
 import com.fypmoney.view.fragment.LeaveFamilyBottomSheet
 import com.fypmoney.view.fragment.UpdateFamilyNameBottomSheet
@@ -108,6 +110,16 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
         }
         mViewModel.onLeaveFamilySuccess.observe(viewLifecycleOwner) {
             if (it) {
+                SharedPrefUtils.putString(
+                    requireContext(),
+                    SharedPrefUtils.SF_KEY_USER_FAMILY_NAME,
+                    null
+                )
+                mViewModel.username.set(
+                    Utility.getCustomerDataFromPreference()?.firstName + requireActivity().resources.getString(
+                        R.string.family_settings_family_fypers
+                    )
+                )
                 intentToActivity(HomeView::class.java)
                 mViewModel.onLeaveFamilySuccess.value = false
             }
