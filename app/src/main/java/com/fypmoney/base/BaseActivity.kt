@@ -469,6 +469,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         config.isGallerySelectionEnabled = true
         config.isResponseExpectationEnabled = true
         config.isTeamMemberInfoVisible = true
+
         config.isUserEventsTrackingEnabled = true
         fresh.init(config)
         val faqOptions = FaqOptions()

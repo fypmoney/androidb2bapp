@@ -71,11 +71,12 @@ import android.text.Spanned
 import android.text.SpannableString
 
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.View
 
-import android.view.ViewTreeObserver
-
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import com.fypmoney.view.fragment.FilterByDateFragment
+import java.time.Year
 
 
 /*
@@ -319,13 +320,74 @@ object Utility {
             mMonth,
             mDay
         )
-        if(isDateOfBirth){
-            datePickerDialog.datePicker.maxDate = (System.currentTimeMillis() - 347039786000)//11 years //Todo
+        if (isDateOfBirth) {
+            datePickerDialog.datePicker.maxDate =
+                (System.currentTimeMillis() - 347039786000)//11 years //Todo
             datePickerDialog.datePicker.minDate = (System.currentTimeMillis() - 2208984820000)//70
 
-        }else{
+        } else {
             datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
         }
+        datePickerDialog.show()
+
+    }
+
+    fun showDatePickerDialogWithStartDate(
+        context: Context,
+        onDateSelectedwithStart: OnDateSelectedwithStart,
+        isDateOfBirth: Boolean = false,
+        calendar: Calendar?
+    ) {
+        val c: Calendar = getInstance()
+        val cal: Calendar
+        if (calendar == null) {
+            cal = c
+        } else {
+            cal = calendar
+        }
+//        cal.set(Calendar.DAY_OF_MONTH,21)
+
+        Log.d("Chackdate", cal.get(Calendar.DAY_OF_MONTH).toString())
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, year, monthOfYear, dayOfMonth ->
+                val simpleDateFormat =
+                    SimpleDateFormat("yyyy MM dd", Locale.ROOT)
+                val date: Date? =
+                    simpleDateFormat.parse("${year} ${monthOfYear + 1} $dayOfMonth")
+                val simpleDateFormatDate =
+                    SimpleDateFormat(DATE_FORMAT_CHANGED, Locale.ROOT)
+                // calculateDifferenceBetweenDates(date,getInstance().time)
+                if (calendar == null) {
+                    cal.set(YEAR, year)
+                    cal.set(MONTH, monthOfYear)
+                    cal.set(DAY_OF_MONTH, dayOfMonth)
+                }
+
+                date?.let {
+                    onDateSelectedwithStart.onDateSelectedwithStart(
+                        simpleDateFormatDate.format(it), SimpleDateFormat(
+                            AppConstants.DATE_TIME_FORMAT_SERVER,
+                            Locale.ROOT
+                        ).format(it), calculateDifferenceBetweenDates(date, getInstance().time),
+                        cal
+                    )
+
+                }
+            },
+            cal.get(YEAR),
+            cal.get(MONTH),
+            cal.get(DAY_OF_MONTH)
+
+        )
+        datePickerDialog.datePicker.minDate = cal.time.time
+//        if(isDateOfBirth){
+//            datePickerDialog?.datePicker!!.maxDate = (System.currentTimeMillis() - 347039786000)//11 years //Todo
+//            datePickerDialog?.datePicker.minDate = (System.currentTimeMillis() - 2208984820000)//70
+//
+//        }else{
+//            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+//        }
         datePickerDialog.show()
 
     }
@@ -354,6 +416,16 @@ object Utility {
 
     interface OnDateSelected {
         fun onDateSelected(dateOnEditText: String, dateOnServer: String, yearDifference: Int) {
+        }
+    }
+
+    interface OnDateSelectedwithStart {
+        fun onDateSelectedwithStart(
+            dateOnEditText: String,
+            dateOnServer: String,
+            yearDifference: Int,
+            c: Calendar
+        ) {
         }
     }
 
