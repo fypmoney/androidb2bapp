@@ -404,7 +404,6 @@
             android:layout_marginEnd="@dimen/_22sdp"
             android:gravity="center"
             android:paddingBottom="@dimen/_16sdp">
-
             <Button
 
                 android:id="@+id/cancel"
@@ -422,6 +421,7 @@
                 android:visibility="gone"
                 tools:visibility="visible"
                 app:backgroundTint="@color/text_color_dark" />
+
 
         </LinearLayout>
     </RelativeLayout>

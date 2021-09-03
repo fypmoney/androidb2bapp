@@ -470,6 +470,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         config.isGallerySelectionEnabled = true
         config.isResponseExpectationEnabled = true
         config.isTeamMemberInfoVisible = true
+
         config.isUserEventsTrackingEnabled = true
 
         val user = fresh.user.apply {
