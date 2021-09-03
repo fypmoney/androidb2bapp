@@ -380,7 +380,10 @@ object Utility {
             cal.get(DAY_OF_MONTH)
 
         )
-        datePickerDialog.datePicker.minDate = cal.time.time
+        if (calendar != null) {
+            datePickerDialog.datePicker.minDate = cal.time.time
+        }
+
 //        if(isDateOfBirth){
 //            datePickerDialog?.datePicker!!.maxDate = (System.currentTimeMillis() - 347039786000)//11 years //Todo
 //            datePickerDialog?.datePicker.minDate = (System.currentTimeMillis() - 2208984820000)//70

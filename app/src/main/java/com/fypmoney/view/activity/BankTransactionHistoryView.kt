@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +14,7 @@ import com.fypmoney.base.PaginationListener
 import com.fypmoney.databinding.ViewBankTransactionHistoryBinding
 import com.fypmoney.model.BankTransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.fragment.FilterByDateFragment2
+import com.fypmoney.view.fragment.FilterByDateFragment
 import com.fypmoney.viewmodel.BankTransactionHistoryViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
@@ -29,7 +28,7 @@ import kotlinx.android.synthetic.main.view_bank_transaction_history.*
 * */
 class BankTransactionHistoryView :
     BaseActivity<ViewBankTransactionHistoryBinding, BankTransactionHistoryViewModel>(),
-    FilterByDateFragment2.OnFilterByDateClickListener {
+    FilterByDateFragment.OnFilterByDateClickListener {
     private var toDatestr: String = ""
     private var fromDatestr: String = ""
     private lateinit var mViewModel: BankTransactionHistoryViewModel
@@ -147,7 +146,7 @@ class BankTransactionHistoryView :
          * */
     private fun callFilterByDateBottomSheet() {
         val bottomSheet =
-            FilterByDateFragment2(
+            FilterByDateFragment(
                 this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))

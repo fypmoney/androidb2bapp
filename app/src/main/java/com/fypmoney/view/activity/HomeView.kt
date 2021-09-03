@@ -560,7 +560,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             FamilyNotificationBottomSheet(
                 notificationResponse?.actionAllowed,
                 notificationResponse?.description,
-                notificationResponse?.isApprovalProcessed,
+                notificationResponse?.isApprovalProcessed, notificationResponse,
                 this
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))

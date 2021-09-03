@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
 import com.fypmoney.databinding.BottomSheetFamilyNotificationBinding
+import com.fypmoney.model.NotificationModel
 import com.fypmoney.util.AppConstants
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -24,6 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class FamilyNotificationBottomSheet(
     private val actionAllowed: String?,
     private val descriptionValue: String?, private val isApprovalProcess: String? = null,
+    var notificationResponse: NotificationModel.NotificationResponseDetails?,
     private var onBottomSheetClickListener: OnBottomSheetClickListener
 ) : BottomSheetDialogFragment() {
 
@@ -55,6 +57,21 @@ class FamilyNotificationBottomSheet(
         val btnAccept = view.findViewById<TextView>(R.id.button_accept)!!
         val btnCancel = view.findViewById<TextView>(R.id.button_cancel)!!
 
+
+
+        val actionAllowedList = actionAllowed?.split(",")
+        if (actionAllowedList?.size!! > 1) {
+            btnCancel.visibility = View.GONE
+            btnAccept.visibility = View.VISIBLE
+            btnReject.visibility = View.VISIBLE
+        } else {
+            btnAccept.visibility = View.GONE
+            btnReject.visibility = View.GONE
+            btnCancel.visibility = View.VISIBLE
+        }
+
+
+        description.text = descriptionValue
         when (isApprovalProcess) {
             AppConstants.YES -> {
                 btnReject.visibility = View.GONE
@@ -65,26 +82,12 @@ class FamilyNotificationBottomSheet(
                     }
 
                     override fun onFinish() {
-                      dismiss()
+                        dismiss()
                     }
                 }.start()
 
             }
         }
-
-        val actionAllowedList = actionAllowed?.split(",")
-        if (actionAllowedList?.size!! > 1) {
-            btnCancel.visibility = View.GONE
-
-        } else {
-            btnAccept.visibility = View.GONE
-            btnReject.visibility = View.GONE
-
-        }
-
-
-        description.text = descriptionValue
-
         btnReject.setOnClickListener {
             onBottomSheetClickListener.onBottomSheetButtonClick(actionAllowedList[0])
             dismiss()
