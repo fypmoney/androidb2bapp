@@ -30,6 +30,50 @@
           }
         },
         {
+          "client_id": "1016008416953-mlqt10iqvsvtdpb7503i5pk5cc3aoo73.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fypmoney",
+            "certificate_hash": "899b0a3cb020bf34ebab90f3a4982a236afab8f5"
+          }
+        },
+        {
+          "client_id": "1016008416953-c613ffpp8g2bkvjmvjpkba3thietrmn3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyhNOQ_Np-jlYfKOK-z4g6Dn3cBCVwPj4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1016008416953-c613ffpp8g2bkvjmvjpkba3thietrmn3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1016008416953-ighjaoh5ohdn3kodqp96fal4rcq7s08o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fypmoney"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1016008416953:android:4df223a0e562a830d34568",
+        "android_client_info": {
+          "package_name": "com.fypmoney.dev"
+        }
+      },
+      "oauth_client": [
+        {
           "client_id": "1016008416953-c613ffpp8g2bkvjmvjpkba3thietrmn3.apps.googleusercontent.com",
           "client_type": 3
         }

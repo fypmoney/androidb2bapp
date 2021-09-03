@@ -193,7 +193,7 @@ class ImagePickerView : AppCompatActivity() {
         val image = File(path, fileName)
         return getUriForFile(
             this@ImagePickerView,
-            packageName.toString() + ".provider",
+            "$packageName.provider",
             image
         )
     }

@@ -37,6 +37,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.view_home.*
 import java.util.concurrent.atomic.AtomicBoolean
 import com.facebook.appevents.AppEventsLogger;
+import java.lang.RuntimeException
 
 
 class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
@@ -133,7 +134,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             }
             true
         }
-
     }
 
     /**

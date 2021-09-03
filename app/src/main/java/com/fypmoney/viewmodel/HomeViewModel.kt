@@ -1,9 +1,12 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.os.Build
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import androidx.multidex.BuildConfig
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -19,6 +22,7 @@ import com.fypmoney.util.Utility
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import java.util.*
 
 /*
 * This is used as a home screen
@@ -109,14 +113,37 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 purpose = ApiConstant.API_USER_DEVICE_INFO,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_USER_DEVICE_INFO),
                 request_type = ApiUrl.PUT,
+                /*UserDeviceInfo(
+                    Build.BRAND,
+                    Build.MODEL,
+                    Build.ID,
+                    TimeZone.getDefault().getDisplayName(
+                        Locale.ROOT
+                    ),
+                    PockketApplication.instance.resources.configuration.locale.country,
+                    BuildConfig.VERSION_NAME,
+                    AppConstants.PLATFORM,
+                    Build.VERSION.SDK_INT.toString(),
+                    SharedPrefUtils.getString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_FIREBASE_TOKEN
+                    ) ?: ""
+                )*/
                 param = UserDeviceInfo(
                     latitude = latitude,
                     longitude = longitude,
                     userId =  userId,
+                    make = Build.BRAND,
+                    model = Build.MODEL,
+                    modelVersion = Build.ID,
+                    timezone = TimeZone.getDefault().getDisplayName(
+                        Locale.ROOT
+                    ),
+                    locale = PockketApplication.instance.resources.configuration.locale.country,
                     dtoken = SharedPrefUtils.getString(
                         getApplication(),
                         SharedPrefUtils.SF_KEY_FIREBASE_TOKEN
-                    )
+                    ) ?: ""
 
                 ), onResponse = this,
                 isProgressBar = false

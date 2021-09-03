@@ -23,7 +23,6 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.fypmoney"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 16
@@ -39,9 +38,9 @@ android {
 
     buildTypes {
         release {
-            debuggable false
-            minifyEnabled true
-            shrinkResources true
+            debuggable true
+            //minifyEnabled true
+            //shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
@@ -69,13 +68,30 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    flavorDimensions "tier"
+    productFlavors {
+            dev{
+                signingConfig signingConfigs.config
+                applicationId "com.fypmoney.dev"
+                resValue "string", "app_name", "F debug"
+                buildConfigField "String", "BASE_ENDPOINT", "\"http://54.84.197.170:9300\""
+                buildConfigField "String", "ADJUST_PROD_KEY","\"buqdhv6bqlts\""
+            }
+            prod{
+                signingConfig signingConfigs.config
+                applicationId "com.fypmoney"
+                resValue "string", "app_name", "Fyp"
+                buildConfigField "String", "BASE_ENDPOINT", "\"https://techservices.fyp-e.in\""
+                buildConfigField "String", "ADJUST_PROD_KEY","\"buqdhv6bqlts\""
 
+
+            }
+    }
 
 }
 
 kapt { generateStubs = true }
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.4.30")
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
@@ -86,24 +102,23 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
     implementation 'com.google.firebase:firebase-inappmessaging-display:20.1.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
 
-    //Appsfyler
 
-    implementation 'com.android.installreferrer:installreferrer:1.0'
+    implementation 'com.android.installreferrer:installreferrer:2.2'
 
-    implementation 'com.airbnb.android:lottie:3.4.0'
+    implementation 'com.airbnb.android:lottie:3.7.0'
     // view model
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     kapt "androidx.lifecycle:lifecycle-compiler:2.3.0"
     implementation 'com.google.android.material:material:1.4.0-alpha01'
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
     implementation 'com.android.support:multidex:1.0.3'
 
     // Sdp for handling different screen size resolutions
@@ -113,23 +128,22 @@ dependencies {
     implementation 'com.vanniktech:emoji-material:0.7.0'
     implementation 'com.vanniktech:emoji-google:0.7.0'
     //Retrofit and RxJava, RxAndroid
-    implementation("com.squareup.retrofit2:converter-gson:2.3.0")
-    implementation("com.squareup.retrofit2:retrofit:2.3.0")
-    implementation("com.squareup.okhttp:okhttp:2.4.0")
-    implementation("io.reactivex.rxjava2:rxjava:2.1.14")
-    implementation("com.squareup.retrofit2:adapter-rxjava2:2.3.0")
-    implementation("io.reactivex.rxjava2:rxandroid:2.0.2")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.okhttp:okhttp:2.7.5")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.10")
+    implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
     implementation("io.reactivex.rxjava2:rxkotlin:2.2.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:3.9.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
     //Add Firebase Core
-    implementation("com.google.firebase:firebase-core:18.0.2")
+    implementation platform('com.google.firebase:firebase-bom:28.4.0')
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation("com.google.firebase:firebase-core")
     // Add the SDK for Firebase Cloud Messaging
-    implementation("com.google.firebase:firebase-messaging:21.0.1")
-    // Add the Firebase Crashlytics SDK.
-    implementation("com.google.firebase:firebase-crashlytics:17.4.0")
-    // Recommended: Add the Google Analytics SDK.
-    implementation("com.google.firebase:firebase-analytics:18.0.2")
+    implementation("com.google.firebase:firebase-messaging:22.0.0")
 
     // Glide to show images
     implementation 'com.github.bumptech.glide:glide:4.11.0'
@@ -142,25 +156,25 @@ dependencies {
     implementation "androidx.preference:preference-ktx:1.1.1"
 
     // Room components
-    implementation "androidx.room:room-ktx:2.2.6"
-    kapt "androidx.room:room-compiler:2.2.6"
-    androidTestImplementation "androidx.room:room-testing:2.2.6"
+    implementation "androidx.room:room-ktx:2.3.0"
+    kapt "androidx.room:room-compiler:2.3.0"
+    androidTestImplementation "androidx.room:room-testing:2.3.0"
 
     // lib for SMS verification (Phone Auth)
-    implementation("com.google.android.gms:play-services-auth:19.0.0")
-    implementation("com.google.android.gms:play-services-auth-api-phone:17.5.0")
-    implementation "com.google.firebase:firebase-messaging-directboot:21.0.1"
+    implementation("com.google.android.gms:play-services-auth:19.2.0")
+    implementation("com.google.android.gms:play-services-auth-api-phone:17.5.1")
+    implementation "com.google.firebase:firebase-messaging-directboot:22.0.0"
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.7.0'
 
     implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.2'
 
     // youtube
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
-    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 
     // shimmer
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
-    implementation 'com.squareup.moshi:moshi:1.9.3'
+    implementation 'com.squareup.moshi:moshi:1.11.0'
     implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
     // google pay
     implementation 'in.payu:payu-gpay:1.4.0'
@@ -179,16 +193,16 @@ dependencies {
 
     implementation 'com.payu.samsungpay:samsungpay:1.0'
 
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
 
     // Qr code scanner
-    implementation 'com.journeyapps:zxing-android-embedded:3.0.1@aar'
-    implementation 'com.google.zxing:core:3.3.0'
+    implementation 'com.journeyapps:zxing-android-embedded:3.0.2@aar'
+    implementation 'com.google.zxing:core:3.4.0'
 
     // qr code parser
     implementation 'com.payneteasy:ber-tlv:1.0-11'
     //dexter permissions
-    implementation "com.karumi:dexter:5.0.0"
+    implementation "com.karumi:dexter:6.2.2"
     // for cropping image
     implementation 'com.github.yalantis:ucrop:2.2.6'
 
@@ -202,7 +216,7 @@ dependencies {
     //play core lib
     implementation 'com.google.android.play:core:1.10.0'
     debugImplementation "com.github.chuckerteam.chucker:library:3.2.0"
-    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.2.0"
+    releaseImplementation "com.github.chuckerteam.chucker:library:3.2.0"
 //"com.github.chuckerteam.chucker:library-no-op:3.2.0"
 
     implementation 'com.adjust.sdk:adjust-android:4.28.4'

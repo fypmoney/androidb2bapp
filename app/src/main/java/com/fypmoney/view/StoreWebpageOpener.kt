@@ -54,9 +54,8 @@ class StoreWebpageOpener : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        window.requestFeature(Window.FEATURE_PROGRESS);
         setContentView(R.layout.activity_webview)
+
         var title = intent.getStringExtra("title")
 
         if (title != null) {
@@ -183,7 +182,7 @@ class StoreWebpageOpener : AppCompatActivity() {
                 ) {
                     onActivityResult(
                         AppConstants.DEVICE_SECURITY_REQUEST_CODE,
-                        AppCompatActivity.RESULT_OK,
+                        RESULT_OK,
                         Intent()
                     )
                     super.onAuthenticationSucceeded(result)
@@ -269,7 +268,7 @@ class StoreWebpageOpener : AppCompatActivity() {
         when (requestCode) {
             AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
                 when (resultCode) {
-                    AppCompatActivity.RESULT_OK -> {
+                    RESULT_OK -> {
                         callCardSettingsBottomSheet()
 
                     }
