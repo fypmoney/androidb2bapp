@@ -1,13 +1,10 @@
 package com.fypmoney.view.fragment
 
 
-import android.R.attr.label
 import android.app.Dialog
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -16,26 +13,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
-import com.fypmoney.connectivity.ErrorResponseInfo
-import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.databinding.BottomSheetCardDetailsBinding
 import com.fypmoney.model.*
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_card_details.*
 import kotlinx.android.synthetic.main.bottom_sheet_card_details.view.*
-import kotlinx.android.synthetic.main.virtual_card_back_layout.*
 
 
 /*
 * This is Card Details
 * */
 class CardDetailsBottomSheet(var cardInfoDetails: CardInfoDetailsBottomSheet?) :
-    BottomSheetDialogFragment(), WebApiCaller.OnWebApiResponse {
-
+    BottomSheetDialogFragment() {
+    lateinit var mViewBinding: BottomSheetCardDetailsBinding
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -44,101 +37,71 @@ class CardDetailsBottomSheet(var cardInfoDetails: CardInfoDetailsBottomSheet?) :
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(
+    ): View {
+        mViewBinding = DataBindingUtil.inflate(
+            layoutInflater,
             R.layout.bottom_sheet_card_details,
             container,
             false
         )
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetCardDetailsBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_card_details,
-            null,
-            false
-        )
-        view.copy.setOnClickListener(View.OnClickListener {
+        return mViewBinding.view
+    }
 
-            var text =card_details.text.toString()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mViewBinding.copy.setOnClickListener {
+
+            val text = card_details.text.toString()
             val clipboard: ClipboardManager? =
                 requireActivity().getSystemService(Context.CLIPBOARD_SERVICE)
-              as ClipboardManager?
-            val clip = ClipData.newPlainText("Card", text)
+                        as ClipboardManager?
+            val clip = ClipData.newPlainText(getString(R.string.card), text)
 
             clipboard?.setPrimaryClip(clip)
-            Toast.makeText(requireContext(),"Copied to Clipboard",Toast.LENGTH_SHORT).show()
-        })
+            Toast.makeText(requireContext(), getString(R.string.copy_to_clipboard), Toast.LENGTH_SHORT).show()
+        }
 
 
-        view.image.setOnCheckedChangeListener { _, isChecked -> // checkbox status is changed from uncheck to checked.
+        mViewBinding.image.setOnCheckedChangeListener { _, isChecked -> // checkbox status is changed from uncheck to checked.
             if (!isChecked) {
-                changepasswordvisibilityshow(view.cvvValue)
+                changePasswordVisibilityShow(view.cvvValue)
             } else {
-                changepasswordvisibility(view.cvvValue)
+                changePasswordVisibility(view.cvvValue)
 
             }
         }
-        bottomSheet.setContentView(bindingSheet.root)
         if (!cardInfoDetails?.cardNo.isNullOrEmpty()) {
-            view.card_details.text = cardInfoDetails?.cardNo
+            mViewBinding.cardDetails.text = cardInfoDetails?.cardNo
         } else {
-            view.copy.visibility = View.GONE
+            mViewBinding.copy.visibility = View.GONE
         }
         if (!cardInfoDetails?.expiry_month.isNullOrEmpty()) {
-            view.ExpiryValue.text =
+            mViewBinding.ExpiryValue.text =
                 cardInfoDetails?.expiry_month + "/" + cardInfoDetails?.expiry_year
 
         } else {
-            view.expiry.visibility = View.INVISIBLE
-            view.ExpiryValue.visibility = View.INVISIBLE
+            mViewBinding.expiry.visibility = View.INVISIBLE
+            mViewBinding.ExpiryValue.visibility = View.INVISIBLE
         }
         if (!cardInfoDetails?.CVV.isNullOrEmpty()) {
-            view.cvvValue.text = cardInfoDetails?.CVV
+            mViewBinding.cvvValue.text = cardInfoDetails?.CVV
         } else {
-            view.cvv.visibility = View.INVISIBLE
-            view.cvvValue.visibility = View.INVISIBLE
-            view.image.visibility = View.INVISIBLE
+            mViewBinding.cvv.visibility = View.INVISIBLE
+            mViewBinding.cvvValue.visibility = View.INVISIBLE
+            mViewBinding.image.visibility = View.INVISIBLE
         }
-
-
-
-
-
-        return view
     }
-    private fun changepasswordvisibilityshow(text: TextView) {
+
+
+
+    private fun changePasswordVisibilityShow(text: TextView) {
         text.transformationMethod = PasswordTransformationMethod.getInstance()
     }
 
-    private fun changepasswordvisibility(text: TextView) {
+
+    private fun changePasswordVisibility(text: TextView) {
         text.transformationMethod = HideReturnsTransformationMethod.getInstance()
     }
-
-    override fun progress(isStart: Boolean, message: String) {
-
-
-    }
-
-    override fun onSuccess(purpose: String, responseData: Any) {
-
-    }
-
-    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
-
-
-    }
-
-    override fun offLine() {
-    }
-
-    /*
-    * This method is used to set the card toggle
-    * */
-    interface OnOpenCardClickListener {
-        fun OnOpenCardClickListener()
-    }
-
 
 
 

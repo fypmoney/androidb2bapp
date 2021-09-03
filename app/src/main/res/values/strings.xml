@@ -27,7 +27,6 @@
         <item>@drawable/bewakoof_logo</item>
 
     </integer-array>
-    <string name="app_name">Fyp</string>
     <string name="action_settings">Settings</string>
 
 
@@ -874,5 +873,7 @@ Coming really soon!
     <string name="instagram">Instagram</string>
     <string name="facebook">Facebook</string>
     <string name="youtube">Youtube</string>
+    <string name="copy_to_clipboard">Copied to Clipboard</string>
+    <string name="card">Card</string>
 
 </resources>

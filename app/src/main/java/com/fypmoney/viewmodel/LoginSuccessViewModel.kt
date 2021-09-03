@@ -23,9 +23,6 @@ import com.google.gson.Gson
 class LoginSuccessViewModel(application: Application) : BaseViewModel(application) {
     var onApiSuccess = MutableLiveData<Boolean>()
 
-    init {
-    }
-
     /*
     * This method is used to handle click of continue
     * */

@@ -75,18 +75,6 @@ class CreateTaskAdapter(var viewModel: CreateTaskViewModel, var onSampleTaskClic
         }
     }
 
-    /**
-     * This will set the data in the list in adapter
-     */
-    fun updateList(notification: NotificationModel.NotificationResponseDetails?, position: Int) {
-        try {
-            taskList?.remove(notification)
-            notifyItemRemoved(position)
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
 
     interface OnSampleTaskClickListener
     {

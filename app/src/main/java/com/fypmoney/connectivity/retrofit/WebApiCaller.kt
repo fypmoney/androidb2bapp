@@ -1,6 +1,7 @@
 package com.fypmoney.connectivity.retrofit
 
 import android.util.Log
+import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.connectivity.ApiConstant
@@ -68,7 +69,7 @@ class WebApiCaller {
 
             }
             else -> {
-                ApiClient.getClient(ApiConstant.BASE_URL).create(ApiInterface::class.java)
+                ApiClient.getClient(BuildConfig.BASE_ENDPOINT).create(ApiInterface::class.java)
 
             }
         }

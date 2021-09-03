@@ -1,6 +1,9 @@
 package com.fypmoney.model
 
+import android.os.Build
 import androidx.annotation.Keep
+import com.fypmoney.BuildConfig
+import com.fypmoney.util.AppConstants
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -28,6 +31,7 @@ data class UpdateProfileRequest(
     @SerializedName("interest") val interest: ArrayList<InterestEntity>?=null,
     ) : BaseRequest()
 
+
 @Keep
 data class AppLoginApiRequest(
     @SerializedName("identifierType") val identifierType: String? = null,
@@ -47,9 +51,9 @@ data class UserDeviceInfo(
     @SerializedName("modelVersion") val modelVersion: String? = null,
     @SerializedName("timezone") val timezone: String? = null,
     @SerializedName("locale") val locale: String? = null,
-    @SerializedName("appVersion") val appVersion: String? = null,
-    @SerializedName("platform") val platform: String? = null,
-    @SerializedName("platformVersion") val platformVersion: String? = null,
+    @SerializedName("appVersion") val appVersion: Int = BuildConfig.VERSION_CODE,
+    @SerializedName("platform") val platform: String = AppConstants.CLIENT_TYPE_VALUE,
+    @SerializedName("platformVersion") val platformVersion: String = Build.VERSION.SDK_INT.toString(),
     @SerializedName("dtoken") val dtoken: String? = null,
     @SerializedName("lat") val latitude: String? = null,
     @SerializedName("long") val longitude: String? = null,

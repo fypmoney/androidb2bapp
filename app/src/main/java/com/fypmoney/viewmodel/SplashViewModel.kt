@@ -46,15 +46,6 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 SharedPrefUtils.SF_KEY_IS_LOGIN
             )!!
         ) {
-            // api call in case preference not contains the data
-            /*if (SharedPrefUtils.getString(
-                    getApplication(),
-                    SharedPrefUtils.SF_KEY_USER_PROFILE_INFO
-                ) == null
-            ) {
-            } else {
-                moveToNextScreen.value = true
-            }*/
             callGetCustomerProfileApi()
             callSettingsApi()
 

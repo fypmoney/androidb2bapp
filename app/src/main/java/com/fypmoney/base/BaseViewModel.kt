@@ -11,6 +11,8 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.AppDatabase
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
+import com.google.firebase.crashlytics.CustomKeysAndValues
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 /**
  *Base View Model class
@@ -58,5 +60,12 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     override fun progress(isStart: Boolean, message: String) {
         progressDialog.postValue(isStart)
+    }
+
+    fun sendCrashData(){
+        val customKeysAndValues = CustomKeysAndValues.Builder()
+        /*FirebaseCrashlytics.getInstance().setCustomKeys{
+            key()
+        }*/
     }
 }
