@@ -6,9 +6,11 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityReferAndEarnBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.referandearn.viewmodel.ReferAndEarnActivityVM
 import kotlinx.android.synthetic.main.toolbar.*
@@ -31,11 +33,13 @@ class ReferAndEarnActivity : BaseActivity<ActivityReferAndEarnBinding,ReferAndEa
 
     private fun setUpViews() {
         mViewBinding.referalCodeValueTv.text =  Utility.getCustomerDataFromPreference()?.referralCode
-        mViewBinding.referAndEarnTitleTv.text =  getString(R.string.refer_to_your_friend_and_get_a_cash_reward_of_50,
-            AppConstants.CASHBACK_AMOUNT
+        mViewBinding.referAndEarnTitleTv.text =  SharedPrefUtils.getString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_REFER_LINE1
         )
-        mViewBinding.referAndEarnSubTitleTv.text =  getString(R.string.share_referral_code_with_your_friend_and_after_they_install_both_of_you_will_get_50_cash_rewards,
-            AppConstants.CASHBACK_AMOUNT
+        mViewBinding.referAndEarnSubTitleTv.text =  SharedPrefUtils.getString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_REFER_LINE2
         )
     }
 

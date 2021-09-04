@@ -36,7 +36,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
 
     private fun callSettingsApi() {
         val request = SettingsRequest()
-        request.keyList = listOf("CARD_ORDER_FLAG")
+        request.keyList = listOf("CARD_ORDER_FLAG","REFER_LINE1", "REFER_LINE2", "REFEREE_CASHBACK")
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_SETTINGS,
@@ -139,6 +139,27 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_KEY_CARD_FLAG,
+                                    it.value
+                                )
+                            }
+                            AppConstants.REFER_LINE1 -> {
+                            SharedPrefUtils.putString(
+                                getApplication(),
+                                SharedPrefUtils.SF_KEY_REFER_LINE1,
+                                it.value
+                            )
+                        }
+                            AppConstants.REFER_LINE2 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_KEY_REFER_LINE2,
+                                    it.value
+                                )
+                            }
+                            AppConstants.REFEREE_CASHBACK -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_KEY_REFEREE_CASHBACK,
                                     it.value
                                 )
                             }

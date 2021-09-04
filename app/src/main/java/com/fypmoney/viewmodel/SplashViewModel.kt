@@ -19,7 +19,11 @@ import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
 import com.fypmoney.model.homemodel.TopTenUsersResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
+import com.fypmoney.util.AppConstants.REFEREE_CASHBACK
+import com.fypmoney.util.AppConstants.REFER_LINE1
+import com.fypmoney.util.AppConstants.REFER_LINE2
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_REFEREE_CASHBACK
 import com.fypmoney.util.Utility
 import com.google.gson.Gson
 
@@ -95,7 +99,7 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
     }
     private fun callSettingsApi() {
         val request = SettingsRequest()
-        request.keyList = listOf("CARD_ORDER_FLAG")
+        request.keyList = listOf("CARD_ORDER_FLAG","REFER_LINE1", "REFER_LINE2", "REFEREE_CASHBACK")
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_SETTINGS,
@@ -179,6 +183,27 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_KEY_CARD_FLAG,
+                                    it.value
+                                )
+                            }
+                            REFER_LINE1 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_KEY_REFER_LINE1,
+                                    it.value
+                                )
+                            }
+                            REFER_LINE2 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_KEY_REFER_LINE2,
+                                    it.value
+                                )
+                            }
+                            REFEREE_CASHBACK -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_KEY_REFEREE_CASHBACK,
                                     it.value
                                 )
                             }
