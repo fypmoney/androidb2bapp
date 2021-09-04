@@ -15,6 +15,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.receivers.AutoReadOtpUtils
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
@@ -45,7 +46,6 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     var isYesBankLogoVisible = ObservableField(false)
     var otpTitle =
         ObservableField(PockketApplication.instance.getString(R.string.otp_title))
-
     /*
     * This method is used to handle click of mobile
     * */

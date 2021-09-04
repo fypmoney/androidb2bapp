@@ -19,7 +19,7 @@ import com.fypmoney.util.livedata.LiveEvent
 abstract class BaseViewModel(application: Application) : AndroidViewModel(application),
     WebApiCaller.OnWebApiResponse {
     var progressDialog = MutableLiveData(false)
-    val internetError = MutableLiveData(false)
+    val internetError:LiveEvent<Boolean> = LiveEvent()
     val logoutUser:LiveEvent<Boolean> = LiveEvent()
     var appDatabase: AppDatabase? = null
 

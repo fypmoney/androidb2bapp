@@ -22,13 +22,6 @@ class AadhaarAccountActivationViewModel(application: Application) : BaseViewMode
     var onActivateAccountSuccess = MutableLiveData<KycActivateAccountResponseDetails>()
     var onLogoutSuccess = MutableLiveData<Boolean>()
 
-    /*
-* This method is used to handle click of activate account using Aadhaar card
-* */
-    fun onActivateAccountClicked() {
-
-
-    }
 
     fun callLogOutApi() {
         WebApiCaller.getInstance().request(

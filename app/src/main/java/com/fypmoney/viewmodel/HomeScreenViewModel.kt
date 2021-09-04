@@ -187,10 +187,11 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
 
                 val redeemDetails = Gson().fromJson(
                     json.get("data"),
-                    com.fypmoney.model.RedeemDetailsResponse::class.java
+                    RedeemDetailsResponse::class.java
                 )
 
                 redeemDetailsResponse.postValue(redeemDetails)
+                callGetCoinsToRedeem()
 
             }
 
@@ -201,10 +202,11 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
 
                 val redeemDetails = Gson().fromJson(
                     json.get("data"),
-                    com.fypmoney.model.RedeemDetailsResponse::class.java
+                    RedeemDetailsResponse::class.java
                 )
 
                 redeemDetailsResponse.postValue(redeemDetails)
+
 
             }
             ApiConstant.TOP_TEN_USER_API -> {

@@ -349,7 +349,6 @@
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginEnd="@dimen/_12sdp"
             android:clipToPadding="true"
-
             android:paddingBottom="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_6sdp"
             android:layout_height="wrap_content">
@@ -377,8 +376,6 @@
                 />
 
             <Button
-
-
                 android:layout_width="0dp"
                 android:layout_weight="1.2"
                 android:layout_height="wrap_content"
@@ -401,7 +398,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-
+            tools:visibility="visible"
             android:layout_marginStart="@dimen/_22sdp"
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_22sdp"
@@ -423,7 +420,7 @@
                 android:textAllCaps="false"
 
                 android:visibility="gone"
-
+                tools:visibility="visible"
                 app:backgroundTint="@color/text_color_dark" />
 
         </LinearLayout>

@@ -25,8 +25,7 @@ const val requestCodeGPSAddress = 102
 class LocationListenerClass(
     val context: Activity,
     var getCurrentLocationListener: GetCurrentLocationListener
-) :
-    LocationListener {
+) : LocationListener {
     private var locationManager: LocationManager? = null
 
     fun permissions() {
@@ -102,9 +101,6 @@ class LocationListenerClass(
 
 
     override fun onProviderEnabled(provider: String) {
-        super.onProviderEnabled(provider)
-
-
     }
 
     override fun onProviderDisabled(provider: String) {
