@@ -15,6 +15,7 @@ import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
+import com.fypmoney.BuildConfig
 import com.fypmoney.util.SharedPrefUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import java.lang.Exception
@@ -36,12 +37,16 @@ class PockketApplication : Application() {
         instance = this
         EmojiManager.install(GoogleEmojiProvider())
         val appToken = "buqdhv6bqlts"
-        val environment = AdjustConfig.ENVIRONMENT_PRODUCTION
+        val environment = if(BuildConfig.DEBUG){
+            AdjustConfig.ENVIRONMENT_SANDBOX
+        }else{
+            AdjustConfig.ENVIRONMENT_PRODUCTION
+        }
         val config = AdjustConfig(this, appToken, environment)
+        config.setUrlStrategy("URL_STRATEGY_INDIA")
         Adjust.onCreate(config)
         registerActivityLifecycleCallbacks(AdjustLifecycleCallbacks())
-        //var appSignature = AppSignatureHelper(this)
-        //appSignature.appSignatures
+
 
         //Check User is logged in or not.
         if(SharedPrefUtils.getBoolean(

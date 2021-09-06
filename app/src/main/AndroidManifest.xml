@@ -46,7 +46,6 @@
             android:noHistory="true"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
