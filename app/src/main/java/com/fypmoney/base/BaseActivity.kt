@@ -5,12 +5,15 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
 import android.app.KeyguardManager
+import android.app.admin.DevicePolicyManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
@@ -31,12 +34,15 @@ import com.freshchat.consumer.sdk.FreshchatConfig
 import com.freshchat.consumer.sdk.FreshchatUser
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
+import com.fypmoney.model.SendMoneyResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.CASHBACK_AMOUNT
 import com.fypmoney.util.AppConstants.PLAY_STORE_URL
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.AddMoneySuccessBottomSheet
+import com.fypmoney.view.activity.HomeView
 import com.fypmoney.view.activity.LoginView
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.toolbar.*
@@ -249,13 +255,14 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
                 askForDeviceSecurity(executor,true)
             }else{
                 val authIntent = km.createConfirmDeviceCredentialIntent(
-                    getString(com.fypmoney.R.string.dialog_title_auth),
+                    getString(R.string.dialog_title_auth),
                     getString(R.string.dialog_msg_auth)
                 )
                 startActivityForResult(authIntent, AppConstants.DEVICE_SECURITY_REQUEST_CODE)
 
             }
-
+        }else{
+            callDeviceSecurity()
         }
     }
 
@@ -320,6 +327,12 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
                         BiometricPrompt.ERROR_USER_CANCELED -> {
                         }
                         BiometricPrompt.ERROR_VENDOR -> {
+                        }
+                        BiometricPrompt.ERROR_LOCKOUT -> {
+
+                        }
+                        BiometricPrompt.ERROR_LOCKOUT_PERMANENT -> {
+
                         }
                     }
                     Log.d(TAG,"Authentication error with $errorCode and $errString")
@@ -500,4 +513,15 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         Freshchat.showFAQs(context, faqOptions)
     }
 
+    private fun callDeviceSecurity() {
+        if(!supportFragmentManager.isDestroyed){
+            val bottomSheet = DeviceSecurityWarningBottomSheet(setDeviceSecurity={
+                val intent = Intent(DevicePolicyManager.ACTION_SET_NEW_PASSWORD)
+                startActivity(intent)
+            })
+            bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            bottomSheet.show(supportFragmentManager, "device_security")
+        }
+
+    }
 }

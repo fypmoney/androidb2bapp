@@ -173,6 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignStart="@+id/cvvValue"
                     android:layout_alignTop="@+id/valid_through"
+                    android:onClick="@{()->fragment.onCvvEyeClicked()}"
                     android:text="@string/cvv_details_title"
                     android:textColor="@color/white" />
 
@@ -183,6 +184,7 @@
                     android:layout_marginEnd="@dimen/dp5"
                     android:layout_toStartOf="@+id/image"
                     android:text="@{viewModel.cvv}"
+                    android:onClick="@{()->fragment.onCvvEyeClicked()}"
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     tools:text="***" />

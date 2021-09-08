@@ -60,7 +60,6 @@ import kotlinx.android.synthetic.main.view_add_money_upi_debit.*
 open class AddMoneyUpiDebitView :
     BaseActivity<ViewAddMoneyUpiDebitBinding, AddMoneyUpiDebitViewModel>(),
     AddNewCardBottomSheet.OnAddNewCardClickListener,
-    PaymentRelatedDetailsListener, ValueAddedServiceApiListener,
     TransactionFailBottomSheet.OnBottomSheetClickListener, AddUpiBottomSheet.OnAddUpiClickListener {
     private lateinit var mViewModel: AddMoneyUpiDebitViewModel
     lateinit var payuConfig: PayuConfig
@@ -100,7 +99,6 @@ open class AddMoneyUpiDebitView :
         payuConfig = PayuConfig()
         payuConfig.environment = PayuConstants.PRODUCTION_ENV
 
-        val amountLength = intent.getStringExtra(AppConstants.AMOUNT)?.length
 
     }
 
@@ -108,29 +106,42 @@ open class AddMoneyUpiDebitView :
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onUpiClicked.observe(this) {
-            mViewModel.clickedAppPackageName.set(it.packageName)
-            callUpiIntent()
+        mViewModel.event.observe(this,{
+            when(it){
+                AddMoneyUpiDebitViewModel.AddMoneyEvent.OnADDNewCardClickedEvent -> {
+                    callAddNewCardBottomSheet()
+                }
+                AddMoneyUpiDebitViewModel.AddMoneyEvent.OnUPIClickedEvent -> {
+                    callUpiIntent()
+                }
+            }
+        })
+        /*mViewModel.onUpiClicked.observe(this) {
+            if(it){
+                callUpiIntent()
+                mViewModel.onUpiClicked.value = false
+            }
+
         }
         mViewModel.onAddNewCardClicked.observe(this) {
             if (it) {
                 callAddNewCardBottomSheet()
                 mViewModel.onAddNewCardClicked.value = false
             }
-        }
+        }*/
 
-        mViewModel.callGetCardsApi.observe(this) {
+        /*mViewModel.callGetCardsApi.observe(this) {
             if (it) {
                 callPayUApi(
+                    hash = mViewModel.getUserCardsHash.get(),
                     command = PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK,
                     var1 = mViewModel.merchantKey.get() + ":" + SharedPrefUtils.getLong(
                         applicationContext,
                         SharedPrefUtils.SF_KEY_USER_ID
-                    ),
-                    hash = mViewModel.getUserCardsHash.get()
+                    )
                 )
             }
-        }
+        }*/
 
 
 
@@ -146,12 +157,7 @@ open class AddMoneyUpiDebitView :
 
         }
 
-        mViewModel.onAddInSaveCardClicked.observe(this) {
-            callDebitCardPaymentGateway(1, it)
 
-        }
-        mViewModel.onBackPress.observe(this) {
-        }
     }
 
 
@@ -244,9 +250,6 @@ open class AddMoneyUpiDebitView :
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "AddUPI")
     }
-    interface OnOpenCardClickListener {
-        fun OnOpenCardClickListener()
-    }
 
     override fun onAddNewCardButtonClick(addNewCardDetails: AddNewCardDetails) {
         mViewModel.modeOfPayment.set(2)
@@ -263,45 +266,6 @@ open class AddMoneyUpiDebitView :
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (mViewModel.isPaymentFail.get() == true) {
-            callTransactionFailBottomSheet()
-
-        }
-        mViewModel.callAddMoneyStep1Api()
-
-
-    }
-
-    override fun onPaymentRelatedDetailsResponse(payuResponse: PayuResponse?) {
-        val list = ArrayList<SavedCardResponseDetails>()
-        mViewModel.isSavedCardProgressVisible.set(false)
-        if (payuResponse?.storedCards?.isNullOrEmpty() == false) {
-            payuResponse.storedCards?.forEach()
-            {
-                list.add(
-                    SavedCardResponseDetails(
-                        card_no = it.maskedCardNumber,
-                        name_on_card = it.nameOnCard,
-                        expiry_month = it.expiryMonth,
-                        expiry_year = it.expiryYear,
-                        is_expired = it.isExpired,
-                        isDomestic = it.isDomestic,
-                        card_brand = it.cardBrand,
-                        card_token = it.cardToken,
-                        card_type = it.cardType
-                    )
-                )
-            }
-            mViewModel.savedCardsAdapter.setList(list)
-        }
-
-    }
-
-    override fun onValueAddedServiceApiResponse(p0: PayuResponse?) {
-    }
-
     //set callback to track important events
 
     //set callback to track important events
@@ -315,17 +279,6 @@ open class AddMoneyUpiDebitView :
                 packageListDialogFragment.verifyVpa(verifyVpaHash)
             }
 
-            protected fun getReturnData(code: Int, status: String?, result: String?): PostData {
-                val postData = PostData()
-                postData.code = code
-                postData.status = status
-                postData.result = result
-                return postData
-            }
-
-            protected fun getReturnData(code: Int, result: String?): PostData {
-                return getReturnData(code, PayuConstants.ERROR, result)
-            }
 
             /**
              * This method will be called after a failed transaction.
@@ -335,10 +288,11 @@ open class AddMoneyUpiDebitView :
              */
             override fun onPaymentFailure(payuResponse: String, merchantResponse: String) {
                 mViewModel.isPaymentFail.set(true)
+                mViewModel.payUResponse.set(payuResponse)
+                mViewModel.callAddMoneyStep2Api()
             }
 
             override fun onPaymentTerminate() {
-
             }
 
             /**
@@ -364,12 +318,11 @@ open class AddMoneyUpiDebitView :
             override fun onBackApprove() {
                 super.onBackApprove()
                 mViewModel.isPaymentFail.set(true)
-
             }
 
             override fun onBackDismiss() {
                 super.onBackDismiss()
-                Utility.showToast("onBackDismiss")
+                // Utility.showToast("onBackDismiss")
             }
 
             /**
@@ -379,7 +332,7 @@ open class AddMoneyUpiDebitView :
              */
             override fun onBackButton(alertDialogBuilder: AlertDialog.Builder) {
                 super.onBackButton(alertDialogBuilder)
-                Utility.showToast("onBackButton")
+                //Utility.showToast("onBackButton")
 
             }
 
@@ -398,11 +351,12 @@ open class AddMoneyUpiDebitView :
     override fun onBottomSheetButtonClick(type: String) {
         when (mViewModel.modeOfPayment.get()) {
             1 -> {
-                callUpiIntent()
-
+                mViewModel.onUpiClicked.value = true
+                mViewModel.callAddMoneyStep1Api()
             }
-            else -> {
-                callAddNewCardBottomSheet()
+            2->{
+                mViewModel.onAddNewCardClicked.value = true
+                mViewModel.callAddMoneyStep1Api()
             }
         }
 
@@ -465,7 +419,7 @@ open class AddMoneyUpiDebitView :
                     "com.payu.testapp.MerchantCheckoutActivity"
 
                 customBrowserConfig.postURL = url
-                if (payuConfig != null) customBrowserConfig.payuPostData = payuConfig.data
+                customBrowserConfig.payuPostData = payuConfig.data
 
                 CustomBrowser().addCustomBrowser(
                     this@AddMoneyUpiDebitView,
@@ -539,23 +493,20 @@ open class AddMoneyUpiDebitView :
 This method is used to call the pay u api
 */
 
-    private fun callPayUApi(hash: String?, command: String?, var1: String?) {
+    /*private fun callPayUApi(hash: String?, command: String?, var1: String?) {
         val merchantWebService = MerchantWebService()
         merchantWebService.key = mViewModel.merchantKey.get()
         merchantWebService.command = command
         merchantWebService.var1 = var1
-
         merchantWebService.hash = hash
-        // dont fetch the data if its been called from payment activity.
         val postData: PostData = MerchantWebServicePostParams(merchantWebService).merchantWebServicePostParams
-
-        // ok we got the post params, let make an api call to payu to fetch the payment related details
         payuConfig.data = postData.result
 
-        val paymentRelatedDetailsForMobileSdkTask = GetPaymentRelatedDetailsTask(this)
-        paymentRelatedDetailsForMobileSdkTask.execute(payuConfig)
+        //TODO to be deleted
+        *//*val paymentRelatedDetailsForMobileSdkTask = GetPaymentRelatedDetailsTask(this)
+        paymentRelatedDetailsForMobileSdkTask.execute(payuConfig)*//*
 
-    }
+    }*/
 
     fun showProgressDialogView(): View {
         return layoutInflater.inflate(R.layout.progress_bar_layout, null)
