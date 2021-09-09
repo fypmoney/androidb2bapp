@@ -116,32 +116,7 @@ open class AddMoneyUpiDebitView :
                 }
             }
         })
-        /*mViewModel.onUpiClicked.observe(this) {
-            if(it){
-                callUpiIntent()
-                mViewModel.onUpiClicked.value = false
-            }
 
-        }
-        mViewModel.onAddNewCardClicked.observe(this) {
-            if (it) {
-                callAddNewCardBottomSheet()
-                mViewModel.onAddNewCardClicked.value = false
-            }
-        }*/
-
-        /*mViewModel.callGetCardsApi.observe(this) {
-            if (it) {
-                callPayUApi(
-                    hash = mViewModel.getUserCardsHash.get(),
-                    command = PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK,
-                    var1 = mViewModel.merchantKey.get() + ":" + SharedPrefUtils.getLong(
-                        applicationContext,
-                        SharedPrefUtils.SF_KEY_USER_ID
-                    )
-                )
-            }
-        }*/
 
 
 
@@ -287,7 +262,7 @@ open class AddMoneyUpiDebitView :
              * @param merchantResponse response received from Furl
              */
             override fun onPaymentFailure(payuResponse: String, merchantResponse: String) {
-                mViewModel.isPaymentFail.set(true)
+                //mViewModel.isPaymentFail.set(true)
                 mViewModel.payUResponse.set(payuResponse)
                 mViewModel.callAddMoneyStep2Api()
             }
@@ -489,26 +464,9 @@ open class AddMoneyUpiDebitView :
             e.printStackTrace()
         }
     }
-/*
-This method is used to call the pay u api
-*/
 
-    /*private fun callPayUApi(hash: String?, command: String?, var1: String?) {
-        val merchantWebService = MerchantWebService()
-        merchantWebService.key = mViewModel.merchantKey.get()
-        merchantWebService.command = command
-        merchantWebService.var1 = var1
-        merchantWebService.hash = hash
-        val postData: PostData = MerchantWebServicePostParams(merchantWebService).merchantWebServicePostParams
-        payuConfig.data = postData.result
 
-        //TODO to be deleted
-        *//*val paymentRelatedDetailsForMobileSdkTask = GetPaymentRelatedDetailsTask(this)
-        paymentRelatedDetailsForMobileSdkTask.execute(payuConfig)*//*
-
-    }*/
-
-    fun showProgressDialogView(): View {
+    private fun showProgressDialogView(): View {
         return layoutInflater.inflate(R.layout.progress_bar_layout, null)
     }
 

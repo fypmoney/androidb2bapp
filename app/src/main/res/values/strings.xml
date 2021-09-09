@@ -878,5 +878,15 @@ Coming really soon!
     <string name="set_device_security">Set Device Security</string>
     <string name="your_phone_is_not_configured_with_passcode_security_n_please_set_device_security_to_view_details">Your phone is not configured with passcode security. \n Please set device security to view details.</string>
     <string name="set_security">Set Security</string>
+    <string name="through_missions_anyone_can_assign_tasks_to_another_fyper_in_their_list_and_pay_them_on_mission_completion">Through ‘Missions’🚀, anyone can assign tasks to another Fyper in their list and pay them on mission completion.</string>
+    <string name="looks_like_you_haven_t_assigned_any_task_to_anyone">Looks like you haven’t assigned any task to anyone. 😅</string>
+    <string name="different_cases_of_task_assigning">Different cases of task assigning -</string>
+    <string name="parents_can_assign_household_chores_to_children">Parents can assign household chores to children</string>
+    <string name="friends_can_assign_any_mission_to_another_friend">Friends can assign any mission to another friend</string>
+    <string name="you_can_assign_to_any_fyper">You can assign to any Fyper</string>
+    <string name="any_fyper_in_your_list_can_assign_a_mission_to_you">Any Fyper in your list can assign a mission to you</string>
+    <string name="head_to_assign_a_mission_tab_it_s_gonna_be_a_fun_way_to_earn">Head to <b>‘Assign A Mission’</b> tab. It’s gonna be a fun way to earn!🤑</string>
+    <string name="your_missions">Your Missions</string>
+    <string name="assigned_missions">Assigned Missions</string>
 
 </resources>

@@ -156,8 +156,8 @@ companion object{
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
-        adapter.addFragment(YourTasksFragment(), "Your Missions")
-        adapter.addFragment(AssignedTaskFragment(), "Assigned Missions")
+        adapter.addFragment(YourTasksFragment(), getString(R.string.your_missions))
+        adapter.addFragment(AssignedTaskFragment(), getString(R.string.assigned_missions))
 
 
         viewPager.adapter = adapter
