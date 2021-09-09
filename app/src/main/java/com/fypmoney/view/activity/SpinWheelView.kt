@@ -6,7 +6,9 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.fypmoney.BR
@@ -97,10 +99,12 @@ class SpinWheelView : BaseActivity<ViewSpinWheelBinding, SpinWheelViewModel>(),
 
             }
         }
-        bottomSheetMessage =
-            RedeemMyntsBottomSheet(itemClickListener2, redeemDetails)
-        bottomSheetMessage?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheetMessage?.show(supportFragmentManager, "TASKMESSAGE")
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            bottomSheetMessage =
+                RedeemMyntsBottomSheet(itemClickListener2, redeemDetails)
+            bottomSheetMessage?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+            bottomSheetMessage?.show(supportFragmentManager, "TASKMESSAGE")
+        }
     }
 
     /**
@@ -147,7 +151,6 @@ class SpinWheelView : BaseActivity<ViewSpinWheelBinding, SpinWheelViewModel>(),
 
         mViewModel.onPlayClicked.observe(this)
         {
-
             when (mViewModel.spinAllowed.value) {
                 AppConstants.NO -> {
 
@@ -230,7 +233,8 @@ class SpinWheelView : BaseActivity<ViewSpinWheelBinding, SpinWheelViewModel>(),
    * This method is used to call log out
    * */
     private fun callErrorBottomSheet(type: String?, message: String? = null) {
-        Handler().post {
+
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             val bottomSheet =
                 ErrorBottomSheet(type!!, message, this, mViewModel)
             bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))

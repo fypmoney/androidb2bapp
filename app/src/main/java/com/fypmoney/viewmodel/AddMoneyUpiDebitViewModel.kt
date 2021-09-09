@@ -3,6 +3,7 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -15,6 +16,7 @@ import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.adapter.AddMoneyUpiAdapter
 import com.fypmoney.view.adapter.SavedCardsAdapter
 import com.payu.india.Extras.PayUChecksum
@@ -29,9 +31,8 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var amountToAdd1 = ObservableField<String>()
     var clickedPositionForUpi = ObservableField<Int>()
     var addMoneyUpiAdapter = AddMoneyUpiAdapter(this)
-    var savedCardsAdapter = SavedCardsAdapter(this)
-    var onUpiClicked = MutableLiveData<UpiModel>()
-    var onAddNewCardClicked = MutableLiveData<Boolean>()
+    var onUpiClicked = MutableLiveData(false)
+    var onAddNewCardClicked = MutableLiveData(false)
     var requestData = ObservableField<String>()
     var hash = ObservableField<String>()
     var merchantKey = ObservableField<String>()
@@ -41,17 +42,14 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     var payUResponse = ObservableField<String>()
     var onStep2Response = MutableLiveData<String>()
     var step2ApiResponse = AddMoneyStep2ResponseDetails()
-    var callGetCardsApi = MutableLiveData(false)
-    var getUserCardsHash = ObservableField<String>()
-    var getCheckIsDomesticHash = ObservableField<String>()
-    var isSavedCardProgressVisible = ObservableField(true)
-    var getVerifyVPAHash = ObservableField<String>()
     var onAddInSaveCardClicked = MutableLiveData<AddNewCardDetails>()
-    var onBackPress = MutableLiveData<Boolean>()
     var isPaymentFail = ObservableField(false)
     var clickedAppPackageName = ObservableField<String>()
     var modeOfPayment = ObservableField<Int>()
 
+    val event: LiveData<AddMoneyEvent>
+        get() = _event
+    private val _event = LiveEvent<AddMoneyEvent>()
 
     /*
       *This method is used to call payment parameters while receiving the payment
@@ -73,20 +71,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         )
     }
 
-    /*
-     *This method is used to call payment parameters while receiving the payment
-     * */
-    private fun callGetHashApi(command: String, var1: String) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_GET_HASH,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_HASH),
-                request_type = ApiUrl.POST,
-                onResponse = this, isProgressBar = false,
-                param = makeGetHashRequest(command, var1)
-            )
-        )
-    }
+
 
 
     /*
@@ -119,14 +104,13 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
                     val result = requestData.get()?.replace("transactionId", "txnid")
                     requestData.set(result)
                     parseResponseOfStep1(requestData.get())
-                    callGetHashApi(
-                        PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK,
-                        merchantKey.get() + ":" + SharedPrefUtils.getLong(
-                            getApplication(),
-                            SharedPrefUtils.SF_KEY_USER_ID
-                        )
-                    )
-
+                    if(onUpiClicked.value!!){
+                        _event.value = AddMoneyEvent.OnUPIClickedEvent
+                        onUpiClicked.value = false
+                    }else if(onAddNewCardClicked.value!!){
+                        _event.value = AddMoneyEvent.OnADDNewCardClickedEvent
+                        onAddNewCardClicked.value = false
+                    }
                 }
             }
             ApiConstant.API_ADD_MONEY_STEP2 -> {
@@ -137,51 +121,6 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
                 }
 
             }
-
-           /* ApiConstant.PAYU_PRODUCTION_URL -> {
-                when (responseData) {
-
-                }
-                if (responseData is AddMoneyStep2Response) {
-                    step2ApiResponse = responseData.addMoneyStep2ResponseDetails
-                    onStep2Response.value = AppConstants.API_SUCCESS
-
-                }
-
-            }*/
-
-            ApiConstant.API_GET_HASH -> {
-                if (responseData is GetHashResponse) {
-                    responseData.getHashResponseDetails.hashData?.forEach()
-                    {
-                        when (it.command) {
-                            PayuConstants.PAYMENT_RELATED_DETAILS_FOR_MOBILE_SDK -> {
-                                getUserCardsHash.set(
-                                    it.hashValue
-                                )
-                                callGetCardsApi.value = true
-
-                            }
-                            PayuConstants.CHECK_IS_DOMESTIC -> {
-                                getCheckIsDomesticHash.set(
-                                    it.hashValue
-                                )
-                            }
-                            PayuConstants.VALIDATE_VPA -> {
-                                getVerifyVPAHash.set(
-                                    it.hashValue
-                                )
-                            }
-                        }
-
-                    }
-
-                }
-
-
-            }
-
-
         }
 
     }
@@ -191,7 +130,6 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         when (purpose) {
             ApiConstant.API_ADD_MONEY_STEP2 -> {
                 onStep2Response.value = AppConstants.API_FAIL
-
             }
         }
 
@@ -199,10 +137,20 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
 
     override fun onUpiItemClicked(position: Int, upiModel: UpiModel?) {
         clickedPositionForUpi.set(position)
-        onUpiClicked.value = upiModel!!
+        clickedAppPackageName.set(upiModel!!.packageName)
+        onUpiClicked.value = true
+        callAddMoneyStep1Api()
 
     }
 
+    /*
+   * This method is used to handle on add new card
+   * */
+    fun onAddNewCardClicked() {
+        onAddNewCardClicked.value = true
+        callAddMoneyStep1Api()
+
+    }
     /*
     *  used to parse the response
     * */
@@ -297,9 +245,6 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
                 mPaymentParams.expiryYear = addNewCardDetails?.expiryYear// YYYY
                 mPaymentParams.cvv = addNewCardDetails?.cvv
 
-                /* if (addNewCardDetails?.isCardSaved == true) {
-                     mPaymentParams.storeCard = 1
-                 } else {*/
                 mPaymentParams.storeCard = 0
 
 
@@ -326,41 +271,9 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         return mPaymentParams
     }
 
-    /*
-    * This method is used to handle on add new card
-    * */
-    fun onAddNewCardClicked() {
-        onAddNewCardClicked.value = true
-
-    }
 
 
-    private fun generateHashFromSDK(mPaymentParams: PaymentParams, salt: String): String? {
 
-        var postData = PostData();
-
-//        if(mPaymentParams.getBeneficiaryAccountNumber()== null){
-
-        // payment Hash;
-        val checksum = PayUChecksum()
-        checksum.amount = mPaymentParams.getAmount();
-        checksum.setKey(mPaymentParams.getKey());
-        checksum.setTxnid(mPaymentParams.getTxnId());
-        checksum.setEmail(mPaymentParams.getEmail());
-        checksum.setSalt(salt);
-        checksum.productinfo = mPaymentParams.getProductInfo();
-        checksum.setFirstname(mPaymentParams.getFirstName());
-        checksum.setUdf1(mPaymentParams.getUdf1());
-        checksum.setUdf2(mPaymentParams.getUdf2());
-        checksum.setUdf3(mPaymentParams.getUdf3());
-        checksum.setUdf4(mPaymentParams.getUdf4());
-        checksum.setUdf5(mPaymentParams.getUdf5());
-
-        postData = checksum.hash
-        return postData.getResult()
-
-
-    }
 
 
     /*
@@ -378,25 +291,10 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         return getHashRequest
     }
 
-    /*
-        *This method is used to call payment parameters while receiving the payment
-        * */
-   /* fun callPayUApi(var1: String) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.PAYU_PRODUCTION_URL,
-                endpoint = NetworkUtil.endURL(ApiConstant.PAYU_PRODUCTION_URL),
-                request_type = ApiUrl.POST,
-                onResponse = this, isProgressBar = true,
-                param = PayUServerRequest(
-                    command = PayuConstants.CHECK_IS_DOMESTIC,
-                    key = merchantKey.get(),
-                    var1 = var1,
-                    hash = getCheckIsDomesticHash.get()!!
-                )
-            ), whichServer = AppConstants.PAYU_SERVER
-        )
-    }*/
+    sealed class AddMoneyEvent{
+        object OnUPIClickedEvent:AddMoneyEvent()
+        object OnADDNewCardClickedEvent:AddMoneyEvent()
+    }
 
 }
 

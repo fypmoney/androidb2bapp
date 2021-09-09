@@ -53,7 +53,7 @@
             android:paddingRight="@dimen/_34sdp"
             android:textColor="#9CA3A5"
             android:gravity="center"
-            android:text="Looks like you haven’t assigned any task to anyone. 😅"
+            android:text="@string/looks_like_you_haven_t_assigned_any_task_to_anyone"
             android:layout_height="wrap_content" />
     </RelativeLayout>
 </RelativeLayout>

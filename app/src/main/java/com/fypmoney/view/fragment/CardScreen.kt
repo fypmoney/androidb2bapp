@@ -227,12 +227,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         }
         mViewModel.onBankProfileSuccess.observe(viewLifecycleOwner) {
             if (it) {
-                /*when (mViewModel.isOrderCard.get()) {
-                    false -> {
-                        myProfileAdapter.updateList(PockketApplication.instance.getString(R.string.track_order))
-                    }
-
-                }*/
                 if (mViewModel.isActivateCardVisible.get() == false) {
                     try {
                         val textString = ArrayList<String>()

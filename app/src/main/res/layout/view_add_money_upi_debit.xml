@@ -110,38 +110,11 @@
                     android:textColor="@color/text_color_dark"
                     android:textSize="17sp" />
 
-                <LinearLayout
-                    android:id="@+id/linear"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/debit_card_text"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <ProgressBar
-                        android:id="@+id/progress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:scaleX="0.4"
-                        android:scaleY="0.4"
-                        tools:visibility="visible"
-                        android:visibility="@{viewModel.isSavedCardProgressVisible?View.VISIBLE:View.GONE}" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/my_recycler_view1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="@{viewModel.isSavedCardProgressVisible?View.GONE:View.VISIBLE}"
-                        app:adapter="@{viewModel.savedCardsAdapter}"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-                </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/add_debit_card_text"
                     style="@style/TextviewRegular"
-                    android:layout_below="@+id/linear"
+                    android:layout_below="@+id/debit_card_text"
                     android:layout_marginStart="@dimen/dp8"
                     android:layout_marginTop="10dp"
                     android:ellipsize="end"
