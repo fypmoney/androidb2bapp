@@ -136,9 +136,6 @@
 
         </activity>
         <activity
-            android:name=".view.activity.MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.activity.ContactView"
             android:screenOrientation="portrait" />
         <activity
@@ -228,14 +225,10 @@
         <meta-data
             android:name="payu_debug_mode_enabled"
             android:value="false" />
-        <!--<meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:resource="@drawable/ic_notification"
-            android:value="@string/default_notification_channel_id" />-->
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.fypmoney.provider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -244,7 +237,7 @@
         </provider>
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.fypmoney.provider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -253,8 +246,7 @@
         </provider>
 
 
-        <!--<receiver android:name=".receivers.GeofenceBroadcastReceiver"
-            android:exported="false"/>-->
+
 
         <service
             android:name=".services.MyFirebaseMessagingService"

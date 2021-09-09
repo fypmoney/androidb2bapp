@@ -11,9 +11,13 @@ import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
 import android.app.Activity
 import android.app.Application.ActivityLifecycleCallbacks
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
+import com.fypmoney.util.SharedPrefUtils
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import java.lang.Exception
 
 
 /**
@@ -38,6 +42,14 @@ class PockketApplication : Application() {
         registerActivityLifecycleCallbacks(AdjustLifecycleCallbacks())
         //var appSignature = AppSignatureHelper(this)
         //appSignature.appSignatures
+
+        //Check User is logged in or not.
+        if(SharedPrefUtils.getBoolean(
+                this,
+                SharedPrefUtils.SF_KEY_IS_LOGIN
+            )!!){
+            setUserForCrashReports(this)
+        }
 
     }
     private class AdjustLifecycleCallbacks : ActivityLifecycleCallbacks {
@@ -68,4 +80,27 @@ class PockketApplication : Application() {
         }
     }
 
+    private fun setUserForCrashReports(context: Context) {
+        try {
+            FirebaseCrashlytics.getInstance()
+                .setUserId(SharedPrefUtils.getLong(
+                    context, key = SharedPrefUtils.SF_KEY_USER_ID).toString())
+            FirebaseCrashlytics.getInstance()
+                .setCustomKey("user_id", SharedPrefUtils.getLong(
+                    context, key = SharedPrefUtils.SF_KEY_USER_ID).toString())
+            SharedPrefUtils.getString(
+                context, key = SharedPrefUtils.SF_KEY_USER_MOBILE)?.let {
+                FirebaseCrashlytics.getInstance()
+                    .setCustomKey("phone", it)
+            }
+            SharedPrefUtils.getString(
+                context, key = SharedPrefUtils.SF_KEY_USER_FIRST_NAME)?.let {
+                FirebaseCrashlytics.getInstance()
+                    .setCustomKey("full_name", "$it ${SharedPrefUtils.getString(
+                        context, key = SharedPrefUtils.SF_KEY_USER_LAST_NAME)}")
+            }
+        } catch (e: Exception) {
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
+    }
 }

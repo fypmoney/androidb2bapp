@@ -3,9 +3,12 @@ package com.fypmoney.base
 
 import android.Manifest
 import android.app.KeyguardManager
+import android.app.admin.DevicePolicyManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -224,6 +227,8 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
             }
 
+        }else{
+            callDeviceSecurity()
         }
     }
 
@@ -319,5 +324,16 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
             }
         }
     }
+
+    private fun callDeviceSecurity() {
+            val bottomSheet = DeviceSecurityWarningBottomSheet(setDeviceSecurity={
+                val intent = Intent(DevicePolicyManager.ACTION_SET_NEW_PASSWORD)
+                startActivity(intent)
+            })
+            bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            bottomSheet.show(requireActivity().supportFragmentManager, "device_security")
+    }
+
+
 
 }

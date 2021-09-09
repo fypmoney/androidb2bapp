@@ -2,6 +2,7 @@ package com.fypmoney.view
 
 
 import android.app.KeyguardManager
+import android.app.admin.DevicePolicyManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -27,6 +28,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
+import com.fypmoney.base.DeviceSecurityWarningBottomSheet
 import com.fypmoney.model.CardInfoDetailsBottomSheet
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
@@ -54,9 +56,8 @@ class StoreWebpageOpener : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        window.requestFeature(Window.FEATURE_PROGRESS);
         setContentView(R.layout.activity_webview)
+
         var title = intent.getStringExtra("title")
 
         if (title != null) {
@@ -131,11 +132,11 @@ class StoreWebpageOpener : AppCompatActivity() {
         toolbar_backImage.setOnClickListener {
             onBackPressed()
         }
-        refresh.setOnClickListener({
+        refresh.setOnClickListener {
 
             webView?.reload()
 
-        })
+        }
 
 
     }
@@ -157,6 +158,8 @@ class StoreWebpageOpener : AppCompatActivity() {
 
             }
 
+        }else{
+            callDeviceSecurity()
         }
     }
 
@@ -183,7 +186,7 @@ class StoreWebpageOpener : AppCompatActivity() {
                 ) {
                     onActivityResult(
                         AppConstants.DEVICE_SECURITY_REQUEST_CODE,
-                        AppCompatActivity.RESULT_OK,
+                        RESULT_OK,
                         Intent()
                     )
                     super.onAuthenticationSucceeded(result)
@@ -269,7 +272,7 @@ class StoreWebpageOpener : AppCompatActivity() {
         when (requestCode) {
             AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
                 when (resultCode) {
-                    AppCompatActivity.RESULT_OK -> {
+                    RESULT_OK -> {
                         callCardSettingsBottomSheet()
 
                     }
@@ -287,4 +290,12 @@ class StoreWebpageOpener : AppCompatActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
+    private fun callDeviceSecurity() {
+        val bottomSheet = DeviceSecurityWarningBottomSheet(setDeviceSecurity={
+            val intent = Intent(DevicePolicyManager.ACTION_SET_NEW_PASSWORD)
+            startActivity(intent)
+        })
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        bottomSheet.show(supportFragmentManager, "device_security")
+    }
 }

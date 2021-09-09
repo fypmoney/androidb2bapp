@@ -9,9 +9,9 @@
         android:id="@+id/rv_assigned"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/_6sdp"
         android:layout_above="@+id/LoadProgressBar"
-        android:layout_marginRight="@dimen/_12sdp" />
+        android:layout_marginRight="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_6sdp" />
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/LoadProgressBar"
         android:layout_width="wrap_content"
@@ -28,31 +28,119 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/empty_screen"
-        android:layout_marginTop="@dimen/_90sdp"
         android:layout_gravity="center_horizontal"
-
         android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/_194sdp"
-            android:id="@+id/image"
-            android:layout_height="@dimen/_142sdp"
-            android:layout_centerHorizontal="true"
-
-            app:srcCompat="@drawable/ic_no_task" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/title1_tv"
             style="@style/TextviewRegular"
-            android:layout_below="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
+            android:gravity="center"
             android:paddingLeft="@dimen/_34sdp"
             android:paddingRight="@dimen/_34sdp"
-            android:textColor="#9CA3A5"
-            android:gravity="center"
-            android:text="Looks like you haven’t been assigned any task yet. 😅"
+            android:text="@string/through_missions_anyone_can_assign_tasks_to_another_fyper_in_their_list_and_pay_them_on_mission_completion"
+            android:textColor="@color/text_color_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/title2_tv"
+            android:layout_width="match_parent"
+            style="@style/TextviewRegular"
+            android:layout_below="@+id/title1_tv"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:textColor="@color/text_color_light"
+            android:gravity="start"
+            android:textSize="14sp"
+            android:text="@string/different_cases_of_task_assigning"
             android:layout_height="wrap_content" />
+
+
+        <TextView
+            android:id="@+id/desc_1_tv"
+            style="@style/TextviewRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title2_tv"
+            android:layout_marginTop="17dp"
+            android:drawableStart="@drawable/ic_check_green_tick"
+            android:drawablePadding="@dimen/dp10"
+            android:gravity="start|center"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:text="@string/parents_can_assign_household_chores_to_children"
+            android:textColor="@color/text_color_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/desc_2_tv"
+            style="@style/TextviewRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/desc_1_tv"
+            android:layout_marginTop="17dp"
+            android:drawableStart="@drawable/ic_check_green_tick"
+            android:drawablePadding="@dimen/dp10"
+            android:gravity="start|center"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:text="@string/friends_can_assign_any_mission_to_another_friend"
+            android:textColor="@color/text_color_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/desc_3_tv"
+            style="@style/TextviewRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/desc_2_tv"
+            android:layout_marginTop="17dp"
+            android:drawableStart="@drawable/ic_check_green_tick"
+            android:drawablePadding="@dimen/dp10"
+            android:gravity="start|center"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:text="@string/you_can_assign_to_any_fyper"
+            android:textColor="@color/text_color_dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/desc_4_tv"
+            style="@style/TextviewRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/desc_3_tv"
+            android:layout_marginTop="17dp"
+            android:drawableStart="@drawable/ic_check_green_tick"
+            android:drawablePadding="@dimen/dp10"
+            android:gravity="start|center"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:text="@string/any_fyper_in_your_list_can_assign_a_mission_to_you"
+            android:textColor="@color/text_color_dark"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/body_tv"
+            style="@style/TextviewRegular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="39dp"
+            android:layout_below="@+id/desc_4_tv"
+            android:gravity="center"
+            android:paddingLeft="@dimen/_34sdp"
+            android:paddingRight="@dimen/_34sdp"
+            android:text="@string/head_to_assign_a_mission_tab_it_s_gonna_be_a_fun_way_to_earn"
+            android:textColor="@color/text_color_light"
+            android:textSize="14sp" />
+
+
     </RelativeLayout>
 </RelativeLayout>

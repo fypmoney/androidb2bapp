@@ -11,6 +11,8 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.AppDatabase
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
+import com.google.firebase.crashlytics.CustomKeysAndValues
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 /**
  *Base View Model class
@@ -36,14 +38,14 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         }else{
             try {
                 when {
-                    purpose != ApiConstant.API_SNC_CONTACTS || purpose != ApiConstant.API_FETCH_ALL_FEEDS || purpose != ApiConstant.API_GET_CUSTOMER_INFO || purpose != ApiConstant.API_ADD_FAMILY_MEMBER || purpose != ApiConstant.API_GET_VIRTUAL_CARD_REQUEST || purpose != ApiConstant.API_ADD_MONEY_STEP2 || purpose != ApiConstant.API_LOGOUT -> {
+                    purpose != ApiConstant.API_SNC_CONTACTS || purpose != ApiConstant.API_FETCH_ALL_FEEDS || purpose != ApiConstant.API_GET_CUSTOMER_INFO || purpose != ApiConstant.API_ADD_FAMILY_MEMBER || purpose != ApiConstant.API_GET_VIRTUAL_CARD_REQUEST || purpose != ApiConstant.API_ADD_MONEY_STEP2 || purpose != ApiConstant.API_LOGOUT || purpose != ApiConstant.API_GET_WALLET_BALANCE -> {
                         Utility.showToast(errorResponseInfo.msg)
 
                     }
                 }
             } catch (e: Exception) {
                 when {
-                    purpose != ApiConstant.API_SNC_CONTACTS || purpose != ApiConstant.API_ADD_FAMILY_MEMBER || purpose != ApiConstant.API_GET_VIRTUAL_CARD_REQUEST || purpose != ApiConstant.API_ADD_MONEY_STEP2 ->
+                    purpose != ApiConstant.API_SNC_CONTACTS || purpose != ApiConstant.API_ADD_FAMILY_MEMBER || purpose != ApiConstant.API_GET_VIRTUAL_CARD_REQUEST || purpose != ApiConstant.API_ADD_MONEY_STEP2 || purpose != ApiConstant.API_GET_WALLET_BALANCE ->
                         Utility.showToast(PockketApplication.instance.getString(R.string.something_went_wrong_error1))
                 }
             }
@@ -58,5 +60,12 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
     override fun progress(isStart: Boolean, message: String) {
         progressDialog.postValue(isStart)
+    }
+
+    fun sendCrashData(){
+        val customKeysAndValues = CustomKeysAndValues.Builder()
+        /*FirebaseCrashlytics.getInstance().setCustomKeys{
+            key()
+        }*/
     }
 }

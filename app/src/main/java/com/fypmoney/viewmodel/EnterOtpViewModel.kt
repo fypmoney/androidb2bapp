@@ -124,17 +124,14 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                     null,
                     null,
                     UserDeviceInfo(
-                        Build.BRAND,
-                        Build.MODEL,
-                        Build.ID,
-                        TimeZone.getDefault().getDisplayName(
+                        make = Build.BRAND,
+                        model = Build.MODEL,
+                        modelVersion = Build.ID,
+                        timezone = TimeZone.getDefault().getDisplayName(
                             Locale.ROOT
                         ),
-                        PockketApplication.instance.resources.configuration.locale.country,
-                        BuildConfig.VERSION_NAME,
-                        AppConstants.PLATFORM,
-                        Build.VERSION.SDK_INT.toString(),
-                        SharedPrefUtils.getString(
+                        locale = PockketApplication.instance.resources.configuration.locale.country,
+                        dtoken = SharedPrefUtils.getString(
                             getApplication(),
                             SharedPrefUtils.SF_KEY_FIREBASE_TOKEN
                         ) ?: ""

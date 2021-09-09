@@ -188,7 +188,11 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
                         if (inviteList.size > 0) {
                             isFamilyFiperVisiblePending.set(true)
                         }
-
+                        username.set(
+                            responseData.GetMemberResponseDetails[0].familyName + "'s " + PockketApplication.instance.resources.getString(
+                                R.string.family_settings_family_fypers1
+                            )
+                        )
                         memberAdapter.setList(approveList)
                         pendingAdapter.setList(inviteList)
 
@@ -217,6 +221,7 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
                     memberRepository.deleteAllMembers()
                     Utility.showToast(responseData.msg!!)
                     onLeaveFamilySuccess.value=true
+
                 }
             }
 

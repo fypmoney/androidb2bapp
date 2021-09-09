@@ -17,6 +17,7 @@ import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_filter_by_date.*
+import java.util.*
 
 
 /*
@@ -24,8 +25,8 @@ import kotlinx.android.synthetic.main.bottom_sheet_filter_by_date.*
 * */
 class FilterByDateFragment(
     private var onBottomSheetClickListener: OnFilterByDateClickListener
-) : BottomSheetDialogFragment(), Utility.OnDateSelected {
-
+) : BottomSheetDialogFragment(), Utility.OnDateSelectedwithStart {
+    var calstart: java.util.Calendar = java.util.Calendar.getInstance()
     val whichOption = ObservableField<Boolean>()
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
@@ -59,10 +60,12 @@ class FilterByDateFragment(
         fromDate.setOnClickListener {
             whichOption.set(true)
             try {
-                Utility.showDatePickerDialog(
+
+                Utility.showDatePickerDialogWithStartDate(
                     context = requireContext(),
-                    onDateSelected = this,
-                    isDateOfBirth = false
+                    onDateSelectedwithStart = this,
+                    isDateOfBirth = false,
+                    null
                 )
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -71,10 +74,12 @@ class FilterByDateFragment(
         toDate.setOnClickListener {
             whichOption.set(false)
             try {
-                Utility.showDatePickerDialog(
+                val c: java.util.Calendar = java.util.Calendar.getInstance()
+                Utility.showDatePickerDialogWithStartDate(
                     context = requireContext(),
-                    onDateSelected = this,
-                    isDateOfBirth = false
+                    onDateSelectedwithStart = this,
+                    isDateOfBirth = false,
+                    calstart
                 )
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -135,9 +140,15 @@ class FilterByDateFragment(
 
     }
 
-    override fun onDateSelected(dateOnEditText: String, dateOnServer: String, yearDifference: Int) {
+    override fun onDateSelectedwithStart(
+        dateOnEditText: String,
+        dateOnServer: String,
+        yearDifference: Int,
+        c: Calendar
+    ) {
         when (whichOption.get()) {
             true -> {
+                calstart = c
                 from_date.text = dateOnEditText
             }
             else -> {

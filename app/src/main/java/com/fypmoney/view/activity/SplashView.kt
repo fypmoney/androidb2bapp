@@ -64,6 +64,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
 
 
 
+
     }
 
     /**
