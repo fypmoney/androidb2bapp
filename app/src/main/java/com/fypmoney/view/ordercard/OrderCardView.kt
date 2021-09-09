@@ -1,14 +1,16 @@
-package com.fypmoney.view.activity
+package com.fypmoney.view.ordercard
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewOrderCardBinding
-import com.fypmoney.view.adapter.MyOrderListAdapter
-import com.fypmoney.viewmodel.OrderCardViewModel
+import com.fypmoney.util.Utility
+import com.fypmoney.view.activity.PlaceOrderCardView
+import com.fypmoney.view.ordercard.cardorderoffer.CardOrderOfferActivity
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
@@ -19,6 +21,7 @@ import kotlinx.android.synthetic.main.view_order_card.*
 * */
 class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
     private lateinit var mViewModel: OrderCardViewModel
+    private lateinit var mViewBinding: ViewOrderCardBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -35,46 +38,30 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = this@OrderCardView,
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = getString(R.string.order_card)
+            isBackArrowVisible = true,
+            backArrowTint = Color.WHITE
         )
-
-        val myOrderListAdapter = MyOrderListAdapter(applicationContext)
-        list.adapter = myOrderListAdapter
-
-        val iconList = ArrayList<Int>()
-        iconList.add(R.drawable.ic_limit)
-        iconList.add(R.drawable.ic_safe)
-        iconList.add(R.drawable.ic_real_time)
-        iconList.add(R.drawable.ic_lock__1_)
-
-        myOrderListAdapter.setList(
-            iconList1 = iconList,
-            resources.getStringArray(R.array.order_card_list).toMutableList()
-        )
+        mViewBinding.cardPriceTv.text = String.format(getString(R.string.fyp_card_price),Utility.convertToRs("20000"))
         setObservers()
-
-        helpValue.setOnClickListener {
-            callFreshChat(applicationContext)
-
-        }
-
 
     }
 
-    fun setObservers() {
-        mViewModel.onOrderCardClicked.observe(this)
-        {
-            if (it) {
-                intentToActivity(PlaceOrderCardView::class.java)
-                mViewModel.onOrderCardClicked.value = false
+    private fun setObservers() {
+        mViewModel.event.observe(this, {
+            handelEvent(it)
+        })
+    }
+
+    private fun handelEvent(it: OrderCardViewModel.OrderCardEvent?) {
+        when (it) {
+            OrderCardViewModel.OrderCardEvent.GetOrderCardEvent -> {
+                intentToActivity(CardOrderOfferActivity::class.java)
             }
-
-
         }
-
     }
 
     /**

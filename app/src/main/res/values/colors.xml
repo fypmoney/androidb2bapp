@@ -72,5 +72,6 @@
     <color name="color5">#F7797D</color>
     <color name="green_winnings">#62AA70</color>
     <color name="grey_heading">#9EA5A7</color>
+    <color name="color_mat_black">#2d3039</color>
 
 </resources>

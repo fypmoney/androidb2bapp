@@ -8,18 +8,116 @@
 
         <variable
             name="viewModel"
-            type="com.fypmoney.viewmodel.OrderCardViewModel" />
+            type="com.fypmoney.view.ordercard.OrderCardViewModel" />
 
 
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_cl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:background="@drawable/ic_order_card_bg">
+
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_cl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewBold"
+                    android:textColor="@color/white"
+                    android:id="@+id/title_tv"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@string/fyp_card"/>
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/card_front_aiv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="1dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/card_price_tv"
+                    app:srcCompat="@drawable/ic_physical_card"/>
+
+
+                <TextView
+                    android:id="@+id/card_price_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:drawableStartCompat="@drawable/ic_card_price"
+                    android:drawablePadding="@dimen/dp20"
+                    android:text="@string/fyp_card_price"
+                    android:textColor="@color/text_color_light"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/dp5"
+                    app:customBackgroundColor="@{@color/color_mat_black}"
+                    app:customIsRounded="@{false}"
+                    app:customCornerRadius="@{@dimen/dp12}"
+                    android:layout_marginBottom="40dp"
+                    app:layout_constraintBottom_toTopOf="@+id/get_this_card_btn"/>
+
+
+
+                <Button
+                    android:id="@+id/get_this_card_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/get_this_card"
+                    android:textSize="18sp"
+                    android:paddingVertical="15dp"
+                    android:onClick="@{()->viewModel.onOrderCardClicked()}"
+                    android:backgroundTint="@color/color_task_card_green"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="@dimen/dp20"/>
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -75,6 +173,6 @@
                 app:backgroundTint="@color/text_color_dark" />
 
         </RelativeLayout>
+-->
 
-    </androidx.core.widget.NestedScrollView>
 </layout>

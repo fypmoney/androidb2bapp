@@ -27,14 +27,11 @@ import com.fypmoney.util.*
 import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.MyProfileListAdapter
-import com.fypmoney.view.notifymeordercard.NotifyMeOrderCardActivity
+import com.fypmoney.view.ordercard.OrderCardView
 import com.fypmoney.viewmodel.CardScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.activity_notify_me_order_card.*
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.screen_card.notify_btn
-import kotlinx.android.synthetic.main.screen_card.video
-import kotlinx.android.synthetic.main.screen_card.view.*
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
 import kotlinx.android.synthetic.main.virtual_card_front_layout.*
 
