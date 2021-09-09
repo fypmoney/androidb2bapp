@@ -226,5 +226,8 @@ object AppConstants {
     const val Completed = "Complete"
     const val Pay = "Pay"
     const val CARD_ORDER_FLAG = "CARD_ORDER_FLAG"
+    const val REFER_LINE1 = "REFER_LINE1"
+    const val REFER_LINE2 = "REFER_LINE2"
+    const val REFEREE_CASHBACK = "REFEREE_CASHBACK"
 
 }

@@ -37,6 +37,9 @@ class SharedPrefUtils {
         const val SF_KEY_APP_UPDATE_TYPE = "in_app_update_type"
         const val SF_KEY_APP_UPDATE_STATUS = "in_app_update_status"
         const val SF_KEY_CARD_FLAG = "card_screen_flag"
+        const val SF_KEY_REFER_LINE1 = "refer_line_1"
+        const val SF_KEY_REFER_LINE2 = "refer_line_2"
+        const val SF_KEY_REFEREE_CASHBACK = "refer_cashback_amount"
 
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {

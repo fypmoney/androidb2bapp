@@ -385,26 +385,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         )
     }
 
-    /*
-   * This method is used to check if permission is granted or not
-   * */
-    fun checkLocationPermission(): Boolean {
-        val result = ContextCompat.checkSelfPermission(applicationContext, ACCESS_FINE_LOCATION)
-        val result1 =
-            ContextCompat.checkSelfPermission(applicationContext, ACCESS_BACKGROUND_LOCATION)
-        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED
-    }
 
-    /*
-    * This method ask for permission
-    * */
-    fun requestLocationPermissions() {
-        ActivityCompat.requestPermissions(
-            this,
-            arrayOf(ACCESS_FINE_LOCATION, ACCESS_BACKGROUND_LOCATION),
-            AppConstants.PERMISSION_CODE
-        )
-    }
 
     /*
      * This method will set the toolbar with back navigation arrow and toolbar title
@@ -448,7 +429,12 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         sendIntent.putExtra(
             Intent.EXTRA_TEXT,
             getString(R.string.share_refral_code,
-                Utility.getCustomerDataFromPreference()?.referralCode,CASHBACK_AMOUNT,PLAY_STORE_URL
+                Utility.convertToRs(
+                    SharedPrefUtils.getString(
+                        PockketApplication.instance,
+                        SharedPrefUtils.SF_KEY_REFEREE_CASHBACK
+                    )
+                ),CASHBACK_AMOUNT,PLAY_STORE_URL
             )
         )
         sendIntent.type = "text/plain"
