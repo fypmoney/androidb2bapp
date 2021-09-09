@@ -369,15 +369,15 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 callCardSettingsBottomSheet()
             }
             1 -> {
-                /*when (mViewModel.isOrderCard.get()) {
+                when (mViewModel.isOrderCard.get()) {
                     true -> {
                         intentToActivity(OrderCardView::class.java)
                     }
                     false -> {
                         intentToActivity(TrackOrderView::class.java)
                     }
-                }*/
-                intentToActivity(NotifyMeOrderCardActivity::class.java)
+                }
+                //intentToActivity(NotifyMeOrderCardActivity::class.java)
 
             }
             2 -> {
