@@ -225,7 +225,6 @@
             android:layout_width="@dimen/_80sdp"
             android:layout_height="@dimen/_80sdp"
             android:layout_centerHorizontal="true"
-
             android:elevation="@dimen/_6sdp"
             app:layout_constraintBottom_toBottomOf="@+id/relativeLayout3"
             app:lottie_autoPlay="true"

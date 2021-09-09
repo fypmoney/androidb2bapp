@@ -28,7 +28,7 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/empty_screen"
         android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content">
