@@ -938,17 +938,13 @@ object Utility {
             val input = SimpleDateFormat(inputFormat, Locale.getDefault())
             val output = SimpleDateFormat(outputFormat, Locale.getDefault())
 
-            val d: Date?
+            var d: Date? = null
             try {
                 d = input.parse(dateTime)
-                d.let {
-                    output.format(it)
-                }
-
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
-            ""
+            output.format(d)
         } else {
             ""
         }

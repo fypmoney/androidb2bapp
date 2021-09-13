@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
+import android.view.WindowManager
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
 import android.webkit.WebView
@@ -48,6 +49,10 @@ class StoreWebpageOpener : BaseActivity<ActivityWebviewBinding, CardDetailsViewM
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window?.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE)
+
         super.onCreate(savedInstanceState)
         binding = getViewDataBinding()
         var title = intent.getStringExtra("title")

@@ -92,7 +92,7 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
 
     }
 
-    fun onTextChanged(s: CharSequence) {
+    fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
         searchedContact.set(s.toString())
         val list = contactAdapter.newContactList?.filter {
             it.firstName?.contains(s, ignoreCase = true) == true || it.contactNumber?.contains(s) == true
