@@ -1,22 +1,13 @@
 package com.fypmoney.view.activity
 
 import android.Manifest
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.media.MediaPlayer.OnPreparedListener
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.application.AppSignatureHelper
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSplashBinding
@@ -150,11 +141,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     /*
     * This method is used to move to the next screen
     * */
-    private fun moveToNextScreen(delayTime: Long = AppConstants.SPLASH_TIME) {
-        Handler(Looper.getMainLooper()).postDelayed({
-            /*if (intent.hasExtra(AppConstants.NOTIFICATION_KEY_NOTIFICATION_TYPE)) {
-                startActivity(onNotificationClick(intent))
-            } else{*/
+    private fun moveToNextScreen() {
             if (SharedPrefUtils.getBoolean(
                         applicationContext,
                         SharedPrefUtils.SF_KEY_IS_LOGIN
@@ -188,50 +175,9 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                 } else {
                     goToLoginScreen()
                 }
-
-
-
-        }, delayTime)
     }
 
 
-    private fun onNotificationClick(intent: Intent): Intent {
-        when (intent.getStringExtra(AppConstants.NOTIFICATION_KEY_NOTIFICATION_TYPE)) {
-            AppConstants.NOTIFICATION_TYPE_IN_APP_DIRECT -> {
-
-                when (intent.getStringExtra(AppConstants.NOTIFICATION_KEY_TYPE)) {
-                    AppConstants.TYPE_APP_SLIDER_NOTIFICATION -> {
-                        val intent = Intent(applicationContext, SplashView::class.java)
-                        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.NOTIFICATION)
-                        intent.putExtra(
-                            AppConstants.NOTIFICATION_APRID,
-                            intent.getStringExtra(AppConstants.NOTIFICATION_KEY_APRID)
-                        )
-                        return intent
-
-                    }
-                    AppConstants.TYPE_NONE_NOTIFICATION -> {
-                        try {
-                            return Intent(
-                                applicationContext,
-                                Class.forName(
-                                    AppConstants.BASE_ACTIVITY_URL + intent.getStringExtra(
-                                        "url"
-                                    )
-                                )
-                            )
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                            intentToActivity(SplashView::class.java)
-                        }
-
-                    }
-                }
-
-            }
-        }
-        return Intent(applicationContext, SplashView::class.java)
-    }
 
     override fun onTryAgainClicked() {
         mViewModel.setUpApp()

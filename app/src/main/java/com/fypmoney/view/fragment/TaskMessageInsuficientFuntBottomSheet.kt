@@ -26,54 +26,36 @@ class TaskMessageInsuficientFuntBottomSheet(
     var title:String? = null,
     var subTitle:String? = null,
     var amount:String? = null
-    ) :
-    BottomSheetDialogFragment() {
+    ) : BottomSheetDialogFragment() {
+
+    private lateinit var binding: BottomSheetInsuficientFundBinding
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
-    var otp = ObservableField<String>()
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(
+    ): View {
+        binding = DataBindingUtil.inflate(
+            inflater,
             R.layout.bottom_sheet_insuficient_fund,
             container,
             false
         )
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetInsuficientFundBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_insuficient_fund,
-            null,
-            false
-        )
-        bottomSheet.setContentView(bindingSheet.root)
-
-        val accept = view.findViewById<Button>(R.id.add_money_btn)!!
-        val reject = view.findViewById<Button>(R.id.reject)!!
-        accept.setOnClickListener {
-            onClickListener.onRejectClicked(0)
-        }
-        reject.setOnClickListener {
-            onClickListener.onAcceptClicked(
-                0, ""
-            )
-        }
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
             title?.let {
-                card_title.text = title
+                binding.cardTitle.text = title
             }
 
         subTitle?.let {
-                sub_title_tv.text = it
+                binding.subTitleTv.text = it
             }
 
         if(amount.isNullOrEmpty()){
@@ -82,6 +64,15 @@ class TaskMessageInsuficientFuntBottomSheet(
             add_money_tv.text = amount
         }
 
+
+        binding.addMoneyBtn.setOnClickListener {
+            onClickListener.onRejectClicked(0)
+        }
+        binding.reject.setOnClickListener {
+            onClickListener.onAcceptClicked(
+                0, ""
+            )
+        }
 
 
     }

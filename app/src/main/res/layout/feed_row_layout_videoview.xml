@@ -22,7 +22,6 @@
             android:id="@+id/youtubePlayerView"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_200sdp"
-
             app:autoPlay="false"
             app:showFullScreenButton="false" />
     </androidx.cardview.widget.CardView>

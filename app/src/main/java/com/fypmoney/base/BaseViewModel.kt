@@ -55,7 +55,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
 
     override fun offLine() {
-        internetError.value = true
+        internetError.postValue(true)
     }
 
     override fun progress(isStart: Boolean, message: String) {

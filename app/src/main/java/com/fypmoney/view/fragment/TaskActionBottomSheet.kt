@@ -34,11 +34,11 @@ class TaskActionBottomSheet(
     var onClickListener: AcceptRejectClickListener,
     var list: TaskDetailResponse,
     val value: Boolean?
-) :
-    BottomSheetDialogFragment() {
+) : BottomSheetDialogFragment() {
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     private var bottomSheetDialog: BottomSheetDialog? = null
     var otp = ObservableField<String>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme)
