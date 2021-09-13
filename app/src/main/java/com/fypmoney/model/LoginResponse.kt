@@ -69,7 +69,8 @@ data class CustomerInfoResponseDetails(
     @SerializedName("referredCount") val referredCount: Int? = null,
     @SerializedName("bankProfile") val bankProfile: BankProfile? = null,
     @SerializedName("profilePicResourceId") val profilePicResourceId: String? = null,
-    @SerializedName("cardProductCode") val cardProductCode: String? = null
+    @SerializedName("cardProductCode") val cardProductCode: String? = null,
+    @SerializedName("postKycScreenCode") val postKycScreenCode: String? = null
 ) : Serializable
 @Keep
 data class UserProfile(

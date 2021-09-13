@@ -6,13 +6,10 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.fypmoney.BR
-import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSpinWheelBinding
 import com.fypmoney.model.RedeemDetailsResponse
@@ -25,6 +22,16 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_spin_wheel.*
 import kotlinx.android.synthetic.main.view_walk_through_one.*
 import java.util.*
+import androidx.recyclerview.widget.LinearSnapHelper
+
+import androidx.recyclerview.widget.LinearLayoutManager
+
+import androidx.recyclerview.widget.RecyclerView
+import com.fypmoney.util.CenterZoomLayoutManager
+import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
+import com.fypmoney.view.adapter.SpinWheelAdapter
+
 
 /*
 * This class is used for spin the wheel
@@ -48,6 +55,25 @@ class SpinWheelView : BaseActivity<ViewSpinWheelBinding, SpinWheelViewModel>(),
         return mViewModel
     }
 
+    private fun onSetRecyclerView(recyclerView: RecyclerView) {
+
+        val layoutManager = CenterZoomLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.layoutManager = layoutManager
+        val iconList = PockketApplication.instance.resources.getIntArray(R.array.rechargeIconList)
+        var adapter = SpinWheelAdapter(iconList, this)
+        recyclerView.adapter = adapter
+        // Scroll to the position we want to snap to
+        layoutManager.scrollToPosition(1)
+        // Wait until the RecyclerView is laid out.
+        recyclerView.post(Runnable { // Shift the view to snap  near the center of the screen.
+            // This does not have to be precise.
+            val dx: Int = (recyclerView.getWidth() - recyclerView.getChildAt(0).getWidth()) / 2
+            recyclerView.scrollBy(-dx, 0)
+            // Assign the LinearSnapHelper that will initially snap the near-center view.
+            val snapHelper = LinearSnapHelper()
+            snapHelper.attachToRecyclerView(recyclerView)
+        })
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
@@ -58,6 +84,9 @@ class SpinWheelView : BaseActivity<ViewSpinWheelBinding, SpinWheelViewModel>(),
         )
 
 //        Glide.with(applicationContext).load(R.raw.coin).into(coin)
+        onSetRecyclerView(adcard)
+
+
         luckyWheelView.setData(mViewModel.luckyItemList)
         luckyWheelView.setRound(4)
         mViewModel.callGetRewardsApi()

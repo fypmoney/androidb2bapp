@@ -40,9 +40,19 @@
                     android:layout_marginBottom="40dp"
                     android:text="@string/spin_wheel_heading" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/adcard"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+
+                    android:layout_below="@+id/verification_title"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_12sdp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/luckylayout"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/verification_title">
@@ -95,7 +105,7 @@
                     android:id="@+id/btnSpinWheel"
 
                     android:layout_width="200dp"
-                    android:layout_below="@+id/luckylayout"
+                    android:layout_below="@+id/adcard"
                     android:layout_height="52dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50dp"

@@ -17,8 +17,10 @@ data class KycActivateAccountResponseDetails(
     @SerializedName("showAdharInitScreen") val showAdharInitScreen: String,
     @SerializedName("showAdharOtpVerificationScreen") val showAdharOtpVerificationScreen: String,
     @SerializedName("action") val action: String,
-    @SerializedName("token") val token: String
-) : Serializable
+    @SerializedName("token") val token: String,
+    @SerializedName("postKycScreenCode") val postKycScreenCode: String,
+
+    ) : Serializable
 
 @Keep
 data class KycMobileVerifyRequest(

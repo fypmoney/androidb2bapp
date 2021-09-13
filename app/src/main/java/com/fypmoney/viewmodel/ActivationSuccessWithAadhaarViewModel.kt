@@ -19,6 +19,7 @@ import com.fypmoney.util.Utility
 * */
 class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseViewModel(application) {
     var onContinueClicked = MutableLiveData<Boolean>()
+    var postKycScreenCode = MutableLiveData<String>()
 
     /*
     * This method is used to handle continue
@@ -72,12 +73,16 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                         SharedPrefUtils.putArrayList(
                             getApplication(),
                             SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
-
                         )
                     }
+                    postKycScreenCode.value =
+                        responseData.customerInfoResponseDetails?.postKycScreenCode!!
                 }
                 if (Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.YES)
+
                     onContinueClicked.value = true
+
+
             }
 
 

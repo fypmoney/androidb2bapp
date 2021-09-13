@@ -801,6 +801,11 @@ object Utility {
             SharedPrefUtils.SF_KEY_USERNAME,
             ""
         )
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_POST_KYC_FLAG,
+            ""
+        )
     }
 
     /*

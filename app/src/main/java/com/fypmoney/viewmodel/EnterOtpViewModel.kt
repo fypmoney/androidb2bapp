@@ -303,6 +303,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
 
             ApiConstant.API_KYC_MOBILE_VERIFICATION -> {
                 if (responseData is KycMobileVerifyResponse) {
+
                     if (responseData.kycMobileVerifyResponseDetails.showAdharInitScreen == AppConstants.YES)
                         onVerificationSuccess.value = true
 

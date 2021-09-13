@@ -2,6 +2,7 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import android.text.TextUtils
+import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -34,6 +35,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
     var dob = MutableLiveData<String>()
     var dobForServer = MutableLiveData<String>()
     var onDobClicked = MutableLiveData(false)
+    var teenager = MutableLiveData(-1)
     var majorMinorText = ObservableField<String>()
     var isMajorMinorVisible = ObservableField(false)
     var buttonColor = ObservableField(false)
@@ -61,8 +63,19 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
             TextUtils.isEmpty(dob.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.dob_empty_error))
             }
+            teenager.value == -1 -> {
+                Utility.showToast(PockketApplication.instance.getString(R.string.select_age_type))
+            }
+
             else -> {
-                isEnabled.value=true
+                isEnabled.value = true
+                var age_type = ""
+                if (teenager.value == 2) {
+                    age_type = "PARENT"
+                } else if (teenager.value == 1) {
+                    age_type = "CHILD"
+                }
+                Log.d("chack", age_type)
                 WebApiCaller.getInstance().request(
                     ApiRequest(
                         purpose = ApiConstant.API_UPDATE_PROFILE,
@@ -73,12 +86,14 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
                             userId = SharedPrefUtils.getLong(
                                 getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID
                             ),
+
                             firstName = firstName.value?.trim(),
                             lastName = lastName.value?.trim(),
                             mobile = SharedPrefUtils.getString(
                                 getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE
                             ),
-                            dob = dobForServer.value?.trim()
+                            dob = dobForServer.value?.trim(),
+                            cityName = age_type
                         )
                     )
                 )

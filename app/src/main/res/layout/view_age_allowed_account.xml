@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.AadhaarAccountActivationViewModel" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_26sdp"
+                android:layout_marginStart="@dimen/screenMarginLeft"
+                android:layout_marginEnd="@dimen/screenMarginRight">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/community_title"
+                    style="@style/TextviewBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="@string/fyp_is_for_teens_and_their_parents"
+                    android:textAlignment="center" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSubTitle"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_below="@+id/community_title"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/margin"
+                    android:gravity="center"
+                    android:textAlignment="center" />
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivServiceLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvSubTitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_28sdp"
+                    app:srcCompat="@drawable/ic_teens_parents" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/next_step_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivServiceLogo"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_52sdp"
+                    android:text="@string/fyp_is_eligible_for_11_18_and_34_age_groups_only_it_is_built_to"
+                    android:textAlignment="center" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/step_one_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/next_step_tv"
+                    android:layout_alignStart="@+id/next_step_tv"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:drawableStart="@drawable/ic_check_green_tick"
+                    android:drawablePadding="20dp"
+                    android:text="@string/teach_teenagers_money_management"
+                    android:textAlignment="viewStart"
+
+                    android:textColor="@color/text_color_dark" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/step_two_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/step_one_tv"
+                    android:layout_alignStart="@+id/next_step_tv"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:drawableStart="@drawable/ic_check_green_tick"
+                    android:drawablePadding="20dp"
+                    android:text="@string/help_parents_to_guide_their_kids"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/text_color_dark" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/step_three_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/step_two_tv"
+                    android:layout_alignStart="@+id/next_step_tv"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:drawableStart="@drawable/ic_check_green_tick"
+                    android:drawablePadding="20dp"
+                    android:text="@string/create_a_financially_literate_community"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/text_color_dark" />
+
+                <Button
+                    android:id="@+id/btnGetOtp"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/step_three_tv"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:layout_marginBottom="@dimen/_30sdp"
+                    android:onClick="@{()->viewModel.callKycAccountActivationApi()}"
+                    android:text="@string/continue_txt"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/text_color_dark" />
+
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

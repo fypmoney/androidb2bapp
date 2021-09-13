@@ -116,6 +116,7 @@
     <string name="first_name_empty_error">Please enter first name</string>
     <string name="last_name_empty_error">Please enter last name</string>
     <string name="dob_empty_error">Please enter Date of Birth</string>
+    <string name="select_age_type">Please your age gap</string>
     <string name="otp_length_error">OTP length must be 6</string>
     <string name="phone_email_validity_error">Please enter valid Mobile No. or Email Id</string>
     <string name="continue_txt">Continue</string>
@@ -875,5 +876,11 @@ Coming really soon!
     <string name="youtube">Youtube</string>
     <string name="copy_to_clipboard">Copied to Clipboard</string>
     <string name="card">Card</string>
-
+    <string name="total_cashback_won">Total Cashback won</string>
+    <string name="exciting_prize">Get Exciting \n Prizes!</string>
+    <string name="fyp_is_for_teens_and_their_parents">Fyp is for Teens and their Parents</string>
+    <string name="fyp_is_eligible_for_11_18_and_34_age_groups_only_it_is_built_to">Fyp is eligible for 11-18 and 34+ age groups only. It is built to -</string>
+    <string name="teach_teenagers_money_management">Teach teenagers money management</string>
+    <string name="help_parents_to_guide_their_kids">Help parents to guide their kids</string>
+    <string name="create_a_financially_literate_community">Create a financially literate community</string>
 </resources>

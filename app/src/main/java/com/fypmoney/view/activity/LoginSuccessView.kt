@@ -74,15 +74,8 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
             when {
 
                 Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
-                    when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
-                        AppConstants.YES -> {
-                            intentToActivity(ReferralCodeView::class.java)
-                        }
-                        else -> {
-                            intentToActivity(CreateAccountView::class.java)
+                    intentToActivity(CreateAccountView::class.java)
 
-                        }
-                    }
                 }
                 Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {
                     intentToActivity(AadhaarAccountActivationView::class.java)
