@@ -5,14 +5,11 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAadhaarVerificationBinding
-import com.fypmoney.databinding.ViewCommunityBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SeparatorTextWatcher
 import com.fypmoney.viewmodel.AadhaarVerificationViewModel
@@ -22,7 +19,6 @@ import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
 import kotlinx.android.synthetic.main.view_aadhaar_verification.*
 import kotlinx.android.synthetic.main.view_enter_otp.*
-import java.lang.Exception
 
 /*
 * This class is used to handle account activation via aadhaar card

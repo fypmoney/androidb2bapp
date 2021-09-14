@@ -173,7 +173,6 @@ class FeedsAdapter(
                 position,
                 feedList?.get(position), onFeedItemClickListener
             )
-
             mRowItemBinding?.youtubePlayerView?.addYouTubePlayerListener(object :
                 AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {

@@ -31,6 +31,7 @@ class CardDetailsBottomSheet(var cardInfoDetails: CardInfoDetailsBottomSheet?) :
     lateinit var mViewBinding: BottomSheetCardDetailsBinding
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
 
@@ -44,13 +45,12 @@ class CardDetailsBottomSheet(var cardInfoDetails: CardInfoDetailsBottomSheet?) :
             container,
             false
         )
-        return mViewBinding.view
+        return mViewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding.copy.setOnClickListener {
-
             val text = card_details.text.toString()
             val clipboard: ClipboardManager? =
                 requireActivity().getSystemService(Context.CLIPBOARD_SERVICE)

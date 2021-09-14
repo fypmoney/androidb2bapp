@@ -33,16 +33,26 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/verification_title"
-                    style="@style/TextviewBold"
+                    style="@style/TextviewRegular"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginBottom="40dp"
-                    android:text="@string/spin_wheel_heading" />
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/your_wish_for_better_rewards_is_going_to_n_be_granted_soon_stay_tuned" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/adcard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/verification_title"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_12sdp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/luckylayout"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/verification_title">
@@ -95,7 +105,7 @@
                     android:id="@+id/btnSpinWheel"
 
                     android:layout_width="200dp"
-                    android:layout_below="@+id/luckylayout"
+                    android:layout_below="@+id/adcard"
                     android:layout_height="52dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="50dp"
@@ -106,6 +116,16 @@
                     android:visibility="gone"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/text_color_dark" />
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/btnSpinWheel"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@color/dividerColor" />
 
 
                 <LinearLayout
@@ -114,7 +134,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_height="wrap_content"
                     android:visibility="@{viewModel.coinVisibilty?View.VISIBLE:View.INVISIBLE}"
-                    android:layout_below="@+id/btnSpinWheel"
+                    android:layout_below="@+id/view1"
                     android:layout_centerHorizontal="true">
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -146,22 +166,12 @@
                     android:layout_marginTop="20dp"
                     android:text="@string/spin_wheel_text1" />
 
-                <View
-                    android:id="@+id/view1"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_below="@+id/text1"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@color/dividerColor" />
 
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/text2"
                     style="@style/TextviewBold"
-                    android:layout_below="@+id/view1"
+                    android:layout_below="@+id/text1"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:text="@string/spin_wheel_text2"

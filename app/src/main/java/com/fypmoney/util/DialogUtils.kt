@@ -5,6 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.LinearLayout
@@ -13,6 +14,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatTextView
 import com.fypmoney.R
 import com.fypmoney.connectivity.network.NetworkUtil
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import java.lang.IllegalStateException
 
 
 /**
@@ -21,11 +24,25 @@ import com.fypmoney.connectivity.network.NetworkUtil
 class DialogUtils {
 
     companion object {
+        private val TAG = DialogUtils::class.java.simpleName
         private var dialog: Dialog? = null
          var mAlertDialog: AlertDialog? = null
         fun showProgressDialog(context: Activity) {
-            if (dialog != null && dialog!!.isShowing) {
-                dialog?.dismiss()
+            try {
+                if (dialog != null && dialog!!.isShowing) {
+                    if(!context.isFinishing && !context.isDestroyed){
+                        dialog?.dismiss()
+                    }
+                }
+            }catch (e:IllegalStateException){
+                Log.d(TAG,"Illegal argument exception ${dialog}")
+                FirebaseCrashlytics.getInstance().recordException(e)
+            }catch (e:Exception){
+                Log.d(TAG,"Illegal argument exception ${dialog}")
+                FirebaseCrashlytics.getInstance().recordException(e)
+
+            }finally {
+                dialog= null;
             }
             dialog = Dialog(context)
             dialog?.setCancelable(false)

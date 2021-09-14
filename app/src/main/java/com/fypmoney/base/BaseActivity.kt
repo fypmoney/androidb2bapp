@@ -289,7 +289,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
                 ) {
                     onActivityResult(
                         AppConstants.DEVICE_SECURITY_REQUEST_CODE,
-                        AppCompatActivity.RESULT_OK,
+                        RESULT_OK,
                         Intent()
                     )
                     super.onAuthenticationSucceeded(result)

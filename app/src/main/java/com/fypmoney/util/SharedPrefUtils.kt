@@ -3,8 +3,11 @@ package com.fypmoney.util
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.lang.ClassCastException
+import java.lang.Exception
 import java.lang.reflect.Type
 
 
@@ -95,7 +98,20 @@ class SharedPrefUtils {
         }
 
         fun getLong(context: Context, key: String): Long {
-            return getSharedPreferences(context)?.getLong(key, 0L)!!
+            var value:Long? = 0L
+            try {
+                value =  getSharedPreferences(context)?.getLong(key, 0L)
+
+            }catch (e:ClassCastException){
+                FirebaseCrashlytics.getInstance()
+                    .setCustomKey("preference_key", key)
+                FirebaseCrashlytics.getInstance().recordException(e)
+            }catch (e:Exception){
+                FirebaseCrashlytics.getInstance()
+                    .setCustomKey("preference_key", key)
+                FirebaseCrashlytics.getInstance().recordException(e)
+            }
+            return value!!
         }
     }
 }
