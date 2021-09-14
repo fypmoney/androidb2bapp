@@ -1,139 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
-    android:layout_width="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    android:layout_height="fill_parent"
-    android:fitsSystemWindows="true">
+    <data>
 
-    <com.airbnb.lottie.LottieAnimationView
+    </data>
 
-        android:id="@+id/load_progress_bar"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="fill_parent"
 
-        android:layout_height="@dimen/_40sdp"
+        android:layout_height="fill_parent"
+        android:fitsSystemWindows="true">
 
-        android:layout_centerInParent="true"
-        android:elevation="@dimen/_4sdp"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/dots_animation" />
-    <RelativeLayout
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#202020"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <TextView
-            android:id="@+id/titleToolbar"
+        <com.airbnb.lottie.LottieAnimationView
+
+            android:id="@+id/load_progress_bar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text=""
-            android:layout_toEndOf="@+id/toolbar_backImage"
-            android:textColor="@color/white"
-            android:textSize="20sp"
+
+            android:layout_height="@dimen/_40sdp"
+
+            android:layout_centerInParent="true"
+            android:elevation="@dimen/_4sdp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/toolbar_backImage"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_centerVertical="true"
-            android:background="?selectableItemBackgroundBorderless"
-            android:paddingStart="8dp"
-            android:paddingTop="@dimen/_12sdp"
-            android:paddingEnd="8dp"
-            android:paddingBottom="@dimen/_12sdp"
-            android:visibility="visible"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_back_arrow"
-            app:tint="@color/cb_grey" />
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/dots_animation" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/title_tv"
-            style="@style/TextviewBold"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/toolbar_backImage"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_18sdp"
-
-            tools:text="" />
-
-        <ImageView
-            android:id="@+id/refresh"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/_6sdp"
-            android:padding="@dimen/_9sdp"
-            android:src="@drawable/ic_baseline_refresh_24"
-            app:tint="@color/white" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/card_details"
-            android:layout_width="wrap_content"
-            android:layout_toLeftOf="@+id/refresh"
-            android:layout_height="@dimen/_24sdp"
-            android:layout_toStartOf="@id/refresh"
-
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/_2sdp"
-            android:background="@drawable/round_dark_grey_backgroud_6"
-            android:paddingRight="@dimen/_18sdp">
-
-            <ImageView
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="-6dp"
-                android:layout_toLeftOf="@+id/amount_tv"
-                android:src="@drawable/logo_white"
-                app:layout_constraintRight_toLeftOf="@+id/amount_tv" />
+            android:background="#202020"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/amount_tv"
-
+                android:id="@+id/titleToolbar"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text=""
+                android:layout_toEndOf="@+id/toolbar_backImage"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/toolbar_backImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:paddingStart="8dp"
+                android:paddingTop="@dimen/_12sdp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="@dimen/_12sdp"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_back_arrow"
+                app:tint="@color/cb_grey" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title_tv"
+                style="@style/TextviewBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/toolbar_backImage"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18sdp"
+
+                tools:text="" />
+
+            <ImageView
+                android:id="@+id/refresh"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_alignParentRight="true"
-                android:elevation="1dp"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:padding="@dimen/_9sdp"
+                android:src="@drawable/ic_baseline_refresh_24"
+                app:tint="@color/white" />
 
-                android:gravity="center"
-                android:text="Loading.."
-                android:textColor="@color/cb_grey"
-                app:layout_constraintEnd_toEndOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_details"
+                android:layout_width="wrap_content"
+                android:layout_toLeftOf="@+id/refresh"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_toStartOf="@id/refresh"
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:background="@drawable/round_dark_grey_backgroud_6"
+                android:paddingRight="@dimen/_18sdp">
 
-    </RelativeLayout>
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="-6dp"
+                    android:layout_toLeftOf="@+id/amount_tv"
+                    android:src="@drawable/logo_white"
+                    app:layout_constraintRight_toLeftOf="@+id/amount_tv" />
+
+                <TextView
+                    android:id="@+id/amount_tv"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:elevation="1dp"
+
+                    android:gravity="center"
+                    android:text="Loading.."
+                    android:textColor="@color/cb_grey"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </RelativeLayout>
 
 
-
-    <WebView
-        android:id="@+id/webView1"
-        android:layout_width="fill_parent"
-        android:visibility="visible"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
-
+        <WebView
+            android:id="@+id/webView1"
+            android:layout_width="fill_parent"
+            android:visibility="visible"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

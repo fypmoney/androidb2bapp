@@ -42,92 +42,83 @@ class AddUpiBottomSheet(
     private val merchantKey: String?,
     private var onBottomSheetClickListener: OnAddUpiClickListener
 ) : BottomSheetDialogFragment(), WebApiCaller.OnWebApiResponse {
-    lateinit var name: AppCompatTextView
-    lateinit var progressBar: ProgressBar
-    var isUpiVerified = ObservableField(false)
-    var vpaInResponse = ObservableField<String>()
+    private lateinit var binding: BottomSheetAddUpiBinding
+
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(
+    ): View {
+        binding = DataBindingUtil.inflate(inflater,
             R.layout.bottom_sheet_add_upi,
             container,
             false
         )
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetAddUpiBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_add_upi,
-            null,
-            false
-        )
-        bottomSheet.setContentView(bindingSheet.root)
-
-        val upiId = view.findViewById<EditText>(R.id.upiId)!!
-        val saveCardCheckbox = view.findViewById<CheckBox>(R.id.saveCardCheckbox)!!
-        val btnAdd = view.findViewById<Button>(R.id.btnAdd)!!
-        val verify = view.findViewById<AppCompatTextView>(R.id.verifyButton)!!
-        name = view.findViewById(R.id.name)!!
-        progressBar = view.findViewById(R.id.progress)!!
-
-        btnAdd.text = getString(R.string.add_btn_text) + " " + getString(R.string.Rs) + amount
-
-        verify.setOnClickListener {
-            when {
-                upiId.length() == 0 -> {
-                    Utility.showToast(getString(R.string.add_upi_empty_error))
-
-                }
-                upiId.length() > PayuConstants.MAX_VPA_SIZE -> {
-                    Utility.showToast(getString(R.string.invalid_upi_error))
-
-                }
-                !upiId.text.toString().trim().contains("@") -> {
-                    Utility.showToast(getString(R.string.invalid_upi_error))
-
-                }
-                else -> {
-                    progressBar.visibility = View.VISIBLE
-                    callGetHashApi(PayuConstants.VALIDATE_VPA, var1 = upiId.text.toString())
-                }
-            }
-        }
-
-        btnAdd.setOnClickListener {
-
-            when {
-                upiId.length() == 0 -> {
-                    Utility.showToast(getString(R.string.add_upi_empty_error))
-
-                }
-                upiId.length() > PayuConstants.MAX_VPA_SIZE -> {
-                    Utility.showToast(getString(R.string.invalid_upi_error))
-
-                }
-                !upiId.text.toString().trim().contains("@") -> {
-                    Utility.showToast(getString(R.string.invalid_upi_error))
-
-                }
-                else -> {
-                    progressBar.visibility = View.VISIBLE
-                    callGetHashApi(PayuConstants.VALIDATE_VPA, var1 = upiId.text.toString())
-
-                }
-
-
-            }
-
-
-        }
-
-        return view
+        return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUp()
+    }
+
+    private fun setUp() {
+
+        binding.btnAdd.text = getString(R.string.add_btn_text) + " " + getString(R.string.Rs) + amount
+
+        binding.verifyButton.setOnClickListener {
+            when {
+                upiId.length() == 0 -> {
+                    Utility.showToast(getString(R.string.add_upi_empty_error))
+
+                }
+                upiId.length() > PayuConstants.MAX_VPA_SIZE -> {
+                    Utility.showToast(getString(R.string.invalid_upi_error))
+
+                }
+                !upiId.text.toString().trim().contains("@") -> {
+                    Utility.showToast(getString(R.string.invalid_upi_error))
+
+                }
+                else -> {
+                    binding.progress.visibility = View.VISIBLE
+                    callGetHashApi(PayuConstants.VALIDATE_VPA, var1 = upiId.text.toString())
+                }
+            }
+        }
+
+        binding.btnAdd.setOnClickListener {
+
+            when {
+                binding.upiId.length() == 0 -> {
+                    Utility.showToast(getString(R.string.add_upi_empty_error))
+
+                }
+                binding.upiId.length() > PayuConstants.MAX_VPA_SIZE -> {
+                    Utility.showToast(getString(R.string.invalid_upi_error))
+
+                }
+                !binding.upiId.text.toString().trim().contains("@") -> {
+                    Utility.showToast(getString(R.string.invalid_upi_error))
+
+                }
+                else -> {
+                    binding.progress.visibility = View.VISIBLE
+                    callGetHashApi(PayuConstants.VALIDATE_VPA, var1 = upiId.text.toString())
+
+                }
+
+
+            }
+
+
+        }
+    }
+
 
     interface OnAddUpiClickListener {
         fun onAddUpiClickListener(upiId: String, isUpiSaved: Boolean)
@@ -198,7 +189,7 @@ class AddUpiBottomSheet(
             }
             ApiConstant.PAYU_PRODUCTION_URL -> {
                 if (responseData is ValidateVpaResponse) {
-                    progressBar.visibility = View.GONE
+                    binding.progress.visibility = View.GONE
                     when (responseData.isVPAValid) {
                         1 -> {
                             name.text = responseData.payerAccountName
@@ -231,7 +222,7 @@ class AddUpiBottomSheet(
 
 override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
     Utility.showToast(errorResponseInfo.msg)
-    progressBar.visibility = View.GONE
+    binding.progress.visibility = View.GONE
 
 }
 

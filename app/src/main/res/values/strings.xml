@@ -850,7 +850,7 @@ Coming really soon!
     <string name="copy_to_clipboard">Copied to Clipboard</string>
     <string name="card">Card</string>
     <string name="set_device_security">Set Device Security</string>
-    <string name="your_phone_is_not_configured_with_passcode_security_n_please_set_device_security_to_view_details">Your phone is not configured with passcode security. \n Please set device security to view details.</string>
+    <string name="your_phone_is_not_configured_with_passcode_security_n_please_set_device_security_to_view_details">Your phone is not configured with passcode security. \n Please set device security to proceed further.</string>
     <string name="set_security">Set Security</string>
     <string name="through_missions_anyone_can_assign_tasks_to_another_fyper_in_their_list_and_pay_them_on_mission_completion">Through ‘Missions’🚀, anyone can assign tasks to another Fyper in their list and pay them on mission completion.</string>
     <string name="looks_like_you_haven_t_assigned_any_task_to_anyone">Looks like you haven’t assigned any task to anyone. 😅</string>
@@ -895,4 +895,5 @@ Coming really soon!
         <item>Easy card locking</item>
     </string-array>
 
+    <string name="your_wish_for_better_rewards_is_going_to_n_be_granted_soon_stay_tuned">Your wish for better rewards is going to\n be granted soon. Stay tuned!</string>
 </resources>

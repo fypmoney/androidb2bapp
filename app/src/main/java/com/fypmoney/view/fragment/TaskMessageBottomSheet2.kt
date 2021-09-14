@@ -27,10 +27,10 @@ class TaskMessageBottomSheet2(
     var onClickListener: MessageSubmitClickListener,
     var model: UpdateTaskGetResponse?,
     var entityId: String?
-) :
-    BottomSheetDialogFragment() {
+) : BottomSheetDialogFragment() {
+    private lateinit var binding:BottomSheetTaskMessageBinding
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
-    var otp = ObservableField<String>()
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
 
@@ -38,44 +38,37 @@ class TaskMessageBottomSheet2(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(
+        binding = DataBindingUtil.inflate(
+            inflater,
             R.layout.bottom_sheet_task_message,
             container,
             false
         )
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetTaskMessageBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_task_message,
-            null,
-            false
-        )
-        bottomSheet.setContentView(bindingSheet.root)
+        return binding.root
+    }
 
-
-        val btnOtp = view.findViewById<MaterialButton>(R.id.continuebtn)!!
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
 
         if (model?.currentState == "REJECT") {
-            view.card_title.text = "Task Rejected!"
-            btnOtp.text = "Continue"
-            view.task_details.text =
+            binding.cardTitle.text = "Task Rejected!"
+            binding.continuebtn.text = "Continue"
+            binding.taskDetails.text =
                 "You have rejected the task assigned by ${model?.requesterName}"
 
-            view.message_image.setImageDrawable(
+            binding.messageImage.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(),
                     R.drawable.ic_task_rejected
                 )
             )
         } else if (model?.currentState == "ACCEPT") {
-            view.card_title.text = "Task Accepted"
-            btnOtp.text = "Continue"
-            view.task_details.text =
+            binding.cardTitle.text = "Task Accepted"
+            binding.continuebtn.text = "Continue"
+            binding.taskDetails.text =
                 "You have accepted the task assigned by ${model?.requesterName}. All the best!"
-            view.message_image.setImageDrawable(
+            binding.messageImage.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(),
                     R.drawable.ic_accepted
@@ -83,12 +76,12 @@ class TaskMessageBottomSheet2(
             )
 
         } else if (model?.currentState == "COMPLETE") {
-            view.card_title.text = "Good job!"
-            view.task_details.text =
+            binding.cardTitle.text = "Good job!"
+            binding.taskDetails.text =
                 "You have successfully completed your task. Stay tuned you will get your cash soon."
 
-            btnOtp.text = "Continue"
-            view.message_image.setImageDrawable(
+            binding.continuebtn.text = "Continue"
+            binding.messageImage.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(),
                     R.drawable.ic_task_completed_graphic
@@ -96,51 +89,51 @@ class TaskMessageBottomSheet2(
             )
 
         } else if (model?.currentState == "CANCEL") {
-            btnOtp.text = "Continue"
-            view.card_title.text = "Task Withdrawn!"
-            view.message_image.setImageDrawable(
+            binding.continuebtn.text = "Continue"
+            binding.cardTitle.text = "Task Withdrawn!"
+            binding.messageImage.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(),
                     R.drawable.ic_task_withdraw
                 )
             )
 
-            view.task_details.text = "You have withdrawn your task."
+            binding.taskDetails.text = "You have withdrawn your task."
         } else if (model?.currentState == "DEPRECIATE") {
-            btnOtp.text = "Continue"
-            view.card_title.text = "Task Depreciated"
-            view.message_image.setImageDrawable(
+            binding.continuebtn.text = "Continue"
+            binding.cardTitle.text = "Task Depreciated"
+            binding.messageImage.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(),
                     R.drawable.ic_whoops_depriciated
                 )
             )
 
-            view.task_details.text = "Task has been depreciated"
+            binding.taskDetails.text = "Task has been depreciated"
         } else if (model?.currentState == "APPRECIATEANDPAY") {
-            btnOtp.text = "Continue"
-            btnOtp.visibility = View.GONE
-            view.card_title.text = "Yay!"
-            view.message_image.setImageDrawable(
+            binding.continuebtn.text = "Continue"
+            binding.continuebtn.visibility = View.GONE
+            binding.cardTitle.text = "Yay!"
+            binding.messageImage.setImageDrawable(
                 ContextCompat.getDrawable(
                     requireContext(),
                     R.drawable.task_appretiate
                 )
             )
-            view.amount.visibility = View.VISIBLE
+            binding.amount.visibility = View.VISIBLE
             var amount = model?.amount!! / 100
-            view.amount.text = "₹" + amount
+            binding.amount.text = "₹" + amount
 
-            view.task_details.text =
+            binding.taskDetails.text =
                 "Hey Champ you have done a great job! I am proud of you. \uD83D\uDC4F"
         }
 
 
 
-        btnOtp.setOnClickListener(View.OnClickListener {
-            if (btnOtp.text == "WITHDRAWAL") {
+        binding.continuebtn.setOnClickListener(View.OnClickListener {
+            if (binding.continuebtn.text == "WITHDRAWAL") {
                 ChoresActivity.mViewModel!!.callTaskAccept("CANCEL", model?.id.toString(), "")
-            } else if (btnOtp.text == "Continue") {
+            } else if (binding.continuebtn.text == "Continue") {
                 onClickListener.onSubmit()
 
             }
@@ -149,8 +142,6 @@ class TaskMessageBottomSheet2(
 
 
 
-
-        return view
     }
 
 

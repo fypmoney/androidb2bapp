@@ -283,7 +283,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 when (resultCode) {
                     AppCompatActivity.RESULT_OK -> {
                             mViewModel.callGetVirtualRequestApi()
-
                     }
 
                 }

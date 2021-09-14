@@ -132,19 +132,9 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
 
         mViewModel.onFeedsApiFail.observe(viewLifecycleOwner) {
             if (it) {
-                shimmerLayout.stopShimmerAnimation()
                 mViewModel.noDataFoundVisibility.set(true)
                 mViewModel.noDataText.set("")
                 mViewModel.onFeedsApiFail.value = false
-                DialogUtils.showConfirmationDialog(
-                    context = requireContext(),
-                    title = "",
-                    message = getString(R.string.empty_Feeds_error),
-                    positiveButtonText = getString(R.string.try_again_text),
-                    negativeButtonText = getString(R.string.cancel_btn_text),
-                    uniqueIdentifier = "",
-                    onAlertDialogClickListener = this, isNegativeButtonRequired = true
-                )
             }
 
         }
