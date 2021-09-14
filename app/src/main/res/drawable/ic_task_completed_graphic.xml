@@ -70,23 +70,10 @@
     <path
         android:pathData="M0,119.086l0.017,-1.482l155.212,1.774l-0.017,1.482z"
         android:fillColor="#1d1d1b" />
-    <path android:pathData="M88.596,77.303l12.024,15.181 57.965,-41.671 13.667,18.729 -74.453,51.038L73.625,94.736Z">
-        <aapt:attr name="android:fillColor">
-            <gradient
-                android:startY="83.60349"
-                android:startX="49.56001"
-                android:endY="83.60349"
-                android:endX="149.07466"
-                android:type="linear">
-                <item
-                    android:offset="0.009"
-                    android:color="#FFF2DC12" />
-                <item
-                    android:offset="1"
-                    android:color="#FFF4A81C" />
-            </gradient>
-        </aapt:attr>
-    </path>
+    <path android:pathData="M88.596,77.303l12.024,15.181 57.965,-41.671 13.667,18.729 -74.453,51.038L73.625,94.736Z"
+        android:fillColor="#FFF2DC12"/>
+
+
     <path
         android:pathData="M151.523,84.441l-5.726,-8.773a4.236,4.236 0,0 0,-6.865 4.581l4.963,8.773a5.325,5.325 0,0 0,4.578 0.38A5.19,5.19 0,0 0,151.523 84.441Z"
         android:fillColor="#fff" />

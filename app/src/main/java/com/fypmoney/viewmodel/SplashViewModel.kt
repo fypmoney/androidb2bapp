@@ -50,8 +50,10 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 SharedPrefUtils.SF_KEY_IS_LOGIN
             )!!
         ) {
-            callGetCustomerProfileApi()
             callSettingsApi()
+            if(Utility.getCustomerDataFromPreference()==null){
+                callGetCustomerProfileApi()
+            }
 
         } else {
             moveToNextScreen.value = true
@@ -109,7 +111,6 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 if (responseData is CustomerInfoResponse) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
                     moveToNextScreen.value = true
-                    getCustomerInfoSuccess.value = responseData
                     // Save the user id in shared preference
                     SharedPrefUtils.putLong(
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
@@ -139,8 +140,6 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                         )
 
                     }
-
-
                 }
             }
             ApiConstant.CHECK_APP_UPDATE->{
@@ -164,6 +163,8 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                             }
                         }
                 }
+
+                moveToNextScreen.value = true
             }
             ApiConstant.API_SETTINGS -> {
                 val data = Gson().fromJson(responseData.toString(), SettingsResponse::class.java)

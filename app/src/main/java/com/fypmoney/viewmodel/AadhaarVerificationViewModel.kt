@@ -27,8 +27,8 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
     var onVerificationFailed = MutableLiveData<String>()
 
     /*
-* This method is used to handle click of get otp
-* */
+    * This method is used to handle click of get otp
+    * */
     fun onGetOtpClicked() {
         when {
             TextUtils.isEmpty(aadhaarNumber.value) -> {
