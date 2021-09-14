@@ -51,8 +51,10 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         setToolbarAndTitle(
             context = this@PlaceOrderCardView,
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = getString(R.string.order_card)
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.order_card),  backArrowTint = Color.WHITE,
+            titleColor = Color.WHITE
         )
+        helpValue.text = getString(R.string.aadhaar_number_help_text)
         helpValue.setOnClickListener {
             callFreshChat(applicationContext)
 

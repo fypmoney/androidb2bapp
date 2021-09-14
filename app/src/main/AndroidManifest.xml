@@ -18,13 +18,14 @@
         tools:ignore="UnusedAttribute"
         tools:replace="android:usesCleartextTraffic">
         <activity
+            android:name=".view.ordercard.personaliseyourcard.PersonaliseYourCardActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.ordercard.cardorderoffer.CardOrderOfferActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.notifymeordercard.NotifyMeOrderCardActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.webview.WebViewActivity"
             android:screenOrientation="portrait" />
@@ -65,7 +66,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.OrderCardView"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.SetPinView"
             android:screenOrientation="portrait"
@@ -128,10 +129,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CreateAccountSuccessView"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CommunityView"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ContactView"
             android:screenOrientation="portrait" />
@@ -223,10 +224,10 @@
         <activity
             android:name=".view.activity.PermissionsActivity"
             android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-
         <meta-data
             android:name="payu_debug_mode_enabled"
             android:value="false" />

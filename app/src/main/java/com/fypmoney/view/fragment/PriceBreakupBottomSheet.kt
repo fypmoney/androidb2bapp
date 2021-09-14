@@ -26,8 +26,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class PriceBreakupBottomSheet(
     val amountValue: String?,
     val productResponse: GetAllProductsResponseDetails?, var isDiscountVisible: Int? = 0
-) :
-    BottomSheetDialogFragment() {
+) : BottomSheetDialogFragment() {
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =

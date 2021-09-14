@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#000</color>
     <color name="colorPrimaryDark">#000</color>
-    <color name="colorAccent">#000</color>
-    <color name="textColorPrimary">#000</color>
+    <color name="colorAccent">#ffffff</color>
+    <color name="textColorPrimary">#ffffff</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -73,5 +73,7 @@
     <color name="green_winnings">#62AA70</color>
     <color name="grey_heading">#9EA5A7</color>
     <color name="color_mat_black">#2d3039</color>
-
+    <color name="color_border_grey">#E9E9E9</color>
+    <color name="color_black_1">#15181F</color>
+    <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#fff</color>
 </resources>

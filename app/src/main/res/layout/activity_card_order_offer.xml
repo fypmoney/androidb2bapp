@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.ordercard.cardorderoffer.CardOrderOfferVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,6 +14,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/ic_order_card_bg"
         tools:context=".view.ordercard.cardorderoffer.CardOrderOfferActivity">
+
 
         <include
             android:id="@+id/toolbar_layout"
@@ -141,7 +144,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/continue_txt"
                     android:textSize="18sp"
-                    android:paddingVertical="15dp"
+                    android:onClick="@{()->viewModel.onContinueClicked()}"
                     android:backgroundTint="@color/color_task_card_green"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

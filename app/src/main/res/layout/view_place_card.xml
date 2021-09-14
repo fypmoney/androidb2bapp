@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -16,254 +17,311 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        >
 
         <include
             android:id="@+id/toolbar_layout"
             layout="@layout/toolbar_for_aadhaar" />
 
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:fillViewport="true"
-            android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="16dp">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/screenMarginLeft"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="@dimen/screenMarginRight"
-                android:layout_marginBottom="@dimen/margin">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivServiceLogo1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="100dp"
-                    app:srcCompat="@drawable/place_order_img" />
-
-                <RelativeLayout
+                <!--Card Details-->
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/price_details_cv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_toEndOf="@+id/ivServiceLogo1"
-                    android:gravity="center_vertical"
+                    android:paddingHorizontal="24dp"
+                    app:cardBackgroundColor="@color/color_black_1"
+                    app:cardCornerRadius="18dp"
+                    app:cardElevation="8dp"
+                    app:cardPreventCornerOverlap="true"
+                    app:cardUseCompatPadding="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                    >
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/heading"
-                        style="@style/TextviewBold"
-                        android:text="@string/premium_card"
-                        android:textColor="@color/text_color_dark"
-                        android:textSize="17dp" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/mini_card_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginStart="18dp"
+                            android:layout_marginVertical="18dp"
+                            app:srcCompat="@drawable/ic_mini_card" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/price"
-                        style="@style/TextviewRegular"
-                        android:layout_below="@+id/heading"
-                        android:layout_marginTop="5dp"
-                        android:ellipsize="end"
-                        android:text="@string/price"
-                        android:textSize="17dp" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/card_name_tv"
+                            style="@style/TextviewBold"
+                            android:text="@string/premium_card"
+                            android:textColor="@color/white"
+                            android:textSize="17sp"
+                            android:layout_marginTop="@dimen/dp5"
+                            android:layout_marginStart="@dimen/dp20"
+                            app:layout_constraintStart_toEndOf="@+id/mini_card_iv"
+                            app:layout_constraintTop_toTopOf="@+id/mini_card_iv"/>
 
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/price"
+                            style="@style/TextviewRegular"
+                            android:layout_marginTop="10dp"
+                            android:ellipsize="end"
+                            android:text="@string/price"
+                            android:textSize="14sp"
+                            android:layout_marginStart="@dimen/dp20"
+                            app:layout_constraintStart_toEndOf="@+id/mini_card_iv"
+                            app:layout_constraintTop_toBottomOf="@+id/card_name_tv"/>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/priceValue"
-                        style="@style/TextviewBold"
-                        android:layout_below="@+id/heading"
-                        android:layout_marginTop="5dp"
-                        android:layout_toEndOf="@+id/price"
-                        android:ellipsize="end"
-                        android:text="@{@string/Rs+viewModel.amount}"
-                        android:textSize="17dp" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/priceValue"
+                            style="@style/TextviewBold"
+                            android:layout_toEndOf="@+id/price"
+                            android:ellipsize="end"
+                            android:text="@{@string/Rs+viewModel.amount}"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:layout_marginStart="@dimen/dp5"
+                            app:layout_constraintBottom_toBottomOf="@+id/price"
+                            app:layout_constraintStart_toEndOf="@+id/price"
+                            app:layout_constraintTop_toTopOf="@+id/price"
+                            tools:text="200" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextviewRegular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/price"
-                        android:layout_gravity="end"
-                        android:layout_marginTop="5dp"
-                        android:drawablePadding="@dimen/margin"
-                        android:onClick="@{()->viewModel.onPriceBreakupClicked()}"
-                        android:text="@string/view_breakup"
-                        android:textColor="@color/text_color_dark" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/price"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:layout_marginStart="@dimen/dp20"
+                            app:layout_constraintStart_toEndOf="@+id/mini_card_iv"
+                            android:onClick="@{()->viewModel.onPriceBreakupClicked()}"
+                            android:text="@string/view_details"
+                            android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                            android:textColor="@color/color_task_card_green" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
-                <View
-                    android:id="@+id/view"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/delivery_address_cl"
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_below="@+id/ivServiceLogo1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/price_details_cv">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/deliver_to"
+                        style="@style/TextviewRegular"
+                        android:gravity="start"
+                        android:text="@string/deliver_to"
+                        android:textColor="@color/white"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:textSize="17sp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/pin_code_til"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/deliver_to"
+                        app:layout_constraintEnd_toStartOf="@+id/state_til"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:layout_marginEnd="20dp"
+                        android:hint="@string/pin"
+                        app:boxBackgroundColor="@color/color_black_1"
+                        android:maxLength="6"
+                        app:hintTextColor="@color/text_color_light">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/pin_code_tie"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            android:text="@={viewModel.pin}"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/state_til"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/deliver_to"
+                        app:layout_constraintStart_toEndOf="@+id/pin_code_til"
+                        android:layout_marginTop="@dimen/dp20"
+                        android:hint="@string/state_hint"
+                        app:boxBackgroundColor="@color/color_black_1"
+                        app:errorTextColor="@color/text_color_red"
+                        app:hintTextColor="@color/text_color_light">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/state_tie"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/city_til"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/pin_code_til"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:hint="@string/city_label"
+                        app:boxBackgroundColor="@color/color_black_1"
+                        app:errorTextColor="@color/text_color_red"
+                        app:hintTextColor="@color/text_color_light">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/city_tie"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/house_number_building_til"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/city_til"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:hint="@string/house_number_building_name"
+                        app:boxBackgroundColor="@color/color_black_1"
+                        app:boxBackgroundMode="filled"
+                        app:errorTextColor="@color/text_color_red"
+                        app:hintTextColor="@color/text_color_light">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/house_number_building_tie"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/road_name_area_til"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/house_number_building_til"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:hint="@string/road_name_area_colony"
+                        app:boxBackgroundColor="@color/color_black_1"
+                        app:boxBackgroundMode="filled"
+                        app:errorTextColor="@color/text_color_red"
+                        app:hintTextColor="@color/text_color_light">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/road_name_area_tie"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/landmark_til"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/road_name_area_til"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/dp10"
+                        android:hint="@string/landmark_optional"
+                        app:boxBackgroundColor="@color/color_black_1"
+                        app:errorTextColor="@color/text_color_red"
+                        app:hintTextColor="@color/text_color_light">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/landmark_tie"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="text"
+                            android:imeOptions="actionDone"
+                            android:singleLine="true"
+                            android:textColor="@color/white"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <Button
+                    android:id="@+id/btnContinue"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
-                    android:background="@color/dividerColor" />
+                    android:backgroundTint="@color/color_task_card_green"
+                    android:onClick="@{()->viewModel.onPlaceOrderClicked()}"
+                    android:text="@string/place_order_btn_text"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/text_color_dark" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
-                    android:id="@+id/linear"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/view"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextviewBold"
-                        android:gravity="start"
-                        android:text="@string/personalized_card"
-                        android:textColor="@color/text_color_dark"
-                        android:textSize="17dp" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/verification_title"
-                        style="@style/TextviewRegular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:text="@string/name_card" />
-
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/edittextMarginTop"
-                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                        android:hint="@string/name_card_hint"
-                        android:inputType="textCapWords"
-                        android:paddingStart="@dimen/edittextHintPaddingStart"
-                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                        android:singleLine="true"
-                        android:text="@={viewModel.name}" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextviewRegular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/customize_quote" />
-
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/edittextMarginTop"
-                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                        android:hint="@string/type_here"
-                        android:inputType="text"
-                        android:paddingStart="@dimen/edittextHintPaddingStart"
-                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                        android:text="@={viewModel.quote}" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextviewBold"
-                        android:layout_marginTop="20dp"
-                        android:gravity="start"
-                        android:text="@string/deliver_to"
-                        android:textColor="@color/text_color_dark"
-                        android:textSize="17dp" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                        android:entries="@{viewModel.stateList}"
-                        android:layout_marginTop="20dp"
-                        android:paddingStart="@dimen/edittextHintPaddingStart"
-                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                        android:paddingTop="9dp"
-                        android:paddingBottom="9dp"
-                        android:selectedItemPosition="@={viewModel.selectedStatePosition}" />
-
-                    <androidx.appcompat.widget.AppCompatSpinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                        android:entries="@{viewModel.cityList}"
-                        android:layout_marginTop="@dimen/edittextMarginTop"
-                        android:paddingStart="@dimen/edittextHintPaddingStart"
-                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                        android:paddingTop="9dp"
-                        android:paddingBottom="9dp"
-                        android:selectedItemPosition="@={viewModel.selectedCityPosition}" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/edittextMarginTop"
-                        android:layout_weight="1"
-                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                        android:hint="@string/pin"
-                        android:inputType="text"
-                        android:paddingStart="@dimen/edittextHintPaddingStart"
-                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                        android:singleLine="true"
-                        android:text="@={viewModel.pin}" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/edittextMarginTop"
-                        android:layout_weight="1"
-                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                        android:hint="@string/home_no"
-                        android:inputType="text"
-                        android:paddingStart="@dimen/edittextHintPaddingStart"
-                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                        android:singleLine="true"
-                        android:text="@={viewModel.houseNo}" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/edittextMarginTop"
-                        android:layout_weight="1"
-                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                        android:hint="@string/road_no"
-                        android:inputType="text"
-                        android:paddingStart="@dimen/edittextHintPaddingStart"
-                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                        android:text="@={viewModel.roadName}" />
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/edittextMarginTop"
-                        android:layout_weight="1"
-                        android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                        android:hint="@string/landmark"
-                        android:inputType="text"
-                        android:paddingStart="@dimen/edittextHintPaddingStart"
-                        android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                        android:text="@={viewModel.landMark}" />
-
-
-                    <Button
-                        android:id="@+id/btnContinue"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:onClick="@{()->viewModel.onPlaceOrderClicked()}"
-                        android:text="@string/place_order_btn_text"
-                        android:textAllCaps="false"
-                        app:backgroundTint="@color/text_color_dark" />
-
-                </LinearLayout>
-
-
-            </RelativeLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

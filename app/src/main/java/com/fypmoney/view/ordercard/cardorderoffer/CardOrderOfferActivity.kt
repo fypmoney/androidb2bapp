@@ -1,5 +1,6 @@
 package com.fypmoney.view.ordercard.cardorderoffer
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,6 +12,7 @@ import com.fypmoney.databinding.ActivityCardOrderOfferBinding
 import com.fypmoney.view.customview.scratchlayout.listener.ScratchListener
 import com.fypmoney.view.customview.scratchlayout.ui.ScratchCardLayout
 import com.fypmoney.view.ordercard.OrderCardViewModel
+import com.fypmoney.view.ordercard.personaliseyourcard.PersonaliseYourCardActivity
 import kotlinx.android.synthetic.main.toolbar.*
 
 class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOrderOfferVM>() {
@@ -28,6 +30,7 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = getViewDataBinding()
+
         setToolbarAndTitle(
             context = this@CardOrderOfferActivity,
             toolbar = toolbar,
@@ -36,6 +39,23 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
         )
 
         setupScratchCardView()
+        setUpObserver()
+    }
+
+    private fun setUpObserver() {
+        mViewModel.event.observe(this,{
+            handelEvents(it)
+        })
+    }
+
+    private fun handelEvents(it: CardOrderOfferVM.CardOfferEvent?) {
+        when(it){
+            CardOrderOfferVM.CardOfferEvent.Continue -> {
+                val intent = Intent(this@CardOrderOfferActivity,PersonaliseYourCardActivity::class.java)
+                startActivity(intent)
+            }
+
+        }
     }
 
     private fun setupScratchCardView() {
