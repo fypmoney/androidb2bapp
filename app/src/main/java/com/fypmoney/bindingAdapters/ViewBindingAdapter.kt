@@ -10,6 +10,22 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import android.text.Spannable
+
+import android.R.attr.text
+
+import android.text.style.ForegroundColorSpan
+
+import android.text.SpannableString
+
+import android.R.attr
+import android.graphics.Color
+import androidx.core.content.res.TypedArrayUtils
+
+import androidx.core.content.res.TypedArrayUtils.getText
+
+
+
 
 
 @BindingAdapter(value = ["app:imageUrl", "app:placeHolderDrawable", "app:rounded"], requireAll = false)
@@ -77,4 +93,23 @@ fun setFirstNameLastName(view: TextView, firstname: String?,lastname:String?) {
     }else{
         view.text = String.format(view.context.resources.getString(R.string.first_name_last_name),firstname,lastname)
     }
+}
+
+fun setSomePartOfTextInColor(textView: TextView,
+                             normalText:String,
+                             colorText:String,
+                             colorCode:String
+){
+    val spannableText = "$normalText $colorText"
+
+    val spannable: Spannable = SpannableString(spannableText)
+
+    spannable.setSpan(
+        ForegroundColorSpan(Color.parseColor(colorCode)),
+        normalText.length,
+        (normalText + colorText).length+1,
+        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
+
+    textView.setText(spannable, TextView.BufferType.SPANNABLE)
 }

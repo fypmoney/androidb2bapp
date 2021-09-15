@@ -67,7 +67,7 @@
                         android:layout_gravity="center_horizontal"
                         app:scratchDrawable="@drawable/ic_scratch_card"
                         app:scratchEnabled="true"
-                        app:scratchRevealFullAtPercent="40"
+                        app:scratchRevealFullAtPercent="20"
                         app:scratchWidth="40dp">
 
                         <LinearLayout
@@ -79,12 +79,15 @@
 
 
                             <ImageView
-                                android:layout_width="150dp"
-                                android:layout_height="150dp"
+                                android:id="@+id/got_the_offer_iv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
                                 android:contentDescription="@null"
-                                android:src="@drawable/ic_gift" />
+                                android:layout_gravity="center_horizontal"
+                                tools:src="@drawable/ic_oops_emoji" />
 
                             <TextView
+                                android:id="@+id/offer_desc_tv"
                                 android:textSize="14sp"
                                 style="@style/TextviewRegular"
                                 android:textColor="@color/text_color_light"
@@ -94,15 +97,16 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginEnd="30dp"
                                 android:gravity="center"
-                                android:text="@string/you_won"
+                                tools:text="@string/you_won"
                                 android:textAlignment="center" />
 
                             <TextView
+                                android:id="@+id/offer_amount_tv"
                                 style="@style/TextviewBold"
                                 android:textColor="@color/text_color_dark"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="₹200"
+                                tools:text="₹200"
                                 android:textSize="27sp"
                                 android:textStyle="bold" />
 
@@ -133,19 +137,16 @@
                     android:layout_marginBottom="@dimen/_80sdp"
                     android:text="@string/scratch_the_card_and_who_knows_you_might_get_lucky_today"/>
 
-
-
-
-
-
-                <Button
+                <com.fypmoney.view.customview.PrimaryButton
                     android:id="@+id/continue_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/continue_txt"
+                    app:text="@string/continue_txt"
                     android:textSize="18sp"
+                    app:enabled="false"
+                    app:enabled_bg="@color/color_task_card_green"
+                    app:disabled_bg="@color/buttonUnselectedColor"
                     android:onClick="@{()->viewModel.onContinueClicked()}"
-                    android:backgroundTint="@color/color_task_card_green"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

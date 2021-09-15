@@ -13,7 +13,6 @@ import com.fypmoney.connectivity.network.NetworkUtil.Companion.isNetworkAvailabl
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.Utility
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,7 +20,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MultipartBody
 import okhttp3.ResponseBody
-import java.lang.Exception
 
 
 /**

@@ -2,16 +2,18 @@ package com.fypmoney.view.ordercard.cardorderoffer
 
 import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.content.res.AppCompatResources
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityCardOrderOfferBinding
+import com.fypmoney.util.AppConstants.ORDER_CARD_INFO
+import com.fypmoney.util.Utility
 import com.fypmoney.view.customview.scratchlayout.listener.ScratchListener
 import com.fypmoney.view.customview.scratchlayout.ui.ScratchCardLayout
-import com.fypmoney.view.ordercard.OrderCardViewModel
 import com.fypmoney.view.ordercard.personaliseyourcard.PersonaliseYourCardActivity
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -37,9 +39,39 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
             isBackArrowVisible = true,
             backArrowTint = Color.WHITE
         )
-
+        mViewModel.userOfferCard = intent.getParcelableExtra(ORDER_CARD_INFO)
+        /*mViewModel.userOfferCard = usercard?.apply {
+            this.discount  = 0
+        }*/
+        setUpView()
         setupScratchCardView()
         setUpObserver()
+    }
+
+    private fun setUpView() {
+        mViewModel.userOfferCard?.let {
+            if(it.discount>0){
+                mBinding.gotTheOfferIv.invalidate()
+                mBinding.offerDescTv.invalidate()
+                mBinding.offerAmountTv.invalidate()
+                mBinding.gotTheOfferIv.background = AppCompatResources.getDrawable(this,R.drawable.ic_gift)
+                mBinding.offerDescTv.text = getString(R.string.you_won)
+                mBinding.offerAmountTv.text =
+                    """${getString(R.string.Rs)}${Utility.convertToRs(it.discount.toString())}"""
+            }else{
+                mBinding.gotTheOfferIv.invalidate()
+                mBinding.gotTheOfferIv.background = AppCompatResources.getDrawable(this,R.drawable.ic_oops_emoji)
+                mBinding.offerDescTv.invalidate()
+                mBinding.offerDescTv.text = getString(R.string.opps)
+                mBinding.offerDescTv.textSize = 27.0f
+                mBinding.offerDescTv.setTextColor(ContextCompat.getColor(this,R.color.text_color_dark))
+                mBinding.offerAmountTv.invalidate()
+                mBinding.offerAmountTv.text =getString(R.string.better_luck_next_time)
+                mBinding.offerAmountTv.textSize = 14.0f
+                mBinding.offerAmountTv.setTextColor(ContextCompat.getColor(this,R.color.text_color_light))
+            }
+        }
+
     }
 
     private fun setUpObserver() {
@@ -67,9 +99,13 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
                 scratchCardLayout: ScratchCardLayout,
                 atLeastScratchedPercent: Int
             ) {
+                mBinding.continueBtn.setBusy(true)
+
             }
 
             override fun onScratchComplete() {
+                mBinding.continueBtn.isEnabled = true
+                mBinding.continueBtn.setBusy(false)
             }
         })
     }

@@ -97,7 +97,6 @@
                     android:layout_height="wrap_content"
                     android:text="@string/get_this_card"
                     android:textSize="18sp"
-                    android:paddingVertical="15dp"
                     android:onClick="@{()->viewModel.onOrderCardClicked()}"
                     android:backgroundTint="@color/color_task_card_green"
                     app:layout_constraintStart_toStartOf="parent"
