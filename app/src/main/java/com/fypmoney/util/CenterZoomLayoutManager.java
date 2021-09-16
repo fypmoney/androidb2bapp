@@ -28,11 +28,18 @@ public class CenterZoomLayoutManager extends LinearLayoutManager {
             for (int i = 0; i < getChildCount(); i++) {
                 View child = getChildAt(i);
                 float childMidpoint =
-                        (getDecoratedRight(child) + getDecoratedLeft(child)) / 2.f;
+                        0;
+                if (child != null) {
+                    childMidpoint = (getDecoratedRight(child) + getDecoratedLeft(child)) / 2.f;
+                }
                 float d = Math.min(d1, Math.abs(midpoint - childMidpoint));
                 float scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0);
-                child.setScaleX(scale);
-                child.setScaleY(scale);
+                if (child != null) {
+                    child.setScaleX(scale);
+                }
+                if (child != null) {
+                    child.setScaleY(scale);
+                }
             }
             return scrolled;
         } else return 0;
