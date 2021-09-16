@@ -68,10 +68,7 @@ class InviteBottomSheet(
                 Utility.getCustomerDataFromPreference()?.referralCode
             )
         }
-        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
-            view.title1.visibility = View.GONE
-            view.title3.visibility = View.GONE
-        }
+
 
 
 

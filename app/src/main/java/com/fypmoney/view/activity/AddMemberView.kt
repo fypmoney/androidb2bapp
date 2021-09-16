@@ -24,6 +24,7 @@ import com.fypmoney.view.fragment.InviteBottomSheet
 import com.fypmoney.view.fragment.InviteMemberBottomSheet
 import com.fypmoney.view.fragment.StayTunedBottomSheet
 import com.fypmoney.viewmodel.AddMemberViewModel
+import kotlinx.android.synthetic.main.bottom_sheet_invite.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_login.*
 
@@ -217,7 +218,12 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
 
     override fun onInviteButtonClick() {
 
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
+            inviteUser()
+        } else {
+            callInviteBottomSheet()
 
-        callInviteBottomSheet()
+        }
+
     }
 }
