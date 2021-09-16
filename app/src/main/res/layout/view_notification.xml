@@ -130,16 +130,6 @@
                     android:orientation="vertical">
 
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/dp8"
-                        android:paddingTop="@dimen/dp5"
-                        android:paddingEnd="@dimen/dp8"
-                        app:adapter="@{viewModel.notificationAdapter}"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:spanCount="2" />
 
                 </LinearLayout>
 

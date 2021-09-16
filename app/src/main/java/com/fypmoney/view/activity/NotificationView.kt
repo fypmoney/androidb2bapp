@@ -45,7 +45,6 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     private var actionAllowed:String? = null
     companion object {
         lateinit var mViewModel: NotificationViewModel
-
     }
 
     private lateinit var mViewBinding: ViewNotificationBinding

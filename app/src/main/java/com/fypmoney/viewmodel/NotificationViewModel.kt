@@ -1,7 +1,6 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -15,8 +14,6 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.view.activity.HomeView
-import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.adapter.NotificationAdapter
 import com.fypmoney.view.adapter.UserTimeLineAdapter
 import com.google.gson.Gson
@@ -44,6 +41,14 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     val showShimmerEffect = MutableLiveData<Boolean>()
     var sendMoneyApiResponse = MutableLiveData<SendMoneyResponseDetails>()
     var amountToBeAdded: String? = ""
+
+    var timelineList: MutableLiveData<ArrayList<NotificationModel.UserTimelineResponseDetails>> =
+        MutableLiveData()
+
+
+    var RequestNotificationList: MutableLiveData<ArrayList<NotificationModel.NotificationResponseDetails>> =
+        MutableLiveData()
+
     init {
         callGetFamilyNotificationApi()
         callUserTimeLineApi()
@@ -137,6 +142,13 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                     } else {
                         notificationstatus.set(1)
                         isGetNotificationsRecyclerVisible.set(true)
+
+                        var notificationList: ArrayList<NotificationModel.NotificationResponseDetails>? =
+                            ArrayList()
+                        responseData.notificationResponseDetails.forEach {
+                            notificationList!!.add(it)
+                        }
+                        RequestNotificationList.postValue(notificationList)
                         notificationAdapter.setList(responseData.notificationResponseDetails)
                     }
                 }
@@ -155,8 +167,14 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                         timelinestatus.set(0)
                         userTimeLineAdapter.setList(null)
                     } else {
+                        var notificationList: ArrayList<NotificationModel.UserTimelineResponseDetails>? =
+                            ArrayList()
+                        responseData.notificationResponseDetails.forEach {
+                            notificationList!!.add(it)
+                        }
+                        timelineList.postValue(notificationList)
                         timelinestatus.set(1)
-                        userTimeLineAdapter.setList(responseData.notificationResponseDetails)
+
                     }
                 }
             }

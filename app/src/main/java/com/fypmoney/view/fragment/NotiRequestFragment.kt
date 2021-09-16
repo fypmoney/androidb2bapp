@@ -6,14 +6,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fypmoney.R
 import com.fypmoney.base.PaginationListener
 import com.fypmoney.model.AssignedTaskResponse
+import com.fypmoney.model.NotificationModel
 import com.fypmoney.view.activity.ChoresActivity
+import com.fypmoney.view.adapter.NotificationAdapter
 
 import com.fypmoney.view.adapter.YourTasksAdapter
 import com.fypmoney.view.interfaces.ListItemClickListener
+import com.fypmoney.viewmodel.NotificationViewModel
 
 import kotlinx.android.synthetic.main.fragment_your_task.view.*
 
@@ -27,9 +31,10 @@ class NotiRequestFragment : Fragment() {
 
     }
 
-    private var itemsArrayList: ArrayList<AssignedTaskResponse> = ArrayList()
+    private var itemsArrayList: ArrayList<NotificationModel.NotificationResponseDetails> =
+        ArrayList()
     private var isLoading = false
-    private var typeAdapter: YourTasksAdapter? = null
+    private var typeAdapter: NotificationAdapter? = null
     private var root: View? = null
 
 
@@ -37,10 +42,22 @@ class NotiRequestFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        root = inflater.inflate(R.layout.fragment_your_task, container, false)
+        root = inflater.inflate(R.layout.fragment_noti_request, container, false)
         setRecyclerView(root!!)
+        activity?.let {
+            val sharedViewModel = ViewModelProviders.of(it).get(NotificationViewModel::class.java)
+            observeInput(sharedViewModel)
 
-        ChoresActivity.mViewModel!!.YourAssigned.observe(
+        }
+
+
+
+
+        return root
+    }
+
+    private fun observeInput(sharedViewModel: NotificationViewModel) {
+        sharedViewModel.RequestNotificationList.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
                 root?.LoadProgressBar?.visibility = View.GONE
@@ -64,12 +81,7 @@ class NotiRequestFragment : Fragment() {
                 page += 1
             })
 
-
-
-
-        return root
     }
-
 
     private fun setRecyclerView(root: View) {
         val layoutManager = GridLayoutManager(requireContext(), 2)
@@ -106,7 +118,7 @@ class NotiRequestFragment : Fragment() {
 
         }
 
-        typeAdapter = YourTasksAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
+        typeAdapter = NotificationAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
         root.rv_assigned!!.adapter = typeAdapter
     }
 

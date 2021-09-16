@@ -6,14 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fypmoney.R
 import com.fypmoney.base.PaginationListener
 import com.fypmoney.model.AssignedTaskResponse
+import com.fypmoney.model.NotificationModel
 import com.fypmoney.view.activity.ChoresActivity
+import com.fypmoney.view.adapter.NotificationAdapter
+import com.fypmoney.view.adapter.UserTimeLineAdapter
 
 import com.fypmoney.view.adapter.YourTasksAdapter
 import com.fypmoney.view.interfaces.ListItemClickListener
+import com.fypmoney.viewmodel.NotificationViewModel
 
 import kotlinx.android.synthetic.main.fragment_your_task.view.*
 
@@ -21,15 +26,16 @@ import kotlinx.android.synthetic.main.fragment_your_task.view.*
 import kotlin.collections.ArrayList
 
 
-class NotiTimelineFragment : Fragment() {
+class NotiTimelineFragment : Fragment(), NotificationAdapter.OnNotificationClickListener {
     companion object {
         var page = 0
 
     }
 
-    private var itemsArrayList: ArrayList<AssignedTaskResponse> = ArrayList()
+    private var itemsArrayList: ArrayList<NotificationModel.UserTimelineResponseDetails> =
+        ArrayList()
     private var isLoading = false
-    private var typeAdapter: YourTasksAdapter? = null
+    private var typeAdapter: UserTimeLineAdapter? = null
     private var root: View? = null
 
 
@@ -39,8 +45,21 @@ class NotiTimelineFragment : Fragment() {
     ): View? {
         root = inflater.inflate(R.layout.fragment_noti_timeline, container, false)
         setRecyclerView(root!!)
+        activity?.let {
+            val sharedViewModel = ViewModelProviders.of(it).get(NotificationViewModel::class.java)
+            observeInput(sharedViewModel)
 
-        ChoresActivity.mViewModel!!.YourAssigned.observe(
+        }
+
+
+
+
+
+        return root
+    }
+
+    private fun observeInput(sharedViewModel: NotificationViewModel) {
+        sharedViewModel.timelineList.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
                 root?.LoadProgressBar?.visibility = View.GONE
@@ -63,13 +82,7 @@ class NotiTimelineFragment : Fragment() {
                 }
                 page += 1
             })
-
-
-
-
-        return root
     }
-
 
     private fun setRecyclerView(root: View) {
         val layoutManager = GridLayoutManager(requireContext(), 2)
@@ -106,7 +119,7 @@ class NotiTimelineFragment : Fragment() {
 
         }
 
-        typeAdapter = YourTasksAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
+        typeAdapter = UserTimeLineAdapter(this, this)
         root.rv_assigned!!.adapter = typeAdapter
     }
 
@@ -116,6 +129,13 @@ class NotiTimelineFragment : Fragment() {
         root.LoadProgressBar?.visibility = View.VISIBLE
         Log.d("chorespage", page.toString())
         isLoading = true
+
+    }
+
+    override fun onNotificationClick(
+        notification: NotificationModel.NotificationResponseDetails?,
+        position: Int
+    ) {
 
     }
 
