@@ -3,6 +3,6 @@
     android:id="@+id/listview_background_shape">
     <stroke
         android:width="2dp"
-        android:color="@color/cb_grey" />
+        android:color="#9CA3A5" />
     <corners android:radius="10dp" />
 </shape>

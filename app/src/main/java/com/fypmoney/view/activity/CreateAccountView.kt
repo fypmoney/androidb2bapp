@@ -52,6 +52,7 @@ class CreateAccountView :
             toolbar = toolbar,
             isBackArrowVisible = true
         )
+        teenagerSelected()
         lin_parent.setOnClickListener(View.OnClickListener {
 
             parentSelected()
@@ -155,9 +156,9 @@ Create this method for observe the viewModel fields
         mViewModel.firstName.observe(this) {
             if (!TextUtils.isEmpty(mViewModel.firstName.value)) {
                 if (!TextUtils.isEmpty(mViewModel.lastName.value)) {
-                    if(!TextUtils.isEmpty(mViewModel.dob.value)){
+
                         mViewModel.isEnabled.value=true
-                    }
+
                 }
 
             }
@@ -178,9 +179,9 @@ Create this method for observe the viewModel fields
         mViewModel.lastName.observe(this) {
             if (!TextUtils.isEmpty(mViewModel.lastName.value)) {
                 if (!TextUtils.isEmpty(mViewModel.firstName.value)) {
-                    if(!TextUtils.isEmpty(mViewModel.dob.value)){
-                        mViewModel.isEnabled.value=true
-                    }
+
+                    mViewModel.isEnabled.value=true
+
                 }
 
             }
@@ -199,29 +200,28 @@ Create this method for observe the viewModel fields
             }
         }
 
-        mViewModel.dob.observe(this) {
-            if (!TextUtils.isEmpty(mViewModel.dob.value)) {
-                if (!TextUtils.isEmpty(mViewModel.firstName.value)) {
-                    if(!TextUtils.isEmpty(mViewModel.lastName.value)){
-                        mViewModel.isEnabled.value=true
-                    }
-                }
-
-            }
-            else{
-                btnCreateAccount.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(
-                    this,
-                    R.color.buttonUnselectedColor
-                ))
-                btnCreateAccount.setTextColor(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.text_color_little_dark
-                    )
-                )
-            }
-        }
-
+//        mViewModel.dob.observe(this) {
+//            if (!TextUtils.isEmpty(mViewModel.dob.value)) {
+//                if (!TextUtils.isEmpty(mViewModel.firstName.value)) {
+//                    if(!TextUtils.isEmpty(mViewModel.lastName.value)){
+//                        mViewModel.isEnabled.value=true
+//                    }
+//                }
+//
+//            }
+//            else{
+//                btnCreateAccount.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(
+//                    this,
+//                    R.color.buttonUnselectedColor
+//                ))
+//                btnCreateAccount.setTextColor(
+//                    ContextCompat.getColor(
+//                        this,
+//                        R.color.text_color_little_dark
+//                    )
+//                )
+//            }
+//        }
 
 
         mViewModel.onLoginClicked.observe(this) {

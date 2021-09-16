@@ -32,15 +32,27 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/verification_title"
-                    style="@style/TextviewRegular"
+                    android:id="@+id/comingsoon"
+                    style="@style/TextviewBold"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_8sdp"
+
                     android:gravity="center"
-                    android:textSize="16sp"
+                    android:text="@string/coming_soon1"
+                    android:textSize="22sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/verification_title"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@+id/comingsoon"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="20dp"
-                    android:text="@string/your_wish_for_better_rewards_is_going_to_n_be_granted_soon_stay_tuned" />
+                    android:gravity="center"
+                    android:text="@string/your_wish_for_better_rewards_is_going_to_n_be_granted_soon_stay_tuned"
+                    android:textSize="16sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/adcard"

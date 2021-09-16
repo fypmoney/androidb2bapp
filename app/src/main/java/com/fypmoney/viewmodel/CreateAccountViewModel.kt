@@ -60,12 +60,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
             TextUtils.isEmpty(lastName.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.last_name_empty_error))
             }
-            TextUtils.isEmpty(dob.value) -> {
-                Utility.showToast(PockketApplication.instance.getString(R.string.dob_empty_error))
-            }
-            teenager.value == -1 -> {
-                Utility.showToast(PockketApplication.instance.getString(R.string.select_age_type))
-            }
+
 
             else -> {
                 isEnabled.value = true
@@ -92,7 +87,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
                             mobile = SharedPrefUtils.getString(
                                 getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE
                             ),
-                            dob = dobForServer.value?.trim(),
+
                             cityName = age_type
                         )
                     )
