@@ -24,8 +24,12 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
     /*
     * This method is used to handle continue
     * */
-    fun onContinueClicked() {
+    init {
         callGetCustomerProfileApi()
+    }
+    fun onContinueClicked() {
+        if (Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.YES)
+            onContinueClicked.value = true
     }
 
 
@@ -78,9 +82,7 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                     postKycScreenCode.value =
                         responseData.customerInfoResponseDetails?.postKycScreenCode!!
                 }
-                if (Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.YES)
 
-                    onContinueClicked.value = true
 
 
             }

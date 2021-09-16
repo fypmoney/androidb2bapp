@@ -19,6 +19,8 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.android.synthetic.main.bottom_sheet_invite.view.*
+import kotlinx.android.synthetic.main.screen_home.*
 
 
 /*
@@ -66,6 +68,12 @@ class InviteBottomSheet(
                 Utility.getCustomerDataFromPreference()?.referralCode
             )
         }
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
+            view.title1.visibility = View.GONE
+            view.title3.visibility = View.GONE
+        }
+
+
 
         shareButton.setOnClickListener {
             onShareClickListener.onShareClickListener(referralCode.text.toString())

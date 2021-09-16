@@ -39,21 +39,21 @@ class SpinWheelAdapter(
             holder.banner.setImageDrawable(
                 ContextCompat.getDrawable(
                     context,
-                    R.drawable.ic_app_reward_banner_1
+                    R.drawable.app_reward_banner_01
                 )
             )
         } else if (position == 1) {
             holder.banner.setImageDrawable(
                 ContextCompat.getDrawable(
                     context,
-                    R.drawable.ic_app_reward_banner_02
+                    R.drawable.app_reward_banner_02
                 )
             )
         } else if (position == 2) {
             holder.banner.setImageDrawable(
                 ContextCompat.getDrawable(
                     context,
-                    R.drawable.ic_app_reward_banner_03
+                    R.drawable.app_reward_banner_03
                 )
             )
         }
@@ -63,11 +63,7 @@ class SpinWheelAdapter(
 
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-
         var card = view
         var banner = view.banner
-
-
     }
 }

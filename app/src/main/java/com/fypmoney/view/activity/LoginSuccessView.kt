@@ -81,11 +81,36 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                     intentToActivity(AadhaarAccountActivationView::class.java)
                 }
                 else-> {
-                    if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                        intentToActivity(HomeView::class.java)
-                    } else {
-                        intentToActivity(PermissionsActivity::class.java)
+                    if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
+
+                        if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+                            intentToActivity(HomeView::class.java)
+                        } else {
+                            intentToActivity(PermissionsActivity::class.java)
+                        }
+                    } else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "0") {
+                        when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
+                            AppConstants.YES -> {
+                                intentToActivity(ReferralCodeView::class.java)
+                            }
+
+                            else -> {
+                                if (hasPermissions(
+                                        this,
+                                        Manifest.permission.READ_CONTACTS
+                                    )
+                                ) {
+                                    intentToActivity(HomeView::class.java)
+                                } else {
+                                    intentToActivity(PermissionsActivity::class.java)
+                                }
+
+                            }
+                        }
+                    } else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "90") {
+                        intentToActivity(AgeAllowedActivationView::class.java)
                     }
+
 
                 }
 

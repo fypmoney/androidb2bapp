@@ -29,6 +29,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     FeedsAdapter.OnFeedItemClickListener {
     var availableAmount =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
+    var totalCount = ObservableField(0)
     var onAddMoneyClicked = MutableLiveData(false)
     var onPayClicked = MutableLiveData(false)
     var onChoreClicked = MutableLiveData(false)
@@ -37,7 +38,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
 
     var isFeedVisible = ObservableField(false)
     var clicked = ObservableField(false)
-    var feedsAdapter = FeedsSectionAdapter(this)
+    var feedsAdapter = FeedsSectionAdapter(this, this)
     var onFeedButtonClick = MutableLiveData<FeedDetails>()
     val selectedPosition = ObservableField<Int>()
     var redeemDetailsResponse = MutableLiveData<RedeemDetailsResponse>()
@@ -47,8 +48,8 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     val splitBillsResponse = MutableLiveData<SplitBillsResponse>()
     val fromWhichScreen = ObservableField(0)
     var onReferalAndCodeClicked = MutableLiveData<Boolean>()
-
-    val topTenUsersResponse:LiveData<TopTenUsersResponse>
+    val page = ObservableField(0)
+    val topTenUsersResponse: LiveData<TopTenUsersResponse>
         get() = _topTenUserResponse
     private val _topTenUserResponse = MutableLiveData<TopTenUsersResponse>()
 
@@ -150,7 +151,8 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
                 NetworkUtil.endURL(ApiConstant.API_FETCH_ALL_FEEDS),
                 ApiUrl.POST,
                 makeFetchFeedRequest(
-                    latitude = null, longitude = null
+                    latitude = null, longitude = null,
+                    pageValue = page.get()
                 ),
                 this, isProgressBar = false
             )
@@ -226,16 +228,16 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
                     // Save the access token in shared preference
                     val response = responseData.getAllFeed?.getAllFeed
                     // check total count and if greater than 0 set list else set no data found
-
+                    totalCount.set(response?.total)
                     response?.feedDetails.let {
                         isFeedVisible.set(true)
                         feedsAdapter.setList(response?.feedDetails)
                     }
 
-
                 }
 
             }
+
         }
     }
 
@@ -276,7 +278,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
 
         val feedRequestModel = FeedRequestModel()
         feedRequestModel.query =
-            "{getAllFeed(page:0,size:null, id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME_HOME + "\",screenSection:null,tags :null,displayCard: [\"STATICIMAGE\",\"STATICIMAGE1X1\",\"DEEPLINK1X1\",\"INAPPWEB1X1\",\"EXTWEBVIEW1X1\",\"BLOG\", \"DEEPLINK\", \"INAPPWEB\", \"EXTWEBVIEW\", \"VIDEO\"]) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId title subTitle content backgroundColor action{ type url buttonText }}}}"
+            "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
 
 
 

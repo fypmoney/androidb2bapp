@@ -48,11 +48,11 @@ class AgeAllowedActivationView :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setToolbarAndTitle(
-            context = this@AgeAllowedActivationView,
-            toolbar = toolbar,
-            isBackArrowVisible = true
-        )
+//        setToolbarAndTitle(
+//            context = this@AgeAllowedActivationView,
+//            toolbar = toolbar,
+//            isBackArrowVisible = false
+//        )
 
 
     }

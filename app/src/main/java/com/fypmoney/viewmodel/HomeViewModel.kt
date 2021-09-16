@@ -143,7 +143,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                     dtoken = SharedPrefUtils.getString(
                         getApplication(),
                         SharedPrefUtils.SF_KEY_FIREBASE_TOKEN
-                    ) ?: ""
+                    ) ?: "",
+                    isHomeViewed = "YES"
 
                 ), onResponse = this,
                 isProgressBar = false

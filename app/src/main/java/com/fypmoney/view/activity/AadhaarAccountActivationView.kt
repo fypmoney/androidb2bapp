@@ -99,21 +99,22 @@ class AadhaarAccountActivationView :
                         intentToActivity(PermissionsActivity::class.java)
                     }
                 } else if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "0") {
-                    when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
-                        AppConstants.YES -> {
-                            intentToActivity(ReferralCodeView::class.java)
-                        }
-                        else -> {
-                            if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                                intentToActivity(HomeView::class.java)
-                            } else {
-                                intentToActivity(PermissionsActivity::class.java)
-                            }
-
-                        }
-                    }
+                    intentToActivity(ReferralCodeView::class.java, true)
+//                    when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
+//                        AppConstants.YES -> {
+//
+//                        }
+//                        else -> {
+//                            if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+//                                intentToActivity(HomeView::class.java)
+//                            } else {
+//                                intentToActivity(PermissionsActivity::class.java)
+//                            }
+//
+//                        }
+//                    }
                 } else if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "90") {
-                    intentToActivity(AgeAllowedActivationView::class.java)
+                    intentToActivity(AgeAllowedActivationView::class.java, true)
                 }
 
             }

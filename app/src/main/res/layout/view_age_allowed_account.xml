@@ -18,6 +18,7 @@
         android:layout_height="match_parent">
 
 
+
         <ScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
@@ -30,7 +31,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_26sdp"
+                android:layout_marginTop="@dimen/_46sdp"
                 android:layout_marginStart="@dimen/screenMarginLeft"
                 android:layout_marginEnd="@dimen/screenMarginRight">
 
@@ -64,7 +65,7 @@
                     android:layout_below="@+id/tvSubTitle"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_28sdp"
-                    app:srcCompat="@drawable/ic_teens_parents" />
+                    app:srcCompat="@drawable/teens_parents" />
 
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -126,14 +127,13 @@
 
                 <Button
                     android:id="@+id/btnGetOtp"
-
                     android:layout_width="wrap_content"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/step_three_tv"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_30sdp"
-                    android:onClick="@{()->viewModel.callKycAccountActivationApi()}"
                     android:text="@string/continue_txt"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/text_color_dark" />

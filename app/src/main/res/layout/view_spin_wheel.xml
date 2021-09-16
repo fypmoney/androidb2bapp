@@ -33,12 +33,14 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/verification_title"
-                    style="@style/TextviewBold"
+                    style="@style/TextviewRegular"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginBottom="40dp"
-                    android:text="@string/spin_wheel_heading" />
+                    android:gravity="center"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="20dp"
+                    android:text="@string/your_wish_for_better_rewards_is_going_to_n_be_granted_soon_stay_tuned" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/adcard"

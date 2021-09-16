@@ -216,6 +216,8 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
     }
 
     override fun onInviteButtonClick() {
+
+
         callInviteBottomSheet()
     }
 }

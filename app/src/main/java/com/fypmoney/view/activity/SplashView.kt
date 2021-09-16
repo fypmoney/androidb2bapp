@@ -162,6 +162,14 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                 ) {
                     when {
                         Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
+
+                            intentToActivity(CreateAccountView::class.java)
+
+                        }
+                        Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {
+                            intentToActivity(AadhaarAccountActivationView::class.java)
+                        }
+                        else -> {
                             if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
 
                                 if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
@@ -192,17 +200,6 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                 intentToActivity(AgeAllowedActivationView::class.java)
                             }
 
-
-                        }
-                        Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {
-                            intentToActivity(AadhaarAccountActivationView::class.java)
-                        }
-                        else -> {
-                            if (hasPermissions(this, *PERMISSIONS)) {
-                                intentToActivity(HomeView::class.java)
-                            } else {
-                                intentToActivity(PermissionsActivity::class.java)
-                            }
 
                         }
                     }

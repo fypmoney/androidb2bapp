@@ -1,5 +1,6 @@
 package com.fypmoney.view.fragment
 
+import android.Manifest
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -22,6 +23,7 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.RedeemDetailsResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.TopTenUsersAdapter
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
@@ -213,9 +215,19 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
                             )
 
                         }
+                        AppConstants.FEED_TYPE_STORIES -> {
+                            if (!it.resourceArr.isNullOrEmpty()) {
+                                callDiduKnowBottomSheet(it.resourceArr)
+                            }
+
+                        }
                     }
         }
 
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
+            ll_second_card.visibility = View.GONE
+
+        }
 
         mViewModel.fetchBalanceLoading.observe(viewLifecycleOwner) {
             if (it) {
@@ -225,6 +237,13 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
             }
         }
 
+    }
+
+    private fun callDiduKnowBottomSheet(list: List<String>) {
+        val bottomSheet =
+            StoriesBottomSheet(list)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "DidUKnowSheet")
     }
 
     override fun onTryAgainClicked() {
