@@ -25,8 +25,8 @@ import com.google.gson.JsonParser
 * */
 class NotificationViewModel(application: Application) : BaseViewModel(application),
     NotificationAdapter.OnNotificationClickListener {
-    var notificationAdapter = NotificationAdapter(this, this)
-    var userTimeLineAdapter = UserTimeLineAdapter(this)
+    var notificationAdapter = NotificationAdapter(this)
+    var userTimeLineAdapter = UserTimeLineAdapter()
     var noDataFoundVisibility = ObservableField(false)
     var isPreviousVisible = ObservableField(false)
     var notificationstatus = ObservableField(-1)
@@ -50,7 +50,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
         MutableLiveData()
 
     init {
-        callGetFamilyNotificationApi()
+        callGetFamilyNotificationApi(0)
         callUserTimeLineApi()
     }
 
@@ -62,14 +62,14 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
       *  */
     fun onRefresh() {
         isLoading.set(true)
-        callGetFamilyNotificationApi()
+        callGetFamilyNotificationApi(0)
         callUserTimeLineApi()
     }
     /*
       * This method is used to call get family notification API
       * */
 
-    fun callGetFamilyNotificationApi() {
+    fun callGetFamilyNotificationApi(page: Int) {
         if (!isLoading.get()) {
             showShimmerEffect.value = true
         }
@@ -78,7 +78,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                 purpose = ApiConstant.API_GET_NOTIFICATION_LIST,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_GET_NOTIFICATION_LIST),
                 request_type = ApiUrl.POST,
-                param = NotificationModel.NotificationRequest(), onResponse = this,
+                param = page, onResponse = this,
                 isProgressBar = false
             )
         )
@@ -142,10 +142,9 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                     } else {
                         notificationstatus.set(1)
                         isGetNotificationsRecyclerVisible.set(true)
-
                         var notificationList: ArrayList<NotificationModel.NotificationResponseDetails>? =
                             ArrayList()
-                        responseData.notificationResponseDetails.forEach {
+                        responseData.notificationResponseDetails?.forEach {
                             notificationList!!.add(it)
                         }
                         RequestNotificationList.postValue(notificationList)
@@ -167,14 +166,14 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                         timelinestatus.set(0)
                         userTimeLineAdapter.setList(null)
                     } else {
+                        timelinestatus.set(1)
                         var notificationList: ArrayList<NotificationModel.UserTimelineResponseDetails>? =
                             ArrayList()
-                        responseData.notificationResponseDetails.forEach {
+                        responseData.notificationResponseDetails?.forEach {
                             notificationList!!.add(it)
                         }
                         timelineList.postValue(notificationList)
-                        timelinestatus.set(1)
-
+                        userTimeLineAdapter.setList(responseData.notificationResponseDetails)
                     }
                 }
             }

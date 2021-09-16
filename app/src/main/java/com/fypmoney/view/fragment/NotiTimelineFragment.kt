@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.R
 import com.fypmoney.base.PaginationListener
 import com.fypmoney.model.AssignedTaskResponse
@@ -19,8 +20,12 @@ import com.fypmoney.view.adapter.UserTimeLineAdapter
 import com.fypmoney.view.adapter.YourTasksAdapter
 import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.viewmodel.NotificationViewModel
+import kotlinx.android.synthetic.main.fragment_noti_request.view.*
+import kotlinx.android.synthetic.main.fragment_noti_timeline.view.*
 
 import kotlinx.android.synthetic.main.fragment_your_task.view.*
+import kotlinx.android.synthetic.main.fragment_your_task.view.LoadProgressBar
+import kotlinx.android.synthetic.main.fragment_your_task.view.empty_screen
 
 
 import kotlin.collections.ArrayList
@@ -32,6 +37,7 @@ class NotiTimelineFragment : Fragment(), NotificationAdapter.OnNotificationClick
 
     }
 
+    private var sharedViewModel: NotificationViewModel? = null
     private var itemsArrayList: ArrayList<NotificationModel.UserTimelineResponseDetails> =
         ArrayList()
     private var isLoading = false
@@ -46,8 +52,8 @@ class NotiTimelineFragment : Fragment(), NotificationAdapter.OnNotificationClick
         root = inflater.inflate(R.layout.fragment_noti_timeline, container, false)
         setRecyclerView(root!!)
         activity?.let {
-            val sharedViewModel = ViewModelProviders.of(it).get(NotificationViewModel::class.java)
-            observeInput(sharedViewModel)
+            sharedViewModel = ViewModelProviders.of(it).get(NotificationViewModel::class.java)
+            observeInput(sharedViewModel!!)
 
         }
 
@@ -68,6 +74,7 @@ class NotiTimelineFragment : Fragment(), NotificationAdapter.OnNotificationClick
                     itemsArrayList.clear()
                 }
                 itemsArrayList.addAll(list)
+                typeAdapter?.setList(list)
                 isLoading = false
                 typeAdapter!!.notifyDataSetChanged()
 
@@ -85,10 +92,11 @@ class NotiTimelineFragment : Fragment(), NotificationAdapter.OnNotificationClick
     }
 
     private fun setRecyclerView(root: View) {
-        val layoutManager = GridLayoutManager(requireContext(), 2)
-        root.rv_assigned!!.layoutManager = layoutManager
+        val layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        root.rv_timeline!!.layoutManager = layoutManager
 
-        root.rv_assigned!!.addOnScrollListener(object : PaginationListener(layoutManager) {
+        root.rv_timeline!!.addOnScrollListener(object : PaginationListener(layoutManager) {
             override fun loadMoreItems() {
                 loadMore(root)
             }
@@ -101,32 +109,16 @@ class NotiTimelineFragment : Fragment(), NotificationAdapter.OnNotificationClick
                 return isLoading
             }
         })
-        var itemClickListener2 = object : ListItemClickListener {
 
 
-            override fun onItemClicked(pos: Int) {
-
-                ChoresActivity.mViewModel?.yourtask?.set(true)
-                ChoresActivity.mViewModel!!.callTaskDetail(itemsArrayList[pos].id.toString())
-
-
-            }
-
-            override fun onCallClicked(pos: Int) {
-
-            }
-
-
-        }
-
-        typeAdapter = UserTimeLineAdapter(this, this)
-        root.rv_assigned!!.adapter = typeAdapter
+        typeAdapter = UserTimeLineAdapter()
+        root.rv_timeline!!.adapter = typeAdapter
     }
 
     private fun loadMore(root: View) {
-        ChoresActivity.mViewModel?.callLoadMoreTask(page)
-        //LoadProgressBar?.visibility = View.VISIBLE
-        root.LoadProgressBar?.visibility = View.VISIBLE
+//        sharedViewModel.callLoadMoreTask(page)
+//        //LoadProgressBar?.visibility = View.VISIBLE
+//        root.LoadProgressBar?.visibility = View.VISIBLE
         Log.d("chorespage", page.toString())
         isLoading = true
 

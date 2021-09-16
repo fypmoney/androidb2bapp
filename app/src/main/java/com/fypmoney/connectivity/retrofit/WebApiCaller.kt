@@ -177,6 +177,25 @@ class WebApiCaller {
                                     request = params1
                                 )
                             }
+
+                            ApiConstant.API_GET_NOTIFICATION_LIST -> {
+
+                                val params = request.param as Int
+
+
+                                mObservable = apiInterface.getPaginationApiCalling(
+                                    endPoint = request.endpoint,
+                                    authorization = SharedPrefUtils.getString(
+                                        PockketApplication.instance,
+                                        SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                    ),
+                                    client_id = ApiConstant.CLIENT_ID,
+                                    page = params,
+                                    size = 3,
+                                    sort = null,
+                                    request = BaseRequest()
+                                )
+                            }
                             ApiConstant.API_TRANSACTION_HISTORY -> {
 
                                 val params1 = request.param as TransactionHistoryRequestwithPage

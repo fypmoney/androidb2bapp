@@ -16,7 +16,7 @@ import com.fypmoney.viewmodel.NotificationViewModel
 /**
  * This adapter class is used to handle notifications
  */
-class NotificationAdapter(var viewModel: NotificationViewModel,var onNotificationClickListener:OnNotificationClickListener) :
+class NotificationAdapter(var onNotificationClickListener: OnNotificationClickListener) :
     RecyclerView.Adapter<BaseViewHolder>() {
     var notificationList: ArrayList<NotificationModel.NotificationResponseDetails>? = ArrayList()
 
