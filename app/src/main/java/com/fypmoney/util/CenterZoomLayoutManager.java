@@ -34,10 +34,11 @@ public class CenterZoomLayoutManager extends LinearLayoutManager {
                 }
                 float d = Math.min(d1, Math.abs(midpoint - childMidpoint));
                 float scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0);
-                if (child != null) {
+                if (child != null && !Float.isNaN(scale)) {
+
                     child.setScaleX(scale);
                 }
-                if (child != null) {
+                if (child != null && !Float.isNaN(scale)) {
                     child.setScaleY(scale);
                 }
             }
