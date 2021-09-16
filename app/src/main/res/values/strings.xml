@@ -889,4 +889,6 @@ Coming really soon!
     <string name="your_missions">Your Missions</string>
     <string name="assigned_missions">Assigned Missions</string>
     <string name="your_wish_for_better_rewards_is_going_to_n_be_granted_soon_stay_tuned">Your wish for better rewards is going to\n be granted soon. Stay tuned!</string>
+    <string name="timeline">Timeline</string>
+    <string name="requests">Requests</string>
 </resources>

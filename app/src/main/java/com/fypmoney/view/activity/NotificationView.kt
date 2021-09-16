@@ -20,8 +20,10 @@ import com.fypmoney.view.fragment.*
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.NotificationViewModel
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_notification.*
 import kotlinx.android.synthetic.main.view_user_feeds.*
 
 /*
@@ -71,9 +73,24 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         mViewBinding.shimmerLayout.startShimmerAnimation()
         setObserver()
         SharedPrefUtils.putString(applicationContext, SharedPrefUtils.SF_KEY_NEW_MESSAGE, null)
-
+        initializeTabs(tabLayout)
     }
 
+    private fun initializeTabs(tabLayout: TabLayout) {
+
+
+        val adapter = ChoresActivity.ViewPagerAdapter(supportFragmentManager)
+
+        adapter.addFragment(NotiTimelineFragment(), getString(R.string.timeline))
+        adapter.addFragment(NotiRequestFragment(), getString(R.string.requests))
+
+
+        viewPager.adapter = adapter
+
+        tabLayout.setupWithViewPager(viewPager);
+
+
+    }
 
     /**
      * Create this method for observe the viewModel fields
