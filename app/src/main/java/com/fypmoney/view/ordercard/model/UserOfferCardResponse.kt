@@ -1,8 +1,17 @@
-package com.fypmoney.view.ordercard
+package com.fypmoney.view.ordercard.model
 import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+
+
+@Keep
+data class UserDeliveryAddress(
+    var pincode:String,
+    var houseAddress:String,
+    var areaDetail:String,
+    var landmark:String
+)
 
 
 @Keep
@@ -16,7 +25,7 @@ data class UserOfferCardResponse(
 @Parcelize
 data class UserOfferCard(
     @SerializedName("basePrice")
-    val basePrice: Int,
+    val basePrice: String,
     @SerializedName("cgst")
     val cgst: Int,
     @SerializedName("code")
@@ -30,13 +39,13 @@ data class UserOfferCard(
     @SerializedName("flexiblePrice")
     val flexiblePrice: String,
     @SerializedName("id")
-    val id: Int,
+    val id: String,
     @SerializedName("igst")
     val igst: Int,
     @SerializedName("listImage")
     val listImage: String,
     @SerializedName("mrp")
-    val mrp: Int,
+    val mrp: String,
     @SerializedName("name")
     val name: String,
     @SerializedName("productType")

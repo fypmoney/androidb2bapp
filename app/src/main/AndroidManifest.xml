@@ -19,7 +19,7 @@
         tools:replace="android:usesCleartextTraffic">
         <activity
             android:name=".view.ordercard.personaliseyourcard.PersonaliseYourCardActivity"
-            android:exported="true" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.cardorderoffer.CardOrderOfferActivity"
             android:screenOrientation="portrait" />
@@ -62,7 +62,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
-            android:name=".view.activity.PlaceOrderCardView"
+            android:name=".view.ordercard.placeorder.PlaceOrderCardView"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.OrderCardView"
@@ -138,6 +138,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.HomeView"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.UserProfileView"

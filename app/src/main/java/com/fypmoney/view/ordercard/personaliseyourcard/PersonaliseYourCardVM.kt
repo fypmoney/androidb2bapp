@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.ordercard.model.UserOfferCard
 
 class PersonaliseYourCardVM(application: Application):BaseViewModel(application) {
+    var userOfferCard: UserOfferCard? = null
 
     val event:LiveData<PersonaliseCardEvents>
         get() = _event

@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/color_mat_black"
         android:orientation="vertical"
         android:paddingStart="@dimen/screenMarginLeft"
-        android:paddingEnd="@dimen/screenMarginRight">
+        android:paddingEnd="@dimen/screenMarginRight"
+        android:paddingBottom="24dp">
 
         <View
             android:id="@+id/view"
@@ -16,6 +19,9 @@
             android:layout_height="4dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:background="@drawable/curved_background1" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -25,9 +31,13 @@
             android:layout_below="@+id/view"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:text="@string/bill_details"
+            android:text="@string/price_breakup"
             android:textAlignment="center"
-            android:textSize="20dp" />
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"/>
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -36,7 +46,9 @@
             android:layout_width="wrap_content"
             android:layout_below="@+id/bill_details"
             android:layout_marginTop="20dp"
-            android:text="@string/card_type"
+            android:text="@string/physical_card_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bill_details"
             android:textAlignment="center" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -46,102 +58,103 @@
             android:layout_below="@+id/bill_details"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="20dp"
-            android:text="@string/dummy_amount1"
+            tools:text="@string/dummy_amount1"
+            android:textColor="@color/white"
             android:textAlignment="center"
-            android:textSize="14dp" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bill_details"
+            android:textSize="14sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/discount_tv"
+            style="@style/TextviewRegular"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/bill_details"
+            android:layout_marginTop="10dp"
+            android:text="@string/discount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_type"
+            android:textAlignment="center" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/discount_amount_tv"
+            style="@style/TextviewBold"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/bill_details"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            tools:text="@string/dummy_amount1"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/amount"
+            android:textSize="14sp" />
+
 
         <View
             android:id="@+id/view1"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_below="@+id/amount"
-            android:layout_gravity="center"
+            android:layout_height="1dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:background="@color/dividerColor" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/discount_amount_tv"
+            android:background="@color/white"/>
 
-        <TableLayout
-            android:id="@+id/table"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/view1"
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/net_payble_tv"
+            style="@style/TextviewRegular"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/bill_details"
+            android:layout_marginTop="20dp"
+            android:text="@string/net_payble"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view1"
+            android:textAlignment="center" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/net_payble_amount_tv"
+            style="@style/TextviewBold"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/bill_details"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            tools:text="@string/dummy_amount1"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view1"
+            android:textSize="14sp" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tax_amount_tv"
+            style="@style/TextviewRegular"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/bill_details"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            tools:text="@string/inc_tax"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/net_payble_tv"
+            android:textAlignment="center" />
 
 
-            <TableRow android:padding="5dp"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
-                    android:textColor="@color/text_color_dark"
-                    android:text="@string/item_total" />
-
-                <TextView
-                    android:id="@+id/item_total"
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/dummy_amt_item_total" />
-
-
-            </TableRow>
-
-
-
-            <TableRow android:padding="5dp"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
-                    android:textColor="@color/text_color_dark"
-                    android:text="@string/tax" />
-
-                <TextView
-                    android:id="@+id/tax"
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/dummy_amt_tax" />
-
-            </TableRow>
-
-
-            <TableRow android:padding="5dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/discountRow">
-
-                <TextView
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
-                    android:textColor="@color/text_color_dark"
-                    android:text="@string/discount" />
-
-                <TextView
-                    android:id="@+id/discount"
-                    style="@style/TextviewRegular"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                   />
-
-            </TableRow>
-        </TableLayout>
-
-        <Button
-            android:id="@+id/gotBtn"
-
+        <com.fypmoney.view.customview.PrimaryButton
+            android:id="@+id/got_it_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/table"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="28dp"
-            android:layout_marginBottom="@dimen/button_margin"
-            android:text="@string/got_it_btn_text"
-            android:textAllCaps="false"
-            app:backgroundTint="@color/text_color_dark" />
+            android:textSize="18sp"
+            app:text="@string/got_it_btn_text"
+            app:enabled_bg="@color/color_task_card_green"
+            app:disabled_bg="@color/buttonUnselectedColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tax_amount_tv"
+            android:layout_marginTop="@dimen/dp20"
+            android:layout_marginBottom="@dimen/dp20"/>
 
-    </RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

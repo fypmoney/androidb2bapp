@@ -11,9 +11,10 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
 import com.fypmoney.util.AppConstants.PHYSICAL_CARD_CODE
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.ordercard.model.UserOfferCard
+import com.fypmoney.view.ordercard.model.UserOfferCardResponse
 import com.google.gson.Gson
 
 
@@ -26,7 +27,7 @@ class OrderCardViewModel(application: Application) : BaseViewModel(application) 
     val state:LiveData<OrderCardState>
         get() = _state
     private val _state = MutableLiveData<OrderCardState>()
-    var userOfferCard:UserOfferCard? = null
+    var userOfferCard: UserOfferCard? = null
     init {
         getCardOfferDetails()
     }

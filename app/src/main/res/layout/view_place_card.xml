@@ -5,13 +5,9 @@
 
     <data>
 
-        <import type="android.view.View" />
-
-        <import type="androidx.core.content.ContextCompat" />
-
         <variable
             name="viewModel"
-            type="com.fypmoney.viewmodel.PlaceOrderCardViewModel" />
+            type="com.fypmoney.view.ordercard.placeorder.PlaceOrderCardViewModel" />
 
     </data>
 
@@ -95,11 +91,10 @@
                             app:layout_constraintTop_toBottomOf="@+id/card_name_tv"/>
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/priceValue"
+                            android:id="@+id/card_price_value_tv"
                             style="@style/TextviewBold"
                             android:layout_toEndOf="@+id/price"
                             android:ellipsize="end"
-                            android:text="@{@string/Rs+viewModel.amount}"
                             android:textColor="@color/white"
                             android:textSize="14sp"
                             android:layout_marginStart="@dimen/dp5"
@@ -156,6 +151,10 @@
                         android:hint="@string/pin"
                         app:boxBackgroundColor="@color/color_black_1"
                         android:maxLength="6"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="6"
+                        app:errorTextColor="@color/text_color_red"
+                        app:errorEnabled="true"
                         app:hintTextColor="@color/text_color_light">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -166,7 +165,6 @@
                             android:imeOptions="actionDone"
                             android:singleLine="true"
                             android:textColor="@color/white"
-                            android:text="@={viewModel.pin}"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -190,6 +188,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="none"
+                            android:focusable="false"
+                            android:cursorVisible="false"
+                            android:focusableInTouchMode="false"
                             android:imeOptions="actionDone"
                             android:singleLine="true"
                             android:textColor="@color/white"
@@ -207,6 +208,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginTop="@dimen/dp10"
                         android:hint="@string/city_label"
+                        app:errorEnabled="true"
                         app:boxBackgroundColor="@color/color_black_1"
                         app:errorTextColor="@color/text_color_red"
                         app:hintTextColor="@color/text_color_light">
@@ -216,6 +218,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="none"
+                            android:focusable="false"
+                            android:cursorVisible="false"
+                            android:focusableInTouchMode="false"
                             android:imeOptions="actionDone"
                             android:singleLine="true"
                             android:textColor="@color/white"
@@ -236,6 +241,7 @@
                         app:boxBackgroundColor="@color/color_black_1"
                         app:boxBackgroundMode="filled"
                         app:errorTextColor="@color/text_color_red"
+                        app:errorEnabled="true"
                         app:hintTextColor="@color/text_color_light">
 
                         <com.google.android.material.textfield.TextInputEditText
@@ -257,10 +263,11 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/house_number_building_til"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginTop="@dimen/dp10"
+                        android:layout_marginTop="@dimen/dp5"
                         android:hint="@string/road_name_area_colony"
                         app:boxBackgroundColor="@color/color_black_1"
                         app:boxBackgroundMode="filled"
+                        app:errorEnabled="true"
                         app:errorTextColor="@color/text_color_red"
                         app:hintTextColor="@color/text_color_light">
 
@@ -283,7 +290,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/road_name_area_til"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginTop="@dimen/dp10"
+                        android:layout_marginTop="@dimen/dp5"
                         android:hint="@string/landmark_optional"
                         app:boxBackgroundColor="@color/color_black_1"
                         app:errorTextColor="@color/text_color_red"
@@ -304,21 +311,21 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <Button
+
+                <com.fypmoney.view.customview.PrimaryButton
                     android:id="@+id/btnContinue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    app:text="@string/place_order_btn_text"
+                    app:enabled="false"
+                    app:enabled_bg="@color/color_task_card_green"
+                    app:disabled_bg="@color/buttonUnselectedColor"
+                    android:onClick="@{()->viewModel.onPlaceOrderClicked()}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:backgroundTint="@color/color_task_card_green"
-                    android:onClick="@{()->viewModel.onPlaceOrderClicked()}"
-                    android:text="@string/place_order_btn_text"
-                    android:textAllCaps="false"
-                    app:backgroundTint="@color/text_color_dark" />
+                    android:layout_marginBottom="@dimen/dp10"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>

@@ -11,6 +11,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityCardOrderOfferBinding
 import com.fypmoney.util.AppConstants.ORDER_CARD_INFO
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.customview.scratchlayout.listener.ScratchListener
 import com.fypmoney.view.customview.scratchlayout.ui.ScratchCardLayout
@@ -44,7 +45,6 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
             this.discount  = 0
         }*/
         setUpView()
-        setupScratchCardView()
         setUpObserver()
     }
 
@@ -71,6 +71,14 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
                 mBinding.offerAmountTv.setTextColor(ContextCompat.getColor(this,R.color.text_color_light))
             }
         }
+        setupScratchCardView()
+        SharedPrefUtils.getBoolean(this,
+            SharedPrefUtils.SF_KEY_IS_ORDER_SCARTCH_CODE_DONE
+        )?.let {
+            if(it){
+                mBinding.scratchCardLayout.revealScratch()
+            }
+        }
 
     }
 
@@ -83,7 +91,12 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
     private fun handelEvents(it: CardOrderOfferVM.CardOfferEvent?) {
         when(it){
             CardOrderOfferVM.CardOfferEvent.Continue -> {
+                SharedPrefUtils.putBoolean(this,
+                    SharedPrefUtils.SF_KEY_IS_ORDER_SCARTCH_CODE_DONE,
+                    true
+                )
                 val intent = Intent(this@CardOrderOfferActivity,PersonaliseYourCardActivity::class.java)
+                intent.putExtra(ORDER_CARD_INFO,mViewModel.userOfferCard)
                 startActivity(intent)
             }
 

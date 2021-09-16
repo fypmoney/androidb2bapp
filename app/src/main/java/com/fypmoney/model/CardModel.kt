@@ -198,22 +198,22 @@ data class CardInfoDetails(
 
 @Keep
 data class OrderCardRequest(
-    @SerializedName("nameOnCard") val nameOnCard: String? = null,
-    @SerializedName("quote") val quote: String? = null,
-    @SerializedName("paymentMode") val paymentMode: String? = null,
-    @SerializedName("pincode") val pincode: String? = null,
-    @SerializedName("houseAddress") val houseAddress: String? = null,
-    @SerializedName("areaDetail") val areaDetail: String? = null,
-    @SerializedName("landmark") val landmark: String? = null,
-    @SerializedName("amount") val amount: String? = null,
-    @SerializedName("productId") val productId: String? = null,
-    @SerializedName("city") val city: String? = null,
-    @SerializedName("state") val state: String? = null,
-    @SerializedName("stateCode") val stateCode: String? = null,
-    @SerializedName("taxMasterCode") val taxMasterCode: String? = null,
-    @SerializedName("productMasterCode") val productMasterCode: String? = null,
-    @SerializedName("totalTax") val totalTax: String? = null,
-    @SerializedName("discount") val discount: String? = null,
+    @SerializedName("nameOnCard") var nameOnCard: String? = null,
+    @SerializedName("quote") var quote: String? = null,
+    @SerializedName("paymentMode") var paymentMode: String? = null,
+    @SerializedName("pincode") var pincode: String? = null,
+    @SerializedName("houseAddress") var houseAddress: String? = null,
+    @SerializedName("areaDetail") var areaDetail: String? = null,
+    @SerializedName("landmark") var landmark: String? = null,
+    @SerializedName("amount") var amount: String? = null,
+    @SerializedName("productId") var productId: String? = null,
+    @SerializedName("city") var city: String? = null,
+    @SerializedName("state") var state: String? = null,
+    @SerializedName("stateCode") var stateCode: String? = null,
+    @SerializedName("taxMasterCode") var taxMasterCode: String? = null,
+    @SerializedName("productMasterCode") var productMasterCode: String? = null,
+    @SerializedName("totalTax") var totalTax: String? = null,
+    @SerializedName("discount") var discount: String? = null,
 
 ) : BaseRequest()
 @Keep

@@ -878,6 +878,10 @@ Coming really soon!
     <string name="landmark_optional">Landmark (Optional)</string>
     <string name="opps"><b>Oops!</b></string>
     <string name="better_luck_next_time">Better luck next time!</string>
+    <string name="price_breakup">Price Breakup</string>
+    <string name="net_payble">Net Payable</string>
+    <string name="inc_tax">(Inc. Taxes: \u20B9 %1$s)</string>
+    <string name="unfortunately_we_are_not_serviceable_in_your_neighborhood_but_we_are_moving_super_fast_to_bring_the_awesome_fyp_card_to_your_pockets">Unfortunately we are not serviceable in your neighborhood but we are moving super fast to bring the awesome Fyp card to your pockets.</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>

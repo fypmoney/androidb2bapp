@@ -25,7 +25,8 @@ class TaskMessageInsuficientFuntBottomSheet(
     var onClickListener: AcceptRejectClickListener,
     var title:String? = null,
     var subTitle:String? = null,
-    var amount:String? = null
+    var amount:String? = null,
+    var background:String? = null
     ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: BottomSheetInsuficientFundBinding
@@ -50,6 +51,9 @@ class TaskMessageInsuficientFuntBottomSheet(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        background?.let {
+            binding.llMain.setBackgroundColor(Color.parseColor(it))
+        }
             title?.let {
                 binding.cardTitle.text = title
             }

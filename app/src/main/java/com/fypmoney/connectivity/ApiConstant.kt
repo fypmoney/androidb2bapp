@@ -100,6 +100,7 @@ object ApiConstant {
   const val API_USER_DEVICE_INFO = "/services/authservice/api/users/device-info"
   const val API_SETTINGS = "/services/PockketService/api/get/system-properties/by-keys"
   const val API_USER_OFFER_CARD = "/services/loyaltyservice/api/user-offer/card"
+  const val API_PIN_CODE = "/services/loyaltyservice/api/service-available/check/"
 
 }
 
