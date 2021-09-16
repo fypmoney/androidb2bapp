@@ -11,6 +11,8 @@ import com.fypmoney.databinding.FeedsRowLayoutBinding
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewhelper.FeedsViewHelper
+import com.fypmoney.viewmodel.FeedsViewModel
+import com.fypmoney.viewmodel.HomeScreenViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
@@ -19,6 +21,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
  * This adapter class is used to handle feeds
  */
 class FeedsSectionAdapter(
+    var viewModel: HomeScreenViewModel,
     var onFeedItemClickListener: FeedsAdapter.OnFeedItemClickListener
 ) :
     RecyclerView.Adapter<BaseViewHolder>() {
@@ -54,7 +57,7 @@ class FeedsSectionAdapter(
      * This will set the data in the list in adapter
      */
     fun setList(feedList1: List<FeedDetails>?) {
-        feedList?.clear()
+
         feedList1?.forEach {
             feedList!!.add(it)
         }
@@ -88,9 +91,24 @@ class FeedsSectionAdapter(
         override fun onBind(position: Int) {
             mViewHelper = FeedsViewHelper(
                 position,
-                feedList?.get(position), onFeedItemClickListener,1
+                feedList?.get(position), onFeedItemClickListener, 1
             )
             mRowItemBinding!!.viewHelper = mViewHelper
+
+
+            try {
+                if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
+                    viewModel.isApiLoading.set(true)
+                    viewModel.page.set(viewModel.page.get()!! + 1)
+                    viewModel.callFetchFeedsApi(
+                        latitude = viewModel.latitude.get(),
+                        longitude = viewModel.longitude.get()
+                    )
+
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
             mRowItemBinding.executePendingBindings()
 
         }

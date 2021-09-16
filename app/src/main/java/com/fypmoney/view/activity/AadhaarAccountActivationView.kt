@@ -1,5 +1,6 @@
 package com.fypmoney.view.activity
 
+import android.Manifest
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -19,6 +20,7 @@ import com.fypmoney.databinding.ViewAadhaarAccountActivationBinding
 import com.fypmoney.databinding.ViewAadhaarVerificationBinding
 import com.fypmoney.databinding.ViewCommunityBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.LogoutBottomSheet
 import com.fypmoney.viewmodel.AadhaarAccountActivationViewModel
 import kotlinx.android.synthetic.main.toolbar.*
@@ -89,7 +91,32 @@ class AadhaarAccountActivationView :
             if (it.showMobileOtpVerificationScreen == AppConstants.YES)
                 intentToActivity(it.token)
             else {
-                intentToHomeActivity(HomeView::class.java)
+                if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "1") {
+
+                    if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+                        intentToActivity(HomeView::class.java)
+                    } else {
+                        intentToActivity(PermissionsActivity::class.java)
+                    }
+                } else if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "0") {
+                    intentToActivity(ReferralCodeView::class.java, true)
+//                    when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
+//                        AppConstants.YES -> {
+//
+//                        }
+//                        else -> {
+//                            if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+//                                intentToActivity(HomeView::class.java)
+//                            } else {
+//                                intentToActivity(PermissionsActivity::class.java)
+//                            }
+//
+//                        }
+//                    }
+                } else if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "90") {
+                    intentToActivity(AgeAllowedActivationView::class.java, true)
+                }
+
             }
         }
         mViewModel.onLogoutSuccess.observe(this) {

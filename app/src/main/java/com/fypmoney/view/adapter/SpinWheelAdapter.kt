@@ -63,11 +63,7 @@ class SpinWheelAdapter(
 
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-
         var card = view
         var banner = view.banner
-
-
     }
 }

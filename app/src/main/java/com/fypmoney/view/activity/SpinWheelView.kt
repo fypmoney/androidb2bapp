@@ -81,7 +81,7 @@ class SpinWheelView : BaseActivity<ViewSpinWheelBinding, SpinWheelViewModel>(),
             context = this@SpinWheelView,
             toolbar = toolbar,
             isBackArrowVisible = true,
-            toolbarTitle="Big Fyp Rewards"
+            toolbarTitle = "Big Fyp Rewards"
         )
 
 //        Glide.with(applicationContext).load(R.raw.coin).into(coin)

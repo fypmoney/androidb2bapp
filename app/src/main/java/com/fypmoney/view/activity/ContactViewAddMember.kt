@@ -71,7 +71,13 @@ class ContactViewAddMember : BaseActivity<ViewContactsBinding, ContactViewModel>
 
         mViewModel.onIsAppUserClicked.observe(this) {
             if (it) {
-             callInviteBottomSheet()
+                if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
+                    inviteUser()
+                } else {
+                    callInviteBottomSheet()
+
+                }
+
                 mViewModel.onIsAppUserClicked.value = false
             }
         }

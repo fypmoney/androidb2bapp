@@ -10,6 +10,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewInviteRejectedBinding
 import com.fypmoney.databinding.ViewStayTunedBinding
+import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.InviteBottomSheet
 import com.fypmoney.viewmodel.InviteMemberViewModel
 import com.fypmoney.viewmodel.InviteRejectedViewModel
@@ -53,7 +54,14 @@ class InviteRejectedView : BaseActivity<ViewInviteRejectedBinding, InviteRejecte
         mViewModel.onRequestAgainClicked.observe(this)
         {
             if (it) {
-                callInviteBottomSheet()
+                if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
+                    callInviteBottomSheet()
+                } else {
+                    inviteUser()
+
+
+                }
+
                 mViewModel.onRequestAgainClicked.value = false
             }
 

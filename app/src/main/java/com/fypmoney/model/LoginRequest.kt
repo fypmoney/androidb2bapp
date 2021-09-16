@@ -58,6 +58,9 @@ data class UserDeviceInfo(
     @SerializedName("lat") val latitude: String? = null,
     @SerializedName("long") val longitude: String? = null,
     @SerializedName("userId") val userId: Long? = null,
+    @SerializedName("isHomeViewed") val isHomeViewed: String? = "YES"
+
+
 ) : Serializable
 @Keep
 data class ReferralCodeResponse(

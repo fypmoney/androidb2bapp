@@ -86,7 +86,13 @@ class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewMode
 
         mViewModel.onInviteClicked.observe(this) {
             if (it) {
-                callInviteBottomSheet()
+                if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
+
+                    inviteUser()
+                } else {
+                    callInviteBottomSheet()
+                }
+
                 mViewModel.onIsAppUserClicked.value = false
             }
         }
@@ -229,7 +235,13 @@ class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewMode
     }
 
     override fun onInviteButtonClick() {
-        callInviteBottomSheet()
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
+
+            inviteUser()
+        } else {
+            callInviteBottomSheet()
+        }
+
     }
 
     override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {

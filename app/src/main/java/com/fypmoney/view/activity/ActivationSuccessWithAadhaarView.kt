@@ -10,6 +10,8 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewActivationSuccessWithAadhaarBinding
+import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.ActivationSuccessWithAadhaarViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -51,11 +53,31 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
         mViewModel.onContinueClicked.observe(this)
         {
             if (it) {
-                if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                    intentToActivity(HomeView::class.java)
-                } else {
-                    intentToActivity(PermissionsActivity::class.java)
+                if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "1") {
+
+                    if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+                        intentToActivity(HomeView::class.java)
+                    } else {
+                        intentToActivity(PermissionsActivity::class.java)
+                    }
+                } else if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "0") {
+                    when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
+                        AppConstants.YES -> {
+                            intentToActivity(ReferralCodeView::class.java)
+                        }
+                        else -> {
+                            if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+                                intentToActivity(HomeView::class.java)
+                            } else {
+                                intentToActivity(PermissionsActivity::class.java)
+                            }
+
+                        }
+                    }
+                } else if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "90") {
+                    intentToActivity(AgeAllowedActivationView::class.java)
                 }
+
 
                 mViewModel.onContinueClicked.value = false
             }
