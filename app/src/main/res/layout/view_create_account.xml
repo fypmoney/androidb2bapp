@@ -135,7 +135,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/etDateOfBirth"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="28dp"
                     android:gravity="center"
                     android:text="@string/are_you_a_teenager_or_a_parent_select_from_below" />
 
@@ -144,7 +144,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/isteenager"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="18dp"
+
                     android:gravity="center"
                     android:weightSum="2">
 
@@ -152,8 +153,9 @@
                         android:id="@+id/lin_teenager"
                         android:layout_width="wrap_content"
 
+
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_8sdp"
+                        android:layout_marginEnd="@dimen/_14sdp"
                         android:layout_weight="1"
                         android:background="@drawable/round_rectangle_50_grey_light">
 
@@ -175,7 +177,7 @@
 
                                 android:text="Teenager"
                                 android:textColor="@color/black"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
                                 android:textStyle="bold" />
 
                             <TextView
@@ -198,9 +200,9 @@
                             android:layout_width="wrap_content"
 
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_1sdp"
+                            android:layout_marginTop="@dimen/_3sdp"
 
-                            android:layout_marginBottom="@dimen/_1sdp"
+                            android:layout_marginBottom="@dimen/_3sdp"
                             android:buttonTint="@drawable/radio_selector" />
 
                     </LinearLayout>
@@ -209,7 +211,7 @@
                         android:id="@+id/lin_parent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_14sdp"
 
 
                         android:layout_weight="1"
@@ -233,7 +235,7 @@
                                 android:gravity="center"
                                 android:text="Parent"
                                 android:textColor="@color/black"
-                                android:textSize="12sp"
+                                android:textSize="14sp"
 
 
                                 android:textStyle="bold" />
@@ -256,8 +258,9 @@
                             android:id="@+id/rad_parent"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_1sdp"
-                            android:layout_marginBottom="@dimen/dp1"
+                            android:layout_marginTop="@dimen/_3sdp"
+
+                            android:layout_marginBottom="@dimen/_3sdp"
                             android:buttonTint="@drawable/radio_selector" />
                     </LinearLayout>
 
