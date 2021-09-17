@@ -87,7 +87,23 @@ class WebApiCaller {
                             client_id = ApiConstant.CLIENT_ID
                         )
                     }
+                    ApiConstant.API_USER_TIMELINE -> {
 
+                        val params = request.param as Int
+
+
+                        mObservable = apiInterface.getPaginationApiCalling2(
+                            endPoint = request.endpoint,
+                            authorization = SharedPrefUtils.getString(
+                                PockketApplication.instance,
+                                SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                            ),
+                            client_id = ApiConstant.CLIENT_ID,
+                            page = params,
+                            size = 6,
+                            sort = null
+                        )
+                    }
                     ApiConstant.CHECK_APP_UPDATE -> {
                         mObservable = apiInterface.checkAppUpdate(
                             endPoint = request.endpoint
@@ -122,6 +138,8 @@ class WebApiCaller {
 
                     else -> {
                         when (request.purpose) {
+
+
                             ApiConstant.API_HISTORY_TASK -> {
 
                                 val params = request.param as GetTaskResponse
@@ -177,6 +195,27 @@ class WebApiCaller {
                                     request = params1
                                 )
                             }
+
+                            ApiConstant.API_GET_NOTIFICATION_LIST -> {
+
+                                val params = request.param as Int
+
+
+                                mObservable = apiInterface.getPaginationApiCalling(
+                                    endPoint = request.endpoint,
+                                    authorization = SharedPrefUtils.getString(
+                                        PockketApplication.instance,
+                                        SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                    ),
+                                    client_id = ApiConstant.CLIENT_ID,
+                                    page = params,
+                                    size = 6,
+                                    sort = null,
+                                    request = BaseRequest()
+                                )
+                            }
+
+
                             ApiConstant.API_TRANSACTION_HISTORY -> {
 
                                 val params1 = request.param as TransactionHistoryRequestwithPage

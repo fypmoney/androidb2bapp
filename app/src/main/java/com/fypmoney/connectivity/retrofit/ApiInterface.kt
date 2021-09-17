@@ -105,19 +105,6 @@ interface ApiInterface {
         @Body request: Any
     ): Observable<ResponseBody>
 
-    @Headers("Accept: application/json")
-    @POST
-    fun getPaginationApiCalling2(
-        @Url endPoint: String,
-        @Header("client_id") client_id: String?,
-        @Header("Authorization") authorization: String?,
-        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
-        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
-
-        @Query("size") size: Int,
-
-        @Body request: Any
-    ): Observable<ResponseBody>
 
     @Headers("Accept: application/json")
     @POST
@@ -205,6 +192,21 @@ interface ApiInterface {
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Header("Content-Type") content_type: String = "application/json",
         @Url endPoint: String
+    ): Observable<ResponseBody>
+
+    @Headers("Accept: application/json")
+    @GET
+    fun getPaginationApiCalling2(
+        @Url endPoint: String,
+        @Header("client_id") client_id: String?,
+        @Header("Authorization") authorization: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
+        @Query("page") page: Int? = null,
+
+        @Query("sort") sort: String? = null,
+        @Query("size") size: Int,
+        @Header("Content-Type") content_type: String = "application/json"
     ): Observable<ResponseBody>
 
     @Headers("Accept: application/json")

@@ -30,7 +30,7 @@ object ApiConstant {
     const val API_UPDATE_APPROVAL_REQUEST = "/services/PockketService/internal/approval-request"
     const val API_VERIFY_REFERRAL_CODE = "/services/authservice/api/customer/refer/"
     const val API_USER_TIMELINE =
-        "/services/PockketService/api/user-timeline?page=0&size=80&sort=createdDate,desc"
+        "/services/PockketService/api/user-timeline?sort=createdDate,desc"
     const val API_GET_TASKMASTER = "/services/loyaltyservice/api/taskMaster"
     const val API_ASSIGN_TASK =
         "/services/loyaltyservice/api/task/assign/search/V1?sort=createdDate,desc"
