@@ -76,7 +76,7 @@ class NotificationAdapter(var onNotificationClickListener: OnNotificationClickLi
             if (notificationList1 == null) {
                 notificationList!!.clear()
             } else {
-                notificationList!!.clear()
+
                 notificationList1?.forEach {
                     notificationList!!.add(it)
                 }

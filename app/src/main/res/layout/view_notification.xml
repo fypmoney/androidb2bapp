@@ -16,32 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="@dimen/_210sdp"
-        android:layout_height="@dimen/_160sdp"
-        android:elevation="@dimen/_2sdp"
-        android:id="@+id/illustration"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:visibility="@{viewModel.isTimeLineNoDataVisible?View.VISIBLE:View.GONE,default=gone}"
-        app:srcCompat="@drawable/ic_no_notifications" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        style="@style/TextviewRegular"
-        android:layout_gravity="center"
-        android:textSize="@dimen/_14sdp"
-        android:layout_marginStart="@dimen/_28sdp"
-        android:layout_marginEnd="@dimen/_28sdp"
-        android:gravity="center"
-        android:visibility="@{viewModel.isTimeLineNoDataVisible?View.VISIBLE:View.GONE,default=gone}"
-        android:layout_marginTop="@dimen/_24sdp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/illustration"
-        android:elevation="@dimen/_2sdp"
-        android:text="@string/user_timeline_api_error"
-        android:textColor="@color/text_color_light" />
-
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
         android:layout_width="match_parent"
@@ -68,18 +42,13 @@
                     android:id="@+id/toolbar_layout"
                     layout="@layout/toolbar" />
 
-                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                    android:id="@+id/swipetorefresh"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/toolbar_layout"
-                    app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
                     <androidx.core.widget.NestedScrollView
                         android:id="@+id/nestedScrollView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clipToPadding="false"
+                        android:layout_below="@+id/toolbar_layout"
                         android:fillViewport="true"
                         android:orientation="vertical">
 
@@ -89,28 +58,54 @@
                             android:layout_height="match_parent"
                             tools:context=".MainActivity">
 
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:id="@+id/shimmerLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_below="@+id/tabLayout"
+                                android:layout_marginTop="@dimen/_16sdp"
+                                android:visibility="@{viewModel.showShimmerEffect?View.VISIBLE:View.GONE,default=gone}">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <include layout="@layout/shimmer_notification_item" />
+
+                                    <include layout="@layout/shimmer_notification_item" />
+
+                                    <include layout="@layout/shimmer_notification_item" />
+
+                                    <include layout="@layout/shimmer_notification_item" />
+
+                                    <include layout="@layout/shimmer_notification_item" />
+
+                                    <include layout="@layout/shimmer_notification_item" />
+                                </LinearLayout>
+                            </com.facebook.shimmer.ShimmerFrameLayout>
 
                             <com.google.android.material.tabs.TabLayout
                                 android:id="@+id/tabLayout"
+
+                                style="@style/RoundedTabLayoutStyle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@android:color/transparent"
-                                app:tabTextAppearance="@style/MyCustomTextAppearance"
-                                app:tabTextColor="@color/black" />
 
-                            <View
-                                android:id="@+id/devider"
-                                android:layout_width="match_parent"
-                                android:layout_height=".5dp"
-                                android:layout_below="@+id/tabLayout"
-                                android:background="@color/dividerColor" />
+                                android:layout_marginStart="@dimen/_8sdp"
+                                android:layout_marginEnd="@dimen/_8sdp"
+                                app:tabIconTint="@drawable/tab_icon_color"
+                                app:tabInlineLabel="true"
+                                app:tabTextAppearance="@style/MyCustomTextAppearance" />
+
 
                             <androidx.viewpager.widget.ViewPager
                                 android:id="@+id/viewPager"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_below="@id/devider"
+                                android:layout_below="@id/tabLayout"
                                 android:layout_centerInParent="true"
+                                android:layout_marginTop="@dimen/_8sdp"
                                 tools:layout_editor_absoluteX="8dp" />
 
                         </RelativeLayout>
@@ -118,7 +113,6 @@
                     </androidx.core.widget.NestedScrollView>
 
 
-                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
                 <LinearLayout
                     android:id="@+id/layout"
@@ -145,44 +139,7 @@
                     android:visibility="gone" />
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/view1"
-                    android:orientation="vertical"
-                    >
 
-
-
-                </LinearLayout>
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/shimmerLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/toolbar_layout"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:visibility="@{viewModel.showShimmerEffect?View.VISIBLE:View.GONE,default=gone}"
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <include layout="@layout/shimmer_notification_item" />
-
-                        <include layout="@layout/shimmer_notification_item" />
-
-                        <include layout="@layout/shimmer_notification_item" />
-
-                        <include layout="@layout/shimmer_notification_item" />
-
-                        <include layout="@layout/shimmer_notification_item" />
-
-                        <include layout="@layout/shimmer_notification_item" />
-                    </LinearLayout>
-                </com.facebook.shimmer.ShimmerFrameLayout>
 
             </RelativeLayout>
 

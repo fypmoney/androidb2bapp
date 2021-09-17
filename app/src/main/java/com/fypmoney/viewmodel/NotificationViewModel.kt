@@ -16,6 +16,8 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.NotificationAdapter
 import com.fypmoney.view.adapter.UserTimeLineAdapter
+import com.fypmoney.view.fragment.NotiRequestFragment
+import com.fypmoney.view.fragment.NotiTimelineFragment
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -25,8 +27,7 @@ import com.google.gson.JsonParser
 * */
 class NotificationViewModel(application: Application) : BaseViewModel(application),
     NotificationAdapter.OnNotificationClickListener {
-    var notificationAdapter = NotificationAdapter(this)
-    var userTimeLineAdapter = UserTimeLineAdapter()
+
     var noDataFoundVisibility = ObservableField(false)
     var isPreviousVisible = ObservableField(false)
     var notificationstatus = ObservableField(-1)
@@ -40,6 +41,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
     val isLoading = ObservableBoolean()
     val showShimmerEffect = MutableLiveData<Boolean>()
     var sendMoneyApiResponse = MutableLiveData<SendMoneyResponseDetails>()
+    var removedItem = MutableLiveData<NotificationModel.NotificationResponseDetails>()
     var amountToBeAdded: String? = ""
 
     var timelineList: MutableLiveData<ArrayList<NotificationModel.UserTimelineResponseDetails>> =
@@ -51,7 +53,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
 
     init {
         callGetFamilyNotificationApi(0)
-        callUserTimeLineApi()
+        callUserTimeLineApi(0)
     }
 
     var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
@@ -62,15 +64,17 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
       *  */
     fun onRefresh() {
         isLoading.set(true)
+        NotiTimelineFragment.page = 0
+        NotiRequestFragment.page = 0
         callGetFamilyNotificationApi(0)
-        callUserTimeLineApi()
+        callUserTimeLineApi(0)
     }
     /*
       * This method is used to call get family notification API
       * */
 
     fun callGetFamilyNotificationApi(page: Int) {
-        if (!isLoading.get()) {
+        if (!isLoading.get() && page == 0) {
             showShimmerEffect.value = true
         }
         WebApiCaller.getInstance().request(
@@ -106,8 +110,8 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
       * This method is used to call user timeline API
       * */
 
-    fun callUserTimeLineApi() {
-        if (!isLoading.get()) {
+    fun callUserTimeLineApi(page: Int) {
+        if (!isLoading.get() && page == 0) {
             showShimmerEffect.value = true
         }
         WebApiCaller.getInstance().request(
@@ -115,7 +119,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                 purpose = ApiConstant.API_USER_TIMELINE,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_USER_TIMELINE),
                 request_type = ApiUrl.GET,
-                param = BaseRequest(), onResponse = this,
+                param = page, onResponse = this,
                 isProgressBar = false
             )
         )
@@ -130,66 +134,36 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
             ApiConstant.API_GET_NOTIFICATION_LIST -> {
                 if (responseData is NotificationModel.NotificationResponse) {
 
-                    if (responseData.notificationResponseDetails.isNullOrEmpty()) {
-                        isGetNotificationsRecyclerVisible.set(false)
-                        if (timelinestatus.get()!! == 0) {
-                            isTimeLineNoDataVisible.set(true)
-                        } else if (notificationstatus.get()!! == 1 || timelinestatus.get()!! == 1) {
-                            isTimeLineNoDataVisible.set(false)
-                        }
-                        notificationAdapter.setList(null)
-                        notificationstatus.set(0)
-                    } else {
-                        notificationstatus.set(1)
-                        isGetNotificationsRecyclerVisible.set(true)
-                        var notificationList: ArrayList<NotificationModel.NotificationResponseDetails>? =
-                            ArrayList()
-                        responseData.notificationResponseDetails?.forEach {
-                            notificationList!!.add(it)
-                        }
-                        RequestNotificationList.postValue(notificationList)
-                        notificationAdapter.setList(responseData.notificationResponseDetails)
+
+                    var notificationList: ArrayList<NotificationModel.NotificationResponseDetails>? =
+                        ArrayList()
+                    responseData.notificationResponseDetails?.forEach {
+                        notificationList!!.add(it)
                     }
+                    RequestNotificationList.postValue(notificationList)
+
                 }
             }
             ApiConstant.API_USER_TIMELINE -> {
 
                 if (responseData is NotificationModel.UserTimelineResponse) {
                     isPreviousVisible.set(true)
-                    if (responseData.notificationResponseDetails.isNullOrEmpty()) {
-
-                        if (notificationstatus.get()!! == 0) {
-                            isTimeLineNoDataVisible.set(true)
-                        } else if (notificationstatus.get()!! == 1 || timelinestatus.get()!! == 1) {
-                            isTimeLineNoDataVisible.set(false)
-                        }
-                        timelinestatus.set(0)
-                        userTimeLineAdapter.setList(null)
-                    } else {
-                        timelinestatus.set(1)
-                        var notificationList: ArrayList<NotificationModel.UserTimelineResponseDetails>? =
-                            ArrayList()
-                        responseData.notificationResponseDetails?.forEach {
-                            notificationList!!.add(it)
-                        }
-                        timelineList.postValue(notificationList)
-                        userTimeLineAdapter.setList(responseData.notificationResponseDetails)
+                    var notificationList: ArrayList<NotificationModel.UserTimelineResponseDetails>? =
+                        ArrayList()
+                    responseData.notificationResponseDetails?.forEach {
+                        notificationList!!.add(it)
                     }
+                    timelineList.postValue(notificationList)
                 }
             }
             ApiConstant.API_UPDATE_APPROVAL_REQUEST -> {
                 if (responseData is UpdateFamilyApprovalResponse) {
                     Utility.showToast(responseData.msg)
                     responseData.notificationResponseDetails.let {
-                        onRefresh()
-                        notificationAdapter.updateList(
-                            notification = responseData.notificationResponseDetails,
-                            position = positionSelected.get()!!
-                        )
-                        if (notificationAdapter.itemCount == 0 && userTimeLineAdapter.itemCount == 0) {
 
-                            isTimeLineNoDataVisible.set(true)
-                        }
+                        removedItem.postValue(responseData.notificationResponseDetails)
+
+
                     }
 
 

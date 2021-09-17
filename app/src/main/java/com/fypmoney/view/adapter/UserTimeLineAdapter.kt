@@ -62,7 +62,7 @@ class UserTimeLineAdapter() :
             if (notificationList1 == null) {
                 notificationList!!.clear()
             } else {
-                notificationList!!.clear()
+
                 notificationList1?.forEach {
                     notificationList!!.add(it)
                 }

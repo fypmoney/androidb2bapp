@@ -6,26 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.R
 import com.fypmoney.base.PaginationListener
-import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.model.NotificationModel
-import com.fypmoney.view.activity.ChoresActivity
 import com.fypmoney.view.adapter.NotificationAdapter
 import com.fypmoney.view.adapter.UserTimeLineAdapter
 
-import com.fypmoney.view.adapter.YourTasksAdapter
-import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.viewmodel.NotificationViewModel
-import kotlinx.android.synthetic.main.fragment_noti_request.view.*
 import kotlinx.android.synthetic.main.fragment_noti_timeline.view.*
-
-import kotlinx.android.synthetic.main.fragment_your_task.view.*
-import kotlinx.android.synthetic.main.fragment_your_task.view.LoadProgressBar
-import kotlinx.android.synthetic.main.fragment_your_task.view.empty_screen
 
 
 import kotlin.collections.ArrayList
@@ -38,8 +28,7 @@ class NotiTimelineFragment : Fragment(), NotificationAdapter.OnNotificationClick
     }
 
     private var sharedViewModel: NotificationViewModel? = null
-    private var itemsArrayList: ArrayList<NotificationModel.UserTimelineResponseDetails> =
-        ArrayList()
+
     private var isLoading = false
     private var typeAdapter: UserTimeLineAdapter? = null
     private var root: View? = null
@@ -52,7 +41,7 @@ class NotiTimelineFragment : Fragment(), NotificationAdapter.OnNotificationClick
         root = inflater.inflate(R.layout.fragment_noti_timeline, container, false)
         setRecyclerView(root!!)
         activity?.let {
-            sharedViewModel = ViewModelProviders.of(it).get(NotificationViewModel::class.java)
+            sharedViewModel = ViewModelProvider(it).get(NotificationViewModel::class.java)
             observeInput(sharedViewModel!!)
 
         }
@@ -71,14 +60,14 @@ class NotiTimelineFragment : Fragment(), NotificationAdapter.OnNotificationClick
                 root?.LoadProgressBar?.visibility = View.GONE
 
                 if (page == 0) {
-                    itemsArrayList.clear()
+                    typeAdapter?.setList(null)
                 }
-                itemsArrayList.addAll(list)
+
                 typeAdapter?.setList(list)
                 isLoading = false
                 typeAdapter!!.notifyDataSetChanged()
 
-                if (itemsArrayList.size > 0) {
+                if (list.size > 0) {
                     root?.empty_screen?.visibility = View.GONE
 
                 } else {
@@ -116,9 +105,9 @@ class NotiTimelineFragment : Fragment(), NotificationAdapter.OnNotificationClick
     }
 
     private fun loadMore(root: View) {
-//        sharedViewModel.callLoadMoreTask(page)
+        sharedViewModel?.callUserTimeLineApi(page)
 //        //LoadProgressBar?.visibility = View.VISIBLE
-//        root.LoadProgressBar?.visibility = View.VISIBLE
+        root.LoadProgressBar?.visibility = View.VISIBLE
         Log.d("chorespage", page.toString())
         isLoading = true
 

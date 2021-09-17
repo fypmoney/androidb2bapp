@@ -30,8 +30,7 @@ class NotiRequestFragment : Fragment() {
     }
 
     private var sharedViewModel: NotificationViewModel? = null
-    private var itemsArrayList: ArrayList<NotificationModel.NotificationResponseDetails> =
-        ArrayList()
+
     private var isLoading = false
     private var typeAdapter: NotificationAdapter? = null
     private var root: View? = null
@@ -56,6 +55,22 @@ class NotiRequestFragment : Fragment() {
     }
 
     private fun observeInput(sharedViewModel: NotificationViewModel) {
+        sharedViewModel.removedItem.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { list ->
+
+                if (list != null) {
+                    sharedViewModel.onRefresh()
+                    typeAdapter?.updateList(
+                        notification = list,
+                        position = sharedViewModel.positionSelected.get()!!
+                    )
+                    sharedViewModel.removedItem.postValue(null)
+                }
+
+            })
+
+
         sharedViewModel.RequestNotificationList.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
@@ -64,12 +79,12 @@ class NotiRequestFragment : Fragment() {
                 if (page == 0) {
                     typeAdapter?.setList(null)
                 }
-                itemsArrayList.addAll(list)
+
                 isLoading = false
                 typeAdapter?.setList(list)
                 typeAdapter!!.notifyDataSetChanged()
 
-                if (itemsArrayList.size > 0) {
+                if (list.size > 0) {
                     root?.empty_screen?.visibility = View.GONE
 
                 } else {
@@ -121,7 +136,7 @@ class NotiRequestFragment : Fragment() {
     private fun loadMore(root: View) {
         sharedViewModel?.callGetFamilyNotificationApi(page)
 //        //LoadProgressBar?.visibility = View.VISIBLE
-//        root.LoadProgressBar?.visibility = View.VISIBLE
+        root.LoadProgressBar?.visibility = View.VISIBLE
         Log.d("chorespage", page.toString())
         isLoading = true
 
