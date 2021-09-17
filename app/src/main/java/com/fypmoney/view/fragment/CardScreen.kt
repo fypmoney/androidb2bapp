@@ -24,12 +24,16 @@ import com.fypmoney.databinding.ScreenCardBinding
 import com.fypmoney.model.UpDateCardSettingsRequest
 import com.fypmoney.model.UpdateCardLimitRequest
 import com.fypmoney.util.*
+import com.fypmoney.util.AppConstants.CARD_TYPE_PHYSICAL
+import com.fypmoney.util.AppConstants.NO
+import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.view.ordercard.OrderCardView
 import com.fypmoney.viewmodel.CardScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.android.synthetic.main.card_add_task.*
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.screen_card.notify_btn
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
@@ -54,10 +58,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     lateinit var myProfileAdapter: MyProfileListAdapter
     override fun getBindingVariable(): Int {
         return BR.viewModel
-    }
-
-    public fun CardScreen() {
-
     }
 
     override fun getLayoutId(): Int {
@@ -108,14 +108,11 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         textString.add(PockketApplication.instance.getString(R.string.card_settings))
         textString.add(PockketApplication.instance.getString(R.string.order_card))
         textString.add(PockketApplication.instance.getString(R.string.account_stmt))
-        textString.add(PockketApplication.instance.getString(R.string.activate_card_heading))
-
-
         val drawableIds = ArrayList<Int>()
         drawableIds.add(R.drawable.ic_card_settings)
         drawableIds.add(R.drawable.ic_order_card)
         drawableIds.add(R.drawable.ic_account_statement)
-        drawableIds.add(R.drawable.ic_activate)
+
 
         myProfileAdapter = MyProfileListAdapter(requireContext(), this)
         list.adapter = myProfileAdapter
@@ -224,31 +221,62 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         }
         mViewModel.onBankProfileSuccess.observe(viewLifecycleOwner) {
             if (it) {
-                if (mViewModel.isActivateCardVisible.get() == false) {
-                    try {
-                        val textString = ArrayList<String>()
-                        textString.add(PockketApplication.instance.getString(R.string.card_settings))
-                        textString.add(PockketApplication.instance.getString(R.string.order_card))
-                        textString.add(PockketApplication.instance.getString(R.string.account_stmt))
-                        val drawableIds = ArrayList<Int>()
-                        drawableIds.add(R.drawable.ic_card_settings)
-                        drawableIds.add(R.drawable.ic_order_card)
-                        drawableIds.add(R.drawable.ic_account_statement)
-                        myProfileAdapter.setList(drawableIds,textString)
-                    } catch (e: Exception) {
-                        e.printStackTrace()
+                for(cardInfo in mViewModel.bankProfileResponse.get()?.cardInfos!!){
+                    when(cardInfo.cardType){
+                        CARD_TYPE_PHYSICAL->{
+                            if(cardInfo.kitNumber.isNullOrEmpty()){
+                                val textString = ArrayList<String>()
+                                textString.add(PockketApplication.instance.getString(R.string.card_settings))
+                                textString.add(PockketApplication.instance.getString(R.string.order_card))
+                                textString.add(PockketApplication.instance.getString(R.string.account_stmt))
+                                val drawableIds = ArrayList<Int>()
+                                drawableIds.add(R.drawable.ic_card_settings)
+                                drawableIds.add(R.drawable.ic_order_card)
+                                drawableIds.add(R.drawable.ic_account_statement)
+                                myProfileAdapter.setList(drawableIds,textString)
+                            }
+                            if(!cardInfo.kitNumber.isNullOrEmpty()){
+                                val textString = ArrayList<String>()
+                                textString.add(PockketApplication.instance.getString(R.string.card_settings))
+                                textString.add(PockketApplication.instance.getString(R.string.track_order))
+                                textString.add(PockketApplication.instance.getString(R.string.account_stmt))
+                                val drawableIds = ArrayList<Int>()
+                                drawableIds.add(R.drawable.ic_card_settings)
+                                drawableIds.add(R.drawable.ic_order_card)
+                                drawableIds.add(R.drawable.ic_account_statement)
+                                myProfileAdapter.setList(drawableIds,textString)
+                            }
+                            if(cardInfo.isCardActivationAllowed==YES){
+                                val textString = ArrayList<String>()
+                                textString.add(PockketApplication.instance.getString(R.string.card_settings))
+                                textString.add(PockketApplication.instance.getString(R.string.track_order))
+                                textString.add(PockketApplication.instance.getString(R.string.account_stmt))
+                                textString.add(PockketApplication.instance.getString(R.string.activate_card_heading))
+                                val drawableIds = ArrayList<Int>()
+                                drawableIds.add(R.drawable.ic_card_settings)
+                                drawableIds.add(R.drawable.ic_order_card)
+                                drawableIds.add(R.drawable.ic_account_statement)
+                                drawableIds.add(R.drawable.ic_activate)
+                                myProfileAdapter.setList(drawableIds,textString)
+                            }
+                            if(cardInfo.status==AppConstants.ENABLE){
+                                val textString = ArrayList<String>()
+                                textString.add(PockketApplication.instance.getString(R.string.card_settings))
+                                textString.add(PockketApplication.instance.getString(R.string.account_stmt))
+                                val drawableIds = ArrayList<Int>()
+                                drawableIds.add(R.drawable.ic_card_settings)
+                                drawableIds.add(R.drawable.ic_account_statement)
+                                myProfileAdapter.setList(drawableIds,textString)
+                            }
+                        }
                     }
                 }
                 mViewModel.onBankProfileSuccess.value = false
             }
+
         }
 
-        mViewModel.onActivateCardClicked.observe(viewLifecycleOwner) {
-            if (it) {
-                callActivateCardSheet()
-                mViewModel.onActivateCardClicked.value = false
-            }
-        }
+
 
         mViewModel.onGetCardDetailsSuccess.observe(viewLifecycleOwner) {
             if (it) {
@@ -365,12 +393,13 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 callCardSettingsBottomSheet()
             }
             1 -> {
-                when (mViewModel.isOrderCard.get()) {
-                    true -> {
+                SharedPrefUtils.getString(requireContext(),SharedPrefUtils.SF_KEY_KIT_NUMBER).let {
+                    if(it.isNullOrEmpty()){
                         intentToActivity(OrderCardView::class.java)
-                    }
-                    false -> {
+
+                    }else{
                         intentToActivity(TrackOrderView::class.java)
+
                     }
                 }
                 //intentToActivity(NotifyMeOrderCardActivity::class.java)

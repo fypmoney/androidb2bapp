@@ -498,7 +498,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="title_activity_add_task">AddTaskActivity</string>
 
     <string name="invite_member_text1">Invite new Fypers</string>
-    <string name="invite_member_text2">Share this link with your friend and after they install both of you will get 50 cash rewards.</string>
+    <string name="invite_member_text2">Share this link with your friend and after they install both of you will get %1$s cash rewards.</string>
     <string name="invite_member_text3">Or Invite via</string>
 
     <!--
@@ -661,7 +661,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="enter_otp_text">Enter the OTP sent to your registered phone number.</string>
     <string name="card_kit_empty_error">Please enter last 4 digit provided on the card kit</string>
     <string name="four_digit_empty_error">Please enter four digit number provided on the card kit</string>
-    <string name="activate_card_text1">To activate your physical card enter four digit number provided on the card kit</string>
+    <string name="activate_card_text1">To activate your physical card enter last four digit number provided on the card kit</string>
     <string name="activate_card_text2">After entering card kit no, you will receive OTP on your registered phone number</string>
     <string name="log_out_title">Log out of Fyp?</string>
     <string name="log_out_text">Remember my login info</string>
@@ -882,6 +882,9 @@ Coming really soon!
     <string name="net_payble">Net Payable</string>
     <string name="inc_tax">(Inc. Taxes: \u20B9 %1$s)</string>
     <string name="unfortunately_we_are_not_serviceable_in_your_neighborhood_but_we_are_moving_super_fast_to_bring_the_awesome_fyp_card_to_your_pockets">Unfortunately we are not serviceable in your neighborhood but we are moving super fast to bring the awesome Fyp card to your pockets.</string>
+    <string name="your_order_has_been_placed_n_successfully">Your order has been placed \n successfully!</string>
+    <string name="net_paid">Net Paid</string>
+    <string name="by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy"><![CDATA[By tapping Activate Now, you agree to the Terms of Service & Privacy Policy]]></string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>

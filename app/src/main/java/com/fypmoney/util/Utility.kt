@@ -802,6 +802,11 @@ object Utility {
             SharedPrefUtils.SF_KEY_USERNAME,
             ""
         )
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_KIT_NUMBER,
+            ""
+        )
     }
 
     /*

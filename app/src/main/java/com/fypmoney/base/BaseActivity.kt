@@ -429,13 +429,13 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         sendIntent.putExtra(
             Intent.EXTRA_TEXT,
             getString(R.string.share_refral_code,
+                Utility.getCustomerDataFromPreference()?.referralCode,
                 Utility.convertToRs(
                     SharedPrefUtils.getString(
                         PockketApplication.instance,
                         SharedPrefUtils.SF_KEY_REFEREE_CASHBACK
                     )
-                ),CASHBACK_AMOUNT,PLAY_STORE_URL
-            )
+                ),PLAY_STORE_URL)
         )
         sendIntent.type = "text/plain"
         startActivity(sendIntent)

@@ -62,6 +62,15 @@ class PersonaliseYourCardActivity : BaseActivity<ActivityPersonaliseYourCardBind
         }
     }
 
+    override fun onBackPressed() {
+        SharedPrefUtils.putString(this,
+            SharedPrefUtils.SF_KEY_NAME_ON_CARD,
+            binding.nameOnCardEt.text.toString()
+        )
+        super.onBackPressed()
+
+    }
+
     private fun setUpViews() {
         binding.nameOnCardEt.doOnTextChanged { text, start, before, count ->
             binding.nameOnCardTv.text = text

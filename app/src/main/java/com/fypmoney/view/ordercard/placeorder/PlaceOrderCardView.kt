@@ -21,6 +21,7 @@ import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.ordercard.model.PinCodeData
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
+import com.fypmoney.view.ordercard.placeordersuccess.PlaceOrderSuccessActivity
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
@@ -161,7 +162,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                 callNotServicebleSheet()
             }
             PlaceOrderCardViewModel.PlaceOrderCardEvent.OnPlaceOrder ->{
-                makePlaceOrderRequest()
+                askForDevicePassword()
             }
             is PlaceOrderCardViewModel.PlaceOrderCardEvent.InSufficientBalance ->{
                 callInsuficientFundMessageSheet(it.amount)
@@ -187,7 +188,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
 
             }
             is PlaceOrderCardViewModel.PlaceOrderCardState.PlaceOrderSuccess -> {
-
+                    intentToActivity(PlaceOrderSuccessActivity::class.java)
             }
         }
     }
@@ -230,16 +231,17 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         return true
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+
+    override fun onBackPressed() {
         Utility.setCustomerDeliveryAddress(
             UserDeliveryAddress(
                 pincode = binding.pinCodeTie.text.toString(),
                 houseAddress = binding.houseNumberBuildingTie.text.toString(),
-                        areaDetail = binding.roadNameAreaTie.text.toString(),
-                        landmark = binding.landmarkTie.text.toString(),
+                areaDetail = binding.roadNameAreaTie.text.toString(),
+                landmark = binding.landmarkTie.text.toString(),
             )
         )
+        super.onBackPressed()
     }
 
 
@@ -254,7 +256,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                 bottomsheetInsufficient?.dismiss()
                 val intent = Intent(this@PlaceOrderCardView,AddMoneyView::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, amount)
-
+                startActivity(intent)
             }
 
             override fun ondimiss() {
@@ -266,7 +268,10 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
             title = resources.getString(R.string.insufficient_bank_balance),
             subTitle =  resources.getString(R.string.insufficient_bank_body),
             amount = resources.getString(R.string.add_money_title1)+resources.getString(R.string.Rs)+Utility.convertToRs(amount),
-             background = "#2d3039"
+             background = "#2d3039",
+             titleColor  = "#ffffff",
+             moneyTextColor  = "#ffffff",
+             buttonColor  = "#8ECC9A",
          )
 
         bottomsheetInsufficient.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
@@ -280,6 +285,24 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         bottomSheet.show(supportFragmentManager, "NOTSERVICEABLE")
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
+                when (resultCode) {
+                    RESULT_OK -> {
+                        runOnUiThread {
+                            makePlaceOrderRequest()
+
+                        }
+
+                    }
+
+                }
+            }
+        }
+    }
 
 
 

@@ -193,7 +193,8 @@ data class CardInfoDetails(
     @SerializedName("atmEnabled") val atmEnabled: String? = null,
     @SerializedName("clEnabled") val clEnabled: String? = null,
     @SerializedName("status") val status: String? = null,
-    @SerializedName("isPinSet") val isPinSet: String? = null
+    @SerializedName("isPinSet") val isPinSet: String? = null,
+    @SerializedName("isCardActivationAllowed") val isCardActivationAllowed: String? = null
 ) : Serializable
 
 @Keep
@@ -248,6 +249,9 @@ data class GetOrderCardStatusResponseDetails(
     @SerializedName("amount") val amount: String? = null,
     @SerializedName("loyaltyPoints") val loyaltyPoints: String? = null,
     @SerializedName("status") val status: String? = null,
+    @SerializedName("basePrice") val basePrice: String? = null,
+    @SerializedName("discount") val discount: String? = null,
+    @SerializedName("totalTax") val totalTax: String? = null,
     @SerializedName("packageStatusList") val packageStatusList: List<PackageStatusList>? = null
 ) : Serializable
 @Keep

@@ -18,6 +18,9 @@
         tools:ignore="UnusedAttribute"
         tools:replace="android:usesCleartextTraffic">
         <activity
+            android:name=".view.ordercard.placeordersuccess.PlaceOrderSuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.ordercard.personaliseyourcard.PersonaliseYourCardActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -79,6 +82,7 @@
             android:name=".view.activity.TrackOrderView"
             android:hardwareAccelerated="false"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

@@ -1,12 +1,14 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewTrackOrderBinding
+import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.TrackOrderViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
@@ -19,7 +21,7 @@ import kotlinx.android.synthetic.main.view_track_order.*
 * */
 class TrackOrderView : BaseActivity<ViewTrackOrderBinding, TrackOrderViewModel>() {
     private lateinit var mViewModel: TrackOrderViewModel
-
+    private lateinit var binding: ViewTrackOrderBinding
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -35,11 +37,14 @@ class TrackOrderView : BaseActivity<ViewTrackOrderBinding, TrackOrderViewModel>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = getViewDataBinding()
         setToolbarAndTitle(
             context = this@TrackOrderView,
             toolbar = toolbar,
-            isBackArrowVisible = true,toolbarTitle=getString(R.string.track_order)
+            isBackArrowVisible = true,toolbarTitle=getString(R.string.track_order),backArrowTint = Color.WHITE,titleColor = Color.WHITE
         )
+
+        helpValue.text = getString(R.string.aadhaar_number_help_text)
         helpValue.setOnClickListener {
             callFreshChat(applicationContext)
 
@@ -50,7 +55,11 @@ class TrackOrderView : BaseActivity<ViewTrackOrderBinding, TrackOrderViewModel>(
     fun setObservers() {
         mViewModel.productResponse.observe(this)
         {
-            //setDataInUi()
+            binding.amount.text = "${getString(R.string.Rs)} ${Utility.convertToRs(it.basePrice.toString())}"
+            binding.discountAmountTv.text = "${getString(R.string.Rs)} ${Utility.convertToRs(it.discount.toString())}"
+            binding.netPaybleAmountTv.text = "${getString(R.string.Rs)} ${Utility.convertToRs(it.amount.toString())}"
+            binding.taxAmountTv.text = String.format(getString(R.string.inc_tax), Utility.convertToRs(it.totalTax.toString()))
+
         }
 
     }

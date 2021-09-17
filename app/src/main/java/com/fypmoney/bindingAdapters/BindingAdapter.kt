@@ -420,7 +420,7 @@ class BindingAdapter {
                         textView.setTextColor(
                             ContextCompat.getColor(
                                 PockketApplication.instance,
-                                R.color.text_color_dark
+                                R.color.white
                             )
                         )
 

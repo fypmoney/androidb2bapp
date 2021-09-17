@@ -91,10 +91,6 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
     private fun handelEvents(it: CardOrderOfferVM.CardOfferEvent?) {
         when(it){
             CardOrderOfferVM.CardOfferEvent.Continue -> {
-                SharedPrefUtils.putBoolean(this,
-                    SharedPrefUtils.SF_KEY_IS_ORDER_SCARTCH_CODE_DONE,
-                    true
-                )
                 val intent = Intent(this@CardOrderOfferActivity,PersonaliseYourCardActivity::class.java)
                 intent.putExtra(ORDER_CARD_INFO,mViewModel.userOfferCard)
                 startActivity(intent)
@@ -117,6 +113,10 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
             }
 
             override fun onScratchComplete() {
+                SharedPrefUtils.putBoolean(this@CardOrderOfferActivity,
+                    SharedPrefUtils.SF_KEY_IS_ORDER_SCARTCH_CODE_DONE,
+                    true
+                )
                 mBinding.continueBtn.isEnabled = true
                 mBinding.continueBtn.setBusy(false)
             }
