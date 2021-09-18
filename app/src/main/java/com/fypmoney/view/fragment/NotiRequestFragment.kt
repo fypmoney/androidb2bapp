@@ -56,6 +56,7 @@ class NotiRequestFragment : Fragment() {
     }
 
     private fun observeInput(sharedViewModel: NotificationViewModel) {
+        page = 0
         sharedViewModel.removedItem.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
@@ -86,10 +87,13 @@ class NotiRequestFragment : Fragment() {
                 typeAdapter!!.notifyDataSetChanged()
 
                 if (list.size > 0) {
+
                     root?.empty_screen?.visibility = View.GONE
 
                 } else {
+
                     if (page == 0) {
+
                         root?.empty_screen?.visibility = View.VISIBLE
                     }
 

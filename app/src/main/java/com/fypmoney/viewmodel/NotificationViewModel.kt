@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -135,11 +136,14 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                 if (responseData is NotificationModel.NotificationResponse) {
 
 
-                    var notificationList: ArrayList<NotificationModel.NotificationResponseDetails>? =
+                    var notificationList: ArrayList<NotificationModel.NotificationResponseDetails> =
                         ArrayList()
                     responseData.notificationResponseDetails?.forEach {
                         notificationList!!.add(it)
                     }
+
+
+
                     RequestNotificationList.postValue(notificationList)
 
                 }
