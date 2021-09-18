@@ -92,38 +92,57 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                             }
 
                         }
-                        AppConstants.FEED_TYPE_INAPPWEB -> {
-                            intentToActivity(
-                                UserFeedsDetailView::class.java,
-                                it,
-                                AppConstants.FEED_TYPE_INAPPWEB
-                            )
-                        }
-                        AppConstants.FEED_TYPE_BLOG -> {
-                            intentToActivity(
-                                UserFeedsDetailView::class.java,
-                                it,
-                                AppConstants.FEED_TYPE_BLOG
-                            )
-                        }
-                        AppConstants.FEED_TYPE_EXTWEBVIEW -> {
-                            startActivity(
-                                Intent.createChooser(
-                                    Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse(it.action?.url)
-                                    ), getString(R.string.browse_with)
-                                )
-                            )
+                AppConstants.FEED_TYPE_INAPPWEB -> {
+                    intentToActivity(
+                        UserFeedsDetailView::class.java,
+                        it,
+                        AppConstants.FEED_TYPE_INAPPWEB
+                    )
+                }
+                AppConstants.FEED_TYPE_INAPPWEB2 -> {
+                    intentToActivity(
+                        UserFeedsDetailView::class.java,
+                        it,
+                        AppConstants.FEED_TYPE_INAPPWEB
+                    )
+                }
 
-                        }
-                        AppConstants.FEED_TYPE_STORIES -> {
-                            if (!it.resourceArr.isNullOrEmpty()) {
-                                callDiduKnowBottomSheet(it.resourceArr)
-                            }
+                AppConstants.FEED_TYPE_BLOG -> {
+                    intentToActivity(
+                        UserFeedsDetailView::class.java,
+                        it,
+                        AppConstants.FEED_TYPE_BLOG
+                    )
+                }
+                AppConstants.FEED_TYPE_EXTWEBVIEW -> {
+                    startActivity(
+                        Intent.createChooser(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(it.action?.url)
+                            ), getString(R.string.browse_with)
+                        )
+                    )
 
-                        }
+                }
+                AppConstants.FEED_TYPE_EXTWEBVIEW2 -> {
+                    startActivity(
+                        Intent.createChooser(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(it.action?.url)
+                            ), getString(R.string.browse_with)
+                        )
+                    )
+
+                }
+                AppConstants.FEED_TYPE_STORIES -> {
+                    if (!it.resourceArr.isNullOrEmpty()) {
+                        callDiduKnowBottomSheet(it.resourceArr)
                     }
+
+                }
+            }
 
 
 

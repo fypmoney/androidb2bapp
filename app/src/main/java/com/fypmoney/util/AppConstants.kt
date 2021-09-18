@@ -45,7 +45,10 @@ object AppConstants {
     const val FEED_TYPE_BLOG = "BLOG"
     const val FEED_TYPE_DEEPLINK = "DEEPLINK"
     const val FEED_TYPE_INAPPWEB = "INAPPWEB"
+    const val FEED_TYPE_INAPPWEB2 = "INAPPWEB1X1"
+
     const val FEED_TYPE_EXTWEBVIEW = "EXTWEBVIEW"
+    const val FEED_TYPE_EXTWEBVIEW2 = "EXTWEBVIEW1X1"
     const val FEED_TYPE_STORIES = "STORIES"
     const val FEED_RESPONSE = "feed_response"
     const val FEED_TYPE_IN_APP = "INAPP"
