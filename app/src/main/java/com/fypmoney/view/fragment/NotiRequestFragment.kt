@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.R
@@ -43,7 +44,7 @@ class NotiRequestFragment : Fragment() {
         root = inflater.inflate(R.layout.fragment_noti_request, container, false)
         setRecyclerView(root!!)
         activity?.let {
-            sharedViewModel = ViewModelProviders.of(it).get(NotificationViewModel::class.java)
+            sharedViewModel = ViewModelProvider(it).get(NotificationViewModel::class.java)
             observeInput(sharedViewModel!!)
 
         }

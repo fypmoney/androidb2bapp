@@ -96,6 +96,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         viewPager.adapter = adapter
 
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.tabRippleColor = null;
         setupTabIcons()
 
 
