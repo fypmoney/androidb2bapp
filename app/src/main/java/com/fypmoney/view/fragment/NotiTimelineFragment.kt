@@ -54,6 +54,7 @@ class NotiTimelineFragment : Fragment(), NotificationAdapter.OnNotificationClick
     }
 
     private fun observeInput(sharedViewModel: NotificationViewModel) {
+        NotiRequestFragment.page = 0
         sharedViewModel.timelineList.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
