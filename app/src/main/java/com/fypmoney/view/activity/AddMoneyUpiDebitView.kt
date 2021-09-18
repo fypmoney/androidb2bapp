@@ -415,7 +415,7 @@ open class AddMoneyUpiDebitView :
     * */
     private fun getListOfApps() {
         val upiList = ArrayList<UpiModel>()
-        upiList.add(UpiModel(name = getString(R.string.google_pay)))
+        //upiList.add(UpiModel(name = getString(R.string.google_pay)))
         val intent = Intent()
         intent.data = Uri.parse(AppConstants.UPI_APPS_FETCH)
         val resolveInfos = packageManager.queryIntentActivities(
@@ -432,7 +432,7 @@ open class AddMoneyUpiDebitView :
                 upiModel.packageName = resolveInfo.activityInfo.packageName
                 upiModel.imageUrl =
                     packageManager.getApplicationIcon(resolveInfo.activityInfo.packageName)
-                if (!upiModel.packageName.equals(AppConstants.GPAY_PACKAGE_NAME) && !upiModel.packageName.equals(AppConstants.FAMPAY_PACKAGE_NAME)){
+                if (!upiModel.packageName.equals(AppConstants.FAMPAY_PACKAGE_NAME)){
                     upiList.add(upiModel)
                 }
             } catch (e: PackageManager.NameNotFoundException) {

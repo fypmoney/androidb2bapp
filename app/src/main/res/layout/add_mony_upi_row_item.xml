@@ -40,7 +40,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:text="@{viewHelper.upi.name}"
-            android:textSize="@dimen/textSize_14"
+            android:textSize="14sp"
 
             />
     </LinearLayout>

@@ -269,16 +269,18 @@ class BindingAdapter {
         @BindingAdapter(value = ["position", "imageUrl"], requireAll = false)
         @JvmStatic
         fun setImageInUPI(imageView: AppCompatImageView, position: Int, imageUrl: Drawable?) {
-            when (position) {
-                1 -> {
+            /*when (position) {
+                *//*1 -> {
                     imageView.setImageResource(R.drawable.ic_google_pay)
 
-                }
+                }*//*
                 else -> {
                     imageView.setImageDrawable(imageUrl)
 
                 }
-            }
+            }*/
+            imageView.setImageDrawable(imageUrl)
+
 
         }
 
