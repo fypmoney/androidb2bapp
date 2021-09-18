@@ -11,6 +11,7 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityPlaceOrderSucessBinding
 import com.fypmoney.view.activity.HomeView
 import com.fypmoney.view.activity.TrackOrderView
+import kotlinx.android.synthetic.main.activity_place_order_sucess.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class PlaceOrderSuccessActivity : BaseActivity<ActivityPlaceOrderSucessBinding,PlaceOrderSuccessVM>() {
@@ -36,6 +37,8 @@ class PlaceOrderSuccessActivity : BaseActivity<ActivityPlaceOrderSucessBinding,P
             isBackArrowVisible = true, toolbarTitle = "",  backArrowTint = Color.WHITE,
             titleColor = Color.WHITE
         )
+
+
         setUpObserver()
     }
 

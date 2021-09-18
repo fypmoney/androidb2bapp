@@ -69,7 +69,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.OrderCardView"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" ></activity>
         <activity
             android:name=".view.activity.SetPinView"
             android:screenOrientation="portrait"

@@ -50,7 +50,6 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
             isBackArrowVisible = true,
             backArrowTint = Color.WHITE
         )
-        mViewBinding.cardPriceTv.text = String.format(getString(R.string.fyp_card_price),Utility.convertToRs("20000"))
         setObservers()
 
     }

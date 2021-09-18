@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <RelativeLayout
@@ -35,7 +36,7 @@
             android:layout_marginTop="50dp"
             android:text="@string/manage_channels_heading"
             android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+            android:textSize="17sp" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -44,6 +45,9 @@
             android:layout_below="@id/verification_title"
             android:layout_marginTop="30dp"
             android:text="@string/point_of_sale"
+
+            tools:visibility = "visible"
+            android:visibility = "gone"
             android:textColor="@color/text_color_dark"
             android:textSize="17sp" />
 
@@ -56,14 +60,42 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="25dp"
             android:checked="true"
+
+            tools:visibility = "visible"
+            android:visibility = "gone"
             android:thumb="@drawable/thumb_selector"
             app:track="@drawable/track_selector" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/atm_channel_tv"
+            style="@style/TextviewRegular"
+            android:layout_below="@id/point_sale_switch"
+            android:layout_marginTop="20dp"
+            android:text="@string/atm"
+            android:textColor="@color/text_color_dark"
+            android:textSize="17sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/atm_channel_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/point_sale_switch"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/dp10"
+            android:checked="true"
+            android:thumb="@drawable/thumb_selector"
+            android:visibility="gone"
+            app:track="@drawable/track_selector"
+            tools:visibility="visible" />
 
         <View
             android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_below="@+id/point_sale_switch"
+            android:layout_below="@+id/atm_channel_tv"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
             android:background="@color/dividerColor" />
@@ -76,7 +108,7 @@
             android:layout_marginBottom="40dp"
             android:text="@string/ecom"
             android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+            android:textSize="17sp" />
 
 
         <androidx.appcompat.widget.SwitchCompat

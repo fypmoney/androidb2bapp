@@ -447,7 +447,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
    * */
     private fun callCardBlockUnblockBottomSheet() {
         val bottomSheet =
-            BlockUnblockCardBottomSheet(mViewModel.bankProfileResponse.get()?.cardInfos, this, this)
+            BlockUnblockCardBottomSheet(mViewModel.bankProfileResponse.get()?.cardInfos, this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "BlockUnblockCard")
     }
