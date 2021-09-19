@@ -39,7 +39,7 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
       * This method is used to handle on click of add
       * */
     fun onAddClicked() {
-        amountSelected.get()?.toInt()?.let {
+        amountSelected.get()?.toIntOrNull()?.let {
             when {
                 TextUtils.isEmpty(amountSelected.get()) or (!TextUtils.isEmpty(amountSelected.get()) && it <= 0) -> {
                     Utility.showToast(PockketApplication.instance.getString(R.string.add_money_empty_error))
