@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.FeedRowLayoutVideoviewBinding
 import com.fypmoney.databinding.FeedsDidUKnowBinding
+import com.fypmoney.databinding.FeedsDidUKnowHomeBinding
 import com.fypmoney.databinding.FeedsRowLayoutBinding
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
@@ -31,7 +32,14 @@ class FeedsSectionAdapter(
     private val typeVideo = 3
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
-            typeWithTitle, typeWithoutTitle -> {
+            typeWithoutTitle -> {
+                val mRowBinding = FeedsDidUKnowHomeBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent, false
+                )
+                return DiduKnowViewHolder(mRowBinding)
+            }
+            typeWithTitle -> {
                 val mRowBinding = FeedsRowLayoutBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent, false
@@ -64,6 +72,40 @@ class FeedsSectionAdapter(
         notifyDataSetChanged()
     }
 
+    inner class DiduKnowViewHolder(
+        private val mRowItemBinding: FeedsDidUKnowHomeBinding? = null
+    ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
+        private lateinit var mViewHelper: FeedsViewHelper
+        override fun onBind(position: Int) {
+            mViewHelper = FeedsViewHelper(
+                position,
+                feedList?.get(position), onFeedItemClickListener
+            )
+            mRowItemBinding!!.viewHelper = mViewHelper
+            mRowItemBinding.viewModel = viewModel
+
+
+            try {
+                if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
+                    viewModel.isApiLoading.set(true)
+                    viewModel.page.set(viewModel.page.get()!! + 1)
+                    viewModel.callFetchFeedsApi(
+                        latitude = viewModel.latitude.get(),
+                        longitude = viewModel.longitude.get()
+                    )
+
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            mRowItemBinding.executePendingBindings()
+
+        }
+
+
+    }
+
     override fun getItemViewType(position: Int): Int {
         return when (feedList?.get(position)?.displayCard) {
             AppConstants.FEED_TYPE_BLOG -> {
@@ -94,6 +136,7 @@ class FeedsSectionAdapter(
                 feedList?.get(position), onFeedItemClickListener, 1
             )
             mRowItemBinding!!.viewHelper = mViewHelper
+
 
 
             try {

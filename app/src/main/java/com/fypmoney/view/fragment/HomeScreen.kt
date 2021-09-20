@@ -178,15 +178,28 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
                     when (it.displayCard) {
                         AppConstants.FEED_TYPE_DEEPLINK -> {
-                            try {
-                                intentToActivity(
-                                    Class.forName(AppConstants.BASE_ACTIVITY_URL + it.action?.url!!),
-                                    it
-                                )
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                                intentToActivity(HomeView::class.java, it)
+                            it.action?.url?.let {
+                                Utility.deeplinkRedirection(it.split(",")[0], requireContext())
+
                             }
+                        }
+                        AppConstants.FEED_TYPE_INAPPWEB2 -> {
+                            intentToActivity(
+                                UserFeedsDetailView::class.java,
+                                it,
+                                AppConstants.FEED_TYPE_INAPPWEB
+                            )
+                        }
+                        AppConstants.FEED_TYPE_EXTWEBVIEW2 -> {
+                            startActivity(
+                                Intent.createChooser(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(it.action?.url)
+                                    ), getString(R.string.browse_with)
+                                )
+                            )
+
                         }
                         AppConstants.FEED_TYPE_INAPPWEB -> {
                             intentToActivity(
