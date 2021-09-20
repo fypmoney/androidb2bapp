@@ -185,6 +185,13 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                 }
                             } else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "90") {
                                 intentToActivity(AgeAllowedActivationView::class.java)
+                            } else {
+
+                                if (Utility.getCustomerDataFromPreference()?.postKycScreenCode == null && mViewModel.callCustomer.value == false) {
+                                    mViewModel.callGetCustomerProfileApi()
+
+                                }
+
                             }
 
 
