@@ -136,7 +136,7 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
     }
 
     override fun onUpiItemClicked(position: Int, upiModel: UpiModel?) {
-        clickedPositionForUpi.set(position)
+        //clickedPositionForUpi.set(position)
         clickedAppPackageName.set(upiModel!!.packageName)
         onUpiClicked.value = true
         callAddMoneyStep1Api()
