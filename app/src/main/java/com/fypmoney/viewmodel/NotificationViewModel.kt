@@ -83,7 +83,7 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                 purpose = ApiConstant.API_GET_NOTIFICATION_LIST,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_GET_NOTIFICATION_LIST),
                 request_type = ApiUrl.POST,
-                param = page, onResponse = this,
+                param = NotificationModel.NotificationRequest(page = page), onResponse = this,
                 isProgressBar = false
             )
         )

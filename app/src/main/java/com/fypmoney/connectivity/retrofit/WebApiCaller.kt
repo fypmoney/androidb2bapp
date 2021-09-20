@@ -198,21 +198,39 @@ class WebApiCaller {
 
                             ApiConstant.API_GET_NOTIFICATION_LIST -> {
 
-                                val params = request.param as Int
+
+                                val params = request.param as NotificationModel.NotificationRequest
+
+                                if (params.page != null) {
+                                    mObservable = apiInterface.getPaginationApiCalling(
+                                        endPoint = request.endpoint,
+                                        authorization = SharedPrefUtils.getString(
+                                            PockketApplication.instance,
+                                            SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                        ),
+                                        client_id = ApiConstant.CLIENT_ID,
+                                        page = params.page,
+                                        size = 6,
+                                        sort = null,
+                                        request = BaseRequest()
+                                    )
+                                } else {
+                                    mObservable =
+                                        apiInterface.postDataOnServer(
+                                            client_id = ApiConstant.CLIENT_ID,
+                                            appId = ApiConstant.APP_ID,
+                                            authorization = SharedPrefUtils.getString(
+                                                PockketApplication.instance,
+                                                SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                            ),
+                                            endPoint = request.endpoint,
+                                            request = request.param
+                                        )
 
 
-                                mObservable = apiInterface.getPaginationApiCalling(
-                                    endPoint = request.endpoint,
-                                    authorization = SharedPrefUtils.getString(
-                                        PockketApplication.instance,
-                                        SharedPrefUtils.SF_KEY_ACCESS_TOKEN
-                                    ),
-                                    client_id = ApiConstant.CLIENT_ID,
-                                    page = params,
-                                    size = 6,
-                                    sort = null,
-                                    request = BaseRequest()
-                                )
+                                }
+
+
                             }
 
 
