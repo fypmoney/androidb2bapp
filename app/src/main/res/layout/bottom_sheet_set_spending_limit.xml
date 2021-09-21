@@ -292,12 +292,11 @@
 
             <Button
                 android:id="@+id/button_save"
-
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:layout_weight="0.5"
-                android:text="@string/save_btn_text"
+                android:text="@string/set"
                 android:textAllCaps="false"
                 app:backgroundTint="@color/text_color_dark" />
 

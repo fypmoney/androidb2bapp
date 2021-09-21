@@ -59,12 +59,10 @@
             android:layout_below="@id/verification_title"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="25dp"
-            android:checked="true"
-
-            tools:visibility = "visible"
-            android:visibility = "gone"
             android:thumb="@drawable/thumb_selector"
-            app:track="@drawable/track_selector" />
+            android:visibility="gone"
+            app:track="@drawable/track_selector"
+            tools:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/atm_channel_tv"
@@ -85,7 +83,6 @@
             android:layout_below="@id/point_sale_switch"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/dp10"
-            android:checked="true"
             android:thumb="@drawable/thumb_selector"
             android:visibility="gone"
             app:track="@drawable/track_selector"
@@ -119,7 +116,6 @@
             android:layout_alignParentEnd="true"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="40dp"
-            android:checked="true"
             android:thumb="@drawable/thumb_selector"
             app:track="@drawable/track_selector" />
 

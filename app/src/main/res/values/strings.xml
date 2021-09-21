@@ -885,6 +885,7 @@ Coming really soon!
     <string name="your_order_has_been_placed_n_successfully">Your order has been placed \n successfully!</string>
     <string name="net_paid">Net Paid</string>
     <string name="by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy"><![CDATA[By tapping Activate Now, you agree to the Terms of Service & Privacy Policy]]></string>
+    <string name="set">Set</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>

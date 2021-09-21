@@ -46,7 +46,9 @@ class PlaceOrderSuccessActivity : BaseActivity<ActivityPlaceOrderSucessBinding,P
         mViewModel.event.observe(this,{
             when(it){
                 PlaceOrderSuccessVM.PlaceOrderSuccessEvent.TrackOrderEvent -> {
-                    startActivity(Intent(this@PlaceOrderSuccessActivity,TrackOrderView::class.java))
+                    val i = Intent(this@PlaceOrderSuccessActivity,TrackOrderView::class.java)
+                    i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or  Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(i)
                     finish()
                 }
             }

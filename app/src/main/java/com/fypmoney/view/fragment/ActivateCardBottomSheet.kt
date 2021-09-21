@@ -44,9 +44,7 @@ class ActivateCardBottomSheet(var onActivateCardClickListener: OnActivateCardCli
 
 
         binding.tNCCb.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked){
-                binding.buttonOtp.isEnabled = true
-            }
+            binding.buttonOtp.isEnabled = isChecked
         }
         binding.buttonOtp.setOnClickListener {
             when {

@@ -82,7 +82,6 @@
             android:name=".view.activity.TrackOrderView"
             android:hardwareAccelerated="false"
             android:screenOrientation="portrait"
-            android:launchMode="singleTask"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

@@ -36,6 +36,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/imageOrderPlaced"
             android:text="@{viewHelper.status}"
+            android:textAllCaps="false"
             android:textAlignment="center"
            />
 
