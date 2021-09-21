@@ -71,21 +71,88 @@
                     android:textSize="12sp" />
             </LinearLayout>
 
-
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/pieChart"
-                android:layout_width="@dimen/_180sdp"
-                android:layout_height="@dimen/_180sdp"
-
+            <ProgressBar
+                android:id="@+id/background_progressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:layout_centerHorizontal="true"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="100"
+                android:progressDrawable="@drawable/stats_full"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- ProgressBar that represents a chart slice, where "android:progress" is the % value of the slice -->
+            <ProgressBar
+                android:id="@+id/stats_progressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="54"
+                android:progressDrawable="@drawable/stats_progress"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/rel"
+            android:layout_marginTop="-60dp"
+            android:layout_marginHorizontal="@dimen/_30sdp"
+            android:background="@drawable/edit_text_rounded_rectangle_shape_solid__dark_gray_8"
+            android:id="@+id/blur"
+            android:alpha=".9"
+            android:layout_height="@dimen/_40sdp">
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:elevation="@dimen/_2sdp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/blur"
+            app:layout_constraintTop_toTopOf="@+id/blur"
+            app:layout_constraintEnd_toEndOf="@+id/blur"
+            app:layout_constraintStart_toStartOf="@+id/blur">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_14sdp"
+                android:text="Total Earned"
+                android:layout_centerVertical="true"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_14sdp"
+                android:text="480"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/_14sdp"
+                android:layout_centerVertical="true"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout7"
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_12sdp"
@@ -93,7 +160,7 @@
             android:weightSum="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rel">
+            app:layout_constraintTop_toBottomOf="@+id/blur">
 
 
             <LinearLayout

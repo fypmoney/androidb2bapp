@@ -89,17 +89,18 @@ object ApiConstant {
   const val API_HISTORY_TASK =
     "/services/loyaltyservice/api/task/history"
 
-  const val TOP_TEN_USER_API = "/services/PockketService/api/recent/wallet/transaction"
-  const val TOTAL_REFERRAL_CASHBACK_API = "/services/PockketService/api/total/referral/points"
-  const val API_STORY = "/services/loyaltyservice/api/story/split"
-  const val API_GET_REWARDS_API = "/services/authservice/api/rewards/v2"
+    const val TOP_TEN_USER_API = "/services/PockketService/api/recent/wallet/transaction"
+    const val TOTAL_REFERRAL_CASHBACK_API = "/services/PockketService/api/total/referral/points"
+    const val API_STORY = "/services/loyaltyservice/api/story/split"
+    const val API_GET_REWARDS_API = "/services/authservice/api/rewards/v2"
     const val API_SPIN_WHEEL = "/services/authservice/api/spin-wheel/v2/1"
     const val API_GET_REWARDS_HISTORY = "/services/authservice/api/all/rewards"
-  const val API_GET_REDEEM_DETAILS_API = "/services/authservice/api/rewards/details"
-  const val API_REDEEM_COINS_API = "/services/authservice/api/redeem/rewards"
-  const val API_USER_DEVICE_INFO = "/services/authservice/api/users/device-info"
-  const val API_SETTINGS = "/services/PockketService/api/get/system-properties/by-keys"
-
+    const val API_GET_REDEEM_DETAILS_API = "/services/authservice/api/rewards/details"
+    const val API_REDEEM_COINS_API = "/services/authservice/api/redeem/rewards"
+    const val API_USER_DEVICE_INFO = "/services/authservice/api/users/device-info"
+    const val API_SETTINGS = "/services/PockketService/api/get/system-properties/by-keys"
+    const val RewardsHistory =
+        "services/PockketService/api/rewardHistory"
 }
 
 

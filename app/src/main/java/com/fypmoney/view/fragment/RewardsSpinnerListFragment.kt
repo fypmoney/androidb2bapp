@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.R
 import com.fypmoney.model.AssignedTaskResponse
@@ -17,6 +18,8 @@ import com.fypmoney.view.activity.SpinWheelViewDark
 import com.fypmoney.view.adapter.SpinnerAdapter
 
 import com.fypmoney.view.interfaces.ListItemClickListener
+import com.fypmoney.viewmodel.NotificationViewModel
+import com.fypmoney.viewmodel.RewardsViewModel
 import kotlinx.android.synthetic.main.dialog_burn_mynts.*
 import kotlinx.android.synthetic.main.fragment_spinner_list.view.*
 
@@ -30,6 +33,7 @@ class RewardsSpinnerListFragment : Fragment() {
 
     }
 
+    private var sharedViewModel: RewardsViewModel? = null
     private var dialogDialog: Dialog? = null
     private var itemsArrayList: ArrayList<AssignedTaskResponse> = ArrayList()
     private var isLoading = false
@@ -44,11 +48,19 @@ class RewardsSpinnerListFragment : Fragment() {
         root = inflater.inflate(R.layout.fragment_spinner_list, container, false)
         setRecyclerView(root!!)
         dialogDialog = Dialog(requireContext())
+        activity?.let {
+            sharedViewModel = ViewModelProvider(it).get(RewardsViewModel::class.java)
+            observeInput(sharedViewModel!!)
 
+        }
 
 
 
         return root
+    }
+
+    private fun observeInput(sharedViewModel: RewardsViewModel) {
+
     }
 
     internal fun showBlockDialog() {

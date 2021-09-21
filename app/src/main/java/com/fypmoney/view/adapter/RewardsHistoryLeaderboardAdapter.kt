@@ -2,11 +2,9 @@ package com.fypmoney.view.adapter
 
 
 import android.content.Context
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
 import com.fypmoney.model.AssignedTaskResponse
@@ -15,11 +13,11 @@ import com.fypmoney.view.interfaces.ListItemClickListener
 import java.util.*
 
 
-class RewardsLeaderboardAdapter(
+class RewardsHistoryLeaderboardAdapter(
     val items: ArrayList<AssignedTaskResponse>,
     val context: Context,
     val clickInterface: ListItemClickListener
-) : RecyclerView.Adapter<RewardsLeaderboardAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<RewardsHistoryLeaderboardAdapter.ViewHolder>() {
 
     private var mLastClickTime: Long = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

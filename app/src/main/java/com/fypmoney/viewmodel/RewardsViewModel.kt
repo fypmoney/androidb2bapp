@@ -26,7 +26,7 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
     var onAddMoneyClicked = MutableLiveData(false)
     var loading = MutableLiveData(false)
     var yourtask = ObservableField(false)
-    var YourAssigned: MutableLiveData<ArrayList<AssignedTaskResponse>> = MutableLiveData()
+    var rewardHistoryList: MutableLiveData<ArrayList<RewardHistoryResponse>> = MutableLiveData()
     var error: MutableLiveData<String> = MutableLiveData()
 
     var AssignedByYouTask: MutableLiveData<ArrayList<AssignedTaskResponse>> = MutableLiveData()
@@ -104,97 +104,24 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
 
     }
 
-    fun callSampleTask() {
 
-        loading.postValue(true)
-        YourTasksFragment.page = 0
-        AssignedTaskFragment.page = 0
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_YOUR_TASK,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_YOUR_TASK),
-                request_type = ApiUrl.POST,
-                GetTaskResponse(
-                    1,
-                    0,
-                    10,
-                    "createdDate,desc"
-                ), onResponse = this,
-                isProgressBar = false
-            )
-
-        )
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_ASSIGN_TASK,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_ASSIGN_TASK),
-                request_type = ApiUrl.POST,
-                GetTaskResponse(
-                    0,
-                    0,
-                    10,
-                    "createdDate,desc"
-                ), onResponse = this,
-                isProgressBar = false
-            )
-
-        )
-
-    }
-
-    fun callTaskDetail(id: String) {
-
-        loading.postValue(true)
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_TASK_DETAIL,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_TASK_DETAIL) + id,
-                request_type = ApiUrl.POST,
-                BaseRequest(), onResponse = this,
-                isProgressBar = false
-            )
-
-        )
-
-
-    }
-
-    fun callTaskAccept(state: String, entityId: String?, s: String) {
-        loading.postValue(true)
-
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_TASK_UPDATE,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_TASK_UPDATE),
-                request_type = ApiUrl.PUT,
-                SendTaskResponse(
-                    state = state, taskId = entityId,
-                    emojis = "",
-                    comments = s
-                ), onResponse = this,
-                isProgressBar = false
-            )
-
-        )
-    }
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         loading.postValue(false)
         when (purpose) {
 
-            ApiConstant.API_YOUR_TASK -> {
-                loading?.postValue(false)
+            ApiConstant.RewardsHistory -> {
+
 
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<Array<AssignedTaskResponse>>(
+                val array = Gson().fromJson<Array<RewardHistoryResponse>>(
                     json.get("data").toString(),
                     Array<AssignedTaskResponse>::class.java
                 )
                 val arrayList = ArrayList(array.toMutableList())
-                YourAssigned.postValue(arrayList)
-                loading.postValue(false)
+                rewardHistoryList.postValue(arrayList)
 
 
             }
