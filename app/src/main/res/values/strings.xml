@@ -116,6 +116,7 @@
     <string name="first_name_empty_error">Please enter first name</string>
     <string name="last_name_empty_error">Please enter last name</string>
     <string name="dob_empty_error">Please enter Date of Birth</string>
+    <string name="select_age_type">Please your age gap</string>
     <string name="otp_length_error">OTP length must be 6</string>
     <string name="phone_email_validity_error">Please enter valid Mobile No. or Email Id</string>
     <string name="continue_txt">Continue</string>
@@ -498,7 +499,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="title_activity_add_task">AddTaskActivity</string>
 
     <string name="invite_member_text1">Invite new Fypers</string>
-    <string name="invite_member_text2">Share this link with your friend and after they install both of you will get 50 cash rewards.</string>
+    <string name="invite_member_text2">Share this link with your friend and after they install both of you will get 25 cash rewards.</string>
     <string name="invite_member_text3">Or Invite via</string>
 
     <!--
@@ -774,6 +775,10 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="share_refral_code">
         "Hey there👋 \n\nI’m inviting you to use Fyp, India's most rewarding app for teenagers that helps you build smart money habits🤑 \nHere’s my code %1$s - just enter it on the referral code screen and complete your KYC to earn INR %2$s💰 Easy- peasey! \nDownload the app- %3$s"
     </string>
+
+    <string name="share_refral_code_34">
+        "Hey there👋 \n\nI’m inviting you to use Fyp, India's most rewarding app for teenagers that helps you build smart money habits🤑 \n \nDownload the app- %1$s"
+    </string>
     <string name="coming_soon">Coming Soon \n</string>
 
 
@@ -875,6 +880,16 @@ Coming really soon!
     <string name="youtube">Youtube</string>
     <string name="copy_to_clipboard">Copied to Clipboard</string>
     <string name="card">Card</string>
+    <string name="total_cashback_won">Total Cashback won</string>
+    <string name="exciting_prize">Get Exciting \n Prizes!</string>
+    <string name="fyp_is_for_teens_and_their_parents">Fyp is for Teens and their Parents</string>
+    <string name="fyp_is_eligible_for_11_18_and_34_age_groups_only_it_is_built_to">Fyp is eligible for 11-18 and 34+ age groups only.\n It is built to -</string>
+    <string name="teach_teenagers_money_management">Teach teenagers money management</string>
+    <string name="help_parents_to_guide_their_kids">Help parents to guide their kids</string>
+    <string name="create_a_financially_literate_community">Create a financially literate community</string>
+    <string name="your_wish_for_better_rewards_is_going_to_n_be_granted_soon_stay_tuned">Your wish for better rewards is going to\n be granted soon. Stay tuned!</string>
+    <string name="are_you_a_teenager_or_a_parent_select_from_below">Are you a teenager or a parent? \nSelect from below</string>
+    <string name="coming_soon1">Coming Soon...</string>
     <string name="set_device_security">Set Device Security</string>
     <string name="your_phone_is_not_configured_with_passcode_security_n_please_set_device_security_to_view_details">Your phone is not configured with passcode security. \n Please set device security to proceed further.</string>
     <string name="set_security">Set Security</string>
@@ -888,5 +903,6 @@ Coming really soon!
     <string name="head_to_assign_a_mission_tab_it_s_gonna_be_a_fun_way_to_earn">Head to <b>‘Assign A Mission’</b> tab. It’s gonna be a fun way to earn!🤑</string>
     <string name="your_missions">Your Missions</string>
     <string name="assigned_missions">Assigned Missions</string>
-    <string name="your_wish_for_better_rewards_is_going_to_n_be_granted_soon_stay_tuned">Your wish for better rewards is going to\n be granted soon. Stay tuned!</string>
+    <string name="timeline">Timeline</string>
+    <string name="requests">Requests</string>
 </resources>

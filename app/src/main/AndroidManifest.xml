@@ -107,7 +107,13 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CreateAccountView"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.activity.LoginSuccessView"
             android:noHistory="true"
@@ -184,7 +190,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ActivationSuccessWithAadhaarView"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+
+        </activity>
 
         <activity
             android:name=".view.activity.AddMoneyUpiDebitView"
@@ -211,16 +219,24 @@
         <activity android:name=".view.StoreWebpageOpener"
             android:hardwareAccelerated="false"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ChoresSelectSampleActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ContactViewAddMember"
+        <activity
+            android:name=".view.activity.ChoresSelectSampleActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.SpinWheelView"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.RewardsHistoryView"
+        <activity
+            android:name=".view.activity.ContactViewAddMember"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.PermissionsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.SpinWheelView"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.RewardsHistoryView"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.PermissionsActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.activity.RewardsActivity" />
+        <activity android:name=".view.activity.SpinWheelViewDark" />
+        <activity android:name=".view.activity.AgeAllowedActivationView" />
 
         <meta-data
             android:name="payu_debug_mode_enabled"

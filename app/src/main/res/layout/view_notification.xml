@@ -16,37 +16,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:layout_width="@dimen/_210sdp"
-        android:layout_height="@dimen/_160sdp"
-        android:elevation="@dimen/_2sdp"
-        android:id="@+id/illustration"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:visibility="@{viewModel.isTimeLineNoDataVisible?View.VISIBLE:View.GONE,default=gone}"
-        app:srcCompat="@drawable/ic_no_notifications" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        style="@style/TextviewRegular"
-        android:layout_gravity="center"
-        android:textSize="@dimen/_14sdp"
-        android:layout_marginStart="@dimen/_28sdp"
-        android:layout_marginEnd="@dimen/_28sdp"
-        android:gravity="center"
-        android:visibility="@{viewModel.isTimeLineNoDataVisible?View.VISIBLE:View.GONE,default=gone}"
-        android:layout_marginTop="@dimen/_24sdp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/illustration"
-        android:elevation="@dimen/_2sdp"
-        android:text="@string/user_timeline_api_error"
-        android:textColor="@color/text_color_light" />
-
-
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background_light_dark"
+
         app:onRefreshListener="@{() -> viewModel.onRefresh()}"
         app:refreshing="@{viewModel.isLoading}">
 
@@ -66,8 +40,78 @@
 
                 <include
                     android:id="@+id/toolbar_layout"
-                    layout="@layout/toolbar"
-                    />
+                    layout="@layout/toolbar" />
+
+
+                    <androidx.core.widget.NestedScrollView
+                        android:id="@+id/nestedScrollView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipToPadding="false"
+                        android:layout_below="@+id/toolbar_layout"
+                        android:fillViewport="true"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/layout2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            tools:context=".MainActivity">
+
+                            <com.facebook.shimmer.ShimmerFrameLayout
+                                android:id="@+id/shimmerLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_below="@+id/tabLayout"
+                                android:layout_marginTop="@dimen/_16sdp"
+                                android:visibility="@{viewModel.showShimmerEffect?View.VISIBLE:View.GONE,default=gone}">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+                                    <include layout="@layout/shimmer_notification_item" />
+
+                                    <include layout="@layout/shimmer_notification_item" />
+
+                                    <include layout="@layout/shimmer_notification_item" />
+
+                                    <include layout="@layout/shimmer_notification_item" />
+
+                                    <include layout="@layout/shimmer_notification_item" />
+
+                                    <include layout="@layout/shimmer_notification_item" />
+                                </LinearLayout>
+                            </com.facebook.shimmer.ShimmerFrameLayout>
+
+                            <com.google.android.material.tabs.TabLayout
+                                android:id="@+id/tabLayout"
+
+                                style="@style/RoundedTabLayoutStyle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginStart="@dimen/_8sdp"
+                                android:layout_marginEnd="@dimen/_8sdp"
+                                app:tabIconTint="@drawable/tab_icon_color"
+                                app:tabInlineLabel="true"
+                                app:tabTextAppearance="@style/MyCustomTextAppearance" />
+
+
+                            <androidx.viewpager.widget.ViewPager
+                                android:id="@+id/viewPager"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/tabLayout"
+                                android:layout_centerInParent="true"
+                                android:layout_marginTop="@dimen/_8sdp"
+                                tools:layout_editor_absoluteX="8dp" />
+
+                        </RelativeLayout>
+
+                    </androidx.core.widget.NestedScrollView>
+
 
 
                 <LinearLayout
@@ -78,16 +122,6 @@
                     android:orientation="vertical">
 
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerview"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/dp8"
-                        android:paddingTop="@dimen/dp5"
-                        android:paddingEnd="@dimen/dp8"
-                        app:adapter="@{viewModel.notificationAdapter}"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:spanCount="2" />
 
                 </LinearLayout>
 
@@ -105,55 +139,7 @@
                     android:visibility="gone" />
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/view1"
-                    android:orientation="vertical"
-                    >
 
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycler_view1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="@dimen/dp8"
-                        android:paddingEnd="@dimen/dp8"
-                        android:paddingBottom="@dimen/screenMarginRight"
-                        app:adapter="@{viewModel.userTimeLineAdapter}"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-
-                        />
-
-                </LinearLayout>
-
-                <com.facebook.shimmer.ShimmerFrameLayout
-                    android:id="@+id/shimmerLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/toolbar_layout"
-                    android:layout_marginTop="@dimen/_16sdp"
-                    android:visibility="@{viewModel.showShimmerEffect?View.VISIBLE:View.GONE,default=gone}"
-                    >
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <include layout="@layout/shimmer_notification_item" />
-
-                        <include layout="@layout/shimmer_notification_item" />
-
-                        <include layout="@layout/shimmer_notification_item" />
-
-                        <include layout="@layout/shimmer_notification_item" />
-
-                        <include layout="@layout/shimmer_notification_item" />
-
-                        <include layout="@layout/shimmer_notification_item" />
-                    </LinearLayout>
-                </com.facebook.shimmer.ShimmerFrameLayout>
 
             </RelativeLayout>
 

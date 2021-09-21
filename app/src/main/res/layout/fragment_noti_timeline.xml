@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.NotificationViewModel" />
+
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_timeline"
+            android:layout_width="match_parent"
+
+
+            android:layout_height="match_parent"
+            android:layout_above="@+id/LoadProgressBar"
+
+            android:layout_marginBottom="@dimen/_6sdp" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/LoadProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/_4sdp"
+
+            android:visibility="gone"
+            android:layout_alignParentBottom="true"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/dots_animation" />
+
+        <RelativeLayout
+            android:id="@+id/empty_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone">
+
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/illustration"
+                android:layout_width="@dimen/_210sdp"
+                android:layout_height="@dimen/_160sdp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:elevation="@dimen/_2sdp"
+                app:srcCompat="@drawable/ic_no_notifications" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextviewRegular"
+                android:layout_below="@+id/illustration"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_56sdp"
+                android:layout_marginEnd="@dimen/_24sdp"
+
+                android:elevation="@dimen/_2sdp"
+                android:gravity="center"
+                android:text="@string/user_timeline_api_error"
+                android:textColor="@color/text_color_light"
+                android:textSize="@dimen/_14sdp" />
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

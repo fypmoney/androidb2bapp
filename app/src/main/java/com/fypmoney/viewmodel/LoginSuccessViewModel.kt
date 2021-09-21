@@ -103,6 +103,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
                         value = responseData.customerInfoResponseDetails?.id!!
                     )
+
                     // Save the user phone in shared preference
                     SharedPrefUtils.putString(
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE,

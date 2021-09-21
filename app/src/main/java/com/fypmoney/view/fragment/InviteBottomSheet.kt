@@ -19,6 +19,8 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.android.synthetic.main.bottom_sheet_invite.view.*
+import kotlinx.android.synthetic.main.screen_home.*
 
 
 /*
@@ -66,6 +68,9 @@ class InviteBottomSheet(
                 Utility.getCustomerDataFromPreference()?.referralCode
             )
         }
+
+
+
 
         shareButton.setOnClickListener {
             onShareClickListener.onShareClickListener(referralCode.text.toString())

@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
+
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewNotificationBinding
 import com.fypmoney.model.NotificationModel
@@ -20,9 +21,12 @@ import com.fypmoney.view.fragment.*
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.NotificationViewModel
+import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.view_notification.*
 import kotlinx.android.synthetic.main.view_user_feeds.*
+
 
 /*
 * This is used to show list of notification
@@ -39,12 +43,18 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     private var bottomSheet: TaskActionBottomSheetnotificationactivity? = null
     private var taskMessageBottomSheet3: TaskMessageBottomSheet3? = null
     private var bottomSheetMessage: TaskMessageBottomSheet2? = null
-    private var deviceSecurityAskedFor:String? = null
-    private var actionAllowed:String? = null
+    private var deviceSecurityAskedFor: String? = null
+    private var actionAllowed: String? = null
+
     companion object {
         lateinit var mViewModel: NotificationViewModel
-
     }
+
+    private val tabIcons = intArrayOf(
+        com.fypmoney.R.drawable.ic_timeline_tab,
+        com.fypmoney.R.drawable.ic_request_tab_noti,
+
+        )
 
     private lateinit var mViewBinding: ViewNotificationBinding
     override fun getBindingVariable(): Int {
@@ -71,9 +81,32 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         mViewBinding.shimmerLayout.startShimmerAnimation()
         setObserver()
         SharedPrefUtils.putString(applicationContext, SharedPrefUtils.SF_KEY_NEW_MESSAGE, null)
+        initializeTabs(tabLayout)
+    }
+
+    private fun initializeTabs(tabLayout: TabLayout) {
+
+
+        val adapter = ChoresActivity.ViewPagerAdapter(supportFragmentManager)
+
+        adapter.addFragment(NotiTimelineFragment(), getString(R.string.timeline))
+        adapter.addFragment(NotiRequestFragment(), getString(R.string.requests))
+
+
+        viewPager.adapter = adapter
+
+        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.tabRippleColor = null;
+        setupTabIcons()
+
 
     }
 
+    private fun setupTabIcons() {
+        tabLayout.getTabAt(0)!!.setIcon(tabIcons[0])
+        tabLayout.getTabAt(1)!!.setIcon(tabIcons[1])
+
+    }
 
     /**
      * Create this method for observe the viewModel fields

@@ -21,7 +21,7 @@ import com.fypmoney.util.Utility
 class AadhaarAccountActivationViewModel(application: Application) : BaseViewModel(application) {
     var onActivateAccountSuccess = MutableLiveData<KycActivateAccountResponseDetails>()
     var onLogoutSuccess = MutableLiveData<Boolean>()
-
+    var postKycScreenCode = MutableLiveData<String>()
 
     fun callLogOutApi() {
         WebApiCaller.getInstance().request(
@@ -54,7 +54,11 @@ class AadhaarAccountActivationViewModel(application: Application) : BaseViewMode
         when (purpose) {
             ApiConstant.API_KYC_ACTIVATE_ACCOUNT -> {
                 if (responseData is KycActivateAccountResponse) {
+
+                    postKycScreenCode.value =
+                        responseData.kycActivateAccountResponseDetails.postKycScreenCode
                     onActivateAccountSuccess.value = responseData.kycActivateAccountResponseDetails
+
 
                 }
             }
