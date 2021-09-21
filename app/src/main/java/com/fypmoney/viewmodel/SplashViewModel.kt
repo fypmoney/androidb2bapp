@@ -34,8 +34,8 @@ import com.google.gson.Gson
 class SplashViewModel(val  app: Application) : BaseViewModel(app) {
     var getCustomerInfoSuccess = MutableLiveData<CustomerInfoResponse>()
     var moveToNextScreen = MutableLiveData(false)
-
-    val appUpdateState:LiveData<AppUpdateState>
+    var callCustomer = MutableLiveData(false);
+    val appUpdateState: LiveData<AppUpdateState>
         get() = _appUpdateState
     private val _appUpdateState = MutableLiveData<AppUpdateState>()
 
@@ -63,7 +63,8 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
     /*
     *This method is used to call get customer profile API
     * */
-    private fun callGetCustomerProfileApi() {
+    fun callGetCustomerProfileApi() {
+        callCustomer.value = true
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_GET_CUSTOMER_INFO,
@@ -108,7 +109,7 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
             ApiConstant.API_GET_CUSTOMER_INFO -> {
                 if (responseData is CustomerInfoResponse) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
-                    moveToNextScreen.value = true
+
                     // Save the user id in shared preference
                     SharedPrefUtils.putLong(
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
@@ -138,6 +139,7 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                         )
 
                     }
+                    moveToNextScreen.value = true
                 }
             }
             ApiConstant.CHECK_APP_UPDATE->{

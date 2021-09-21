@@ -426,17 +426,30 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     fun inviteUser() {
         val sendIntent = Intent()
         sendIntent.action = Intent.ACTION_SEND
-        sendIntent.putExtra(
-            Intent.EXTRA_TEXT,
-            getString(R.string.share_refral_code,
-                Utility.getCustomerDataFromPreference()?.referralCode,
-                Utility.convertToRs(
-                    SharedPrefUtils.getString(
-                        PockketApplication.instance,
-                        SharedPrefUtils.SF_KEY_REFEREE_CASHBACK
-                    )
-                ),PLAY_STORE_URL)
-        )
+
+
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
+            sendIntent.putExtra(
+                Intent.EXTRA_TEXT,
+                getString(
+                    R.string.share_refral_code_34,
+                    PLAY_STORE_URL
+                )
+            )
+
+        } else {
+            sendIntent.putExtra(
+                Intent.EXTRA_TEXT,
+                getString(
+                    R.string.share_refral_code,
+                    Utility.getCustomerDataFromPreference()?.referralCode,
+                    CASHBACK_AMOUNT,
+                    PLAY_STORE_URL
+                )
+            )
+        }
+
+
         sendIntent.type = "text/plain"
         startActivity(sendIntent)
     }

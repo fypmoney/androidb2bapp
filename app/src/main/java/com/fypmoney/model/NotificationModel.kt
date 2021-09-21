@@ -10,7 +10,8 @@ class NotificationModel {
         @SerializedName("id") val id: String? = null,
         @SerializedName("sourceUserId") val sourceUserId: Int? = null,
         @SerializedName("destinationUserId") val destinationUserId: Int? = null,
-        @SerializedName("requestCategoryCode") val requestCategoryCode: String? = null
+        @SerializedName("requestCategoryCode") val requestCategoryCode: String? = null,
+        @SerializedName("page") val page: Int? = null
     ) : BaseRequest()
     @Keep
     data class NotificationResponse(

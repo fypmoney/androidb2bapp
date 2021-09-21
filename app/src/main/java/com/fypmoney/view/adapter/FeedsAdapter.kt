@@ -115,7 +115,6 @@ class FeedsAdapter(
                         latitude = viewModel.latitude.get(),
                         longitude = viewModel.longitude.get()
                     )
-
                 }
             } catch (e: Exception) {
                 e.printStackTrace()

@@ -14,7 +14,7 @@ import com.fypmoney.viewmodel.NotificationViewModel
 /**
  * This adapter class is used to handle user timelines
  */
-class UserTimeLineAdapter(var viewModel: NotificationViewModel) :
+class UserTimeLineAdapter() :
     RecyclerView.Adapter<BaseViewHolder>() {
     var notificationList: ArrayList<NotificationModel.UserTimelineResponseDetails>? = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
@@ -62,7 +62,7 @@ class UserTimeLineAdapter(var viewModel: NotificationViewModel) :
             if (notificationList1 == null) {
                 notificationList!!.clear()
             } else {
-                notificationList!!.clear()
+
                 notificationList1?.forEach {
                     notificationList!!.add(it)
                 }

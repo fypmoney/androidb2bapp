@@ -94,6 +94,7 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
   * */
 
     fun callGetFamilyNotificationApi(aprid: String?) {
+        Log.d("chack", aprid.toString())
         if (!aprid.isNullOrEmpty()) {
             WebApiCaller.getInstance().request(
                 ApiRequest(
@@ -143,7 +144,8 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                     dtoken = SharedPrefUtils.getString(
                         getApplication(),
                         SharedPrefUtils.SF_KEY_FIREBASE_TOKEN
-                    ) ?: ""
+                    ) ?: "",
+                    isHomeViewed = "YES"
 
                 ), onResponse = this,
                 isProgressBar = false

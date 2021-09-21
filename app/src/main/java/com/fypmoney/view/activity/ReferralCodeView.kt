@@ -49,18 +49,28 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
     private fun setObserver() {
         mViewModel.onSkipClicked.observe(this) {
             if (it) {
-                intentToActivity()
+                mViewModel.callGetCustomerProfileApi()
                 mViewModel.onSkipClicked.value = false
             }
 
         }
         mViewModel.onReferralCodeSuccess.observe(this) {
             if (it) {
-                intentToActivity()
+
+                mViewModel.callGetCustomerProfileApi()
                 mViewModel.onReferralCodeSuccess.value = false
             }
 
         }
+
+        mViewModel.onCustomerApiSuccess.observe(this) {
+            if (it) {
+                intentToActivity()
+                mViewModel.onCustomerApiSuccess.value = false
+            }
+
+        }
+
 
     }
 
@@ -86,6 +96,7 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
                 finishAffinity()
             }
             else -> {
+
                 if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
                     startActivity(Intent(this@ReferralCodeView, HomeView::class.java))
 
