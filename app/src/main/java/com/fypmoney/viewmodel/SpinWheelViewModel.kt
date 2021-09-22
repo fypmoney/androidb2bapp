@@ -63,43 +63,43 @@ class SpinWheelViewModel(application: Application) : BaseViewModel(application) 
     private fun setDataInSpinWheel() {
         val luckyItem1 = LuckyItem()
         luckyItem1.topText = PockketApplication.instance.getString(R.string.better_luck_emoji)
-        luckyItem1.icon = R.drawable.mynt
+        luckyItem1.icon = R.drawable.cash
         luckyItem1.color = ContextCompat.getColor(getApplication(), R.color.text_color_dark)
         luckyItemList.add(luckyItem1)
 
         val luckyItem2 = LuckyItem()
         luckyItem2.topText = "5"
-        luckyItem2.icon = R.drawable.mynt
+        luckyItem2.icon = R.drawable.cash
         luckyItem2.color = ContextCompat.getColor(getApplication(), R.color.color_dark_red)
         luckyItemList.add(luckyItem2)
 
         val luckyItem3 = LuckyItem()
         luckyItem3.topText = "10"
-        luckyItem3.icon = R.drawable.mynt
+        luckyItem3.icon = R.drawable.cash
         luckyItem3.color = ContextCompat.getColor(getApplication(), R.color.color_dark_yellow)
         luckyItemList.add(luckyItem3)
 
         val luckyItem4 = LuckyItem()
         luckyItem4.topText = "20"
-        luckyItem4.icon = R.drawable.mynt
+        luckyItem4.icon = R.drawable.cash
         luckyItem4.color = ContextCompat.getColor(getApplication(), R.color.color_dark_red)
         luckyItemList.add(luckyItem4)
 
         val luckyItem5 = LuckyItem()
         luckyItem5.topText = "50"
-        luckyItem5.icon = R.drawable.mynt
+        luckyItem5.icon = R.drawable.cash
         luckyItem5.color = ContextCompat.getColor(getApplication(), R.color.color_dark_yellow)
         luckyItemList.add(luckyItem5)
 
         val luckyItem6 = LuckyItem()
         luckyItem6.topText = "100"
-        luckyItem6.icon = R.drawable.mynt
+        luckyItem6.icon = R.drawable.cash
         luckyItem6.color = ContextCompat.getColor(getApplication(), R.color.color_dark_black)
         luckyItemList.add(luckyItem6)
 
         val luckyItem7 = LuckyItem()
         luckyItem7.topText = "500"
-        luckyItem7.icon = R.drawable.mynt
+        luckyItem7.icon = R.drawable.cash
         luckyItem7.color = ContextCompat.getColor(getApplication(), R.color.color_dark_yellow)
         luckyItemList.add(luckyItem7)
     }

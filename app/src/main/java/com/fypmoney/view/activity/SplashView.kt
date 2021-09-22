@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 
 import com.fypmoney.BR
@@ -45,7 +46,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
-       //val appSignatureHelper =  AppSignatureHelper(this)
+        //val appSignatureHelper =  AppSignatureHelper(this)
         //Log.d("Data","Chutiya "+appSignatureHelper.appSignatures)
         val uri: Uri =
             Uri.parse("android.resource://" + packageName + "/" + R.raw.splash)
@@ -54,6 +55,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         video.setOnPreparedListener { video.start() }
 
 
+//        Log.d("chacknoti",intent.extras)
 
 
     }

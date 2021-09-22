@@ -27,6 +27,7 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
     var loading = MutableLiveData(false)
     var yourtask = ObservableField(false)
     var rewardHistoryList: MutableLiveData<ArrayList<RewardHistoryResponse>> = MutableLiveData()
+    var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
     var error: MutableLiveData<String> = MutableLiveData()
 
     var AssignedByYouTask: MutableLiveData<ArrayList<AssignedTaskResponse>> = MutableLiveData()
@@ -44,7 +45,8 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
 
     init {
 
-
+        callRewardHistory()
+        callRewardSummary()
     }
 
     /*
@@ -62,46 +64,28 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
     /*
       * This method is used to call user timeline API
       * */
-
-    fun callLoadMoreTask(page: Int) {
-
-
+    fun callRewardHistory() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                purpose = ApiConstant.API_YOUR_TASK,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_YOUR_TASK),
-                request_type = ApiUrl.POST,
-                GetTaskResponse(
-                    1,
-                    page,
-                    10,
-                    "createdDate,desc"
-                ), onResponse = this,
-                isProgressBar = false
+                ApiConstant.RewardsHistory,
+                NetworkUtil.endURL(ApiConstant.RewardsHistory),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
             )
         )
-
     }
 
-    fun callLoadMoreAssignedTask(page: Int) {
-
-
+    fun callRewardSummary() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                purpose = ApiConstant.API_ASSIGN_TASK,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_ASSIGN_TASK),
-                request_type = ApiUrl.POST,
-                GetTaskResponse(
-                    0,
-                    page,
-                    10,
-                    "createdDate,desc"
-                ), onResponse = this,
-                isProgressBar = false
+                ApiConstant.API_REWARD_SUMMARY,
+                NetworkUtil.endURL(ApiConstant.API_REWARD_SUMMARY),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
             )
-
         )
-
     }
 
 
@@ -118,14 +102,27 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
 
                 val array = Gson().fromJson<Array<RewardHistoryResponse>>(
                     json.get("data").toString(),
-                    Array<AssignedTaskResponse>::class.java
+                    Array<RewardHistoryResponse>::class.java
                 )
                 val arrayList = ArrayList(array.toMutableList())
                 rewardHistoryList.postValue(arrayList)
 
 
             }
+            ApiConstant.API_REWARD_SUMMARY -> {
 
+
+                val json = JsonParser().parse(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson<RewardPointsSummaryResponse>(
+                    json.get("data").toString(),
+                    RewardPointsSummaryResponse::class.java
+                )
+
+                rewardSummaryStatus.postValue(array)
+
+
+            }
 
         }
 

@@ -8,13 +8,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
 import com.fypmoney.model.AssignedTaskResponse
+import com.fypmoney.model.RewardHistoryResponse
 import com.fypmoney.view.interfaces.ListItemClickListener
+import kotlinx.android.synthetic.main.reward_history_item_leaderboard.view.*
 
 import java.util.*
 
 
 class RewardsHistoryLeaderboardAdapter(
-    val items: ArrayList<AssignedTaskResponse>,
+    val items: ArrayList<RewardHistoryResponse>,
     val context: Context,
     val clickInterface: ListItemClickListener
 ) : RecyclerView.Adapter<RewardsHistoryLeaderboardAdapter.ViewHolder>() {
@@ -31,11 +33,26 @@ class RewardsHistoryLeaderboardAdapter(
 
     override fun getItemCount(): Int {
 
-        return 10
+        return items.size
     }
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        holder.numberofMynts.text = items[position].loyaltyPointsBurnt.toString() + " Mynts"
+        holder.desc.text = items[position].descriptionl
+
+        if (items[position].cashbackWon != null && items[position].cashbackWon!! > 0) {
+            holder.amount.visibility = View.VISIBLE
+            holder.won_tv.visibility = View.VISIBLE
+
+
+        } else {
+            holder.amount.visibility = View.VISIBLE
+            holder.won_tv.visibility = View.VISIBLE
+        }
+
+        holder.amount.text = items[position].cashbackWon.toString()
 
 
     }
@@ -45,6 +62,10 @@ class RewardsHistoryLeaderboardAdapter(
 
 
         var card = view
+        var desc = view.desc
+        var won_tv = view.won_tv
+        var amount = view.amount
+        var numberofMynts = view.heading
 
 
 //        init {

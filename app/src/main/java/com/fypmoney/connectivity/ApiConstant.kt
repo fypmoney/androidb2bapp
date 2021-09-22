@@ -101,6 +101,9 @@ object ApiConstant {
     const val API_SETTINGS = "/services/PockketService/api/get/system-properties/by-keys"
     const val RewardsHistory =
         "services/PockketService/api/rewardHistory"
+
+    const val API_REWARD_SUMMARY =
+        "services/loyaltyservice/api/loyalty/points/summary"
 }
 
 

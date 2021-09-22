@@ -1,27 +1,17 @@
 package com.fypmoney.view.fragment
 
-import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import com.fypmoney.R
-import com.fypmoney.base.PaginationListener
 import com.fypmoney.model.AssignedTaskResponse
-import com.fypmoney.view.activity.ChoresActivity
 
 import com.fypmoney.view.adapter.YourTasksAdapter
-import com.fypmoney.view.interfaces.ListItemClickListener
-import com.fypmoney.viewmodel.NotificationViewModel
 import com.fypmoney.viewmodel.RewardsViewModel
 import kotlinx.android.synthetic.main.fragment_rewards_overview.view.*
-
-import kotlinx.android.synthetic.main.fragment_your_task.view.*
-import kotlinx.android.synthetic.main.fragment_your_task.view.LoadProgressBar
 
 
 import kotlin.collections.ArrayList
@@ -48,7 +38,7 @@ class RewardsOverviewFragment : Fragment() {
         root = inflater.inflate(R.layout.fragment_rewards_overview, container, false)
         activity?.let {
             sharedViewModel = ViewModelProvider(it).get(RewardsViewModel::class.java)
-            observeInput(sharedViewModel!!)
+            observeInput(sharedViewModel!!, root!!)
 
         }
 
@@ -56,10 +46,21 @@ class RewardsOverviewFragment : Fragment() {
         return root
     }
 
-    private fun observeInput(sharedViewModel: RewardsViewModel) {
+    private fun observeInput(sharedViewModel: RewardsViewModel, root: View) {
+
+        sharedViewModel.rewardSummaryStatus.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { list ->
+
+
+                root.totalearned.text = list.totalPoints.toString()
+                root.burned_points.text = list.burntPoints.toString()
+                root.points_left.text = list.remainingPoints.toString()
+
+
+            })
 
     }
-
 
 
 }

@@ -170,8 +170,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     private fun onNotificationClick(remoteMessage: RemoteMessage): Intent {
         when (remoteMessage.data[AppConstants.NOTIFICATION_KEY_NOTIFICATION_TYPE]) {
             AppConstants.NOTIFICATION_TYPE_IN_APP_DIRECT -> {
-
+                Log.d("chacknoticlicked", "t")
                 when (remoteMessage.data[AppConstants.NOTIFICATION_KEY_TYPE]) {
+
+
                     AppConstants.TYPE_APP_SLIDER_NOTIFICATION -> {
                         val intent = Intent(applicationContext, HomeView::class.java)
                         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.NOTIFICATION)
@@ -186,6 +188,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
                     }
                     AppConstants.TYPE_NONE_NOTIFICATION -> {
+                        Log.d("chacknoticlicked2", "t")
                         try {
                             val intent = Intent(
                                 applicationContext,

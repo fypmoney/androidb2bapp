@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.R
 import com.fypmoney.model.AssignedTaskResponse
+import com.fypmoney.model.RewardHistoryResponse
 import com.fypmoney.view.adapter.RewardsHistoryLeaderboardAdapter
 
 import com.fypmoney.view.interfaces.ListItemClickListener
@@ -30,7 +31,7 @@ class RewardHistoryFragment : Fragment() {
     }
 
     private var sharedViewModel: RewardsViewModel? = null
-    private var itemsArrayList: ArrayList<AssignedTaskResponse> = ArrayList()
+    private var itemsArrayList: ArrayList<RewardHistoryResponse> = ArrayList()
     private var isLoading = false
     private var typeAdapterHistory: RewardsHistoryLeaderboardAdapter? = null
     private var root: View? = null
@@ -61,15 +62,16 @@ class RewardHistoryFragment : Fragment() {
         sharedViewModel.rewardHistoryList.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
-//                root?.LoadProgressBar?.visibility = View.GONE
+                root?.LoadProgressBar?.visibility = View.GONE
 
-//                if (NotiTimelineFragment.page == 0) {
-//                    typeAdapterHistory?.setList(null)
-//                }
-//
-//                typeAdapterHistory?.setList(list)
-//                isLoading = false
-//                typeAdapterHistory!!.notifyDataSetChanged()
+                if (page == 0) {
+                    itemsArrayList.clear()
+
+                }
+                itemsArrayList.addAll(list)
+
+                isLoading = false
+                typeAdapterHistory?.notifyDataSetChanged()
 
                 if (list.size > 0) {
                     root?.empty_screen?.visibility = View.GONE

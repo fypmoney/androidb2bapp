@@ -67,7 +67,7 @@ class SpinWheelView : BaseActivity<ViewSpinWheelBinding, SpinWheelViewModel>(),
         // Wait until the RecyclerView is laid out.
         recyclerView.post(Runnable { // Shift the view to snap  near the center of the screen.
             // This does not have to be precise.
-            val dx: Int = (recyclerView.getWidth() - recyclerView.getChildAt(0).getWidth()) / 2
+            val dx: Int = (recyclerView.width - recyclerView.getChildAt(0).width) / 2
             recyclerView.scrollBy(-dx, 0)
             // Assign the LinearSnapHelper that will initially snap the near-center view.
             val snapHelper = LinearSnapHelper()
