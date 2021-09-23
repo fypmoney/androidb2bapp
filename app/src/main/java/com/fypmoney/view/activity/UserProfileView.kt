@@ -284,7 +284,24 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
         }
     }
 
-    override fun onItemClick(position: Int) {
+
+
+
+    /*
+    * This method is used to call log out
+    * */
+    private fun callLogOutBottomSheet() {
+        val bottomSheet =
+            LogoutBottomSheet(this)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "LogOutBottomSheet")
+    }
+
+    override fun onLogoutButtonClick() {
+        mViewModel.callLogOutApi()
+    }
+
+    override fun onItemClick(position: Int, name: String?) {
         when (position) {
             0 -> {
                 Utility.goToAppSettings(applicationContext)
@@ -306,21 +323,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
             }
 
         }
-    }
 
-
-    /*
-    * This method is used to call log out
-    * */
-    private fun callLogOutBottomSheet() {
-        val bottomSheet =
-            LogoutBottomSheet(this)
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "LogOutBottomSheet")
-    }
-
-    override fun onLogoutButtonClick() {
-        mViewModel.callLogOutApi()
     }
 
 

@@ -76,7 +76,7 @@ class PersonaliseYourCardActivity : BaseActivity<ActivityPersonaliseYourCardBind
             binding.nameOnCardTv.text = text
         }
         binding.nameOnCardEt.doAfterTextChanged {
-            binding.getThisCardBtn.isEnabled = true
+            binding.getThisCardBtn.isEnabled = binding.nameOnCardEt.text!!.isNotEmpty()
         }
         SharedPrefUtils.getString(this,
             SharedPrefUtils.SF_KEY_NAME_ON_CARD

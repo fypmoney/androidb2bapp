@@ -57,6 +57,5 @@ class PlaceOrderSuccessActivity : BaseActivity<ActivityPlaceOrderSucessBinding,P
 
     override fun onBackPressed() {
         startActivity(Intent(this@PlaceOrderSuccessActivity, HomeView::class.java))
-        finishAffinity()
     }
 }

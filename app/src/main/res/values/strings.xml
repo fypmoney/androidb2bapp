@@ -849,6 +849,7 @@ Coming really soon!
     <string name="mission_desc">Mission description</string>
     <string name="emoji">Emoji</string>
     <string name="pay">Pay</string>
+    <string name="pay_amount">Pay ₹%1$s</string>
     <string name="instagram">Instagram</string>
     <string name="facebook">Facebook</string>
     <string name="youtube">Youtube</string>
@@ -900,8 +901,13 @@ Coming really soon!
     <string name="unfortunately_we_are_not_serviceable_in_your_neighborhood_but_we_are_moving_super_fast_to_bring_the_awesome_fyp_card_to_your_pockets">Unfortunately we are not serviceable in your neighborhood but we are moving super fast to bring the awesome Fyp card to your pockets.</string>
     <string name="your_order_has_been_placed_n_successfully">Your order has been placed \n successfully!</string>
     <string name="net_paid">Net Paid</string>
-    <string name="by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy"><![CDATA[By tapping Activate Now, you agree to the Terms of Service & Privacy Policy]]></string>
+    <string name="by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy">"By tapping Activate Now, you agree to the %1$s &amp; %2$s"</string>
     <string name="set">Set</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="your_card_has_been_activated_n_successfully">Your card has been activated \n successfully.</string>
+    <string name="click_on_set_pin_and_setup_your_n_pin_and_expiry_date_to_enable_n_offline_card_transactions">Click on “ Set Pin” and setup your \n PIN and expiry date to enable \n offline card transactions.</string>
+    <string name="set_pin">Set Pin</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
@@ -913,6 +919,7 @@ Coming really soon!
         <item>Help?</item>
         <item>Log out</item>
     </string-array>
+
     <string-array name="relationNameList">
         <item>Parent</item>
         <item>Sibling</item>
@@ -922,7 +929,7 @@ Coming really soon!
         <item>Grand Child</item>
         <item>Other</item>
     </string-array>
-
+    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="order_card_list">
         <item>Set your limit</item>
         <item>Sensitive details kept safe</item>

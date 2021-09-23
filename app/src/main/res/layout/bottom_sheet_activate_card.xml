@@ -55,14 +55,30 @@
             android:text="@string/activate_card_text2"
             android:textAlignment="center" />
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/t_n_c_cb"
-            style="@style/TextviewRegular"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
-            android:text="@string/by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy"
-            android:textAlignment="center" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/t_n_c_cb"
+                style="@style/TextviewRegular"
+                android:layout_gravity="start"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:text=""
+                android:textAlignment="viewStart" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/t_n_c_tv"
+                style="@style/TextviewRegular"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy"
+                android:textAlignment="center" />
+        </LinearLayout>
+
 
 
 

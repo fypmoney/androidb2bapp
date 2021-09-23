@@ -3,6 +3,7 @@ package com.fypmoney.view.ordercard.cardorderoffer
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -47,7 +48,10 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
         }*/
         setUpView()
         setUpObserver()
+
     }
+
+
 
     private fun setUpView() {
         mViewModel.userOfferCard?.let {

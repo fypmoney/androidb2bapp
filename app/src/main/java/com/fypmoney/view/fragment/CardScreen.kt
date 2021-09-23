@@ -31,6 +31,11 @@ import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.view.ordercard.OrderCardView
+import com.fypmoney.view.setpindialog.SetPinDialogFragment
+import com.fypmoney.view.setpindialog.SetPinFragmentVM
+import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+import com.fypmoney.view.webview.WebViewActivity
 import com.fypmoney.viewmodel.CardScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.card_add_task.*
@@ -248,15 +253,15 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                             }
                             if(cardInfo.isCardActivationAllowed==YES){
                                 val textString = ArrayList<String>()
+                                textString.add(PockketApplication.instance.getString(R.string.activate_card_heading))
                                 textString.add(PockketApplication.instance.getString(R.string.card_settings))
                                 textString.add(PockketApplication.instance.getString(R.string.track_order))
                                 textString.add(PockketApplication.instance.getString(R.string.account_stmt))
-                                textString.add(PockketApplication.instance.getString(R.string.activate_card_heading))
                                 val drawableIds = ArrayList<Int>()
+                                drawableIds.add(R.drawable.ic_activate)
                                 drawableIds.add(R.drawable.ic_card_settings)
                                 drawableIds.add(R.drawable.ic_order_card)
                                 drawableIds.add(R.drawable.ic_account_statement)
-                                drawableIds.add(R.drawable.ic_activate)
                                 myProfileAdapter.setList(drawableIds,textString)
                             }
                             if(cardInfo.status==AppConstants.ENABLE){
@@ -286,6 +291,10 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         mViewModel.onActivateCardInit.observe(viewLifecycleOwner) {
             if (it) {
                 mViewModel.onActivateCardInit.value = false
+                val setPinFragment = SetPinDialogFragment(setPinClickListener = {
+                    mViewModel.callSetOrChangeApi()
+                })
+                setPinFragment.show(childFragmentManager,"set pin")
             }
         }
 
@@ -387,33 +396,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         )
     }
 
-    override fun onItemClick(position: Int) {
-        when (position) {
-            0 -> {
-                callCardSettingsBottomSheet()
-            }
-            1 -> {
-                SharedPrefUtils.getString(requireContext(),SharedPrefUtils.SF_KEY_KIT_NUMBER).let {
-                    if(it.isNullOrEmpty()){
-                        intentToActivity(OrderCardView::class.java)
 
-                    }else{
-                        intentToActivity(TrackOrderView::class.java)
-
-                    }
-                }
-                //intentToActivity(NotifyMeOrderCardActivity::class.java)
-
-            }
-            2 -> {
-                intentToActivity(BankTransactionHistoryView::class.java)
-            }
-            3 -> {
-                callActivateCardSheet()
-            }
-
-        }
-    }
 
     private fun intentToActivity(aClass: Class<*>, type: String? = null, url: String? = null) {
         val intent = Intent(requireActivity(), aClass)
@@ -548,9 +531,24 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     }
 
     override fun onActivateCardClick(kitFourDigit: String?) {
-        mViewModel.callActivateCardApi(kitFourDigit)
-
+        //mViewModel.callActivateCardApi(kitFourDigit)
+        val setPinFragment = SetPinDialogFragment(setPinClickListener = {
+            mViewModel.callSetOrChangeApi()
+        })
+        setPinFragment.show(childFragmentManager,"set pin")
     }
+
+    override fun onPrivacyPolicyTermsClicked(title: String, url: String) {
+        openWebPageFor(title,url)
+    }
+
+    private fun openWebPageFor(title: String, url: String) {
+        val intent = Intent(requireActivity(), WebViewActivity::class.java)
+        intent.putExtra(ARG_WEB_URL_TO_OPEN, url)
+        intent.putExtra(ARG_WEB_PAGE_TITLE, title)
+        startActivity(intent)
+    }
+
 
     /**
      * Method to navigate to the Feeds screen after login
@@ -583,6 +581,32 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     override fun setPinClick() {
         mViewModel.callSetOrChangeApi()
+    }
+
+    override fun onItemClick(position: Int, name: String?) {
+        when (name) {
+            PockketApplication.instance.getString(R.string.card_settings) -> {
+                callCardSettingsBottomSheet()
+            }
+            PockketApplication.instance.getString(R.string.order_card) -> {
+                intentToActivity(OrderCardView::class.java)
+            }
+            PockketApplication.instance.getString(R.string.track_order)->{
+                SharedPrefUtils.getString(requireContext(),SharedPrefUtils.SF_KEY_KIT_NUMBER).let {
+                    if(!it.isNullOrEmpty()){
+                        intentToActivity(TrackOrderView::class.java)
+                    }
+                }
+            }
+            PockketApplication.instance.getString(R.string.account_stmt) -> {
+                intentToActivity(BankTransactionHistoryView::class.java)
+            }
+            PockketApplication.instance.getString(R.string.activate_card_heading) -> {
+                callActivateCardSheet()
+            }
+
+        }
+
     }
 
 }

@@ -73,9 +73,13 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
     }
 
     private fun setUpViews() {
-        mViewModel.userOfferCard.let {
+
+        mViewModel.userOfferCard?.let {
             binding.cardPriceValueTv.text =
                 "${getString(R.string.Rs)} ${Utility.convertToRs(it?.mrp.toString())}"
+            binding.cardNameTv.text = it.name
+            binding.btnContinue.setText(String.format(getString(R.string.pay_amount),Utility.convertToRs(
+                it.mrp)))
         }
         Utility.getCustomerDeliveryAddress()?.let {
              binding.pinCodeTie.setText(it.pincode)
@@ -225,7 +229,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                                                 city:String,
                                                 houseNumber:String,
                                                 roadNumber:String):Boolean{
-        if(pinCode.isEmpty() and state.isEmpty() and city.isEmpty() and houseNumber.isEmpty() and roadNumber.isEmpty()){
+        if(pinCode.isEmpty() or state.isEmpty() or city.isEmpty() or houseNumber.isEmpty() or roadNumber.isEmpty()){
             return false
         }
         return true

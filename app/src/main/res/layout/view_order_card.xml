@@ -17,7 +17,7 @@
         android:id="@+id/main_cl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_order_card_bg">
+        android:background="@color/black">
 
         <include
             android:id="@+id/toolbar_layout"
@@ -56,17 +56,18 @@
                     android:text="@string/fyp_card"/>
 
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <VideoView
                     android:id="@+id/card_front_aiv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:padding="1dp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@android:color/transparent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/card_price_tv"
-                    app:srcCompat="@drawable/ic_physical_card"/>
+                    app:layout_constraintTop_toBottomOf="@+id/title_tv"
+                    app:layout_constraintBottom_toTopOf="@+id/card_price_tv"/>
+
 
 
                 <TextView
@@ -86,7 +87,7 @@
                     app:customBackgroundColor="@{@color/color_mat_black}"
                     app:customIsRounded="@{false}"
                     app:customCornerRadius="@{@dimen/dp12}"
-                    android:layout_marginBottom="40dp"
+                    android:layout_marginBottom="20dp"
                     app:layout_constraintBottom_toTopOf="@+id/get_this_card_btn"/>
 
 

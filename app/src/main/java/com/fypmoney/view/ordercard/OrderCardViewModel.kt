@@ -44,7 +44,7 @@ class OrderCardViewModel(application: Application) : BaseViewModel(application) 
                 NetworkUtil.endURL(ApiConstant.API_USER_OFFER_CARD),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
     }

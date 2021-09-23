@@ -2,6 +2,7 @@ package com.fypmoney.view.ordercard
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.databinding.adapters.ViewBindingAdapter
@@ -15,6 +16,7 @@ import com.fypmoney.bindingAdapters.setSomePartOfTextInColor
 import com.fypmoney.util.AppConstants.ORDER_CARD_INFO
 import com.fypmoney.view.ordercard.cardorderoffer.CardOrderOfferActivity
 import com.google.common.base.Ascii.RS
+import kotlinx.android.synthetic.main.activity_notify_me_order_card.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
@@ -50,6 +52,15 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
             isBackArrowVisible = true,
             backArrowTint = Color.WHITE
         )
+
+        val uri: Uri =
+            Uri.parse("android.resource://" + packageName + "/" + R.raw.ic_card_video)
+        mViewBinding.cardFrontAiv.setMediaController(null)
+        mViewBinding.cardFrontAiv.setVideoURI(uri)
+        mViewBinding.cardFrontAiv.setOnPreparedListener {
+            it.isLooping = true
+            mViewBinding.cardFrontAiv.start()
+        }
         setObservers()
 
     }
@@ -66,7 +77,7 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
     private fun handelState(it: OrderCardViewModel.OrderCardState?) {
         when(it){
             is OrderCardViewModel.OrderCardState.Error -> {
-
+                onBackPressed()
             }
             is OrderCardViewModel.OrderCardState.Success -> {
                 Utility.convertToRs("${it.userOfferCard.basePrice}")?.let { it1 ->

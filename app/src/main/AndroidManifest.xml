@@ -83,11 +83,6 @@
             android:hardwareAccelerated="false"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".view.activity.FirstScreenView"

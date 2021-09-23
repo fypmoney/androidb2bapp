@@ -72,5 +72,8 @@ class TrackOrderView : BaseActivity<ViewTrackOrderBinding, TrackOrderViewModel>(
         startActivity(Intent(this@TrackOrderView, aClass))
     }
 
+    override fun onBackPressed() {
+        startActivity(Intent(this@TrackOrderView, HomeView::class.java))
+    }
 
 }

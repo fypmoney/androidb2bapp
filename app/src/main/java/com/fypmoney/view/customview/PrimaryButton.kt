@@ -23,6 +23,8 @@ class PrimaryButton : FrameLayout {
     private var binding: BtnPrimaryBinding? = null
     private var enabledBackgroundColor: Int = ContextCompat.getColor(context, R.color.colorPrimary)
     private var disabledBackgroundColor: Int = ContextCompat.getColor(context, R.color.buttonUnselectedColor)
+    private var disabledTextColor: Int = ContextCompat.getColor(context, R.color.grey_heading)
+    private var enabledTextColor: Int = ContextCompat.getColor(context, R.color.white)
     constructor(context: Context) : super(context) {
         init(context, null, 0)
     }
@@ -113,9 +115,15 @@ class PrimaryButton : FrameLayout {
             binding!!.primaryButton.setBackgroundColor(
                 enabledBackgroundColor
             )
+            binding!!.primaryButton.setTextColor(
+                enabledTextColor
+            )
         } else {
             binding!!.primaryButton.setBackgroundColor(
                 disabledBackgroundColor
+            )
+            binding!!.primaryButton.setTextColor(
+                disabledTextColor
             )
         }
     }
