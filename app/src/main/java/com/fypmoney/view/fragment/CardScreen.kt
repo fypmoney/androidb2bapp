@@ -108,6 +108,11 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        mViewModel.callGetWalletBalanceApi()
+        mViewModel.callGetBankProfileApi()
+    }
     private fun showCardLayout() {
         val textString = ArrayList<String>()
         textString.add(PockketApplication.instance.getString(R.string.card_settings))
@@ -128,10 +133,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         setObservers()
         loadAnimations()
         changeCameraDistance()
-        mViewModel.callGetWalletBalanceApi()
-        mViewModel.callGetBankProfileApi()
-
-
         val behavior: BottomSheetBehavior<*> =
             BottomSheetBehavior.from<View>(mViewBinding.clBottomsheet)
         BottomSheetBehavior.from<ConstraintLayout>(mViewBinding.clBottomsheet)
@@ -290,11 +291,12 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         }
         mViewModel.onActivateCardInit.observe(viewLifecycleOwner) {
             if (it) {
-                mViewModel.onActivateCardInit.value = false
                 val setPinFragment = SetPinDialogFragment(setPinClickListener = {
                     mViewModel.callSetOrChangeApi()
                 })
                 setPinFragment.show(childFragmentManager,"set pin")
+                mViewModel.onActivateCardInit.value = false
+
             }
         }
 
@@ -498,7 +500,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 mViewModel.callCardSettingsUpdateApi(upDateCardSettingsRequest)
             }
             getString(R.string.activate_card_heading) -> {
-                mViewModel.callActivateCardInitApi()
+                mViewModel.callActivateCardApi(fourDigitNumber)
 
             }
         }
@@ -531,11 +533,8 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     }
 
     override fun onActivateCardClick(kitFourDigit: String?) {
-        //mViewModel.callActivateCardApi(kitFourDigit)
-        val setPinFragment = SetPinDialogFragment(setPinClickListener = {
-            mViewModel.callSetOrChangeApi()
-        })
-        setPinFragment.show(childFragmentManager,"set pin")
+        mViewModel.callActivateCardApi(kitFourDigit)
+
     }
 
     override fun onPrivacyPolicyTermsClicked(title: String, url: String) {

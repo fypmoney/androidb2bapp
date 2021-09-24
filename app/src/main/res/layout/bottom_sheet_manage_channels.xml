@@ -8,10 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingTop="@dimen/_24sdp"
+        android:paddingBottom="@dimen/_24sdp"
         android:paddingStart="@dimen/screenMarginLeft"
         android:paddingEnd="@dimen/screenMarginRight">
 
         <View
+            android:id="@+id/view12"
             android:layout_width="40dp"
             android:layout_height="4dp"
             android:layout_centerHorizontal="true"
@@ -32,12 +35,42 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/verification_title"
             style="@style/TextviewRegular"
+            android:layout_below="@+id/view12"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="26dp"
             android:text="@string/manage_channels_heading"
             android:textColor="@color/text_color_dark"
             android:textSize="17sp" />
 
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/ecom_virtual"
+            style="@style/TextviewRegular"
+            android:layout_alignTop="@+id/ecom_virtual_switch"
+            android:layout_alignBottom="@+id/ecom_virtual_switch"
+            android:gravity="center"
+            android:text="@string/ecom"
+            android:textColor="@color/text_color_dark"
+            android:textSize="17sp" />
+
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/ecom_virtual_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/verification_title"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:thumb="@drawable/thumb_selector"
+            app:track="@drawable/track_selector" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/ecom_virtual_switch"
+            android:layout_marginTop="12dp"
+            android:background="@color/dividerColor" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/point_sale"
@@ -56,22 +89,15 @@
             android:id="@+id/point_sale_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/verification_title"
+            android:layout_below="@id/view2"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="15dp"
             android:thumb="@drawable/thumb_selector"
             android:visibility="gone"
             app:track="@drawable/track_selector"
             tools:visibility="visible" />
 
-        <View
-            android:id="@+id/view3"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_below="@+id/point_sale_switch"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:background="@color/dividerColor" />
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/atm_channel_tv"
@@ -90,7 +116,7 @@
             android:id="@+id/atm_channel_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/view3"
+            android:layout_below="@id/point_sale_switch"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="@dimen/dp10"
             android:thumb="@drawable/thumb_selector"
@@ -98,36 +124,9 @@
             app:track="@drawable/track_selector"
             tools:visibility="visible" />
 
-        <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_below="@+id/atm_channel_tv"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15dp"
-            android:background="@color/dividerColor" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/ecom_virtual"
-            style="@style/TextviewRegular"
-            android:layout_alignTop="@+id/ecom_virtual_switch"
-            android:layout_alignBottom="@+id/ecom_virtual_switch"
-            android:text="@string/ecom"
-            android:gravity="center"
-            android:textColor="@color/text_color_dark"
-            android:textSize="17sp" />
 
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/ecom_virtual_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/view2"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="40dp"
-            android:thumb="@drawable/thumb_selector"
-            app:track="@drawable/track_selector" />
+
 
 
     </RelativeLayout>

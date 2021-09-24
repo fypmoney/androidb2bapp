@@ -15,7 +15,7 @@ import com.fypmoney.databinding.FragmentSetPinDialogBinding
 
 class SetPinDialogFragment(val setPinClickListener:()->Unit) : BaseDialogFragment<FragmentSetPinDialogBinding>() {
 
-    private val setPinFragmentVM = ViewModelProvider(this).get(SetPinFragmentVM::class.java)
+    private lateinit var  setPinFragmentVM:SetPinFragmentVM
 
     override val baseFragmentVM: BaseViewModel
         get() = setPinFragmentVM
@@ -23,6 +23,12 @@ class SetPinDialogFragment(val setPinClickListener:()->Unit) : BaseDialogFragmen
         get() = SetPinDialogFragment::class.java.simpleName
     override val layoutId: Int
         get() = R.layout.fragment_set_pin_dialog
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setPinFragmentVM = ViewModelProvider(this).get(SetPinFragmentVM::class.java)
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

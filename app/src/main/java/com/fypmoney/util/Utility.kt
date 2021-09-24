@@ -618,9 +618,10 @@ object Utility {
 
                         // Get the current contact phone number
                         val number = contacts.getString(
-                            contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                            contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                        )
                         var updatedNumber = number.replace(" ", "").trim()
-                        if(updatedNumber.length>10){
+                        if (updatedNumber.length > 10) {
                             updatedNumber = updatedNumber.takeLast(10)
                         }
                         contactEntity.contactNumber = updatedNumber
@@ -855,6 +856,7 @@ object Utility {
             )
         return gson.fromJson(json, CustomerInfoResponseDetails::class.java)
     }
+
     fun setCustomerDeliveryAddress(deliveryAddress: UserDeliveryAddress) {
         val gson = Gson()
         val json = gson.toJson(deliveryAddress)
@@ -976,7 +978,6 @@ object Utility {
     }
 
 
-
     /*
     * This method is used to compare dates
     * */
@@ -1053,38 +1054,43 @@ object Utility {
     }
 
 
+    fun deeplinkRedirection(screenName: String, context: Context) {
+        var intent: Intent? = null
 
+        when (screenName) {
+            HOMEVIEW -> {
+                intent = Intent(context, HomeView::class.java)
+            }
+            ReferralScreen -> {
+                intent = Intent(context, ReferAndEarnActivity::class.java)
 
-    fun deeplinkRedirection(screenName:String,context: Context){
-        var intent:Intent? = null
+            }
+            CardScreen -> {
+                intent = Intent(context, HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, CardScreen)
 
-        when(screenName){
-            HOMEVIEW->{
-                intent = Intent(context,HomeView::class.java)
-            }ReferralScreen->{
-                intent = Intent(context,ReferAndEarnActivity::class.java)
+            }
+            StoreScreen -> {
+                intent = Intent(context, HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreScreen)
 
-            }CardScreen->{
-                intent = Intent(context,HomeView::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN,CardScreen)
+            }
+            FEEDSCREEN -> {
+                intent = Intent(context, HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FEEDSCREEN)
 
-            }StoreScreen->{
-                intent = Intent(context,HomeView::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN,StoreScreen)
+            }
+            FyperScreen -> {
+                intent = Intent(context, HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FyperScreen)
 
-            }FEEDSCREEN->{
-                intent = Intent(context,HomeView::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN,FEEDSCREEN)
+            }
+            TRACKORDER -> {
+                intent = Intent(context, TrackOrderView::class.java)
 
-            }FyperScreen->{
-                intent = Intent(context,HomeView::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN,FyperScreen)
-
-            }TRACKORDER->{
-                intent = Intent(context,TrackOrderView::class.java)
-
-            }CHORES->{
-                 intent = Intent(context,ChoresActivity::class.java)
+            }
+            CHORES -> {
+                intent = Intent(context, ChoresActivity::class.java)
 
             }
         }
@@ -1092,5 +1098,45 @@ object Utility {
             context.startActivity(intent)
 
         }
+    }
+
+    fun firstCharCapitalOfString(string: String): String {
+        val space = " "
+        val splitedStr = string.split(space)
+        return splitedStr.joinToString(space) { it1 ->
+            it1.replaceFirstChar { it }
+        }
+
+    }
+
+    fun toTitleCase(string: String?): String? {
+
+        // Check if String is null
+        if (string == null) {
+            return null
+        }
+        var whiteSpace = true
+        val builder = StringBuilder(string) // String builder to store string
+        val builderLength = builder.length
+
+        // Loop through builder
+        for (i in 0 until builderLength) {
+            val c = builder[i] // Get character at builders position
+            if (whiteSpace) {
+
+                // Check if character is not white space
+                if (!Character.isWhitespace(c)) {
+
+                    // Convert to title case and leave whitespace mode.
+                    builder.setCharAt(i, Character.toTitleCase(c))
+                    whiteSpace = false
+                }
+            } else if (Character.isWhitespace(c)) {
+                whiteSpace = true // Set character is white space
+            } else {
+                builder.setCharAt(i, Character.toLowerCase(c)) // Set character to lowercase
+            }
+        }
+        return builder.toString() // Return builders text
     }
 }

@@ -104,7 +104,7 @@
 
     <!--Login-->
     <string name="go_to_messages_btn_text">Go to Messages</string>
-    <string name="set_or_change_pin_btn_text">Set or Change pin</string>
+    <string name="set_or_change_pin_btn_text">Set or Change Pin</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="otp">OTP</string>
     <string name="sign_in_sign_up">Sign In/Sign Up</string>
@@ -499,7 +499,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="title_activity_add_task">AddTaskActivity</string>
 
     <string name="invite_member_text1">Invite new Fypers</string>
-    <string name="invite_member_text2">Share this link with your friend and after they install both of you will get 25 cash rewards.</string>
+    <string name="invite_member_text2">Share this link with your friend and after they install both of you will get %1$s cash rewards.</string>
     <string name="invite_member_text3">Or Invite via</string>
 
     <!--
@@ -755,13 +755,10 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="fetching_price">Fetching Price…</string>
     <string name="set_or_change_pin">Set or change pin</string>
     <string name="otp_sent_success_message">OTP has been sent successfully</string>
-    <string name="set_or_change_pin1">1:   Click on the \'Change PIN button below \'</string>
-    <string name="set_or_change_pin2">2:   You will receive an SMS with a link to change PIN. Click on that link </string>
+    <string name="set_or_change_pin1">1: Click on \' Set or Change Pin \' button below.</string>
+    <string name="set_or_change_pin2">2: Enter your new PIN and Expiry date and click on \' Set PIN \' button. Your PIN has been updated. </string>
 
-    <!--
-    set or change pin
-    -->
-    <string name="set_or_change_pin3">3:   Enter your new PIN and click \'Okay \'. Your PIN has been changed.</string>
+
     <string name="an_update_has_just_been_downloaded">An update has downloaded</string>
     <string name="app_update_title">App Updated</string>
     <string name="create_your_own_task">Create your own task</string>
@@ -908,6 +905,7 @@ Coming really soon!
     <string name="your_card_has_been_activated_n_successfully">Your card has been activated \n successfully.</string>
     <string name="click_on_set_pin_and_setup_your_n_pin_and_expiry_date_to_enable_n_offline_card_transactions">Click on “ Set Pin” and setup your \n PIN and expiry date to enable \n offline card transactions.</string>
     <string name="set_pin">Set Pin</string>
+    <string name="order_india_s_first_hololam_card">Order India\'s First Hololam Card.</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>

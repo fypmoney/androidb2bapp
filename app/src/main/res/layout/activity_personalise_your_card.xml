@@ -133,9 +133,10 @@
                     android:textCursorDrawable="@null"
                     android:hint="@string/enter_name"
                     android:layout_weight="1"
+                    android:maxLength="26"
                     android:background="@null"
                     android:layout_marginStart="@dimen/dp10"
-                    android:digits="qwertyuiopasdfghjklzxcvbnm ., QWERTYUIOPASDFGHJKLZXCVBNM"                android:maxLength="30"
+                    android:digits="qwertyuiopasdfghjklzxcvbnm ., QWERTYUIOPASDFGHJKLZXCVBNM"
 
                     />
 

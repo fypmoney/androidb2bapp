@@ -54,8 +54,6 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
             if(Utility.getCustomerDataFromPreference()==null){
                 callGetCustomerProfileApi()
             }
-        } else {
-            moveToNextScreen.value = true
         }
     }
 
@@ -163,7 +161,6 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                             }
                         }
                 }
-
                 moveToNextScreen.value = true
             }
             ApiConstant.API_SETTINGS -> {

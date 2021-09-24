@@ -9,7 +9,6 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.R
 import com.fypmoney.util.autoCleared
 import com.fypmoney.view.activity.SplashView
@@ -24,6 +23,7 @@ abstract class BaseDialogFragment<VDB : ViewDataBinding> : DialogFragment() {
     abstract val layoutId: Int
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        isCancelable = false
         return DataBindingUtil.inflate<VDB>(inflater, layoutId, container, false).also {
             binding = it
         }.root

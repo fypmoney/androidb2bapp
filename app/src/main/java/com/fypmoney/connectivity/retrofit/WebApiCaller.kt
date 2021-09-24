@@ -53,12 +53,7 @@ class WebApiCaller {
         command: String? = null,
         image: MultipartBody.Part? = null
     ) {
-        if (!isNetworkAvailable()) {
-            Log.d(NetworkUtil.TAGN,"hasTransport wifi")
 
-            request.onResponse.offLine()
-            return
-        }
         var mObservable: Observable<ResponseBody>? = null
 
         val apiInterface: ApiInterface = when (whichServer) {
@@ -70,6 +65,12 @@ class WebApiCaller {
                 ApiClient.getClient(BuildConfig.BASE_ENDPOINT).create(ApiInterface::class.java)
 
             }
+        }
+
+        if (!isNetworkAvailable()) {
+            Log.d(NetworkUtil.TAGN,"hasTransport wifi")
+            request.onResponse.offLine()
+            return
         }
 
          when (request.request_type) {

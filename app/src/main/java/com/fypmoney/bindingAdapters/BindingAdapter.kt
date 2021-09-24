@@ -417,7 +417,12 @@ class BindingAdapter {
             isDone: String?
         ) {
             when (status) {
-                AppConstants.ORDER_STATUS_ORDERED, AppConstants.ORDER_STATUS_IN_PROGRESS, AppConstants.ORDER_STATUS_SHIPPED, AppConstants.ORDER_STATUS_OUT_FOR_DELIVERY, AppConstants.ORDER_STATUS_DELIVERED, AppConstants.ORDER_STATUS_SEND_TO_VENDOR -> {
+                AppConstants.ORDER_STATUS_ORDERED,
+                AppConstants.ORDER_STATUS_IN_PROGRESS,
+                AppConstants.ORDER_STATUS_SHIPPED,
+                AppConstants.ORDER_STATUS_OUT_FOR_DELIVERY,
+                AppConstants.ORDER_STATUS_DELIVERED,
+                AppConstants.ORDER_STATUS_SEND_TO_VENDOR -> {
                     if (isDone == AppConstants.YES) {
                         textView.setTextColor(
                             ContextCompat.getColor(
