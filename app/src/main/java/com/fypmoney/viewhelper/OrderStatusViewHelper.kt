@@ -32,11 +32,12 @@ class OrderStatusViewHelper(
 
         if (!orderStatus?.date.isNullOrEmpty()) {
             date.set(
-                Utility.parseDateTime(
+                orderStatus?.date
+                /*Utility.parseDateTime(
                     orderStatus?.date,
                     inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
                     outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT3
-                )
+                )*/
             )
         }
     }

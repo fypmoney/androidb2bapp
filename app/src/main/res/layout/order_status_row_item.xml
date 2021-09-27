@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -38,6 +39,23 @@
             android:text="@{viewHelper.status}"
             android:textAllCaps="false"
             android:textAlignment="center"
+            tools:text = "Status"
+           />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/view_shipping_details_tv"
+            style="@style/TextviewRegular"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_toEndOf="@+id/imageOrderPlaced"
+            android:textSize="12sp"
+            android:layout_below="@+id/textOrderPlaced"
+            android:text="@string/view_details"
+            android:textAllCaps="false"
+            android:textAlignment="center"
+            android:textColor="@color/color_skyblue"
+            tools:visibility="visible"
+            android:visibility="visible"
            />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -61,6 +79,7 @@
             android:layout_toEndOf="@+id/imageOrderPlaced"
             android:layout_below="@id/imageOrderPlaced"
             android:background="@drawable/dotted_black"
+            tools:src="@drawable/ic_shipped"
             android:visibility="@{viewHelper.isLineVisible?View.VISIBLE:View.GONE}" />
 
     </RelativeLayout>

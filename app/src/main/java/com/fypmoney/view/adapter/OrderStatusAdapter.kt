@@ -2,13 +2,19 @@ package com.fypmoney.view.adapter
 
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.OrderStatusRowItemBinding
 import com.fypmoney.model.PackageStatusList
+import com.fypmoney.util.AppConstants
 import com.fypmoney.viewhelper.OrderStatusViewHelper
-import com.fypmoney.viewmodel.TrackOrderViewModel
+import com.fypmoney.view.ordercard.trackorder.TrackOrderViewModel
+import android.graphics.Paint
+
+
+
 
 /**
  * This adapter class is used to handle order status
@@ -54,6 +60,20 @@ class OrderStatusAdapter(var viewModel: TrackOrderViewModel) :
                     statusList?.size,
                     statusList?.get(position)?.isDone
                 )
+            }
+
+
+            if(((statusList?.get(position)?.status)=="SHIPPED")
+                and ((statusList?.get(position)?.isDone)==AppConstants.YES)){
+                mRowItemBinding?.viewShippingDetailsTv?.paintFlags = mRowItemBinding?.viewShippingDetailsTv?.paintFlags!! or Paint.UNDERLINE_TEXT_FLAG
+                mRowItemBinding.viewShippingDetailsTv.visibility = View.VISIBLE
+
+            }else{
+                mRowItemBinding?.viewShippingDetailsTv?.visibility = View.GONE
+
+            }
+            mRowItemBinding?.viewShippingDetailsTv?.setOnClickListener {
+                viewModel.onShippingDetailsClick((statusList?.get(position)))
             }
             mRowItemBinding!!.viewHelper = mViewHelper
 

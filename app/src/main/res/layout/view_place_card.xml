@@ -113,7 +113,7 @@
                             android:layout_marginStart="@dimen/dp20"
                             app:layout_constraintStart_toEndOf="@+id/mini_card_iv"
                             android:onClick="@{()->viewModel.onPriceBreakupClicked()}"
-                            android:text="@string/view_details"
+                            android:text="@string/view_breakup"
                             android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
                             android:textColor="@color/color_task_card_green" />
                     </androidx.constraintlayout.widget.ConstraintLayout>

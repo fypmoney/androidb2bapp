@@ -723,7 +723,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="city_empty_error">Please choose city</string>
     <string name="hno_empty_error">Please enter House number and Building name</string>
     <string name="road_name_empty_error">Please enter road name, area,colony</string>
-    <string name="view_breakup"><u>View Price Breakup</u></string>
+    <string name="view_breakup">View Price Breakup</string>
     <string name="city_hint_val">City*</string>
     <string name="state_hint">State*</string>
     <string name="bill_details">Bill Details</string>
@@ -819,7 +819,7 @@ Coming really soon!
     <string name="money_added_successfully">Money Added Successfully</string>
     <string name="payment_made_successfully">Payment Made Successfully</string>
 
-    <string name="view_details">View Details</string>
+    <string name="view_details">View Shipping  Details</string>
     <string name="press_again_to_exit">Press BACK again to exit.</string>
     <string name="load_money">Load Money</string>
     <string name="insufficient_bank_balance">Insufficient bank balance</string>
@@ -906,6 +906,11 @@ Coming really soon!
     <string name="click_on_set_pin_and_setup_your_n_pin_and_expiry_date_to_enable_n_offline_card_transactions">Click on “ Set Pin” and setup your \n PIN and expiry date to enable \n offline card transactions.</string>
     <string name="set_pin">Set Pin</string>
     <string name="order_india_s_first_hololam_card">Order India\'s First Hololam Card.</string>
+    <string name="view_shipping_details"><u>View Details</u></string>
+    <string name="shipping_details">Shipping Details</string>
+    <string name="delivery_partner">Delivery Partner</string>
+    <string name="awb_number">AWB Number</string>
+    <string name="expected_delivery">Expected Delivery</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
