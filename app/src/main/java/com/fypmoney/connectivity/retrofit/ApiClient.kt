@@ -38,12 +38,13 @@ class ApiClient {
                 // Added interceptor for http logging
                 builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
                 builder.addInterceptor(ChuckerInterceptor(PockketApplication.instance))
+
             }
             return Retrofit.Builder()
                 .baseUrl(baseUrl)
                 .client(builder.build())
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(getFactory())
                 .build()
         }
 

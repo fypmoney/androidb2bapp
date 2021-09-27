@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,21 +9,20 @@
 
         <variable
             name="viewModel"
-            type="com.fypmoney.viewmodel.TrackOrderViewModel" />
-
-
+            type="com.fypmoney.view.ordercard.trackorder.TrackOrderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/black">
 
         <include
             android:id="@+id/toolbar_layout"
             layout="@layout/toolbar_for_aadhaar" />
 
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -37,7 +37,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/screenMarginLeft"
                 android:layout_marginEnd="@dimen/screenMarginRight"
-                android:background="@color/white"
                 android:orientation="vertical"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -50,123 +49,13 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
-                <!--   <androidx.appcompat.widget.AppCompatImageView
-                       android:id="@+id/imageOrderPlaced"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_marginTop="20dp"
-                       app:srcCompat="@drawable/ic_check_skyblue" />
-
-                   <androidx.appcompat.widget.AppCompatTextView
-                       android:id="@+id/textOrderPlaced"
-                       style="@style/TextviewRegular"
-                       android:layout_marginStart="10dp"
-                       android:layout_marginTop="20dp"
-                       android:layout_toEndOf="@+id/imageOrderPlaced"
-                       android:text="@string/order_placed"
-                       android:textAlignment="center"
-                       android:textSize="17dp" />
-
-                   <androidx.appcompat.widget.AppCompatTextView
-                       android:id="@+id/date"
-                       style="@style/TextviewRegular"
-                       android:layout_alignParentEnd="true"
-                       android:layout_marginStart="10dp"
-                       android:layout_marginTop="20dp"
-                       android:text="date"
-                       android:textAlignment="center"
-                       android:textSize="17dp"
-                       android:visibility="gone" />
-
-                   <androidx.appcompat.widget.AppCompatImageView
-                       android:id="@+id/view_order_placed"
-                       android:layout_width="2dp"
-                       android:layout_height="50dp"
-                       android:layout_below="@id/imageOrderPlaced"
-                       android:layout_toStartOf="@+id/imageOrderPlaced"
-                       android:layout_toEndOf="@+id/imageOrderPlaced"
-                       android:background="@drawable/dotted_black"
-
-                       />
-
-                   <androidx.appcompat.widget.AppCompatImageView
-                       android:id="@+id/imageOrderShipped"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_below="@id/view_order_placed"
-                       app:srcCompat="@drawable/ic_check_disabl" />
-
-                   <androidx.appcompat.widget.AppCompatTextView
-                       android:id="@+id/textOrderShipped"
-                       style="@style/TextviewRegular"
-                       android:layout_below="@id/view_order_placed"
-                       android:layout_marginStart="10dp"
-                       android:layout_toEndOf="@+id/imageOrderShipped"
-                       android:text="@string/shipped"
-                       android:textAlignment="center"
-                       android:textSize="17dp" />
-
-                   <androidx.appcompat.widget.AppCompatImageView
-                       android:id="@+id/view_order_Shipped"
-                       android:layout_width="2dp"
-                       android:layout_height="50dp"
-                       android:layout_below="@id/imageOrderShipped"
-                       android:layout_toStartOf="@+id/imageOrderShipped"
-                       android:layout_toEndOf="@+id/imageOrderShipped"
-                       android:background="@drawable/dotted_black"
-
-                       />
-
-                   <androidx.appcompat.widget.AppCompatImageView
-                       android:id="@+id/imageOrderDelivery"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_below="@id/view_order_Shipped"
-                       app:srcCompat="@drawable/ic_check_disabl" />
-
-                   <androidx.appcompat.widget.AppCompatTextView
-                       android:id="@+id/textOrderDelivery"
-                       style="@style/TextviewRegular"
-                       android:layout_below="@id/view_order_Shipped"
-                       android:layout_marginStart="10dp"
-                       android:layout_toEndOf="@+id/imageOrderDelivery"
-                       android:text="@string/out_for_delivery"
-                       android:textAlignment="center"
-                       android:textSize="17dp" />
-
-                   <androidx.appcompat.widget.AppCompatImageView
-                       android:id="@+id/view_order_Delivery"
-                       android:layout_width="2dp"
-                       android:layout_height="50dp"
-                       android:layout_below="@id/imageOrderDelivery"
-                       android:layout_toStartOf="@+id/imageOrderDelivery"
-                       android:layout_toEndOf="@+id/imageOrderDelivery"
-                       android:background="@drawable/dotted_black" />
-
-                   <androidx.appcompat.widget.AppCompatImageView
-                       android:id="@+id/imageOrderDelivered"
-                       android:layout_width="wrap_content"
-                       android:layout_height="wrap_content"
-                       android:layout_below="@id/view_order_Delivery"
-                       app:srcCompat="@drawable/ic_check_disabl" />
-
-                   <androidx.appcompat.widget.AppCompatTextView
-                       android:id="@+id/textOrderDelivered"
-                       style="@style/TextviewRegular"
-                       android:layout_below="@id/view_order_Delivery"
-                       android:layout_marginStart="10dp"
-                       android:layout_toEndOf="@+id/imageOrderDelivered"
-                       android:text="@string/delivered"
-                       android:textAlignment="center"
-                       android:textSize="17dp" />-->
-
                 <View
                     android:id="@+id/view3"
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="0.5dp"
                     android:layout_below="@+id/recycler_view"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:background="@color/dividerColor" />
 
 
@@ -178,99 +67,119 @@
                     android:layout_marginTop="20dp"
                     android:text="@string/bill_details"
                     android:textAlignment="center"
-                    android:textSize="20dp" />
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
 
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/card_type"
-                    style="@style/TextviewRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_below="@+id/bill_details"
-                    android:layout_marginTop="20dp"
-                    android:text="@{viewModel.nameOfProduct}"
-                    android:textAlignment="center" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/amount"
-                    style="@style/TextviewBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/bill_details"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="14dp"
-                    android:text="@{@string/Rs+viewModel.amount}"
-                    android:textSize="17dp" />
 
-                <View
-                    android:id="@+id/view1"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_below="@+id/amount"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:background="@color/dividerColor" />
 
-                <TableLayout
-                    android:id="@+id/table"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/view1"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp">
+                    android:layout_below="@id/bill_details"
+                    android:orientation="vertical"
+                    android:paddingBottom="24dp">
 
 
-                    <TableRow android:padding="5dp">
+                    <View
+                        android:id="@+id/view12"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:background="@color/dividerColor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/discount_amount_tv" />
 
-                        <TextView
-                            style="@style/TextviewRegular"
-                            android:text="@string/item_total" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/amount"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="20dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/dummy_amount1" />
 
-                        <TextView
-                            style="@style/TextviewRegular"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:text="@{@string/Rs+viewModel.itemTotal}" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/discount_tv"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/discount"
+                        android:textAlignment="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/card_type" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/discount_amount_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="10dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/amount"
+                        tools:text="@string/dummy_amount1" />
 
 
-                    </TableRow>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/card_type"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/physical_card_text"
+                        android:textAlignment="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-                    <TableRow android:padding="5dp">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/net_payble_tv"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/net_paid"
+                        android:textAlignment="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view12" />
 
-                        <TextView
-                            style="@style/TextviewRegular"
-                            android:text="@string/tax" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/net_payble_amount_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="20dp"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view12"
+                        tools:text="@string/dummy_amount1" />
 
-                        <TextView
-                            style="@style/TextviewRegular"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:text="@{@string/Rs+viewModel.taxAmount}" />
 
-                    </TableRow>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tax_amount_tv"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:textAlignment="center"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/net_payble_tv"
+                        tools:text="@string/inc_tax" />
 
-                    <TableRow
-                        android:padding="5dp"
-                        android:visibility="@{viewModel.isDiscountVisible?View.VISIBLE:View.GONE}">
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <TextView
-                            style="@style/TextviewRegular"
-                            android:text="@string/discount" />
-
-                        <TextView
-                            style="@style/TextviewRegular"
-                            android:layout_weight="1"
-                            android:gravity="end"
-                            android:text="@{@string/Rs+viewModel.discount}" />
-
-                    </TableRow>
-                </TableLayout>
 
 
             </RelativeLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

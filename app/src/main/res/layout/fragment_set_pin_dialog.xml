@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.fypmoney.view.setpindialog.SetPinFragmentVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:padding="@dimen/dp16"
+        tools:context=".view.fragment.SetPinDialogFragment">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/activate_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:translationZ="@dimen/dp10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_card_activated"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/setpin_cv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/dp16"
+            android:layout_marginEnd="@dimen/dp16"
+            android:layout_marginTop="80dp"
+            app:customStrokeWidth="@{@dimen/dp1}"
+            app:customBackgroundColor="@{@color/white}"
+            app:customIsRounded="@{false}"
+            app:customCornerRadius="@{@dimen/dp18}">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextviewBold"
+                android:id="@+id/title_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="26sp"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="@string/congratulations"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="100dp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextviewRegular"
+                android:id="@+id/sub_title_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:gravity="center"
+                android:textColor="@color/text_color_dark"
+                android:text="@string/your_card_has_been_activated_n_successfully"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title_tv"
+                android:layout_marginTop="20dp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextviewRegular"
+                android:id="@+id/desc_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:gravity="start"
+                android:drawablePadding="@dimen/dp16"
+                android:drawableStart="@drawable/ic_check_green_tick"
+                android:textColor="@color/text_color_dark"
+                android:text="@string/click_on_set_pin_and_setup_your_n_pin_and_expiry_date_to_enable_n_offline_card_transactions"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sub_title_tv"
+                android:layout_marginTop="20dp"/>
+
+            <com.fypmoney.view.customview.PrimaryButton
+                android:id="@+id/set_pin_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/perfect"
+                android:textSize="18sp"
+                app:text="@string/set_pin"
+                app:enabled="true"
+                app:enabled_bg="@color/black"
+                android:onClick="@{()->viewmodel.onSetPinClicked()}"
+                app:disabled_bg="@color/buttonUnselectedColor"
+                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginBottom="@dimen/dp20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/desc_tv"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

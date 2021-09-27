@@ -61,8 +61,12 @@ class CardSettingsBottomSheet(
         bankProfileResponse?.cardInfos?.forEach {
             when(it.cardType){
                 AppConstants.CARD_TYPE_PHYSICAL ->{
-                    if(it.isPinSet.isNullOrEmpty() && it.isPinSet.equals("NO")){
-                        textString.add(PockketApplication.instance.getString(R.string.card_settings_pin))
+                    if(it.status == AppConstants.ENABLE){
+/*
+                        if(it.isPinSet.isNullOrEmpty() || it.isPinSet.equals("NO")){
+*/
+                            textString.add(PockketApplication.instance.getString(R.string.card_settings_pin))
+                      /*  }*/
                     }
                 }
             }
@@ -88,13 +92,12 @@ class CardSettingsBottomSheet(
         return view
     }
 
-    override fun onItemClick(position: Int) {
-        onCardSettingsClickListener.onCardSettingsClick(position)
-        dismiss()
-    }
-
-
     interface OnCardSettingsClickListener {
         fun onCardSettingsClick(position: Int)
+    }
+
+    override fun onItemClick(position: Int, name: String?) {
+        onCardSettingsClickListener.onCardSettingsClick(position)
+        dismiss()
     }
 }

@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:theme="@style/ToolbarTheme"
+        app:titleMarginStart ="0dp"
+        app:contentInsetStartWithNavigation="0dp"
         app:layout_constraintTop_toTopOf="parent">
 
 
@@ -20,6 +22,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/toolbar_title"
                 style="@style/TextviewRegular"
+
                 android:textColor="@color/text_color_dark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

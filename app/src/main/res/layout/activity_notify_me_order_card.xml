@@ -66,8 +66,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintDimensionRatio="700:1080"
-
-
                 android:layout_marginStart="@dimen/_18sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_16sdp"

@@ -39,16 +39,13 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 * */
 class BlockUnblockCardBottomSheet(
     var cardInfo: List<CardInfoDetails>?,
-    var cardSettingClickListener: CardSettingClickListener,
     var onBottomSheetDismissListener: ManageChannelsBottomSheet.OnBottomSheetDismissListener
 ) :
     BottomSheetDialogFragment(),
     DialogUtils.OnAlertDialogClickListener, WebApiCaller.OnWebApiResponse {
+    lateinit var binding: BottomSheetBlockUnblockCardBinding
     var cardType = ObservableField<Int>()
     var action = ObservableField<String>()
-    lateinit var pSwitch: SwitchCompat
-    lateinit var vSwitch: SwitchCompat
-    lateinit var progressBar: ProgressBar
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
@@ -56,34 +53,43 @@ class BlockUnblockCardBottomSheet(
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(
+    ): View {
+        binding = DataBindingUtil.inflate(
+            inflater,
             R.layout.bottom_sheet_block_unblock_card,
             container,
             false
         )
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetBlockUnblockCardBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_block_unblock_card,
-            null,
-            false
-        )
-        bottomSheet.setContentView(bindingSheet.root)
+        setUpViews()
 
-        vSwitch = view.findViewById(R.id.virtual_card_switch)!!
-        progressBar = view.findViewById(R.id.progress)!!
+        return binding.root
+    }
 
-
+    fun setUpViews() {
         cardInfo?.forEach {
             when (it.cardType) {
                 AppConstants.CARD_TYPE_VIRTUAL -> {
                     if (it.isCardBlocked == AppConstants.YES) {
-                        vSwitch.isChecked = false
+                        binding.virtualCardSwitch.isChecked = false
 
                     } else if (it.isCardBlocked == AppConstants.NO) {
-                        vSwitch.isChecked = true
+                        binding.virtualCardSwitch.isChecked = true
+
+                    }
+                }
+                AppConstants.CARD_TYPE_PHYSICAL -> {
+                    if(it.status=="INACTIVE"){
+                        binding.physicalCardSwitch.visibility = View.GONE
+                        binding.physicalCardTv.visibility = View.GONE
+                    }else{
+                        binding.physicalCardSwitch.visibility = View.VISIBLE
+                        binding.physicalCardTv.visibility = View.VISIBLE
+                    }
+                    if (it.isCardBlocked == AppConstants.YES) {
+                        binding.physicalCardSwitch.isChecked = false
+
+                    } else if (it.isCardBlocked == AppConstants.NO) {
+                        binding.physicalCardSwitch.isChecked = true
 
                     }
                 }
@@ -92,17 +98,17 @@ class BlockUnblockCardBottomSheet(
         }
 
 
-        vSwitch.setOnClickListener {
+        binding.virtualCardSwitch.setOnClickListener {
             cardType.set(AppConstants.CARD_TYPE_VIRTUAL_CARD)
-            val message: String = if (vSwitch.isChecked) {
-                vSwitch.isChecked = !vSwitch.isChecked
+            val message: String = if (binding.virtualCardSwitch.isChecked) {
+                binding.virtualCardSwitch.isChecked = !binding.virtualCardSwitch.isChecked
                 action.set(AppConstants.UNBLOCK_CARD_ACTION)
                 PockketApplication.instance.getString(R.string.card_block_confirm) + PockketApplication.instance.getString(
                     R.string.unblock_card_text
                 )
 
             } else {
-                vSwitch.isChecked = !vSwitch.isChecked
+                binding.virtualCardSwitch.isChecked = !binding.virtualCardSwitch.isChecked
                 action.set(AppConstants.BLOCK_CARD_ACTION)
                 PockketApplication.instance.getString(R.string.card_block_confirm) + PockketApplication.instance.getString(
                     R.string.block_card_text
@@ -122,11 +128,39 @@ class BlockUnblockCardBottomSheet(
 
         }
 
-        return view
+        binding.physicalCardSwitch.setOnClickListener {
+            cardType.set(AppConstants.CARD_TYPE_PHYSICAL_CARD)
+            val message: String = if (binding.physicalCardSwitch.isChecked) {
+                binding.physicalCardSwitch.isChecked = !binding.physicalCardSwitch.isChecked
+                action.set(AppConstants.UNBLOCK_CARD_ACTION)
+                PockketApplication.instance.getString(R.string.card_block_confirm) + PockketApplication.instance.getString(
+                    R.string.unblock_card_text
+                )
+
+            } else {
+                binding.physicalCardSwitch.isChecked = !binding.physicalCardSwitch.isChecked
+                action.set(AppConstants.BLOCK_CARD_ACTION)
+                PockketApplication.instance.getString(R.string.card_block_confirm) + PockketApplication.instance.getString(
+                    R.string.block_card_text
+                )
+
+
+            }
+            DialogUtils.showConfirmationDialog(
+                context = requireContext(),
+                title = "",
+                message = message,
+                positiveButtonText = getString(R.string.yes_btn_text),
+                negativeButtonText = getString(R.string.no_btn_text),
+                uniqueIdentifier = "",
+                onAlertDialogClickListener = this, isNegativeButtonRequired = true
+            )
+
+        }
     }
 
     override fun onPositiveButtonClick(uniqueIdentifier: String) {
-        progressBar.visibility = View.VISIBLE
+        binding.progress.visibility = View.VISIBLE
         callCardSettingsUpdateApi(
             UpDateCardSettingsRequest(
                 action = action.get(),
@@ -158,7 +192,7 @@ class BlockUnblockCardBottomSheet(
     override fun onSuccess(purpose: String, responseData: Any) {
         when (purpose) {
             ApiConstant.API_UPDATE_CARD_SETTINGS -> {
-                progressBar.visibility = View.GONE
+                binding.progress.visibility = View.GONE
                 if (responseData is UpdateCardSettingsResponse) {
                     setCardToggle(responseData.updateCardSettingsResponseDetails)
                 }
@@ -169,7 +203,7 @@ class BlockUnblockCardBottomSheet(
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         Utility.showToast(errorResponseInfo.msg)
-        progressBar.visibility = View.GONE
+        binding.progress.visibility = View.GONE
 
     }
 
@@ -185,10 +219,20 @@ class BlockUnblockCardBottomSheet(
             AppConstants.CARD_TYPE_VIRTUAL -> {
                 when (updateCardSettingsResponseDetails.isCardBlocked) {
                     AppConstants.YES -> {
-                        vSwitch.isChecked = false
+                        binding.virtualCardSwitch.isChecked = false
                     }
                     AppConstants.NO -> {
-                        vSwitch.isChecked = true
+                        binding.virtualCardSwitch.isChecked = true
+                    }
+                }
+            }
+            AppConstants.CARD_TYPE_PHYSICAL -> {
+                when (updateCardSettingsResponseDetails.isCardBlocked) {
+                    AppConstants.YES -> {
+                        binding.physicalCardSwitch.isChecked = false
+                    }
+                    AppConstants.NO -> {
+                        binding.physicalCardSwitch.isChecked = true
                     }
                 }
             }

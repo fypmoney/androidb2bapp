@@ -25,7 +25,11 @@ class TaskMessageInsuficientFuntBottomSheet(
     var onClickListener: AcceptRejectClickListener,
     var title:String? = null,
     var subTitle:String? = null,
-    var amount:String? = null
+    var amount:String? = null,
+    var background:String? = null,
+    var titleColor:String? = null,
+    var moneyTextColor:String? = null,
+    var buttonColor:String? = null,
     ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: BottomSheetInsuficientFundBinding
@@ -50,7 +54,19 @@ class TaskMessageInsuficientFuntBottomSheet(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-            title?.let {
+        background?.let {
+            binding.llMain.setBackgroundColor(Color.parseColor(it))
+        }
+        titleColor?.let {
+            binding.cardTitle.setTextColor(Color.parseColor(it))
+        }
+        moneyTextColor?.let {
+            binding.addMoneyTv.setTextColor(Color.parseColor(it))
+        }
+        buttonColor?.let {
+            binding.addMoneyBtn.setBackgroundColor(Color.parseColor(it))
+        }
+        title?.let {
                 binding.cardTitle.text = title
             }
 

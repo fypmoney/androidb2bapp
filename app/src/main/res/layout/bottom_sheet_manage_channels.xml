@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:paddingTop="@dimen/_24sdp"
+        android:paddingBottom="@dimen/_24sdp"
         android:paddingStart="@dimen/screenMarginLeft"
         android:paddingEnd="@dimen/screenMarginRight">
 
         <View
+            android:id="@+id/view12"
             android:layout_width="40dp"
             android:layout_height="4dp"
             android:layout_centerHorizontal="true"
@@ -31,31 +35,32 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/verification_title"
             style="@style/TextviewRegular"
+            android:layout_below="@+id/view12"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="26dp"
             android:text="@string/manage_channels_heading"
             android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+            android:textSize="17sp" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/point_sale"
+            android:id="@+id/ecom_virtual"
             style="@style/TextviewRegular"
-            android:layout_below="@id/verification_title"
-            android:layout_marginTop="30dp"
-            android:text="@string/point_of_sale"
+            android:layout_alignTop="@+id/ecom_virtual_switch"
+            android:layout_alignBottom="@+id/ecom_virtual_switch"
+            android:gravity="center"
+            android:text="@string/ecom"
             android:textColor="@color/text_color_dark"
             android:textSize="17sp" />
 
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/point_sale_switch"
+            android:id="@+id/ecom_virtual_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/verification_title"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="25dp"
-            android:checked="true"
+            android:layout_marginTop="20dp"
             android:thumb="@drawable/thumb_selector"
             app:track="@drawable/track_selector" />
 
@@ -63,33 +68,65 @@
             android:id="@+id/view2"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_below="@+id/point_sale_switch"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="25dp"
+            android:layout_below="@+id/ecom_virtual_switch"
+            android:layout_marginTop="12dp"
             android:background="@color/dividerColor" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/ecom_virtual"
+            android:id="@+id/point_sale"
             style="@style/TextviewRegular"
-            android:layout_below="@id/view2"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="40dp"
-            android:text="@string/ecom"
+            android:layout_alignTop="@+id/point_sale_switch"
+            android:layout_alignBottom="@+id/point_sale_switch"
+            android:gravity="center"
+            android:text="@string/point_of_sale"
             android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+            android:textSize="17sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
 
         <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/ecom_virtual_switch"
+            android:id="@+id/point_sale_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/view2"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="40dp"
-            android:checked="true"
+            android:layout_marginTop="15dp"
             android:thumb="@drawable/thumb_selector"
-            app:track="@drawable/track_selector" />
+            android:visibility="gone"
+            app:track="@drawable/track_selector"
+            tools:visibility="visible" />
+
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/atm_channel_tv"
+            style="@style/TextviewRegular"
+            android:layout_alignTop="@+id/atm_channel_switch"
+            android:layout_alignBottom="@+id/atm_channel_switch"
+            android:gravity="center"
+            android:text="@string/atm"
+            android:textColor="@color/text_color_dark"
+            android:textSize="17sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/atm_channel_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/point_sale_switch"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="@dimen/dp10"
+            android:thumb="@drawable/thumb_selector"
+            android:visibility="gone"
+            app:track="@drawable/track_selector"
+            tools:visibility="visible" />
+
+
+
+
 
 
     </RelativeLayout>

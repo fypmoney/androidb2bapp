@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.ordercard.personaliseyourcard.PersonaliseYourCardVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/ic_order_card_bg"
+        tools:context=".view.ordercard.personaliseyourcard.PersonaliseYourCardActivity">
+
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/card_cl"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextviewBold"
+                android:textColor="@color/white"
+                android:id="@+id/title_tv"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/personalise_your_card"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/personlise_card_cl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/ll_name"
+                app:layout_constraintTop_toBottomOf="@+id/title_tv">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/card_front_aiv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="1dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_personlize_card_back"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/name_on_card_tv"
+                    style="@style/TextviewBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginBottom="100dp"
+                    android:textAllCaps="true"
+                    android:maxLength="30"
+                    android:text="@string/your_name"
+                    android:textAlignment="viewEnd"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.774"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.507" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/ll_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="2dp"
+                app:layout_constraintStart_toStartOf="@+id/personlise_card_cl"
+                app:layout_constraintEnd_toEndOf="@+id/personlise_card_cl"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="100dp"
+                app:customStrokeWidth="@{@dimen/dp1}"
+                app:customBackgroundColor="@{@color/colorEdittext}"
+                app:customIsRounded="@{false}"
+                app:customCornerRadius="@{@dimen/dp26}">
+
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView"
+                    android:layout_marginStart="@dimen/dp20"
+                    android:src="@drawable/ic_user"/>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_mat_black"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginBottom="@dimen/dp10"
+                    android:layout_marginStart="10dp"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/name_on_card_et"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/text_color_light"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:gravity="start|center_vertical"
+                    android:minHeight="50dp"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    android:textCursorDrawable="@null"
+                    android:hint="@string/enter_name"
+                    android:layout_weight="1"
+                    android:maxLength="26"
+                    android:background="@null"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:digits="qwertyuiopasdfghjklzxcvbnm ., QWERTYUIOPASDFGHJKLZXCVBNM"
+
+                    />
+
+
+            </LinearLayout>
+
+
+
+            <com.fypmoney.view.customview.PrimaryButton
+                android:id="@+id/get_this_card_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/perfect"
+                android:textSize="18sp"
+                app:text="@string/perfect"
+                app:enabled="false"
+                app:enabled_bg="@color/color_task_card_green"
+                app:disabled_bg="@color/buttonUnselectedColor"
+                android:onClick="@{()->viewModel.onPerfectClicked()}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/dp20"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

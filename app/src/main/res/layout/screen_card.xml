@@ -3,95 +3,127 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/tools">
 
-    <data>
-
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="com.fypmoney.viewmodel.CardScreenViewModel" />
-
-        <variable
-            name="fragment"
-            type="com.fypmoney.view.fragment.CardScreen" />
-
-
-    </data>
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"
-        >
-        <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-            android:layout_gravity="top"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/black">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp16"
-            >
-
-
-            <FrameLayout
-                android:id="@+id/card_back"
-                android:layout_width="match_parent"
-                android:layout_gravity="center"
-                android:layout_height="match_parent">
-
-                <include
-                    layout="@layout/virtual_card_back_layout"
-
-                    bind:fragment="@{fragment}"
-                    bind:viewModel="@{viewModel}" />
-
-
-            </FrameLayout>
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
 
             <FrameLayout
-                android:id="@+id/card_front"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-
-                android:gravity="center">
-
-                <include
-                    layout="@layout/virtual_card_front_layout"
-                    bind:viewModel="@{viewModel}"
-                    bind:fragment="@{fragment}"/>
-
-            </FrameLayout>
-
-
-        </FrameLayout>
-
-        <RelativeLayout
-            android:layout_marginTop="@dimen/dp16"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/rotate"
-                style="@style/TextviewRegular"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:drawableStart="@drawable/ic_rotate"
-                android:drawablePadding="10dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/rotate_card"
-                android:textColor="@color/text_color_light"
-                android:textSize="14sp" />
+                android:paddingVertical="@dimen/dp16">
 
 
-        </RelativeLayout>
+                <FrameLayout
+                    android:id="@+id/card_back"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center">
 
+                    <include
+                        layout="@layout/virtual_card_back_layout"
+
+                        bind:fragment="@{fragment}"
+                        bind:viewModel="@{viewModel}" />
+
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/card_front"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <include
+                        layout="@layout/virtual_card_front_layout"
+                        bind:fragment="@{fragment}"
+                        bind:viewModel="@{viewModel}" />
+
+                </FrameLayout>
+
+
+            </FrameLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/rotate_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/rotate_card"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="14sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/rotate"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rotate_tv"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:drawableStart="@drawable/ic_rotate"
+                    android:drawablePadding="10dp"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:onClick="@{()->viewModel.onRotateCard()}"
+                    android:padding="10dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@string/rotate_card_txt"
+                    android:textColor="@color/white"
+                    app:customBackgroundColor="@{@color/color_task_card_green}"
+                    app:customCornerRadius="@{@dimen/dp24}"
+                    app:customIsRounded="@{false}"
+                    app:drawableTint="@color/white" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/swipe_up_for_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/swipe_up_pull_details_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/swipe_up_tv"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginBottom="80dp"
+                    app:srcCompat="@drawable/ic_baseline_keyboard_arrow_up_24"
+                    app:tint="@color/white" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/swipe_up_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="40dp"
+                    android:text="@string/swipe_to_view_settings"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </RelativeLayout>
         </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -101,7 +133,7 @@
             android:background="@drawable/curved_background12"
             android:clipToPadding="true"
             app:behavior_hideable="false"
-            app:behavior_peekHeight="@dimen/_130sdp"
+            app:behavior_peekHeight="@dimen/_90sdp"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -126,113 +158,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/up_iv" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/notify_order_card_nsv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"
-            android:fillViewport="true">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/black">
-
-
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/main_cl"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/title_tv"
-                        style="@style/TextviewBold"
-                        android:textSize="26sp"
-                        android:textColor="@color/white"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/awesomeness_loading"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/sub_title_tv"
-                        style="@style/TextviewRegular"
-                        android:textSize="17sp"
-                        android:textColor="@color/white"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        app:layout_constraintTop_toBottomOf="@+id/title_tv"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:text="@string/we_want_to_give_you_the_best"/>
-
-
-                    <VideoView
-                        android:id="@+id/video"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        app:layout_constraintDimensionRatio="700:1080"
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginEnd="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        app:layout_constraintTop_toBottomOf="@+id/title_tv"
-                        app:layout_constraintBottom_toTopOf="@+id/body_tv"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent" />
-
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/body_tv"
-                        style="@style/TextviewRegular"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/_20sdp"
-                        android:layout_marginTop="@dimen/dp16"
-                        android:gravity="center"
-                        app:layout_constraintTop_toBottomOf="@+id/video"
-                        android:layout_marginStart="@dimen/dp16"
-                        android:layout_marginEnd="@dimen/dp16"
-                        android:text="Here’s a cool sneak peek of your virtual card that is going to roll out in a couple of days. Shopping clothes, ordering food, or recharging are just a piece of cake now. Savor it!"
-                        android:textColor="@color/text_color_light"
-                        android:textSize="14sp"
-                        app:layout_constraintBottom_toTopOf="@+id/notify_btn"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
-
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/notify_btn"
-                        style="@style/TextviewRegular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="30dp"
-                        android:paddingHorizontal="34dp"
-                        android:paddingVertical="10dp"
-                        android:text="@string/notify_me"
-                        android:background="@drawable/curved_background20"
-                        android:textSize="18sp"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.CardScreenViewModel" />
+
+        <variable
+            name="fragment"
+            type="com.fypmoney.view.fragment.CardScreen" />
+
+
+    </data>
 
 </layout>

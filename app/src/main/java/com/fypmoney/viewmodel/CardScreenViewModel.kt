@@ -47,14 +47,11 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var onViewDetailsClicked = MutableLiveData<Boolean>()
     var onGetCardDetailsSuccess = MutableLiveData<Boolean>()
     var onActivateCardInit = MutableLiveData<Boolean>()
-    var onActivateCardClicked = MutableLiveData<Boolean>()
     var onSetPinSuccess = MutableLiveData<SetPinResponseDetails>()
-    var isActivateCardVisible = ObservableField(false)
-    var onBankProfileSuccess = MutableLiveData(false)
-    var isOrderCard = ObservableField(true)
+    var onBankProfileSuccess = MutableLiveData<Boolean>()
     var isViewDetailsVisible = ObservableField(true)
     var bankProfileResponse = ObservableField<BankProfileResponseDetails>()
-
+    var rotateCardClicked = MutableLiveData<Boolean>()
 
     /*
     * This is used to see the card details
@@ -63,12 +60,10 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         onViewDetailsClicked.value = true
     }
 
-    /*
-    * This method is used to activate card
-    * */
-    fun onActivateCardClicked() {
-        onActivateCardClicked.value = true
+    fun onRotateCard(){
+        rotateCardClicked.value = true
     }
+
 
     /*
         * This method is used to get the balance of wallet
@@ -162,7 +157,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     /*
       * This method is used to call activate card init api
       * */
-    fun callActivateCardInitApi() {
+    /*fun callActivateCardInitApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_ACTIVATE_CARD_INIT,
@@ -172,7 +167,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 this, isProgressBar = true
             )
         )
-    }
+    }*/
 
     /*
         * This method is used to call update card limit api
@@ -278,18 +273,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_KEY_KIT_NUMBER, it.kitNumber
-                                )
-                                if (it.status == AppConstants.ENABLE) {
-                                    isActivateCardVisible.set(false)
-                                } else {
-                                    isActivateCardVisible.set(true)
-                                }
-                                when {
-                                    !it.kitNumber.isNullOrEmpty() -> {
-                                        isOrderCard.set(false)
-                                    }
-                                }
-                            }
+                                )}
                         }
 
                     }
@@ -299,17 +283,16 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
 
             }
 
-            ApiConstant.API_ACTIVATE_CARD_INIT -> {
+            /*ApiConstant.API_ACTIVATE_CARD_INIT -> {
                 progressDialog.value = false
                 if (responseData is ActivateCardInitResponse) {
-                    when (responseData.msg) {
+                    *//*when (responseData.msg) {
                         ApiConstant.API_SUCCESS -> {
-                            onActivateCardInit.value = true
                         }
-                    }
+                    }*//*
                 }
 
-            }
+            }*/
             ApiConstant.API_GET_WALLET_BALANCE -> {
                 if (responseData is GetWalletBalanceResponse) {
                     isFetchBalanceVisible.set(false)
@@ -324,8 +307,9 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             }
             ApiConstant.API_ACTIVATE_CARD -> {
                 if (responseData is ActivateCardResponse) {
-
-
+                    callGetBankProfileApi()
+                    Utility.showToast(responseData.activateCardResponseDetails?.message)
+                    onActivateCardInit.value = true
                 }
             }
 

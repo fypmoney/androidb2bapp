@@ -35,7 +35,7 @@ class MyProfileListAdapter(
 
 
         binding.linear.setOnClickListener {
-            onItemClickListener.onItemClick(position)
+            onItemClickListener.onItemClick(position,titleList[position])
         }
         return binding.root
     }
@@ -71,9 +71,10 @@ class MyProfileListAdapter(
         titleList[1] = value
         notifyDataSetChanged()
 
+
     }
 
     interface OnListItemClickListener {
-        fun onItemClick(position: Int)
+        fun onItemClick(position: Int,name:String?=null)
     }
 }
