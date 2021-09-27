@@ -61,10 +61,10 @@
                         app:lkwCenterImage="@drawable/help"
                         app:lkwCursor="@drawable/ic_cursor"
                         app:lkwEdgeColor="@color/wheel_border"
-                        app:lkwTopTextColor="@color/white"
-                        app:lkwTopTextSize="18sp"
                         app:lkwEdgeWidth="15"
-                        app:lkwTopTextPadding="20dp" />
+                        app:lkwTopTextColor="@color/white"
+                        app:lkwTopTextPadding="20dp"
+                        app:lkwTopTextSize="18sp" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivServiceLogo"
@@ -82,8 +82,8 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivServiceLogo1"
                         android:layout_width="0dp"
-                        android:layout_margin="70dp"
                         android:layout_height="0dp"
+                        android:layout_margin="70dp"
                         android:adjustViewBounds="true"
                         android:rotation="39"
                         app:layout_constraintBottom_toBottomOf="@+id/luckyWheelView"
@@ -121,9 +121,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/coin"
-                        android:layout_width="@dimen/_20sdp"
-                        android:src="@drawable/ic_mynt_coin"
-                        android:layout_height="@dimen/_20sdp"
+                        android:layout_width="@dimen/_24sdp"
+                        android:src="@drawable/cash"
+
+                        android:layout_height="@dimen/_24sdp"
 
                         android:adjustViewBounds="true" />
 

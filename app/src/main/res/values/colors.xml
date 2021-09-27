@@ -32,6 +32,8 @@
     <color name="text_color_light">#9CA3A5</color>
     <color name="text_color_little_dark">#5A6365</color>
     <color name="text_color_dark">#231F20</color>
+    <color name="spin_light">#bae6c2</color>
+    <color name="spin_dark">#66ba72</color>
     <color name="text_color_more_dark">#4D4D4D</color>
     <color name="text_color_faded">#989898</color>
     <color name="colorRed">#FF4B4B</color>

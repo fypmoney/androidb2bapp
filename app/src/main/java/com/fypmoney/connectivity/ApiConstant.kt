@@ -104,6 +104,11 @@ object ApiConstant {
 
     const val API_REWARD_SUMMARY =
         "services/loyaltyservice/api/loyalty/points/summary"
+    const val API_GET_REWARD_PRODUCTS =
+        "services/PockketService/api/list/reward-product"
+    const val API_GET_REWARD_EARNINGS =
+        "services/PockketService/api/total-cashback-earned"
+
 }
 
 

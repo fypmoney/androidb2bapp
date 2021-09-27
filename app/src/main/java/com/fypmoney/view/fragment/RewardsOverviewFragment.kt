@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.R
 import com.fypmoney.model.AssignedTaskResponse
+import com.fypmoney.util.Utility
 
 import com.fypmoney.view.adapter.YourTasksAdapter
 import com.fypmoney.viewmodel.RewardsViewModel
@@ -51,12 +52,17 @@ class RewardsOverviewFragment : Fragment() {
         sharedViewModel.rewardSummaryStatus.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
-
-
                 root.totalearned.text = list.totalPoints.toString()
                 root.burned_points.text = list.burntPoints.toString()
                 root.points_left.text = list.remainingPoints.toString()
+            })
 
+        sharedViewModel.totalRewardsResponse.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { list ->
+                root.loading_amount_hdp.clearAnimation()
+                root.loading_amount_hdp.visibility = View.GONE
+                root.total_refral_won_value_tv.text = Utility.convertToRs("${list.amount}")
 
             })
 

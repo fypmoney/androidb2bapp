@@ -130,22 +130,22 @@
 
             <TextView
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_14sdp"
                 android:text="Total Earned"
-                android:layout_centerVertical="true"
-                android:textSize="14sp"
                 android:textColor="@color/white"
-                android:layout_height="wrap_content" />
+                android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/totalearned"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="@dimen/_14sdp"
                 android:layout_marginEnd="@dimen/_14sdp"
-                android:text="480"
-                android:id="@+id/totalearned"
+
                 android:textColor="@color/white"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -193,7 +193,7 @@
                     android:id="@+id/points_left"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="860"
+
                     android:textColor="@color/white"
                     android:textSize="22sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -238,7 +238,7 @@
                     android:id="@+id/burned_points"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="860"
+
                     android:textColor="@color/white"
                     android:textSize="22sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -317,10 +317,14 @@
             android:id="@+id/total_refral_won_value_tv"
             style="@style/TextviewBold"
             android:layout_width="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:textColor="@color/green_winnings"
             android:textSize="22sp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/total_refral_won_tv" />
 

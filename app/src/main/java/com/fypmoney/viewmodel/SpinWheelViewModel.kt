@@ -1,7 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.util.Log
+import android.graphics.Color
 import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -17,7 +17,6 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 
 import com.fypmoney.util.AppConstants
-import com.fypmoney.util.Utility
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -47,7 +46,7 @@ class SpinWheelViewModel(application: Application) : BaseViewModel(application) 
         ObservableField(PockketApplication.instance.getString(R.string.fetching_reward))
 
     init {
-        setDataInSpinWheel()
+
     }
 
     /*
@@ -60,48 +59,35 @@ class SpinWheelViewModel(application: Application) : BaseViewModel(application) 
     /*
     * This method is used to set data in spin the wheel
     * */
-    private fun setDataInSpinWheel() {
-        val luckyItem1 = LuckyItem()
-        luckyItem1.topText = PockketApplication.instance.getString(R.string.better_luck_emoji)
-        luckyItem1.icon = R.drawable.cash
-        luckyItem1.color = ContextCompat.getColor(getApplication(), R.color.text_color_dark)
-        luckyItemList.add(luckyItem1)
+    fun setDataInSpinWheel(list: ArrayList<SectionListItem>) {
 
-        val luckyItem2 = LuckyItem()
-        luckyItem2.topText = "5"
-        luckyItem2.icon = R.drawable.cash
-        luckyItem2.color = ContextCompat.getColor(getApplication(), R.color.color_dark_red)
-        luckyItemList.add(luckyItem2)
+        list.forEachIndexed { pos, item ->
 
-        val luckyItem3 = LuckyItem()
-        luckyItem3.topText = "10"
-        luckyItem3.icon = R.drawable.cash
-        luckyItem3.color = ContextCompat.getColor(getApplication(), R.color.color_dark_yellow)
-        luckyItemList.add(luckyItem3)
 
-        val luckyItem4 = LuckyItem()
-        luckyItem4.topText = "20"
-        luckyItem4.icon = R.drawable.cash
-        luckyItem4.color = ContextCompat.getColor(getApplication(), R.color.color_dark_red)
-        luckyItemList.add(luckyItem4)
+            if (item.sectionValue == "0") {
+                val luckyItem1 = LuckyItem()
+                luckyItem1.topText =
+                    PockketApplication.instance.getString(R.string.better_luck_emoji)
+                luckyItem1.icon = R.drawable.cash
+                luckyItem1.color = Color.parseColor(item.colorCode)
+                luckyItemList.add(luckyItem1)
+            } else if (pos % 2 == 0) {
+                val luckyItem3 = LuckyItem()
+                luckyItem3.topText = item.sectionValue
+                luckyItem3.icon = R.drawable.cash
+                luckyItem3.color = Color.parseColor(item.colorCode)
+                luckyItemList.add(luckyItem3)
+            } else {
+                val luckyItem4 = LuckyItem()
+                luckyItem4.topText = item.sectionValue
+                luckyItem4.icon = R.drawable.cash
+                luckyItem4.color = Color.parseColor(item.colorCode)
+                luckyItemList.add(luckyItem4)
+            }
 
-        val luckyItem5 = LuckyItem()
-        luckyItem5.topText = "50"
-        luckyItem5.icon = R.drawable.cash
-        luckyItem5.color = ContextCompat.getColor(getApplication(), R.color.color_dark_yellow)
-        luckyItemList.add(luckyItem5)
+        }
 
-        val luckyItem6 = LuckyItem()
-        luckyItem6.topText = "100"
-        luckyItem6.icon = R.drawable.cash
-        luckyItem6.color = ContextCompat.getColor(getApplication(), R.color.color_dark_black)
-        luckyItemList.add(luckyItem6)
 
-        val luckyItem7 = LuckyItem()
-        luckyItem7.topText = "500"
-        luckyItem7.icon = R.drawable.cash
-        luckyItem7.color = ContextCompat.getColor(getApplication(), R.color.color_dark_yellow)
-        luckyItemList.add(luckyItem7)
     }
 
     /*

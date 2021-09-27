@@ -246,8 +246,8 @@ public class PielView extends View {
         int x = (int) +(mCenter + mRadius * 3 / 5 / 2 * Math.cos(angle));
         int y = (int) (mCenter + mRadius * 3 / 5 / 2 * Math.sin(angle));
 
-        Rect rect = new Rect(x - imgWidth / 2, y - imgWidth / 2,
-                x + imgWidth / 2, y + imgWidth / 2);
+        Rect rect = new Rect(x - imgWidth / 2, y - imgWidth / 3,
+                x + imgWidth / 2, y + imgWidth / 3);
         canvas.drawBitmap(bitmap, null, rect, null);
     }
 

@@ -10,29 +10,30 @@ import com.fypmoney.R
 import com.fypmoney.model.aRewardProductResponse
 import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.view.interfaces.ListItemClickListener
-import kotlinx.android.synthetic.main.card_spin_item.view.*
+import kotlinx.android.synthetic.main.card_scratch_item.view.*
+
 
 import java.util.*
 
 
-class SpinnerAdapter(
+class ScratchItemAdapter(
     val items: ArrayList<aRewardProductResponse>,
     val context: Context,
     val clickInterface: ListContactClickListener
-) : RecyclerView.Adapter<SpinnerAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ScratchItemAdapter.ViewHolder>() {
 
     private var mLastClickTime: Long = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.card_spin_item, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.card_scratch_item, parent, false)
         )
 
     }
 
     override fun getItemCount(): Int {
 
-        return items.size
+        return 8
     }
 
 
@@ -42,8 +43,8 @@ class SpinnerAdapter(
             clickInterface.onItemClicked(position)
         })
 
-        holder.coins_to_be_burn.text = items[position].appDisplayText
-        holder.desc.text = items[position].description
+//        holder.coins_to_be_burn.text=items[position].appDisplayText
+//        holder.desc.text=items[position].description
 
     }
 
@@ -53,7 +54,7 @@ class SpinnerAdapter(
 
         var card = view
 
-        var coins_to_be_burn = view.coins_to_be_burn
+        var coins_to_be_burn = view.burn_amount
         var desc = view.desc
 
 //        init {

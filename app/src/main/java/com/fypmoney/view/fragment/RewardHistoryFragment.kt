@@ -15,10 +15,7 @@ import com.fypmoney.view.adapter.RewardsHistoryLeaderboardAdapter
 
 import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.viewmodel.RewardsViewModel
-import kotlinx.android.synthetic.main.fragment_noti_timeline.view.*
-import kotlinx.android.synthetic.main.fragment_spinner_list.view.*
-import kotlinx.android.synthetic.main.fragment_spinner_list.view.LoadProgressBar
-import kotlinx.android.synthetic.main.fragment_spinner_list.view.empty_screen
+import kotlinx.android.synthetic.main.fragment_reward_history.view.*
 
 
 import kotlin.collections.ArrayList
@@ -90,7 +87,7 @@ class RewardHistoryFragment : Fragment() {
     private fun setRecyclerView(root: View) {
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        root.rv_assigned!!.layoutManager = layoutManager
+        root.rv_history!!.layoutManager = layoutManager
 
 
         var itemClickListener2 = object : ListItemClickListener {
@@ -109,7 +106,7 @@ class RewardHistoryFragment : Fragment() {
 
         typeAdapterHistory =
             RewardsHistoryLeaderboardAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
-        root.rv_assigned!!.adapter = typeAdapterHistory
+        root.rv_history!!.adapter = typeAdapterHistory
     }
 
     private fun loadMore(root: View) {
