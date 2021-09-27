@@ -12,8 +12,7 @@ import android.view.View
 import com.fypmoney.R
 import kotlin.math.abs
 
-internal class ScratchCard(context: Context, attrs: AttributeSet?, defStyle: Int) :
-    View(context, attrs, defStyle) {
+internal class ScratchCard(context: Context, attrs: AttributeSet?, defStyle: Int) : View(context, attrs, defStyle) {
 
     private var mPath: Path? = null
     private var mInnerPaint: Paint? = null
@@ -34,15 +33,10 @@ internal class ScratchCard(context: Context, attrs: AttributeSet?, defStyle: Int
     }
 
     private fun init(context: Context, attrs: AttributeSet?) {
-        @SuppressLint("CustomViewStyleable") val a =
-            context.obtainStyledAttributes(attrs, R.styleable.ScratchCardLayout)
+        @SuppressLint("CustomViewStyleable") val a = context.obtainStyledAttributes(attrs, R.styleable.ScratchCardLayout)
         mScratchDrawable = a.getDrawable(R.styleable.ScratchCardLayout_scratchDrawable)
-        mScratchWidth = a.getDimension(
-            R.styleable.ScratchCardLayout_scratchWidth,
-            ScratchCardUtils.dipToPx(context, 30f)
-        )
-        mRevealFullAtPercent =
-            a.getInteger(R.styleable.ScratchCardLayout_scratchRevealFullAtPercent, 100)
+        mScratchWidth = a.getDimension(R.styleable.ScratchCardLayout_scratchWidth, ScratchCardUtils.dipToPx(context, 30f))
+        mRevealFullAtPercent = a.getInteger(R.styleable.ScratchCardLayout_scratchRevealFullAtPercent, 100)
         mEnableScratching = a.getBoolean(R.styleable.ScratchCardLayout_scratchEnabled, true)
         a.recycle()
     }
@@ -109,10 +103,7 @@ internal class ScratchCard(context: Context, attrs: AttributeSet?, defStyle: Int
                         percentCompleted == 0 -> mListener?.onScratchStarted()
                         percentCompleted == 100 -> stopScratchingAndRevealFull()
                         percentCompleted >= mRevealFullAtPercent -> stopScratchingAndRevealFull()
-                        else -> mListener?.onScratchProgress(
-                            parent as ScratchCardLayout,
-                            percentCompleted
-                        )
+                        else -> mListener?.onScratchProgress(parent as ScratchCardLayout, percentCompleted)
                     }
                 }
             }

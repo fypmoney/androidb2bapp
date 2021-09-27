@@ -76,6 +76,7 @@ import android.view.View
 
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import com.fypmoney.view.fragment.FilterByDateFragment
+import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import java.time.Year
 
 
@@ -801,7 +802,11 @@ object Utility {
             SharedPrefUtils.SF_KEY_USERNAME,
             ""
         )
-
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_KIT_NUMBER,
+            ""
+        )
     }
 
     /*
@@ -849,6 +854,25 @@ object Utility {
                 SharedPrefUtils.SF_KEY_USER_PROFILE_INFO
             )
         return gson.fromJson(json, CustomerInfoResponseDetails::class.java)
+    }
+    fun setCustomerDeliveryAddress(deliveryAddress: UserDeliveryAddress) {
+        val gson = Gson()
+        val json = gson.toJson(deliveryAddress)
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_DELIVERY_ADDRESS,
+            json
+        )
+    }
+
+    fun getCustomerDeliveryAddress(): UserDeliveryAddress? {
+        val gson = Gson()
+        val json =
+            SharedPrefUtils.getString(
+                PockketApplication.instance,
+                SharedPrefUtils.SF_KEY_USER_DELIVERY_ADDRESS
+            )
+        return gson.fromJson(json, UserDeliveryAddress::class.java)
     }
 
     /*

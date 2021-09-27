@@ -22,28 +22,12 @@ import com.fypmoney.view.adapter.OrderStatusAdapter
 * */
 class TrackOrderViewModel(application: Application) : BaseViewModel(application) {
     private var kitNumber = ObservableField<String>()
-    var orderStatus = ObservableField<String>()
     var amount = ObservableField<String>()
-    var itemTotal = ObservableField<String>()
-    var nameOfProduct = ObservableField<String>()
-    var taxAmount = ObservableField<String>()
-    var discount = ObservableField<String>()
-    var isDiscountVisible = ObservableField(false)
-    var isOrderPlaced = ObservableField<Boolean>()
-    var isOrderShipped = ObservableField<Boolean>()
-    var isOrderDelivered = ObservableField<Boolean>()
-    var isOrderOutForDelivery = ObservableField<Boolean>()
     var orderStatusAdapter = OrderStatusAdapter(this)
-    var productResponse = MutableLiveData<GetAllProductsResponseDetails>()
+    var productResponse = MutableLiveData<GetOrderCardStatusResponseDetails>()
 
     init {
         kitNumber.set(SharedPrefUtils.getString(application, SharedPrefUtils.SF_KEY_KIT_NUMBER))
-        if (Utility.getCustomerDataFromPreference()?.cardProductCode == null) {
-            callGetAllProductsApi()
-        } else {
-            isDiscountVisible.set(true)
-            callGetAllProductsByCodeApi()
-        }
         callGetCardStatusApi()
     }
 
@@ -62,43 +46,13 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
         )
     }
 
-    /*
-    * This method is used to get all cards
-    * */
-    private fun callGetAllProductsByCodeApi() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_GET_ALL_PRODUCTS_BY_CODE,
-                NetworkUtil.endURL(ApiConstant.API_GET_ALL_PRODUCTS_BY_CODE + Utility.getCustomerDataFromPreference()?.cardProductCode),
-                ApiUrl.GET,
-                BaseRequest(),
-                this, isProgressBar = false
-            )
-        )
-    }
-
-
-    /*
-    * This method is used to get all cards
-    * */
-    private fun callGetAllProductsApi() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_GET_ALL_PRODUCTS,
-                NetworkUtil.endURL(ApiConstant.API_GET_ALL_PRODUCTS + AppConstants.ORDER_CARD_PHYSICAL_CARD_CODE),
-                ApiUrl.GET,
-                BaseRequest(),
-                this, isProgressBar = false
-            )
-        )
-    }
-
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_GET_ORDER_CARD_STATUS -> {
                 if (responseData is GetOrderCardStatusResponse) {
+                    productResponse.value = responseData.GetOrderCardStatusResponseDetails
                     if (!responseData.GetOrderCardStatusResponseDetails.packageStatusList.isNullOrEmpty()) {
                         orderStatusAdapter.setList(
                             responseData.GetOrderCardStatusResponseDetails.packageStatusList
@@ -106,36 +60,6 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
                     }
                 } else {
                     Utility.showToast("Error in fetching order status,please try again")
-                }
-            }
-            ApiConstant.API_GET_ALL_PRODUCTS, ApiConstant.API_GET_ALL_PRODUCTS_BY_CODE -> {
-                if (responseData is GetAllProductsResponse) {
-                    if (!responseData.getAllProductsResponseDetails?.isNullOrEmpty()!!) {
-                        productResponse.value = responseData.getAllProductsResponseDetails[0]
-                        amount.set(
-                            Utility.convertToRs(productResponse.value!!.mrp)
-                        )
-
-                        nameOfProduct.set(
-                            responseData.getAllProductsResponseDetails[0].name
-                        )
-                        taxAmount.set(
-                            Utility.convertToRs(
-                                responseData.getAllProductsResponseDetails[0].totalTax
-                            )
-                        )
-                        discount.set(
-                            Utility.convertToRs(
-                                responseData.getAllProductsResponseDetails[0].discount
-                            )
-                        )
-                        itemTotal.set(
-                            Utility.convertToRs(
-                                responseData.getAllProductsResponseDetails[0].basePrice
-                            )
-                        )
-
-                    }
                 }
             }
 

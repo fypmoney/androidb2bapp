@@ -20,11 +20,7 @@ class ScratchCardLayout : CardView, ScratchCard.ScratchCardInterface {
         init(context, attrs, 0)
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
-    ) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         init(context, attrs, defStyleAttr)
     }
 
@@ -68,10 +64,8 @@ class ScratchCardLayout : CardView, ScratchCard.ScratchCardInterface {
      * Adding the scratch card to layout
      */
     private fun setupScratchView() {
-        scratchCard.layoutParams = LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
+        scratchCard.layoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT)
         post { addView(scratchCard) }
     }
 
@@ -114,7 +108,7 @@ class ScratchCardLayout : CardView, ScratchCard.ScratchCardInterface {
     /**
      * Reveal scratch. (Reveal whats underneath the scratch view)
      */
-    fun revealScratch() {
+    fun revealScratch(){
         scratchCard.revealScratch()
     }
 }

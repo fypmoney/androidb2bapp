@@ -17,12 +17,18 @@
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
         tools:replace="android:usesCleartextTraffic">
-
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-
+        <activity
+            android:name=".view.ordercard.placeordersuccess.PlaceOrderSuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.ordercard.personaliseyourcard.PersonaliseYourCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.ordercard.cardorderoffer.CardOrderOfferActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.notifymeordercard.NotifyMeOrderCardActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.webview.WebViewActivity"
             android:screenOrientation="portrait" />
@@ -42,12 +48,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.SplashView"
+            android:exported="true"
             android:label="@string/app_name"
-            android:noHistory="true"
             android:launchMode="singleTop"
+            android:noHistory="true"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme"
-            android:exported="true">
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -59,13 +65,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
-            android:name=".view.activity.PlaceOrderCardView"
+            android:name=".view.ordercard.placeorder.PlaceOrderCardView"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.OrderCardView"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:name=".view.ordercard.OrderCardView"
+            android:screenOrientation="portrait" ></activity>
         <activity
             android:name=".view.activity.SetPinView"
             android:screenOrientation="portrait"
@@ -81,8 +85,8 @@
             android:theme="@style/Theme.DreamfolksApp.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
 
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -93,6 +97,7 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="your.custom.ACTION" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -133,19 +138,16 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CreateAccountSuccessView"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CommunityView"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ContactView"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.HomeView"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.UserProfileView"
@@ -184,16 +186,13 @@
         <activity
             android:name=".view.activity.AadhaarVerificationView"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing"/>
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".view.activity.TransactionHistoryView"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ActivationSuccessWithAadhaarView"
-            android:screenOrientation="portrait">
-
-        </activity>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.AddMoneyUpiDebitView"
             android:screenOrientation="portrait" />
@@ -216,7 +215,8 @@
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.StoreWebpageOpener"
+        <activity
+            android:name=".view.StoreWebpageOpener"
             android:hardwareAccelerated="false"
             android:screenOrientation="portrait"/>
         <activity
@@ -238,6 +238,9 @@
         <activity android:name=".view.activity.SpinWheelViewDark" />
         <activity android:name=".view.activity.AgeAllowedActivationView" />
 
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
         <meta-data
             android:name="payu_debug_mode_enabled"
             android:value="false" />
@@ -261,8 +264,14 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-
-
+        <receiver
+            android:name="com.adjust.sdk.AdjustReferrerReceiver"
+            android:exported="true"
+            android:permission="android.permission.INSTALL_PACKAGES">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".services.MyFirebaseMessagingService"
@@ -273,15 +282,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <receiver
-            android:name="com.adjust.sdk.AdjustReferrerReceiver"
-            android:permission="android.permission.INSTALL_PACKAGES"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="com.android.vending.INSTALL_REFERRER" />
-            </intent-filter>
-        </receiver>
     </application>
 
     <queries>

@@ -47,11 +47,8 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var onViewDetailsClicked = MutableLiveData<Boolean>()
     var onGetCardDetailsSuccess = MutableLiveData<Boolean>()
     var onActivateCardInit = MutableLiveData<Boolean>()
-    var onActivateCardClicked = MutableLiveData<Boolean>()
     var onSetPinSuccess = MutableLiveData<SetPinResponseDetails>()
-    var isActivateCardVisible = ObservableField(false)
-    var onBankProfileSuccess = MutableLiveData(false)
-    var isOrderCard = ObservableField(true)
+    var onBankProfileSuccess = MutableLiveData<Boolean>()
     var isViewDetailsVisible = ObservableField(true)
     var bankProfileResponse = ObservableField<BankProfileResponseDetails>()
 
@@ -63,12 +60,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         onViewDetailsClicked.value = true
     }
 
-    /*
-    * This method is used to activate card
-    * */
-    fun onActivateCardClicked() {
-        onActivateCardClicked.value = true
-    }
+
 
     /*
         * This method is used to get the balance of wallet
@@ -278,18 +270,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_KEY_KIT_NUMBER, it.kitNumber
-                                )
-                                if (it.status == AppConstants.ENABLE) {
-                                    isActivateCardVisible.set(false)
-                                } else {
-                                    isActivateCardVisible.set(true)
-                                }
-                                when {
-                                    !it.kitNumber.isNullOrEmpty() -> {
-                                        isOrderCard.set(false)
-                                    }
-                                }
-                            }
+                                )}
                         }
 
                     }

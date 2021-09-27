@@ -30,4 +30,17 @@
         <attr name="scratchEnabled" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="PrimaryButton">
+        <attr name="enabled" format="boolean" />
+        <attr name="text" format="string" />
+        <attr name="enabled_bg" format="color" />
+        <attr name="disabled_bg" format="color" />
+    </declare-styleable>
+    <declare-styleable name="ScratchCardLayout">
+        <attr name="scratchDrawable" format="reference|color" />
+        <attr name="scratchWidth" format="dimension" />
+        <attr name="scratchRevealFullAtPercent" format="integer" />
+        <attr name="scratchEnabled" format="boolean" />
+    </declare-styleable>
+
 </resources>

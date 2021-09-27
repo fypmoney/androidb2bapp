@@ -45,7 +45,9 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,var onBotto
     var isApiHit = ObservableField<Boolean>(true)
     lateinit var pPointSaleSwitch: SwitchCompat
     lateinit var pointSale: TextView
+    lateinit var atmTxt: TextView
     lateinit var vEcomSwitch: SwitchCompat
+    lateinit var vAtmSwitch: SwitchCompat
     lateinit var progressBar: ProgressBar
     var whichSwitch = ObservableField<String>()
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
@@ -61,19 +63,12 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,var onBotto
             container,
             false
         )
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetManageChannelsBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_manage_channels,
-            null,
-            false
-        )
-        bottomSheet.setContentView(bindingSheet.root)
 
         pPointSaleSwitch = view.findViewById(R.id.point_sale_switch)!!
         vEcomSwitch = view.findViewById(R.id.ecom_virtual_switch)!!
+        vAtmSwitch = view.findViewById(R.id.atm_channel_switch)!!
         pointSale = view.findViewById(R.id.point_sale)!!
+        atmTxt = view.findViewById(R.id.atm_channel_tv)!!
         progressBar = view.findViewById(R.id.progress)!!
 
 
@@ -85,18 +80,30 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,var onBotto
                     } else if (it.ecomEnabled == AppConstants.NO) {
                         vEcomSwitch.isChecked = false
                     }
-                    hideOfflineStore()
+                    //hideOfflineStore()
 
                 }
                 AppConstants.CARD_TYPE_PHYSICAL -> {
-                    if(it.status=="INACTIVE"){
+                    if(it.status == AppConstants.ENABLE){
+                        showOfflineStore()
+
+                    }else{
                         hideOfflineStore()
                     }
-                    else if (it.posEnabled == AppConstants.YES) {
+                    if (it.posEnabled == AppConstants.YES) {
                         pPointSaleSwitch.isChecked = true
-                    } else if (it.posEnabled == AppConstants.NO) {
+                    }
+                     if (it.posEnabled == AppConstants.NO) {
                         pPointSaleSwitch.isChecked = false
                     }
+                     if (it.atmEnabled == AppConstants.YES) {
+                        vAtmSwitch.isChecked = true
+                    }
+                     if (it.atmEnabled == AppConstants.NO) {
+                        vAtmSwitch.isChecked = false
+                    }
+
+
 
                 }
             }
@@ -114,6 +121,34 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,var onBotto
                 )
             } else {
                 pPointSaleSwitch.isChecked = !pPointSaleSwitch.isChecked
+                isEnable.set(AppConstants.OFF)
+                PockketApplication.instance.getString(R.string.card_block_confirm) + PockketApplication.instance.getString(
+                    R.string.disable_card_text
+                )
+
+            }
+            DialogUtils.showConfirmationDialog(
+                context = requireContext(),
+                title = "",
+                message = message,
+                positiveButtonText = getString(R.string.yes_btn_text),
+                negativeButtonText = getString(R.string.no_btn_text),
+                uniqueIdentifier = "",
+                onAlertDialogClickListener = this, isNegativeButtonRequired = true
+            )
+
+        }
+        vAtmSwitch.setOnClickListener {
+            channelType.set(AppConstants.Channel_ATM)
+            cardType.set(AppConstants.CARD_TYPE_PHYSICAL_CARD)
+            val message: String = if (vAtmSwitch.isChecked) {
+                vAtmSwitch.isChecked = !vAtmSwitch.isChecked
+                isEnable.set(AppConstants.ON)
+                PockketApplication.instance.getString(R.string.card_block_confirm) + PockketApplication.instance.getString(
+                    R.string.enable_card_text
+                )
+            } else {
+                vAtmSwitch.isChecked = !vAtmSwitch.isChecked
                 isEnable.set(AppConstants.OFF)
                 PockketApplication.instance.getString(R.string.card_block_confirm) + PockketApplication.instance.getString(
                     R.string.disable_card_text
@@ -163,9 +198,17 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,var onBotto
         return view
     }
 
+    private fun showOfflineStore() {
+        pointSale.visibility = View.VISIBLE
+        pPointSaleSwitch.visibility = View.VISIBLE
+        atmTxt.visibility = View.VISIBLE
+        vAtmSwitch.visibility = View.VISIBLE    }
+
     private fun hideOfflineStore() {
         pointSale.visibility = View.GONE
         pPointSaleSwitch.visibility = View.GONE
+        atmTxt.visibility = View.GONE
+        vAtmSwitch.visibility = View.GONE
     }
 
     override fun onPositiveButtonClick(uniqueIdentifier: String) {
@@ -235,6 +278,13 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,var onBotto
                             pPointSaleSwitch.isChecked = true
                         else if (updateCardSettingsResponseDetails.posEnabled == AppConstants.NO)
                             pPointSaleSwitch.isChecked = false
+
+                    }
+                    AppConstants.Channel_ATM -> {
+                        if (updateCardSettingsResponseDetails.atmEnabled == AppConstants.YES)
+                            vAtmSwitch.isChecked = true
+                        else if (updateCardSettingsResponseDetails.atmEnabled == AppConstants.NO)
+                            vAtmSwitch.isChecked = false
 
                     }
                 }

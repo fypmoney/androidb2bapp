@@ -53,32 +53,40 @@ class SetSpendingLimitBottomSheet(
             container,
             false
         )
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetSetSpendingLimitBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_set_spending_limit,
-            null,
-            false
-        )
-        bottomSheet.setContentView(bindingSheet.root)
+
+        return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupViews(view)
+
+    }
+
+    private fun setupViews(view: View) {
         val save = view.findViewById<Button>(R.id.button_save)!!
         val cancel = view.findViewById<AppCompatTextView>(R.id.cancel)!!
         val amountEcom = view.findViewById<AppCompatTextView>(R.id.amount_ecom)!!
         val amountPos = view.findViewById<AppCompatTextView>(R.id.amount_pos)!!
+        val amountAtm = view.findViewById<AppCompatTextView>(R.id.amount_atm)!!
         val seekbarEcom = view.findViewById<SeekBar>(R.id.seekBar_ecom)!!
         val seekbarPos = view.findViewById<SeekBar>(R.id.seekBar_point_sale)!!
+        val seekbarAtm = view.findViewById<SeekBar>(R.id.seekBar_atm)!!
         val offLineStores = view.findViewById<RelativeLayout>(R.id.rl_offline_store)!!
+        val rlAtm = view.findViewById<RelativeLayout>(R.id.rl_atm)!!
 
         //Offline status
-         bankProfileResponseDetails?.cardInfos?.forEach {
-             when(it.cardType){
-                 AppConstants.CARD_TYPE_PHYSICAL->{
-                     if(it.status==AppConstants.ENABLE){
-                         offLineStores.visibility = View.VISIBLE
-                     }
-                 }
-             }
+        bankProfileResponseDetails?.cardInfos?.forEach {
+            when (it.cardType) {
+                AppConstants.CARD_TYPE_PHYSICAL -> {
+                    if (it.status == AppConstants.ENABLE) {
+                        offLineStores.visibility = View.VISIBLE
+                    }
+                    if (it.atmEnabled == AppConstants.YES) {
+                        rlAtm.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
 
 
@@ -91,9 +99,16 @@ class SetSpendingLimitBottomSheet(
                 PockketApplication.instance.getString(R.string.Rs) + Utility.convertToRs(
                     bankProfileResponseDetails?.posLimit
                 )
+            amountAtm.text =
+                PockketApplication.instance.getString(R.string.Rs) + Utility.convertToRs(
+                    bankProfileResponseDetails?.atmLimit
+                )
             seekbarEcom.progress =
                 Utility.convertToRs(bankProfileResponseDetails?.ecomLimit)!!.toInt()
-            seekbarPos.progress = Utility.convertToRs(bankProfileResponseDetails?.posLimit)!!.toInt()
+            seekbarPos.progress =
+                Utility.convertToRs(bankProfileResponseDetails?.posLimit)!!.toInt()
+            seekbarAtm.progress =
+                Utility.convertToRs(bankProfileResponseDetails?.atmLimit)!!.toInt()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -103,7 +118,7 @@ class SetSpendingLimitBottomSheet(
                     action = AppConstants.MOD_ONLINE_LIMIT,
                     ecomLimit = Utility.convertToPaise(seekbarEcom.progress.toString()),
                     posLimit = Utility.convertToPaise(seekbarPos.progress.toString()),
-                    atmLimit = "0"
+                    atmLimit = Utility.convertToPaise(seekbarAtm.progress.toString())
                 )
             )
             dismiss()
@@ -126,6 +141,18 @@ class SetSpendingLimitBottomSheet(
 
             }
         })
+        seekbarAtm.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                amountAtm.text = PockketApplication.instance.getString(R.string.Rs) + progress
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+
+            }
+        })
 
         seekbarEcom.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -139,15 +166,6 @@ class SetSpendingLimitBottomSheet(
 
             }
         })
-
-
-        /*   val amount = view.findViewById<TextView>(R.id.amount)!!
-           val updatedAmount = view.findViewById<TextView>(R.id.updated_balance)!!
-
-           amount.text = getString(R.string.Rs) + amount1
-           updatedAmount.text = getString(R.string.updated_balance) + getString(R.string.Rs)+ updatedAmount1
-   */
-        return view
     }
 
     interface OnSetSpendingLimitClickListener {

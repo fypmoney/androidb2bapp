@@ -1,23 +1,17 @@
 package com.fypmoney.application
 
-import android.app.Application
-import android.util.Log
-
-import com.vanniktech.emoji.google.GoogleEmojiProvider
-
-import com.vanniktech.emoji.EmojiManager
-import com.adjust.sdk.Adjust
-
-import com.adjust.sdk.AdjustConfig
 import android.app.Activity
-import android.app.Application.ActivityLifecycleCallbacks
+import android.app.Application
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
+import com.adjust.sdk.Adjust
+import com.adjust.sdk.AdjustConfig
 import com.fypmoney.util.SharedPrefUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import java.lang.Exception
+import com.vanniktech.emoji.EmojiManager
+import com.vanniktech.emoji.google.GoogleEmojiProvider
 
 
 /**

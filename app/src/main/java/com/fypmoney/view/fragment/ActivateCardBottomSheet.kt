@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.view_enter_otp.*
 
 class ActivateCardBottomSheet(var onActivateCardClickListener: OnActivateCardClickListener) :
     BottomSheetDialogFragment() {
+    lateinit var  binding: BottomSheetActivateCardBinding
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     var otp = ObservableField<String>()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -33,26 +34,19 @@ class ActivateCardBottomSheet(var onActivateCardClickListener: OnActivateCardCli
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(
+    ): View {
+        binding = DataBindingUtil.inflate(
+            inflater,
             R.layout.bottom_sheet_activate_card,
             container,
             false
         )
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetActivateCardBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_activate_card,
-            null,
-            false
-        )
-        bottomSheet.setContentView(bindingSheet.root)
 
 
-        val btnOtp = view.findViewById<Button>(R.id.button_otp)!!
-        val otpView = view.findViewById<OtpView>(R.id.otpView)!!
-        btnOtp.setOnClickListener {
+        binding.tNCCb.setOnCheckedChangeListener { buttonView, isChecked ->
+            binding.buttonOtp.isEnabled = isChecked
+        }
+        binding.buttonOtp.setOnClickListener {
             when {
                 TextUtils.isEmpty(otp.get()) -> {
                     Utility.showToast(PockketApplication.instance.getString(R.string.card_kit_empty_error))
@@ -65,11 +59,11 @@ class ActivateCardBottomSheet(var onActivateCardClickListener: OnActivateCardCli
 
 
         }
-        otpView.setOtpCompletionListener { otp1 -> // do Stuff
+        binding.otpView.setOtpCompletionListener { otp1 -> // do Stuff
             otp.set(otp1)
         }
 
-        return view
+        return binding.root
     }
 
     interface OnActivateCardClickListener {

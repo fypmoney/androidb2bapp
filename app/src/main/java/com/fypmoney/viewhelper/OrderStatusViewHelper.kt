@@ -24,7 +24,7 @@ class OrderStatusViewHelper(
             isLineVisible.set(true)
 
         }
-        status.set(orderStatus?.status?.replace("_", " ")?.toLowerCase())
+        status.set(orderStatus?.status?.replace("_", " "))
         statusForImage.set(orderStatus?.status)
 
         if (!orderStatus?.date.isNullOrEmpty()) {
@@ -32,7 +32,7 @@ class OrderStatusViewHelper(
                 Utility.parseDateTime(
                     orderStatus?.date,
                     inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
-                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT4
+                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT3
                 )
             )
         }

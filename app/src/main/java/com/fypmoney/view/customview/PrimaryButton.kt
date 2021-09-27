@@ -22,9 +22,7 @@ class PrimaryButton : FrameLayout {
     private var text: String? = null
     private var binding: BtnPrimaryBinding? = null
     private var enabledBackgroundColor: Int = ContextCompat.getColor(context, R.color.colorPrimary)
-    private var disabledBackgroundColor: Int =
-        ContextCompat.getColor(context, R.color.buttonUnselectedColor)
-
+    private var disabledBackgroundColor: Int = ContextCompat.getColor(context, R.color.buttonUnselectedColor)
     constructor(context: Context) : super(context) {
         init(context, null, 0)
     }
@@ -50,18 +48,12 @@ class PrimaryButton : FrameLayout {
         enabled = a.getBoolean(R.styleable.PrimaryButton_enabled, true)
         text = a.getString(R.styleable.PrimaryButton_text)
 
-        enabledBackgroundColor = a.getColor(
-            R.styleable.PrimaryButton_enabled_bg,
-            ContextCompat.getColor(
-                context, R.color.colorPrimary
-            )
-        )
-        disabledBackgroundColor = a.getColor(
-            R.styleable.PrimaryButton_disabled_bg,
-            ContextCompat.getColor(
-                context, R.color.colorPrimary
-            )
-        )
+        enabledBackgroundColor = a.getColor(R.styleable.PrimaryButton_enabled_bg,
+            ContextCompat.getColor(context, R.color.colorPrimary
+        ))
+        disabledBackgroundColor = a.getColor(R.styleable.PrimaryButton_disabled_bg,
+            ContextCompat.getColor(context, R.color.colorPrimary
+        ))
         // make button enable / disable
         binding!!.primaryButton.isEnabled = enabled
 

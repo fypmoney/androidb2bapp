@@ -24,8 +24,8 @@ interface ApiInterface {
     fun getDataFromServer(
         @Header("client_id") client_id: String?,
         @Header("Authorization") authorization: String?,
-        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Url endPoint: String
     ): Observable<ResponseBody>
 
@@ -217,6 +217,4 @@ interface ApiInterface {
         @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
         @Url endPoint: String
     ): Observable<ResponseBody>
-
-
 }
