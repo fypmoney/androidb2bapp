@@ -23,9 +23,8 @@ import android.graphics.Color
 import androidx.core.content.res.TypedArrayUtils
 
 import androidx.core.content.res.TypedArrayUtils.getText
-
-
-
+import android.animation.ObjectAnimator
+import android.view.animation.Interpolator
 
 
 @BindingAdapter(value = ["app:imageUrl", "app:placeHolderDrawable", "app:rounded"], requireAll = false)
@@ -112,4 +111,20 @@ fun setSomePartOfTextInColor(textView: TextView,
     )
 
     textView.setText(spannable, TextView.BufferType.SPANNABLE)
+}
+
+ fun doBounceAnimation(targetView: View) {
+    val interpolator: Interpolator = Interpolator { v ->
+        getPowOut(v, 2.0) //Add getPowOut(v,3); for more up animation
+    }
+    val animator = ObjectAnimator.ofFloat(targetView, "translationY", 0f, 25f, 0f)
+    animator.interpolator = interpolator
+    animator.startDelay = 100
+    animator.duration = 800
+    animator.repeatCount = -1
+    animator.start()
+}
+
+private fun getPowOut(elapsedTimeRate: Float, pow: Double): Float {
+    return (1.toFloat() - Math.pow((1 - elapsedTimeRate).toDouble(), pow)).toFloat()
 }

@@ -649,7 +649,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="dummy_amount_2500">\u20B9 0</string>
     <string name="manage_channels_heading">Manage Channels</string>
     <string name="activate_card_heading">Activate Card</string>
-    <string name="rotate_card">Rotate the card to view details</string>
+    <string name="rotate_card">Tap on Rotate card to view Details</string>
 
     <!--
     Manage Channels
@@ -911,6 +911,9 @@ Coming really soon!
     <string name="delivery_partner">Delivery Partner</string>
     <string name="awb_number">AWB Number</string>
     <string name="expected_delivery">Expected Delivery</string>
+    <string name="rotate_card_txt">Rotate Card</string>
+    <string name="swipe_up_to_continue">Swipe up to continue</string>
+    <string name="swipe_to_view_settings">Swipe to view settings</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>

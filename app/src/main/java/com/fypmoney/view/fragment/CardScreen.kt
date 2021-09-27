@@ -1,12 +1,12 @@
 package com.fypmoney.view.fragment
 
-import android.animation.*
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.method.HideReturnsTransformationMethod
@@ -20,6 +20,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
+import com.fypmoney.bindingAdapters.doBounceAnimation
 import com.fypmoney.databinding.ScreenCardBinding
 import com.fypmoney.model.UpDateCardSettingsRequest
 import com.fypmoney.model.UpdateCardLimitRequest
@@ -27,7 +28,9 @@ import com.fypmoney.util.*
 import com.fypmoney.util.AppConstants.CARD_TYPE_PHYSICAL
 import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.view.CardSettingClickListener
-import com.fypmoney.view.activity.*
+import com.fypmoney.view.activity.BankTransactionHistoryView
+import com.fypmoney.view.activity.EnterOtpView
+import com.fypmoney.view.activity.SetPinView
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.view.ordercard.OrderCardView
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
@@ -38,7 +41,6 @@ import com.fypmoney.view.webview.WebViewActivity
 import com.fypmoney.viewmodel.CardScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.screen_card.*
-import kotlinx.android.synthetic.main.screen_card.notify_btn
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
 import kotlinx.android.synthetic.main.virtual_card_front_layout.*
 
@@ -94,15 +96,8 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         mViewBinding.viewModel = mViewModel
         mViewBinding.fragment = this
 
-        if(SharedPrefUtils.getString(
-                requireContext(),
-                SharedPrefUtils.SF_KEY_CARD_FLAG
-            )=="1"){
-            showNotifyCardLayout()
-        }else{
-            mViewBinding.notifyOrderCardNsv.visibility = View.GONE
-            showCardLayout()
-        }
+        showCardLayout()
+
 
     }
 
@@ -135,7 +130,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             BottomSheetBehavior.from<View>(mViewBinding.clBottomsheet)
         BottomSheetBehavior.from<ConstraintLayout>(mViewBinding.clBottomsheet)
         behavior.state =
-            BottomSheetBehavior.STATE_COLLAPSED
+            BottomSheetBehavior.STATE_HIDDEN
         behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
@@ -148,11 +143,27 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
         })
+        doBounceAnimation(swipe_up_pull_details_iv)
+        swipe_up_for_details.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
+            override fun onSwipeTop() {
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
 
-        /*up_iv.setOnClickListener {
+            override fun onSwipeRight() {
+            }
 
-        }*/
 
+            override fun onSwipeLeft() {
+
+            }
+
+            override fun onSwipeBottom() {
+            }
+
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                return gestureDetector.onTouchEvent(event)
+            }
+        })
         front_fl.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
             override fun onSwipeTop() {
             }
@@ -197,26 +208,19 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         })
     }
 
-    private fun showNotifyCardLayout() {
-        val uri: Uri =
-            Uri.parse("android.resource://" + context?.packageName + "/" + R.raw.notify_order_card)
-        mViewBinding.video.setMediaController(null)
-        mViewBinding.video.setVideoURI(uri)
-        mViewBinding.video.setOnPreparedListener {
-            it.isLooping = true
-            mViewBinding.video.start()
-        }
-        notify_btn.setOnClickListener {
-            Utility.showToast(resources.getString(R.string.thanks_we_will_keep_you_notify))
-        }
-        mViewBinding.notifyOrderCardNsv.visibility = View.VISIBLE
-    }
 
 
     /*
     * This method is used to observe the observers
     * */
     private fun setObservers() {
+        mViewModel.rotateCardClicked.observe(viewLifecycleOwner) {
+            if (it) {
+                flipCardLeft()
+            }else{
+                flipCardRight()
+            }
+        }
         mViewModel.onViewDetailsClicked.observe(viewLifecycleOwner) {
             if (it) {
                 askForDevicePassword()

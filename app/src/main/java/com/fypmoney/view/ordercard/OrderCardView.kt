@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.databinding.adapters.ViewBindingAdapter
 import androidx.lifecycle.ViewModelProvider
@@ -14,9 +16,11 @@ import com.fypmoney.databinding.ViewOrderCardBinding
 import com.fypmoney.util.Utility
 import com.fypmoney.bindingAdapters.setSomePartOfTextInColor
 import com.fypmoney.util.AppConstants.ORDER_CARD_INFO
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.ordercard.cardorderoffer.CardOrderOfferActivity
 import com.google.common.base.Ascii.RS
 import kotlinx.android.synthetic.main.activity_notify_me_order_card.*
+import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
@@ -53,14 +57,25 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
             backArrowTint = Color.WHITE
         )
 
-        val uri: Uri =
-            Uri.parse("android.resource://" + packageName + "/" + R.raw.ic_card_video)
-        mViewBinding.cardFrontAiv.setMediaController(null)
-        mViewBinding.cardFrontAiv.setVideoURI(uri)
-        mViewBinding.cardFrontAiv.setOnPreparedListener {
-            it.isLooping = true
-            mViewBinding.cardFrontAiv.start()
+        if(SharedPrefUtils.getString(
+                applicationContext,
+                SharedPrefUtils.SF_KEY_CARD_FLAG
+            )=="1"){
+            showNotifyCardLayout()
+        }else{
+            mViewBinding.notifyOrderCardNsv.visibility = View.GONE
+            val uri: Uri =
+                Uri.parse("android.resource://" + packageName + "/" + R.raw.ic_card_video)
+            mViewBinding.cardFrontAiv.setMediaController(null)
+            mViewBinding.cardFrontAiv.setVideoURI(uri)
+            mViewBinding.cardFrontAiv.setOnPreparedListener {
+                it.isLooping = true
+                mViewBinding.cardFrontAiv.start()
+            }
+
+            mViewBinding.orderCardNsv.visibility = View.VISIBLE
         }
+
         setObservers()
 
     }
@@ -100,7 +115,21 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
         }
     }
 
-
+    private fun showNotifyCardLayout() {
+        val uri: Uri =
+            Uri.parse("android.resource://" + applicationContext.packageName + "/" + R.raw.notify_order_card)
+        mViewBinding.video.setMediaController(null)
+        mViewBinding.video.setVideoURI(uri)
+        mViewBinding.video.setOnPreparedListener {
+            it.isLooping = true
+            mViewBinding.video.start()
+        }
+        mViewBinding.notifyBtn.setOnClickListener {
+            Utility.showToast(resources.getString(R.string.thanks_we_will_keep_you_notify))
+            finish()
+        }
+        mViewBinding.notifyOrderCardNsv.visibility = View.VISIBLE
+    }
 
 
 }

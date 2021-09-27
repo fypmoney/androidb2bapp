@@ -806,6 +806,21 @@ object Utility {
             SharedPrefUtils.SF_KEY_KIT_NUMBER,
             ""
         )
+        SharedPrefUtils.putBoolean(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_IS_ORDER_SCARTCH_CODE_DONE,
+            false
+        )
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_NAME_ON_CARD,
+            ""
+        )
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_DELIVERY_ADDRESS,
+            ""
+        )
     }
 
     /*

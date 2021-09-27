@@ -51,7 +51,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var onBankProfileSuccess = MutableLiveData<Boolean>()
     var isViewDetailsVisible = ObservableField(true)
     var bankProfileResponse = ObservableField<BankProfileResponseDetails>()
-
+    var rotateCardClicked = MutableLiveData<Boolean>()
 
     /*
     * This is used to see the card details
@@ -60,6 +60,9 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         onViewDetailsClicked.value = true
     }
 
+    fun onRotateCard(){
+        rotateCardClicked.value = true
+    }
 
 
     /*

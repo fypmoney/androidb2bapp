@@ -23,6 +23,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:duplicateParentState="false"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginBottom="@dimen/dp10"
         android:visibility="@{viewModel.isFrontVisible?View.VISIBLE:View.GONE,default=visible}">
 
         <androidx.appcompat.widget.AppCompatImageView
