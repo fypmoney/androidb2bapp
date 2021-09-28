@@ -51,6 +51,7 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
     }
 
 
+
     private fun initializeTabs(tabLayout: TabLayout, viewPager: ViewPager) {
 
 
@@ -66,7 +67,6 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
 
 
     }
-
     internal class ViewPagerAdapter(manager: FragmentManager?) :
         FragmentPagerAdapter(manager!!) {
         private val mFragmentList: MutableList<Fragment> = java.util.ArrayList()

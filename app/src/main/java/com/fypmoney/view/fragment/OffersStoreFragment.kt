@@ -55,6 +55,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, StoreScreenViewM
     private var typeAdapter: FeedsStoreAdapter? = null
 
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

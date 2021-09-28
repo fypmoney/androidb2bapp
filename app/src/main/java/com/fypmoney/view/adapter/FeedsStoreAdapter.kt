@@ -162,6 +162,7 @@ class FeedsStoreAdapter(
     }
 
 
+
     inner class VideoViewHolder(
         private val mRowItemBinding: FeedRowLayoutVideoviewBinding? = null,
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {

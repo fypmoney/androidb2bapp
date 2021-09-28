@@ -88,7 +88,6 @@ class StoreScreenViewModel(application: Application) : BaseViewModel(application
         )
 
     }
-
     private fun makeFetchFeedRequest(
         size: Int? = 5,
         pageValue: Int? = 0,

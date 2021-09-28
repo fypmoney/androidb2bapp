@@ -54,6 +54,7 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
     private var typeAdapter: FeedsStoreAdapter? = null
 
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
@@ -74,8 +75,8 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
         )
 
 
-    }
 
+    }
     private fun getListOfApps(stores: Int, rechargeIconList: Int): ArrayList<StoreDataModel> {
         val upiList = ArrayList<StoreDataModel>()
         val iconList = PockketApplication.instance.resources.getIntArray(rechargeIconList)
@@ -104,7 +105,6 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
 
 
     }
-
     open fun loadJSONFromAsset(stores: Int): String? {
         var json: String? = null
         json = try {
@@ -121,7 +121,6 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
         }
         return json
     }
-
     override fun onTryAgainClicked() {
         TODO("Not yet implemented")
     }
