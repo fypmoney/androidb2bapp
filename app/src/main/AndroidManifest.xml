@@ -237,6 +237,7 @@
         <activity android:name=".view.activity.RewardsActivity" />
         <activity android:name=".view.activity.SpinWheelViewDark" />
         <activity android:name=".view.activity.AgeAllowedActivationView" />
+        <activity android:name=".view.activity.ScratchCardActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

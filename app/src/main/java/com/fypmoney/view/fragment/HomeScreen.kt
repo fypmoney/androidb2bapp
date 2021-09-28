@@ -97,6 +97,8 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
 
             }
         )
+
+
         with(mViewBinding.recentRv) {
             adapter = topTenUsersAdapter
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)

@@ -111,7 +111,7 @@
             android:layout_width="match_parent"
             app:layout_constraintTop_toBottomOf="@+id/rel"
             android:layout_marginTop="-60dp"
-            android:layout_marginHorizontal="@dimen/_30sdp"
+            android:layout_marginHorizontal="@dimen/_40sdp"
             android:background="@drawable/edit_text_rounded_rectangle_shape_solid__dark_gray_8"
             android:id="@+id/blur"
             android:alpha=".9"
@@ -119,38 +119,58 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:elevation="@dimen/_2sdp"
+        <androidx.cardview.widget.CardView
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:backgroundTint="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="@+id/blur"
             app:layout_constraintTop_toTopOf="@+id/blur"
+            app:cardCornerRadius="@dimen/_10sdp"
+            android:elevation="0dp"
             app:layout_constraintEnd_toEndOf="@+id/blur"
-            app:layout_constraintStart_toStartOf="@+id/blur">
+            app:layout_constraintStart_toStartOf="@+id/blur"
+            android:layout_height="0dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_14sdp"
-                android:text="Total Earned"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
+            <com.fypmoney.view.customview.blurr.BlurLayout
 
-            <TextView
+                android:layout_width="match_parent"
+
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="@+id/blur"
+                app:layout_constraintTop_toTopOf="@+id/blur"
+                app:layout_constraintEnd_toEndOf="@+id/blur"
+                app:layout_constraintStart_toStartOf="@+id/blur">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:text="Total Earned"
+                        android:textColor="@color/white"
+                        android:textSize="14sp" />
+
+                    <TextView
                 android:id="@+id/totalearned"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="@dimen/_14sdp"
-                android:layout_marginEnd="@dimen/_14sdp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="@dimen/_14sdp"
+                        android:layout_marginEnd="@dimen/_14sdp"
 
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+                        android:textColor="@color/white"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
 
-        </RelativeLayout>
+
+            </com.fypmoney.view.customview.blurr.BlurLayout>
+
+        </androidx.cardview.widget.CardView>
 
         <LinearLayout
             android:id="@+id/linearLayout7"
@@ -294,7 +314,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/_8sdp"
             android:src="@drawable/ic_gift_rewards"
-            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -302,7 +322,7 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/total_refral_won_tv"
             style="@style/TextviewBold"
-            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_12sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -333,7 +353,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_14sdp"
+            android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/total_refral_won_tv"

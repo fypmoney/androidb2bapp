@@ -16,6 +16,7 @@ import com.fypmoney.R
 import com.fypmoney.model.SectionListItem
 import com.fypmoney.model.aRewardProductResponse
 import com.fypmoney.util.AppConstants
+import com.fypmoney.view.activity.ScratchCardActivity
 import com.fypmoney.view.activity.SpinWheelViewDark
 import com.fypmoney.view.adapter.ScratchItemAdapter
 import com.fypmoney.view.adapter.SpinnerAdapter
@@ -24,7 +25,6 @@ import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.viewmodel.RewardsViewModel
 import kotlinx.android.synthetic.main.dialog_burn_mynts.*
 import kotlinx.android.synthetic.main.fragment_spinner_list.view.*
-import java.io.Serializable
 
 
 import kotlin.collections.ArrayList
@@ -79,7 +79,7 @@ class RewardsSpinnerListFragment : Fragment() {
 
     }
 
-    internal fun showBurnDialog(i: Int) {
+    internal fun showBurnDialog(i: Int, type: String) {
 
 
         dialogDialog!!.setCancelable(true)
@@ -97,7 +97,7 @@ class RewardsSpinnerListFragment : Fragment() {
 
 
         dialogDialog!!.clicked.setOnClickListener(View.OnClickListener {
-            when (itemsArrayList[i].productType) {
+            when (type) {
                 AppConstants.PRODUCT_SPIN -> {
                     val intent = Intent(requireContext(), SpinWheelViewDark::class.java)
                     val `object` = ArrayList<SectionListItem>()
@@ -114,9 +114,14 @@ class RewardsSpinnerListFragment : Fragment() {
 //                    args.putSerializable("ARRAYLIST", itemsArrayList as Serializable)
 //                    intent.putExtra("BUNDLE", args)
                     requireContext().startActivity(intent)
-                    dialogDialog!!.dismiss()
+                    dialogDialog?.dismiss()
                 }
                 AppConstants.PRODUCT_SCRATCH -> {
+                    val intent = Intent(requireContext(), ScratchCardActivity::class.java)
+
+
+                    requireContext().startActivity(intent)
+                    dialogDialog?.dismiss()
 
                 }
             }
@@ -138,7 +143,7 @@ class RewardsSpinnerListFragment : Fragment() {
 
 
             override fun onItemClicked(pos: Int) {
-                showBurnDialog(pos)
+                showBurnDialog(pos, "SPIN_WHEEL")
 
 
             }
@@ -156,7 +161,7 @@ class RewardsSpinnerListFragment : Fragment() {
 
         var itemClickListener2 = object : ListContactClickListener {
             override fun onItemClicked(pos: Int) {
-                showBurnDialog(pos)
+                showBurnDialog(pos, "SCRATCH_CARD")
             }
         }
 
