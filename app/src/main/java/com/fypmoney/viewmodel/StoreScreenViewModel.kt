@@ -41,7 +41,7 @@ class StoreScreenViewModel(application: Application) : BaseViewModel(application
     var isFeedVisible = ObservableField(false)
     var onUpiClicked = MutableLiveData<StoreDataModel>()
     var onRechargeClicked = MutableLiveData<StoreDataModel>()
-
+    var isRecyclerviewVisible = ObservableField(false)
     var onFeedButtonClick = MutableLiveData<FeedDetails>()
     var storeAdapter = StoreItemAdapter(this, application.applicationContext)
     var rechargeItemAdapter = RechargeItemAdapter(this)
@@ -125,6 +125,7 @@ class StoreScreenViewModel(application: Application) : BaseViewModel(application
         when (purpose) {
             ApiConstant.API_FETCH_ALL_FEEDS -> {
                 if (responseData is FeedResponseModel) {
+
                     // Save the access token in shared preference
                     val response = responseData.getAllFeed?.getAllFeed
                     // check total count and if greater than 0 set list else set no data found

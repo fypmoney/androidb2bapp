@@ -1,5 +1,9 @@
 package com.fypmoney.view.fragment
 
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,13 +21,18 @@ import com.fypmoney.base.PaginationListener
 import com.fypmoney.databinding.FragmentStoreBinding
 import com.fypmoney.databinding.ScreenStoreBinding
 import com.fypmoney.model.AssignedTaskResponse
+import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.StoreDataModel
+import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.ChoresActivity
+import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.adapter.FeedsStoreAdapter
 
 import com.fypmoney.view.adapter.YourTasksAdapter
+import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.viewmodel.NotificationViewModel
 import com.fypmoney.viewmodel.StoreScreenViewModel
@@ -67,6 +76,7 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
                 R.array.rechargeIconList
             )
         )
+        mViewBinding.shimmerLayout.startShimmerAnimation()
         sharedViewModel.storeAdapter.setList(
             getListOfApps(
                 R.raw.shopping_json,
@@ -127,9 +137,11 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
 
     private fun observeInput(sharedViewModel: StoreScreenViewModel) {
         sharedViewModel.storefeedList.observe(requireActivity(), { list ->
-
+            mViewBinding.shimmerLayout.stopShimmerAnimation()
             typeAdapter?.setList(list)
+
             typeAdapter?.notifyDataSetChanged()
+            sharedViewModel.isRecyclerviewVisible.set(true)
 
 
         })
@@ -163,8 +175,80 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
         mViewBinding.rvStoreFeeds.adapter = typeAdapter
     }
 
-    override fun onFeedClick(position: Int, feedDetails: FeedDetails) {
+    override fun onFeedClick(position: Int, it: FeedDetails) {
+        when (it.displayCard) {
+            AppConstants.FEED_TYPE_DEEPLINK -> {
+                it.action?.url?.let {
+                    Utility.deeplinkRedirection(it.split(",")[0], requireContext())
 
+                }
+            }
+            AppConstants.FEED_TYPE_INAPPWEB2 -> {
+                intentToActivity(
+                    UserFeedsDetailView::class.java,
+                    it,
+                    AppConstants.FEED_TYPE_INAPPWEB
+                )
+            }
+            AppConstants.FEED_TYPE_EXTWEBVIEW2 -> {
+                startActivity(
+                    Intent.createChooser(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(it.action?.url)
+                        ), getString(R.string.browse_with)
+                    )
+                )
+
+            }
+            AppConstants.FEED_TYPE_INAPPWEB -> {
+                intentToActivity(
+                    UserFeedsDetailView::class.java,
+                    it,
+                    AppConstants.FEED_TYPE_INAPPWEB
+                )
+            }
+            AppConstants.FEED_TYPE_BLOG -> {
+                intentToActivity(
+                    UserFeedsDetailView::class.java,
+                    it,
+                    AppConstants.FEED_TYPE_BLOG
+                )
+            }
+            AppConstants.FEED_TYPE_EXTWEBVIEW -> {
+                startActivity(
+                    Intent.createChooser(
+                        Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse(it.action?.url)
+                        ), getString(R.string.browse_with)
+                    )
+                )
+
+            }
+            AppConstants.FEED_TYPE_STORIES -> {
+                if (!it.resourceArr.isNullOrEmpty()) {
+                    callDiduKnowBottomSheet(it.resourceArr)
+                }
+
+            }
+        }
+
+    }
+
+    private fun callDiduKnowBottomSheet(list: List<String>) {
+        val bottomSheet =
+            StoriesBottomSheet(list)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "DidUKnowSheet")
+    }
+
+    private fun intentToActivity(aClass: Class<*>, feedDetails: FeedDetails, type: String? = null) {
+        val intent = Intent(context, aClass)
+        intent.putExtra(AppConstants.FEED_RESPONSE, feedDetails)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
+        intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
+        startActivity(intent)
     }
 
     override fun getBindingVariable(): Int {
