@@ -47,7 +47,7 @@
                 <TextView
                     android:id="@+id/item_total"
                     style="@style/TextviewRegular"
-                    android:textSize="17dp"
+                    android:textSize="14sp"
                     android:textColor="@color/text_color_dark"
                     android:text="@string/set_or_change_pin1" />
 
@@ -60,42 +60,31 @@
                 <TextView
                     android:id="@+id/packaging"
                     style="@style/TextviewRegular"
-                    android:textSize="17dp"
+                    android:textSize="14sp"
                     android:textColor="@color/text_color_dark"
                     android:text="@string/set_or_change_pin2" />
 
 
             </TableRow>
 
-            <TableRow android:padding="5dp"
-                android:layout_marginTop="10dp">
 
-
-                <TextView
-                    android:id="@+id/delivery_fee"
-                    style="@style/TextviewRegular"
-                    android:textSize="17dp"
-                    android:textColor="@color/text_color_dark"
-                    android:text="@string/set_or_change_pin3" />
-
-            </TableRow>
 
 
         </TableLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/goToMessages"
             style="@style/Widget.App.Button"
             android:layout_width="299dp"
             android:layout_height="52dp"
+            android:layout_below="@+id/table"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/curved_background1"
-            app:backgroundTint="@color/text_color_dark"
-            android:text="@string/set_or_change_pin_btn_text"
-            android:textAllCaps="false"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="40dp"
-            android:layout_below="@+id/table"
-            />
+            android:background="@drawable/curved_background1"
+            android:text="@string/set_or_change_pin_btn_text"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/text_color_dark" />
 
     </RelativeLayout>
 </layout>

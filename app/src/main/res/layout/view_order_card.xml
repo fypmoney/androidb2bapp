@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,73 +9,231 @@
 
         <variable
             name="viewModel"
-            type="com.fypmoney.viewmodel.OrderCardViewModel" />
+            type="com.fypmoney.view.ordercard.OrderCardViewModel" />
 
 
     </data>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main_cl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
+        android:background="@color/black">
 
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
-        <RelativeLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/order_card_nsv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="0dp"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
-            <include
-                android:id="@+id/toolbar_layout"
-                layout="@layout/toolbar_for_aadhaar" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardview"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_cl"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                app:cardCornerRadius="15dp"
-                android:layout_marginTop="20dp"
-                android:layout_below="@+id/toolbar_layout"
-                android:background="@drawable/curved_background14">
+                android:layout_height="match_parent">
 
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivServiceLogo1"
-                IMAGE="@{viewModel.imageUrl}"
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewBold"
+                    android:textColor="@color/white"
+                    android:id="@+id/title_tv_1"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@string/order_india_s_first_hololam_card"/>
+
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/title_tv_1"
+                    app:layout_constraintBottom_toTopOf="@+id/card_price_tv">
+
+                    <VideoView
+                        android:id="@+id/card_front_aiv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"/>
+                </FrameLayout>
+
+
+
+
+                <TextView
+                    android:id="@+id/card_price_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:drawableStartCompat="@drawable/ic_card_price"
+                    android:drawablePadding="@dimen/dp20"
+                    android:text="@string/fyp_card_price"
+                    android:textColor="@color/text_color_light"
+                    android:paddingHorizontal="16dp"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:paddingVertical="@dimen/dp5"
+                    app:customBackgroundColor="@{@color/color_mat_black}"
+                    app:customIsRounded="@{false}"
+                    app:customCornerRadius="@{@dimen/dp12}"
+                    android:layout_marginBottom="40dp"
+                    app:layout_constraintBottom_toTopOf="@+id/get_this_card_btn"/>
+
+
+
+                <Button
+                    android:id="@+id/get_this_card_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/check_offer"
+                    android:textSize="18sp"
+                    android:onClick="@{()->viewModel.onOrderCardClicked()}"
+                    android:backgroundTint="@color/color_task_card_green"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="@dimen/dp20"/>
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/notify_order_card_nsv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:visibility="gone">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/premium_card_banner" />
-            </androidx.cardview.widget.CardView>
-            <com.fypmoney.util.ScrollableListView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_below="@+id/cardview"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0dp" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/dp20"
+                android:background="@color/black">
 
-            <Button
-                android:id="@+id/btnContinue"
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
-                android:onClick="@{()->viewModel.onOrderCardClicked()}"
-                android:text="@string/order_premium_card_btn_text"
-                android:textAllCaps="false"
-                app:backgroundTint="@color/text_color_dark" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/notify_order_card_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-        </RelativeLayout>
+                    <VideoView
+                        android:id="@+id/video"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:layout_marginEnd="@dimen/_20sdp"
+                        app:layout_constraintBottom_toTopOf="@+id/body_tv"
+                        app:layout_constraintDimensionRatio="700:1080"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/title_tv" />
 
-    </ScrollView>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/sub_title_tv"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:text="@string/we_want_to_give_you_the_best"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/title_tv" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/title_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/awesomeness_loading"
+                        android:textColor="@color/white"
+                        android:textSize="26sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/body_tv"
+                        style="@style/TextviewRegular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dp16"
+                        android:layout_marginTop="@dimen/dp16"
+                        android:layout_marginEnd="@dimen/dp16"
+                        android:layout_marginBottom="@dimen/_20sdp"
+                        android:gravity="center"
+                        android:text="Here’s a cool sneak peek of your virtual card that is going to roll out in a couple of days. Shopping clothes, ordering food, or recharging are just a piece of cake now. Savor it!"
+                        android:textColor="@color/text_color_light"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toTopOf="@+id/notify_btn"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/video" />
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/notify_btn"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="30dp"
+                        android:background="@drawable/curved_background20"
+                        android:paddingHorizontal="34dp"
+                        android:paddingVertical="10dp"
+                        android:text="@string/notify_me"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 </layout>

@@ -54,9 +54,6 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
             if(Utility.getCustomerDataFromPreference()==null){
                 callGetCustomerProfileApi()
             }
-
-        } else {
-            moveToNextScreen.value = true
         }
     }
 
@@ -80,7 +77,6 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
     *This method is used to call get customer profile API
     * */
     private fun callCheckAppUpdate() {
-
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.CHECK_APP_UPDATE,
@@ -165,8 +161,6 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                             }
                         }
                 }
-
-                moveToNextScreen.value = true
             }
             ApiConstant.API_SETTINGS -> {
                 val data = Gson().fromJson(responseData.toString(), SettingsResponse::class.java)

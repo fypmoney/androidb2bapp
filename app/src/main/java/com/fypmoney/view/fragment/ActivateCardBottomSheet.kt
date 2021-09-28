@@ -2,10 +2,14 @@ package com.fypmoney.view.fragment
 
 
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
 import android.text.TextUtils
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +21,11 @@ import com.fypmoney.application.PockketApplication
 import com.fypmoney.databinding.BottomSheetActivateCardBinding
 import com.fypmoney.databinding.BottomSheetSetSpendingLimitBinding
 import com.fypmoney.util.Utility
+import com.fypmoney.util.textview.ClickableSpanListener
+import com.fypmoney.util.textview.MyStoreClickableSpan
+import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+import com.fypmoney.view.webview.WebViewActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mukesh.OtpView
@@ -25,6 +34,7 @@ import kotlinx.android.synthetic.main.view_enter_otp.*
 
 class ActivateCardBottomSheet(var onActivateCardClickListener: OnActivateCardClickListener) :
     BottomSheetDialogFragment() {
+    lateinit var  binding: BottomSheetActivateCardBinding
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     var otp = ObservableField<String>()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -33,26 +43,28 @@ class ActivateCardBottomSheet(var onActivateCardClickListener: OnActivateCardCli
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(
+    ): View {
+        binding = DataBindingUtil.inflate(
+            inflater,
             R.layout.bottom_sheet_activate_card,
             container,
             false
         )
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetActivateCardBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_activate_card,
-            null,
-            false
-        )
-        bottomSheet.setContentView(bindingSheet.root)
 
 
-        val btnOtp = view.findViewById<Button>(R.id.button_otp)!!
-        val otpView = view.findViewById<OtpView>(R.id.otpView)!!
-        btnOtp.setOnClickListener {
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpviews()
+    }
+
+    private fun setUpviews() {
+        binding.tNCCb.setOnCheckedChangeListener { buttonView, isChecked ->
+            binding.buttonOtp.isEnabled = isChecked
+        }
+        binding.buttonOtp.setOnClickListener {
             when {
                 TextUtils.isEmpty(otp.get()) -> {
                     Utility.showToast(PockketApplication.instance.getString(R.string.card_kit_empty_error))
@@ -65,17 +77,55 @@ class ActivateCardBottomSheet(var onActivateCardClickListener: OnActivateCardCli
 
 
         }
-        otpView.setOtpCompletionListener { otp1 -> // do Stuff
+        binding.otpView.setOtpCompletionListener { otp1 -> // do Stuff
             otp.set(otp1)
         }
 
-        return view
+        showPrivacyPolicyAndTermsAndConditions()
     }
 
     interface OnActivateCardClickListener {
         fun onActivateCardClick(kitFourDigit: String?)
+        fun onPrivacyPolicyTermsClicked(title: String, url: String)
 
     }
+
+    private fun showPrivacyPolicyAndTermsAndConditions() {
+        val text = resources.getString(R.string.by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy,  resources.getString(R.string.terms_and_conditions),resources.getString(R.string.privacy_policy))
+        val privacyPolicyText = resources.getString(R.string.privacy_policy)
+        val tAndCText = resources.getString(R.string.terms_and_conditions)
+        val privacyPolicyStarIndex = text.indexOf(privacyPolicyText)
+        val privacyPolicyEndIndex = privacyPolicyStarIndex + privacyPolicyText.length
+        val tAndCStartIndex = text.indexOf(tAndCText)
+        val tAndCEndIndex = tAndCStartIndex + tAndCText.length
+        val ss = SpannableString(text);
+        ss.setSpan(
+
+            MyStoreClickableSpan(1, object : ClickableSpanListener {
+                override fun onPositionClicked(pos: Int) {
+                    onActivateCardClickListener.onPrivacyPolicyTermsClicked(getString(R.string.privacy_policy),"https://www.fypmoney.in/fyp/privacy-policy/")
+
+                }
+            }),
+            privacyPolicyStarIndex,
+            privacyPolicyEndIndex,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        ss.setSpan(
+            MyStoreClickableSpan(2, object : ClickableSpanListener {
+                override fun onPositionClicked(pos: Int) {
+                    onActivateCardClickListener.onPrivacyPolicyTermsClicked(getString(R.string.terms_and_conditions),"https://www.fypmoney.in/fyp/terms-of-use/")
+                }
+            }),
+            tAndCStartIndex,
+            tAndCEndIndex,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        binding.tNCTv.text = ss
+        binding.tNCTv.highlightColor = Color.TRANSPARENT
+        binding.tNCTv.movementMethod = LinkMovementMethod.getInstance()
+    }
+
 
 
 }

@@ -40,7 +40,7 @@ import com.fypmoney.util.AppConstants.StoreScreen
 import com.fypmoney.util.AppConstants.TRACKORDER
 import com.fypmoney.view.activity.ChoresActivity
 import com.fypmoney.view.activity.HomeView
-import com.fypmoney.view.activity.TrackOrderView
+import com.fypmoney.view.ordercard.trackorder.TrackOrderView
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
 import com.google.gson.Gson
 import com.google.i18n.phonenumbers.PhoneNumberUtil
@@ -75,8 +75,7 @@ import android.util.Log
 import android.view.View
 
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import com.fypmoney.view.fragment.FilterByDateFragment
-import java.time.Year
+import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 
 
 /*
@@ -617,9 +616,10 @@ object Utility {
 
                         // Get the current contact phone number
                         val number = contacts.getString(
-                            contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                            contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                        )
                         var updatedNumber = number.replace(" ", "").trim()
-                        if(updatedNumber.length>10){
+                        if (updatedNumber.length > 10) {
                             updatedNumber = updatedNumber.takeLast(10)
                         }
                         contactEntity.contactNumber = updatedNumber
@@ -801,7 +801,26 @@ object Utility {
             SharedPrefUtils.SF_KEY_USERNAME,
             ""
         )
-
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_KIT_NUMBER,
+            ""
+        )
+        SharedPrefUtils.putBoolean(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_IS_ORDER_SCARTCH_CODE_DONE,
+            false
+        )
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_NAME_ON_CARD,
+            ""
+        )
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_DELIVERY_ADDRESS,
+            ""
+        )
     }
 
     /*
@@ -849,6 +868,26 @@ object Utility {
                 SharedPrefUtils.SF_KEY_USER_PROFILE_INFO
             )
         return gson.fromJson(json, CustomerInfoResponseDetails::class.java)
+    }
+
+    fun setCustomerDeliveryAddress(deliveryAddress: UserDeliveryAddress) {
+        val gson = Gson()
+        val json = gson.toJson(deliveryAddress)
+        SharedPrefUtils.putString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_DELIVERY_ADDRESS,
+            json
+        )
+    }
+
+    fun getCustomerDeliveryAddress(): UserDeliveryAddress? {
+        val gson = Gson()
+        val json =
+            SharedPrefUtils.getString(
+                PockketApplication.instance,
+                SharedPrefUtils.SF_KEY_USER_DELIVERY_ADDRESS
+            )
+        return gson.fromJson(json, UserDeliveryAddress::class.java)
     }
 
     /*
@@ -952,7 +991,6 @@ object Utility {
     }
 
 
-
     /*
     * This method is used to compare dates
     * */
@@ -1029,38 +1067,43 @@ object Utility {
     }
 
 
+    fun deeplinkRedirection(screenName: String, context: Context) {
+        var intent: Intent? = null
 
+        when (screenName) {
+            HOMEVIEW -> {
+                intent = Intent(context, HomeView::class.java)
+            }
+            ReferralScreen -> {
+                intent = Intent(context, ReferAndEarnActivity::class.java)
 
-    fun deeplinkRedirection(screenName:String,context: Context){
-        var intent:Intent? = null
+            }
+            CardScreen -> {
+                intent = Intent(context, HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, CardScreen)
 
-        when(screenName){
-            HOMEVIEW->{
-                intent = Intent(context,HomeView::class.java)
-            }ReferralScreen->{
-                intent = Intent(context,ReferAndEarnActivity::class.java)
+            }
+            StoreScreen -> {
+                intent = Intent(context, HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreScreen)
 
-            }CardScreen->{
-                intent = Intent(context,HomeView::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN,CardScreen)
+            }
+            FEEDSCREEN -> {
+                intent = Intent(context, HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FEEDSCREEN)
 
-            }StoreScreen->{
-                intent = Intent(context,HomeView::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN,StoreScreen)
+            }
+            FyperScreen -> {
+                intent = Intent(context, HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FyperScreen)
 
-            }FEEDSCREEN->{
-                intent = Intent(context,HomeView::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN,FEEDSCREEN)
+            }
+            TRACKORDER -> {
+                intent = Intent(context, TrackOrderView::class.java)
 
-            }FyperScreen->{
-                intent = Intent(context,HomeView::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN,FyperScreen)
-
-            }TRACKORDER->{
-                intent = Intent(context,TrackOrderView::class.java)
-
-            }CHORES->{
-                 intent = Intent(context,ChoresActivity::class.java)
+            }
+            CHORES -> {
+                intent = Intent(context, ChoresActivity::class.java)
 
             }
         }
@@ -1068,5 +1111,38 @@ object Utility {
             context.startActivity(intent)
 
         }
+    }
+
+
+
+    fun toTitleCase(string: String?): String? {
+
+        // Check if String is null
+        if (string == null) {
+            return null
+        }
+        var whiteSpace = true
+        val builder = StringBuilder(string) // String builder to store string
+        val builderLength = builder.length
+
+        // Loop through builder
+        for (i in 0 until builderLength) {
+            val c = builder[i] // Get character at builders position
+            if (whiteSpace) {
+
+                // Check if character is not white space
+                if (!Character.isWhitespace(c)) {
+
+                    // Convert to title case and leave whitespace mode.
+                    builder.setCharAt(i, Character.toTitleCase(c))
+                    whiteSpace = false
+                }
+            } else if (Character.isWhitespace(c)) {
+                whiteSpace = true // Set character is white space
+            } else {
+                builder.setCharAt(i, Character.toLowerCase(c)) // Set character to lowercase
+            }
+        }
+        return builder.toString() // Return builders text
     }
 }

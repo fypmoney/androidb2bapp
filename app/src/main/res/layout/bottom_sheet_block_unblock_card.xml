@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <RelativeLayout
@@ -35,7 +36,7 @@
             android:layout_marginTop="50dp"
             android:text="@string/card_settings_block"
             android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+            android:textSize="17sp" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -45,7 +46,7 @@
             android:layout_marginTop="30dp"
             android:text="@string/virtual_card_text"
             android:textColor="@color/text_color_dark"
-            android:textSize="17dp" />
+            android:textSize="17sp" />
 
 
         <androidx.appcompat.widget.SwitchCompat
@@ -59,9 +60,33 @@
             app:track="@drawable/track_selector" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/physical_card_tv"
+            style="@style/TextviewRegular"
+            android:layout_below="@+id/virtual_card_switch"
+            android:layout_marginTop="30dp"
+            tools:visibility = "visible"
+            android:visibility="gone"
+            android:text="@string/physical_card_text"
+            android:textColor="@color/text_color_dark"
+            android:textSize="17sp" />
+
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/physical_card_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/virtual_card_switch"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="15dp"
+            tools:visibility = "visible"
+            android:visibility="gone"
+            android:thumb="@drawable/thumb_selector"
+            app:track="@drawable/track_selector" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/text"
             style="@style/TextviewRegular"
-            android:layout_below="@id/virtual_card_switch"
+            android:layout_below="@id/physical_card_switch"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="50dp"
