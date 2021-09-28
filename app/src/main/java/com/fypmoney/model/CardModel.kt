@@ -263,7 +263,7 @@ data class PackageStatusList(
     @SerializedName("partnerName") val partnerName: String? = null,
     @SerializedName("partnerId") val partnerId: String? = null,
     @SerializedName("awbNo") val awbNo: String? = null,
-    @SerializedName("link") val link: String? = null,
+    @SerializedName("partnerLink") val link: String? = null,
     @SerializedName("isDone") var isDone: String? = null
 ) : Serializable
 @Keep

@@ -29,7 +29,6 @@ import com.fypmoney.util.AppConstants.CARD_TYPE_PHYSICAL
 import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.BankTransactionHistoryView
-import com.fypmoney.view.activity.EnterOtpView
 import com.fypmoney.view.activity.SetPinView
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.view.ordercard.OrderCardView
@@ -551,34 +550,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     }
 
 
-    /**
-     * Method to navigate to the Feeds screen after login
-     */
-    private fun goToEnterOtpScreen(kitFourDigit: String?) {
-        val intent = Intent(requireContext(), EnterOtpView::class.java)
-        intent.putExtra(
-            AppConstants.MOBILE_TYPE,
-            ""
-        )
-        intent.putExtra(
-            AppConstants.FROM_WHICH_SCREEN, AppConstants.ACTIVATE_CARD
-        )
-
-        intent.putExtra(
-            AppConstants.MOBILE_WITHOUT_COUNTRY_CODE,
-            ""
-        )
-
-        intent.putExtra(
-            AppConstants.KYC_ACTIVATION_TOKEN, ""
-
-        )
-        intent.putExtra(
-            AppConstants.KIT_FOUR_DIGIT, kitFourDigit
-
-        )
-        startActivity(intent)
-    }
 
     override fun setPinClick() {
         mViewModel.callSetOrChangeApi()

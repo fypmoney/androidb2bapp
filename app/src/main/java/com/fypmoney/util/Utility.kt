@@ -1113,14 +1113,7 @@ object Utility {
         }
     }
 
-    fun firstCharCapitalOfString(string: String): String {
-        val space = " "
-        val splitedStr = string.split(space)
-        return splitedStr.joinToString(space) { it1 ->
-            it1.replaceFirstChar { it }
-        }
 
-    }
 
     fun toTitleCase(string: String?): String? {
 

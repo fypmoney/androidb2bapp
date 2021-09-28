@@ -12,7 +12,6 @@ import com.fypmoney.databinding.ViewTrackOrderBinding
 import com.fypmoney.model.PackageStatusList
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.HomeView
-import com.fypmoney.view.fragment.PriceBreakupBottomSheet
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.view.webview.WebViewActivity
@@ -96,15 +95,9 @@ class TrackOrderView : BaseActivity<ViewTrackOrderBinding, TrackOrderViewModel>(
         startActivity(intent)
     }
 
-    /**
-     * Method to navigate to the different activity
-     */
-    private fun intentToActivity(aClass: Class<*>) {
-        startActivity(Intent(this@TrackOrderView, aClass))
-    }
-
     override fun onBackPressed() {
         startActivity(Intent(this@TrackOrderView, HomeView::class.java))
+        finish()
     }
 
 }

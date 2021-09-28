@@ -22,6 +22,7 @@ import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.ordercard.model.PinCodeData
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.placeordersuccess.PlaceOrderSuccessActivity
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
@@ -70,6 +71,8 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         mViewModel.mapRequestOrderObject()
         setUpViews()
         setObservers()
+
+
     }
 
     private fun setUpViews() {
@@ -259,13 +262,12 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
             override fun onRejectClicked(pos: Int) {
                 bottomsheetInsufficient?.dismiss()
                 val intent = Intent(this@PlaceOrderCardView,AddMoneyView::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, amount)
+                intent.putExtra("amountshouldbeadded", Utility.convertToRs(amount))
                 startActivity(intent)
             }
 
             override fun ondimiss() {
                 bottomsheetInsufficient?.dismiss()
-
             }
         }
          bottomsheetInsufficient = TaskMessageInsuficientFuntBottomSheet(itemClickListener2,
@@ -298,16 +300,11 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                     RESULT_OK -> {
                         runOnUiThread {
                             makePlaceOrderRequest()
-
                         }
-
                     }
-
                 }
             }
         }
     }
-
-
 
 }

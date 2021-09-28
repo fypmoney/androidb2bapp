@@ -1,6 +1,5 @@
 package com.dreamfolks.fypmoney
 
-import com.fypmoney.util.Utility
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -14,11 +13,5 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
-    }
-    @Test
-    fun conevrt_strings() {
-        var str = "ORDER PLACED"
-        var out = Utility.firstCharCapitalOfString(str)
-        assertEquals("Order Placed", out)
     }
 }

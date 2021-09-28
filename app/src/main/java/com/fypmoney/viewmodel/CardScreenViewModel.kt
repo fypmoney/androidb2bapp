@@ -318,6 +318,11 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        when(purpose){
+            ApiConstant.API_ACTIVATE_CARD -> {
+                Utility.showToast(errorResponseInfo.msg)
+            }
+        }
     }
 
     fun makeFetchCardRequest(requestData: String): FetchVirtualCardRequest {

@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.adapters.ViewBindingAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
+import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewOrderCardBinding
@@ -19,6 +20,7 @@ import com.fypmoney.util.AppConstants.ORDER_CARD_INFO
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.ordercard.cardorderoffer.CardOrderOfferActivity
 import com.google.common.base.Ascii.RS
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.activity_notify_me_order_card.*
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -33,6 +35,7 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
 
     private lateinit var mViewModel: OrderCardViewModel
     private lateinit var mViewBinding: ViewOrderCardBinding
+    private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -64,6 +67,8 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
             showNotifyCardLayout()
         }else{
             mViewBinding.notifyOrderCardNsv.visibility = View.GONE
+            mViewBinding.orderCardNsv.visibility = View.VISIBLE
+
             val uri: Uri =
                 Uri.parse("android.resource://" + packageName + "/" + R.raw.ic_card_video)
             mViewBinding.cardFrontAiv.setMediaController(null)
@@ -73,9 +78,9 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
                 mViewBinding.cardFrontAiv.start()
             }
 
-            mViewBinding.orderCardNsv.visibility = View.VISIBLE
         }
-
+        mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
+        mFirebaseAnalytics!!.logEvent("order_card_view",null)
         setObservers()
 
     }
@@ -108,6 +113,12 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
     private fun handelEvent(it: OrderCardViewModel.OrderCardEvent?) {
         when (it) {
             OrderCardViewModel.OrderCardEvent.GetOrderCardEvent -> {
+                val bundle = Bundle()
+                bundle.putString("user_id",SharedPrefUtils.getLong(
+                    applicationContext,
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+                mFirebaseAnalytics!!.logEvent("get_order_card_click",bundle)
                 val intent = Intent(this@OrderCardView,CardOrderOfferActivity::class.java)
                 intent.putExtra(ORDER_CARD_INFO,mViewModel.userOfferCard)
                 startActivity(intent)
@@ -117,7 +128,7 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
 
     private fun showNotifyCardLayout() {
         val uri: Uri =
-            Uri.parse("android.resource://" + applicationContext.packageName + "/" + R.raw.notify_order_card)
+            Uri.parse("android.resource://" + packageName + "/" + R.raw.notify_order_card)
         mViewBinding.video.setMediaController(null)
         mViewBinding.video.setVideoURI(uri)
         mViewBinding.video.setOnPreparedListener {
