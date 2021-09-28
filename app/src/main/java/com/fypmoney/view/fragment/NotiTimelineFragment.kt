@@ -57,7 +57,7 @@ class NotiTimelineFragment : Fragment(), NotificationAdapter.OnNotificationClick
        page = 0
         sharedViewModel.timelineList.observe(
             requireActivity(),
-            androidx.lifecycle.Observer { list ->
+            { list ->
                 root?.LoadProgressBar?.visibility = View.GONE
 
                 if (page == 0) {

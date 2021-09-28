@@ -5,7 +5,11 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager.widget.ViewPager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -13,6 +17,7 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenStoreBinding
 import com.fypmoney.model.StoreDataModel
 import com.fypmoney.viewmodel.StoreScreenViewModel
+import com.google.android.material.tabs.TabLayout
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -45,67 +50,52 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
         return mViewModel
     }
 
-    private fun getListOfApps(stores: Int, rechargeIconList: Int): ArrayList<StoreDataModel> {
-        val upiList = ArrayList<StoreDataModel>()
-        val iconList = PockketApplication.instance.resources.getIntArray(rechargeIconList)
 
-        try {
-            val obj = JSONObject(loadJSONFromAsset(stores))
-            val m_jArry = obj.getJSONArray("stores")
+    private fun initializeTabs(tabLayout: TabLayout, viewPager: ViewPager) {
 
-            var m_li: HashMap<String, String>
-            for (i in 0 until m_jArry.length()) {
-                val jo_inside = m_jArry.getJSONObject(i)
 
-                val formula_value = jo_inside.getString("title")
-                val url_value = jo_inside.getString("url")
-                var model = StoreDataModel()
-                model.title = formula_value
-                model.url = url_value
-                model.Icon = iconList[i]
+        val adapter = ViewPagerAdapter(childFragmentManager)
 
-                upiList.add(model)
-            }
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-return upiList
+        adapter.addFragment(StoresFragment(), "Shops")
+        adapter.addFragment(OffersStoreFragment(), "Offers")
+
+
+        viewPager.adapter = adapter
+
+        tabLayout.setupWithViewPager(viewPager);
 
 
     }
-    open fun loadJSONFromAsset(stores: Int): String? {
-        var json: String? = null
-        json = try {
 
-            val `is`: InputStream? =  resources.openRawResource(stores)  // your file name
-            val size: Int? = `is`?.available()
-            val buffer = size?.let { ByteArray(it) }
-            `is`?.read(buffer)
-            `is`?.close()
-            buffer?.let { String(it, charset("UTF-8")) }
-        } catch (ex: IOException) {
-            ex.printStackTrace()
-            return null
+    internal class ViewPagerAdapter(manager: FragmentManager?) :
+        FragmentPagerAdapter(manager!!) {
+        private val mFragmentList: MutableList<Fragment> = java.util.ArrayList()
+        private val mFragmentTitleList: MutableList<String> = java.util.ArrayList()
+        override fun getItem(position: Int): Fragment {
+            return mFragmentList[position]
         }
-        return json
+
+        override fun getCount(): Int {
+            return mFragmentList.size
+        }
+
+        fun addFragment(fragment: Fragment, title: String) {
+            mFragmentList.add(fragment)
+            mFragmentTitleList.add(title)
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return mFragmentTitleList[position]
+        }
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
 
-        mViewModel.rechargeItemAdapter.setList(
-            getListOfApps(
-                R.raw.recharges_json,
-                R.array.rechargeIconList
-            )
-        )
-        mViewModel.storeAdapter.setList(
-            getListOfApps(
-                R.raw.shopping_json,
-                R.array.shoppingIconList
-            )
-        )
+
+        initializeTabs(mViewBinding.tabLayout, mViewBinding.viewPager)
 
         setObservers(requireContext())
 
