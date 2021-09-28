@@ -905,6 +905,8 @@ Coming really soon!
     <string name="scratch_card">Scratch the card and who knows you might get lucky today 😍</string>
     <string name="scratch_your_luck">Scratch your luck🤑</string>
     <string name="rewards_won">Rewards you have won</string>
+    <string name="shops">Shops</string>
+    <string name="offers">Offers</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
