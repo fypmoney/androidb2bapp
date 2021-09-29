@@ -80,7 +80,6 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
 
         }
         mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
-        mFirebaseAnalytics!!.logEvent("order_card_view",null)
         setObservers()
 
     }
@@ -118,7 +117,7 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
                     applicationContext,
                     SharedPrefUtils.SF_KEY_USER_ID
                 ).toString())
-                mFirebaseAnalytics!!.logEvent("get_order_card_click",bundle)
+                mFirebaseAnalytics!!.logEvent("check_offer",bundle)
                 val intent = Intent(this@OrderCardView,CardOrderOfferActivity::class.java)
                 intent.putExtra(ORDER_CARD_INFO,mViewModel.userOfferCard)
                 startActivity(intent)

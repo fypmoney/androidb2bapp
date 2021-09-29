@@ -25,8 +25,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 24
-        versionName "1.2.1"
+        versionCode 25
+        versionName "1.2.2"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
         // Stops the Gradle plugin�s automatic rasterization of vectors

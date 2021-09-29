@@ -52,7 +52,6 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
         setUpView()
         setUpObserver()
         mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
-        mFirebaseAnalytics!!.logEvent("order_card_scratch_view",null)
     }
 
 
@@ -105,7 +104,7 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
                     applicationContext,
                     SharedPrefUtils.SF_KEY_USER_ID
                 ).toString())
-                mFirebaseAnalytics!!.logEvent("order_card_offer_continue_click",bundle)
+                mFirebaseAnalytics!!.logEvent("scratch_card_continue",bundle)
                 val intent = Intent(this@CardOrderOfferActivity,PersonaliseYourCardActivity::class.java)
                 intent.putExtra(ORDER_CARD_INFO,mViewModel.userOfferCard)
                 startActivity(intent)

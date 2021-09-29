@@ -649,16 +649,11 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="dummy_amount_2500">\u20B9 0</string>
     <string name="manage_channels_heading">Manage Channels</string>
     <string name="activate_card_heading">Activate Card</string>
-    <string name="rotate_card">Tap on Rotate card to view Details</string>
+    <string name="rotate_card">Tap on Rotate Card to view details</string>
 
-    <!--
-    Manage Channels
-    -->
     <string name="issue_by">Issued by</string>
 
-    <!--
-  Activate card
-  -->
+
     <string name="enter_otp_text">Enter the OTP sent to your registered phone number.</string>
     <string name="card_kit_empty_error">Please enter last 4 digit provided on the card kit</string>
     <string name="four_digit_empty_error">Please enter four digit number provided on the card kit</string>
@@ -819,7 +814,7 @@ Coming really soon!
     <string name="money_added_successfully">Money Added Successfully</string>
     <string name="payment_made_successfully">Payment Made Successfully</string>
 
-    <string name="view_details">View Shipping  Details</string>
+    <string name="view_details">View Details</string>
     <string name="press_again_to_exit">Press BACK again to exit.</string>
     <string name="load_money">Load Money</string>
     <string name="insufficient_bank_balance">Insufficient bank balance</string>
@@ -906,7 +901,7 @@ Coming really soon!
     <string name="click_on_set_pin_and_setup_your_n_pin_and_expiry_date_to_enable_n_offline_card_transactions">Click on “ Set Pin” and setup your \n PIN and expiry date to enable \n offline card transactions.</string>
     <string name="set_pin">Set Pin</string>
     <string name="order_india_s_first_hololam_card">Order India\'s First Hololam Card.</string>
-    <string name="view_shipping_details"><u>View Details</u></string>
+    <string name="view_shipping_details"><u>View Shipping Details</u></string>
     <string name="shipping_details">Shipping Details</string>
     <string name="delivery_partner">Delivery Partner</string>
     <string name="awb_number">AWB Number</string>
@@ -915,6 +910,7 @@ Coming really soon!
     <string name="swipe_up_to_continue">Swipe up to continue</string>
     <string name="swipe_to_view_settings">Swipe to view settings</string>
     <string name="check_offer">Check Offer</string>
+    <string name="please_tyr_again_later">Please try again later</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>

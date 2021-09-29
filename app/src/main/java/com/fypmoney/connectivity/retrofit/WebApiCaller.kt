@@ -67,11 +67,11 @@ class WebApiCaller {
             }
         }
 
-        if (!isNetworkAvailable()) {
+       /* if (!isNetworkAvailable()) {
             Log.d(NetworkUtil.TAGN,"hasTransport wifi")
-            request.onResponse.offLine()
+            //request.onResponse.offLine()
             return
-        }
+        }*/
 
          when (request.request_type) {
             ApiUrl.GET -> {
