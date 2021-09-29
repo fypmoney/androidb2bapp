@@ -112,7 +112,7 @@
                     android:layout_marginTop="@dimen/_12sdp"
                     android:ellipsize="end"
                     android:textStyle="bold"
-                    android:text="Recharge &amp; Bill Payments"
+                    android:text="@string/recharge_amp_bill_payments"
                     android:textColor="@color/text_color_dark"
                     android:textSize="17dp" />
 
@@ -140,7 +140,7 @@
                     android:layout_marginTop="20dp"
                     android:textStyle="bold"
                     android:ellipsize="end"
-                    android:text="Shopping"
+                    android:text="@string/shopping"
                     android:textColor="@color/text_color_dark"
                     android:textSize="17dp" />
 
