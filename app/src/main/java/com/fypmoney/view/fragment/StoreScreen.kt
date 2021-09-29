@@ -16,6 +16,7 @@ import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenStoreBinding
 import com.fypmoney.model.StoreDataModel
+import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.viewmodel.StoreScreenViewModel
 import com.google.android.material.tabs.TabLayout
 import org.json.JSONException
@@ -109,8 +110,8 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
             mViewModel.onUpiClicked.observe(requireActivity()) {
 
 
-                val intent2 = Intent(requireContext, StoreWebpageOpener::class.java)
-                StoreWebpageOpener.url = it.url!!
+                val intent2 = Intent(requireContext, StoreWebpageOpener2::class.java)
+                StoreWebpageOpener2.url = it.url!!
                 intent2.putExtra("title", it.title)
                 requireContext.startActivity(intent2)
 
@@ -119,8 +120,8 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
         mViewModel.onRechargeClicked.observe(requireActivity()) {
 
 
-            val intent2 = Intent(requireContext, StoreWebpageOpener::class.java)
-            StoreWebpageOpener.url = it.url!!
+            val intent2 = Intent(requireContext, StoreWebpageOpener2::class.java)
+            StoreWebpageOpener2.url = it.url!!
             intent2.putExtra("title", it.title)
             requireContext.startActivity(intent2)
 

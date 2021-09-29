@@ -20,20 +20,24 @@ import com.fypmoney.BR
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.databinding.ActivityWebview2Binding
 import com.fypmoney.databinding.ActivityWebviewBinding
 import com.fypmoney.model.CardInfoDetailsBottomSheet
+import com.fypmoney.util.AdvancedWebView
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.CardDetailsBottomSheet
 import com.fypmoney.viewmodel.CardDetailsViewModel
-import kotlinx.android.synthetic.main.activity_webview.*
+
+import kotlinx.android.synthetic.main.activity_webview2.*
 
 
-class StoreWebpageOpener : BaseActivity<ActivityWebviewBinding, CardDetailsViewModel>() {
+class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsViewModel>(),
+    AdvancedWebView.Listener {
     private var card: CardInfoDetailsBottomSheet? = null
     private lateinit var mViewModel: CardDetailsViewModel
-    private val TAG = StoreWebpageOpener::class.java.simpleName
-    private lateinit var binding: ActivityWebviewBinding
+    private val TAG = StoreWebpageOpener2::class.java.simpleName
+    private lateinit var binding: ActivityWebview2Binding
 
     companion object {
         var url = ""
@@ -41,7 +45,7 @@ class StoreWebpageOpener : BaseActivity<ActivityWebviewBinding, CardDetailsViewM
 
     override fun getBindingVariable(): Int = BR.viewModel
 
-    override fun getLayoutId(): Int = R.layout.activity_webview
+    override fun getLayoutId(): Int = R.layout.activity_webview2
 
     override fun getViewModel(): CardDetailsViewModel {
         mViewModel = ViewModelProvider(this).get(CardDetailsViewModel::class.java)
@@ -51,7 +55,8 @@ class StoreWebpageOpener : BaseActivity<ActivityWebviewBinding, CardDetailsViewM
     override fun onCreate(savedInstanceState: Bundle?) {
         window?.setFlags(
             WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE)
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
 
         super.onCreate(savedInstanceState)
         binding = getViewDataBinding()
@@ -60,22 +65,7 @@ class StoreWebpageOpener : BaseActivity<ActivityWebviewBinding, CardDetailsViewM
         if (title != null) {
             title_tv.text = title
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            binding.webView1.setRendererPriorityPolicy(WebView.RENDERER_PRIORITY_IMPORTANT, false)
-        }
-        binding.webView1.webViewClient = CustomWebViewClient()
-        binding.webView1.settings.javaScriptEnabled = true
-        binding.webView1.settings.domStorageEnabled = true
-        binding.webView1.settings.allowFileAccess = true;
-        binding.webView1.setInitialScale(1)
-        binding.webView1.settings.loadWithOverviewMode = true
-        binding.webView1.settings.useWideViewPort = true
-        binding.webView1.overScrollMode = WebView.OVER_SCROLL_NEVER
-        binding.webView1.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK;
 
-        if (BuildConfig.DEBUG) {
-            WebView.setWebContentsDebuggingEnabled(true)
-        }
 
         binding.webView1.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, progress: Int) {
@@ -84,6 +74,12 @@ class StoreWebpageOpener : BaseActivity<ActivityWebviewBinding, CardDetailsViewM
             }
 
         }
+
+        webView1.setListener(this, this);
+        webView1.setMixedContentAllowed(false);
+        webView1.loadUrl(url)
+        webView1.setCookiesEnabled(true)
+
         mViewModel.availableAmount.observe(
             this,
             { amount ->
@@ -108,14 +104,9 @@ class StoreWebpageOpener : BaseActivity<ActivityWebviewBinding, CardDetailsViewM
             }
 
         }
-        binding.webView1.loadUrl(url)
 
         binding.toolbarBackImage.setOnClickListener {
             onBackPressed()
-        }
-        refresh.setOnClickListener {
-            binding.webView1.reload()
-
         }
 
 
@@ -149,7 +140,6 @@ class StoreWebpageOpener : BaseActivity<ActivityWebviewBinding, CardDetailsViewM
     }
 
 
-
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && binding.webView1.canGoBack()) {
             binding.webView1.goBack()
@@ -157,7 +147,6 @@ class StoreWebpageOpener : BaseActivity<ActivityWebviewBinding, CardDetailsViewM
         }
         return super.onKeyDown(keyCode, event)
     }
-
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -173,6 +162,33 @@ class StoreWebpageOpener : BaseActivity<ActivityWebviewBinding, CardDetailsViewM
                 }
             }
         }
+    }
+
+    override fun onPageStarted(url: String?, favicon: Bitmap?) {
+
+    }
+
+    override fun onPageFinished(url: String?) {
+
+    }
+
+    override fun onPageError(errorCode: Int, description: String?, failingUrl: String?) {
+
+    }
+
+    override fun onDownloadRequested(
+        url: String?,
+        suggestedFilename: String?,
+        mimeType: String?,
+        contentLength: Long,
+        contentDisposition: String?,
+        userAgent: String?
+    ) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onExternalPageRequest(url: String?) {
+        TODO("Not yet implemented")
     }
 
 }
