@@ -4,8 +4,8 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <item name="colorAccent">@color/white</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorAccent">@color/black</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/black</item>
         <item name="colorSecondaryVariant">@color/black</item>

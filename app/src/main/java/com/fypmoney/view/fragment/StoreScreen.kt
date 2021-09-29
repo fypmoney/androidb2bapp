@@ -8,6 +8,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.fypmoney.BR
@@ -42,9 +43,7 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
         return R.layout.screen_store
     }
 
-    public fun StoreScreen() {
 
-    }
 
     override fun getViewModel(): StoreScreenViewModel {
         mViewModel = ViewModelProvider(this).get(StoreScreenViewModel::class.java)
@@ -58,8 +57,8 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
 
         val adapter = ViewPagerAdapter(childFragmentManager)
 
-        adapter.addFragment(StoresFragment(), "Shops")
-        adapter.addFragment(OffersStoreFragment(), "Offers")
+        adapter.addFragment(StoresFragment(), getString(R.string.shops))
+        adapter.addFragment(OffersStoreFragment(), getString(R.string.offers))
 
 
         viewPager.adapter = adapter
@@ -69,9 +68,9 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
 
     }
     internal class ViewPagerAdapter(manager: FragmentManager?) :
-        FragmentPagerAdapter(manager!!) {
-        private val mFragmentList: MutableList<Fragment> = java.util.ArrayList()
-        private val mFragmentTitleList: MutableList<String> = java.util.ArrayList()
+        FragmentPagerAdapter(manager!!, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        private val mFragmentList: MutableList<Fragment> = ArrayList()
+        private val mFragmentTitleList: MutableList<String> = ArrayList()
         override fun getItem(position: Int): Fragment {
             return mFragmentList[position]
         }
@@ -110,22 +109,18 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
             mViewModel.onUpiClicked.observe(requireActivity()) {
 
 
-                val intent2 = Intent(requireContext, StoreWebpageOpener2::class.java)
-                StoreWebpageOpener2.url = it.url!!
+                val intent2 = Intent(requireContext, StoreWebpageOpener::class.java)
+                StoreWebpageOpener.url = it.url!!
                 intent2.putExtra("title", it.title)
                 requireContext.startActivity(intent2)
 
 
             }
         mViewModel.onRechargeClicked.observe(requireActivity()) {
-
-
-            val intent2 = Intent(requireContext, StoreWebpageOpener2::class.java)
-            StoreWebpageOpener2.url = it.url!!
+            val intent2 = Intent(requireContext, StoreWebpageOpener::class.java)
+            StoreWebpageOpener.url = it.url!!
             intent2.putExtra("title", it.title)
             requireContext.startActivity(intent2)
-
-
         }
 
     }

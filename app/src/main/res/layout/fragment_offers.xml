@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View" />
-
-        <variable
-            name="viewModel"
-            type="com.fypmoney.viewmodel.StoreScreenViewModel" />
-
 
     </data>
 
@@ -16,85 +11,48 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:id="@+id/scroll_view"
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/data_nsv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
-            android:scrollbars="vertical">
+            android:fillViewport="true">
 
-            <LinearLayout
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main_cl"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="18dp"
-                    android:layout_marginEnd="18dp"
-                    android:visibility="gone">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/ic_scan" />
-
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivNotificationBell"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="18dp"
-                        android:layout_toStartOf="@+id/myProfile"
-                        app:srcCompat="@drawable/notification_bell_icon" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/myProfile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:backgroundTint="@color/black"
-                        app:srcCompat="@drawable/ic_profile" />
-
-                </RelativeLayout>
+                android:layout_height="match_parent">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_store_feeds"
+                    android:id="@+id/featured_offer_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:layout_marginRight="@dimen/_16sdp"
-                    android:layout_below="@+id/upi_text"
-                    android:layout_marginTop="@dimen/margin"
-
-
-                    />
-
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/item_banner_type" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_offers_b"
+                    android:id="@+id/offer_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:layout_marginRight="@dimen/_16sdp"
-                    android:layout_below="@+id/upi_text"
-                    android:layout_marginTop="@dimen/margin"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginEnd="@dimen/dp16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/featured_offer_rv"
+                    tools:listitem="@layout/item_grid_type_offers" />
 
-   />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            </LinearLayout>
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

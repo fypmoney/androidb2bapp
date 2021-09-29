@@ -26,6 +26,7 @@ import com.fypmoney.view.adapter.FeedsStoreAdapter
 
 import com.fypmoney.view.adapter.YourTasksAdapter
 import com.fypmoney.view.interfaces.ListItemClickListener
+import com.fypmoney.view.offfers.OffersStoreFragmentVM
 import com.fypmoney.viewmodel.NotificationViewModel
 import com.fypmoney.viewmodel.StoreScreenViewModel
 
@@ -39,35 +40,14 @@ import java.io.InputStream
 import kotlin.collections.ArrayList
 
 
-class OffersStoreFragment : BaseFragment<FragmentOffersBinding, StoreScreenViewModel>(),
-    FeedsAdapter.OnFeedItemClickListener {
-    companion object {
-        var page = 0
-
-    }
-
-    private lateinit var sharedViewModel: StoreScreenViewModel
-    private lateinit var mViewBinding: FragmentOffersBinding
-
-
-    private var itemsArrayList: ArrayList<AssignedTaskResponse> = ArrayList()
-    private var isLoading = false
-    private var typeAdapter: FeedsStoreAdapter? = null
-
-
+class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragmentVM>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
     }
 
     override fun onTryAgainClicked() {
-
-    }
-
-
-    override fun onFeedClick(position: Int, feedDetails: FeedDetails) {
 
     }
 
@@ -79,13 +59,8 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, StoreScreenViewM
         return R.layout.fragment_offers
     }
 
-    override fun getViewModel(): StoreScreenViewModel {
-
-        parentFragment?.let {
-            sharedViewModel = ViewModelProvider(it).get(StoreScreenViewModel::class.java)
-        }
-
-        return sharedViewModel
+    override fun getViewModel(): OffersStoreFragmentVM {
+        return ViewModelProvider(this).get(OffersStoreFragmentVM::class.java)
     }
 
 }
