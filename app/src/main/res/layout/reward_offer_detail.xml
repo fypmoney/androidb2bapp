@@ -17,66 +17,38 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@+id/lin"
+
             android:orientation="vertical"
 
             >
 
             <RelativeLayout
-
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content">
 
-                >
-
-                <LinearLayout
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/_42sdp"
-                    android:elevation="@dimen/_1sdp">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/back_close"
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_32sdp"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/_4sdp"
-                        android:paddingVertical="@dimen/_10sdp"
-                        android:src="@drawable/ic_back_arrow" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextviewBold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="@dimen/_6sdp"
-                        android:text="@string/offer_details"
-
-                        android:textSize="20sp" />
-
-                </LinearLayout>
-
-                <RelativeLayout
+                <androidx.cardview.widget.CardView
                     android:id="@+id/top_bg"
+                    android:layout_marginTop="-26dp"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_160sdp"
 
-                    android:alpha=".2"
-                    android:background="@drawable/round_bottom_background_44dp"
-                    app:cardCornerRadius="18dp" />
 
-                <TextView
-                    android:id="@+id/emoji"
-                    style="@style/TextviewBold"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_2sdp"
+                    android:layout_height="@dimen/_180sdp"
 
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="@dimen/_28sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:layout_marginEnd="@dimen/_24sdp"
-                    android:layout_marginBottom="@dimen/_46sdp"
-                    android:textSize="27sp" />
+
+                    app:cardCornerRadius="26dp">
+
+                    <ImageView
+
+                        android:layout_width="match_parent"
+                        android:scaleType="fitXY"
+                        android:src=""
+
+
+                        android:layout_marginTop="26dp"
+                        android:layout_height="match_parent" />
+
+                </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
 
