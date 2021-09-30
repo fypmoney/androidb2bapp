@@ -247,7 +247,7 @@ class EnterAmountForPayRequestView :
      */
     private fun intentToActivity(aClass: Class<*>) {
         startActivity(Intent(this@EnterAmountForPayRequestView, aClass))
-        finishAffinity()
+        finish()
     }
 
     /*

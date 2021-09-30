@@ -256,7 +256,7 @@
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textCursorDrawable="@null"
-
+                            android:maxLength="100"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -285,6 +285,8 @@
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textCursorDrawable="@null"
+                            android:maxLength="100"
+
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -311,6 +313,7 @@
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textCursorDrawable="@null"
+                            android:maxLength="100"
 
                             />
 
@@ -330,6 +333,7 @@
                     app:enabled_bg="@color/color_task_card_green"
                     app:disabled_bg="@color/buttonUnselectedColor"
                     android:onClick="@{()->viewModel.onPlaceOrderClicked()}"
+                    app:layout_constraintTop_toBottomOf="@+id/delivery_address_cl"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

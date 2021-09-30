@@ -36,6 +36,7 @@ import java.util.*
 class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardViewModel>() {
     private lateinit var binding: ViewPlaceCardBinding
     private lateinit var mViewModel: PlaceOrderCardViewModel
+    private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -64,6 +65,8 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
             callFreshChat(applicationContext)
 
         }
+        mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
+
         mViewModel.userOfferCard = intent.getParcelableExtra(AppConstants.ORDER_CARD_INFO)
         mViewModel.placeOrderRequest?.nameOnCard = SharedPrefUtils.getString(this,
             SharedPrefUtils.SF_KEY_NAME_ON_CARD
@@ -169,6 +172,12 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                 callNotServicebleSheet()
             }
             PlaceOrderCardViewModel.PlaceOrderCardEvent.OnPlaceOrder ->{
+                val bundle = Bundle()
+                bundle.putString("user_id",SharedPrefUtils.getLong(
+                    applicationContext,
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+                mFirebaseAnalytics!!.logEvent("pay_button",bundle)
                 askForDevicePassword()
             }
             is PlaceOrderCardViewModel.PlaceOrderCardEvent.InSufficientBalance ->{
@@ -192,10 +201,24 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                 setUpStateAndCity(it.pinCode)
             }
             is PlaceOrderCardViewModel.PlaceOrderCardState.PlaceOrderError -> {
-
+                Utility.showToast(getString(R.string.please_tyr_again_later))
             }
             is PlaceOrderCardViewModel.PlaceOrderCardState.PlaceOrderSuccess -> {
-                    intentToActivity(PlaceOrderSuccessActivity::class.java)
+                Utility.setCustomerDeliveryAddress(
+                    UserDeliveryAddress(
+                        pincode = binding.pinCodeTie.text.toString(),
+                        houseAddress = binding.houseNumberBuildingTie.text.toString(),
+                        areaDetail = binding.roadNameAreaTie.text.toString(),
+                        landmark = binding.landmarkTie.text.toString(),
+                    )
+                )
+                val bundle = Bundle()
+                bundle.putString("user_id",SharedPrefUtils.getLong(
+                    applicationContext,
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+                mFirebaseAnalytics!!.logEvent("order_success",bundle)
+                intentToActivity(PlaceOrderSuccessActivity::class.java)
             }
         }
     }
@@ -261,6 +284,13 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
 
             override fun onRejectClicked(pos: Int) {
                 bottomsheetInsufficient?.dismiss()
+
+                val bundle = Bundle()
+                bundle.putString("user_id",SharedPrefUtils.getLong(
+                    applicationContext,
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+                mFirebaseAnalytics!!.logEvent("add_money_button",bundle)
                 val intent = Intent(this@PlaceOrderCardView,AddMoneyView::class.java)
                 intent.putExtra("amountshouldbeadded", Utility.convertToRs(amount))
                 startActivity(intent)
@@ -305,6 +335,18 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        Utility.setCustomerDeliveryAddress(
+            UserDeliveryAddress(
+                pincode = binding.pinCodeTie.text.toString(),
+                houseAddress = binding.houseNumberBuildingTie.text.toString(),
+                areaDetail = binding.roadNameAreaTie.text.toString(),
+                landmark = binding.landmarkTie.text.toString(),
+            )
+        )
+        super.onDestroy()
     }
 
 }

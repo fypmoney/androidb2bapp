@@ -39,6 +39,7 @@ import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.view.webview.WebViewActivity
 import com.fypmoney.viewmodel.CardScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
 import kotlinx.android.synthetic.main.virtual_card_front_layout.*
@@ -60,6 +61,9 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     private var mSetLeftIn: AnimatorSet? = null
     private var mIsBackVisible = false
     lateinit var myProfileAdapter: MyProfileListAdapter
+
+    private var mFirebaseAnalytics: FirebaseAnalytics? = null
+
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -107,12 +111,12 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     }
     private fun showCardLayout() {
         val textString = ArrayList<String>()
-        textString.add(PockketApplication.instance.getString(R.string.card_settings))
         textString.add(PockketApplication.instance.getString(R.string.order_card))
+        textString.add(PockketApplication.instance.getString(R.string.card_settings))
         textString.add(PockketApplication.instance.getString(R.string.account_stmt))
         val drawableIds = ArrayList<Int>()
-        drawableIds.add(R.drawable.ic_card_settings)
         drawableIds.add(R.drawable.ic_order_card)
+        drawableIds.add(R.drawable.ic_card_settings)
         drawableIds.add(R.drawable.ic_account_statement)
 
 
@@ -233,12 +237,12 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                         CARD_TYPE_PHYSICAL->{
                             if(cardInfo.kitNumber.isNullOrEmpty()){
                                 val textString = ArrayList<String>()
-                                textString.add(PockketApplication.instance.getString(R.string.card_settings))
                                 textString.add(PockketApplication.instance.getString(R.string.order_card))
+                                textString.add(PockketApplication.instance.getString(R.string.card_settings))
                                 textString.add(PockketApplication.instance.getString(R.string.account_stmt))
                                 val drawableIds = ArrayList<Int>()
-                                drawableIds.add(R.drawable.ic_card_settings)
                                 drawableIds.add(R.drawable.ic_order_card)
+                                drawableIds.add(R.drawable.ic_card_settings)
                                 drawableIds.add(R.drawable.ic_account_statement)
                                 myProfileAdapter.setList(drawableIds,textString)
                             }
@@ -561,6 +565,13 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 callCardSettingsBottomSheet()
             }
             PockketApplication.instance.getString(R.string.order_card) -> {
+                val bundle = Bundle()
+                bundle.putString("user_id",SharedPrefUtils.getLong(
+                    requireContext(),
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+                mFirebaseAnalytics =  FirebaseAnalytics.getInstance(requireContext())
+                mFirebaseAnalytics!!.logEvent("ordered_card",bundle)
                 intentToActivity(OrderCardView::class.java)
             }
             PockketApplication.instance.getString(R.string.track_order)->{

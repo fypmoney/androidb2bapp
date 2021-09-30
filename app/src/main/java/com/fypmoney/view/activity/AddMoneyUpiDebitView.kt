@@ -210,7 +210,7 @@ open class AddMoneyUpiDebitView :
 
     private fun intentToHomeActivity(aClass: Class<*>) {
         startActivity(Intent(this, aClass))
-        finishAffinity()
+        finish()
     }
 
 

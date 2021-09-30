@@ -50,7 +50,7 @@
             android:layout_toEndOf="@+id/imageOrderPlaced"
             android:textSize="12sp"
             android:layout_below="@+id/textOrderPlaced"
-            android:text="@string/view_details"
+            android:text="@string/view_shipping_details"
             android:textAllCaps="false"
             android:textAlignment="center"
             android:textColor="@color/color_skyblue"
