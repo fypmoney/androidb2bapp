@@ -111,11 +111,11 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     }
     private fun showCardLayout() {
         val textString = ArrayList<String>()
-        //textString.add(PockketApplication.instance.getString(R.string.order_card))
+        textString.add(PockketApplication.instance.getString(R.string.order_card))
         textString.add(PockketApplication.instance.getString(R.string.card_settings))
         textString.add(PockketApplication.instance.getString(R.string.account_stmt))
         val drawableIds = ArrayList<Int>()
-        //drawableIds.add(R.drawable.ic_order_card)
+        drawableIds.add(R.drawable.ic_order_card)
         drawableIds.add(R.drawable.ic_card_settings)
         drawableIds.add(R.drawable.ic_account_statement)
 

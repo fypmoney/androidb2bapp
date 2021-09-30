@@ -37,22 +37,16 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
             logoutUser.value = true
         }else{
             try {
-                when (purpose){
-                    ApiConstant.API_SNC_CONTACTS , ApiConstant.API_FETCH_ALL_FEEDS ,
-                            ApiConstant.API_GET_CUSTOMER_INFO ,  ApiConstant.API_ADD_FAMILY_MEMBER ,
-                            ApiConstant.API_GET_VIRTUAL_CARD_REQUEST ,
-                            ApiConstant.API_ADD_MONEY_STEP2 , ApiConstant.API_LOGOUT ,
-                            ApiConstant.API_GET_WALLET_BALANCE  -> {
+                when {
+                    purpose != ApiConstant.API_SNC_CONTACTS || purpose != ApiConstant.API_FETCH_ALL_FEEDS || purpose != ApiConstant.API_GET_CUSTOMER_INFO || purpose != ApiConstant.API_ADD_FAMILY_MEMBER || purpose != ApiConstant.API_GET_VIRTUAL_CARD_REQUEST || purpose != ApiConstant.API_ADD_MONEY_STEP2 || purpose != ApiConstant.API_LOGOUT -> {
                         Utility.showToast(errorResponseInfo.msg)
 
                     }
                 }
             } catch (e: Exception) {
                 when {
-                    purpose != ApiConstant.API_SNC_CONTACTS || purpose != ApiConstant.API_ADD_FAMILY_MEMBER || purpose != ApiConstant.API_GET_VIRTUAL_CARD_REQUEST || purpose != ApiConstant.API_ADD_MONEY_STEP2 || purpose != ApiConstant.API_GET_WALLET_BALANCE ->{
-
-                    }
-                        //Utility.showToast(PockketApplication.instance.getString(R.string.something_went_wrong_error1))
+                    purpose != ApiConstant.API_SNC_CONTACTS || purpose != ApiConstant.API_ADD_FAMILY_MEMBER || purpose != ApiConstant.API_GET_VIRTUAL_CARD_REQUEST || purpose != ApiConstant.API_ADD_MONEY_STEP2 ->
+                        Utility.showToast(PockketApplication.instance.getString(R.string.something_went_wrong_error1))
                 }
             }
         }
@@ -68,10 +62,4 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         progressDialog.postValue(isStart)
     }
 
-    fun sendCrashData(){
-        val customKeysAndValues = CustomKeysAndValues.Builder()
-        /*FirebaseCrashlytics.getInstance().setCustomKeys{
-            key()
-        }*/
-    }
 }
