@@ -15,6 +15,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.adapter.*
+import com.google.gson.Gson
 
 class StoreScreenViewModel(application: Application) : BaseViewModel(application),
    StoreItemAdapter.OnStoreItemClick,RechargeItemAdapter.OnRechargeItemClick {
@@ -120,14 +121,19 @@ class StoreScreenViewModel(application: Application) : BaseViewModel(application
 
     }
 
+    private fun <T> getObject(response: String, instance: Class<T>): Any? {
+        return Gson().fromJson(response, instance)
+    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_FETCH_ALL_FEEDS -> {
-                if (responseData is FeedResponseModel) {
+                var feeds = getObject(responseData.toString(), FeedResponseModel::class.java)
+                if (feeds is FeedResponseModel) {
 
                     // Save the access token in shared preference
-                    val response = responseData.getAllFeed?.getAllFeed
+                    val response = feeds.getAllFeed?.getAllFeed
                     // check total count and if greater than 0 set list else set no data found
                     var notificationList: ArrayList<FeedDetails>? =
                         ArrayList()

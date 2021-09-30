@@ -224,9 +224,10 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
                 }
             }
             ApiConstant.API_FETCH_ALL_FEEDS -> {
-                if (responseData is FeedResponseModel) {
+                var feeds = getObject(responseData.toString(), FeedResponseModel::class.java)
+                if (feeds is FeedResponseModel) {
                     // Save the access token in shared preference
-                    val response = responseData.getAllFeed?.getAllFeed
+                    val response = feeds.getAllFeed?.getAllFeed
                     // check total count and if greater than 0 set list else set no data found
                     totalCount.set(response?.total)
                     response?.feedDetails.let {
@@ -239,6 +240,10 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
             }
 
         }
+    }
+
+    private fun <T> getObject(response: String, instance: Class<T>): Any? {
+        return Gson().fromJson(response, instance)
     }
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {

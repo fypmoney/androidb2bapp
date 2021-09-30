@@ -21,6 +21,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.FeedsAdapter
+import com.google.gson.Gson
 import java.lang.Exception
 
 /*
@@ -85,16 +86,17 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
         isLoading.set(false)
         when (purpose) {
             ApiConstant.API_FETCH_ALL_FEEDS -> {
-                if (responseData is FeedResponseModel) {
+                var feeds = getObject(responseData.toString(), FeedResponseModel::class.java)
+                if (feeds is FeedResponseModel) {
                     isRecyclerviewVisible.set(true)
                     // Save the access token in shared preference
-                    val response = responseData.getAllFeed?.getAllFeed
+                    val response = feeds.getAllFeed?.getAllFeed
                     isApiLoading.set(false)
                     totalCount.set(response?.total)
                     // check total count and if greater than 0 set list else set no data found
                     try {
                         when {
-                            totalCount.get()!! > 0 && fromWhichScreen.get() == 0-> {
+                            totalCount.get()!! > 0 && fromWhichScreen.get() == 0 -> {
                                 if (response != null) {
                                     feedsAdapter.setList(response.feedDetails)
                                 }
@@ -112,7 +114,6 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
                         }
 
 
-
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }
@@ -121,6 +122,10 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
             }
         }
 
+    }
+
+    private fun <T> getObject(response: String, instance: Class<T>): Any? {
+        return Gson().fromJson(response, instance)
     }
 
     override fun onFeedClick(position: Int, feedDetails: FeedDetails) {

@@ -13,6 +13,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/data_nsv"
+            app:layout_constraintBottom_toTopOf="@+id/LoadProgressBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
@@ -23,9 +24,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                        <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                        <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/featured_offer_rv"
                     android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginEnd="@dimen/dp16"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -53,6 +78,24 @@
 
 
         </androidx.core.widget.NestedScrollView>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/LoadProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+
+
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toBottomOf="@+id/data_nsv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/dots_animation" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

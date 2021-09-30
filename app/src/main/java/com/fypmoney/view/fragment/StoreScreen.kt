@@ -20,6 +20,7 @@ import com.fypmoney.model.StoreDataModel
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.viewmodel.StoreScreenViewModel
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.view_notification.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -33,7 +34,11 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
 
     private lateinit var mViewModel: StoreScreenViewModel
     private lateinit var mViewBinding: ScreenStoreBinding
+    private val tabIcons = intArrayOf(
+        com.fypmoney.R.drawable.ic_store_tab,
+        com.fypmoney.R.drawable.ic_offer_tab,
 
+        )
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -63,10 +68,20 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
 
         viewPager.adapter = adapter
 
+
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.tabRippleColor = null;
+        setupTabIcons()
 
 
     }
+
+    private fun setupTabIcons() {
+        tabLayout.getTabAt(0)!!.setIcon(tabIcons[0])
+        tabLayout.getTabAt(1)!!.setIcon(tabIcons[1])
+
+    }
+
     internal class ViewPagerAdapter(manager: FragmentManager?) :
         FragmentPagerAdapter(manager!!, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         private val mFragmentList: MutableList<Fragment> = ArrayList()
@@ -109,16 +124,16 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
             mViewModel.onUpiClicked.observe(requireActivity()) {
 
 
-                val intent2 = Intent(requireContext, StoreWebpageOpener::class.java)
-                StoreWebpageOpener.url = it.url!!
+                val intent2 = Intent(requireContext, StoreWebpageOpener2::class.java)
+                StoreWebpageOpener2.url = it.url!!
                 intent2.putExtra("title", it.title)
                 requireContext.startActivity(intent2)
 
 
             }
         mViewModel.onRechargeClicked.observe(requireActivity()) {
-            val intent2 = Intent(requireContext, StoreWebpageOpener::class.java)
-            StoreWebpageOpener.url = it.url!!
+            val intent2 = Intent(requireContext, StoreWebpageOpener2::class.java)
+            StoreWebpageOpener2.url = it.url!!
             intent2.putExtra("title", it.title)
             requireContext.startActivity(intent2)
         }

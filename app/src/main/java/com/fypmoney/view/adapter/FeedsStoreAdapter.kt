@@ -5,10 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
-import com.fypmoney.databinding.FeedRowLayoutVideoviewBinding
-import com.fypmoney.databinding.FeedsDidUKnowBinding
-import com.fypmoney.databinding.FeedsDidUKnowHomeBinding
-import com.fypmoney.databinding.FeedsRowLayoutBinding
+import com.fypmoney.databinding.*
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewhelper.FeedsViewHelper
@@ -35,14 +32,14 @@ class FeedsStoreAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
             typeWithoutTitle -> {
-                val mRowBinding = FeedsDidUKnowHomeBinding.inflate(
+                val mRowBinding = FeedsRowLayoutShortBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent, false
                 )
                 return DiduKnowViewHolder(mRowBinding)
             }
             typeWithTitle -> {
-                val mRowBinding = FeedsRowLayoutBinding.inflate(
+                val mRowBinding = FeedsRowLayoutShortBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent, false
                 )
@@ -75,7 +72,7 @@ class FeedsStoreAdapter(
     }
 
     inner class DiduKnowViewHolder(
-        private val mRowItemBinding: FeedsDidUKnowHomeBinding? = null
+        private val mRowItemBinding: FeedsRowLayoutShortBinding? = null
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         private lateinit var mViewHelper: FeedsViewHelper
         override fun onBind(position: Int) {
@@ -129,7 +126,7 @@ class FeedsStoreAdapter(
     }
 
     inner class ViewHolder(
-        private val mRowItemBinding: FeedsRowLayoutBinding? = null
+        private val mRowItemBinding: FeedsRowLayoutShortBinding? = null
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         private lateinit var mViewHelper: FeedsViewHelper
         override fun onBind(position: Int) {

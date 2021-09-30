@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -141,6 +142,14 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
             typeAdapter?.setList(list)
 
             typeAdapter?.notifyDataSetChanged()
+//            mViewBinding.rvStoreFeeds.post(Runnable { // Shift the view to snap  near the center of the screen.
+//                // This does not have to be precise.
+//                val dx: Int = ( mViewBinding.rvStoreFeeds.width -  mViewBinding.rvStoreFeeds.getChildAt(0).width) / 2
+//                mViewBinding.rvStoreFeeds.scrollBy(-dx, 0)
+//                // Assign the LinearSnapHelper that will initially snap the near-center view.
+//                val snapHelper = LinearSnapHelper()
+//                snapHelper.attachToRecyclerView( mViewBinding.rvStoreFeeds)
+//            })
             sharedViewModel.isRecyclerviewVisible.set(true)
 
 
@@ -171,8 +180,10 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
 
         }
 
+
         typeAdapter = sharedViewModel?.let { FeedsStoreAdapter(it, this) }
         mViewBinding.rvStoreFeeds.adapter = typeAdapter
+
     }
 
     override fun onFeedClick(position: Int, it: FeedDetails) {

@@ -16,13 +16,15 @@ data class FeedResponseModel(
 ) : Serializable
 @Keep
 data class FeedResponseModelDetails(
-    @SerializedName("getAllFeed") var getAllFeed: GetAllFeed?,
+    @SerializedName("getAllFeed") var getAllFeed: GetAllFeed2?,
 ) : Serializable
+
 @Keep
-data class GetAllFeed(
+data class GetAllFeed2(
     @SerializedName("total") var total: Int? = 0,
     @SerializedName("feedData") var feedDetails: List<FeedDetails>?
 ) : Serializable
+
 @Keep
 data class FeedDetails(
     @SerializedName("id") var id: String? = null,
