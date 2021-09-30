@@ -50,17 +50,11 @@ import kotlin.collections.ArrayList
 
 class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(),
     FeedsAdapter.OnFeedItemClickListener {
-    companion object {
-        var page = 0
-
-    }
 
     private lateinit var sharedViewModel: StoreScreenViewModel
     private lateinit var mViewBinding: FragmentStoreBinding
 
 
-    private var itemsArrayList: ArrayList<AssignedTaskResponse> = ArrayList()
-    private var isLoading = false
     private var typeAdapter: FeedsStoreAdapter? = null
 
 
@@ -96,7 +90,6 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
             val obj = JSONObject(loadJSONFromAsset(stores))
             val m_jArry = obj.getJSONArray("stores")
 
-            var m_li: HashMap<String, String>
             for (i in 0 until m_jArry.length()) {
                 val jo_inside = m_jArry.getJSONObject(i)
 
@@ -116,7 +109,7 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
 
 
     }
-    open fun loadJSONFromAsset(stores: Int): String? {
+     private fun loadJSONFromAsset(stores: Int): String? {
         var json: String? = null
         json = try {
 
@@ -142,14 +135,6 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
             typeAdapter?.setList(list)
 
             typeAdapter?.notifyDataSetChanged()
-//            mViewBinding.rvStoreFeeds.post(Runnable { // Shift the view to snap  near the center of the screen.
-//                // This does not have to be precise.
-//                val dx: Int = ( mViewBinding.rvStoreFeeds.width -  mViewBinding.rvStoreFeeds.getChildAt(0).width) / 2
-//                mViewBinding.rvStoreFeeds.scrollBy(-dx, 0)
-//                // Assign the LinearSnapHelper that will initially snap the near-center view.
-//                val snapHelper = LinearSnapHelper()
-//                snapHelper.attachToRecyclerView( mViewBinding.rvStoreFeeds)
-//            })
             sharedViewModel.isRecyclerviewVisible.set(true)
 
 
@@ -181,7 +166,7 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
         }
 
 
-        typeAdapter = sharedViewModel?.let { FeedsStoreAdapter(it, this) }
+        typeAdapter = sharedViewModel?.let { FeedsStoreAdapter(requireActivity(),it, this) }
         mViewBinding.rvStoreFeeds.adapter = typeAdapter
 
     }

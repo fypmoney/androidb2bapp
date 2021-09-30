@@ -1,25 +1,28 @@
 package com.fypmoney.view.adapter
 
 
+import android.app.Activity
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.fypmoney.R
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.*
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewhelper.FeedsViewHelper
-import com.fypmoney.viewmodel.FeedsViewModel
-import com.fypmoney.viewmodel.HomeScreenViewModel
 import com.fypmoney.viewmodel.StoreScreenViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import kotlinx.android.synthetic.main.view_home.view.*
 
 
 /**
  * This adapter class is used to handle feeds
  */
 class FeedsStoreAdapter(
+    var context:Activity,
     var viewModel: StoreScreenViewModel,
     var onFeedItemClickListener: FeedsAdapter.OnFeedItemClickListener
 ) :
@@ -32,7 +35,7 @@ class FeedsStoreAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
             typeWithoutTitle -> {
-                val mRowBinding = FeedsRowLayoutShortBinding.inflate(
+                val mRowBinding = ItemStoreFeedsBannerBinding.inflate(
                     LayoutInflater.from(parent.context),
                     parent, false
                 )
@@ -72,17 +75,15 @@ class FeedsStoreAdapter(
     }
 
     inner class DiduKnowViewHolder(
-        private val mRowItemBinding: FeedsRowLayoutShortBinding? = null
+        private val mRowItemBinding: ItemStoreFeedsBannerBinding? = null
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         private lateinit var mViewHelper: FeedsViewHelper
         override fun onBind(position: Int) {
-            mViewHelper = FeedsViewHelper(
+             mViewHelper = FeedsViewHelper(
                 position,
                 feedList?.get(position), onFeedItemClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
-//            mRowItemBinding.viewModel = viewModel
-
 
             try {
                 if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {

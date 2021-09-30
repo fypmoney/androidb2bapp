@@ -21,12 +21,10 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/layoutServicePrice"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginHorizontal="@dimen/dp20"
+        android:layout_marginVertical="@dimen/dp20"
         android:background="@color/white"
         android:onClick="@{()->viewHelper.onFeedButtonClick()}"
         app:cardCornerRadius="20dp"
@@ -66,7 +64,6 @@
                 android:gravity="start"
                 android:maxLines="2"
                 android:minLines="2"
-
                 android:padding="10dp"
                 android:text="@{viewHelper.feedDetails.title}"
                 android:textAlignment="viewStart"
