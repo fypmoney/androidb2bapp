@@ -76,15 +76,17 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
             requireActivity(),
             androidx.lifecycle.Observer { list ->
                 mViewBinding?.LoadProgressBar?.visibility = View.GONE
+                mViewBinding?.shimmerLayout?.visibility = View.INVISIBLE
+                mViewBinding?.shimmerLayout?.stopShimmerAnimation()
 
-                if (page == 0) {
-                    bottomArrayList.clear()
-                    page += 1
-                    mViewBinding?.shimmerLayout?.visibility = View.INVISIBLE
-                    mViewBinding?.shimmerLayout?.stopShimmerAnimation()
-
-
-                }
+//                if (page == 0) {
+//                    bottomArrayList.clear()
+//                    page += 1
+//                    mViewBinding?.shimmerLayout?.visibility = View.INVISIBLE
+//                    mViewBinding?.shimmerLayout?.stopShimmerAnimation()
+//
+//
+//                }
 
 
                 bottomArrayList.addAll(list)
@@ -112,20 +114,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         mViewBinding?.featuredOfferRv!!.layoutManager = layoutManager
-        mViewBinding?.featuredOfferRv!!.addOnScrollListener(object :
-            PaginationListener(layoutManager) {
-            override fun loadMoreItems() {
-                loadMore()
-            }
 
-            override fun loadMoreTopItems() {
-
-            }
-
-            override fun isLoading(): Boolean {
-                return isLoading
-            }
-        })
         var itemClickListener2 = object : ListContactClickListener {
 
 
@@ -163,7 +152,20 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
     private fun setRecyclerViewBottom() {
         val layoutManager = GridLayoutManager(requireContext(), 2)
         mViewBinding?.offerRv!!.layoutManager = layoutManager
-
+//        mViewBinding?.offerRv!!.addOnScrollListener(object :
+//            PaginationListener(layoutManager) {
+//            override fun loadMoreItems() {
+//                loadMore()
+//            }
+//
+//            override fun loadMoreTopItems() {
+//
+//            }
+//
+//            override fun isLoading(): Boolean {
+//                return isLoading
+//            }
+//        })
         var itemClickListener2 = object : ListContactClickListener {
 
 

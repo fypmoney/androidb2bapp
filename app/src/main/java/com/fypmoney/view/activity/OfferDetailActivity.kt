@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -95,22 +96,29 @@ class OfferDetailActivity :
         mViewModel!!.offerDetail.observe(
             this,
             androidx.lifecycle.Observer { list ->
-                tandCStr = list.tnc
-                Utility.setImageUsingGlide(imageView = image_banner, url = list.innerBannerImg)
+                tandCStr = list?.tnc
+                if (list?.innerBannerImg != null) {
+                    Glide.with(this).load(list?.innerBannerImg).placeholder(R.color.grey)
+                        .into(image_banner)
+                }
+
                 offer_title.text = list?.title
 
 
-                list.details?.forEach { it ->
+                list?.details?.forEach { it ->
                     it?.let { it1 -> itemsArrayList.add(it1) }
 
                 }
-                couponcode.text = list.code
+                couponcode.text = list?.code
                 descrip.text = Utility.parseDateTime(
-                    list.date,
+                    list?.date,
                     inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
                     outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT4
                 )
-                Utility.setImageUsingGlide(context = this, imageView = logo, url = list.logoImg)
+                if (list?.logoImg != null) {
+                    Glide.with(this).load(list?.logoImg).placeholder(R.color.grey).into(logo)
+
+                }
 
                 typeAdapter?.notifyDataSetChanged()
 

@@ -104,7 +104,7 @@
                             app:civ_border_width="1dp"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
-                            android:src="@drawable/myntra_logo" />
+                           />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/bywhom"

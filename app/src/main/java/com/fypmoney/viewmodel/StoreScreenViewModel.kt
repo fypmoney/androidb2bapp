@@ -14,6 +14,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.*
 import com.google.gson.Gson
 
@@ -102,15 +103,32 @@ class StoreScreenViewModel(application: Application) : BaseViewModel(application
             for (i in 0 until userInterest.size) {
                 userInterestValue = userInterestValue.append(userInterest.get(i))
                 if (i != userInterest.size - 1) {
-                    userInterestValue = userInterestValue.append(",")
+                    userInterestValue = userInterestValue.append("\",\"")
+                } else {
+                    userInterestValue.append("\"")
                 }
 
             }
         }
 
+
+        var gender = 1
+        var feedtype = ""
+
+        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MEN") {
+            gender = 0
+        } else {
+            gender = 1
+        }
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
+            feedtype =
+                gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
+        }
+
+
         val feedRequestModel = FeedRequestModel()
         feedRequestModel.query =
-            "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "SHOP" + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
+            "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "SHOP" + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
 
 
 

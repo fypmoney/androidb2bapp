@@ -14,6 +14,7 @@ import com.fypmoney.model.FeedRequestModel
 import com.fypmoney.model.FeedResponseModel
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.google.gson.Gson
 
 class OffersStoreFragmentVM(application: Application): BaseViewModel(application) {
@@ -129,10 +130,22 @@ class OffersStoreFragmentVM(application: Application): BaseViewModel(application
 
             }
         }
+        var gender = 1
+        var feedtype = ""
+
+        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MEN") {
+            gender = 0
+        } else {
+            gender = 1
+        }
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
+            feedtype =
+                gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
+        }
 
         val feedRequestModel = FeedRequestModel()
         feedRequestModel.query =
-            "{getAllFeed(page:0, size:null, id : null, screenName:\"OFFER\",screenSection:\"top\",tags :[], displayCard: []) { total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
+            "{getAllFeed(page:0, size:null, id : null, screenName:\"OFFER\",screenSection:\"top\",tags :[\"$feedtype\"], displayCard: []) { total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
 
 
 
@@ -142,7 +155,7 @@ class OffersStoreFragmentVM(application: Application): BaseViewModel(application
     }
 
     private fun makeFetchFeedRequestBottom(
-        size: Int? = 5,
+        size: Int? = 50,
         pageValue: Int? = 0,
         latitude: String? = "0.0",
         longitude: String? = "0.0"
@@ -154,15 +167,36 @@ class OffersStoreFragmentVM(application: Application): BaseViewModel(application
             for (i in 0 until userInterest.size) {
                 userInterestValue = userInterestValue.append(userInterest.get(i))
                 if (i != userInterest.size - 1) {
-                    userInterestValue = userInterestValue.append(",")
+                    userInterestValue = userInterestValue.append("\",\"")
+                } else {
+                    userInterestValue.append("\"")
                 }
 
             }
         }
 
+
+        var gender = 1
+        var feedtype = ""
+
+        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MEN") {
+            gender = 0
+        } else {
+            gender = 1
+        }
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
+            feedtype =
+                gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
+        }
+
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
+            feedtype =
+                gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
+        }
+
         val feedRequestModel = FeedRequestModel()
         feedRequestModel.query =
-            "{getAllFeed(page:$pageValue, size:null, id : null, screenName:\"OFFER\",screenSection:\"bottom\",tags :[], displayCard: []) { total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
+            "{getAllFeed(page:$pageValue, size:50, id : null, screenName:\"OFFER\",screenSection:\"bottom\",tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
 
 
 

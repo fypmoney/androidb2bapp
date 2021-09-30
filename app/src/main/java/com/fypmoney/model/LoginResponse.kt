@@ -70,14 +70,42 @@ data class CustomerInfoResponseDetails(
     @SerializedName("bankProfile") val bankProfile: BankProfile? = null,
     @SerializedName("profilePicResourceId") val profilePicResourceId: String? = null,
     @SerializedName("cardProductCode") val cardProductCode: String? = null,
-    @SerializedName("postKycScreenCode") val postKycScreenCode: String? = null
+    @SerializedName("postKycScreenCode") val postKycScreenCode: String? = null,
+
+
+    @SerializedName("parent") val parent: Any? = null,
+
+    @SerializedName("userLevel") val userLevel: Any? = null,
+
+
+    @SerializedName("isHomeViewed") val isHomeViewed: Any? = null,
+
+    @SerializedName("rfu2") val rfu2: Any? = null,
+
+    @SerializedName("rfu1") val rfu1: Any? = null,
+
+    @SerializedName("langKey") val langKey: String? = null,
+
+
+    @SerializedName("idAccessToken") val idAccessToken: Any? = null
 ) : Serializable
+
+
 @Keep
 data class UserProfile(
     @SerializedName("cityName") val cityName: String? = null,
     @SerializedName("dob") val dob: String? = null,
-    @SerializedName("schoolName") val schoolName: String? = null
-    ) : Serializable
+    @SerializedName("schoolName") val schoolName: String? = null,
+
+
+    @SerializedName("gender") val gender: String? = null,
+
+    @SerializedName("subscribedToPromotions") val subscribedToPromotions: Any? = null,
+    @SerializedName("id") val id: Int? = null,
+    @SerializedName("cityId") val cityId: Any? = null,
+
+    @SerializedName("anniversary") val anniversary: Any? = null
+) : Serializable
 
 @Keep
 data class BankProfile(
@@ -92,6 +120,7 @@ data class UserInterestModel(
     @SerializedName("code") var code: String?,
     @SerializedName("description") var description: String?,
     @SerializedName("status") var status: String?
+
 ) : Serializable
 @Keep
 data class LogOutResponse(

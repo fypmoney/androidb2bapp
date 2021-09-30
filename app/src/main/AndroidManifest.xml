@@ -239,6 +239,8 @@
         <activity android:name=".view.activity.AgeAllowedActivationView" />
         <activity android:name=".view.activity.ScratchCardActivity" />
         <activity android:name=".view.StoreWebpageOpener2" />
+        <activity android:name=".view.activity.OfferDetailActivity" />
+        <activity android:name=".view.activity.HtmlOpenerView" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
