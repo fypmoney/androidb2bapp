@@ -189,7 +189,8 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                 intentToActivity(AgeAllowedActivationView::class.java)
                             } else {
 
-                                if (Utility.getCustomerDataFromPreference()?.postKycScreenCode == null && mViewModel.callCustomer.value == false) {
+                                if (Utility.getCustomerDataFromPreference()?.postKycScreenCode == null &&
+                                    Utility.getCustomerDataFromPreference()?.userProfile?.gender == null && mViewModel.callCustomer.value == false) {
                                     mViewModel.callGetCustomerProfileApi()
 
                                 }

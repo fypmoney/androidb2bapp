@@ -125,7 +125,9 @@ class OffersStoreFragmentVM(application: Application): BaseViewModel(application
             for (i in 0 until userInterest.size) {
                 userInterestValue = userInterestValue.append(userInterest.get(i))
                 if (i != userInterest.size - 1) {
-                    userInterestValue = userInterestValue.append(",")
+                    userInterestValue = userInterestValue.append("\",\"")
+                } else {
+                    userInterestValue.append("\"")
                 }
 
             }
@@ -145,11 +147,7 @@ class OffersStoreFragmentVM(application: Application): BaseViewModel(application
 
         val feedRequestModel = FeedRequestModel()
         feedRequestModel.query =
-            "{getAllFeed(page:0, size:null, id : null, screenName:\"OFFER\",screenSection:\"top\",tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"], displayCard: []) { total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
-
-
-
-
+            "{getAllFeed(page:0, size:null, id : null, screenName:\"OFFER\",screenSection:\"top\",tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []){ total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
         return feedRequestModel
 
     }

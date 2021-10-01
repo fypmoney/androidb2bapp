@@ -78,7 +78,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = getString(R.string.notification_text)
         )
-        mViewBinding.shimmerLayout.startShimmerAnimation()
+        mViewBinding.shimmerLayout.startShimmer()
         setObserver()
         SharedPrefUtils.putString(applicationContext, SharedPrefUtils.SF_KEY_NEW_MESSAGE, null)
         initializeTabs(tabLayout)
@@ -147,7 +147,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         }
         mViewModel.showShimmerEffect.observe(this) {
             if (!it) {
-                mViewBinding.shimmerLayout.stopShimmerAnimation()
+                mViewBinding.shimmerLayout.stopShimmer()
             }
 
         }

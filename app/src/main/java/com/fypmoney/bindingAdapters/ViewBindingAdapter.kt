@@ -1,31 +1,22 @@
 package com.fypmoney.bindingAdapters
 
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerDrawable
 import com.fypmoney.R
-import com.google.firebase.crashlytics.FirebaseCrashlytics
-import android.text.Spannable
-
-import android.R.attr.text
-
-import android.text.style.ForegroundColorSpan
-
-import android.text.SpannableString
-
-import android.R.attr
-import android.graphics.Color
-import androidx.core.content.res.TypedArrayUtils
-
-import androidx.core.content.res.TypedArrayUtils.getText
-
-
-
+import com.google.android.material.imageview.ShapeableImageView
+import com.google.android.material.shape.CornerFamily
 
 
 @BindingAdapter(value = ["app:imageUrl", "app:placeHolderDrawable", "app:rounded"], requireAll = false)
@@ -94,7 +85,16 @@ fun setFirstNameLastName(view: TextView, firstname: String?,lastname:String?) {
         view.text = String.format(view.context.resources.getString(R.string.first_name_last_name),firstname,lastname)
     }
 }
-
+fun roundedImageView(imageView: ShapeableImageView,
+                     topRight:Float=0.0f,topLeft:Float=0.0f,bottomLeft:Float=0.0f,bottomRight:Float=0.0f){
+    imageView.shapeAppearanceModel = imageView.shapeAppearanceModel
+        .toBuilder()
+        .setBottomRightCorner(CornerFamily.ROUNDED, bottomRight)
+        .setBottomLeftCorner(CornerFamily.ROUNDED, bottomLeft)
+        .setTopRightCorner(CornerFamily.ROUNDED, topRight)
+        .setTopLeftCorner(CornerFamily.ROUNDED, topLeft)
+        .build()
+}
 fun setSomePartOfTextInColor(textView: TextView,
                              normalText:String,
                              colorText:String,
@@ -112,4 +112,19 @@ fun setSomePartOfTextInColor(textView: TextView,
     )
 
     textView.setText(spannable, TextView.BufferType.SPANNABLE)
+}
+
+fun shimmerDrawable():ShimmerDrawable{
+    val shimmer = Shimmer.AlphaHighlightBuilder()// The attributes for a ShimmerDrawable is set by this builder
+        .setDuration(1800) // how long the shimmering animation takes to do one full sweep
+        .setBaseAlpha(0.7f) //the alpha of the underlying children
+        .setHighlightAlpha(0.6f) // the shimmer alpha amount
+        .setDirection(Shimmer.Direction.LEFT_TO_RIGHT)
+        .setAutoStart(true)
+        .build()
+
+    val shimmerDrawable = ShimmerDrawable().apply {
+        setShimmer(shimmer)
+    }
+    return shimmerDrawable
 }

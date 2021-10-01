@@ -910,7 +910,7 @@ Coming really soon!
     <string name="shopping">Shopping</string>
     <string name="recharge_amp_bill_payments"><![CDATA[Recharge & Bill Payments]]></string>
     <string name="offer_details">Offer details</string>
-    <string name="expiry_date">Expiry Date</string>
+    <string name="expiry_date">Expiry Date:-</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>

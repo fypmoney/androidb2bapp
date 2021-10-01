@@ -61,7 +61,7 @@ class OffersTopAdapter(
         })
 
 
-        Utility.setImageUsingGlide(url = items[position].resourceId, imageView = holder.image)
+        Utility.setImageUsingGlideWithShimmerPlaceholder(url = items[position].resourceId, imageView = holder.image)
 
 
     }

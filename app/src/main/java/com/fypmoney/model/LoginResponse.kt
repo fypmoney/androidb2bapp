@@ -96,16 +96,11 @@ data class UserProfile(
     @SerializedName("cityName") val cityName: String? = null,
     @SerializedName("dob") val dob: String? = null,
     @SerializedName("schoolName") val schoolName: String? = null,
-
-
-    @SerializedName("gender") val gender: String? = null,
-
-    @SerializedName("subscribedToPromotions") val subscribedToPromotions: Any? = null,
-    @SerializedName("id") val id: Int? = null,
-    @SerializedName("cityId") val cityId: Any? = null,
-
-    @SerializedName("anniversary") val anniversary: Any? = null
-) : Serializable
+    @SerializedName("anniversary") val anniversary: String? = null,
+    @SerializedName("cityId") val cityId: String? = null,
+    @SerializedName("subscribedToPromotions") val subscribedToPromotions: String? = null,
+    @SerializedName("gender") val gender: String? = null
+    ):Serializable
 
 @Keep
 data class BankProfile(

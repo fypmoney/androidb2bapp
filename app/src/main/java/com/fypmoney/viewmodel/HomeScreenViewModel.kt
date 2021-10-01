@@ -224,7 +224,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
                 }
             }
             ApiConstant.API_FETCH_ALL_FEEDS -> {
-                var feeds = getObject(responseData.toString(), FeedResponseModel::class.java)
+                val feeds = getObject(responseData.toString(), FeedResponseModel::class.java)
                 if (feeds is FeedResponseModel) {
                     // Save the access token in shared preference
                     val response = feeds.getAllFeed?.getAllFeed

@@ -9,14 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="18dp"
-        app:cardElevation="6dp"
         android:layout_gravity="center_horizontal"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:contentPadding="5dp">
+        app:contentPadding="3dp">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/main_cl"

@@ -6,12 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-
-
-        android:layout_height="match_parent"
-
-
-        >
+        android:layout_height="match_parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -48,43 +43,51 @@
 
 
         </androidx.appcompat.widget.Toolbar>
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:orientation="vertical"
-
-            >
+            android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/rl_banner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/guideline"
+                android:background="@drawable/bottom_curved_44"
+                android:clipChildren="false"
+                >
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/top_bg"
-                    android:layout_marginTop="-32dp"
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_banner"
                     android:layout_width="match_parent"
-                    android:layout_marginBottom="@dimen/_2sdp"
-                    android:layout_height="@dimen/_200sdp"
-                    app:cardCornerRadius="32dp">
-
-                    <ImageView
-
-                        android:layout_width="match_parent"
-                        android:scaleType="fitXY"
-                        android:id="@+id/image_banner"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
+                    tools:src="@drawable/ic_total_referral_won" />
 
 
-                        android:layout_marginTop="32dp"
-                        android:layout_height="match_parent" />
-
-                </androidx.cardview.widget.CardView>
 
             </RelativeLayout>
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent=".3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
             <androidx.core.widget.NestedScrollView
+                android:id="@+id/nsv_details"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guideline"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_height="0dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -100,11 +103,9 @@
                         <ImageView
                             android:id="@+id/logo"
                             app:civ_border_color="@color/grey"
-                            android:padding="2dp"
-                            app:civ_border_width="1dp"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
-                           />
+                            tools:src="@drawable/myntra_logo" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/bywhom"
@@ -188,8 +189,6 @@
                             style="@style/TextviewRegular"
 
                             android:layout_marginLeft="@dimen/_20sdp"
-
-
                             android:text="@string/expiry_date"
                             android:textAlignment="center" />
 
@@ -228,9 +227,7 @@
                         android:layout_marginStart="@dimen/_18sdp"
                         android:layout_marginTop="@dimen/_6sdp"
                         android:layout_marginEnd="@dimen/_18sdp"
-
                         android:padding="@dimen/_8sdp"
-
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
@@ -248,7 +245,7 @@
             </androidx.core.widget.NestedScrollView>
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </RelativeLayout>

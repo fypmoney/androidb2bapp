@@ -62,11 +62,11 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
         page = 0
         setRecyclerView()
         setRecyclerViewBottom()
-        mViewBinding?.shimmerLayout?.startShimmerAnimation()
+        mViewBinding?.shimmerLayout?.startShimmer()
         mviewModel!!.offerTopList.observe(
             requireActivity(),
-            androidx.lifecycle.Observer { list ->
-                mViewBinding?.shimmerLayout?.stopShimmerAnimation()
+            { list ->
+                mViewBinding?.shimmerLayout?.stopShimmer()
                 itemsArrayList.addAll(list)
                 mViewBinding?.shimmerLayout?.visibility = View.INVISIBLE
                 typeAdapter?.notifyDataSetChanged()
@@ -74,10 +74,14 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
             })
         mviewModel!!.offerBottomList.observe(
             requireActivity(),
-            androidx.lifecycle.Observer { list ->
+            { list ->
                 mViewBinding?.LoadProgressBar?.visibility = View.GONE
-                mViewBinding?.shimmerLayout?.visibility = View.INVISIBLE
-                mViewBinding?.shimmerLayout?.stopShimmerAnimation()
+
+                if (page == 0) {
+                    bottomArrayList.clear()
+                    page += 1
+                    mViewBinding?.shimmerLayout?.visibility = View.INVISIBLE
+                    mViewBinding?.shimmerLayout?.stopShimmer()
 
 //                if (page == 0) {
 //                    bottomArrayList.clear()
@@ -106,8 +110,9 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
 //                }
 
 
-            })
+            }
 
+    })
     }
 
     private fun setRecyclerView() {
@@ -121,13 +126,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
             override fun onItemClicked(pos: Int) {
 
                 val intent = Intent(requireContext(), OfferDetailActivity::class.java)
-
                 intent.putExtra("feedid", itemsArrayList[pos].id)
-
-
-
-
-
                 startActivity(intent)
             }
 

@@ -48,7 +48,8 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
             context = this@OrderCardView,
             toolbar = toolbar,
             isBackArrowVisible = true,
-            backArrowTint = Color.WHITE
+            backArrowTint = Color.WHITE,
+            titleColor = Color.BLACK
         )
         setObservers()
 

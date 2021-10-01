@@ -1,6 +1,7 @@
 package com.fypmoney.view.activity
 
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
@@ -15,6 +16,7 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.FeedDetailsViewModel
 import kotlinx.android.synthetic.main.html_web_opener.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 /*
@@ -45,7 +47,14 @@ class HtmlOpenerView : BaseActivity<HtmlWebOpenerBinding, FeedDetailsViewModel>(
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
 
+        setToolbarAndTitle(
+            context = this@HtmlOpenerView,
+            toolbar = toolbar,
+            isBackArrowVisible = true,
+            backArrowTint = Color.BLACK,
+            toolbarTitle = getString(R.string.terms_and_conditions)
 
+        )
 
 
 

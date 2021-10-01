@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.bindingAdapters.roundedImageView
 import com.fypmoney.databinding.RewardOfferDetailBinding
 import com.fypmoney.databinding.ViewAgeAllowedAccountBinding
 import com.fypmoney.model.FeedDetails
@@ -54,24 +55,16 @@ class OfferDetailActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var id = intent.getStringExtra("feedid")
+        val id = intent.getStringExtra("feedid")
 
-        back.setOnClickListener(View.OnClickListener {
+        back.setOnClickListener {
             super.onBackPressed()
-        })
+        }
 
         tandc.setOnClickListener {
-
             if (tandCStr != null) {
                 val intent = Intent(this@OfferDetailActivity, HtmlOpenerView::class.java)
-//
-//                intent.putExtra("feedid",itemsArrayList[pos].id)
                 HtmlOpenerView.tandC = tandCStr as String
-
-
-
-
-
                 startActivity(intent)
             } else {
                 Utility.showToast("Loading")
@@ -95,13 +88,10 @@ class OfferDetailActivity :
 
         mViewModel!!.offerDetail.observe(
             this,
-            androidx.lifecycle.Observer { list ->
-                tandCStr = list?.tnc
-                if (list?.innerBannerImg != null) {
-                    Glide.with(this).load(list?.innerBannerImg).placeholder(R.color.grey)
-                        .into(image_banner)
-                }
-
+            { list ->
+                tandCStr = list.tnc
+                //roundedImageView(image_banner,bottomLeft = 44.0f,bottomRight = 44.0f)
+                Utility.setImageUsingGlideWithShimmerPlaceholder(imageView = image_banner, url = list.innerBannerImg)
                 offer_title.text = list?.title
 
 
@@ -115,13 +105,10 @@ class OfferDetailActivity :
                     inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
                     outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT4
                 )
-                if (list?.logoImg != null) {
-                    Glide.with(this).load(list?.logoImg).placeholder(R.color.grey).into(logo)
-
-                }
+                Utility.setImageUsingGlideWithShimmerPlaceholder(context = this, imageView = logo, url = list.logoImg)
 
                 typeAdapter?.notifyDataSetChanged()
-
+                nsv_details.visibility = View.VISIBLE
 
             })
 

@@ -2,8 +2,12 @@ package com.fypmoney.view.adapter
 
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.os.SystemClock
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +15,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
+import com.fypmoney.bindingAdapters.setSomePartOfTextInColor
 import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.Utility
@@ -58,7 +63,7 @@ class OffersBottomAdapter(
 
             clickInterface.onItemClicked(position)
         })
-        Utility.setImageUsingGlide(url = items[position].resourceId, imageView = holder.image)
+        Utility.setImageUsingGlideWithShimmerPlaceholder(url = items[position].resourceId, imageView = holder.image)
 
         holder.title_tv.text = items[position].title
         holder.desc.text = items[position].subTitle

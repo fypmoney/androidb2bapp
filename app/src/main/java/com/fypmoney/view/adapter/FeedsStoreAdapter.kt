@@ -11,6 +11,7 @@ import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.*
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.viewhelper.FeedsViewHelper
 import com.fypmoney.viewmodel.StoreScreenViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -79,6 +80,9 @@ class FeedsStoreAdapter(
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         private lateinit var mViewHelper: FeedsViewHelper
         override fun onBind(position: Int) {
+            if (mRowItemBinding != null) {
+                Utility.setImageUsingGlideWithShimmerPlaceholder(context,feedList?.get(position)?.resourceId,mRowItemBinding.image)
+            }
              mViewHelper = FeedsViewHelper(
                 position,
                 feedList?.get(position), onFeedItemClickListener

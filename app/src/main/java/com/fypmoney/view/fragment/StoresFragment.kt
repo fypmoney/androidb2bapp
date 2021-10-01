@@ -71,7 +71,7 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
                 R.array.rechargeIconList
             )
         )
-        mViewBinding.shimmerLayout.startShimmerAnimation()
+        mViewBinding.shimmerLayout.startShimmer()
         sharedViewModel.storeAdapter.setList(
             getListOfApps(
                 R.raw.shopping_json,
@@ -131,7 +131,7 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
 
     private fun observeInput(sharedViewModel: StoreScreenViewModel) {
         sharedViewModel.storefeedList.observe(requireActivity(), { list ->
-            mViewBinding.shimmerLayout.stopShimmerAnimation()
+            mViewBinding.shimmerLayout.stopShimmer()
             typeAdapter?.setList(list)
 
             typeAdapter?.notifyDataSetChanged()
