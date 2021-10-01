@@ -135,7 +135,7 @@ class OffersStoreFragmentVM(application: Application): BaseViewModel(application
         var gender = 1
         var feedtype = ""
 
-        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MEN") {
+        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MALE") {
             gender = 0
         } else {
             gender = 1
@@ -177,7 +177,7 @@ class OffersStoreFragmentVM(application: Application): BaseViewModel(application
         var gender = 1
         var feedtype = ""
 
-        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MEN") {
+        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MALE") {
             gender = 0
         } else {
             gender = 1
