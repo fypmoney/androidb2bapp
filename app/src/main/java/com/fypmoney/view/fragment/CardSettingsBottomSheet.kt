@@ -92,13 +92,12 @@ class CardSettingsBottomSheet(
         return view
     }
 
-    override fun onItemClick(position: Int) {
-        onCardSettingsClickListener.onCardSettingsClick(position)
-        dismiss()
-    }
-
-
     interface OnCardSettingsClickListener {
         fun onCardSettingsClick(position: Int)
+    }
+
+    override fun onItemClick(position: Int, name: String?) {
+        onCardSettingsClickListener.onCardSettingsClick(position)
+        dismiss()
     }
 }

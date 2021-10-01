@@ -200,7 +200,6 @@ class EnterAmountForPayRequestView :
 
     private fun intentToHomeActivity(aClass: Class<*>) {
         startActivity(Intent(this, aClass))
-        finishAffinity()
     }
 
     /*private fun callViewPaymentDetails() {
@@ -248,7 +247,7 @@ class EnterAmountForPayRequestView :
      */
     private fun intentToActivity(aClass: Class<*>) {
         startActivity(Intent(this@EnterAmountForPayRequestView, aClass))
-        finishAffinity()
+        finish()
     }
 
     /*

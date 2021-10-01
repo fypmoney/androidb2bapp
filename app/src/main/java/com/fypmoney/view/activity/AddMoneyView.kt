@@ -5,16 +5,14 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.databinding.ViewAddMemberBinding
 import com.fypmoney.databinding.ViewAddMoneyBinding
-import com.fypmoney.databinding.ViewInviteRejectedBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.roundOfAmountToCeli
 import com.fypmoney.viewmodel.AddMoneyViewModel
 import kotlinx.android.synthetic.main.bottom_sheet_redeem_coins.view.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -50,13 +48,10 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
             isBackArrowVisible = true, toolbarTitle = getString(R.string.add_money_screen_title)
         )
         val amount = intent.getStringExtra("amountshouldbeadded")
-        Log.d("camount", amount.toString())
         setObserver()
         if (!amount.isNullOrEmpty()) {
-            add_money_editext.setText(amount)
+            add_money_editext.setText(roundOfAmountToCeli(amount))
         }
-
-
     }
 
     /**
@@ -72,7 +67,7 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
                     s.clear()
                 } else {
                     if (s.toString().isNotEmpty()) {
-                        btnSendOtp.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.text_color_dark));
+                        btnSendOtp.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.text_color_dark))
                         btnSendOtp.setTextColor(
                             ContextCompat.getColor(
                                 this@AddMoneyView,
@@ -87,11 +82,11 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
                                 (mViewModel.remainingLoadLimitAmount.get()!!
                                     .toInt() / 100).toString()
                             )
-                            add_money_editext.setSelection(add_money_editext.text.length);
+                            add_money_editext.setSelection(add_money_editext.text.length)
                         }
 
                     } else {
-                        btnSendOtp.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.cb_grey)));
+                        btnSendOtp.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.cb_grey))
                         btnSendOtp.setTextColor(
                             ContextCompat.getColor(
                                 this@AddMoneyView,
@@ -106,7 +101,7 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
         })
         mViewModel.setEdittextLength.observe(this) {
             if (it) {
-                add_money_editext.setSelection(add_money_editext.text.length);
+                add_money_editext.setSelection(add_money_editext.text.length)
                 mViewModel.setEdittextLength.value = false
                 }
             }

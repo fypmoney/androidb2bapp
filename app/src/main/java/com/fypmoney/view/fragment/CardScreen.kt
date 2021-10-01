@@ -1,12 +1,12 @@
 package com.fypmoney.view.fragment
 
-import android.animation.*
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.text.method.HideReturnsTransformationMethod
@@ -20,22 +20,27 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
+import com.fypmoney.bindingAdapters.doBounceAnimation
 import com.fypmoney.databinding.ScreenCardBinding
 import com.fypmoney.model.UpDateCardSettingsRequest
 import com.fypmoney.model.UpdateCardLimitRequest
 import com.fypmoney.util.*
 import com.fypmoney.util.AppConstants.CARD_TYPE_PHYSICAL
-import com.fypmoney.util.AppConstants.NO
 import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.view.CardSettingClickListener
-import com.fypmoney.view.activity.*
+import com.fypmoney.view.activity.BankTransactionHistoryView
+import com.fypmoney.view.activity.SetPinView
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.view.ordercard.OrderCardView
+import com.fypmoney.view.ordercard.trackorder.TrackOrderView
+import com.fypmoney.view.setpindialog.SetPinDialogFragment
+import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+import com.fypmoney.view.webview.WebViewActivity
 import com.fypmoney.viewmodel.CardScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import kotlinx.android.synthetic.main.card_add_task.*
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.screen_card.*
-import kotlinx.android.synthetic.main.screen_card.notify_btn
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
 import kotlinx.android.synthetic.main.virtual_card_front_layout.*
 
@@ -56,6 +61,9 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     private var mSetLeftIn: AnimatorSet? = null
     private var mIsBackVisible = false
     lateinit var myProfileAdapter: MyProfileListAdapter
+
+    private var mFirebaseAnalytics: FirebaseAnalytics? = null
+
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -91,26 +99,24 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         mViewBinding.viewModel = mViewModel
         mViewBinding.fragment = this
 
-        if(SharedPrefUtils.getString(
-                requireContext(),
-                SharedPrefUtils.SF_KEY_CARD_FLAG
-            )=="1"){
-            showNotifyCardLayout()
-        }else{
-            mViewBinding.notifyOrderCardNsv.visibility = View.GONE
-            showCardLayout()
-        }
+        showCardLayout()
+
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        mViewModel.callGetWalletBalanceApi()
+        mViewModel.callGetBankProfileApi()
+    }
     private fun showCardLayout() {
         val textString = ArrayList<String>()
-        textString.add(PockketApplication.instance.getString(R.string.card_settings))
         textString.add(PockketApplication.instance.getString(R.string.order_card))
+        textString.add(PockketApplication.instance.getString(R.string.card_settings))
         textString.add(PockketApplication.instance.getString(R.string.account_stmt))
         val drawableIds = ArrayList<Int>()
-        drawableIds.add(R.drawable.ic_card_settings)
         drawableIds.add(R.drawable.ic_order_card)
+        drawableIds.add(R.drawable.ic_card_settings)
         drawableIds.add(R.drawable.ic_account_statement)
 
 
@@ -123,15 +129,11 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         setObservers()
         loadAnimations()
         changeCameraDistance()
-        mViewModel.callGetWalletBalanceApi()
-        mViewModel.callGetBankProfileApi()
-
-
         val behavior: BottomSheetBehavior<*> =
             BottomSheetBehavior.from<View>(mViewBinding.clBottomsheet)
         BottomSheetBehavior.from<ConstraintLayout>(mViewBinding.clBottomsheet)
         behavior.state =
-            BottomSheetBehavior.STATE_COLLAPSED
+            BottomSheetBehavior.STATE_HIDDEN
         behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
@@ -144,11 +146,27 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
             }
         })
+        doBounceAnimation(swipe_up_pull_details_iv)
+        swipe_up_for_details.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
+            override fun onSwipeTop() {
+                behavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
 
-        /*up_iv.setOnClickListener {
+            override fun onSwipeRight() {
+            }
 
-        }*/
 
+            override fun onSwipeLeft() {
+
+            }
+
+            override fun onSwipeBottom() {
+            }
+
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+                return gestureDetector.onTouchEvent(event)
+            }
+        })
         front_fl.setOnTouchListener(object : OnSwipeTouchListener(requireContext()) {
             override fun onSwipeTop() {
             }
@@ -193,26 +211,19 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         })
     }
 
-    private fun showNotifyCardLayout() {
-        val uri: Uri =
-            Uri.parse("android.resource://" + context?.packageName + "/" + R.raw.notify_order_card)
-        mViewBinding.video.setMediaController(null)
-        mViewBinding.video.setVideoURI(uri)
-        mViewBinding.video.setOnPreparedListener {
-            it.isLooping = true
-            mViewBinding.video.start()
-        }
-        notify_btn.setOnClickListener {
-            Utility.showToast(resources.getString(R.string.thanks_we_will_keep_you_notify))
-        }
-        mViewBinding.notifyOrderCardNsv.visibility = View.VISIBLE
-    }
 
 
     /*
     * This method is used to observe the observers
     * */
     private fun setObservers() {
+        mViewModel.rotateCardClicked.observe(viewLifecycleOwner) {
+            if (it) {
+                flipCardLeft()
+            }else{
+                flipCardRight()
+            }
+        }
         mViewModel.onViewDetailsClicked.observe(viewLifecycleOwner) {
             if (it) {
                 askForDevicePassword()
@@ -226,12 +237,12 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                         CARD_TYPE_PHYSICAL->{
                             if(cardInfo.kitNumber.isNullOrEmpty()){
                                 val textString = ArrayList<String>()
-                                textString.add(PockketApplication.instance.getString(R.string.card_settings))
                                 textString.add(PockketApplication.instance.getString(R.string.order_card))
+                                textString.add(PockketApplication.instance.getString(R.string.card_settings))
                                 textString.add(PockketApplication.instance.getString(R.string.account_stmt))
                                 val drawableIds = ArrayList<Int>()
-                                drawableIds.add(R.drawable.ic_card_settings)
                                 drawableIds.add(R.drawable.ic_order_card)
+                                drawableIds.add(R.drawable.ic_card_settings)
                                 drawableIds.add(R.drawable.ic_account_statement)
                                 myProfileAdapter.setList(drawableIds,textString)
                             }
@@ -248,15 +259,15 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                             }
                             if(cardInfo.isCardActivationAllowed==YES){
                                 val textString = ArrayList<String>()
+                                textString.add(PockketApplication.instance.getString(R.string.activate_card_heading))
                                 textString.add(PockketApplication.instance.getString(R.string.card_settings))
                                 textString.add(PockketApplication.instance.getString(R.string.track_order))
                                 textString.add(PockketApplication.instance.getString(R.string.account_stmt))
-                                textString.add(PockketApplication.instance.getString(R.string.activate_card_heading))
                                 val drawableIds = ArrayList<Int>()
+                                drawableIds.add(R.drawable.ic_activate)
                                 drawableIds.add(R.drawable.ic_card_settings)
                                 drawableIds.add(R.drawable.ic_order_card)
                                 drawableIds.add(R.drawable.ic_account_statement)
-                                drawableIds.add(R.drawable.ic_activate)
                                 myProfileAdapter.setList(drawableIds,textString)
                             }
                             if(cardInfo.status==AppConstants.ENABLE){
@@ -285,7 +296,12 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         }
         mViewModel.onActivateCardInit.observe(viewLifecycleOwner) {
             if (it) {
+                val setPinFragment = SetPinDialogFragment(setPinClickListener = {
+                    mViewModel.callSetOrChangeApi()
+                })
+                setPinFragment.show(childFragmentManager,"set pin")
                 mViewModel.onActivateCardInit.value = false
+
             }
         }
 
@@ -387,33 +403,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         )
     }
 
-    override fun onItemClick(position: Int) {
-        when (position) {
-            0 -> {
-                callCardSettingsBottomSheet()
-            }
-            1 -> {
-                SharedPrefUtils.getString(requireContext(),SharedPrefUtils.SF_KEY_KIT_NUMBER).let {
-                    if(it.isNullOrEmpty()){
-                        intentToActivity(OrderCardView::class.java)
 
-                    }else{
-                        intentToActivity(TrackOrderView::class.java)
-
-                    }
-                }
-                //intentToActivity(NotifyMeOrderCardActivity::class.java)
-
-            }
-            2 -> {
-                intentToActivity(BankTransactionHistoryView::class.java)
-            }
-            3 -> {
-                callActivateCardSheet()
-            }
-
-        }
-    }
 
     private fun intentToActivity(aClass: Class<*>, type: String? = null, url: String? = null) {
         val intent = Intent(requireActivity(), aClass)
@@ -515,7 +505,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 mViewModel.callCardSettingsUpdateApi(upDateCardSettingsRequest)
             }
             getString(R.string.activate_card_heading) -> {
-                mViewModel.callActivateCardInitApi()
+                mViewModel.callActivateCardApi(fourDigitNumber)
 
             }
         }
@@ -552,37 +542,54 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     }
 
-    /**
-     * Method to navigate to the Feeds screen after login
-     */
-    private fun goToEnterOtpScreen(kitFourDigit: String?) {
-        val intent = Intent(requireContext(), EnterOtpView::class.java)
-        intent.putExtra(
-            AppConstants.MOBILE_TYPE,
-            ""
-        )
-        intent.putExtra(
-            AppConstants.FROM_WHICH_SCREEN, AppConstants.ACTIVATE_CARD
-        )
+    override fun onPrivacyPolicyTermsClicked(title: String, url: String) {
+        openWebPageFor(title,url)
+    }
 
-        intent.putExtra(
-            AppConstants.MOBILE_WITHOUT_COUNTRY_CODE,
-            ""
-        )
-
-        intent.putExtra(
-            AppConstants.KYC_ACTIVATION_TOKEN, ""
-
-        )
-        intent.putExtra(
-            AppConstants.KIT_FOUR_DIGIT, kitFourDigit
-
-        )
+    private fun openWebPageFor(title: String, url: String) {
+        val intent = Intent(requireActivity(), WebViewActivity::class.java)
+        intent.putExtra(ARG_WEB_URL_TO_OPEN, url)
+        intent.putExtra(ARG_WEB_PAGE_TITLE, title)
         startActivity(intent)
     }
 
+
+
     override fun setPinClick() {
         mViewModel.callSetOrChangeApi()
+    }
+
+    override fun onItemClick(position: Int, name: String?) {
+        when (name) {
+            PockketApplication.instance.getString(R.string.card_settings) -> {
+                callCardSettingsBottomSheet()
+            }
+            PockketApplication.instance.getString(R.string.order_card) -> {
+                val bundle = Bundle()
+                bundle.putString("user_id",SharedPrefUtils.getLong(
+                    requireContext(),
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+                mFirebaseAnalytics =  FirebaseAnalytics.getInstance(requireContext())
+                mFirebaseAnalytics!!.logEvent("ordered_card",bundle)
+                intentToActivity(OrderCardView::class.java)
+            }
+            PockketApplication.instance.getString(R.string.track_order)->{
+                SharedPrefUtils.getString(requireContext(),SharedPrefUtils.SF_KEY_KIT_NUMBER).let {
+                    if(!it.isNullOrEmpty()){
+                        intentToActivity(TrackOrderView::class.java)
+                    }
+                }
+            }
+            PockketApplication.instance.getString(R.string.account_stmt) -> {
+                intentToActivity(BankTransactionHistoryView::class.java)
+            }
+            PockketApplication.instance.getString(R.string.activate_card_heading) -> {
+                callActivateCardSheet()
+            }
+
+        }
+
     }
 
 }

@@ -105,7 +105,7 @@
 
     <!--Login-->
     <string name="go_to_messages_btn_text">Go to Messages</string>
-    <string name="set_or_change_pin_btn_text">Set or Change pin</string>
+    <string name="set_or_change_pin_btn_text">Set or Change Pin</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="otp">OTP</string>
     <string name="sign_in_sign_up">Sign In/Sign Up</string>
@@ -500,7 +500,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="title_activity_add_task">AddTaskActivity</string>
 
     <string name="invite_member_text1">Invite new Fypers</string>
-    <string name="invite_member_text2">Share this link with your friend and after they install both of you will get 25 cash rewards.</string>
+    <string name="invite_member_text2">Share this link with your friend and after they install both of you will get %1$s cash rewards.</string>
     <string name="invite_member_text3">Or Invite via</string>
 
     <!--
@@ -650,16 +650,11 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="dummy_amount_2500">\u20B9 0</string>
     <string name="manage_channels_heading">Manage Channels</string>
     <string name="activate_card_heading">Activate Card</string>
-    <string name="rotate_card">Rotate the card to view details</string>
+    <string name="rotate_card">Tap on Rotate Card to view details</string>
 
-    <!--
-    Manage Channels
-    -->
     <string name="issue_by">Issued by</string>
 
-    <!--
-  Activate card
-  -->
+
     <string name="enter_otp_text">Enter the OTP sent to your registered phone number.</string>
     <string name="card_kit_empty_error">Please enter last 4 digit provided on the card kit</string>
     <string name="four_digit_empty_error">Please enter four digit number provided on the card kit</string>
@@ -724,7 +719,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="city_empty_error">Please choose city</string>
     <string name="hno_empty_error">Please enter House number and Building name</string>
     <string name="road_name_empty_error">Please enter road name, area,colony</string>
-    <string name="view_breakup"><u>View Price Breakup</u></string>
+    <string name="view_breakup">View Price Breakup</string>
     <string name="city_hint_val">City*</string>
     <string name="state_hint">State*</string>
     <string name="bill_details">Bill Details</string>
@@ -756,13 +751,10 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="fetching_price">Fetching Price…</string>
     <string name="set_or_change_pin">Set or change pin</string>
     <string name="otp_sent_success_message">OTP has been sent successfully</string>
-    <string name="set_or_change_pin1">1:   Click on the \'Change PIN button below \'</string>
-    <string name="set_or_change_pin2">2:   You will receive an SMS with a link to change PIN. Click on that link </string>
+    <string name="set_or_change_pin1">1: Click on \' Set or Change Pin \' button below.</string>
+    <string name="set_or_change_pin2">2: Enter your new PIN and Expiry date and click on \' Set PIN \' button. Your PIN has been updated. </string>
 
-    <!--
-    set or change pin
-    -->
-    <string name="set_or_change_pin3">3:   Enter your new PIN and click \'Okay \'. Your PIN has been changed.</string>
+
     <string name="an_update_has_just_been_downloaded">An update has downloaded</string>
     <string name="app_update_title">App Updated</string>
     <string name="create_your_own_task">Create your own task</string>
@@ -850,6 +842,7 @@ Coming really soon!
     <string name="mission_desc">Mission description</string>
     <string name="emoji">Emoji</string>
     <string name="pay">Pay</string>
+    <string name="pay_amount">Pay ₹%1$s</string>
     <string name="instagram">Instagram</string>
     <string name="facebook">Facebook</string>
     <string name="youtube">Youtube</string>
@@ -882,7 +875,8 @@ Coming really soon!
     <string name="get_this_card">Get this card</string>
     <string name="fyp_card">Fyp Card</string>
     <string name="scratch_to_get_lucky">Scratch to get lucky!</string>
-     <string name="you_won">You won</string>
+    <string name="scratch_the_card_and_who_knows_you_might_get_lucky_today">Scratch the card and who knows you might win a free card today 😍</string>
+    <string name="you_won">You got a discount of</string>
     <string name="fyp_card_price">Fyp Card Price: &#160;</string>
     <string name="your_wish_for_better_rewards_is_going_to_n_be_granted_soon_stay_tuned">Your wish for better rewards is going to\n be granted soon. Stay tuned!</string>
     <string name="personalise_your_card">Personalise Your Card</string>
@@ -900,8 +894,24 @@ Coming really soon!
     <string name="unfortunately_we_are_not_serviceable_in_your_neighborhood_but_we_are_moving_super_fast_to_bring_the_awesome_fyp_card_to_your_pockets">Unfortunately we are not serviceable in your neighborhood but we are moving super fast to bring the awesome Fyp card to your pockets.</string>
     <string name="your_order_has_been_placed_n_successfully">Your order has been placed \n successfully!</string>
     <string name="net_paid">Net Paid</string>
-    <string name="by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy"><![CDATA[By tapping Activate Now, you agree to the Terms of Service & Privacy Policy]]></string>
+    <string name="by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy">"By tapping Activate Now, you agree to the %1$s &amp; %2$s"</string>
     <string name="set">Set</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="congratulations">Congratulations!</string>
+    <string name="your_card_has_been_activated_n_successfully">Your card has been activated \n successfully.</string>
+    <string name="click_on_set_pin_and_setup_your_n_pin_and_expiry_date_to_enable_n_offline_card_transactions">Click on “ Set Pin” and setup your \n PIN and expiry date to enable \n offline card transactions.</string>
+    <string name="set_pin">Set Pin</string>
+    <string name="order_india_s_first_hololam_card">Order India\'s First Hololam Card.</string>
+    <string name="view_shipping_details"><u>View Shipping Details</u></string>
+    <string name="shipping_details">Shipping Details</string>
+    <string name="delivery_partner">Delivery Partner</string>
+    <string name="awb_number">AWB Number</string>
+    <string name="expected_delivery">Expected Delivery</string>
+    <string name="rotate_card_txt">Rotate Card</string>
+    <string name="swipe_up_to_continue">Swipe up to continue</string>
+    <string name="swipe_to_view_settings">Swipe to view settings</string>
+    <string name="check_offer">Check Offer</string>
+    <string name="please_tyr_again_later">Please try again later</string>
     <string name="scratch_card">Scratch the card and who knows you might get lucky today 😍</string>
     <string name="scratch_your_luck">Scratch your luck🤑</string>
     <string name="rewards_won">Rewards you have won</string>
@@ -922,6 +932,7 @@ Coming really soon!
         <item>Help?</item>
         <item>Log out</item>
     </string-array>
+
     <string-array name="relationNameList">
         <item>Parent</item>
         <item>Sibling</item>
@@ -931,7 +942,7 @@ Coming really soon!
         <item>Grand Child</item>
         <item>Other</item>
     </string-array>
-
+    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="order_card_list">
         <item>Set your limit</item>
         <item>Sensitive details kept safe</item>

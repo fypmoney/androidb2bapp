@@ -51,7 +51,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var onBankProfileSuccess = MutableLiveData<Boolean>()
     var isViewDetailsVisible = ObservableField(true)
     var bankProfileResponse = ObservableField<BankProfileResponseDetails>()
-
+    var rotateCardClicked = MutableLiveData<Boolean>()
 
     /*
     * This is used to see the card details
@@ -60,6 +60,9 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         onViewDetailsClicked.value = true
     }
 
+    fun onRotateCard(){
+        rotateCardClicked.value = true
+    }
 
 
     /*
@@ -154,7 +157,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     /*
       * This method is used to call activate card init api
       * */
-    fun callActivateCardInitApi() {
+    /*fun callActivateCardInitApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_ACTIVATE_CARD_INIT,
@@ -164,7 +167,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 this, isProgressBar = true
             )
         )
-    }
+    }*/
 
     /*
         * This method is used to call update card limit api
@@ -280,17 +283,16 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
 
             }
 
-            ApiConstant.API_ACTIVATE_CARD_INIT -> {
+            /*ApiConstant.API_ACTIVATE_CARD_INIT -> {
                 progressDialog.value = false
                 if (responseData is ActivateCardInitResponse) {
-                    when (responseData.msg) {
+                    *//*when (responseData.msg) {
                         ApiConstant.API_SUCCESS -> {
-                            onActivateCardInit.value = true
                         }
-                    }
+                    }*//*
                 }
 
-            }
+            }*/
             ApiConstant.API_GET_WALLET_BALANCE -> {
                 if (responseData is GetWalletBalanceResponse) {
                     isFetchBalanceVisible.set(false)
@@ -305,8 +307,9 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             }
             ApiConstant.API_ACTIVATE_CARD -> {
                 if (responseData is ActivateCardResponse) {
-
-
+                    callGetBankProfileApi()
+                    Utility.showToast(responseData.activateCardResponseDetails?.message)
+                    onActivateCardInit.value = true
                 }
             }
 
@@ -315,6 +318,11 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        when(purpose){
+            ApiConstant.API_ACTIVATE_CARD -> {
+                Utility.showToast(errorResponseInfo.msg)
+            }
+        }
     }
 
     fun makeFetchCardRequest(requestData: String): FetchVirtualCardRequest {

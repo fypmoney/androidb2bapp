@@ -164,7 +164,7 @@
                     android:longClickable="false"
                     android:text="@={viewModel.amountSelected}"
                     android:textColor="@color/add_money_amount_color"
-                    android:textSize="32dp" />
+                    android:textSize="32sp" />
 
                 <View
                     android:id="@+id/view1"
@@ -189,7 +189,6 @@
 
                 <Button
                     android:id="@+id/btnSendOtp"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/add_money_text"
@@ -200,7 +199,7 @@
                     android:textAllCaps="false"
                     android:textColor="@color/text_color_little_dark"
                     android:textSize="18sp"
-                    app:backgroundTint="@color/buttonUnselectedColor" />
+                    app:backgroundTint="@color/cb_grey" />
 
 
             </RelativeLayout>

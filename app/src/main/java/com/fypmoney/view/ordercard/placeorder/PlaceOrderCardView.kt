@@ -22,6 +22,7 @@ import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.ordercard.model.PinCodeData
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.placeordersuccess.PlaceOrderSuccessActivity
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
@@ -35,6 +36,7 @@ import java.util.*
 class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardViewModel>() {
     private lateinit var binding: ViewPlaceCardBinding
     private lateinit var mViewModel: PlaceOrderCardViewModel
+    private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -63,6 +65,8 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
             callFreshChat(applicationContext)
 
         }
+        mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
+
         mViewModel.userOfferCard = intent.getParcelableExtra(AppConstants.ORDER_CARD_INFO)
         mViewModel.placeOrderRequest?.nameOnCard = SharedPrefUtils.getString(this,
             SharedPrefUtils.SF_KEY_NAME_ON_CARD
@@ -70,12 +74,18 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         mViewModel.mapRequestOrderObject()
         setUpViews()
         setObservers()
+
+
     }
 
     private fun setUpViews() {
-        mViewModel.userOfferCard.let {
+
+        mViewModel.userOfferCard?.let {
             binding.cardPriceValueTv.text =
                 "${getString(R.string.Rs)} ${Utility.convertToRs(it?.mrp.toString())}"
+            binding.cardNameTv.text = it.name
+            binding.btnContinue.setText(String.format(getString(R.string.pay_amount),Utility.convertToRs(
+                it.mrp)))
         }
         Utility.getCustomerDeliveryAddress()?.let {
              binding.pinCodeTie.setText(it.pincode)
@@ -162,6 +172,12 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                 callNotServicebleSheet()
             }
             PlaceOrderCardViewModel.PlaceOrderCardEvent.OnPlaceOrder ->{
+                val bundle = Bundle()
+                bundle.putString("user_id",SharedPrefUtils.getLong(
+                    applicationContext,
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+                mFirebaseAnalytics!!.logEvent("pay_button",bundle)
                 askForDevicePassword()
             }
             is PlaceOrderCardViewModel.PlaceOrderCardEvent.InSufficientBalance ->{
@@ -185,10 +201,24 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                 setUpStateAndCity(it.pinCode)
             }
             is PlaceOrderCardViewModel.PlaceOrderCardState.PlaceOrderError -> {
-
+                Utility.showToast(getString(R.string.please_tyr_again_later))
             }
             is PlaceOrderCardViewModel.PlaceOrderCardState.PlaceOrderSuccess -> {
-                    intentToActivity(PlaceOrderSuccessActivity::class.java)
+                Utility.setCustomerDeliveryAddress(
+                    UserDeliveryAddress(
+                        pincode = binding.pinCodeTie.text.toString(),
+                        houseAddress = binding.houseNumberBuildingTie.text.toString(),
+                        areaDetail = binding.roadNameAreaTie.text.toString(),
+                        landmark = binding.landmarkTie.text.toString(),
+                    )
+                )
+                val bundle = Bundle()
+                bundle.putString("user_id",SharedPrefUtils.getLong(
+                    applicationContext,
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+                mFirebaseAnalytics!!.logEvent("order_success",bundle)
+                intentToActivity(PlaceOrderSuccessActivity::class.java)
             }
         }
     }
@@ -225,7 +255,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                                                 city:String,
                                                 houseNumber:String,
                                                 roadNumber:String):Boolean{
-        if(pinCode.isEmpty() and state.isEmpty() and city.isEmpty() and houseNumber.isEmpty() and roadNumber.isEmpty()){
+        if(pinCode.isEmpty() or state.isEmpty() or city.isEmpty() or houseNumber.isEmpty() or roadNumber.isEmpty()){
             return false
         }
         return true
@@ -254,14 +284,20 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
 
             override fun onRejectClicked(pos: Int) {
                 bottomsheetInsufficient?.dismiss()
+
+                val bundle = Bundle()
+                bundle.putString("user_id",SharedPrefUtils.getLong(
+                    applicationContext,
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+                mFirebaseAnalytics!!.logEvent("add_money_button",bundle)
                 val intent = Intent(this@PlaceOrderCardView,AddMoneyView::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, amount)
+                intent.putExtra("amountshouldbeadded", Utility.convertToRs(amount))
                 startActivity(intent)
             }
 
             override fun ondimiss() {
                 bottomsheetInsufficient?.dismiss()
-
             }
         }
          bottomsheetInsufficient = TaskMessageInsuficientFuntBottomSheet(itemClickListener2,
@@ -294,16 +330,23 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                     RESULT_OK -> {
                         runOnUiThread {
                             makePlaceOrderRequest()
-
                         }
-
                     }
-
                 }
             }
         }
     }
 
-
+    override fun onDestroy() {
+        Utility.setCustomerDeliveryAddress(
+            UserDeliveryAddress(
+                pincode = binding.pinCodeTie.text.toString(),
+                houseAddress = binding.houseNumberBuildingTie.text.toString(),
+                areaDetail = binding.roadNameAreaTie.text.toString(),
+                landmark = binding.landmarkTie.text.toString(),
+            )
+        )
+        super.onDestroy()
+    }
 
 }

@@ -11,6 +11,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
+import com.fypmoney.util.AppConstants.ORDER_CARD_PHYSICAL_CARD_CODE
 import com.fypmoney.util.AppConstants.PHYSICAL_CARD_CODE
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.ordercard.model.UserOfferCard
@@ -44,7 +45,7 @@ class OrderCardViewModel(application: Application) : BaseViewModel(application) 
                 NetworkUtil.endURL(ApiConstant.API_USER_OFFER_CARD),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
     }
@@ -56,16 +57,8 @@ class OrderCardViewModel(application: Application) : BaseViewModel(application) 
                 val data = Gson().fromJson(responseData.toString(), UserOfferCardResponse::class.java)
                 if(data is UserOfferCardResponse){
                     if(!data.data.isNullOrEmpty()){
-                        for (userCard in data.data){
-                            when(userCard.code){
-                                PHYSICAL_CARD_CODE->{
-                                    userOfferCard = userCard
-                                    _state.value = OrderCardState.Success(userCard)
-                                    break
-                                }
-                            }
-
-                        }
+                        userOfferCard = data.data[0]
+                        _state.value = OrderCardState.Success(userOfferCard!!)
                     }
                 }
             }

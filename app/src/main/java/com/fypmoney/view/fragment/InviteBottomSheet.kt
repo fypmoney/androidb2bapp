@@ -44,15 +44,6 @@ class InviteBottomSheet(
             container,
             false
         )
-        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetInviteBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_invite,
-            null,
-            false
-        )
-        bottomSheet.setContentView(bindingSheet.root)
 
         val referralCode = view.findViewById<TextView>(R.id.title1)!!
         val referralMsg = view.findViewById<TextView>(R.id.title3)!!

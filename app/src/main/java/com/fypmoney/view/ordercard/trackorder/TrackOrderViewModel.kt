@@ -1,8 +1,8 @@
-package com.fypmoney.viewmodel
+package com.fypmoney.view.ordercard.trackorder
 
 import android.app.Application
-import android.util.Log
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -12,9 +12,9 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
-import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.adapter.OrderStatusAdapter
 
 /*
@@ -26,11 +26,17 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
     var orderStatusAdapter = OrderStatusAdapter(this)
     var productResponse = MutableLiveData<GetOrderCardStatusResponseDetails>()
 
+    val event:LiveData<TrackOrderEvent>
+        get()= _event
+    private val _event = LiveEvent<TrackOrderEvent>()
     init {
         kitNumber.set(SharedPrefUtils.getString(application, SharedPrefUtils.SF_KEY_KIT_NUMBER))
         callGetCardStatusApi()
     }
 
+    fun onShippingDetailsClick(packageStatusList:PackageStatusList?){
+        _event.value = TrackOrderEvent.ShippingDetailsEvent(packageStatusList)
+    }
     /*
     * This method is used to track order
     * */
@@ -73,5 +79,8 @@ class TrackOrderViewModel(application: Application) : BaseViewModel(application)
         super.onError(purpose, errorResponseInfo)
     }
 
+    sealed class TrackOrderEvent{
+         data class ShippingDetailsEvent(var packageStatusList:PackageStatusList?): TrackOrderEvent()
+    }
 
 }

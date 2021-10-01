@@ -3,6 +3,7 @@ package com.fypmoney.view.ordercard.cardorderoffer
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -17,11 +18,14 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.customview.scratchlayout.listener.ScratchListener
 import com.fypmoney.view.customview.scratchlayout.ui.ScratchCardLayout
 import com.fypmoney.view.ordercard.personaliseyourcard.PersonaliseYourCardActivity
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.toolbar.*
 
 class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOrderOfferVM>() {
     private lateinit var mViewModel: CardOrderOfferVM
     private lateinit var mBinding: ActivityCardOrderOfferBinding
+    private var mFirebaseAnalytics: FirebaseAnalytics? = null
+
     override fun getBindingVariable(): Int  =  BR.viewModel
 
     override fun getLayoutId(): Int  = R.layout.activity_card_order_offer
@@ -47,7 +51,10 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
         }*/
         setUpView()
         setUpObserver()
+        mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
     }
+
+
 
     private fun setUpView() {
         mViewModel.userOfferCard?.let {
@@ -92,6 +99,12 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
     private fun handelEvents(it: CardOrderOfferVM.CardOfferEvent?) {
         when(it){
             CardOrderOfferVM.CardOfferEvent.Continue -> {
+                val bundle = Bundle()
+                bundle.putString("user_id",SharedPrefUtils.getLong(
+                    applicationContext,
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+                mFirebaseAnalytics!!.logEvent("scratch_card_continue",bundle)
                 val intent = Intent(this@CardOrderOfferActivity,PersonaliseYourCardActivity::class.java)
                 intent.putExtra(ORDER_CARD_INFO,mViewModel.userOfferCard)
                 startActivity(intent)

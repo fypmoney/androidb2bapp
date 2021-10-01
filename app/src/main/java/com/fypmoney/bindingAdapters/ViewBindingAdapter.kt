@@ -15,6 +15,22 @@ import com.bumptech.glide.Glide
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.fypmoney.R
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import android.text.Spannable
+
+import android.R.attr.text
+
+import android.text.style.ForegroundColorSpan
+
+import android.text.SpannableString
+
+import android.R.attr
+import android.graphics.Color
+import androidx.core.content.res.TypedArrayUtils
+
+import androidx.core.content.res.TypedArrayUtils.getText
+import android.animation.ObjectAnimator
+import android.view.animation.Interpolator
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.shape.CornerFamily
 
@@ -112,6 +128,22 @@ fun setSomePartOfTextInColor(textView: TextView,
     )
 
     textView.setText(spannable, TextView.BufferType.SPANNABLE)
+}
+
+ fun doBounceAnimation(targetView: View) {
+    val interpolator: Interpolator = Interpolator { v ->
+        getPowOut(v, 2.0) //Add getPowOut(v,3); for more up animation
+    }
+    val animator = ObjectAnimator.ofFloat(targetView, "translationY", 0f, 25f, 0f)
+    animator.interpolator = interpolator
+    animator.startDelay = 100
+    animator.duration = 800
+    animator.repeatCount = -1
+    animator.start()
+}
+
+private fun getPowOut(elapsedTimeRate: Float, pow: Double): Float {
+    return (1.toFloat() - Math.pow((1 - elapsedTimeRate).toDouble(), pow)).toFloat()
 }
 
 fun shimmerDrawable():ShimmerDrawable{

@@ -176,8 +176,8 @@
                         android:visibility="gone"/>-->
                     <Button
                             android:id="@+id/btnSendOtp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginStart="47dp"
                             android:layout_marginEnd="47dp"
@@ -185,13 +185,13 @@
                             android:text="@string/verify_btn_text"
                             android:textAllCaps="false"
 
-                        android:enabled="false"
+                            android:enabled="false"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             android:layout_marginBottom="@dimen/_40sdp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             android:textColor="@color/text_color_little_dark"
-                            app:backgroundTint="@color/buttonUnselectedColor"
+                            app:backgroundTint="@color/cb_grey"
                         />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

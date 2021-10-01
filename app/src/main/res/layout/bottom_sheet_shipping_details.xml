@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_mat_black"
+        android:paddingStart="@dimen/screenMarginLeft"
+        android:paddingEnd="@dimen/screenMarginRight"
+        android:paddingBottom="24dp">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/curved_background1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/shipping_details"
+            style="@style/TextviewBold"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:text="@string/shipping_details"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/delievery_partner_name_value_tv"
+            style="@style/TextviewBold"
+            android:layout_width="0dp"
+            android:layout_alignParentEnd="true"
+            android:textAlignment="viewEnd"
+            android:layout_marginStart="16dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/delivery_partner_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/delivery_partner_tv"
+            app:layout_constraintTop_toTopOf="@+id/delivery_partner_tv"
+            tools:text="Bluedart" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/delivery_partner_tv"
+            style="@style/TextviewRegular"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/delivery_partner"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shipping_details" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewRegular"
+            android:id="@+id/awb_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/awb_number"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/delivery_partner_tv" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/awb_number_value_tv"
+            style="@style/TextviewBold"
+            android:layout_width="0dp"
+            android:layout_alignParentEnd="true"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_marginStart="@dimen/dp16"
+            app:layout_constraintBottom_toBottomOf="@+id/awb_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/awb_tv"
+            app:layout_constraintTop_toTopOf="@+id/awb_tv"
+            tools:text="123456789" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextviewRegular"
+            android:id="@+id/expected_delivery_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/expected_delivery"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/awb_tv" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/expected_delivery_value_tv"
+            style="@style/TextviewBold"
+            android:layout_width="0dp"
+            android:layout_alignParentEnd="true"
+            android:textAlignment="viewEnd"
+            android:layout_marginStart="@dimen/dp16"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/expected_delivery_tv"
+            app:layout_constraintTop_toTopOf="@+id/expected_delivery_tv"
+            tools:text="10-15 days" />
+
+
+        <com.fypmoney.view.customview.PrimaryButton
+            android:id="@+id/track_order_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/perfect"
+            android:textSize="18sp"
+            android:layout_marginTop="30dp"
+            app:text="@string/track_order"
+            app:enabled="true"
+            app:enabled_bg="@color/color_task_card_green"
+            app:disabled_bg="@color/buttonUnselectedColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/expected_delivery_tv"
+            android:layout_marginBottom="@dimen/dp20" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

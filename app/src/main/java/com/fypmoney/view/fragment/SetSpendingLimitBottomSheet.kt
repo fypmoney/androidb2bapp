@@ -80,10 +80,13 @@ class SetSpendingLimitBottomSheet(
             when (it.cardType) {
                 AppConstants.CARD_TYPE_PHYSICAL -> {
                     if (it.status == AppConstants.ENABLE) {
-                        offLineStores.visibility = View.VISIBLE
-                    }
-                    if (it.atmEnabled == AppConstants.YES) {
-                        rlAtm.visibility = View.VISIBLE
+
+                        if(it.posEnabled ==AppConstants.YES){
+                            offLineStores.visibility = View.VISIBLE
+                        }
+                        if (it.atmEnabled == AppConstants.YES) {
+                            rlAtm.visibility = View.VISIBLE
+                        }
                     }
                 }
             }

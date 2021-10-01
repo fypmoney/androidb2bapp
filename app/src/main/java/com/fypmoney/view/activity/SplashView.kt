@@ -25,14 +25,10 @@ import kotlinx.android.synthetic.main.view_splash.*
 * */
 class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     private lateinit var mViewModel: SplashViewModel
-
+    private  val TAG = SplashView::class.java.simpleName
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
-
-    var PERMISSIONS = arrayOf(
-        Manifest.permission.READ_CONTACTS
-    )
 
     override fun getLayoutId(): Int {
         return R.layout.view_splash
@@ -92,6 +88,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                         SharedPrefUtils.SF_KEY_APP_UPDATE_TYPE,
                         0
                     )
+                    Log.d(TAG,"0")
 
                 }
                 SplashViewModel.AppUpdateState.FORCEUPDATE -> {
@@ -104,16 +101,26 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                         SharedPrefUtils.SF_KEY_APP_UPDATE_TYPE,
                         1
                     )
+                    Log.d(TAG,"1")
+
                 }
                 SplashViewModel.AppUpdateState.NOTALLOWED -> {
                     checkUpdate.value = false
                     Utility.showToast(NOT_ALLOWED_MSG)
+                    finish()
+                    Log.d(TAG,NOT_ALLOWED_MSG)
+
 
                 }
                 SplashViewModel.AppUpdateState.NOTUPDATE -> {
                     checkUpdate.value = false
+                    Log.d(TAG,"NOTUPDATE")
+
                 }
             }
+
+            mViewModel.moveToNextScreen.value = true
+
         })
 
 

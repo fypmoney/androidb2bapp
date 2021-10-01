@@ -100,9 +100,10 @@ class PayRequestProfileView :
         startActivity(intent)
     }
 
-    override fun onItemClick(position: Int) {
-        when (position) {
 
+
+    override fun onItemClick(position: Int, name: String?) {
+        when (position) {
             0 -> {
                 intentToActivity(
                     contactEntity = mViewModel.contactResult.get(),

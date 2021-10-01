@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.fypmoney.viewmodel.TrackOrderViewModel" />
+            type="com.fypmoney.view.ordercard.trackorder.TrackOrderViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

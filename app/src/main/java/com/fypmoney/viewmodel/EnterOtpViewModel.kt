@@ -4,7 +4,6 @@ import android.app.Application
 import android.os.Build
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import androidx.multidex.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -15,7 +14,6 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
-import com.fypmoney.receivers.AutoReadOtpUtils
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
@@ -349,10 +347,12 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
-
         when (purpose) {
             ApiConstant.API_KYC_MOBILE_VERIFICATION, ApiConstant.API_KYC_VERIFICATION -> {
                 onVerificationFail.value = true
+            }
+            ApiConstant.API_LOGIN -> {
+                Utility.showToast(errorResponseInfo.msg)
             }
         }
 

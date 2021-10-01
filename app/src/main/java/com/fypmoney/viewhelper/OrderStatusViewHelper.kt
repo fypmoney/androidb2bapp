@@ -24,16 +24,20 @@ class OrderStatusViewHelper(
             isLineVisible.set(true)
 
         }
-        status.set(orderStatus?.status?.replace("_", " "))
+        Utility.toTitleCase(orderStatus?.status?.replace("_", " "))?.let{
+            status.set(it)
+
+        }
         statusForImage.set(orderStatus?.status)
 
         if (!orderStatus?.date.isNullOrEmpty()) {
             date.set(
-                Utility.parseDateTime(
+                orderStatus?.date
+                /*Utility.parseDateTime(
                     orderStatus?.date,
                     inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
                     outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT3
-                )
+                )*/
             )
         }
     }

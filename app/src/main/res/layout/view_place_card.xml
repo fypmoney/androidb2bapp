@@ -71,7 +71,7 @@
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/card_name_tv"
                             style="@style/TextviewBold"
-                            android:text="@string/premium_card"
+                            tools:text="@string/premium_card"
                             android:textColor="@color/white"
                             android:textSize="17sp"
                             android:layout_marginTop="@dimen/dp5"
@@ -113,7 +113,7 @@
                             android:layout_marginStart="@dimen/dp20"
                             app:layout_constraintStart_toEndOf="@+id/mini_card_iv"
                             android:onClick="@{()->viewModel.onPriceBreakupClicked()}"
-                            android:text="@string/view_details"
+                            android:text="@string/view_breakup"
                             android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
                             android:textColor="@color/color_task_card_green" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -143,7 +143,6 @@
                         android:id="@+id/pin_code_til"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:theme="@style/EditTextThemeOverlay"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/deliver_to"
                         app:layout_constraintEnd_toStartOf="@+id/state_til"
@@ -166,6 +165,7 @@
                             android:imeOptions="actionDone"
                             android:singleLine="true"
                             android:textColor="@color/white"
+                            android:textCursorDrawable="@null"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -194,6 +194,7 @@
                             android:focusableInTouchMode="false"
                             android:imeOptions="actionDone"
                             android:singleLine="true"
+                            android:textCursorDrawable="@null"
                             android:textColor="@color/white"
                             />
 
@@ -225,6 +226,7 @@
                             android:imeOptions="actionDone"
                             android:singleLine="true"
                             android:textColor="@color/white"
+                            android:textCursorDrawable="@null"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -253,6 +255,8 @@
                             android:imeOptions="actionDone"
                             android:singleLine="true"
                             android:textColor="@color/white"
+                            android:textCursorDrawable="@null"
+                            android:maxLength="100"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -280,6 +284,9 @@
                             android:imeOptions="actionDone"
                             android:singleLine="true"
                             android:textColor="@color/white"
+                            android:textCursorDrawable="@null"
+                            android:maxLength="100"
+
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -305,6 +312,9 @@
                             android:imeOptions="actionDone"
                             android:singleLine="true"
                             android:textColor="@color/white"
+                            android:textCursorDrawable="@null"
+                            android:maxLength="100"
+
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -323,6 +333,7 @@
                     app:enabled_bg="@color/color_task_card_green"
                     app:disabled_bg="@color/buttonUnselectedColor"
                     android:onClick="@{()->viewModel.onPlaceOrderClicked()}"
+                    app:layout_constraintTop_toBottomOf="@+id/delivery_address_cl"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"

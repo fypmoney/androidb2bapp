@@ -1,15 +1,20 @@
-package com.fypmoney.view.activity
+package com.fypmoney.view.ordercard.trackorder
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewTrackOrderBinding
+import com.fypmoney.model.PackageStatusList
 import com.fypmoney.util.Utility
-import com.fypmoney.viewmodel.TrackOrderViewModel
+import com.fypmoney.view.activity.HomeView
+import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+import com.fypmoney.view.webview.WebViewActivity
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
@@ -62,15 +67,37 @@ class TrackOrderView : BaseActivity<ViewTrackOrderBinding, TrackOrderViewModel>(
             binding.taxAmountTv.text = String.format(getString(R.string.inc_tax), Utility.convertToRs(it.totalTax.toString()))
 
         }
+        mViewModel.event.observe(this,{
+            when(it){
+                is TrackOrderViewModel.TrackOrderEvent.ShippingDetailsEvent ->{
+                    callShippingDetails(it.packageStatusList)
+                }
+            }
+        })
 
     }
 
-    /**
-     * Method to navigate to the different activity
-     */
-    private fun intentToActivity(aClass: Class<*>) {
-        startActivity(Intent(this@TrackOrderView, aClass))
+    private fun callShippingDetails(packageStatusList: PackageStatusList?) {
+        val bottomSheet =
+                packageStatusList?.let { ShippingDetailsBottomSheet(it,onTrackOrderClick = {
+                    it.link?.let { it1 -> openWebPageFor("Track Order", it1) }
+                }) }
+            bottomSheet?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+            bottomSheet?.show(supportFragmentManager, "Shipping Details")
+
+
     }
 
+    private fun openWebPageFor(title: String, url: String) {
+        val intent = Intent(this@TrackOrderView, WebViewActivity::class.java)
+        intent.putExtra(ARG_WEB_URL_TO_OPEN, url)
+        intent.putExtra(ARG_WEB_PAGE_TITLE, title)
+        startActivity(intent)
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this@TrackOrderView, HomeView::class.java))
+        finish()
+    }
 
 }
