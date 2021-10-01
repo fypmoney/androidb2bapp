@@ -71,7 +71,6 @@
     android:layout_below="@+id/upi_text"
     android:layout_marginLeft="@dimen/_8sdp"
     android:layout_marginRight="@dimen/_8sdp"
-
     android:layout_marginTop="@dimen/margin"
     android:layout_height="wrap_content">
 

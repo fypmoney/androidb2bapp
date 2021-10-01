@@ -131,11 +131,16 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
 
     private fun observeInput(sharedViewModel: StoreScreenViewModel) {
         sharedViewModel.storefeedList.observe(requireActivity(), { list ->
-            mViewBinding.shimmerLayout.stopShimmer()
-            typeAdapter?.setList(list)
+            if(list.isNullOrEmpty()){
+                mViewBinding.rvStoreFeeds.visibility = View.GONE
+            }else{
+                mViewBinding.shimmerLayout.stopShimmer()
+                typeAdapter?.setList(list)
 
-            typeAdapter?.notifyDataSetChanged()
-            sharedViewModel.isRecyclerviewVisible.set(true)
+                typeAdapter?.notifyDataSetChanged()
+                sharedViewModel.isRecyclerviewVisible.set(true)
+            }
+
 
 
         })
