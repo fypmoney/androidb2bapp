@@ -178,13 +178,13 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
 
     override fun onResume() {
         super.onResume()
-        shimmerLayout.startShimmerAnimation()
+        shimmerLayout.startShimmer()
     }
 
 
 
     override fun onTryAgainClicked() {
-        shimmerLayout.startShimmerAnimation()
+        shimmerLayout.startShimmer()
         mViewModel.isRecyclerviewVisible.set(false)
         mViewModel.callFetchFeedsApi(
             latitude = mViewModel.latitude.get(),
@@ -204,7 +204,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
 
     override fun onPositiveButtonClick(uniqueIdentifier: String) {
         mViewModel.isRecyclerviewVisible.set(true)
-        shimmerLayout.startShimmerAnimation()
+        shimmerLayout.startShimmer()
         mViewModel.callFetchFeedsApi(false, mViewModel.latitude.get(), mViewModel.longitude.get())
     }
 }

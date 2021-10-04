@@ -6,13 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.R
 import com.fypmoney.model.AssignedTaskResponse
-import com.fypmoney.view.adapter.RewardsLeaderboardAdapter
+import com.fypmoney.model.RewardHistoryResponse
+import com.fypmoney.view.adapter.RewardsHistoryLeaderboardAdapter
 
 import com.fypmoney.view.interfaces.ListItemClickListener
-import kotlinx.android.synthetic.main.fragment_spinner_list.view.*
+import com.fypmoney.viewmodel.RewardsViewModel
+import kotlinx.android.synthetic.main.fragment_reward_history.view.*
 
 
 import kotlin.collections.ArrayList
@@ -24,9 +27,10 @@ class RewardHistoryFragment : Fragment() {
 
     }
 
-    private var itemsArrayList: ArrayList<AssignedTaskResponse> = ArrayList()
+    private var sharedViewModel: RewardsViewModel? = null
+    private var itemsArrayList: ArrayList<RewardHistoryResponse> = ArrayList()
     private var isLoading = false
-    private var typeAdapter: RewardsLeaderboardAdapter? = null
+    private var typeAdapterHistory: RewardsHistoryLeaderboardAdapter? = null
     private var root: View? = null
 
 
@@ -34,10 +38,14 @@ class RewardHistoryFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        root = inflater.inflate(R.layout.fragment_spinner_list, container, false)
+        root = inflater.inflate(R.layout.fragment_reward_history, container, false)
         setRecyclerView(root!!)
 
+        activity?.let {
+            sharedViewModel = ViewModelProvider(it).get(RewardsViewModel::class.java)
+            observeInput(sharedViewModel!!)
 
+        }
 
 
 
@@ -45,10 +53,41 @@ class RewardHistoryFragment : Fragment() {
     }
 
 
+    private fun observeInput(sharedViewModel: RewardsViewModel) {
+
+        page = 0
+        sharedViewModel.rewardHistoryList.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { list ->
+                root?.LoadProgressBar?.visibility = View.GONE
+
+                if (page == 0) {
+                    itemsArrayList.clear()
+
+                }
+                itemsArrayList.addAll(list)
+
+                isLoading = false
+                typeAdapterHistory?.notifyDataSetChanged()
+
+                if (list.size > 0) {
+                    root?.empty_screen?.visibility = View.GONE
+
+                } else {
+                    if (page == 0) {
+                        root?.empty_screen?.visibility = View.VISIBLE
+                    }
+
+                }
+                page += 1
+            })
+
+    }
+
     private fun setRecyclerView(root: View) {
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        root.rv_assigned!!.layoutManager = layoutManager
+        root.rv_history!!.layoutManager = layoutManager
 
 
         var itemClickListener2 = object : ListItemClickListener {
@@ -65,9 +104,9 @@ class RewardHistoryFragment : Fragment() {
 
         }
 
-        typeAdapter =
-            RewardsLeaderboardAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
-        root.rv_assigned!!.adapter = typeAdapter
+        typeAdapterHistory =
+            RewardsHistoryLeaderboardAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
+        root.rv_history!!.adapter = typeAdapterHistory
     }
 
     private fun loadMore(root: View) {

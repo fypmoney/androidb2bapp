@@ -2,29 +2,23 @@ package com.fypmoney.view.adapter
 
 
 import android.content.Context
-import android.os.Build
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
-import com.fypmoney.model.AssignedTaskResponse
-import com.fypmoney.view.activity.ChoresActivity
+import com.fypmoney.model.aRewardProductResponse
+import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.view.interfaces.ListItemClickListener
-import kotlinx.android.synthetic.main.card_assigned.view.*
+import kotlinx.android.synthetic.main.card_spin_item.view.*
 
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.*
 
 
 class SpinnerAdapter(
-    val items: ArrayList<AssignedTaskResponse>,
+    val items: ArrayList<aRewardProductResponse>,
     val context: Context,
-    val clickInterface: ListItemClickListener
+    val clickInterface: ListContactClickListener
 ) : RecyclerView.Adapter<SpinnerAdapter.ViewHolder>() {
 
     private var mLastClickTime: Long = 0
@@ -38,7 +32,7 @@ class SpinnerAdapter(
 
     override fun getItemCount(): Int {
 
-        return 3
+        return items.size
     }
 
 
@@ -48,6 +42,9 @@ class SpinnerAdapter(
             clickInterface.onItemClicked(position)
         })
 
+        holder.coins_to_be_burn.text = items[position].appDisplayText
+        holder.desc.text = items[position].description
+
     }
 
 
@@ -56,6 +53,8 @@ class SpinnerAdapter(
 
         var card = view
 
+        var coins_to_be_burn = view.coins_to_be_burn
+        var desc = view.desc
 
 //        init {
 //            offer.z = context.resources.getDimension(R.dimen.list_item_elevation)

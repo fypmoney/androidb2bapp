@@ -70,6 +70,7 @@ class StoreWebpageOpener : BaseActivity<ActivityWebviewBinding, CardDetailsViewM
         binding.webView1.setInitialScale(1)
         binding.webView1.settings.loadWithOverviewMode = true
         binding.webView1.settings.useWideViewPort = true
+        binding.webView1.overScrollMode = WebView.OVER_SCROLL_NEVER
         binding.webView1.settings.cacheMode = WebSettings.LOAD_CACHE_ELSE_NETWORK;
 
         if (BuildConfig.DEBUG) {

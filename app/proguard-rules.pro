@@ -43,7 +43,8 @@
 -dontwarn java.nio.file.**
 -dontwarn org.codehaus.**
 
-
+-keep class * extends android.webkit.WebChromeClient { *; }
+-dontwarn im.delight.android.webview.**
 
 -dontwarn retrofit2.**
 -dontwarn org.codehaus.mojo.**

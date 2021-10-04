@@ -30,13 +30,12 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivServiceLogo"
             android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_spin_burned"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginBottom="@dimen/_4sdp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/circular4"
-            android:backgroundTint="@color/grey"
-            android:padding="9dp"
+
 
             />
 
@@ -53,7 +52,7 @@
             android:textSize="@dimen/textSize_18" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/number_relation"
+            android:id="@+id/desc"
             style="@style/TextviewRegular"
             android:layout_below="@+id/heading"
             android:layout_marginStart="@dimen/margin"
@@ -61,7 +60,7 @@
             android:layout_toEndOf="@+id/ivServiceLogo"
             android:ellipsize="end"
 
-            android:text="Earned for doing Aadhaar KYC"
+            android:text=""
             android:textColor="@color/grey_heading" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -84,9 +83,9 @@
             android:layout_alignParentRight="true"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_2sdp"
-            android:textColor="@color/grey_heading"
             android:layout_marginEnd="@dimen/_8sdp"
             android:text="Won"
+            android:textColor="@color/grey_heading"
 
 
             android:textSize="14sp" />

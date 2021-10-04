@@ -75,6 +75,10 @@ import android.util.Log
 import android.view.View
 
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerDrawable
+import com.fypmoney.bindingAdapters.shimmerDrawable
+import com.fypmoney.view.fragment.FilterByDateFragment
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 
 
@@ -1019,6 +1023,27 @@ object Utility {
         url.let {
             if (!url.isNullOrEmpty()) {
                 Glide.with(context!!).load(url).placeholder(R.drawable.ic_fyp_logo)
+                    .into(imageView)
+            } else {
+                imageView.setImageResource(R.drawable.ic_user)
+
+            }
+        }
+    }
+
+    /*
+     * This method is used to set image using glide
+     * */
+    fun setImageUsingGlideWithShimmerPlaceholder(
+        context: Context? = PockketApplication.instance,
+        url: String?,
+        imageView: ImageView
+    ) {
+
+
+        url.let {
+            if (!url.isNullOrEmpty()) {
+                Glide.with(context!!).load(url).placeholder(shimmerDrawable())
                     .into(imageView)
             } else {
                 imageView.setImageResource(R.drawable.ic_user)

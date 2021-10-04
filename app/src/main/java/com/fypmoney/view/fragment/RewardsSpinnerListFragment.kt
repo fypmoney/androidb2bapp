@@ -5,18 +5,24 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.R
-import com.fypmoney.model.AssignedTaskResponse
+import com.fypmoney.model.SectionListItem
+import com.fypmoney.model.aRewardProductResponse
+import com.fypmoney.util.AppConstants
+import com.fypmoney.view.activity.ScratchCardActivity
 import com.fypmoney.view.activity.SpinWheelViewDark
+import com.fypmoney.view.adapter.ScratchItemAdapter
 import com.fypmoney.view.adapter.SpinnerAdapter
+import com.fypmoney.view.interfaces.ListContactClickListener
 
-import com.fypmoney.view.interfaces.ListItemClickListener
+import com.fypmoney.viewmodel.RewardsViewModel
 import kotlinx.android.synthetic.main.dialog_burn_mynts.*
 import kotlinx.android.synthetic.main.fragment_spinner_list.view.*
 
@@ -30,10 +36,12 @@ class RewardsSpinnerListFragment : Fragment() {
 
     }
 
+    private var sharedViewModel: RewardsViewModel? = null
     private var dialogDialog: Dialog? = null
-    private var itemsArrayList: ArrayList<AssignedTaskResponse> = ArrayList()
+    private var itemsArrayList: ArrayList<aRewardProductResponse> = ArrayList()
     private var isLoading = false
     private var typeAdapter: SpinnerAdapter? = null
+    private var scratchAdapter: ScratchItemAdapter? = null
     private var root: View? = null
 
 
@@ -43,15 +51,35 @@ class RewardsSpinnerListFragment : Fragment() {
     ): View? {
         root = inflater.inflate(R.layout.fragment_spinner_list, container, false)
         setRecyclerView(root!!)
+        setRvScratchCard(root!!)
         dialogDialog = Dialog(requireContext())
+        activity?.let {
+            sharedViewModel = ViewModelProvider(it).get(RewardsViewModel::class.java)
+            observeInput(sharedViewModel!!)
 
+        }
 
 
 
         return root
     }
 
-    internal fun showBlockDialog() {
+    private fun observeInput(sharedViewModel: RewardsViewModel) {
+
+        sharedViewModel.spinArrayList.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { list ->
+
+                itemsArrayList.clear()
+
+                itemsArrayList.addAll(list)
+                typeAdapter?.notifyDataSetChanged()
+
+            })
+
+    }
+
+    internal fun showBurnDialog(i: Int, type: String) {
 
 
         dialogDialog!!.setCancelable(true)
@@ -69,48 +97,77 @@ class RewardsSpinnerListFragment : Fragment() {
 
 
         dialogDialog!!.clicked.setOnClickListener(View.OnClickListener {
-            val intent = Intent(requireContext(), SpinWheelViewDark::class.java)
+            when (type) {
+                AppConstants.PRODUCT_SPIN -> {
+                    val intent = Intent(requireContext(), SpinWheelViewDark::class.java)
+                    val `object` = ArrayList<SectionListItem>()
+                    SpinWheelViewDark.itemsArrayList.clear()
 
-            requireContext().startActivity(intent)
-            dialogDialog!!.dismiss()
+                    itemsArrayList[i].sectionList?.forEachIndexed { pos, item ->
+                        if (item != null) {
+                            SpinWheelViewDark.itemsArrayList.add(item)
+                        }
+                    }
+
+
+//                    val args = Bundle()
+//                    args.putSerializable("ARRAYLIST", itemsArrayList as Serializable)
+//                    intent.putExtra("BUNDLE", args)
+                    requireContext().startActivity(intent)
+                    dialogDialog?.dismiss()
+                }
+                AppConstants.PRODUCT_SCRATCH -> {
+                    val intent = Intent(requireContext(), ScratchCardActivity::class.java)
+
+
+                    requireContext().startActivity(intent)
+                    dialogDialog?.dismiss()
+
+                }
+            }
+
         })
 
 
         dialogDialog!!.show()
     }
 
+
     private fun setRecyclerView(root: View) {
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        root.rv_assigned!!.layoutManager = layoutManager
+        root.rv_spinner!!.layoutManager = layoutManager
 
 
-        var itemClickListener2 = object : ListItemClickListener {
+        var itemClickListener2 = object : ListContactClickListener {
 
 
             override fun onItemClicked(pos: Int) {
+                showBurnDialog(pos, "SPIN_WHEEL")
 
-                showBlockDialog()
-            }
-
-            override fun onCallClicked(pos: Int) {
 
             }
-
-
         }
 
         typeAdapter = SpinnerAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
-        root.rv_assigned!!.adapter = typeAdapter
+        root.rv_spinner!!.adapter = typeAdapter
     }
 
-    private fun loadMore(root: View) {
+    private fun setRvScratchCard(root: View) {
+        val layoutManager =
+            GridLayoutManager(requireContext(), 2)
+        root.rv_scratch!!.layoutManager = layoutManager
 
-        //LoadProgressBar?.visibility = View.VISIBLE
-        root.LoadProgressBar?.visibility = View.VISIBLE
-        Log.d("chorespage", page.toString())
-        isLoading = true
 
+        var itemClickListener2 = object : ListContactClickListener {
+            override fun onItemClicked(pos: Int) {
+                showBurnDialog(pos, "SCRATCH_CARD")
+            }
+        }
+
+        scratchAdapter = ScratchItemAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
+        root.rv_scratch!!.adapter = scratchAdapter
     }
+
 
 }

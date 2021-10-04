@@ -2,43 +2,49 @@ package com.fypmoney.view.adapter
 
 
 import android.content.Context
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
-import com.fypmoney.model.AssignedTaskResponse
+import com.fypmoney.model.aRewardProductResponse
+import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.view.interfaces.ListItemClickListener
+import kotlinx.android.synthetic.main.card_scratch_item.view.*
+
 
 import java.util.*
 
 
-class RewardsLeaderboardAdapter(
-    val items: ArrayList<AssignedTaskResponse>,
+class ScratchItemAdapter(
+    val items: ArrayList<aRewardProductResponse>,
     val context: Context,
-    val clickInterface: ListItemClickListener
-) : RecyclerView.Adapter<RewardsLeaderboardAdapter.ViewHolder>() {
+    val clickInterface: ListContactClickListener
+) : RecyclerView.Adapter<ScratchItemAdapter.ViewHolder>() {
 
     private var mLastClickTime: Long = 0
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
-            LayoutInflater.from(context)
-                .inflate(R.layout.reward_history_item_leaderboard, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.card_scratch_item, parent, false)
         )
 
     }
 
     override fun getItemCount(): Int {
 
-        return 10
+        return 8
     }
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        holder.card.setOnClickListener(View.OnClickListener {
+            clickInterface.onItemClicked(position)
+        })
+
+//        holder.coins_to_be_burn.text=items[position].appDisplayText
+//        holder.desc.text=items[position].description
 
     }
 
@@ -48,6 +54,8 @@ class RewardsLeaderboardAdapter(
 
         var card = view
 
+        var coins_to_be_burn = view.burn_amount
+        var desc = view.desc
 
 //        init {
 //            offer.z = context.resources.getDimension(R.dimen.list_item_elevation)

@@ -39,6 +39,9 @@
             android:name=".view.referandearn.view.ReferAndEarnActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activity.HtmlOpenerView"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activity.AddTaskActivity"
             android:label="@string/title_activity_add_task"
             android:screenOrientation="portrait" />
@@ -229,9 +232,14 @@
         <activity
             android:name=".view.activity.PermissionsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.OfferDetailActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".view.activity.RewardsActivity" />
         <activity android:name=".view.activity.SpinWheelViewDark" />
         <activity android:name=".view.activity.AgeAllowedActivationView" />
+        <activity android:name=".view.activity.ScratchCardActivity" />
+        <activity android:name=".view.StoreWebpageOpener2" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

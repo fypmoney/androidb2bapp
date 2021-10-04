@@ -42,7 +42,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
-       //val appSignatureHelper =  AppSignatureHelper(this)
+        //val appSignatureHelper =  AppSignatureHelper(this)
         //Log.d("Data","Chutiya "+appSignatureHelper.appSignatures)
         val uri: Uri =
             Uri.parse("android.resource://" + packageName + "/" + R.raw.splash)
@@ -51,6 +51,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         video.setOnPreparedListener { video.start() }
 
 
+//        Log.d("chacknoti",intent.extras)
 
 
     }
@@ -195,7 +196,8 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                 intentToActivity(AgeAllowedActivationView::class.java)
                             } else {
 
-                                if (Utility.getCustomerDataFromPreference()?.postKycScreenCode == null && mViewModel.callCustomer.value == false) {
+                                if (Utility.getCustomerDataFromPreference()?.postKycScreenCode == null &&
+                                    Utility.getCustomerDataFromPreference()?.userProfile?.gender == null && mViewModel.callCustomer.value == false) {
                                     mViewModel.callGetCustomerProfileApi()
 
                                 }

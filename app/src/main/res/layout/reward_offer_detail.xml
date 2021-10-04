@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:elevation="@dimen/_2sdp"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/ToolbarTheme"
+            app:titleMarginStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/back"
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+
+
+                tools:visibility="visible"
+                android:layout_marginEnd="10dp"
+                android:tint="@color/white"
+                app:srcCompat="@drawable/ic_back_arrow" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/toolbar_title"
+                style="@style/TextviewBold"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:text="Title"
+                android:text="@string/offer_details"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center_vertical" />
+
+
+        </androidx.appcompat.widget.Toolbar>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_banner"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/guideline"
+                android:background="@drawable/bottom_curved_44"
+                android:clipChildren="false"
+                >
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/image_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
+                    tools:src="@drawable/ic_total_referral_won" />
+
+
+
+            </RelativeLayout>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent=".3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.core.widget.NestedScrollView
+                android:id="@+id/nsv_details"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/guideline"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_height="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_22sdp"
+                        android:layout_marginTop="@dimen/_8sdp">
+
+                        <ImageView
+                            android:id="@+id/logo"
+                            app:civ_border_color="@color/grey"
+                            android:layout_width="@dimen/_30sdp"
+                            android:layout_height="@dimen/_30sdp"
+                            tools:src="@drawable/myntra_logo" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/bywhom"
+                            style="@style/TextviewRegular"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/_14sdp"
+                            tools:text="Myntra"
+                            android:textColor="@color/text_color_dark" />
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/offer_title"
+                        style="@style/TextviewBold"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_22sdp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/_14sdp"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="22sp"
+                        tools:text="Congrats! 50% off from Myntra" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        style="@style/TextviewRegular"
+
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginTop="10dp"
+
+                        android:text="Copy code and use at checkout"
+                        android:textAlignment="center" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+
+                        android:layout_width="match_parent"
+                        android:background="@drawable/round_rectangle_80"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_marginRight="@dimen/_20sdp"
+
+
+                        >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:id="@+id/couponcode"
+                            style="@style/TextviewRegular"
+                            tools:text="GFH2D4Zw788.."
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:textColor="@color/black"
+
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/appCompatButton"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/appCompatButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/round_rectangle_80"
+                            android:backgroundTint="#48AB5B"
+                            android:paddingHorizontal="@dimen/_36sdp"
+                            android:text="@string/copy"
+                            android:textColor="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="@dimen/_18sdp"
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+
+                            android:layout_marginLeft="@dimen/_20sdp"
+                            android:text="@string/expiry_date"
+                            android:textAlignment="center" />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/descrip"
+
+                            style="@style/TextviewRegular"
+                            android:layout_marginLeft="@dimen/_6sdp"
+                            android:layout_marginRight="@dimen/_22sdp"
+
+                            android:scrollHorizontally="true"
+
+
+                            android:textColor="@color/text_color_dark"
+
+                            tools:text="September 15, 2021" />
+
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/assigned"
+
+                        style="@style/TextviewRegular"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginTop="20dp"
+
+                        android:text="Details"
+                        android:textAlignment="center" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_18sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginEnd="@dimen/_18sdp"
+                        android:padding="@dimen/_8sdp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        style="@style/TextviewRegular"
+                        android:layout_marginStart="@dimen/_18sdp"
+                        android:textColor="#5AAFC9"
+                        android:id="@+id/tandc"
+                        android:layout_marginBottom="@dimen/_24sdp"
+                        android:text="Terms and conditions apply"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </RelativeLayout>
+
+
+</layout>
+

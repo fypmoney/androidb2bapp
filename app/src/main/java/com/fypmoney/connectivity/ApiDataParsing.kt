@@ -54,9 +54,9 @@ class ApiDataParsing {
                 API_LOGIN -> {
                     getObject(response, LoginResponse::class.java)
                 }
-                API_FETCH_ALL_FEEDS -> {
-                    getObject(response, FeedResponseModel::class.java)
-                }
+//                API_FETCH_ALL_FEEDS -> {
+//                    getObject(response, FeedResponseModel::class.java)
+//                }
                 ApiConstant.API_ADD_FAMILY_MEMBER -> {
                     when (request.request_type) {
                         ApiUrl.GET -> {

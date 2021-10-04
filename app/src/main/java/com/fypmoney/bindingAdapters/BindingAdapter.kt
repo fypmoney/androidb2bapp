@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SizeReadyCallback
+import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerDrawable
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.util.AppConstants
@@ -41,10 +43,11 @@ class BindingAdapter {
             imageUrl: String?,
             type: Int? = 0
         ) {
+
             imageUrl?.let {
                 when (type) {
                     1 -> {
-                        Glide.with(PockketApplication.instance).load(imageUrl)
+                        Glide.with(PockketApplication.instance).load(imageUrl).placeholder(shimmerDrawable())
                             .into(imageView).getSize(
                                 SizeReadyCallback { width, height ->
                                     //before you load image LOG height and width that u actually got?

@@ -6,21 +6,21 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.databinding.ViewSpinWheelBinding
 import com.fypmoney.databinding.ViewSpinWheelBlackBinding
 import com.fypmoney.model.RedeemDetailsResponse
+import com.fypmoney.model.SectionListItem
+import com.fypmoney.model.aRewardProductResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.fragment.ErrorBottomSheet
+import com.fypmoney.view.fragment.ErrorBottomSpinProductSheet
 import com.fypmoney.view.fragment.RedeemMyntsBottomSheet
 import com.fypmoney.view.interfaces.ListItemClickListener
+import com.fypmoney.viewmodel.SpinWheelProductViewModel
 import com.fypmoney.viewmodel.SpinWheelViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_spin_wheel_black.*
@@ -31,11 +31,16 @@ import java.util.*
 /*
 * This class is used for spin the wheel
 * */
-class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelViewModel>(),
-    ErrorBottomSheet.OnSpinErrorClickListener {
+class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProductViewModel>(),
+    ErrorBottomSpinProductSheet.OnSpinErrorClickListener {
     private var bottomSheetMessage: RedeemMyntsBottomSheet? = null
     private var showerror: Boolean? = null
-    private lateinit var mViewModel: SpinWheelViewModel
+    private lateinit var mViewModel: SpinWheelProductViewModel
+
+    companion object {
+        var itemsArrayList: ArrayList<SectionListItem> = ArrayList()
+    }
+
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -45,13 +50,20 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelViewM
         return R.layout.view_spin_wheel_black
     }
 
-    override fun getViewModel(): SpinWheelViewModel {
-        mViewModel = ViewModelProvider(this).get(SpinWheelViewModel::class.java)
+    override fun getViewModel(): SpinWheelProductViewModel {
+        mViewModel = ViewModelProvider(this).get(SpinWheelProductViewModel::class.java)
         return mViewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+//        val intent = intent
+//        val args = intent.getBundleExtra("BUNDLE")
+//        val getList = args!!.getSerializable("ARRAYLIST") as ArrayList<SectionListItem>
+
+        mViewModel.setDataInSpinWheel(itemsArrayList)
         setObserver()
         setToolbarAndTitle(
             context = this@SpinWheelViewDark,
@@ -231,7 +243,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelViewM
 
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
             val bottomSheet =
-                ErrorBottomSheet(type!!, message, this, mViewModel)
+                ErrorBottomSpinProductSheet(type!!, message, this, mViewModel)
             bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
             bottomSheet.show(supportFragmentManager, "ErrorBottomSheet")
         }
@@ -249,10 +261,6 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelViewM
 
     }
 
-    private fun getRandomIndex(): Int {
-        val rand = Random()
-        return rand.nextInt(mViewModel.luckyItemList.size - 1) + 0
-    }
 
 
     /**

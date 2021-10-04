@@ -224,9 +224,10 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
                 }
             }
             ApiConstant.API_FETCH_ALL_FEEDS -> {
-                if (responseData is FeedResponseModel) {
+                val feeds = getObject(responseData.toString(), FeedResponseModel::class.java)
+                if (feeds is FeedResponseModel) {
                     // Save the access token in shared preference
-                    val response = responseData.getAllFeed?.getAllFeed
+                    val response = feeds.getAllFeed?.getAllFeed
                     // check total count and if greater than 0 set list else set no data found
                     totalCount.set(response?.total)
                     response?.feedDetails.let {
@@ -239,6 +240,10 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
             }
 
         }
+    }
+
+    private fun <T> getObject(response: String, instance: Class<T>): Any? {
+        return Gson().fromJson(response, instance)
     }
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
@@ -270,15 +275,29 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
             for (i in 0 until userInterest.size) {
                 userInterestValue = userInterestValue.append(userInterest.get(i))
                 if (i != userInterest.size - 1) {
-                    userInterestValue = userInterestValue.append(",")
+                    userInterestValue = userInterestValue.append("\",\"")
+                } else {
+                    userInterestValue.append("\"")
                 }
 
             }
         }
+        var gender = 1
+        var feedtype = ""
+
+        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MALE") {
+            gender = 0
+        } else {
+            gender = 1
+        }
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
+            feedtype =
+                gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
+        }
 
         val feedRequestModel = FeedRequestModel()
         feedRequestModel.query =
-            "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "HOME" + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
+            "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "HOME" + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
 
 
 

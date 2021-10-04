@@ -1,8 +1,6 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.util.Log
-import androidx.databinding.Observable
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -13,8 +11,6 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
-import com.fypmoney.view.fragment.AssignedTaskFragment
-import com.fypmoney.view.fragment.YourTasksFragment
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -26,7 +22,14 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
     var onAddMoneyClicked = MutableLiveData(false)
     var loading = MutableLiveData(false)
     var yourtask = ObservableField(false)
-    var YourAssigned: MutableLiveData<ArrayList<AssignedTaskResponse>> = MutableLiveData()
+    var rewardHistoryList: MutableLiveData<ArrayList<RewardHistoryResponse>> = MutableLiveData()
+    var spinArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
+
+    var scratchArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
+    var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
+    var rewardsproductsSpinner: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
+    var rewardsproducts: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
+    var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
     var error: MutableLiveData<String> = MutableLiveData()
 
     var AssignedByYouTask: MutableLiveData<ArrayList<AssignedTaskResponse>> = MutableLiveData()
@@ -44,161 +47,153 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
 
     init {
 
-
+        callRewardHistory()
+        callRewardSummary()
+        callRewardProductList()
+        callTotalRewardsEarnings()
     }
 
-    /*
-      * This method is used to refresh on swipe
-      *  */
+
     fun onRefresh() {
 
 
     }
-    /*
-      * This method is used to call get family notification API
-      * */
 
-
-    /*
-      * This method is used to call user timeline API
-      * */
-
-    fun callLoadMoreTask(page: Int) {
-
-
+    fun callRewardHistory() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                purpose = ApiConstant.API_YOUR_TASK,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_YOUR_TASK),
-                request_type = ApiUrl.POST,
-                GetTaskResponse(
-                    1,
-                    page,
-                    10,
-                    "createdDate,desc"
-                ), onResponse = this,
-                isProgressBar = false
+                ApiConstant.RewardsHistory,
+                NetworkUtil.endURL(ApiConstant.RewardsHistory),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
             )
         )
-
     }
 
-    fun callLoadMoreAssignedTask(page: Int) {
-
-
+    fun callRewardSummary() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                purpose = ApiConstant.API_ASSIGN_TASK,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_ASSIGN_TASK),
-                request_type = ApiUrl.POST,
-                GetTaskResponse(
-                    0,
-                    page,
-                    10,
-                    "createdDate,desc"
-                ), onResponse = this,
-                isProgressBar = false
+                ApiConstant.API_REWARD_SUMMARY,
+                NetworkUtil.endURL(ApiConstant.API_REWARD_SUMMARY),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
             )
-
-        )
-
-    }
-
-    fun callSampleTask() {
-
-        loading.postValue(true)
-        YourTasksFragment.page = 0
-        AssignedTaskFragment.page = 0
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_YOUR_TASK,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_YOUR_TASK),
-                request_type = ApiUrl.POST,
-                GetTaskResponse(
-                    1,
-                    0,
-                    10,
-                    "createdDate,desc"
-                ), onResponse = this,
-                isProgressBar = false
-            )
-
-        )
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_ASSIGN_TASK,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_ASSIGN_TASK),
-                request_type = ApiUrl.POST,
-                GetTaskResponse(
-                    0,
-                    0,
-                    10,
-                    "createdDate,desc"
-                ), onResponse = this,
-                isProgressBar = false
-            )
-
-        )
-
-    }
-
-    fun callTaskDetail(id: String) {
-
-        loading.postValue(true)
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_TASK_DETAIL,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_TASK_DETAIL) + id,
-                request_type = ApiUrl.POST,
-                BaseRequest(), onResponse = this,
-                isProgressBar = false
-            )
-
-        )
-
-
-    }
-
-    fun callTaskAccept(state: String, entityId: String?, s: String) {
-        loading.postValue(true)
-
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_TASK_UPDATE,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_TASK_UPDATE),
-                request_type = ApiUrl.PUT,
-                SendTaskResponse(
-                    state = state, taskId = entityId,
-                    emojis = "",
-                    comments = s
-                ), onResponse = this,
-                isProgressBar = false
-            )
-
         )
     }
+
+    fun callRewardProductList() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_REWARD_PRODUCTS,
+                NetworkUtil.endURL(ApiConstant.API_GET_REWARD_PRODUCTS),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    fun callTotalRewardsEarnings() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_REWARD_EARNINGS,
+                NetworkUtil.endURL(ApiConstant.API_GET_REWARD_EARNINGS),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+    }
+
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         loading.postValue(false)
         when (purpose) {
 
-            ApiConstant.API_YOUR_TASK -> {
-                loading?.postValue(false)
+
+            ApiConstant.API_GET_REWARD_EARNINGS -> {
+
 
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
-
-                val array = Gson().fromJson<Array<AssignedTaskResponse>>(
+                val array = Gson().fromJson<totalRewardsResponse>(
                     json.get("data").toString(),
-                    Array<AssignedTaskResponse>::class.java
+                    com.fypmoney.model.totalRewardsResponse::class.java
                 )
-                val arrayList = ArrayList(array.toMutableList())
-                YourAssigned.postValue(arrayList)
-                loading.postValue(false)
+
+                totalRewardsResponse.postValue(array)
 
 
             }
 
+            ApiConstant.RewardsHistory -> {
+
+
+                val json = JsonParser().parse(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson<Array<RewardHistoryResponse>>(
+                    json.get("data").toString(),
+                    Array<RewardHistoryResponse>::class.java
+                )
+                val arrayList = ArrayList(array.toMutableList())
+                rewardHistoryList.postValue(arrayList)
+
+
+            }
+            ApiConstant.API_GET_REWARD_PRODUCTS -> {
+
+
+                val json = JsonParser().parse(responseData.toString()) as JsonObject
+                val dataObject = json.get("data")?.asJsonObject
+
+                val array = Gson().fromJson<Array<aRewardProductResponse>>(
+                    dataObject?.get("SPIN_WHEEL").toString(),
+                    Array<aRewardProductResponse>::class.java
+                )
+
+
+                val arrayList = ArrayList(array.toMutableList())
+
+                val spinarray = Gson().fromJson<Array<aRewardProductResponse>>(
+                    dataObject?.get("SCRATCH_CARD").toString(),
+                    Array<aRewardProductResponse>::class.java
+                )
+
+
+                if (spinarray != null) {
+                    val scratchArray = ArrayList(spinarray.toMutableList())
+                    scratchArrayList.postValue(scratchArray)
+                }
+
+
+//                 var itemsArrayList: ArrayList<aRewardProductResponse> = ArrayList()
+//
+//                spinObject.forEachIndexed{pos,item->
+//                    val images = Gson().fromJson(item, aRewardProductResponse::class.java)
+////
+//                    itemsArrayList.add(images)
+//                }
+
+                spinArrayList.postValue(arrayList)
+
+
+            }
+            ApiConstant.API_REWARD_SUMMARY -> {
+
+
+                val json = JsonParser().parse(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson<RewardPointsSummaryResponse>(
+                    json.get("data").toString(),
+                    RewardPointsSummaryResponse::class.java
+                )
+
+                rewardSummaryStatus.postValue(array)
+
+
+            }
 
         }
 

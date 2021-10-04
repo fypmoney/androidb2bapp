@@ -19,6 +19,7 @@
     </data>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/main_cv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -26,7 +27,6 @@
         android:layout_marginBottom="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_8sdp"
         app:cardCornerRadius="20dp"
-
         android:onClick="@{()->viewHelper.onFeedButtonClick()}">
 
         <androidx.appcompat.widget.AppCompatImageView
