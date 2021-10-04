@@ -296,9 +296,15 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         }
 
         val feedRequestModel = FeedRequestModel()
-        feedRequestModel.query =
-            "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "HOME" + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
+        if(userInterest.isNullOrEmpty()){
+            feedRequestModel.query =
+                "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "HOME" + "\",screenSection:null,tags :[\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
 
+        }else{
+            feedRequestModel.query =
+                "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "HOME" + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
+
+        }
 
 
 
