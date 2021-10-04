@@ -25,6 +25,7 @@
                 android:layout_height="match_parent">
 
                 <com.facebook.shimmer.ShimmerFrameLayout
+                    tools:visibility="gone"
                     android:id="@+id/shimmerLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -62,15 +63,13 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/offer_rv"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="2"
-                    android:layout_marginStart="@dimen/dp8"
-                    android:layout_marginEnd="@dimen/dp8"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/featured_offer_rv"
+                    app:layout_constraintStart_toStartOf="@+id/featured_offer_rv"
                     app:layout_constraintTop_toBottomOf="@+id/featured_offer_rv"
                     tools:listitem="@layout/item_grid_type_offers" />
 

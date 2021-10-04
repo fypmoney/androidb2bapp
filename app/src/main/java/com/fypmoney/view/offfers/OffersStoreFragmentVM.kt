@@ -146,8 +146,15 @@ class OffersStoreFragmentVM(application: Application): BaseViewModel(application
         }
 
         val feedRequestModel = FeedRequestModel()
-        feedRequestModel.query =
-            "{getAllFeed(page:0, size:null, id : null, screenName:\"OFFER\",screenSection:\"top\",tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []){ total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
+        if(userInterest.isNullOrEmpty()){
+            feedRequestModel.query =
+                "{getAllFeed(page:0, size:null, id : null, screenName:\"OFFER\",screenSection:\"top\",tags :[\"" + feedtype + "\"],displayCard: []){ total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
+
+        }else{
+            feedRequestModel.query =
+                "{getAllFeed(page:0, size:null, id : null, screenName:\"OFFER\",screenSection:\"top\",tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []){ total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
+
+        }
         return feedRequestModel
 
     }
@@ -169,7 +176,6 @@ class OffersStoreFragmentVM(application: Application): BaseViewModel(application
                 } else {
                     userInterestValue.append("\"")
                 }
-
             }
         }
 
@@ -187,14 +193,16 @@ class OffersStoreFragmentVM(application: Application): BaseViewModel(application
                 gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
         }
 
-        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
-            feedtype =
-                gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
-        }
 
         val feedRequestModel = FeedRequestModel()
-        feedRequestModel.query =
-            "{getAllFeed(page:$pageValue, size:50, id : null, screenName:\"OFFER\",screenSection:\"bottom\",tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
+        if(userInterest.isNullOrEmpty()){
+            feedRequestModel.query =
+                "{getAllFeed(page:$pageValue, size:50, id : null, screenName:\"OFFER\",screenSection:\"bottom\",tags :[\"" + feedtype + "\"],displayCard: []) { total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
+
+        }else{
+            feedRequestModel.query =
+                "{getAllFeed(page:$pageValue, size:50, id : null, screenName:\"OFFER\",screenSection:\"bottom\",tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
+        }
 
 
 
