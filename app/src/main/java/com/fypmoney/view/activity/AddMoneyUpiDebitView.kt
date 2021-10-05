@@ -487,32 +487,30 @@ open class AddMoneyUpiDebitView :
     * This method is used to call upi intents
     * */
     fun callUpiIntent() {
-
-        val params = mViewModel.getPaymentParams(type = AppConstants.TYPE_GENERIC)
-        try {
-            callCustomBrowser(
-                com.payu.paymentparamhelper.PayuConstants.UPI_INTENT,
-                params,
-                params.txnId,
-                PayuConstants.PRODUCTION_PAYMENT_URL,
-                isSpecificAppSet = true,
-                packageName = mViewModel.clickedAppPackageName.get()
-            )
-
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }/*
         when (mViewModel.clickedPositionForUpi.get()) {
-            *//*0 -> {
+            0 -> {
                 callAddUpiBottomSheet()
-            }
+            }/*
             1 -> {
                 callGooglePayIntent()
-            }*//*
+            }*/
             else -> {
+                val params = mViewModel.getPaymentParams(type = AppConstants.TYPE_GENERIC)
+                try {
+                    callCustomBrowser(
+                        com.payu.paymentparamhelper.PayuConstants.UPI_INTENT,
+                        params,
+                        params.txnId,
+                        PayuConstants.PRODUCTION_PAYMENT_URL,
+                        isSpecificAppSet = true,
+                        packageName = mViewModel.clickedAppPackageName.get()
+                    )
 
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
             }
-        }*/
+        }
     }
 
 
