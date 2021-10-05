@@ -11,6 +11,8 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -19,24 +21,29 @@ import com.google.gson.JsonParser
 * This class is used for handling chores
 * */
 class RewardsViewModel(application: Application) : BaseViewModel(application) {
+
+
+    var latitude = ObservableField<Double>()
+
+    val longitude = ObservableField<Double>()
     var onAddMoneyClicked = MutableLiveData(false)
     var loading = MutableLiveData(false)
-    var yourtask = ObservableField(false)
+    var selectedPosition = ObservableField(-1)
+    val isApiLoading = ObservableField(true)
+    var clickedType = ObservableField("")
     var rewardHistoryList: MutableLiveData<ArrayList<RewardHistoryResponse>> = MutableLiveData()
     var spinArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
-
+    val page = ObservableField(0)
     var scratchArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
     var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
-    var rewardsproductsSpinner: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
-    var rewardsproducts: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
     var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
+    var coinsBurned: MutableLiveData<CoinsBurnedResponse> = MutableLiveData()
     var error: MutableLiveData<String> = MutableLiveData()
-
-    var AssignedByYouTask: MutableLiveData<ArrayList<AssignedTaskResponse>> = MutableLiveData()
+    var totalCount = ObservableField(0)
     var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
-    var bottomtaskwithdrawn: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
-    var selectedPosition = MutableLiveData(-1)
-    var amountToBeAdded: String? = ""
+    var rewardfeedList: MutableLiveData<ArrayList<FeedDetails>> =
+        MutableLiveData()
+    var isRecyclerviewVisible = ObservableField(false)
 
     var TaskDetailResponse: MutableLiveData<TaskDetailResponse> = MutableLiveData()
 
@@ -51,6 +58,7 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
         callRewardSummary()
         callRewardProductList()
         callTotalRewardsEarnings()
+        callFetchFeedsApi()
     }
 
 
@@ -71,12 +79,93 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
         )
     }
 
+    private fun makeFetchFeedRequest(
+        size: Int? = 5,
+        pageValue: Int? = 0,
+        latitude: String? = "0.0",
+        longitude: String? = "0.0"
+    ): FeedRequestModel {
+        val userInterest =
+            SharedPrefUtils.getArrayList(getApplication(), SharedPrefUtils.SF_KEY_USER_INTEREST)
+        var userInterestValue = StringBuilder()
+        if (!userInterest.isNullOrEmpty()) {
+            for (i in 0 until userInterest.size) {
+                userInterestValue = userInterestValue.append(userInterest.get(i))
+                if (i != userInterest.size - 1) {
+                    userInterestValue = userInterestValue.append("\",\"")
+                } else {
+                    userInterestValue.append("\"")
+                }
+
+            }
+        }
+
+
+        var gender = 1
+        var feedtype = ""
+
+        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MALE") {
+            gender = 0
+        } else {
+            gender = 1
+        }
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
+            feedtype =
+                gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
+        }
+
+
+        val feedRequestModel = FeedRequestModel()
+        feedRequestModel.query =
+            "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "SHOP" + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
+
+
+
+
+
+
+        return feedRequestModel
+
+    }
+
+    fun callFetchFeedsApi(
+        isProgressBarVisible: Boolean? = false,
+        latitude: Double? = 0.0,
+        longitude: Double? = 0.0
+    ) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_FETCH_ALL_FEEDS,
+                NetworkUtil.endURL(ApiConstant.API_FETCH_ALL_FEEDS),
+                ApiUrl.POST,
+                makeFetchFeedRequest(
+                    latitude = null, longitude = null,
+                    pageValue = page.get()
+                ),
+                this, isProgressBar = false
+            )
+        )
+
+    }
+
     fun callRewardSummary() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_REWARD_SUMMARY,
                 NetworkUtil.endURL(ApiConstant.API_REWARD_SUMMARY),
                 ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    fun callRewardsRedeem(code: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_REDEEM_REWARD,
+                NetworkUtil.endURL(ApiConstant.API_REDEEM_REWARD) + code,
+                ApiUrl.POST,
                 BaseRequest(),
                 this, isProgressBar = true
             )
@@ -107,12 +196,45 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
         )
     }
 
+    private fun <T> getObject(response: String, instance: Class<T>): Any? {
+        return Gson().fromJson(response, instance)
+    }
+
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         loading.postValue(false)
         when (purpose) {
+            ApiConstant.API_FETCH_ALL_FEEDS -> {
+                var feeds = getObject(responseData.toString(), FeedResponseModel::class.java)
+                if (feeds is FeedResponseModel) {
 
+                    // Save the access token in shared preference
+                    val response = feeds.getAllFeed?.getAllFeed
+                    // check total count and if greater than 0 set list else set no data found
+                    var notificationList: ArrayList<FeedDetails>? =
+                        ArrayList()
+                    response?.feedDetails?.forEach() {
+                        notificationList?.add(it)
+                    }
+                    rewardfeedList.postValue(notificationList)
+
+                }
+
+            }
+            ApiConstant.API_REDEEM_REWARD -> {
+
+
+                val json = JsonParser().parse(responseData.toString()) as JsonObject
+                val array = Gson().fromJson<CoinsBurnedResponse>(
+                    json.get("data").toString(),
+                    com.fypmoney.model.CoinsBurnedResponse::class.java
+                )
+
+                coinsBurned.postValue(array)
+
+
+            }
 
             ApiConstant.API_GET_REWARD_EARNINGS -> {
 

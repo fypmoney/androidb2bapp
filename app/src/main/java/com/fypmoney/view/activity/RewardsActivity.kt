@@ -2,35 +2,31 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.fypmoney.BR
-import com.fypmoney.R
+
 import com.fypmoney.base.BaseActivity
 
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.fragment.*
-import com.fypmoney.view.interfaces.AcceptRejectClickListener
-import com.fypmoney.view.interfaces.MessageSubmitClickListener
 
 import com.google.android.material.tabs.TabLayout
 
 import java.util.ArrayList
 
 
-import android.app.ActivityOptions
 import com.fypmoney.databinding.ViewRewardsBinding
-import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.RewardsViewModel
 import kotlinx.android.synthetic.main.toolbar.*
+
+import androidx.core.content.ContextCompat
+import com.fypmoney.R
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
 
 class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsViewModel>() {
@@ -94,16 +90,44 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsViewModel>() {
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
-        adapter.addFragment(RewardsOverviewFragment(), "Overview")
-        adapter.addFragment(RewardHistoryFragment(), "History")
-        adapter.addFragment(RewardsSpinnerListFragment(), "Spinners")
-
+        adapter.addFragment(RewardsOverviewFragment(), getString(R.string.overview))
+        adapter.addFragment(RewardsSpinnerListFragment(), getString(R.string.spinners))
+        adapter.addFragment(RewardHistoryFragment(), getString(R.string.history))
 
         viewPager.adapter = adapter
 
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager)
+
+        tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                if (tab.position == 0) {
+                    tab.view.background = ContextCompat.getDrawable(
+                        this@RewardsActivity,
+                        com.fypmoney.R.drawable.round_backgorund_20
+                    )
 
 
+                } else if (tab.position == 1) {
+                    tab.view.background = ContextCompat.getDrawable(
+                        this@RewardsActivity,
+                        com.fypmoney.R.drawable.tab_two_rewards
+                    )
+
+                } else {
+                    tab.view.background = ContextCompat.getDrawable(
+                        this@RewardsActivity,
+                        com.fypmoney.R.drawable.tab_three_rewards
+                    )
+
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                tab.view.setBackgroundColor(Color.TRANSPARENT)
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
     }
 
     /**

@@ -29,7 +29,8 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
     var luckyItemList: ArrayList<LuckyItem> = ArrayList()
     var getRewardsResponseList = ObservableField<GetRewardsResponseDetails>()
     var spinWheelResponseList = MutableLiveData<SpinWheelResponseDetails>()
-    var redeemCallBackResponse = MutableLiveData<RedeemRequestedResponse>()
+    var spinWheelApiResponse = MutableLiveData<SpinWheelResponseDetails>()
+    var redeemCallBackResponse = MutableLiveData<aRewardProductResponse>()
     var redeemDetailsResponse = MutableLiveData<RedeemDetailsResponse>()
     val onGetRewardsSuccess = MutableLiveData<Boolean>()
     val spinAllowed = MutableLiveData<String>()
@@ -107,11 +108,11 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
 
     }
 
-    fun callRedeemCoins() {
+    fun callProductsDetailsApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_REDEEM_COINS_API,
-                NetworkUtil.endURL(ApiConstant.API_REDEEM_COINS_API),
+                ApiConstant.REWARD_PRODUCT_DETAILS,
+                NetworkUtil.endURL(ApiConstant.REWARD_PRODUCT_DETAILS),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = true
@@ -121,19 +122,6 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
 
     }
 
-    fun callGetCoinsToRedeem() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_GET_REDEEM_DETAILS_API,
-                NetworkUtil.endURL(ApiConstant.API_GET_REDEEM_DETAILS_API),
-                ApiUrl.GET,
-                BaseRequest(),
-                this, isProgressBar = false
-            )
-        )
-
-
-    }
 
     /*
     * This method is used to play wheel
@@ -150,8 +138,8 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
     fun callSpinWheelApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_SPIN_WHEEL,
-                NetworkUtil.endURL(ApiConstant.API_SPIN_WHEEL),
+                ApiConstant.Play_Order_Api,
+                NetworkUtil.endURL(ApiConstant.Play_Order_Api),
                 ApiUrl.POST,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -165,7 +153,22 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
         super.onSuccess(purpose, responseData)
         when (purpose) {
 
-            ApiConstant.API_SPIN_WHEEL -> {
+            ApiConstant.REWARD_PRODUCT_DETAILS -> {
+
+
+                val json = JsonParser().parse(responseData.toString()) as JsonObject
+
+                val spinDetails = Gson().fromJson(
+                    json.get("data"),
+                    com.fypmoney.model.aRewardProductResponse::class.java
+                )
+
+                redeemCallBackResponse.value = spinDetails
+                fromWhich.set(AppConstants.ERROR_TYPE_AFTER_SPIN)
+                callGetRewardsApi()
+
+            }
+            ApiConstant.Play_Order_Api -> {
 
 
                 val json = JsonParser().parse(responseData.toString()) as JsonObject

@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -14,14 +15,12 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSpinWheelBlackBinding
 import com.fypmoney.model.RedeemDetailsResponse
 import com.fypmoney.model.SectionListItem
-import com.fypmoney.model.aRewardProductResponse
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.fragment.ErrorBottomSheet
 import com.fypmoney.view.fragment.ErrorBottomSpinProductSheet
+import com.fypmoney.view.fragment.MoneyEarnedMyntsBottomSheet
 import com.fypmoney.view.fragment.RedeemMyntsBottomSheet
 import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.viewmodel.SpinWheelProductViewModel
-import com.fypmoney.viewmodel.SpinWheelViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_spin_wheel_black.*
 
@@ -33,12 +32,12 @@ import java.util.*
 * */
 class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProductViewModel>(),
     ErrorBottomSpinProductSheet.OnSpinErrorClickListener {
-    private var bottomSheetMessage: RedeemMyntsBottomSheet? = null
+
     private var showerror: Boolean? = null
     private lateinit var mViewModel: SpinWheelProductViewModel
 
     companion object {
-        var itemsArrayList: ArrayList<SectionListItem> = ArrayList()
+        var sectionArrayList: ArrayList<SectionListItem> = ArrayList()
     }
 
 
@@ -62,8 +61,10 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 //        val intent = intent
 //        val args = intent.getBundleExtra("BUNDLE")
 //        val getList = args!!.getSerializable("ARRAYLIST") as ArrayList<SectionListItem>
+        coin.setOnClickListener(View.OnClickListener {
+            callEarnedMoneyBottom()
+        })
 
-        mViewModel.setDataInSpinWheel(itemsArrayList)
         setObserver()
         setToolbarAndTitle(
             context = this@SpinWheelViewDark,
@@ -72,9 +73,19 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
         )
 
 //        Glide.with(applicationContext).load(R.raw.coin).into(coin)
-        luckyWheelView.setData(mViewModel.luckyItemList)
+
         luckyWheelView.setRound(4)
         mViewModel.callGetRewardsApi()
+        if (sectionArrayList.size == 0) {
+            mViewModel.callProductsDetailsApi()
+        } else {
+            mViewModel.setDataInSpinWheel(sectionArrayList)
+            luckyWheelView.setData(mViewModel.luckyItemList)
+
+        }
+
+
+
         try {
             luckyWheelView.setLuckyRoundItemSelectedListener {
                 mViewModel.coinVisibilty.set(true)
@@ -95,27 +106,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
     }
 
-    private fun callRedeemMyntsSheet(redeemDetails: RedeemDetailsResponse) {
-        var itemClickListener2 = object : ListItemClickListener {
 
-
-            override fun onItemClicked(pos: Int) {
-                bottomSheetMessage?.dismiss()
-            }
-
-            override fun onCallClicked(pos: Int) {
-                mViewModel.callRedeemCoins()
-                bottomSheetMessage?.dismiss()
-
-            }
-        }
-        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-            bottomSheetMessage =
-                RedeemMyntsBottomSheet(itemClickListener2, redeemDetails)
-            bottomSheetMessage?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-            bottomSheetMessage?.show(supportFragmentManager, "TASKMESSAGE")
-        }
-    }
 
     /**
      * Create this method for observe the viewModel fields
@@ -141,6 +132,18 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
+            }
+            mViewModel.redeemCallBackResponse.observe(this) {
+                it.sectionList?.forEach { i ->
+                    if (i != null) {
+                        sectionArrayList.add(i)
+                    }
+                }
+
+
+                mViewModel.setDataInSpinWheel(sectionArrayList)
+                luckyWheelView.setData(mViewModel.luckyItemList)
+
             }
 
 
@@ -236,9 +239,18 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
     }
 
-    /*
-   * This method is used to call log out
-   * */
+
+    private fun callEarnedMoneyBottom() {
+
+        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+            var bottomSheetMessage = MoneyEarnedMyntsBottomSheet()
+            bottomSheetMessage?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+            bottomSheetMessage?.show(supportFragmentManager, "TASKMESSAGE")
+        }
+
+
+    }
+
     private fun callErrorBottomSheet(type: String?, message: String? = null) {
 
         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
@@ -252,20 +264,11 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
     }
 
     override fun onSpinErrorClick(type: String) {
-        /*   when (type) {
-               AppConstants.ERROR_TYPE_SPIN_ALLOWED -> {
-                   finish()
-               }
-           }
-   */
 
     }
 
 
 
-    /**
-     * Method to navigate to the different activity
-     */
     private fun intentToActivity(aClass: Class<*>) {
         val intent = Intent(this@SpinWheelViewDark, aClass)
         startActivity(intent)

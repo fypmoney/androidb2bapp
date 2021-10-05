@@ -62,15 +62,18 @@
                             <com.google.android.material.tabs.TabLayout
                                 android:id="@+id/tabLayout"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_32sdp"
+                                android:layout_height="@dimen/_36sdp"
                                 android:layout_marginStart="@dimen/_12sdp"
                                 android:layout_marginEnd="@dimen/_12sdp"
                                 android:background="#1E1F22"
                                 app:tabBackground="@drawable/rewards_tab_selector"
                                 app:tabIndicatorHeight="0dp"
                                 app:tabMode="fixed"
+                                app:tabSelectedTextColor="#15181F"
                                 app:tabTextAppearance="@style/MyCustomTextAppearance"
-                                app:tabTextColor="@color/white" />
+                                app:tabTextColor="#a3a3a3">
+
+                            </com.google.android.material.tabs.TabLayout>
 
 
                             <androidx.viewpager.widget.ViewPager

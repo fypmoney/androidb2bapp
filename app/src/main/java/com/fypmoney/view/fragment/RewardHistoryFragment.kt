@@ -1,5 +1,6 @@
 package com.fypmoney.view.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.R
 import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.model.RewardHistoryResponse
+import com.fypmoney.view.activity.SpinWheelViewDark
 import com.fypmoney.view.adapter.RewardsHistoryLeaderboardAdapter
 
 import com.fypmoney.view.interfaces.ListItemClickListener
@@ -94,10 +96,18 @@ class RewardHistoryFragment : Fragment() {
 
 
             override fun onItemClicked(pos: Int) {
+                val intent = Intent(requireContext(), SpinWheelViewDark::class.java)
+                SpinWheelViewDark.sectionArrayList.clear()
 
+
+//                    val args = Bundle()
+//                    args.putSerializable("ARRAYLIST", itemsArrayList as Serializable)
+//                    intent.putExtra("BUNDLE", args)
+                requireContext().startActivity(intent)
             }
 
             override fun onCallClicked(pos: Int) {
+
 
             }
 
@@ -109,13 +119,6 @@ class RewardHistoryFragment : Fragment() {
         root.rv_history!!.adapter = typeAdapterHistory
     }
 
-    private fun loadMore(root: View) {
 
-        //LoadProgressBar?.visibility = View.VISIBLE
-        root.LoadProgressBar?.visibility = View.VISIBLE
-        Log.d("chorespage", page.toString())
-        isLoading = true
-
-    }
 
 }

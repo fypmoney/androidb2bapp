@@ -54,6 +54,10 @@ class RewardsHistoryLeaderboardAdapter(
 
         holder.amount.text = items[position].cashbackWon.toString()
 
+        holder.card.setOnClickListener(View.OnClickListener {
+            clickInterface.onItemClicked(position)
+        })
+
 
     }
 

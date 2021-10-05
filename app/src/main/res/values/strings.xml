@@ -920,6 +920,9 @@ Coming really soon!
     <string name="recharge_amp_bill_payments"><![CDATA[Recharge & Bill Payments]]></string>
     <string name="offer_details">Offer details</string>
     <string name="expiry_date">Expiry Date:-</string>
+    <string name="overview">Overview</string>
+    <string name="spinners">Spinners</string>
+    <string name="history">History</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
