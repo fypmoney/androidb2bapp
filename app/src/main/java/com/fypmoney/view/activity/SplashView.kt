@@ -42,17 +42,11 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
-        //val appSignatureHelper =  AppSignatureHelper(this)
-        //Log.d("Data","Chutiya "+appSignatureHelper.appSignatures)
         val uri: Uri =
             Uri.parse("android.resource://" + packageName + "/" + R.raw.splash)
         video.setMediaController(null)
         video.setVideoURI(uri)
         video.setOnPreparedListener { video.start() }
-
-
-//        Log.d("chacknoti",intent.extras)
-
 
     }
 
@@ -201,10 +195,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                     mViewModel.callGetCustomerProfileApi()
 
                                 }
-
                             }
-
-
                         }
                     }
 

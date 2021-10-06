@@ -41,9 +41,6 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
         return BR.viewModel
     }
 
-    public fun UserFeedsView() {
-
-    }
 
     override fun getLayoutId(): Int {
         return R.layout.view_user_feeds

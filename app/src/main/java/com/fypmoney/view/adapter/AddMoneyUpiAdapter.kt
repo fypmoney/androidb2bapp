@@ -84,14 +84,14 @@ class AddMoneyUpiAdapter(var onUpiClickListener: OnUpiClickListener) :
     }
 
     override fun getItemViewType(position: Int): Int {
-        return typeList/*when (position) {
+        return when (position) {
             0 -> {
                 typeAdd
             }
             else -> {
                 typeList
-            }*/
-       /* }*/
+            }
+        }
 
     }
 
@@ -100,10 +100,9 @@ class AddMoneyUpiAdapter(var onUpiClickListener: OnUpiClickListener) :
      */
     fun setList(addMoneyList1: List<UpiModel>?) {
         upiList!!.clear()
-        /*val upiModel = UpiModel()
+        val upiModel = UpiModel()
         upiModel.name = PockketApplication.instance.getString(R.string.add_upi_text)
-        upiList?.add(upiModel)*/
-
+        upiList?.add(upiModel)
         addMoneyList1!!.forEach {
             upiList!!.add(it)
         }

@@ -1,7 +1,6 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.BuildConfig
@@ -16,14 +15,12 @@ import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.SettingsRequest
 import com.fypmoney.model.SettingsResponse
 import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
-import com.fypmoney.model.homemodel.TopTenUsersResponse
-import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
 import com.fypmoney.util.AppConstants.REFEREE_CASHBACK
 import com.fypmoney.util.AppConstants.REFER_LINE1
 import com.fypmoney.util.AppConstants.REFER_LINE2
 import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_REFEREE_CASHBACK
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_APP_VERSION_CODE
 import com.fypmoney.util.Utility
 import com.google.gson.Gson
 
@@ -32,7 +29,7 @@ import com.google.gson.Gson
 * This class is launcher screen
 * */
 class SplashViewModel(val  app: Application) : BaseViewModel(app) {
-    var getCustomerInfoSuccess = MutableLiveData<CustomerInfoResponse>()
+
     var moveToNextScreen = MutableLiveData(false)
     var callCustomer = MutableLiveData(false);
     val appUpdateState: LiveData<AppUpdateState>
@@ -51,8 +48,11 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
             )!!
         ) {
             callSettingsApi()
-            if(Utility.getCustomerDataFromPreference()==null){
-                callGetCustomerProfileApi()
+            SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let {
+                if(Utility.getCustomerDataFromPreference()==null || (it < BuildConfig.VERSION_CODE)||(it > BuildConfig.VERSION_CODE)){
+                    SharedPrefUtils.putInt(app,SF_KEY_APP_VERSION_CODE, BuildConfig.VERSION_CODE)
+                    callGetCustomerProfileApi()
+                }
             }
         }
     }

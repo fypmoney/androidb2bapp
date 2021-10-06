@@ -46,6 +46,7 @@ class SharedPrefUtils {
         const val SF_KEY_NAME_ON_CARD = "name_on_card"
         const val SF_KEY_USER_DELIVERY_ADDRESS = "delivery_addres"
         const val SF_KEY_IS_ORDER_SCARTCH_CODE_DONE = "order_on_card_scratch_done"
+        const val SF_KEY_APP_VERSION_CODE = "app_version_code"
 
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {
