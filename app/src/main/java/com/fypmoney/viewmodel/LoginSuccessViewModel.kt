@@ -66,7 +66,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
             ApiConstant.API_GET_CUSTOMER_INFO -> {
                 if (responseData is CustomerInfoResponse) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
-                    onApiSuccess.value=true
+
                     // Save the user id in shared preference
 
                     // save first name, last name, date of birth
@@ -123,7 +123,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                         )
 
                     }
-
+                    onApiSuccess.value = true
 
                 }
             }
@@ -170,6 +170,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                     it.value
                                 )
                             }
+
                             AppConstants.REFEREE_CASHBACK -> {
                                 SharedPrefUtils.putString(
                                     getApplication(),

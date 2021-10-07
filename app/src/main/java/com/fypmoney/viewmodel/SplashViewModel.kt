@@ -134,8 +134,8 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                     )
                     val interestList = ArrayList<String>()
                     if (responseData.customerInfoResponseDetails?.userInterests?.isNullOrEmpty() == false) {
-                        responseData.customerInfoResponseDetails?.userInterests!!.forEach {
-                            interestList.add(it.name!!)
+                        responseData.customerInfoResponseDetails?.userInterests?.forEach {
+                            it.name?.let { it1 -> interestList.add(it1) }
                         }
 
                         SharedPrefUtils.putArrayList(

@@ -17,7 +17,11 @@ import com.fypmoney.util.AppConstants.NOT_ALLOWED_MSG
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SplashViewModel
+import com.moe.pushlibrary.MoEHelper
+import com.moe.pushlibrary.models.GeoLocation
+import com.moengage.core.Properties
 import kotlinx.android.synthetic.main.view_splash.*
+import java.util.*
 
 
 /*
@@ -47,6 +51,20 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         video.setMediaController(null)
         video.setVideoURI(uri)
         video.setOnPreparedListener { video.start() }
+
+        val properties = Properties()
+        properties
+            // tracking integer
+            .addAttribute("quantity", 2)
+            // tracking string
+            .addAttribute("product", "iPhone")
+            // tracking date
+            .addAttribute("purchaseDate", Date())
+            // tracking double
+            .addAttribute("price", 5999.99)
+            // tracking location
+            .addAttribute("userLocation", GeoLocation(40.77, 73.98))
+        MoEHelper.getInstance(this).trackEvent("Purchase", properties)
 
     }
 
