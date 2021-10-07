@@ -91,14 +91,14 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
                         }
                 AppConstants.FEED_TYPE_INAPPWEB -> {
                     intentToActivity(
-                        UserFeedsDetailView::class.java,
+                        UserFeedsInAppWebview::class.java,
                         it,
                         AppConstants.FEED_TYPE_INAPPWEB
                     )
                 }
                 AppConstants.FEED_TYPE_INAPPWEB2 -> {
                     intentToActivity(
-                        UserFeedsDetailView::class.java,
+                        UserFeedsInAppWebview::class.java,
                         it,
                         AppConstants.FEED_TYPE_INAPPWEB
                     )

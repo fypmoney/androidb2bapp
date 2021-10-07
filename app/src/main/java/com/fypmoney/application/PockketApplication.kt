@@ -10,8 +10,10 @@ import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
 import com.fypmoney.util.SharedPrefUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.moengage.core.DataCenter
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.google.GoogleEmojiProvider
+import com.moengage.core.MoEngage
 
 
 /**
@@ -19,7 +21,8 @@ import com.vanniktech.emoji.google.GoogleEmojiProvider
  */
 
 class PockketApplication : Application() {
-    var appUpdateRequired:Boolean = false
+    var appUpdateRequired: Boolean = false
+
     companion object {
         lateinit var instance: PockketApplication
             private set
@@ -27,6 +30,11 @@ class PockketApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        val moEngage = MoEngage.Builder(this, "E5IA56TQXEJ5P7B1CULT4CCE")
+            .setDataCenter(DataCenter.DATA_CENTER_3)
+
+            .build()
+        MoEngage.initialise(moEngage)
         instance = this
         EmojiManager.install(GoogleEmojiProvider())
         val appToken = "buqdhv6bqlts"
@@ -38,12 +46,23 @@ class PockketApplication : Application() {
         //appSignature.appSignatures
 
         //Check User is logged in or not.
-        if(SharedPrefUtils.getBoolean(
+        if (SharedPrefUtils.getBoolean(
                 this,
                 SharedPrefUtils.SF_KEY_IS_LOGIN
-            )!!){
+            )!!
+        ) {
             setUserForCrashReports(this)
         }
+
+
+//        val analytics = Analytics.Builder(this, "M7jjorCvQXP6MGtnekIgreVCY5hR9Aae")
+//            .trackApplicationLifecycleEvents() // Enable this to record certain application events automatically!
+//            .recordScreenViews() // Enable this to record screen views automatically!
+//            .build()
+//
+//// Set the initialized instance as a globally accessible instance.
+//        Analytics.setSingletonInstance(analytics);
+
 
     }
     private class AdjustLifecycleCallbacks : ActivityLifecycleCallbacks {

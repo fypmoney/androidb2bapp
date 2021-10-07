@@ -240,6 +240,7 @@
         <activity android:name=".view.activity.AgeAllowedActivationView" />
         <activity android:name=".view.activity.ScratchCardActivity" />
         <activity android:name=".view.StoreWebpageOpener2" />
+        <activity android:name=".view.activity.UserFeedsInAppWebview" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

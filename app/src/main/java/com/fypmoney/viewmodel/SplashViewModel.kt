@@ -15,6 +15,7 @@ import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.SettingsRequest
 import com.fypmoney.model.SettingsResponse
 import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
 import com.fypmoney.util.AppConstants.REFEREE_CASHBACK
 import com.fypmoney.util.AppConstants.REFER_LINE1
@@ -89,7 +90,14 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
     }
     private fun callSettingsApi() {
         val request = SettingsRequest()
-        request.keyList = listOf("CARD_ORDER_FLAG","REFER_LINE1", "REFER_LINE2", "REFEREE_CASHBACK")
+        request.keyList = listOf(
+            "CARD_ORDER_FLAG",
+            "REFER_LINE1",
+            "REFER_LINE2",
+            "REFEREE_CASHBACK",
+            "REFERAL_PKYC0",
+            "REFERAL_PKYC1"
+        )
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_SETTINGS,
@@ -174,6 +182,21 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                     it.value
                                 )
                             }
+                            AppConstants.REFER_MSG_SHARED_1 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_REFFERAL_MSG,
+                                    it.value
+                                )
+                            }
+
+                            AppConstants.REFER_MSG_SHARED_2 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_REFFERAL_MSG_2,
+                                    it.value
+                                )
+                            }
                             REFER_LINE1 -> {
                                 SharedPrefUtils.putString(
                                     getApplication(),
@@ -194,6 +217,7 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                     SharedPrefUtils.SF_KEY_REFEREE_CASHBACK,
                                     it.value
                                 )
+
                             }
                         }
                     }

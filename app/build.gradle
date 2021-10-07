@@ -25,7 +25,7 @@ android {
     defaultConfig {
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 28
+        versionCode 26
         versionName "1.2.5"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
@@ -153,6 +153,7 @@ dependencies {
     // qr code generation
     implementation "com.github.kenglxn.QRGen:android:2.6.0"
 
+
     // for saving shared preferences
     implementation "androidx.preference:preference-ktx:1.1.1"
 
@@ -225,6 +226,11 @@ dependencies {
 
     implementation 'com.adjust.sdk:adjust-android:4.28.4'
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.1'
+
+
+    implementation 'androidx.lifecycle:lifecycle-process:2.3.1'
+    implementation "com.moengage:moe-android-sdk:11.4.01"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
 apollo {
     generateKotlinModels.set(true)
