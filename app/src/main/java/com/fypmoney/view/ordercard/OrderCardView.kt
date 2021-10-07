@@ -18,6 +18,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.bindingAdapters.setSomePartOfTextInColor
 import com.fypmoney.util.AppConstants.ORDER_CARD_INFO
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.view.ordercard.activateofflinecard.ScanCardKitNumberActivity
 import com.fypmoney.view.ordercard.cardorderoffer.CardOrderOfferActivity
 import com.google.common.base.Ascii.RS
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -123,6 +124,13 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
                 intent.putExtra(ORDER_CARD_INFO,mViewModel.userOfferCard)
                 startActivity(intent)
             }
+            OrderCardViewModel.OrderCardEvent.AlreadyHaveACardEvent -> {
+                val intent = Intent(this@OrderCardView,ScanCardKitNumberActivity::class.java)
+                intent.putExtra(ORDER_CARD_INFO,mViewModel.userOfferCard)
+                startActivity(intent)
+                finish()
+            }
+
         }
     }
 

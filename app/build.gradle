@@ -200,7 +200,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
 
     // Qr code scanner
-    implementation 'com.journeyapps:zxing-android-embedded:3.0.2@aar'
+    implementation 'com.journeyapps:zxing-android-embedded:4.2.0'
     implementation 'com.google.zxing:core:3.4.0'
 
     // qr code parser

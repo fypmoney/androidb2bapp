@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 class QrCodeScannerView : BaseActivity<ViewQrCodeScannerBinding, QrCodeScannerViewModel>() {
     private lateinit var mViewModel: QrCodeScannerViewModel
     private var integrator: IntentIntegrator? = null
+
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -51,9 +52,8 @@ class QrCodeScannerView : BaseActivity<ViewQrCodeScannerBinding, QrCodeScannerVi
         integrator?.setCameraId(0) // Use a specific camera of the device
         integrator?.setOrientationLocked(true)
         integrator?.setBeepEnabled(false)
-        integrator?.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES)
+        integrator?.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE)
         integrator?.captureActivity = CaptureActivityPortrait::class.java
-
         checkAndAskPermission()
         setObserver()
     }
@@ -102,8 +102,6 @@ class QrCodeScannerView : BaseActivity<ViewQrCodeScannerBinding, QrCodeScannerVi
                         finish()
                     }
                 }
-
-
             }
         }
     }
@@ -180,7 +178,6 @@ class QrCodeScannerView : BaseActivity<ViewQrCodeScannerBinding, QrCodeScannerVi
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
         return hashMap["59"]
     }
 

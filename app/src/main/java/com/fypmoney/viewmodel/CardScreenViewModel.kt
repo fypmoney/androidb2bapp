@@ -81,8 +81,8 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     }
 
     /*
-        * This method is used to call activate card api
-        * */
+     * This method is used to call activate card api
+     * */
     fun callActivateCardApi(kitFourDigit: String?) {
         val additionalInfo = System.currentTimeMillis().toString()
         WebApiCaller.getInstance().request(

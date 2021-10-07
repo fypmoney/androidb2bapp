@@ -88,12 +88,7 @@ class TrackOrderView : BaseActivity<ViewTrackOrderBinding, TrackOrderViewModel>(
 
     }
 
-    private fun openWebPageFor(title: String, url: String) {
-        val intent = Intent(this@TrackOrderView, WebViewActivity::class.java)
-        intent.putExtra(ARG_WEB_URL_TO_OPEN, url)
-        intent.putExtra(ARG_WEB_PAGE_TITLE, title)
-        startActivity(intent)
-    }
+
 
     override fun onBackPressed() {
         startActivity(Intent(this@TrackOrderView, HomeView::class.java))

@@ -31,7 +31,7 @@
                 android:onClick="@{()->viewModel.onQrCodeClicked()}"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:srcCompat="@drawable/ic_scan" />
 
             <androidx.constraintlayout.widget.ConstraintLayout

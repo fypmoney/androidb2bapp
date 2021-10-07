@@ -181,10 +181,5 @@ class PermissionsActivity : BaseActivity<ViewPermissionActivityBinding, Permissi
         tvTerms.movementMethod = LinkMovementMethod.getInstance()
     }
 
-    private fun openWebPageFor(title: String, url: String) {
-        val intent = Intent(this, WebViewActivity::class.java)
-        intent.putExtra(ARG_WEB_URL_TO_OPEN, url)
-        intent.putExtra(ARG_WEB_PAGE_TITLE, title)
-        startActivity(intent)
-    }
+
 }

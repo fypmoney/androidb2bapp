@@ -539,7 +539,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     override fun onActivateCardClick(kitFourDigit: String?) {
         mViewModel.callActivateCardApi(kitFourDigit)
-
     }
 
     override fun onPrivacyPolicyTermsClicked(title: String, url: String) {
