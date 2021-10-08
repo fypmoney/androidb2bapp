@@ -7,8 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
-import com.fypmoney.model.AssignedTaskResponse
-import com.fypmoney.model.RewardHistoryResponse
+import com.fypmoney.model.RewardHistoryResponse2
 import com.fypmoney.view.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.reward_history_item_leaderboard.view.*
 
@@ -16,7 +15,7 @@ import java.util.*
 
 
 class RewardsHistoryLeaderboardAdapter(
-    val items: ArrayList<RewardHistoryResponse>,
+    val items: ArrayList<RewardHistoryResponse2>,
     val context: Context,
     val clickInterface: ListItemClickListener
 ) : RecyclerView.Adapter<RewardsHistoryLeaderboardAdapter.ViewHolder>() {
@@ -39,10 +38,10 @@ class RewardsHistoryLeaderboardAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.numberofMynts.text = items[position].loyaltyPointsBurnt.toString() + " Mynts"
-        holder.desc.text = items[position].descriptionl
+        holder.numberofMynts.text = items[position].points.toString() + " Mynts"
+        holder.desc.text = items[position].eventDescription.toString()
 
-        if (items[position].cashbackWon != null && items[position].cashbackWon!! > 0) {
+        if (items[position].cashbackWonForProduct != null && items[position].cashbackWonForProduct!! > 0) {
             holder.amount.visibility = View.VISIBLE
             holder.won_tv.visibility = View.VISIBLE
 
@@ -52,7 +51,7 @@ class RewardsHistoryLeaderboardAdapter(
             holder.won_tv.visibility = View.VISIBLE
         }
 
-        holder.amount.text = items[position].cashbackWon.toString()
+        holder.amount.text = items[position].cashbackWonForProduct.toString()
 
         holder.card.setOnClickListener(View.OnClickListener {
             clickInterface.onItemClicked(position)

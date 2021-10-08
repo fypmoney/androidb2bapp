@@ -31,7 +31,7 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
     var selectedPosition = ObservableField(-1)
     val isApiLoading = ObservableField(true)
     var clickedType = ObservableField("")
-    var rewardHistoryList: MutableLiveData<ArrayList<RewardHistoryResponse>> = MutableLiveData()
+    var rewardHistoryList2: MutableLiveData<ArrayList<RewardHistoryResponse2>> = MutableLiveData()
     var spinArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
     val page = ObservableField(0)
     var scratchArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
@@ -255,12 +255,12 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
 
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<Array<RewardHistoryResponse>>(
+                val array = Gson().fromJson<Array<RewardHistoryResponse2>>(
                     json.get("data").toString(),
-                    Array<RewardHistoryResponse>::class.java
+                    Array<RewardHistoryResponse2>::class.java
                 )
                 val arrayList = ArrayList(array.toMutableList())
-                rewardHistoryList.postValue(arrayList)
+                rewardHistoryList2.postValue(arrayList)
 
 
             }

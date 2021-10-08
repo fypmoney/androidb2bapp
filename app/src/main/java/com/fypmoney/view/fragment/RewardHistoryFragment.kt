@@ -2,7 +2,6 @@ package com.fypmoney.view.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.R
-import com.fypmoney.model.AssignedTaskResponse
-import com.fypmoney.model.RewardHistoryResponse
+import com.fypmoney.model.RewardHistoryResponse2
 import com.fypmoney.view.activity.SpinWheelViewDark
 import com.fypmoney.view.adapter.RewardsHistoryLeaderboardAdapter
 
@@ -30,7 +28,7 @@ class RewardHistoryFragment : Fragment() {
     }
 
     private var sharedViewModel: RewardsViewModel? = null
-    private var itemsArrayList: ArrayList<RewardHistoryResponse> = ArrayList()
+    private var itemsArrayList: ArrayList<RewardHistoryResponse2> = ArrayList()
     private var isLoading = false
     private var typeAdapterHistory: RewardsHistoryLeaderboardAdapter? = null
     private var root: View? = null
@@ -58,7 +56,7 @@ class RewardHistoryFragment : Fragment() {
     private fun observeInput(sharedViewModel: RewardsViewModel) {
 
         page = 0
-        sharedViewModel.rewardHistoryList.observe(
+        sharedViewModel.rewardHistoryList2.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
                 root?.LoadProgressBar?.visibility = View.GONE
@@ -89,7 +87,7 @@ class RewardHistoryFragment : Fragment() {
     private fun setRecyclerView(root: View) {
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        root.rv_history!!.layoutManager = layoutManager
+        root.rv_history?.layoutManager = layoutManager
 
 
         var itemClickListener2 = object : ListItemClickListener {
