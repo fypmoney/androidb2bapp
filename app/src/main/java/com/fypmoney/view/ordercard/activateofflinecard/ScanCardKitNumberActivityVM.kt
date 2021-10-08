@@ -1,6 +1,7 @@
 package com.fypmoney.view.ordercard.activateofflinecard
 
 import android.app.Application
+import android.content.DialogInterface
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -19,15 +20,19 @@ import com.google.gson.Gson
 
 class ScanCardKitNumberActivityVM(application: Application):BaseViewModel(application) {
 
-    val event:LiveData<ScanCardKitNumberEvent>
+    val event: LiveData<ScanCardKitNumberEvent>
         get() = _event
     private val _event = LiveEvent<ScanCardKitNumberEvent>()
 
-    val state:LiveData<ScanCardKitNumberState>
+    val state: LiveData<ScanCardKitNumberState>
         get() = _state
     private val _state = MutableLiveData<ScanCardKitNumberState>()
+    val errorRecived = MutableLiveData<ErrorResponseInfo>()
 
-    fun verifyKitNumber(){
+    var isAlreadyCaptured = false
+
+
+    fun verifyKitNumber() {
         _event.value = ScanCardKitNumberEvent.OnVerifyKitNumberClickedEvent
     }
 
@@ -95,6 +100,7 @@ class ScanCardKitNumberActivityVM(application: Application):BaseViewModel(applic
                         SharedPrefUtils.SF_KEY_KIT_NUMBER,
                         data.orderCardResponseDetails?.kitNumber
                     )
+                    isAlreadyCaptured = true
                     _state.value = ScanCardKitNumberState.KitNumberVerified
                 }
             }
@@ -114,10 +120,16 @@ class ScanCardKitNumberActivityVM(application: Application):BaseViewModel(applic
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
-        when(purpose){
+        when (purpose) {
             ApiConstant.API_ACTIVATE_CARD -> {
+
                 Utility.showToast(errorResponseInfo.msg)
             }
+            ApiConstant.API_POST_CHECK_OFFLINE_CARD -> {
+
+                errorRecived.postValue(errorResponseInfo)
+            }
+
         }
     }
     sealed class ScanCardKitNumberEvent{

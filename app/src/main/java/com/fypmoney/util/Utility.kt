@@ -739,7 +739,7 @@ object Utility {
         negativeButton: String?,
         cancelable: Boolean?,
         positiveListener: DialogInterface.OnClickListener?,
-        negativeListener: DialogInterface.OnClickListener?
+        negativeListener: DialogInterface.OnClickListener? = null
     ) {
         val builder = AlertDialog.Builder(
             context!!

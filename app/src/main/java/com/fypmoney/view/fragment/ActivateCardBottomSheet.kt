@@ -79,7 +79,7 @@ class ActivateCardBottomSheet(
                 }
                 else -> {
                     onActivateCardClickListener.onActivateCardClick(otp.get())
-                    dismiss()
+
                 }
             }
 

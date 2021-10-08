@@ -1,5 +1,7 @@
 package com.fypmoney.view.ordercard.activateofflinecard
 
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
@@ -7,6 +9,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
@@ -14,17 +17,26 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityScanCardKitNumberBinding
+import com.fypmoney.model.SectionListItem
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.CaptureManager
+import com.fypmoney.util.Utility
+import com.fypmoney.view.CardSettingClickListener
+import com.fypmoney.view.activity.ScratchCardActivity
 import com.fypmoney.view.activity.SetPinView
+import com.fypmoney.view.activity.SpinWheelViewDark
 import com.fypmoney.view.fragment.ActivateCardBottomSheet
 import com.fypmoney.view.fragment.SetOrChangePinBottomSheet
+import com.fypmoney.view.interfaces.ListItemClickListener
+import com.fypmoney.view.setpindialog.SetPinDialogFragment
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
-import com.journeyapps.barcodescanner.CaptureManager
+
 import com.journeyapps.barcodescanner.DecoratedBarcodeView.TorchListener
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
+import kotlinx.android.synthetic.main.dialog_burn_mynts.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.view.*
 import java.util.*
@@ -63,7 +75,12 @@ class ScanCardKitNumberActivity : BaseActivity<ActivityScanCardKitNumberBinding,
                     mViewModel.checkKitNumberIsValid(binding.kitNumberEt.text.toString())
                 }
                 ScanCardKitNumberActivityVM.ScanCardKitNumberEvent.OnActivateCardSuccess -> {
-                    callSetPinBottomSheet()
+//                    callSetPinBottomSheet()
+                    val setPinFragment = SetPinDialogFragment(setPinClickListener = {
+                        mViewModel.callSetOrChangeApi(binding.kitNumberEt.text.toString())
+                    })
+                    setPinFragment.show(supportFragmentManager, "set pin")
+
                 }
                 is ScanCardKitNumberActivityVM.ScanCardKitNumberEvent.SetPinSuccess -> {
                     it.setpinResponseDetails.url.let {
@@ -76,6 +93,28 @@ class ScanCardKitNumberActivity : BaseActivity<ActivityScanCardKitNumberBinding,
                 }
             }
         })
+
+        mViewModel.errorRecived.observe(this, {
+            if (it != null) {
+                Utility.showDialog(this@ScanCardKitNumberActivity,
+                    info = "Scanned code is invalid",
+                    cancelable = false,
+                    positiveButton = "Retry",
+                    positiveListener = DialogInterface.OnClickListener
+                    { p0, p1 ->
+                        binding.zxingBarcodeScanner.resume()
+
+
+                    },
+                    negativeListener = null,
+                    negativeButton = null
+                )
+            }
+            mViewModel.errorRecived.postValue(null)
+
+
+        }
+        )
     }
 
 
@@ -150,7 +189,9 @@ class ScanCardKitNumberActivity : BaseActivity<ActivityScanCardKitNumberBinding,
 
     private fun setupScanner() {
         capture = CaptureManager(this, binding.zxingBarcodeScanner)
-        capture.setShowMissingCameraPermissionDialog(false)
+
+        capture.setShowMissingCameraPermissionDialog(true)
+
         binding.zxingBarcodeScanner.setTorchListener(this)
 
         val callback: BarcodeCallback = object : BarcodeCallback {
@@ -164,11 +205,26 @@ class ScanCardKitNumberActivity : BaseActivity<ActivityScanCardKitNumberBinding,
 
                     Log.d("kitNumber", result.text)
                 } else {
-                    Toast.makeText(
-                        this@ScanCardKitNumberActivity,
-                        getString(R.string.please_scan_valid_qr_code),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    binding.zxingBarcodeScanner.pause()
+                    Utility.showDialog(this@ScanCardKitNumberActivity,
+                        info = "Scanned code is invalid",
+                        cancelable = false,
+                        positiveButton = "Retry",
+                        positiveListener = DialogInterface.OnClickListener
+                        { p0, p1 ->
+                            binding.zxingBarcodeScanner.resume()
+
+
+                        },
+                        negativeListener = null,
+                        negativeButton = null
+                    )
+
+//                    Toast.makeText(
+//                        binding.kitNumberEt.context,
+//                        getString(R.string.please_scan_valid_qr_code),
+//                        Toast.LENGTH_SHORT
+//                    ).show()
                 }
             }
 
@@ -220,8 +276,11 @@ class ScanCardKitNumberActivity : BaseActivity<ActivityScanCardKitNumberBinding,
 
     override fun onResume() {
         super.onResume()
-        capture.onResume()
-        binding.zxingBarcodeScanner.resume()
+        if (!mViewModel.isAlreadyCaptured) {
+            capture.onResume()
+            binding.zxingBarcodeScanner.resume()
+        }
+
     }
 
     override fun onPause() {
