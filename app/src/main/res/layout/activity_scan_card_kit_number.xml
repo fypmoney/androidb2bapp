@@ -32,10 +32,14 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/scan_area_iv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            app:layout_constraintDimensionRatio="1:1"
             android:layout_height="wrap_content"
-            android:layout_marginTop="160dp"
+
             android:background="@drawable/ic_scan_qr"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_layout" />
@@ -45,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingVertical="2dp"
+
             app:layout_constraintStart_toStartOf="@+id/scan_area_iv"
             app:layout_constraintEnd_toEndOf="@+id/scan_area_iv"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -57,6 +62,7 @@
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/kit_number_et"
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/text_color_light"
@@ -86,6 +92,7 @@
             android:text="@string/perfect"
             android:textSize="18sp"
             app:text="@string/perfect"
+            android:visibility="gone"
             app:enabled="false"
             app:enabled_bg="@color/color_task_card_green"
             app:disabled_bg="@color/buttonUnselectedColor"

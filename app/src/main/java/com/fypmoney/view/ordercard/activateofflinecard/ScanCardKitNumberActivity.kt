@@ -84,14 +84,21 @@ class ScanCardKitNumberActivity : BaseActivity<ActivityScanCardKitNumberBinding,
     * */
     private fun callActivateCardSheet() {
         val bottomSheet =
-            ActivateCardBottomSheet(object : ActivateCardBottomSheet.OnActivateCardClickListener{
+            ActivateCardBottomSheet(object : ActivateCardBottomSheet.OnActivateCardClickListener {
                 override fun onActivateCardClick(kitFourDigit: String?) {
                     mViewModel.callActivateCardApi(kitFourDigit)
                 }
+
                 override fun onPrivacyPolicyTermsClicked(title: String, url: String) {
-                    openWebPageFor(title,url)
+                    openWebPageFor(title, url)
                 }
+            }, object : ActivateCardBottomSheet.OnActivateSheetDismissListner {
+                override fun OnDismiss() {
+//                    finish()
+                }
+
             })
+        bottomSheet.isCancelable = false
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "ActivateCard")
     }
@@ -101,12 +108,18 @@ class ScanCardKitNumberActivity : BaseActivity<ActivityScanCardKitNumberBinding,
    * */
     private fun callSetPinBottomSheet() {
         val bottomSheet =
-            SetOrChangePinBottomSheet(object:SetOrChangePinBottomSheet.OnSetOrChangePinClickListener{
+            SetOrChangePinBottomSheet(object :
+                SetOrChangePinBottomSheet.OnSetOrChangePinClickListener {
                 override fun setPinClick() {
                     mViewModel.callSetOrChangeApi(binding.kitNumberEt.text.toString())
                 }
 
+            }, object : SetOrChangePinBottomSheet.OnSetOrChangePinDismissListener {
+                override fun OnSheetDismissed() {
+//                    finish()
+                }
             })
+        bottomSheet.isCancelable = false
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "SetPin")
     }
@@ -128,7 +141,7 @@ class ScanCardKitNumberActivity : BaseActivity<ActivityScanCardKitNumberBinding,
             titleColor = Color.WHITE
         )
         binding.kitNumberEt.doOnTextChanged { text, start, before, count ->
-            binding.verifyKitNumberBtn.isEnabled = text?.length == 10
+//            binding.verifyKitNumberBtn.isEnabled = text?.length == 10
             if (text?.length == 0) {
                 binding.zxingBarcodeScanner.resume()
             } 
@@ -147,6 +160,8 @@ class ScanCardKitNumberActivity : BaseActivity<ActivityScanCardKitNumberBinding,
                 ) {
                     binding.kitNumberEt.setText(result.text)
                     binding.zxingBarcodeScanner.pause()
+                    mViewModel.verifyKitNumber()
+
                     Log.d("kitNumber", result.text)
                 } else {
                     Toast.makeText(

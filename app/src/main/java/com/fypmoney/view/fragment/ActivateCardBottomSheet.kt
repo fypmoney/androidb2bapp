@@ -32,13 +32,21 @@ import com.mukesh.OtpView
 import kotlinx.android.synthetic.main.view_enter_otp.*
 
 
-class ActivateCardBottomSheet(var onActivateCardClickListener: OnActivateCardClickListener) :
+class ActivateCardBottomSheet(
+    var onActivateCardClickListener: OnActivateCardClickListener,
+    var onDismissListner: OnActivateSheetDismissListner? = null
+) :
     BottomSheetDialogFragment() {
-    lateinit var  binding: BottomSheetActivateCardBinding
+    lateinit var binding: BottomSheetActivateCardBinding
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     var otp = ObservableField<String>()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
+
+    override fun dismiss() {
+        super.dismiss()
+        onDismissListner?.OnDismiss()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -90,8 +98,19 @@ class ActivateCardBottomSheet(var onActivateCardClickListener: OnActivateCardCli
 
     }
 
+    interface OnActivateSheetDismissListner {
+        fun OnDismiss()
+
+
+    }
+
+
     private fun showPrivacyPolicyAndTermsAndConditions() {
-        val text = resources.getString(R.string.by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy,  resources.getString(R.string.terms_and_conditions),resources.getString(R.string.privacy_policy))
+        val text = resources.getString(
+            R.string.by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy,
+            resources.getString(R.string.terms_and_conditions),
+            resources.getString(R.string.privacy_policy)
+        )
         val privacyPolicyText = resources.getString(R.string.privacy_policy)
         val tAndCText = resources.getString(R.string.terms_and_conditions)
         val privacyPolicyStarIndex = text.indexOf(privacyPolicyText)
