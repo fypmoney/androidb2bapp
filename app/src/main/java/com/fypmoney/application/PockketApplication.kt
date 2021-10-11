@@ -9,6 +9,7 @@ import android.os.Bundle
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
 import com.fyp.trackr.base.Trackr
+import com.fypmoney.BuildConfig
 import com.fypmoney.util.SharedPrefUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.vanniktech.emoji.EmojiManager
@@ -35,8 +36,13 @@ class PockketApplication : Application() {
         instance = this
         EmojiManager.install(GoogleEmojiProvider())
         val appToken = "buqdhv6bqlts"
-        val environment = AdjustConfig.ENVIRONMENT_PRODUCTION
+        val environment = if(BuildConfig.DEBUG){
+            AdjustConfig.ENVIRONMENT_SANDBOX
+        }else{
+            AdjustConfig.ENVIRONMENT_PRODUCTION
+        }
         val config = AdjustConfig(this, appToken, environment)
+        config.setUrlStrategy("URL_STRATEGY_INDIA")
         Adjust.onCreate(config)
         registerActivityLifecycleCallbacks(AdjustLifecycleCallbacks())
 

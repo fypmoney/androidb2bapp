@@ -630,9 +630,12 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         latitude: Double,
         Longitude: Double
     ) {
-        mViewModel.postLatlong("$latitude","$Longitude",SharedPrefUtils.getLong(
+        SharedPrefUtils.getLong(
             application, key = SharedPrefUtils.SF_KEY_USER_ID
-        ))
+        ).let {
+            mViewModel.postLatlong("$latitude","$Longitude",it)
+        }
+
     }
 
 }
