@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
+import com.fyp.trackr.base.Trackr
 import com.fypmoney.util.SharedPrefUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.vanniktech.emoji.EmojiManager
@@ -26,6 +27,10 @@ class PockketApplication : Application() {
     }
 
     override fun onCreate() {
+
+        // register trackr
+        Trackr.register(this)
+
         super.onCreate()
         instance = this
         EmojiManager.install(GoogleEmojiProvider())
@@ -34,8 +39,7 @@ class PockketApplication : Application() {
         val config = AdjustConfig(this, appToken, environment)
         Adjust.onCreate(config)
         registerActivityLifecycleCallbacks(AdjustLifecycleCallbacks())
-        //var appSignature = AppSignatureHelper(this)
-        //appSignature.appSignatures
+
 
         //Check User is logged in or not.
         if(SharedPrefUtils.getBoolean(

@@ -46,12 +46,11 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvCreateAccount"
                     style="@style/TextviewBold"
-                   android:layout_below="@+id/ivServiceLogo"
+                    android:layout_below="@+id/ivServiceLogo"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="40dp"
                     android:text="@string/create_account_title"
-                    android:textAlignment="center"
-                    />
+                    android:textAlignment="center" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/verification_title"
