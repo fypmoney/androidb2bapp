@@ -1,8 +1,10 @@
 package com.fyp.trackr.base
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.pm.ActivityInfo
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
@@ -10,13 +12,21 @@ import android.os.Handler
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
+import androidx.constraintlayout.motion.widget.MotionHelper
 import androidx.fragment.app.FragmentActivity
+import com.adjust.sdk.Adjust
+import com.adjust.sdk.AdjustConfig
+import com.adjust.sdk.AdjustEvent
 import com.fyp.trackr.models.AnalyticsEvent
 import com.fyp.trackr.models.ScreenEvent
 import com.fyp.trackr.services.TrackrServices
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.moe.pushlibrary.MoEHelper
+import com.moengage.core.MoEngage
+import com.moengage.core.Properties
+import com.moengage.core.model.AppStatus
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -25,6 +35,8 @@ object Trackr {
     private const val TAG = "Trackr"
     private const val COUNTER_KEY = "ct_event_counter_key"
     private var fire: FirebaseAnalytics? = null
+    private var adjust: Adjust? = null
+    private var moEngage: MoEngage? = null
     private var loglevel = LogLevel.PROD
     private var app: Application? = null
     var activity: FragmentActivity? = null
@@ -38,11 +50,25 @@ object Trackr {
 
     fun register(app: Application) {
         this.app = app
+        this.app!!.registerActivityLifecycleCallbacks(AdjustLifecycleCallbacks())
     }
-    fun initialize(app: Application ) {
+    fun initialize(app: Application, adjustKey:String = "",
+                   moEngageKey:String = "" ) {
         if (fire == null)
             fire = FirebaseAnalytics.getInstance(app.applicationContext)
 
+        if(adjust==null){
+            val appToken = adjustKey
+            val environment = AdjustConfig.ENVIRONMENT_PRODUCTION
+            val config = AdjustConfig(app, appToken, environment)
+            config.setUrlStrategy("URL_STRATEGY_INDIA")
+            Adjust.onCreate(config)
+        }
+        if(moEngage==null){
+            moEngage = MoEngage.Builder(app, moEngageKey)
+                .build()
+            MoEngage.initialise(moEngage!!)
+        }
         GlobalScope.launch {
             var adInfo: AdvertisingIdClient.Info? = null
             var andiInfo: String? = null
@@ -91,21 +117,39 @@ object Trackr {
 
     fun login(userId: String) {
         fire?.setUserId(userId)
+        app?.let { MoEHelper.getInstance(it).setUniqueId(userId) }
         updateUserId(userId)
     }
     fun login(data: HashMap<String, Any>) {
+    }
 
+
+
+    fun logOut(){
+        MoEHelper.getInstance(app!!).logoutUser()
     }
 
     fun data(data: HashMap<String, Any>) {
         for (data_point in data) {
             fire?.setUserProperty(data_point.key, data_point.value.toString())
         }
+        MoEHelper.getInstance(app!!).setUserAttribute(data)
+
     }
     fun updateUserId(userId: String?){
         sharedPreference?.edit()?.putString("user_id", userId)?.apply()
     }
     fun location(location: Location?) {
+    }
+
+    fun appIsInstallFirst(isFirstTime:Boolean){
+        if(isFirstTime){
+            app?.let { MoEHelper.getInstance(it).setAppStatus(AppStatus.INSTALL) }
+        }else{
+            app?.let { MoEHelper.getInstance(it).setAppStatus(AppStatus.UPDATE) }
+
+
+        }
     }
 
     fun a(event: AnalyticsEvent?) {
@@ -124,13 +168,19 @@ object Trackr {
             when (service) {
                 TrackrServices.MOENGAGE -> {
                     if (loglevel.num <= LogLevel.DEBUG.num) {
-                        Log.d("CT_EVENT", "Data: $event")
+                        Log.d("MOENGAGE_EVENT", "Data: $event")
                     }
                     event.data()["counter"] = eventCount
-                    /*if (event.data().isEmpty())
-                        clevertap?.pushEvent(event.name.name)
-                    else
-                        clevertap?.pushEvent(event.name.name, event.data())*/
+                    val properties = Properties()
+                    if(event.data().isEmpty()){
+                        MoEHelper.getInstance(app!!).trackEvent(event.name.name, properties)
+
+                    }else{
+                        for (property in event.data()){
+                            properties.addAttribute(property.key,property.value)
+                        }
+                        MoEHelper.getInstance(app!!).trackEvent(event.name.name, properties)
+                    }
                 }
                 TrackrServices.FIREBASE -> {
                     if (loglevel.num <= LogLevel.DEBUG.num) {
@@ -140,6 +190,13 @@ object Trackr {
                         fire?.logEvent(event.name.name, Bundle.EMPTY)
                     else
                         fire?.logEvent(event.name.name, event.bundle())
+                }
+                TrackrServices.ADJUST -> {
+                    if (loglevel.num <= LogLevel.DEBUG.num) {
+                        Log.d("ADJUST_EVENT", "Data: $event")
+                    }
+                    Adjust.trackEvent(AdjustEvent(event.name.name));
+
                 }
             }
         }
@@ -183,4 +240,33 @@ object Trackr {
     enum class LogLevel(val num: Int) {
         DEBUG(0), INFO(1), PROD(2), ANALYTICS(-1)
     }
+
+    private class AdjustLifecycleCallbacks : Application.ActivityLifecycleCallbacks {
+        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            }
+        }
+
+        override fun onActivityStarted(activity: Activity) {
+        }
+
+        override fun onActivityResumed(activity: Activity) {
+            Adjust.onResume()
+        }
+
+        override fun onActivityPaused(activity: Activity) {
+            Adjust.onPause()
+        }
+
+        override fun onActivityStopped(activity: Activity) {
+        }
+
+        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
+        }
+
+        override fun onActivityDestroyed(activity: Activity) {
+        }
+    }
+
 }

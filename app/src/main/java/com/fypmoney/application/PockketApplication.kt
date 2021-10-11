@@ -28,24 +28,11 @@ class PockketApplication : Application() {
     }
 
     override fun onCreate() {
-
         // register trackr
         Trackr.register(this)
-
         super.onCreate()
         instance = this
         EmojiManager.install(GoogleEmojiProvider())
-        val appToken = "buqdhv6bqlts"
-        val environment = if(BuildConfig.DEBUG){
-            AdjustConfig.ENVIRONMENT_SANDBOX
-        }else{
-            AdjustConfig.ENVIRONMENT_PRODUCTION
-        }
-        val config = AdjustConfig(this, appToken, environment)
-        config.setUrlStrategy("URL_STRATEGY_INDIA")
-        Adjust.onCreate(config)
-        registerActivityLifecycleCallbacks(AdjustLifecycleCallbacks())
-
 
         //Check User is logged in or not.
         if(SharedPrefUtils.getBoolean(
@@ -55,33 +42,16 @@ class PockketApplication : Application() {
             setUserForCrashReports(this)
         }
 
-    }
-    private class AdjustLifecycleCallbacks : ActivityLifecycleCallbacks {
-        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-        }
+        // init analytics
 
-        override fun onActivityStarted(activity: Activity) {
-        }
+        // init analytics
+        Trackr.setLogLevel(if (BuildConfig.DEBUG) Trackr.LogLevel.ANALYTICS else Trackr.LogLevel.PROD)
+        Trackr.initialize(
+            this,
+            BuildConfig.ADJUST_PROD_KEY,
+            BuildConfig.MOENAGE_KEY
+        )
 
-        override fun onActivityResumed(activity: Activity) {
-            Adjust.onResume()
-        }
-
-        override fun onActivityPaused(activity: Activity) {
-            Adjust.onPause()
-        }
-
-        override fun onActivityStopped(activity: Activity) {
-        }
-
-        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-        }
-
-        override fun onActivityDestroyed(activity: Activity) {
-        }
     }
 
     private fun setUserForCrashReports(context: Context) {

@@ -2,6 +2,11 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.UserTrackr
+import com.fyp.trackr.models.push
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -16,6 +21,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.google.gson.Gson
+import com.moengage.core.internal.MoEConstants.*
 
 /*
 * This class is used to show login success
@@ -23,6 +29,9 @@ import com.google.gson.Gson
 class LoginSuccessViewModel(application: Application) : BaseViewModel(application) {
     var onApiSuccess = MutableLiveData<Boolean>()
 
+    init {
+
+    }
     /*
     * This method is used to handle click of continue
     * */
@@ -67,9 +76,8 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                 if (responseData is CustomerInfoResponse) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
                     onApiSuccess.value=true
-                    // Save the user id in shared preference
-
-                    // save first name, last name, date of birth
+                    trackr { it.services = arrayListOf(TrackrServices.ADJUST,TrackrServices.FIREBASE)
+                        it.name = TrackrEvent.LOGINSUCCESS }
 
                     SharedPrefUtils.putString(
                         getApplication(),

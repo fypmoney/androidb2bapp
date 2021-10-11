@@ -2,6 +2,8 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -25,6 +27,9 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
     * This method is used to handle continue
     * */
     init {
+        trackr {
+            it.name = TrackrEvent.AADHARVERIFICATION
+        }
         callGetCustomerProfileApi()
     }
     fun onContinueClicked() {

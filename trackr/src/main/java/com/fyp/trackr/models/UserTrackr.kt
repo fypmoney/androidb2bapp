@@ -8,7 +8,9 @@ object UserTrackr {
 
 
 }
+fun UserTrackr.setMoengage(){
 
+}
 fun UserTrackr.push(map: HashMap<String, Any>) {
     Trackr.data(map)
 }
@@ -24,4 +26,7 @@ fun UserTrackr.loginWithMap(map: HashMap<String, Any>) {
 
 fun UserTrackr.login(userId: String) {
     Trackr.login(userId)
+}
+fun UserTrackr.logOut() {
+    Trackr.logOut()
 }

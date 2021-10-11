@@ -37,6 +37,10 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.view_home.*
 import java.util.concurrent.atomic.AtomicBoolean
 import com.facebook.appevents.AppEventsLogger;
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import java.lang.RuntimeException
 
 
@@ -53,7 +57,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     private var taskMessageBottomSheet3: TaskActionBottomSheetnotification? = null
     private var bottomSheetMessage: TaskMessageBottomSheet3? = null
     private var deviceSecurityAskedFor:String? = null
-    private var mFirebaseAnalytics: FirebaseAnalytics? = null
     private lateinit var mViewBinding: ViewHomeBinding
     private val doubleBackPressed = AtomicBoolean(false)
 
@@ -79,8 +82,15 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         setObserver()
         checkAndAskPermission()
         loadFragment(HomeScreen(),1)
-        mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
-        mFirebaseAnalytics!!.logEvent("Home_Screen",null)
+
+        trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.HOMESCREEN
+            it.add(
+                TrackrField.user_id,SharedPrefUtils.getLong(
+                    applicationContext,
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+        }
         logSentFriendRequestEvent()
 
 

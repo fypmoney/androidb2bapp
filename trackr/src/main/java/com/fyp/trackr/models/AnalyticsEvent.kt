@@ -1,6 +1,7 @@
 package com.fyp.trackr.models
 
 import android.os.Bundle
+import com.fyp.trackr.base.Trackr
 import com.fyp.trackr.services.TrackrServices
 import org.json.JSONObject
 
@@ -51,13 +52,41 @@ data class AnalyticsEvent(var name: TrackrEvent = TrackrEvent.None,
         return bundle
     }
 }
+// Easy Kotlin Extensions
+fun AnalyticsEvent?.push() {
+    Trackr.a(this)
+}
+
+// Easy Kotlin DSL for init
+fun trackr(block: (AnalyticsEvent) -> Unit): AnalyticsEvent {
+    val p = AnalyticsEvent()
+    block(p)
+    p.push()
+    return p
+}
 // List of Events
 enum class TrackrEvent(name: String) {
 
     None(""),
-
+    LOGINSUCCESS("vp1kxg"),
+    KYCCOMPLETD("m64ei2"),
+    CHECKOFFER("check_offer"),
+    PAYBUTTON("pay_button"),
+    PERSONALISEDYOUCARD("personalised_card_complete"),
+    ORDERSUCCESS("order_success"),
+    ADDMONEYBUTTON("add_money_button"),
+    SCRATCHCARDCONTINUE("scratch_card_continue"),
+    LOGINSUCCESSVIEW("login_success_view"),
+    HOMESCREEN("Home_Screen"),
+    ORDEREDCARD("ordered_card"),
+    PHONEVERIFICATION("Phone_verification"),
+    ACCOUNTCREATED("Account_created"),
+    ACCOUNTACTIVATION("Account_activation"),
+    BANKVERIFICATION("Bank_verification"),
+    AADHARVERIFICATION("Aadhar_verification"),
 
 }
 
 enum class TrackrField(name: String) {
+    user_id("user_id")
 }

@@ -1,5 +1,5 @@
 package com.fyp.trackr.services
 
 enum class TrackrServices {
-    MOENGAGE, FIREBASE
+    MOENGAGE, FIREBASE,ADJUST
 }
