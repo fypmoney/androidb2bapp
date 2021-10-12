@@ -21,6 +21,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.google.gson.Gson
+import com.moengage.core.internal.MoEConstants
 import com.moengage.core.internal.MoEConstants.*
 
 /*
@@ -118,6 +119,15 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                         value = responseData.customerInfoResponseDetails?.mobile
                     )
 
+                    Utility.getCustomerDataFromPreference()?.let {
+                        val map = hashMapOf<String,Any>()
+                        map[USER_ATTRIBUTE_UNIQUE_ID] = it.id.toString()
+                        map[USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
+                        map[USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
+                        map[USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
+                        map[USER_ATTRIBUTE_USER_BDAY] = it.dob.toString()
+                        UserTrackr.push(map)
+                    }
                     val interestList = ArrayList<String>()
                     if (responseData.customerInfoResponseDetails?.userInterests?.isNullOrEmpty() == false) {
                         responseData.customerInfoResponseDetails?.userInterests!!.forEach {

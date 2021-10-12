@@ -77,7 +77,7 @@ android {
                 resValue "string", "app_name", "F debug"
                 buildConfigField "String", "BASE_ENDPOINT", "\"http://54.84.197.170:9300\""
                 buildConfigField "String", "ADJUST_PROD_KEY","\"buqdhv6bqlts\""
-                buildConfigField "String", "MOENAGE_KEY","\"E5IA56TQXEJ5P7B1CULT4CCE\""
+                buildConfigField "String", "MOENAGE_KEY","\"EF6YXWOUCTC748YDOJ47ZU3V\""
             }
             prod{
                 signingConfig signingConfigs.config
@@ -85,7 +85,7 @@ android {
                 resValue "string", "app_name", "Fyp"
                 buildConfigField "String", "BASE_ENDPOINT", "\"https://techservices.fyp-e.in\""
                 buildConfigField "String", "ADJUST_PROD_KEY","\"buqdhv6bqlts\""
-                buildConfigField "String", "MOENAGE_KEY","\"E5IA56TQXEJ5P7B1CULT4CCE\""
+                buildConfigField "String", "MOENAGE_KEY","\"EF6YXWOUCTC748YDOJ47ZU3V\""
             }
     }
 
@@ -226,6 +226,9 @@ dependencies {
 
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.1'
     implementation project(path: ':trackr')
+
+    implementation("com.moengage:rich-notification:2.3.00")
+
 }
 apollo {
     generateKotlinModels.set(true)

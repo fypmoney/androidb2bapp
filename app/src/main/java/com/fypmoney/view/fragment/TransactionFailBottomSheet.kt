@@ -12,6 +12,9 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.databinding.BottomSheetTransactionFailBinding
 import com.fypmoney.util.AppConstants
@@ -83,6 +86,12 @@ class TransactionFailBottomSheet(
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.LOADMONEYFAIL
+        }
+    }
     interface OnBottomSheetClickListener {
         fun onBottomSheetButtonClick(type: String)
 

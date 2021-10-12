@@ -6,6 +6,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -47,7 +50,9 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         video.setMediaController(null)
         video.setVideoURI(uri)
         video.setOnPreparedListener { video.start() }
-
+        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.APPLAUNCH
+        }
     }
 
     /**

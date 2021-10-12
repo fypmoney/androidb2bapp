@@ -3,6 +3,9 @@ package com.fypmoney.view.referandearn.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -32,6 +35,9 @@ class ReferAndEarnActivityVM(application: Application):BaseViewModel(application
         _event.value = ReferAndEarnEvent.CopyReferCode
     }
     fun shareCode(){
+        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.REFSUCCESS
+        }
         _event.value = ReferAndEarnEvent.ShareReferCode
     }
 

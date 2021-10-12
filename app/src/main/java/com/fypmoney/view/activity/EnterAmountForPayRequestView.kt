@@ -9,6 +9,9 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -125,9 +128,15 @@ class EnterAmountForPayRequestView :
         mViewModel.onApiResponse.observe(this) {
             when (it) {
                 AppConstants.API_FAIL -> {
+                    trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                        it.name = TrackrEvent.TRANSCATIONFALIURE
+                    }
                     callBottomSheet()
                 }
                 AppConstants.API_SUCCESS -> {
+                    trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                        it.name = TrackrEvent.TRANSCATIONSUCCESS
+                    }
                     intentToActivity(HomeView::class.java)
                 }
                 AppConstants.INSUFFICIENT_ERROR_CODE -> {

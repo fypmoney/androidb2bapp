@@ -12,6 +12,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -60,7 +63,9 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
             isBackArrowVisible = false
         )*/
 
-
+        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.FEEDLAUNCH
+        }
 
         mViewModel.callFetchFeedsApi(false, 0.0, 0.0)
 

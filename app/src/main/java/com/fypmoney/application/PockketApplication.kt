@@ -10,6 +10,7 @@ import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
 import com.fyp.trackr.base.Trackr
 import com.fypmoney.BuildConfig
+import com.fypmoney.R
 import com.fypmoney.util.SharedPrefUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.vanniktech.emoji.EmojiManager
@@ -49,7 +50,10 @@ class PockketApplication : Application() {
         Trackr.initialize(
             this,
             BuildConfig.ADJUST_PROD_KEY,
-            BuildConfig.MOENAGE_KEY
+            BuildConfig.MOENAGE_KEY,
+            R.drawable.ic_notification,
+            R.mipmap.ic_launcher_round,
+            R.color.colorPrimary
         )
 
     }

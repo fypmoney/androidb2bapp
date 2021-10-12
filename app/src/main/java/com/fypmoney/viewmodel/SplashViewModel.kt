@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.base.Trackr
 import com.fyp.trackr.models.UserTrackr
+import com.fyp.trackr.models.login
 import com.fyp.trackr.models.push
 import com.fypmoney.BuildConfig
 import com.fypmoney.base.BaseViewModel
@@ -52,6 +53,16 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                  Trackr.appIsInstallFirst(isFirstTime = true)
              }else{
                  Trackr.appIsInstallFirst(isFirstTime = false)
+                 Utility.getCustomerDataFromPreference()?.let {
+                     val map = hashMapOf<String,Any>()
+                     map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = it.id.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it.dob.toString()
+                     UserTrackr.push(map)
+                     UserTrackr.login( it.id.toString())
+                 }
              }
          }
         if (SharedPrefUtils.getBoolean(
@@ -71,15 +82,6 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 }else{
                     Trackr.appIsInstallFirst(isFirstTime = false)
                 }
-            }
-            Utility.getCustomerDataFromPreference()?.let {
-                val map = hashMapOf<String,Any>()
-                map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = it.id.toString()
-                map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
-                map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
-                map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
-                map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it.dob.toString()
-                UserTrackr.push(map)
             }
 
         }

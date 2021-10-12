@@ -4,6 +4,9 @@ import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -27,6 +30,9 @@ class ReferAndEarnActivity : BaseActivity<ActivityReferAndEarnBinding,ReferAndEa
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = getString(R.string.refer_and_earn)
         )
+        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.REFTAB
+        }
         setUpViews()
         setUpObserver()
     }

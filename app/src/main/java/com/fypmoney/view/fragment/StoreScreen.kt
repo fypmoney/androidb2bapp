@@ -35,8 +35,8 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
     private lateinit var mViewModel: StoreScreenViewModel
     private lateinit var mViewBinding: ScreenStoreBinding
     private val tabIcons = intArrayOf(
-        com.fypmoney.R.drawable.ic_store_tab,
-        com.fypmoney.R.drawable.ic_offer_tab,
+        R.drawable.ic_store_tab,
+        R.drawable.ic_offer_tab,
 
         )
 

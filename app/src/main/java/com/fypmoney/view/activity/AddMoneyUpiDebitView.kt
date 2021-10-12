@@ -20,6 +20,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -268,6 +271,9 @@ open class AddMoneyUpiDebitView :
             }
 
             override fun onPaymentTerminate() {
+                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.LOADMONEYEXTERNALTERMINATE
+                }
             }
 
             /**
@@ -293,6 +299,9 @@ open class AddMoneyUpiDebitView :
             override fun onBackApprove() {
                 super.onBackApprove()
                 mViewModel.isPaymentFail.set(true)
+                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.LOADUSERBACK
+                }
             }
 
             override fun onBackDismiss() {
@@ -308,7 +317,9 @@ open class AddMoneyUpiDebitView :
             override fun onBackButton(alertDialogBuilder: AlertDialog.Builder) {
                 super.onBackButton(alertDialogBuilder)
                 //Utility.showToast("onBackButton")
-
+                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.LOADUSERBACK
+                }
             }
 
             override fun isPaymentOptionAvailable(resultData: CustomBrowserResultData) {
@@ -317,8 +328,6 @@ open class AddMoneyUpiDebitView :
                         resultData.isPaymentOptionAvailable
                     com.payu.custombrowser.util.PaymentOption.PHONEPE -> isPhonePeSupported =
                         resultData.isPaymentOptionAvailable
-
-
                 }
             }
         }

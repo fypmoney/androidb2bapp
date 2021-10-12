@@ -5,31 +5,31 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
+import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
-import androidx.constraintlayout.motion.widget.MotionHelper
 import androidx.fragment.app.FragmentActivity
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
 import com.adjust.sdk.AdjustEvent
+import com.fyp.trackr.BuildConfig
+import com.fyp.trackr.R
 import com.fyp.trackr.models.AnalyticsEvent
 import com.fyp.trackr.models.ScreenEvent
 import com.fyp.trackr.services.TrackrServices
-import com.google.android.gms.ads.identifier.AdvertisingIdClient
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.moe.pushlibrary.MoEHelper
+import com.moengage.core.DataCenter
+import com.moengage.core.LogLevel.VERBOSE
 import com.moengage.core.MoEngage
 import com.moengage.core.Properties
+import com.moengage.core.config.LogConfig
+import com.moengage.core.config.NotificationConfig
 import com.moengage.core.model.AppStatus
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import java.io.IOException
 
 object Trackr {
     private const val TAG = "Trackr"
@@ -53,7 +53,7 @@ object Trackr {
         this.app!!.registerActivityLifecycleCallbacks(AdjustLifecycleCallbacks())
     }
     fun initialize(app: Application, adjustKey:String = "",
-                   moEngageKey:String = "" ) {
+                   moEngageKey:String = "",notiSmallIcon:Int = 0,notiLargeIcon:Int = 0,notiColor:Int = 0 ) {
         if (fire == null)
             fire = FirebaseAnalytics.getInstance(app.applicationContext)
 
@@ -65,11 +65,35 @@ object Trackr {
             Adjust.onCreate(config)
         }
         if(moEngage==null){
-            moEngage = MoEngage.Builder(app, moEngageKey)
-                .build()
-            MoEngage.initialise(moEngage!!)
+            if(BuildConfig.DEBUG){
+                moEngage = MoEngage.Builder(app, moEngageKey)
+                    .configureLogs(LogConfig(VERBOSE, false))
+                    .setDataCenter(DataCenter.DATA_CENTER_3)
+                    .configureNotificationMetaData(
+                        NotificationConfig(notiSmallIcon,
+                        notiLargeIcon,
+                        notiColor, null,
+                            true,
+                            isBuildingBackStackEnabled = false, isLargeIconDisplayEnabled = true)
+                    ).build()
+                MoEngage.initialise(moEngage!!)
+            }else{
+                moEngage = MoEngage.Builder(app, moEngageKey)
+                    .setDataCenter(DataCenter.DATA_CENTER_3)
+                    .configureNotificationMetaData(
+                        NotificationConfig(
+                            notiSmallIcon,
+                            notiLargeIcon,
+                            notiColor, null,
+                            true,
+                            isBuildingBackStackEnabled = false, isLargeIconDisplayEnabled = true)
+                    )
+                    .build()
+                MoEngage.initialise(moEngage!!)
+            }
+
         }
-        GlobalScope.launch {
+       /* GlobalScope.launch {
             var adInfo: AdvertisingIdClient.Info? = null
             var andiInfo: String? = null
             try {
@@ -82,7 +106,7 @@ object Trackr {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-        }
+        }*/
         mainHandler = Handler(app.mainLooper)
         initSharedPreference(app)
         addNotificationChannels(app)
