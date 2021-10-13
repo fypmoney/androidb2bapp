@@ -15,8 +15,7 @@ import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
 import com.fypmoney.databinding.BottomSheetErrorBinding
 import com.fypmoney.util.AppConstants
-import com.fypmoney.viewmodel.SpinWheelProductViewModel
-import com.fypmoney.viewmodel.SpinWheelViewModel
+import com.fypmoney.view.rewardsAndWinnings.viewModel.SpinWheelProductViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

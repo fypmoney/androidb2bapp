@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/linear_gradient_rewards">
+
+        <include
+            android:id="@+id/layout"
+            layout="@layout/toolbar" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_below="@+id/layout"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_history"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/LoadProgressBar"
+
+                android:layout_marginBottom="@dimen/_6sdp" />
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+
+                android:id="@+id/shimmerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_layout_history" />
+
+                    <include layout="@layout/shimmer_layout_history" />
+
+                    <include layout="@layout/shimmer_layout_history" />
+
+                    <include layout="@layout/shimmer_layout_history" />
+
+                    <include layout="@layout/shimmer_layout_history" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/LoadProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/_4sdp"
+
+                android:visibility="gone"
+                android:layout_alignParentBottom="true"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/dots_animation" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/empty_screen"
+                android:layout_marginTop="@dimen/_90sdp"
+                android:layout_gravity="center_horizontal"
+
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_194sdp"
+                    android:id="@+id/image"
+                    android:layout_height="@dimen/_142sdp"
+                    android:layout_centerHorizontal="true"
+
+                    app:srcCompat="@drawable/ic_no_task" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@+id/image"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:paddingLeft="@dimen/_34sdp"
+                    android:paddingRight="@dimen/_34sdp"
+                    android:textColor="#9CA3A5"
+                    android:gravity="center"
+                    android:text="Looks like you haven’t been assigned any task yet. 😅"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+</layout>
+

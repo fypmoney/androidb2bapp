@@ -1,4 +1,4 @@
-package com.fypmoney.view.activity
+package com.fypmoney.view.rewardsAndWinnings.activity
 
 import android.graphics.Color
 import android.os.Bundle
@@ -11,9 +11,6 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityScratchProductBinding
 
 import com.fypmoney.model.ScratchCardProductViewmodel
-
-import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.Utility
 
 import com.fypmoney.view.customview.scratchlayout.listener.ScratchListener
 
@@ -59,6 +56,11 @@ class ScratchCardActivity :
         mViewModel.event.observe(this, {
             handelEvents(it)
         })
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        setResult(52)
     }
 
     private fun handelEvents(it: ScratchCardProductViewmodel.CardOfferEvent?) {

@@ -1,12 +1,10 @@
-package com.fypmoney.model
+package com.fypmoney.view.rewardsAndWinnings.model
 
-import androidx.annotation.Keep
-
-@Keep
-data class RewardHistoryResponse2(
+data class RewardResponse(
 	val loyaltyEarned: Any? = null,
-	val cashbackWonForProduct: Int? = null,
-	val orderId: Any? = null,
+	val cashbackWonForProduct: Any? = null,
+	val orderNumber: String? = null,
+	val productName: Any? = null,
 	val points: Int? = null,
 	val transactionType: String? = null,
 	val pointConversionValue: Any? = null,
@@ -16,7 +14,7 @@ data class RewardHistoryResponse2(
 	val baseTxnId: Any? = null,
 	val customerId: Int? = null,
 	val additionalInfo: Any? = null,
-	val eventDescription: Any? = null,
+	val eventDescription: String? = null,
 	val txnTime: String? = null,
 	val isFullFilled: String? = null,
 	val tierMasterId: Int? = null,

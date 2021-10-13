@@ -236,4 +236,6 @@ object AppConstants {
     const val REFEREE_CASHBACK = "REFEREE_CASHBACK"
     const val PHYSICAL_CARD_CODE = "PHYCRD"
     const val ORDER_CARD_INFO = "order_card_info"
+    const val ORDER_ID = "ORDERID"
+    const val SECTION_ID = "SECTIONID"
 }

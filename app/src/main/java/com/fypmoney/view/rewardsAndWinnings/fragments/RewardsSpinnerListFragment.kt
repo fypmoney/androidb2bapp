@@ -1,51 +1,60 @@
-package com.fypmoney.view.fragment
+package com.fypmoney.view.rewardsAndWinnings.fragments
 
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
-import com.fypmoney.databinding.FragmentRewardsOverviewBinding
 import com.fypmoney.databinding.FragmentSpinnerListBinding
 import com.fypmoney.model.aRewardProductResponse
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.activity.ScratchCardActivity
-import com.fypmoney.view.activity.SpinWheelViewDark
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
+import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
+import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import com.fypmoney.view.adapter.ScratchItemAdapter
 import com.fypmoney.view.adapter.SpinnerAdapter
 import com.fypmoney.view.interfaces.ListContactClickListener
 
-import com.fypmoney.viewmodel.RewardsViewModel
 import kotlinx.android.synthetic.main.dialog_burn_mynts.*
-import kotlinx.android.synthetic.main.fragment_spinner_list.view.*
 
 
 import kotlin.collections.ArrayList
 
 
-class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, RewardsViewModel>() {
+class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, RewardsAndVM>() {
     companion object {
         var page = 0
 
     }
 
-    private var sharedViewModel: RewardsViewModel? = null
+    private var sharedViewModel: RewardsAndVM? = null
     private var dialogDialog: Dialog? = null
     private var itemsArrayList: ArrayList<aRewardProductResponse> = ArrayList()
+    private var scratchArrayList: ArrayList<aRewardProductResponse> = ArrayList()
 
     private var typeAdapter: SpinnerAdapter? = null
     private var scratchAdapter: ScratchItemAdapter? = null
     private var mViewBinding: FragmentSpinnerListBinding? = null
+
+    val startForResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            if (result.resultCode == 52) {
+
+
+            }
+
+        }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,16 +72,31 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
     }
 
-    private fun observeInput(sharedViewModel: RewardsViewModel) {
+    private fun observeInput(sharedViewModel: RewardsAndVM) {
 
         sharedViewModel.spinArrayList.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
 
                 itemsArrayList.clear()
+                mViewBinding?.shimmerLayout?.visibility = View.GONE
+                mViewBinding?.shimmerLayout?.stopShimmer()
 
                 itemsArrayList.addAll(list)
                 typeAdapter?.notifyDataSetChanged()
+
+            })
+
+        sharedViewModel.scratchArrayList.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { list ->
+                mViewBinding?.shimmerscratch?.visibility = View.GONE
+                mViewBinding?.shimmerscratch?.stopShimmer()
+
+                scratchArrayList.clear()
+
+                scratchArrayList.addAll(list)
+                scratchAdapter?.notifyDataSetChanged()
 
             })
 
@@ -84,6 +108,9 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                     AppConstants.PRODUCT_SPIN -> {
                         val intent = Intent(requireContext(), SpinWheelViewDark::class.java)
                         SpinWheelViewDark.sectionArrayList.clear()
+                        intent.putExtra(AppConstants.ORDER_ID, list.orderNo)
+                        intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
+
 
                         itemsArrayList[sharedViewModel.selectedPosition.get()!!].sectionList?.forEachIndexed { pos, item ->
                             if (item != null) {
@@ -95,12 +122,13 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 //                    val args = Bundle()
 //                    args.putSerializable("ARRAYLIST", itemsArrayList as Serializable)
 //                    intent.putExtra("BUNDLE", args)
-                        requireContext().startActivity(intent)
+                        startForResult.launch(intent)
 
                     }
                     AppConstants.PRODUCT_SCRATCH -> {
                         val intent = Intent(requireContext(), ScratchCardActivity::class.java)
-                        requireContext().startActivity(intent)
+                        intent.putExtra(AppConstants.ORDER_ID, list.orderNo)
+                        startForResult.launch(intent)
 
 
                     }
@@ -111,24 +139,51 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
     }
 
-    internal fun showBurnDialog(i: Int, type: String) {
+    internal fun showBurnDialog(i: Int, type: String, appDisplayText: String?) {
 
 
-        dialogDialog!!.setCancelable(true)
-        dialogDialog!!.setCanceledOnTouchOutside(true)
-        dialogDialog!!.setContentView(R.layout.dialog_burn_mynts)
+        dialogDialog?.setCancelable(true)
+        dialogDialog?.setCanceledOnTouchOutside(true)
+        dialogDialog?.setContentView(R.layout.dialog_burn_mynts)
 
-        val wlp = dialogDialog!!.window!!.attributes
+        val wlp = dialogDialog?.window!!.attributes
 
         wlp.width = ViewGroup.LayoutParams.MATCH_PARENT
 
-        dialogDialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        dialogDialog!!.window!!.attributes = wlp
+        if (appDisplayText != null) {
+            dialogDialog?.amount_to_enter?.text = appDisplayText
+            dialogDialog?.clicked?.text = "Burn $appDisplayText Mynts"
+
+        }
+
+        dialogDialog?.window?.attributes = wlp
+        when (type) {
+            AppConstants.PRODUCT_SPIN -> {
 
 
+                dialogDialog?.spin_green?.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_spin_green
+                    )
+                )
 
-        dialogDialog!!.clicked.setOnClickListener(View.OnClickListener {
+            }
+            AppConstants.PRODUCT_SCRATCH -> {
+                dialogDialog?.spin_green?.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_scratch_card_product
+                    )
+                )
+
+            }
+        }
+
+
+        dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
             when (type) {
                 AppConstants.PRODUCT_SPIN -> {
                     sharedViewModel?.selectedPosition?.set(i)
@@ -141,7 +196,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                     sharedViewModel?.clickedType?.set(AppConstants.PRODUCT_SCRATCH)
                     sharedViewModel?.selectedPosition?.set(i)
 
-                    sharedViewModel?.callRewardsRedeem(itemsArrayList[i].code)
+                    sharedViewModel?.callRewardsRedeem(scratchArrayList[i].code)
 
 
                 }
@@ -150,7 +205,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         })
 
 
-        dialogDialog!!.show()
+        dialogDialog?.show()
     }
 
 
@@ -164,7 +219,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
 
             override fun onItemClicked(pos: Int) {
-                showBurnDialog(pos, AppConstants.PRODUCT_SPIN)
+                showBurnDialog(pos, AppConstants.PRODUCT_SPIN, itemsArrayList[pos].appDisplayText)
 
 
             }
@@ -182,11 +237,16 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
         var itemClickListener2 = object : ListContactClickListener {
             override fun onItemClicked(pos: Int) {
-                showBurnDialog(pos, AppConstants.PRODUCT_SCRATCH)
+                showBurnDialog(
+                    pos,
+                    AppConstants.PRODUCT_SCRATCH,
+                    scratchArrayList[pos].appDisplayText
+                )
             }
         }
 
-        scratchAdapter = ScratchItemAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
+        scratchAdapter =
+            ScratchItemAdapter(scratchArrayList, requireContext(), itemClickListener2!!)
         mViewBinding?.rvScratch!!.adapter = scratchAdapter
     }
 
@@ -198,9 +258,9 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         return R.layout.fragment_spinner_list
     }
 
-    override fun getViewModel(): RewardsViewModel {
+    override fun getViewModel(): RewardsAndVM {
         activity?.let {
-            sharedViewModel = ViewModelProvider(it).get(RewardsViewModel::class.java)
+            sharedViewModel = ViewModelProvider(it).get(RewardsAndVM::class.java)
             observeInput(sharedViewModel!!)
 
         }

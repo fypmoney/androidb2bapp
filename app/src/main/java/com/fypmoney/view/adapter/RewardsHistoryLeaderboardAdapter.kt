@@ -5,9 +5,12 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
-import com.fypmoney.model.RewardHistoryResponse2
+import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
+import com.fypmoney.view.rewardsAndWinnings.model.RewardHistoryResponse2
 import com.fypmoney.view.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.reward_history_item_leaderboard.view.*
 
@@ -42,18 +45,62 @@ class RewardsHistoryLeaderboardAdapter(
         holder.desc.text = items[position].eventDescription.toString()
 
         if (items[position].cashbackWonForProduct != null && items[position].cashbackWonForProduct!! > 0) {
-            holder.amount.visibility = View.VISIBLE
-            holder.won_tv.visibility = View.VISIBLE
 
+
+            holder.amount.visibility = View.VISIBLE
+
+            holder.won_tv.visibility = View.VISIBLE
+            holder.status_tv.visibility = View.INVISIBLE
+            holder.amount.text =
+                "₹" + Utility.convertToRs(items[position].cashbackWonForProduct.toString())
+
+            holder.productType.setImageDrawable(
+                ContextCompat.getDrawable(
+                    context,
+                    R.drawable.ic_mynt_coin
+                )
+            )
 
         } else {
-            holder.amount.visibility = View.VISIBLE
-            holder.won_tv.visibility = View.VISIBLE
+            holder.amount.visibility = View.INVISIBLE
+            holder.status_tv.visibility = View.VISIBLE
+            holder.won_tv.visibility = View.INVISIBLE
+
         }
 
-        holder.amount.text = items[position].cashbackWonForProduct.toString()
+        if (items[position].productType == AppConstants.PRODUCT_SPIN) {
+            holder.productType.setImageDrawable(
+                ContextCompat.getDrawable(
+                    context,
+                    R.drawable.ic_spin_burned
+                )
+            )
+
+        } else {
+            holder.productType.setImageDrawable(
+                ContextCompat.getDrawable(
+                    context,
+                    R.drawable.ic_scratch_card_product
+                )
+            )
+
+        }
+
+        if (items[position].isFullFilled == AppConstants.NO) {
+            holder.status_tv.visibility = View.VISIBLE
+        } else {
+            holder.status_tv.visibility = View.INVISIBLE
+        }
+
+        if (!items[position].fullfillmentDescription.isNullOrEmpty()) {
+            holder.won_tv.text = items[position].fullfillmentDescription.toString()
+        }
+
+
+
 
         holder.card.setOnClickListener(View.OnClickListener {
+//            if(items[position].isFullFilled==AppConstants.NO)
             clickInterface.onItemClicked(position)
         })
 
@@ -69,6 +116,8 @@ class RewardsHistoryLeaderboardAdapter(
         var won_tv = view.won_tv
         var amount = view.amount
         var numberofMynts = view.heading
+        var status_tv = view.status_tv
+        var productType = view.productType
 
 
 //        init {

@@ -1,4 +1,4 @@
-package com.fypmoney.view.activity
+package com.fypmoney.view.rewardsAndWinnings
 
 import android.content.Intent
 import android.graphics.Color
@@ -12,7 +12,6 @@ import com.fypmoney.BR
 
 import com.fypmoney.base.BaseActivity
 
-import com.fypmoney.util.AppConstants
 import com.fypmoney.view.fragment.*
 
 import com.google.android.material.tabs.TabLayout
@@ -21,15 +20,18 @@ import java.util.ArrayList
 
 
 import com.fypmoney.databinding.ViewRewardsBinding
-import com.fypmoney.viewmodel.RewardsViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 
 import androidx.core.content.ContextCompat
 import com.fypmoney.R
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
+import com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment
+import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment
+import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 
 
-class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsViewModel>() {
+class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
 
     lateinit var tabLayout: TabLayout
@@ -37,7 +39,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsViewModel>() {
 
 
     companion object {
-        var mViewModel: RewardsViewModel? = null
+        var mViewModel: RewardsAndVM? = null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +48,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsViewModel>() {
 
 
 
-        setObserver()
+
         setToolbarAndTitle(
             context = this,
             toolbar = toolbar,
@@ -85,6 +87,11 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsViewModel>() {
         }
     }
 
+    override fun onActivityReenter(resultCode: Int, data: Intent?) {
+        super.onActivityReenter(resultCode, data)
+
+    }
+
     private fun initializeTabs(tabLayout: TabLayout) {
 
 
@@ -95,6 +102,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsViewModel>() {
         adapter.addFragment(RewardHistoryFragment(), getString(R.string.history))
 
         viewPager.adapter = adapter
+//        viewPager.offscreenPageLimit=0
 
         tabLayout.setupWithViewPager(viewPager)
 
@@ -130,39 +138,6 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsViewModel>() {
         })
     }
 
-    /**
-     * Create this method for observe the viewModel fields
-     */
-    private fun setObserver() {
-
-    }
-
-
-    private fun intentToPayActivity(aClass: Class<*>, pay: String? = null) {
-        val intent = Intent(this, aClass)
-        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
-        startActivity(intent)
-    }
-
-
-    private fun callActivity(aClass: Class<*>, amount: String?) {
-        val intent = Intent(this, aClass)
-        intent.putExtra("amountshouldbeadded", amount)
-
-
-
-        startActivity(intent)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == 99) {
-
-
-        }
-
-
-    }
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -172,9 +147,11 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsViewModel>() {
         return R.layout.view_rewards
     }
 
-    override fun getViewModel(): RewardsViewModel {
-        mViewModel = ViewModelProvider(this).get(RewardsViewModel::class.java)
+    override fun getViewModel(): RewardsAndVM {
+        mViewModel = ViewModelProvider(this).get(RewardsAndVM::class.java)
 
         return mViewModel!!
     }
+
+
 }

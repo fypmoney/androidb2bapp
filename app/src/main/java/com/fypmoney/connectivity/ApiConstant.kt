@@ -118,7 +118,7 @@ object ApiConstant {
         "/services/PockketService/api/purchase/reward-product/"
     const val API_PLAY_SPIN =
         "services/PockketService/api/total-cashback-earned"
-    const val Play_Order_Api =
+    const val PLAY_ORDER_API =
         "/services/PockketService/api/play/order/"
 
 }

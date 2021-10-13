@@ -1,8 +1,7 @@
-package com.fypmoney.viewmodel
+package com.fypmoney.view.rewardsAndWinnings.viewModel
 
 import android.app.Application
-import android.util.Log
-import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -10,58 +9,48 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.GetRewardsHistoryResponse
-import com.fypmoney.model.GetRewardsHistoryResponseDetails
-import com.fypmoney.view.adapter.RewardsHistoryAdapter
+import com.fypmoney.view.rewardsAndWinnings.model.RewardHistoryResponse2
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
-class RewardsHistoryViewModel(application: Application) : BaseViewModel(application) {
-    var rewardsHistoryAdapter = RewardsHistoryAdapter()
-    var noDataFoundVisibility = ObservableField(false)
-
+class RewardsHistoryVM(application: Application) : BaseViewModel(application) {
+    var rewardHistoryList2: MutableLiveData<ArrayList<RewardHistoryResponse2>> = MutableLiveData()
 
     init {
-        callGetRewardsHistoryApi()
+
     }
 
-    /*
-* This method is used to call get rewards history api
-* */
-    private fun callGetRewardsHistoryApi() {
+    fun callRewardHistory() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_GET_REWARDS_HISTORY,
-                NetworkUtil.endURL(ApiConstant.API_GET_REWARDS_HISTORY),
+                ApiConstant.RewardsHistory,
+                NetworkUtil.endURL(ApiConstant.RewardsHistory),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
-
-
     }
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.API_GET_REWARDS_HISTORY -> {
+            ApiConstant.RewardsHistory -> {
+
 
                 val json = JsonParser().parse(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<Array<GetRewardsHistoryResponseDetails>>(
+                val array = Gson().fromJson<Array<RewardHistoryResponse2>>(
                     json.get("data").toString(),
-                    Array<GetRewardsHistoryResponseDetails>::class.java
+                    Array<RewardHistoryResponse2>::class.java
                 )
                 val arrayList = ArrayList(array.toMutableList())
-                rewardsHistoryAdapter.setList(arrayList)
+                rewardHistoryList2.postValue(arrayList)
 
 
             }
-
         }
 
 

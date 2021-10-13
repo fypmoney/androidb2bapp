@@ -1,20 +1,16 @@
 package com.fypmoney.view.fragment
 
-import android.Manifest
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ScreenHomeBinding
@@ -22,8 +18,8 @@ import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.RedeemDetailsResponse
 import com.fypmoney.util.AppConstants
-import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.TopTenUsersAdapter
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
@@ -283,12 +279,6 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         bottomSheetMessage?.show(childFragmentManager, "TASKMESSAGE")
     }
 
-
-    private fun setCurrentFragment(fragment: Fragment) =
-        childFragmentManager.beginTransaction().apply {
-            replace(R.id.container, fragment)
-            commit()
-        }
 
     /*
     * This method is used to call add money fragment

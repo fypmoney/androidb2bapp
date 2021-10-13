@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="-50dp"
         android:elevation="@dimen/_2sdp"
-        android:src="@drawable/ic_spin_green"
+        android:src="@drawable/ic_wallet_updated"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,37 +41,41 @@
             app:layout_constraintTop_toTopOf="parent">
 
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/coin"
-                android:layout_width="@dimen/_24sdp"
-                android:layout_height="@dimen/_24sdp"
-                android:adjustViewBounds="true"
-
-                android:src="@drawable/ic_mynt_coin" />
-
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/amount_to_enter"
+                android:id="@+id/verification_title1"
                 style="@style/TextviewBold"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/_4sdp"
 
-                android:text=""
+                android:text="Congratulations!"
                 android:textColor="@color/white"
                 android:textSize="24sp" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/luckonside"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16sdp"
+            android:gravity="center"
+            android:text="Luck is on your side"
+            android:textColor="#BAE6C2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
             android:gravity="center"
             android:text="Will be deducted from your balance \nto spin the wheel."
             android:textColor="@color/cb_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout" />
+            app:layout_constraintTop_toBottomOf="@+id/luckonside" />
 
         <Button
             android:id="@+id/clicked"
@@ -80,7 +84,7 @@
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_12sdp"
             android:backgroundTint="#48AB5B"
-            android:text=""
+            android:text="@string/continue_btn_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />

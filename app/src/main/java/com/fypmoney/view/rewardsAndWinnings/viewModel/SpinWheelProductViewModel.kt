@@ -1,8 +1,7 @@
-package com.fypmoney.viewmodel
+package com.fypmoney.view.rewardsAndWinnings.viewModel
 
 import android.app.Application
 import android.graphics.Color
-import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -17,6 +16,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -27,24 +27,23 @@ import java.util.*
 * */
 class SpinWheelProductViewModel(application: Application) : BaseViewModel(application) {
     var luckyItemList: ArrayList<LuckyItem> = ArrayList()
-    var getRewardsResponseList = ObservableField<GetRewardsResponseDetails>()
-    var spinWheelResponseList = MutableLiveData<SpinWheelResponseDetails>()
-    var spinWheelApiResponse = MutableLiveData<SpinWheelResponseDetails>()
+
+    var spinWheelResponseList = MutableLiveData<SpinWheelRotateResponseDetails>()
+
     var redeemCallBackResponse = MutableLiveData<aRewardProductResponse>()
-    var redeemDetailsResponse = MutableLiveData<RedeemDetailsResponse>()
-    val onGetRewardsSuccess = MutableLiveData<Boolean>()
+
     val spinAllowed = MutableLiveData<String>()
-    val onSpinDone = MutableLiveData<Boolean>()
+
     val enableSpin = MutableLiveData<Boolean>()
-    val coinVisibilty = ObservableField(true)
-    val screenopen = ObservableField(false)
+    val coinVisibilty = ObservableField(false)
+
     val spinnerClickable = ObservableField(true)
-    val onRewardsHistoryClicked = MutableLiveData<Boolean>()
+
     val onPlayClicked = MutableLiveData<Boolean>()
     val onError = MutableLiveData<ErrorResponseInfo>()
     private val fromWhich = ObservableField<String>()
     val totalRewards =
-        ObservableField(PockketApplication.instance.getString(R.string.fetching_reward))
+        ObservableField("")
 
     init {
 
@@ -53,9 +52,7 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
     /*
     * This is used to handle rewards history
     * */
-    fun onRewardsHistoryClicked() {
-        onRewardsHistoryClicked.value = true
-    }
+
 
     /*
     * This method is used to set data in spin the wheel
@@ -74,13 +71,13 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
                 luckyItemList.add(luckyItem1)
             } else if (pos % 2 == 0) {
                 val luckyItem3 = LuckyItem()
-                luckyItem3.topText = item.sectionValue
+                luckyItem3.topText = Utility.convertToRs(item.sectionValue)
                 luckyItem3.icon = R.drawable.cash
                 luckyItem3.color = Color.parseColor(item.colorCode)
                 luckyItemList.add(luckyItem3)
             } else {
                 val luckyItem4 = LuckyItem()
-                luckyItem4.topText = item.sectionValue
+                luckyItem4.topText = Utility.convertToRs(item.sectionValue)
                 luckyItem4.icon = R.drawable.cash
                 luckyItem4.color = Color.parseColor(item.colorCode)
                 luckyItemList.add(luckyItem4)
@@ -94,25 +91,12 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
     /*
 * This method is used to call get rewards api
 * */
-    fun callGetRewardsApi() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_GET_REWARDS_API,
-                NetworkUtil.endURL(ApiConstant.API_GET_REWARDS_API),
-                ApiUrl.GET,
-                BaseRequest(),
-                this, isProgressBar = true
-            )
-        )
 
-
-    }
-
-    fun callProductsDetailsApi() {
+    fun callProductsDetailsApi(orderId: String?) {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.REWARD_PRODUCT_DETAILS,
-                NetworkUtil.endURL(ApiConstant.REWARD_PRODUCT_DETAILS),
+                NetworkUtil.endURL(ApiConstant.REWARD_PRODUCT_DETAILS + orderId),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = true
@@ -135,11 +119,11 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
     /*
    * This method is used to call spin wheel api
    * */
-    fun callSpinWheelApi() {
+    fun callSpinWheelApi(orderId: String?) {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.Play_Order_Api,
-                NetworkUtil.endURL(ApiConstant.Play_Order_Api),
+                ApiConstant.PLAY_ORDER_API,
+                NetworkUtil.endURL(ApiConstant.PLAY_ORDER_API + orderId),
                 ApiUrl.POST,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -156,7 +140,7 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
             ApiConstant.REWARD_PRODUCT_DETAILS -> {
 
 
-                val json = JsonParser().parse(responseData.toString()) as JsonObject
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
                 val spinDetails = Gson().fromJson(
                     json.get("data"),
@@ -165,81 +149,30 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
 
                 redeemCallBackResponse.value = spinDetails
                 fromWhich.set(AppConstants.ERROR_TYPE_AFTER_SPIN)
-                callGetRewardsApi()
+
 
             }
-            ApiConstant.Play_Order_Api -> {
+            ApiConstant.PLAY_ORDER_API -> {
 
 
-                val json = JsonParser().parse(responseData.toString()) as JsonObject
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
                 val spinDetails = Gson().fromJson(
                     json.get("data"),
-                    com.fypmoney.model.SpinWheelResponseDetails::class.java
+                    com.fypmoney.model.SpinWheelRotateResponseDetails::class.java
                 )
 
                 spinWheelResponseList.value = spinDetails
                 fromWhich.set(AppConstants.ERROR_TYPE_AFTER_SPIN)
-                callGetRewardsApi()
-
-            }
-            ApiConstant.API_REDEEM_COINS_API -> {
-
-
-                val json = JsonParser().parse(responseData.toString()) as JsonObject
-
-                val redeemDetails = Gson().fromJson(
-                    json.get("data"),
-                    com.fypmoney.model.RedeemDetailsResponse::class.java
-                )
-
-                redeemDetailsResponse.postValue(redeemDetails)
-                callGetRewardsApi()
-            }
-
-            ApiConstant.API_GET_REDEEM_DETAILS_API -> {
-
-
-                val json = JsonParser().parse(responseData.toString()) as JsonObject
-
-                val redeemDetails = Gson().fromJson(
-                    json.get("data"),
-                    com.fypmoney.model.RedeemDetailsResponse::class.java
-                )
-
-                redeemDetailsResponse.postValue(redeemDetails)
-
-            }
-            ApiConstant.API_GET_REWARDS_API -> {
-
-
-                val json = JsonParser().parse(responseData.toString()) as JsonObject
-
-                val spinDetails = Gson().fromJson(
-                    json.get("data"),
-                    com.fypmoney.model.GetRewardsResponseDetails::class.java
-                )
-
-                getRewardsResponseList.set(spinDetails)
-
-                if (fromWhich.get() != AppConstants.ERROR_TYPE_AFTER_SPIN) {
-                    spinAllowed.value = spinDetails.spinAllowedToday!!
-                }
-                when {
-                    fromWhich.get() != AppConstants.ERROR_TYPE_AFTER_SPIN -> {
-                        if (enableSpin.value == true) {
-                            onGetRewardsSuccess.value = true
-                        }
-                    }
-                }
-                if (!spinDetails.pointsToRedeem.isNullOrEmpty())
-                    totalRewards.set(((spinDetails.pointsToRedeem)!!.toInt() / 100).toString())
+                if (!spinDetails.cashbackWon.isNullOrEmpty())
+                    totalRewards.set(Utility.convertToRs(spinDetails.cashbackWon))
                 else {
                     totalRewards.set("0")
                 }
 
-
             }
+
+
         }
 
 

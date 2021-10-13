@@ -2,22 +2,18 @@ package com.fypmoney.view.adapter
 
 
 import android.app.Activity
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.fypmoney.R
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.*
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewhelper.FeedsViewHelper
-import com.fypmoney.viewmodel.RewardsViewModel
-import com.fypmoney.viewmodel.StoreScreenViewModel
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import kotlinx.android.synthetic.main.view_home.view.*
 
 
 /**
@@ -25,7 +21,7 @@ import kotlinx.android.synthetic.main.view_home.view.*
  */
 class FeedsRewardsAdapter(
     var context: Activity,
-    var viewModel: RewardsViewModel,
+    var viewModel: RewardsAndVM,
     var onFeedItemClickListener: FeedsAdapter.OnFeedItemClickListener
 ) :
     RecyclerView.Adapter<BaseViewHolder>() {
@@ -70,9 +66,14 @@ class FeedsRewardsAdapter(
      */
     fun setList(feedList1: List<FeedDetails>?) {
 
-        feedList1?.forEach {
-            feedList!!.add(it)
+        if (feedList1 != null) {
+            feedList1?.forEach {
+                feedList!!.add(it)
+            }
+        } else {
+            feedList?.clear()
         }
+
         notifyDataSetChanged()
     }
 

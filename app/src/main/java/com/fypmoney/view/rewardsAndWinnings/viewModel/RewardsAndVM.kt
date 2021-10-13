@@ -1,4 +1,4 @@
-package com.fypmoney.viewmodel
+package com.fypmoney.view.rewardsAndWinnings.viewModel
 
 import android.app.Application
 import androidx.databinding.ObservableField
@@ -17,10 +17,8 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
-/*
-* This class is used for handling chores
-* */
-class RewardsViewModel(application: Application) : BaseViewModel(application) {
+
+class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
 
     var latitude = ObservableField<Double>()
@@ -31,7 +29,7 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
     var selectedPosition = ObservableField(-1)
     val isApiLoading = ObservableField(true)
     var clickedType = ObservableField("")
-    var rewardHistoryList2: MutableLiveData<ArrayList<RewardHistoryResponse2>> = MutableLiveData()
+
     var spinArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
     val page = ObservableField(0)
     var scratchArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
@@ -43,10 +41,6 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
     var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
     var rewardfeedList: MutableLiveData<ArrayList<FeedDetails>> =
         MutableLiveData()
-    var isRecyclerviewVisible = ObservableField(false)
-
-    var TaskDetailResponse: MutableLiveData<TaskDetailResponse> = MutableLiveData()
-
     fun onSelectClicked() {
         onAddMoneyClicked.value = true
     }
@@ -54,7 +48,7 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
 
     init {
 
-        callRewardHistory()
+
         callRewardSummary()
         callRewardProductList()
         callTotalRewardsEarnings()
@@ -67,17 +61,7 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
 
     }
 
-    fun callRewardHistory() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.RewardsHistory,
-                NetworkUtil.endURL(ApiConstant.RewardsHistory),
-                ApiUrl.GET,
-                BaseRequest(),
-                this, isProgressBar = true
-            )
-        )
-    }
+
 
     private fun makeFetchFeedRequest(
         size: Int? = 5,
@@ -155,7 +139,7 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
                 NetworkUtil.endURL(ApiConstant.API_REWARD_SUMMARY),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
     }
@@ -167,7 +151,7 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
                 NetworkUtil.endURL(ApiConstant.API_REDEEM_REWARD) + code,
                 ApiUrl.POST,
                 BaseRequest(),
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
     }
@@ -179,7 +163,7 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
                 NetworkUtil.endURL(ApiConstant.API_GET_REWARD_PRODUCTS),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
     }
@@ -191,7 +175,7 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
                 NetworkUtil.endURL(ApiConstant.API_GET_REWARD_EARNINGS),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
     }
@@ -225,7 +209,7 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
             ApiConstant.API_REDEEM_REWARD -> {
 
 
-                val json = JsonParser().parse(responseData.toString()) as JsonObject
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
                 val array = Gson().fromJson<CoinsBurnedResponse>(
                     json.get("data").toString(),
                     com.fypmoney.model.CoinsBurnedResponse::class.java
@@ -239,7 +223,7 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
             ApiConstant.API_GET_REWARD_EARNINGS -> {
 
 
-                val json = JsonParser().parse(responseData.toString()) as JsonObject
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
                 val array = Gson().fromJson<totalRewardsResponse>(
                     json.get("data").toString(),
                     com.fypmoney.model.totalRewardsResponse::class.java
@@ -250,24 +234,11 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
 
             }
 
-            ApiConstant.RewardsHistory -> {
 
-
-                val json = JsonParser().parse(responseData.toString()) as JsonObject
-
-                val array = Gson().fromJson<Array<RewardHistoryResponse2>>(
-                    json.get("data").toString(),
-                    Array<RewardHistoryResponse2>::class.java
-                )
-                val arrayList = ArrayList(array.toMutableList())
-                rewardHistoryList2.postValue(arrayList)
-
-
-            }
             ApiConstant.API_GET_REWARD_PRODUCTS -> {
 
 
-                val json = JsonParser().parse(responseData.toString()) as JsonObject
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
                 val dataObject = json.get("data")?.asJsonObject
 
                 val array = Gson().fromJson<Array<aRewardProductResponse>>(
@@ -275,9 +246,10 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
                     Array<aRewardProductResponse>::class.java
                 )
 
-
-                val arrayList = ArrayList(array.toMutableList())
-
+                if (array != null) {
+                    val arrayList = ArrayList(array.toMutableList())
+                    spinArrayList.postValue(arrayList)
+                }
                 val spinarray = Gson().fromJson<Array<aRewardProductResponse>>(
                     dataObject?.get("SCRATCH_CARD").toString(),
                     Array<aRewardProductResponse>::class.java
@@ -298,14 +270,12 @@ class RewardsViewModel(application: Application) : BaseViewModel(application) {
 //                    itemsArrayList.add(images)
 //                }
 
-                spinArrayList.postValue(arrayList)
-
 
             }
             ApiConstant.API_REWARD_SUMMARY -> {
 
 
-                val json = JsonParser().parse(responseData.toString()) as JsonObject
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
                 val array = Gson().fromJson<RewardPointsSummaryResponse>(
                     json.get("data").toString(),

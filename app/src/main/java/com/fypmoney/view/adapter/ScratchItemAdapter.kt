@@ -33,13 +33,16 @@ class ScratchItemAdapter(
 
     override fun getItemCount(): Int {
 
-        return 8
+        return items.size
     }
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.card.setOnClickListener(View.OnClickListener {
+            clickInterface.onItemClicked(position)
+        })
+        holder.burnAmount.setOnClickListener(View.OnClickListener {
             clickInterface.onItemClicked(position)
         })
 
@@ -54,7 +57,7 @@ class ScratchItemAdapter(
 
         var card = view
 
-        var coins_to_be_burn = view.burn_amount
+        var burnAmount = view.burn_amount
         var desc = view.desc
 
 //        init {

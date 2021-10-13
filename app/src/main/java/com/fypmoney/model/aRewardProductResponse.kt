@@ -15,7 +15,8 @@ data class aRewardProductResponse(
 	val scratchResourceHide: Any? = null,
 	val sectionList: List<SectionListItem?>? = null,
 	val scratchResourceShow: Any? = null,
-	val productType: String? = null
+	val productType: String? = null,
+	val sectionId: Int? = null
 )
 
 @Keep

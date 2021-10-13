@@ -1,4 +1,4 @@
-package com.fypmoney.view.fragment
+package com.fypmoney.view.rewardsAndWinnings.fragments
 
 import android.content.Intent
 import android.graphics.Color
@@ -16,16 +16,16 @@ import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.adapter.FeedsRewardsAdapter
 
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.interfaces.ListItemClickListener
-import com.fypmoney.viewmodel.RewardsViewModel
 
 
-class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, RewardsViewModel>(),
+class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, RewardsAndVM>(),
     FeedsAdapter.OnFeedItemClickListener {
     companion object {
         var page = 0
@@ -33,7 +33,7 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
     }
 
     private var mViewBinding: FragmentRewardsOverviewBinding? = null
-    private var sharedViewModel: RewardsViewModel? = null
+    private var sharedViewModel: RewardsAndVM? = null
 
     private var typeAdapter: FeedsRewardsAdapter? = null
 
@@ -82,13 +82,14 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
 
     }
 
-    private fun observeInput(sharedViewModel: RewardsViewModel) {
+    private fun observeInput(sharedViewModel: RewardsAndVM) {
         sharedViewModel.rewardfeedList.observe(requireActivity(), { list ->
             if (list.isNullOrEmpty()) {
                 mViewBinding?.recyclerView?.visibility = View.GONE
             } else {
                 mViewBinding?.shimmerLayout?.stopShimmer()
                 typeAdapter?.setList(list)
+
                 mViewBinding?.shimmerLayout?.visibility = View.GONE
                 typeAdapter?.notifyDataSetChanged()
 
@@ -96,13 +97,7 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
 
 
         })
-        sharedViewModel.rewardSummaryStatus.observe(
-            requireActivity(),
-            androidx.lifecycle.Observer { list ->
-                mViewBinding?.totalearned?.text = list.totalPoints.toString()
-                mViewBinding?.burnedPoints?.text = list.burntPoints.toString()
-                mViewBinding?.pointsLeft?.text = list.remainingPoints.toString()
-            })
+
 
         sharedViewModel.totalRewardsResponse.observe(
             requireActivity(),
@@ -110,6 +105,16 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
                 mViewBinding?.loadingAmountHdp?.clearAnimation()
                 mViewBinding?.loadingAmountHdp?.visibility = View.GONE
                 mViewBinding?.totalRefralWonValueTv?.text = Utility.convertToRs("${list.amount}")
+
+            })
+
+        sharedViewModel.rewardSummaryStatus.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { list ->
+                mViewBinding?.loadingAmountMynts?.clearAnimation()
+                mViewBinding?.loadingAmountMynts?.visibility = View.GONE
+                mViewBinding?.totalMyntsWonValueTv?.text =
+                    Utility.convertToRs("${list.totalPoints}")
 
             })
 
@@ -123,10 +128,10 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
         return R.layout.fragment_rewards_overview
     }
 
-    override fun getViewModel(): RewardsViewModel {
+    override fun getViewModel(): RewardsAndVM {
         activity?.let {
-            sharedViewModel = ViewModelProvider(it).get(RewardsViewModel::class.java)
-            observeInput(sharedViewModel!!)
+            sharedViewModel = ViewModelProvider(it).get(RewardsAndVM::class.java)
+//            observeInput(sharedViewModel!!)
 
         }
         return sharedViewModel!!

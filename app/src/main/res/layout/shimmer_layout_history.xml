@@ -4,13 +4,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
-        <import type="androidx.core.content.ContextCompat" />
-
-        <variable
-            name="viewHelper"
-            type="com.fypmoney.viewhelper.RewardsHistoryViewHelper" />
 
     </data>
 
@@ -27,15 +20,14 @@
         android:paddingBottom="5dp">
 
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/productType"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivServiceLogo"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginBottom="@dimen/_4sdp"
-            android:src="@drawable/ic_spin_burned"
-
+            android:src="@color/cb_grey"
 
             />
 
@@ -45,24 +37,23 @@
             style="@style/TextviewRegular"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_toEndOf="@+id/productType"
-
+            android:layout_toEndOf="@+id/ivServiceLogo"
+            android:background="@color/cb_grey"
+            android:text="   ,                          "
             android:textColor="@color/white"
 
-            android:textSize="16sp" />
+            android:textSize="@dimen/textSize_18" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/desc"
             style="@style/TextviewRegular"
             android:layout_below="@+id/heading"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_toEndOf="@+id/productType"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toEndOf="@+id/ivServiceLogo"
             android:ellipsize="end"
-            android:textSize="12sp"
-
-
-            android:text=""
+            android:background="@color/cb_grey"
+            android:text="             "
             android:textColor="@color/grey_heading" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -71,12 +62,12 @@
             android:layout_alignParentRight="true"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_5sdp"
-
             android:layout_marginEnd="@dimen/_8sdp"
-
+            android:background="@color/cb_grey"
+            android:text="        "
             android:textColor="@color/white"
 
-            android:textSize="16sp" />
+            android:textSize="@dimen/textSize_18" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/won_tv"
@@ -86,24 +77,12 @@
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_2sdp"
             android:layout_marginEnd="@dimen/_8sdp"
-            android:textColor="@color/grey_heading"
-            android:textSize="12sp" />
+            android:text="     "
+            android:background="@color/cb_grey"
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/status_tv"
-            style="@style/TextviewRegular"
-            android:layout_below="@+id/amount"
-
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:text="Play"
-
-            android:textColor="#F7AA11"
+            android:textSize="14sp" />
 
 
-            android:textSize="12sp" />
     </RelativeLayout>
 
 </layout>

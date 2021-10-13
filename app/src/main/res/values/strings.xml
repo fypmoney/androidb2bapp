@@ -923,6 +923,8 @@ Coming really soon!
     <string name="overview">Overview</string>
     <string name="spinners">Spinners</string>
     <string name="history">History</string>
+    <string name="spin_dark_text">Spin it to win It🤑</string>
+    <string name="total_mynts">Total Mynts won</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
