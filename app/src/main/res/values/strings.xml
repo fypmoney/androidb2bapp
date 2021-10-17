@@ -818,7 +818,9 @@ Coming really soon!
     <string name="press_again_to_exit">Press BACK again to exit.</string>
     <string name="load_money">Load Money</string>
     <string name="insufficient_bank_balance">Insufficient bank balance</string>
+    <string name="insufficient_mynt_balance">Insufficient Mynt balance</string>
     <string name="insufficient_bank_body">You have Insufficient bank balance, to make \n this payment you have to add money</string>
+    <string name="insufficient_mynt_body">You have Insufficient Mynts, to make \n this purchase you have earn mynts</string>
 
     <string name="uh_oh">Uh oh!</string>
     <string name="add_money">Add Money</string>
@@ -925,6 +927,8 @@ Coming really soon!
     <string name="history">History</string>
     <string name="spin_dark_text">Spin it to win It🤑</string>
     <string name="total_mynts">Total Mynts won</string>
+    <string name="claim_your_rewards">Claim your rewards</string>
+    <string name="arcade">Arcade</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>

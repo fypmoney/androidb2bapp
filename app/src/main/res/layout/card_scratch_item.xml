@@ -11,9 +11,10 @@
     app:cardCornerRadius="@dimen/_20sdp"
     android:paddingTop="@dimen/_6sdp"
     android:paddingBottom="@dimen/_4sdp"
+    android:id="@+id/bg_card"
+
     android:paddingLeft="@dimen/_6sdp"
     android:paddingRight="@dimen/_6sdp"
-    android:backgroundTint="#9b5aa7"
 
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -45,7 +46,7 @@
             android:scaleType="fitXY"
 
             android:elevation="@dimen/_2sdp"
-            android:alpha=".50"
+
             android:src="@drawable/ic_scratch_card_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,6 +75,7 @@
             android:text="1000"
             android:id="@+id/burn_amount"
             style="@style/TextviewBold"
+            android:alpha=".70"
             android:textSize="14sp"
             android:textColor="@color/white"
             android:layout_height="52dp"

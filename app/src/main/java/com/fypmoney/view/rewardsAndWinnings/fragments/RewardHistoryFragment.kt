@@ -11,6 +11,7 @@ import com.fypmoney.databinding.FragmentRewardHistoryBinding
 import com.fypmoney.util.Utility
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.rewardsAndWinnings.activity.RewardsHistoryView
+import kotlin.math.roundToInt
 
 
 class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, RewardsAndVM>() {
@@ -67,6 +68,8 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
                 mViewBinding?.shimmerLayout?.stopShimmer()
                 mViewBinding?.totalearned?.text = Utility.convertToRs(list.totalPoints.toString())
                 mViewBinding?.burnedPoints?.text = Utility.convertToRs(list.burntPoints.toString())
+                mViewBinding?.statsProgressbar?.progress =
+                    ((list.burntPoints?.div(list.totalPoints!!))!! * 100).roundToInt()
                 mViewBinding?.pointsLeft?.text =
                     Utility.convertToRs(list.remainingPoints.toString())
             })

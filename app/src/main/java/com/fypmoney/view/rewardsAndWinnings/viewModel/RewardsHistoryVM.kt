@@ -10,25 +10,26 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
-import com.fypmoney.view.rewardsAndWinnings.model.RewardHistoryResponse2
+import com.fypmoney.model.GetTaskResponse
+import com.fypmoney.model.RewardHistoryResponseNew
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
 class RewardsHistoryVM(application: Application) : BaseViewModel(application) {
-    var rewardHistoryList2: MutableLiveData<ArrayList<RewardHistoryResponse2>> = MutableLiveData()
+    var rewardHistoryList2: MutableLiveData<ArrayList<RewardHistoryResponseNew>> = MutableLiveData()
 
     init {
 
     }
 
-    fun callRewardHistory() {
+    fun callRewardHistory(page: Int) {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.RewardsHistory,
                 NetworkUtil.endURL(ApiConstant.RewardsHistory),
                 ApiUrl.GET,
-                BaseRequest(),
+                param = page,
                 this, isProgressBar = false
             )
         )
@@ -40,11 +41,11 @@ class RewardsHistoryVM(application: Application) : BaseViewModel(application) {
             ApiConstant.RewardsHistory -> {
 
 
-                val json = JsonParser().parse(responseData.toString()) as JsonObject
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<Array<RewardHistoryResponse2>>(
+                val array = Gson().fromJson<Array<RewardHistoryResponseNew>>(
                     json.get("data").toString(),
-                    Array<RewardHistoryResponse2>::class.java
+                    Array<RewardHistoryResponseNew>::class.java
                 )
                 val arrayList = ArrayList(array.toMutableList())
                 rewardHistoryList2.postValue(arrayList)

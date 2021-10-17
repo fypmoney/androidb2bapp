@@ -2,6 +2,7 @@ package com.fypmoney.view.rewardsAndWinnings
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -24,6 +25,10 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 import androidx.core.content.ContextCompat
 import com.fypmoney.R
+import com.fypmoney.util.AppConstants
+import com.fypmoney.view.activity.AddMoneyView
+import com.fypmoney.view.activity.ContactListView
+import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment
@@ -36,16 +41,14 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
     lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
-
+    var mViewModel: RewardsAndVM? = null
 
     companion object {
-        var mViewModel: RewardsAndVM? = null
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
 
 
 
@@ -60,10 +63,53 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         viewPager = findViewById(R.id.viewPager)
 
         initializeTabs(tabLayout)
+        mViewModel?.error?.observe(
+            this,
+            androidx.lifecycle.Observer { list ->
+
+                if (list == "PKT_2051") {
+                    callInsuficientFundMessageSheet()
+                }
+
+            }
+        )
 
 
     }
 
+    private fun callInsuficientFundMessageSheet() {
+        var bottomsheetInsufficient: RewardsMessageInsuficientMyntsSheet? = null
+        val itemClickListener2 = object : AcceptRejectClickListener {
+            override fun onAcceptClicked(pos: Int, str: String) {
+
+            }
+
+            override fun onRejectClicked(pos: Int) {
+                bottomsheetInsufficient?.dismiss()
+
+            }
+
+            override fun ondimiss() {
+
+            }
+        }
+        bottomsheetInsufficient =
+            RewardsMessageInsuficientMyntsSheet(
+                itemClickListener2, title = resources.getString(R.string.insufficient_mynt_balance),
+                subTitle = resources.getString(R.string.insufficient_mynt_body),
+                amount = "",
+                background = "#2D3039"
+            )
+        bottomsheetInsufficient?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomsheetInsufficient?.show(supportFragmentManager, "TASKMESSAGE")
+    }
+
+    private fun callActivity(aClass: Class<*>) {
+        val intent = Intent(this, aClass)
+
+
+        startActivity(intent)
+    }
 
     internal class ViewPagerAdapter(manager: FragmentManager?) :
         FragmentPagerAdapter(manager!!) {
@@ -92,19 +138,30 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        mViewModel?.callTotalRewardsEarnings()
+        mViewModel?.callRewardSummary()
+
+    }
+
     private fun initializeTabs(tabLayout: TabLayout) {
 
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
         adapter.addFragment(RewardsOverviewFragment(), getString(R.string.overview))
-        adapter.addFragment(RewardsSpinnerListFragment(), getString(R.string.spinners))
+        adapter.addFragment(RewardsSpinnerListFragment(), getString(R.string.arcade))
         adapter.addFragment(RewardHistoryFragment(), getString(R.string.history))
 
         viewPager.adapter = adapter
 //        viewPager.offscreenPageLimit=0
 
         tabLayout.setupWithViewPager(viewPager)
+        tabLayout.getTabAt(0)?.view?.background = ContextCompat.getDrawable(
+            this@RewardsActivity,
+            com.fypmoney.R.drawable.round_backgorund_20
+        )
 
         tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {

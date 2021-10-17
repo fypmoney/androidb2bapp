@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/linear_gradient_rewards">
+        android:background="@drawable/linear_gradient_rewards_rect">
 
         <include
             android:id="@+id/layout"
@@ -65,6 +65,7 @@
                 android:layout_marginBottom="@dimen/_4sdp"
 
                 android:visibility="gone"
+
                 android:layout_alignParentBottom="true"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"

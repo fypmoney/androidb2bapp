@@ -3,21 +3,25 @@ package com.fypmoney.view.rewardsAndWinnings.activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.base.PaginationListener
 import com.fypmoney.databinding.ViewRewardHistoryBinding
+import com.fypmoney.model.HistoryItem
 
-import com.fypmoney.view.rewardsAndWinnings.model.RewardHistoryResponse2
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.adapter.RewardsHistoryLeaderboardAdapter
+import com.fypmoney.view.fragment.YourTasksFragment
 
 import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsHistoryVM
 import kotlinx.android.synthetic.main.fragment_reward_history.view.*
+import kotlinx.android.synthetic.main.fragment_your_task.view.*
 
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_reward_history.*
@@ -43,7 +47,7 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
         return R.layout.view_reward_history
     }
 
-    private var itemsArrayList: ArrayList<RewardHistoryResponse2> = ArrayList()
+    private var itemsArrayList: ArrayList<HistoryItem> = ArrayList()
     private var isLoading = false
     private var typeAdapterHistory: RewardsHistoryLeaderboardAdapter? = null
     override fun getViewModel(): RewardsHistoryVM {
@@ -67,7 +71,15 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                     itemsArrayList.clear()
 
                 }
-                itemsArrayList.addAll(list)
+                list.forEach { it ->
+                    it.history?.forEach { item ->
+                        if (item != null) {
+                            itemsArrayList.add(item)
+                        }
+                    }
+
+                }
+
 
                 isLoading = false
                 typeAdapterHistory?.notifyDataSetChanged()
@@ -103,7 +115,7 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
     override fun onStart() {
         super.onStart()
         page = 0
-        mVM.callRewardHistory()
+        mVM.callRewardHistory(page)
     }
 
     private fun setRecyclerView(root: ViewRewardHistoryBinding?) {
@@ -111,7 +123,19 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         root?.rvHistory?.layoutManager = layoutManager
 
+        root?.rvHistory!!.addOnScrollListener(object : PaginationListener(layoutManager) {
+            override fun loadMoreItems() {
+                loadMore(root)
+            }
 
+            override fun loadMoreTopItems() {
+
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+        })
         var itemClickListener2 = object : ListItemClickListener {
 
 
@@ -154,6 +178,15 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
         typeAdapterHistory =
             RewardsHistoryLeaderboardAdapter(itemsArrayList, this, itemClickListener2!!)
         root?.rvHistory?.adapter = typeAdapterHistory
+    }
+
+    private fun loadMore(root: ViewRewardHistoryBinding?) {
+        mVM?.callRewardHistory(page)
+        //LoadProgressBar?.visibility = View.VISIBLE
+        root?.LoadProgressBar?.visibility = View.VISIBLE
+
+        isLoading = true
+
     }
 
     /**

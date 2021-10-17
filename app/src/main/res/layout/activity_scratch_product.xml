@@ -90,11 +90,10 @@
 
                         <ImageView
                             android:id="@+id/got_the_offer_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:contentDescription="@null"
-                            android:layout_gravity="center_horizontal"
-                            tools:src="@drawable/ic_oops_emoji" />
+                            android:layout_gravity="center_horizontal" />
 
                         <TextView
                             android:id="@+id/offer_desc_tv"
@@ -144,13 +143,13 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scratch_cv"
                 android:layout_marginBottom="@dimen/_80sdp"
-                android:text="@string/scratch_card" />
+                android:text="" />
 
             <com.fypmoney.view.customview.PrimaryButton
                 android:id="@+id/continue_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:text="@string/continue_txt"
+                app:text="@string/claim_your_rewards"
                 android:textSize="18sp"
                 app:enabled="false"
                 app:enabled_bg="@color/color_task_card_green"

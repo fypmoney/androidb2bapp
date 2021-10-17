@@ -81,12 +81,10 @@
             style="@style/TextviewBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_14sdp"
             android:textColor="@color/green_winnings"
             android:textSize="22sp"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -163,7 +161,6 @@
             style="@style/TextviewBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_14sdp"
             android:textColor="@color/green_winnings"
@@ -176,9 +173,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-
             app:layout_constraintBottom_toBottomOf="@+id/total_mynts_won_value_tv"
-
             app:layout_constraintStart_toEndOf="@+id/total_mynts_won_value_tv"
             app:layout_constraintTop_toTopOf="@+id/total_mynts_won_value_tv"
             tools:visibility="visible" />

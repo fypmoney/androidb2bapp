@@ -4,8 +4,8 @@ import androidx.annotation.Keep
 
 @Keep
 data class RewardPointsSummaryResponse(
-    val burntPoints: Int? = null,
-    val totalPoints: Int? = null,
+    val burntPoints: Float? = null,
+    val totalPoints: Float? = null,
     val remainingPoints: Int? = null
 )
 

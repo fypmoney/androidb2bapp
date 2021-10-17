@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -128,6 +129,8 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                     AppConstants.PRODUCT_SCRATCH -> {
                         val intent = Intent(requireContext(), ScratchCardActivity::class.java)
                         intent.putExtra(AppConstants.ORDER_ID, list.orderNo)
+                        intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
+
                         startForResult.launch(intent)
 
 
@@ -139,7 +142,12 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
     }
 
-    internal fun showBurnDialog(i: Int, type: String, appDisplayText: String?) {
+    internal fun showBurnDialog(
+        i: Int,
+        type: String,
+        appDisplayText: String?,
+        detailResource: String?
+    ) {
 
 
         dialogDialog?.setCancelable(true)
@@ -152,6 +160,8 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
         dialogDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        dialogDialog?.spin_green?.let { Glide.with(requireContext()).load(detailResource).into(it) }
+
         if (appDisplayText != null) {
             dialogDialog?.amount_to_enter?.text = appDisplayText
             dialogDialog?.clicked?.text = "Burn $appDisplayText Mynts"
@@ -159,28 +169,28 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         }
 
         dialogDialog?.window?.attributes = wlp
-        when (type) {
-            AppConstants.PRODUCT_SPIN -> {
-
-
-                dialogDialog?.spin_green?.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.ic_spin_green
-                    )
-                )
-
-            }
-            AppConstants.PRODUCT_SCRATCH -> {
-                dialogDialog?.spin_green?.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        requireContext(),
-                        R.drawable.ic_scratch_card_product
-                    )
-                )
-
-            }
-        }
+//        when (type) {
+//            AppConstants.PRODUCT_SPIN -> {
+//
+//
+//                dialogDialog?.spin_green?.setImageDrawable(
+//                    ContextCompat.getDrawable(
+//                        requireContext(),
+//                        R.drawable.ic_spin_green
+//                    )
+//                )
+//
+//            }
+//            AppConstants.PRODUCT_SCRATCH -> {
+//                dialogDialog?.spin_green?.setImageDrawable(
+//                    ContextCompat.getDrawable(
+//                        requireContext(),
+//                        R.drawable.ic_scratch_card_product
+//                    )
+//                )
+//
+//            }
+//        }
 
 
         dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
@@ -219,7 +229,14 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
 
             override fun onItemClicked(pos: Int) {
-                showBurnDialog(pos, AppConstants.PRODUCT_SPIN, itemsArrayList[pos].appDisplayText)
+
+
+                showBurnDialog(
+                    pos,
+                    AppConstants.PRODUCT_SPIN,
+                    itemsArrayList[pos].appDisplayText,
+                    itemsArrayList[pos].detailResource
+                )
 
 
             }
@@ -240,7 +257,8 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                 showBurnDialog(
                     pos,
                     AppConstants.PRODUCT_SCRATCH,
-                    scratchArrayList[pos].appDisplayText
+                    scratchArrayList[pos].appDisplayText,
+                    scratchArrayList[pos].detailResource
                 )
             }
         }

@@ -32,7 +32,6 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
 
     var redeemCallBackResponse = MutableLiveData<aRewardProductResponse>()
 
-    val spinAllowed = MutableLiveData<String>()
 
     val enableSpin = MutableLiveData<Boolean>()
     val coinVisibilty = ObservableField(false)

@@ -18,7 +18,7 @@
             android:layout_below="@+id/contraint"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_36sdp"
-            android:backgroundTint="@color/text_color_little_dark"
+            android:backgroundTint="@color/cb_dark_grey"
             android:text="Show Reward History" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
@@ -155,7 +155,7 @@
 
             </RelativeLayout>
 
-            <androidx.cardview.widget.CardView
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:backgroundTint="@android:color/transparent"
                 app:layout_constraintBottom_toBottomOf="@+id/blur"
@@ -164,15 +164,11 @@
 
                 app:layout_constraintEnd_toEndOf="@+id/blur"
                 app:layout_constraintStart_toStartOf="@+id/blur"
-                android:layout_height="0dp">
+                android:layout_height="@dimen/_40sdp">
 
-                <com.fypmoney.view.customview.blurr.BlurLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:layout_constraintBottom_toBottomOf="@+id/blur"
-                    app:layout_constraintTop_toTopOf="@+id/blur"
-                    app:layout_constraintEnd_toEndOf="@+id/blur"
-                    app:layout_constraintStart_toStartOf="@+id/blur">
+                    android:layout_height="match_parent">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -202,9 +198,9 @@
                     </RelativeLayout>
 
 
-                </com.fypmoney.view.customview.blurr.BlurLayout>
+                </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayout7"
@@ -213,7 +209,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:paddingBottom="@dimen/_10sdp"
+
                 android:layout_marginEnd="@dimen/_12sdp"
                 android:weightSum="2"
                 app:layout_constraintBottom_toBottomOf="parent"

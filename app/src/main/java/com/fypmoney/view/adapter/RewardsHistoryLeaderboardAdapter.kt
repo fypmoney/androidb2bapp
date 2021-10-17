@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
+import com.fypmoney.model.HistoryItem
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.rewardsAndWinnings.model.RewardHistoryResponse2
@@ -18,7 +19,7 @@ import java.util.*
 
 
 class RewardsHistoryLeaderboardAdapter(
-    val items: ArrayList<RewardHistoryResponse2>,
+    val items: ArrayList<HistoryItem>,
     val context: Context,
     val clickInterface: ListItemClickListener
 ) : RecyclerView.Adapter<RewardsHistoryLeaderboardAdapter.ViewHolder>() {

@@ -24,7 +24,7 @@
             android:layout_alignStart="@+id/layout"
             android:id="@+id/desc"
             android:layout_marginTop="@dimen/_4sdp"
-            android:layout_toStartOf="@+id/image_illus"
+            android:layout_marginEnd="@dimen/_60sdp"
             android:layout_below="@+id/layout"
             android:layout_height="wrap_content" />
 
@@ -74,14 +74,15 @@
             app:cardCornerRadius="18dp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/image_illus"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_146sdp"
+
+
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/_12sdp"
-            android:elevation="@dimen/_2sdp"
-            android:src="@drawable/ic_spin_green" />
+
+            android:elevation="-2dp" />
 
 
     </RelativeLayout>

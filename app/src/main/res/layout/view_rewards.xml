@@ -16,7 +16,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="#1E1F22"
+        android:background="@drawable/linear_gradient_rewards_rect"
         android:layout_height="match_parent">
 
         <include
@@ -65,7 +65,7 @@
                                 android:layout_height="@dimen/_36sdp"
                                 android:layout_marginStart="@dimen/_12sdp"
                                 android:layout_marginEnd="@dimen/_12sdp"
-                                android:background="#1E1F22"
+                                android:background="@android:color/transparent"
                                 app:tabBackground="@drawable/rewards_tab_selector"
                                 app:tabIndicatorHeight="0dp"
                                 app:tabMode="fixed"

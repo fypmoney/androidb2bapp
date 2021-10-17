@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -15,6 +14,7 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSpinWheelBlackBinding
 import com.fypmoney.model.SectionListItem
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.ErrorBottomSpinProductSheet
 import com.fypmoney.view.rewardsAndWinnings.viewModel.SpinWheelProductViewModel
 import kotlinx.android.synthetic.main.dialog_burn_mynts.*
@@ -30,6 +30,7 @@ import java.util.*
 class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProductViewModel>(),
     ErrorBottomSpinProductSheet.OnSpinErrorClickListener {
 
+    private var sectionId: Int? = null
     private var dialogDialog: Dialog? = null
     private var orderId: String? = null
 
@@ -59,6 +60,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
         val intent = intent
         orderId = intent.getStringExtra(AppConstants.ORDER_ID)
+        sectionId = intent.getIntExtra(AppConstants.SECTION_ID, -1)
 //        val args = intent.getBundleExtra("BUNDLE")
 //        val getList = args!!.getSerializable("ARRAYLIST") as ArrayList<SectionListItem>
 
@@ -73,7 +75,6 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 //        Glide.with(applicationContext).load(R.raw.coin).into(coin)
         dialogDialog = Dialog(this)
 
-        luckyWheelView.setRound(4)
 
         if (sectionArrayList.size == 0) {
             mViewModel.callProductsDetailsApi(orderId)
@@ -86,9 +87,24 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
 
         try {
+
+
             luckyWheelView.setLuckyRoundItemSelectedListener {
                 mViewModel.coinVisibilty.set(true)
-                showBurnDialog()
+                sectionArrayList.forEach { item ->
+
+                    if (item.id == sectionId.toString()) {
+
+
+                        showwonDialog(item.sectionValue)
+
+                        return@forEach
+
+                    }
+
+
+                }
+
 
             }
         } catch (e: Exception) {
@@ -100,7 +116,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
     }
 
 
-    internal fun showBurnDialog() {
+    private fun showwonDialog(sectionValue: String?) {
 
 
         dialogDialog?.setCancelable(false)
@@ -111,14 +127,17 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
         wlp?.width = ViewGroup.LayoutParams.MATCH_PARENT
 
+
+        dialogDialog?.textView?.text =
+            "your wallet will be updated with ₹ " + Utility.convertToRs(sectionValue)
+
         dialogDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         dialogDialog?.window?.attributes = wlp
 
 
         dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
-            finish()
-
+            mViewModel.callSpinWheelApi(orderId)
         })
 
 
@@ -130,22 +149,22 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
      */
     private fun setObserver() {
         mViewModel.spinWheelResponseList.observe(this) {
-            try {
-                when (it.sectionId) {
-                    1 -> {
-                        luckyWheelView.startLuckyWheelWithTargetIndex(it.sectionId!! - 1)
-
-                    }
-                    else -> {
-
-                        luckyWheelView.startLuckyWheelWithTargetIndex(it.sectionId!! - 1)
-                    }
-
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
+//            try {
+//                when (it.sectionId) {
+//                    1 -> {
+//                        luckyWheelView.startLuckyWheelWithTargetIndex(it.sectionId!! - 1)
+//
+//                    }
+//                    else -> {
+//
+//                        luckyWheelView.startLuckyWheelWithTargetIndex(it.sectionId!! - 1)
+//                    }
+//
+//                }
+//            } catch (e: Exception) {
+//                e.printStackTrace()
+//            }
+            finish()
 
         }
         mViewModel.redeemCallBackResponse.observe(this) {
@@ -155,6 +174,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
                 }
             }
 
+            sectionId = it.sectionId
 
             mViewModel.setDataInSpinWheel(sectionArrayList)
             luckyWheelView.setData(mViewModel.luckyItemList)
@@ -172,8 +192,22 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
         mViewModel.onPlayClicked.observe(this)
         {
+            try {
+                when (sectionId) {
+                    1 -> {
+                        luckyWheelView.startLuckyWheelWithTargetIndex(sectionId!! - 1)
 
-            mViewModel.callSpinWheelApi(orderId)
+                    }
+                    else -> {
+
+                        luckyWheelView.startLuckyWheelWithTargetIndex(sectionId!! - 1)
+                    }
+
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
 
         }
 

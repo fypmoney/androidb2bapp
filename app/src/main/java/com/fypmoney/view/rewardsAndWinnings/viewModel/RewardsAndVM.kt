@@ -49,9 +49,9 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     init {
 
 
-        callRewardSummary()
+
         callRewardProductList()
-        callTotalRewardsEarnings()
+
         callFetchFeedsApi()
     }
 
@@ -101,7 +101,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
         val feedRequestModel = FeedRequestModel()
         feedRequestModel.query =
-            "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "SHOP" + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
+            "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "REWARD" + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
 
 
 
@@ -295,6 +295,13 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         loading.postValue(false)
+        when (purpose) {
+            ApiConstant.API_REDEEM_REWARD -> {
+                error.postValue(errorResponseInfo.errorCode)
+
+            }
+
+        }
 
 
     }

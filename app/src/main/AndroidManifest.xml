@@ -224,10 +224,10 @@
             android:name=".view.activity.ContactViewAddMember"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.SpinWheelView"
+            android:name=".view.rewardsAndWinnings.activity.SpinWheelView"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.RewardsHistoryView"
+            android:name=".view.rewardsAndWinnings.activity.SpinHistoryView"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.PermissionsActivity"
@@ -235,11 +235,12 @@
         <activity
             android:name=".view.activity.OfferDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.RewardsActivity" />
-        <activity android:name=".view.activity.SpinWheelViewDark" />
+        <activity android:name=".view.rewardsAndWinnings.RewardsActivity" />
+        <activity android:name=".view.rewardsAndWinnings.activity.SpinWheelViewDark" />
         <activity android:name=".view.activity.AgeAllowedActivationView" />
-        <activity android:name=".view.activity.ScratchCardActivity" />
+        <activity android:name=".view.rewardsAndWinnings.activity.ScratchCardActivity" />
         <activity android:name=".view.StoreWebpageOpener2" />
+        <activity android:name=".view.rewardsAndWinnings.activity.RewardsHistoryView" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
