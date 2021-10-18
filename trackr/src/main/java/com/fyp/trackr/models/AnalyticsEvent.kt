@@ -99,13 +99,21 @@ enum class TrackrEvent(name: String) {
     LOADMONEYSUCCESS("Load_money_success"),
     LOADMONEYFAIL("Load_money_fail"),
     LOADUSERBACK("Load_user_back"),
+    LOADMONEYBACKDISMISS("on_back_dismiss"),
     REFSUCCESS("Ref_success"),
     TRANSCATIONSUCCESS("Tran_success"),
     TRANSCATIONFALIURE("Tran_faliure"),
     LOADMONEYEXTERNALTERMINATE("load_money_external_terminate"),
+    FORCEUPDATESCREENISSHOWN("Force_update_screen_is_shown"),
+    FLEXIBLEUPDATEPOPUPISSHOWN("Flex_update_popup_is_shown"),
+    FORCEUPDATECOMPLETED("Force_update_completed"),
+    FORCEUPDATEFAILED("Force_update_failed"),
+    NOAPPUPDATEAVAILBLE("NO_app_update_available"),
 
 }
 
 enum class TrackrField(name: String) {
-    user_id("user_id")
+    user_id("user_id"),
+    user_mobile_no("user_mobile_no"),
+    transaction_amount("transaction_amount")
 }

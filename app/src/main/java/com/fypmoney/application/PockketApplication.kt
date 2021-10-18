@@ -2,8 +2,13 @@ package com.fypmoney.application
 
 import android.app.Activity
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.ContentResolver
 import android.content.Context
 import android.content.pm.ActivityInfo
+import android.media.AudioAttributes
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import com.adjust.sdk.Adjust
@@ -11,6 +16,9 @@ import com.adjust.sdk.AdjustConfig
 import com.fyp.trackr.base.Trackr
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
+import com.fypmoney.notification.NotificationUtils
+import com.fypmoney.notification.NotificationUtils.PROMOTIONAL_CHANNEL_ID
+import com.fypmoney.notification.NotificationUtils.TRANSACTION_CHANNEL_ID
 import com.fypmoney.util.SharedPrefUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.vanniktech.emoji.EmojiManager
@@ -43,6 +51,18 @@ class PockketApplication : Application() {
             setUserForCrashReports(this)
         }
 
+        NotificationUtils.createNotificationChannel(applicationContext=this,
+            channelId = TRANSACTION_CHANNEL_ID,
+            channelName = "FYP Transaction",
+            channelDescription = "Notification channel related to transaction notification",
+            notificationImportance = NotificationManager.IMPORTANCE_DEFAULT
+        )
+        NotificationUtils.createNotificationChannel(applicationContext=this,
+            channelId = PROMOTIONAL_CHANNEL_ID,
+            channelName = "FYP Promotional",
+            channelDescription = "Promotional Notification",
+            notificationImportance = NotificationManager.IMPORTANCE_DEFAULT
+        )
         // init analytics
 
         // init analytics
@@ -57,6 +77,7 @@ class PockketApplication : Application() {
         )
 
     }
+
 
     private fun setUserForCrashReports(context: Context) {
         try {
@@ -81,4 +102,6 @@ class PockketApplication : Application() {
             FirebaseCrashlytics.getInstance().recordException(e)
         }
     }
+
+
 }

@@ -30,6 +30,8 @@ import org.jetbrains.annotations.NotNull
 import org.json.JSONObject
 import retrofit2.adapter.rxjava2.Result.response
 import android.media.AudioAttributes
+import com.fypmoney.notification.NotificationUtils
+import com.fypmoney.notification.NotificationUtils.GENRAL_CHANNEL_ID
 import com.moengage.firebase.MoEFireBaseHelper
 import com.moengage.pushbase.MoEPushHelper
 
@@ -65,7 +67,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
             remoteMessage.let {
                 val notificationBuilder: NotificationCompat.Builder =
-                    NotificationCompat.Builder(this, createNotificationChannel())
+                    NotificationCompat.Builder(this, NotificationUtils.getChannelId(
+                        NotificationUtils.Channels.General
+                    ))
                         .setContentTitle(it.notification?.title.toString())
                         .setContentText(it.notification?.body.toString())
                         .setPriority(NotificationCompat.PRIORITY_HIGH)

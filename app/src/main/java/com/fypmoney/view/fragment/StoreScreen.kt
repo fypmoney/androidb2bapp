@@ -122,8 +122,6 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
     private fun setObservers(requireContext: Context) {
 
             mViewModel.onUpiClicked.observe(requireActivity()) {
-
-
                 val intent2 = Intent(requireContext, StoreWebpageOpener2::class.java)
                 StoreWebpageOpener2.url = it.url!!
                 intent2.putExtra("title", it.title)

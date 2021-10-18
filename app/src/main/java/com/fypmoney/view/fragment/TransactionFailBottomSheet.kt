@@ -13,11 +13,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
 import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.databinding.BottomSheetTransactionFailBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -90,6 +93,10 @@ class TransactionFailBottomSheet(
         super.onViewCreated(view, savedInstanceState)
         trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
             it.name = TrackrEvent.LOADMONEYFAIL
+            it.add(
+                TrackrField.user_mobile_no, SharedPrefUtils.getString(PockketApplication.instance,
+                SharedPrefUtils.SF_KEY_USER_MOBILE))
+            it.add(TrackrField.transaction_amount,amount1)
         }
     }
     interface OnBottomSheetClickListener {

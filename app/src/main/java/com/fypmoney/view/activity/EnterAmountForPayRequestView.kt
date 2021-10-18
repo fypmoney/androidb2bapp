@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
 import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
@@ -18,6 +19,7 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewEnterAmountForPayRequestBinding
 import com.fypmoney.model.SendMoneyResponse
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.AddMoneySuccessBottomSheet
 import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
@@ -128,8 +130,12 @@ class EnterAmountForPayRequestView :
         mViewModel.onApiResponse.observe(this) {
             when (it) {
                 AppConstants.API_FAIL -> {
-                    trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-                        it.name = TrackrEvent.TRANSCATIONFALIURE
+                    trackr { it1 ->
+                        it1.services = arrayListOf(TrackrServices.MOENGAGE)
+                        it1.name = TrackrEvent.TRANSCATIONFALIURE
+                        it1.add(TrackrField.user_mobile_no,SharedPrefUtils.getString(this@EnterAmountForPayRequestView,
+                            SharedPrefUtils.SF_KEY_USER_MOBILE))
+                        it1.add(TrackrField.transaction_amount,mViewModel.amountToBeAdded)
                     }
                     callBottomSheet()
                 }

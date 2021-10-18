@@ -129,7 +129,8 @@
                         android:drawablePadding="@dimen/_8sdp"
                         android:onClick="@{()->viewModel.onPayClicked()}"
                         android:paddingVertical="8dp"
-                        android:paddingHorizontal="10dp"                        android:text="@string/pay_money_btn_text"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/pay_money_btn_text"
                         android:textColor="@color/text_color_dark"
                         android:textSize="14sp" />
 
@@ -138,6 +139,29 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <FrameLayout
+                android:id="@+id/notice_alert_fl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:customStrokeWidth="@{@dimen/dp1}"
+                app:customBackgroundColor="@{@color/color_little_orange}"
+                app:customIsRounded="@{false}"
+                app:customCornerRadius="@{@dimen/dp16}"
+                android:layout_margin="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/top_View_layout">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/notice_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/color_orange"
+                    tools:text="Error Message on home screen"/>
+
+            </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/ll_upper_card"
@@ -149,7 +173,7 @@
                 android:weightSum="2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/top_View_layout">
+                app:layout_constraintTop_toBottomOf="@+id/notice_alert_fl">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/choreCard"
@@ -470,9 +494,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ll_second_card" />
 
-
-
-
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -485,8 +506,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="@dimen/dp10"
                 app:layout_constraintTop_toBottomOf="@+id/reedem_mynts_rlt" />
-
-
 
 
             <androidx.recyclerview.widget.RecyclerView

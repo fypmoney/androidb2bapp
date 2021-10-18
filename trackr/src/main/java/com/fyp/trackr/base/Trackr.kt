@@ -72,7 +72,7 @@ object Trackr {
                     .configureNotificationMetaData(
                         NotificationConfig(notiSmallIcon,
                         notiLargeIcon,
-                        notiColor, null,
+                        notiColor, "notification_sound",
                             true,
                             isBuildingBackStackEnabled = false, isLargeIconDisplayEnabled = true)
                     ).build()
@@ -84,14 +84,13 @@ object Trackr {
                         NotificationConfig(
                             notiSmallIcon,
                             notiLargeIcon,
-                            notiColor, null,
+                            notiColor, "notification_sound",
                             true,
-                            isBuildingBackStackEnabled = false, isLargeIconDisplayEnabled = true)
+                            isBuildingBackStackEnabled = true, isLargeIconDisplayEnabled = true)
                     )
                     .build()
                 MoEngage.initialise(moEngage!!)
             }
-
         }
        /* GlobalScope.launch {
             var adInfo: AdvertisingIdClient.Info? = null

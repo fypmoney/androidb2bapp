@@ -72,7 +72,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.OrderCardView"
-            android:screenOrientation="portrait" ></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.SetPinView"
             android:screenOrientation="portrait"
@@ -235,11 +235,16 @@
         <activity
             android:name=".view.activity.OfferDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.RewardsActivity" />
-        <activity android:name=".view.activity.SpinWheelViewDark" />
-        <activity android:name=".view.activity.AgeAllowedActivationView" />
-        <activity android:name=".view.activity.ScratchCardActivity" />
-        <activity android:name=".view.StoreWebpageOpener2" />
+        <activity android:name=".view.activity.RewardsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.SpinWheelViewDark"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.AgeAllowedActivationView"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ScratchCardActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.StoreWebpageOpener2"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
