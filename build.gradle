@@ -6,12 +6,12 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.0'
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.31")
+        classpath 'com.android.tools.build:gradle:7.0.3'
+        classpath('org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.31')
         // Add google services to support firebase push notification
-        classpath "com.google.gms:google-services:4.3.5"
+        classpath "com.google.gms:google-services:4.3.10"
         // use latest dependency for firebase crashlytics
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.2'
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
 
 
     }
@@ -27,6 +27,9 @@ allprojects {
         maven {
             url "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
         }
+        flatDir{
+            dirs 'libs'
+        }
 
     }
 }
@@ -41,5 +44,6 @@ ext{
     minSdkVersion = 21
     targetSdkVersion = 30
     compileSdkVersion = 30
+    kotlin_version = '1.5.31'
 
 }

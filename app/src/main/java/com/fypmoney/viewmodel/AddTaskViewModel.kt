@@ -4,6 +4,9 @@ import android.app.Application
 import android.util.Log
 import androidx.databinding.ObservableArrayList
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -73,6 +76,9 @@ class AddTaskViewModel(application: Application) : BaseViewModel(application) {
             "INR", userId!!, startdate, title, trim
         )
 
+        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.GIVENMISSIONSUCCESS
+        }
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_CREATE_TASK,

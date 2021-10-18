@@ -12,6 +12,8 @@ import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.UserTrackr
+import com.fyp.trackr.models.logOut
 import com.fypmoney.BR
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
@@ -118,6 +120,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
      */
     private fun setObserver() {
         mViewModel.onLogoutSuccess.observe(this) {
+            UserTrackr.logOut()
             intentToActivity(LoginView::class.java, isFinishAll = true)
         }
 

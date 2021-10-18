@@ -2,6 +2,10 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.UserTrackr
+import com.fyp.trackr.models.push
+import com.fyp.trackr.models.trackr
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -13,6 +17,7 @@ import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.moengage.core.internal.MoEConstants
 
 /*
 * This class is is used to display message in case aadhaar verification success
@@ -25,6 +30,9 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
     * This method is used to handle continue
     * */
     init {
+        trackr {
+            it.name = TrackrEvent.AADHARVERIFICATION
+        }
         callGetCustomerProfileApi()
     }
     fun onContinueClicked() {
@@ -81,6 +89,13 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                     }
                     postKycScreenCode.value =
                         responseData.customerInfoResponseDetails?.postKycScreenCode!!
+
+
+                    responseData.customerInfoResponseDetails?.dob?.let {
+                        val map = hashMapOf<String,Any>()
+                        map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it
+                        UserTrackr.push(map)
+                    }
                 }
 
 

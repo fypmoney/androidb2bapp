@@ -32,6 +32,8 @@ import com.freshchat.consumer.sdk.FaqOptions
 import com.freshchat.consumer.sdk.Freshchat
 import com.freshchat.consumer.sdk.FreshchatConfig
 import com.freshchat.consumer.sdk.FreshchatUser
+import com.fyp.trackr.models.UserTrackr
+import com.fyp.trackr.models.logOut
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.model.SendMoneyResponseDetails
@@ -217,6 +219,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         {
             if(it) {
                 Utility.showToast(resources.getString(R.string.unauthrized_msg))
+                UserTrackr.logOut()
                 Utility.resetPreferenceAfterLogout()
                 val intent = Intent(this@BaseActivity , LoginView::class.java)
                     startActivity(intent)

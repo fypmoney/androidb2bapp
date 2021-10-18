@@ -3,6 +3,10 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -26,6 +30,11 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
     var onKycInitSuccess = MutableLiveData<KycInitResponseDetails>()
     var onVerificationFailed = MutableLiveData<String>()
 
+    init {
+        trackr {
+            it.name = TrackrEvent.BANKVERIFICATION
+        }
+    }
     /*
     * This method is used to handle click of get otp
     * */

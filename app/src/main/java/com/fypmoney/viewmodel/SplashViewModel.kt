@@ -3,6 +3,10 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.base.Trackr
+import com.fyp.trackr.models.UserTrackr
+import com.fyp.trackr.models.login
+import com.fyp.trackr.models.push
 import com.fypmoney.BuildConfig
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -23,6 +27,8 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_APP_VERSION_CODE
 import com.fypmoney.util.Utility
 import com.google.gson.Gson
+import com.moengage.core.internal.MoEConstants
+import com.moengage.core.model.AppStatus
 
 
 /*
@@ -42,6 +48,23 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
      fun setUpApp() {
         callCheckAppUpdate()
+         SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let {
+             if(it==0){
+                 Trackr.appIsInstallFirst(isFirstTime = true)
+             }else{
+                 Trackr.appIsInstallFirst(isFirstTime = false)
+                 Utility.getCustomerDataFromPreference()?.let {
+                     val map = hashMapOf<String,Any>()
+                     map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = it.id.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it.dob.toString()
+                     UserTrackr.push(map)
+                     UserTrackr.login( it.id.toString())
+                 }
+             }
+         }
         if (SharedPrefUtils.getBoolean(
                 app,
                 SharedPrefUtils.SF_KEY_IS_LOGIN
@@ -49,11 +72,18 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
         ) {
             callSettingsApi()
             SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let {
-                if(Utility.getCustomerDataFromPreference()==null || (it < BuildConfig.VERSION_CODE)||(it > BuildConfig.VERSION_CODE)){
+                if(Utility.getCustomerDataFromPreference()==null ||
+                    (it < BuildConfig.VERSION_CODE)||(it > BuildConfig.VERSION_CODE)){
                     SharedPrefUtils.putInt(app,SF_KEY_APP_VERSION_CODE, BuildConfig.VERSION_CODE)
                     callGetCustomerProfileApi()
                 }
+                if(it==0){
+                    Trackr.appIsInstallFirst(isFirstTime = true)
+                }else{
+                    Trackr.appIsInstallFirst(isFirstTime = false)
+                }
             }
+
         }
     }
 

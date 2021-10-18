@@ -114,22 +114,6 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
                 purpose = ApiConstant.API_USER_DEVICE_INFO,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_USER_DEVICE_INFO),
                 request_type = ApiUrl.PUT,
-                /*UserDeviceInfo(
-                    Build.BRAND,
-                    Build.MODEL,
-                    Build.ID,
-                    TimeZone.getDefault().getDisplayName(
-                        Locale.ROOT
-                    ),
-                    PockketApplication.instance.resources.configuration.locale.country,
-                    BuildConfig.VERSION_NAME,
-                    AppConstants.PLATFORM,
-                    Build.VERSION.SDK_INT.toString(),
-                    SharedPrefUtils.getString(
-                        getApplication(),
-                        SharedPrefUtils.SF_KEY_FIREBASE_TOKEN
-                    ) ?: ""
-                )*/
                 param = UserDeviceInfo(
                     latitude = latitude,
                     longitude = longitude,
