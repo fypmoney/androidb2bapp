@@ -46,7 +46,9 @@ class SharedPrefUtils {
         const val SF_KEY_NAME_ON_CARD = "name_on_card"
         const val SF_KEY_USER_DELIVERY_ADDRESS = "delivery_addres"
         const val SF_KEY_IS_ORDER_SCARTCH_CODE_DONE = "order_on_card_scratch_done"
-
+        const val SF_KEY_APP_VERSION_CODE = "app_version_code"
+        const val SF_REFFERAL_MSG = "refer_share_message_0"
+        const val SF_REFFERAL_MSG_2 = "refer_share_message_1"
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(context)
@@ -59,7 +61,7 @@ class SharedPrefUtils {
 
         fun putArrayList(context: Context, key: String, value: ArrayList<String>?) {
             val gson = Gson()
-            val textList = ArrayList<String>(value)
+
             val jsonText = gson.toJson(value)
             val editor = getSharedPreferences(context)?.edit()
             editor?.putString(key, jsonText)?.apply()

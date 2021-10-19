@@ -6,6 +6,11 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustEvent
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.UserTrackr
+import com.fyp.trackr.models.push
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -13,6 +18,7 @@ import com.fypmoney.databinding.ViewActivationSuccessWithAadhaarBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.ActivationSuccessWithAadhaarViewModel
+import com.moengage.core.internal.MoEConstants
 import kotlinx.android.synthetic.main.toolbar.*
 
 /*
@@ -41,7 +47,11 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
             toolbar = toolbar,
             isBackArrowVisible = true
         )
-        Adjust.trackEvent(AdjustEvent("m64ei2"))
+        trackr { it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)
+            it.name = TrackrEvent.KYCCOMPLETD }
+
+
+
         setObserver()
 
     }

@@ -7,6 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.databinding.BottomsheetAddMoneySuccessViewBinding
 import com.fypmoney.util.Utility
@@ -64,6 +67,10 @@ class AddMoneySuccessBottomSheet(var amountAdded:String,
         }
         binding.continueBtn.setOnClickListener {
             onHomeViewClick()
+        }
+
+        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.LOADMONEYSUCCESS
         }
     }
 

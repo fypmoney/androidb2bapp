@@ -7,6 +7,8 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustEvent
+import com.fyp.trackr.models.*
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -43,14 +45,20 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
-        val mFirebaseAnalytics = FirebaseAnalytics.getInstance(applicationContext)
-        var bundle = Bundle()
-//        bundle.putLong("user_id",  SharedPrefUtils.getLong(
-//            application,
-//            SharedPrefUtils.SF_KEY_USER_ID
-//        ))
-        mFirebaseAnalytics.logEvent("login_success_view", bundle)
 
+        trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.PHONEVERIFICATION
+            it.add(
+                TrackrField.user_id,SharedPrefUtils.getLong(
+                    applicationContext,
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+        }
+
+        UserTrackr.login(SharedPrefUtils.getLong(
+            applicationContext,
+            SharedPrefUtils.SF_KEY_USER_ID
+        ).toString())
         image.gifResource = R.raw.phone_verified
         Timer().schedule(1000) {
             runOnUiThread {
@@ -70,7 +78,6 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
      */
     private fun setObserver() {
         mViewModel.onApiSuccess.observe(this) {
-            Adjust.trackEvent(AdjustEvent("vp1kxg"));
             when {
 
                 Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {

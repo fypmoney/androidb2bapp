@@ -16,6 +16,10 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -62,7 +66,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     private var mIsBackVisible = false
     lateinit var myProfileAdapter: MyProfileListAdapter
 
-    private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -539,7 +542,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     override fun onActivateCardClick(kitFourDigit: String?) {
         mViewModel.callActivateCardApi(kitFourDigit)
-
     }
 
     override fun onPrivacyPolicyTermsClicked(title: String, url: String) {
@@ -565,13 +567,14 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 callCardSettingsBottomSheet()
             }
             PockketApplication.instance.getString(R.string.order_card) -> {
-                val bundle = Bundle()
-                bundle.putString("user_id",SharedPrefUtils.getLong(
-                    requireContext(),
-                    SharedPrefUtils.SF_KEY_USER_ID
-                ).toString())
-                mFirebaseAnalytics =  FirebaseAnalytics.getInstance(requireContext())
-                mFirebaseAnalytics!!.logEvent("ordered_card",bundle)
+                trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.ORDEREDCARD
+                    it.add(
+                        TrackrField.user_id,SharedPrefUtils.getLong(
+                            requireContext(),
+                            SharedPrefUtils.SF_KEY_USER_ID
+                        ).toString())
+                }
                 intentToActivity(OrderCardView::class.java)
             }
             PockketApplication.instance.getString(R.string.track_order)->{

@@ -164,10 +164,5 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
         mViewBinding.tvTerms.movementMethod = LinkMovementMethod.getInstance()
     }
 
-    private fun openWebPageFor(title: String, url: String) {
-        val intent = Intent(this@FirstScreenView, WebViewActivity::class.java)
-        intent.putExtra(ARG_WEB_URL_TO_OPEN, url)
-        intent.putExtra(ARG_WEB_PAGE_TITLE, title)
-        startActivity(intent)
-    }
+
 }

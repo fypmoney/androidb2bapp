@@ -35,6 +35,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     private var bottomSheetMessage: RedeemMyntsBottomSheet? = null
     private lateinit var mViewModel: HomeScreenViewModel
     private lateinit var mViewBinding: ScreenHomeBinding
+
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -183,7 +184,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
                         }
                         AppConstants.FEED_TYPE_INAPPWEB2 -> {
                             intentToActivity(
-                                UserFeedsDetailView::class.java,
+                                UserFeedsInAppWebview::class.java,
                                 it,
                                 AppConstants.FEED_TYPE_INAPPWEB
                             )
@@ -201,7 +202,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
                         }
                         AppConstants.FEED_TYPE_INAPPWEB -> {
                             intentToActivity(
-                                UserFeedsDetailView::class.java,
+                                UserFeedsInAppWebview::class.java,
                                 it,
                                 AppConstants.FEED_TYPE_INAPPWEB
                             )

@@ -29,6 +29,9 @@ import java.util.ArrayList
 
 
 import android.app.ActivityOptions
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.util.Utility
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -118,7 +121,9 @@ companion object{
                 com.fypmoney.R.anim.slideinleft,
                 com.fypmoney.R.anim.slideinright
             ).toBundle()
-
+            trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                it.name = TrackrEvent.ADDMISSION
+            }
             startActivityForResult(intent, 12, bndlAnimation)
 
         }

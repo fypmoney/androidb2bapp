@@ -9,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.base.PaginationListener
 import com.fypmoney.model.AssignedTaskResponse
@@ -47,7 +50,7 @@ class AssignedTaskFragment : Fragment() {
 
         ChoresActivity.mViewModel!!.AssignedByYouTask.observe(
             requireActivity(),
-            androidx.lifecycle.Observer { list ->
+            { list ->
                 root?.LoadProgressBar?.visibility = View.GONE
 
                 if (page == 0) {
@@ -95,6 +98,12 @@ class AssignedTaskFragment : Fragment() {
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.ASSMISSION
+        }
+    }
     private fun setRecyclerView(root: View) {
         val layoutManager = GridLayoutManager(requireContext(), 2)
         root.rv_assigned!!.layoutManager = layoutManager

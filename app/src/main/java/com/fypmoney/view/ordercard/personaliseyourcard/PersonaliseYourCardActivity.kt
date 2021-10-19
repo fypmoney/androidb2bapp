@@ -7,6 +7,10 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.library.baseAdapters.BR
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityPersonaliseYourCardBinding
@@ -23,7 +27,6 @@ class PersonaliseYourCardActivity : BaseActivity<ActivityPersonaliseYourCardBind
     override fun getBindingVariable(): Int  = BR.viewModel
 
     override fun getLayoutId(): Int  = R.layout.activity_personalise_your_card
-    private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
     override fun getViewModel(): PersonaliseYourCardVM {
         mViewModel = ViewModelProvider(this).get(PersonaliseYourCardVM::class.java)
@@ -40,7 +43,6 @@ class PersonaliseYourCardActivity : BaseActivity<ActivityPersonaliseYourCardBind
             backArrowTint = Color.WHITE,
         )
         mViewModel.userOfferCard = intent.getParcelableExtra(AppConstants.ORDER_CARD_INFO)
-        mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
 
         setUpViews()
         setUpObserver()
@@ -59,12 +61,14 @@ class PersonaliseYourCardActivity : BaseActivity<ActivityPersonaliseYourCardBind
                     SharedPrefUtils.SF_KEY_NAME_ON_CARD,
                     binding.nameOnCardEt.text.toString()
                 )
-                val bundle = Bundle()
-                bundle.putString("user_id",SharedPrefUtils.getLong(
-                    applicationContext,
-                    SharedPrefUtils.SF_KEY_USER_ID
-                ).toString())
-                mFirebaseAnalytics!!.logEvent("personalised_card_complete",bundle)
+                trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.PERSONALISEDYOUCARD
+                    it.add(
+                        TrackrField.user_id,SharedPrefUtils.getLong(
+                        applicationContext,
+                        SharedPrefUtils.SF_KEY_USER_ID
+                    ).toString())
+                }
                 val intent = Intent(this@PersonaliseYourCardActivity, PlaceOrderCardView::class.java)
                 intent.putExtra(AppConstants.ORDER_CARD_INFO,mViewModel.userOfferCard)
                 startActivity(intent)

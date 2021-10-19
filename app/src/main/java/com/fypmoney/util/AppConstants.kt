@@ -10,8 +10,6 @@ import com.google.gson.reflect.TypeToken
 * This class is used to store the Constants of the application
 * */
 object AppConstants {
-    const val GOOGLE_CLIENT_ID: String =
-        "916744568213-gr0bfi1ued1eguo2sjr77pd45ak4796r.apps.googleusercontent.com"
     const val FRESH_CHAT_APP_KEY="8dbdc877-4045-4b7c-8a69-1b176c41e71c"
     const val FRESH_CHAT_APP_ID="03bfae8e-f0f7-48a9-948a-b737edd1a38b"
     const val FRESH_CHAT_DOMAIN="msdk.in.freshchat.com"
@@ -42,6 +40,9 @@ object AppConstants {
     const val FEED_TYPE_VIDEO = "VIDEO"
     const val FEED_TYPE_DID_YOU_KNOW = "DIDYOUKNOW"
     const val FEED_TYPE_STATIC_IMAGE = "STATICIMAGE"
+    const val FEED_TYPE_STATIC_IMAGE1x1 = "STATICIMAGE1X1"
+    const val IN_APP_WEBVIEW1x1 = "INAPPWEB1X1"
+
     const val FEED_TYPE_BLOG = "BLOG"
     const val FEED_TYPE_DEEPLINK = "DEEPLINK"
     const val FEED_TYPE_INAPPWEB = "INAPPWEB"
@@ -230,12 +231,17 @@ object AppConstants {
     const val Accepted = "Accepted"
     const val Completed = "Complete"
     const val Pay = "Pay"
+    const val REFER_MSG_SHARED_1 = "REFERAL_PKYC0"
+    const val REFER_MSG_SHARED_2 = "REFERAL_PKYC1"
     const val CARD_ORDER_FLAG = "CARD_ORDER_FLAG"
     const val REFER_LINE1 = "REFER_LINE1"
     const val REFER_LINE2 = "REFER_LINE2"
     const val REFEREE_CASHBACK = "REFEREE_CASHBACK"
     const val PHYSICAL_CARD_CODE = "PHYCRD"
     const val ORDER_CARD_INFO = "order_card_info"
+    const val REFER_CODE_CHECKING_VARIABLE = "$@%$"
+
+
     const val ORDER_ID = "ORDERID"
     const val SECTION_ID = "SECTIONID"
 }

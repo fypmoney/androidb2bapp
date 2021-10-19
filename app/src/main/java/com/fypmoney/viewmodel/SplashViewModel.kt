@@ -1,9 +1,12 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.base.Trackr
+import com.fyp.trackr.models.UserTrackr
+import com.fyp.trackr.models.login
+import com.fyp.trackr.models.push
 import com.fypmoney.BuildConfig
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -16,23 +19,24 @@ import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.SettingsRequest
 import com.fypmoney.model.SettingsResponse
 import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
-import com.fypmoney.model.homemodel.TopTenUsersResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
 import com.fypmoney.util.AppConstants.REFEREE_CASHBACK
 import com.fypmoney.util.AppConstants.REFER_LINE1
 import com.fypmoney.util.AppConstants.REFER_LINE2
 import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_REFEREE_CASHBACK
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_APP_VERSION_CODE
 import com.fypmoney.util.Utility
 import com.google.gson.Gson
+import com.moengage.core.internal.MoEConstants
+import com.moengage.core.model.AppStatus
 
 
 /*
 * This class is launcher screen
 * */
 class SplashViewModel(val  app: Application) : BaseViewModel(app) {
-    var getCustomerInfoSuccess = MutableLiveData<CustomerInfoResponse>()
+
     var moveToNextScreen = MutableLiveData(false)
     var callCustomer = MutableLiveData(false);
     val appUpdateState: LiveData<AppUpdateState>
@@ -45,15 +49,42 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
      fun setUpApp() {
         callCheckAppUpdate()
+         SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let {
+             if(it==0){
+                 Trackr.appIsInstallFirst(isFirstTime = true)
+             }else{
+                 Trackr.appIsInstallFirst(isFirstTime = false)
+                 Utility.getCustomerDataFromPreference()?.let {
+                     val map = hashMapOf<String,Any>()
+                     map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = it.id.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it.dob.toString()
+                     UserTrackr.push(map)
+                     UserTrackr.login( it.id.toString())
+                 }
+             }
+         }
         if (SharedPrefUtils.getBoolean(
                 app,
                 SharedPrefUtils.SF_KEY_IS_LOGIN
             )!!
         ) {
             callSettingsApi()
-            if(Utility.getCustomerDataFromPreference()==null){
-                callGetCustomerProfileApi()
+            SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let {
+                if(Utility.getCustomerDataFromPreference()==null ||
+                    (it < BuildConfig.VERSION_CODE)||(it > BuildConfig.VERSION_CODE)){
+                    SharedPrefUtils.putInt(app,SF_KEY_APP_VERSION_CODE, BuildConfig.VERSION_CODE)
+                    callGetCustomerProfileApi()
+                }
+                if(it==0){
+                    Trackr.appIsInstallFirst(isFirstTime = true)
+                }else{
+                    Trackr.appIsInstallFirst(isFirstTime = false)
+                }
             }
+
         }
     }
 
@@ -89,7 +120,14 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
     }
     private fun callSettingsApi() {
         val request = SettingsRequest()
-        request.keyList = listOf("CARD_ORDER_FLAG","REFER_LINE1", "REFER_LINE2", "REFEREE_CASHBACK")
+        request.keyList = listOf(
+            "CARD_ORDER_FLAG",
+            "REFER_LINE1",
+            "REFER_LINE2",
+            "REFEREE_CASHBACK",
+            "REFERAL_PKYC0",
+            "REFERAL_PKYC1"
+        )
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_SETTINGS,
@@ -126,8 +164,8 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                     )
                     val interestList = ArrayList<String>()
                     if (responseData.customerInfoResponseDetails?.userInterests?.isNullOrEmpty() == false) {
-                        responseData.customerInfoResponseDetails?.userInterests!!.forEach {
-                            interestList.add(it.name!!)
+                        responseData.customerInfoResponseDetails?.userInterests?.forEach {
+                            it.name?.let { it1 -> interestList.add(it1) }
                         }
 
                         SharedPrefUtils.putArrayList(
@@ -174,6 +212,21 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                     it.value
                                 )
                             }
+                            AppConstants.REFER_MSG_SHARED_1 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_REFFERAL_MSG,
+                                    it.value
+                                )
+                            }
+
+                            AppConstants.REFER_MSG_SHARED_2 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_REFFERAL_MSG_2,
+                                    it.value
+                                )
+                            }
                             REFER_LINE1 -> {
                                 SharedPrefUtils.putString(
                                     getApplication(),
@@ -194,6 +247,7 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                     SharedPrefUtils.SF_KEY_REFEREE_CASHBACK,
                                     it.value
                                 )
+
                             }
                         }
                     }

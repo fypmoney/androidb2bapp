@@ -35,8 +35,8 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
     private lateinit var mViewModel: StoreScreenViewModel
     private lateinit var mViewBinding: ScreenStoreBinding
     private val tabIcons = intArrayOf(
-        com.fypmoney.R.drawable.ic_store_tab,
-        com.fypmoney.R.drawable.ic_offer_tab,
+        R.drawable.ic_store_tab,
+        R.drawable.ic_offer_tab,
 
         )
 
@@ -122,8 +122,6 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
     private fun setObservers(requireContext: Context) {
 
             mViewModel.onUpiClicked.observe(requireActivity()) {
-
-
                 val intent2 = Intent(requireContext, StoreWebpageOpener2::class.java)
                 StoreWebpageOpener2.url = it.url!!
                 intent2.putExtra("title", it.title)

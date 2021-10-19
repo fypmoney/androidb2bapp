@@ -6,6 +6,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -17,7 +20,11 @@ import com.fypmoney.util.AppConstants.NOT_ALLOWED_MSG
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SplashViewModel
+import com.moe.pushlibrary.MoEHelper
+import com.moe.pushlibrary.models.GeoLocation
+import com.moengage.core.Properties
 import kotlinx.android.synthetic.main.view_splash.*
+import java.util.*
 
 
 /*
@@ -42,18 +49,14 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
-        //val appSignatureHelper =  AppSignatureHelper(this)
-        //Log.d("Data","Chutiya "+appSignatureHelper.appSignatures)
         val uri: Uri =
             Uri.parse("android.resource://" + packageName + "/" + R.raw.splash)
         video.setMediaController(null)
         video.setVideoURI(uri)
         video.setOnPreparedListener { video.start() }
-
-
-//        Log.d("chacknoti",intent.extras)
-
-
+        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.APPLAUNCH
+        }
     }
 
     /**
@@ -201,10 +204,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                     mViewModel.callGetCustomerProfileApi()
 
                                 }
-
                             }
-
-
                         }
                     }
 

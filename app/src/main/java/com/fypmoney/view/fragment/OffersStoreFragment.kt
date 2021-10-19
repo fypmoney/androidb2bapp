@@ -11,6 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -22,6 +26,7 @@ import com.fypmoney.databinding.ScreenStoreBinding
 import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.StoreDataModel
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.activity.AddTaskActivity
 import com.fypmoney.view.activity.ChoresActivity
 import com.fypmoney.view.activity.OfferDetailActivity
@@ -113,6 +118,13 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
             }
 
     })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.OFFERTAB
+        }
     }
 
     private fun setRecyclerView() {

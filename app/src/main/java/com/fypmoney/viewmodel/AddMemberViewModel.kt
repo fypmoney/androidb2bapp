@@ -8,6 +8,9 @@ import android.widget.AdapterView
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -78,6 +81,9 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
     * This method is used to add member
     * */
     fun onAddMemberClicked() {
+        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.FAMILYADD
+        }
         when {
             TextUtils.isEmpty(parentName.get()) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.member_name_empty_error))

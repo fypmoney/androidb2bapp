@@ -8,7 +8,8 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSetPinBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.SetPinViewModel
-import kotlinx.android.synthetic.main.view_user_feeds_detail.*
+import kotlinx.android.synthetic.main.view_set_pin.*
+
 
 /*
 * This is used to show feed details

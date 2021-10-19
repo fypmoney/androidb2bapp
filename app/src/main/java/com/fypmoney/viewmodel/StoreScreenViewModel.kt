@@ -18,7 +18,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.*
 import com.google.gson.Gson
 
-class StoreScreenViewModel(application: Application) : BaseViewModel(application),
+class  StoreScreenViewModel(application: Application) : BaseViewModel(application),
    StoreItemAdapter.OnStoreItemClick,RechargeItemAdapter.OnRechargeItemClick {
     var latitude = ObservableField<Double>()
     var totalCount = ObservableField(0)
@@ -127,10 +127,13 @@ class StoreScreenViewModel(application: Application) : BaseViewModel(application
 
 
         val feedRequestModel = FeedRequestModel()
-        feedRequestModel.query =
-            "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "SHOP" + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
-
-
+        if(userInterest.isNullOrEmpty()){
+            feedRequestModel.query =
+                "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "SHOP" + "\",screenSection:null,tags :[\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
+        }else{
+            feedRequestModel.query =
+                "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "SHOP" + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
+        }
 
 
 

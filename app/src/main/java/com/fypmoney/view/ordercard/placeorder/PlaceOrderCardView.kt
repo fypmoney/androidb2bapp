@@ -7,6 +7,10 @@ import android.os.Bundle
 import androidx.core.widget.doBeforeTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -36,7 +40,6 @@ import java.util.*
 class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardViewModel>() {
     private lateinit var binding: ViewPlaceCardBinding
     private lateinit var mViewModel: PlaceOrderCardViewModel
-    private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -65,7 +68,6 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
             callFreshChat(applicationContext)
 
         }
-        mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
 
         mViewModel.userOfferCard = intent.getParcelableExtra(AppConstants.ORDER_CARD_INFO)
         mViewModel.placeOrderRequest?.nameOnCard = SharedPrefUtils.getString(this,
@@ -172,12 +174,13 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                 callNotServicebleSheet()
             }
             PlaceOrderCardViewModel.PlaceOrderCardEvent.OnPlaceOrder ->{
-                val bundle = Bundle()
-                bundle.putString("user_id",SharedPrefUtils.getLong(
+                trackr { it.services = arrayListOf(TrackrServices.FIREBASE,TrackrServices.MOENGAGE)
+                it.name = TrackrEvent.PAYBUTTON
+                it.add(TrackrField.user_id,SharedPrefUtils.getLong(
                     applicationContext,
                     SharedPrefUtils.SF_KEY_USER_ID
                 ).toString())
-                mFirebaseAnalytics!!.logEvent("pay_button",bundle)
+                }
                 askForDevicePassword()
             }
             is PlaceOrderCardViewModel.PlaceOrderCardEvent.InSufficientBalance ->{
@@ -212,12 +215,15 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                         landmark = binding.landmarkTie.text.toString(),
                     )
                 )
-                val bundle = Bundle()
-                bundle.putString("user_id",SharedPrefUtils.getLong(
-                    applicationContext,
-                    SharedPrefUtils.SF_KEY_USER_ID
-                ).toString())
-                mFirebaseAnalytics!!.logEvent("order_success",bundle)
+
+                trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.ORDERSUCCESS
+                    it.add(
+                        TrackrField.user_id,SharedPrefUtils.getLong(
+                            applicationContext,
+                            SharedPrefUtils.SF_KEY_USER_ID
+                        ).toString())
+                }
                 intentToActivity(PlaceOrderSuccessActivity::class.java)
             }
         }
@@ -285,12 +291,14 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
             override fun onRejectClicked(pos: Int) {
                 bottomsheetInsufficient?.dismiss()
 
-                val bundle = Bundle()
-                bundle.putString("user_id",SharedPrefUtils.getLong(
-                    applicationContext,
-                    SharedPrefUtils.SF_KEY_USER_ID
-                ).toString())
-                mFirebaseAnalytics!!.logEvent("add_money_button",bundle)
+                trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.ADDMONEYBUTTON
+                    it.add(
+                        TrackrField.user_id,SharedPrefUtils.getLong(
+                            applicationContext,
+                            SharedPrefUtils.SF_KEY_USER_ID
+                        ).toString())
+                }
                 val intent = Intent(this@PlaceOrderCardView,AddMoneyView::class.java)
                 intent.putExtra("amountshouldbeadded", Utility.convertToRs(amount))
                 startActivity(intent)

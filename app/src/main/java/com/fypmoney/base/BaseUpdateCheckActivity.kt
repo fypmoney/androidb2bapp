@@ -12,7 +12,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
+import com.fypmoney.util.SharedPrefUtils
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.InstallState
@@ -55,6 +61,13 @@ open class BaseUpdateCheckActivity : AppCompatActivity() {
                 try {
                     if (updateType == AppUpdateType.FLEXIBLE) {
                         appUpdateManager.registerListener(appUpdatedListener)
+                        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                            it.name = TrackrEvent.FLEXIBLEUPDATEPOPUPISSHOWN
+                        }
+                    }else{
+                        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                            it.name = TrackrEvent.FORCEUPDATESCREENISSHOWN
+                        }
                     }
                     updateType.let {
                         appUpdateManager.startUpdateFlowForResult(
@@ -72,7 +85,9 @@ open class BaseUpdateCheckActivity : AppCompatActivity() {
             } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_NOT_AVAILABLE) {
                 Log.e(TAG,"No app update")
                 checkUpdate.value = false
-
+                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.NOAPPUPDATEAVAILBLE
+                }
             }
         }
 
@@ -80,6 +95,9 @@ open class BaseUpdateCheckActivity : AppCompatActivity() {
         appUpdateManager.appUpdateInfo.addOnFailureListener { appUpdateInfo: Exception ->
             Log.i(TAG,"app update failed $appUpdateInfo")
             checkUpdate.value = false
+            trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                it.name = TrackrEvent.FORCEUPDATEFAILED
+            }
 
         }
     }
@@ -90,7 +108,7 @@ open class BaseUpdateCheckActivity : AppCompatActivity() {
         if (requestCode == APP_UPDATE_REQUEST_CODE) {
             if (resultCode != Activity.RESULT_OK) {
                 Toast.makeText(this,
-                        "App Update failed, please try again on the next app launch.",
+                        getString(R.string.app_update_failed_please_try_again_on_the_next_app_launch),
                         Toast.LENGTH_SHORT)
                         .show()
                 if (updateType == 1) {
@@ -119,6 +137,9 @@ open class BaseUpdateCheckActivity : AppCompatActivity() {
         val dialog: Dialog = dialogBuilder.create()
         if(dialog.isShowing){
             return
+        }
+        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.FORCEUPDATECOMPLETED
         }
         dialog.show()
     }

@@ -20,8 +20,13 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAddMoneyUpiDebitBinding
 import com.fypmoney.model.AddNewCardDetails
@@ -268,6 +273,14 @@ open class AddMoneyUpiDebitView :
             }
 
             override fun onPaymentTerminate() {
+                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.LOADMONEYEXTERNALTERMINATE
+                    it.add(
+                        TrackrField.user_mobile_no, SharedPrefUtils.getString(
+                            PockketApplication.instance,
+                            SharedPrefUtils.SF_KEY_USER_MOBILE))
+                    it.add(TrackrField.transaction_amount,mViewModel.amountToAdd)
+                }
             }
 
             /**
@@ -293,11 +306,27 @@ open class AddMoneyUpiDebitView :
             override fun onBackApprove() {
                 super.onBackApprove()
                 mViewModel.isPaymentFail.set(true)
+                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.LOADUSERBACK
+                    it.add(
+                        TrackrField.user_mobile_no, SharedPrefUtils.getString(
+                            PockketApplication.instance,
+                            SharedPrefUtils.SF_KEY_USER_MOBILE))
+                    it.add(TrackrField.transaction_amount,mViewModel.amountToAdd)
+                }
             }
 
             override fun onBackDismiss() {
                 super.onBackDismiss()
                 // Utility.showToast("onBackDismiss")
+                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.LOADMONEYBACKDISMISS
+                    it.add(
+                        TrackrField.user_mobile_no, SharedPrefUtils.getString(
+                            PockketApplication.instance,
+                            SharedPrefUtils.SF_KEY_USER_MOBILE))
+                    it.add(TrackrField.transaction_amount,mViewModel.amountToAdd)
+                }
             }
 
             /**
@@ -308,7 +337,14 @@ open class AddMoneyUpiDebitView :
             override fun onBackButton(alertDialogBuilder: AlertDialog.Builder) {
                 super.onBackButton(alertDialogBuilder)
                 //Utility.showToast("onBackButton")
-
+                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.LOADUSERBACK
+                    it.add(
+                        TrackrField.user_mobile_no, SharedPrefUtils.getString(
+                            PockketApplication.instance,
+                            SharedPrefUtils.SF_KEY_USER_MOBILE))
+                    it.add(TrackrField.transaction_amount,mViewModel.amountToAdd)
+                }
             }
 
             override fun isPaymentOptionAvailable(resultData: CustomBrowserResultData) {
@@ -317,8 +353,6 @@ open class AddMoneyUpiDebitView :
                         resultData.isPaymentOptionAvailable
                     com.payu.custombrowser.util.PaymentOption.PHONEPE -> isPhonePeSupported =
                         resultData.isPaymentOptionAvailable
-
-
                 }
             }
         }
@@ -487,32 +521,30 @@ open class AddMoneyUpiDebitView :
     * This method is used to call upi intents
     * */
     fun callUpiIntent() {
-
-        val params = mViewModel.getPaymentParams(type = AppConstants.TYPE_GENERIC)
-        try {
-            callCustomBrowser(
-                com.payu.paymentparamhelper.PayuConstants.UPI_INTENT,
-                params,
-                params.txnId,
-                PayuConstants.PRODUCTION_PAYMENT_URL,
-                isSpecificAppSet = true,
-                packageName = mViewModel.clickedAppPackageName.get()
-            )
-
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }/*
         when (mViewModel.clickedPositionForUpi.get()) {
-            *//*0 -> {
+            0 -> {
                 callAddUpiBottomSheet()
-            }
+            }/*
             1 -> {
                 callGooglePayIntent()
-            }*//*
+            }*/
             else -> {
+                val params = mViewModel.getPaymentParams(type = AppConstants.TYPE_GENERIC)
+                try {
+                    callCustomBrowser(
+                        com.payu.paymentparamhelper.PayuConstants.UPI_INTENT,
+                        params,
+                        params.txnId,
+                        PayuConstants.PRODUCTION_PAYMENT_URL,
+                        isSpecificAppSet = true,
+                        packageName = mViewModel.clickedAppPackageName.get()
+                    )
 
+                } catch (e: java.lang.Exception) {
+                    e.printStackTrace()
+                }
             }
-        }*/
+        }
     }
 
 

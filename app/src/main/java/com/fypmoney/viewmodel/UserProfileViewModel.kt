@@ -3,6 +3,9 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -83,6 +86,9 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
                         SharedPrefUtils.SF_KEY_PROFILE_IMAGE,
                         responseData.profileImageUploadResponseDetails?.accessUrl
                     )
+                    trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                        it.name = TrackrEvent.PROFILEIMAGE
+                    }
                     onProfileSuccess.value = true
 
                 }

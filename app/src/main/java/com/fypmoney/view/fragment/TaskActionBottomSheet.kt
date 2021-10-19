@@ -13,6 +13,9 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableField
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.model.ChoresTimeLineItem
@@ -170,6 +173,9 @@ class TaskActionBottomSheet(
                 ChoresActivity.mViewModel!!.callTaskAccept("ACCEPT", list.entityId.toString(), "")
             } else if (accept.text == "Pay") {
 
+                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.MISSIONPAID
+                }
                 onClickListener.onAcceptClicked(
                     56, comment.text?.trim()
                         .toString()
@@ -202,6 +208,9 @@ class TaskActionBottomSheet(
                         .toString()
                 )
             } else if (cancel.text == "Complete") {
+                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.MISSIONCOMPLETE
+                }
                 ChoresActivity.mViewModel!!.callTaskAccept(
                     "COMPLETE", list.entityId.toString(), comment.text?.trim()
                         .toString()

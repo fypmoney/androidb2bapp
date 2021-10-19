@@ -120,24 +120,7 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
         bottomSheet.show(supportFragmentManager, "CardSettings")
     }
 
-    open class CustomWebViewClient() : WebViewClient() {
 
-        override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-            view.loadUrl(url)
-            return true
-        }
-
-        override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-            super.onPageStarted(view, url, favicon)
-        }
-
-
-        override fun onPageFinished(view: WebView?, url: String?) {
-            super.onPageFinished(view, url)
-
-            //
-        }
-    }
 
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

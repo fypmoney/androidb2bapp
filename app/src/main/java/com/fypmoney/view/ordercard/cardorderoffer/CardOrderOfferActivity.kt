@@ -8,6 +8,10 @@ import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -24,7 +28,6 @@ import kotlinx.android.synthetic.main.toolbar.*
 class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOrderOfferVM>() {
     private lateinit var mViewModel: CardOrderOfferVM
     private lateinit var mBinding: ActivityCardOrderOfferBinding
-    private var mFirebaseAnalytics: FirebaseAnalytics? = null
 
     override fun getBindingVariable(): Int  =  BR.viewModel
 
@@ -51,7 +54,6 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
         }*/
         setUpView()
         setUpObserver()
-        mFirebaseAnalytics =  FirebaseAnalytics.getInstance(applicationContext)
     }
 
 
@@ -104,7 +106,14 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
                     applicationContext,
                     SharedPrefUtils.SF_KEY_USER_ID
                 ).toString())
-                mFirebaseAnalytics!!.logEvent("scratch_card_continue",bundle)
+                trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.SCRATCHCARDCONTINUE
+                    it.add(
+                        TrackrField.user_id,SharedPrefUtils.getLong(
+                            applicationContext,
+                            SharedPrefUtils.SF_KEY_USER_ID
+                        ).toString())
+                }
                 val intent = Intent(this@CardOrderOfferActivity,PersonaliseYourCardActivity::class.java)
                 intent.putExtra(ORDER_CARD_INFO,mViewModel.userOfferCard)
                 startActivity(intent)

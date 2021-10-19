@@ -3,6 +3,10 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -13,6 +17,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 
 /*
@@ -38,6 +43,14 @@ class AadhaarAccountActivationViewModel(application: Application) : BaseViewMode
     * This method is used to call auth login API
     * */
     fun callKycAccountActivationApi() {
+        trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.ACCOUNTACTIVATION
+            it.add(
+                TrackrField.user_id, SharedPrefUtils.getLong(
+                    PockketApplication.instance,
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+        }
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_KYC_ACTIVATE_ACCOUNT,

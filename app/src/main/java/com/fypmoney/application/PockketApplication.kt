@@ -2,16 +2,29 @@ package com.fypmoney.application
 
 import android.app.Activity
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.ContentResolver
 import android.content.Context
 import android.content.pm.ActivityInfo
+import android.media.AudioAttributes
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
+import com.fyp.trackr.base.Trackr
+import com.fypmoney.BuildConfig
+import com.fypmoney.R
+import com.fypmoney.notification.NotificationUtils
+import com.fypmoney.notification.NotificationUtils.PROMOTIONAL_CHANNEL_ID
+import com.fypmoney.notification.NotificationUtils.TRANSACTION_CHANNEL_ID
 import com.fypmoney.util.SharedPrefUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.moengage.core.DataCenter
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.google.GoogleEmojiProvider
+import com.moengage.core.MoEngage
 
 
 /**
@@ -19,23 +32,19 @@ import com.vanniktech.emoji.google.GoogleEmojiProvider
  */
 
 class PockketApplication : Application() {
-    var appUpdateRequired:Boolean = false
+    var appUpdateRequired: Boolean = false
+
     companion object {
         lateinit var instance: PockketApplication
             private set
     }
 
     override fun onCreate() {
+        // register trackr
+        Trackr.register(this)
         super.onCreate()
         instance = this
         EmojiManager.install(GoogleEmojiProvider())
-        val appToken = "buqdhv6bqlts"
-        val environment = AdjustConfig.ENVIRONMENT_PRODUCTION
-        val config = AdjustConfig(this, appToken, environment)
-        Adjust.onCreate(config)
-        registerActivityLifecycleCallbacks(AdjustLifecycleCallbacks())
-        //var appSignature = AppSignatureHelper(this)
-        //appSignature.appSignatures
 
         //Check User is logged in or not.
         if(SharedPrefUtils.getBoolean(
@@ -45,34 +54,33 @@ class PockketApplication : Application() {
             setUserForCrashReports(this)
         }
 
+        NotificationUtils.createNotificationChannel(applicationContext=this,
+            channelId = TRANSACTION_CHANNEL_ID,
+            channelName = "FYP Transaction",
+            channelDescription = "Notification channel related to transaction notification",
+            notificationImportance = NotificationManager.IMPORTANCE_DEFAULT
+        )
+        NotificationUtils.createNotificationChannel(applicationContext=this,
+            channelId = PROMOTIONAL_CHANNEL_ID,
+            channelName = "FYP Promotional",
+            channelDescription = "Promotional Notification",
+            notificationImportance = NotificationManager.IMPORTANCE_DEFAULT
+        )
+        // init analytics
+
+        // init analytics
+        Trackr.setLogLevel(if (BuildConfig.DEBUG) Trackr.LogLevel.ANALYTICS else Trackr.LogLevel.PROD)
+        Trackr.initialize(
+            this,
+            BuildConfig.ADJUST_PROD_KEY,
+            BuildConfig.MOENAGE_KEY,
+            R.drawable.ic_notification,
+            R.mipmap.ic_launcher_round,
+            R.color.colorPrimary
+        )
+
     }
-    private class AdjustLifecycleCallbacks : ActivityLifecycleCallbacks {
-        override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-                activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-        }
 
-        override fun onActivityStarted(activity: Activity) {
-        }
-
-        override fun onActivityResumed(activity: Activity) {
-            Adjust.onResume()
-        }
-
-        override fun onActivityPaused(activity: Activity) {
-            Adjust.onPause()
-        }
-
-        override fun onActivityStopped(activity: Activity) {
-        }
-
-        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-        }
-
-        override fun onActivityDestroyed(activity: Activity) {
-        }
-    }
 
     private fun setUserForCrashReports(context: Context) {
         try {
@@ -97,4 +105,6 @@ class PockketApplication : Application() {
             FirebaseCrashlytics.getInstance().recordException(e)
         }
     }
+
+
 }

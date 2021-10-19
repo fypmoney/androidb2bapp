@@ -922,6 +922,13 @@ Coming really soon!
     <string name="recharge_amp_bill_payments"><![CDATA[Recharge & Bill Payments]]></string>
     <string name="offer_details">Offer details</string>
     <string name="expiry_date">Expiry Date:-</string>
+    <string name="app_update_failed_please_try_again_on_the_next_app_launch">App Update failed, please try again on the next app launch.</string>
+    <string name="already_have_a_physical_card">Already have a physical card?</string>
+    <string name="tap_here_to_activate"><u>Tap here to activate.</u></string>
+    <string name="scan_kit_number">Scan Kit Number</string>
+    <string name="or_manually_enter_10_digit_kit_number">Or manually enter 10 digit kit number</string>
+    <string name="please_scan_valid_qr_code">Please scan valid Qr Code</string>
+
     <string name="overview">Overview</string>
     <string name="spinners">Spinners</string>
     <string name="history">History</string>
