@@ -22,8 +22,6 @@
                 android:id="@+id/back"
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
-
-
                 tools:visibility="visible"
                 android:layout_marginEnd="10dp"
                 android:tint="@color/white"
@@ -56,7 +54,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/guideline"
-                android:background="@drawable/bottom_curved_44"
                 android:clipChildren="false"
                 >
 
@@ -95,8 +92,9 @@
                     android:layout_height="wrap_content">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         android:layout_marginStart="@dimen/_22sdp"
                         android:layout_marginTop="@dimen/_8sdp">
 
@@ -113,7 +111,22 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="@dimen/_14sdp"
                             tools:text="Myntra"
+                            android:layout_weight=".5"
                             android:textColor="@color/text_color_dark" />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+                            android:id="@+id/view_details_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/link_color"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="end"
+                            android:layout_weight=".5"
+                            android:layout_marginEnd="@dimen/dp16"
+                            android:text="@string/visit_store"/>
+
 
                     </LinearLayout>
 

@@ -8,6 +8,7 @@ import com.fyp.trackr.models.UserTrackr
 import com.fyp.trackr.models.login
 import com.fyp.trackr.models.push
 import com.fypmoney.BuildConfig
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -21,9 +22,13 @@ import com.fypmoney.model.SettingsResponse
 import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
+import com.fypmoney.util.AppConstants.ERROR_MESSAGE_HOME
+import com.fypmoney.util.AppConstants.IS_NEW_FEED_AVAILABLE
 import com.fypmoney.util.AppConstants.REFEREE_CASHBACK
 import com.fypmoney.util.AppConstants.REFER_LINE1
 import com.fypmoney.util.AppConstants.REFER_LINE2
+import com.fypmoney.util.AppConstants.REFER_MSG_SHARED_1
+import com.fypmoney.util.AppConstants.REFER_MSG_SHARED_2
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_APP_VERSION_CODE
 import com.fypmoney.util.Utility
@@ -126,7 +131,9 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
             "REFER_LINE2",
             "REFEREE_CASHBACK",
             "REFERAL_PKYC0",
-            "REFERAL_PKYC1"
+            "REFERAL_PKYC1",
+            "ERROR_MESSAGE_HOME",
+            "IS_NEW_FEED_AVAILABLE"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -212,7 +219,7 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                     it.value
                                 )
                             }
-                            AppConstants.REFER_MSG_SHARED_1 -> {
+                            REFER_MSG_SHARED_1 -> {
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_REFFERAL_MSG,
@@ -220,7 +227,7 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                 )
                             }
 
-                            AppConstants.REFER_MSG_SHARED_2 -> {
+                            REFER_MSG_SHARED_2 -> {
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_REFFERAL_MSG_2,
@@ -248,6 +255,12 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                     it.value
                                 )
 
+                            }
+                            ERROR_MESSAGE_HOME -> {
+                                PockketApplication.homeScreenErrorMsg = it.value
+                            }
+                            IS_NEW_FEED_AVAILABLE -> {
+                                PockketApplication.isNewFeedAvailableData = it
                             }
                         }
                     }

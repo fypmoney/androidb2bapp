@@ -21,11 +21,9 @@ import java.lang.Exception
 * This class is used for handling aadhaar verification using otp
 * */
 class OffersDetailsViewModel(application: Application) : BaseViewModel(application) {
-    init {
-
-    }
 
     var offerDetail: MutableLiveData<Offers> = MutableLiveData()
+    var action: MutableLiveData<OfferAction> = MutableLiveData()
     fun callFetchFeedsApi(id: String?) {
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -62,7 +60,7 @@ class OffersDetailsViewModel(application: Application) : BaseViewModel(applicati
 
         val feedRequestModel = FeedRequestModel()
         feedRequestModel.query =
-            "{getAllFeed(page:0, size:null, id : \"$id\", screenName:\"OFFER\",screenSection:null,tags :[],latitude:null,longitude:null,withinRadius:null,displayCard: []) { total feedData  { offers { innerBannerImg logoImg title code date details tnc }}}}"
+            "{getAllFeed(page:0, size:null, id : \"$id\", screenName:\"OFFER\",screenSection:null,tags :[],latitude:null,longitude:null,withinRadius:null,displayCard: []) { total feedData  { action { url } offers { innerBannerImg logoImg title code date details tnc }}}}"
 
 
         return feedRequestModel
@@ -77,7 +75,7 @@ class OffersDetailsViewModel(application: Application) : BaseViewModel(applicati
                 var feeds = getObject(responseData.toString(), OfferDetailResponse::class.java)
                 if (feeds is OfferDetailResponse) {
                     offerDetail.postValue(feeds.data?.getAllFeed?.feedData?.get(0)?.offers)
-
+                    action.value = feeds.data?.getAllFeed?.feedData?.get(0)?.action
                 }
             }
 

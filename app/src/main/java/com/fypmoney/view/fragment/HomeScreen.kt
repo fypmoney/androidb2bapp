@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ScreenHomeBinding
@@ -19,6 +20,8 @@ import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.RedeemDetailsResponse
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_ERROR_MESSAGE_HOME
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.TopTenUsersAdapter
@@ -72,7 +75,17 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
             mViewModel.callSplitBillsStories()
 
         }
+        checkForErrorNotice()
+    }
 
+    private fun checkForErrorNotice() {
+        PockketApplication.homeScreenErrorMsg?.let{
+            if(it.isNotEmpty()){
+                mViewBinding.noticeAlertFl.visibility = View.VISIBLE
+                mViewBinding.noticeTv.text = it
+            }
+
+        }
     }
 
 

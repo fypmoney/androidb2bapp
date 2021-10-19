@@ -11,16 +11,19 @@ import android.media.AudioAttributes
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
 import com.fyp.trackr.base.Trackr
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
+import com.fypmoney.model.KeysFound
 import com.fypmoney.notification.NotificationUtils
 import com.fypmoney.notification.NotificationUtils.PROMOTIONAL_CHANNEL_ID
 import com.fypmoney.notification.NotificationUtils.TRANSACTION_CHANNEL_ID
 import com.fypmoney.util.SharedPrefUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.moe.pushlibrary.MoEHelper
 import com.moengage.core.DataCenter
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.google.GoogleEmojiProvider
@@ -36,7 +39,8 @@ class PockketApplication : Application() {
 
     companion object {
         lateinit var instance: PockketApplication
-            private set
+        var homeScreenErrorMsg: String? = null
+        var isNewFeedAvailableData: KeysFound? = null
     }
 
     override fun onCreate() {
@@ -79,6 +83,8 @@ class PockketApplication : Application() {
             R.color.colorPrimary
         )
 
+        val contextList = arrayListOf("C1", "C2", "C3", "C4")
+        MoEHelper.getInstance(this).appContext = contextList
     }
 
 

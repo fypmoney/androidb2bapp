@@ -237,6 +237,8 @@ object AppConstants {
     const val REFER_LINE1 = "REFER_LINE1"
     const val REFER_LINE2 = "REFER_LINE2"
     const val REFEREE_CASHBACK = "REFEREE_CASHBACK"
+    const val ERROR_MESSAGE_HOME = "ERROR_MESSAGE_HOME"
+    const val IS_NEW_FEED_AVAILABLE = "IS_NEW_FEED_AVAILABLE"
     const val PHYSICAL_CARD_CODE = "PHYCRD"
     const val ORDER_CARD_INFO = "order_card_info"
     const val REFER_CODE_CHECKING_VARIABLE = "$@%$"

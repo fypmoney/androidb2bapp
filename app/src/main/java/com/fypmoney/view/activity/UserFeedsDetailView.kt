@@ -1,7 +1,10 @@
 package com.fypmoney.view.activity
 
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -111,11 +114,28 @@ class UserFeedsDetailView : BaseActivity<ViewUserFeedsDetailBinding, FeedDetails
             }
 
         }
+        mViewBinding.toolbar1.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.action_share->{
+                        mViewModel.feedDetails.get()!!.action?.url?.let { it2 ->
+                            shareLink(
+                                it2
+                            )
 
+                    }
+                        true
+                }else -> {
+                        false
+                }
+            }
+        }
 
     }
 
-
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_blogs, menu)
+        return true
+    }
 
 
 }

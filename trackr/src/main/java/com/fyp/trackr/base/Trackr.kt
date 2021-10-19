@@ -289,6 +289,8 @@ object Trackr {
         }
 
         override fun onActivityDestroyed(activity: Activity) {
+            app?.applicationContext?.let { MoEHelper.getInstance(it).resetAppContext() }
+
         }
     }
 

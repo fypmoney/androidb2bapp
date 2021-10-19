@@ -578,4 +578,15 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         startActivity(intent)
     }
 
+    fun shareLink(url: String){
+        val sendIntent = Intent()
+        sendIntent.action = Intent.ACTION_SEND
+        sendIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            url
+        )
+        sendIntent.type = "text/plain"
+        startActivity(sendIntent)
+    }
+
 }

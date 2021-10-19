@@ -41,6 +41,7 @@ import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
 import com.fyp.trackr.services.TrackrServices
+import com.fypmoney.application.PockketApplication
 import java.lang.RuntimeException
 
 
@@ -129,6 +130,9 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                     setupHome()
                 }
                 R.id.feeds -> {
+                    val badge = mViewBinding.navigationView.getOrCreateBadge(R.id.feeds)
+                    badge.clearNumber()
+                    badge.isVisible = false
                     setupFeeds()
                 }
                 R.id.store -> {
@@ -143,6 +147,22 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
 
             }
             true
+        }
+
+        setupBadegs()
+    }
+
+    private fun setupBadegs() {
+        PockketApplication.isNewFeedAvailableData?.let{
+            val badge = mViewBinding.navigationView.getOrCreateBadge(R.id.feeds)
+             it.value.toIntOrNull()?.let { count->
+                 if(count!=0){
+                     badge.isVisible = true
+                     badge.number = count
+                 }else{
+                     badge.isVisible = false
+                 }
+            }
         }
     }
 

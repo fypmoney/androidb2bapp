@@ -43,6 +43,8 @@ class SharedPrefUtils {
         const val SF_KEY_REFER_LINE1 = "refer_line_1"
         const val SF_KEY_REFER_LINE2 = "refer_line_2"
         const val SF_KEY_REFEREE_CASHBACK = "refer_cashback_amount"
+        const val SF_KEY_ERROR_MESSAGE_HOME = "error_msg_home"
+        const val SF_KEY_IS_NEW_FEED_AVAILABLE = "is_new_feed_available"
         const val SF_KEY_NAME_ON_CARD = "name_on_card"
         const val SF_KEY_USER_DELIVERY_ADDRESS = "delivery_addres"
         const val SF_KEY_IS_ORDER_SCARTCH_CODE_DONE = "order_on_card_scratch_done"
