@@ -17,7 +17,6 @@ import kotlin.math.roundToInt
 class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, RewardsAndVM>() {
     companion object {
         var page = 0
-
     }
 
     private var mViewBinding: FragmentRewardHistoryBinding? = null
@@ -62,14 +61,18 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
         sharedViewModel.rewardSummaryStatus.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
-
                 mViewBinding?.contraint?.visibility = View.VISIBLE
                 mViewBinding?.shimmerLayout?.visibility = View.GONE
                 mViewBinding?.shimmerLayout?.stopShimmer()
                 mViewBinding?.totalearned?.text = Utility.convertToRs(list.totalPoints.toString())
                 mViewBinding?.burnedPoints?.text = Utility.convertToRs(list.burntPoints.toString())
-                mViewBinding?.statsProgressbar?.progress =
-                    ((list.burntPoints?.div(list.totalPoints!!))!! * 100).roundToInt()
+                if((list.burntPoints != 0.0f) and (list.totalPoints != 0.0f)){
+                    mViewBinding?.statsProgressbar?.progress =
+                        ((list.burntPoints?.div(list.totalPoints!!))!! * 100).roundToInt()
+                }else{
+                    mViewBinding?.statsProgressbar?.progress =0
+                 }
+
                 mViewBinding?.pointsLeft?.text =
                     Utility.convertToRs(list.remainingPoints.toString())
             })
