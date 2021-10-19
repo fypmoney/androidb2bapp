@@ -58,6 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_24sdp"
+                    android:padding="@dimen/_6sdp"
                     app:srcCompat="@drawable/ic_share"
                     android:onClick="@{()->viewmodel.shareCode()}"
                     app:layout_constraintBottom_toBottomOf="@+id/referal_code_value_tv"

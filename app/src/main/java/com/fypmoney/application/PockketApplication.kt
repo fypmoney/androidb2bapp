@@ -21,8 +21,10 @@ import com.fypmoney.notification.NotificationUtils.PROMOTIONAL_CHANNEL_ID
 import com.fypmoney.notification.NotificationUtils.TRANSACTION_CHANNEL_ID
 import com.fypmoney.util.SharedPrefUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.moengage.core.DataCenter
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.google.GoogleEmojiProvider
+import com.moengage.core.MoEngage
 
 
 /**
@@ -30,7 +32,8 @@ import com.vanniktech.emoji.google.GoogleEmojiProvider
  */
 
 class PockketApplication : Application() {
-    var appUpdateRequired:Boolean = false
+    var appUpdateRequired: Boolean = false
+
     companion object {
         lateinit var instance: PockketApplication
             private set

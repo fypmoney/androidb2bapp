@@ -40,6 +40,9 @@ object AppConstants {
     const val FEED_TYPE_VIDEO = "VIDEO"
     const val FEED_TYPE_DID_YOU_KNOW = "DIDYOUKNOW"
     const val FEED_TYPE_STATIC_IMAGE = "STATICIMAGE"
+    const val FEED_TYPE_STATIC_IMAGE1x1 = "STATICIMAGE1X1"
+    const val IN_APP_WEBVIEW1x1 = "INAPPWEB1X1"
+
     const val FEED_TYPE_BLOG = "BLOG"
     const val FEED_TYPE_DEEPLINK = "DEEPLINK"
     const val FEED_TYPE_INAPPWEB = "INAPPWEB"
@@ -228,10 +231,15 @@ object AppConstants {
     const val Accepted = "Accepted"
     const val Completed = "Complete"
     const val Pay = "Pay"
+    const val REFER_MSG_SHARED_1 = "REFERAL_PKYC0"
+    const val REFER_MSG_SHARED_2 = "REFERAL_PKYC1"
     const val CARD_ORDER_FLAG = "CARD_ORDER_FLAG"
     const val REFER_LINE1 = "REFER_LINE1"
     const val REFER_LINE2 = "REFER_LINE2"
     const val REFEREE_CASHBACK = "REFEREE_CASHBACK"
     const val PHYSICAL_CARD_CODE = "PHYCRD"
     const val ORDER_CARD_INFO = "order_card_info"
+    const val REFER_CODE_CHECKING_VARIABLE = "$@%$"
+
+
 }

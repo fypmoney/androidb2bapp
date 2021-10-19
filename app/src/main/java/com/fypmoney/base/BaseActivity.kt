@@ -46,10 +46,14 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.AddMoneySuccessBottomSheet
 import com.fypmoney.view.activity.HomeView
 import com.fypmoney.view.activity.LoginView
+import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+import com.fypmoney.view.webview.WebViewActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors.newSingleThreadExecutor
+import android.R.string
 
 
 /**
@@ -432,24 +436,64 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
 
 
         if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
-            sendIntent.putExtra(
-                Intent.EXTRA_TEXT,
-                getString(
-                    R.string.share_refral_code_34,
-                    PLAY_STORE_URL
+            if (!SharedPrefUtils.getString(
+                    applicationContext,
+                    SharedPrefUtils.SF_REFFERAL_MSG_2
+                ).isNullOrEmpty()
+            ) {
+                sendIntent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    SharedPrefUtils.getString(
+                        applicationContext,
+                        SharedPrefUtils.SF_REFFERAL_MSG_2
+                    )
                 )
-            )
+
+            } else {
+                sendIntent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    getString(
+                        R.string.share_refral_code_34,
+                        PLAY_STORE_URL
+                    )
+                )
+
+            }
 
         } else {
-            sendIntent.putExtra(
-                Intent.EXTRA_TEXT,
-                getString(
-                    R.string.share_refral_code,
-                    Utility.getCustomerDataFromPreference()?.referralCode,
-                    CASHBACK_AMOUNT,
-                    PLAY_STORE_URL
+
+            if (!SharedPrefUtils.getString(
+                    applicationContext,
+                    SharedPrefUtils.SF_REFFERAL_MSG
+                ).isNullOrEmpty()
+            ) {
+
+
+                var code = Utility.getCustomerDataFromPreference()?.referralCode
+
+                var redferMsg = SharedPrefUtils.getString(
+                    applicationContext,
+                    SharedPrefUtils.SF_REFFERAL_MSG
                 )
-            )
+
+                var newString =
+                    code?.let { redferMsg?.replace(AppConstants.REFER_CODE_CHECKING_VARIABLE, it) }
+                sendIntent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    newString
+                )
+
+            } else {
+                sendIntent.putExtra(
+                    Intent.EXTRA_TEXT,
+                    getString(
+                        R.string.share_refral_code_34,
+                        PLAY_STORE_URL
+                    )
+                )
+
+            }
+
         }
 
 
@@ -526,4 +570,12 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         }
 
     }
+
+     fun openWebPageFor(title: String, url: String) {
+        val intent = Intent(this@BaseActivity, WebViewActivity::class.java)
+        intent.putExtra(ARG_WEB_URL_TO_OPEN, url)
+        intent.putExtra(ARG_WEB_PAGE_TITLE, title)
+        startActivity(intent)
+    }
+
 }

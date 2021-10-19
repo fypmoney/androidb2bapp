@@ -112,6 +112,8 @@ object ApiConstant {
         "services/PockketService/api/list/reward-product"
     const val API_GET_REWARD_EARNINGS =
         "services/PockketService/api/total-cashback-earned"
+    const val API_POST_CHECK_OFFLINE_CARD =
+        "/services/PockketService/api/order-card/offline"
 
 }
 

@@ -141,7 +141,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                         )
 
                     }
-
+                    onApiSuccess.value = true
 
                 }
             }
@@ -158,13 +158,29 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                     it.value
                                 )
                             }
+                            AppConstants.REFER_MSG_SHARED_1 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_REFFERAL_MSG,
+                                    it.value
+                                )
+                            }
+
+                            AppConstants.REFER_MSG_SHARED_2 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_REFFERAL_MSG_2,
+                                    it.value
+                                )
+                            }
                             AppConstants.REFER_LINE1 -> {
-                            SharedPrefUtils.putString(
-                                getApplication(),
-                                SharedPrefUtils.SF_KEY_REFER_LINE1,
-                                it.value
-                            )
-                        }
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_KEY_REFER_LINE1,
+                                    it.value
+                                )
+                            }
+
                             AppConstants.REFER_LINE2 -> {
                                 SharedPrefUtils.putString(
                                     getApplication(),
@@ -172,6 +188,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                     it.value
                                 )
                             }
+
                             AppConstants.REFEREE_CASHBACK -> {
                                 SharedPrefUtils.putString(
                                     getApplication(),
