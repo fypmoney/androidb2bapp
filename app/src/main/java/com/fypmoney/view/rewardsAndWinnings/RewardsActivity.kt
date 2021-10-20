@@ -142,6 +142,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         super.onStart()
         mViewModel?.callTotalRewardsEarnings()
         mViewModel?.callRewardSummary()
+        mViewModel?.callRewardHistory()
 
     }
 
@@ -155,7 +156,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         adapter.addFragment(RewardHistoryFragment(), getString(R.string.history))
 
         viewPager.adapter = adapter
-//        viewPager.offscreenPageLimit=0
+        viewPager.offscreenPageLimit = 3
 
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.getTabAt(0)?.view?.background = ContextCompat.getDrawable(

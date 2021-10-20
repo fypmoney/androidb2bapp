@@ -20,6 +20,7 @@ import com.google.gson.JsonParser
 
 class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
+    var rewardHistoryList: MutableLiveData<ArrayList<RewardHistoryResponseNew>> = MutableLiveData()
 
     var latitude = ObservableField<Double>()
 
@@ -53,6 +54,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         callRewardProductList()
 
         callFetchFeedsApi()
+        callRewardHistory()
     }
 
 
@@ -184,11 +186,41 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         return Gson().fromJson(response, instance)
     }
 
+    fun callRewardHistory() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.RewardsHistory,
+                NetworkUtil.endURL(ApiConstant.RewardsHistory),
+                ApiUrl.GET,
+                param = QueryPaginationParams(
+
+                    0,
+                    3,
+                    "createdDate,desc"
+                ),
+                this, isProgressBar = false
+            )
+        )
+    }
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         loading.postValue(false)
         when (purpose) {
+            ApiConstant.RewardsHistory -> {
+
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson<Array<RewardHistoryResponseNew>>(
+                    json.get("data").toString(),
+                    Array<RewardHistoryResponseNew>::class.java
+                )
+                val arrayList = ArrayList(array.toMutableList())
+                rewardHistoryList.postValue(arrayList)
+
+
+            }
             ApiConstant.API_FETCH_ALL_FEEDS -> {
                 var feeds = getObject(responseData.toString(), FeedResponseModel::class.java)
                 if (feeds is FeedResponseModel) {

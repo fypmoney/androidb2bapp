@@ -11,13 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/showHistory"
+
+            android:layout_below="@+id/contraint" />
+
         <Button
             android:id="@+id/showHistory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/contraint"
+            android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_36sdp"
+            android:layout_marginTop="@dimen/dp6"
+            android:layout_marginBottom="@dimen/_6sdp"
             android:backgroundTint="@color/cb_dark_grey"
             android:text="Show Reward History" />
 
@@ -209,7 +218,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_12sdp"
-
+                android:layout_marginBottom="@dimen/_12sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
                 android:weightSum="2"
                 app:layout_constraintBottom_toBottomOf="parent"

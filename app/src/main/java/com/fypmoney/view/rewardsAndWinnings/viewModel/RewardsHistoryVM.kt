@@ -11,6 +11,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.GetTaskResponse
+import com.fypmoney.model.QueryPaginationParams
 import com.fypmoney.model.RewardHistoryResponseNew
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -29,7 +30,12 @@ class RewardsHistoryVM(application: Application) : BaseViewModel(application) {
                 ApiConstant.RewardsHistory,
                 NetworkUtil.endURL(ApiConstant.RewardsHistory),
                 ApiUrl.GET,
-                param = page,
+                param = QueryPaginationParams(
+
+                    page,
+                    10,
+                    "createdDate,desc"
+                ),
                 this, isProgressBar = false
             )
         )

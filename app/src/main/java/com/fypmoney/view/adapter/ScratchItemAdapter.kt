@@ -49,6 +49,7 @@ class ScratchItemAdapter(
             clickInterface.onItemClicked(position)
         })
         holder.desc.text = items[position].description
+        holder.burnAmount.text = items[position].appDisplayText
         Glide.with(context).load(items[position].listResource).into(holder.bg)
 //        holder.coins_to_be_burn.text=items[position].appDisplayText
 //        holder.desc.text=items[position].description

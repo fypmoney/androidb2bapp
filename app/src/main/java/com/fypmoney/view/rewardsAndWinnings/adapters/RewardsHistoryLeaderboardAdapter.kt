@@ -1,4 +1,4 @@
-package com.fypmoney.view.adapter
+package com.fypmoney.view.rewardsAndWinnings.adapters
 
 
 import android.content.Context
@@ -11,8 +11,8 @@ import com.fypmoney.R
 import com.fypmoney.model.HistoryItem
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.view.rewardsAndWinnings.model.RewardHistoryResponse2
-import com.fypmoney.view.interfaces.ListItemClickListener
+import com.fypmoney.view.interfaces.ListContactClickListener
+import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
 import kotlinx.android.synthetic.main.reward_history_item_leaderboard.view.*
 
 import java.util.*
@@ -21,7 +21,7 @@ import java.util.*
 class RewardsHistoryLeaderboardAdapter(
     val items: ArrayList<HistoryItem>,
     val context: Context,
-    val clickInterface: ListItemClickListener
+    val clickInterface: ListRewardsItemClickListener
 ) : RecyclerView.Adapter<RewardsHistoryLeaderboardAdapter.ViewHolder>() {
 
     private var mLastClickTime: Long = 0
@@ -102,7 +102,7 @@ class RewardsHistoryLeaderboardAdapter(
 
         holder.card.setOnClickListener(View.OnClickListener {
 //            if(items[position].isFullFilled==AppConstants.NO)
-            clickInterface.onItemClicked(position)
+            clickInterface.onItemClicked(items[position])
         })
 
 

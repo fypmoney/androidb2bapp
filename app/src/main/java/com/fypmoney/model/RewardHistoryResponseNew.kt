@@ -1,8 +1,8 @@
 package com.fypmoney.model
 
 data class RewardHistoryResponseNew(
-	val date: String? = null,
-	val history: List<HistoryItem?>? = null
+    val date: String? = null,
+    var history: ArrayList<HistoryItem?>? = null
 )
 
 data class HistoryItem(

@@ -34,8 +34,6 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
 
 
     val enableSpin = MutableLiveData<Boolean>()
-    val coinVisibilty = ObservableField(false)
-
     val spinnerClickable = ObservableField(true)
 
     val onPlayClicked = MutableLiveData<Boolean>()
@@ -112,7 +110,7 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
     fun onPlayClicked() {
         spinnerClickable.set(false)
         onPlayClicked.value = true
-        coinVisibilty.set(false)
+
     }
 
     /*

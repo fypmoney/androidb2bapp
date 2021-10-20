@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_36sdp"
+                    android:layout_marginBottom="@dimen/_42sdp"
                     android:src="@drawable/ic_wheel_of_fortune" />
 
 
@@ -66,8 +66,8 @@
 
                     <com.fypmoney.util.spinwheel.LuckyWheelView
                         android:id="@+id/luckyWheelView"
-                        android:layout_width="250dp"
-                        android:layout_height="250dp"
+                        android:layout_width="300dp"
+                        android:layout_height="300dp"
                         android:scrollbarFadeDuration="30"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -124,48 +124,7 @@
                     android:visibility="gone"
                     app:backgroundTint="@color/text_color_dark" />
 
-                <LinearLayout
-                    android:id="@id/layout"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="60dp"
-                    android:layout_height="wrap_content"
-                    android:visibility="@{viewModel.coinVisibilty?View.VISIBLE:View.INVISIBLE}"
-                    android:layout_below="@+id/btnSpinWheel"
-                    android:layout_centerHorizontal="true">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/coin"
-                        android:layout_width="@dimen/_24sdp"
-                        android:src="@drawable/cash"
-
-                        android:layout_height="@dimen/_24sdp"
-
-                        android:adjustViewBounds="true" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/verification_title1"
-                        style="@style/TextviewBold"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:layout_marginStart="@dimen/_4sdp"
-
-                        android:layout_gravity="center_vertical"
-                        android:text="@{viewModel.totalRewards}"
-                        android:textSize="@dimen/_18sdp" />
-                </LinearLayout>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/text1"
-                    style="@style/TextviewBold"
-                    android:textColor="@color/text_color_light"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/btnSpinWheel"
-                    android:layout_centerHorizontal="true"
-                    android:layout_gravity="center"
-                    android:textSize="16sp"
-
-                    android:layout_marginTop="20dp"
-                    android:text="@string/rewards_won" />
 
 
             </RelativeLayout>

@@ -17,7 +17,8 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.ErrorBottomSpinProductSheet
 import com.fypmoney.view.rewardsAndWinnings.viewModel.SpinWheelProductViewModel
-import kotlinx.android.synthetic.main.dialog_burn_mynts.*
+import kotlinx.android.synthetic.main.dialog_cash_won.*
+
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_spin_wheel_black.*
 
@@ -90,7 +91,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
 
             luckyWheelView.setLuckyRoundItemSelectedListener {
-                mViewModel.coinVisibilty.set(true)
+
                 sectionArrayList.forEach { item ->
 
                     if (item.id == sectionId.toString()) {
@@ -128,6 +129,14 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
         wlp?.width = ViewGroup.LayoutParams.MATCH_PARENT
 
 
+        if (sectionValue == "0") {
+            dialogDialog?.congrats_tv?.visibility = View.GONE
+            dialogDialog?.textView?.visibility = View.GONE
+            dialogDialog?.clicked?.text = getString(R.string.continue_txt)
+            dialogDialog?.luckonside_tv?.visibility = View.GONE
+        }
+
+
         dialogDialog?.textView?.text =
             "your wallet will be updated with ₹ " + Utility.convertToRs(sectionValue)
 
@@ -137,7 +146,12 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
 
         dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
-            mViewModel.callSpinWheelApi(orderId)
+            if (dialogDialog?.clicked?.text == getString(R.string.continue_txt)) {
+                finish()
+            } else {
+                mViewModel.callSpinWheelApi(orderId)
+            }
+
         })
 
 

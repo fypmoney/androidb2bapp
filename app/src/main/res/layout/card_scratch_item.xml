@@ -9,39 +9,35 @@
     android:layout_marginEnd="@dimen/_6sdp"
     android:layout_marginTop="@dimen/_6sdp"
     app:cardCornerRadius="@dimen/_20sdp"
-    android:paddingTop="@dimen/_6sdp"
-    android:paddingBottom="@dimen/_4sdp"
-    android:id="@+id/bg_card"
-
-    android:paddingLeft="@dimen/_6sdp"
-    android:paddingRight="@dimen/_6sdp"
+    android:backgroundTint="@android:color/transparent"
 
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:padding="@dimen/_6sdp"
+
         android:layout_height="wrap_content">
 
-
-        <RelativeLayout
-            android:id="@+id/card_bg"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_146sdp"
-            android:visibility="gone"
-            android:alpha=".40"
-            android:background="@drawable/round_backgorund_20"
-            android:backgroundTint="#9b5aa7"
-            android:elevation="-1dp"
-            app:cardCornerRadius="18dp"
+        <androidx.cardview.widget.CardView
+            android:layout_width="0dp"
+            android:alpha=".80"
+            android:id="@+id/bg_card"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="0dp" />
+
 
         <ImageView
             android:id="@+id/image_illus"
             android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
             android:layout_height="@dimen/_120sdp"
             android:scaleType="fitXY"
 
@@ -54,12 +50,13 @@
 
         <TextView
             android:id="@+id/desc"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
             android:elevation="@dimen/_2sdp"
 
-
+            android:layout_marginLeft="@dimen/_6sdp"
+            android:layout_marginRight="@dimen/_6sdp"
             android:text="Redeem 200 FypMynts to spin the wheel. And get exciting rewards"
             android:textColor="@color/cb_grey"
 
@@ -74,6 +71,14 @@
             android:drawableLeft="@drawable/ic_mynt_coin"
             android:text="1000"
             android:id="@+id/burn_amount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="@dimen/_6sdp"
+            android:layout_marginRight="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
             style="@style/TextviewBold"
             android:alpha=".70"
             android:textSize="14sp"

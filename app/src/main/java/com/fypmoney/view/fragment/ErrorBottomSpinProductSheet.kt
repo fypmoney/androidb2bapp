@@ -62,13 +62,12 @@ class ErrorBottomSpinProductSheet(
             AppConstants.ERROR_TYPE_SPIN_ALLOWED -> {
                 text.text = getString(R.string.oops)
                 heading.text = getString(R.string.oop)
-                mViewModel.coinVisibilty.set(true)
+
                 mViewModel.spinnerClickable.set(true)
 
             }
             else -> {
                 heading.text = getString(R.string.oo_error)
-                mViewModel.coinVisibilty.set(true)
 
             }
         }

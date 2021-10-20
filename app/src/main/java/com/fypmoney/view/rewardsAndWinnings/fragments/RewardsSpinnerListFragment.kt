@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
+import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.databinding.FragmentSpinnerListBinding
 import com.fypmoney.model.aRewardProductResponse
 import com.fypmoney.util.AppConstants
@@ -160,7 +161,11 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
         dialogDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        dialogDialog?.spin_green?.let { Glide.with(requireContext()).load(detailResource).into(it) }
+        dialogDialog?.spin_green?.let {
+            Glide.with(requireContext()).load(detailResource).placeholder(
+                shimmerDrawable()
+            ).into(it)
+        }
 
         if (appDisplayText != null) {
             dialogDialog?.amount_to_enter?.text = appDisplayText

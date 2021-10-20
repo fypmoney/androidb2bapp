@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.facebook.shimmer.ShimmerDrawable
 import com.fypmoney.R
+import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.model.aRewardProductResponse
 import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.view.interfaces.ListItemClickListener
@@ -46,7 +48,8 @@ class SpinnerAdapter(
         holder.coins_to_be_burn.text = items[position].appDisplayText
         holder.desc.text = items[position].description
 
-        Glide.with(context).load(items[position].listResource).into(holder.bg)
+        Glide.with(context).load(items[position].listResource).placeholder(shimmerDrawable())
+            .into(holder.bg)
 
     }
 

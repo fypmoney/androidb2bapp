@@ -3,7 +3,6 @@ package com.fypmoney.view.rewardsAndWinnings.activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,12 +12,14 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.PaginationListener
 import com.fypmoney.databinding.ViewRewardHistoryBinding
 import com.fypmoney.model.HistoryItem
+import com.fypmoney.model.RewardHistoryResponseNew
 
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.adapter.RewardsHistoryLeaderboardAdapter
-import com.fypmoney.view.fragment.YourTasksFragment
+import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryLeaderboardAdapter
+import com.fypmoney.view.interfaces.ListContactClickListener
+import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryBaseAdapter
+import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
 
-import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsHistoryVM
 import kotlinx.android.synthetic.main.fragment_reward_history.view.*
 import kotlinx.android.synthetic.main.fragment_your_task.view.*
@@ -47,9 +48,9 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
         return R.layout.view_reward_history
     }
 
-    private var itemsArrayList: ArrayList<HistoryItem> = ArrayList()
+    private var itemsArrayList: ArrayList<RewardHistoryResponseNew> = ArrayList()
     private var isLoading = false
-    private var typeAdapterHistory: RewardsHistoryLeaderboardAdapter? = null
+    private var typeAdapterHistory: RewardsHistoryBaseAdapter? = null
     override fun getViewModel(): RewardsHistoryVM {
         mVM = ViewModelProvider(this).get(RewardsHistoryVM::class.java)
 
@@ -71,14 +72,21 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                     itemsArrayList.clear()
 
                 }
-                list.forEach { it ->
-                    it.history?.forEach { item ->
-                        if (item != null) {
-                            itemsArrayList.add(item)
-                        }
-                    }
+                if (itemsArrayList.size > 0 && list.isNotEmpty() && itemsArrayList[itemsArrayList.size - 1].date == list[0].date) {
 
+                    list[0].history?.let {
+                        itemsArrayList[itemsArrayList.size - 1].history?.addAll(
+                            it
+                        )
+                    }
+                } else {
+                    list.forEach { it ->
+                        itemsArrayList.add(it)
+
+
+                    }
                 }
+
 
 
                 isLoading = false
@@ -86,7 +94,6 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
 
                 if (list.size > 0) {
                     empty_screen?.visibility = View.GONE
-
                 } else {
                     if (page == 0) {
                         empty_screen?.visibility = View.VISIBLE
@@ -136,17 +143,17 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                 return isLoading
             }
         })
-        var itemClickListener2 = object : ListItemClickListener {
+        var itemClickListener2 = object : ListRewardsItemClickListener {
 
 
-            override fun onItemClicked(pos: Int) {
+            override fun onItemClicked(historyItem: HistoryItem) {
 
-                if (itemsArrayList[pos].productType == AppConstants.PRODUCT_SPIN) {
+                if (historyItem.productType == AppConstants.PRODUCT_SPIN) {
                     val intent = Intent(this@RewardsHistoryView, SpinWheelViewDark::class.java)
                     SpinWheelViewDark.sectionArrayList.clear()
                     intent.putExtra(
                         AppConstants.ORDER_ID,
-                        itemsArrayList[pos].orderNumber.toString()
+                        historyItem.orderNumber.toString()
                     )
                     startActivity(intent)
 
@@ -159,24 +166,18 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                     val intent = Intent(this@RewardsHistoryView, ScratchCardActivity::class.java)
                     intent.putExtra(
                         AppConstants.ORDER_ID,
-                        itemsArrayList[pos].orderNumber.toString()
+                        historyItem.orderNumber.toString()
                     )
                     startActivity(intent)
 
                 }
-
-            }
-
-            override fun onCallClicked(pos: Int) {
-
-
             }
 
 
         }
 
         typeAdapterHistory =
-            RewardsHistoryLeaderboardAdapter(itemsArrayList, this, itemClickListener2!!)
+            RewardsHistoryBaseAdapter(itemsArrayList, this, itemClickListener2!!)
         root?.rvHistory?.adapter = typeAdapterHistory
     }
 

@@ -52,7 +52,7 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
 
 
     override fun onTryAgainClicked() {
-        TODO("Not yet implemented")
+
     }
 
     private fun setRecyclerView() {
@@ -113,8 +113,8 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
             androidx.lifecycle.Observer { list ->
                 mViewBinding?.loadingAmountMynts?.clearAnimation()
                 mViewBinding?.loadingAmountMynts?.visibility = View.GONE
-                mViewBinding?.totalMyntsWonValueTv?.text =
-                    Utility.convertToRs("${list.totalPoints}")
+                mViewBinding?.totalMyntsWonValueTv?.text = list.totalPoints.toString()
+
 
             })
 
