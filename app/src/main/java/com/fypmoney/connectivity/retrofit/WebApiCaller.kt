@@ -431,8 +431,6 @@ class WebApiCaller {
                                     msg = ""
                                 )
                             )
-
-
                         }
 
                         else {

@@ -53,25 +53,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/guideline"
+                app:layout_constraintDimensionRatio="1.5:1"
                 android:clipChildren="false"
                 >
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/image_banner"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:scaleType="fitXY"
+                    android:layout_height="match_parent"
                     tools:src="@drawable/ic_total_referral_won" />
-
-
 
             </RelativeLayout>
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_percent=".3"
+                app:layout_constraintGuide_percent=".4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

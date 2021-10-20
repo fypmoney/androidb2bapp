@@ -209,7 +209,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 NetworkUtil.endURL(ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS),
                 ApiUrl.POST,
                 fetchVirtualCardRequest,
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
     }
