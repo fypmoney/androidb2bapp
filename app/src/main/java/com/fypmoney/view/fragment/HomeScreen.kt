@@ -294,11 +294,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     }
 
 
-    private fun setCurrentFragment(fragment: Fragment) =
-        childFragmentManager.beginTransaction().apply {
-            replace(R.id.container, fragment)
-            commit()
-        }
+
 
     /*
     * This method is used to call add money fragment

@@ -41,6 +41,7 @@ object AppConstants {
     const val FEED_TYPE_DID_YOU_KNOW = "DIDYOUKNOW"
     const val FEED_TYPE_STATIC_IMAGE = "STATICIMAGE"
     const val FEED_TYPE_STATIC_IMAGE1x1 = "STATICIMAGE1X1"
+    const val FEED_TYPE_STATIC_IMAGE1x1_5 = "STATICIMAGE1X1.5"
     const val IN_APP_WEBVIEW1x1 = "INAPPWEB1X1"
 
     const val FEED_TYPE_BLOG = "BLOG"

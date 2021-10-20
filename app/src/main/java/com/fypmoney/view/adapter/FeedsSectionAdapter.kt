@@ -28,6 +28,7 @@ class FeedsSectionAdapter(
     private val typeWithoutTitle = 2
     private val staticImage1x1 = 4
     private val inAppwebview1x1 = 5
+    private val staticImage1x1_5 = 6
     private val typeVideo = 3
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
@@ -58,6 +59,13 @@ class FeedsSectionAdapter(
                     parent, false
                 )
                 return StaticImage1x1(mRowBinding)
+            }
+            staticImage1x1_5 -> {
+                val mRowBinding = ItemFeedsStaticImageAspectRatioBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent, false
+                )
+                return StaticImage1x1_5(mRowBinding)
             }
             typeVideo -> {
                 val mRowBinding = FeedRowLayoutVideoviewBinding.inflate(
@@ -149,8 +157,38 @@ class FeedsSectionAdapter(
             mRowItemBinding.executePendingBindings()
 
         }
+    }
 
 
+    inner class StaticImage1x1_5(
+        private val mRowItemBinding: ItemFeedsStaticImageAspectRatioBinding? = null
+    ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
+        private lateinit var mViewHelper: FeedsViewHelper
+        override fun onBind(position: Int) {
+            mViewHelper = FeedsViewHelper(
+                position,
+                feedList?.get(position), onFeedItemClickListener
+            )
+            mRowItemBinding!!.viewHelper = mViewHelper
+
+
+            try {
+                if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
+                    viewModel.isApiLoading.set(true)
+                    viewModel.page.set(viewModel.page.get()!! + 1)
+                    viewModel.callFetchFeedsApi(
+                        latitude = viewModel.latitude.get(),
+                        longitude = viewModel.longitude.get()
+                    )
+
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            mRowItemBinding.executePendingBindings()
+
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -163,6 +201,9 @@ class FeedsSectionAdapter(
             }
             AppConstants.FEED_TYPE_STATIC_IMAGE1x1 -> {
                 staticImage1x1
+            }
+            AppConstants.FEED_TYPE_STATIC_IMAGE1x1_5 -> {
+                staticImage1x1_5
             }
             AppConstants.IN_APP_WEBVIEW1x1 -> {
                 inAppwebview1x1

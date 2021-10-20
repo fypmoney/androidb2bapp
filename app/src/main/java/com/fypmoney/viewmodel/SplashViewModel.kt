@@ -20,7 +20,6 @@ import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.SettingsRequest
 import com.fypmoney.model.SettingsResponse
 import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
-import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
 import com.fypmoney.util.AppConstants.ERROR_MESSAGE_HOME
 import com.fypmoney.util.AppConstants.IS_NEW_FEED_AVAILABLE
@@ -34,7 +33,6 @@ import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_APP_VERSION_CODE
 import com.fypmoney.util.Utility
 import com.google.gson.Gson
 import com.moengage.core.internal.MoEConstants
-import com.moengage.core.model.AppStatus
 
 
 /*

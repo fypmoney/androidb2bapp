@@ -115,5 +115,7 @@ enum class TrackrEvent(name: String) {
 enum class TrackrField(name: String) {
     user_id("user_id"),
     user_mobile_no("user_mobile_no"),
-    transaction_amount("transaction_amount")
+    transaction_amount("transaction_amount"),
+    added_family_member_mobile_no("added_family_member_mobile_no"),
+    added_family_member_reletionship("added_family_member_reletionship"),
 }
