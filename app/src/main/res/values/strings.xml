@@ -791,7 +791,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
 
     <string name="cancel">Cancel</string>
 
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="get_help">Get Help</string>
     <string name="awesomeness_loading">Awesomeness Loading…</string>
     <string name="we_want_to_give_you_the_best">We want to give you the best.</string>
@@ -850,7 +850,7 @@ Coming really soon!
     <string name="total_cashback_won">Total Cashback won</string>
     <string name="exciting_prize">Get Exciting \n Prizes!</string>
     <string name="fyp_is_for_teens_and_their_parents">Fyp is for Teens and their Parents</string>
-    <string name="fyp_is_eligible_for_11_18_and_34_age_groups_only_it_is_built_to">Fyp is eligible for 11-18 and 34+ age groups only.\n It is built to -</string>
+    <string name="fyp_is_eligible_for_11_18_and_34_age_groups_only_it_is_built_to">Fyp is eligible for 11-21 and 34+ age groups only.\n It is built to -</string>
     <string name="teach_teenagers_money_management">Teach teenagers money management</string>
     <string name="help_parents_to_guide_their_kids">Help parents to guide their kids</string>
     <string name="create_a_financially_literate_community">Create a financially literate community</string>
@@ -926,7 +926,13 @@ Coming really soon!
     <string name="scan_kit_number">Scan Kit Number</string>
     <string name="or_manually_enter_10_digit_kit_number">Or manually enter 10 digit kit number</string>
     <string name="please_scan_valid_qr_code">Please scan valid Qr Code</string>
-    <string name="visit_store">Visit Store</string>
+    <string name="visit_store">Redeem Offer</string>
+    <string name="age_11_19">Age 11–21</string>
+    <string name="teenager">Teenager</string>
+    <string name="fetching_your_card_details">Fetching your card details...</string>
+    <string name="terms_and_conditions_apply">Terms and conditions apply</string>
+    <string name="copy_code_and_use_at_checkout">Copy code and use at checkout</string>
+    <string name="details">Details</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>
@@ -936,6 +942,8 @@ Coming really soon!
         <item>Privacy settings</item>
         <item>Feed/ interest settings</item>
         <item>Community settings</item>
+        <item>Privacy Policy</item>
+        <item>Terms &amp; Conditions</item>
         <item>Help?</item>
         <item>Log out</item>
     </string-array>

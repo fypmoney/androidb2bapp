@@ -117,7 +117,11 @@ class OfferDetailActivity :
                 typeAdapter?.notifyDataSetChanged()
                 nsv_details.visibility = View.VISIBLE
 
+                if(mViewModel.action.value?.url.isNullOrEmpty()){
+                    view_details_tv.visibility = View.GONE
+                }
             })
+
 
         view_details_tv.setOnClickListener {
             mViewModel.action.value?.url?.let {

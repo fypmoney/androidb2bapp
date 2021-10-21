@@ -33,43 +33,36 @@
             app:titleMarginStart="0dp"
             tools:title="title" />
 
-
-        <androidx.core.widget.NestedScrollView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar1">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar1"
+            android:orientation="vertical">
 
-            <LinearLayout
+
+            <WebView
+                android:id="@+id/webView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
-                android:orientation="vertical">
-
-
-                <com.fypmoney.util.AdvancedWebView
-                    android:id="@+id/webView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/card_padding" />
+                android:layout_marginBottom="@dimen/card_padding" />
 
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/load_progress_bar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_gravity="center"
-                    android:elevation="@dimen/_4sdp"
-                    android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:lottie_autoPlay="true"
-                    app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/dots_animation" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/load_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_gravity="center"
+                android:elevation="@dimen/_4sdp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/dots_animation" />
 
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
+        </FrameLayout>
 
 
     </RelativeLayout>

@@ -44,8 +44,10 @@ import com.fypmoney.view.webview.WebViewActivity
 import com.fypmoney.viewmodel.CardScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.firebase.analytics.FirebaseAnalytics
+import kotlinx.android.synthetic.main.bottomsheet_add_money_success_view.view.*
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
+import kotlinx.android.synthetic.main.virtual_card_back_layout.view.*
 import kotlinx.android.synthetic.main.virtual_card_front_layout.*
 
 
@@ -294,6 +296,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
         mViewModel.onGetCardDetailsSuccess.observe(viewLifecycleOwner) {
             if (it) {
+                mViewBinding.cardBack.back_fl.mCardBackLayout.progress_bar.visibility = View.GONE
                 mViewModel.onGetCardDetailsSuccess.value = false
             }
         }
@@ -329,6 +332,8 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
                 when (resultCode) {
                     AppCompatActivity.RESULT_OK -> {
+                            mViewBinding.cardBack.back_fl.mCardBackLayout.progress_bar.visibility = View.VISIBLE
+                            mViewBinding.cardBack.back_fl.mCardBackLayout.viewCardDetails.visibility = View.GONE
                             mViewModel.callGetVirtualRequestApi()
                     }
 

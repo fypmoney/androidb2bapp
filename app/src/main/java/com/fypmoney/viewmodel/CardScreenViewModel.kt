@@ -127,7 +127,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     /*
       * This method is used to call add card
       * */
-    private fun callAddCardApi() {
+    /*private fun callAddCardApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_ADD_CARD,
@@ -137,7 +137,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 this, isProgressBar = false
             )
         )
-    }
+    }*/
 
     /*
         * This method is used to call update card settings
@@ -194,7 +194,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 NetworkUtil.endURL(ApiConstant.API_GET_VIRTUAL_CARD_REQUEST),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
     }
@@ -209,7 +209,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                 NetworkUtil.endURL(ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS),
                 ApiUrl.POST,
                 fetchVirtualCardRequest,
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
     }
@@ -246,7 +246,6 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
                     cvvNumber = responseData.fetchVirtualCardResponseDetails.cvv
                     expiry.set(responseData.fetchVirtualCardResponseDetails.expiry_month + "/" + responseData.fetchVirtualCardResponseDetails.expiry_year)
                     onGetCardDetailsSuccess.value = true
-                    callAddCardApi()
 
                 }
             }

@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -53,6 +54,7 @@ class UserFeedsDetailView : BaseActivity<ViewUserFeedsDetailBinding, FeedDetails
 
 
         mViewModel.feedDetails.set(intent.getSerializableExtra(AppConstants.FEED_RESPONSE) as FeedDetails?)
+
         webView.settings.apply {
             javaScriptEnabled = true
         }
@@ -134,6 +136,9 @@ class UserFeedsDetailView : BaseActivity<ViewUserFeedsDetailBinding, FeedDetails
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_blogs, menu)
+        if(mViewModel.feedDetails.get()?.action?.url.isNullOrEmpty()){
+            menu?.get(0)?.isVisible = false
+        }
         return true
     }
 

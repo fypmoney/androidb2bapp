@@ -35,9 +35,8 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
     private lateinit var mViewModel: StoreScreenViewModel
     private lateinit var mViewBinding: ScreenStoreBinding
     private val tabIcons = intArrayOf(
-        R.drawable.ic_store_tab,
         R.drawable.ic_offer_tab,
-
+        R.drawable.ic_store_tab,
         )
 
     override fun getBindingVariable(): Int {
@@ -61,9 +60,8 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
 
 
         val adapter = ViewPagerAdapter(childFragmentManager)
-
-        adapter.addFragment(StoresFragment(), getString(R.string.shops))
         adapter.addFragment(OffersStoreFragment(), getString(R.string.offers))
+        adapter.addFragment(StoresFragment(), getString(R.string.shops))
 
 
         viewPager.adapter = adapter

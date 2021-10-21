@@ -38,7 +38,7 @@ import com.moengage.core.internal.MoEConstants
 /*
 * This class is launcher screen
 * */
-class SplashViewModel(val  app: Application) : BaseViewModel(app) {
+class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
     var moveToNextScreen = MutableLiveData(false)
     var callCustomer = MutableLiveData(false);
