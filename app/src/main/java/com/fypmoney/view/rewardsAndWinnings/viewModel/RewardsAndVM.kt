@@ -37,7 +37,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
     var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
     var coinsBurned: MutableLiveData<CoinsBurnedResponse> = MutableLiveData()
-    var error: MutableLiveData<String> = MutableLiveData()
+    var error: MutableLiveData<ErrorResponseInfo> = MutableLiveData()
     var totalCount = ObservableField(0)
     var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
     var rewardfeedList: MutableLiveData<ArrayList<FeedDetails>> =
@@ -329,7 +329,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         loading.postValue(false)
         when (purpose) {
             ApiConstant.API_REDEEM_REWARD -> {
-                error.postValue(errorResponseInfo.errorCode)
+                error.postValue(errorResponseInfo)
 
             }
 

@@ -35,6 +35,7 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
 
     val enableSpin = MutableLiveData<Boolean>()
     val spinnerClickable = ObservableField(true)
+    val played = ObservableField(false)
 
     val onPlayClicked = MutableLiveData<Boolean>()
     val onError = MutableLiveData<ErrorResponseInfo>()
@@ -160,12 +161,9 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
                 )
 
                 spinWheelResponseList.value = spinDetails
+                played.set(true)
                 fromWhich.set(AppConstants.ERROR_TYPE_AFTER_SPIN)
-                if (!spinDetails.cashbackWon.isNullOrEmpty())
-                    totalRewards.set(Utility.convertToRs(spinDetails.cashbackWon))
-                else {
-                    totalRewards.set("0")
-                }
+
 
             }
 

@@ -937,6 +937,12 @@ Coming really soon!
     <string name="total_mynts">Total Mynts won</string>
     <string name="claim_your_rewards">Claim your rewards</string>
     <string name="arcade">Arcade</string>
+    <string name="refer_a_friend_or_make_a_ntransaction_to_earn_more_mynts">Refer a friend or make a\ntransaction to earn more mynts.</string>
+    <string name="better_luck_nnext_time">Better luck\nnext time</string>
+    <string name="you_won_scratch">You won</string>
+    <string name="scratch_the_card_and_who_knows_you_might_get_lucky_today2">Scratch the card and who knows you might\nget lucky today 😍</string>
+    <string name="seems_like_you_have_zero_mynts_here_s_how_you_can_earn_more_mynts">Seems like you have zero mynts. Here’s how you can earn more mynts</string>
+    <string name="refer_a_friend_and_when_they_complete_their_kyc_you_earn_mynts">Refer a friend and when they complete their KYC you earn mynts</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>

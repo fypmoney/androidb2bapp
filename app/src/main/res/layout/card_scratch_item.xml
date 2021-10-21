@@ -23,7 +23,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="0dp"
-            android:alpha=".80"
+            android:alpha=".70"
             android:id="@+id/bg_card"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

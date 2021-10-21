@@ -1,9 +1,12 @@
 package com.fypmoney.view.rewardsAndWinnings
 
+import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -25,20 +28,18 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 import androidx.core.content.ContextCompat
 import com.fypmoney.R
-import com.fypmoney.util.AppConstants
-import com.fypmoney.view.activity.AddMoneyView
-import com.fypmoney.view.activity.ContactListView
-import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
 
 
 class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
 
+    private var dialogDialog: Dialog? = null
     lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
     var mViewModel: RewardsAndVM? = null
@@ -50,7 +51,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
+        dialogDialog = Dialog(this)
 
         setToolbarAndTitle(
             context = this,
@@ -67,8 +68,8 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
             this,
             androidx.lifecycle.Observer { list ->
 
-                if (list == "PKT_2051") {
-                    callInsuficientFundMessageSheet()
+                if (list.errorCode == "PKT_2051") {
+                    callInsuficientFundMessageSheet(list.msg)
                 }
 
             }
@@ -77,31 +78,33 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
     }
 
-    private fun callInsuficientFundMessageSheet() {
-        var bottomsheetInsufficient: RewardsMessageInsuficientMyntsSheet? = null
-        val itemClickListener2 = object : AcceptRejectClickListener {
-            override fun onAcceptClicked(pos: Int, str: String) {
+    private fun callInsuficientFundMessageSheet(msg: String) {
+        dialogDialog?.setCancelable(false)
+        dialogDialog?.setCanceledOnTouchOutside(false)
+        dialogDialog?.setContentView(R.layout.dialog_rewards_insufficient)
 
-            }
+        val wlp = dialogDialog?.window?.attributes
 
-            override fun onRejectClicked(pos: Int) {
-                bottomsheetInsufficient?.dismiss()
+        wlp?.width = ViewGroup.LayoutParams.MATCH_PARENT
+        dialogDialog?.setCanceledOnTouchOutside(false)
 
-            }
 
-            override fun ondimiss() {
 
-            }
-        }
-        bottomsheetInsufficient =
-            RewardsMessageInsuficientMyntsSheet(
-                itemClickListener2, title = resources.getString(R.string.insufficient_mynt_balance),
-                subTitle = resources.getString(R.string.insufficient_mynt_body),
-                amount = "",
-                background = "#2D3039"
-            )
-        bottomsheetInsufficient?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomsheetInsufficient?.show(supportFragmentManager, "TASKMESSAGE")
+
+        dialogDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialogDialog?.window?.attributes = wlp
+        dialogDialog?.error_msg?.text = msg
+
+
+
+        dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
+
+            dialogDialog?.dismiss()
+        })
+
+
+        dialogDialog?.show()
     }
 
     private fun callActivity(aClass: Class<*>) {
@@ -156,7 +159,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         adapter.addFragment(RewardHistoryFragment(), getString(R.string.history))
 
         viewPager.adapter = adapter
-        viewPager.offscreenPageLimit = 3
+        viewPager.offscreenPageLimit = 1
 
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.getTabAt(0)?.view?.background = ContextCompat.getDrawable(

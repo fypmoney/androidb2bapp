@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -70,7 +71,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
         setToolbarAndTitle(
             context = this@SpinWheelViewDark,
             toolbar = toolbar,
-            isBackArrowVisible = true, titleColor = Color.WHITE
+            isBackArrowVisible = false, titleColor = Color.WHITE
         )
 
 //        Glide.with(applicationContext).load(R.raw.coin).into(coin)
@@ -134,11 +135,24 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
             dialogDialog?.textView?.visibility = View.GONE
             dialogDialog?.clicked?.text = getString(R.string.continue_txt)
             dialogDialog?.luckonside_tv?.visibility = View.GONE
+            dialogDialog?.spin_green?.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.better_luck_next_time
+                )
+            )
+            dialogDialog?.better_next_time?.visibility = View.VISIBLE
+        }
+        if (mViewModel.played.get() == true) {
+            dialogDialog?.textView?.text =
+                "your wallet has been updated with ₹ " + Utility.convertToRs(sectionValue)
+
+        } else {
+            dialogDialog?.textView?.text =
+                "your wallet will be updated with ₹ " + Utility.convertToRs(sectionValue)
         }
 
 
-        dialogDialog?.textView?.text =
-            "your wallet will be updated with ₹ " + Utility.convertToRs(sectionValue)
 
         dialogDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -146,7 +160,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
 
         dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
-            if (dialogDialog?.clicked?.text == getString(R.string.continue_txt)) {
+            if (mViewModel.played.get() == true) {
                 finish()
             } else {
                 mViewModel.callSpinWheelApi(orderId)

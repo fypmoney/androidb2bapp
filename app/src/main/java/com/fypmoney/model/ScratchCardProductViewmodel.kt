@@ -1,6 +1,7 @@
 package com.fypmoney.model
 
 import android.app.Application
+import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -16,16 +17,12 @@ import com.google.gson.JsonParser
 
 
 class ScratchCardProductViewmodel(application: Application) : BaseViewModel(application) {
-    var spinWheelResponseList = MutableLiveData<SpinWheelRotateResponseDetails>()
+    var scratchResponseList = MutableLiveData<SpinWheelRotateResponseDetails>()
     var redeemCallBackResponse = MutableLiveData<aRewardProductResponse>()
     var onButtomClicked = MutableLiveData(false)
-    val event: LiveData<CardOfferEvent>
-        get() = _event
-    private val _event = LiveEvent<CardOfferEvent>()
+    var scratchCalled = MutableLiveData(false)
+    val played = ObservableField(false)
 
-    fun onContinueClicked() {
-        _event.value = CardOfferEvent.Continue
-    }
 
     sealed class CardOfferEvent {
         object Continue : CardOfferEvent()
@@ -46,15 +43,18 @@ class ScratchCardProductViewmodel(application: Application) : BaseViewModel(appl
     }
 
     fun callScratchWheelApi(orderId: String?, b: Boolean) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.PLAY_ORDER_API,
-                NetworkUtil.endURL(ApiConstant.PLAY_ORDER_API + orderId),
-                ApiUrl.POST,
-                BaseRequest(),
-                this, isProgressBar = b
+        if (scratchCalled.value == false) {
+            scratchCalled.value = true
+            WebApiCaller.getInstance().request(
+                ApiRequest(
+                    ApiConstant.PLAY_ORDER_API,
+                    NetworkUtil.endURL(ApiConstant.PLAY_ORDER_API + orderId),
+                    ApiUrl.POST,
+                    BaseRequest(),
+                    this, isProgressBar = b
+                )
             )
-        )
+        }
 
 
     }
@@ -86,7 +86,9 @@ class ScratchCardProductViewmodel(application: Application) : BaseViewModel(appl
                     com.fypmoney.model.SpinWheelRotateResponseDetails::class.java
                 )
 
-                spinWheelResponseList.value = spinDetails
+
+                scratchResponseList.value = spinDetails
+                played.set(true)
 
 //                if (!spinDetails.cashbackWon.isNullOrEmpty())
 //                    totalRewards.set(Utility.convertToRs(spinDetails.cashbackWon))

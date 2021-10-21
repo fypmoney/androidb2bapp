@@ -75,13 +75,12 @@
                         android:layout_width="250dp"
                         android:layout_height="250dp"
                         android:alpha=".40"
-                        android:background="@drawable/round_backgorund_20"
-                        android:backgroundTint="#9b5aa7"
+
                         app:cardCornerRadius="18dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -92,35 +91,43 @@
                             android:id="@+id/got_the_offer_iv"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:contentDescription="@null"
-                            android:layout_gravity="center_horizontal" />
+
+                            android:layout_gravity="center_horizontal"
+                            android:contentDescription="@null" />
 
                         <TextView
                             android:id="@+id/offer_desc_tv"
-                            android:textSize="14sp"
                             style="@style/TextviewRegular"
-                            android:textColor="@color/text_color_light"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_above="@+id/offer_amount_tv"
+                            android:layout_centerHorizontal="true"
                             android:layout_marginStart="30dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="30dp"
+                            android:elevation="@dimen/_1sdp"
                             android:gravity="center"
-                            tools:text="@string/you_won"
-                            android:textAlignment="center" />
+                            android:textAlignment="center"
+                            android:textColor="@color/cb_dark_grey"
+                            android:textSize="14sp"
+                            android:text="@string/you_won_scratch" />
 
                         <TextView
                             android:id="@+id/offer_amount_tv"
                             style="@style/TextviewBold"
+                            android:layout_marginBottom="@dimen/_12sdp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_alignParentBottom="true"
                             android:textColor="@color/text_color_dark"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="₹200"
+
+                            android:text=""
                             android:textSize="27sp"
                             android:textStyle="bold" />
 
 
-                    </LinearLayout>
+                    </RelativeLayout>
 
 
                 </com.fypmoney.view.customview.scratchlayout.ui.ScratchCardLayout>
@@ -143,22 +150,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scratch_cv"
                 android:layout_marginBottom="@dimen/_80sdp"
-                android:text="" />
+                android:text="@string/scratch_the_card_and_who_knows_you_might_get_lucky_today2" />
 
-            <com.fypmoney.view.customview.PrimaryButton
-                android:id="@+id/continue_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:text="@string/claim_your_rewards"
-                android:textSize="18sp"
-                app:enabled="false"
-                app:enabled_bg="@color/color_task_card_green"
-                app:disabled_bg="@color/buttonUnselectedColor"
-                android:onClick="@{()->viewModel.onContinueClicked()}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="@dimen/dp20" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

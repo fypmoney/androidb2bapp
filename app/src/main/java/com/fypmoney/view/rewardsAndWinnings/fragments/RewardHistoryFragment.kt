@@ -3,6 +3,7 @@ package com.fypmoney.view.rewardsAndWinnings.fragments
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
@@ -19,6 +20,7 @@ import com.fypmoney.view.rewardsAndWinnings.activity.RewardsHistoryView
 import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
 import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
+import jp.wasabeef.blurry.Blurry
 import kotlin.math.roundToInt
 
 
@@ -41,6 +43,13 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
             val intent = Intent(requireContext(), RewardsHistoryView::class.java)
             requireContext().startActivity(intent)
         })
+        Blurry.with(requireContext())
+            .radius(25)
+            .sampling(2)
+            .async()
+            .animate(500)
+            .onto(mViewBinding?.blur as ViewGroup)
+
         setRecyclerView(mViewBinding)
         sharedViewModel?.let { setObserver(it) }
     }
@@ -132,17 +141,25 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
                 mViewBinding?.contraint?.visibility = View.VISIBLE
                 mViewBinding?.shimmerLayout?.visibility = View.GONE
                 mViewBinding?.shimmerLayout?.stopShimmer()
-                mViewBinding?.totalearned?.text = Utility.convertToRs(list.totalPoints.toString())
-                mViewBinding?.burnedPoints?.text = Utility.convertToRs(list.burntPoints.toString())
+                if (list.totalPoints != null) {
+                    mViewBinding?.totalearned?.text = String.format("%.0f", list.totalPoints)
+                }
+                if (list.burntPoints != null) {
+                    mViewBinding?.burnedPoints?.text = String.format("%.0f", list.burntPoints)
+                }
+
                 if ((list.burntPoints != 0.0f) and (list.totalPoints != 0.0f)) {
                     mViewBinding?.statsProgressbar?.progress =
                         ((list.burntPoints?.div(list.totalPoints!!))!! * 100).roundToInt()
-                }else{
-                    mViewBinding?.statsProgressbar?.progress =0
-                 }
+                } else {
+                    mViewBinding?.statsProgressbar?.progress = 0
+                }
 
-                mViewBinding?.pointsLeft?.text =
-                    Utility.convertToRs(list.remainingPoints.toString())
+                if (list.remainingPoints != null) {
+                    mViewBinding?.pointsLeft?.text = String.format("%.0f", list.remainingPoints)
+                }
+
+
             })
     }
 

@@ -104,7 +104,8 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
             androidx.lifecycle.Observer { list ->
                 mViewBinding?.loadingAmountHdp?.clearAnimation()
                 mViewBinding?.loadingAmountHdp?.visibility = View.GONE
-                mViewBinding?.totalRefralWonValueTv?.text = Utility.convertToRs("${list.amount}")
+                mViewBinding?.totalRefralWonValueTv?.text =
+                    "₹" + Utility.convertToRs("${list.amount}")
 
             })
 
@@ -113,7 +114,10 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
             androidx.lifecycle.Observer { list ->
                 mViewBinding?.loadingAmountMynts?.clearAnimation()
                 mViewBinding?.loadingAmountMynts?.visibility = View.GONE
-                mViewBinding?.totalMyntsWonValueTv?.text = list.totalPoints.toString()
+                if (list.totalPoints != null) {
+                    mViewBinding?.totalMyntsWonValueTv?.text =
+                        String.format("%.0f", list.totalPoints)
+                }
 
 
             })

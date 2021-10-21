@@ -30,7 +30,12 @@ import kotlinx.android.synthetic.main.view_spin_wheel_black.*
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.Nullable
+import androidx.core.content.ContextCompat
 import com.fypmoney.util.Utility
+import kotlinx.android.synthetic.main.dialog_burn_mynts.clicked
+import kotlinx.android.synthetic.main.dialog_burn_mynts.spin_green
+import kotlinx.android.synthetic.main.dialog_burn_mynts.textView
+import kotlinx.android.synthetic.main.dialog_cash_won.*
 
 
 class ScratchCardActivity :
@@ -72,10 +77,8 @@ class ScratchCardActivity :
     }
 
     private fun setUpObserver() {
-        mViewModel.event.observe(this, {
-            handelEvents(it)
-        })
-        mViewModel.spinWheelResponseList.observe(this) {
+
+        mViewModel.scratchResponseList.observe(this) {
 //            if(mViewModel.onButtomClicked.value==true){
 //
 //
@@ -83,17 +86,26 @@ class ScratchCardActivity :
             Handler(Looper.getMainLooper()).postDelayed({
                 showwonDialog(it.cashbackWon)
             }, 1000)
-            mBinding.continueBtn.setBusy(false)
-            mBinding.continueBtn.isEnabled = false
-            mBinding.continueBtn.setText("Claimed")
 
 
         }
         mViewModel.redeemCallBackResponse.observe(this) {
 //          mBinding.scratchCardLayout.setScratchDrawable()
+            sectionId = it.sectionId
 
-            mBinding.bodyTv.text = it.description
+            it.sectionList?.forEach { item ->
 
+                if (item?.id == sectionId.toString()) {
+
+
+                    mBinding.offerAmountTv.text = "₹" + Utility.convertToRs(item.sectionValue)
+
+                    return@forEach
+
+                }
+
+
+            }
             Glide.with(this).load(it.scratchResourceShow).into(mBinding.gotTheOfferIv)
 
             Glide.with(this).asDrawable().load(it.scratchResourceHide)
@@ -129,10 +141,28 @@ class ScratchCardActivity :
         val wlp = dialogDialog?.window?.attributes
 
         wlp?.width = ViewGroup.LayoutParams.MATCH_PARENT
+        if (cashbackWon == "0") {
+            dialogDialog?.congrats_tv?.visibility = View.GONE
+            dialogDialog?.textView?.visibility = View.GONE
+            dialogDialog?.clicked?.text = getString(R.string.continue_txt)
+            dialogDialog?.luckonside_tv?.visibility = View.GONE
+            dialogDialog?.spin_green?.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.better_luck_next_time
+                )
+            )
+            dialogDialog?.better_next_time?.visibility = View.VISIBLE
+        }
+        if (mViewModel.played.get() == true) {
+            dialogDialog?.textView?.text =
+                "your wallet has been updated with ₹ " + Utility.convertToRs(cashbackWon)
 
+        } else {
+            dialogDialog?.textView?.text =
+                "your wallet will be updated with ₹ " + Utility.convertToRs(cashbackWon)
+        }
 
-        dialogDialog?.textView?.text =
-            "your wallet has been updated with ₹ " + Utility.convertToRs(cashbackWon)
         dialogDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         dialogDialog?.window?.attributes = wlp
@@ -140,7 +170,11 @@ class ScratchCardActivity :
         dialogDialog?.clicked?.text = getString(R.string.continue_txt)
 
         dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
-            finish()
+            if (mViewModel.played.get() == true) {
+                finish()
+            } else {
+                mViewModel.callScratchWheelApi(orderId, true)
+            }
         })
 
 
@@ -151,8 +185,8 @@ class ScratchCardActivity :
         when (it) {
             ScratchCardProductViewmodel.CardOfferEvent.Continue -> {
                 mViewModel.onButtomClicked.value = true
-                mBinding.continueBtn.setBusy(false)
 
+                mViewModel.scratchCalled.value = false
                 mViewModel.callScratchWheelApi(orderId, true)
 
             }
@@ -169,13 +203,7 @@ class ScratchCardActivity :
                 scratchCardLayout: ScratchCardLayout,
                 atLeastScratchedPercent: Int
             ) {
-                mBinding.continueBtn.setBusy(true)
-                mBinding.gotTheOfferIv.invalidate()
-                mBinding.offerDescTv.invalidate()
-                mBinding.offerAmountTv.invalidate()
-                mBinding.gotTheOfferIv.background =
-                    AppCompatResources.getDrawable(this@ScratchCardActivity, R.drawable.ic_gift)
-                mBinding.offerDescTv.text = getString(R.string.you_won)
+
 
             }
 
@@ -185,8 +213,8 @@ class ScratchCardActivity :
                 mBinding.cardBg.visibility = View.GONE
 
                 mViewModel.callScratchWheelApi(orderId, false)
-                mBinding.continueBtn.isEnabled = true
-                mBinding.continueBtn.setBusy(false)
+
+
             }
         })
     }
