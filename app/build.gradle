@@ -234,7 +234,7 @@ dependencies {
     implementation project(path: ':trackr')
 
     implementation("com.moengage:rich-notification:2.3.00")
-    implementation 'jp.wasabeef:blurry:4.0.0'
+
 }
 apollo {
     generateKotlinModels.set(true)

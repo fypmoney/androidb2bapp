@@ -58,7 +58,7 @@
                     android:layout_marginEnd="@dimen/_24sdp"
                     android:gravity="center"
 
-                    android:text="200 Mynts needed to claim this spinner"
+                    android:text=""
                     android:textColor="#BAE6C2"
                     android:textSize="24sp" />
 
@@ -88,7 +88,7 @@
                 android:layout_marginTop="@dimen/_16sdp"
                 android:gravity="center"
                 android:text="@string/refer_a_friend_or_make_a_ntransaction_to_earn_more_mynts"
-                android:textColor="#BAE6C2"
+                android:textColor="@color/cb_grey"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layout" />

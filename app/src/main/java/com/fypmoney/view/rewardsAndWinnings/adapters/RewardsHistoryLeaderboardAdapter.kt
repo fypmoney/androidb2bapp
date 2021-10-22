@@ -46,6 +46,7 @@ class RewardsHistoryLeaderboardAdapter(
         holder.desc.text = items[position].eventDescription.toString()
 
         if (items[position].cashbackWonForProduct != null && items[position].cashbackWonForProduct!! > 0) {
+            holder.note.visibility = View.VISIBLE
 
 
             holder.amount.visibility = View.VISIBLE
@@ -62,7 +63,9 @@ class RewardsHistoryLeaderboardAdapter(
                 )
             )
 
+
         } else {
+            holder.note.visibility = View.GONE
             holder.amount.visibility = View.INVISIBLE
             holder.status_tv.visibility = View.VISIBLE
             holder.won_tv.visibility = View.INVISIBLE
@@ -101,7 +104,7 @@ class RewardsHistoryLeaderboardAdapter(
 
 
         holder.card.setOnClickListener(View.OnClickListener {
-//            if(items[position].isFullFilled==AppConstants.NO)
+//            if (items[position].isFullFilled == AppConstants.NO)
             clickInterface.onItemClicked(items[position])
         })
 
@@ -118,6 +121,7 @@ class RewardsHistoryLeaderboardAdapter(
         var amount = view.amount
         var numberofMynts = view.heading
         var status_tv = view.status_tv
+        var note = view.note
         var productType = view.productType
 
 

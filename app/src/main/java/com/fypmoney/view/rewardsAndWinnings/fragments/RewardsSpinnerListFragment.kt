@@ -4,16 +4,20 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.Nullable
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -88,7 +92,18 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                 typeAdapter?.notifyDataSetChanged()
 
             })
+        sharedViewModel.error.observe(
+            this,
+            androidx.lifecycle.Observer { list ->
 
+                if (list.errorCode == "PKT_2051") {
+                    dialogDialog?.dismiss()
+
+
+                }
+
+            }
+        )
         sharedViewModel.scratchArrayList.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
@@ -128,12 +143,41 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
                     }
                     AppConstants.PRODUCT_SCRATCH -> {
-                        val intent = Intent(requireContext(), ScratchCardActivity::class.java)
-                        intent.putExtra(AppConstants.ORDER_ID, list.orderNo)
-                        intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
 
-                        startForResult.launch(intent)
 
+                        Glide.with(this).asDrawable()
+                            .load(scratchArrayList[sharedViewModel.selectedPosition.get()!!].scratchResourceHide)
+                            .into(object : CustomTarget<Drawable?>() {
+
+                                override fun onLoadCleared(@Nullable placeholder: Drawable?) {
+
+                                }
+
+                                override fun onResourceReady(
+                                    resource: Drawable,
+                                    transition: Transition<in Drawable?>?
+                                ) {
+                                    val intent =
+                                        Intent(requireContext(), ScratchCardActivity::class.java)
+                                    intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
+                                    scratchArrayList[sharedViewModel.selectedPosition.get()!!].sectionList?.forEachIndexed { pos, item ->
+                                        if (item != null) {
+                                            ScratchCardActivity.sectionArrayList.add(item)
+                                        }
+                                    }
+                                    ScratchCardActivity.imageScratch = resource
+
+                                    intent.putExtra(
+                                        AppConstants.ORDER_ID,
+                                        list.orderNo
+                                    )
+                                    intent.putExtra(
+                                        AppConstants.PRODUCT_HIDE_IMAGE,
+                                        scratchArrayList[sharedViewModel.selectedPosition.get()!!].scratchResourceShow
+                                    )
+                                    startActivity(intent)
+                                }
+                            })
 
                     }
                 }

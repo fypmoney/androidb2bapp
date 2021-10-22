@@ -1,11 +1,16 @@
 package com.fypmoney.view.rewardsAndWinnings.fragments
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.Nullable
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -21,6 +26,7 @@ import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
 import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
 import jp.wasabeef.blurry.Blurry
+import kotlinx.android.synthetic.main.view_reward_history.*
 import kotlin.math.roundToInt
 
 
@@ -43,12 +49,6 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
             val intent = Intent(requireContext(), RewardsHistoryView::class.java)
             requireContext().startActivity(intent)
         })
-        Blurry.with(requireContext())
-            .radius(25)
-            .sampling(2)
-            .async()
-            .animate(500)
-            .onto(mViewBinding?.blur as ViewGroup)
 
         setRecyclerView(mViewBinding)
         sharedViewModel?.let { setObserver(it) }
@@ -102,12 +102,8 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
 
 
                 } else {
-                    val intent = Intent(requireContext(), ScratchCardActivity::class.java)
-                    intent.putExtra(
-                        AppConstants.ORDER_ID,
-                        historyItem.orderNumber.toString()
-                    )
-                    startActivity(intent)
+                    sharedViewModel?.callProductsDetailsApi(historyItem.orderNumber)
+
 
                 }
             }
@@ -118,7 +114,46 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
         root?.rvHistory?.adapter = typeAdapterHistory
     }
     private fun setObserver(sharedViewModel: RewardsAndVM) {
+        sharedViewModel?.redeemproductDetails.observe(requireActivity()) {
+            if (it != null) {
+                Glide.with(this).asDrawable().load(it.scratchResourceHide)
+                    .into(object : CustomTarget<Drawable?>() {
 
+                        override fun onLoadCleared(@Nullable placeholder: Drawable?) {
+
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            transition: Transition<in Drawable?>?
+                        ) {
+                            val intent = Intent(requireContext(), ScratchCardActivity::class.java)
+                            intent.putExtra(AppConstants.SECTION_ID, it.sectionId)
+                            it.sectionList?.forEachIndexed { pos, item ->
+                                if (item != null) {
+                                    ScratchCardActivity.sectionArrayList.add(item)
+                                }
+                            }
+                            ScratchCardActivity.imageScratch = resource
+
+                            intent.putExtra(
+                                AppConstants.ORDER_ID,
+                                sharedViewModel.orderNumber.value
+                            )
+                            intent.putExtra(
+                                AppConstants.PRODUCT_HIDE_IMAGE,
+                                it.scratchResourceShow
+                            )
+                            startActivity(intent)
+
+                        }
+
+
+                    })
+            }
+            sharedViewModel?.redeemproductDetails.postValue(null)
+
+        }
         sharedViewModel.rewardHistoryList.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->
@@ -131,6 +166,16 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
                     }
 
                 }
+                if (list.size > 0) {
+
+                    mViewBinding?.showHistory?.visibility = View.VISIBLE
+                    mViewBinding?.emptyScreen?.visibility = View.GONE
+                } else {
+                    mViewBinding?.showHistory?.visibility = View.GONE
+                    mViewBinding?.emptyScreen?.visibility = View.VISIBLE
+
+
+                }
                 typeAdapterHistory?.notifyDataSetChanged()
 
 
@@ -141,6 +186,7 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
                 mViewBinding?.contraint?.visibility = View.VISIBLE
                 mViewBinding?.shimmerLayout?.visibility = View.GONE
                 mViewBinding?.shimmerLayout?.stopShimmer()
+
                 if (list.totalPoints != null) {
                     mViewBinding?.totalearned?.text = String.format("%.0f", list.totalPoints)
                 }

@@ -243,5 +243,6 @@ object AppConstants {
 
 
     const val ORDER_ID = "ORDERID"
+    const val PRODUCT_HIDE_IMAGE = "HIDE_IMAGE"
     const val SECTION_ID = "SECTIONID"
 }

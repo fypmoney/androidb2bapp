@@ -2,10 +2,15 @@ package com.fypmoney.view.rewardsAndWinnings.activity
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.Nullable
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -15,8 +20,6 @@ import com.fypmoney.model.HistoryItem
 import com.fypmoney.model.RewardHistoryResponseNew
 
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryLeaderboardAdapter
-import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryBaseAdapter
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
 
@@ -32,6 +35,7 @@ import kotlinx.android.synthetic.main.view_reward_history.*
 * This is used to handle rewards
 * */
 class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistoryVM>() {
+
     private var mViewBinding: ViewRewardHistoryBinding? = null
     private lateinit var mVM: RewardsHistoryVM
 
@@ -61,6 +65,42 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
     private fun observeInput(sharedVM: RewardsHistoryVM) {
 
         page = 0
+        mVM?.redeemproductDetails.observe(this) {
+
+            Glide.with(this).asDrawable().load(it.scratchResourceHide)
+                .into(object : CustomTarget<Drawable?>() {
+
+                    override fun onLoadCleared(@Nullable placeholder: Drawable?) {
+
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable,
+                        transition: Transition<in Drawable?>?
+                    ) {
+                        val intent =
+                            Intent(this@RewardsHistoryView, ScratchCardActivity::class.java)
+                        intent.putExtra(AppConstants.SECTION_ID, it.sectionId)
+                        it.sectionList?.forEachIndexed { pos, item ->
+                            if (item != null) {
+                                ScratchCardActivity.sectionArrayList.add(item)
+                            }
+                        }
+                        ScratchCardActivity.imageScratch = resource
+
+                        intent.putExtra(
+                            AppConstants.ORDER_ID,
+                            mVM.orderNumber.value
+                        )
+                        intent.putExtra(
+                            AppConstants.PRODUCT_HIDE_IMAGE,
+                            it.scratchResourceShow
+                        )
+                        startActivity(intent)
+                    }
+                })
+
+        }
         sharedVM.rewardHistoryList2.observe(
             this,
             androidx.lifecycle.Observer { list ->
@@ -163,12 +203,8 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
 
 
                 } else {
-                    val intent = Intent(this@RewardsHistoryView, ScratchCardActivity::class.java)
-                    intent.putExtra(
-                        AppConstants.ORDER_ID,
-                        historyItem.orderNumber.toString()
-                    )
-                    startActivity(intent)
+
+                    mVM.callProductsDetailsApi(historyItem.orderNumber)
 
                 }
             }

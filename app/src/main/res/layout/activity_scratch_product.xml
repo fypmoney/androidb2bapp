@@ -16,7 +16,22 @@
         android:background="@drawable/ic_order_card_bg"
         tools:context=".view.ordercard.cardorderoffer.CardOrderOfferActivity">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/LoadProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
 
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_16sdp"
+
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:lottie_autoPlay="true"
+            android:visibility="gone"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/dots_animation" />
         <include
             android:id="@+id/toolbar_layout"
             layout="@layout/toolbar"
@@ -70,15 +85,6 @@
                     app:scratchRevealFullAtPercent="20"
                     app:scratchWidth="40dp">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card_bg"
-                        android:layout_width="250dp"
-                        android:layout_height="250dp"
-                        android:alpha=".40"
-
-                        app:cardCornerRadius="18dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"

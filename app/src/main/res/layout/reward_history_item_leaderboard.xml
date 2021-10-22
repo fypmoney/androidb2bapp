@@ -18,8 +18,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_4sdp"
-        android:layout_marginEnd="@dimen/_4sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/round_dark_grey_rewards_18"
 
@@ -78,6 +78,22 @@
 
             android:textSize="16sp" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/note"
+
+
+            android:layout_height="8dp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/amount"
+            android:layout_alignBottom="@+id/amount"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+
+            android:layout_toStartOf="@+id/amount"
+            android:src="@drawable/cash" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/won_tv"
             style="@style/TextviewRegular"
@@ -103,7 +119,7 @@
             android:textColor="#F7AA11"
 
 
-            android:textSize="12sp" />
+            android:textSize="14sp" />
     </RelativeLayout>
 
 </layout>

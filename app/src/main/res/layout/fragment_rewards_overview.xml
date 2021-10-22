@@ -64,8 +64,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
-            android:layout_marginBottom="@dimen/_12sdp"
-            android:text="@string/total_cashback_won"
+            android:layout_marginBottom="@dimen/_14sdp"
+            android:text="@string/total_savings"
 
             android:textColor="#a3a3a3"
             android:textSize="12sp"
@@ -144,8 +144,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
-            android:layout_marginBottom="@dimen/_12sdp"
-            android:text="@string/total_mynts"
+            android:layout_marginBottom="@dimen/_14sdp"
+            android:text="@string/your_mynts"
 
             android:textColor="#a3a3a3"
             android:textSize="12sp"

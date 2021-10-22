@@ -9,16 +9,17 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.GetTaskResponse
-import com.fypmoney.model.QueryPaginationParams
-import com.fypmoney.model.RewardHistoryResponseNew
+import com.fypmoney.model.*
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RewardsHistoryVM(application: Application) : BaseViewModel(application) {
     var rewardHistoryList2: MutableLiveData<ArrayList<RewardHistoryResponseNew>> = MutableLiveData()
+    var redeemproductDetails = MutableLiveData<aRewardProductResponse>()
+    var orderNumber = MutableLiveData("")
 
     init {
 
@@ -41,9 +42,38 @@ class RewardsHistoryVM(application: Application) : BaseViewModel(application) {
         )
     }
 
+    fun callProductsDetailsApi(orderId: String?) {
+        orderNumber.value = orderId
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.REWARD_PRODUCT_DETAILS,
+                NetworkUtil.endURL(ApiConstant.REWARD_PRODUCT_DETAILS + orderId),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+
+
+    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
+            ApiConstant.REWARD_PRODUCT_DETAILS -> {
+
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val spinDetails = Gson().fromJson(
+                    json.get("data"),
+                    com.fypmoney.model.aRewardProductResponse::class.java
+                )
+
+                redeemproductDetails.value = spinDetails
+
+
+            }
             ApiConstant.RewardsHistory -> {
 
 

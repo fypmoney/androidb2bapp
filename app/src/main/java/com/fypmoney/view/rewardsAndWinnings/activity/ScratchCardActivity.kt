@@ -31,11 +31,13 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.Nullable
 import androidx.core.content.ContextCompat
+import com.fypmoney.model.SectionListItem
 import com.fypmoney.util.Utility
 import kotlinx.android.synthetic.main.dialog_burn_mynts.clicked
 import kotlinx.android.synthetic.main.dialog_burn_mynts.spin_green
 import kotlinx.android.synthetic.main.dialog_burn_mynts.textView
 import kotlinx.android.synthetic.main.dialog_cash_won.*
+import java.util.ArrayList
 
 
 class ScratchCardActivity :
@@ -47,6 +49,12 @@ class ScratchCardActivity :
     override fun getBindingVariable(): Int = BR.viewModel
     private var dialogDialog: Dialog? = null
     override fun getLayoutId(): Int = R.layout.activity_scratch_product
+
+    companion object {
+        var imageScratch: Drawable? = null
+        var sectionArrayList: ArrayList<SectionListItem> = ArrayList()
+    }
+
 
     override fun getViewModel(): ScratchCardProductViewmodel {
         mViewModel = ViewModelProvider(this).get(ScratchCardProductViewmodel::class.java)
@@ -60,15 +68,19 @@ class ScratchCardActivity :
         setToolbarAndTitle(
             context = this@ScratchCardActivity,
             toolbar = toolbar,
-            isBackArrowVisible = true,
+            isBackArrowVisible = false,
             backArrowTint = Color.WHITE
         )
         dialogDialog = Dialog(this)
 
         orderId = intent.getStringExtra(AppConstants.ORDER_ID)
         sectionId = intent.getIntExtra(AppConstants.SECTION_ID, -1)
-        mViewModel.callProductsDetailsApi(orderId)
+        var image_url = intent.getStringExtra(AppConstants.PRODUCT_HIDE_IMAGE)
+
+        Glide.with(this).load(image_url).into(mBinding.gotTheOfferIv)
+//        mViewModel.callProductsDetailsApi(orderId)
         setUpView()
+        mBinding.scratchCardLayout.setScratchDrawable(imageScratch)
         setUpObserver()
     }
 
@@ -78,49 +90,37 @@ class ScratchCardActivity :
 
     private fun setUpObserver() {
 
+
         mViewModel.scratchResponseList.observe(this) {
 //            if(mViewModel.onButtomClicked.value==true){
 //
 //
 //            }
+            mBinding.LoadProgressBar.visibility = View.GONE
             Handler(Looper.getMainLooper()).postDelayed({
                 showwonDialog(it.cashbackWon)
-            }, 1000)
+            }, 500)
 
 
         }
         mViewModel.redeemCallBackResponse.observe(this) {
 //          mBinding.scratchCardLayout.setScratchDrawable()
-            sectionId = it.sectionId
 
-            it.sectionList?.forEach { item ->
-
-                if (item?.id == sectionId.toString()) {
-
-
-                    mBinding.offerAmountTv.text = "₹" + Utility.convertToRs(item.sectionValue)
-
-                    return@forEach
-
-                }
-
-
-            }
-            Glide.with(this).load(it.scratchResourceShow).into(mBinding.gotTheOfferIv)
-
-            Glide.with(this).asDrawable().load(it.scratchResourceHide)
-                .into(object : CustomTarget<Drawable?>() {
-
-                    override fun onLoadCleared(@Nullable placeholder: Drawable?) {}
-
-
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        transition: Transition<in Drawable?>?
-                    ) {
-                        mBinding.scratchCardLayout.setScratchDrawable(resource)
-                    }
-                })
+//            Glide.with(this).asDrawable().load(it.scratchResourceHide)
+//                .into(object : CustomTarget<Drawable?>() {
+//
+//                    override fun onLoadCleared(@Nullable placeholder: Drawable?) {
+//
+//                    }
+//
+//                    override fun onResourceReady(
+//                        resource: Drawable,
+//                        transition: Transition<in Drawable?>?
+//                    ) {
+//                        mBinding.scratchCardLayout.setScratchDrawable(resource)
+//                    }
+//                })
+//            mBinding.scratchCardLayout.setScratchDrawable(ContextCompat.getDrawable(this,R.drawable.ic_task_rejected))
 
 
         }
@@ -181,20 +181,21 @@ class ScratchCardActivity :
         dialogDialog?.show()
     }
 
-    private fun handelEvents(it: ScratchCardProductViewmodel.CardOfferEvent?) {
-        when (it) {
-            ScratchCardProductViewmodel.CardOfferEvent.Continue -> {
-                mViewModel.onButtomClicked.value = true
 
-                mViewModel.scratchCalled.value = false
-                mViewModel.callScratchWheelApi(orderId, true)
+    private fun setupScratchCardView() {
+        sectionArrayList?.forEach { item ->
+
+            if (item?.id == sectionId.toString()) {
+
+
+                mBinding.offerAmountTv.text = "₹" + Utility.convertToRs(item.sectionValue)
+
+                return@forEach
 
             }
 
-        }
-    }
 
-    private fun setupScratchCardView() {
+        }
         mBinding.scratchCardLayout.setScratchListener(object : ScratchListener {
             override fun onScratchStarted() {
             }
@@ -210,7 +211,7 @@ class ScratchCardActivity :
             override fun onScratchComplete() {
 
 
-                mBinding.cardBg.visibility = View.GONE
+                mBinding.LoadProgressBar.visibility = View.VISIBLE
 
                 mViewModel.callScratchWheelApi(orderId, false)
 

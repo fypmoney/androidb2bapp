@@ -116,7 +116,7 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
                 mViewBinding?.loadingAmountMynts?.visibility = View.GONE
                 if (list.totalPoints != null) {
                     mViewBinding?.totalMyntsWonValueTv?.text =
-                        String.format("%.0f", list.totalPoints)
+                        String.format("%.0f", list.remainingPoints)
                 }
 
 

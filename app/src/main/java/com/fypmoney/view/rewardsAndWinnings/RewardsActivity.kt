@@ -69,6 +69,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
             androidx.lifecycle.Observer { list ->
 
                 if (list.errorCode == "PKT_2051") {
+
                     callInsuficientFundMessageSheet(list.msg)
                 }
 

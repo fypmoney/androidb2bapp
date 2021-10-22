@@ -13,6 +13,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.util.livedata.LiveEvent
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -23,14 +24,15 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     var rewardHistoryList: MutableLiveData<ArrayList<RewardHistoryResponseNew>> = MutableLiveData()
 
     var latitude = ObservableField<Double>()
-
+    var redeemproductDetails = LiveEvent<aRewardProductResponse>()
     val longitude = ObservableField<Double>()
     var onAddMoneyClicked = MutableLiveData(false)
     var loading = MutableLiveData(false)
     var selectedPosition = ObservableField(-1)
     val isApiLoading = ObservableField(true)
+    val detailsCalling = ObservableField(false)
     var clickedType = ObservableField("")
-
+    var orderNumber = MutableLiveData("")
     var spinArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
     val page = ObservableField(0)
     var scratchArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
@@ -63,6 +65,21 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
     }
 
+    fun callProductsDetailsApi(orderId: String?) {
+        detailsCalling.set(true)
+        orderNumber.value = orderId
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.REWARD_PRODUCT_DETAILS,
+                NetworkUtil.endURL(ApiConstant.REWARD_PRODUCT_DETAILS + orderId),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+
+
+    }
 
 
     private fun makeFetchFeedRequest(
@@ -207,6 +224,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         super.onSuccess(purpose, responseData)
         loading.postValue(false)
         when (purpose) {
+
             ApiConstant.RewardsHistory -> {
 
 
@@ -301,6 +319,20 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 ////
 //                    itemsArrayList.add(images)
 //                }
+
+
+            }
+            ApiConstant.REWARD_PRODUCT_DETAILS -> {
+
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val spinDetails = Gson().fromJson(
+                    json.get("data"),
+                    com.fypmoney.model.aRewardProductResponse::class.java
+                )
+
+                redeemproductDetails.value = spinDetails
 
 
             }
