@@ -151,6 +151,52 @@
                     app:spanCount="4"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/food_delivery_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_marginLeft="@dimen/_16sdp"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:text="@string/food_delivery"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="17sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/food_delivery_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_16sdp"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    app:adapter="@{viewModel.foodDeliveryItemAdapter}"
+                    android:layout_marginTop="@dimen/margin"
+                    app:spanCount="4"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cabs_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_marginLeft="@dimen/_16sdp"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:text="@string/cabs_amp_e_bikes"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="17sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cabs_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_16sdp"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    app:adapter="@{viewModel.cabsItemAdapter}"
+                    android:layout_marginTop="@dimen/margin"
+                    app:spanCount="4"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

@@ -44,7 +44,12 @@ class RechargeItemAdapter(var onStoreClickListener: OnRechargeItemClick) :
                 position,
                 storeList?.get(position), onStoreClickListener
             )
-    mRowItemBinding?.tvServiceName?.text= storeList?.get(position)?.title
+        mRowItemBinding?.tvServiceName?.text= storeList?.get(position)?.title
+            storeList?.get(position)?.Icon?.let {
+                mRowItemBinding?.ivServiceLogo?.setImageResource(
+                    it
+                )
+            }
 
             mRowItemBinding!!.viewHelper = mViewHelper
             mRowItemBinding.executePendingBindings()
