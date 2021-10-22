@@ -25,8 +25,7 @@ import com.fypmoney.view.rewardsAndWinnings.activity.RewardsHistoryView
 import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
 import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
-import jp.wasabeef.blurry.Blurry
-import kotlinx.android.synthetic.main.view_reward_history.*
+
 import kotlin.math.roundToInt
 
 
