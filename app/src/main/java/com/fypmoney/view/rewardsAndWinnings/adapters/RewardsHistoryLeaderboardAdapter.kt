@@ -121,7 +121,7 @@ class RewardsHistoryLeaderboardAdapter(
 
         holder.card.setOnClickListener(View.OnClickListener {
          if (items[position].isFullFilled == AppConstants.NO)
-             clickInterface.onItemClicked(items[position])
+            clickInterface.onItemClicked(items[position])
         })
 
 

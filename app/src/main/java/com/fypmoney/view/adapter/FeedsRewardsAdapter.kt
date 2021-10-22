@@ -80,7 +80,6 @@ class FeedsRewardsAdapter(
         }
         return ViewHolder()
     }
-
     inner class StaticImage1x1(
         private val mRowItemBinding: FeedsDidUKnowrewards1x1Binding? = null
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
@@ -118,7 +117,6 @@ class FeedsRewardsAdapter(
     override fun getItemCount(): Int {
         return feedList!!.size
     }
-
     inner class StaticImage1x1_5(
         private val mRowItemBinding: ItemFeedsStaticImageAspectRatioBinding? = null
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
@@ -149,7 +147,6 @@ class FeedsRewardsAdapter(
 
         }
     }
-
     /**
      * This will set the data in the list in adapter
      */
