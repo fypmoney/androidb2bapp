@@ -18,6 +18,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.activity.UserFeedsDetailView
+import com.fypmoney.view.activity.UserFeedsInAppWebview
 import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.adapter.FeedsRewardsAdapter
 
@@ -151,7 +152,7 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
             }
             AppConstants.FEED_TYPE_INAPPWEB2 -> {
                 intentToActivity(
-                    UserFeedsDetailView::class.java,
+                    UserFeedsInAppWebview::class.java,
                     it,
                     AppConstants.FEED_TYPE_INAPPWEB
                 )
@@ -169,7 +170,7 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
             }
             AppConstants.FEED_TYPE_INAPPWEB -> {
                 intentToActivity(
-                    UserFeedsDetailView::class.java,
+                    UserFeedsInAppWebview::class.java,
                     it,
                     AppConstants.FEED_TYPE_INAPPWEB
                 )

@@ -251,6 +251,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
                     response?.feedDetails?.forEach() {
                         notificationList?.add(it)
                     }
+                    totalCount.set(response?.total)
                     rewardfeedList.postValue(notificationList)
 
                 }

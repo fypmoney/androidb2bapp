@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
+    android:background="@drawable/round_backgorund_20"
+    android:backgroundTint="#F4F4F4"
 
     android:layout_marginTop="@dimen/_4sdp"
     android:layout_marginBottom="@dimen/_4sdp"
     android:elevation="@dimen/_4sdp"
     android:layout_marginRight="@dimen/_8sdp"
+    app:cardCornerRadius="20dp"
     android:layout_marginLeft="@dimen/_8sdp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="wrap_content">
@@ -24,7 +26,7 @@
             android:layout_alignStart="@+id/layout"
             android:id="@+id/desc"
             android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginEnd="@dimen/_60sdp"
+            android:layout_marginEnd="@dimen/_96sdp"
             android:layout_below="@+id/layout"
             android:layout_height="wrap_content" />
 
@@ -61,31 +63,30 @@
         </LinearLayout>
 
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_bg"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_146sdp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image_illus"
+                android:layout_width="0dp"
+                android:scaleType="fitXY"
+                app:layout_constraintDimensionRatio="1.9:1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="0dp"
 
 
-            android:alpha=".10"
-            android:background="@drawable/round_backgorund_20"
-            android:backgroundTint="#F4F4F4"
-            android:elevation="-1dp"
-            app:cardCornerRadius="18dp" />
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
 
-        <ImageView
-            android:id="@+id/image_illus"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_146sdp"
-
-
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-
-            android:elevation="-2dp" />
+                android:elevation="-2dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </RelativeLayout>
 
 
-</RelativeLayout>
+</androidx.cardview.widget.CardView>
