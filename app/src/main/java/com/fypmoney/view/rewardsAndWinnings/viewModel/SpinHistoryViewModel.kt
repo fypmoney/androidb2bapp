@@ -1,7 +1,6 @@
-package com.fypmoney.viewmodel
+package com.fypmoney.view.rewardsAndWinnings.viewModel
 
 import android.app.Application
-import android.util.Log
 import androidx.databinding.ObservableField
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -10,17 +9,15 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.AssignedTaskResponse
 import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.GetRewardsHistoryResponse
 import com.fypmoney.model.GetRewardsHistoryResponseDetails
-import com.fypmoney.view.adapter.RewardsHistoryAdapter
+import com.fypmoney.view.adapter.SpinHistoryAdapter
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
-class RewardsHistoryViewModel(application: Application) : BaseViewModel(application) {
-    var rewardsHistoryAdapter = RewardsHistoryAdapter()
+class SpinHistoryViewModel(application: Application) : BaseViewModel(application) {
+    var rewardsHistoryAdapter = SpinHistoryAdapter()
     var noDataFoundVisibility = ObservableField(false)
 
 

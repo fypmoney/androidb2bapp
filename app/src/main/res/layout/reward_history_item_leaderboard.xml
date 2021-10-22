@@ -18,8 +18,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_4sdp"
-        android:layout_marginEnd="@dimen/_4sdp"
+        android:layout_marginStart="@dimen/_10sdp"
+        android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_8sdp"
         android:background="@drawable/round_dark_grey_rewards_18"
 
@@ -28,13 +28,13 @@
 
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ivServiceLogo"
+            android:id="@+id/productType"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_spin_burned"
             android:layout_marginStart="10dp"
             android:layout_marginTop="@dimen/_4sdp"
             android:layout_marginBottom="@dimen/_4sdp"
+            android:src="@drawable/ic_spin_burned"
 
 
             />
@@ -45,23 +45,29 @@
             style="@style/TextviewRegular"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_5sdp"
-            android:layout_toEndOf="@+id/ivServiceLogo"
-            android:text="200 Mynts"
+            android:layout_toEndOf="@+id/productType"
+
             android:textColor="@color/white"
 
-            android:textSize="@dimen/textSize_18" />
+            android:textSize="16sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/desc"
             style="@style/TextviewRegular"
             android:layout_below="@+id/heading"
+            android:layout_marginEnd="@dimen/_2sdp"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:layout_toEndOf="@+id/ivServiceLogo"
-            android:ellipsize="end"
+            android:maxLines="2"
+            android:layout_marginTop="@dimen/_4sdp"
 
+            android:layout_toStartOf="@+id/won_tv"
+            android:layout_toEndOf="@+id/productType"
+
+
+            android:ellipsize="end"
             android:text=""
-            android:textColor="@color/grey_heading" />
+            android:textColor="@color/grey_heading"
+            android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/amount"
@@ -71,26 +77,55 @@
             android:layout_marginTop="@dimen/_5sdp"
 
             android:layout_marginEnd="@dimen/_8sdp"
-            android:text="₹70.00"
+
             android:textColor="@color/white"
 
-            android:textSize="@dimen/textSize_18" />
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/note"
+
+
+            android:layout_height="8dp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/amount"
+            android:layout_alignBottom="@+id/amount"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+
+            android:layout_toStartOf="@+id/amount"
+            android:src="@drawable/cash" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/won_tv"
             style="@style/TextviewRegular"
             android:layout_below="@+id/amount"
+
             android:layout_alignParentRight="true"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_2sdp"
             android:layout_marginEnd="@dimen/_8sdp"
-            android:text="Won"
             android:textColor="@color/grey_heading"
+            android:textSize="12sp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/status_tv"
+            style="@style/TextviewRegular"
+            android:layout_below="@+id/amount"
+
+            android:layout_alignParentRight="true"
+            android:visibility="invisible"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:text="Play"
+
+            android:textColor="#F7AA11"
 
 
             android:textSize="14sp" />
-
-
     </RelativeLayout>
 
 </layout>

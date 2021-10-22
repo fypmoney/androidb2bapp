@@ -103,6 +103,23 @@ class WebApiCaller {
                             sort = null
                         )
                     }
+                    ApiConstant.RewardsHistory -> {
+
+                        val params = request.param as QueryPaginationParams
+
+
+                        mObservable = apiInterface.getPaginationApiCalling2(
+                            endPoint = request.endpoint,
+                            authorization = SharedPrefUtils.getString(
+                                PockketApplication.instance,
+                                SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                            ),
+                            client_id = ApiConstant.CLIENT_ID,
+                            page = params.page,
+                            size = params.size,
+                            sort = null
+                        )
+                    }
                     ApiConstant.CHECK_APP_UPDATE -> {
                         mObservable = apiInterface.checkAppUpdate(
                             endPoint = request.endpoint
@@ -422,37 +439,61 @@ class WebApiCaller {
                 }
 
                 override fun onError(e: Throwable) {
-                    try {
-                        if (request.purpose == ApiConstant.API_LOGOUT) {
-                            request.onResponse.onError(
-                                purpose = request.purpose,
-                                ErrorResponseInfo(
-                                    errorCode = "204",
-                                    msg = ""
-                                )
-                            )
-                        }
-
-                        else {
-                            request.onResponse.onError(
-                                purpose = request.purpose,
-                                NetworkUtil.responseData(e)!!
-                            )
-                        }
-                        if (request.isProgressBar!!) {
-                            request.onResponse.progress(false, null.toString())
-                        }
-                    } catch (e: Exception) {
+                    if (e is java.net.ConnectException) {
                         request.onResponse.onError(
                             purpose = request.purpose,
                             ErrorResponseInfo(
-                                errorCode = "1",
+                                errorCode = "101",
                                 msg = ""
                             )
                         )
                         request.onResponse.progress(false, null.toString())
                         e.printStackTrace()
+                    } else if (e is java.net.SocketTimeoutException) {
+
+                        request.onResponse.onError(
+                            purpose = request.purpose,
+                            ErrorResponseInfo(
+                                errorCode = "101",
+                                msg = ""
+                            )
+                        )
+                        request.onResponse.progress(false, null.toString())
+                        e.printStackTrace()
+                    } else {
+                        try {
+                            if (request.purpose == ApiConstant.API_LOGOUT) {
+                                request.onResponse.onError(
+                                    purpose = request.purpose,
+                                    ErrorResponseInfo(
+                                        errorCode = "204",
+                                        msg = ""
+                                    )
+                                )
+
+
+                            } else {
+                                request.onResponse.onError(
+                                    purpose = request.purpose,
+                                    NetworkUtil.responseData(e)!!
+                                )
+                            }
+                            if (request.isProgressBar!!) {
+                                request.onResponse.progress(false, null.toString())
+                            }
+                        } catch (e: Exception) {
+                            request.onResponse.onError(
+                                purpose = request.purpose,
+                                ErrorResponseInfo(
+                                    errorCode = "1",
+                                    msg = ""
+                                )
+                            )
+                            request.onResponse.progress(false, null.toString())
+                            e.printStackTrace()
+                        }
                     }
+
                 }
 
 

@@ -13,7 +13,7 @@ import com.fypmoney.viewhelper.RewardsHistoryViewHelper
 /**
  * This adapter class is used to handle rewards history
  */
-class RewardsHistoryAdapter() :
+class SpinHistoryAdapter() :
     RecyclerView.Adapter<BaseViewHolder>() {
     var rewardsList: ArrayList<GetRewardsHistoryResponseDetails>? = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {

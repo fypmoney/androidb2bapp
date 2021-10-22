@@ -1,6 +1,5 @@
 package com.fypmoney.view.ordercard.activateofflinecard
 
-import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,31 +8,23 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityScanCardKitNumberBinding
-import com.fypmoney.model.SectionListItem
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.CaptureManager
 import com.fypmoney.util.Utility
-import com.fypmoney.view.CardSettingClickListener
-import com.fypmoney.view.activity.ScratchCardActivity
 import com.fypmoney.view.activity.SetPinView
-import com.fypmoney.view.activity.SpinWheelViewDark
 import com.fypmoney.view.fragment.ActivateCardBottomSheet
 import com.fypmoney.view.fragment.SetOrChangePinBottomSheet
-import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.view.setpindialog.SetPinDialogFragment
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.ResultPoint
 import com.journeyapps.barcodescanner.BarcodeCallback
 import com.journeyapps.barcodescanner.BarcodeResult
-
 import com.journeyapps.barcodescanner.DecoratedBarcodeView.TorchListener
 import com.journeyapps.barcodescanner.DefaultDecoderFactory
 import kotlinx.android.synthetic.main.dialog_burn_mynts.*

@@ -29,16 +29,27 @@ data class Rewards(
 data class SpinWheelResponse(
     @SerializedName("data") val spinWheelResponseDetails: SpinWheelResponseDetails
 ) : Serializable
+
 @Keep
 data class SpinWheelResponseDetails(
     @SerializedName("sectionId") var sectionId: Int?,
     @SerializedName("sectionName") var sectionName: String?,
     @SerializedName("colorCode") var colorCode: String?
 ) : Serializable
+
+@Keep
+data class SpinWheelRotateResponseDetails(
+    @SerializedName("message") var message: String?,
+    @SerializedName("cashbackWon") var cashbackWon: String?,
+    @SerializedName("sectionValue") var sectionValue: String?,
+    @SerializedName("sectionId") var sectionId: Int?
+) : Serializable
+
 @Keep
 data class GetRewardsHistoryResponse(
     @SerializedName("data") val getRewardsResponseDetails: List<GetRewardsHistoryResponseDetails>
 ) : Serializable
+
 @Keep
 data class GetRewardsHistoryResponseDetails(
     @SerializedName("id") var id: Int?,

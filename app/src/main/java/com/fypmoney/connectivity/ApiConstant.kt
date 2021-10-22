@@ -104,7 +104,7 @@ object ApiConstant {
   const val API_PIN_CODE = "/services/loyaltyservice/api/service-available/check/"
 
     const val RewardsHistory =
-        "services/PockketService/api/rewardHistory"
+        "services/loyaltyservice/api/rewardHistory"
 
     const val API_REWARD_SUMMARY =
         "services/loyaltyservice/api/loyalty/points/summary"
@@ -114,6 +114,14 @@ object ApiConstant {
         "services/PockketService/api/total-cashback-earned"
     const val API_POST_CHECK_OFFLINE_CARD =
         "/services/PockketService/api/order-card/offline"
+    const val REWARD_PRODUCT_DETAILS =
+        "/services/PockketService/api/reward-product/by/orderId/"
+    const val API_REDEEM_REWARD =
+        "/services/PockketService/api/purchase/reward-product/"
+    const val API_PLAY_SPIN =
+        "services/PockketService/api/total-cashback-earned"
+    const val PLAY_ORDER_API =
+        "/services/PockketService/api/play/order/"
     const val API_GET_CASHBACK_EARNED =
         "/services/PockketService/api/cashback-earned/bymrn/"
     const val API_GET_REWARDS_EARNED =

@@ -131,7 +131,7 @@ public class PielView extends View {
     }
 
     public void setTopTextSize(int size) {
-        mTopTextSize = size;
+        mTopTextSize = size + 8;
         invalidate();
     }
 
@@ -246,8 +246,8 @@ public class PielView extends View {
         int x = (int) +(mCenter + mRadius * 3 / 5 / 2 * Math.cos(angle));
         int y = (int) (mCenter + mRadius * 3 / 5 / 2 * Math.sin(angle));
 
-        Rect rect = new Rect(x - imgWidth / 2, y - imgWidth / 3,
-                x + imgWidth / 2, y + imgWidth / 3);
+        Rect rect = new Rect(x - imgWidth / 2, y - imgWidth / 2,
+                x + imgWidth / 2, y + imgWidth / 2);
         canvas.drawBitmap(bitmap, null, rect, null);
     }
 
@@ -283,6 +283,9 @@ public class PielView extends View {
         mTextPaint.setTypeface(typeface);
         mTextPaint.setTextAlign(Paint.Align.LEFT);
         mTextPaint.setTextSize(mTopTextSize);
+        mTextPaint.setLetterSpacing(.2f);
+        mTextPaint.setLinearText(true);
+        mTextPaint.setSubpixelText(true);
         int noOfLines = 0;
         for (String line : mStr.split("\n")) {
             noOfLines++;
@@ -290,7 +293,7 @@ public class PielView extends View {
         float textWidth = mTextPaint.measureText(mStr);
         int hOffset = (int) (mRadius * Math.PI / mLuckyItemList.size() / 2 - textWidth / 2);
 
-        int vOffset = mTopTextPadding;
+        int vOffset = mTopTextPadding + 50;
 
         canvas.drawTextOnPath(mStr, path, hOffset, vOffset, mTextPaint);
     }
@@ -379,7 +382,7 @@ public class PielView extends View {
             float multiplier = getRotation() > 200f ? 2 : 1;
             animate()
                     .setInterpolator(animationStart)
-                    .setDuration(500L)
+                    .setDuration(300L)
                     .setListener(new Animator.AnimatorListener() {
                         @Override
                         public void onAnimationStart(Animator animation) {
