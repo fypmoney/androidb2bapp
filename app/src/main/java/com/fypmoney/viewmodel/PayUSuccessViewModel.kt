@@ -3,14 +3,21 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
-import com.fypmoney.model.AddMoneyStep2ResponseDetails
-import com.fypmoney.model.BankTransactionHistoryResponseDetails
-import com.fypmoney.model.TransactionHistoryResponseDetails
+import com.fypmoney.connectivity.ApiConstant
+import com.fypmoney.connectivity.ApiUrl
+import com.fypmoney.connectivity.ErrorResponseInfo
+import com.fypmoney.connectivity.network.NetworkUtil
+import com.fypmoney.connectivity.retrofit.ApiRequest
+import com.fypmoney.connectivity.retrofit.WebApiCaller
+import com.fypmoney.model.*
+import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.google.gson.Gson
 import java.text.SimpleDateFormat
 
 /*
@@ -28,10 +35,15 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
     var payUResponse = ObservableField<AddMoneyStep2ResponseDetails>()
     var bankResponse = ObservableField<BankTransactionHistoryResponseDetails>()
     var transactionHistoryResponse = ObservableField<TransactionHistoryResponseDetails>()
-
+    var cashbackEarnedData = ObservableField<String>()
+    var rewardEarnedData = ObservableField<String>()
+    var cashbackEarnedError = MutableLiveData<Boolean>()
+    var rewardEarnedError = MutableLiveData<Boolean>()
     /*
     * This is used to set the initial parameters
     * */
+    init {
+    }
     fun setInitialData() {
         when (fromWhichScreen.get()) {
             AppConstants.ADD_MONEY -> {
@@ -116,6 +128,65 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
             }
         }
 
+    }
+
+
+    fun callCashbackEarned() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_GET_CASHBACK_EARNED,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_CASHBACK_EARNED+"${bankResponse.get()?.mrn}/"),
+                request_type = ApiUrl.GET,
+                onResponse = this, isProgressBar = true,
+                param = ""
+            )
+        )
+    }
+    fun callRewardsEarned() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_GET_REWARDS_EARNED,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_REWARDS_EARNED+"${bankResponse.get()?.mrn}/"),
+                request_type = ApiUrl.GET,
+                onResponse = this, isProgressBar = true,
+                param = ""
+            )
+        )
+    }
+    override fun onSuccess(purpose: String, responseData: Any) {
+        super.onSuccess(purpose, responseData)
+        when(purpose){
+            ApiConstant.API_GET_CASHBACK_EARNED->{
+                val data = Gson().fromJson(responseData.toString(), CashbackEarnedResponse::class.java)
+                cashbackEarnedData.set(
+                    data.data.getAmountInRuppes()
+                )
+                cashbackEarnedError.value = true
+
+            }
+            ApiConstant.API_GET_REWARDS_EARNED->{
+                val data = Gson().fromJson(responseData.toString(), RewardsEarnedResponse::class.java)
+                rewardEarnedData.set(
+                    data.data.points
+                )
+                rewardEarnedError.value = true
+
+            }
+        }
+    }
+
+    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
+        super.onError(purpose, errorResponseInfo)
+        when(purpose){
+            ApiConstant.API_GET_CASHBACK_EARNED->{
+                rewardEarnedError.value = false
+
+            }
+            ApiConstant.API_GET_REWARDS_EARNED->{
+                rewardEarnedError.value = false
+
+            }
+        }
     }
 
 

@@ -26,46 +26,21 @@ class  StoreScreenViewModel(application: Application) : BaseViewModel(applicatio
 
     var storefeedList: MutableLiveData<ArrayList<FeedDetails>> =
         MutableLiveData()
-    var offerstopList: MutableLiveData<ArrayList<FeedDetails>> =
-        MutableLiveData()
-
-    var offersbottomList: MutableLiveData<ArrayList<FeedDetails>> =
-        MutableLiveData()
-    var availableAmount =
-        ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
     val isApiLoading = ObservableField(true)
 
     val page = ObservableField(0)
-    var onAddMoneyClicked = MutableLiveData(false)
-    var onPayClicked = MutableLiveData(false)
-    var onChoreClicked = MutableLiveData(false)
-    var isFetchBalanceVisible = ObservableField(true)
-    var isFeedVisible = ObservableField(false)
     var onUpiClicked = MutableLiveData<StoreDataModel>()
     var onRechargeClicked = MutableLiveData<StoreDataModel>()
     var isRecyclerviewVisible = ObservableField(false)
     var onFeedButtonClick = MutableLiveData<FeedDetails>()
     var storeAdapter = StoreItemAdapter(this, application.applicationContext)
     var rechargeItemAdapter = RechargeItemAdapter(this)
+
     init {
         callFetchFeedsApi()
 
     }
 
-    /*
-    * This is used to handle add money
-    * */
-    fun onAddMoneyClicked() {
-        onAddMoneyClicked.value = true
-    }
-
-    /*
-    * This is used to handle pay button click
-    * */
-    fun onPayClicked() {
-        onPayClicked.value = true
-
-    }
 
     /*
      * This method is used to get the balance of wallet
@@ -174,17 +149,14 @@ class  StoreScreenViewModel(application: Application) : BaseViewModel(applicatio
 
     }
 
-    var clickedPositionForUpi = ObservableField<Int>()
 
 
     override fun onStoreItemClicked(position: Int, upiModel: StoreDataModel?) {
-        clickedPositionForUpi.set(position)
         onUpiClicked.value = upiModel!!
     }
 
 
     override fun onRechargeItemClicked(position: Int, upiModel: StoreDataModel?) {
-        clickedPositionForUpi.set(position)
         onRechargeClicked.value = upiModel!!
     }
 

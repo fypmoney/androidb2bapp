@@ -933,6 +933,8 @@ Coming really soon!
     <string name="terms_and_conditions_apply">Terms and conditions apply</string>
     <string name="copy_code_and_use_at_checkout">Copy code and use at checkout</string>
     <string name="details">Details</string>
+    <string name="total_cashback_earned">Total cashback earned</string>
+    <string name="total_rewards_earned">Total rewards earned</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>
