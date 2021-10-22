@@ -31,6 +31,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.annotation.Nullable
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import com.fypmoney.model.SectionListItem
 import com.fypmoney.util.Utility
 import kotlinx.android.synthetic.main.dialog_burn_mynts.clicked
@@ -98,7 +99,9 @@ class ScratchCardActivity :
 //            }
             mBinding.LoadProgressBar.visibility = View.GONE
             Handler(Looper.getMainLooper()).postDelayed({
-                showwonDialog(it.cashbackWon)
+                if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                    showwonDialog(it.cashbackWon)
+                }
             }, 500)
 
 
