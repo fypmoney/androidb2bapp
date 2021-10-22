@@ -115,6 +115,7 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
     private fun setObserver(sharedViewModel: RewardsAndVM) {
         sharedViewModel?.redeemproductDetails.observe(requireActivity()) {
             if (it != null) {
+                sharedViewModel?.redeemproductDetails.postValue(null)
                 Glide.with(this).asDrawable().load(it.scratchResourceHide)
                     .into(object : CustomTarget<Drawable?>() {
 
@@ -144,13 +145,11 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
                                 it.scratchResourceShow
                             )
                             startActivity(intent)
-
                         }
-
-
                     })
+
             }
-            sharedViewModel?.redeemproductDetails.postValue(null)
+
 
         }
         sharedViewModel.rewardHistoryList.observe(

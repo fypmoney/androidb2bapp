@@ -65,10 +65,19 @@ class RewardsHistoryLeaderboardAdapter(
 
 
         } else {
+
+            if (items[position]?.cashbackWonForProduct != null) {
+                holder.amount.text =
+                    "₹" + Utility.convertToRs(items[position]?.cashbackWonForProduct.toString())
+            } else {
+                holder.amount.text =
+                    "₹0"
+            }
+
             holder.note.visibility = View.GONE
-            holder.amount.visibility = View.INVISIBLE
+//            holder.amount.visibility = View.INVISIBLE
             holder.status_tv.visibility = View.VISIBLE
-            holder.won_tv.visibility = View.INVISIBLE
+
 
         }
 
@@ -91,6 +100,13 @@ class RewardsHistoryLeaderboardAdapter(
         }
 
         if (items[position].isFullFilled == AppConstants.NO) {
+            holder.note.visibility = View.INVISIBLE
+
+
+            holder.amount.visibility = View.INVISIBLE
+
+            holder.won_tv.visibility = View.INVISIBLE
+
             holder.status_tv.visibility = View.VISIBLE
         } else {
             holder.status_tv.visibility = View.INVISIBLE
@@ -104,7 +120,7 @@ class RewardsHistoryLeaderboardAdapter(
 
 
         holder.card.setOnClickListener(View.OnClickListener {
-//            if (items[position].isFullFilled == AppConstants.NO)
+//          if (items[position].isFullFilled == AppConstants.NO)
             clickInterface.onItemClicked(items[position])
         })
 

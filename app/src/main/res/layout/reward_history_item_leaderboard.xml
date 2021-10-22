@@ -55,15 +55,19 @@
             android:id="@+id/desc"
             style="@style/TextviewRegular"
             android:layout_below="@+id/heading"
+            android:layout_marginEnd="@dimen/_2sdp"
             android:layout_marginStart="@dimen/margin"
+            android:maxLines="2"
             android:layout_marginTop="@dimen/_4sdp"
+
+            android:layout_toStartOf="@+id/won_tv"
             android:layout_toEndOf="@+id/productType"
+
+
             android:ellipsize="end"
-            android:textSize="12sp"
-
-
             android:text=""
-            android:textColor="@color/grey_heading" />
+            android:textColor="@color/grey_heading"
+            android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/amount"
@@ -98,6 +102,7 @@
             android:id="@+id/won_tv"
             style="@style/TextviewRegular"
             android:layout_below="@+id/amount"
+
             android:layout_alignParentRight="true"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_2sdp"
@@ -111,6 +116,7 @@
             android:layout_below="@+id/amount"
 
             android:layout_alignParentRight="true"
+            android:visibility="invisible"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_12sdp"

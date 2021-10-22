@@ -64,19 +64,19 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
                 val luckyItem1 = LuckyItem()
                 luckyItem1.topText =
                     PockketApplication.instance.getString(R.string.better_luck_emoji)
-                luckyItem1.icon = R.drawable.cash
+//                luckyItem1.icon = R.drawable.cash
                 luckyItem1.color = Color.parseColor(item.colorCode)
                 luckyItemList.add(luckyItem1)
             } else if (pos % 2 == 0) {
                 val luckyItem3 = LuckyItem()
                 luckyItem3.topText = Utility.convertToRs(item.sectionValue)
-                luckyItem3.icon = R.drawable.cash
+//                luckyItem3.icon = R.drawable.cash
                 luckyItem3.color = Color.parseColor(item.colorCode)
                 luckyItemList.add(luckyItem3)
             } else {
                 val luckyItem4 = LuckyItem()
                 luckyItem4.topText = Utility.convertToRs(item.sectionValue)
-                luckyItem4.icon = R.drawable.cash
+//                luckyItem4.icon = R.drawable.cash
                 luckyItem4.color = Color.parseColor(item.colorCode)
                 luckyItemList.add(luckyItem4)
             }

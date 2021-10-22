@@ -16,7 +16,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -121,66 +125,72 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
             requireActivity(),
             androidx.lifecycle.Observer { list ->
                 dialogDialog?.dismiss()
-                when (sharedViewModel.clickedType.get()) {
-                    AppConstants.PRODUCT_SPIN -> {
-                        val intent = Intent(requireContext(), SpinWheelViewDark::class.java)
-                        SpinWheelViewDark.sectionArrayList.clear()
-                        intent.putExtra(AppConstants.ORDER_ID, list.orderNo)
-                        intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
+                if (list != null) {
+                    sharedViewModel.coinsBurned.postValue(null)
+
+                    when (sharedViewModel.clickedType.get()) {
+                        AppConstants.PRODUCT_SPIN -> {
+                            val intent = Intent(requireContext(), SpinWheelViewDark::class.java)
+                            SpinWheelViewDark.sectionArrayList.clear()
+                            intent.putExtra(AppConstants.ORDER_ID, list.orderNo)
+                            intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
 
 
-                        itemsArrayList[sharedViewModel.selectedPosition.get()!!].sectionList?.forEachIndexed { pos, item ->
-                            if (item != null) {
-                                SpinWheelViewDark.sectionArrayList.add(item)
+                            itemsArrayList[sharedViewModel.selectedPosition.get()!!].sectionList?.forEachIndexed { pos, item ->
+                                if (item != null) {
+                                    SpinWheelViewDark.sectionArrayList.add(item)
+                                }
                             }
-                        }
 
 
 //                    val args = Bundle()
 //                    args.putSerializable("ARRAYLIST", itemsArrayList as Serializable)
 //                    intent.putExtra("BUNDLE", args)
-                        startForResult.launch(intent)
+                            startForResult.launch(intent)
 
-                    }
-                    AppConstants.PRODUCT_SCRATCH -> {
+                        }
+                        AppConstants.PRODUCT_SCRATCH -> {
 
 
-                        Glide.with(this).asDrawable()
-                            .load(scratchArrayList[sharedViewModel.selectedPosition.get()!!].scratchResourceHide)
-                            .into(object : CustomTarget<Drawable?>() {
+                            Glide.with(this).asDrawable()
+                                .load(scratchArrayList[sharedViewModel.selectedPosition.get()!!].scratchResourceHide)
+                                .into(object : CustomTarget<Drawable?>() {
 
-                                override fun onLoadCleared(@Nullable placeholder: Drawable?) {
+                                    override fun onLoadCleared(@Nullable placeholder: Drawable?) {
 
-                                }
-
-                                override fun onResourceReady(
-                                    resource: Drawable,
-                                    transition: Transition<in Drawable?>?
-                                ) {
-                                    val intent =
-                                        Intent(requireContext(), ScratchCardActivity::class.java)
-                                    intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
-                                    scratchArrayList[sharedViewModel.selectedPosition.get()!!].sectionList?.forEachIndexed { pos, item ->
-                                        if (item != null) {
-                                            ScratchCardActivity.sectionArrayList.add(item)
-                                        }
                                     }
-                                    ScratchCardActivity.imageScratch = resource
 
-                                    intent.putExtra(
-                                        AppConstants.ORDER_ID,
-                                        list.orderNo
-                                    )
-                                    intent.putExtra(
-                                        AppConstants.PRODUCT_HIDE_IMAGE,
-                                        scratchArrayList[sharedViewModel.selectedPosition.get()!!].scratchResourceShow
-                                    )
-                                    startActivity(intent)
-                                }
-                            })
+                                    override fun onResourceReady(
+                                        resource: Drawable,
+                                        transition: Transition<in Drawable?>?
+                                    ) {
+                                        val intent =
+                                            Intent(requireContext(), ScratchCardActivity::class.java)
+                                        intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
+                                        scratchArrayList[sharedViewModel.selectedPosition.get()!!].sectionList?.forEachIndexed { pos, item ->
+                                            if (item != null) {
+                                                ScratchCardActivity.sectionArrayList.add(item)
+                                            }
+                                        }
+                                        ScratchCardActivity.imageScratch = resource
 
+                                        intent.putExtra(
+                                            AppConstants.ORDER_ID,
+                                            list.orderNo
+                                        )
+                                        intent.putExtra(
+                                            AppConstants.PRODUCT_HIDE_IMAGE,
+                                            scratchArrayList[sharedViewModel.selectedPosition.get()!!].scratchResourceShow
+                                        )
+                                        startActivity(intent)
+                                    }
+                                })
+
+                        }
                     }
+
                 }
+
 
             })
 
@@ -194,7 +204,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         detailResource: String?
     ) {
 
-
+        dialogDialog?.progress_image?.visibility = View.VISIBLE
         dialogDialog?.setCancelable(true)
         dialogDialog?.setCanceledOnTouchOutside(true)
         dialogDialog?.setContentView(R.layout.dialog_burn_mynts)
@@ -206,9 +216,31 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         dialogDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         dialogDialog?.spin_green?.let {
-            Glide.with(requireContext()).load(detailResource).placeholder(
-                shimmerDrawable()
-            ).into(it)
+            Glide.with(requireContext()).load(detailResource)
+                .listener(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(
+                        e: GlideException?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        dialogDialog?.progress_image?.visibility = View.INVISIBLE
+                        return false
+                    }
+
+                    override fun onResourceReady(
+                        resource: Drawable?,
+                        model: Any?,
+                        target: Target<Drawable>?,
+                        dataSource: DataSource?,
+                        isFirstResource: Boolean
+                    ): Boolean {
+                        dialogDialog?.progress_image?.visibility = View.INVISIBLE
+
+                        return false
+                    }
+
+                }).into(it)
         }
 
         if (appDisplayText != null) {

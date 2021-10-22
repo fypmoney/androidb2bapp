@@ -76,11 +76,15 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
 //        Glide.with(applicationContext).load(R.raw.coin).into(coin)
         dialogDialog = Dialog(this)
+        luckyWheelView.setRound(5)
+
+
 
 
         if (sectionArrayList.size == 0) {
             mViewModel.callProductsDetailsApi(orderId)
         } else {
+            luckylayout.visibility = View.VISIBLE
             mViewModel.setDataInSpinWheel(sectionArrayList)
             luckyWheelView.setData(mViewModel.luckyItemList)
 
@@ -97,9 +101,9 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
                     if (item.id == sectionId.toString()) {
 
-
-                        showwonDialog(item.sectionValue)
-
+                        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                            showwonDialog(item.sectionValue)
+                        }
                         return@forEach
 
                     }
@@ -144,6 +148,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
             dialogDialog?.better_next_time?.visibility = View.VISIBLE
         }
         if (mViewModel.played.get() == true) {
+            dialogDialog?.clicked?.text = getString(R.string.continue_txt)
             dialogDialog?.textView?.text =
                 "your wallet has been updated with ₹ " + Utility.convertToRs(sectionValue)
 
@@ -203,7 +208,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
             }
 
             sectionId = it.sectionId
-
+            luckylayout.visibility = View.VISIBLE
             mViewModel.setDataInSpinWheel(sectionArrayList)
             luckyWheelView.setData(mViewModel.luckyItemList)
 
@@ -212,7 +217,6 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
         mViewModel.onError.observe(this)
         {
             if (it.errorCode != "UAA_1058") {
-                callErrorBottomSheet(AppConstants.ERROR_TYPE_SPIN_ALLOWED, message = it.msg)
 
             }
 
@@ -253,17 +257,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
     }
 
 
-    private fun callErrorBottomSheet(type: String?, message: String? = null) {
 
-        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-            val bottomSheet =
-                ErrorBottomSpinProductSheet(type!!, message, this, mViewModel)
-            bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-            bottomSheet.show(supportFragmentManager, "ErrorBottomSheet")
-        }
-
-
-    }
 
     override fun onSpinErrorClick(type: String) {
 

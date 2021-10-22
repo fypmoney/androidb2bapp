@@ -38,7 +38,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     var scratchArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
     var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
     var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
-    var coinsBurned: MutableLiveData<CoinsBurnedResponse> = MutableLiveData()
+    var coinsBurned: LiveEvent<CoinsBurnedResponse> = LiveEvent()
     var error: MutableLiveData<ErrorResponseInfo> = MutableLiveData()
     var totalCount = ObservableField(0)
     var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
@@ -170,7 +170,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
                 NetworkUtil.endURL(ApiConstant.API_REDEEM_REWARD) + code,
                 ApiUrl.POST,
                 BaseRequest(),
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
     }
