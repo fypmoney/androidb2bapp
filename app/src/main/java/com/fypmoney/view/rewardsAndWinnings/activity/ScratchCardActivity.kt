@@ -190,8 +190,21 @@ class ScratchCardActivity :
 
             if (item?.id == sectionId.toString()) {
 
+                if (item.sectionValue != null && item.sectionValue != "0") {
+                    mBinding.offerAmountTv.text = "₹" + Utility.convertToRs(item.sectionValue)
+                    mBinding.offerDescTv.visibility = View.VISIBLE
+                } else {
+                    mBinding.offerAmountTv.text = "₹" + Utility.convertToRs(item.sectionValue)
 
-                mBinding.offerAmountTv.text = "₹" + Utility.convertToRs(item.sectionValue)
+                    mBinding.oppsTv.visibility = View.VISIBLE
+                    mBinding.betterLuck.visibility = View.VISIBLE
+                    mBinding.offerAmountTv.visibility = View.INVISIBLE
+                    mBinding.offerDescTv.visibility = View.INVISIBLE
+
+                }
+
+
+
 
                 return@forEach
 

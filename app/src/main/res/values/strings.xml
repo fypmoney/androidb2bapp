@@ -955,6 +955,8 @@ Coming really soon!
     <string name="total_savings">Total Savings</string>
     <string name="your_mynts">Your Mynts</string>
     <string name="view_more">View more</string>
+    <string name="have">Have</string>
+    <string name="spent">Spent</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
