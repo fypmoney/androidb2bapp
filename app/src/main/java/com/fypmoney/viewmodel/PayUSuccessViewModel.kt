@@ -161,15 +161,22 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
                 cashbackEarnedData.set(
                     data.data.getAmountInRuppes()
                 )
-                cashbackEarnedError.value = true
+                if(data.data.amount!=0){
+                    cashbackEarnedError.value = true
+                }
 
             }
             ApiConstant.API_GET_REWARDS_EARNED->{
                 val data = Gson().fromJson(responseData.toString(), RewardsEarnedResponse::class.java)
+
                 rewardEarnedData.set(
                     data.data.points
                 )
-                rewardEarnedError.value = true
+                data.data.points?.let {
+                    if(it != "0"){
+                        rewardEarnedError.value = true
+                    }
+                }
 
             }
         }

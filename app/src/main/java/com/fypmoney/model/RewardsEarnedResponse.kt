@@ -26,7 +26,7 @@ data class RewardEarnedData(
     val partnerId: String,
     val pointConversionValue: String,
     val pointExpiryDate: String,
-    val points: String,
+    val points: String? = null,
     val productCode: String,
     val productName: String,
     val productType: String,
