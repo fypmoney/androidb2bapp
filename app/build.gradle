@@ -26,8 +26,8 @@ android {
         ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 30
-        versionName "1.2.7"
+        versionCode 31
+        versionName "1.2.8"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
         // Stops the Gradle plugin�s automatic rasterization of vectors
