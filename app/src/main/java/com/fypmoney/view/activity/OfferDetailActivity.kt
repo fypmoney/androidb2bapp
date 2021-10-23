@@ -127,7 +127,7 @@ class OfferDetailActivity :
             mViewModel.action.value?.url?.let {
                 val intent2 = Intent(this, StoreWebpageOpener2::class.java)
                 StoreWebpageOpener2.url =it
-                    intent2.putExtra("title", mViewModel.offerDetail.value?.title)
+//                    intent2.putExtra("title", mViewModel.offerDetail.value?.title)
                 startActivity(intent2)
             }
 
