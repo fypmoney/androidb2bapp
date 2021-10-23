@@ -1,0 +1,14 @@
+{
+  "stores": [
+    {
+      "url": "https://www.olacabs.com/",
+      "title": "Ola",
+      "image": "Jackson"
+    },
+    {
+      "url": "https://m.uber.com/",
+      "title": "Uber",
+      "image": "Jackson"
+    }
+  ]
+}

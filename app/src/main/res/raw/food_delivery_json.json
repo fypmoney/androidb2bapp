@@ -1,0 +1,14 @@
+{
+  "stores": [
+    {
+      "url": "https://www.zomato.com/",
+      "title": "Zomato",
+      "image": "Jackson"
+    },
+    {
+      "url": "https://www.swiggy.com/",
+      "title": "Swiggy",
+      "image": "Jackson"
+    }
+  ]
+}

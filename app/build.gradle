@@ -13,7 +13,7 @@ plugins {
 android {
     signingConfigs {
         config {
-            storeFile file('C:\\Users\\Pawankumar\\Desktop\\jks\\FypKeystore.jks')
+            storeFile file('C:\\Users\\Pawankumar\\Desktop\\FypKeystore.jks')
             storePassword 'WjfUzYjN8bem6bX6'
             keyAlias 'Fyp'
             keyPassword 'WjfUzYjN8bem6bX6'
@@ -39,9 +39,9 @@ android {
 
     buildTypes {
         release {
-            debuggable false
-            minifyEnabled true
-            shrinkResources true
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }

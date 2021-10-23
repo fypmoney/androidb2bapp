@@ -20,6 +20,7 @@
 
     </integer-array>
     <integer-array name="shoppingIconList">
+        <item>@drawable/flipcart_logo</item>
         <item>@drawable/amazon_logo</item>
         <item>@drawable/myntra_logo</item>
         <item>@drawable/zara_logo</item>
@@ -466,6 +467,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="add_money_screen_text">You can add funds up to Rs.</string>
     <string name="add_money_screen_text1">" for the current month"</string>
     <string name="add_money_empty_error">Please enter amount</string>
+    <string name="minimum_load_amount">Minimum Load Amount is ₹10</string>
     <string name="add_money_trans_success_title">Money Added successfully</string>
 
     <!--
@@ -957,6 +959,8 @@ Coming really soon!
     <string name="view_more">View more</string>
     <string name="have">Have</string>
     <string name="spent">Spent</string>
+    <string name="food_delivery">Food Delivery</string>
+    <string name="cabs_amp_e_bikes"><![CDATA[Cabs & E-bikes]]></string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
