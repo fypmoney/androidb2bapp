@@ -88,6 +88,7 @@
             android:layout_marginBottom="@dimen/_2sdp"
             android:layout_marginStart="@dimen/_6sdp"
             android:layout_marginEnd="@dimen/_6sdp"
+            android:gravity="start"
             style="@style/TextviewBold"
             android:alpha=".70"
             android:textSize="14sp"

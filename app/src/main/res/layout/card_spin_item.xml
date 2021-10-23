@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="match_parent"
             android:elevation="@dimen/_2sdp"
-            android:text="Redeem 200 Fyp mynts"
+            android:text=""
             android:textColor="@color/cb_grey"
             android:layout_alignStart="@+id/layout"
             android:id="@+id/desc"
