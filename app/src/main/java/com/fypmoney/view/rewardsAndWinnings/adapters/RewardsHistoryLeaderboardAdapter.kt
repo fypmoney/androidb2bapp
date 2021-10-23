@@ -73,7 +73,10 @@ class RewardsHistoryLeaderboardAdapter(
                 holder.amount.text =
                     "₹0"
             }
+            if (items[position].transactionType == AppConstants.TRANS_TYPE_EARN) {
+                holder.amount.visibility = View.INVISIBLE
 
+            }
             holder.note.visibility = View.GONE
 //            holder.amount.visibility = View.INVISIBLE
             holder.status_tv.visibility = View.VISIBLE
@@ -94,6 +97,15 @@ class RewardsHistoryLeaderboardAdapter(
                 ContextCompat.getDrawable(
                     context,
                     R.drawable.ic_scratch_card_product
+                )
+            )
+
+        }
+        if (items[position].transactionType == AppConstants.TRANS_TYPE_EARN) {
+            holder.productType.setImageDrawable(
+                ContextCompat.getDrawable(
+                    context,
+                    R.drawable.ic_mynt_coin
                 )
             )
 

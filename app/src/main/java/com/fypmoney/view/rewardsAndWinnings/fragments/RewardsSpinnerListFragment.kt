@@ -250,28 +250,20 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         }
 
         dialogDialog?.window?.attributes = wlp
-//        when (type) {
-//            AppConstants.PRODUCT_SPIN -> {
-//
-//
-//                dialogDialog?.spin_green?.setImageDrawable(
-//                    ContextCompat.getDrawable(
-//                        requireContext(),
-//                        R.drawable.ic_spin_green
-//                    )
-//                )
-//
-//            }
-//            AppConstants.PRODUCT_SCRATCH -> {
-//                dialogDialog?.spin_green?.setImageDrawable(
-//                    ContextCompat.getDrawable(
-//                        requireContext(),
-//                        R.drawable.ic_scratch_card_product
-//                    )
-//                )
-//
-//            }
-//        }
+        when (type) {
+            AppConstants.PRODUCT_SPIN -> {
+
+
+                dialogDialog?.textView?.text =
+                    getString(R.string.will_be_deducted_from_your_balance_nto_spin_the_wheel)
+
+            }
+            AppConstants.PRODUCT_SCRATCH -> {
+                dialogDialog?.textView?.text =
+                    getString(R.string.will_be_deducted_from_your_balance_scratch)
+
+            }
+        }
 
 
         dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {

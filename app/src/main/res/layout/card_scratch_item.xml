@@ -32,21 +32,30 @@
             android:layout_height="0dp" />
 
 
-        <ImageView
-            android:id="@+id/image_illus"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
+            android:id="@+id/image_scartc"
             android:layout_marginTop="@dimen/_6sdp"
-            android:layout_marginStart="@dimen/_6sdp"
-            android:layout_marginEnd="@dimen/_6sdp"
-            android:layout_height="@dimen/_120sdp"
-            android:scaleType="fitXY"
-
-            android:elevation="@dimen/_2sdp"
-
-            android:src="@drawable/ic_scratch_card_white"
+            app:cardCornerRadius="@dimen/_20sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:elevation="@dimen/_2sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/image_illus"
+                android:layout_width="match_parent"
+
+                android:layout_height="@dimen/_120sdp"
+                android:scaleType="fitXY"
+
+
+                android:src="@drawable/ic_scratch_card_white" />
+        </androidx.cardview.widget.CardView>
+
 
         <TextView
             android:id="@+id/desc"
@@ -63,7 +72,7 @@
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_illus" />
+            app:layout_constraintTop_toBottomOf="@+id/image_scartc" />
 
         <Button
             android:layout_width="match_parent"

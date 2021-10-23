@@ -132,6 +132,40 @@
                             android:textSize="27sp"
                             android:textStyle="bold" />
 
+                        <TextView
+                            android:id="@+id/opps_tv"
+                            style="@style/TextviewBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_above="@+id/better_luck"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="@dimen/_2sdp"
+
+                            android:text="@string/opps"
+
+                            android:textColor="@color/text_color_dark"
+                            android:textSize="27sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/better_luck"
+                            android:visibility="gone"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginBottom="@dimen/_14sdp"
+                            android:elevation="@dimen/_1sdp"
+                            android:gravity="center"
+                            android:text="@string/better_luck_next_time"
+                            android:textAlignment="center"
+                            android:textColor="@color/cb_dark_grey"
+                            android:textSize="14sp" />
 
                     </RelativeLayout>
 

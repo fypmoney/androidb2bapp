@@ -957,8 +957,14 @@ Coming really soon!
     <string name="total_savings">Total Savings</string>
     <string name="your_mynts">Your Mynts</string>
     <string name="view_more">View more</string>
+    <string name="have">Have</string>
+    <string name="spent">Spent</string>
     <string name="food_delivery">Food Delivery</string>
     <string name="cabs_amp_e_bikes"><![CDATA[Cabs & E-bikes]]></string>
+    <string name="will_be_deducted_from_your_balance_nto_spin_the_wheel">Will be deducted from your balance \nto spin the wheel.</string>
+
+    <string name="will_be_deducted_from_your_balance_scratch">Will be deducted from your balance \nfor Scratch card.</string>
+
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>

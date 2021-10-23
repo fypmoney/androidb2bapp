@@ -32,7 +32,7 @@
         android:layout_marginStart="@dimen/_12sdp"
         android:paddingTop="@dimen/_6sdp"
         android:layout_marginEnd="@dimen/_6sdp"
-        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_16sdp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_16sdp"
             android:src="@drawable/cash"
+
             app:layout_constraintBottom_toBottomOf="@+id/total_refral_won_value_tv"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/total_refral_won_value_tv" />
@@ -64,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
-            android:layout_marginBottom="@dimen/_14sdp"
+            android:layout_marginBottom="@dimen/_18sdp"
             android:text="@string/total_savings"
 
             android:textColor="#a3a3a3"
@@ -81,7 +82,7 @@
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_14sdp"
             android:textColor="@color/spin_light"
-            android:textSize="22sp"
+            android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -108,7 +109,7 @@
         android:layout_marginStart="@dimen/_6sdp"
         android:paddingTop="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_16sdp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -132,10 +133,11 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_16sdp"
+            android:id="@+id/mynticon"
+            android:layout_marginStart="@dimen/_12sdp"
             android:src="@drawable/ic_mynt_coin"
             app:layout_constraintBottom_toBottomOf="@+id/total_mynts_won_value_tv"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/total_mynts_won_value_tv" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -144,13 +146,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
-            android:layout_marginBottom="@dimen/_14sdp"
+            android:layout_marginBottom="@dimen/_18sdp"
             android:text="@string/your_mynts"
 
             android:textColor="#a3a3a3"
+            android:layout_marginStart="@dimen/_12sdp"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/total_mynts_won_value_tv"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/total_mynts_won_value_tv" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -158,12 +161,13 @@
             style="@style/TextviewBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_12sdp"
+            app:layout_constraintStart_toEndOf="@+id/mynticon"
 
+            android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_14sdp"
             android:textColor="@color/color_orange"
-            android:textSize="22sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="24sp"
+
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.fypmoney.view.customview.HorizontalDottedProgress

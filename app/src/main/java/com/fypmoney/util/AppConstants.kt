@@ -80,6 +80,7 @@ object AppConstants {
     const val API_SUCCESS = "Success"
     const val API_FAIL = "Fail"
     const val FEED_SCREEN_NAME = "FEED"
+    const val REWARD_SCREEN_NAME = "REWARD"
     const val FEED_SCREEN_NAME_HOME = "HOME"
     const val FEED_WITHIN_RADIUS = "20"
     const val IS_PROFILE_COMPLETED = "isProfileCompleted"
@@ -248,4 +249,6 @@ object AppConstants {
     const val ORDER_ID = "ORDERID"
     const val PRODUCT_HIDE_IMAGE = "HIDE_IMAGE"
     const val SECTION_ID = "SECTIONID"
+    const val TRANS_TYPE_EARN = "EARN"
+
 }
