@@ -113,45 +113,7 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
         root?.rvHistory?.adapter = typeAdapterHistory
     }
     private fun setObserver(sharedViewModel: RewardsAndVM) {
-        sharedViewModel?.redeemproductDetails.observe(requireActivity()) {
-            if (it != null) {
-                sharedViewModel?.redeemproductDetails.postValue(null)
-                Glide.with(this).asDrawable().load(it.scratchResourceHide)
-                    .into(object : CustomTarget<Drawable?>() {
 
-                        override fun onLoadCleared(@Nullable placeholder: Drawable?) {
-
-                        }
-
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            transition: Transition<in Drawable?>?
-                        ) {
-                            val intent = Intent(requireContext(), ScratchCardActivity::class.java)
-                            intent.putExtra(AppConstants.SECTION_ID, it.sectionId)
-                            it.sectionList?.forEachIndexed { pos, item ->
-                                if (item != null) {
-                                    ScratchCardActivity.sectionArrayList.add(item)
-                                }
-                            }
-                            ScratchCardActivity.imageScratch = resource
-
-                            intent.putExtra(
-                                AppConstants.ORDER_ID,
-                                sharedViewModel.orderNumber.value
-                            )
-                            intent.putExtra(
-                                AppConstants.PRODUCT_HIDE_IMAGE,
-                                it.scratchResourceShow
-                            )
-                            startActivity(intent)
-                        }
-                    })
-
-            }
-
-
-        }
         sharedViewModel.rewardHistoryList.observe(
             requireActivity(),
             androidx.lifecycle.Observer { list ->

@@ -101,6 +101,16 @@
                             android:layout_gravity="center_horizontal"
                             android:contentDescription="@null" />
 
+                        <ImageView
+                            android:layout_width="128dp"
+                            android:id="@+id/smiley_oops"
+                            android:visibility="invisible"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/opps_smiley"
+
+                            android:layout_marginTop="@dimen/_24sdp"
+                            android:layout_height="128dp" />
+
                         <TextView
                             android:id="@+id/offer_desc_tv"
                             style="@style/TextviewRegular"

@@ -155,6 +155,7 @@ class ScratchCardActivity :
                     R.drawable.better_luck_next_time
                 )
             )
+
             dialogDialog?.better_next_time?.visibility = View.VISIBLE
         }
         if (mViewModel.played.get() == true) {
@@ -200,6 +201,8 @@ class ScratchCardActivity :
                     mBinding.betterLuck.visibility = View.VISIBLE
                     mBinding.offerAmountTv.visibility = View.INVISIBLE
                     mBinding.offerDescTv.visibility = View.INVISIBLE
+                    mBinding.smileyOops.visibility = View.VISIBLE
+                    Glide.with(this).load(R.color.white).into(mBinding.gotTheOfferIv)
 
                 }
 
