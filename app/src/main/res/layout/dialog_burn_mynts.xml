@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
             android:gravity="center"
-            android:text="Will be deducted from your balance \nto spin the wheel."
+            android:text="@string/will_be_deducted_from_your_balance_nto_spin_the_wheel"
             android:textColor="@color/cb_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
