@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_16sdp"
-            android:src="@drawable/cash"
+
 
             app:layout_constraintBottom_toBottomOf="@+id/total_refral_won_value_tv"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +107,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_marginStart="@dimen/_6sdp"
-        android:paddingTop="@dimen/_10sdp"
+        android:paddingTop="@dimen/_6sdp"
         android:layout_marginEnd="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_16sdp"
 
