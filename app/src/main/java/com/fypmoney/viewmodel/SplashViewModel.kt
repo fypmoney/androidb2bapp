@@ -33,6 +33,7 @@ import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_APP_VERSION_CODE
 import com.fypmoney.util.Utility
 import com.google.gson.Gson
 import com.moengage.core.internal.MoEConstants
+import com.moengage.firebase.MoEFireBaseHelper
 
 
 /*
@@ -52,20 +53,32 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
      fun setUpApp() {
         callCheckAppUpdate()
-         SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let {
-             if(it==0){
+         SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let { it1 ->
+             if(it1==0){
                  Trackr.appIsInstallFirst(isFirstTime = true)
+                 SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
+                     ?.let { it1 ->
+                         MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
+                             it1
+                         )
+                     }
              }else{
                  Trackr.appIsInstallFirst(isFirstTime = false)
+                 SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
+                     ?.let { it1 ->
+                         MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
+                             it1
+                         )
+                     }
                  Utility.getCustomerDataFromPreference()?.let {
                      val map = hashMapOf<String,Any>()
-                     map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = it.id.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = it.mobile.toString()
                      map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
                      map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
                      map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
                      map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it.dob.toString()
                      UserTrackr.push(map)
-                     UserTrackr.login( it.id.toString())
+                     UserTrackr.login( it.mobile.toString())
                  }
              }
          }

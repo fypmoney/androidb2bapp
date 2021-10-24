@@ -307,11 +307,11 @@
             </intent-filter>
         </service>
 
-        <service android:name="com.moengage.firebase.MoEFireBaseMessagingService">
+        <!--<service android:name="com.moengage.firebase.MoEFireBaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service>
+        </service>-->
     </application>
     <queries>
         <intent>

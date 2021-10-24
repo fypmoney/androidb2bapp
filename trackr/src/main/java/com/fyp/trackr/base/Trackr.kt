@@ -27,6 +27,7 @@ import com.moengage.core.DataCenter
 import com.moengage.core.LogLevel.VERBOSE
 import com.moengage.core.MoEngage
 import com.moengage.core.Properties
+import com.moengage.core.config.FcmConfig
 import com.moengage.core.config.LogConfig
 import com.moengage.core.config.NotificationConfig
 import com.moengage.core.model.AppStatus
@@ -75,11 +76,14 @@ object Trackr {
                         notiColor, "notification_sound",
                             true,
                             isBuildingBackStackEnabled = false, isLargeIconDisplayEnabled = true)
-                    ).build()
+                    )
+                    .configureFcm(FcmConfig(false))
+                    .build()
                 MoEngage.initialise(moEngage!!)
             }else{
                 moEngage = MoEngage.Builder(app, moEngageKey)
                     .setDataCenter(DataCenter.DATA_CENTER_3)
+                    .configureLogs(LogConfig(VERBOSE, true))
                     .configureNotificationMetaData(
                         NotificationConfig(
                             notiSmallIcon,
@@ -88,6 +92,7 @@ object Trackr {
                             true,
                             isBuildingBackStackEnabled = true, isLargeIconDisplayEnabled = true)
                     )
+                    .configureFcm(FcmConfig(false))
                     .build()
                 MoEngage.initialise(moEngage!!)
             }

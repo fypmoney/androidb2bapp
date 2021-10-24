@@ -4,6 +4,8 @@ import android.app.Application
 import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.*
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -20,6 +22,7 @@ import com.fypmoney.model.LoginInitResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.moengage.core.internal.MoEConstants
 
 /*
 * This is used to login
@@ -49,6 +52,14 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
        * This method is used to handle click of continue
        * */
     fun onContinueClicked() {
+        val map = hashMapOf<String,Any>()
+        map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = mobile.value.toString()
+        UserTrackr.push(map)
+        trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.MOBILE_ENTERED
+            it.add(
+                TrackrField.user_mobile_no,mobile.value.toString())
+        }
         onContinueClicked.value = true
     }
 

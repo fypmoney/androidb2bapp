@@ -71,6 +71,8 @@ enum class TrackrEvent(name: String) {
     LOGINSUCCESS("vp1kxg"),
     KYCCOMPLETD("m64ei2"),
     CHECKOFFER("check_offer"),
+    MOBILE_ENTERED("mobile_entered"),
+    OTP_VERIFIED("otp_verified"),
     PAYBUTTON("pay_button"),
     PERSONALISEDYOUCARD("personalised_card_complete"),
     ORDERSUCCESS("order_success"),
