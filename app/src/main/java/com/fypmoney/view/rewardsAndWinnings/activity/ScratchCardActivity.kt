@@ -112,8 +112,7 @@ class ScratchCardActivity :
 
 
         dialogError?.clicked?.setOnClickListener(View.OnClickListener {
-            mViewModel.callScratchWheelApi(orderId, true)
-            dialogError?.dismiss()
+         finish()
         })
 
 

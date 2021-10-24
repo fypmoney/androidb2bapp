@@ -76,7 +76,7 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_12sdp"
             android:backgroundTint="#48AB5B"
-            android:text="@string/claim_your_rewards" />
+            android:text="@string/continue_txt" />
     </RelativeLayout>
 
 

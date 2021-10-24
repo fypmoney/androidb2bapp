@@ -278,8 +278,8 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
 
         dialogError?.clicked?.setOnClickListener(View.OnClickListener {
-            mViewModel.callSpinWheelApi(orderId)
-            dialogError?.dismiss()
+//            mViewModel.callSpinWheelApi(orderId)
+            finish()
         })
 
 
