@@ -46,7 +46,7 @@ import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
 class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
 
-    private var dialogDialog: Dialog? = null
+    private var dialogInsufficientFund: Dialog? = null
     lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
     var mViewModel: RewardsAndVM? = null
@@ -58,7 +58,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        dialogDialog = Dialog(this)
+        dialogInsufficientFund = Dialog(this)
 
         setToolbarAndTitle(
             context = this,
@@ -77,7 +77,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
                 if (list.errorCode == "PKT_2051") {
 
-                    callInsuficientFundMessageSheet(list.msg)
+                    callInsuficientFundDialog(list.msg)
                 }
 
             }
@@ -86,33 +86,33 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
     }
 
-    private fun callInsuficientFundMessageSheet(msg: String) {
-        dialogDialog?.setCancelable(false)
-        dialogDialog?.setCanceledOnTouchOutside(false)
-        dialogDialog?.setContentView(R.layout.dialog_rewards_insufficient)
+    private fun callInsuficientFundDialog(msg: String) {
+        dialogInsufficientFund?.setCancelable(false)
+        dialogInsufficientFund?.setCanceledOnTouchOutside(false)
+        dialogInsufficientFund?.setContentView(R.layout.dialog_rewards_insufficient)
 
-        val wlp = dialogDialog?.window?.attributes
+        val wlp = dialogInsufficientFund?.window?.attributes
 
         wlp?.width = ViewGroup.LayoutParams.MATCH_PARENT
-        dialogDialog?.setCanceledOnTouchOutside(false)
+        dialogInsufficientFund?.setCanceledOnTouchOutside(false)
 
 
 
 
-        dialogDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogInsufficientFund?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        dialogDialog?.window?.attributes = wlp
-        dialogDialog?.error_msg?.text = msg
+        dialogInsufficientFund?.window?.attributes = wlp
+        dialogInsufficientFund?.error_msg?.text = msg
 
 
 
-        dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
+        dialogInsufficientFund?.clicked?.setOnClickListener(View.OnClickListener {
 
-            dialogDialog?.dismiss()
+            dialogInsufficientFund?.dismiss()
         })
 
 
-        dialogDialog?.show()
+        dialogInsufficientFund?.show()
     }
 
     private fun callActivity(aClass: Class<*>) {

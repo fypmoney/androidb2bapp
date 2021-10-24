@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
+import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
@@ -22,7 +23,7 @@ class ScratchCardProductViewmodel(application: Application) : BaseViewModel(appl
     var onButtomClicked = MutableLiveData(false)
     var scratchCalled = MutableLiveData(false)
     val played = ObservableField(false)
-
+    var error: MutableLiveData<ErrorResponseInfo> = MutableLiveData()
 
     sealed class CardOfferEvent {
         object Continue : CardOfferEvent()
@@ -100,5 +101,17 @@ class ScratchCardProductViewmodel(application: Application) : BaseViewModel(appl
         }
     }
 
+    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
+        super.onError(purpose, errorResponseInfo)
 
+        when (purpose) {
+            ApiConstant.PLAY_ORDER_API -> {
+                error.postValue(errorResponseInfo)
+
+            }
+
+        }
+
+
+    }
 }

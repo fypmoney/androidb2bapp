@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.connectivity.ApiConstant
+import com.fypmoney.connectivity.ApiConstant.PLAY_ORDER_API
 import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.database.AppDatabase
@@ -41,7 +42,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
         } else {
             try {
                 when {
-                    purpose != ApiConstant.API_SNC_CONTACTS || purpose != ApiConstant.API_FETCH_ALL_FEEDS || purpose != ApiConstant.API_GET_CUSTOMER_INFO || purpose != ApiConstant.API_ADD_FAMILY_MEMBER || purpose != ApiConstant.API_GET_VIRTUAL_CARD_REQUEST || purpose != ApiConstant.API_ADD_MONEY_STEP2 || purpose != ApiConstant.API_LOGOUT -> {
+                    purpose != ApiConstant.API_SNC_CONTACTS || purpose != ApiConstant.API_FETCH_ALL_FEEDS || purpose != ApiConstant.API_GET_CUSTOMER_INFO || purpose != ApiConstant.API_ADD_FAMILY_MEMBER || purpose != ApiConstant.API_GET_VIRTUAL_CARD_REQUEST || purpose != ApiConstant.API_ADD_MONEY_STEP2 || purpose != ApiConstant.API_LOGOUT || purpose != ApiConstant.API_REDEEM_REWARD || purpose != PLAY_ORDER_API -> {
                         Utility.showToast(errorResponseInfo.msg)
 
                     }

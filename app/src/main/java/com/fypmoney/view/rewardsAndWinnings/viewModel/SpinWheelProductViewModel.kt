@@ -177,7 +177,7 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
         super.onError(purpose, errorResponseInfo)
 
         when (purpose) {
-            ApiConstant.API_SPIN_WHEEL -> {
+            ApiConstant.PLAY_ORDER_API -> {
                 onError.value = errorResponseInfo
             }
         }
