@@ -9,16 +9,25 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.databinding.ViewSpinWheelBlackBinding
 import com.fypmoney.model.SectionListItem
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.ErrorBottomSpinProductSheet
 import com.fypmoney.view.rewardsAndWinnings.viewModel.SpinWheelProductViewModel
+import kotlinx.android.synthetic.main.dialog_burn_mynts.*
 import kotlinx.android.synthetic.main.dialog_cash_won.*
+import kotlinx.android.synthetic.main.dialog_cash_won.better_next_time
+import kotlinx.android.synthetic.main.dialog_cash_won.clicked
+import kotlinx.android.synthetic.main.dialog_cash_won.luckonside_tv
+import kotlinx.android.synthetic.main.dialog_cash_won.spin_green
+import kotlinx.android.synthetic.main.dialog_cash_won.textView
+import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
 
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_spin_wheel_black.*
@@ -32,6 +41,7 @@ import java.util.*
 class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProductViewModel>(),
     ErrorBottomSpinProductSheet.OnSpinErrorClickListener {
 
+    private var dialogError: Dialog? = null
     private var sectionId: Int? = null
     private var dialogDialog: Dialog? = null
     private var orderId: String? = null
@@ -59,6 +69,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        dialogError = Dialog(this)
 
         val intent = intent
         orderId = intent.getStringExtra(AppConstants.ORDER_ID)
@@ -216,8 +227,9 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
         mViewModel.onError.observe(this)
         {
-            if (it.errorCode != "UAA_1058") {
-
+            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                dialogDialog?.dismiss()
+                callErrorDialog(it.msg)
             }
 
         }
@@ -246,6 +258,33 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
     }
 
+    private fun callErrorDialog(msg: String) {
+        dialogError?.setCancelable(false)
+        dialogError?.setCanceledOnTouchOutside(false)
+        dialogError?.setContentView(R.layout.dialog_rewards_error)
+
+        val wlp = dialogError?.window?.attributes
+
+        wlp?.width = ViewGroup.LayoutParams.MATCH_PARENT
+        dialogError?.setCanceledOnTouchOutside(false)
+
+
+
+        dialogError?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialogError?.window?.attributes = wlp
+        dialogError?.error_msg?.text = msg
+
+
+
+        dialogError?.clicked?.setOnClickListener(View.OnClickListener {
+            mViewModel.callSpinWheelApi(orderId)
+            dialogError?.dismiss()
+        })
+
+
+        dialogError?.show()
+    }
     override fun onBackPressed() {
         super.onBackPressed()
 

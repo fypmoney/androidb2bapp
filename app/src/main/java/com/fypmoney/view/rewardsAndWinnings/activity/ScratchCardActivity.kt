@@ -7,11 +7,8 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -29,7 +26,6 @@ import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_spin_wheel_black.*
 import android.os.Handler
 import android.os.Looper
-import androidx.annotation.Nullable
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import com.fypmoney.model.SectionListItem
@@ -38,11 +34,15 @@ import kotlinx.android.synthetic.main.dialog_burn_mynts.clicked
 import kotlinx.android.synthetic.main.dialog_burn_mynts.spin_green
 import kotlinx.android.synthetic.main.dialog_burn_mynts.textView
 import kotlinx.android.synthetic.main.dialog_cash_won.*
+import kotlinx.android.synthetic.main.dialog_cash_won.better_next_time
+import kotlinx.android.synthetic.main.dialog_cash_won.luckonside_tv
+import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
 import java.util.ArrayList
 
 
 class ScratchCardActivity :
     BaseActivity<ActivityScratchProductBinding, ScratchCardProductViewmodel>() {
+    private var dialogError: Dialog? = null
     private var sectionId: Int? = null
     private var orderId: String? = null
     private lateinit var mViewModel: ScratchCardProductViewmodel
@@ -65,6 +65,7 @@ class ScratchCardActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = getViewDataBinding()
+        dialogError = Dialog(this)
 
         setToolbarAndTitle(
             context = this@ScratchCardActivity,
@@ -89,7 +90,48 @@ class ScratchCardActivity :
         setupScratchCardView()
     }
 
+    private fun callErrorDialog(msg: String) {
+        dialogError?.setCancelable(false)
+        dialogError?.setCanceledOnTouchOutside(false)
+        dialogError?.setContentView(R.layout.dialog_rewards_error_scratch)
+
+        val wlp = dialogError?.window?.attributes
+
+        wlp?.width = ViewGroup.LayoutParams.MATCH_PARENT
+        dialogError?.setCanceledOnTouchOutside(false)
+
+
+
+
+
+        dialogError?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialogError?.window?.attributes = wlp
+        dialogError?.error_msg?.text = msg
+
+
+
+        dialogError?.clicked?.setOnClickListener(View.OnClickListener {
+            mViewModel.callScratchWheelApi(orderId, true)
+            dialogError?.dismiss()
+        })
+
+
+        dialogError?.show()
+    }
+
     private fun setUpObserver() {
+        mViewModel?.error?.observe(
+            this,
+            androidx.lifecycle.Observer { list ->
+
+                if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                    dialogDialog?.dismiss()
+                    callErrorDialog(list.msg)
+                }
+
+            }
+        )
 
 
         mViewModel.scratchResponseList.observe(this) {
