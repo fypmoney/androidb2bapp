@@ -113,12 +113,21 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
 
                 }
                 if (itemsArrayList.size > 0 && list.isNotEmpty() && itemsArrayList[itemsArrayList.size - 1].date == list[0].date) {
+                    list.forEachIndexed { pos, item ->
 
-                    list[0].history?.let {
-                        itemsArrayList[itemsArrayList.size - 1].history?.addAll(
-                            it
-                        )
+                        if (pos == 0) {
+                            list[0].history?.let {
+                                itemsArrayList[itemsArrayList.size - 1].history?.addAll(
+                                    it
+                                )
+                            }
+                        } else {
+                            itemsArrayList.add(item)
+
+                        }
+
                     }
+
                 } else {
                     list.forEach { it ->
                         itemsArrayList.add(it)
