@@ -7,6 +7,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.ImageView
+import android.widget.TextView
 import com.fypmoney.R
 import com.fypmoney.view.StoreWebpageOpener
 import kotlinx.android.synthetic.main.activity_webview.*
@@ -19,6 +20,7 @@ class WebViewActivity : AppCompatActivity() {
 
     private var load_progress: ImageView?=null
     private var webView: WebView?=null
+    private var toolbarTitle: TextView?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_webview)
@@ -27,6 +29,7 @@ class WebViewActivity : AppCompatActivity() {
         val pageTitle = intent?.getStringExtra(ARG_WEB_PAGE_TITLE)
 
         load_progress = findViewById(R.id.load_progress_bar)
+        toolbarTitle = findViewById(R.id.titleToolbar)
         card_details.visibility = View.GONE
         webView = findViewById(R.id.webView1)
         webView!!.webChromeClient = object : WebChromeClient() {
@@ -40,11 +43,9 @@ class WebViewActivity : AppCompatActivity() {
         webView!!.webViewClient = StoreWebpageOpener.CustomWebViewClient()
         webView!!.settings.javaScriptEnabled = true
 
-        refresh.setOnClickListener(View.OnClickListener {
-
+        refresh.setOnClickListener {
             webView?.reload()
-
-        })
+        }
 
 
         toolbar_backImage.setOnClickListener {
@@ -55,8 +56,7 @@ class WebViewActivity : AppCompatActivity() {
     }
 
     private fun initWebView(url: String, title: String) {
-
-
+        toolbarTitle?.text = title
         webView!!.clearHistory()
         webView!!.settings.javaScriptEnabled = true
         webView!!.settings.domStorageEnabled = true

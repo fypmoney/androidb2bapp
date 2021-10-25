@@ -106,7 +106,12 @@ class RedeemMyntsBottomSheet(
             view.message_image.visibility = View.GONE
             Glide.with(requireContext()).asGif().load(R.raw.redeemmynts_2).into(view.gif_redeem)
             view.continuebtn.text = "Continue"
-            view.continuebtn.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.text_color_dark)));
+            view.continuebtn.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.text_color_dark
+                )
+            );
             view.continuebtn.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),

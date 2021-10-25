@@ -44,10 +44,6 @@ class CreateAccountSuccessView :
             isBackArrowVisible = true
         )
         setObserver()
-        val eventValue: MutableMap<String, Any> = HashMap()
-//                eventValue[AFInAppEventParameterName.CUSTOMER_USER_ID] = it
-
-
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 

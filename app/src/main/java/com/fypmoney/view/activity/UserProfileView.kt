@@ -12,6 +12,8 @@ import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.UserTrackr
+import com.fyp.trackr.models.logOut
 import com.fypmoney.BR
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
@@ -24,6 +26,9 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.view.community.SocialCommunityActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
+import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+import com.fypmoney.view.webview.WebViewActivity
 import com.fypmoney.viewmodel.UserProfileViewModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -102,6 +107,8 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
         iconList.add(R.drawable.ic_privacy)
         iconList.add(R.drawable.ic_interest)
         iconList.add(R.drawable.ic_community)
+        iconList.add(R.drawable.ic_privacy)
+        iconList.add(R.drawable.ic_privacy)
         iconList.add(R.drawable.ic_help)
         iconList.add(R.drawable.ic_log_out)
         myProfileAdapter.setList(
@@ -118,6 +125,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
      */
     private fun setObserver() {
         mViewModel.onLogoutSuccess.observe(this) {
+            UserTrackr.logOut()
             intentToActivity(LoginView::class.java, isFinishAll = true)
         }
 
@@ -313,18 +321,25 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
             2 -> {
                 intentToActivity(SocialCommunityActivity::class.java)
             }
-
             3 -> {
+                openWebPageFor(getString(R.string.privacy_policy),"https://www.fypmoney.in/fyp/privacy-policy/")
+            }
+            4 -> {
+                openWebPageFor(getString(R.string.terms_and_conditions),"https://www.fypmoney.in/fyp/terms-of-use/")
+            }
+
+            5 -> {
                 callFreshChat(applicationContext)
             }
 
-            4 -> {
+            6 -> {
                 callLogOutBottomSheet()
             }
 
         }
 
     }
+
 
 
 }

@@ -54,13 +54,17 @@
                     android:paddingStart="8dp"
                     android:paddingEnd="0dp" />
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
                     android:id="@+id/copy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:tint="@color/white"
-                    app:srcCompat="@drawable/ic_icon_feather_copy" />
+                    android:text="@string/copy"
+                    android:textColor="@color/white"
+                    android:drawablePadding="@dimen/dp5"
+                    android:drawableEnd="@drawable/ic_icon_feather_copy" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/expiry"

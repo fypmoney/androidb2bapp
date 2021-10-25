@@ -1,128 +1,189 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <LinearLayout
-            android:id="@+id/lin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:src="@drawable/ic_spin_red" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:text="Spinners"
-                android:textColor="@color/white"
-
-                android:textSize="20sp" />
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/LoadProgressBar"
-            android:layout_below="@+id/lin"
-
-            android:layout_marginBottom="@dimen/_6sdp" />
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:id="@+id/lin2"
-            android:layout_below="@+id/rv_spinner"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="28dp"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:src="@drawable/ic_scratch_card_title"
-
-                android:layout_height="28dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:text="Scratch cards"
-                android:layout_marginStart="@dimen/_8sdp"
-                android:textSize="20sp"
-                android:textColor="@color/white"
-                android:layout_gravity="center_vertical"
-
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_scratch"
-            android:layout_width="match_parent"
-            android:layout_marginStart="@dimen/_6sdp"
-            android:layout_marginEnd="@dimen/_6sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/LoadProgressBar"
-            android:layout_below="@+id/lin2"
-
-            android:layout_marginBottom="@dimen/_6sdp" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/LoadProgressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_30sdp"
-
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="@dimen/_4sdp"
-
-            android:visibility="gone"
-            android:layout_alignParentBottom="true"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/dots_animation" />
+        android:layout_height="match_parent">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:visibility="gone"
-            android:id="@+id/empty_screen"
-            android:layout_marginTop="@dimen/_90sdp"
-            android:layout_gravity="center_horizontal"
-
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/_194sdp"
-                android:id="@+id/image"
-                android:layout_height="@dimen/_142sdp"
-                android:layout_centerHorizontal="true"
 
-                app:srcCompat="@drawable/ic_no_task" />
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/lin"
                 android:layout_width="match_parent"
-                style="@style/TextviewRegular"
-                android:layout_below="@+id/image"
-                android:layout_marginTop="@dimen/_30sdp"
-                android:paddingLeft="@dimen/_34sdp"
-                android:paddingRight="@dimen/_34sdp"
-                android:textColor="#9CA3A5"
-                android:gravity="center"
-                android:text="Looks like you haven’t been assigned any task yet. 😅"
-                android:layout_height="wrap_content" />
-        </RelativeLayout>
-    </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp">
 
-</androidx.core.widget.NestedScrollView>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:src="@drawable/ic_spin_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:text="Spinners"
+                    android:textColor="@color/white"
+
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:id="@+id/layout"
+                android:layout_above="@+id/LoadProgressBar"
+                android:layout_below="@+id/lin"
+
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_spinner"
+
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginBottom="@dimen/_6sdp" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:layout_marginTop="@dimen/_12sdp"
+
+                    android:id="@+id/shimmerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/shimmer_placeholder_layout" />
+
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:id="@+id/lin2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout"
+                android:layout_marginTop="@dimen/_12sdp">
+
+                <ImageView
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="@dimen/_14sdp"
+
+                    android:src="@drawable/ic_scratch_card_title" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:text="Scratch cards"
+                    android:textColor="@color/white"
+
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:id="@+id/shimmerscratch"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/LoadProgressBar"
+                android:layout_below="@+id/lin2"
+                android:layout_width="match_parent"
+
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_placeholder_scratch" />
+
+                    <include layout="@layout/shimmer_placeholder_scratch" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_scratch"
+                android:layout_width="match_parent"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/LoadProgressBar"
+                android:layout_below="@+id/lin2"
+
+                android:layout_marginBottom="@dimen/_6sdp" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/LoadProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/_4sdp"
+
+                android:visibility="gone"
+                android:layout_alignParentBottom="true"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/dots_animation" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/empty_screen"
+                android:layout_marginTop="@dimen/_90sdp"
+                android:layout_gravity="center_horizontal"
+
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_194sdp"
+                    android:id="@+id/image"
+                    android:layout_height="@dimen/_142sdp"
+                    android:layout_centerHorizontal="true"
+
+                    app:srcCompat="@drawable/ic_no_task" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@+id/image"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:paddingLeft="@dimen/_34sdp"
+                    android:paddingRight="@dimen/_34sdp"
+                    android:textColor="#9CA3A5"
+                    android:gravity="center"
+                    android:text="Looks like you haven’t been assigned any task yet. 😅"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

@@ -33,6 +33,7 @@ class FeedsStoreAdapter(
 
     private val typeWithoutTitle = 2
     private val typeVideo = 3
+    private val staticImage1x1_5 = 6
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         when (viewType) {
             typeWithoutTitle -> {
@@ -56,6 +57,13 @@ class FeedsStoreAdapter(
                 )
                 return VideoViewHolder(mRowBinding)
             }
+            staticImage1x1_5 -> {
+                val mRowBinding = ItemFeedsStaticImageAspectRatioBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent, false
+                )
+                return StaticImage1x1_5(mRowBinding)
+            }
         }
         return ViewHolder()
     }
@@ -75,6 +83,36 @@ class FeedsStoreAdapter(
         notifyDataSetChanged()
     }
 
+    inner class StaticImage1x1_5(
+        private val mRowItemBinding: ItemFeedsStaticImageAspectRatioBinding? = null
+    ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
+        private lateinit var mViewHelper: FeedsViewHelper
+        override fun onBind(position: Int) {
+            mViewHelper = FeedsViewHelper(
+                position,
+                feedList?.get(position), onFeedItemClickListener
+            )
+            mRowItemBinding!!.viewHelper = mViewHelper
+
+
+            try {
+                if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
+                    viewModel.isApiLoading.set(true)
+                    viewModel.page.set(viewModel.page.get()!! + 1)
+                    viewModel.callFetchFeedsApi(
+                        latitude = viewModel.latitude.get(),
+                        longitude = viewModel.longitude.get()
+                    )
+
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            mRowItemBinding.executePendingBindings()
+
+        }
+    }
     inner class DiduKnowViewHolder(
         private val mRowItemBinding: ItemStoreFeedsBannerBinding? = null
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
@@ -118,6 +156,10 @@ class FeedsStoreAdapter(
             AppConstants.FEED_TYPE_VIDEO -> {
                 typeVideo
             }
+            AppConstants.FEED_TYPE_STATIC_IMAGE1x1_5 -> {
+                staticImage1x1_5
+            }
+
             else -> {
                 typeWithoutTitle
             }

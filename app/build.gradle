@@ -13,7 +13,7 @@ plugins {
 android {
     signingConfigs {
         config {
-            storeFile file('C:\\Users\\Pawankumar\\Desktop\\jks\\FypKeystore.jks')
+            storeFile file('C:\\Users\\Pawankumar\\Desktop\\FypKeystore.jks')
             storePassword 'WjfUzYjN8bem6bX6'
             keyAlias 'Fyp'
             keyPassword 'WjfUzYjN8bem6bX6'
@@ -23,10 +23,11 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
+        ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 30
-        versionName "1.2.7"
+        versionCode 31
+        versionName "1.3.0"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
         // Stops the Gradle plugin�s automatic rasterization of vectors
@@ -76,6 +77,7 @@ android {
                 resValue "string", "app_name", "F debug"
                 buildConfigField "String", "BASE_ENDPOINT", "\"http://54.84.197.170:9300\""
                 buildConfigField "String", "ADJUST_PROD_KEY","\"buqdhv6bqlts\""
+                buildConfigField "String", "MOENAGE_KEY","\"EF6YXWOUCTC748YDOJ47ZU3V\""
             }
             prod{
                 signingConfig signingConfigs.config
@@ -83,8 +85,7 @@ android {
                 resValue "string", "app_name", "Fyp"
                 buildConfigField "String", "BASE_ENDPOINT", "\"https://techservices.fyp-e.in\""
                 buildConfigField "String", "ADJUST_PROD_KEY","\"buqdhv6bqlts\""
-
-
+                buildConfigField "String", "MOENAGE_KEY","\"EF6YXWOUCTC748YDOJ47ZU3V\""
             }
     }
 
@@ -95,7 +96,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.6.0'
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
     implementation "androidx.biometric:biometric-ktx:1.2.0-alpha03"
@@ -132,10 +133,10 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.okhttp:okhttp:2.7.5")
-    implementation("io.reactivex.rxjava2:rxjava:2.2.10")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.21")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
-    implementation("io.reactivex.rxjava2:rxkotlin:2.2.0")
+    implementation("io.reactivex.rxjava2:rxkotlin:2.4.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
 
     //Add Firebase Core
@@ -152,6 +153,7 @@ dependencies {
 
     // qr code generation
     implementation "com.github.kenglxn.QRGen:android:2.6.0"
+
 
     // for saving shared preferences
     implementation "androidx.preference:preference-ktx:1.1.1"
@@ -200,7 +202,7 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
 
     // Qr code scanner
-    implementation 'com.journeyapps:zxing-android-embedded:3.0.2@aar'
+    implementation 'com.journeyapps:zxing-android-embedded:4.2.0'
     implementation 'com.google.zxing:core:3.4.0'
 
     // qr code parser
@@ -223,8 +225,16 @@ dependencies {
     releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.2.0"
 //"com.github.chuckerteam.chucker:library-no-op:3.2.0"
 
-    implementation 'com.adjust.sdk:adjust-android:4.28.4'
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.1'
+
+
+    implementation 'androidx.lifecycle:lifecycle-process:2.3.1'
+    implementation "com.moengage:moe-android-sdk:11.4.01"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':trackr')
+
+    implementation("com.moengage:rich-notification:2.3.00")
+
 }
 apollo {
     generateKotlinModels.set(true)

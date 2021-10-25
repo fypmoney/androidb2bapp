@@ -98,7 +98,7 @@
                     app:customBackgroundColor="@{@color/color_mat_black}"
                     app:customIsRounded="@{false}"
                     app:customCornerRadius="@{@dimen/dp12}"
-                    android:layout_marginBottom="40dp"
+                    android:layout_marginBottom="26dp"
                     app:layout_constraintBottom_toTopOf="@+id/get_this_card_btn"/>
 
 
@@ -113,8 +113,36 @@
                     android:backgroundTint="@color/color_task_card_green"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/alredy_have_card_tv"
                     android:layout_marginBottom="@dimen/dp20"/>
+
+                <TextView
+                    style="@style/TextviewRegular"
+                    android:id="@+id/alredy_have_card_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="@dimen/dp10"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/tap_hare_to_activate_tv"
+                    android:text="@string/already_have_a_physical_card"/>
+
+                <TextView
+                    style="@style/TextviewRegular"
+                    android:id="@+id/tap_hare_to_activate_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_skyblue"
+                    android:textSize="16sp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_6sdp"
+                    android:onClick="@{()->viewModel.onAlreadyHaveACard()}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:text="@string/tap_here_to_activate" />
 
 
 

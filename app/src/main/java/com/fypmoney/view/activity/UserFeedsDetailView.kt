@@ -1,10 +1,14 @@
 package com.fypmoney.view.activity
 
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -50,6 +54,7 @@ class UserFeedsDetailView : BaseActivity<ViewUserFeedsDetailBinding, FeedDetails
 
 
         mViewModel.feedDetails.set(intent.getSerializableExtra(AppConstants.FEED_RESPONSE) as FeedDetails?)
+
         webView.settings.apply {
             javaScriptEnabled = true
         }
@@ -111,11 +116,31 @@ class UserFeedsDetailView : BaseActivity<ViewUserFeedsDetailBinding, FeedDetails
             }
 
         }
+        mViewBinding.toolbar1.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.action_share->{
+                        mViewModel.feedDetails.get()!!.action?.url?.let { it2 ->
+                            shareLink(
+                                it2
+                            )
 
+                    }
+                        true
+                }else -> {
+                        false
+                }
+            }
+        }
 
     }
 
-
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_blogs, menu)
+        if(mViewModel.feedDetails.get()?.action?.url.isNullOrEmpty()){
+            menu?.get(0)?.isVisible = false
+        }
+        return true
+    }
 
 
 }

@@ -6,11 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.facebook.shimmer.ShimmerDrawable
 import com.fypmoney.R
+import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.model.aRewardProductResponse
 import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.view.interfaces.ListItemClickListener
+
 import kotlinx.android.synthetic.main.card_spin_item.view.*
+import kotlinx.android.synthetic.main.card_spin_item.view.desc
 
 import java.util.*
 
@@ -45,6 +50,11 @@ class SpinnerAdapter(
         holder.coins_to_be_burn.text = items[position].appDisplayText
         holder.desc.text = items[position].description
 
+
+
+        Glide.with(context).load(items[position].listResource).placeholder(shimmerDrawable())
+            .into(holder.bg)
+
     }
 
 
@@ -55,6 +65,8 @@ class SpinnerAdapter(
 
         var coins_to_be_burn = view.coins_to_be_burn
         var desc = view.desc
+
+        var bg = view.image_illus
 
 //        init {
 //            offer.z = context.resources.getDimension(R.dimen.list_item_elevation)

@@ -256,7 +256,7 @@
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textCursorDrawable="@null"
-                            android:maxLength="100"
+                            android:maxLength="50"
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -285,7 +285,7 @@
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textCursorDrawable="@null"
-                            android:maxLength="100"
+                            android:maxLength="50"
 
                             />
 
@@ -313,7 +313,7 @@
                             android:singleLine="true"
                             android:textColor="@color/white"
                             android:textCursorDrawable="@null"
-                            android:maxLength="100"
+                            android:maxLength="50"
 
                             />
 

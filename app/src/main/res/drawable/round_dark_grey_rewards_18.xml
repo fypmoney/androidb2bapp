@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/listview_background_shape">
-    <solid android:color="@color/cb_dark_grey" />
+    <solid android:color="#15181F" />
 
     <corners android:radius="18dp" />
 </shape>

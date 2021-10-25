@@ -46,12 +46,11 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvCreateAccount"
                     style="@style/TextviewBold"
-                   android:layout_below="@+id/ivServiceLogo"
+                    android:layout_below="@+id/ivServiceLogo"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="40dp"
                     android:text="@string/create_account_title"
-                    android:textAlignment="center"
-                    />
+                    android:textAlignment="center" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/verification_title"
@@ -175,7 +174,7 @@
                                 android:layout_marginStart="@dimen/_10sdp"
                                 android:layout_weight="2"
 
-                                android:text="Teenager"
+                                android:text="@string/teenager"
                                 android:textColor="@color/black"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
@@ -184,12 +183,9 @@
 
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-
-
                                 android:layout_marginStart="@dimen/_10sdp"
-
                                 android:layout_weight="2"
-                                android:text="Age 11-19"
+                                android:text="@string/age_11_19"
                                 android:textColor="@color/grey_heading"
                                 android:textSize="12sp" />
                         </LinearLayout>

@@ -68,24 +68,49 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
         sharedViewModel.rechargeItemAdapter.setList(
             getListOfApps(
                 R.raw.recharges_json,
-                R.array.rechargeIconList
+                arrayListOf(
+                    R.drawable.airtel_logo,
+                    R.drawable.vi_logo,
+                    R.drawable.jio_logo)
             )
         )
         mViewBinding.shimmerLayout.startShimmer()
         sharedViewModel.storeAdapter.setList(
             getListOfApps(
                 R.raw.shopping_json,
-                R.array.shoppingIconList
+                arrayListOf(R.drawable.flipcart_logo,
+                R.drawable.amazon_logo,
+                R.drawable.myntra_logo,
+                R.drawable.zara_logo,
+                R.drawable.nykaa_logo,
+                R.drawable.bewakoof_logo,
+                R.drawable.maybeonline_logo,
+                R.drawable.handm)
             )
         )
 
 
+        sharedViewModel.foodDeliveryItemAdapter.setList(
+            getListOfApps(
+                R.raw.food_delivery_json,
+                arrayListOf(
+                    R.drawable.zomato,
+                    R.drawable.swiggy)
+            )
+        )
+        sharedViewModel.cabsItemAdapter.setList(
+            getListOfApps(
+                R.raw.cabs_json,
+                arrayListOf(
+                    R.drawable.ola,
+                    R.drawable.ic_uber)
+            )
+        )
+
 
     }
-    private fun getListOfApps(stores: Int, rechargeIconList: Int): ArrayList<StoreDataModel> {
+    private fun getListOfApps(stores: Int, iconList: List<Int>): ArrayList<StoreDataModel> {
         val upiList = ArrayList<StoreDataModel>()
-        val iconList = PockketApplication.instance.resources.getIntArray(rechargeIconList)
-
         try {
             val obj = JSONObject(loadJSONFromAsset(stores))
             val m_jArry = obj.getJSONArray("stores")

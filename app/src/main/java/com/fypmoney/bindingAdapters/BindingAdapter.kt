@@ -5,11 +5,13 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.util.Log
+import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.RelativeLayout
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -138,15 +140,14 @@ class BindingAdapter {
 
         @BindingAdapter("SET_ALIGNMENT")
         @JvmStatic
-        fun setLayoutAlignment(view: RelativeLayout, isSender: String) {
+        fun setLayoutAlignment(view: ConstraintLayout, isSender: String) {
             try {
                 when (isSender) {
                     AppConstants.YES -> {
                         val textViewLayoutParams = RelativeLayout.LayoutParams(
-                            view.context.resources.getDimension(R.dimen._160sdp).toInt(),
-                            view.context.resources.getDimension(R.dimen._80sdp).toInt(),
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
                         )
-
                         // add a rule to align to the left
 
                         // add a rule to align to the left
@@ -165,8 +166,8 @@ class BindingAdapter {
                     }
                     else -> {
                         val textViewLayoutParams = RelativeLayout.LayoutParams(
-                            view.context.resources.getDimension(R.dimen._160sdp).toInt(),
-                            view.context.resources.getDimension(R.dimen._80sdp).toInt(),
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT,
                         )
 
                         textViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_START)

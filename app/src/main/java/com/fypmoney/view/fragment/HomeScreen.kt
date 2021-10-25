@@ -1,17 +1,17 @@
 package com.fypmoney.view.fragment
 
-import android.Manifest
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -23,7 +23,9 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.RedeemDetailsResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_ERROR_MESSAGE_HOME
 import com.fypmoney.util.Utility
+import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.TopTenUsersAdapter
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
@@ -39,6 +41,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     private var bottomSheetMessage: RedeemMyntsBottomSheet? = null
     private lateinit var mViewModel: HomeScreenViewModel
     private lateinit var mViewBinding: ScreenHomeBinding
+
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -69,13 +72,26 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
             intentToPayActivity(ChoresActivity::class.java)
         }
         mViewBinding.spinwheel.setOnClickListener {
-            intentToPayActivity(SpinWheelView::class.java)
+            trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                it.name = TrackrEvent.OPENREWARDS
+            }
+            intentToPayActivity(RewardsActivity::class.java)
         }
         mViewBinding.splitBillsCv.setOnClickListener {
             mViewModel.callSplitBillsStories()
 
         }
+        checkForErrorNotice()
+    }
 
+    private fun checkForErrorNotice() {
+        PockketApplication.homeScreenErrorMsg?.let{
+            if(it.isNotEmpty()){
+                mViewBinding.noticeAlertFl.visibility = View.VISIBLE
+                mViewBinding.noticeTv.text = it
+            }
+
+        }
     }
 
 
@@ -187,7 +203,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
                         }
                         AppConstants.FEED_TYPE_INAPPWEB2 -> {
                             intentToActivity(
-                                UserFeedsDetailView::class.java,
+                                UserFeedsInAppWebview::class.java,
                                 it,
                                 AppConstants.FEED_TYPE_INAPPWEB
                             )
@@ -205,7 +221,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
                         }
                         AppConstants.FEED_TYPE_INAPPWEB -> {
                             intentToActivity(
-                                UserFeedsDetailView::class.java,
+                                UserFeedsInAppWebview::class.java,
                                 it,
                                 AppConstants.FEED_TYPE_INAPPWEB
                             )
@@ -284,11 +300,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
     }
 
 
-    private fun setCurrentFragment(fragment: Fragment) =
-        childFragmentManager.beginTransaction().apply {
-            replace(R.id.container, fragment)
-            commit()
-        }
+
 
     /*
     * This method is used to call add money fragment

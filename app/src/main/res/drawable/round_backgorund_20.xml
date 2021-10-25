@@ -8,7 +8,7 @@
         android:top="6dp">
 
         <shape android:id="@+id/listview_background_shape">
-            <solid android:color="#5AAFC9" />
+            <solid android:color="#BAE6C2" />
 
             <corners android:radius="20dp" />
         </shape>

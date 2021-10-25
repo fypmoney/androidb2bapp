@@ -22,7 +22,8 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="300dp"
+        >
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar_layout"
@@ -33,7 +34,6 @@
             app:expandedTitleMarginStart="12dp"
             app:expandedTitleMarginBottom="70dp"
             app:collapsedTitleGravity="start"
-
             app:expandedTitleGravity="start|center_horizontal|bottom"
             app:maxLines="4"
             app:expandedTitleTextAppearance="@style/TextAppearance.App.CollapsingToolbar.Expanded"
@@ -60,6 +60,7 @@
                 app:titleMarginStart ="0dp"
                 app:contentInsetStartWithNavigation="0dp"
                 tools:title ="title"
+                app:menu="@menu/menu_blogs"
                 app:title="@{viewModel.feedDetails.title}">
 
             </com.google.android.material.appbar.MaterialToolbar>
@@ -97,7 +98,7 @@
             android:orientation="vertical">
 
 
-            <WebView
+            <com.fypmoney.util.AdvancedWebView
                 android:id="@+id/webView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

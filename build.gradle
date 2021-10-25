@@ -27,6 +27,9 @@ allprojects {
         maven {
             url "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
         }
+        flatDir{
+            dirs 'libs'
+        }
 
     }
 }
@@ -41,5 +44,6 @@ ext{
     minSdkVersion = 21
     targetSdkVersion = 30
     compileSdkVersion = 30
+    kotlin_version = '1.5.31'
 
 }

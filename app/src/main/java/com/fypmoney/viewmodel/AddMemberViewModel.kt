@@ -8,6 +8,10 @@ import android.widget.AdapterView
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -140,6 +144,11 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
 
         }
 
+        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.FAMILYADD
+            it.add(TrackrField.added_family_member_mobile_no,mobile.value!!.trim())
+            it.add(TrackrField.added_family_member_reletionship,relation)
+        }
         WebApiCaller.getInstance().request(
             ApiRequest(
                 API_ADD_FAMILY_MEMBER,

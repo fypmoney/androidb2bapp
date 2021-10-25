@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+
+    </data>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_4sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:background="@drawable/round_dark_grey_rewards_18"
+
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivServiceLogo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:src="@color/cb_grey"
+
+            />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/heading"
+            style="@style/TextviewRegular"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_toEndOf="@+id/ivServiceLogo"
+            android:background="@color/cb_grey"
+            android:text="   ,                          "
+            android:textColor="@color/white"
+
+            android:textSize="@dimen/textSize_18" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/desc"
+            style="@style/TextviewRegular"
+            android:layout_below="@+id/heading"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_toEndOf="@+id/ivServiceLogo"
+            android:ellipsize="end"
+            android:background="@color/cb_grey"
+            android:text="             "
+            android:textColor="@color/grey_heading" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/amount"
+            style="@style/TextviewRegular"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:background="@color/cb_grey"
+            android:text="        "
+            android:textColor="@color/white"
+
+            android:textSize="@dimen/textSize_18" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/won_tv"
+            style="@style/TextviewRegular"
+            android:layout_below="@+id/amount"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:text="     "
+            android:background="@color/cb_grey"
+
+            android:textSize="14sp" />
+
+
+    </RelativeLayout>
+
+</layout>

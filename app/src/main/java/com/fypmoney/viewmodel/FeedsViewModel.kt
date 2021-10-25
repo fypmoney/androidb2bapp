@@ -200,11 +200,11 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
             0 -> {
                 if(userInterest.isNullOrEmpty()){
                     feedRequestModel.query =
-                        "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME + "\",screenSection:null,tags :[\"" + feedtype + "\"],displayCard: [\"STATICIMAGE\",\"STORIES\",\"STATICIMAGE1X1\",\"DEEPLINK1X1\",\"INAPPWEB1X1\",\"EXTWEBVIEW1X1\",\"BLOG\", \"DEEPLINK\", \"INAPPWEB\", \"EXTWEBVIEW\", \"VIDEO\"]) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
+                        "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME + "\",screenSection:null,tags :[\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
 
                 }else{
                     feedRequestModel.query =
-                        "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: [\"STATICIMAGE\",\"STORIES\",\"STATICIMAGE1X1\",\"DEEPLINK1X1\",\"INAPPWEB1X1\",\"EXTWEBVIEW1X1\",\"BLOG\", \"DEEPLINK\", \"INAPPWEB\", \"EXTWEBVIEW\", \"VIDEO\"]) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
+                        "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
 
                 }
 

@@ -2,6 +2,8 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.*
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -16,6 +18,8 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.google.gson.Gson
+import com.moengage.core.internal.MoEConstants
+import com.moengage.core.internal.MoEConstants.*
 
 /*
 * This class is used to show login success
@@ -23,6 +27,9 @@ import com.google.gson.Gson
 class LoginSuccessViewModel(application: Application) : BaseViewModel(application) {
     var onApiSuccess = MutableLiveData<Boolean>()
 
+    init {
+
+    }
     /*
     * This method is used to handle click of continue
     * */
@@ -67,9 +74,8 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                 if (responseData is CustomerInfoResponse) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
                     onApiSuccess.value=true
-                    // Save the user id in shared preference
-
-                    // save first name, last name, date of birth
+                    trackr { it.services = arrayListOf(TrackrServices.ADJUST,TrackrServices.FIREBASE)
+                        it.name = TrackrEvent.LOGINSUCCESS }
 
                     SharedPrefUtils.putString(
                         getApplication(),
@@ -110,6 +116,16 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                         value = responseData.customerInfoResponseDetails?.mobile
                     )
 
+                    Utility.getCustomerDataFromPreference()?.let {
+                        val map = hashMapOf<String,Any>()
+                        map[USER_ATTRIBUTE_UNIQUE_ID] = it.mobile.toString()
+                        map[USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
+                        map[USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
+                        map[USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
+                        map[USER_ATTRIBUTE_USER_BDAY] = it.dob.toString()
+                        UserTrackr.push(map)
+                        UserTrackr.login( it.mobile.toString())
+                    }
                     val interestList = ArrayList<String>()
                     if (responseData.customerInfoResponseDetails?.userInterests?.isNullOrEmpty() == false) {
                         responseData.customerInfoResponseDetails?.userInterests!!.forEach {
@@ -123,7 +139,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                         )
 
                     }
-
+                    onApiSuccess.value = true
 
                 }
             }
@@ -140,13 +156,29 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                     it.value
                                 )
                             }
+                            AppConstants.REFER_MSG_SHARED_1 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_REFFERAL_MSG,
+                                    it.value
+                                )
+                            }
+
+                            AppConstants.REFER_MSG_SHARED_2 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_REFFERAL_MSG_2,
+                                    it.value
+                                )
+                            }
                             AppConstants.REFER_LINE1 -> {
-                            SharedPrefUtils.putString(
-                                getApplication(),
-                                SharedPrefUtils.SF_KEY_REFER_LINE1,
-                                it.value
-                            )
-                        }
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_KEY_REFER_LINE1,
+                                    it.value
+                                )
+                            }
+
                             AppConstants.REFER_LINE2 -> {
                                 SharedPrefUtils.putString(
                                     getApplication(),
@@ -154,6 +186,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                     it.value
                                 )
                             }
+
                             AppConstants.REFEREE_CASHBACK -> {
                                 SharedPrefUtils.putString(
                                     getApplication(),

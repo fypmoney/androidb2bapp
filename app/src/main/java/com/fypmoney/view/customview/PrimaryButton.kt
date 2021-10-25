@@ -25,6 +25,7 @@ class PrimaryButton : FrameLayout {
     private var disabledBackgroundColor: Int = ContextCompat.getColor(context, R.color.buttonUnselectedColor)
     private var disabledTextColor: Int = ContextCompat.getColor(context, R.color.grey_heading)
     private var enabledTextColor: Int = ContextCompat.getColor(context, R.color.white)
+
     constructor(context: Context) : super(context) {
         init(context, null, 0)
     }

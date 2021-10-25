@@ -21,6 +21,7 @@
             android:layout_width="@dimen/_184sdp"
             android:layout_marginTop="@dimen/_26sdp"
             android:id="@+id/message_image"
+            android:src="@drawable/ic_redeem_mynts_illustration"
             android:layout_marginBottom="@dimen/_16sdp"
             android:layout_gravity="center_horizontal"
             android:layout_height="@dimen/_164sdp" />

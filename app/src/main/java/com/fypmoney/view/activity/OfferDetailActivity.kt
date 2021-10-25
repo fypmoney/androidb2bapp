@@ -12,6 +12,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -22,6 +25,7 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 
 import com.fypmoney.util.Utility
+import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.adapter.OffersTopAdapter
 import com.fypmoney.view.adapter.offerpointsAdapter
 import com.fypmoney.view.interfaces.ListContactClickListener
@@ -84,6 +88,9 @@ class OfferDetailActivity :
 
             clipboard?.setPrimaryClip(clip)
             Toast.makeText(this, getString(R.string.copy_to_clipboard), Toast.LENGTH_SHORT).show()
+            trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+                it.name = TrackrEvent.OFFERCOPY
+            }
         }
 
         mViewModel!!.offerDetail.observe(
@@ -110,8 +117,21 @@ class OfferDetailActivity :
                 typeAdapter?.notifyDataSetChanged()
                 nsv_details.visibility = View.VISIBLE
 
+                if(mViewModel.action.value?.url.isNullOrEmpty()){
+                    view_details_tv.visibility = View.GONE
+                }
             })
 
+
+        view_details_tv.setOnClickListener {
+            mViewModel.action.value?.url?.let {
+                val intent2 = Intent(this, StoreWebpageOpener2::class.java)
+                StoreWebpageOpener2.url =it
+//                    intent2.putExtra("title", mViewModel.offerDetail.value?.title)
+                startActivity(intent2)
+            }
+
+        }
     }
 
     private fun setRecyclerView() {

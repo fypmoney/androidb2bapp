@@ -3,6 +3,7 @@ package com.fypmoney.view.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -59,6 +60,13 @@ class PayUSuccessView : BaseActivity<ViewPayuSuccessBinding, PayUSuccessViewMode
                 )
                 mViewModel.bankResponse.set(intent.getSerializableExtra(AppConstants.RESPONSE) as BankTransactionHistoryResponseDetails)
                 mViewModel.setInitialData()
+                mViewModel.bankResponse.get()?.paymentMode?.let {
+                    if(it == "MerchantTransaction"){
+                        mViewModel.callCashbackEarned()
+                        mViewModel.callRewardsEarned()
+                    }
+                }
+
             }
 
             AppConstants.TRANSACTION -> {
@@ -84,7 +92,20 @@ class PayUSuccessView : BaseActivity<ViewPayuSuccessBinding, PayUSuccessViewMode
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-
+        mViewModel.cashbackEarnedError.observe(this,{
+            if(it){
+                mViewBinding.cashbackCl.visibility = View.VISIBLE
+            }else{
+                mViewBinding.cashbackCl.visibility = View.GONE
+            }
+        })
+        mViewModel.rewardEarnedError.observe(this,{
+            if(it){
+                mViewBinding.rewardsCl.visibility = View.VISIBLE
+            }else{
+                mViewBinding.rewardsCl.visibility = View.GONE
+            }
+        })
     }
 
     /**

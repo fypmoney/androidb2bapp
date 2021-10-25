@@ -36,6 +36,9 @@ class OrderCardViewModel(application: Application) : BaseViewModel(application) 
     fun onOrderCardClicked() {
         _event.value = OrderCardEvent.GetOrderCardEvent
     }
+    fun onAlreadyHaveACard() {
+        _event.value = OrderCardEvent.AlreadyHaveACardEvent
+    }
 
 
     private fun getCardOfferDetails() {
@@ -76,6 +79,7 @@ class OrderCardViewModel(application: Application) : BaseViewModel(application) 
     }
     sealed class OrderCardEvent {
         object GetOrderCardEvent : OrderCardEvent()
+        object AlreadyHaveACardEvent : OrderCardEvent()
     }
 
     sealed class OrderCardState{

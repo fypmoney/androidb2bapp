@@ -16,14 +16,18 @@ data class Offers(
 	val innerBannerImg: String? = null,
 	val tnc: String? = null,
 	val details: List<String?>? = null,
-	val title: String? = null
+	val title: String? = null,
 )
-
+data class OfferAction(
+	var url:String? = null
+)
 data class Data2(
 	val getAllFeed: GetAllFeed? = null
 )
 
 data class FeedDataItem(
-	val offers: Offers? = null
+	val offers: Offers? = null,
+	val action: OfferAction? = null
+
 )
 

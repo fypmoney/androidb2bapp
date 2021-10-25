@@ -4,6 +4,10 @@ import android.app.Application
 import android.os.Build
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -55,6 +59,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
        * This method is used to handle click of submit
        * */
     fun onVerifyClicked() {
+
         when {
             otp.get().isNullOrEmpty() -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.empty_otp_error))
@@ -330,6 +335,11 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                         SharedPrefUtils.SF_KEY_IS_LOGIN,
                         true
                     )
+                    trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+                        it.name = TrackrEvent.OTP_VERIFIED
+                        it.add(
+                            TrackrField.user_mobile_no,mobile.value.toString())
+                    }
                     // Save the access token in shared preference
                     SharedPrefUtils.putString(
                         getApplication(), key = SharedPrefUtils.SF_KEY_ACCESS_TOKEN,

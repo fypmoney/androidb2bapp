@@ -16,7 +16,22 @@
         android:background="@drawable/ic_order_card_bg"
         tools:context=".view.ordercard.cardorderoffer.CardOrderOfferActivity">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/LoadProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
 
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/_16sdp"
+
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:lottie_autoPlay="true"
+            android:visibility="gone"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/dots_animation" />
         <include
             android:id="@+id/toolbar_layout"
             layout="@layout/toolbar"
@@ -70,18 +85,8 @@
                     app:scratchRevealFullAtPercent="20"
                     app:scratchWidth="40dp">
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card_bg"
-                        android:layout_width="250dp"
-                        android:layout_height="250dp"
-                        android:alpha=".40"
-                        android:background="@drawable/round_backgorund_20"
-                        android:backgroundTint="#9b5aa7"
-                        app:cardCornerRadius="18dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
@@ -90,38 +95,89 @@
 
                         <ImageView
                             android:id="@+id/got_the_offer_iv"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:contentDescription="@null"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
                             android:layout_gravity="center_horizontal"
-                            tools:src="@drawable/ic_oops_emoji" />
+                            android:contentDescription="@null" />
+
+                        <ImageView
+                            android:layout_width="128dp"
+                            android:id="@+id/smiley_oops"
+                            android:visibility="invisible"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/opps_smiley"
+
+                            android:layout_marginTop="@dimen/_24sdp"
+                            android:layout_height="128dp" />
 
                         <TextView
                             android:id="@+id/offer_desc_tv"
-                            android:textSize="14sp"
                             style="@style/TextviewRegular"
-                            android:textColor="@color/text_color_light"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_above="@+id/offer_amount_tv"
+                            android:layout_centerHorizontal="true"
                             android:layout_marginStart="30dp"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="30dp"
+                            android:elevation="@dimen/_1sdp"
                             android:gravity="center"
-                            tools:text="@string/you_won"
-                            android:textAlignment="center" />
+                            android:textAlignment="center"
+                            android:textColor="@color/cb_dark_grey"
+                            android:textSize="14sp"
+                            android:text="@string/you_won_scratch" />
 
                         <TextView
                             android:id="@+id/offer_amount_tv"
                             style="@style/TextviewBold"
+                            android:layout_marginBottom="@dimen/_12sdp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_alignParentBottom="true"
                             android:textColor="@color/text_color_dark"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:text="₹200"
+
+                            android:text=""
                             android:textSize="27sp"
                             android:textStyle="bold" />
 
+                        <TextView
+                            android:id="@+id/opps_tv"
+                            style="@style/TextviewBold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"
+                            android:layout_above="@+id/better_luck"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="@dimen/_2sdp"
 
-                    </LinearLayout>
+                            android:text="@string/opps"
+
+                            android:textColor="@color/text_color_dark"
+                            android:textSize="27sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/better_luck"
+                            android:visibility="gone"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginStart="30dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginBottom="@dimen/_14sdp"
+                            android:elevation="@dimen/_1sdp"
+                            android:gravity="center"
+                            android:text="@string/better_luck_next_time"
+                            android:textAlignment="center"
+                            android:textColor="@color/cb_dark_grey"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
 
 
                 </com.fypmoney.view.customview.scratchlayout.ui.ScratchCardLayout>
@@ -144,22 +200,9 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/scratch_cv"
                 android:layout_marginBottom="@dimen/_80sdp"
-                android:text="@string/scratch_card" />
+                android:text="@string/scratch_the_card_and_who_knows_you_might_get_lucky_today2" />
 
-            <com.fypmoney.view.customview.PrimaryButton
-                android:id="@+id/continue_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:text="@string/continue_txt"
-                android:textSize="18sp"
-                app:enabled="false"
-                app:enabled_bg="@color/color_task_card_green"
-                app:disabled_bg="@color/buttonUnselectedColor"
-                android:onClick="@{()->viewModel.onContinueClicked()}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="@dimen/dp20" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

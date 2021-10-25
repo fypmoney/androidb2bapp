@@ -12,6 +12,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.databinding.BottomSheetResponseTaskBinding
 import com.fypmoney.model.NotificationModel
@@ -66,12 +69,18 @@ class TaskActionBottomSheetnotificationactivity(
             if (accept.text == "Accept") {
                 NotificationView.mViewModel!!.callTaskAccept("ACCEPT", list.entityId.toString(), "")
             } else if (accept.text == "Complete") {
+                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.MISSIONCOMPLETE
+                }
                 NotificationView.mViewModel!!.callTaskAccept(
                     "COMPLETE", list.entityId.toString(), view.comment.text?.trim()
                         .toString()
                 )
 
             } else if (accept.text == "Pay") {
+                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                    it.name = TrackrEvent.MISSIONPAID
+                }
                 onClickListener.onAcceptClicked(
                     56, view.comment.text?.trim()
                         .toString()
