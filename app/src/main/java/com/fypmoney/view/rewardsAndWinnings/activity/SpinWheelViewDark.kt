@@ -219,6 +219,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
             }
 
             sectionId = it.sectionId
+
             luckylayout.visibility = View.VISIBLE
             mViewModel.setDataInSpinWheel(sectionArrayList)
             luckyWheelView.setData(mViewModel.luckyItemList)

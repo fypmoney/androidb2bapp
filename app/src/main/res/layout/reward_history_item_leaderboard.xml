@@ -24,7 +24,7 @@
         android:background="@drawable/round_dark_grey_rewards_18"
 
         android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="8dp">
 
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -55,18 +55,19 @@
             android:id="@+id/desc"
             style="@style/TextviewRegular"
             android:layout_below="@+id/heading"
-            android:layout_marginEnd="@dimen/_2sdp"
             android:layout_marginStart="@dimen/margin"
-            android:maxLines="2"
             android:layout_marginTop="@dimen/_4sdp"
-
+            android:layout_marginEnd="@dimen/_2sdp"
             android:layout_toStartOf="@+id/won_tv"
+
             android:layout_toEndOf="@+id/productType"
-
-
             android:ellipsize="end"
+
+
+            android:maxLines="2"
+            android:alpha=".4"
             android:text=""
-            android:textColor="@color/grey_heading"
+            android:textColor="@color/white"
             android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatTextView

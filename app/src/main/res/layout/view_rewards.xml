@@ -16,7 +16,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="@drawable/linear_gradient_rewards_rect"
+        android:background="#090B12"
         android:layout_height="match_parent">
 
         <include
