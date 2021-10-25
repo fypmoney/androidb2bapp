@@ -117,11 +117,6 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
                     if (item.id == sectionId.toString()) {
 
                         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                            trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-                                it.name = TrackrEvent.SPINSUCCESS
-                                it.add(TrackrField.spin_product_code,item.c)
-
-                            }
                             showwonDialog(item.sectionValue)
                         }
                         return@forEach
