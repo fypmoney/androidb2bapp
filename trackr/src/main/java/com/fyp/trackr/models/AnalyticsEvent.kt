@@ -111,12 +111,17 @@ enum class TrackrEvent(name: String) {
     FORCEUPDATECOMPLETED("Force_update_completed"),
     FORCEUPDATEFAILED("Force_update_failed"),
     NOAPPUPDATEAVAILBLE("NO_app_update_available"),
+    OPENREWARDS("Open_rewards"),
+    OPENARCADE("Open_arcade"),
+    SPINCODE("Spin"),
+    SPINSUCCESS("Spin_success "),
 
 }
 
 enum class TrackrField(name: String) {
     user_id("user_id"),
     user_mobile_no("user_mobile_no"),
+    spin_product_code("product_code"),
     transaction_amount("transaction_amount"),
     added_family_member_mobile_no("added_family_member_mobile_no"),
     added_family_member_reletionship("added_family_member_reletionship"),

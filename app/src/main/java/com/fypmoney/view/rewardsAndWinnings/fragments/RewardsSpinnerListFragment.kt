@@ -22,6 +22,10 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -73,6 +77,10 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         setRecyclerView()
         setRvScratchCard()
         dialogDialog = Dialog(requireContext())
+
+        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            it.name = TrackrEvent.OPENARCADE
+        }
 
 
     }
@@ -141,17 +149,10 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                                     SpinWheelViewDark.sectionArrayList.add(item)
                                 }
                             }
-
-
-//                    val args = Bundle()
-//                    args.putSerializable("ARRAYLIST", itemsArrayList as Serializable)
-//                    intent.putExtra("BUNDLE", args)
                             startForResult.launch(intent)
 
                         }
                         AppConstants.PRODUCT_SCRATCH -> {
-
-
                             Glide.with(this).asDrawable()
                                 .load(scratchArrayList[sharedViewModel.selectedPosition.get()!!].scratchResourceHide)
                                 .into(object : CustomTarget<Drawable?>() {
@@ -302,6 +303,12 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
 
             override fun onItemClicked(pos: Int) {
+                itemsArrayList[pos].code?.let {it1->
+                    trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                        it.name = TrackrEvent.SPINCODE
+                        it.add(TrackrField.spin_product_code,it1)
+                    }
+                }
 
 
                 showBurnDialog(

@@ -10,6 +10,10 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -113,6 +117,11 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
                     if (item.id == sectionId.toString()) {
 
                         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                            trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                                it.name = TrackrEvent.SPINSUCCESS
+                                it.add(TrackrField.spin_product_code,item.c)
+
+                            }
                             showwonDialog(item.sectionValue)
                         }
                         return@forEach
@@ -183,6 +192,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
             }
 
         })
+
 
 
         dialogDialog?.show()

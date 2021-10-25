@@ -9,6 +9,9 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -69,6 +72,9 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
             intentToPayActivity(ChoresActivity::class.java)
         }
         mViewBinding.spinwheel.setOnClickListener {
+            trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                it.name = TrackrEvent.OPENREWARDS
+            }
             intentToPayActivity(RewardsActivity::class.java)
         }
         mViewBinding.splitBillsCv.setOnClickListener {
