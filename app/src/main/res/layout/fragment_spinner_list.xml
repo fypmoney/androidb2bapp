@@ -51,13 +51,13 @@
                     android:id="@+id/rv_spinner"
 
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:layout_height="wrap_content"
 
                     android:layout_marginBottom="@dimen/_6sdp" />
 
                 <com.facebook.shimmer.ShimmerFrameLayout
-                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
 
                     android:id="@+id/shimmerLayout"
                     android:layout_width="match_parent"
@@ -106,7 +106,7 @@
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_marginEnd="@dimen/_6sdp"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:id="@+id/shimmerscratch"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/LoadProgressBar"
@@ -133,7 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginStart="@dimen/_6sdp"
                 android:layout_marginEnd="@dimen/_6sdp"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_12sdp"
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/LoadProgressBar"
                 android:layout_below="@+id/lin2"

@@ -20,7 +20,8 @@
             android:layout_marginLeft="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_16sdp"
 
-            android:textColor="#a3a3a3"
+            android:textColor="@color/white"
+            android:alpha=".40"
             android:textSize="14sp" />
 
         <androidx.recyclerview.widget.RecyclerView
