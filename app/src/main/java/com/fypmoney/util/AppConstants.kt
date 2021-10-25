@@ -246,9 +246,10 @@ object AppConstants {
     const val REFER_CODE_CHECKING_VARIABLE = "$@%$"
 
 
-    const val ORDER_ID = "ORDERID"
+    const val ORDER_NUM = "ORDERID"
     const val PRODUCT_HIDE_IMAGE = "HIDE_IMAGE"
     const val SECTION_ID = "SECTIONID"
+    const val PRODUCT_CODE = "PRODUCT_CODE"
     const val TRANS_TYPE_EARN = "EARN"
 
 }

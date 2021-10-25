@@ -1,28 +1,19 @@
 package com.fypmoney.view.rewardsAndWinnings.fragments
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.Nullable
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentRewardHistoryBinding
 import com.fypmoney.model.HistoryItem
 import com.fypmoney.util.AppConstants
-import com.fypmoney.util.Utility
 import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryLeaderboardAdapter
-import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.rewardsAndWinnings.activity.RewardsHistoryView
-import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
 import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
 
@@ -90,7 +81,7 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
                     val intent = Intent(requireContext(), SpinWheelViewDark::class.java)
                     SpinWheelViewDark.sectionArrayList.clear()
                     intent.putExtra(
-                        AppConstants.ORDER_ID,
+                        AppConstants.ORDER_NUM,
                         historyItem.orderNumber.toString()
                     )
                     startActivity(intent)

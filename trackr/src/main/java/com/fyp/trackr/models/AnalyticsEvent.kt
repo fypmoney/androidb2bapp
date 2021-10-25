@@ -114,8 +114,11 @@ enum class TrackrEvent(name: String) {
     OPENREWARDS("Open_rewards"),
     OPENARCADE("Open_arcade"),
     SPINCODE("Spin"),
-    SPINSUCCESS("Spin_success "),
-
+    SPINSUCCESS("Spin_success"),
+    SPINZERO("Zero_spin"),
+    SCRATCHCODE("Scratch"),
+    SCRATCHSUCCESS("Scratch_success"),
+    INSUFMYNTS("Insuf_mynts"),
 }
 
 enum class TrackrField(name: String) {

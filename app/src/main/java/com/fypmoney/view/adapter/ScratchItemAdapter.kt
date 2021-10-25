@@ -26,7 +26,7 @@ class ScratchItemAdapter(
     val clickInterface: ListContactClickListener
 ) : RecyclerView.Adapter<ScratchItemAdapter.ViewHolder>() {
 
-    private var mLastClickTime: Long = 0
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
@@ -53,8 +53,7 @@ class ScratchItemAdapter(
         holder.burnAmount.text = items[position].appDisplayText
         Glide.with(context).load(items[position].listResource).placeholder(shimmerDrawable())
             .into(holder.bg)
-//        holder.coins_to_be_burn.text=items[position].appDisplayText
-//        holder.desc.text=items[position].description
+
 
         if (items[position].backgroundColor != null) {
             holder.bg_card.background.setTint(
@@ -89,9 +88,6 @@ class ScratchItemAdapter(
         var bg = view.image_illus
         var bg_card = view.bg_card
 
-//        init {
-//            offer.z = context.resources.getDimension(R.dimen.list_item_elevation)
-//        }
 
     }
 }

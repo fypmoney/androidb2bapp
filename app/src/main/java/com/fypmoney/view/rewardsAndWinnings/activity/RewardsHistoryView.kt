@@ -89,7 +89,7 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                         ScratchCardActivity.imageScratch = resource
 
                         intent.putExtra(
-                            AppConstants.ORDER_ID,
+                            AppConstants.ORDER_NUM,
                             mVM.orderNumber.value
                         )
                         intent.putExtra(
@@ -192,7 +192,7 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                     val intent = Intent(this@RewardsHistoryView, SpinWheelViewDark::class.java)
                     SpinWheelViewDark.sectionArrayList.clear()
                     intent.putExtra(
-                        AppConstants.ORDER_ID,
+                        AppConstants.ORDER_NUM,
                         historyItem.orderNumber.toString()
                     )
                     startActivity(intent)

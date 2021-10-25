@@ -32,6 +32,9 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
@@ -108,6 +111,12 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
         dialogInsufficientFund?.clicked?.setOnClickListener(View.OnClickListener {
 
+
+            trackr {
+                it.services = arrayListOf(TrackrServices.MOENGAGE)
+                it.name = TrackrEvent.INSUFMYNTS
+
+            }
             dialogInsufficientFund?.dismiss()
         })
 
@@ -249,7 +258,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
                             ScratchCardActivity.imageScratch = resource
 
                             intent.putExtra(
-                                AppConstants.ORDER_ID,
+                                AppConstants.ORDER_NUM,
                                 mViewModel.orderNumber.value
                             )
                             intent.putExtra(
