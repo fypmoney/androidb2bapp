@@ -41,6 +41,7 @@ object AppConstants {
     const val FEED_TYPE_DID_YOU_KNOW = "DIDYOUKNOW"
     const val FEED_TYPE_STATIC_IMAGE = "STATICIMAGE"
     const val FEED_TYPE_STATIC_IMAGE1x1 = "STATICIMAGE1X1"
+    const val FEED_TYPE_STATIC_IMAGE1x1_5 = "STATICIMAGE1X1.5"
     const val IN_APP_WEBVIEW1x1 = "INAPPWEB1X1"
 
     const val FEED_TYPE_BLOG = "BLOG"
@@ -79,6 +80,7 @@ object AppConstants {
     const val API_SUCCESS = "Success"
     const val API_FAIL = "Fail"
     const val FEED_SCREEN_NAME = "FEED"
+    const val REWARD_SCREEN_NAME = "REWARD"
     const val FEED_SCREEN_NAME_HOME = "HOME"
     const val FEED_WITHIN_RADIUS = "20"
     const val IS_PROFILE_COMPLETED = "isProfileCompleted"
@@ -243,5 +245,10 @@ object AppConstants {
     const val ORDER_CARD_INFO = "order_card_info"
     const val REFER_CODE_CHECKING_VARIABLE = "$@%$"
 
+
+    const val ORDER_ID = "ORDERID"
+    const val PRODUCT_HIDE_IMAGE = "HIDE_IMAGE"
+    const val SECTION_ID = "SECTIONID"
+    const val TRANS_TYPE_EARN = "EARN"
 
 }

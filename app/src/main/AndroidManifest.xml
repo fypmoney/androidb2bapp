@@ -225,10 +225,10 @@
             android:name=".view.activity.ContactViewAddMember"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.SpinWheelView"
+            android:name=".view.rewardsAndWinnings.activity.SpinWheelView"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.RewardsHistoryView"
+            android:name=".view.rewardsAndWinnings.activity.SpinHistoryView"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.PermissionsActivity"
@@ -236,17 +236,31 @@
         <activity
             android:name=".view.activity.OfferDetailActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.RewardsActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.SpinWheelViewDark"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.AgeAllowedActivationView"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ScratchCardActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.StoreWebpageOpener2"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.UserFeedsInAppWebview" />
+        <activity
+            android:name=".view.rewardsAndWinnings.RewardsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.rewardsAndWinnings.activity.SpinWheelViewDark"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.AgeAllowedActivationView"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.rewardsAndWinnings.activity.ScratchCardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.StoreWebpageOpener2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.UserFeedsInAppWebview"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".view.rewardsAndWinnings.activity.RewardsHistoryView"
+            android:screenOrientation="portrait">
+
+        </activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
@@ -293,11 +307,11 @@
             </intent-filter>
         </service>
 
-        <service android:name="com.moengage.firebase.MoEFireBaseMessagingService">
+        <!--<service android:name="com.moengage.firebase.MoEFireBaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </service>
+        </service>-->
     </application>
     <queries>
         <intent>

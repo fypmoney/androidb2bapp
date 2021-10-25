@@ -46,9 +46,11 @@ class StoreItemAdapter(var onStoreClickListener: OnStoreItemClick, var context: 
                 storeList?.get(position), onStoreClickListener
             )
             mRowItemBinding?.tvServiceName?.text = storeList?.get(position)?.title
-
-
-
+            storeList?.get(position)?.Icon?.let {
+                mRowItemBinding?.ivServiceLogo?.setImageResource(
+                    it
+                )
+            }
             mRowItemBinding!!.viewHelper = mViewHelper
             mRowItemBinding.executePendingBindings()
         }

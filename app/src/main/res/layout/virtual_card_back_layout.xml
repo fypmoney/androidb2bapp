@@ -192,6 +192,7 @@
                     tools:text="***" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/viewCardDetails"
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -211,6 +212,23 @@
                     app:customBackgroundColor="@{@color/white}"
                     app:customCornerRadius="@{@dimen/dp24}"
                     app:customIsRounded="@{false}" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/progress_bar"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/expiry"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:padding="10dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@string/fetching_your_card_details"
+                    android:textColor="@color/white"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
             </RelativeLayout>
 
 

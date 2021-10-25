@@ -26,13 +26,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:layout_marginTop="16dp"
                     android:layout_marginStart="18dp"
                     android:layout_marginEnd="18dp"
@@ -113,19 +111,17 @@
                     android:textStyle="bold"
                     android:text="@string/recharge_amp_bill_payments"
                     android:textColor="@color/text_color_dark"
-                    android:textSize="17dp" />
+                    android:textSize="17sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recharge_rv"
                     app:adapter="@{viewModel.rechargeItemAdapter}"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_16sdp"
                     android:layout_marginRight="@dimen/_16sdp"
                     android:layout_below="@+id/upi_text"
                     android:layout_marginTop="@dimen/margin"
-
                     app:spanCount="4"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
@@ -141,7 +137,7 @@
                     android:ellipsize="end"
                     android:text="@string/shopping"
                     android:textColor="@color/text_color_dark"
-                    android:textSize="17dp" />
+                    android:textSize="17sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/my_recycler_view"
@@ -151,6 +147,52 @@
                     android:layout_marginRight="@dimen/_16sdp"
                     android:layout_below="@+id/upi_text"
                     app:adapter="@{viewModel.storeAdapter}"
+                    android:layout_marginTop="@dimen/margin"
+                    app:spanCount="4"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/food_delivery_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_marginLeft="@dimen/_16sdp"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:text="@string/food_delivery"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="17sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/food_delivery_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_16sdp"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    app:adapter="@{viewModel.foodDeliveryItemAdapter}"
+                    android:layout_marginTop="@dimen/margin"
+                    app:spanCount="4"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/cabs_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_marginLeft="@dimen/_16sdp"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:ellipsize="end"
+                    android:text="@string/cabs_amp_e_bikes"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="17sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/cabs_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_16sdp"
+                    android:layout_marginRight="@dimen/_16sdp"
+                    app:adapter="@{viewModel.cabsItemAdapter}"
                     android:layout_marginTop="@dimen/margin"
                     app:spanCount="4"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />

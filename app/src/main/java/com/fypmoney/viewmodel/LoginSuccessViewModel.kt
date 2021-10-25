@@ -2,10 +2,7 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.UserTrackr
-import com.fyp.trackr.models.push
-import com.fyp.trackr.models.trackr
+import com.fyp.trackr.models.*
 import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -121,12 +118,13 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
 
                     Utility.getCustomerDataFromPreference()?.let {
                         val map = hashMapOf<String,Any>()
-                        map[USER_ATTRIBUTE_UNIQUE_ID] = it.id.toString()
+                        map[USER_ATTRIBUTE_UNIQUE_ID] = it.mobile.toString()
                         map[USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
                         map[USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
                         map[USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
                         map[USER_ATTRIBUTE_USER_BDAY] = it.dob.toString()
                         UserTrackr.push(map)
+                        UserTrackr.login( it.mobile.toString())
                     }
                     val interestList = ArrayList<String>()
                     if (responseData.customerInfoResponseDetails?.userInterests?.isNullOrEmpty() == false) {

@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="@dimen/card_elevation"
+    android:layout_marginTop="@dimen/_6sdp"
 
 
     app:layout_constraintTop_toTopOf="parent"

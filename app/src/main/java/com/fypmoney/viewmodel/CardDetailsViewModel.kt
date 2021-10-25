@@ -79,7 +79,7 @@ class CardDetailsViewModel(application: Application) : BaseViewModel(application
             }
             ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
                 if (responseData is FetchVirtualCardResponse) {
-                    var cardInfoDetails= CardInfoDetailsBottomSheet(responseData.fetchVirtualCardResponseDetails.card_number,
+                    val cardInfoDetails= CardInfoDetailsBottomSheet(responseData.fetchVirtualCardResponseDetails.card_number,
 
                         responseData.fetchVirtualCardResponseDetails.cvv,responseData.fetchVirtualCardResponseDetails.expiry_month
                                , responseData.fetchVirtualCardResponseDetails.expiry_year)
@@ -106,11 +106,6 @@ class CardDetailsViewModel(application: Application) : BaseViewModel(application
     }
 
     /*
-      * This method is used to call add card
-      * */
-
-
-    /*
         * This method is used to call update card settings
         * */
     fun callCardSettingsUpdateApi(upDateCardSettingsRequest: UpDateCardSettingsRequest) {
@@ -124,27 +119,21 @@ class CardDetailsViewModel(application: Application) : BaseViewModel(application
             )
         )
     }
-
-    /*
-      * This method is used to call activate card init api
-      * */
-
-
     /*
      * This method is used to call get virtual card details
      * */
-     fun callGetVirtualCardDetailsApi(fetchVirtualCardRequest: FetchVirtualCardRequest) {
+    private fun callGetVirtualCardDetailsApi(fetchVirtualCardRequest: FetchVirtualCardRequest) {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS,
                 NetworkUtil.endURL(ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS),
                 ApiUrl.POST,
                 fetchVirtualCardRequest,
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
     }
-    fun callGetVirtualRequestApi() {
+    private fun callGetVirtualRequestApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_VIRTUAL_CARD_REQUEST,
@@ -169,8 +158,6 @@ class CardDetailsViewModel(application: Application) : BaseViewModel(application
                 carderrormsg.set(errorResponseInfo.msg)
             }
         }
-
-
     }
 
     fun makeFetchCardRequest(requestData: String): FetchVirtualCardRequest {
@@ -183,8 +170,6 @@ class CardDetailsViewModel(application: Application) : BaseViewModel(application
         fetchVirtualCardRequest.p2 = mainObject.getString("p2")
         fetchVirtualCardRequest.checksum = mainObject.getString("checksum")
         return fetchVirtualCardRequest
-
-
     }
 
 }

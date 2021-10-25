@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -29,9 +30,8 @@
             android:id="@+id/ivServiceLogo"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            SET_IMAGE_STORE="@{viewHelper.position}"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/amazon_logo" />
+            tools:srcCompat="@drawable/amazon_logo" />
 
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -42,7 +42,7 @@
             android:textStyle="bold"
             android:text="@string/add_upi_text"
 
-            android:textSize="@dimen/textSize_14"
+            android:textSize="15sp"
 
             />
     </LinearLayout>

@@ -469,14 +469,14 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
             ) {
 
 
-                var code = Utility.getCustomerDataFromPreference()?.referralCode
+                val code = Utility.getCustomerDataFromPreference()?.referralCode
 
-                var redferMsg = SharedPrefUtils.getString(
+                val redferMsg = SharedPrefUtils.getString(
                     applicationContext,
                     SharedPrefUtils.SF_REFFERAL_MSG
                 )
 
-                var newString =
+                val newString =
                     code?.let { redferMsg?.replace(AppConstants.REFER_CODE_CHECKING_VARIABLE, it) }
                 sendIntent.putExtra(
                     Intent.EXTRA_TEXT,

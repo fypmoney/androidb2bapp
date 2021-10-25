@@ -65,10 +65,6 @@ class BankTransactionHistoryViewModel(application: Application) : BaseViewModel(
             ApiConstant.API_BANK_TRANSACTION_HISTORY -> {
                 if (responseData is BankTransactionHistoryResponse) {
                     LoadedList.postValue(responseData.transactions.bankTransactionHistoryResponseDetails)
-
-//                    if (!responseData.transactions.bankTransactionHistoryResponseDetails.isNullOrEmpty())
-
-
                 }
             }
         }

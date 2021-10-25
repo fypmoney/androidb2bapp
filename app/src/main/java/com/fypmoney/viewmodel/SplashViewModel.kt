@@ -20,7 +20,6 @@ import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.SettingsRequest
 import com.fypmoney.model.SettingsResponse
 import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
-import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
 import com.fypmoney.util.AppConstants.ERROR_MESSAGE_HOME
 import com.fypmoney.util.AppConstants.IS_NEW_FEED_AVAILABLE
@@ -34,13 +33,13 @@ import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_APP_VERSION_CODE
 import com.fypmoney.util.Utility
 import com.google.gson.Gson
 import com.moengage.core.internal.MoEConstants
-import com.moengage.core.model.AppStatus
+import com.moengage.firebase.MoEFireBaseHelper
 
 
 /*
 * This class is launcher screen
 * */
-class SplashViewModel(val  app: Application) : BaseViewModel(app) {
+class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
     var moveToNextScreen = MutableLiveData(false)
     var callCustomer = MutableLiveData(false);
@@ -54,20 +53,32 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
      fun setUpApp() {
         callCheckAppUpdate()
-         SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let {
-             if(it==0){
+         SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let { it1 ->
+             if(it1==0){
                  Trackr.appIsInstallFirst(isFirstTime = true)
+                 SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
+                     ?.let { it1 ->
+                         MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
+                             it1
+                         )
+                     }
              }else{
                  Trackr.appIsInstallFirst(isFirstTime = false)
+                 SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
+                     ?.let { it1 ->
+                         MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
+                             it1
+                         )
+                     }
                  Utility.getCustomerDataFromPreference()?.let {
                      val map = hashMapOf<String,Any>()
-                     map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = it.id.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = it.mobile.toString()
                      map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
                      map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
                      map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
                      map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it.dob.toString()
                      UserTrackr.push(map)
-                     UserTrackr.login( it.id.toString())
+                     UserTrackr.login( it.mobile.toString())
                  }
              }
          }
@@ -82,6 +93,8 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                     (it < BuildConfig.VERSION_CODE)||(it > BuildConfig.VERSION_CODE)){
                     SharedPrefUtils.putInt(app,SF_KEY_APP_VERSION_CODE, BuildConfig.VERSION_CODE)
                     callGetCustomerProfileApi()
+
+
                 }
                 if(it==0){
                     Trackr.appIsInstallFirst(isFirstTime = true)
@@ -182,6 +195,15 @@ class SplashViewModel(val  app: Application) : BaseViewModel(app) {
                         )
 
                     }
+
+                    val map = hashMapOf<String,Any>()
+                    map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = responseData.customerInfoResponseDetails!!.mobile.toString()
+                    map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = responseData.customerInfoResponseDetails!!.mobile.toString()
+                    map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = responseData.customerInfoResponseDetails!!.firstName.toString()
+                    map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = responseData.customerInfoResponseDetails!!.lastName.toString()
+                    map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = responseData.customerInfoResponseDetails!!.dob.toString()
+                    UserTrackr.push(map)
+                    UserTrackr.login( responseData.customerInfoResponseDetails!!.mobile.toString())
                     moveToNextScreen.value = true
                 }
             }

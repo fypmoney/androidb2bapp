@@ -203,12 +203,12 @@
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
                     android:singleLine="true"
+                    android:maxLength="50"
                     android:text="@={viewModel.message}" />
 
 
                 <Button
                     android:id="@+id/btnSendOtp"
-
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"

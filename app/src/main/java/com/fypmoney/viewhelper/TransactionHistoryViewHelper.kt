@@ -22,6 +22,8 @@ class TransactionHistoryViewHelper(
     var msg =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
     var amount = ObservableField<String?>()
+    var comment = ObservableField<String?>()
+    var commentIsVisible = ObservableField<Boolean?>(true)
     var date = ObservableField<String?>()
 
 
@@ -60,6 +62,13 @@ class TransactionHistoryViewHelper(
                     outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT2
                 )
             )
+            if(transactionHistory?.comments.isNullOrEmpty()){
+                commentIsVisible.set(false)
+            }else{
+                comment.set(
+                    transactionHistory?.comments)
+            }
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

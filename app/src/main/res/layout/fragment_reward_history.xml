@@ -1,59 +1,526 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_history"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/LoadProgressBar"
+    <data>
 
-        android:layout_marginBottom="@dimen/_6sdp" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/LoadProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_30sdp"
-
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/_4sdp"
-
-        android:visibility="gone"
-        android:layout_alignParentBottom="true"
-        app:lottie_autoPlay="true"
-        app:lottie_loop="true"
-        app:lottie_rawRes="@raw/dots_animation" />
+    </data>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:visibility="gone"
-        android:id="@+id/empty_screen"
-        android:layout_marginTop="@dimen/_90sdp"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/_194sdp"
-            android:id="@+id/image"
-            android:layout_height="@dimen/_142sdp"
-            android:layout_centerHorizontal="true"
-
-            app:srcCompat="@drawable/ic_no_task" />
-
-        <TextView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            style="@style/TextviewRegular"
-            android:layout_below="@+id/image"
-            android:layout_marginTop="@dimen/_30sdp"
-            android:paddingLeft="@dimen/_34sdp"
-            android:paddingRight="@dimen/_34sdp"
-            android:textColor="#9CA3A5"
-            android:gravity="center"
-            android:text="Looks like you haven’t been assigned any task yet. 😅"
-            android:layout_height="wrap_content" />
+            android:layout_below="@+id/contraint"
+            android:layout_above="@+id/viewmore"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_4sdp"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:visibility="gone"
+                    android:id="@+id/empty_screen"
+
+                    android:orientation="vertical"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:background="@drawable/round_dark_grey_rewards_18"
+
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+
+                        <androidx.appcompat.widget.AppCompatImageView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="@dimen/_24sdp"
+                            android:layout_marginBottom="@dimen/_4sdp"
+                            android:src="@drawable/ic_mynts_three"
+
+
+                            />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+
+                            style="@style/TextviewRegular"
+                            android:layout_below="@+id/productType"
+                            android:layout_marginLeft="@dimen/_18sdp"
+                            android:layout_marginRight="@dimen/_18sdp"
+                            android:layout_centerHorizontal="true"
+
+                            android:layout_marginTop="@dimen/_14sdp"
+                            android:layout_marginBottom="@dimen/_20sdp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:text="@string/seems_like_you_have_zero_mynts_here_s_how_you_can_earn_more_mynts"
+
+
+                            android:textColor="@color/cb_grey"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/round_dark_grey_rewards_18"
+
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+
+                        <TextView
+
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/ic_circle_orange"
+                            android:layout_marginStart="14dp"
+
+                            android:text="1"
+                            android:textSize="14sp"
+                            android:textColor="#F7AA11"
+                            android:gravity="center"
+
+
+                            android:src="@drawable/ic_mynts_three"
+
+
+                            />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+
+                            style="@style/TextviewRegular"
+                            android:layout_below="@+id/productType"
+                            android:layout_marginLeft="@dimen/_18sdp"
+                            android:layout_marginRight="@dimen/_18sdp"
+                            android:layout_centerHorizontal="true"
+
+                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_marginBottom="@dimen/_12sdp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:text="@string/refer_a_friend_and_when_they_complete_their_kyc_you_earn_mynts"
+
+
+                            android:textColor="@color/grey_heading"
+                            android:textSize="14sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_marginBottom="@dimen/_10sdp"
+                        android:layout_marginStart="@dimen/_4sdp"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:background="@drawable/round_dark_grey_rewards_18"
+
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp">
+
+
+                        <TextView
+
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="@drawable/ic_circle_blue"
+                            android:layout_marginStart="14dp"
+
+                            android:text="2"
+                            android:textSize="14sp"
+                            android:textColor="#8ECFE3"
+                            android:gravity="center"
+
+
+                            android:src="@drawable/ic_mynts_three"
+
+
+                            />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+
+                            style="@style/TextviewRegular"
+                            android:layout_below="@+id/productType"
+                            android:layout_marginLeft="@dimen/_18sdp"
+                            android:layout_marginRight="@dimen/_18sdp"
+                            android:layout_centerHorizontal="true"
+
+                            android:layout_marginTop="@dimen/_14sdp"
+                            android:layout_marginBottom="@dimen/_14sdp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:text="@string/make_your_first_transaction_using_your_fyp_card_and_earn_mynts"
+
+
+                            android:textColor="@color/grey_heading"
+                            android:textSize="14sp" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_history"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    />
+            </RelativeLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+
+        <RelativeLayout
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:id="@+id/viewmore"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/showHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
+                android:layout_marginTop="@dimen/dp6"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:backgroundTint="#15181F"
+                android:text="@string/view_more" />
+
+        </RelativeLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+
+            android:id="@+id/shimmerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/shimmer_layout_overview" />
+
+            </LinearLayout>
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/contraint"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
+
+
+            android:elevation="@dimen/_2sdp">
+
+            <RelativeLayout
+
+                android:id="@+id/relativeLayout5"
+                android:layout_width="match_parent"
+
+                android:layout_height="0dp"
+                android:alpha=".10"
+                android:background="@drawable/round_backgorund_20"
+                android:backgroundTint="#F4F4F4"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <RelativeLayout
+                android:id="@+id/rel"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_12sdp"
+
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:id="@id/layout"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+
+                    android:layout_centerVertical="true"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/coin"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:adjustViewBounds="true"
+
+                        android:src="@drawable/ic_mynt_coin" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/verification_title1"
+                        style="@style/TextviewBold"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_4sdp"
+
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:text="Mynts"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/background_progressbar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="240dp"
+                    android:layout_height="240dp"
+                    android:layout_centerHorizontal="true"
+                    android:indeterminate="false"
+                    android:max="100"
+
+                    android:progress="100"
+                    android:progressDrawable="@drawable/stats_full"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <!-- ProgressBar that represents a chart slice, where "android:progress" is the % value of the slice -->
+                <ProgressBar
+                    android:id="@+id/stats_progressbar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="240dp"
+                    android:layout_height="240dp"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="54"
+                    android:progressDrawable="@drawable/stats_progress"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/rel"
+                android:layout_marginTop="-70dp"
+                android:layout_marginHorizontal="@dimen/_40sdp"
+                android:background="@drawable/edit_text_rounded_rectangle_shape_solid__dark_gray_8"
+                android:id="@+id/blur"
+
+                android:layout_height="@dimen/_40sdp">
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:backgroundTint="@android:color/transparent"
+                app:layout_constraintBottom_toBottomOf="@+id/blur"
+                app:layout_constraintTop_toTopOf="@+id/blur"
+                app:cardCornerRadius="@dimen/_10sdp"
+
+
+                app:layout_constraintEnd_toEndOf="@+id/blur"
+                app:layout_constraintStart_toStartOf="@+id/blur"
+                android:layout_height="0dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/_14sdp"
+                            android:text="Total Earned"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/totalearned"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="@dimen/_14sdp"
+                            android:layout_marginEnd="@dimen/_14sdp"
+
+                            android:textColor="@color/white"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout7"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:paddingBottom="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:weightSum="2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/blur">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:background="@drawable/circular_red"
+                        android:elevation="@dimen/_2sdp"
+                        android:backgroundTint="#bae6c2"
+
+                        app:layout_constraintBottom_toBottomOf="@+id/points_left"
+                        app:layout_constraintEnd_toStartOf="@+id/points_left"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <TextView
+                        android:id="@+id/points_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        style="@style/TextviewBold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+
+                        android:text="@string/have"
+                        android:textColor="@color/text_color_light"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/points_left"
+                        tools:layout_editor_absoluteY="16dp" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="@dimen/_10sdp"
+                        android:layout_height="@dimen/_10sdp"
+                        android:backgroundTint="#ff4856"
+                        android:elevation="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:background="@drawable/circular_red"
+                        app:layout_constraintBottom_toBottomOf="@+id/burned_points"
+                        app:layout_constraintEnd_toStartOf="@+id/burned_points"
+                        app:layout_constraintTop_toTopOf="@+id/burned_points" />
+
+                    <TextView
+                        android:id="@+id/burned_points"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:textColor="@color/white"
+                        style="@style/TextviewBold"
+                        android:textSize="18sp"
+                        android:text=""
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/spent"
+                        android:textColor="@color/text_color_light"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/burned_points" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </RelativeLayout>
-</RelativeLayout>
+
+</layout>

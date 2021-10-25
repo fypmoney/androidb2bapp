@@ -117,13 +117,17 @@ class OfferDetailActivity :
                 typeAdapter?.notifyDataSetChanged()
                 nsv_details.visibility = View.VISIBLE
 
+                if(mViewModel.action.value?.url.isNullOrEmpty()){
+                    view_details_tv.visibility = View.GONE
+                }
             })
+
 
         view_details_tv.setOnClickListener {
             mViewModel.action.value?.url?.let {
                 val intent2 = Intent(this, StoreWebpageOpener2::class.java)
                 StoreWebpageOpener2.url =it
-                    intent2.putExtra("title", mViewModel.offerDetail.value?.title)
+//                    intent2.putExtra("title", mViewModel.offerDetail.value?.title)
                 startActivity(intent2)
             }
 

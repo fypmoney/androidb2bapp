@@ -31,8 +31,6 @@ class OffersDetailsViewModel(application: Application) : BaseViewModel(applicati
                 NetworkUtil.endURL(ApiConstant.API_FETCH_ALL_FEEDS),
                 ApiUrl.POST,
                 makeFetchFeedRequesttop(
-
-
                     id
                 ),
                 this, isProgressBar = true
