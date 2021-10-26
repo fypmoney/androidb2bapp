@@ -7,7 +7,7 @@
     android:elevation="@dimen/_4sdp"
     android:layout_marginStart="@dimen/_6sdp"
     android:layout_marginEnd="@dimen/_6sdp"
-    android:layout_marginTop="@dimen/_6sdp"
+    android:layout_marginTop="@dimen/_10sdp"
     app:cardCornerRadius="@dimen/_20sdp"
     android:backgroundTint="@android:color/transparent"
 
@@ -66,7 +66,7 @@
 
             android:layout_marginLeft="@dimen/_6sdp"
             android:layout_marginRight="@dimen/_6sdp"
-            android:text="Redeem 200 FypMynts to spin the wheel. And get exciting rewards"
+            android:text=""
             android:textColor="@color/cb_grey"
 
             android:textSize="14sp"
@@ -80,6 +80,7 @@
             android:drawableLeft="@drawable/ic_mynt_coin"
             android:text="1000"
             android:id="@+id/burn_amount"
+            android:maxLines="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -94,7 +95,7 @@
             android:gravity="start"
             style="@style/TextviewBold"
             android:alpha=".70"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textColor="@color/white"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/desc" />

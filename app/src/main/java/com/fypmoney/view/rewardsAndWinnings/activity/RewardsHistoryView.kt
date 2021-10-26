@@ -89,7 +89,7 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                         ScratchCardActivity.imageScratch = resource
 
                         intent.putExtra(
-                            AppConstants.ORDER_ID,
+                            AppConstants.ORDER_NUM,
                             mVM.orderNumber.value
                         )
                         intent.putExtra(
@@ -113,12 +113,21 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
 
                 }
                 if (itemsArrayList.size > 0 && list.isNotEmpty() && itemsArrayList[itemsArrayList.size - 1].date == list[0].date) {
+                    list.forEachIndexed { pos, item ->
 
-                    list[0].history?.let {
-                        itemsArrayList[itemsArrayList.size - 1].history?.addAll(
-                            it
-                        )
+                        if (pos == 0) {
+                            list[0].history?.let {
+                                itemsArrayList[itemsArrayList.size - 1].history?.addAll(
+                                    it
+                                )
+                            }
+                        } else {
+                            itemsArrayList.add(item)
+
+                        }
+
                     }
+
                 } else {
                     list.forEach { it ->
                         itemsArrayList.add(it)
@@ -192,7 +201,7 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                     val intent = Intent(this@RewardsHistoryView, SpinWheelViewDark::class.java)
                     SpinWheelViewDark.sectionArrayList.clear()
                     intent.putExtra(
-                        AppConstants.ORDER_ID,
+                        AppConstants.ORDER_NUM,
                         historyItem.orderNumber.toString()
                     )
                     startActivity(intent)

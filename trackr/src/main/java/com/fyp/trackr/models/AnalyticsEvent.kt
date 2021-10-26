@@ -115,6 +115,10 @@ enum class TrackrEvent(name: String) {
     Open_arcade("Open_arcade"),
     Spin("Spin"),
     SPINSUCCESS("Spin_success "),
+    SPINZERO("Zero_spin"),
+    SCRATCHCODE("Scratch"),
+    SCRATCHSUCCESS("Scratch_success"),
+    INSUFMYNTS("Insuf_mynts"),
 
 }
 

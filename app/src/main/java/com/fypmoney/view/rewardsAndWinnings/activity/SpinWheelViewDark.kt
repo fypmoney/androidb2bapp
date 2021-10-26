@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -17,7 +16,6 @@ import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.databinding.ViewSpinWheelBlackBinding
 import com.fypmoney.model.SectionListItem
 import com.fypmoney.util.AppConstants
@@ -45,6 +43,8 @@ import java.util.*
 class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProductViewModel>(),
     ErrorBottomSpinProductSheet.OnSpinErrorClickListener {
 
+
+    private var ProductCode: String? = null
     private var dialogError: Dialog? = null
     private var sectionId: Int? = null
     private var dialogDialog: Dialog? = null
@@ -76,8 +76,10 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
         dialogError = Dialog(this)
 
         val intent = intent
-        orderId = intent.getStringExtra(AppConstants.ORDER_ID)
+        orderId = intent.getStringExtra(AppConstants.ORDER_NUM)
         sectionId = intent.getIntExtra(AppConstants.SECTION_ID, -1)
+        ProductCode = intent.getStringExtra(AppConstants.PRODUCT_CODE)
+
 //        val args = intent.getBundleExtra("BUNDLE")
 //        val getList = args!!.getSerializable("ARRAYLIST") as ArrayList<SectionListItem>
 
@@ -117,6 +119,11 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
                     if (item.id == sectionId.toString()) {
 
                         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                            trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                                it.name = TrackrEvent.SPINSUCCESS
+                                it.add(TrackrField.spin_product_code, ProductCode)
+
+                            }
                             showwonDialog(item.sectionValue)
                         }
                         return@forEach
@@ -181,8 +188,24 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
         dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
             if (mViewModel.played.get() == true) {
+                if (sectionValue == "0") {
+                    trackr {
+                        it.services = arrayListOf(TrackrServices.MOENGAGE)
+                        it.name = TrackrEvent.SPINZERO
+                        it.add(TrackrField.spin_product_code, ProductCode)
+
+                    }
+                }
                 finish()
             } else {
+                if (sectionValue == "0") {
+                    trackr {
+                        it.services = arrayListOf(TrackrServices.MOENGAGE)
+                        it.name = TrackrEvent.SPINZERO
+                        it.add(TrackrField.spin_product_code, ProductCode)
+
+                    }
+                }
                 mViewModel.callSpinWheelApi(orderId)
             }
 
@@ -222,7 +245,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
                     sectionArrayList.add(i)
                 }
             }
-
+            ProductCode = it.code
             sectionId = it.sectionId
 
             luckylayout.visibility = View.VISIBLE

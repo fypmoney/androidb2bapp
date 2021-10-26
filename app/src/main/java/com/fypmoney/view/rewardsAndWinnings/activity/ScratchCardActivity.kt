@@ -28,6 +28,10 @@ import android.os.Handler
 import android.os.Looper
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.model.SectionListItem
 import com.fypmoney.util.Utility
 import kotlinx.android.synthetic.main.dialog_burn_mynts.clicked
@@ -42,6 +46,7 @@ import java.util.ArrayList
 
 class ScratchCardActivity :
     BaseActivity<ActivityScratchProductBinding, ScratchCardProductViewmodel>() {
+    private var ProductCode: String? = null
     private var dialogError: Dialog? = null
     private var sectionId: Int? = null
     private var orderId: String? = null
@@ -75,8 +80,9 @@ class ScratchCardActivity :
         )
         dialogDialog = Dialog(this)
 
-        orderId = intent.getStringExtra(AppConstants.ORDER_ID)
+        orderId = intent.getStringExtra(AppConstants.ORDER_NUM)
         sectionId = intent.getIntExtra(AppConstants.SECTION_ID, -1)
+        ProductCode = intent.getStringExtra(AppConstants.PRODUCT_CODE)
         var image_url = intent.getStringExtra(AppConstants.PRODUCT_HIDE_IMAGE)
 
         Glide.with(this).load(image_url).into(mBinding.gotTheOfferIv)
@@ -139,8 +145,15 @@ class ScratchCardActivity :
 //
 //            }
             mBinding.LoadProgressBar.visibility = View.GONE
+
             Handler(Looper.getMainLooper()).postDelayed({
                 if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                    trackr {
+                        it.services = arrayListOf(TrackrServices.MOENGAGE)
+                        it.name = TrackrEvent.SCRATCHSUCCESS
+                        it.add(TrackrField.spin_product_code, ProductCode)
+
+                    }
                     showwonDialog(it.cashbackWon)
                 }
             }, 500)
@@ -216,6 +229,13 @@ class ScratchCardActivity :
 
         dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
             if (mViewModel.played.get() == true) {
+//                if (cashbackWon == "0") {
+//                    trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+//                        it.name = TrackrEvent.SPINZERO
+//                        it.add(TrackrField.spin_product_code,ProductCode)
+//
+//                    }
+//                }
                 finish()
             } else {
                 mViewModel.callScratchWheelApi(orderId, true)

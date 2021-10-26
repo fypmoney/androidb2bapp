@@ -11,7 +11,6 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.Nullable
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,7 +28,6 @@ import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
-import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.databinding.FragmentSpinnerListBinding
 import com.fypmoney.model.aRewardProductResponse
 import com.fypmoney.util.AppConstants
@@ -140,8 +138,12 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                         AppConstants.PRODUCT_SPIN -> {
                             val intent = Intent(requireContext(), SpinWheelViewDark::class.java)
                             SpinWheelViewDark.sectionArrayList.clear()
-                            intent.putExtra(AppConstants.ORDER_ID, list.orderNo)
+                            intent.putExtra(AppConstants.ORDER_NUM, list.orderNo)
                             intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
+                            intent.putExtra(
+                                AppConstants.PRODUCT_CODE,
+                                itemsArrayList[sharedViewModel.selectedPosition.get()!!].code
+                            )
 
 
                             itemsArrayList[sharedViewModel.selectedPosition.get()!!].sectionList?.forEachIndexed { pos, item ->
@@ -168,6 +170,10 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                                         val intent =
                                             Intent(requireContext(), ScratchCardActivity::class.java)
                                         intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
+                                        intent.putExtra(
+                                            AppConstants.PRODUCT_CODE,
+                                            list.rewardProductCode
+                                        )
                                         scratchArrayList[sharedViewModel.selectedPosition.get()!!].sectionList?.forEachIndexed { pos, item ->
                                             if (item != null) {
                                                 ScratchCardActivity.sectionArrayList.add(item)
@@ -176,7 +182,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                                         ScratchCardActivity.imageScratch = resource
 
                                         intent.putExtra(
-                                            AppConstants.ORDER_ID,
+                                            AppConstants.ORDER_NUM,
                                             list.orderNo
                                         )
                                         intent.putExtra(
@@ -334,6 +340,14 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
         var itemClickListener2 = object : ListContactClickListener {
             override fun onItemClicked(pos: Int) {
+                itemsArrayList[pos].code?.let { it1 ->
+                    trackr {
+                        it.services = arrayListOf(TrackrServices.MOENGAGE)
+                        it.name = TrackrEvent.SCRATCHCODE
+                        it.add(TrackrField.spin_product_code, it1)
+                    }
+                }
+
                 showBurnDialog(
                     pos,
                     AppConstants.PRODUCT_SCRATCH,
