@@ -261,6 +261,7 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".view.rewardsAndWinnings.CashBackWonHistoryActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

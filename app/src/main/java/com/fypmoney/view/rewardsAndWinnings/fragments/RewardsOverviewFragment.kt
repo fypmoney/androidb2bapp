@@ -24,6 +24,7 @@ import com.fypmoney.view.adapter.FeedsRewardsAdapter
 
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.interfaces.ListItemClickListener
+import com.fypmoney.view.rewardsAndWinnings.CashBackWonHistoryActivity
 
 
 class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, RewardsAndVM>(),
@@ -47,6 +48,11 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
 
         setRecyclerView()
         sharedViewModel?.let { observeInput(it) }
+        mViewBinding?.bootomPartCl?.setOnClickListener(View.OnClickListener {
+            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
+
+            startActivity(intent)
+        })
 
 
     }

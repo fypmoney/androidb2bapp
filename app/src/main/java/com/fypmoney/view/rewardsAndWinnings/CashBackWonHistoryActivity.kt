@@ -1,55 +1,28 @@
 package com.fypmoney.view.rewardsAndWinnings
 
-import android.app.Dialog
-import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.Nullable
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager.widget.ViewPager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 
 import com.fypmoney.base.BaseActivity
 
-import com.fypmoney.view.fragment.*
 
-import com.google.android.material.tabs.TabLayout
-
-import java.util.ArrayList
-
-
-import com.fypmoney.databinding.ViewRewardsBinding
 import kotlinx.android.synthetic.main.toolbar.*
-
-import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
-import com.fypmoney.util.AppConstants
-import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
-import com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment
-import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment
-import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment
+import com.fypmoney.base.PaginationListener
+import com.fypmoney.databinding.CashbackWonActivityBinding
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsCashbackwonVM
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
-import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
+import kotlinx.android.synthetic.main.view_bank_transaction_history.*
 
 
-class CashBackWonHistoryActivity : BaseActivity<ViewRewardsBinding, RewardsCashbackwonVM>() {
-
-
+class CashBackWonHistoryActivity :
+    BaseActivity<CashbackWonActivityBinding, RewardsCashbackwonVM>() {
+    var isLoading: Boolean = false
+    var page = 1
+    private var mViewBinding: Int? = null
     var mViewModel: RewardsCashbackwonVM? = null
 
     companion object {
@@ -60,7 +33,7 @@ class CashBackWonHistoryActivity : BaseActivity<ViewRewardsBinding, RewardsCashb
         super.onCreate(savedInstanceState)
 
 
-
+        mViewBinding = getBindingVariable()
         setToolbarAndTitle(
             context = this,
             toolbar = toolbar,
@@ -85,7 +58,7 @@ class CashBackWonHistoryActivity : BaseActivity<ViewRewardsBinding, RewardsCashb
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_rewards
+        return R.layout.cashback_won_activity
     }
 
     override fun getViewModel(): RewardsCashbackwonVM {
@@ -95,9 +68,70 @@ class CashBackWonHistoryActivity : BaseActivity<ViewRewardsBinding, RewardsCashb
         return mViewModel!!
     }
 
+    private fun setRecylerView() {
+        val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+        recycler_view.layoutManager = layoutManager
+
+        recycler_view.addOnScrollListener(object : PaginationListener(layoutManager) {
+            override fun loadMoreItems() {
+
+                loadMore()
+            }
+
+            override fun loadMoreTopItems() {
+
+
+            }
+
+            override fun isLoading(): Boolean {
+                return isLoading
+            }
+        })
+
+    }
     private fun setObserver(mViewModel: RewardsCashbackwonVM) {
+        mViewModel!!.rewardHistoryList.observe(this, androidx.lifecycle.Observer { list ->
+            if (list != null) {
+
+
+                LoadProgressBar?.visibility = View.GONE
+
+
+                if (list.isNotEmpty()) {
+                    var arraylist = list
+                    page = page + 1
+
+                    mViewModel.noDataFoundVisibility.set(false)
+                    mViewModel.bankTransactionHistoryAdapter.setList(arraylist)
+                } else {
+
+                    if (page == 1) {
+                        mViewModel.noDataFoundVisibility.set(true)
+                    }
+                }
+
+                isLoading = false
+
+            } else {
+
+                if (page == 1) {
+
+                    mViewModel.noDataFoundVisibility.set(true)
+                }
+            }
+
+        })
 
     }
 
+    private fun loadMore() {
+
+        LoadProgressBar?.visibility = View.VISIBLE
+        isLoading = true
+        mViewModel?.callRewardHistory(page)
+
+
+    }
 
 }

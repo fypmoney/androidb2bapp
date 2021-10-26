@@ -11,10 +11,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
-import com.fypmoney.util.AppConstants
-import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.Utility
-import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.adapter.CashbackHistoryAdapter
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -22,16 +19,52 @@ import com.google.gson.JsonParser
 
 class RewardsCashbackwonVM(application: Application) : BaseViewModel(application) {
 
-
+    var bankTransactionHistoryAdapter = CashbackHistoryAdapter(this)
+    var rewardHistoryList: MutableLiveData<ArrayList<CashbackWonResponse>> = MutableLiveData()
+    var noDataFoundVisibility = ObservableField(false)
+    var onItemClicked = MutableLiveData<CashbackWonResponse>()
 
     init {
-
+        callRewardHistory(0)
 
     }
 
+    fun callRewardHistory(page: Int) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.CashbackHistory,
+                NetworkUtil.endURL(ApiConstant.CashbackHistory),
+                ApiUrl.GET,
+                param = QueryPaginationParams(
+
+                    page,
+                    3,
+                    "createdDate,desc"
+                ),
+                this, isProgressBar = false
+            )
+        )
+    }
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
+
+        when (purpose) {
+            ApiConstant.CashbackHistory -> {
+
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson<Array<CashbackWonResponse>>(
+                    json.get("data").toString(),
+                    Array<CashbackWonResponse>::class.java
+                )
+                val arrayList = ArrayList(array.toMutableList())
+                rewardHistoryList.postValue(arrayList)
+
+
+            }
+        }
 
 
     }
