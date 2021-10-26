@@ -117,7 +117,7 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
         when (it) {
             OrderCardViewModel.OrderCardEvent.GetOrderCardEvent -> {
                 trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
-                    it.name = TrackrEvent.CHECKOFFER
+                    it.name = TrackrEvent.check_offer
                     it.add(
                         TrackrField.user_id,SharedPrefUtils.getLong(
                         applicationContext,

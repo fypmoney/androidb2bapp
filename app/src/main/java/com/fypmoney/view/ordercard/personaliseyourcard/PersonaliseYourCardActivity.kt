@@ -62,7 +62,7 @@ class PersonaliseYourCardActivity : BaseActivity<ActivityPersonaliseYourCardBind
                     binding.nameOnCardEt.text.toString()
                 )
                 trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
-                    it.name = TrackrEvent.PERSONALISEDYOUCARD
+                    it.name = TrackrEvent.personalised_card_complete
                     it.add(
                         TrackrField.user_id,SharedPrefUtils.getLong(
                         applicationContext,

@@ -83,7 +83,7 @@ object Trackr {
             }else{
                 moEngage = MoEngage.Builder(app, moEngageKey)
                     .setDataCenter(DataCenter.DATA_CENTER_3)
-                    .configureLogs(LogConfig(VERBOSE, false))
+                    .configureLogs(LogConfig(VERBOSE, true))
                     .configureNotificationMetaData(
                         NotificationConfig(
                             notiSmallIcon,

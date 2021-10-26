@@ -36,7 +36,7 @@ class ReferAndEarnActivityVM(application: Application):BaseViewModel(application
     }
     fun shareCode(){
         trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-            it.name = TrackrEvent.REFSUCCESS
+            it.name = TrackrEvent.Ref_success
         }
         _event.value = ReferAndEarnEvent.ShareReferCode
     }

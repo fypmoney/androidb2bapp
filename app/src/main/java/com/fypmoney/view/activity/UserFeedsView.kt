@@ -64,7 +64,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
         )*/
 
         trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-            it.name = TrackrEvent.FEEDLAUNCH
+            it.name = TrackrEvent.feed_launch
         }
 
         mViewModel.callFetchFeedsApi(false, 0.0, 0.0)

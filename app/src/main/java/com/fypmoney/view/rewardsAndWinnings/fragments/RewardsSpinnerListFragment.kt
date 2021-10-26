@@ -79,7 +79,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         dialogDialog = Dialog(requireContext())
 
         trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-            it.name = TrackrEvent.OPENARCADE
+            it.name = TrackrEvent.Open_arcade
         }
 
 
@@ -305,7 +305,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
             override fun onItemClicked(pos: Int) {
                 itemsArrayList[pos].code?.let {it1->
                     trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-                        it.name = TrackrEvent.SPINCODE
+                        it.name = TrackrEvent.Spin
                         it.add(TrackrField.spin_product_code,it1)
                     }
                 }

@@ -336,7 +336,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                         true
                     )
                     trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
-                        it.name = TrackrEvent.OTP_VERIFIED
+                        it.name = TrackrEvent.otp_verified
                         it.add(
                             TrackrField.user_mobile_no,mobile.value.toString())
                     }

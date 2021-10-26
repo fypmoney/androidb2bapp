@@ -52,6 +52,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     var isViewDetailsVisible = ObservableField(true)
     var bankProfileResponse = ObservableField<BankProfileResponseDetails>()
     var rotateCardClicked = MutableLiveData<Boolean>()
+    var fetchingBankDetails = MutableLiveData<Boolean>()
 
     /*
     * This is used to see the card details
@@ -124,20 +125,6 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
     }
 
 
-    /*
-      * This method is used to call add card
-      * */
-    /*private fun callAddCardApi() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_ADD_CARD,
-                NetworkUtil.endURL(ApiConstant.API_ADD_CARD),
-                ApiUrl.POST,
-                BaseRequest(),
-                this, isProgressBar = false
-            )
-        )
-    }*/
 
     /*
         * This method is used to call update card settings
@@ -154,20 +141,6 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         )
     }
 
-    /*
-      * This method is used to call activate card init api
-      * */
-    /*fun callActivateCardInitApi() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_ACTIVATE_CARD_INIT,
-                NetworkUtil.endURL(ApiConstant.API_ACTIVATE_CARD_INIT),
-                ApiUrl.GET,
-                BaseRequest(),
-                this, isProgressBar = true
-            )
-        )
-    }*/
 
     /*
         * This method is used to call update card limit api
@@ -188,6 +161,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
      * This method is used to call get virtual card request
      * */
     fun callGetVirtualRequestApi() {
+        fetchingBankDetails.value = true
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_VIRTUAL_CARD_REQUEST,

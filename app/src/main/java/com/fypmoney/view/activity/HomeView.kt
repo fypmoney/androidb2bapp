@@ -85,7 +85,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         loadFragment(HomeScreen(),1)
 
         trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
-            it.name = TrackrEvent.HOMESCREEN
+            it.name = TrackrEvent.Home_Screen
             it.add(
                 TrackrField.user_id,SharedPrefUtils.getLong(
                     applicationContext,

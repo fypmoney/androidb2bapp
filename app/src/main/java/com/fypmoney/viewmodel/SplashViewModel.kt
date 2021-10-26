@@ -57,17 +57,17 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
              if(it1==0){
                  Trackr.appIsInstallFirst(isFirstTime = true)
                  SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
-                     ?.let { it1 ->
+                     ?.let { it2 ->
                          MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
-                             it1
+                             it2
                          )
                      }
              }else{
                  Trackr.appIsInstallFirst(isFirstTime = false)
                  SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
-                     ?.let { it1 ->
+                     ?.let { it2 ->
                          MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
-                             it1
+                             it2
                          )
                      }
                  Utility.getCustomerDataFromPreference()?.let {

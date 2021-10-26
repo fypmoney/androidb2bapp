@@ -56,7 +56,7 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
         map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = mobile.value.toString()
         UserTrackr.push(map)
         trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
-            it.name = TrackrEvent.MOBILE_ENTERED
+            it.name = TrackrEvent.mobile_entered
             it.add(
                 TrackrField.user_mobile_no,mobile.value.toString())
         }

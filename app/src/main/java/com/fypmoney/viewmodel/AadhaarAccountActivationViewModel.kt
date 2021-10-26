@@ -44,7 +44,7 @@ class AadhaarAccountActivationViewModel(application: Application) : BaseViewMode
     * */
     fun callKycAccountActivationApi() {
         trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
-            it.name = TrackrEvent.ACCOUNTACTIVATION
+            it.name = TrackrEvent.Account_activation
             it.add(
                 TrackrField.user_id, SharedPrefUtils.getLong(
                     PockketApplication.instance,

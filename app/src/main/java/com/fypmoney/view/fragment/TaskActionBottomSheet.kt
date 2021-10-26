@@ -174,7 +174,7 @@ class TaskActionBottomSheet(
             } else if (accept.text == "Pay") {
 
                 trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-                    it.name = TrackrEvent.MISSIONPAID
+                    it.name = TrackrEvent.Miss_paid
                 }
                 onClickListener.onAcceptClicked(
                     56, comment.text?.trim()
@@ -209,7 +209,7 @@ class TaskActionBottomSheet(
                 )
             } else if (cancel.text == "Complete") {
                 trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-                    it.name = TrackrEvent.MISSIONCOMPLETE
+                    it.name = TrackrEvent.Miss_complete
                 }
                 ChoresActivity.mViewModel!!.callTaskAccept(
                     "COMPLETE", list.entityId.toString(), comment.text?.trim()

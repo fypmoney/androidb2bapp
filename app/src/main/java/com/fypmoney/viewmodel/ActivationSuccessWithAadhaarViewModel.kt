@@ -31,7 +31,7 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
     * */
     init {
         trackr {
-            it.name = TrackrEvent.AADHARVERIFICATION
+            it.name = TrackrEvent.Aadhar_verification
         }
         callGetCustomerProfileApi()
     }
