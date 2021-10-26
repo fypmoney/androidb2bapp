@@ -161,7 +161,7 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
      * This method is used to call get virtual card request
      * */
     fun callGetVirtualRequestApi() {
-        fetchingBankDetails.value = true
+        fetchingBankDetails.postValue(true)
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_VIRTUAL_CARD_REQUEST,
