@@ -160,27 +160,7 @@ class ScratchCardActivity :
 
 
         }
-        mViewModel.redeemCallBackResponse.observe(this) {
-//          mBinding.scratchCardLayout.setScratchDrawable()
 
-//            Glide.with(this).asDrawable().load(it.scratchResourceHide)
-//                .into(object : CustomTarget<Drawable?>() {
-//
-//                    override fun onLoadCleared(@Nullable placeholder: Drawable?) {
-//
-//                    }
-//
-//                    override fun onResourceReady(
-//                        resource: Drawable,
-//                        transition: Transition<in Drawable?>?
-//                    ) {
-//                        mBinding.scratchCardLayout.setScratchDrawable(resource)
-//                    }
-//                })
-//            mBinding.scratchCardLayout.setScratchDrawable(ContextCompat.getDrawable(this,R.drawable.ic_task_rejected))
-
-
-        }
     }
 
     override fun onBackPressed() {
