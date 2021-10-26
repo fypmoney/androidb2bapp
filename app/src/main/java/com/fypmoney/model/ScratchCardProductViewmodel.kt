@@ -19,8 +19,8 @@ import com.google.gson.JsonParser
 
 class ScratchCardProductViewmodel(application: Application) : BaseViewModel(application) {
     var scratchResponseList = MutableLiveData<SpinWheelRotateResponseDetails>()
-    var redeemCallBackResponse = MutableLiveData<aRewardProductResponse>()
-    var onButtomClicked = MutableLiveData(false)
+
+
     var scratchCalled = MutableLiveData(false)
     val played = ObservableField(false)
     var error: MutableLiveData<ErrorResponseInfo> = MutableLiveData()

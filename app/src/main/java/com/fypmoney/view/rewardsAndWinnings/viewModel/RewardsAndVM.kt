@@ -30,6 +30,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     var onAddMoneyClicked = MutableLiveData(false)
     var loading = MutableLiveData(false)
     var selectedPosition = ObservableField(-1)
+    var selectedPositionScratch = ObservableField(-1)
     val isApiLoading = ObservableField(true)
     val detailsCalling = ObservableField(false)
     var clickedType = ObservableField("")

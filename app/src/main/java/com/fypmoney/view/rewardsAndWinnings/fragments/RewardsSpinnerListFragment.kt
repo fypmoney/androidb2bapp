@@ -156,7 +156,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                         }
                         AppConstants.PRODUCT_SCRATCH -> {
                             Glide.with(this).asDrawable()
-                                .load(scratchArrayList[sharedViewModel.selectedPosition.get()!!].scratchResourceHide)
+                                .load(scratchArrayList[sharedViewModel.selectedPositionScratch.get()!!].scratchResourceHide)
                                 .into(object : CustomTarget<Drawable?>() {
 
                                     override fun onLoadCleared(@Nullable placeholder: Drawable?) {
@@ -174,7 +174,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                                             AppConstants.PRODUCT_CODE,
                                             list.rewardProductCode
                                         )
-                                        scratchArrayList[sharedViewModel.selectedPosition.get()!!].sectionList?.forEachIndexed { pos, item ->
+                                        scratchArrayList[sharedViewModel.selectedPositionScratch.get()!!].sectionList?.forEachIndexed { pos, item ->
                                             if (item != null) {
                                                 ScratchCardActivity.sectionArrayList.add(item)
                                             }
@@ -187,7 +187,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                                         )
                                         intent.putExtra(
                                             AppConstants.PRODUCT_HIDE_IMAGE,
-                                            scratchArrayList[sharedViewModel.selectedPosition.get()!!].scratchResourceShow
+                                            scratchArrayList[sharedViewModel.selectedPositionScratch.get()!!].scratchResourceShow
                                         )
                                         startActivity(intent)
                                     }
@@ -284,7 +284,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                 }
                 AppConstants.PRODUCT_SCRATCH -> {
                     sharedViewModel?.clickedType?.set(AppConstants.PRODUCT_SCRATCH)
-                    sharedViewModel?.selectedPosition?.set(i)
+                    sharedViewModel?.selectedPositionScratch?.set(i)
 
                     sharedViewModel?.callRewardsRedeem(scratchArrayList[i].code)
 
@@ -309,22 +309,24 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
 
             override fun onItemClicked(pos: Int) {
-                itemsArrayList[pos].code?.let {it1->
-                    trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-                        it.name = TrackrEvent.Spin
-                        it.add(TrackrField.spin_product_code,it1)
+                if (itemsArrayList.size - 1 > pos) {
+                    itemsArrayList[pos].code?.let { it1 ->
+                        trackr {
+                            it.services = arrayListOf(TrackrServices.MOENGAGE)
+                            it.name = TrackrEvent.Spin
+                            it.add(TrackrField.spin_product_code, it1)
+                        }
                     }
+
+
+                    showBurnDialog(
+                        pos,
+                        AppConstants.PRODUCT_SPIN,
+                        itemsArrayList[pos].appDisplayText,
+                        itemsArrayList[pos].detailResource
+                    )
+
                 }
-
-
-                showBurnDialog(
-                    pos,
-                    AppConstants.PRODUCT_SPIN,
-                    itemsArrayList[pos].appDisplayText,
-                    itemsArrayList[pos].detailResource
-                )
-
-
             }
         }
 
@@ -340,20 +342,23 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
         var itemClickListener2 = object : ListContactClickListener {
             override fun onItemClicked(pos: Int) {
-                itemsArrayList[pos].code?.let { it1 ->
-                    trackr {
-                        it.services = arrayListOf(TrackrServices.MOENGAGE)
-                        it.name = TrackrEvent.SCRATCHCODE
-                        it.add(TrackrField.spin_product_code, it1)
+                if (scratchArrayList.size - 1 > pos) {
+                    scratchArrayList[pos].code?.let { it1 ->
+                        trackr {
+                            it.services = arrayListOf(TrackrServices.MOENGAGE)
+                            it.name = TrackrEvent.SCRATCHCODE
+                            it.add(TrackrField.spin_product_code, it1)
+                        }
                     }
+
+                    showBurnDialog(
+                        pos,
+                        AppConstants.PRODUCT_SCRATCH,
+                        scratchArrayList[pos].appDisplayText,
+                        scratchArrayList[pos].detailResource
+                    )
                 }
 
-                showBurnDialog(
-                    pos,
-                    AppConstants.PRODUCT_SCRATCH,
-                    scratchArrayList[pos].appDisplayText,
-                    scratchArrayList[pos].detailResource
-                )
             }
         }
 
