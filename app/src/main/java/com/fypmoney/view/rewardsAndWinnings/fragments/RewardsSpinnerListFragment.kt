@@ -305,11 +305,10 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         mViewBinding?.rvSpinner?.layoutManager = layoutManager
 
 
-        var itemClickListener2 = object : ListContactClickListener {
+        val itemClickListener2 = object : ListContactClickListener {
 
 
             override fun onItemClicked(pos: Int) {
-                if (itemsArrayList.size - 1 > pos) {
                     itemsArrayList[pos].code?.let { it1 ->
                         trackr {
                             it.services = arrayListOf(TrackrServices.MOENGAGE)
@@ -326,7 +325,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                         itemsArrayList[pos].detailResource
                     )
 
-                }
+
             }
         }
 
@@ -340,9 +339,8 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         mViewBinding?.rvScratch?.layoutManager = layoutManager
 
 
-        var itemClickListener2 = object : ListContactClickListener {
+        val itemClickListener2 = object : ListContactClickListener {
             override fun onItemClicked(pos: Int) {
-                if (scratchArrayList.size - 1 > pos) {
                     scratchArrayList[pos].code?.let { it1 ->
                         trackr {
                             it.services = arrayListOf(TrackrServices.MOENGAGE)
@@ -357,7 +355,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                         scratchArrayList[pos].appDisplayText,
                         scratchArrayList[pos].detailResource
                     )
-                }
+
 
             }
         }
