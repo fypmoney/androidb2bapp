@@ -51,25 +51,19 @@ class TaskActionBottomSheetnotificationactivity(
             false
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetResponseTaskBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_response_task,
-            null,
-            false
-        )
-        bottomSheet.setContentView(bindingSheet.root)
+
 
 
         val accept = view.findViewById<Button>(R.id.accept)!!
 
         getExtraDetail(list, view)
 
-        accept.setOnClickListener(View.OnClickListener {
+        accept.setOnClickListener {
             if (accept.text == "Accept") {
                 NotificationView.mViewModel!!.callTaskAccept("ACCEPT", list.entityId.toString(), "")
             } else if (accept.text == "Complete") {
-                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                trackr {
+                    it.services = arrayListOf(TrackrServices.MOENGAGE)
                     it.name = TrackrEvent.Miss_complete
                 }
                 NotificationView.mViewModel!!.callTaskAccept(
@@ -78,7 +72,8 @@ class TaskActionBottomSheetnotificationactivity(
                 )
 
             } else if (accept.text == "Pay") {
-                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                trackr {
+                    it.services = arrayListOf(TrackrServices.MOENGAGE)
                     it.name = TrackrEvent.Miss_paid
                 }
                 onClickListener.onAcceptClicked(
@@ -89,22 +84,26 @@ class TaskActionBottomSheetnotificationactivity(
             }
 
 
-        })
-        view.reject.setOnClickListener(View.OnClickListener {
-            if (view.reject.text == "Reject") {
-                NotificationView.mViewModel!!.callTaskAccept("REJECT", list.entityId.toString(), "")
-            } else if (view.reject.text == "In process") {
-                onClickListener.ondimiss()
-            } else if (view.reject.text == "Depreciate") {
+        }
+        view.reject.setOnClickListener {
+            when (view.reject.text) {
+                "Reject" -> {
+                    NotificationView.mViewModel!!.callTaskAccept("REJECT", list.entityId.toString(), "")
+                }
+                "In process" -> {
+                    onClickListener.ondimiss()
+                }
+                "Depreciate" -> {
 
-                NotificationView.mViewModel!!.callTaskAccept(
-                    "DEPRECIATE", list.entityId.toString(), comment.text?.trim()
-                        .toString()
-                )
+                    NotificationView.mViewModel!!.callTaskAccept(
+                        "DEPRECIATE", list.entityId.toString(), comment.text?.trim()
+                            .toString()
+                    )
 
+                }
             }
 
-        })
+        }
         view.cancel.setOnClickListener(View.OnClickListener {
             if (view.cancel.text == "Cancel") {
                 NotificationView.mViewModel!!.callTaskAccept(
@@ -120,43 +119,49 @@ class TaskActionBottomSheetnotificationactivity(
             }
 
         })
-        if (list.actionAllowed == "COMPLETE") {
-            accept.text = "Complete"
-            view.lin.visibility = View.GONE
-            view.cancel.visibility = View.VISIBLE
-            view.cancel.text = "Complete"
-            view.reject.text = "In process"
-            view.bywhom.visibility = View.VISIBLE
-            view.bywhom.text = "By " + list.destinationUserName
-            view.comment.visibility = View.VISIBLE
-        } else if (list.actionAllowed == "REJECT,ACCEPT") {
-            accept.text = "Accept"
-            view.bywhom.visibility = View.VISIBLE
-            view.bywhom.text = "By " + list.destinationUserName
-            view.reject.text = "Reject"
-            view.comment.visibility = View.GONE
-        } else if (list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY") {
-            view.accept.text = "Pay"
-            view.reject.text = "Depreciate"
-            view.bywhom.visibility = View.GONE
-            view.days_left.visibility = View.GONE
-            view.viewdiv.visibility = View.GONE
-            view.comment.visibility = View.VISIBLE
-        } else if (list.actionAllowed == "CANCEL") {
-            view.comment.visibility = View.VISIBLE
-            view.lin.visibility = View.VISIBLE
+        when {
+            list.actionAllowed == "COMPLETE" -> {
+                accept.text = "Complete"
+                view.lin.visibility = View.GONE
+                view.cancel.visibility = View.VISIBLE
+                view.cancel.text = "Complete"
+                view.reject.text = "In process"
+                view.bywhom.visibility = View.VISIBLE
+                view.bywhom.text = "By " + list.destinationUserName
+                view.comment.visibility = View.VISIBLE
+            }
+            list.actionAllowed == "REJECT,ACCEPT" -> {
+                accept.text = "Accept"
+                view.bywhom.visibility = View.VISIBLE
+                view.bywhom.text = "By " + list.destinationUserName
+                view.reject.text = "Reject"
+                view.comment.visibility = View.GONE
+            }
+            list.actionAllowed == "DEPRECIATE,APPRECIATEANDPAY" -> {
+                view.accept.text = "Pay"
+                view.reject.text = "Depreciate"
+                view.bywhom.visibility = View.GONE
+                view.days_left.visibility = View.GONE
+                view.viewdiv.visibility = View.GONE
+                view.comment.visibility = View.VISIBLE
+            }
+            list.actionAllowed == "CANCEL" -> {
+                view.comment.visibility = View.VISIBLE
+                view.lin.visibility = View.VISIBLE
 
-            view.lin.visibility = View.GONE
-            view.bywhom.visibility = View.VISIBLE
-            view.bywhom.text = "To " + list.destinationUserName
-            view.cancel.visibility = View.VISIBLE
+                view.lin.visibility = View.GONE
+                view.bywhom.visibility = View.VISIBLE
+                view.bywhom.text = "To " + list.destinationUserName
+                view.cancel.visibility = View.VISIBLE
 
-        } else if (list.actionAllowed?.isEmpty() == true) {
-            view.comment.visibility = View.GONE
-            view.lin.visibility = View.GONE
-            view.bywhom.visibility = View.VISIBLE
-            view.bywhom.text = "By " + list.sourceUserName
+            }
+            list.actionAllowed?.isEmpty() == true -> {
+                view.comment.visibility = View.GONE
+                view.lin.visibility = View.GONE
+                view.bywhom.visibility = View.VISIBLE
+                view.bywhom.text = "By " + list.sourceUserName
 
+            }
         }
 
 
