@@ -87,7 +87,7 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
                         responseData.profileImageUploadResponseDetails?.accessUrl
                     )
                     trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-                        it.name = TrackrEvent.PROFILEIMAGE
+                        it.name = TrackrEvent.Profile_image
                     }
                     onProfileSuccess.value = true
 

@@ -107,7 +107,7 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
                     SharedPrefUtils.SF_KEY_USER_ID
                 ).toString())
                 trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
-                    it.name = TrackrEvent.SCRATCHCARDCONTINUE
+                    it.name = TrackrEvent.scratch_card_continue
                     it.add(
                         TrackrField.user_id,SharedPrefUtils.getLong(
                             applicationContext,

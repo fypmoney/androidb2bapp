@@ -175,7 +175,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
             }
             PlaceOrderCardViewModel.PlaceOrderCardEvent.OnPlaceOrder ->{
                 trackr { it.services = arrayListOf(TrackrServices.FIREBASE,TrackrServices.MOENGAGE)
-                it.name = TrackrEvent.PAYBUTTON
+                it.name = TrackrEvent.pay_button
                 it.add(TrackrField.user_id,SharedPrefUtils.getLong(
                     applicationContext,
                     SharedPrefUtils.SF_KEY_USER_ID
@@ -217,7 +217,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                 )
 
                 trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
-                    it.name = TrackrEvent.ORDERSUCCESS
+                    it.name = TrackrEvent.order_success
                     it.add(
                         TrackrField.user_id,SharedPrefUtils.getLong(
                             applicationContext,
@@ -292,7 +292,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                 bottomsheetInsufficient?.dismiss()
 
                 trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
-                    it.name = TrackrEvent.ADDMONEYBUTTON
+                    it.name = TrackrEvent.add_money_button
                     it.add(
                         TrackrField.user_id,SharedPrefUtils.getLong(
                             applicationContext,

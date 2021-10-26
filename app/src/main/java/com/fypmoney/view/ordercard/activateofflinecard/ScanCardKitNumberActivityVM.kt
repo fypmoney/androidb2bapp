@@ -122,8 +122,8 @@ class ScanCardKitNumberActivityVM(application: Application):BaseViewModel(applic
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
             ApiConstant.API_ACTIVATE_CARD -> {
-
                 Utility.showToast(errorResponseInfo.msg)
+                _event.value = ScanCardKitNumberEvent.OnActivateCardFaliure
             }
             ApiConstant.API_POST_CHECK_OFFLINE_CARD -> {
 
@@ -135,6 +135,7 @@ class ScanCardKitNumberActivityVM(application: Application):BaseViewModel(applic
     sealed class ScanCardKitNumberEvent{
         object OnVerifyKitNumberClickedEvent:ScanCardKitNumberEvent()
         object OnActivateCardSuccess:ScanCardKitNumberEvent()
+        object OnActivateCardFaliure:ScanCardKitNumberEvent()
         data class SetPinSuccess(val setpinResponseDetails: SetPinResponseDetails):ScanCardKitNumberEvent()
 
     }

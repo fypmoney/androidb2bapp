@@ -320,6 +320,12 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 )
             }
         }
+        mViewModel.fetchingBankDetails.observe(requireActivity(),{
+            if(it){
+                mViewBinding.cardBack.back_fl.mCardBackLayout.progress_bar.visibility = View.VISIBLE
+                mViewBinding.cardBack.back_fl.mCardBackLayout.viewCardDetails.visibility = View.GONE
+            }
+        })
     }
 
     override fun onTryAgainClicked() {
@@ -332,8 +338,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
                 when (resultCode) {
                     AppCompatActivity.RESULT_OK -> {
-                            mViewBinding.cardBack.back_fl.mCardBackLayout.progress_bar.visibility = View.VISIBLE
-                            mViewBinding.cardBack.back_fl.mCardBackLayout.viewCardDetails.visibility = View.GONE
                             mViewModel.callGetVirtualRequestApi()
                     }
 
@@ -573,7 +577,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
             }
             PockketApplication.instance.getString(R.string.order_card) -> {
                 trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
-                    it.name = TrackrEvent.ORDEREDCARD
+                    it.name = TrackrEvent.ordered_card
                     it.add(
                         TrackrField.user_id,SharedPrefUtils.getLong(
                             requireContext(),

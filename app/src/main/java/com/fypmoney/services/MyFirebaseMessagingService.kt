@@ -8,32 +8,27 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
+import android.media.AudioAttributes
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
-
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
+import com.fypmoney.notification.NotificationUtils
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.activity.HomeView
-import com.fypmoney.view.activity.NotificationView
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import org.jetbrains.annotations.NotNull
-import org.json.JSONObject
-import retrofit2.adapter.rxjava2.Result.response
-import android.media.AudioAttributes
-import com.fypmoney.notification.NotificationUtils
-import com.fypmoney.notification.NotificationUtils.GENRAL_CHANNEL_ID
 import com.moengage.firebase.MoEFireBaseHelper
 import com.moengage.pushbase.MoEPushHelper
+import org.jetbrains.annotations.NotNull
 
 
 /*

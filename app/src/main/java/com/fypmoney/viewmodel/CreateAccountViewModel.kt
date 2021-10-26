@@ -5,6 +5,8 @@ import android.text.TextUtils
 import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.UserTrackr
+import com.fyp.trackr.models.push
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -21,6 +23,7 @@ import com.fypmoney.model.InterestEntity
 import com.fypmoney.model.UpdateProfileRequest
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.moengage.core.internal.MoEConstants
 
 /*
 * This is used to handle account creation related functionality
@@ -150,6 +153,12 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
                     // again update the saved data in preference
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
 
+                    val map = hashMapOf<String,Any>()
+
+                    map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = responseData.customerInfoResponseDetails!!.firstName.toString()
+                    map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = responseData.customerInfoResponseDetails!!.lastName.toString()
+                    map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = responseData.customerInfoResponseDetails!!.dob.toString()
+                    UserTrackr.push(map)
 
                     val interestList = ArrayList<String>()
                     if (!selectedInterestList.isNullOrEmpty()) {

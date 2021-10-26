@@ -5,7 +5,6 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,6 @@ import com.fypmoney.databinding.BottomSheetResponseTaskBinding
 import com.fypmoney.model.NotificationModel
 import com.fypmoney.model.NotificationTaskObjectModel
 import com.fypmoney.view.activity.HomeView
-import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -48,14 +46,6 @@ class TaskActionBottomSheetnotification(
             false
         )
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        val bottomSheet = BottomSheetDialog(requireContext())
-        val bindingSheet = DataBindingUtil.inflate<BottomSheetResponseTaskBinding>(
-            layoutInflater,
-            R.layout.bottom_sheet_response_task,
-            null,
-            false
-        )
-        bottomSheet.setContentView(bindingSheet.root)
 
 
         val accept = view.findViewById<Button>(R.id.accept)!!

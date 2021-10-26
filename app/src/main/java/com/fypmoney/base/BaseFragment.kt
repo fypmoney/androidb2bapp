@@ -254,7 +254,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
                     result: BiometricPrompt.AuthenticationResult
                 ) {
                     onActivityResult(
-                        AppConstants.DEVICE_SECURITY_REQUEST_CODE,
+                        DEVICE_SECURITY_REQUEST_CODE,
                         AppCompatActivity.RESULT_OK,
                         Intent()
                     )
@@ -312,7 +312,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
 
     // call back when password is correct or incorrect
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == AppConstants.DEVICE_SECURITY_REQUEST_CODE) {
+        if (requestCode == DEVICE_SECURITY_REQUEST_CODE) {
             when (resultCode) {
                 AppCompatActivity.RESULT_OK -> {
 

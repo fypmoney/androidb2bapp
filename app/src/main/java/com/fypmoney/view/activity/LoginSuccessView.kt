@@ -47,7 +47,7 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
         setObserver()
 
         trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
-            it.name = TrackrEvent.PHONEVERIFICATION
+            it.name = TrackrEvent.Phone_verification
             it.add(
                 TrackrField.user_id,SharedPrefUtils.getLong(
                     applicationContext,

@@ -82,6 +82,9 @@ class ScanCardKitNumberActivity : BaseActivity<ActivityScanCardKitNumberBinding,
                         )
                     }
                 }
+                ScanCardKitNumberActivityVM.ScanCardKitNumberEvent.OnActivateCardFaliure ->{
+                    finish()
+                }
             }
         })
 

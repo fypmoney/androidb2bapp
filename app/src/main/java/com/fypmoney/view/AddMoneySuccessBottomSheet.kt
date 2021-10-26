@@ -70,7 +70,7 @@ class AddMoneySuccessBottomSheet(var amountAdded:String,
         }
 
         trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-            it.name = TrackrEvent.LOADMONEYSUCCESS
+            it.name = TrackrEvent.Load_money_success
         }
     }
 

@@ -2,6 +2,7 @@ package com.dreamfolks.fypmoney
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.fypmoney.util.Utility
 
 import org.junit.Test
 import org.junit.runner.RunWith

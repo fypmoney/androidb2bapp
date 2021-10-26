@@ -29,19 +29,7 @@ class ScratchCardProductViewmodel(application: Application) : BaseViewModel(appl
         object Continue : CardOfferEvent()
     }
 
-    fun callProductsDetailsApi(orderId: String?) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.REWARD_PRODUCT_DETAILS,
-                NetworkUtil.endURL(ApiConstant.REWARD_PRODUCT_DETAILS + orderId),
-                ApiUrl.GET,
-                BaseRequest(),
-                this, isProgressBar = true
-            )
-        )
 
-
-    }
 
     fun callScratchWheelApi(orderId: String?, b: Boolean) {
         if (scratchCalled.value == false) {
@@ -63,20 +51,7 @@ class ScratchCardProductViewmodel(application: Application) : BaseViewModel(appl
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.REWARD_PRODUCT_DETAILS -> {
 
-
-                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-
-                val spinDetails = Gson().fromJson(
-                    json.get("data"),
-                    com.fypmoney.model.aRewardProductResponse::class.java
-                )
-
-                redeemCallBackResponse.value = spinDetails
-
-
-            }
             ApiConstant.PLAY_ORDER_API -> {
 
 

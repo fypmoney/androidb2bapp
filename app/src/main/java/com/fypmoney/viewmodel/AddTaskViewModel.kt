@@ -77,7 +77,7 @@ class AddTaskViewModel(application: Application) : BaseViewModel(application) {
         )
 
         trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-            it.name = TrackrEvent.GIVENMISSIONSUCCESS
+            it.name = TrackrEvent.Miss_given_success
         }
         WebApiCaller.getInstance().request(
             ApiRequest(

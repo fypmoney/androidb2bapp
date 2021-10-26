@@ -132,7 +132,7 @@ class EnterAmountForPayRequestView :
                 AppConstants.API_FAIL -> {
                     trackr { it1 ->
                         it1.services = arrayListOf(TrackrServices.MOENGAGE)
-                        it1.name = TrackrEvent.TRANSCATIONFALIURE
+                        it1.name = TrackrEvent.Tran_faliure
                         it1.add(TrackrField.user_mobile_no,SharedPrefUtils.getString(this@EnterAmountForPayRequestView,
                             SharedPrefUtils.SF_KEY_USER_MOBILE))
                         it1.add(TrackrField.transaction_amount,mViewModel.amountToBeAdded)
@@ -141,7 +141,7 @@ class EnterAmountForPayRequestView :
                 }
                 AppConstants.API_SUCCESS -> {
                     trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-                        it.name = TrackrEvent.TRANSCATIONSUCCESS
+                        it.name = TrackrEvent.Tran_success
                     }
                     intentToActivity(HomeView::class.java)
                 }
