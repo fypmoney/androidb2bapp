@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -20,6 +21,7 @@ import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.base.PaginationListener
+import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.FragmentOffersBinding
 import com.fypmoney.databinding.FragmentStoreBinding
 import com.fypmoney.databinding.ScreenStoreBinding
@@ -30,7 +32,9 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.activity.AddTaskActivity
 import com.fypmoney.view.activity.ChoresActivity
 import com.fypmoney.view.activity.OfferDetailActivity
+import com.fypmoney.view.activity.PayRequestProfileView
 import com.fypmoney.view.adapter.*
+import com.fypmoney.view.giftCardModule.GiftCardAdapter
 
 import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.view.interfaces.ListItemClickListener
@@ -148,6 +152,36 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
         typeAdapter =
             OffersTopAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
         mViewBinding?.featuredOfferRv!!.adapter = typeAdapter
+    }
+
+    private fun setUpRecyclerView() {
+        val topTenUsersAdapter = GiftCardAdapter(
+            viewLifecycleOwner, onRecentUserClick = {
+                val contact = ContactEntity()
+                contact.userId = it.userId.toString()
+                contact.contactNumber = it.userMobile
+                contact.profilePicResourceId = it.profilePicResourceId
+                contact.firstName = it.name
+//            contact.lastName=it.familyName
+
+
+                intentToActivity(
+                    contactEntity = contact,
+                    aClass = PayRequestProfileView::class.java, ""
+                )
+
+            }
+        )
+
+
+        with(mViewBinding.recentRv) {
+            adapter = topTenUsersAdapter
+            layoutManager = LinearLayoutManager(
+                requireContext(),
+                androidx.recyclerview.widget.RecyclerView.HORIZONTAL,
+                false
+            )
+        }
     }
 
     private fun loadMore() {
