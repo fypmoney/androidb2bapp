@@ -18,6 +18,7 @@ import com.fypmoney.databinding.CashbackWonActivityBinding
 import com.fypmoney.model.BankTransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.activity.PayUSuccessView
+import com.fypmoney.view.activity.PayUSuccessViewCashbackWon
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsCashbackwonVM
 import kotlinx.android.synthetic.main.cashback_won_activity.*
 
@@ -128,16 +129,16 @@ class CashBackWonHistoryActivity :
 
         })
         mViewModel.onItemClicked.observe(this) {
-            intentToActivity(PayUSuccessView::class.java, it)
+            intentToActivity(PayUSuccessViewCashbackWon::class.java, it)
         }
     }
 
     private fun intentToActivity(
         aClass: Class<*>,
-        bankTransactionHistoryResponseDetails: BankTransactionHistoryResponseDetails
+        transactionDetails: BankTransactionHistoryResponseDetails
     ) {
         val intent = Intent(this, aClass)
-        intent.putExtra(AppConstants.RESPONSE, bankTransactionHistoryResponseDetails)
+        intent.putExtra(AppConstants.RESPONSE, transactionDetails)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.BANK_TRANSACTION)
         startActivity(intent)
 
