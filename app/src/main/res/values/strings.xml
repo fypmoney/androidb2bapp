@@ -965,6 +965,8 @@ Coming really soon!
 
     <string name="will_be_deducted_from_your_balance_scratch">Will be deducted from your balance \nfor Scratch card.</string>
     <string name="make_your_first_transaction_using_your_fyp_card_and_earn_mynts">Make your first transaction using your fyp card and earn mynts.</string>
+    <string name="cash_back_won_history">Cashback Won History</string>
+    <string name="looks_like_you_haven_t_any_referred_a_yet">Looks like you haven’t any referred a yet.</string>
     <string name="you_can_send_or_request_up_to_10000">You can send or request up to RS 10000</string>
 
     <string-array name="person_category_array">
