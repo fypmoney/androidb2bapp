@@ -122,7 +122,11 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                         map[USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
                         map[USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
                         map[USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
-                        map[USER_ATTRIBUTE_USER_BDAY] = it.dob.toString()
+
+                        map[USER_ATTRIBUTE_USER_BDAY] = it.userProfile?.dob.toString()
+                        map[USER_ATTRIBUTE_USER_GENDER] = it.userProfile?.gender.toString()
+                        map[CUSTOM_USER_POST_KYC_CODE] = it.postKycScreenCode.toString()
+
                         UserTrackr.push(map)
                         UserTrackr.login( it.mobile.toString())
                     }

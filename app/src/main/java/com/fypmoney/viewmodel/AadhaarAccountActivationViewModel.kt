@@ -43,7 +43,7 @@ class AadhaarAccountActivationViewModel(application: Application) : BaseViewMode
     * This method is used to call auth login API
     * */
     fun callKycAccountActivationApi() {
-        trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+        trackr {
             it.name = TrackrEvent.Account_activation
             it.add(
                 TrackrField.user_id, SharedPrefUtils.getLong(

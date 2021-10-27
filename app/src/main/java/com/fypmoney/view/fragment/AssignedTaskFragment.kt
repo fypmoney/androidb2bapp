@@ -100,7 +100,7 @@ class AssignedTaskFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+        trackr {
             it.name = TrackrEvent.Ass_Mission
         }
     }

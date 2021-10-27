@@ -149,7 +149,7 @@ class ScratchCardActivity :
             Handler(Looper.getMainLooper()).postDelayed({
                 if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
                     trackr {
-                        it.services = arrayListOf(TrackrServices.MOENGAGE)
+
                         it.name = TrackrEvent.SCRATCHSUCCESS
                         it.add(TrackrField.spin_product_code, ProductCode)
 
@@ -210,7 +210,7 @@ class ScratchCardActivity :
         dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
             if (mViewModel.played.get() == true) {
 //                if (cashbackWon == "0") {
-//                    trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+//                    trackr {
 //                        it.name = TrackrEvent.SPINZERO
 //                        it.add(TrackrField.spin_product_code,ProductCode)
 //

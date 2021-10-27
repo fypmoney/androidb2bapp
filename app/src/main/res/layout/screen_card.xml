@@ -15,10 +15,23 @@
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent">
 
-            <FrameLayout
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/rotate_tv"
+                style="@style/TextviewRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_rotate"
+                android:drawablePadding="@dimen/dp8"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/rotate_card"
+                android:textColor="@color/text_color_light"
+                android:layout_marginTop="@dimen/dp16"
+                android:textSize="14sp" />
+
+             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/dp16">
+                android:paddingVertical="4dp">
 
 
                 <FrameLayout
@@ -58,24 +71,12 @@
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/rotate_tv"
-                    style="@style/TextviewRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="@string/rotate_card"
-                    android:textColor="@color/text_color_light"
-                    android:textSize="14sp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/rotate"
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rotate_tv"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="10dp"
                     android:drawableStart="@drawable/ic_rotate"
                     android:drawablePadding="10dp"
                     android:focusable="true"

@@ -30,7 +30,7 @@ class ReferAndEarnActivity : BaseActivity<ActivityReferAndEarnBinding,ReferAndEa
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = getString(R.string.refer_and_earn)
         )
-        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+        trackr {
             it.name = TrackrEvent.Ref_tab
         }
         setUpViews()

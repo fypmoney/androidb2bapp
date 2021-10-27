@@ -54,7 +54,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         video.setMediaController(null)
         video.setVideoURI(uri)
         video.setOnPreparedListener { video.start() }
-        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+        trackr {
             it.name = TrackrEvent.App_launch
         }
     }

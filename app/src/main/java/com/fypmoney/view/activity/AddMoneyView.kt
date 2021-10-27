@@ -12,14 +12,17 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAddMoneyBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.util.roundOfAmountToCeli
 import com.fypmoney.viewmodel.AddMoneyViewModel
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.bottom_sheet_redeem_coins.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_add_money.*
 import kotlinx.android.synthetic.main.view_add_money.add_money_editext
 import kotlinx.android.synthetic.main.view_add_money.btnSendOtp
 import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.*
+import java.lang.NumberFormatException
 
 /*
 * This class is used to add money
@@ -62,39 +65,49 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-
-                if (s.toString().startsWith("0")) {
-                    s.clear()
-                } else {
-                    if (s.toString().isNotEmpty()) {
-                        btnSendOtp.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.text_color_dark))
-                        btnSendOtp.setTextColor(
-                            ContextCompat.getColor(
-                                this@AddMoneyView,
-                                R.color.white
-                            )
-                        )
-                        if (!mViewModel.remainingLoadLimitAmount.get()
-                                .isNullOrEmpty() && s.toString()
-                                .toInt() > mViewModel.remainingLoadLimitAmount.get()!!.toInt() / 100
-                        ) {
-                            add_money_editext.setText(
-                                (mViewModel.remainingLoadLimitAmount.get()!!
-                                    .toInt() / 100).toString()
-                            )
-                            add_money_editext.setSelection(add_money_editext.text.length)
-                        }
-
+                try{
+                    if (s.toString().startsWith("0")) {
+                        s.clear()
                     } else {
-                        btnSendOtp.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.cb_grey))
-                        btnSendOtp.setTextColor(
-                            ContextCompat.getColor(
-                                this@AddMoneyView,
-                                R.color.grey_heading
+                        if (s.toString().isNotEmpty()) {
+                            btnSendOtp.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.text_color_dark))
+                            btnSendOtp.setTextColor(
+                                ContextCompat.getColor(
+                                    this@AddMoneyView,
+                                    R.color.white
+                                )
                             )
-                        )
+                            if (!mViewModel.remainingLoadLimitAmount.get()
+                                    .isNullOrEmpty() && s.toString()
+                                    .toInt() > mViewModel.remainingLoadLimitAmount.get()!!.toInt() / 100
+                            ) {
+                                add_money_editext.setText(
+                                    (mViewModel.remainingLoadLimitAmount.get()!!
+                                        .toInt() / 100).toString()
+                                )
+                                add_money_editext.setSelection(add_money_editext.text.length)
+                            }
 
+                        } else {
+                            btnSendOtp.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.cb_grey))
+                            btnSendOtp.setTextColor(
+                                ContextCompat.getColor(
+                                    this@AddMoneyView,
+                                    R.color.grey_heading
+                                )
+                            )
+
+                        }
                     }
+                }catch (e:NumberFormatException){
+                    mViewModel.remainingLoadLimit.get()?.let {
+                        Utility.showToast(mViewModel.remainingLoadLimit.get())
+                        FirebaseCrashlytics.getInstance()
+                            .setCustomKey("load_amount", it)
+                        FirebaseCrashlytics.getInstance().recordException(e)
+                        add_money_editext.setText("")
+                    }
+
                 }
 
             }

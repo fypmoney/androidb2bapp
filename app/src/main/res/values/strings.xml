@@ -652,7 +652,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="dummy_amount_2500">\u20B9 0</string>
     <string name="manage_channels_heading">Manage Channels</string>
     <string name="activate_card_heading">Activate Card</string>
-    <string name="rotate_card">Tap on Rotate Card to view details</string>
+    <string name="rotate_card">Rotate card to view details</string>
 
     <string name="issue_by">Issued by</string>
 
@@ -660,7 +660,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="enter_otp_text">Enter the OTP sent to your registered phone number.</string>
     <string name="card_kit_empty_error">Please enter last 4 digit provided on the card kit</string>
     <string name="four_digit_empty_error">Please enter four digit number provided on the card kit</string>
-    <string name="activate_card_text1">To activate your physical card enter last four digit number provided on the card kit</string>
+    <string name="activate_card_text1">To activate your physical card enter " Activation Code " provided on activation slip.</string>
     <string name="activate_card_text2">After entering card kit no, you will receive OTP on your registered phone number</string>
     <string name="log_out_title">Log out of Fyp?</string>
     <string name="log_out_text">Remember my login info</string>
@@ -965,6 +965,7 @@ Coming really soon!
 
     <string name="will_be_deducted_from_your_balance_scratch">Will be deducted from your balance \nfor Scratch card.</string>
     <string name="make_your_first_transaction_using_your_fyp_card_and_earn_mynts">Make your first transaction using your fyp card and earn mynts.</string>
+    <string name="you_can_send_or_request_up_to_10000">You can send or request up to RS 10000</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>

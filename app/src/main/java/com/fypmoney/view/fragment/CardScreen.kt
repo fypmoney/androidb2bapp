@@ -576,7 +576,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
                 callCardSettingsBottomSheet()
             }
             PockketApplication.instance.getString(R.string.order_card) -> {
-                trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+                trackr {
                     it.name = TrackrEvent.ordered_card
                     it.add(
                         TrackrField.user_id,SharedPrefUtils.getLong(

@@ -273,7 +273,7 @@ open class AddMoneyUpiDebitView :
             }
 
             override fun onPaymentTerminate() {
-                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                trackr {
                     it.name = TrackrEvent.load_money_external_terminate
                     it.add(
                         TrackrField.user_mobile_no, SharedPrefUtils.getString(
@@ -306,7 +306,7 @@ open class AddMoneyUpiDebitView :
             override fun onBackApprove() {
                 super.onBackApprove()
                 mViewModel.isPaymentFail.set(true)
-                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                trackr {
                     it.name = TrackrEvent.Load_user_back
                     it.add(
                         TrackrField.user_mobile_no, SharedPrefUtils.getString(
@@ -319,7 +319,7 @@ open class AddMoneyUpiDebitView :
             override fun onBackDismiss() {
                 super.onBackDismiss()
                 // Utility.showToast("onBackDismiss")
-                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                trackr {
                     it.name = TrackrEvent.on_back_dismiss
                     it.add(
                         TrackrField.user_mobile_no, SharedPrefUtils.getString(
@@ -337,7 +337,7 @@ open class AddMoneyUpiDebitView :
             override fun onBackButton(alertDialogBuilder: AlertDialog.Builder) {
                 super.onBackButton(alertDialogBuilder)
                 //Utility.showToast("onBackButton")
-                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                trackr {
                     it.name = TrackrEvent.Load_user_back
                     it.add(
                         TrackrField.user_mobile_no, SharedPrefUtils.getString(

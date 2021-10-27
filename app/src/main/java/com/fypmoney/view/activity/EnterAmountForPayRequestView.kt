@@ -26,12 +26,14 @@ import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
 import com.fypmoney.view.fragment.TransactionFailBottomSheet
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.viewmodel.EnterAmountForPayRequestViewModel
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.activity_add_task.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_add_money.*
 import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.*
 import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.add_money_editext
 import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.btnSendOtp
+import java.lang.NumberFormatException
 
 
 class EnterAmountForPayRequestView :
@@ -65,33 +67,41 @@ class EnterAmountForPayRequestView :
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-
-                if (s.toString().startsWith("0")) {
-                    s.clear()
-                } else {
-                    if (s.toString().isNotEmpty()) {
-                        btnSendOtp.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.text_color_dark)));
-                        btnSendOtp.setTextColor(
-                            ContextCompat.getColor(
-                                this@EnterAmountForPayRequestView,
-                                R.color.white
-                            )
-                        )
-                        if (s.toString().toInt() > 9999) {
-                            add_money_editext.setText(getString(R.string.amount_limit))
-                            add_money_editext.text?.length?.let { add_money_editext.setSelection(it) };
-                        }
+                try{
+                    if (s.toString().startsWith("0")) {
+                        s.clear()
                     } else {
-                        btnSendOtp.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.cb_grey)));
-                        btnSendOtp.setTextColor(
-                            ContextCompat.getColor(
-                                this@EnterAmountForPayRequestView,
-                                R.color.grey_heading
+                        if (s.toString().isNotEmpty()) {
+                            btnSendOtp.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.text_color_dark)));
+                            btnSendOtp.setTextColor(
+                                ContextCompat.getColor(
+                                    this@EnterAmountForPayRequestView,
+                                    R.color.white
+                                )
                             )
-                        )
+                            if (s.toString().toInt() > 9999) {
+                                add_money_editext.setText(getString(R.string.amount_limit))
+                                add_money_editext.text?.length?.let { add_money_editext.setSelection(it) };
+                            }
+                        } else {
+                            btnSendOtp.setBackgroundTintList(ColorStateList.valueOf(resources.getColor(R.color.cb_grey)));
+                            btnSendOtp.setTextColor(
+                                ContextCompat.getColor(
+                                    this@EnterAmountForPayRequestView,
+                                    R.color.grey_heading
+                                )
+                            )
 
+                        }
                     }
+                }catch (e:NumberFormatException){
+                    Utility.showToast(getString(R.string.you_can_send_or_request_up_to_10000))
+                    FirebaseCrashlytics.getInstance()
+                        .setCustomKey("p2p_amount", s.toString())
+                    FirebaseCrashlytics.getInstance().recordException(e)
+                    add_money_editext.setText("")
                 }
+
 
 
             }
@@ -140,7 +150,7 @@ class EnterAmountForPayRequestView :
                     callBottomSheet()
                 }
                 AppConstants.API_SUCCESS -> {
-                    trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                    trackr {
                         it.name = TrackrEvent.Tran_success
                     }
                     intentToActivity(HomeView::class.java)

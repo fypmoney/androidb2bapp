@@ -25,13 +25,13 @@ import com.fypmoney.view.ordercard.personaliseyourcard.PersonaliseYourCardActivi
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.toolbar.*
 
-class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOrderOfferVM>() {
+class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding, CardOrderOfferVM>() {
     private lateinit var mViewModel: CardOrderOfferVM
     private lateinit var mBinding: ActivityCardOrderOfferBinding
 
-    override fun getBindingVariable(): Int  =  BR.viewModel
+    override fun getBindingVariable(): Int = BR.viewModel
 
-    override fun getLayoutId(): Int  = R.layout.activity_card_order_offer
+    override fun getLayoutId(): Int = R.layout.activity_card_order_offer
 
     override fun getViewModel(): CardOrderOfferVM {
         mViewModel = ViewModelProvider(this).get(CardOrderOfferVM::class.java)
@@ -57,35 +57,47 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
     }
 
 
-
     private fun setUpView() {
         mViewModel.userOfferCard?.let {
-            if(it.discount>0){
+            if (it.discount > 0) {
                 mBinding.gotTheOfferIv.invalidate()
                 mBinding.offerDescTv.invalidate()
                 mBinding.offerAmountTv.invalidate()
-                mBinding.gotTheOfferIv.background = AppCompatResources.getDrawable(this,R.drawable.ic_gift)
+                mBinding.gotTheOfferIv.background =
+                    AppCompatResources.getDrawable(this, R.drawable.ic_gift)
                 mBinding.offerDescTv.text = getString(R.string.you_won)
                 mBinding.offerAmountTv.text =
                     """${getString(R.string.Rs)}${Utility.convertToRs(it.discount.toString())}"""
-            }else{
+            } else {
                 mBinding.gotTheOfferIv.invalidate()
-                mBinding.gotTheOfferIv.background = AppCompatResources.getDrawable(this,R.drawable.ic_oops_emoji)
+                mBinding.gotTheOfferIv.background =
+                    AppCompatResources.getDrawable(this, R.drawable.ic_oops_emoji)
                 mBinding.offerDescTv.invalidate()
                 mBinding.offerDescTv.text = getString(R.string.opps)
                 mBinding.offerDescTv.textSize = 27.0f
-                mBinding.offerDescTv.setTextColor(ContextCompat.getColor(this,R.color.text_color_dark))
+                mBinding.offerDescTv.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.text_color_dark
+                    )
+                )
                 mBinding.offerAmountTv.invalidate()
-                mBinding.offerAmountTv.text =getString(R.string.better_luck_next_time)
+                mBinding.offerAmountTv.text = getString(R.string.better_luck_next_time)
                 mBinding.offerAmountTv.textSize = 14.0f
-                mBinding.offerAmountTv.setTextColor(ContextCompat.getColor(this,R.color.text_color_light))
+                mBinding.offerAmountTv.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.text_color_light
+                    )
+                )
             }
         }
         setupScratchCardView()
-        SharedPrefUtils.getBoolean(this,
+        SharedPrefUtils.getBoolean(
+            this,
             SharedPrefUtils.SF_KEY_IS_ORDER_SCARTCH_CODE_DONE
         )?.let {
-            if(it){
+            if (it) {
                 mBinding.scratchCardLayout.revealScratch()
             }
         }
@@ -93,29 +105,33 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
     }
 
     private fun setUpObserver() {
-        mViewModel.event.observe(this,{
+        mViewModel.event.observe(this, {
             handelEvents(it)
         })
     }
 
     private fun handelEvents(it: CardOrderOfferVM.CardOfferEvent?) {
-        when(it){
+        when (it) {
             CardOrderOfferVM.CardOfferEvent.Continue -> {
                 val bundle = Bundle()
-                bundle.putString("user_id",SharedPrefUtils.getLong(
-                    applicationContext,
-                    SharedPrefUtils.SF_KEY_USER_ID
-                ).toString())
-                trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+                bundle.putString(
+                    "user_id", SharedPrefUtils.getLong(
+                        applicationContext,
+                        SharedPrefUtils.SF_KEY_USER_ID
+                    ).toString()
+                )
+                trackr {
                     it.name = TrackrEvent.scratch_card_continue
                     it.add(
-                        TrackrField.user_id,SharedPrefUtils.getLong(
+                        TrackrField.user_id, SharedPrefUtils.getLong(
                             applicationContext,
                             SharedPrefUtils.SF_KEY_USER_ID
-                        ).toString())
+                        ).toString()
+                    )
                 }
-                val intent = Intent(this@CardOrderOfferActivity,PersonaliseYourCardActivity::class.java)
-                intent.putExtra(ORDER_CARD_INFO,mViewModel.userOfferCard)
+                val intent =
+                    Intent(this@CardOrderOfferActivity, PersonaliseYourCardActivity::class.java)
+                intent.putExtra(ORDER_CARD_INFO, mViewModel.userOfferCard)
                 startActivity(intent)
             }
 
@@ -123,7 +139,7 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
     }
 
     private fun setupScratchCardView() {
-        mBinding.scratchCardLayout.setScratchListener(object :ScratchListener{
+        mBinding.scratchCardLayout.setScratchListener(object : ScratchListener {
             override fun onScratchStarted() {
             }
 
@@ -136,11 +152,12 @@ class CardOrderOfferActivity : BaseActivity<ActivityCardOrderOfferBinding,CardOr
             }
 
             override fun onScratchComplete() {
-                SharedPrefUtils.putBoolean(this@CardOrderOfferActivity,
+                SharedPrefUtils.putBoolean(
+                    this@CardOrderOfferActivity,
                     SharedPrefUtils.SF_KEY_IS_ORDER_SCARTCH_CODE_DONE,
                     true
                 )
-                if(mViewModel.userOfferCard?.discount!! >0){
+                if (mViewModel.userOfferCard?.discount!! > 0) {
                     mBinding.offerFoundTv.visibility = View.VISIBLE
                 }
                 mBinding.continueBtn.isEnabled = true

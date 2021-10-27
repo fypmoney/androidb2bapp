@@ -13,8 +13,6 @@ data class AnalyticsEvent(var name: TrackrEvent = TrackrEvent.None,
                 map: HashMap<String, Any> = hashMapOf(),
                 service: TrackrServices = TrackrServices.MOENGAGE) : this(name, map, arrayListOf(service))
 
-    //constructor(name: TrackrEvent = TrackrEvent.None) : this(name, hashMapOf(), arrayListOf(TrackrServices.CT, TrackrServices.SEGMENT))
-
     constructor(name: TrackrEvent = TrackrEvent.None, map: HashMap<String, Any> = hashMapOf()) : this(name, map, arrayListOf(TrackrServices.MOENGAGE,TrackrServices.FIREBASE))
     constructor(name: TrackrEvent = TrackrEvent.None, services: ArrayList<TrackrServices>) : this(name, hashMapOf(), services)
 

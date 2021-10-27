@@ -61,11 +61,11 @@ open class BaseUpdateCheckActivity : AppCompatActivity() {
                 try {
                     if (updateType == AppUpdateType.FLEXIBLE) {
                         appUpdateManager.registerListener(appUpdatedListener)
-                        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                        trackr {
                             it.name = TrackrEvent.Flex_update_popup_is_shown
                         }
                     }else{
-                        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                        trackr {
                             it.name = TrackrEvent.Force_update_screen_is_shown
                         }
                     }
@@ -85,7 +85,7 @@ open class BaseUpdateCheckActivity : AppCompatActivity() {
             } else if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_NOT_AVAILABLE) {
                 Log.e(TAG,"No app update")
                 checkUpdate.value = false
-                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+                trackr {
                     it.name = TrackrEvent.NO_app_update_available
                 }
             }
@@ -95,7 +95,7 @@ open class BaseUpdateCheckActivity : AppCompatActivity() {
         appUpdateManager.appUpdateInfo.addOnFailureListener { appUpdateInfo: Exception ->
             Log.i(TAG,"app update failed $appUpdateInfo")
             checkUpdate.value = false
-            trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            trackr {
                 it.name = TrackrEvent.Force_update_failed
             }
 
@@ -138,7 +138,7 @@ open class BaseUpdateCheckActivity : AppCompatActivity() {
         if(dialog.isShowing){
             return
         }
-        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+        trackr {
             it.name = TrackrEvent.Force_update_completed
         }
         dialog.show()

@@ -216,7 +216,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                     )
                 )
 
-                trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+                trackr {
                     it.name = TrackrEvent.order_success
                     it.add(
                         TrackrField.user_id,SharedPrefUtils.getLong(
@@ -291,7 +291,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
             override fun onRejectClicked(pos: Int) {
                 bottomsheetInsufficient?.dismiss()
 
-                trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+                trackr {
                     it.name = TrackrEvent.add_money_button
                     it.add(
                         TrackrField.user_id,SharedPrefUtils.getLong(

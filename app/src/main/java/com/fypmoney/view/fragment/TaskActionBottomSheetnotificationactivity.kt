@@ -63,7 +63,7 @@ class TaskActionBottomSheetnotificationactivity(
                 NotificationView.mViewModel!!.callTaskAccept("ACCEPT", list.entityId.toString(), "")
             } else if (accept.text == "Complete") {
                 trackr {
-                    it.services = arrayListOf(TrackrServices.MOENGAGE)
+
                     it.name = TrackrEvent.Miss_complete
                 }
                 NotificationView.mViewModel!!.callTaskAccept(
@@ -73,7 +73,7 @@ class TaskActionBottomSheetnotificationactivity(
 
             } else if (accept.text == "Pay") {
                 trackr {
-                    it.services = arrayListOf(TrackrServices.MOENGAGE)
+
                     it.name = TrackrEvent.Miss_paid
                 }
                 onClickListener.onAcceptClicked(

@@ -113,7 +113,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
 
             trackr {
-                it.services = arrayListOf(TrackrServices.MOENGAGE)
+
                 it.name = TrackrEvent.INSUFMYNTS
 
             }

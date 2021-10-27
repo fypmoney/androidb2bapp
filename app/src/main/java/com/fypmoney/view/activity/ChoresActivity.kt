@@ -121,7 +121,7 @@ companion object{
                 com.fypmoney.R.anim.slideinleft,
                 com.fypmoney.R.anim.slideinright
             ).toBundle()
-            trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            trackr {
                 it.name = TrackrEvent.Add_misssion
             }
             startActivityForResult(intent, 12, bndlAnimation)

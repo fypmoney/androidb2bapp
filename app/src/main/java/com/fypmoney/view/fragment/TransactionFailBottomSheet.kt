@@ -91,7 +91,7 @@ class TransactionFailBottomSheet(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+        trackr {
             it.name = TrackrEvent.Load_money_fail
             it.add(
                 TrackrField.user_mobile_no, SharedPrefUtils.getString(PockketApplication.instance,

@@ -21,7 +21,7 @@
             android:id="@+id/verification_title"
             style="@style/TextviewRegular"
             android:layout_gravity="center"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/activate_card_heading"
             android:textColor="@color/text_color_dark"
             android:textSize="17sp" />

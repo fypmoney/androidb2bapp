@@ -72,7 +72,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
             intentToPayActivity(ChoresActivity::class.java)
         }
         mViewBinding.spinwheel.setOnClickListener {
-            trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+            trackr {
                 it.name = TrackrEvent.Open_rewards
             }
             intentToPayActivity(RewardsActivity::class.java)

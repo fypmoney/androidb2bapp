@@ -69,7 +69,7 @@ class AddMoneySuccessBottomSheet(var amountAdded:String,
             onHomeViewClick()
         }
 
-        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
+        trackr {
             it.name = TrackrEvent.Load_money_success
         }
     }
