@@ -5,17 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
-import com.fypmoney.database.entity.ContactEntity
-import com.fypmoney.databinding.BankTransactionHistoryRowItemBinding
 import com.fypmoney.databinding.CashbackHistoryRowItemBinding
 import com.fypmoney.model.BankTransactionHistoryResponseDetails
-import com.fypmoney.model.CashbackData
-import com.fypmoney.model.CashbackEarnedResponse
 import com.fypmoney.model.CashbackWonResponse
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsCashbackwonVM
-import com.fypmoney.viewhelper.BankTransactionHistoryViewHelper
-import com.fypmoney.viewhelper.cashBackHistoryViewHelper
-import com.fypmoney.viewmodel.BankTransactionHistoryViewModel
+import com.fypmoney.viewhelper.CashBackHistoryViewHelper
 
 
 /**
@@ -23,7 +17,7 @@ import com.fypmoney.viewmodel.BankTransactionHistoryViewModel
  */
 class CashbackHistoryAdapter(var viewModel: RewardsCashbackwonVM) :
     RecyclerView.Adapter<BaseViewHolder>() {
-    var transactionList: ArrayList<CashbackWonResponse>? = ArrayList()
+    var transactionList: ArrayList<BankTransactionHistoryResponseDetails>? = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val mRowBinding = CashbackHistoryRowItemBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -45,10 +39,10 @@ class CashbackHistoryAdapter(var viewModel: RewardsCashbackwonVM) :
     inner class ViewHolder(
         private val mRowItemBinding: CashbackHistoryRowItemBinding? = null
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
-        lateinit var mViewHelper: cashBackHistoryViewHelper
+        lateinit var mViewHelper: CashBackHistoryViewHelper
 
         override fun onBind(position: Int) {
-            mViewHelper = cashBackHistoryViewHelper(
+            mViewHelper = CashBackHistoryViewHelper(
                 position,
                 transactionList?.get(position), viewModel, this@CashbackHistoryAdapter
             )
@@ -63,7 +57,7 @@ class CashbackHistoryAdapter(var viewModel: RewardsCashbackwonVM) :
     /**
      * This will set the data in the list in adapter
      */
-    fun setList(transactionList1: List<CashbackWonResponse>?) {
+    fun setList(transactionList1: List<BankTransactionHistoryResponseDetails>?) {
         try {
             if (transactionList1 != null) {
                 transactionList1?.forEach {
@@ -74,7 +68,7 @@ class CashbackHistoryAdapter(var viewModel: RewardsCashbackwonVM) :
                 transactionList!!.clear()
             }
 
-            Log.d("akiakjdi", transactionList1?.size.toString())
+
             notifyDataSetChanged()
         } catch (e: Exception) {
             e.printStackTrace()

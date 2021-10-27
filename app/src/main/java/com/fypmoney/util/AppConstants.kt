@@ -153,6 +153,7 @@ object AppConstants {
     const val TYPE_PHONEPE = "phonepe"
     const val TYPE_GENERIC = "generic"
     const val CREDITED = "Credited"
+    const val LOAD = "LOAD"
     const val DEBITED = "Debited"
     const val BANK_TRANSACTION = "bank_transaction"
     const val TRANSACTION = "transaction"

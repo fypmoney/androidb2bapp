@@ -1,5 +1,6 @@
 package com.fypmoney.view.rewardsAndWinnings
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -14,8 +15,11 @@ import kotlinx.android.synthetic.main.toolbar.*
 import com.fypmoney.R
 import com.fypmoney.base.PaginationListener
 import com.fypmoney.databinding.CashbackWonActivityBinding
+import com.fypmoney.model.BankTransactionHistoryResponseDetails
+import com.fypmoney.util.AppConstants
+import com.fypmoney.view.activity.PayUSuccessView
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsCashbackwonVM
-import kotlinx.android.synthetic.main.view_bank_transaction_history.*
+import kotlinx.android.synthetic.main.cashback_won_activity.*
 
 
 class CashBackWonHistoryActivity :
@@ -38,9 +42,10 @@ class CashBackWonHistoryActivity :
             context = this,
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = getString(R.string.cash_back_won_history),
-            titleColor = Color.WHITE,
-            backArrowTint = Color.WHITE
+            titleColor = Color.BLACK,
+            backArrowTint = Color.BLACK
         )
+        setRecylerView()
 
 
     }
@@ -71,9 +76,9 @@ class CashBackWonHistoryActivity :
     private fun setRecylerView() {
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        recycler_view.layoutManager = layoutManager
+        rv_cashback.layoutManager = layoutManager
 
-        recycler_view.addOnScrollListener(object : PaginationListener(layoutManager) {
+        rv_cashback.addOnScrollListener(object : PaginationListener(layoutManager) {
             override fun loadMoreItems() {
 
                 loadMore()
@@ -91,7 +96,7 @@ class CashBackWonHistoryActivity :
 
     }
     private fun setObserver(mViewModel: RewardsCashbackwonVM) {
-        mViewModel!!.rewardHistoryList.observe(this, androidx.lifecycle.Observer { list ->
+        mViewModel?.rewardHistoryList.observe(this, androidx.lifecycle.Observer { list ->
             if (list != null) {
 
 
@@ -103,7 +108,7 @@ class CashBackWonHistoryActivity :
                     page = page + 1
 
                     mViewModel.noDataFoundVisibility.set(false)
-                    mViewModel.bankTransactionHistoryAdapter.setList(arraylist)
+                    mViewModel.cashbackHistoryAdapter.setList(arraylist)
                 } else {
 
                     if (page == 1) {
@@ -122,6 +127,19 @@ class CashBackWonHistoryActivity :
             }
 
         })
+        mViewModel.onItemClicked.observe(this) {
+            intentToActivity(PayUSuccessView::class.java, it)
+        }
+    }
+
+    private fun intentToActivity(
+        aClass: Class<*>,
+        bankTransactionHistoryResponseDetails: BankTransactionHistoryResponseDetails
+    ) {
+        val intent = Intent(this, aClass)
+        intent.putExtra(AppConstants.RESPONSE, bankTransactionHistoryResponseDetails)
+        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.BANK_TRANSACTION)
+        startActivity(intent)
 
     }
 

@@ -19,10 +19,11 @@ import com.google.gson.JsonParser
 
 class RewardsCashbackwonVM(application: Application) : BaseViewModel(application) {
 
-    var bankTransactionHistoryAdapter = CashbackHistoryAdapter(this)
-    var rewardHistoryList: MutableLiveData<ArrayList<CashbackWonResponse>> = MutableLiveData()
+    var cashbackHistoryAdapter = CashbackHistoryAdapter(this)
+    var rewardHistoryList: MutableLiveData<ArrayList<BankTransactionHistoryResponseDetails>> =
+        MutableLiveData()
     var noDataFoundVisibility = ObservableField(false)
-    var onItemClicked = MutableLiveData<CashbackWonResponse>()
+    var onItemClicked = MutableLiveData<BankTransactionHistoryResponseDetails>()
 
     init {
         callRewardHistory(0)
@@ -30,6 +31,10 @@ class RewardsCashbackwonVM(application: Application) : BaseViewModel(application
     }
 
     fun callRewardHistory(page: Int) {
+        var progress = false
+        if (page == 0) {
+            progress = true
+        }
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.CashbackHistory,
@@ -38,10 +43,10 @@ class RewardsCashbackwonVM(application: Application) : BaseViewModel(application
                 param = QueryPaginationParams(
 
                     page,
-                    3,
+                    8,
                     "createdDate,desc"
                 ),
-                this, isProgressBar = false
+                this, isProgressBar = progress
             )
         )
     }
@@ -55,9 +60,9 @@ class RewardsCashbackwonVM(application: Application) : BaseViewModel(application
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<Array<CashbackWonResponse>>(
+                val array = Gson().fromJson<Array<BankTransactionHistoryResponseDetails>>(
                     json.get("data").toString(),
-                    Array<CashbackWonResponse>::class.java
+                    Array<BankTransactionHistoryResponseDetails>::class.java
                 )
                 val arrayList = ArrayList(array.toMutableList())
                 rewardHistoryList.postValue(arrayList)

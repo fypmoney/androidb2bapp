@@ -120,6 +120,24 @@ class WebApiCaller {
                             sort = null
                         )
                     }
+                    ApiConstant.CashbackHistory -> {
+
+                        val params = request.param as QueryPaginationParams
+
+
+                        mObservable = apiInterface.getPaginationApiCalling2(
+                            endPoint = request.endpoint,
+                            authorization = SharedPrefUtils.getString(
+                                PockketApplication.instance,
+                                SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                            ),
+                            client_id = ApiConstant.CLIENT_ID,
+                            page = params.page,
+                            size = params.size,
+                            sort = null
+                        )
+                    }
+
                     ApiConstant.CHECK_APP_UPDATE -> {
                         mObservable = apiInterface.checkAppUpdate(
                             endPoint = request.endpoint
