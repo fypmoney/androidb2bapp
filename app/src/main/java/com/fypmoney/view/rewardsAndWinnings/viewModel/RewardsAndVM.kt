@@ -34,6 +34,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     val isApiLoading = ObservableField(true)
     val detailsCalling = ObservableField(false)
     var clickedType = ObservableField("")
+    var totalmyntsClicked = MutableLiveData(false)
     var orderNumber = MutableLiveData("")
     var spinArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
     val page = ObservableField(0)

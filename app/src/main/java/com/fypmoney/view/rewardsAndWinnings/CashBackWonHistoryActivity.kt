@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.cashback_won_activity.*
 class CashBackWonHistoryActivity :
     BaseActivity<CashbackWonActivityBinding, RewardsCashbackwonVM>() {
     var isLoading: Boolean = false
-    var page = 1
+    var page = 0
     private var mViewBinding: Int? = null
     var mViewModel: RewardsCashbackwonVM? = null
 

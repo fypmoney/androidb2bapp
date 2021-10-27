@@ -53,7 +53,9 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
 
             startActivity(intent)
         })
-
+        mViewBinding?.totalMyntsLayout?.setOnClickListener(View.OnClickListener {
+            sharedViewModel?.totalmyntsClicked?.postValue(true)
+        })
 
     }
 
