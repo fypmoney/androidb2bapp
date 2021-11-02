@@ -3,6 +3,7 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.*
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -28,7 +29,12 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
     * */
     init {
         trackr {
-            it.name = TrackrEvent.Aadhar_verification
+            it.services = arrayListOf(
+                TrackrServices.FIREBASE,
+                TrackrServices.MOENGAGE,
+                TrackrServices.FB,TrackrServices.ADJUST
+            )
+            it.name = TrackrEvent.kyc_verification
         }
         callGetCustomerProfileApi()
     }

@@ -101,7 +101,7 @@ class AssignedTaskFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         trackr {
-            it.name = TrackrEvent.Ass_Mission
+            it.name = TrackrEvent.assigned_mission
         }
     }
     private fun setRecyclerView(root: View) {

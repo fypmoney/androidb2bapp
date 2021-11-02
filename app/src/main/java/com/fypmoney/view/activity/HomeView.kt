@@ -79,15 +79,13 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         loadFragment(HomeScreen(),1)
 
         trackr {
-            it.name = TrackrEvent.Home_Screen
+            it.name = TrackrEvent.home_screen
             it.add(
                 TrackrField.user_id,SharedPrefUtils.getLong(
                     applicationContext,
                     SharedPrefUtils.SF_KEY_USER_ID
                 ).toString())
         }
-        logSentFriendRequestEvent()
-
 
         LocationListenerClass(
             this, this
@@ -161,13 +159,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         }
     }
 
-    /**
-     * This function assumes logger is an instance of AppEventsLogger and has been
-     * created using AppEventsLogger.newLogger() call.
-     */
-    fun logSentFriendRequestEvent() {
-        AppEventsLogger.newLogger(applicationContext).logEvent("home_screen")
-    }
+
     private fun setupFamily() {
         loadFragment(FamilySettingsView(), 5)
         mViewBinding.navigationView.menu.findItem(R.id.family).isChecked = true;

@@ -120,7 +120,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
                         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
                             trackr {
-                                it.name = TrackrEvent.SPINSUCCESS
+                                it.name = TrackrEvent.spin_success
                                 it.add(TrackrField.spin_product_code, ProductCode)
 
                             }
@@ -191,7 +191,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
                 if (sectionValue == "0") {
                     trackr {
 
-                        it.name = TrackrEvent.SPINZERO
+                        it.name = TrackrEvent.zero_spin
                         it.add(TrackrField.spin_product_code, ProductCode)
 
                     }
@@ -201,7 +201,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
                 if (sectionValue == "0") {
                     trackr {
 
-                        it.name = TrackrEvent.SPINZERO
+                        it.name = TrackrEvent.zero_spin
                         it.add(TrackrField.spin_product_code, ProductCode)
 
                     }

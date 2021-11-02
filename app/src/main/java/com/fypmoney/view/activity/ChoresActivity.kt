@@ -122,7 +122,7 @@ companion object{
                 com.fypmoney.R.anim.slideinright
             ).toBundle()
             trackr {
-                it.name = TrackrEvent.Add_misssion
+                it.name = TrackrEvent.add_misssion
             }
             startActivityForResult(intent, 12, bndlAnimation)
 

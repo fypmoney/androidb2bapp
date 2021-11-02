@@ -127,7 +127,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
             trackr {
 
-                it.name = TrackrEvent.INSUFMYNTS
+                it.name = TrackrEvent.insufficient_mynts
 
             }
             dialogInsufficientFund?.dismiss()

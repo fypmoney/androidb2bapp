@@ -171,10 +171,12 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
 
                     // Save the user id in shared preference
-                    SharedPrefUtils.putLong(
-                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
-                        value = responseData.customerInfoResponseDetails?.id!!
-                    )
+                    responseData.customerInfoResponseDetails?.id?.let {
+                        SharedPrefUtils.putLong(
+                            getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
+                            value = it
+                        )
+                    }
                     // Save the user phone in shared preference
                     SharedPrefUtils.putString(
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE,
