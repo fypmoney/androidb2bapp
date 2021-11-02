@@ -261,6 +261,7 @@
             android:screenOrientation="portrait">
 
         </activity>
+        <activity android:name=".view.giftCardModule.PurchaseGiftCardScreen" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

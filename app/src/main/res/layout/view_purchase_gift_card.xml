@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.PurchaseGiftViewModel" />
+
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="#f4f4f4"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar_gift_card"
+
+            />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
+            android:layout_height="0dp">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/message_text"
+                style="@style/TextviewRegular"
+
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/text_color_light"
+                android:textSize="15dp"
+                tools:text="Earn 1 FypMynt for every ₹1 spent for a gift card" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/amount"
+                style="@style/TextviewBold"
+                android:layout_below="@+id/message_text"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@{@string/Rs+viewModel.availableAmount}"
+                android:textSize="42dp"
+                android:visibility="@{viewModel.isFetchBalanceVisible?View.GONE:View.VISIBLE,default=gone}" />
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/add_money"
+                style="@style/TextviewRegular"
+                android:layout_below="@id/amount"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="12dp"
+                android:text="@string/add_money_gift_card"
+                android:textColor="@color/text_color_dark"
+                android:textSize="17sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@id/rv_products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="4"
+                android:layout_marginStart="@dimen/dp8"
+                android:layout_marginEnd="@dimen/dp8"
+                android:layout_below="@id/add_money"
+                android:layout_marginTop="22dp">
+
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <LinearLayout
+                android:layout_marginStart="12dp"
+                android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray_8"
+                android:layout_below="@+id/rv_products"
+                android:id="@+id/lin"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:hint="@string/type_your_msg_here"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/vDivider5"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/lin"
+                android:layout_marginTop="@dimen/_18sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:alpha=".60"
+                    android:background="@drawable/round_top_background_grey" />
+
+                <TextView
+                    android:id="@+id/contacts_heading"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/search"
+                    android:layout_alignBottom="@+id/search"
+                    android:layout_marginStart="14dp"
+                    android:gravity="center"
+                    android:text="Select from contacts"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search"
+
+                    android:layout_width="match_parent"
+                    android:layoutDirection="rtl"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginEnd="14dp"
+
+
+                    android:drawableStart="@drawable/ic_icon_feather_search"
+
+                    android:drawablePadding="10dp"
+                    android:fontFamily="@font/product_sans_regular"
+                    android:hint="@string/search"
+                    android:padding="10dp"
+                    android:textColor="@color/text_color_dark"
+                    android:textColorHint="@color/text_color_dark"
+                    android:textSize="14sp"
+                    app:iconifiedByDefault="true" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_contacts"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/search"
+
+                    app:adapter="@{viewModel.contactAdapter}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+            </RelativeLayout>
+
+
+            <Button
+                android:id="@+id/btnSendOtp"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_46sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="@dimen/_18sdp"
+                android:onClick="@{()->viewModel.onAddClicked()}"
+                android:text="@string/pay"
+                android:textAllCaps="false"
+                android:textColor="@color/text_color_little_dark"
+                android:textSize="18sp"
+                app:backgroundTint="@color/cb_grey"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

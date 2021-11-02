@@ -37,9 +37,6 @@ class  StoreScreenViewModel(application: Application) : BaseViewModel(applicatio
     var rechargeItemAdapter = RechargeItemAdapter(this)
     var foodDeliveryItemAdapter = RechargeItemAdapter(this)
     var cabsItemAdapter = RechargeItemAdapter(this)
-    var groceriesAndUtilitesAdapter = RechargeItemAdapter(this)
-    var travelAndBookingAdapter = RechargeItemAdapter(this)
-    var educationAdapter = RechargeItemAdapter(this)
 
     init {
         callFetchFeedsApi()

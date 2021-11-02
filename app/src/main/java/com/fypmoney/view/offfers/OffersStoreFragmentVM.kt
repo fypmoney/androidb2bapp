@@ -148,11 +148,11 @@ class OffersStoreFragmentVM(application: Application): BaseViewModel(application
         val feedRequestModel = FeedRequestModel()
         if(userInterest.isNullOrEmpty()){
             feedRequestModel.query =
-                "{getAllFeed(page:0, size:null, id : null, screenName:\"OFFER\",screenSection:\"top\",tags :[\"" + feedtype + "\"],displayCard: []){ total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
+                "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "HOME" + "\",screenSection:null,tags :[\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
 
         }else{
             feedRequestModel.query =
-                "{getAllFeed(page:0, size:null, id : null, screenName:\"OFFER\",screenSection:\"top\",tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []){ total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
+                "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "HOME" + "\",screenSection:null,tags :[\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
 
         }
         return feedRequestModel
@@ -197,11 +197,11 @@ class OffersStoreFragmentVM(application: Application): BaseViewModel(application
         val feedRequestModel = FeedRequestModel()
         if(userInterest.isNullOrEmpty()){
             feedRequestModel.query =
-                "{getAllFeed(page:$pageValue, size:50, id : null, screenName:\"OFFER\",screenSection:\"bottom\",tags :[\"" + feedtype + "\"],displayCard: []) { total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
+                "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "HOME" + "\",screenSection:null,tags :[\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
 
         }else{
             feedRequestModel.query =
-                "{getAllFeed(page:$pageValue, size:50, id : null, screenName:\"OFFER\",screenSection:\"bottom\",tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData  { id name description screenName screenSection sortOrder displayCard scope tags resourceId title subTitle }}}"
+                "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + "HOME" + "\",screenSection:null,tags :[\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
         }
 
 

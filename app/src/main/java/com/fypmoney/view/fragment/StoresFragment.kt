@@ -158,6 +158,8 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
         sharedViewModel.storefeedList.observe(requireActivity(), { list ->
             if(list.isNullOrEmpty()){
                 mViewBinding.rvStoreFeeds.visibility = View.GONE
+                mViewBinding.shimmerLayout.stopShimmer()
+                sharedViewModel.isRecyclerviewVisible.set(true)
             }else{
                 mViewBinding.shimmerLayout.stopShimmer()
                 typeAdapter?.setList(list)

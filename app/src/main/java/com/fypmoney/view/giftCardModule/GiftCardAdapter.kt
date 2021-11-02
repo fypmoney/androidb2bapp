@@ -2,27 +2,24 @@ package com.fypmoney.view.giftCardModule
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.fypmoney.R
-import com.fypmoney.bindingAdapters.loadImage
-import com.fypmoney.databinding.ItemTopTenUserBinding
+import com.fypmoney.databinding.ItemGiftCardBinding
 import com.fypmoney.extension.executeAfter
-import com.fypmoney.model.homemodel.Users
-import com.fypmoney.util.Utility
+import com.fypmoney.model.FeedDetails
+
 
 class GiftCardAdapter(
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: Users) -> Unit
-) : ListAdapter<Users, TopTenUsersVH>(TopTenUsersDiffUtils) {
+    val onRecentUserClick: (model: FeedDetails) -> Unit
+) : ListAdapter<FeedDetails, GiftCardVH>(GiftCardDiffUtils) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopTenUsersVH {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GiftCardVH {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemTopTenUserBinding.inflate(inflater, parent, false)
-        return TopTenUsersVH(
+        val binding = ItemGiftCardBinding.inflate(inflater, parent, false)
+        return GiftCardVH(
             binding,
             lifecycleOwner,
             onRecentUserClick
@@ -30,40 +27,40 @@ class GiftCardAdapter(
 
     }
 
-    override fun onBindViewHolder(holder: TopTenUsersVH, position: Int) {
+    override fun onBindViewHolder(holder: GiftCardVH, position: Int) {
         holder.bind(getItem(position))
     }
 
 }
 
-class TopTenUsersVH(
-    private val binding: ItemTopTenUserBinding,
+class GiftCardVH(
+    private val binding: ItemGiftCardBinding,
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: Users) -> Unit
+    val onRecentUserClick: (model: FeedDetails) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(user: Users) {
+    fun bind(user: FeedDetails) {
         binding.executeAfter {
-            lifecycleOwner = this@TopTenUsersVH.lifecycleOwner
-            item = user
+            lifecycleOwner = this@GiftCardVH.lifecycleOwner
+            var item = user
 //            loadImage(recentIv,user.profilePicResourceId,
 //                ContextCompat.getDrawable(this.recentIv.context, R.drawable.ic_profile_img),true)
 //
-//            recentUserCl.setOnClickListener {
-//                onRecentUserClick(user)
-//            }
+            binding.buygift.setOnClickListener {
+                onRecentUserClick(user)
+            }
 //            userNameTv.text = Utility.getFirstName(user.name)
         }
     }
 
 }
 
-object TopTenUsersDiffUtils : DiffUtil.ItemCallback<Users>() {
+object GiftCardDiffUtils : DiffUtil.ItemCallback<FeedDetails>() {
 
-    override fun areItemsTheSame(oldItem: Users, newItem: Users): Boolean {
-        return ((oldItem.userId == newItem.userId) && (oldItem.profilePicResourceId === oldItem.profilePicResourceId))
+    override fun areItemsTheSame(oldItem: FeedDetails, newItem: FeedDetails): Boolean {
+        return false
     }
 
-    override fun areContentsTheSame(oldItem: Users, newItem: Users): Boolean {
+    override fun areContentsTheSame(oldItem: FeedDetails, newItem: FeedDetails): Boolean {
         return oldItem == newItem
     }
 }

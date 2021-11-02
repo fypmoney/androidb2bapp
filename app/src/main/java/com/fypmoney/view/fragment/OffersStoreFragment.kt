@@ -35,6 +35,7 @@ import com.fypmoney.view.activity.OfferDetailActivity
 import com.fypmoney.view.activity.PayRequestProfileView
 import com.fypmoney.view.adapter.*
 import com.fypmoney.view.giftCardModule.GiftCardAdapter
+import com.fypmoney.view.giftCardModule.PurchaseGiftCardScreen
 
 import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.view.interfaces.ListItemClickListener
@@ -72,7 +73,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
         setRecyclerView()
         setRecyclerViewBottom()
         mViewBinding?.shimmerLayout?.startShimmer()
-        mviewModel!!.offerTopList.observe(
+        mviewModel?.offerBottomList?.observe(
             requireActivity(),
             { list ->
                 mViewBinding?.shimmerLayout?.stopShimmer()
@@ -80,7 +81,14 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
                 mViewBinding?.shimmerLayout?.visibility = View.INVISIBLE
                 typeAdapter?.notifyDataSetChanged()
 
+
             })
+        mviewModel?.offerBottomList?.observe(viewLifecycleOwner, {
+            (mViewBinding?.giftcardRv?.adapter as GiftCardAdapter).run {
+                submitList(it)
+            }
+
+        })
         mviewModel!!.offerBottomList.observe(
             requireActivity(),
             { list ->
@@ -92,36 +100,21 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
                     mViewBinding?.shimmerLayout?.visibility = View.INVISIBLE
                     mViewBinding?.shimmerLayout?.stopShimmer()
 
-//                if (page == 0) {
-//                    bottomArrayList.clear()
-//                    page += 1
-//                    mViewBinding?.shimmerLayout?.visibility = View.INVISIBLE
-//                    mViewBinding?.shimmerLayout?.stopShimmerAnimation()
-//
-//
-//                }
+
 
 
                 bottomArrayList.addAll(list)
-                isLoading = false
+                    isLoading = false
 
 
-                bottomAdapter!!.notifyDataSetChanged()
-
-//                if (itemsArrayList.size > 0) {
-//                    mViewBinding?.empty_screen?.visibility = View.GONE
-//
-//                } else {
-//                    if (YourTasksFragment.page == 0) {
-//                        mViewBinding?.empty_screen?.visibility = View.VISIBLE
-//                    }
-//
-//                }
+                    bottomAdapter!!.notifyDataSetChanged()
 
 
-            }
+                }
 
-    })
+            })
+
+        setUpRecyclerView()
     }
 
     override fun onResume() {
@@ -155,62 +148,29 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
     }
 
     private fun setUpRecyclerView() {
-        val topTenUsersAdapter = GiftCardAdapter(
+        val giftCardAdapter = GiftCardAdapter(
             viewLifecycleOwner, onRecentUserClick = {
-                val contact = ContactEntity()
-                contact.userId = it.userId.toString()
-                contact.contactNumber = it.userMobile
-                contact.profilePicResourceId = it.profilePicResourceId
-                contact.firstName = it.name
-//            contact.lastName=it.familyName
-
-
-                intentToActivity(
-                    contactEntity = contact,
-                    aClass = PayRequestProfileView::class.java, ""
-                )
-
+                val intent = Intent(requireContext(), PurchaseGiftCardScreen::class.java)
+                startActivity(intent)
             }
         )
 
 
-        with(mViewBinding.recentRv) {
-            adapter = topTenUsersAdapter
+        with(mViewBinding!!.giftcardRv) {
+            adapter = giftCardAdapter
             layoutManager = LinearLayoutManager(
                 requireContext(),
-                androidx.recyclerview.widget.RecyclerView.HORIZONTAL,
+                RecyclerView.HORIZONTAL,
                 false
             )
         }
     }
 
-    private fun loadMore() {
-
-        mviewModel?.callFetchFeedsApiBottom(page)
-        //LoadProgressBar?.visibility = View.VISIBLE
-        mViewBinding?.LoadProgressBar?.visibility = View.VISIBLE
-
-        isLoading = true
-
-    }
 
     private fun setRecyclerViewBottom() {
         val layoutManager = GridLayoutManager(requireContext(), 2)
         mViewBinding?.offerRv!!.layoutManager = layoutManager
-//        mViewBinding?.offerRv!!.addOnScrollListener(object :
-//            PaginationListener(layoutManager) {
-//            override fun loadMoreItems() {
-//                loadMore()
-//            }
-//
-//            override fun loadMoreTopItems() {
-//
-//            }
-//
-//            override fun isLoading(): Boolean {
-//                return isLoading
-//            }
-//        })
+
         var itemClickListener2 = object : ListContactClickListener {
 
 
@@ -232,7 +192,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
 
         bottomAdapter =
             OffersBottomAdapter(bottomArrayList, requireContext(), itemClickListener2!!)
-        mViewBinding?.offerRv!!.adapter = bottomAdapter
+        mViewBinding?.offerRv?.adapter = bottomAdapter
     }
     override fun onTryAgainClicked() {
 
