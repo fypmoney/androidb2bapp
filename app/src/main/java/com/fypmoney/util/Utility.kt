@@ -435,119 +435,6 @@ object Utility {
         }
     }
 
-    /*
-    * This method will return all the contacts from the phone book
-    * */
-    fun getAllContacts(
-        contentResolver: ContentResolver,
-        contactRepository: ContactRepository, onAllContactsAddedListener: OnAllContactsAddedListener
-    ) {
-        val contactList = mutableListOf<ContactEntity>()
-        GlobalScope.launch(Dispatchers.Main) {
-            // Switch to a background (IO) thread
-            withContext(Dispatchers.IO) {
-                val lastDate: String? = SharedPrefUtils.getString(
-                    PockketApplication.instance,
-                    SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
-                )
-                val contacts: Cursor?
-                if (lastDate != null) {
-                    contacts = contentResolver.query(
-                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                        null,
-                        ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP + " >= ?",
-                        arrayOf(lastDate),
-                        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY + " ASC"
-                    )
-                } else {
-                    contacts = contentResolver.query(
-                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                        null,
-                        null,
-                        null,
-                        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY + " ASC"
-                    )
-                }
-
-
-                // Loop through the contacts
-                while (contacts?.moveToNext()!!) {
-                    val contactEntity = ContactEntity()
-                    // Get the current contact name
-                    val name = contacts.getString(
-                        contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY)
-                    )
-                    var lastName: String? = if (name?.trim()?.split(" ")?.size ?: 0 > 1) {
-                        ""
-                    } else {
-                        null
-                    }
-                    val list = name?.trim()?.split(" ")
-                    list?.forEachIndexed { index, s ->
-                        if (index > 0) {
-                            lastName = "$lastName${s.trim()} "
-                        }
-
-                    }
-                    if (list?.isNotEmpty() == true)
-                        contactEntity.firstName = list[0].trim()
-                    // Get the current contact last name
-                    contactEntity.lastName = lastName?.trim()
-                    // Get the current contact phone number
-                    val number = contacts.getString(
-                        contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-                    )
-                    var updatedNumber = number.replace(" ", "").trim()
-//                    if(updatedNumber.length>10){
-//                        updatedNumber = updatedNumber.takeLast(10)
-//                    }
-                    contactEntity.contactNumber = updatedNumber
-
-
-                    /*  // Get the current contact lookup key
-                      contactEntity.lookupKey = contacts.getString(
-                          contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY)
-
-                      )*/
-                    // Get the current contact id
-                    contactEntity.phoneBookIdentifier = contacts.getString(
-                        contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
-                    )
-
-                    /*     // Get the current contact id
-                         contactEntity.email = contacts.getString(
-                             contacts.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)
-                         )
-
-                         Log.d("hdddhdhdh", contactEntity.email!!)
-             */
-                    setLastContactSinkDate()
-                    contactList.add(contactEntity)
-                }
-                contacts.close()
-
-            }
-            // switch to the main thread
-            if (SharedPrefUtils.getString(
-                    PockketApplication.instance,
-                    SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
-                ) == null
-            ) {
-                contactRepository.insertAllContacts(contactList)
-            } else {
-                if (!contactList.isNullOrEmpty()) {
-                    contactList.forEach {
-                        contactRepository.deleteContactsBasedOnLookupKey(it.phoneBookIdentifier!!)
-                    }
-                    contactRepository.insertAllContacts(contactList)
-                }
-            }
-            onAllContactsAddedListener.onAllContactsSynced()
-        }
-
-
-    }
-
     interface OnAllContactsAddedListener {
         fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>? = null)
     }
@@ -568,8 +455,6 @@ object Utility {
 
 
                 val contacts: Cursor?
-                //  GlobalScope.launch(Dispatchers.Main) {
-                // Switch to a background (IO) thread
 
                 val lastDate: String? = SharedPrefUtils.getString(
                     PockketApplication.instance,
@@ -701,9 +586,7 @@ object Utility {
         return phone
     }
 
-    fun canGetLocation(context: Context): Boolean {
-        return isLocationEnabled(context) // application context
-    }
+
 
     /*
     * This method will check if location is enabled or not

@@ -178,28 +178,16 @@ class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewMode
     private fun checkAndAskPermission() {
         when (checkPermission(Manifest.permission.READ_CONTACTS)) {
             true -> {
-                mViewModel.progressDialog.value = true
-                mViewModel.callContactSyncApi()
-
+                Utility.getAllContactsInList(
+                    contentResolver,
+                    this,
+                    contactRepository = mViewModel.contactRepository
+                )
             }
             else -> {
                 requestPermission(Manifest.permission.READ_CONTACTS)
             }
         }
-    }
-
-
-    /*
-    * This method is used to call the Broadcast receiver
-    * */
-    private fun callBroadCast(contactEntity: ContactEntity) {
-        val intent = Intent(AppConstants.CONTACT_BROADCAST_NAME)
-        intent.putExtra(
-            AppConstants.CONTACT_BROADCAST_KEY,
-            contactEntity
-        )
-        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
-        finish()
     }
 
     override fun onPositiveButtonClick(uniqueIdentifier: String) {

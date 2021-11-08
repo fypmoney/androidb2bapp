@@ -120,6 +120,23 @@
             android:layout_marginEnd="@dimen/dp16"
             android:text="@string/contact_not_found"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/contact_is_loading_tv"
+            style="@style/TextviewRegular"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/search"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="16dp"
+            android:gravity="center_horizontal"
+            android:text="@string/please_wait_loading_contact_list"
+            android:textColor="@color/text_color_dark"
+            android:visibility="@{viewModel.contactIsLoading?View.VISIBLE:View.GONE,default=gone}"
+            tools:visibility="visible" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
