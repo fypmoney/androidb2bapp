@@ -161,9 +161,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                 ) {
                     when {
                         Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
-
                             intentToActivity(CreateAccountView::class.java)
-
                         }
                         Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {
                             intentToActivity(AadhaarAccountActivationView::class.java)
@@ -176,7 +174,8 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                 } else {
                                     intentToActivity(PermissionsActivity::class.java)
                                 }
-                            } else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "0") {
+                            }
+                            else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "0") {
                                 when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
                                     AppConstants.YES -> {
                                         intentToActivity(ReferralCodeView::class.java)
@@ -195,10 +194,11 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
 
                                     }
                                 }
-                            } else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "90") {
+                            }
+                            else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "90") {
                                 intentToActivity(AgeAllowedActivationView::class.java)
-                            } else {
-
+                            }
+                            else {
                                 if (Utility.getCustomerDataFromPreference()?.postKycScreenCode == null &&
                                     Utility.getCustomerDataFromPreference()?.userProfile?.gender == null && mViewModel.callCustomer.value == false) {
                                     mViewModel.callGetCustomerProfileApi()

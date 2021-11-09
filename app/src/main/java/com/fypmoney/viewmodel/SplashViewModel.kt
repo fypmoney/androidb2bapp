@@ -3,6 +3,7 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.adjust.sdk.Adjust
 import com.fyp.trackr.base.Trackr
 import com.fyp.trackr.models.CUSTOM_USER_POST_KYC_CODE
 import com.fyp.trackr.models.UserTrackr
@@ -63,6 +64,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                          MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
                              it2
                          )
+                         Adjust.setPushToken(it2, PockketApplication.instance);
                      }
              }else{
                  Trackr.appIsInstallFirst(isFirstTime = false)
@@ -71,6 +73,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                          MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
                              it2
                          )
+                         Adjust.setPushToken(it2, PockketApplication.instance);
                      }
                  Utility.getCustomerDataFromPreference()?.let {
                      val map = hashMapOf<String,Any>()
@@ -97,8 +100,6 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                     (it < BuildConfig.VERSION_CODE)||(it > BuildConfig.VERSION_CODE)){
                     SharedPrefUtils.putInt(app,SF_KEY_APP_VERSION_CODE, BuildConfig.VERSION_CODE)
                     callGetCustomerProfileApi()
-
-
                 }
                 if(it==0){
                     Trackr.appIsInstallFirst(isFirstTime = true)
