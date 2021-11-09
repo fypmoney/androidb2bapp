@@ -230,7 +230,7 @@ dependencies {
     implementation "com.moengage:moe-android-sdk:11.4.01"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':trackr')
-
+    implementation(name:'adjust-lib', ext:'aar')
     implementation("com.moengage:rich-notification:2.3.00")
 
 }
