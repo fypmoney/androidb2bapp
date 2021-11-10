@@ -173,8 +173,8 @@ class TaskActionBottomSheet(
                 ChoresActivity.mViewModel!!.callTaskAccept("ACCEPT", list.entityId.toString(), "")
             } else if (accept.text == "Pay") {
 
-                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-                    it.name = TrackrEvent.Miss_paid
+                trackr {
+                    it.name = TrackrEvent.mission_paid
                 }
                 onClickListener.onAcceptClicked(
                     56, comment.text?.trim()
@@ -208,8 +208,8 @@ class TaskActionBottomSheet(
                         .toString()
                 )
             } else if (cancel.text == "Complete") {
-                trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-                    it.name = TrackrEvent.Miss_complete
+                trackr {
+                    it.name = TrackrEvent.mission_complete
                 }
                 ChoresActivity.mViewModel!!.callTaskAccept(
                     "COMPLETE", list.entityId.toString(), comment.text?.trim()

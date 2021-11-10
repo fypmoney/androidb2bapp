@@ -95,16 +95,18 @@ object ApiConstant {
     const val API_GET_REWARDS_API = "/services/authservice/api/rewards/v2"
     const val API_SPIN_WHEEL = "/services/authservice/api/spin-wheel/v2/1"
     const val API_GET_REWARDS_HISTORY = "/services/authservice/api/all/rewards"
-  const val API_GET_REDEEM_DETAILS_API = "/services/authservice/api/rewards/details"
-  const val API_REDEEM_COINS_API = "/services/authservice/api/redeem/rewards"
+    const val API_GET_REDEEM_DETAILS_API = "/services/authservice/api/rewards/details"
+    const val API_REDEEM_COINS_API = "/services/authservice/api/redeem/rewards"
 
     const val API_USER_DEVICE_INFO = "/services/authservice/api/users/device-info"
-  const val API_SETTINGS = "/services/PockketService/api/get/system-properties/by-keys"
-  const val API_USER_OFFER_CARD = "/services/loyaltyservice/api/user-offer/card"
-  const val API_PIN_CODE = "/services/loyaltyservice/api/service-available/check/"
+    const val API_SETTINGS = "/services/PockketService/api/get/system-properties/by-keys"
+    const val API_USER_OFFER_CARD = "/services/loyaltyservice/api/user-offer/card"
+    const val API_PIN_CODE = "/services/loyaltyservice/api/service-available/check/"
 
     const val RewardsHistory =
         "services/loyaltyservice/api/rewardHistory"
+    const val CashbackHistory =
+        "services/PockketService/api/cashbackHistory"
 
     const val API_REWARD_SUMMARY =
         "services/loyaltyservice/api/loyalty/points/summary"

@@ -13,9 +13,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-
+import com.facebook.appevents.AppEventsLogger
+import com.fyp.trackr.models.*
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.database.entity.ContactEntity
@@ -33,16 +35,8 @@ import com.fypmoney.view.fragment.*
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.HomeViewModel
-import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.view_home.*
 import java.util.concurrent.atomic.AtomicBoolean
-import com.facebook.appevents.AppEventsLogger;
-import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.TrackrField
-import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
-import com.fypmoney.application.PockketApplication
-import java.lang.RuntimeException
 
 
 class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
@@ -84,16 +78,14 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         checkAndAskPermission()
         loadFragment(HomeScreen(),1)
 
-        trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
-            it.name = TrackrEvent.Home_Screen
+        trackr {
+            it.name = TrackrEvent.home_screen
             it.add(
                 TrackrField.user_id,SharedPrefUtils.getLong(
                     applicationContext,
                     SharedPrefUtils.SF_KEY_USER_ID
                 ).toString())
         }
-        logSentFriendRequestEvent()
-
 
         LocationListenerClass(
             this, this
@@ -150,6 +142,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         }
 
         setupBadegs()
+
     }
 
     private fun setupBadegs() {
@@ -166,13 +159,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         }
     }
 
-    /**
-     * This function assumes logger is an instance of AppEventsLogger and has been
-     * created using AppEventsLogger.newLogger() call.
-     */
-    fun logSentFriendRequestEvent() {
-        AppEventsLogger.newLogger(applicationContext).logEvent("home_screen")
-    }
+
     private fun setupFamily() {
         loadFragment(FamilySettingsView(), 5)
         mViewBinding.navigationView.menu.findItem(R.id.family).isChecked = true;

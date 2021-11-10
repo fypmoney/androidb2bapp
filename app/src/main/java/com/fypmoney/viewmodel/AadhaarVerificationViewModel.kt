@@ -32,7 +32,7 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
 
     init {
         trackr {
-            it.name = TrackrEvent.Bank_verification
+            it.name = TrackrEvent.bank_verification
         }
     }
     /*

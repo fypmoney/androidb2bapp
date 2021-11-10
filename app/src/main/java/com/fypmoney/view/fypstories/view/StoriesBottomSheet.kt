@@ -62,24 +62,6 @@ class StoriesBottomSheet(var resourceList: List<String?>):
             ContextCompat.getDrawable(binding!!.storiesIv.context,R.drawable.progress_bar_drawable),
             rounded = false
         )
-
-        /*context?.let {
-            Glide.with(it)
-                .load(resourceList[counter])
-                .listener(object : RequestListener<Drawable> {
-                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        cli.visibility = View.GONE
-                        return false
-                    }
-
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        cli.visibility = View.VISIBLE
-                        return false
-                    }
-                })
-                .into(binding!!.storiesIv)
-        }*/
-
         binding!!.reverse.setOnClickListener { binding!!.stories.reverse() }
         binding!!.reverse.setOnTouchListener(onTouchListener)
 
@@ -111,24 +93,6 @@ class StoriesBottomSheet(var resourceList: List<String?>):
             ContextCompat.getDrawable(binding!!.storiesIv.context,R.drawable.progress_bar_drawable),
             rounded = false
         )
-       /* context?.let {
-            Glide.with(it)
-                .load(resourceList[++counter])
-                .listener(object : RequestListener<Drawable> {
-                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        cli.visibility = View.GONE
-                        return false
-                    }
-
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        cli.visibility = View.VISIBLE
-                        return false
-                    }
-                })
-                .into(binding!!.storiesIv)
-        }*/
-
-
     }
 
     override fun onPrev() {
@@ -137,27 +101,6 @@ class StoriesBottomSheet(var resourceList: List<String?>):
             ContextCompat.getDrawable(binding!!.storiesIv.context,R.drawable.progress_bar_drawable),
             rounded = false
         )
-
-
-
-       /* context?.let {
-            Glide.with(it)
-                .load(resourceList[--counter])
-                .listener(object : RequestListener<Drawable> {
-                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        cli.visibility = View.GONE
-                        return false
-                    }
-
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        cli.visibility = View.VISIBLE
-                        return false
-                    }
-                })
-                .into(binding!!.storiesIv)
-        }
-*/
-
     }
 
     override fun onComplete() {

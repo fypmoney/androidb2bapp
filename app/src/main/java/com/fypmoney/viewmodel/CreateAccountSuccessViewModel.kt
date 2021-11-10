@@ -2,6 +2,7 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.AnalyticsEvent
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -23,8 +24,9 @@ class CreateAccountSuccessViewModel(application: Application) : BaseViewModel(ap
 
     }
     init {
-        trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
-            it.name = TrackrEvent.Account_created
+        trackr {
+            it.services = arrayListOf(TrackrServices.FIREBASE,TrackrServices.MOENGAGE,TrackrServices.FB,TrackrServices.ADJUST)
+            it.name = TrackrEvent.account_creation
             it.add(
                 TrackrField.user_id, SharedPrefUtils.getLong(
                     application,

@@ -16,10 +16,12 @@ import androidx.fragment.app.FragmentActivity
 import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
 import com.adjust.sdk.AdjustEvent
+import com.facebook.appevents.AppEventsLogger
 import com.fyp.trackr.BuildConfig
 import com.fyp.trackr.R
 import com.fyp.trackr.models.AnalyticsEvent
 import com.fyp.trackr.models.ScreenEvent
+import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.services.TrackrServices
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.moe.pushlibrary.MoEHelper
@@ -83,7 +85,7 @@ object Trackr {
             }else{
                 moEngage = MoEngage.Builder(app, moEngageKey)
                     .setDataCenter(DataCenter.DATA_CENTER_3)
-                    .configureLogs(LogConfig(VERBOSE, true))
+                    .configureLogs(LogConfig(VERBOSE, false) )
                     .configureNotificationMetaData(
                         NotificationConfig(
                             notiSmallIcon,
@@ -192,7 +194,7 @@ object Trackr {
             }
         }
         val eventCount = incrementEventCount()
-        for (service in event.services) {
+         for (service in event.services) {
             when (service) {
                 TrackrServices.MOENGAGE -> {
                     if (loglevel.num <= LogLevel.DEBUG.num) {
@@ -223,7 +225,39 @@ object Trackr {
                     if (loglevel.num <= LogLevel.DEBUG.num) {
                         Log.d("ADJUST_EVENT", "Data: $event")
                     }
-                    Adjust.trackEvent(AdjustEvent(event.name.name));
+                    var adjustEventName = ""
+                    when(event.name.name){
+                        TrackrEvent.account_creation.name->{
+                            adjustEventName = "tnpgjs"
+                        }
+                        TrackrEvent.kyc_verification.name->{
+                            adjustEventName = "eesdlf"
+                        }
+                        TrackrEvent.load_money_fail.name->{
+                            adjustEventName = "1x4oan"
+                        }
+                        TrackrEvent.load_money_success.name->{
+                            adjustEventName = "gerdxc"
+                        }
+                        TrackrEvent.mission_given_success.name->{
+                            adjustEventName = "fwz8lp"
+                        }
+                        TrackrEvent.add_familymember.name->{
+                            adjustEventName = "of1zqz"
+                        }
+                        TrackrEvent.order_success.name->{
+                            adjustEventName = "5s49wf"
+                        }
+                        TrackrEvent.refferal_shared.name->{
+                            adjustEventName = "4nxchn"
+                        }
+                    }
+                    Log.d("ADJUST_EVENT_KEY", "KEY: $adjustEventName")
+                    Adjust.trackEvent(AdjustEvent(adjustEventName));
+
+                }
+                TrackrServices.FB -> {
+                    app?.applicationContext?.let { AppEventsLogger.newLogger(it).logEvent(event.name.name) }
 
                 }
             }

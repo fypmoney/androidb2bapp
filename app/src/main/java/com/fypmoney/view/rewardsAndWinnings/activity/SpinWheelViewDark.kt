@@ -119,8 +119,8 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
                     if (item.id == sectionId.toString()) {
 
                         if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                            trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-                                it.name = TrackrEvent.SPINSUCCESS
+                            trackr {
+                                it.name = TrackrEvent.spin_success
                                 it.add(TrackrField.spin_product_code, ProductCode)
 
                             }
@@ -190,8 +190,8 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
             if (mViewModel.played.get() == true) {
                 if (sectionValue == "0") {
                     trackr {
-                        it.services = arrayListOf(TrackrServices.MOENGAGE)
-                        it.name = TrackrEvent.SPINZERO
+
+                        it.name = TrackrEvent.zero_spin
                         it.add(TrackrField.spin_product_code, ProductCode)
 
                     }
@@ -200,8 +200,8 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
             } else {
                 if (sectionValue == "0") {
                     trackr {
-                        it.services = arrayListOf(TrackrServices.MOENGAGE)
-                        it.name = TrackrEvent.SPINZERO
+
+                        it.name = TrackrEvent.zero_spin
                         it.add(TrackrField.spin_product_code, ProductCode)
 
                     }

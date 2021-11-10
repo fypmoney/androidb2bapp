@@ -55,7 +55,7 @@ class LoginViewModel(application: Application) : BaseViewModel(application) {
         val map = hashMapOf<String,Any>()
         map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = mobile.value.toString()
         UserTrackr.push(map)
-        trackr { it.services = arrayListOf(TrackrServices.FIREBASE, TrackrServices.MOENGAGE)
+        trackr {
             it.name = TrackrEvent.mobile_entered
             it.add(
                 TrackrField.user_mobile_no,mobile.value.toString())

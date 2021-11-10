@@ -76,8 +76,8 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         setRvScratchCard()
         dialogDialog = Dialog(requireContext())
 
-        trackr { it.services = arrayListOf(TrackrServices.MOENGAGE)
-            it.name = TrackrEvent.Open_arcade
+        trackr {
+            it.name = TrackrEvent.open_arcade
         }
 
 
@@ -311,8 +311,8 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
             override fun onItemClicked(pos: Int) {
                     itemsArrayList[pos].code?.let { it1 ->
                         trackr {
-                            it.services = arrayListOf(TrackrServices.MOENGAGE)
-                            it.name = TrackrEvent.Spin
+
+                            it.name = TrackrEvent.spin
                             it.add(TrackrField.spin_product_code, it1)
                         }
                     }
@@ -343,8 +343,8 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
             override fun onItemClicked(pos: Int) {
                     scratchArrayList[pos].code?.let { it1 ->
                         trackr {
-                            it.services = arrayListOf(TrackrServices.MOENGAGE)
-                            it.name = TrackrEvent.SCRATCHCODE
+
+                            it.name = TrackrEvent.scratch
                             it.add(TrackrField.spin_product_code, it1)
                         }
                     }

@@ -2,10 +2,8 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.UserTrackr
-import com.fyp.trackr.models.push
-import com.fyp.trackr.models.trackr
+import com.fyp.trackr.models.*
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -31,7 +29,12 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
     * */
     init {
         trackr {
-            it.name = TrackrEvent.Aadhar_verification
+            it.services = arrayListOf(
+                TrackrServices.FIREBASE,
+                TrackrServices.MOENGAGE,
+                TrackrServices.FB,TrackrServices.ADJUST
+            )
+            it.name = TrackrEvent.kyc_verification
         }
         callGetCustomerProfileApi()
     }
@@ -94,7 +97,17 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                     responseData.customerInfoResponseDetails?.dob?.let {
                         val map = hashMapOf<String,Any>()
                         map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it
+                        map[CUSTOM_USER_POST_KYC_CODE] = responseData.customerInfoResponseDetails?.postKycScreenCode!!
+
                         UserTrackr.push(map)
+                    }
+                    responseData.customerInfoResponseDetails?.userProfile?.let {
+                        val map = hashMapOf<String,Any>()
+
+                        map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it.dob.toString()
+                        map[MoEConstants.USER_ATTRIBUTE_USER_GENDER] = it.gender.toString()
+                        UserTrackr.push(map)
+
                     }
                 }
 

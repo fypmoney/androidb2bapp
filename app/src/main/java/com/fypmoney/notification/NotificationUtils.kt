@@ -15,7 +15,9 @@ object NotificationUtils {
      private val TAG = NotificationUtils::class.java.simpleName
      const val TRANSACTION_CHANNEL_ID = "fyp_transaction_channel"
      const val PROMOTIONAL_CHANNEL_ID = "fyp_promotional_channel"
+     const val FESTIVAL_PROMOTIONAL_CHANNEL_ID = "fyp_festival_promotional_channel"
      const val GENRAL_CHANNEL_ID = "fyp_general_channel"
+     const val RICH_CONTENT_CHANNEL_ID = "moe_rich_content"
 
     fun createNotificationChannel(applicationContext:Application,
                                           channelId:String,
@@ -37,6 +39,12 @@ object NotificationUtils {
                      Uri.parse(
                          ContentResolver.SCHEME_ANDROID_RESOURCE
                                  + "://" + BuildConfig.APPLICATION_ID + "/" + R.raw.notification_sound), audioAttributes)
+             }
+             if(channel.id==FESTIVAL_PROMOTIONAL_CHANNEL_ID){
+                 channel.setSound(
+                     Uri.parse(
+                         ContentResolver.SCHEME_ANDROID_RESOURCE
+                                 + "://" + BuildConfig.APPLICATION_ID + "/" + R.raw.diwali_push_sound), audioAttributes)
              }else{
                  channel.setSound(
                      Uri.parse(
@@ -63,11 +71,15 @@ object NotificationUtils {
             Channels.General -> {
                 GENRAL_CHANNEL_ID
             }
+            Channels.FESTIVALPROMOTIONAL -> {
+                FESTIVAL_PROMOTIONAL_CHANNEL_ID
+            }
         }
     }
     sealed class Channels{
         object Transaction:Channels()
         object Promotional:Channels()
+        object FESTIVALPROMOTIONAL:Channels()
         object General:Channels()
     }
 

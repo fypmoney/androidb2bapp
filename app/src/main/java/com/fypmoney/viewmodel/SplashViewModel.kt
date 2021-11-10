@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.base.Trackr
+import com.fyp.trackr.models.CUSTOM_USER_POST_KYC_CODE
 import com.fyp.trackr.models.UserTrackr
 import com.fyp.trackr.models.login
 import com.fyp.trackr.models.push
@@ -43,6 +44,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
     var moveToNextScreen = MutableLiveData(false)
     var callCustomer = MutableLiveData(false);
+
     val appUpdateState: LiveData<AppUpdateState>
         get() = _appUpdateState
     private val _appUpdateState = MutableLiveData<AppUpdateState>()
@@ -76,7 +78,9 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                      map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
                      map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
                      map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
-                     map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it.dob.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it.userProfile?.dob.toString()
+                     map[MoEConstants.USER_ATTRIBUTE_USER_GENDER] = it.userProfile?.gender.toString()
+                     map[CUSTOM_USER_POST_KYC_CODE] = it.postKycScreenCode.toString()
                      UserTrackr.push(map)
                      UserTrackr.login( it.mobile.toString())
                  }
@@ -167,10 +171,12 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
 
                     // Save the user id in shared preference
-                    SharedPrefUtils.putLong(
-                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
-                        value = responseData.customerInfoResponseDetails?.id!!
-                    )
+                    responseData.customerInfoResponseDetails?.id?.let {
+                        SharedPrefUtils.putLong(
+                            getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
+                            value = it
+                        )
+                    }
                     // Save the user phone in shared preference
                     SharedPrefUtils.putString(
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE,
