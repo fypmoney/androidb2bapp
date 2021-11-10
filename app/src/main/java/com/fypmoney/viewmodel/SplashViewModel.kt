@@ -53,8 +53,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
     init {
         setUpApp()
     }
-
-     fun setUpApp() {
+    fun setUpApp() {
         callCheckAppUpdate()
          SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let { it1 ->
              if(it1==0){
