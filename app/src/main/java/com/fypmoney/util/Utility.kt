@@ -1,5 +1,6 @@
 package com.fypmoney.util
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.*
 import android.content.res.Resources
@@ -409,6 +410,16 @@ object Utility {
         intent.addCategory(Intent.CATEGORY_DEFAULT)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
+    }
+    fun goToAppSettingsPermission(context: Activity,requestCode:Int) {
+        val intent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.parse(AppConstants.APP_SETTINGS_PACKAGE_TEXT + context.packageName)
+        )
+        intent.addCategory(Intent.CATEGORY_DEFAULT)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivityForResult(intent, requestCode)
+
     }
 
     /*

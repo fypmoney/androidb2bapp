@@ -6,7 +6,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -20,6 +22,7 @@ import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewContactListBinding
 import com.fypmoney.databinding.ViewContactsBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.PERMISSION_CODE
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
@@ -33,6 +36,7 @@ import kotlinx.android.synthetic.main.view_contacts.*
 /*
 * This is used to handle contacts
 * */
+
 class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewModel>(),
     DialogUtils.OnAlertDialogClickListener, InviteBottomSheet.OnShareClickListener,
     InviteMemberBottomSheet.OnInviteButtonClickListener, Utility.OnAllContactsAddedListener {
@@ -64,8 +68,6 @@ class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewMode
         setObserver()
         checkAndAskPermission()
     }
-
-
     /**
      * Create this method for observe the viewModel fields
      */
@@ -160,11 +162,8 @@ class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewMode
                     )
                 } else {
                     //set to never ask again
-                    SharedPrefUtils.putBoolean(
-                        applicationContext,
-                        SharedPrefUtils.SF_KEY_STORAGE_PERMANENTLY_DENY,
-                        true
-                    )
+                    Utility.showToast(getString(R.string.please_allow_us_to_read_your_contacts))
+                    Utility.goToAppSettingsPermission(this@ContactListView,PERMISSION_CODE)
                 }
             }
         }
@@ -234,5 +233,14 @@ class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewMode
 
     override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {
         mViewModel.callContactSyncApi()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode== PERMISSION_CODE){
+            if(resultCode== RESULT_OK){
+                checkAndAskPermission()
+            }
+        }
     }
 }
