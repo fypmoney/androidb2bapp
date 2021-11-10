@@ -177,8 +177,6 @@ object Trackr {
             app?.let { MoEHelper.getInstance(it).setAppStatus(AppStatus.INSTALL) }
         }else{
             app?.let { MoEHelper.getInstance(it).setAppStatus(AppStatus.UPDATE) }
-
-
         }
     }
 
@@ -262,7 +260,7 @@ object Trackr {
                         }
                     }
                     Log.d("ADJUST_EVENT_KEY", "KEY: $adjustEventName")
-                    Adjust.trackEvent(AdjustEvent(adjustEventName));
+                    Adjust.trackEvent(AdjustEvent(adjustEventName))
 
                 }
                 TrackrServices.FB -> {

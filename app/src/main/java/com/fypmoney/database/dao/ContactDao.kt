@@ -20,9 +20,9 @@ abstract class ContactDao : BaseDao<ContactEntity>("contact_entity") {
     )
 
     // update contact is App user Status
-    @Query("UPDATE contact_entity  set isAppUser = :isAppUser,profilePicResourceId= :profilePicUrl,userId= :userId WHERE contactNumber LIKE'%' || :contactNum || '%'")
+    @Query("UPDATE contact_entity  set isAppUser = :isAppUser,profilePicResourceId= :profilePicUrl,isSync= :isSync,userId= :userId WHERE contactNumber LIKE'%' || :contactNum || '%'")
     abstract suspend fun updateIsAppUserStatus(
-        contactNum: String?, isAppUser: Boolean, profilePicUrl: String?, userId: String?
+        contactNum: String?, isAppUser: Boolean, profilePicUrl: String?, userId: String?,isSync:Boolean
     )
 
     // fetch all contact and return as a list of entity
