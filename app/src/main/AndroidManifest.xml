@@ -315,6 +315,12 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>-->
+
+        <activity
+            android:name="com.moe.pushlibrary.activities.MoEActivity"
+            android:label="HomeView"
+            android:parentActivityName="com.fypmoney.view.activity.HomeView" >
+        </activity>
     </application>
     <queries>
         <intent>
