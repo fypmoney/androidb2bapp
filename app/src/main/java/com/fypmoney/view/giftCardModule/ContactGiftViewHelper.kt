@@ -38,6 +38,7 @@ class ContactGiftViewHelper(
      * */
     fun onItemClicked() {
         if (userId.toString() != contactEntity?.userId) {
+            isBackgroundHighlight.set(true)
             if (isAppUser.get() == true) {
                 viewModel.onItemClicked.value = contactEntity
 

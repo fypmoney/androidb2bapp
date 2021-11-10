@@ -66,16 +66,13 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
     }
 
     private fun setUpListners() {
-        mViewBinding.search.setOnQueryTextFocusChangeListener(object : View.OnFocusChangeListener {
-            override fun onFocusChange(v: View?, hasFocus: Boolean) {
-                if (hasFocus) {
-                    mViewBinding.contactsHeading.visibility = View.INVISIBLE
-                } else {
-                    mViewBinding.contactsHeading.visibility = View.VISIBLE
-                }
+        mViewBinding.search.setOnQueryTextFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                mViewBinding.contactsHeading.visibility = View.INVISIBLE
+            } else {
+                mViewBinding.contactsHeading.visibility = View.VISIBLE
             }
-
-        })
+        }
         mViewBinding.search.setOnQueryTextListener(object :
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -155,10 +152,10 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
         }
         mViewModel.onItemClicked.observe(this) {
 
-            val resultIntent = Intent()
-            resultIntent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, it)
-            setResult(13, resultIntent)
-            finish()
+//            val resultIntent = Intent()
+//            resultIntent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, it)
+//            setResult(13, resultIntent)
+//            finish()
 
         }
 

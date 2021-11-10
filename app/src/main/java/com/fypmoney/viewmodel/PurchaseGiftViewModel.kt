@@ -119,30 +119,26 @@ class PurchaseGiftViewModel(application: Application) : BaseViewModel(applicatio
 
     }
 
-    /*
-      * This method is used to handle on click of add
-      * */
+
     fun onAddClicked() {
-        amountSelected.get()?.toIntOrNull()?.let {
-            when {
-                TextUtils.isEmpty(amountSelected.get()) -> {
-                    Utility.showToast(PockketApplication.instance.getString(R.string.add_money_empty_error))
-                }
-                it < 10 -> {
-                    Utility.showToast(PockketApplication.instance.getString(R.string.minimum_load_amount))
-                }
-                else -> {
-                    onAddClicked.value = true
-                }
-            }
-        }
+//        amountSelected.get()?.toIntOrNull()?.let {
+//            when {
+//                TextUtils.isEmpty(amountSelected.get()) -> {
+//                    Utility.showToast(PockketApplication.instance.getString(R.string.add_money_empty_error))
+//                }
+//                it < 10 -> {
+//                    Utility.showToast(PockketApplication.instance.getString(R.string.minimum_load_amount))
+//                }
+//                else -> {
+//                    onAddClicked.value = true
+//                }
+//            }
+//        }
+
 
     }
 
-    fun onAmountSelected(amount: Int) {
-        amountSelected.set(amount.toString())
 
-    }
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
