@@ -94,30 +94,27 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                         responseData.customerInfoResponseDetails?.postKycScreenCode!!
 
 
-                    responseData.customerInfoResponseDetails?.dob?.let {
-                        val map = hashMapOf<String,Any>()
-                        map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it
-                        map[CUSTOM_USER_POST_KYC_CODE] = responseData.customerInfoResponseDetails?.postKycScreenCode!!
-
+                    responseData.customerInfoResponseDetails?.postKycScreenCode?.let {
+                        val map = hashMapOf<String, Any>()
+                        map[CUSTOM_USER_POST_KYC_CODE] = it
                         UserTrackr.push(map)
                     }
-                    responseData.customerInfoResponseDetails?.userProfile?.let {
-                        val map = hashMapOf<String,Any>()
-
-                        map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it.dob.toString()
-                        map[MoEConstants.USER_ATTRIBUTE_USER_GENDER] = it.gender.toString()
-                        UserTrackr.push(map)
+                    responseData.customerInfoResponseDetails?.userProfile?.let { userProfile ->
+                        val map1 = hashMapOf<String, Any>()
+                        map1[MoEConstants.USER_ATTRIBUTE_USER_GENDER] =
+                            userProfile.gender.toString()
+                        UserTrackr.push(map1)
+                        userProfile.dob?.let { it1 -> UserTrackr.setDateOfBirthDate(it1) }
 
                     }
+
+
                 }
-
 
 
             }
 
-
         }
-
     }
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {

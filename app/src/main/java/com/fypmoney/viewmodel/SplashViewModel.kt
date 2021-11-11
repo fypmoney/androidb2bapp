@@ -5,10 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.adjust.sdk.Adjust
 import com.fyp.trackr.base.Trackr
-import com.fyp.trackr.models.CUSTOM_USER_POST_KYC_CODE
-import com.fyp.trackr.models.UserTrackr
-import com.fyp.trackr.models.login
-import com.fyp.trackr.models.push
+import com.fyp.trackr.models.*
 import com.fypmoney.BuildConfig
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -55,39 +52,6 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
     }
     fun setUpApp() {
         callCheckAppUpdate()
-         SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let { it1 ->
-             if(it1==0){
-                 Trackr.appIsInstallFirst(isFirstTime = true)
-                 SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
-                     ?.let { it2 ->
-                         MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
-                             it2
-                         )
-                         Adjust.setPushToken(it2, PockketApplication.instance);
-                     }
-             }else{
-                 Trackr.appIsInstallFirst(isFirstTime = false)
-                 SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
-                     ?.let { it2 ->
-                         MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
-                             it2
-                         )
-                         Adjust.setPushToken(it2, PockketApplication.instance);
-                     }
-                 Utility.getCustomerDataFromPreference()?.let {
-                     val map = hashMapOf<String,Any>()
-                     map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = it.mobile.toString()
-                     map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
-                     map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
-                     map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
-                     map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it.userProfile?.dob.toString()
-                     map[MoEConstants.USER_ATTRIBUTE_USER_GENDER] = it.userProfile?.gender.toString()
-                     map[CUSTOM_USER_POST_KYC_CODE] = it.postKycScreenCode.toString()
-                     UserTrackr.push(map)
-                     UserTrackr.login( it.mobile.toString())
-                 }
-             }
-         }
         if (SharedPrefUtils.getBoolean(
                 app,
                 SharedPrefUtils.SF_KEY_IS_LOGIN
@@ -102,8 +66,37 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 }
                 if(it==0){
                     Trackr.appIsInstallFirst(isFirstTime = true)
+                    SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
+                        ?.let { it2 ->
+                            MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
+                                it2
+                            )
+                            Adjust.setPushToken(it2, PockketApplication.instance);
+                        }
                 }else{
                     Trackr.appIsInstallFirst(isFirstTime = false)
+                    SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
+                        ?.let { it2 ->
+                            MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
+                                it2
+                            )
+                            Adjust.setPushToken(it2, PockketApplication.instance);
+                        }
+                    Utility.getCustomerDataFromPreference()?.let {
+                        val map = hashMapOf<String,Any>()
+                        map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = it.mobile.toString()
+                        map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
+                        map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
+                        map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
+
+                        map[MoEConstants.USER_ATTRIBUTE_USER_GENDER] = it.userProfile?.gender.toString()
+                        map[CUSTOM_USER_POST_KYC_CODE] = it.postKycScreenCode.toString()
+                        it.userProfile?.dob?.let {dob->
+                            UserTrackr.setDateOfBirthDate(dob)
+                        }
+                        UserTrackr.push(map)
+                        UserTrackr.login( it.mobile.toString())
+                    }
                 }
             }
 
@@ -207,9 +200,14 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                     map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = responseData.customerInfoResponseDetails!!.mobile.toString()
                     map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = responseData.customerInfoResponseDetails!!.firstName.toString()
                     map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = responseData.customerInfoResponseDetails!!.lastName.toString()
-                    map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = responseData.customerInfoResponseDetails!!.dob.toString()
                     UserTrackr.push(map)
                     UserTrackr.login( responseData.customerInfoResponseDetails!!.mobile.toString())
+                    responseData.customerInfoResponseDetails?.dob?.let {
+                        UserTrackr.setDateOfBirthDate(
+                            it
+                        )
+                    }
+
                     moveToNextScreen.value = true
                 }
             }

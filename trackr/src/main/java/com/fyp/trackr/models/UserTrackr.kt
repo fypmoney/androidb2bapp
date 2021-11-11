@@ -30,3 +30,7 @@ fun UserTrackr.login(userId: String) {
 fun UserTrackr.logOut() {
     Trackr.logOut()
 }
+
+fun UserTrackr.setDateOfBirthDate(dob:String) {
+    Trackr.sendDob(dob)
+}

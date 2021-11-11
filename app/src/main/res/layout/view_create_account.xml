@@ -100,40 +100,14 @@
                     android:text="@={viewModel.lastName}"
                     android:textSize="@dimen/_14sdp" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvDob"
-                    style="@style/TextviewRegular"
-                    android:layout_width="wrap_content"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/et_last_name"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/dob_label" />
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/etDateOfBirth"
-                    android:visibility="gone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvDob"
-                    android:layout_marginTop="@dimen/edittextMarginTop"
-                    android:cursorVisible="false"
-                    android:drawableEnd="@drawable/birthday_icon"
-                    android:focusable="false"
-                    android:hint="@string/dd_mm_yyyy"
-                    android:inputType="none"
-                    android:onClick="@{()->viewModel.onDobClicked()}"
-                    android:paddingStart="@dimen/edittextHintPaddingStart"
-                    android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                    android:singleLine="true"
-                    android:text="@={viewModel.dob}" />
 
                 <TextView
                     android:id="@+id/isteenager"
                     style="@style/TextviewRegular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/etDateOfBirth"
+                    android:layout_below="@+id/et_last_name"
                     android:layout_marginTop="28dp"
                     android:gravity="center"
                     android:text="@string/are_you_a_teenager_or_a_parent_select_from_below" />
