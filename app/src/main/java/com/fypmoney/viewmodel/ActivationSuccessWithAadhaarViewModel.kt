@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.*
 import com.fyp.trackr.services.TrackrServices
@@ -21,6 +22,7 @@ import com.moengage.core.internal.MoEConstants
 * This class is is used to display message in case aadhaar verification success
 * */
 class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseViewModel(application) {
+    private val TAG: String = ActivationSuccessWithAadhaarViewModel::class.java.simpleName
     var onContinueClicked = MutableLiveData<Boolean>()
     var postKycScreenCode = MutableLiveData<String>()
 
@@ -92,7 +94,43 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                     }
                     postKycScreenCode.value =
                         responseData.customerInfoResponseDetails?.postKycScreenCode!!
-
+                    responseData.customerInfoResponseDetails?.postKycScreenCode?.let {
+                        when(it){
+                            "0"->{
+                                trackr {
+                                    it.services = arrayListOf(
+                                        TrackrServices.FIREBASE,
+                                        TrackrServices.MOENGAGE,
+                                        TrackrServices.FB,TrackrServices.ADJUST
+                                    )
+                                    it.name = TrackrEvent.kyc_verification_teen
+                                }
+                            }
+                            "1"->{
+                                trackr {
+                                    it.services = arrayListOf(
+                                        TrackrServices.FIREBASE,
+                                        TrackrServices.MOENGAGE,
+                                        TrackrServices.FB,TrackrServices.ADJUST
+                                    )
+                                    it.name = TrackrEvent.kyc_verification_other
+                                }
+                            }
+                            "90"->{
+                                trackr {
+                                    it.services = arrayListOf(
+                                        TrackrServices.FIREBASE,
+                                        TrackrServices.MOENGAGE,
+                                        TrackrServices.FB,TrackrServices.ADJUST
+                                    )
+                                    it.name = TrackrEvent.kyc_verification_adult
+                                }
+                            }
+                            else -> {
+                                Log.d(TAG , "No data found for KYC $it")
+                            }
+                        }
+                    }
 
                     responseData.customerInfoResponseDetails?.postKycScreenCode?.let {
                         val map = hashMapOf<String, Any>()

@@ -86,6 +86,9 @@ enum class TrackrEvent(name: String) {
     account_activation("account_activation"),
     bank_verification("bank_verification"),
     kyc_verification("kyc_verification"),
+    kyc_verification_teen("kyc_verification_teen"),
+    kyc_verification_adult("kyc_verification_adult"),
+    kyc_verification_other("kyc_verification_other"),
     offer_tab("offer_tab"),
     offer_copy("offer_copy"),
     app_launch("app_launch"),
@@ -120,11 +123,6 @@ enum class TrackrEvent(name: String) {
     scratch("scratch"),
     scratch_success("scratch_success"),
     insufficient_mynts("insufficient_mynts"),
-
-
-
-    //adjust events
-
 }
 
 enum class TrackrField(name: String) {

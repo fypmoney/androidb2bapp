@@ -122,6 +122,12 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
 
         Log.d("contactlist", "1ee")
         val contactRequestDetailsList = mutableListOf<ContactRequestDetails>()
+        contactRepository.getAllNotSyncedContacts().forEachIndexed { index, s ->
+            if (s.contactNumber?.length!! > 9) {
+                contactRequestDetailsList.add(s)
+            }
+
+        }
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_SNC_CONTACTS,
@@ -145,7 +151,6 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
             ApiConstant.API_SNC_CONTACTS -> {
                 Log.d("contactlist", responseData.toString())
                 if (responseData is ContactResponse) {
-                    // it update the sync status of the contacts which are synced to server and also update the is app user status based on server response
                     contactRepository.updateIsSyncAndIsAppUserStatus(responseData.contactResponseDetails?.userPhoneContact)
                     getAllContacts()
                 }
