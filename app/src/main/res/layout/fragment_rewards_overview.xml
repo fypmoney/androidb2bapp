@@ -15,186 +15,269 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:id="@+id/amount_mynts"
-    android:weightSum="2"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="parent"
-    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/bootom_part_cl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginStart="@dimen/_12sdp"
-        android:paddingTop="@dimen/_6sdp"
-        android:layout_marginEnd="@dimen/_6sdp"
-        android:layout_marginTop="@dimen/_16sdp"
+            <LinearLayout
+                android:id="@+id/amount_mynts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent">
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/bootom_part_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:layout_weight="1"
+                    android:paddingTop="@dimen/_6sdp"
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:alpha=".10"
-            android:background="@drawable/round_backgorund_20"
-            android:backgroundTint="#F4F4F4"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_16sdp"
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:alpha=".10"
+                        android:background="@drawable/round_backgorund_20"
+                        android:backgroundTint="#F4F4F4"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-
-            app:layout_constraintBottom_toBottomOf="@+id/total_refral_won_value_tv"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/total_refral_won_value_tv" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/total_refral_won_tv"
-            style="@style/TextviewBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:layout_marginBottom="@dimen/_18sdp"
-            android:text="@string/total_savings"
-
-            android:textColor="@color/white"
-            android:alpha=".4"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/total_refral_won_value_tv"
-            app:layout_constraintTop_toBottomOf="@+id/total_refral_won_value_tv" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/total_refral_won_value_tv"
-            style="@style/TextviewBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_14sdp"
-            android:textColor="@color/spin_light"
-            android:textSize="24sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.fypmoney.view.customview.HorizontalDottedProgress
-            android:id="@+id/loading_amount_hdp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-
-            app:layout_constraintBottom_toBottomOf="@+id/total_refral_won_value_tv"
-
-            app:layout_constraintStart_toEndOf="@+id/total_refral_won_value_tv"
-            app:layout_constraintTop_toTopOf="@+id/total_refral_won_value_tv"
-            tools:visibility="visible" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/_16sdp"
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                        app:layout_constraintBottom_toBottomOf="@+id/total_refral_won_value_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/total_refral_won_value_tv" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/total_refral_won_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginBottom="@dimen/_18sdp"
+                        android:alpha=".4"
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginStart="@dimen/_6sdp"
-        android:paddingTop="@dimen/_6sdp"
-        android:layout_marginEnd="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:id="@+id/total_mynts_layout"
+                        android:text="@string/total_savings"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/total_refral_won_value_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/total_refral_won_value_tv" />
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/total_refral_won_value_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:textColor="@color/spin_light"
+                        android:textSize="24sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout7"
-            android:layout_width="0dp"
+                    <com.fypmoney.view.customview.HorizontalDottedProgress
+                        android:id="@+id/loading_amount_hdp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
 
+                        app:layout_constraintBottom_toBottomOf="@+id/total_refral_won_value_tv"
 
-            android:layout_height="0dp"
-
-            android:alpha=".10"
-            android:background="@drawable/round_backgorund_20"
-            android:backgroundTint="#F4F4F4"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/mynticon"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:src="@drawable/ic_mynt_coin"
-            app:layout_constraintBottom_toBottomOf="@+id/total_mynts_won_value_tv"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/total_mynts_won_value_tv" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/total_mynts_won_tv"
-            style="@style/TextviewBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:layout_marginBottom="@dimen/_18sdp"
-            android:text="@string/your_mynts"
-
-            android:textColor="@color/white"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:textSize="12sp"
-            android:alpha=".40"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/total_mynts_won_value_tv" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/total_mynts_won_value_tv"
-            style="@style/TextviewBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toEndOf="@+id/mynticon"
-
-            android:layout_marginStart="@dimen/_4sdp"
-            android:layout_marginTop="@dimen/_14sdp"
-            android:textColor="@color/color_orange"
-            android:textSize="24sp"
-
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.fypmoney.view.customview.HorizontalDottedProgress
-            android:id="@+id/loading_amount_mynts"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:layout_constraintBottom_toBottomOf="@+id/total_mynts_won_value_tv"
-            app:layout_constraintStart_toEndOf="@+id/total_mynts_won_value_tv"
-            app:layout_constraintTop_toTopOf="@+id/total_mynts_won_value_tv"
-            tools:visibility="visible" />
+                        app:layout_constraintStart_toEndOf="@+id/total_refral_won_value_tv"
+                        app:layout_constraintTop_toTopOf="@+id/total_refral_won_value_tv"
+                        tools:visibility="visible" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-</LinearLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
 
+                    android:id="@+id/total_mynts_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    android:paddingTop="@dimen/_6sdp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent">
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayout7"
+                        android:layout_width="0dp"
+
+
+                        android:layout_height="0dp"
+
+                        android:alpha=".10"
+                        android:background="@drawable/round_backgorund_20"
+                        android:backgroundTint="#F4F4F4"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/mynticon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:src="@drawable/ic_mynt_coin"
+                        app:layout_constraintBottom_toBottomOf="@+id/total_mynts_won_value_tv"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/total_mynts_won_value_tv" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/total_mynts_won_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginBottom="@dimen/_18sdp"
+
+                        android:alpha=".40"
+                        android:text="@string/your_mynts"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/total_mynts_won_value_tv" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/total_mynts_won_value_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_4sdp"
+
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:textColor="@color/color_orange"
+                        android:textSize="24sp"
+                        app:layout_constraintStart_toEndOf="@+id/mynticon"
+
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.fypmoney.view.customview.HorizontalDottedProgress
+                        android:id="@+id/loading_amount_mynts"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:layout_constraintBottom_toBottomOf="@+id/total_mynts_won_value_tv"
+                        app:layout_constraintStart_toEndOf="@+id/total_mynts_won_value_tv"
+                        app:layout_constraintTop_toTopOf="@+id/total_mynts_won_value_tv"
+                        tools:visibility="visible" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/golden_card_layout"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/amount_mynts"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="@dimen/_12sdp"
+                android:paddingTop="@dimen/_6sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:alpha=".10"
+                    android:background="@drawable/round_dark_grey_rewards_18"
+                    android:backgroundTint="#F4F4F4"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:src="@drawable/ticket"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/golder_card_won_heading"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+
+                    android:alpha=".8"
+                    android:text="@string/total_golden_cards"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:layout_constraintBottom_toBottomOf="@id/loading_golden_cards"
+                    app:layout_constraintStart_toStartOf="@+id/loading_golden_cards"
+                    app:layout_constraintTop_toTopOf="@+id/loading_golden_cards" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/amount_golder_tv"
+                    style="@style/TextviewBold"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:layout_marginBottom="@dimen/_14sdp"
+                    android:textColor="#F2DC12"
+                    android:textSize="30sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.fypmoney.view.customview.HorizontalDottedProgress
+                    android:id="@+id/loading_golden_cards"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    app:layout_constraintBottom_toBottomOf="@+id/amount_golder_tv"
+
+                    app:layout_constraintStart_toEndOf="@+id/amount_golder_tv"
+                    app:layout_constraintTop_toTopOf="@+id/amount_golder_tv"
+                    tools:visibility="visible" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:id="@+id/shimmerLayout"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:layout_below="@+id/amount_mynts"
+                android:layout_below="@+id/golden_card_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -219,7 +302,7 @@
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/amount_mynts"
+                android:layout_below="@+id/golden_card_layout"
                 android:layout_marginTop="@dimen/dp10"
                 android:layout_marginBottom="@dimen/_8sdp"
                 app:layout_constraintEnd_toEndOf="parent"

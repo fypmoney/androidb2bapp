@@ -24,7 +24,7 @@ class RewardsHistoryLeaderboardAdapter(
     val clickInterface: ListRewardsItemClickListener
 ) : RecyclerView.Adapter<RewardsHistoryLeaderboardAdapter.ViewHolder>() {
 
-    private var mLastClickTime: Long = 0
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
@@ -62,22 +62,17 @@ class RewardsHistoryLeaderboardAdapter(
                     R.drawable.ic_mynt_coin
                 )
             )
-
+            holder.note.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.cash))
 
         } else {
+            holder.note.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ticket))
+            holder.amount.text = items[position].noOfJackpotTicket.toString()
 
-            if (items[position]?.cashbackWonForProduct != null) {
-                holder.amount.text =
-                    "₹" + Utility.convertToRs(items[position]?.cashbackWonForProduct.toString())
-            } else {
-                holder.amount.text =
-                    "₹0"
-            }
             if (items[position].transactionType == AppConstants.TRANS_TYPE_EARN) {
                 holder.amount.visibility = View.INVISIBLE
 
             }
-            holder.note.visibility = View.GONE
+
 //            holder.amount.visibility = View.INVISIBLE
             holder.status_tv.visibility = View.VISIBLE
 

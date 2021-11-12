@@ -45,6 +45,7 @@ import java.util.ArrayList
 
 class ScratchCardActivity :
     BaseActivity<ActivityScratchProductBinding, ScratchCardProductViewmodel>() {
+    private var noOfGoldenCard: Int? = null
     private var ProductCode: String? = null
     private var dialogError: Dialog? = null
     private var sectionId: Int? = null
@@ -82,18 +83,18 @@ class ScratchCardActivity :
         orderId = intent.getStringExtra(AppConstants.ORDER_NUM)
         sectionId = intent.getIntExtra(AppConstants.SECTION_ID, -1)
         ProductCode = intent.getStringExtra(AppConstants.PRODUCT_CODE)
+        noOfGoldenCard = intent.getIntExtra(AppConstants.NO_GOLDED_CARD, -1)
+
         var image_url = intent.getStringExtra(AppConstants.PRODUCT_HIDE_IMAGE)
 
         Glide.with(this).load(image_url).into(mBinding.gotTheOfferIv)
 //        mViewModel.callProductsDetailsApi(orderId)
-        setUpView()
+
+        setupScratchCardView()
         mBinding.scratchCardLayout.setScratchDrawable(imageScratch)
         setUpObserver()
     }
 
-    private fun setUpView() {
-        setupScratchCardView()
-    }
 
     private fun callErrorDialog(msg: String) {
         dialogError?.setCancelable(false)
@@ -180,26 +181,17 @@ class ScratchCardActivity :
         if (cashbackWon == "0") {
             dialogDialog?.congrats_tv?.visibility = View.GONE
             dialogDialog?.textView?.visibility = View.GONE
-            if (noOfJackpotTicket != null) {
-                dialogDialog?.spin_green?.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.golden_cards
-                    )
+            dialogDialog?.spin_green?.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.golden_cards
                 )
-                dialogDialog?.better_next_time?.visibility = View.INVISIBLE
+            )
+            dialogDialog?.better_next_time?.visibility = View.INVISIBLE
+            if (noOfJackpotTicket != null) {
+
                 dialogDialog!!.golden_cards_won!!.text =
                     "You won " + noOfJackpotTicket + "\nGolden Tickets"
-            } else {
-                dialogDialog?.better_next_time?.visibility = View.VISIBLE
-                dialogDialog?.clicked?.text = getString(R.string.continue_txt)
-
-                dialogDialog?.spin_green?.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this,
-                        R.drawable.better_luck_next_time
-                    )
-                )
             }
             dialogDialog?.clicked?.text = getString(R.string.continue_txt)
             dialogDialog?.luckonside_tv?.visibility = View.GONE
@@ -249,12 +241,16 @@ class ScratchCardActivity :
                     mBinding.offerAmountTv.text = "₹" + Utility.convertToRs(item.sectionValue)
                     mBinding.offerDescTv.visibility = View.VISIBLE
                 } else {
-                    mBinding.offerAmountTv.text = "₹" + Utility.convertToRs(item.sectionValue)
+                    if (noOfGoldenCard != null) {
+                        mBinding.offerAmountTv.text = noOfGoldenCard.toString() + " Golden Tickets"
 
-                    mBinding.oppsTv.visibility = View.VISIBLE
-                    mBinding.betterLuck.visibility = View.VISIBLE
-                    mBinding.offerAmountTv.visibility = View.INVISIBLE
-                    mBinding.offerDescTv.visibility = View.INVISIBLE
+                    }
+                    mBinding.offerDescTv.setTextColor(ContextCompat.getColor(this, R.color.white))
+                    mBinding.offerAmountTv.setTextColor(ContextCompat.getColor(this, R.color.white))
+//                    mBinding.oppsTv.visibility = View.VISIBLE
+//                    mBinding.betterLuck.visibility = View.VISIBLE
+
+
                     mBinding.smileyOops.visibility = View.VISIBLE
                     Glide.with(this).load(R.color.white).into(mBinding.gotTheOfferIv)
 
@@ -284,8 +280,8 @@ class ScratchCardActivity :
             override fun onScratchComplete() {
 
 
+                mBinding.offerFoundTv.visibility = View.VISIBLE
                 mBinding.LoadProgressBar.visibility = View.VISIBLE
-
                 mViewModel.callScratchWheelApi(orderId, false)
 
 

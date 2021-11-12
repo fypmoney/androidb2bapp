@@ -56,6 +56,9 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
         mViewBinding?.totalMyntsLayout?.setOnClickListener(View.OnClickListener {
             sharedViewModel?.totalmyntsClicked?.postValue(true)
         })
+        mViewBinding?.goldenCardLayout?.setOnClickListener(View.OnClickListener {
+            sharedViewModel?.totalmyntsClicked?.postValue(true)
+        })
 
     }
 
@@ -131,6 +134,15 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
 
             })
 
+        sharedViewModel.totalJackpotAmount.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { list ->
+                mViewBinding?.loadingGoldenCards?.clearAnimation()
+                mViewBinding?.loadingGoldenCards?.visibility = View.GONE
+                mViewBinding?.amountGolderTv?.text =
+                    "${list.count}"
+
+            })
     }
 
     override fun getBindingVariable(): Int {

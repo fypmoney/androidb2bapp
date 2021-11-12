@@ -139,6 +139,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                             val intent = Intent(requireContext(), SpinWheelViewDark::class.java)
                             SpinWheelViewDark.sectionArrayList.clear()
                             intent.putExtra(AppConstants.ORDER_NUM, list.orderNo)
+                            intent.putExtra(AppConstants.NO_GOLDED_CARD, list.noOfJackpotTicket)
                             intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
                             intent.putExtra(
                                 AppConstants.PRODUCT_CODE,
@@ -170,6 +171,10 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                                         val intent =
                                             Intent(requireContext(), ScratchCardActivity::class.java)
                                         intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
+                                        intent.putExtra(
+                                            AppConstants.NO_GOLDED_CARD,
+                                            list.noOfJackpotTicket
+                                        )
                                         intent.putExtra(
                                             AppConstants.PRODUCT_CODE,
                                             list.rewardProductCode

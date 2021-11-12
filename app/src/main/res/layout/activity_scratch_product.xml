@@ -32,6 +32,7 @@
             android:visibility="gone"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/dots_animation" />
+
         <include
             android:id="@+id/toolbar_layout"
             layout="@layout/toolbar"
@@ -39,6 +40,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/offer_found_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:elevation="@dimen/_6sdp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:lottie_autoPlay="true"
+            android:visibility="gone"
+
+            app:lottie_rawRes="@raw/ic_fireworks" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/card_cl"
@@ -90,6 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
+
                         android:orientation="vertical">
 
 
@@ -102,14 +118,12 @@
                             android:contentDescription="@null" />
 
                         <ImageView
-                            android:layout_width="128dp"
                             android:id="@+id/smiley_oops"
-                            android:visibility="invisible"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_centerHorizontal="true"
-                            android:src="@drawable/opps_smiley"
 
-                            android:layout_marginTop="@dimen/_24sdp"
-                            android:layout_height="128dp" />
+                            android:src="@drawable/golden_won" />
 
                         <TextView
                             android:id="@+id/offer_desc_tv"
@@ -123,10 +137,10 @@
                             android:layout_marginEnd="30dp"
                             android:elevation="@dimen/_1sdp"
                             android:gravity="center"
+                            android:text="@string/you_won_scratch"
                             android:textAlignment="center"
                             android:textColor="@color/cb_dark_grey"
-                            android:textSize="14sp"
-                            android:text="@string/you_won_scratch" />
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/offer_amount_tv"

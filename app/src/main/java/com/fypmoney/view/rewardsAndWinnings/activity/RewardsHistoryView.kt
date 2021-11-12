@@ -81,6 +81,7 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                         val intent =
                             Intent(this@RewardsHistoryView, ScratchCardActivity::class.java)
                         intent.putExtra(AppConstants.SECTION_ID, it.sectionId)
+                        intent.putExtra(AppConstants.NO_GOLDED_CARD, it.noOfJackpotTicket)
                         it.sectionList?.forEachIndexed { pos, item ->
                             if (item != null) {
                                 ScratchCardActivity.sectionArrayList.add(item)
@@ -200,6 +201,8 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                 if (historyItem.productType == AppConstants.PRODUCT_SPIN) {
                     val intent = Intent(this@RewardsHistoryView, SpinWheelViewDark::class.java)
                     SpinWheelViewDark.sectionArrayList.clear()
+                    intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
+
                     intent.putExtra(
                         AppConstants.ORDER_NUM,
                         historyItem.orderNumber.toString()

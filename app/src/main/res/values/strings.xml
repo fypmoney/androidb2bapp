@@ -970,6 +970,7 @@ Coming really soon!
     <string name="looks_like_you_haven_t_any_referred_a_yet">Looks like you haven’t any referred a yet.</string>
     <string name="you_can_send_or_request_up_to_10000">You can send or request up to RS 10000</string>
     <string name="total_golden">Total Golden tickets won</string>
+    <string name="total_golden_cards">Total Golden tickets\nwon for this week</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>

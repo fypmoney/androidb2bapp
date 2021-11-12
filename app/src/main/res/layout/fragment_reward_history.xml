@@ -415,7 +415,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:paddingBottom="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_14sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
                 android:weightSum="2"
                 app:layout_constraintBottom_toBottomOf="parent"

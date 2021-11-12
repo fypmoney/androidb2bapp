@@ -176,6 +176,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         mViewModel?.callTotalRewardsEarnings()
         mViewModel?.callRewardSummary()
         mViewModel?.callRewardHistory()
+        mViewModel?.callTotalJackpotCards()
 
     }
 
@@ -191,7 +192,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         adapter.addFragment(RewardHistoryFragment(), getString(R.string.history))
 
         viewPager.adapter = adapter
-        viewPager.offscreenPageLimit = 1
+//        viewPager.offscreenPageLimit = 1
 
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.getTabAt(0)?.view?.background = ContextCompat.getDrawable(
@@ -271,6 +272,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
                             val intent =
                                 Intent(this@RewardsActivity, ScratchCardActivity::class.java)
                             intent.putExtra(AppConstants.SECTION_ID, it.sectionId)
+                            intent.putExtra(AppConstants.NO_GOLDED_CARD, it.noOfJackpotTicket)
                             it.sectionList?.forEachIndexed { pos, item ->
                                 if (item != null) {
                                     ScratchCardActivity.sectionArrayList.add(item)

@@ -50,9 +50,9 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
         setRecyclerView()
         sharedViewModel?.let { observeInput(it) }
         mViewBinding?.bootomPartCl?.setOnClickListener(View.OnClickListener {
-            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
-
-            startActivity(intent)
+//            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
+//
+//            startActivity(intent)
         })
 
 
