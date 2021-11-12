@@ -77,7 +77,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         dialogDialog = Dialog(requireContext())
 
         trackr {
-            it.name = TrackrEvent.Open_arcade
+            it.name = TrackrEvent.open_arcade
         }
 
 
@@ -312,7 +312,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                     itemsArrayList[pos].code?.let { it1 ->
                         trackr {
 
-                            it.name = TrackrEvent.Spin
+                            it.name = TrackrEvent.spin
                             it.add(TrackrField.spin_product_code, it1)
                         }
                     }
@@ -344,7 +344,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                     scratchArrayList[pos].code?.let { it1 ->
                         trackr {
 
-                            it.name = TrackrEvent.SCRATCHCODE
+                            it.name = TrackrEvent.scratch
                             it.add(TrackrField.spin_product_code, it1)
                         }
                     }

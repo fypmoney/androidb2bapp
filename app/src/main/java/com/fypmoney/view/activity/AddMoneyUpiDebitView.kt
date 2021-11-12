@@ -307,7 +307,7 @@ open class AddMoneyUpiDebitView :
                 super.onBackApprove()
                 mViewModel.isPaymentFail.set(true)
                 trackr {
-                    it.name = TrackrEvent.Load_user_back
+                    it.name = TrackrEvent.load_user_back
                     it.add(
                         TrackrField.user_mobile_no, SharedPrefUtils.getString(
                             PockketApplication.instance,
@@ -338,7 +338,7 @@ open class AddMoneyUpiDebitView :
                 super.onBackButton(alertDialogBuilder)
                 //Utility.showToast("onBackButton")
                 trackr {
-                    it.name = TrackrEvent.Load_user_back
+                    it.name = TrackrEvent.load_user_back
                     it.add(
                         TrackrField.user_mobile_no, SharedPrefUtils.getString(
                             PockketApplication.instance,

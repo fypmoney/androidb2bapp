@@ -89,7 +89,7 @@ class OfferDetailActivity :
             clipboard?.setPrimaryClip(clip)
             Toast.makeText(this, getString(R.string.copy_to_clipboard), Toast.LENGTH_SHORT).show()
             trackr {
-                it.name = TrackrEvent.Offer_copy
+                it.name = TrackrEvent.offer_copy
             }
         }
 

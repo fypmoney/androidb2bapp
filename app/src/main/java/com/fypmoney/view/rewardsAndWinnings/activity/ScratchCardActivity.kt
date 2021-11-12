@@ -150,7 +150,7 @@ class ScratchCardActivity :
                 if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
                     trackr {
 
-                        it.name = TrackrEvent.SCRATCHSUCCESS
+                        it.name = TrackrEvent.scratch_success
                         it.add(TrackrField.spin_product_code, ProductCode)
 
                     }

@@ -74,6 +74,19 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         viewPager = findViewById(R.id.viewPager)
 
         initializeTabs(tabLayout)
+
+
+
+        mViewModel?.totalmyntsClicked?.observe(
+            this,
+            androidx.lifecycle.Observer { list ->
+                if (list) {
+                    viewPager.currentItem = 2
+                    mViewModel?.totalmyntsClicked?.postValue(false)
+
+                }
+            }
+        )
         mViewModel?.error?.observe(
             this,
             androidx.lifecycle.Observer { list ->
@@ -114,7 +127,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
             trackr {
 
-                it.name = TrackrEvent.INSUFMYNTS
+                it.name = TrackrEvent.insufficient_mynts
 
             }
             dialogInsufficientFund?.dismiss()

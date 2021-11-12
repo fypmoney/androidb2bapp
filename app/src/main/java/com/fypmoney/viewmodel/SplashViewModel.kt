@@ -3,6 +3,7 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.adjust.sdk.Adjust
 import com.fyp.trackr.base.Trackr
 import com.fyp.trackr.models.CUSTOM_USER_POST_KYC_CODE
 import com.fyp.trackr.models.UserTrackr
@@ -52,8 +53,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
     init {
         setUpApp()
     }
-
-     fun setUpApp() {
+    fun setUpApp() {
         callCheckAppUpdate()
          SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let { it1 ->
              if(it1==0){
@@ -63,6 +63,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                          MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
                              it2
                          )
+                         Adjust.setPushToken(it2, PockketApplication.instance);
                      }
              }else{
                  Trackr.appIsInstallFirst(isFirstTime = false)
@@ -71,6 +72,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                          MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
                              it2
                          )
+                         Adjust.setPushToken(it2, PockketApplication.instance);
                      }
                  Utility.getCustomerDataFromPreference()?.let {
                      val map = hashMapOf<String,Any>()
@@ -97,8 +99,6 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                     (it < BuildConfig.VERSION_CODE)||(it > BuildConfig.VERSION_CODE)){
                     SharedPrefUtils.putInt(app,SF_KEY_APP_VERSION_CODE, BuildConfig.VERSION_CODE)
                     callGetCustomerProfileApi()
-
-
                 }
                 if(it==0){
                     Trackr.appIsInstallFirst(isFirstTime = true)
@@ -171,10 +171,12 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
 
                     // Save the user id in shared preference
-                    SharedPrefUtils.putLong(
-                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
-                        value = responseData.customerInfoResponseDetails?.id!!
-                    )
+                    responseData.customerInfoResponseDetails?.id?.let {
+                        SharedPrefUtils.putLong(
+                            getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
+                            value = it
+                        )
+                    }
                     // Save the user phone in shared preference
                     SharedPrefUtils.putString(
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE,

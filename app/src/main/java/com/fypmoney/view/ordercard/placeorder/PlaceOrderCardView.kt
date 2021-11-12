@@ -217,6 +217,10 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                 )
 
                 trackr {
+                    it.services = arrayListOf(
+                        TrackrServices.FIREBASE,
+                        TrackrServices.MOENGAGE,
+                        TrackrServices.FB,TrackrServices.ADJUST)
                     it.name = TrackrEvent.order_success
                     it.add(
                         TrackrField.user_id,SharedPrefUtils.getLong(

@@ -1,33 +1,21 @@
 package com.fypmoney.application
 
-import android.app.Activity
 import android.app.Application
-import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.ContentResolver
 import android.content.Context
-import android.content.pm.ActivityInfo
-import android.media.AudioAttributes
-import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.adjust.sdk.Adjust
-import com.adjust.sdk.AdjustConfig
 import com.fyp.trackr.base.Trackr
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.model.KeysFound
 import com.fypmoney.notification.NotificationUtils
+import com.fypmoney.notification.NotificationUtils.FESTIVAL_PROMOTIONAL_CHANNEL_ID
 import com.fypmoney.notification.NotificationUtils.PROMOTIONAL_CHANNEL_ID
 import com.fypmoney.notification.NotificationUtils.TRANSACTION_CHANNEL_ID
 import com.fypmoney.util.SharedPrefUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.moe.pushlibrary.MoEHelper
-import com.moengage.core.DataCenter
 import com.vanniktech.emoji.EmojiManager
 import com.vanniktech.emoji.google.GoogleEmojiProvider
-import com.moengage.core.MoEngage
 
 
 /**
@@ -68,6 +56,12 @@ class PockketApplication : Application() {
             channelId = PROMOTIONAL_CHANNEL_ID,
             channelName = "FYP Promotional",
             channelDescription = "Promotional Notification",
+            notificationImportance = NotificationManager.IMPORTANCE_DEFAULT
+        )
+        NotificationUtils.createNotificationChannel(applicationContext=this,
+            channelId = FESTIVAL_PROMOTIONAL_CHANNEL_ID,
+            channelName = "Festival  Promotional",
+            channelDescription = "Festival Notification",
             notificationImportance = NotificationManager.IMPORTANCE_DEFAULT
         )
         // init analytics

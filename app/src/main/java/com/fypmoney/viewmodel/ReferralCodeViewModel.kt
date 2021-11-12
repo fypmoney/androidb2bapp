@@ -3,6 +3,8 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -79,7 +81,9 @@ class ReferralCodeViewModel(application: Application) : BaseViewModel(applicatio
                     // set the button text to continue
                     when (responseData.msg) {
                         ApiConstant.API_SUCCESS -> {
-
+                            trackr {
+                                it.name = TrackrEvent.ref_applied_success
+                            }
                             onReferralCodeSuccess.value = true
 
                         }

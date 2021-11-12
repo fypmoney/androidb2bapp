@@ -15,6 +15,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.adjust.sdk.Adjust
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -39,6 +40,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(s)
         Log.d("FCMToken", s)
         MoEFireBaseHelper.getInstance().passPushToken(applicationContext,s)
+        Adjust.setPushToken(s, applicationContext);
 
         SharedPrefUtils.putString(applicationContext, SharedPrefUtils.SF_KEY_FIREBASE_TOKEN, s)
 
@@ -111,36 +113,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     }
 
-    private fun createNotificationChannel(): String {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "fypmoney_new"
-            val name: CharSequence = "FypMoney"
-            val description1 = "Fypmoney notification"
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(channelId, name, importance).apply {
-                description = description1
-                setShowBadge(true)
-            }
-            val audioAttributes = AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                .build()
-            channel.setSound(Uri.parse(
-                ContentResolver.SCHEME_ANDROID_RESOURCE
-                        + "://" + BuildConfig.APPLICATION_ID + "/" + R.raw.notification_sound), audioAttributes)
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            val notificationManager = applicationContext.getSystemService(
-                NotificationManager::class.java
-            )!!
-            notificationManager.createNotificationChannel(channel)
-            channel.id
-        } else {
-            ""
-        }
-    }
 
     /**
      * Method to navigate to the different activity

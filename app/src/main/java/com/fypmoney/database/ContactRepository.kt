@@ -30,8 +30,6 @@ class ContactRepository(mDB: AppDatabase?) {
     fun getContactsFromDatabase(): List<ContactEntity>? {
         return runBlocking {
             appDB?.contactDao()?.getAllContacts()
-
-
         }
     }
 
@@ -111,7 +109,6 @@ class ContactRepository(mDB: AppDatabase?) {
     * */
     fun updateIsSyncAndIsAppUserStatus(contactList: ArrayList<UserPhoneContact>?) {
         runBlocking {
-            appDB?.contactDao()?.updateIsSyncStatus(isSync = false, isSyncChanged = true)
             if (!contactList.isNullOrEmpty()) {
                 contactList.forEachIndexed { index, userPhoneContact ->
                     appDB?.contactDao()
@@ -119,8 +116,10 @@ class ContactRepository(mDB: AppDatabase?) {
                             isAppUser = true,
                             contactNum = userPhoneContact.contactNumber,
                             profilePicUrl = userPhoneContact.profilePicResourceId,
-                            userId = userPhoneContact.userId
+                            userId = userPhoneContact.userId,
+                            isSync = true
                         )
+
 
                 }
             }

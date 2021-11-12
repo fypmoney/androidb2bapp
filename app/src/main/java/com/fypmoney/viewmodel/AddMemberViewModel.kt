@@ -145,7 +145,11 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
         }
 
         trackr {
-            it.name = TrackrEvent.Family_add
+            it.services = arrayListOf(
+                TrackrServices.FIREBASE,
+                TrackrServices.MOENGAGE,
+                TrackrServices.FB,TrackrServices.ADJUST)
+            it.name = TrackrEvent.add_familymember
             it.add(TrackrField.added_family_member_mobile_no,mobile.value!!.trim())
             it.add(TrackrField.added_family_member_reletionship,relation)
         }

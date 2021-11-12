@@ -123,7 +123,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
     override fun onResume() {
         super.onResume()
         trackr {
-            it.name = TrackrEvent.Offer_tab
+            it.name = TrackrEvent.offer_tab
         }
     }
 

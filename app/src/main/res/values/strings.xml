@@ -833,7 +833,7 @@ Coming really soon!
     <string name="logout">Logout</string>
     <string name="facebook_app_id">393472762006028</string>
     <string name="facebook_client_token">Facebook Client ID</string>
-    <string name="_1_we_read_contacts_to_verify_your_mobile_number_and_inviting_friends_from_phonebook">We read contacts to verify your mobile number and inviting friends from phonebook.</string>
+    <string name="_1_we_read_contacts_to_verify_your_mobile_number_and_inviting_friends_from_phonebook">We read your contacts for hassle free money transfer to fellow Fyp user.</string>
     <string name="we_use_your_location_to_check_if_your_current_city_is_serviceable_by_us">We use your location to check if your current city is serviceable by us.</string>
     <string name="location_permission1">Location Permission</string>
     <string name="welcome_to_fyp">Welcome to Fyp!</string>
@@ -965,7 +965,11 @@ Coming really soon!
 
     <string name="will_be_deducted_from_your_balance_scratch">Will be deducted from your balance \nfor Scratch card.</string>
     <string name="make_your_first_transaction_using_your_fyp_card_and_earn_mynts">Make your first transaction using your fyp card and earn mynts.</string>
+    <string name="cash_back_won_history">Cashback Won History</string>
+    <string name="looks_like_you_haven_t_any_referred_a_yet">Looks like you haven’t any referred a yet.</string>
     <string name="you_can_send_or_request_up_to_10000">You can send or request up to RS 10000</string>
+    <string name="please_wait_loading_contact_list">Please wait,loading contact list...</string>
+    <string name="please_allow_us_to_read_your_contacts">Please allow us to read your contacts.</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>

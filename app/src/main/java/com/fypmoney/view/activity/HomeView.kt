@@ -79,15 +79,13 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         loadFragment(HomeScreen(),1)
 
         trackr {
-            it.name = TrackrEvent.Home_Screen
+            it.name = TrackrEvent.home_screen
             it.add(
                 TrackrField.user_id,SharedPrefUtils.getLong(
                     applicationContext,
                     SharedPrefUtils.SF_KEY_USER_ID
                 ).toString())
         }
-        logSentFriendRequestEvent()
-
 
         LocationListenerClass(
             this, this
@@ -161,13 +159,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         }
     }
 
-    /**
-     * This function assumes logger is an instance of AppEventsLogger and has been
-     * created using AppEventsLogger.newLogger() call.
-     */
-    fun logSentFriendRequestEvent() {
-        AppEventsLogger.newLogger(applicationContext).logEvent("home_screen")
-    }
+
     private fun setupFamily() {
         loadFragment(FamilySettingsView(), 5)
         mViewBinding.navigationView.menu.findItem(R.id.family).isChecked = true;
@@ -267,13 +259,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onFeedClicked.observe(this) {
-            if (it) {
-                intentToActivity(UserFeedsView::class.java)
-                mViewModel.onFeedClicked.value = false
-            }
-        }
-
         mViewModel.sendMoneyApiResponse.observe(this) {
             callTransactionSuccessBottomSheet(it)
         }
@@ -323,7 +308,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 callInsuficientFundMessageSheet(Utility.convertToRs(mViewModel.amountToBeAdded))
             }
         })
-        mViewModel.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
+        mViewModel.bottomSheetStatus.observe(this, { list ->
             bottomSheetMessage?.dismiss()
             taskMessageBottomSheet3?.dismiss()
             if (list.currentState == "ACCEPT") {
@@ -453,7 +438,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
  * This method is used to check for permissions
  * */
     private fun checkAndAskPermission() {
-        when (checkPermission(Manifest.permission.READ_CONTACTS)) {
+        /*when (checkPermission(Manifest.permission.READ_CONTACTS)) {
             true -> {
                 Utility.getAllContactsInList(
                     contentResolver,
@@ -464,7 +449,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
             else -> {
                 requestPermission(Manifest.permission.READ_CONTACTS)
             }
-        }
+        }*/
         when (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
             false -> {
                 mViewModel.postLatlong("","",SharedPrefUtils.getLong(
@@ -521,11 +506,11 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     //allow
-                    var list = Utility.getAllContactsInList(
+                    /*var list = Utility.getAllContactsInList(
                         contentResolver,
                         this,
                         contactRepository = mViewModel.contactRepository
-                    )
+                    )*/
 
                 } else {
                     //set to never ask again
@@ -542,7 +527,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     }
 
     override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {
-        mViewModel.callContactSyncApi()
+        //mViewModel.callContactSyncApi()
     }
 
     private fun setCurrentFragment(fragment: Fragment) =

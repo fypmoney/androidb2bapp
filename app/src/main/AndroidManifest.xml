@@ -89,7 +89,7 @@
             android:name=".view.ordercard.trackorder.TrackOrderView"
             android:hardwareAccelerated="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar"></activity>
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.FirstScreenView"
             android:screenOrientation="portrait" />
@@ -254,14 +254,17 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.UserFeedsInAppWebview"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"/>
 
-        </activity>
         <activity
             android:name=".view.rewardsAndWinnings.activity.RewardsHistoryView"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"/>
 
-        </activity>
+        <activity android:name=".view.rewardsAndWinnings.CashBackWonHistoryActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".view.activity.PayUSuccessViewCashbackWon"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
