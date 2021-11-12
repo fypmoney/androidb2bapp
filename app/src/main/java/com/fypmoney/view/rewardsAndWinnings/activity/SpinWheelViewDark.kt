@@ -4,6 +4,8 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -119,15 +121,19 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
                 sectionArrayList.forEach { item ->
 
                     if (item.id == sectionId.toString()) {
+                        offer_found_tv.visibility = View.VISIBLE
 
-                        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                            trackr {
-                                it.name = TrackrEvent.spin_success
-                                it.add(TrackrField.spin_product_code, ProductCode)
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                                trackr {
+                                    it.name = TrackrEvent.spin_success
+                                    it.add(TrackrField.spin_product_code, ProductCode)
 
+                                }
+                                showwonDialog(item.sectionValue)
                             }
-                            showwonDialog(item.sectionValue)
-                        }
+                        }, 400)
+
                         return@forEach
 
                     }
