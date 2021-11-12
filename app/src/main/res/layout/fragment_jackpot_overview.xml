@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:background="@drawable/jackpot_radial_gradient"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_120sdp"
+                android:layout_marginStart="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_28sdp"
+
+                android:src="@drawable/ic_offer_banner" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_below="@+id/banner"
+                android:id="@+id/amount_mynts"
+                android:layout_marginTop="@dimen/_12sdp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/bootom_part_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:paddingTop="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:alpha=".10"
+                        android:background="@drawable/round_dark_grey_backgroud_6"
+                        android:backgroundTint="#F4F4F4"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+
+                        app:layout_constraintBottom_toBottomOf="@+id/total_refral_won_value_tv"
+                        app:layout_constraintStart_toEndOf="@+id/loading_amount_hdp"
+                        app:layout_constraintTop_toTopOf="@+id/total_refral_won_value_tv" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/total_refral_won_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginBottom="@dimen/_18sdp"
+                        android:text="@string/total_golden"
+
+                        android:textColor="@color/white"
+                        android:alpha=".8"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/total_refral_won_value_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/total_refral_won_value_tv" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/total_refral_won_value_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:textColor="@color/color_orange"
+                        android:textSize="24sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.fypmoney.view.customview.HorizontalDottedProgress
+                        android:id="@+id/loading_amount_hdp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+
+                        app:layout_constraintBottom_toBottomOf="@+id/total_refral_won_value_tv"
+
+                        app:layout_constraintStart_toEndOf="@+id/total_refral_won_value_tv"
+                        app:layout_constraintTop_toTopOf="@+id/total_refral_won_value_tv"
+                        tools:visibility="visible" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:id="@+id/shimmerLayout"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_below="@+id/amount_mynts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                    <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                    <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/amount_mynts"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginBottom="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/LoadProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/_4sdp"
+
+                android:visibility="gone"
+                android:layout_alignParentBottom="true"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/dots_animation" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/empty_screen"
+                android:layout_marginTop="@dimen/_90sdp"
+                android:layout_gravity="center_horizontal"
+
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_194sdp"
+                    android:id="@+id/image"
+                    android:layout_height="@dimen/_142sdp"
+                    android:layout_centerHorizontal="true"
+
+                    app:srcCompat="@drawable/ic_no_task" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@+id/image"
+                    android:layout_marginTop="@dimen/_30sdp"
+                    android:paddingLeft="@dimen/_34sdp"
+                    android:paddingRight="@dimen/_34sdp"
+                    android:textColor="#9CA3A5"
+                    android:gravity="center"
+                    android:text="Looks like you haven’t been assigned any task yet. 😅"
+                    android:layout_height="wrap_content" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

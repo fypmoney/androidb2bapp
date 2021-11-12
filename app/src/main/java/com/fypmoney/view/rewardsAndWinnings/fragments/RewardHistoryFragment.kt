@@ -94,7 +94,6 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
                 } else {
                     sharedViewModel?.callProductsDetailsApi(historyItem.orderNumber)
 
-
                 }
             }
         }

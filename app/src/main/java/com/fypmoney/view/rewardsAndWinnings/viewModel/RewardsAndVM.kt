@@ -15,6 +15,8 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
+import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -42,11 +44,18 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
     var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
     var coinsBurned: LiveEvent<CoinsBurnedResponse> = LiveEvent()
+    var totalJackpotAmount: MutableLiveData<TotalJackpotResponse> = MutableLiveData()
+
     var error: MutableLiveData<ErrorResponseInfo> = MutableLiveData()
     var totalCount = ObservableField(0)
+    var totalCountJackpot = ObservableField(0)
     var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
     var rewardfeedList: MutableLiveData<ArrayList<FeedDetails>> =
         MutableLiveData()
+
+    var jackpotfeedList: MutableLiveData<ArrayList<FeedDetails>> =
+        MutableLiveData()
+
     fun onSelectClicked() {
         onAddMoneyClicked.value = true
     }
@@ -55,11 +64,11 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     init {
 
 
-
         callRewardProductList()
 
         callFetchFeedsApi()
         callRewardHistory()
+        callTotalJackpotCards()
     }
 
 
@@ -205,6 +214,18 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         )
     }
 
+    fun callTotalJackpotCards() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_JACKPOT_CARDS,
+                NetworkUtil.endURL(ApiConstant.API_GET_JACKPOT_CARDS),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
     private fun <T> getObject(response: String, instance: Class<T>): Any? {
         return Gson().fromJson(response, instance)
     }
@@ -248,17 +269,27 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
             ApiConstant.API_FETCH_ALL_FEEDS -> {
                 var feeds = getObject(responseData.toString(), FeedResponseModel::class.java)
                 if (feeds is FeedResponseModel) {
-
-                    // Save the access token in shared preference
                     val response = feeds.getAllFeed?.getAllFeed
-                    // check total count and if greater than 0 set list else set no data found
-                    var notificationList: ArrayList<FeedDetails>? =
-                        ArrayList()
-                    response?.feedDetails?.forEach() {
-                        notificationList?.add(it)
+                    if (!response?.feedDetails.isNullOrEmpty() && response?.feedDetails?.get(0)?.screenName == "REWARD") {
+
+                        var notificationList: ArrayList<FeedDetails>? =
+                            ArrayList()
+                        response?.feedDetails?.forEach() {
+                            notificationList?.add(it)
+                        }
+                        totalCount.set(response?.total)
+                        rewardfeedList.postValue(notificationList)
+                    } else {
+                        var notificationList: ArrayList<FeedDetails>? =
+                            ArrayList()
+                        response?.feedDetails?.forEach() {
+                            notificationList?.add(it)
+                        }
+                        totalCountJackpot.set(response?.total)
+                        jackpotfeedList.postValue(notificationList)
                     }
-                    totalCount.set(response?.total)
-                    rewardfeedList.postValue(notificationList)
+                    // Save the access token in shared preference
+
 
                 }
 
@@ -276,6 +307,20 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
 
             }
+            ApiConstant.API_GET_JACKPOT_CARDS -> {
+
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+                val array = Gson().fromJson<TotalJackpotResponse>(
+                    json.get("data").toString(),
+                    TotalJackpotResponse::class.java
+                )
+
+                totalJackpotAmount.postValue(array)
+
+
+            }
+
 
             ApiConstant.API_GET_REWARD_EARNINGS -> {
 
@@ -283,7 +328,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
                 val array = Gson().fromJson<totalRewardsResponse>(
                     json.get("data").toString(),
-                    com.fypmoney.model.totalRewardsResponse::class.java
+                    com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse::class.java
                 )
 
                 totalRewardsResponse.postValue(array)

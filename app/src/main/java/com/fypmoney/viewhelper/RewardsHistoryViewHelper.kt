@@ -14,12 +14,6 @@ class RewardsHistoryViewHelper(var rewardsHistory: GetRewardsHistoryResponseDeta
     init {
 
 
-
-//        val sf = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.m'Z'",Locale.US)
-//        val outDate = SimpleDateFormat("MMM dd' ,'hh:mm a",Locale.US)
-////        sf.timeZone = TimeZone.getTimeZone("IST")
-//        val dtt = sf.parse( rewardsHistory?.playedOn)
-
         try {
             val sf = SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'", Locale.US)
             val outDate = SimpleDateFormat("MMM dd' ,'hh:mm a", Locale.US)

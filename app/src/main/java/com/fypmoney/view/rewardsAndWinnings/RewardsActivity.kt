@@ -34,12 +34,12 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment
+import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsJackpotFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -81,7 +81,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
             this,
             androidx.lifecycle.Observer { list ->
                 if (list) {
-                    viewPager.currentItem = 2
+                    viewPager.currentItem = 3
                     mViewModel?.totalmyntsClicked?.postValue(false)
 
                 }
@@ -185,7 +185,9 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
         adapter.addFragment(RewardsOverviewFragment(), getString(R.string.overview))
+
         adapter.addFragment(RewardsSpinnerListFragment(), getString(R.string.arcade))
+        adapter.addFragment(RewardsJackpotFragment(), getString(R.string.jackpot))
         adapter.addFragment(RewardHistoryFragment(), getString(R.string.history))
 
         viewPager.adapter = adapter
@@ -212,10 +214,16 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
                         com.fypmoney.R.drawable.tab_two_rewards
                     )
 
+                } else if (tab.position == 2) {
+                    tab.view.background = ContextCompat.getDrawable(
+                        this@RewardsActivity,
+                        com.fypmoney.R.drawable.tab_third_rewards
+                    )
+
                 } else {
                     tab.view.background = ContextCompat.getDrawable(
                         this@RewardsActivity,
-                        com.fypmoney.R.drawable.tab_three_rewards
+                        com.fypmoney.R.drawable.tab_four_rewards
                     )
 
                 }

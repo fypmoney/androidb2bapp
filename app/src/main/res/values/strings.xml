@@ -942,6 +942,7 @@ Coming really soon!
     <string name="total_rewards_earned">Total rewards earned</string>
 
     <string name="overview">Overview</string>
+    <string name="jackpot">Jackpot</string>
     <string name="spinners">Spinners</string>
     <string name="history">History</string>
     <string name="spin_dark_text">Spin it to win It🤑</string>
@@ -968,6 +969,7 @@ Coming really soon!
     <string name="cash_back_won_history">Cashback Won History</string>
     <string name="looks_like_you_haven_t_any_referred_a_yet">Looks like you haven’t any referred a yet.</string>
     <string name="you_can_send_or_request_up_to_10000">You can send or request up to RS 10000</string>
+    <string name="total_golden">Total Golden tickets won</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>

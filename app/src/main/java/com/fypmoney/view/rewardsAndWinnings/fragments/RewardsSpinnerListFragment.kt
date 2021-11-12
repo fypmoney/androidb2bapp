@@ -331,6 +331,12 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
         typeAdapter = SpinnerAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
         mViewBinding?.rvSpinner?.adapter = typeAdapter
+        if (itemsArrayList.size > 0) {
+
+            mViewBinding?.shimmerLayout?.visibility = View.GONE
+            mViewBinding?.shimmerLayout?.stopShimmer()
+        }
+
     }
 
     private fun setRvScratchCard() {
@@ -363,6 +369,10 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         scratchAdapter =
             ScratchItemAdapter(scratchArrayList, requireContext(), itemClickListener2!!)
         mViewBinding?.rvScratch!!.adapter = scratchAdapter
+        if (scratchArrayList.size > 0) {
+            mViewBinding?.shimmerscratch?.visibility = View.GONE
+            mViewBinding?.shimmerscratch?.stopShimmer()
+        }
     }
 
     override fun getBindingVariable(): Int {

@@ -69,7 +69,9 @@
                                 app:tabBackground="@drawable/rewards_tab_selector"
                                 app:tabIndicatorHeight="0dp"
                                 android:textSize="18sp"
-                                app:tabMode="fixed"
+                                app:tabMode="scrollable"
+                                app:tabPaddingStart="@dimen/_24sdp"
+                                app:tabPaddingEnd="@dimen/_24sdp"
                                 app:tabSelectedTextColor="#15181F"
                                 app:tabTextAppearance="@style/MyCustomTextAppearance"
                                 app:tabTextColor="#a3a3a3">

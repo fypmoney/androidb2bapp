@@ -20,7 +20,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.view.customview.scratchlayout.listener.ScratchListener
 
 import com.fypmoney.view.customview.scratchlayout.ui.ScratchCardLayout
-import kotlinx.android.synthetic.main.dialog_burn_mynts.*
+
 
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_spin_wheel_black.*
@@ -31,7 +31,6 @@ import androidx.lifecycle.Lifecycle
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.model.SectionListItem
 import com.fypmoney.util.Utility
 import kotlinx.android.synthetic.main.dialog_burn_mynts.clicked
@@ -154,7 +153,7 @@ class ScratchCardActivity :
                         it.add(TrackrField.spin_product_code, ProductCode)
 
                     }
-                    showwonDialog(it.cashbackWon)
+                    showwonDialog(it.cashbackWon, it.noOfJackpotTicket)
                 }
             }, 500)
 
@@ -168,7 +167,7 @@ class ScratchCardActivity :
         setResult(52)
     }
 
-    private fun showwonDialog(cashbackWon: String?) {
+    private fun showwonDialog(cashbackWon: String?, noOfJackpotTicket: Int?) {
 
 
         dialogDialog?.setCancelable(false)
@@ -181,16 +180,30 @@ class ScratchCardActivity :
         if (cashbackWon == "0") {
             dialogDialog?.congrats_tv?.visibility = View.GONE
             dialogDialog?.textView?.visibility = View.GONE
+            if (noOfJackpotTicket != null) {
+                dialogDialog?.spin_green?.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.golden_cards
+                    )
+                )
+                dialogDialog?.better_next_time?.visibility = View.INVISIBLE
+                dialogDialog!!.golden_cards_won!!.text =
+                    "You won " + noOfJackpotTicket + "\nGolden Tickets"
+            } else {
+                dialogDialog?.better_next_time?.visibility = View.VISIBLE
+                dialogDialog?.clicked?.text = getString(R.string.continue_txt)
+
+                dialogDialog?.spin_green?.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.better_luck_next_time
+                    )
+                )
+            }
             dialogDialog?.clicked?.text = getString(R.string.continue_txt)
             dialogDialog?.luckonside_tv?.visibility = View.GONE
-            dialogDialog?.spin_green?.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this,
-                    R.drawable.better_luck_next_time
-                )
-            )
 
-            dialogDialog?.better_next_time?.visibility = View.VISIBLE
         }
         if (mViewModel.played.get() == true) {
             dialogDialog?.textView?.text =
