@@ -61,7 +61,8 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
     val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == 52) {
+            if (result.resultCode == 23) {
+                sharedViewModel?.totalmyntsClicked?.postValue(true)
 
 
             }
@@ -194,7 +195,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                                             AppConstants.PRODUCT_HIDE_IMAGE,
                                             scratchArrayList[sharedViewModel.selectedPositionScratch.get()!!].scratchResourceShow
                                         )
-                                        startActivity(intent)
+                                        startForResult.launch(intent)
                                     }
                                 })
 

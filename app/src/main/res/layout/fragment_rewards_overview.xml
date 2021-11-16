@@ -218,7 +218,7 @@
                 <ImageView
                     android:id="@+id/imageView3"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="36dp"
 
 
                     android:layout_marginEnd="@dimen/_12sdp"
@@ -239,7 +239,7 @@
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@id/loading_golden_cards"
-                    app:layout_constraintStart_toStartOf="@+id/loading_golden_cards"
+                    app:layout_constraintStart_toEndOf="@+id/amount_golder_tv"
                     app:layout_constraintTop_toTopOf="@+id/loading_golden_cards" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -252,6 +252,8 @@
                     android:layout_marginTop="@dimen/_14sdp"
                     android:layout_marginBottom="@dimen/_14sdp"
                     android:textColor="#F2DC12"
+                    android:text="...."
+                    android:visibility="invisible"
                     android:textSize="30sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -261,11 +263,12 @@
                     android:id="@+id/loading_golden_cards"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
                     android:layout_gravity="center"
 
                     app:layout_constraintBottom_toBottomOf="@+id/amount_golder_tv"
 
-                    app:layout_constraintStart_toEndOf="@+id/amount_golder_tv"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/amount_golder_tv"
                     tools:visibility="visible" />
 

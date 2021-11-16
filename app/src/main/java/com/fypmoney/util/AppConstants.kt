@@ -138,6 +138,7 @@ object AppConstants {
     const val CHANGED_DATE_TIME_FORMAT = "MMM dd,yyyy-HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT9 = "dd MMM,yyyy-HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT1 = "MMM dd"
+    const val CHANEGEDATE_DATE_MONTH = "dd MMM"
     const val CHANGED_DATE_TIME_FORMAT2 = "MMM dd HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT3 = "MMM dd, HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT4 = "MMM dd, yyyy"
@@ -253,5 +254,6 @@ object AppConstants {
     const val NO_GOLDED_CARD = "GOLDEDCARD"
     const val PRODUCT_CODE = "PRODUCT_CODE"
     const val TRANS_TYPE_EARN = "EARN"
+    const val JACKPOT_SCREEN_NAME = "JACKPOT"
 
 }

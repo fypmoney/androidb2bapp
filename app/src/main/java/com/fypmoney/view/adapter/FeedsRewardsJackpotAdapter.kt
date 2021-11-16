@@ -11,7 +11,7 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewhelper.FeedsViewHelper
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsJackpotVM
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
@@ -19,13 +19,14 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
 /**
  * This adapter class is used to handle feeds
  */
-class FeedsRewardsAdapter(
+class FeedsRewardsJackpotAdapter(
     var context: Activity,
-    var viewModel: RewardsAndVM,
-    var onFeedItemClickListener: FeedsAdapter.OnFeedItemClickListener
+    var viewModel: RewardsJackpotVM,
+    var onFeedItemClickListener: FeedsAdapter.OnFeedItemClickListener,
+    var feedList: ArrayList<FeedDetails>? = ArrayList()
 ) :
     RecyclerView.Adapter<BaseViewHolder>() {
-    var feedList: ArrayList<FeedDetails>? = ArrayList()
+
     private val typeWithTitle = 1
 
     private val typeWithoutTitle = 2
@@ -80,6 +81,7 @@ class FeedsRewardsAdapter(
         }
         return ViewHolder()
     }
+
     inner class StaticImage1x1(
         private val mRowItemBinding: FeedsDidUKnowrewards1x1Binding? = null
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
@@ -94,10 +96,10 @@ class FeedsRewardsAdapter(
 
 
             try {
-                if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
+                if (position == feedList?.size!! - 1 && viewModel.totalCountJackpot.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
-                    viewModel.page.set(viewModel.page.get()!! + 1)
-                    viewModel.callFetchFeedsApi(
+                    viewModel.pagejackpot.set(viewModel.pagejackpot.get()!! + 1)
+                    viewModel.callFetchFeedsJackpotApi(
                         latitude = viewModel.latitude.get(),
                         longitude = viewModel.longitude.get()
                     )
@@ -117,6 +119,7 @@ class FeedsRewardsAdapter(
     override fun getItemCount(): Int {
         return feedList!!.size
     }
+
     inner class StaticImage1x1_5(
         private val mRowItemBinding: ItemFeedsStaticImageAspectRatioBinding? = null
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
@@ -130,10 +133,10 @@ class FeedsRewardsAdapter(
 
 
             try {
-                if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
+                if (position == feedList?.size!! - 1 && viewModel.totalCountJackpot.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
-                    viewModel.page.set(viewModel.page.get()!! + 1)
-                    viewModel.callFetchFeedsApi(
+                    viewModel.pagejackpot.set(viewModel.pagejackpot.get()!! + 1)
+                    viewModel.callFetchFeedsJackpotApi(
                         latitude = viewModel.latitude.get(),
                         longitude = viewModel.longitude.get()
                     )
@@ -147,6 +150,7 @@ class FeedsRewardsAdapter(
 
         }
     }
+
     /**
      * This will set the data in the list in adapter
      */
@@ -182,10 +186,10 @@ class FeedsRewardsAdapter(
             mRowItemBinding!!.viewHelper = mViewHelper
 
             try {
-                if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
+                if (position == feedList?.size!! - 1 && viewModel.totalCountJackpot.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
-                    viewModel.page.set(viewModel.page.get()!! + 1)
-                    viewModel.callFetchFeedsApi(
+                    viewModel.pagejackpot.set(viewModel.pagejackpot.get()!! + 1)
+                    viewModel.callFetchFeedsJackpotApi(
                         latitude = viewModel.latitude.get(),
                         longitude = viewModel.longitude.get()
                     )
@@ -247,10 +251,10 @@ class FeedsRewardsAdapter(
 
 
             try {
-                if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
+                if (position == feedList?.size!! - 1 && viewModel.totalCountJackpot.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
-                    viewModel.page.set(viewModel.page.get()!! + 1)
-                    viewModel.callFetchFeedsApi(
+                    viewModel.pagejackpot.set(viewModel.pagejackpot.get()!! + 1)
+                    viewModel.callFetchFeedsJackpotApi(
                         latitude = viewModel.latitude.get(),
                         longitude = viewModel.longitude.get()
                     )

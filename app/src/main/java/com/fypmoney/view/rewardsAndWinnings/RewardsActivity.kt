@@ -166,8 +166,13 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         }
     }
 
-    override fun onActivityReenter(resultCode: Int, data: Intent?) {
-        super.onActivityReenter(resultCode, data)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (resultCode == 23) {
+            mViewModel?.totalmyntsClicked?.postValue(true)
+        }
+
 
     }
 
@@ -176,7 +181,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         mViewModel?.callTotalRewardsEarnings()
         mViewModel?.callRewardSummary()
         mViewModel?.callRewardHistory()
-        mViewModel?.callTotalJackpotCards()
+
 
     }
 
@@ -192,7 +197,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         adapter.addFragment(RewardHistoryFragment(), getString(R.string.history))
 
         viewPager.adapter = adapter
-//        viewPager.offscreenPageLimit = 1
+        viewPager.offscreenPageLimit = 0
 
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.getTabAt(0)?.view?.background = ContextCompat.getDrawable(

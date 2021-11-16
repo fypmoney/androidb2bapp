@@ -17,6 +17,23 @@
         tools:context=".view.ordercard.cardorderoffer.CardOrderOfferActivity">
 
         <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/offer_found_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_400sdp"
+            android:layout_marginStart="-80dp"
+            android:layout_marginEnd="-80dp"
+            android:layout_marginBottom="-80dp"
+
+            android:layout_centerHorizontal="true"
+            android:elevation="@dimen/_6sdp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:lottie_autoPlay="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:lottie_rawRes="@raw/ribbon_bomb" />
+
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/LoadProgressBar"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_30sdp"
@@ -40,20 +57,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/offer_found_tv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:elevation="@dimen/_6sdp"
 
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:lottie_autoPlay="true"
-            android:visibility="gone"
-
-            app:lottie_rawRes="@raw/ic_fireworks" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/card_cl"
@@ -84,6 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_100sdp"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title_tv"
@@ -93,6 +98,7 @@
                     android:id="@+id/scratch_card_layout"
                     android:layout_width="250dp"
                     android:layout_height="250dp"
+                    android:backgroundTint="#26282b"
                     android:layout_gravity="center_horizontal"
                     app:scratchDrawable="@drawable/ic_scratch_card_white"
                     app:scratchEnabled="true"
@@ -104,7 +110,10 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+
+                        android:background="@android:color/transparent"
                         android:gravity="center"
+
 
                         android:orientation="vertical">
 
@@ -122,8 +131,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_centerHorizontal="true"
+                            android:src="@drawable/golden_won"
 
-                            android:src="@drawable/golden_won" />
+                            android:visibility="invisible" />
 
                         <TextView
                             android:id="@+id/offer_desc_tv"
@@ -153,7 +163,7 @@
                             android:layout_height="wrap_content"
 
                             android:text=""
-                            android:textSize="27sp"
+                            android:textSize="25sp"
                             android:textStyle="bold" />
 
                         <TextView

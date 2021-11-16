@@ -73,20 +73,6 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
         mViewBinding?.recyclerView?.layoutManager = layoutManager
 
 
-        var itemClickListener2 = object : ListItemClickListener {
-
-
-            override fun onItemClicked(pos: Int) {
-
-
-            }
-
-            override fun onCallClicked(pos: Int) {
-
-            }
-
-
-        }
 
 
         typeAdapter = sharedViewModel?.let { FeedsRewardsAdapter(requireActivity(), it, this) }
@@ -139,6 +125,7 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
             androidx.lifecycle.Observer { list ->
                 mViewBinding?.loadingGoldenCards?.clearAnimation()
                 mViewBinding?.loadingGoldenCards?.visibility = View.GONE
+                mViewBinding?.amountGolderTv?.visibility = View.VISIBLE
                 mViewBinding?.amountGolderTv?.text =
                     "${list.count}"
 

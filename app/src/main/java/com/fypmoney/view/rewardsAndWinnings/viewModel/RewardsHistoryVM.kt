@@ -70,6 +70,7 @@ class RewardsHistoryVM(application: Application) : BaseViewModel(application) {
                     com.fypmoney.model.aRewardProductResponse::class.java
                 )
 
+
                 redeemproductDetails.value = spinDetails
 
 

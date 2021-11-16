@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
 
-    android:layout_marginStart="@dimen/_32sdp"
-    android:layout_marginEnd="@dimen/_32sdp"
+    android:layout_marginStart="@dimen/_36sdp"
+    android:layout_marginEnd="@dimen/_36sdp"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -57,7 +57,6 @@
 
                     android:layout_marginEnd="@dimen/_24sdp"
                     android:gravity="center"
-
                     android:text=""
                     android:textColor="#BAE6C2"
                     android:textSize="24sp" />
@@ -87,6 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:gravity="center"
+                style="@style/TextviewRegular"
                 android:text="@string/refer_a_friend_or_make_a_ntransaction_to_earn_more_mynts"
                 android:textColor="@color/cb_grey"
                 app:layout_constraintEnd_toEndOf="parent"

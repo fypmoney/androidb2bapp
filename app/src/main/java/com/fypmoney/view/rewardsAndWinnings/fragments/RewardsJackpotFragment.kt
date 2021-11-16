@@ -12,33 +12,31 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentJackpotOverviewBinding
-import com.fypmoney.databinding.FragmentRewardsOverviewBinding
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.activity.UserFeedsInAppWebview
 import com.fypmoney.view.adapter.FeedsAdapter
-import com.fypmoney.view.adapter.FeedsRewardsAdapter
+import com.fypmoney.view.adapter.FeedsRewardsJackpotAdapter
 
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
-import com.fypmoney.view.interfaces.ListItemClickListener
-import com.fypmoney.view.rewardsAndWinnings.CashBackWonHistoryActivity
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsJackpotVM
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 
-class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, RewardsAndVM>(),
+class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, RewardsJackpotVM>(),
     FeedsAdapter.OnFeedItemClickListener {
-    companion object {
-        var page = 0
 
-    }
+    var feedList: ArrayList<FeedDetails>? = ArrayList()
 
     private var mViewBinding: FragmentJackpotOverviewBinding? = null
-    private var sharedViewModel: RewardsAndVM? = null
+    private var jackpotViewModel: RewardsJackpotVM? = null
 
-    private var typeAdapter: FeedsRewardsAdapter? = null
+    private var feedAdapter: FeedsRewardsJackpotAdapter? = null
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -47,8 +45,16 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
 
 
 
+
+
         setRecyclerView()
-        sharedViewModel?.let { observeInput(it) }
+        setWeekText()
+
+
+
+
+
+        jackpotViewModel?.let { observeInput(it) }
         mViewBinding?.bootomPartCl?.setOnClickListener(View.OnClickListener {
 //            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
 //
@@ -58,35 +64,68 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
 
     }
 
+    private fun setWeekText() {
+        try {
+            val c: Calendar = Calendar.getInstance()
+            c.firstDayOfWeek = Calendar.MONDAY
+            c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+
+            var spf = SimpleDateFormat(AppConstants.CHANEGEDATE_DATE_MONTH);
+            var date = spf.format(c.time);
+
+            mViewBinding?.totalRefralWonTv?.text = date
+
+            c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+
+
+            var date2 = spf.format(c.time);
+            mViewBinding?.totalRefralWonTv?.text =
+                "Total Golden tickets won\nfrom " + date + " to " + date2
+
+        } catch (e: Exception) {
+
+        }
+
+
+    }
+
 
     override fun onTryAgainClicked() {
 
     }
+
 
     private fun setRecyclerView() {
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         mViewBinding?.recyclerView?.layoutManager = layoutManager
 
+        if (!feedList.isNullOrEmpty()) {
+            mViewBinding?.shimmerLayout?.stopShimmer()
+            mViewBinding?.shimmerLayout?.visibility = View.GONE
+        }
 
-
-
-        typeAdapter = sharedViewModel?.let { FeedsRewardsAdapter(requireActivity(), it, this) }
-        mViewBinding?.recyclerView?.adapter = typeAdapter
+        feedAdapter = jackpotViewModel?.let {
+            FeedsRewardsJackpotAdapter(
+                requireActivity(),
+                it,
+                this,
+                feedList
+            )
+        }
+        mViewBinding?.recyclerView?.adapter = feedAdapter
 
     }
 
-    private fun observeInput(sharedViewModel: RewardsAndVM) {
+    private fun observeInput(sharedViewModel: RewardsJackpotVM) {
+
         sharedViewModel.jackpotfeedList.observe(requireActivity(), { list ->
-            if (list.isNullOrEmpty()) {
-                mViewBinding?.recyclerView?.visibility = View.GONE
-            } else {
+            if (!list.isNullOrEmpty()) {
                 mViewBinding?.shimmerLayout?.stopShimmer()
-                typeAdapter?.setList(list)
 
+                feedList?.addAll(list)
                 mViewBinding?.shimmerLayout?.visibility = View.GONE
-                typeAdapter?.notifyDataSetChanged()
-
+                feedAdapter?.notifyDataSetChanged()
             }
 
 
@@ -114,13 +153,13 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
         return R.layout.fragment_jackpot_overview
     }
 
-    override fun getViewModel(): RewardsAndVM {
-        activity?.let {
-            sharedViewModel = ViewModelProvider(it).get(RewardsAndVM::class.java)
+    override fun getViewModel(): RewardsJackpotVM {
+
+        jackpotViewModel = ViewModelProvider(this).get(RewardsJackpotVM::class.java)
 //            observeInput(sharedViewModel!!)
 
-        }
-        return sharedViewModel!!
+
+        return jackpotViewModel!!
     }
 
     override fun onFeedClick(position: Int, it: FeedDetails) {

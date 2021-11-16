@@ -54,7 +54,7 @@ class RewardsHistoryLeaderboardAdapter(
             holder.won_tv.visibility = View.VISIBLE
             holder.status_tv.visibility = View.INVISIBLE
             holder.amount.text =
-                "₹" + Utility.convertToRs(items[position].cashbackWonForProduct.toString())
+                " ₹" + Utility.convertToRs(items[position].cashbackWonForProduct.toString())
 
             holder.productType.setImageDrawable(
                 ContextCompat.getDrawable(
@@ -103,6 +103,7 @@ class RewardsHistoryLeaderboardAdapter(
                     R.drawable.ic_mynt_coin
                 )
             )
+            holder.note.visibility = View.INVISIBLE
 
         }
 

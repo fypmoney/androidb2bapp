@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,7 @@ import java.util.ArrayList
 
 class ScratchCardActivity :
     BaseActivity<ActivityScratchProductBinding, ScratchCardProductViewmodel>() {
+    private var mp: MediaPlayer? = null
     private var noOfGoldenCard: Int? = null
     private var ProductCode: String? = null
     private var dialogError: Dialog? = null
@@ -118,7 +120,9 @@ class ScratchCardActivity :
 
 
         dialogError?.clicked?.setOnClickListener(View.OnClickListener {
-         finish()
+            mp?.stop()
+            setResult(23)
+            finish()
         })
 
 
@@ -154,9 +158,16 @@ class ScratchCardActivity :
                         it.add(TrackrField.spin_product_code, ProductCode)
 
                     }
+
+                    offer_found_tv?.visibility = View.VISIBLE
                     showwonDialog(it.cashbackWon, it.noOfJackpotTicket)
+                    mp = MediaPlayer.create(
+                        this,
+                        R.raw.reward_won_sound
+                    )
+                    mp?.start()
                 }
-            }, 500)
+            }, 300)
 
 
         }
@@ -191,12 +202,13 @@ class ScratchCardActivity :
             if (noOfJackpotTicket != null) {
 
                 dialogDialog!!.golden_cards_won!!.text =
-                    "You won " + noOfJackpotTicket + "\nGolden Tickets"
+                    "You won " + noOfJackpotTicket + getString(R.string.golden_card)
             }
             dialogDialog?.clicked?.text = getString(R.string.continue_txt)
             dialogDialog?.luckonside_tv?.visibility = View.GONE
 
         }
+
         if (mViewModel.played.get() == true) {
             dialogDialog?.textView?.text =
                 "your wallet has been updated with ₹ " + Utility.convertToRs(cashbackWon)
@@ -221,6 +233,8 @@ class ScratchCardActivity :
 //
 //                    }
 //                }
+                mp?.stop()
+                setResult(23)
                 finish()
             } else {
                 mViewModel.callScratchWheelApi(orderId, true)
@@ -229,6 +243,11 @@ class ScratchCardActivity :
 
 
         dialogDialog?.show()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mp?.stop()
     }
 
 
@@ -241,7 +260,7 @@ class ScratchCardActivity :
                     mBinding.offerAmountTv.text = "₹" + Utility.convertToRs(item.sectionValue)
                     mBinding.offerDescTv.visibility = View.VISIBLE
                 } else {
-                    if (noOfGoldenCard != null) {
+                    if (noOfGoldenCard != null && noOfGoldenCard!! > 0) {
                         mBinding.offerAmountTv.text = noOfGoldenCard.toString() + " Golden Tickets"
 
                     }
@@ -280,7 +299,6 @@ class ScratchCardActivity :
             override fun onScratchComplete() {
 
 
-                mBinding.offerFoundTv.visibility = View.VISIBLE
                 mBinding.LoadProgressBar.visibility = View.VISIBLE
                 mViewModel.callScratchWheelApi(orderId, false)
 

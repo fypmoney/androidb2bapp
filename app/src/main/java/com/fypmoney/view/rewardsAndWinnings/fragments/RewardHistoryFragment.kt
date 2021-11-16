@@ -79,12 +79,13 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
             override fun onItemClicked(historyItem: HistoryItem) {
                 if (historyItem.productType == AppConstants.PRODUCT_SPIN) {
                     val intent = Intent(requireContext(), SpinWheelViewDark::class.java)
-                    intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
                     SpinWheelViewDark.sectionArrayList.clear()
                     intent.putExtra(
                         AppConstants.ORDER_NUM,
                         historyItem.orderNumber.toString()
                     )
+                    intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
+
                     startActivity(intent)
 
 //                    val args = Bundle()

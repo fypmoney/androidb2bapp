@@ -125,7 +125,7 @@ class SpinWheelProductViewModel(application: Application) : BaseViewModel(applic
                 NetworkUtil.endURL(ApiConstant.PLAY_ORDER_API + orderId),
                 ApiUrl.POST,
                 BaseRequest(),
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
 

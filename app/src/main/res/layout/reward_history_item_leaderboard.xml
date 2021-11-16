@@ -40,9 +40,9 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/productType"
-            android:layout_width="46dp"
+            android:layout_width="44dp"
 
-            android:layout_height="58dp"
+            android:layout_height="56dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="@dimen/_10sdp"
             android:paddingBottom="12dp"
@@ -100,12 +100,14 @@
             android:layout_width="wrap_content"
 
 
-            android:layout_height="6dp"
+            android:layout_height="@dimen/_8sdp"
 
             android:layout_alignTop="@+id/amount"
+
             android:layout_alignBottom="@+id/amount"
             android:layout_toStartOf="@+id/amount"
             android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
 
             android:src="@drawable/cash" />
 
@@ -117,8 +119,9 @@
             android:layout_alignParentRight="true"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_4sdp"
+            android:alpha=".40"
             android:layout_marginEnd="@dimen/_12sdp"
-            android:textColor="@color/grey_heading"
+            android:textColor="@color/white"
             android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -127,16 +130,16 @@
             android:layout_below="@+id/amount"
 
             android:layout_alignParentRight="true"
-            android:visibility="invisible"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_12sdp"
-            android:text="Play"
-
+            android:text="@string/play"
             android:textColor="#F7AA11"
 
+            android:textSize="14sp"
 
-            android:textSize="14sp" />
+
+            android:visibility="invisible" />
     </RelativeLayout>
 
 </layout>

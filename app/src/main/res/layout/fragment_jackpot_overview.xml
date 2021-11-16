@@ -82,9 +82,9 @@
                         style="@style/TextviewBold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
                         android:layout_marginBottom="@dimen/_18sdp"
-                        android:text="@string/total_golden"
+                        android:text="@string/total_golden_cards"
 
                         android:textColor="@color/white"
                         android:alpha=".8"
