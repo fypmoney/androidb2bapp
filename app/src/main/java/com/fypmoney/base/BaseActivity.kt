@@ -13,13 +13,11 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.util.Log
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -31,20 +29,12 @@ import androidx.fragment.app.Fragment
 import com.freshchat.consumer.sdk.FaqOptions
 import com.freshchat.consumer.sdk.Freshchat
 import com.freshchat.consumer.sdk.FreshchatConfig
-import com.freshchat.consumer.sdk.FreshchatUser
 import com.fyp.trackr.models.UserTrackr
 import com.fyp.trackr.models.logOut
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
-import com.fypmoney.model.SendMoneyResponseDetails
-import com.fypmoney.util.AppConstants
-import com.fypmoney.util.AppConstants.CASHBACK_AMOUNT
+import com.fypmoney.util.*
 import com.fypmoney.util.AppConstants.PLAY_STORE_URL
-import com.fypmoney.util.DialogUtils
-import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.Utility
-import com.fypmoney.view.AddMoneySuccessBottomSheet
-import com.fypmoney.view.activity.HomeView
 import com.fypmoney.view.activity.LoginView
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
@@ -53,7 +43,6 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors.newSingleThreadExecutor
-import android.R.string
 
 
 /**
@@ -431,31 +420,22 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
        * This is used to share the app
        * */
     fun inviteUser() {
-        val sendIntent = Intent()
-        sendIntent.action = Intent.ACTION_SEND
-
-
-        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
+        var content:String? = null
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null
+            && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
             if (!SharedPrefUtils.getString(
                     applicationContext,
                     SharedPrefUtils.SF_REFFERAL_MSG_2
                 ).isNullOrEmpty()
             ) {
-                sendIntent.putExtra(
-                    Intent.EXTRA_TEXT,
-                    SharedPrefUtils.getString(
+                content = SharedPrefUtils.getString(
                         applicationContext,
-                        SharedPrefUtils.SF_REFFERAL_MSG_2
-                    )
-                )
+                        SharedPrefUtils.SF_REFFERAL_MSG_2)
 
             } else {
-                sendIntent.putExtra(
-                    Intent.EXTRA_TEXT,
-                    getString(
-                        R.string.share_refral_code_34,
-                        PLAY_STORE_URL
-                    )
+                content = getString(
+                    R.string.share_refral_code_34,
+                    PLAY_STORE_URL
                 )
 
             }
@@ -476,31 +456,31 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
                     SharedPrefUtils.SF_REFFERAL_MSG
                 )
 
-                val newString =
+                val contentWithCode =
                     code?.let { redferMsg?.replace(AppConstants.REFER_CODE_CHECKING_VARIABLE, it) }
-                sendIntent.putExtra(
-                    Intent.EXTRA_TEXT,
-                    newString
-                )
+               content = contentWithCode
 
             } else {
-                sendIntent.putExtra(
-                    Intent.EXTRA_TEXT,
+                content =
                     getString(
                         R.string.share_refral_code_34,
                         PLAY_STORE_URL
                     )
-                )
-
             }
-
         }
-
-
-        sendIntent.type = "text/plain"
-        startActivity(sendIntent)
+        content?.let { onInviteUser(it) }
     }
 
+
+    private fun onInviteUser(data:String) {
+        val link = DynamicLinksUtil.generateInviteContent(data)
+
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plain"
+        intent.putExtra(Intent.EXTRA_TEXT, link)
+
+        startActivity(Intent.createChooser(intent, "Share Link"))
+    }
     override fun onTryAgainClicked() {
 
     }
