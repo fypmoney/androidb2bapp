@@ -4,6 +4,7 @@ import androidx.annotation.Keep
 
 @Keep
 data class TotalJackpotResponse(
-    val count: Int? = null
+    val count: Int? = null,
+    val totalJackpotMsg: String? = null
 )
 

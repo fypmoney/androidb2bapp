@@ -230,7 +230,8 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/golder_card_won_heading"
                     style="@style/TextviewRegular"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_marginEnd="@dimen/_56sdp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_12sdp"
 
@@ -239,6 +240,7 @@
                     android:textColor="@color/white"
                     android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="@id/loading_golden_cards"
+                    app:layout_constraintEnd_toStartOf="@+id/imageView3"
                     app:layout_constraintStart_toEndOf="@+id/amount_golder_tv"
                     app:layout_constraintTop_toTopOf="@+id/loading_golden_cards" />
 

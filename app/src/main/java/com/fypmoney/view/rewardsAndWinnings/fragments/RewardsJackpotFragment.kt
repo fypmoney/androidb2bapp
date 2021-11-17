@@ -32,27 +32,15 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
     FeedsAdapter.OnFeedItemClickListener {
 
     var feedList: ArrayList<FeedDetails>? = ArrayList()
-
     private var mViewBinding: FragmentJackpotOverviewBinding? = null
     private var jackpotViewModel: RewardsJackpotVM? = null
-
     private var feedAdapter: FeedsRewardsJackpotAdapter? = null
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
 
-
-
-
-
         setRecyclerView()
-        setWeekText()
-
-
-
-
 
         jackpotViewModel?.let { observeInput(it) }
         mViewBinding?.bootomPartCl?.setOnClickListener(View.OnClickListener {
@@ -64,30 +52,6 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
 
     }
 
-    private fun setWeekText() {
-        try {
-            val c: Calendar = Calendar.getInstance()
-            c.firstDayOfWeek = Calendar.MONDAY
-            c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
-
-            var spf = SimpleDateFormat(AppConstants.CHANEGEDATE_DATE_MONTH);
-            var date = spf.format(c.time);
-
-            mViewBinding?.totalRefralWonTv?.text = date
-
-            c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
-
-
-            var date2 = spf.format(c.time);
-            mViewBinding?.totalRefralWonTv?.text =
-                "Total Golden tickets won\nfrom " + date + " to " + date2
-
-        } catch (e: Exception) {
-
-        }
-
-
-    }
 
 
     override fun onTryAgainClicked() {
@@ -137,8 +101,13 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
             androidx.lifecycle.Observer { list ->
                 mViewBinding?.loadingAmountHdp?.clearAnimation()
                 mViewBinding?.loadingAmountHdp?.visibility = View.GONE
-                mViewBinding?.totalRefralWonValueTv?.text =
-                    "${list.count}"
+                if (list.count != null) {
+                    mViewBinding?.totalRefralWonValueTv?.text =
+                        "${list.count}"
+                }
+                if (list.totalJackpotMsg != null) {
+                    mViewBinding?.totalRefralWonTv?.text = "${list.totalJackpotMsg}"
+                }
 
             })
 

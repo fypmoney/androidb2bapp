@@ -342,7 +342,6 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
                 var feeds = getObject(responseData.toString(), FeedResponseModel::class.java)
                 if (feeds is FeedResponseModel) {
                     val response = feeds.getAllFeed?.getAllFeed
-                    if (!response?.feedDetails.isNullOrEmpty() && response?.feedDetails?.get(0)?.screenName == "REWARD") {
 
                         var notificationList: ArrayList<FeedDetails>? =
                             ArrayList()
@@ -351,15 +350,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
                         }
                         totalCount.set(response?.total)
                         rewardfeedList.postValue(notificationList)
-                    } else {
-                        var notificationList: ArrayList<FeedDetails>? =
-                            ArrayList()
-                        response?.feedDetails?.forEach() {
-                            notificationList?.add(it)
-                        }
-                        totalCountJackpot.set(response?.total)
-                        jackpotfeedList.postValue(notificationList)
-                    }
+
                     // Save the access token in shared preference
 
 
@@ -383,12 +374,14 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
-                val array = Gson().fromJson<TotalJackpotResponse>(
-                    json.get("data").toString(),
-                    TotalJackpotResponse::class.java
-                )
+                if (json != null && json.get("data").toString() != "[]") {
+                    val array = Gson().fromJson<TotalJackpotResponse>(
+                        json.get("data").toString(),
+                        TotalJackpotResponse::class.java
+                    )
 
-                totalJackpotAmount.postValue(array)
+                    totalJackpotAmount.postValue(array)
+                }
 
 
             }

@@ -105,6 +105,7 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
                 mViewBinding?.totalRefralWonValueTv?.text =
                     "₹" + Utility.convertToRs("${list.amount}")
 
+
             })
 
         sharedViewModel.rewardSummaryStatus.observe(
@@ -126,8 +127,13 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
                 mViewBinding?.loadingGoldenCards?.clearAnimation()
                 mViewBinding?.loadingGoldenCards?.visibility = View.GONE
                 mViewBinding?.amountGolderTv?.visibility = View.VISIBLE
-                mViewBinding?.amountGolderTv?.text =
-                    "${list.count}"
+                if (list.count != null) {
+                    mViewBinding?.amountGolderTv?.text =
+                        "${list.count}"
+                }
+                if (list.totalJackpotMsg != null) {
+                    mViewBinding?.golderCardWonHeading?.text = "${list.totalJackpotMsg}"
+                }
 
             })
     }

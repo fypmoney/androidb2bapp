@@ -184,13 +184,14 @@ class RewardsJackpotVM(application: Application) : BaseViewModel(application) {
 
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
-                val array = Gson().fromJson<TotalJackpotResponse>(
-                    json.get("data").toString(),
-                    TotalJackpotResponse::class.java
-                )
+                if (json != null && json.get("data").toString() != "[]") {
+                    val array = Gson().fromJson<TotalJackpotResponse>(
+                        json.get("data").toString(),
+                        TotalJackpotResponse::class.java
+                    )
 
-                totalJackpotAmount.postValue(array)
-
+                    totalJackpotAmount.postValue(array)
+                }
 
             }
 

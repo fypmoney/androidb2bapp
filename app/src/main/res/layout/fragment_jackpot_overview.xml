@@ -65,13 +65,14 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/imageView4"
 
+                        android:layout_width="wrap_content"
                         android:layout_height="@dimen/_80sdp"
                         android:layout_marginTop="@dimen/_2sdp"
+
+
                         android:layout_marginBottom="@dimen/_6sdp"
-
-
                         android:src="@drawable/golden_cards"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -80,16 +81,17 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/total_refral_won_tv"
                         style="@style/TextviewBold"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2sdp"
                         android:layout_marginBottom="@dimen/_18sdp"
-                        android:text="@string/total_golden_cards"
-
-                        android:textColor="@color/white"
                         android:alpha=".8"
+                        android:layout_marginEnd="@dimen/_12sdp"
+                        android:text="@string/total_golden_cards"
+                        android:textColor="@color/white"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView4"
                         app:layout_constraintStart_toStartOf="@+id/total_refral_won_value_tv"
                         app:layout_constraintTop_toBottomOf="@+id/total_refral_won_value_tv" />
 
