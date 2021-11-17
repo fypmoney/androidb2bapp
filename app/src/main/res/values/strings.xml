@@ -976,6 +976,8 @@ Coming really soon!
     <string name="golden_card">\nGolden Tickets</string>
     <string name="you_won_1">You won </string>
     <string name="play">Play</string>
+    <string name="please_wait_loading_contact_list">Please wait,loading contact list...</string>
+    <string name="please_allow_us_to_read_your_contacts">Please allow us to read your contacts.</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>

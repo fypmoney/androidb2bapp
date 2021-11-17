@@ -30,7 +30,6 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
         SharedPrefUtils.SF_KEY_USER_ID
     )
     var contactAdapter = ContactListAdapter(this, userId)
-    var isClickable = ObservableField(false)
     var countCheckIsAppUserApiCall: Int? = 0
     var searchedContact = ObservableField<String>()
     var searchedName = ObservableField<String>()
@@ -42,19 +41,21 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
     var emptyContactListError = MutableLiveData<Boolean>()
     var selectedContactList = ObservableArrayList<ContactEntity>()
     var onSelectClicked = MutableLiveData<Boolean>()
-    var inviteMember= MutableLiveData<Boolean>()
     var isFetchBalanceVisible = ObservableField(true)
     var fetchBalanceLoading = MutableLiveData<Boolean>()
-    var contactNotFound = MutableLiveData<Boolean>(false)
+    var contactNotFound = MutableLiveData(false)
+    var contactIsLoading = MutableLiveData(true)
     var availableAmount =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
+
     init {
         callGetWalletBalanceApi()
     }
     /*
 * This method is used to get all the contacts
 * */
-    fun getAllContacts() {
+    private fun getAllContacts() {
+        contactIsLoading.postValue(false)
         contactRepository.getContactsFromDatabase().let {
             try {
                 progressDialog.value = false
@@ -119,6 +120,13 @@ class ContactListViewModel(application: Application) : BaseViewModel(application
 * This method is used to call contact sync API
 * */ fun callContactSyncApi() {
         val contactRequestDetailsList = mutableListOf<ContactRequestDetails>()
+        contactRepository.getAllNotSyncedContacts().forEachIndexed { index, s ->
+            if (s.contactNumber?.length!! > 9) {
+                contactRequestDetailsList.add(s)
+            }
+
+        }
+
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_SNC_CONTACTS,

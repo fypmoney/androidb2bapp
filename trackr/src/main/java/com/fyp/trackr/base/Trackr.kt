@@ -177,8 +177,6 @@ object Trackr {
             app?.let { MoEHelper.getInstance(it).setAppStatus(AppStatus.INSTALL) }
         }else{
             app?.let { MoEHelper.getInstance(it).setAppStatus(AppStatus.UPDATE) }
-
-
         }
     }
 
@@ -233,6 +231,15 @@ object Trackr {
                         TrackrEvent.kyc_verification.name->{
                             adjustEventName = "eesdlf"
                         }
+                        TrackrEvent.kyc_verification_teen.name->{
+                            adjustEventName = "p7vxsb"
+                        }
+                        TrackrEvent.kyc_verification_adult.name->{
+                            adjustEventName = "wcb2ih"
+                        }
+                        TrackrEvent.kyc_verification_other.name->{
+                            adjustEventName = "6shjhs"
+                        }
                         TrackrEvent.load_money_fail.name->{
                             adjustEventName = "1x4oan"
                         }
@@ -253,7 +260,7 @@ object Trackr {
                         }
                     }
                     Log.d("ADJUST_EVENT_KEY", "KEY: $adjustEventName")
-                    Adjust.trackEvent(AdjustEvent(adjustEventName));
+                    Adjust.trackEvent(AdjustEvent(adjustEventName))
 
                 }
                 TrackrServices.FB -> {

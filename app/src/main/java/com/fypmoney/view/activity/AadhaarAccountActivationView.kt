@@ -13,8 +13,11 @@ import android.text.style.ClickableSpan
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.UserTrackr
 import com.fyp.trackr.models.push
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -95,28 +98,51 @@ class AadhaarAccountActivationView :
                 intentToActivity(it.token)
             else {
                 if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "1") {
-
+                    trackr {
+                        it.services = arrayListOf(
+                            TrackrServices.FIREBASE,
+                            TrackrServices.MOENGAGE,
+                            TrackrServices.FB,TrackrServices.ADJUST
+                        )
+                        it.name = TrackrEvent.kyc_verification_other
+                    }
                     if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
                         intentToActivity(HomeView::class.java)
                     } else {
                         intentToActivity(PermissionsActivity::class.java)
                     }
                 } else if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "0") {
+                    when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
+                        AppConstants.YES -> {
+                            intentToActivity(ReferralCodeView::class.java)
+                        }
+                        else -> {
+                            if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+                                intentToActivity(HomeView::class.java)
+                            } else {
+                                intentToActivity(PermissionsActivity::class.java)
+                            }
+
+                        }
+                    }
+                    trackr {
+                        it.services = arrayListOf(
+                            TrackrServices.FIREBASE,
+                            TrackrServices.MOENGAGE,
+                            TrackrServices.FB, TrackrServices.ADJUST
+                        )
+                        it.name = TrackrEvent.kyc_verification_teen
+                    }
                     intentToActivity(ReferralCodeView::class.java, true)
-//                    when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
-//                        AppConstants.YES -> {
-//
-//                        }
-//                        else -> {
-//                            if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-//                                intentToActivity(HomeView::class.java)
-//                            } else {
-//                                intentToActivity(PermissionsActivity::class.java)
-//                            }
-//
-//                        }
-//                    }
                 } else if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "90") {
+                    trackr {
+                        it.services = arrayListOf(
+                            TrackrServices.FIREBASE,
+                            TrackrServices.MOENGAGE,
+                            TrackrServices.FB,TrackrServices.ADJUST
+                        )
+                        it.name = TrackrEvent.kyc_verification_adult
+                    }
                     intentToActivity(AgeAllowedActivationView::class.java, true)
                 }
 
