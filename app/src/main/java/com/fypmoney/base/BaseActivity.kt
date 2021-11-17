@@ -35,6 +35,8 @@ import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.util.*
 import com.fypmoney.util.AppConstants.PLAY_STORE_URL
+import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getInviteLinkWithExtraData
+import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getInviteLinkWithNoData
 import com.fypmoney.view.activity.LoginView
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
@@ -468,17 +470,27 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
                     )
             }
         }
-        content?.let { onInviteUser(it) }
+        if(Utility.getCustomerDataFromPreference()?.postKycScreenCode != null
+            && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "0"){
+            content?.let {
+                Utility.getCustomerDataFromPreference()?.referralCode?.let { it1 ->
+                    getInviteLinkWithExtraData(it,
+                        it1
+                    ) {
+                        onInviteUser(it)
+                    }
+                }
+            }
+        }else{
+            content?.let { onInviteUser(getInviteLinkWithNoData(it)) }
+        }
     }
 
 
-    private fun onInviteUser(data:String) {
-        val link = DynamicLinksUtil.generateInviteContent(data)
-
+    private fun onInviteUser(content:String) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_TEXT, link)
-
+        intent.putExtra(Intent.EXTRA_TEXT, content)
         startActivity(Intent.createChooser(intent, "Share Link"))
     }
     override fun onTryAgainClicked() {

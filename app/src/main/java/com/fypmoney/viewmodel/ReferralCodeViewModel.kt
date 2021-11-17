@@ -4,6 +4,7 @@ import android.app.Application
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -31,10 +32,23 @@ class ReferralCodeViewModel(application: Application) : BaseViewModel(applicatio
     var onCustomerApiSuccess = MutableLiveData(false)
     var referralCode = MutableLiveData<String>()
 
+    init {
+        SharedPrefUtils.getString(application.applicationContext,
+            SharedPrefUtils.SF_REFERRAL_CODE_FROM_INVITE_LINK
+        )?.let {
+            trackr { it1->
+                it1.name = TrackrEvent.ref_from_invite_link
+                it1.add(TrackrField.referral_code,it)
+            }
+            referralCode.value = it
+        }
+    }
     /*
       * This method is used to handle on click of skip
       * */
     fun onSkipClicked() {
+        SharedPrefUtils.putString(PockketApplication.instance,
+            SharedPrefUtils.SF_REFERRAL_CODE_FROM_INVITE_LINK,null)
         onSkipClicked.value = true
     }
 
@@ -96,11 +110,6 @@ class ReferralCodeViewModel(application: Application) : BaseViewModel(applicatio
                     var data = responseData.customerInfoResponseDetails
                     data?.isReferralAllowed = "NO"
                     Utility.saveCustomerDataInPreference(data)
-
-                    // Save the user id in shared preference
-
-                    // save first name, last name, date of birth
-
                     SharedPrefUtils.putString(
                         getApplication(),
                         SharedPrefUtils.SF_KEY_USER_FIRST_NAME,
@@ -151,7 +160,6 @@ class ReferralCodeViewModel(application: Application) : BaseViewModel(applicatio
                         SharedPrefUtils.putArrayList(
                             getApplication(),
                             SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
-
                         )
 
                     }
