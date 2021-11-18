@@ -8,9 +8,6 @@
 
         <import type="androidx.core.content.ContextCompat" />
 
-        <variable
-            name="viewHelper"
-            type="com.fypmoney.viewhelper.RewardsHistoryViewHelper" />
 
     </data>
 
@@ -21,19 +18,31 @@
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_8sdp"
-        android:background="@drawable/round_dark_grey_rewards_18"
 
-        android:paddingTop="5dp"
-        android:paddingBottom="8dp">
+        >
 
+        <RelativeLayout
+            android:id="@+id/relativeLayout7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_alignBottom="@+id/productType"
+
+            android:layout_alignParentTop="true"
+            android:alpha=".10"
+
+            android:background="@drawable/round_dark_grey_rewards_18"
+            android:backgroundTint="#F4F4F4"
+            android:paddingBottom="@dimen/_12sdp" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/productType"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
+            android:layout_width="44dp"
+
+            android:layout_height="56dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginBottom="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:paddingBottom="12dp"
             android:src="@drawable/ic_spin_burned"
 
 
@@ -44,7 +53,7 @@
             android:id="@+id/heading"
             style="@style/TextviewRegular"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_12sdp"
             android:layout_toEndOf="@+id/productType"
 
             android:textColor="@color/white"
@@ -56,17 +65,17 @@
             style="@style/TextviewRegular"
             android:layout_below="@+id/heading"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginEnd="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
             android:layout_toStartOf="@+id/won_tv"
 
             android:layout_toEndOf="@+id/productType"
-            android:ellipsize="end"
-
-
-            android:maxLines="2"
             android:alpha=".4"
-            android:text=""
+
+
+            android:ellipsize="end"
+            android:maxLines="2"
+
             android:textColor="@color/white"
             android:textSize="12sp" />
 
@@ -74,29 +83,29 @@
             android:id="@+id/amount"
             style="@style/TextviewRegular"
             android:layout_alignParentRight="true"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/_5sdp"
 
-            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+
+            android:layout_marginEnd="@dimen/_12sdp"
 
             android:textColor="@color/white"
 
             android:textSize="16sp" />
 
         <ImageView
-            android:layout_width="wrap_content"
             android:id="@+id/note"
+            android:layout_width="wrap_content"
 
 
-            android:layout_height="8dp"
-            android:layout_marginEnd="@dimen/_4sdp"
-            android:visibility="gone"
+            android:layout_height="@dimen/_8sdp"
+
             android:layout_alignTop="@+id/amount"
+
             android:layout_alignBottom="@+id/amount"
+            android:layout_toStartOf="@+id/amount"
             android:paddingTop="@dimen/_2sdp"
             android:paddingBottom="@dimen/_2sdp"
 
-            android:layout_toStartOf="@+id/amount"
             android:src="@drawable/cash" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -106,9 +115,10 @@
 
             android:layout_alignParentRight="true"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="@dimen/_2sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:textColor="@color/grey_heading"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:alpha=".40"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:textColor="@color/white"
             android:textSize="12sp" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -117,16 +127,16 @@
             android:layout_below="@+id/amount"
 
             android:layout_alignParentRight="true"
-            android:visibility="invisible"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_12sdp"
-            android:text="Play"
-
+            android:text="@string/play"
             android:textColor="#F7AA11"
 
+            android:textSize="14sp"
 
-            android:textSize="14sp" />
+
+            android:visibility="invisible" />
     </RelativeLayout>
 
 </layout>

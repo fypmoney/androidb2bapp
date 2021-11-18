@@ -16,7 +16,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="#090B12"
+        android:background="@color/reward_background"
         android:layout_height="match_parent">
 
         <include
@@ -56,7 +56,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
 
-                            tools:context=".MainActivity">
+                            >
 
 
                             <com.google.android.material.tabs.TabLayout
@@ -69,10 +69,12 @@
                                 app:tabBackground="@drawable/rewards_tab_selector"
                                 app:tabIndicatorHeight="0dp"
                                 android:textSize="18sp"
-                                app:tabMode="fixed"
-                                app:tabSelectedTextColor="#15181F"
+                                app:tabMode="scrollable"
+                                app:tabPaddingStart="@dimen/_24sdp"
+                                app:tabPaddingEnd="@dimen/_24sdp"
+                                app:tabSelectedTextColor="@color/color_black_1"
                                 app:tabTextAppearance="@style/MyCustomTextAppearance"
-                                app:tabTextColor="#a3a3a3">
+                                app:tabTextColor="@color/reward_tab_text_color">
 
                             </com.google.android.material.tabs.TabLayout>
 

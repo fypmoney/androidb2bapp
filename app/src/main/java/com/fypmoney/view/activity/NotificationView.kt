@@ -94,7 +94,6 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
 
 
         viewPager.adapter = adapter
-
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.tabRippleColor = null;
         setupTabIcons()
@@ -103,8 +102,8 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     }
 
     private fun setupTabIcons() {
-        tabLayout.getTabAt(0)!!.setIcon(tabIcons[0])
-        tabLayout.getTabAt(1)!!.setIcon(tabIcons[1])
+        tabLayout.getTabAt(0)?.setIcon(tabIcons[0])
+        tabLayout.getTabAt(1)?.setIcon(tabIcons[1])
 
     }
 

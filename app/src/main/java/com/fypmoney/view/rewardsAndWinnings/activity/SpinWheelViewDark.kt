@@ -3,7 +3,10 @@ package com.fypmoney.view.rewardsAndWinnings.activity
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -44,6 +47,9 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
     ErrorBottomSpinProductSheet.OnSpinErrorClickListener {
 
 
+    private var mp: MediaPlayer? = null
+    private var mp_spinning: MediaPlayer? = null
+    private var noOfGoldenCard: Int? = null
     private var ProductCode: String? = null
     private var dialogError: Dialog? = null
     private var sectionId: Int? = null
@@ -79,6 +85,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
         orderId = intent.getStringExtra(AppConstants.ORDER_NUM)
         sectionId = intent.getIntExtra(AppConstants.SECTION_ID, -1)
         ProductCode = intent.getStringExtra(AppConstants.PRODUCT_CODE)
+        noOfGoldenCard = intent.getIntExtra(AppConstants.NO_GOLDED_CARD, -1)
 
 //        val args = intent.getBundleExtra("BUNDLE")
 //        val getList = args!!.getSerializable("ARRAYLIST") as ArrayList<SectionListItem>
@@ -118,14 +125,25 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
                     if (item.id == sectionId.toString()) {
 
-                        if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
-                            trackr {
-                                it.name = TrackrEvent.spin_success
-                                it.add(TrackrField.spin_product_code, ProductCode)
 
+
+                            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                                trackr {
+                                    it.name = TrackrEvent.spin_success
+                                    it.add(TrackrField.spin_product_code, ProductCode)
+
+                                }
+                                mp_spinning?.stop()
+                                offer_found_tv?.visibility = View.VISIBLE
+                                showwonDialog(item.sectionValue)
+                                mp = MediaPlayer.create(
+                                    this,
+                                    R.raw.reward_won_sound
+                                )
+                                mp?.start()
                             }
-                            showwonDialog(item.sectionValue)
-                        }
+
+
                         return@forEach
 
                     }
@@ -143,6 +161,10 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        mp_spinning?.stop()
+    }
 
     private fun showwonDialog(sectionValue: String?) {
 
@@ -167,16 +189,34 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
                     R.drawable.better_luck_next_time
                 )
             )
-            dialogDialog?.better_next_time?.visibility = View.VISIBLE
+            dialogDialog?.spin_green?.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.golden_cards
+                )
+            )
+
+            dialogDialog?.better_next_time?.visibility = View.INVISIBLE
+            if (noOfGoldenCard != null) {
+                trackr {
+                    it.name = TrackrEvent.ticket_win_success
+                }
+                dialogDialog!!.golden_cards_won!!.text =
+                    getString(R.string.you_won_1) + " " + noOfGoldenCard + " " + getString(R.string.golden_card)
+            }
+            dialogDialog?.clicked?.text = getString(R.string.continue_txt)
+
         }
         if (mViewModel.played.get() == true) {
             dialogDialog?.clicked?.text = getString(R.string.continue_txt)
             dialogDialog?.textView?.text =
-                "your wallet has been updated with ₹ " + Utility.convertToRs(sectionValue)
+                getString(R.string.your_wallet_updated) + " " + Utility.convertToRs(sectionValue)
 
         } else {
             dialogDialog?.textView?.text =
-                "your wallet will be updated with ₹ " + Utility.convertToRs(sectionValue)
+                getString(R.string.your_wallet_will_updated) + " " + Utility.convertToRs(
+                    sectionValue
+                )
         }
 
 
@@ -196,6 +236,8 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
                     }
                 }
+                mp_spinning?.stop()
+                setResult(23)
                 finish()
             } else {
                 if (sectionValue == "0") {
@@ -236,6 +278,9 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 //            } catch (e: Exception) {
 //                e.printStackTrace()
 //            }
+            mp?.stop()
+            mp_spinning?.stop()
+            setResult(23)
             finish()
 
         }
@@ -247,6 +292,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
             }
             ProductCode = it.code
             sectionId = it.sectionId
+            noOfGoldenCard = it.noOfJackpotTicket
 
             luckylayout.visibility = View.VISIBLE
             mViewModel.setDataInSpinWheel(sectionArrayList)
@@ -266,6 +312,11 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
         mViewModel.onPlayClicked.observe(this)
         {
             try {
+                mp_spinning = MediaPlayer.create(
+                    this,
+                    R.raw.spinwheel_rotating_sound
+                )
+                mp_spinning?.start()
                 when (sectionId) {
                     1 -> {
                         luckyWheelView.startLuckyWheelWithTargetIndex(sectionId!! - 1)
@@ -308,6 +359,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
         dialogError?.clicked?.setOnClickListener(View.OnClickListener {
 //            mViewModel.callSpinWheelApi(orderId)
+            setResult(23)
             finish()
         })
 

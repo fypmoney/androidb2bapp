@@ -79,8 +79,10 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.fypmoney.bindingAdapters.shimmerDrawable
+import com.fypmoney.util.AppConstants.JACKPOTTAB
 import com.fypmoney.view.fragment.FilterByDateFragment
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
+import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 
 
 /*
@@ -997,6 +999,11 @@ object Utility {
                 intent = Intent(context, ReferAndEarnActivity::class.java)
 
             }
+            JACKPOTTAB -> {
+                intent = Intent(context, RewardsActivity::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, JACKPOTTAB)
+            }
+
             CardScreen -> {
                 intent = Intent(context, HomeView::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, CardScreen)
