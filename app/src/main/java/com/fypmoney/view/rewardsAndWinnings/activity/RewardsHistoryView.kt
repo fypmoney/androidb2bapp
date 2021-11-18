@@ -57,11 +57,11 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
     private var typeAdapterHistory: RewardsHistoryBaseAdapter? = null
     override fun getViewModel(): RewardsHistoryVM {
         mVM = ViewModelProvider(this).get(RewardsHistoryVM::class.java)
-        observeInput(mVM)
+
         return mVM
     }
 
-    private fun observeInput(sharedVM: RewardsHistoryVM) {
+    private fun observeInput(sharedVM: RewardsHistoryVM?) {
 
         page = 0
         mVM?.redeemproductDetails.observe(this) {
@@ -101,7 +101,7 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                 })
 
         }
-        sharedVM.rewardHistoryList.observe(
+        sharedVM?.rewardHistoryList?.observe(
             this,
             { list ->
                 LoadProgressBar?.visibility = View.GONE
@@ -160,7 +160,7 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
             isBackArrowVisible = true, toolbarTitle = getString(R.string.rewards_history_view)
         )
         setRecyclerView(mViewBinding)
-
+        observeInput(mVM)
     }
 
     override fun onStart() {

@@ -256,26 +256,9 @@ public class PielView extends View {
 
         int arraySize = mLuckyItemList.size();
 
-//
-//        float textWidth = 60;
-//
+
         float initFloat = (tmpAngle + 360f / arraySize / 2);
-//        float angle = (float) (initFloat * Math.PI / 180);
-//
-//        int x = (int) +(mCenter + mRadius * 3 / 5 / 2 * Math.cos(angle));
-//        int y = (int) (mCenter + mRadius * 3 / 5 / 2 * Math.sin(angle));
-//
-////        RectF rect = new RectF(x + textWidth, y,
-////                x - textWidth, y);
-//        Rect rect = new Rect(x - imgWidth / 2, y - imgWidth / 2,
-//                x + imgWidth / 2, y + imgWidth / 2);
-////        Path path = new Path();
-////        path.addRect(rect, Path.Direction.CW);
-////        path.close();
-//        canvas.rotate(initFloat + (arraySize / 18f), x, y);
-////        canvas.drawTextOnPath(, path, mTopTextPadding / 7f, mTextPaint.getTextSize() / 2.75f, mTextPaint);
-//
-//        canvas.drawBitmap(bitmap, null, rect, null);
+
 
         canvas.rotate(initFloat + (arraySize / 18f), x, y);
         canvas.drawBitmap(bitmap, null, rect, null);
@@ -296,26 +279,9 @@ public class PielView extends View {
 
         int arraySize = mLuckyItemList.size();
 
-//
-//        float textWidth = 60;
-//
+
         float initFloat = (tmpAngle + 360f / arraySize / 2);
-//        float angle = (float) (initFloat * Math.PI / 180);
-//
-//        int x = (int) +(mCenter + mRadius * 3 / 5 / 2 * Math.cos(angle));
-//        int y = (int) (mCenter + mRadius * 3 / 5 / 2 * Math.sin(angle));
-//
-////        RectF rect = new RectF(x + textWidth, y,
-////                x - textWidth, y);
-//        Rect rect = new Rect(x - imgWidth / 2, y - imgWidth / 2,
-//                x + imgWidth / 2, y + imgWidth / 2);
-////        Path path = new Path();
-////        path.addRect(rect, Path.Direction.CW);
-////        path.close();
-//        canvas.rotate(initFloat + (arraySize / 18f), x, y);
-////        canvas.drawTextOnPath(, path, mTopTextPadding / 7f, mTextPaint.getTextSize() / 2.75f, mTextPaint);
-//
-//        canvas.drawBitmap(bitmap, null, rect, null);
+
 
         canvas.rotate(initFloat + (arraySize / 18f), x, y);
         canvas.drawBitmap(bitmap, null, rect, null);

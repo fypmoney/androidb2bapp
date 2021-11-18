@@ -8,9 +8,6 @@
 
         <import type="androidx.core.content.ContextCompat" />
 
-        <variable
-            name="viewHelper"
-            type="com.fypmoney.viewhelper.RewardsHistoryViewHelper" />
 
     </data>
 

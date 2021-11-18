@@ -146,6 +146,9 @@ object AppConstants {
     const val CHANGED_DATE_TIME_FORMAT8 = "dd MMM, yy"
     const val CHANGED_DATE_TIME_FORMAT7 = "HH:mm,  MMM dd, yy"
     const val CHANGED_DATE_TIME_FORMAT5 = " dd/MM/yyyy"
+    const val REWARD_HISTORY_OUTPUT = "MMM dd' ,'hh:mm a"
+    const val REWARD_HISTORY_INPUT = "MMM dd' ,'hh:mm a"
+
     const val PAYU_SERVER = "pay u server"
 
     const val TYPE_UPI = "upi"
@@ -213,7 +216,7 @@ object AppConstants {
     const val FEEDSCREEN = "FeedScreen"
     const val TRACKORDER = "TrackOrderScreen"
     const val CHORES = "ChoresScreen"
-    const val JACKPOTTAB = "JACKPOT"
+    const val JACKPOTTAB = "Jackpot"
 
     /* Home : "HomeView, 0"
 

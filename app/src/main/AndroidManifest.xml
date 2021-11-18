@@ -224,12 +224,8 @@
         <activity
             android:name=".view.activity.ContactViewAddMember"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.rewardsAndWinnings.activity.SpinWheelView"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.rewardsAndWinnings.activity.SpinHistoryView"
-            android:screenOrientation="portrait" />
+
+
         <activity
             android:name=".view.activity.PermissionsActivity"
             android:screenOrientation="portrait" />

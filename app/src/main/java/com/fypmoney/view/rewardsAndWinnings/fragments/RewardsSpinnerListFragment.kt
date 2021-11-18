@@ -79,7 +79,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
     override fun getViewModel(): RewardsAndVM {
         activity?.let {
             mViewmodel = ViewModelProvider(it).get(RewardsAndVM::class.java)
-            observeInput(mViewmodel!!)
+
 
         }
         return mViewmodel!!
@@ -92,7 +92,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         setRecyclerView()
         setRvScratchCard()
         buyProductDialog = Dialog(requireContext())
-
+        observeInput(mViewmodel!!)
 
 
 
@@ -118,7 +118,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
             })
         mviewModel.error.observe(
-            this,
+            requireActivity(),
             androidx.lifecycle.Observer { list ->
 
                 if (list.errorCode == "PKT_2051") {

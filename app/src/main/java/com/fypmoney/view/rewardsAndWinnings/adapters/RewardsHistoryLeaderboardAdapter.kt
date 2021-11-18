@@ -42,7 +42,7 @@ class RewardsHistoryLeaderboardAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.numberofMynts.text = items[position].points.toString() + " Mynts"
+        (items[position].points.toString() + " Mynts").also { holder.numberofMynts.text = it }
         holder.desc.text = items[position].eventDescription.toString()
 
 
@@ -147,8 +147,8 @@ class RewardsHistoryLeaderboardAdapter(
         }
 
         holder.card.setOnClickListener(View.OnClickListener {
-//         if (items[position].isFullFilled == AppConstants.NO)
-            clickInterface.onItemClicked(items[position])
+            if (items[position].isFullFilled == AppConstants.NO)
+                clickInterface.onItemClicked(items[position])
         })
 
 
@@ -167,10 +167,6 @@ class RewardsHistoryLeaderboardAdapter(
         var note = view.note
         var productType = view.productType
 
-
-//        init {
-//            offer.z = context.resources.getDimension(R.dimen.list_item_elevation)
-//        }
 
     }
 }
