@@ -1,10 +1,14 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class RewardHistoryResponseNew(
     val date: String? = null,
     var history: ArrayList<HistoryItem?>? = null
 )
 
+@Keep
 data class HistoryItem(
     val loyaltyEarned: Any? = null,
     val cashbackWonForProduct: Int? = null,

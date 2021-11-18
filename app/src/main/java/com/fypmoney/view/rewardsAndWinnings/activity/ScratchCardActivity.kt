@@ -190,6 +190,7 @@ class ScratchCardActivity :
 
         wlp?.width = ViewGroup.LayoutParams.MATCH_PARENT
         if (cashbackWon == "0") {
+
             dialogDialog?.congrats_tv?.visibility = View.GONE
             dialogDialog?.textView?.visibility = View.GONE
             dialogDialog?.spin_green?.setImageDrawable(
@@ -200,7 +201,9 @@ class ScratchCardActivity :
             )
             dialogDialog?.better_next_time?.visibility = View.INVISIBLE
             if (noOfJackpotTicket != null) {
-
+                trackr {
+                    it.name = TrackrEvent.ticket_win_success
+                }
                 dialogDialog!!.golden_cards_won!!.text =
                     "You won " + noOfJackpotTicket + getString(R.string.golden_card)
             }
@@ -226,13 +229,7 @@ class ScratchCardActivity :
 
         dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
             if (mViewModel.played.get() == true) {
-//                if (cashbackWon == "0") {
-//                    trackr {
-//                        it.name = TrackrEvent.SPINZERO
-//                        it.add(TrackrField.spin_product_code,ProductCode)
-//
-//                    }
-//                }
+
                 mp?.stop()
                 setResult(23)
                 finish()

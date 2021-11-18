@@ -24,7 +24,6 @@
                 android:layout_marginStart="@dimen/_28sdp"
                 android:layout_marginTop="@dimen/_24sdp"
                 android:layout_marginEnd="@dimen/_28sdp"
-
                 android:src="@drawable/jackpot_banner" />
 
             <LinearLayout
@@ -58,7 +57,7 @@
                         android:layout_height="0dp"
                         android:alpha=".10"
                         android:background="@drawable/round_dark_grey_rewards_18"
-                        android:backgroundTint="#F4F4F4"
+                        android:backgroundTint="@color/grey"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +86,7 @@
                         android:layout_marginBottom="@dimen/_18sdp"
                         android:alpha=".8"
                         android:layout_marginEnd="@dimen/_12sdp"
-                        android:text="@string/total_golden_cards"
+
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -177,35 +176,6 @@
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/dots_animation" />
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:visibility="gone"
-                android:id="@+id/empty_screen"
-                android:layout_marginTop="@dimen/_90sdp"
-                android:layout_gravity="center_horizontal"
-
-                android:layout_height="wrap_content">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="@dimen/_194sdp"
-                    android:id="@+id/image"
-                    android:layout_height="@dimen/_142sdp"
-                    android:layout_centerHorizontal="true"
-
-                    app:srcCompat="@drawable/ic_no_task" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    style="@style/TextviewRegular"
-                    android:layout_below="@+id/image"
-                    android:layout_marginTop="@dimen/_30sdp"
-                    android:paddingLeft="@dimen/_34sdp"
-                    android:paddingRight="@dimen/_34sdp"
-                    android:textColor="#9CA3A5"
-                    android:gravity="center"
-                    android:text="Looks like you haven’t been assigned any task yet. 😅"
-                    android:layout_height="wrap_content" />
-            </RelativeLayout>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

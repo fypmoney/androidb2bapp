@@ -36,6 +36,7 @@ import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
 import com.fypmoney.R
 import com.fypmoney.util.AppConstants
+import com.fypmoney.view.activity.HomeView
 import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment
@@ -73,7 +74,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         tabLayout = findViewById(R.id.tabLayout)
         viewPager = findViewById(R.id.viewPager)
 
-        initializeTabs(tabLayout)
+        initializeTabs(tabLayout, intent)
 
 
 
@@ -166,15 +167,6 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == 23) {
-            mViewModel?.totalmyntsClicked?.postValue(true)
-        }
-
-
-    }
 
     override fun onStart() {
         super.onStart()
@@ -185,7 +177,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
     }
 
-    private fun initializeTabs(tabLayout: TabLayout) {
+    private fun initializeTabs(tabLayout: TabLayout, intent: Intent) {
 
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
@@ -219,13 +211,17 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
                         this@RewardsActivity,
                         com.fypmoney.R.drawable.tab_two_rewards
                     )
-
+                    trackr {
+                        it.name = TrackrEvent.open_arcade
+                    }
                 } else if (tab.position == 2) {
                     tab.view.background = ContextCompat.getDrawable(
                         this@RewardsActivity,
                         com.fypmoney.R.drawable.tab_third_rewards
                     )
-
+                    trackr {
+                        it.name = TrackrEvent.open_jackpot
+                    }
                 } else {
                     tab.view.background = ContextCompat.getDrawable(
                         this@RewardsActivity,
@@ -241,6 +237,17 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+
+
+
+        when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
+            AppConstants.JACKPOTTAB -> {
+                mViewModel?.totalmyntsClicked?.postValue(true)
+
+            }
+
+
+        }
     }
 
 

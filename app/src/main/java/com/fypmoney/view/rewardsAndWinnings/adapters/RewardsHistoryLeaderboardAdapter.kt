@@ -45,40 +45,77 @@ class RewardsHistoryLeaderboardAdapter(
         holder.numberofMynts.text = items[position].points.toString() + " Mynts"
         holder.desc.text = items[position].eventDescription.toString()
 
-        if (items[position].cashbackWonForProduct != null && items[position].cashbackWonForProduct!! > 0) {
-            holder.note.visibility = View.VISIBLE
 
 
-            holder.amount.visibility = View.VISIBLE
 
-            holder.won_tv.visibility = View.VISIBLE
-            holder.status_tv.visibility = View.INVISIBLE
-            holder.amount.text =
-                " ₹" + Utility.convertToRs(items[position].cashbackWonForProduct.toString())
+        if (items[position].isFullFilled == AppConstants.NO) {
+            holder.note.visibility = View.INVISIBLE
 
-            holder.productType.setImageDrawable(
-                ContextCompat.getDrawable(
-                    context,
-                    R.drawable.ic_mynt_coin
-                )
-            )
-            holder.note.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.cash))
 
+            holder.amount.visibility = View.INVISIBLE
+
+            holder.won_tv.visibility = View.INVISIBLE
+
+            holder.status_tv.visibility = View.VISIBLE
         } else {
-            holder.note.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ticket))
-            holder.amount.text = items[position].noOfJackpotTicket.toString()
+            holder.status_tv.visibility = View.INVISIBLE
+            if (items[position].noOfJackpotTicket == null) {
+                if (items[position].cashbackWonForProduct != null && items[position].cashbackWonForProduct!! > 0) {
+                    holder.note.visibility = View.VISIBLE
 
-            if (items[position].transactionType == AppConstants.TRANS_TYPE_EARN) {
-                holder.amount.visibility = View.INVISIBLE
 
-            }
+                    holder.amount.visibility = View.VISIBLE
+
+                    holder.won_tv.visibility = View.VISIBLE
+                    holder.status_tv.visibility = View.INVISIBLE
+
+                    holder.amount.text =
+                        " ₹" + Utility.convertToRs(items[position].cashbackWonForProduct.toString())
+
+
+                    holder.note.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            context,
+                            R.drawable.cash
+                        )
+                    )
+
+                } else {
+                    holder.note.visibility = View.INVISIBLE
+//           holder.amount.visibility=View.INVISIBLE
+
+                    if (items[position].transactionType == AppConstants.TRANS_TYPE_EARN) {
+                        holder.amount.visibility = View.INVISIBLE
+
+                    }
+                    holder.amount.text = "₹0"
+//           holder.amount.visibility=View.INVISIBLE
+                    holder.amount.visibility = View.VISIBLE
+
+                    holder.won_tv.visibility = View.VISIBLE
+//            holder.amount.visibility = View.INVISIBLE
+                    holder.status_tv.visibility = View.INVISIBLE
+
+
+                }
+
+            } else {
+                holder.amount.text = items[position].noOfJackpotTicket.toString()
+                holder.note.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ticket))
+                holder.amount.text = items[position].noOfJackpotTicket.toString()
+
 
 //            holder.amount.visibility = View.INVISIBLE
-            holder.status_tv.visibility = View.VISIBLE
+                holder.status_tv.visibility = View.INVISIBLE
+
+            }
+        }
+
+        if (!items[position].fullfillmentDescription.isNullOrEmpty()) {
+            holder.won_tv.text = items[position].fullfillmentDescription.toString()
 
 
         }
-
         if (items[position].productType == AppConstants.PRODUCT_SPIN) {
             holder.productType.setImageDrawable(
                 ContextCompat.getDrawable(
@@ -103,27 +140,11 @@ class RewardsHistoryLeaderboardAdapter(
                     R.drawable.ic_mynt_coin
                 )
             )
-            holder.note.visibility = View.INVISIBLE
-
-        }
-
-        if (items[position].isFullFilled == AppConstants.NO) {
-            holder.note.visibility = View.INVISIBLE
-
-
             holder.amount.visibility = View.INVISIBLE
-
+            holder.note.visibility = View.INVISIBLE
             holder.won_tv.visibility = View.INVISIBLE
 
-            holder.status_tv.visibility = View.VISIBLE
-        } else {
-            holder.status_tv.visibility = View.INVISIBLE
         }
-
-        if (!items[position].fullfillmentDescription.isNullOrEmpty()) {
-            holder.won_tv.text = items[position].fullfillmentDescription.toString()
-        }
-
 
         holder.card.setOnClickListener(View.OnClickListener {
 //         if (items[position].isFullFilled == AppConstants.NO)

@@ -213,21 +213,23 @@ object AppConstants {
     const val FEEDSCREEN = "FeedScreen"
     const val TRACKORDER = "TrackOrderScreen"
     const val CHORES = "ChoresScreen"
-   /* Home : "HomeView, 0"
+    const val JACKPOTTAB = "JACKPOT"
 
-    Refereal Screen : "ReferralScrren, 1"
+    /* Home : "HomeView, 0"
 
-    Card Screen : "CardScreen, 2"
+     Refereal Screen : "ReferralScrren, 1"
 
-    Stores : "StoreScreen, 3"
+     Card Screen : "CardScreen, 2"
 
-    Fyper : "FyperScreen, 4"
+     Stores : "StoreScreen, 3"
 
-    Feed : "FeedScreen, 5"
+     Fyper : "FyperScreen, 4"
 
-    Track Order : "TrackOrderScreen, 6"
+     Feed : "FeedScreen, 5"
 
-    Chores :" ChoresScreen, 7"*/
+     Track Order : "TrackOrderScreen, 6"
+
+     Chores :" ChoresScreen, 7"*/
    const val ERROR_TYPE_AFTER_SPIN = "AfterSpin"
     const val INSUFFICIENT_ERROR_CODE = "PKT_2037"
     const val AADHAR_VERIFICATION_ERROR_CODE = "PKT_2006"

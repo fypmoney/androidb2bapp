@@ -40,7 +40,6 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     var orderNumber = MutableLiveData("")
     var spinArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
     val page = ObservableField(0)
-    val pagejackpot = ObservableField(0)
     var scratchArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
     var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
     var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
@@ -49,13 +48,12 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
     var error: MutableLiveData<ErrorResponseInfo> = MutableLiveData()
     var totalCount = ObservableField(0)
-    var totalCountJackpot = ObservableField(0)
+
     var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
     var rewardfeedList: MutableLiveData<ArrayList<FeedDetails>> =
         MutableLiveData()
 
-    var jackpotfeedList: MutableLiveData<ArrayList<FeedDetails>> =
-        MutableLiveData()
+
 
     fun onSelectClicked() {
         onAddMoneyClicked.value = true
@@ -63,10 +61,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
 
     init {
-
-
         callRewardProductList()
-//callFetchFeedsJackpotApi()
         callFetchFeedsApi()
         callRewardHistory()
         callTotalJackpotCards()
@@ -218,25 +213,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
     }
 
-    fun callFetchFeedsJackpotApi(
-        isProgressBarVisible: Boolean? = false,
-        latitude: Double? = 0.0,
-        longitude: Double? = 0.0
-    ) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_FETCH_ALL_FEEDS,
-                NetworkUtil.endURL(ApiConstant.API_FETCH_ALL_FEEDS),
-                ApiUrl.POST,
-                makeFetchFeedJackpotRequest(
-                    latitude = null, longitude = null,
-                    pageValue = pagejackpot.get()
-                ),
-                this, isProgressBar = false
-            )
-        )
 
-    }
 
     fun callRewardSummary() {
         WebApiCaller.getInstance().request(
@@ -329,7 +306,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<Array<RewardHistoryResponseNew>>(
+                val array = Gson().fromJson(
                     json.get("data").toString(),
                     Array<RewardHistoryResponseNew>::class.java
                 )
@@ -350,9 +327,6 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
                         }
                         totalCount.set(response?.total)
                         rewardfeedList.postValue(notificationList)
-
-                    // Save the access token in shared preference
-
 
                 }
 
@@ -429,14 +403,6 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
                 }
 
 
-//                 var itemsArrayList: ArrayList<aRewardProductResponse> = ArrayList()
-//
-//                spinObject.forEachIndexed{pos,item->
-//                    val images = Gson().fromJson(item, aRewardProductResponse::class.java)
-////
-//                    itemsArrayList.add(images)
-//                }
-
 
             }
             ApiConstant.REWARD_PRODUCT_DETAILS -> {
@@ -446,7 +412,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
                 val spinDetails = Gson().fromJson(
                     json.get("data"),
-                    com.fypmoney.model.aRewardProductResponse::class.java
+                    aRewardProductResponse::class.java
                 )
 
                 redeemproductDetails.value = spinDetails
@@ -479,12 +445,8 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         when (purpose) {
             ApiConstant.API_REDEEM_REWARD -> {
                 error.postValue(errorResponseInfo)
-
             }
-
         }
-
-
     }
 
 

@@ -58,7 +58,7 @@
                     android:layout_marginEnd="@dimen/_24sdp"
                     android:gravity="center"
                     android:text=""
-                    android:textColor="#BAE6C2"
+                    android:textColor="@color/spin_light"
                     android:textSize="24sp" />
 
 
@@ -72,7 +72,7 @@
                 android:layout_marginStart="@dimen/_4sdp"
                 android:layout_marginTop="@dimen/_52sdp"
                 android:text="@string/better_luck_nnext_time"
-                android:textColor="#BAE6C2"
+                android:textColor="@color/spin_light"
                 android:textSize="26sp"
 
                 android:visibility="gone"
@@ -104,7 +104,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginBottom="@dimen/_12sdp"
-            android:backgroundTint="#48AB5B"
+            android:backgroundTint="@color/reward_continue_button"
             android:text="@string/continue_txt" />
     </RelativeLayout>
 

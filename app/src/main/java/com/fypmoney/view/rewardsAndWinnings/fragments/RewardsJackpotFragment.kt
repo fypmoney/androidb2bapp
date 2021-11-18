@@ -23,8 +23,6 @@ import com.fypmoney.view.adapter.FeedsRewardsJackpotAdapter
 
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsJackpotVM
-import java.text.SimpleDateFormat
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -34,86 +32,7 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
     var feedList: ArrayList<FeedDetails>? = ArrayList()
     private var mViewBinding: FragmentJackpotOverviewBinding? = null
     private var jackpotViewModel: RewardsJackpotVM? = null
-    private var feedAdapter: FeedsRewardsJackpotAdapter? = null
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mViewBinding = getViewDataBinding()
-
-        setRecyclerView()
-
-        jackpotViewModel?.let { observeInput(it) }
-        mViewBinding?.bootomPartCl?.setOnClickListener(View.OnClickListener {
-//            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
-//
-//            startActivity(intent)
-        })
-
-
-    }
-
-
-
-    override fun onTryAgainClicked() {
-
-    }
-
-
-    private fun setRecyclerView() {
-        val layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        mViewBinding?.recyclerView?.layoutManager = layoutManager
-
-        if (!feedList.isNullOrEmpty()) {
-            mViewBinding?.shimmerLayout?.stopShimmer()
-            mViewBinding?.shimmerLayout?.visibility = View.GONE
-        }
-
-        feedAdapter = jackpotViewModel?.let {
-            FeedsRewardsJackpotAdapter(
-                requireActivity(),
-                it,
-                this,
-                feedList
-            )
-        }
-        mViewBinding?.recyclerView?.adapter = feedAdapter
-
-    }
-
-    private fun observeInput(sharedViewModel: RewardsJackpotVM) {
-
-        sharedViewModel.jackpotfeedList.observe(requireActivity(), { list ->
-            if (!list.isNullOrEmpty()) {
-                mViewBinding?.shimmerLayout?.stopShimmer()
-
-                feedList?.addAll(list)
-                mViewBinding?.shimmerLayout?.visibility = View.GONE
-                feedAdapter?.notifyDataSetChanged()
-            }
-
-
-        })
-
-
-        sharedViewModel.totalJackpotAmount.observe(
-            requireActivity(),
-            androidx.lifecycle.Observer { list ->
-                mViewBinding?.loadingAmountHdp?.clearAnimation()
-                mViewBinding?.loadingAmountHdp?.visibility = View.GONE
-                if (list.count != null) {
-                    mViewBinding?.totalRefralWonValueTv?.text =
-                        "${list.count}"
-                }
-                if (list.totalJackpotMsg != null) {
-                    mViewBinding?.totalRefralWonTv?.text = "${list.totalJackpotMsg}"
-                }
-
-            })
-
-
-    }
-
+    private var feedJackpotAdapter: FeedsRewardsJackpotAdapter? = null
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -125,9 +44,6 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
     override fun getViewModel(): RewardsJackpotVM {
 
         jackpotViewModel = ViewModelProvider(this).get(RewardsJackpotVM::class.java)
-//            observeInput(sharedViewModel!!)
-
-
         return jackpotViewModel!!
     }
 
@@ -190,6 +106,79 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
             }
         }
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mViewBinding = getViewDataBinding()
+
+        setRecyclerView()
+
+        jackpotViewModel?.let { observeInput(it) }
+
+
+    }
+
+
+    override fun onTryAgainClicked() {
+
+    }
+
+
+    private fun setRecyclerView() {
+        val layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        mViewBinding?.recyclerView?.layoutManager = layoutManager
+
+        if (!feedList.isNullOrEmpty()) {
+            mViewBinding?.shimmerLayout?.stopShimmer()
+            mViewBinding?.shimmerLayout?.visibility = View.GONE
+        }
+
+        feedJackpotAdapter = jackpotViewModel?.let {
+            FeedsRewardsJackpotAdapter(
+                requireActivity(),
+                it,
+                this,
+                feedList
+            )
+        }
+        mViewBinding?.recyclerView?.adapter = feedJackpotAdapter
+
+    }
+
+    private fun observeInput(mViewModel: RewardsJackpotVM) {
+
+        mViewModel.jackpotfeedList.observe(requireActivity(), { list ->
+            if (!list.isNullOrEmpty()) {
+                mViewBinding?.shimmerLayout?.stopShimmer()
+
+                feedList?.addAll(list)
+                mViewBinding?.shimmerLayout?.visibility = View.GONE
+                feedJackpotAdapter?.notifyDataSetChanged()
+            }
+
+
+        })
+
+
+        mViewModel.totalJackpotAmount.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { list ->
+                mViewBinding?.loadingAmountHdp?.clearAnimation()
+                mViewBinding?.loadingAmountHdp?.visibility = View.GONE
+                if (list.count != null) {
+                    mViewBinding?.totalRefralWonValueTv?.text =
+                        "${list.count}"
+                }
+                if (list.totalJackpotMsg != null) {
+                    mViewBinding?.totalRefralWonTv?.text = "${list.totalJackpotMsg}"
+                }
+
+            })
+
+
+    }
+
 
     private fun callDiduKnowBottomSheet(list: List<String>) {
         val bottomSheet =

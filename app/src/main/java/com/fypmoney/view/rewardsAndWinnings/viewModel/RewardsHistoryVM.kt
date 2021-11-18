@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
-import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
@@ -17,13 +16,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class RewardsHistoryVM(application: Application) : BaseViewModel(application) {
-    var rewardHistoryList2: MutableLiveData<ArrayList<RewardHistoryResponseNew>> = MutableLiveData()
+    var rewardHistoryList: MutableLiveData<ArrayList<RewardHistoryResponseNew>> = MutableLiveData()
     var redeemproductDetails = MutableLiveData<aRewardProductResponse>()
     var orderNumber = MutableLiveData("")
 
-    init {
-
-    }
 
     fun callRewardHistory(page: Int) {
         WebApiCaller.getInstance().request(
@@ -67,7 +63,7 @@ class RewardsHistoryVM(application: Application) : BaseViewModel(application) {
 
                 val spinDetails = Gson().fromJson(
                     json.get("data"),
-                    com.fypmoney.model.aRewardProductResponse::class.java
+                    aRewardProductResponse::class.java
                 )
 
 
@@ -80,12 +76,12 @@ class RewardsHistoryVM(application: Application) : BaseViewModel(application) {
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<Array<RewardHistoryResponseNew>>(
+                val array = Gson().fromJson(
                     json.get("data").toString(),
                     Array<RewardHistoryResponseNew>::class.java
                 )
                 val arrayList = ArrayList(array.toMutableList())
-                rewardHistoryList2.postValue(arrayList)
+                rewardHistoryList.postValue(arrayList)
 
 
             }
@@ -94,10 +90,5 @@ class RewardsHistoryVM(application: Application) : BaseViewModel(application) {
 
     }
 
-    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
-        super.onError(purpose, errorResponseInfo)
-
-
-    }
 
 }

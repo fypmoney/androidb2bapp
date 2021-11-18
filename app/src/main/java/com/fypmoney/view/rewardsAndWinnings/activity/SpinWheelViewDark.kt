@@ -198,7 +198,9 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
             dialogDialog?.better_next_time?.visibility = View.INVISIBLE
             if (noOfGoldenCard != null) {
-
+                trackr {
+                    it.name = TrackrEvent.ticket_win_success
+                }
                 dialogDialog!!.golden_cards_won!!.text =
                     getString(R.string.you_won_1) + " " + noOfGoldenCard + " " + getString(R.string.golden_card)
             }

@@ -23,7 +23,6 @@ import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.adapter.FeedsRewardsAdapter
 
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
-import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.view.rewardsAndWinnings.CashBackWonHistoryActivity
 
 
@@ -35,108 +34,9 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
     }
 
     private var mViewBinding: FragmentRewardsOverviewBinding? = null
-    private var sharedViewModel: RewardsAndVM? = null
+    private var mViewmodel: RewardsAndVM? = null
 
-    private var typeAdapter: FeedsRewardsAdapter? = null
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mViewBinding = getViewDataBinding()
-
-
-
-        setRecyclerView()
-        sharedViewModel?.let { observeInput(it) }
-        mViewBinding?.bootomPartCl?.setOnClickListener(View.OnClickListener {
-            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
-
-            startActivity(intent)
-        })
-        mViewBinding?.totalMyntsLayout?.setOnClickListener(View.OnClickListener {
-            sharedViewModel?.totalmyntsClicked?.postValue(true)
-        })
-        mViewBinding?.goldenCardLayout?.setOnClickListener(View.OnClickListener {
-            sharedViewModel?.totalmyntsClicked?.postValue(true)
-        })
-
-    }
-
-
-    override fun onTryAgainClicked() {
-
-    }
-
-    private fun setRecyclerView() {
-        val layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        mViewBinding?.recyclerView?.layoutManager = layoutManager
-
-
-
-
-        typeAdapter = sharedViewModel?.let { FeedsRewardsAdapter(requireActivity(), it, this) }
-        mViewBinding?.recyclerView?.adapter = typeAdapter
-
-    }
-
-    private fun observeInput(sharedViewModel: RewardsAndVM) {
-        sharedViewModel.rewardfeedList.observe(requireActivity(), { list ->
-            if (list.isNullOrEmpty()) {
-                mViewBinding?.recyclerView?.visibility = View.GONE
-            } else {
-                mViewBinding?.shimmerLayout?.stopShimmer()
-                typeAdapter?.setList(list)
-
-                mViewBinding?.shimmerLayout?.visibility = View.GONE
-                typeAdapter?.notifyDataSetChanged()
-
-            }
-
-
-        })
-
-
-        sharedViewModel.totalRewardsResponse.observe(
-            requireActivity(),
-            androidx.lifecycle.Observer { list ->
-                mViewBinding?.loadingAmountHdp?.clearAnimation()
-                mViewBinding?.loadingAmountHdp?.visibility = View.GONE
-                mViewBinding?.totalRefralWonValueTv?.text =
-                    "₹" + Utility.convertToRs("${list.amount}")
-
-
-            })
-
-        sharedViewModel.rewardSummaryStatus.observe(
-            requireActivity(),
-            androidx.lifecycle.Observer { list ->
-                mViewBinding?.loadingAmountMynts?.clearAnimation()
-                mViewBinding?.loadingAmountMynts?.visibility = View.GONE
-                if (list.totalPoints != null) {
-                    mViewBinding?.totalMyntsWonValueTv?.text =
-                        String.format("%.0f", list.remainingPoints)
-                }
-
-
-            })
-
-        sharedViewModel.totalJackpotAmount.observe(
-            requireActivity(),
-            androidx.lifecycle.Observer { list ->
-                mViewBinding?.loadingGoldenCards?.clearAnimation()
-                mViewBinding?.loadingGoldenCards?.visibility = View.GONE
-                mViewBinding?.amountGolderTv?.visibility = View.VISIBLE
-                if (list.count != null) {
-                    mViewBinding?.amountGolderTv?.text =
-                        "${list.count}"
-                }
-                if (list.totalJackpotMsg != null) {
-                    mViewBinding?.golderCardWonHeading?.text = "${list.totalJackpotMsg}"
-                }
-
-            })
-    }
+    private var feedsRewardsAdapter: FeedsRewardsAdapter? = null
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -148,11 +48,11 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
 
     override fun getViewModel(): RewardsAndVM {
         activity?.let {
-            sharedViewModel = ViewModelProvider(it).get(RewardsAndVM::class.java)
-//            observeInput(sharedViewModel!!)
+            mViewmodel = ViewModelProvider(it).get(RewardsAndVM::class.java)
+
 
         }
-        return sharedViewModel!!
+        return mViewmodel!!
     }
 
     override fun onFeedClick(position: Int, it: FeedDetails) {
@@ -214,6 +114,106 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
             }
         }
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mViewBinding = getViewDataBinding()
+
+
+
+        setRecyclerView()
+        mViewmodel?.let { observeInput(it) }
+        mViewBinding?.bootomPartCl?.setOnClickListener(View.OnClickListener {
+            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
+            startActivity(intent)
+        })
+        mViewBinding?.totalMyntsLayout?.setOnClickListener(View.OnClickListener {
+            mViewmodel?.totalmyntsClicked?.postValue(true)
+        })
+        mViewBinding?.goldenCardLayout?.setOnClickListener(View.OnClickListener {
+            mViewmodel?.totalmyntsClicked?.postValue(true)
+        })
+
+    }
+
+
+    override fun onTryAgainClicked() {
+
+    }
+
+    private fun setRecyclerView() {
+        val layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        mViewBinding?.recyclerView?.layoutManager = layoutManager
+
+
+
+
+        feedsRewardsAdapter = mViewmodel?.let { FeedsRewardsAdapter(requireActivity(), it, this) }
+        mViewBinding?.recyclerView?.adapter = feedsRewardsAdapter
+
+    }
+
+    private fun observeInput(viewModel: RewardsAndVM) {
+        viewModel.rewardfeedList.observe(requireActivity(), { list ->
+            if (list.isNullOrEmpty()) {
+
+
+                mViewBinding?.recyclerView?.visibility = View.GONE
+            } else {
+                mViewBinding?.shimmerLayout?.stopShimmer()
+                feedsRewardsAdapter?.setList(list)
+
+                mViewBinding?.shimmerLayout?.visibility = View.GONE
+                feedsRewardsAdapter?.notifyDataSetChanged()
+
+            }
+
+
+        })
+
+
+        viewModel.totalRewardsResponse.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { list ->
+                mViewBinding?.loadingAmountHdp?.clearAnimation()
+                mViewBinding?.loadingAmountHdp?.visibility = View.GONE
+                mViewBinding?.totalRefralWonValueTv?.text =
+                    getString(R.string.rupee_symbol) + Utility.convertToRs("${list.amount}")
+
+
+            })
+
+        viewModel.rewardSummaryStatus.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { list ->
+                mViewBinding?.loadingAmountMynts?.clearAnimation()
+                mViewBinding?.loadingAmountMynts?.visibility = View.GONE
+                if (list.totalPoints != null) {
+                    mViewBinding?.totalMyntsWonValueTv?.text =
+                        String.format("%.0f", list.remainingPoints)
+                }
+
+
+            })
+
+        viewModel.totalJackpotAmount.observe(
+            requireActivity(),
+            androidx.lifecycle.Observer { list ->
+                mViewBinding?.loadingGoldenCards?.clearAnimation()
+                mViewBinding?.loadingGoldenCards?.visibility = View.GONE
+                mViewBinding?.amountGolderTv?.visibility = View.VISIBLE
+                if (list.count != null) {
+                    mViewBinding?.amountGolderTv?.text =
+                        "${list.count}"
+                }
+                if (list.totalJackpotMsg != null) {
+                    mViewBinding?.golderCardWonHeading?.text = "${list.totalJackpotMsg}"
+                }
+
+            })
+    }
+
+
 
     private fun callDiduKnowBottomSheet(list: List<String>) {
         val bottomSheet =

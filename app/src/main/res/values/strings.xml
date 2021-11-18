@@ -978,6 +978,15 @@ Coming really soon!
     <string name="play">Play</string>
     <string name="please_wait_loading_contact_list">Please wait,loading contact list...</string>
     <string name="please_allow_us_to_read_your_contacts">Please allow us to read your contacts.</string>
+    <string name="not_available_at_this_time">Not Available at this time</string>
+    <string name="four_dots">....</string>
+    <string name="rupee_symbol">₹</string>
+    <string name="spinners_heading">Spinners</string>
+    <string name="scratch_cards">Scratch cards</string>
+    <string name="mynts">Mynts</string>
+    <string name="total_earned">Total Earned</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>

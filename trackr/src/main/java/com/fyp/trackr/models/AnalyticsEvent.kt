@@ -121,6 +121,8 @@ enum class TrackrEvent(name: String) {
     scratch("scratch"),
     scratch_success("scratch_success"),
     insufficient_mynts("insufficient_mynts"),
+    open_jackpot("open_jackpot"),
+    ticket_win_success("ticket_win_success")
 }
 
 enum class TrackrField(name: String) {

@@ -25,26 +25,10 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
         var page = 0
     }
 
-    private var typeAdapterHistory: RewardsHistoryLeaderboardAdapter? = null
+    private var rewardAdapterHistory: RewardsHistoryLeaderboardAdapter? = null
     private var itemsArrayList: ArrayList<HistoryItem> = ArrayList()
     private var mViewBinding: FragmentRewardHistoryBinding? = null
-    private var sharedViewModel: RewardsAndVM? = null
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mViewBinding = getViewDataBinding()
-
-        mViewBinding?.showHistory?.setOnClickListener(View.OnClickListener {
-
-            val intent = Intent(requireContext(), RewardsHistoryView::class.java)
-            requireContext().startActivity(intent)
-        })
-
-        setRecyclerView(mViewBinding)
-        sharedViewModel?.let { setObserver(it) }
-    }
-
-
+    private var mViewModel: RewardsAndVM? = null
     override fun onTryAgainClicked() {
 
     }
@@ -60,13 +44,26 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
 
     override fun getViewModel(): RewardsAndVM {
         activity?.let {
-            sharedViewModel = ViewModelProvider(it).get(RewardsAndVM::class.java)
-
-//            setObserver(sharedViewModel!!)
+            mViewModel = ViewModelProvider(it).get(RewardsAndVM::class.java)
         }
 
-        return sharedViewModel!!
+        return mViewModel!!
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mViewBinding = getViewDataBinding()
+
+        mViewBinding?.showHistory?.setOnClickListener {
+
+            val intent = Intent(requireContext(), RewardsHistoryView::class.java)
+            requireContext().startActivity(intent)
+        }
+
+        setRecyclerView(mViewBinding)
+        mViewModel?.let { setObserver(it) }
+    }
+
 
     private fun setRecyclerView(root: FragmentRewardHistoryBinding?) {
         val layoutManager =
@@ -85,24 +82,18 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
                         historyItem.orderNumber.toString()
                     )
                     intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
-
                     startActivity(intent)
 
-//                    val args = Bundle()
-//                    args.putSerializable("ARRAYLIST", itemsArrayList as Serializable)
-//                    intent.putExtra("BUNDLE", args)
-
-
                 } else {
-                    sharedViewModel?.callProductsDetailsApi(historyItem.orderNumber)
+                    mViewModel?.callProductsDetailsApi(historyItem.orderNumber)
 
                 }
             }
         }
 
-        typeAdapterHistory =
+        rewardAdapterHistory =
             RewardsHistoryLeaderboardAdapter(itemsArrayList, requireContext(), itemClickListener2)
-        root?.rvHistory?.adapter = typeAdapterHistory
+        root?.rvHistory?.adapter = rewardAdapterHistory
     }
     private fun setObserver(sharedViewModel: RewardsAndVM) {
 
@@ -128,7 +119,7 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
 
 
                 }
-                typeAdapterHistory?.notifyDataSetChanged()
+                rewardAdapterHistory?.notifyDataSetChanged()
 
 
             })

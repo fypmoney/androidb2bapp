@@ -78,7 +78,7 @@
 
             android:ellipsize="end"
             android:maxLines="2"
-            android:text=""
+
             android:textColor="@color/white"
             android:textSize="12sp" />
 
