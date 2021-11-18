@@ -1,9 +1,10 @@
 package com.fypmoney.view.ordercard.activateofflinecard
 
 import android.app.Application
-import android.content.DialogInterface
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -15,7 +16,6 @@ import com.fypmoney.model.*
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
-import com.fypmoney.view.ordercard.model.UserOfferCardResponse
 import com.google.gson.Gson
 
 class ScanCardKitNumberActivityVM(application: Application):BaseViewModel(application) {
@@ -106,11 +106,17 @@ class ScanCardKitNumberActivityVM(application: Application):BaseViewModel(applic
             }
             ApiConstant.API_SET_CHANGE_PIN -> {
                 if (responseData is SetPinResponse) {
+                    trackr { it1->
+                        it1.name = TrackrEvent.pin_success
+                    }
                     _event.value = ScanCardKitNumberEvent.SetPinSuccess(responseData.setPinResponseDetails!!)
                 }
             }
             ApiConstant.API_ACTIVATE_CARD -> {
                 if (responseData is ActivateCardResponse) {
+                    trackr { it1->
+                        it1.name = TrackrEvent.card_activate_success
+                    }
                     Utility.showToast(responseData.activateCardResponseDetails?.message)
                     _event.value = ScanCardKitNumberEvent.OnActivateCardSuccess
                 }

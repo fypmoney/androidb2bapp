@@ -150,9 +150,6 @@ class EnterAmountForPayRequestView :
                     callBottomSheet()
                 }
                 AppConstants.API_SUCCESS -> {
-                    trackr {
-                        it.name = TrackrEvent.tran_success
-                    }
                     intentToActivity(HomeView::class.java)
                 }
                 AppConstants.INSUFFICIENT_ERROR_CODE -> {
@@ -161,6 +158,9 @@ class EnterAmountForPayRequestView :
             }
         }
         mViewModel.sendMoneyApiResponse.observe(this) {
+            trackr {
+                it.name = TrackrEvent.tran_success
+            }
             callTransactionSuccessBottomSheet(it)
         }
 

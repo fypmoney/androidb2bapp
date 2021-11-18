@@ -321,12 +321,6 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
 
                 }
             }
-            ApiConstant.API_ACTIVATE_CARD -> {
-                if (responseData is ActivateCardResponse) {
-
-
-                }
-            }
 
             ApiConstant.API_LOGIN -> {
                 if (responseData is LoginResponse) {
