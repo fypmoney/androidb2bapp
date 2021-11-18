@@ -121,12 +121,14 @@ enum class TrackrEvent(name: String) {
     scratch("scratch"),
     scratch_success("scratch_success"),
     insufficient_mynts("insufficient_mynts"),
+    ref_from_invite_link("ref_from_invite_link"),
     card_activate_success("card_activate_success"),
     pin_success ("pin_success"),
 }
 
 enum class TrackrField(name: String) {
     user_id("user_id"),
+    referral_code("referral_code"),
     user_mobile_no("user_mobile_no"),
     spin_product_code("product_code"),
     transaction_amount("transaction_amount"),
