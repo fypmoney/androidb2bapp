@@ -4,6 +4,8 @@ import android.app.Application
 import android.os.Build
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -197,6 +199,9 @@ class HomeViewModel(application: Application) : BaseViewModel(application) {
 
             ApiConstant.API_PAY_MONEY -> {
                 if (responseData is PayMoneyResponse) {
+                    trackr {
+                        it.name = TrackrEvent.tran_success
+                    }
                     sendMoneyApiResponse.value = responseData.sendMoneyResponseDetails
 
                 }

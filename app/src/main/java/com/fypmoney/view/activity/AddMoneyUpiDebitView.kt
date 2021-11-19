@@ -128,6 +128,13 @@ open class AddMoneyUpiDebitView :
         mViewModel.onStep2Response.observe(this) {
             when (it) {
                 AppConstants.API_SUCCESS -> {
+                    trackr {
+                        it.services = arrayListOf(
+                            TrackrServices.FIREBASE,
+                            TrackrServices.MOENGAGE,
+                            TrackrServices.FB,TrackrServices.ADJUST)
+                        it.name = TrackrEvent.load_money_success
+                    }
                     callTransactionSuccessBottomSheet()
                 }
                 AppConstants.API_FAIL -> {
@@ -300,7 +307,6 @@ open class AddMoneyUpiDebitView :
 
             override fun setCBProperties(webview: WebView, payUCustomBrowser: Bank) {
                 webview.webChromeClient = PayUWebChromeClient(payUCustomBrowser)
-
             }
 
             override fun onBackApprove() {

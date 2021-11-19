@@ -51,6 +51,7 @@ class SharedPrefUtils {
         const val SF_KEY_APP_VERSION_CODE = "app_version_code"
         const val SF_REFFERAL_MSG = "refer_share_message_0"
         const val SF_REFFERAL_MSG_2 = "refer_share_message_1"
+        const val SF_REFERRAL_CODE_FROM_INVITE_LINK = "referral_code_from_invite_link"
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(context)

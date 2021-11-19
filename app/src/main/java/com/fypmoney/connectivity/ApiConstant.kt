@@ -128,6 +128,8 @@ object ApiConstant {
         "/services/PockketService/api/cashback-earned/bymrn/"
     const val API_GET_REWARDS_EARNED =
         "services/loyaltyservice/api/loyalty/transaction/bymrn/"
+    const val API_GET_JACKPOT_CARDS =
+        "services/PockketService/api/jackpot/tickets"
 
 }
 

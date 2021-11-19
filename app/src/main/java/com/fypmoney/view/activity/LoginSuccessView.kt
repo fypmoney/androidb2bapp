@@ -79,7 +79,6 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
     private fun setObserver() {
         mViewModel.onApiSuccess.observe(this) {
             when {
-
                 Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
                     intentToActivity(CreateAccountView::class.java)
 
@@ -89,7 +88,6 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                 }
                 else-> {
                     if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
-
                         if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
                             intentToActivity(HomeView::class.java)
                         } else {
@@ -100,7 +98,6 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                             AppConstants.YES -> {
                                 intentToActivity(ReferralCodeView::class.java)
                             }
-
                             else -> {
                                 if (hasPermissions(
                                         this,

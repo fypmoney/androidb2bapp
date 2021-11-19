@@ -14,6 +14,8 @@ data class CoinsBurnedResponse(
     val rewardProductCode: String? = null,
     val productType: Any? = null,
     val fullfillmentDescription: Any? = null,
-    val sectionId: Int? = null
+    val sectionId: Int? = null,
+    val noOfJackpotTicket: Int? = null
+
 )
 

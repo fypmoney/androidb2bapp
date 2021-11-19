@@ -74,7 +74,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
-            android:backgroundTint="#DC9BEB"
+            android:backgroundTint="@color/scratch_button_default"
             android:drawableLeft="@drawable/ic_mynt_coin"
             android:id="@+id/burn_amount"
             android:maxLines="1"

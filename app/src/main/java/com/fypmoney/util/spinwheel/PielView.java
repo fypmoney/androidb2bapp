@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
@@ -131,7 +132,7 @@ public class PielView extends View {
     }
 
     public void setTopTextSize(int size) {
-        mTopTextSize = size + 8;
+        mTopTextSize = size + 2;
         invalidate();
     }
 
@@ -192,10 +193,12 @@ public class PielView extends View {
 
             int sliceColor = mLuckyItemList.get(i).color != 0 ? mLuckyItemList.get(i).color : defaultBackgroundColor;
 
-            if (mLuckyItemList.get(i).icon != 0)
+            if (i != 0 && mLuckyItemList.get(i).icon != 0)
                 drawImage(canvas, tmpAngle, BitmapFactory.decodeResource(getResources(),
                         mLuckyItemList.get(i).icon));
-
+            if (i == 0 && mLuckyItemList.get(i).icon != 0)
+                drawImagesingle(canvas, tmpAngle, BitmapFactory.decodeResource(getResources(),
+                        mLuckyItemList.get(i).icon));
             if (!TextUtils.isEmpty(mLuckyItemList.get(i).topText))
                 drawTopText(canvas, tmpAngle, sweepAngle, mLuckyItemList.get(i).topText, sliceColor);
             if (!TextUtils.isEmpty(mLuckyItemList.get(i).secondaryText))
@@ -240,17 +243,50 @@ public class PielView extends View {
      * @param bitmap
      */
     private void drawImage(Canvas canvas, float tmpAngle, Bitmap bitmap) {
+        canvas.save();
+        int imgWidth = 60;
+        float angle = (float) ((tmpAngle + 360f / mLuckyItemList.size() / 2) * Math.PI / 180);
+
+        int x = (int) +(mCenter + mRadius * 4 / 7 / 2 * Math.cos(angle));
+        int y = (int) (mCenter + mRadius * 4 / 7 / 2 * Math.sin(angle));
+
+        Rect rect = new Rect(x - imgWidth / 2, y - imgWidth / 3,
+                x + imgWidth / 2, y + imgWidth / 3);
+
+
+        int arraySize = mLuckyItemList.size();
+
+
+        float initFloat = (tmpAngle + 360f / arraySize / 2);
+
+
+        canvas.rotate(initFloat + (arraySize / 18f), x, y);
+        canvas.drawBitmap(bitmap, null, rect, null);
+        canvas.restore();
+    }
+
+    private void drawImagesingle(Canvas canvas, float tmpAngle, Bitmap bitmap) {
+        canvas.save();
         int imgWidth = 60;
         float angle = (float) ((tmpAngle + 360f / mLuckyItemList.size() / 2) * Math.PI / 180);
 
         int x = (int) +(mCenter + mRadius * 3 / 5 / 2 * Math.cos(angle));
         int y = (int) (mCenter + mRadius * 3 / 5 / 2 * Math.sin(angle));
 
-        Rect rect = new Rect(x - imgWidth / 2, y - imgWidth / 2,
-                x + imgWidth / 2, y + imgWidth / 2);
-        canvas.drawBitmap(bitmap, null, rect, null);
-    }
+        Rect rect = new Rect(x - imgWidth, y - imgWidth / 2,
+                x + imgWidth, y + imgWidth / 2);
 
+
+        int arraySize = mLuckyItemList.size();
+
+
+        float initFloat = (tmpAngle + 360f / arraySize / 2);
+
+
+        canvas.rotate(initFloat + (arraySize / 18f), x, y);
+        canvas.drawBitmap(bitmap, null, rect, null);
+        canvas.restore();
+    }
     private void drawCenterImage(Canvas canvas, Drawable drawable) {
         ;
         Bitmap bitmap = LuckyWheelUtils.drawableToBitmap(drawable);
@@ -283,7 +319,7 @@ public class PielView extends View {
         mTextPaint.setTypeface(typeface);
         mTextPaint.setTextAlign(Paint.Align.LEFT);
         mTextPaint.setTextSize(mTopTextSize);
-        mTextPaint.setLetterSpacing(.2f);
+        mTextPaint.setLetterSpacing(.1f);
         mTextPaint.setLinearText(true);
         mTextPaint.setSubpixelText(true);
         int noOfLines = 0;
@@ -293,7 +329,7 @@ public class PielView extends View {
         float textWidth = mTextPaint.measureText(mStr);
         int hOffset = (int) (mRadius * Math.PI / mLuckyItemList.size() / 2 - textWidth / 2);
 
-        int vOffset = mTopTextPadding + 50;
+        int vOffset = mTopTextPadding + 30;
 
         canvas.drawTextOnPath(mStr, path, hOffset, vOffset, mTextPaint);
     }

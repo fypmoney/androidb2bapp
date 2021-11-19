@@ -90,7 +90,7 @@ class FeedsRewardsAdapter(
                 feedList?.get(position), onFeedItemClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
-            mRowItemBinding.viewModel = viewModel
+
 
 
             try {

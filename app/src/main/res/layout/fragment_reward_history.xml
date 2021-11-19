@@ -104,9 +104,9 @@
                             android:background="@drawable/ic_circle_orange"
                             android:layout_marginStart="14dp"
 
-                            android:text="1"
+                            android:text="@string/_1"
                             android:textSize="14sp"
-                            android:textColor="#F7AA11"
+                            android:textColor="@color/color_orange"
                             android:gravity="center"
 
 
@@ -160,9 +160,9 @@
                             android:background="@drawable/ic_circle_blue"
                             android:layout_marginStart="14dp"
 
-                            android:text="2"
+                            android:text="@string/_2"
                             android:textSize="14sp"
-                            android:textColor="#8ECFE3"
+                            android:textColor="@color/chores_background"
                             android:gravity="center"
 
 
@@ -221,7 +221,7 @@
                 android:visibility="gone"
                 android:layout_marginTop="@dimen/dp6"
                 android:layout_marginBottom="@dimen/_6sdp"
-                android:backgroundTint="#15181F"
+                android:backgroundTint="@color/color_black_1"
                 android:text="@string/view_more" />
 
         </RelativeLayout>
@@ -258,14 +258,12 @@
             android:elevation="@dimen/_2sdp">
 
             <RelativeLayout
-
                 android:id="@+id/relativeLayout5"
                 android:layout_width="match_parent"
-
                 android:layout_height="0dp"
                 android:alpha=".10"
                 android:background="@drawable/round_backgorund_20"
-                android:backgroundTint="#F4F4F4"
+                android:backgroundTint="@color/grey"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -308,7 +306,7 @@
                         android:layout_marginStart="@dimen/_4sdp"
 
                         android:layout_marginTop="@dimen/_2sdp"
-                        android:text="Mynts"
+                        android:text="@string/mynts"
                         android:textColor="@color/white"
                         android:textSize="12sp" />
                 </LinearLayout>
@@ -385,12 +383,13 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/_14sdp"
-                            android:text="Total Earned"
+                            android:text="@string/total_earned"
                             android:textColor="@color/white"
-                            android:textSize="14sp" />
+                            android:textSize="@dimen/text_14sp" />
 
                         <TextView
                             android:id="@+id/totalearned"
+                            style="@style/TextviewBold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
@@ -399,8 +398,7 @@
                             android:layout_marginEnd="@dimen/_14sdp"
 
                             android:textColor="@color/white"
-                            android:textSize="22sp"
-                            android:textStyle="bold" />
+                            android:textSize="@dimen/text_22sp" />
                     </RelativeLayout>
 
 
@@ -415,7 +413,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_12sdp"
-                android:paddingBottom="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_14sdp"
                 android:layout_marginEnd="@dimen/_12sdp"
                 android:weightSum="2"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -438,7 +436,8 @@
                         android:layout_marginEnd="@dimen/_4sdp"
                         android:background="@drawable/circular_red"
                         android:elevation="@dimen/_2sdp"
-                        android:backgroundTint="#bae6c2"
+                        android:backgroundTint="@color/spin_light"
+                        style="@style/TextviewRegular"
 
                         app:layout_constraintBottom_toBottomOf="@+id/points_left"
                         app:layout_constraintEnd_toStartOf="@+id/points_left"
@@ -451,7 +450,8 @@
                         android:layout_height="wrap_content"
 
                         android:textColor="@color/white"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/text_18sp"
+
                         style="@style/TextviewBold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -462,10 +462,10 @@
                         android:layout_width="wrap_content"
 
                         android:layout_height="wrap_content"
-
+                        style="@style/TextviewRegular"
                         android:text="@string/have"
                         android:textColor="@color/text_color_light"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/text_14sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/points_left"
@@ -483,7 +483,7 @@
                     <RelativeLayout
                         android:layout_width="@dimen/_10sdp"
                         android:layout_height="@dimen/_10sdp"
-                        android:backgroundTint="#ff4856"
+                        android:backgroundTint="@color/text_color_red"
                         android:elevation="@dimen/_2sdp"
                         android:layout_marginEnd="@dimen/_4sdp"
                         android:background="@drawable/circular_red"
@@ -498,8 +498,8 @@
 
                         android:textColor="@color/white"
                         style="@style/TextviewBold"
-                        android:textSize="18sp"
-                        android:text=""
+                        android:textSize="@dimen/text_18sp"
+
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -509,8 +509,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/spent"
+                        style="@style/TextviewRegular"
                         android:textColor="@color/text_color_light"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/text_14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
