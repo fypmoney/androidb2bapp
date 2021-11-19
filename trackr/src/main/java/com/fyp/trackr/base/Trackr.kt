@@ -17,11 +17,14 @@ import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
 import com.adjust.sdk.AdjustEvent
 import com.facebook.appevents.AppEventsLogger
+import com.facebook.internal.Utility
 import com.fyp.trackr.BuildConfig
 import com.fyp.trackr.R
+import com.fyp.trackr.SERVER_DATE_TIME_FORMAT1
 import com.fyp.trackr.models.AnalyticsEvent
 import com.fyp.trackr.models.ScreenEvent
 import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.parseDateStringIntoDate
 import com.fyp.trackr.services.TrackrServices
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.moe.pushlibrary.MoEHelper
@@ -99,20 +102,6 @@ object Trackr {
                 MoEngage.initialise(moEngage!!)
             }
         }
-       /* GlobalScope.launch {
-            var adInfo: AdvertisingIdClient.Info? = null
-            var andiInfo: String? = null
-            try {
-                adInfo = AdvertisingIdClient.getAdvertisingIdInfo(app.applicationContext)
-                andiInfo = Settings.Secure.getString(app.contentResolver, Settings.Secure.ANDROID_ID)
-            } catch (exception: IOException) {
-                exception.printStackTrace()
-            } catch (exception: GooglePlayServicesNotAvailableException) {
-                exception.printStackTrace()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }*/
         mainHandler = Handler(app.mainLooper)
         initSharedPreference(app)
         addNotificationChannels(app)
@@ -165,6 +154,17 @@ object Trackr {
         }
         MoEHelper.getInstance(app!!).setUserAttribute(data)
 
+    }
+    fun sendDob(dateOfBirth:String?){
+        val dob = parseDateStringIntoDate(dateOfBirth,
+            inputFormat = SERVER_DATE_TIME_FORMAT1)
+        dob?.let { it1 ->
+            app?.applicationContext?.let {
+                MoEHelper.getInstance(it).setBirthDate(
+                    it1
+                )
+            }
+        }
     }
     fun updateUserId(userId: String?){
         sharedPreference?.edit()?.putString("user_id", userId)?.apply()

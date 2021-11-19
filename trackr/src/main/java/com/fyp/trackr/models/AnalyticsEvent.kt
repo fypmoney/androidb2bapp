@@ -55,6 +55,8 @@ fun AnalyticsEvent?.push() {
     Trackr.a(this)
 }
 
+
+
 // Easy Kotlin DSL for init
 fun trackr(block: (AnalyticsEvent) -> Unit): AnalyticsEvent {
     val p = AnalyticsEvent()
