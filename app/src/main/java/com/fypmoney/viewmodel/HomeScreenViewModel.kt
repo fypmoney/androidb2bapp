@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.os.SystemClock
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -29,6 +30,7 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     FeedsAdapter.OnFeedItemClickListener {
     var availableAmount =
         ObservableField(PockketApplication.instance.getString(R.string.dummy_amount))
+    private var mLastClickTime: Long = 0
     var totalCount = ObservableField(0)
     var onAddMoneyClicked = MutableLiveData(false)
     var onPayClicked = MutableLiveData(false)
@@ -315,6 +317,10 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
     }
 
     override fun onFeedClick(position: Int, feedDetails: FeedDetails) {
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
+            return
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         selectedPosition.set(position)
         onFeedButtonClick.value = feedDetails
     }
