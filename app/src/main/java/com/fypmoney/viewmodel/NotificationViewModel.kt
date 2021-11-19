@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -187,6 +189,9 @@ class NotificationViewModel(application: Application) : BaseViewModel(applicatio
                 if (responseData is PayMoneyResponse) {
                     onRefresh()
                     Utility.showToast(responseData.msg)
+                    trackr {
+                        it.name = TrackrEvent.tran_success
+                    }
                     sendMoneyApiResponse.value = responseData.sendMoneyResponseDetails
 
 

@@ -43,7 +43,6 @@ dependencies {
     api 'com.google.firebase:firebase-analytics:19.0.2'
     api 'com.moengage:moe-android-sdk:11.4.01'
     api 'com.adjust.sdk:adjust-android:4.28.4'
-    api 'com.android.installreferrer:installreferrer:2.2'
     api 'com.facebook.android:facebook-android-sdk:latest.release'
 
 }

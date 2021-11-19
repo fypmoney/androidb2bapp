@@ -8,7 +8,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -17,12 +16,10 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSplashBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.NOT_ALLOWED_MSG
+import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getReferralCodeFromDynamicLink
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SplashViewModel
-import com.moe.pushlibrary.MoEHelper
-import com.moe.pushlibrary.models.GeoLocation
-import com.moengage.core.Properties
 import kotlinx.android.synthetic.main.view_splash.*
 import java.util.*
 
@@ -49,6 +46,10 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setObserver()
+        getReferralCodeFromDynamicLink(activity = this,intent = intent,onReferralCodeFound = {
+            SharedPrefUtils.putString(applicationContext,
+            SharedPrefUtils.SF_REFERRAL_CODE_FROM_INVITE_LINK,it)
+        })
         val uri: Uri =
             Uri.parse("android.resource://" + packageName + "/" + R.raw.splash)
         video.setMediaController(null)
@@ -57,6 +58,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         trackr {
             it.name = TrackrEvent.app_launch
         }
+
     }
 
     /**
@@ -218,5 +220,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     override fun onTryAgainClicked() {
         mViewModel.setUpApp()
     }
+
+
 
 }
