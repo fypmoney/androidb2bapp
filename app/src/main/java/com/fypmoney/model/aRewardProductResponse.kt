@@ -19,6 +19,7 @@ data class aRewardProductResponse(
     val sectionId: Int? = null,
     val appDisplayTextColor: String? = null,
     val backgroundColor: String? = null,
+    val noOfJackpotTicket: Int? = null
 
 
     )

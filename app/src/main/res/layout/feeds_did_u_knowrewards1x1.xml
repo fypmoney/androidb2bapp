@@ -12,9 +12,6 @@
             name="viewHelper"
             type="com.fypmoney.viewhelper.FeedsViewHelper" />
 
-        <variable
-            name="viewModel"
-            type="com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM" />
 
     </data>
 

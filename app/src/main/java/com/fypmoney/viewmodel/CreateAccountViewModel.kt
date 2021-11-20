@@ -7,6 +7,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.UserTrackr
 import com.fyp.trackr.models.push
+import com.fyp.trackr.models.setDateOfBirthDate
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -39,18 +40,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
     var dobForServer = MutableLiveData<String>()
     var onDobClicked = MutableLiveData(false)
     var teenager = MutableLiveData(-1)
-    var majorMinorText = ObservableField<String>()
-    var isMajorMinorVisible = ObservableField(false)
-    var buttonColor = ObservableField(false)
     var selectedInterestList = ArrayList<InterestEntity>()
-    var interestRepository = InterestRepository(mDB = appDatabase)
-    /*
-    * This method is used to set data
-    * */
-    fun setData(customerInfoResponse: CustomerInfoResponseDetails) {
-        firstName.value = customerInfoResponse.firstName
-        lastName.value = customerInfoResponse.lastName
-    }
 
     /*
     * This method is used to handle click of continue
@@ -73,7 +63,6 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
                 } else if (teenager.value == 1) {
                     age_type = "CHILD"
                 }
-                Log.d("chack", age_type)
                 WebApiCaller.getInstance().request(
                     ApiRequest(
                         purpose = ApiConstant.API_UPDATE_PROFILE,
@@ -107,12 +96,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
         onDobClicked.value = true
     }
 
-    /*
-    * This method is used to handle click of login
-    * */
-    fun onLoginClicked() {
-        onLoginClicked.value = true
-    }
+
 
 
     override fun onSuccess(purpose: String, responseData: Any) {
@@ -155,10 +139,14 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
 
                     val map = hashMapOf<String,Any>()
 
-                    map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = responseData.customerInfoResponseDetails!!.firstName.toString()
-                    map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = responseData.customerInfoResponseDetails!!.lastName.toString()
-                    map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = responseData.customerInfoResponseDetails!!.dob.toString()
+                    map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = responseData.customerInfoResponseDetails?.firstName.toString()
+                    map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = responseData.customerInfoResponseDetails?.lastName.toString()
                     UserTrackr.push(map)
+                    responseData.customerInfoResponseDetails?.userProfile?.dob?.let {
+                        UserTrackr.setDateOfBirthDate(
+                            it
+                        )
+                    }
 
                     val interestList = ArrayList<String>()
                     if (!selectedInterestList.isNullOrEmpty()) {

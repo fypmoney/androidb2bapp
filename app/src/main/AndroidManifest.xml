@@ -224,12 +224,8 @@
         <activity
             android:name=".view.activity.ContactViewAddMember"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.rewardsAndWinnings.activity.SpinWheelView"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.rewardsAndWinnings.activity.SpinHistoryView"
-            android:screenOrientation="portrait" />
+
+
         <activity
             android:name=".view.activity.PermissionsActivity"
             android:screenOrientation="portrait" />
@@ -315,6 +311,12 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>-->
+
+        <activity
+            android:name="com.moe.pushlibrary.activities.MoEActivity"
+            android:label="HomeView"
+            android:parentActivityName="com.fypmoney.view.activity.HomeView" >
+        </activity>
     </application>
     <queries>
         <intent>

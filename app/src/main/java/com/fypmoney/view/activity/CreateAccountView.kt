@@ -80,12 +80,6 @@ class CreateAccountView :
         })
         btnCreateAccount.backgroundTintList =
             ContextCompat.getColorStateList(applicationContext, R.color.buttonUnselectedColor)
-
-        try {
-            mViewModel.setData(intent.getSerializableExtra((AppConstants.CUSTOMER_INFO_RESPONSE)) as CustomerInfoResponseDetails)
-        } catch (e: java.lang.Exception) {
-            e.printStackTrace()
-        }
         setObserver()
     }
 

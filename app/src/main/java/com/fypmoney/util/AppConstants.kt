@@ -138,6 +138,7 @@ object AppConstants {
     const val CHANGED_DATE_TIME_FORMAT = "MMM dd,yyyy-HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT9 = "dd MMM,yyyy-HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT1 = "MMM dd"
+    const val CHANEGEDATE_DATE_MONTH = "dd MMM"
     const val CHANGED_DATE_TIME_FORMAT2 = "MMM dd HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT3 = "MMM dd, HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT4 = "MMM dd, yyyy"
@@ -145,6 +146,9 @@ object AppConstants {
     const val CHANGED_DATE_TIME_FORMAT8 = "dd MMM, yy"
     const val CHANGED_DATE_TIME_FORMAT7 = "HH:mm,  MMM dd, yy"
     const val CHANGED_DATE_TIME_FORMAT5 = " dd/MM/yyyy"
+    const val REWARD_HISTORY_OUTPUT = "MMM dd' ,'hh:mm a"
+    const val REWARD_HISTORY_INPUT = "MMM dd' ,'hh:mm a"
+
     const val PAYU_SERVER = "pay u server"
 
     const val TYPE_UPI = "upi"
@@ -212,21 +216,23 @@ object AppConstants {
     const val FEEDSCREEN = "FeedScreen"
     const val TRACKORDER = "TrackOrderScreen"
     const val CHORES = "ChoresScreen"
-   /* Home : "HomeView, 0"
+    const val JACKPOTTAB = "Jackpot"
 
-    Refereal Screen : "ReferralScrren, 1"
+    /* Home : "HomeView, 0"
 
-    Card Screen : "CardScreen, 2"
+     Refereal Screen : "ReferralScrren, 1"
 
-    Stores : "StoreScreen, 3"
+     Card Screen : "CardScreen, 2"
 
-    Fyper : "FyperScreen, 4"
+     Stores : "StoreScreen, 3"
 
-    Feed : "FeedScreen, 5"
+     Fyper : "FyperScreen, 4"
 
-    Track Order : "TrackOrderScreen, 6"
+     Feed : "FeedScreen, 5"
 
-    Chores :" ChoresScreen, 7"*/
+     Track Order : "TrackOrderScreen, 6"
+
+     Chores :" ChoresScreen, 7"*/
    const val ERROR_TYPE_AFTER_SPIN = "AfterSpin"
     const val INSUFFICIENT_ERROR_CODE = "PKT_2037"
     const val AADHAR_VERIFICATION_ERROR_CODE = "PKT_2006"
@@ -250,7 +256,9 @@ object AppConstants {
     const val ORDER_NUM = "ORDERID"
     const val PRODUCT_HIDE_IMAGE = "HIDE_IMAGE"
     const val SECTION_ID = "SECTIONID"
+    const val NO_GOLDED_CARD = "GOLDEDCARD"
     const val PRODUCT_CODE = "PRODUCT_CODE"
     const val TRANS_TYPE_EARN = "EARN"
+    const val JACKPOT_SCREEN_NAME = "JACKPOT"
 
 }

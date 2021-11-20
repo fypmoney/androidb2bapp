@@ -942,6 +942,7 @@ Coming really soon!
     <string name="total_rewards_earned">Total rewards earned</string>
 
     <string name="overview">Overview</string>
+    <string name="jackpot">Jackpot</string>
     <string name="spinners">Spinners</string>
     <string name="history">History</string>
     <string name="spin_dark_text">Spin it to win It🤑</string>
@@ -968,8 +969,24 @@ Coming really soon!
     <string name="cash_back_won_history">Cashback Won History</string>
     <string name="looks_like_you_haven_t_any_referred_a_yet">Looks like you haven’t any referred a yet.</string>
     <string name="you_can_send_or_request_up_to_10000">You can send or request up to RS 10000</string>
+    <string name="total_golden">Total Golden tickets won</string>
+    <string name="total_golden_cards">Total Golden tickets won for this week</string>
+    <string name="your_wallet_updated">your wallet has been updated with ₹ </string>
+    <string name="your_wallet_will_updated">your wallet will be updated with ₹ </string>
+    <string name="golden_card">\nGolden Tickets</string>
+    <string name="you_won_1">You won </string>
+    <string name="play">Play</string>
     <string name="please_wait_loading_contact_list">Please wait,loading contact list...</string>
     <string name="please_allow_us_to_read_your_contacts">Please allow us to read your contacts.</string>
+    <string name="not_available_at_this_time">Not Available at this time</string>
+    <string name="four_dots">....</string>
+    <string name="rupee_symbol">₹</string>
+    <string name="spinners_heading">Spinners</string>
+    <string name="scratch_cards">Scratch cards</string>
+    <string name="mynts">Mynts</string>
+    <string name="total_earned">Total Earned</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>

@@ -19,6 +19,23 @@
 
         <include layout="@layout/toolbar" />
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/offer_found_tv"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_400sdp"
+            android:layout_marginStart="-80dp"
+            android:layout_marginEnd="-80dp"
+            android:layout_marginBottom="-80dp"
+
+            android:layout_centerHorizontal="true"
+            android:elevation="@dimen/_6sdp"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:lottie_autoPlay="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:lottie_rawRes="@raw/ribbon_bomb" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_marginStart="@dimen/_24sdp"

@@ -1,4 +1,4 @@
-package com.fypmoney.model
+package com.fypmoney.view.rewardsAndWinnings.model
 
 import androidx.annotation.Keep
 

@@ -34,12 +34,13 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.util.AppConstants
+import com.fypmoney.view.activity.HomeView
 import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment
+import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsJackpotFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
@@ -73,7 +74,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         tabLayout = findViewById(R.id.tabLayout)
         viewPager = findViewById(R.id.viewPager)
 
-        initializeTabs(tabLayout)
+        initializeTabs(tabLayout, intent)
 
 
 
@@ -81,7 +82,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
             this,
             androidx.lifecycle.Observer { list ->
                 if (list) {
-                    viewPager.currentItem = 2
+                    viewPager.currentItem = 3
                     mViewModel?.totalmyntsClicked?.postValue(false)
 
                 }
@@ -166,10 +167,6 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         }
     }
 
-    override fun onActivityReenter(resultCode: Int, data: Intent?) {
-        super.onActivityReenter(resultCode, data)
-
-    }
 
     override fun onStart() {
         super.onStart()
@@ -177,19 +174,22 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         mViewModel?.callRewardSummary()
         mViewModel?.callRewardHistory()
 
+
     }
 
-    private fun initializeTabs(tabLayout: TabLayout) {
+    private fun initializeTabs(tabLayout: TabLayout, intent: Intent) {
 
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
         adapter.addFragment(RewardsOverviewFragment(), getString(R.string.overview))
+
         adapter.addFragment(RewardsSpinnerListFragment(), getString(R.string.arcade))
+        adapter.addFragment(RewardsJackpotFragment(), getString(R.string.jackpot))
         adapter.addFragment(RewardHistoryFragment(), getString(R.string.history))
 
         viewPager.adapter = adapter
-        viewPager.offscreenPageLimit = 1
+        viewPager.offscreenPageLimit = 0
 
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.getTabAt(0)?.view?.background = ContextCompat.getDrawable(
@@ -211,11 +211,21 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
                         this@RewardsActivity,
                         com.fypmoney.R.drawable.tab_two_rewards
                     )
-
+                    trackr {
+                        it.name = TrackrEvent.open_arcade
+                    }
+                } else if (tab.position == 2) {
+                    tab.view.background = ContextCompat.getDrawable(
+                        this@RewardsActivity,
+                        com.fypmoney.R.drawable.tab_third_rewards
+                    )
+                    trackr {
+                        it.name = TrackrEvent.open_jackpot
+                    }
                 } else {
                     tab.view.background = ContextCompat.getDrawable(
                         this@RewardsActivity,
-                        com.fypmoney.R.drawable.tab_three_rewards
+                        com.fypmoney.R.drawable.tab_four_rewards
                     )
 
                 }
@@ -227,6 +237,17 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+
+
+
+        when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
+            AppConstants.JACKPOTTAB -> {
+                viewPager.currentItem = 2
+
+            }
+
+
+        }
     }
 
 
@@ -263,6 +284,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
                             val intent =
                                 Intent(this@RewardsActivity, ScratchCardActivity::class.java)
                             intent.putExtra(AppConstants.SECTION_ID, it.sectionId)
+                            intent.putExtra(AppConstants.NO_GOLDED_CARD, it.noOfJackpotTicket)
                             it.sectionList?.forEachIndexed { pos, item ->
                                 if (item != null) {
                                     ScratchCardActivity.sectionArrayList.add(item)

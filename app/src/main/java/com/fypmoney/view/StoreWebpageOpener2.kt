@@ -79,6 +79,7 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
         webView1.setMixedContentAllowed(false);
         webView1.loadUrl(url)
         webView1.setCookiesEnabled(true)
+        binding.webView1.settings.setSupportMultipleWindows(true)
 
         mViewModel.availableAmount.observe(
             this,
