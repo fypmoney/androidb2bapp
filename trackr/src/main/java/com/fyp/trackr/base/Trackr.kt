@@ -35,6 +35,7 @@ import com.moengage.core.Properties
 import com.moengage.core.config.FcmConfig
 import com.moengage.core.config.LogConfig
 import com.moengage.core.config.NotificationConfig
+import com.moengage.core.internal.MoEConstants.USER_ATTRIBUTE_USER_BDAY
 import com.moengage.core.model.AppStatus
 
 object Trackr {
@@ -160,9 +161,7 @@ object Trackr {
             inputFormat = SERVER_DATE_TIME_FORMAT1)
         dob?.let { it1 ->
             app?.applicationContext?.let {
-                MoEHelper.getInstance(it).setBirthDate(
-                    it1
-                )
+                MoEHelper.getInstance(it).setUserAttribute(USER_ATTRIBUTE_USER_BDAY,it1)
             }
         }
     }

@@ -24,8 +24,8 @@ android {
         ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 39
-        versionName "1.3.7"
+        versionCode 40
+        versionName "1.4.0"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
         // Stops the Gradle plugin�s automatic rasterization of vectors
@@ -37,9 +37,9 @@ android {
 
     buildTypes {
         release {
-            debuggable true
-            minifyEnabled false
-            shrinkResources false
+            debuggable false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }

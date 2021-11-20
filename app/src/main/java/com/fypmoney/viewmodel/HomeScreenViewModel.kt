@@ -4,6 +4,11 @@ import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.currentFormattedDate
+import com.fyp.trackr.models.CUSTOM_USER_WALLET_BALANCE
+import com.fyp.trackr.models.CUSTOM_USER_WALLET_BALANCE_UPDATE_TIME
+import com.fyp.trackr.models.UserTrackr
+import com.fyp.trackr.models.push
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -15,7 +20,6 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.model.homemodel.TopTenUsersResponse
-import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.FeedsAdapter
@@ -176,6 +180,15 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         when (purpose) {
             ApiConstant.API_GET_WALLET_BALANCE -> {
                 if (responseData is GetWalletBalanceResponse) {
+                    responseData.getWalletBalanceResponseDetails.accountBalance.toIntOrNull()?.let { accountBalance->
+                        currentFormattedDate()?.let {
+                            val map = hashMapOf<String,Any>()
+                            map[CUSTOM_USER_WALLET_BALANCE] = accountBalance
+                            map[CUSTOM_USER_WALLET_BALANCE_UPDATE_TIME] = it
+                            UserTrackr.push(map)
+                        }
+                    }
+
                     isFetchBalanceVisible.set(false)
                     fetchBalanceLoading.value = true
                     availableAmount.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)!!))
