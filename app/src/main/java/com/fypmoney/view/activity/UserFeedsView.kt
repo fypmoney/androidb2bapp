@@ -50,11 +50,7 @@ class UserFeedsView(val tabchangeListner: HomeTabChangeClickListener) :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
-        /*setToolbarAndTitle(
-            context = requireContext(),
-            toolbar = toolbar,
-            isBackArrowVisible = false
-        )*/
+
 
         trackr {
             it.name = TrackrEvent.feed_launch
@@ -72,12 +68,7 @@ class UserFeedsView(val tabchangeListner: HomeTabChangeClickListener) :
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-       /* mViewModel.onFeedsSuccess.observe(viewLifecycleOwner)
-        {
-            mViewModel.fromWhichScreen.set(0)
-            callDiduKnowBottomSheet(it)
 
-        }*/
         mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
             when (it.displayCard) {
                         AppConstants.FEED_TYPE_DEEPLINK -> {

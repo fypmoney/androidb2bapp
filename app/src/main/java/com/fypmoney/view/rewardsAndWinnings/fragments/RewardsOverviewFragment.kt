@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.SystemClock
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +29,9 @@ import com.fypmoney.view.rewardsAndWinnings.CashBackWonHistoryActivity
 
 class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, RewardsAndVM>(),
     FeedsAdapter.OnFeedItemClickListener {
+
+    private var mLastClickTime: Long = 0
+
     companion object {
         var page = 0
 
@@ -56,6 +60,10 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
     }
 
     override fun onFeedClick(position: Int, it: FeedDetails) {
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
+            return
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         when (it.displayCard) {
             AppConstants.FEED_TYPE_DEEPLINK -> {
                 it.action?.url?.let {
