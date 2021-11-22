@@ -79,7 +79,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
     override fun getViewModel(): RewardsAndVM {
         activity?.let {
             mViewmodel = ViewModelProvider(it).get(RewardsAndVM::class.java)
-
+            observeInput(mViewmodel!!)
 
         }
         return mViewmodel!!
@@ -92,7 +92,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         setRecyclerView()
         setRvScratchCard()
         buyProductDialog = Dialog(requireContext())
-        observeInput(mViewmodel!!)
+
 
 
 
@@ -106,7 +106,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
     private fun observeInput(mviewModel: RewardsAndVM) {
 
         mviewModel.spinArrayList.observe(
-            requireActivity(),
+            this,
             androidx.lifecycle.Observer { list ->
 
                 itemsArrayList.clear()
@@ -118,7 +118,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
             })
         mviewModel.error.observe(
-            requireActivity(),
+            this,
             androidx.lifecycle.Observer { list ->
 
                 if (list.errorCode == "PKT_2051") {
@@ -130,7 +130,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
             }
         )
         mviewModel.scratchArrayList.observe(
-            requireActivity(),
+            this,
             androidx.lifecycle.Observer { list ->
                 mViewBinding?.shimmerscratch?.visibility = View.GONE
                 mViewBinding?.shimmerscratch?.stopShimmer()
@@ -143,7 +143,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
             })
 
         mviewModel.coinsBurned.observe(
-            requireActivity(),
+            this,
             androidx.lifecycle.Observer { list ->
                 buyProductDialog?.dismiss()
                 if (list != null) {

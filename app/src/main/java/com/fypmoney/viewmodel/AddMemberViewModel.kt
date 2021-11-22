@@ -126,47 +126,53 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
 * */
 
     fun callAddMemberApi() {
-        SharedPrefUtils.putString(
-            getApplication(),
-            SharedPrefUtils.SF_KEY_SELECTED_RELATION,
-            selectedRelationList.get(0).relationName
-        )
-        progressDialog.value = true
-        var relation = selectedRelationList.get(0).relationName?.toUpperCase(Locale.getDefault())!!
-        if (relation == "KIDS") {
-            relation = "CHILD"
-
-        } else if (relation == "GRAND CHILD") {
-            relation = "GRANDCHILD"
-
-        } else if (relation == "GRAND PARENTS") {
-            relation = "GRANDPARENT"
-
-        }
-
-        trackr {
-            it.services = arrayListOf(
-                TrackrServices.FIREBASE,
-                TrackrServices.MOENGAGE,
-                TrackrServices.FB,TrackrServices.ADJUST)
-            it.name = TrackrEvent.add_familymember
-            it.add(TrackrField.added_family_member_mobile_no,mobile.value!!.trim())
-            it.add(TrackrField.added_family_member_reletionship,relation)
-        }
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                API_ADD_FAMILY_MEMBER,
-                NetworkUtil.endURL(API_ADD_FAMILY_MEMBER),
-                ApiUrl.POST,
-                AddFamilyMemberRequest(
-                    mobileNo = mobile.value!!.trim(),
-                    name = parentName.get(),
-                    relation = relation
-                ),
-                this,
-                isProgressBar = false
+        if (selectedRelationList.isNotEmpty()) {
+            SharedPrefUtils.putString(
+                getApplication(),
+                SharedPrefUtils.SF_KEY_SELECTED_RELATION,
+                selectedRelationList.get(0).relationName
             )
-        )
+        }
+
+        progressDialog.value = true
+        if (selectedRelationList.isNotEmpty()) {
+            var relation =
+                selectedRelationList.get(0).relationName?.toUpperCase(Locale.getDefault())!!
+            if (relation == "KIDS") {
+                relation = "CHILD"
+
+            } else if (relation == "GRAND CHILD") {
+                relation = "GRANDCHILD"
+
+            } else if (relation == "GRAND PARENTS") {
+                relation = "GRANDPARENT"
+
+            }
+            trackr {
+                it.services = arrayListOf(
+                    TrackrServices.FIREBASE,
+                    TrackrServices.MOENGAGE,
+                    TrackrServices.FB, TrackrServices.ADJUST
+                )
+                it.name = TrackrEvent.add_familymember
+                it.add(TrackrField.added_family_member_mobile_no, mobile.value!!.trim())
+                it.add(TrackrField.added_family_member_reletionship, relation)
+            }
+            WebApiCaller.getInstance().request(
+                ApiRequest(
+                    API_ADD_FAMILY_MEMBER,
+                    NetworkUtil.endURL(API_ADD_FAMILY_MEMBER),
+                    ApiUrl.POST,
+                    AddFamilyMemberRequest(
+                        mobileNo = mobile.value!!.trim(),
+                        name = parentName.get(),
+                        relation = relation
+                    ),
+                    this,
+                    isProgressBar = false
+                )
+            )
+        }
 
 
     }

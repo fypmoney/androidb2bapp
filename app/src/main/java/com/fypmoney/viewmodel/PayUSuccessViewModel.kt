@@ -49,13 +49,19 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
             AppConstants.ADD_MONEY -> {
                 isAddMoneyLayoutVisible.set(true)
                 availableAmount.set(Utility.convertToRs(payUResponse.get()?.amount))
-                paymentDateTime.set(
-                    Utility.parseDateTime(
-                        payUResponse.get()?.txnTime,
-                        inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT,
-                        outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT
+                if (payUResponse.get()?.txnTime != null) {
+                    paymentDateTime.set(
+
+                        Utility.parseDateTime(
+                            payUResponse.get()?.txnTime,
+                            inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT,
+                            outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT
+                        )
+
+
                     )
-                )
+                }
+
                 fypId.set(payUResponse.get()?.accountTxnNo)
                 bankId.set(payUResponse.get()?.bankExternalId)
             }
@@ -66,24 +72,28 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
 
                 when (bankResponse.get()?.transactionType) {
                     AppConstants.CREDITED -> {
-                        paymentDateTime.set(
-                            PockketApplication.instance.getString(R.string.received_text) +
-                                    Utility.parseDateTime(
-                                        date!![0],
-                                        inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
-                                        outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT9
-                                    )
-                        )
+                        if (date!![0] != null) {
+                            paymentDateTime.set(
+                                PockketApplication.instance.getString(R.string.received_text) +
+                                        Utility.parseDateTime(
+                                            date!![0],
+                                            inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
+                                            outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT9
+                                        )
+                            )
+                        }
                     }
                     AppConstants.DEBITED -> {
-                        paymentDateTime.set(
-                            PockketApplication.instance.getString(R.string.sent_text) +
-                                    Utility.parseDateTime(
-                                        date!![0],
-                                        inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
-                                        outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT9
-                                    )
-                        )
+                        if (date!![0] != null) {
+                            paymentDateTime.set(
+                                PockketApplication.instance.getString(R.string.sent_text) +
+                                        Utility.parseDateTime(
+                                            date!![0],
+                                            inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT2,
+                                            outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT9
+                                        )
+                            )
+                        }
                     }
                 }
 
@@ -96,26 +106,32 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
             AppConstants.TRANSACTION -> {
                 isAddMoneyLayoutVisible.set(false)
                 availableAmount.set(Utility.convertToRs(transactionHistoryResponse.get()?.txnAmount))
+                try {
+                    val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                    val date = outputFormat.parse(transactionHistoryResponse.get()?.txnTime)
+                    val postFormater = SimpleDateFormat(AppConstants.CHANGED_DATE_TIME_FORMAT7)
 
-                val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-                val date = outputFormat.parse(transactionHistoryResponse.get()?.txnTime)
-                val postFormater = SimpleDateFormat(AppConstants.CHANGED_DATE_TIME_FORMAT7)
+                    val newDateStr = postFormater.format(date)
+                    when (transactionHistoryResponse.get()?.isSender) {
+                        AppConstants.YES -> {
+                            paymentDateTime.set(
+                                PockketApplication.instance.getString(R.string.sent_text) +
+                                        newDateStr
+                            )
+                        }
+                        AppConstants.NO -> {
+                            paymentDateTime.set(
+                                PockketApplication.instance.getString(R.string.received_text) +
+                                        newDateStr
+                            )
+                        }
+                    }
+                } catch (e: Exception) {
 
-                val newDateStr = postFormater.format(date)
-                when (transactionHistoryResponse.get()?.isSender) {
-                    AppConstants.YES -> {
-                        paymentDateTime.set(
-                            PockketApplication.instance.getString(R.string.sent_text) +
-                                    newDateStr
-                        )
-                    }
-                    AppConstants.NO -> {
-                        paymentDateTime.set(
-                            PockketApplication.instance.getString(R.string.received_text) +
-                                    newDateStr
-                        )
-                    }
                 }
+
+
+
 
 
 
