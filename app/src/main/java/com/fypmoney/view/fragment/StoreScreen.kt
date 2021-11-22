@@ -1,6 +1,5 @@
 package com.fypmoney.view.fragment
 
-import com.fypmoney.view.StoreWebpageOpener
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,36 +7,31 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenStoreBinding
-import com.fypmoney.model.StoreDataModel
 import com.fypmoney.view.StoreWebpageOpener2
+import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.viewmodel.StoreScreenViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.view_notification.*
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.IOException
-import java.io.InputStream
 
 
 /**
  * This fragment is used for loyalty
  */
-class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
+class StoreScreen(val tabchangeListner: HomeTabChangeClickListener) :
+    BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
 
     private lateinit var mViewModel: StoreScreenViewModel
     private lateinit var mViewBinding: ScreenStoreBinding
     private val tabIcons = intArrayOf(
         R.drawable.ic_offer_tab,
         R.drawable.ic_store_tab,
-        )
+    )
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
