@@ -80,6 +80,7 @@ import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.util.AppConstants.JACKPOTTAB
+import com.fypmoney.view.activity.OfferDetailActivity
 import com.fypmoney.view.fragment.FilterByDateFragment
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -1018,6 +1019,7 @@ object Utility {
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreScreen)
 
             }
+
             FEEDSCREEN -> {
                 intent = Intent(context, HomeView::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FEEDSCREEN)
@@ -1036,7 +1038,16 @@ object Utility {
                 intent = Intent(context, ChoresActivity::class.java)
 
             }
+            else -> {
+                if (screenName.startsWith("offerdetails_")) {
+                    intent = Intent(context, OfferDetailActivity::class.java)
+                    var feedId = screenName.split("_")[1]
+                    intent.putExtra("feedid", feedId)
+
+                }
+            }
         }
+
         intent?.let {
             context.startActivity(intent)
 
