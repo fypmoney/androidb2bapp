@@ -987,6 +987,7 @@ Coming really soon!
     <string name="total_earned">Total Earned</string>
     <string name="_1">1</string>
     <string name="_2">2</string>
+    <string name="unable_to_open_page_please_try_again_later">Unable to open page. please try again later..</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>

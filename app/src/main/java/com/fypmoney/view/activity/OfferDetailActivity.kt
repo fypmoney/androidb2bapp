@@ -29,6 +29,8 @@ import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.adapter.OffersTopAdapter
 import com.fypmoney.view.adapter.offerpointsAdapter
 import com.fypmoney.view.interfaces.ListContactClickListener
+import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.viewmodel.OffersDetailsViewModel
 
 import kotlinx.android.synthetic.main.reward_offer_detail.*
@@ -125,10 +127,10 @@ class OfferDetailActivity :
 
         view_details_tv.setOnClickListener {
             mViewModel.action.value?.url?.let {
-                val intent2 = Intent(this, StoreWebpageOpener2::class.java)
-                StoreWebpageOpener2.url =it
-//                    intent2.putExtra("title", mViewModel.offerDetail.value?.title)
-                startActivity(intent2)
+                val intent = Intent(this, StoreWebpageOpener2::class.java)
+                //intent.putExtra(ARG_WEB_PAGE_TITLE, mViewModel.offerDetail.value?.title)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, it)
+                startActivity(intent)
             }
 
         }
