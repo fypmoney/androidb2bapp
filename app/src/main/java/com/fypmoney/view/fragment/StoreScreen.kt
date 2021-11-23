@@ -16,6 +16,9 @@ import com.fypmoney.databinding.ScreenStoreBinding
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+
+import com.fypmoney.view.interfaces.HomeTabChangeClickListener
+
 import com.fypmoney.viewmodel.StoreScreenViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.view_notification.*
@@ -24,14 +27,15 @@ import kotlinx.android.synthetic.main.view_notification.*
 /**
  * This fragment is used for loyalty
  */
-class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
+class StoreScreen(val tabchangeListner: HomeTabChangeClickListener) :
+    BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
 
     private lateinit var mViewModel: StoreScreenViewModel
     private lateinit var mViewBinding: ScreenStoreBinding
     private val tabIcons = intArrayOf(
         R.drawable.ic_offer_tab,
         R.drawable.ic_store_tab,
-        )
+    )
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
