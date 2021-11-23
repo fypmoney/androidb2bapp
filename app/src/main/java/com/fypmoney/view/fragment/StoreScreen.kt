@@ -1,6 +1,5 @@
 package com.fypmoney.view.fragment
 
-import com.fypmoney.view.StoreWebpageOpener
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,23 +7,18 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenStoreBinding
-import com.fypmoney.model.StoreDataModel
 import com.fypmoney.view.StoreWebpageOpener2
+import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.viewmodel.StoreScreenViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.view_notification.*
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.IOException
-import java.io.InputStream
 
 
 /**
@@ -120,18 +114,16 @@ class StoreScreen : BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
     private fun setObservers(requireContext: Context) {
 
             mViewModel.onUpiClicked.observe(requireActivity()) {
-                val intent2 = Intent(requireContext, StoreWebpageOpener2::class.java)
-                StoreWebpageOpener2.url = it.url!!
-                intent2.putExtra("title", it.title)
-                requireContext.startActivity(intent2)
-
-
+                val intent = Intent(requireContext, StoreWebpageOpener2::class.java)
+                intent.putExtra(ARG_WEB_PAGE_TITLE, it.title)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, it.url)
+                startActivity(intent)
             }
-        mViewModel.onRechargeClicked.observe(requireActivity()) {
-            val intent2 = Intent(requireContext, StoreWebpageOpener2::class.java)
-            StoreWebpageOpener2.url = it.url!!
-            intent2.putExtra("title", it.title)
-            requireContext.startActivity(intent2)
+            mViewModel.onRechargeClicked.observe(requireActivity()) {
+                val intent = Intent(requireContext, StoreWebpageOpener2::class.java)
+                intent.putExtra(ARG_WEB_PAGE_TITLE, it.title)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, it.url)
+                startActivity(intent)
         }
 
     }
