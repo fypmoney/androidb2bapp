@@ -1,38 +1,42 @@
 package com.fypmoney.view.giftCardModule
 
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
-import android.widget.SearchView
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.base.BaseFragment
 import com.fypmoney.database.entity.ContactEntity
-import com.fypmoney.databinding.ViewAddMoneyBinding
 import com.fypmoney.databinding.ViewPurchaseGiftCardBinding
-import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.fragment.GiftCardPurchasedBottomSheet
+import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardRequest
+import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardResponse
+import com.fypmoney.view.giftCardModule.model.VoucherDetailsItem
+import com.fypmoney.view.giftCardModule.model.VoucherProductItem
 
 import com.fypmoney.viewmodel.PurchaseGiftViewModel
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, PurchaseGiftViewModel>(),
     DialogUtils.OnAlertDialogClickListener,
     Utility.OnAllContactsAddedListener {
 
+    private var giftCardAdapter: GiftProductListAdapter? = null
+    private var giftList: List<VoucherProductItem?>? = ArrayList()
+    private var selectedGiftCard: VoucherProductItem? = null
+    private var selectedContact: ContactEntity? = null
     private lateinit var mViewModel: PurchaseGiftViewModel
     private lateinit var mViewBinding: ViewPurchaseGiftCardBinding
 
@@ -58,6 +62,28 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = "Myntra E Gift Card"
         )
+        mViewBinding.payAndPurchase.setOnClickListener(View.OnClickListener {
+            if (selectedContact != null && selectedGiftCard != null) {
+                var purchase = PurchaseGiftCardRequest()
+                purchase.destinationMobileNo = selectedContact?.contactNumber
+                purchase.destinationName =
+                    selectedContact?.firstName + " " + selectedContact?.lastName
+                if (selectedContact?.isAppUser == true)
+                    purchase.giftedPerson = "FYPUSER"
+                else
+                    purchase.giftedPerson = "NOTFYPUSER"
+
+                purchase.destinationEmail = "ranjeet@ranjeet.in"
+
+                var voucher = VoucherDetailsItem()
+                voucher.voucherProductId = selectedGiftCard?.id
+                val supplierNames: List<VoucherDetailsItem> = Arrays.asList(voucher)
+                purchase.voucherDetails = supplierNames
+                mViewModel.purchaseGiftCardRequest(purchase)
+
+            }
+
+        })
         setObservers()
         setUpListners()
         mViewModel.callBrandGiftCards("OLA")
@@ -139,8 +165,14 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
 
             mViewBinding.messageText.text = it.giftMessage
             (mViewBinding?.rvProducts?.adapter as GiftProductListAdapter).run {
-                submitList(it.voucherProduct)
+                giftList = it.voucherProduct
+                submitList(giftList)
             }
+
+        })
+        mViewModel?.giftpurchased?.observe(this, {
+            GiftCardPurchased(it)
+
 
         })
 
@@ -151,6 +183,11 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
             }
         }
         mViewModel.onItemClicked.observe(this) {
+            selectedContact = it
+            if (selectedGiftCard != null) {
+                mViewBinding.payAndPurchase.isEnabled = true
+
+            }
 
 //            val resultIntent = Intent()
 //            resultIntent.putExtra(AppConstants.CONTACT_SELECTED_RESPONSE, it)
@@ -188,10 +225,33 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
 
     }
 
-    private fun setUpRecyclerView() {
-        val giftCardAdapter = GiftProductListAdapter(
-            lifecycleOwner = this, onRecentUserClick = {
+    private fun GiftCardPurchased(list: PurchaseGiftCardResponse?) {
 
+        var bottomSheetMessage2 =
+            GiftCardPurchasedBottomSheet(list)
+        bottomSheetMessage2.isCancelable = false
+        bottomSheetMessage2?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetMessage2?.show(supportFragmentManager, "TASKMESSAGE")
+    }
+
+    private fun setUpRecyclerView() {
+        giftCardAdapter = GiftProductListAdapter(
+            lifecycleOwner = this, giftcardClicked = {
+                giftList?.forEachIndexed { pos, item ->
+                    if (it == pos) {
+                        giftList?.get(pos)?.selected = true
+                        selectedGiftCard = giftList!![pos]
+                        if (selectedContact != null) {
+                            mViewBinding.payAndPurchase.isEnabled = true
+
+                        }
+                    } else {
+                        giftList?.get(pos)?.selected = false
+                    }
+
+                }
+                giftCardAdapter?.submitList(giftList)
+                giftCardAdapter?.notifyDataSetChanged()
             }
         )
 

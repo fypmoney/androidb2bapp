@@ -9,20 +9,22 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:id="@+id/layout_amount"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextviewRegular"
-            android:background="@drawable/curved_background29"
-            android:gravity="center"
-            android:layout_marginStart="5dp"
             android:id="@+id/amount_tv"
-
-            android:layout_marginEnd="5dp"
-            android:layout_weight="1"
-            android:paddingVertical="5dp"
+            style="@style/TextviewRegular"
             android:layout_width="wrap_content"
+
+
+            android:layout_weight="1"
+
+            android:gravity="center"
             android:minEms="5"
+            android:paddingVertical="5dp"
             android:text="@string/add_money_50"
             android:textColor="@color/text_color_dark" />
     </RelativeLayout>

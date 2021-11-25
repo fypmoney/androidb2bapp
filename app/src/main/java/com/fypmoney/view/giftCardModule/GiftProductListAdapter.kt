@@ -6,15 +6,16 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.fypmoney.databinding.ItemGiftCardBinding
+import com.fypmoney.R
 import com.fypmoney.databinding.ItemProductsAmountGiftBinding
 import com.fypmoney.extension.executeAfter
+import com.fypmoney.util.Utility
 import com.fypmoney.view.giftCardModule.model.VoucherProductItem
 
 
 class GiftProductListAdapter(
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: VoucherProductItem) -> Unit
+    val giftcardClicked: (model: Int) -> Unit
 ) : ListAdapter<VoucherProductItem, GiftProducstVH>(GiftProductDiffUtils) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GiftProducstVH {
@@ -23,7 +24,7 @@ class GiftProductListAdapter(
         return GiftProducstVH(
             binding,
             lifecycleOwner,
-            onRecentUserClick
+            giftcardClicked
         )
 
 
@@ -33,26 +34,39 @@ class GiftProductListAdapter(
         holder.bind(getItem(position))
     }
 
+
 }
 
 class GiftProducstVH(
     private val binding: ItemProductsAmountGiftBinding,
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: VoucherProductItem) -> Unit
+    val giftcardClicked: (model: Int) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
+    private var selected_position: Int? = null
+
     fun bind(user: VoucherProductItem) {
         binding.executeAfter {
             lifecycleOwner = this@GiftProducstVH.lifecycleOwner
-            var item = user
-//            loadImage(recentIv,user.profilePicResourceId,
-//                ContextCompat.getDrawable(this.recentIv.context, R.drawable.ic_profile_img),true)
+
+            binding.layoutAmount.setOnClickListener {
+
+                giftcardClicked(bindingAdapterPosition)
+
+            }
+            if (user.selected == true) {
+                binding.layoutAmount.setBackgroundResource(R.drawable.curved_background30_grey)
+
+            } else {
+                binding.layoutAmount.setBackgroundResource(R.drawable.curved_background29)
+            }
 
 
-            amountTv.text = user.amount.toString()
+            amountTv.text = Utility.convertToRs(user.amount.toString())
         }
     }
 
 }
+
 
 object GiftProductDiffUtils : DiffUtil.ItemCallback<VoucherProductItem>() {
 

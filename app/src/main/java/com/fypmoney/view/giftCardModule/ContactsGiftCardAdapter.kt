@@ -1,10 +1,12 @@
 package com.fypmoney.view.giftCardModule
 
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.fypmoney.R
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ContactRowGiftCardItemBinding
@@ -20,6 +22,7 @@ import com.fypmoney.viewmodel.PurchaseGiftViewModel
  */
 class ContactsGiftCardAdapter(var viewModel: PurchaseGiftViewModel, var userId: Long) :
     RecyclerView.Adapter<BaseViewHolder>() {
+
     var contactList: ArrayList<ContactEntity>? = ArrayList()
     var newContactList: ArrayList<ContactEntity>? = ArrayList()
     var newSearchList: ArrayList<ContactEntity>? = ArrayList()
@@ -48,6 +51,8 @@ class ContactsGiftCardAdapter(var viewModel: PurchaseGiftViewModel, var userId: 
         lateinit var mViewHelper: ContactGiftViewHelper
 
         override fun onBind(position: Int) {
+
+
             mViewHelper = ContactGiftViewHelper(
                 position,
                 contactList?.get(position), viewModel,
@@ -66,6 +71,14 @@ class ContactsGiftCardAdapter(var viewModel: PurchaseGiftViewModel, var userId: 
                 url = contactList?.get(position)?.profilePicResourceId,
                 imageView = mRowItemBinding.ivServiceLogo
             )
+
+            mRowItemBinding.bgCard.setBackgroundResource(if (viewModel.selectedPosition.get() === position) R.drawable.background_grey_contact_selected else R.drawable.background_grey)
+            mRowItemBinding.bgCard.setOnClickListener {
+                viewModel.selectedPosition.set(position)
+                viewModel.onItemClicked.value = contactList?.get(position)
+                notifyDataSetChanged()
+            }
+
             mViewHelper.init()
             mRowItemBinding.executePendingBindings()
 

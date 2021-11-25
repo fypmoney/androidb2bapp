@@ -70,11 +70,11 @@
                 android:id="@id/rv_products"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="4"
-                android:layout_marginStart="@dimen/dp8"
-                android:layout_marginEnd="@dimen/dp8"
                 android:layout_below="@id/add_money"
-                android:layout_marginTop="22dp">
+                android:layout_marginStart="@dimen/dp8"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="@dimen/dp8"
+                android:weightSum="4">
 
 
             </androidx.recyclerview.widget.RecyclerView>
@@ -107,15 +107,17 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:layout_below="@+id/lin"
                 android:layout_marginTop="@dimen/_18sdp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+
                     android:layout_alignParentTop="true"
                     android:layout_alignParentBottom="true"
-                    android:alpha=".60"
+
                     android:background="@drawable/round_top_background_grey" />
 
                 <TextView
@@ -134,19 +136,20 @@
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/search"
 
-                    android:layout_width="match_parent"
-                    android:layoutDirection="rtl"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginStart="14dp"
                     android:layout_marginEnd="14dp"
-
-
+                    android:background="#f4f4f4"
                     android:drawableStart="@drawable/ic_icon_feather_search"
 
+
                     android:drawablePadding="10dp"
+
                     android:fontFamily="@font/product_sans_regular"
                     android:hint="@string/search"
+                    android:layoutDirection="rtl"
                     android:padding="10dp"
                     android:textColor="@color/text_color_dark"
                     android:textColorHint="@color/text_color_dark"
@@ -158,6 +161,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/search"
+                    android:layout_marginBottom="@dimen/_68sdp"
 
                     app:adapter="@{viewModel.contactAdapter}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
@@ -167,7 +171,7 @@
 
 
             <Button
-                android:id="@+id/btnSendOtp"
+                android:id="@+id/pay_and_purchase"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/_46sdp"
                 android:layout_alignParentBottom="true"
@@ -177,9 +181,10 @@
                 android:onClick="@{()->viewModel.onAddClicked()}"
                 android:text="@string/pay"
                 android:textAllCaps="false"
-                android:textColor="@color/text_color_little_dark"
+                android:textColor="@color/white"
                 android:textSize="18sp"
-                app:backgroundTint="@color/cb_grey"
+
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />

@@ -1,8 +1,6 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.text.TextUtils
-import android.util.Log
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -20,9 +18,10 @@ import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.*
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.adapter.ContactAdapter
 import com.fypmoney.view.giftCardModule.ContactsGiftCardAdapter
 import com.fypmoney.view.giftCardModule.model.GiftProductResponse
+import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardRequest
+import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -36,8 +35,11 @@ class PurchaseGiftViewModel(application: Application) : BaseViewModel(applicatio
         application,
         SharedPrefUtils.SF_KEY_USER_ID
     )
+
+    var selectedPosition = ObservableField(-1)
     var searchedContact = ObservableField<String>()
     var productList = MutableLiveData<GiftProductResponse>()
+    var giftpurchased = MutableLiveData<PurchaseGiftCardResponse>()
     var emptyContactListError = MutableLiveData<Boolean>()
     var contactNotFound = MutableLiveData<Boolean>(false)
     var onItemClicked = MutableLiveData<ContactEntity>()
@@ -57,6 +59,20 @@ class PurchaseGiftViewModel(application: Application) : BaseViewModel(applicatio
                 NetworkUtil.endURL(ApiConstant.GET_BRAND_GIFT_CARD + orderId),
                 ApiUrl.GET,
                 BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+
+
+    }
+
+    fun purchaseGiftCardRequest(orderId: PurchaseGiftCardRequest) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.PURCHASE_GIFT_CARD,
+                NetworkUtil.endURL(ApiConstant.PURCHASE_GIFT_CARD),
+                ApiUrl.POST,
+                orderId,
                 this, isProgressBar = true
             )
         )
@@ -150,6 +166,19 @@ class PurchaseGiftViewModel(application: Application) : BaseViewModel(applicatio
                     contactRepository.updateIsSyncAndIsAppUserStatus(responseData.contactResponseDetails?.userPhoneContact)
                     getAllContacts()
                 }
+            }
+            ApiConstant.PURCHASE_GIFT_CARD -> {
+
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val obj = Gson().fromJson(
+                    json.get("data"),
+                    PurchaseGiftCardResponse::class.java
+                )
+                giftpurchased.postValue(obj)
+
+
             }
             ApiConstant.GET_BRAND_GIFT_CARD -> {
 

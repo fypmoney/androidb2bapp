@@ -14,13 +14,14 @@ data class GiftProductResponse(
 )
 
 data class VoucherProductItem(
-	val amount: Int? = null,
-	val name: String? = null,
-	val productGuid: String? = null,
-	val tagline: String? = null,
-	val maxAllowedQuantity: Int? = null,
-	val id: Int? = null,
-	val isFlexiblePrice: String? = null,
-	val status: String? = null
+    val amount: Int? = null,
+    val name: String? = null,
+    val productGuid: String? = null,
+    val tagline: String? = null,
+    val maxAllowedQuantity: Int? = null,
+    val id: Int? = null,
+    val isFlexiblePrice: String? = null,
+    val status: String? = null,
+    var selected: Boolean? = false
 )
 
