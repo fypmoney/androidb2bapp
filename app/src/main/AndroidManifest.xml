@@ -317,6 +317,7 @@
             android:label="HomeView"
             android:parentActivityName="com.fypmoney.view.activity.HomeView" >
         </activity>
+
     </application>
     <queries>
         <intent>

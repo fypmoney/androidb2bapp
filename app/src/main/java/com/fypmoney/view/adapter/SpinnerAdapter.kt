@@ -7,12 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.facebook.shimmer.ShimmerDrawable
 import com.fypmoney.R
 import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.model.aRewardProductResponse
 import com.fypmoney.view.interfaces.ListContactClickListener
-import com.fypmoney.view.interfaces.ListItemClickListener
 
 import kotlinx.android.synthetic.main.card_spin_item.view.*
 import kotlinx.android.synthetic.main.card_spin_item.view.desc

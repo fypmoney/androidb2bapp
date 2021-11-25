@@ -34,6 +34,7 @@ import com.fypmoney.view.AddMoneySuccessBottomSheet
 import com.fypmoney.view.fragment.*
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
+import com.fypmoney.view.storeoffers.OffersScreen
 import com.fypmoney.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.view_home.*
 import java.util.concurrent.atomic.AtomicBoolean
@@ -183,7 +184,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     }
 
     private fun setupStore() {
-        loadFragment(StoreScreen(), 4)
+        loadFragment(OffersScreen(), 4)
         mViewBinding.navigationView.menu.findItem(R.id.store).isChecked = true;
         mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
         mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this, R.color.black))

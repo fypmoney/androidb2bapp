@@ -4,29 +4,21 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.bindingAdapters.roundedImageView
 import com.fypmoney.databinding.RewardOfferDetailBinding
-import com.fypmoney.databinding.ViewAgeAllowedAccountBinding
-import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 
 import com.fypmoney.util.Utility
 import com.fypmoney.view.StoreWebpageOpener2
-import com.fypmoney.view.adapter.OffersTopAdapter
 import com.fypmoney.view.adapter.offerpointsAdapter
 import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.viewmodel.OffersDetailsViewModel
@@ -43,11 +35,11 @@ class OfferDetailActivity :
     private var typeAdapter: offerpointsAdapter? = null
     private lateinit var mViewModel: OffersDetailsViewModel
     private var itemsArrayList: ArrayList<String> = ArrayList()
-    override fun getBindingVariable(): Int {
+    override fun getBindingVariable(): kotlin.Int {
         return BR.viewModel
     }
 
-    override fun getLayoutId(): Int {
+    override fun getLayoutId(): kotlin.Int {
         return R.layout.reward_offer_detail
     }
 
@@ -141,17 +133,8 @@ class OfferDetailActivity :
         var itemClickListener2 = object : ListContactClickListener {
 
 
-            override fun onItemClicked(pos: Int) {
-//
-//                val intent = Intent(this@OfferDetailActivity, OfferDetailActivity::class.java)
-//
-//                intent.putExtra("feedid",itemsArrayList[pos].id)
-//
-//
-//
-//
-//
-//                startActivity(intent)
+            override fun onItemClicked(pos: kotlin.Int) {
+
             }
 
 

@@ -68,11 +68,11 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
         }
 
-    override fun getBindingVariable(): Int {
+    override fun getBindingVariable(): kotlin.Int {
         return BR.viewModel
     }
 
-    override fun getLayoutId(): Int {
+    override fun getLayoutId(): kotlin.Int {
         return R.layout.fragment_spinner_list
     }
 
@@ -225,7 +225,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
     }
 
     internal fun showBurnDialog(
-        i: Int,
+        i: kotlin.Int,
         type: String,
         appDisplayText: String?,
         detailResource: String?
@@ -328,17 +328,17 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         val itemClickListener2 = object : ListContactClickListener {
 
 
-            override fun onItemClicked(pos: Int) {
-                    itemsArrayList[pos].code?.let { it1 ->
-                        trackr {
+            override fun onItemClicked(pos: kotlin.Int) {
+                itemsArrayList[pos].code?.let { it1 ->
+                    trackr {
 
-                            it.name = TrackrEvent.spin
-                            it.add(TrackrField.spin_product_code, it1)
-                        }
+                        it.name = TrackrEvent.spin
+                        it.add(TrackrField.spin_product_code, it1)
                     }
+                }
 
 
-                    showBurnDialog(
+                showBurnDialog(
                         pos,
                         AppConstants.PRODUCT_SPIN,
                         itemsArrayList[pos].appDisplayText,
@@ -366,17 +366,17 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
 
         val itemClickListener2 = object : ListContactClickListener {
-            override fun onItemClicked(pos: Int) {
-                    scratchArrayList[pos].code?.let { it1 ->
-                        trackr {
+            override fun onItemClicked(pos: kotlin.Int) {
+                scratchArrayList[pos].code?.let { it1 ->
+                    trackr {
 
-                            it.name = TrackrEvent.scratch
-                            it.add(TrackrField.spin_product_code, it1)
-                        }
+                        it.name = TrackrEvent.scratch
+                        it.add(TrackrField.spin_product_code, it1)
                     }
+                }
 
-                    showBurnDialog(
-                        pos,
+                showBurnDialog(
+                    pos,
                         AppConstants.PRODUCT_SCRATCH,
                         scratchArrayList[pos].appDisplayText,
                         scratchArrayList[pos].detailResource
