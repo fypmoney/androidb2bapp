@@ -130,6 +130,7 @@ object ApiConstant {
         "services/loyaltyservice/api/loyalty/transaction/bymrn/"
     const val GET_BRAND_GIFT_CARD =
         "services/PockketService/api/product/"
+    const val PURCHASE_GIFT_CARD = "services/PockketService/api/purchase-voucher"
 
 }
 
