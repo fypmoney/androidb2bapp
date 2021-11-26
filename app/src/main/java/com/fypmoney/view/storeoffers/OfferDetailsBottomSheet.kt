@@ -28,7 +28,14 @@ import kotlinx.android.synthetic.main.bottom_sheet_offer_detail.view.recycler_vi
 import org.json.JSONObject
 
 import android.R.attr.data
+import androidx.core.content.ContextCompat
+import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.model.HistoryItem
+import com.fypmoney.util.Utility
+import kotlinx.android.synthetic.main.bottom_sheet_offer_detail.view.logo
+import kotlinx.android.synthetic.main.reward_offer_detail.*
+import kotlinx.android.synthetic.main.slide_item_container.*
+import kotlinx.android.synthetic.main.slide_item_container.view.*
 
 import org.json.JSONArray
 
@@ -63,9 +70,8 @@ class OfferDetailsBottomSheet(
 
 
         bottomSheet.setContentView(bindingSheet.root)
+        Utility.setImageUsingGlideWithShimmerPlaceholder(imageView = view.logo, url = offerDetails.brandLogo)
 
-        Glide.with(requireContext()).load(offerDetails.brandLogo).placeholder(shimmerDrawable())
-            .into(view.logo)
         view.brandName.text = offerDetails.brandName
 
         view.offer_title.text = offerDetails.offerShortTitle
@@ -78,7 +84,7 @@ class OfferDetailsBottomSheet(
                 itemsArrayList.add(jsonArr[i] as String)
 
             }
-            setRecyclerView(view, itemsArrayList, view.rv_details)
+            setRecyclerView(view, itemsArrayList, view.recycler_view)
         } catch (e: Exception) {
 
         }
@@ -93,7 +99,7 @@ class OfferDetailsBottomSheet(
 
 
 
-            setRecyclerView(view, itemsArrayList2, view.recycler_view)
+            setRecyclerView(view, itemsArrayList2, view.rv_details)
 
         } catch (e: Exception) {
 

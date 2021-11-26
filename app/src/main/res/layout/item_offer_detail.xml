@@ -15,15 +15,16 @@
         android:layout_height="5dp" />
 
     <TextView
-        android:layout_width="match_parent"
-        style="@style/TextviewRegular"
         android:id="@+id/detail"
-        android:textAlignment="viewStart"
-        android:layout_toEndOf="@+id/dot"
-        android:textSize="14sp"
-        android:textColor="@color/text_color_dark"
-        tools:text="adkjashdjka adsjasjgdjas dashdjasd sadkjdgas adjsdask asdjasdkas adsjkhkjdhakjsd"
+        style="@style/TextviewRegular"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
-        android:layout_height="wrap_content" />
+        android:layout_toEndOf="@+id/dot"
+        android:textAlignment="viewStart"
+
+        android:textColor="@color/text_color_faded"
+        android:textSize="@dimen/_10sdp"
+        tools:text="sfsfsfsf" />
 
 </RelativeLayout>

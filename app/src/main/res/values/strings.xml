@@ -229,7 +229,7 @@
     <string name="home_bottom_nav_title">Home</string>
     <string name="feeds_bottom_nav_title">Feed</string>
     <string name="card_bottom_nav_title">Card</string>
-    <string name="store_bottom_nav_title">Offers</string>
+    <string name="store_bottom_nav_title">Store</string>
     <string name="fyper_bottom_nav_title">Fyper</string>
     <string name="dummy_amount">0</string>
     <string name="dummy_name">FYP User</string>

@@ -1,17 +1,17 @@
 package com.fypmoney.view.storeoffers.adapter
 
 import android.content.Context
-import androidx.viewpager2.widget.ViewPager2
-import com.fypmoney.view.storeoffers.adapter.SliderAdapter.SliderViewHolder
-import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.view.storeoffers.ListOfferClickListener
+import com.fypmoney.view.storeoffers.adapter.SliderAdapter.SliderViewHolder
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 
 class SliderAdapter(
@@ -32,24 +32,10 @@ class SliderAdapter(
     }
 
     override fun onBindViewHolder(holder: SliderViewHolder, position: kotlin.Int) {
-
-        if (position != sliderItems.size - 1)
-            holder.setImage(sliderItems[position].offerImage)
-        else
-            holder.imageView.setImageResource(R.drawable.view_more)
+         holder.setImage(sliderItems[position].offerImage)
         holder.card.setOnClickListener {
-            if (position != sliderItems.size - 1) {
                 itemClickListener2.onItemClicked(sliderItems[position], "middle")
-            } else {
-                itemClickListener2.onItemClicked(sliderItems[position], "last")
-            }
-
         }
-
-
-        //        if (position == sliderItems.size - 2) {
-//            viewPager2.post(runnable)
-//        }
     }
 
     override fun getItemCount(): kotlin.Int {
@@ -63,13 +49,9 @@ class SliderAdapter(
         init {
             card = itemView
             imageView = itemView.findViewById(R.id.offer_image)
-
-
         }
 
         fun setImage(sliderItems: String?) {
-
-
             Glide.with(context).load(sliderItems).placeholder(shimmerDrawable()).into(imageView)
         }
 

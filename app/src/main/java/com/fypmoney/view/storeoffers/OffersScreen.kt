@@ -1,13 +1,11 @@
 package com.fypmoney.view.storeoffers
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.view.View
-import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -17,16 +15,14 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.base.BaseFragment
+import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.OffersStoreBinding
-import com.fypmoney.util.AppConstants
-import com.fypmoney.view.activity.HomeView
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.storeoffers.adapter.SliderAdapter
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.viewmodel.OffersViewModel
+import kotlinx.android.synthetic.main.slide_item_container.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlin.collections.ArrayList
 
 
 class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
@@ -59,8 +55,7 @@ class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
 
-
-        viewPager2 = mViewBinding.imageviewpager
+         viewPager2 = mViewBinding.imageviewpager
 
 
         setToolbarAndTitle(
@@ -82,8 +77,6 @@ class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
     private fun setObservers(requireContext: Context) {
 
         mViewModel.offerList.observe(this) {
-
-
             setListSlider(it)
 
         }
@@ -99,21 +92,8 @@ class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
 
 
             override fun onItemClicked(pos: offerDetailResponse, position: String) {
-                if (position == "last") {
-                    intent = Intent(this@OffersScreen, HomeView::class.java)
-                    intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.StoreScreen)
-//                    Toast.makeText(this@OffersScreen,"Clicked",Toast.LENGTH_SHORT).show()
-                } else {
-                    callOfferDetailsSheeet(pos)
-                }
-
-
-            }
-
-
-        }
-        var offerdetails = offerDetailResponse()
-        arrayList.add(offerdetails)
+                callOfferDetailsSheeet(pos)
+            }        }
         viewPager2!!.adapter = null
         viewPager2!!.adapter =
             SliderAdapter(arrayList, viewPager2!!, itemClickListener2, this)
@@ -148,8 +128,8 @@ class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
 
         var bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
-        bottomSheetMessage?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheetMessage?.show(supportFragmentManager, "TASKMESSAGE")
+        bottomSheetMessage.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetMessage.show(supportFragmentManager, "TASKMESSAGE")
     }
 
 

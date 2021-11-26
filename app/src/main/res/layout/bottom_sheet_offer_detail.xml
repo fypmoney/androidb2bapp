@@ -7,7 +7,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:orientation="vertical"
         >
 
@@ -77,7 +76,7 @@
 
                 android:layout_marginStart="@dimen/_20sdp"
                 android:layout_marginTop="40dp"
-                android:textSize="16sp"
+                android:textSize="@dimen/_10sdp"
 
                 android:text="@string/offer_details_caps"
 
@@ -107,7 +106,7 @@
                 android:layout_marginTop="16dp"
 
                 android:text="TERMS &amp; CONDITIONS"
-                android:textSize="16sp"
+                android:textSize="@dimen/_10sdp"
 
                 android:textAlignment="center" />
 
