@@ -19,17 +19,17 @@ import com.fypmoney.databinding.ViewFamilySettingsBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.customview.GifView
 import com.fypmoney.view.fragment.LeaveFamilyBottomSheet
 import com.fypmoney.view.fragment.UpdateFamilyNameBottomSheet
+import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.viewmodel.FamilySettingsViewModel
-import kotlinx.android.synthetic.main.view_walk_through_three.*
 
 
 /*
 * This class is used as Home Screen
 * */
-class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySettingsViewModel>(),
+class FamilySettingsView(val tabchangeListner: HomeTabChangeClickListener) :
+    BaseFragment<ViewFamilySettingsBinding, FamilySettingsViewModel>(),
     UpdateFamilyNameBottomSheet.OnUpdateFamilyClickListener,
     LeaveFamilyBottomSheet.OnLeaveFamilyClickListener {
     private lateinit var mViewModel: FamilySettingsViewModel

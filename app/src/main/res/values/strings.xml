@@ -988,6 +988,7 @@ Coming really soon!
     <string name="_1">1</string>
     <string name="_2">2</string>
     <string name="offer_details_caps">OFFER DETAILS</string>
+    <string name="unable_to_open_page_please_try_again_later">Unable to open page. please try again later..</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>

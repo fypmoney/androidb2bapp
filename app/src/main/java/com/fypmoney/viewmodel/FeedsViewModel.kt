@@ -1,6 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
+import android.os.SystemClock
 import android.util.Log
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
@@ -34,6 +35,7 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
     var noDataFoundVisibility = ObservableField(false)
     var noDataText = ObservableField(application.getString(R.string.no_data_found))
     var isRecyclerviewVisible = ObservableField(false)
+    private var mLastClickTime: Long = 0
     var username = ObservableField<String>()
     var totalCount = ObservableField(0)
     var onFeedButtonClick = MutableLiveData<FeedDetails>()
@@ -130,6 +132,10 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
     }
 
     override fun onFeedClick(position: Int, feedDetails: FeedDetails) {
+        if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
+            return
+        }
+        mLastClickTime = SystemClock.elapsedRealtime();
         selectedPosition.set(position)
         onFeedButtonClick.value = feedDetails
     }
@@ -142,6 +148,7 @@ class FeedsViewModel(application: Application) : BaseViewModel(application),
         isApiLoading.set(true)
         pageValue.set(0)
         feedsAdapter.feedList?.clear()
+
         callFetchFeedsApi(
             latitude = latitude.get(),
             longitude = longitude.get(),
