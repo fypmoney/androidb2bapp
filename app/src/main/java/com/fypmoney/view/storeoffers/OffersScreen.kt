@@ -1,11 +1,13 @@
 package com.fypmoney.view.storeoffers
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -14,19 +16,20 @@ import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.OffersStoreBinding
+import com.fypmoney.util.AppConstants
+import com.fypmoney.view.activity.HomeView
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.storeoffers.adapter.SliderAdapter
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.viewmodel.OffersViewModel
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.collections.ArrayList
 
 
-/**
- * This fragment is used for loyalty
- */
-class OffersScreen : BaseFragment<OffersStoreBinding, OffersViewModel>() {
+class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
 
     private var moved: kotlin.Int? = 1
     private lateinit var mViewModel: OffersViewModel
@@ -51,8 +54,8 @@ class OffersScreen : BaseFragment<OffersStoreBinding, OffersViewModel>() {
     private val sliderHandler = Handler()
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
 
@@ -60,11 +63,15 @@ class OffersScreen : BaseFragment<OffersStoreBinding, OffersViewModel>() {
         viewPager2 = mViewBinding.imageviewpager
 
 
+        setToolbarAndTitle(
+            context = this,
+            toolbar = toolbar, backArrowTint = Color.WHITE, titleColor = Color.WHITE,
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.offers)
+        )
 
 
 
-
-        setObservers(requireContext())
+        setObservers(this)
 
     }
 
@@ -74,7 +81,7 @@ class OffersScreen : BaseFragment<OffersStoreBinding, OffersViewModel>() {
 
     private fun setObservers(requireContext: Context) {
 
-        mViewModel.offerList.observe(requireActivity()) {
+        mViewModel.offerList.observe(this) {
 
 
             setListSlider(it)
@@ -91,17 +98,25 @@ class OffersScreen : BaseFragment<OffersStoreBinding, OffersViewModel>() {
         var itemClickListener2 = object : ListOfferClickListener {
 
 
-            override fun onItemClicked(pos: offerDetailResponse) {
+            override fun onItemClicked(pos: offerDetailResponse, position: String) {
+                if (position == "last") {
+                    intent = Intent(this@OffersScreen, HomeView::class.java)
+                    intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.StoreScreen)
+//                    Toast.makeText(this@OffersScreen,"Clicked",Toast.LENGTH_SHORT).show()
+                } else {
+                    callOfferDetailsSheeet(pos)
+                }
 
-                callOfferDetailsSheeet(pos)
 
             }
 
 
         }
-
+        var offerdetails = offerDetailResponse()
+        arrayList.add(offerdetails)
+        viewPager2!!.adapter = null
         viewPager2!!.adapter =
-            SliderAdapter(arrayList, viewPager2!!, itemClickListener2, requireContext())
+            SliderAdapter(arrayList, viewPager2!!, itemClickListener2, this)
 
         viewPager2!!.clipToPadding = false
         viewPager2!!.clipChildren = false
@@ -134,7 +149,7 @@ class OffersScreen : BaseFragment<OffersStoreBinding, OffersViewModel>() {
 
         var bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
         bottomSheetMessage?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheetMessage?.show(childFragmentManager, "TASKMESSAGE")
+        bottomSheetMessage?.show(supportFragmentManager, "TASKMESSAGE")
     }
 
 

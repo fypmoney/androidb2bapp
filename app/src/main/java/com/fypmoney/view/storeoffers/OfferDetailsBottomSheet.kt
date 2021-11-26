@@ -1,6 +1,7 @@
 package com.fypmoney.view.fragment
 
 
+import android.R.attr
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -24,6 +25,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_offer_detail.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_offer_detail.view.recycler_view
+import org.json.JSONObject
+
+import android.R.attr.data
+import com.fypmoney.model.HistoryItem
+
+import org.json.JSONArray
 
 
 class OfferDetailsBottomSheet(
@@ -61,22 +68,37 @@ class OfferDetailsBottomSheet(
             .into(view.logo)
         view.brandName.text = offerDetails.brandName
 
+        view.offer_title.text = offerDetails.offerShortTitle
+
+        try {
+            val jsonArr = JSONArray(offerDetails?.tnc)
+            var itemsArrayList: ArrayList<String> = ArrayList()
+            for (i in 0 until jsonArr.length()) {
+
+                itemsArrayList.add(jsonArr[i] as String)
+
+            }
+            setRecyclerView(view, itemsArrayList, view.rv_details)
+        } catch (e: Exception) {
+
+        }
+        try {
+            val jsonArr2 = JSONArray(offerDetails?.offerContent)
+            var itemsArrayList2: ArrayList<String> = ArrayList()
+            for (i in 0 until jsonArr2.length()) {
+
+                itemsArrayList2.add(jsonArr2[i] as String)
+
+            }
 
 
 
-        setRecyclerView(view, offerDetails.offerContent, view.rv_details)
-        setRecyclerView(view, offerDetails.tnc, view.recycler_view)
+            setRecyclerView(view, itemsArrayList2, view.recycler_view)
 
-//        view.continuebtn.setOnClickListener(View.OnClickListener {
-//            if (view.continuebtn.text == "Continue") {
-//                itemClickListener2.onItemClicked(0)
-//
-//            } else {
-//                itemClickListener2.onCallClicked(0)
-//
-//            }
-//
-//        })
+        } catch (e: Exception) {
+
+        }
+
 
 
         return view

@@ -184,11 +184,21 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     }
 
     private fun setupStore() {
-        loadFragment(OffersScreen(), 4)
+
+        loadFragment(StoreScreen(), 4)
+        mViewBinding.toolbar.setBackgroundColor(
+            ContextCompat.getColor(
+                this,
+                R.color.reward_background
+            )
+        )
+        mViewBinding.toolbarTitle.setTextColor(
+            ContextCompat.getColor(
+                this,
+                R.color.white
+            )
+        )
         mViewBinding.navigationView.menu.findItem(R.id.store).isChecked = true;
-        mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
-        mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this, R.color.black))
-        mViewBinding.ivNotificationBell.setImageResource(R.drawable.ic_bell_icon_black)
         mViewModel.headerText.set(getString(R.string.store_bottom_nav_title))
     }
 

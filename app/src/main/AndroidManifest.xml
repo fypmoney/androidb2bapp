@@ -315,7 +315,12 @@
         <activity
             android:name="com.moe.pushlibrary.activities.MoEActivity"
             android:label="HomeView"
-            android:parentActivityName="com.fypmoney.view.activity.HomeView" >
+            android:parentActivityName="com.fypmoney.view.activity.HomeView"></activity>
+        <activity android:name=".view.storeoffers.OffersScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
 
     </application>

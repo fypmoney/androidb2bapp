@@ -14,7 +14,7 @@
     </data>
 
     <RelativeLayout
-        android:background="#f5f5f5"
+        android:background="@color/reward_background"
         android:id="@+id/layout2"
 
         android:layout_width="match_parent"
@@ -22,10 +22,14 @@
 
         >
 
+        <include
+            android:id="@+id/layout"
+            layout="@layout/toolbar" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/imageviewpager"
             android:layout_width="match_parent"
+            android:layout_below="@+id/layout"
             android:layout_height="match_parent"
             android:paddingStart="30dp"
             android:paddingEnd="30dp" />

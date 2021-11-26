@@ -42,7 +42,7 @@ class OffersViewModel(application: Application) : BaseViewModel(application) {
                 NetworkUtil.endURL(ApiConstant.Api_OfferList),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = false
+                this, isProgressBar = true
             )
         )
     }
@@ -53,6 +53,7 @@ class OffersViewModel(application: Application) : BaseViewModel(application) {
         when (purpose) {
             ApiConstant.Api_OfferList -> {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
+//                var feeds = getObject(responseData.toString(),Array<offerDetailResponse>::class.java)
 
                 val array = Gson().fromJson(
                     json.get("data").toString(),

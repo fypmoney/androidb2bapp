@@ -7,9 +7,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:orientation="vertical"
-        android:paddingStart="@dimen/screenMarginLeft"
-        android:paddingEnd="@dimen/screenMarginRight">
+        >
 
         <View
             android:layout_width="40dp"
@@ -26,8 +26,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_22sdp"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_24sdp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -44,10 +44,11 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/brandName"
-                        style="@style/TextviewRegular"
+                        style="@style/TextviewBold"
                         android:layout_gravity="center_vertical"
                         android:layout_marginStart="@dimen/_14sdp"
                         android:layout_weight=".5"
+                        android:textSize="16sp"
                         android:textColor="@color/text_color_dark"
                         tools:text="Myntra" />
 
@@ -75,12 +76,18 @@
                 style="@style/TextviewBold"
 
                 android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:textSize="16sp"
 
                 android:text="@string/offer_details_caps"
 
                 android:textAlignment="center" />
+
+            <View
+                android:background="@color/grey"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_height="2dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_details"
@@ -89,7 +96,7 @@
                 android:layout_marginStart="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:padding="@dimen/_8sdp"
+
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
@@ -97,13 +104,18 @@
                 style="@style/TextviewBold"
 
                 android:layout_marginStart="@dimen/_20sdp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
 
                 android:text="TERMS &amp; CONDITIONS"
                 android:textSize="16sp"
 
                 android:textAlignment="center" />
 
+            <View
+                android:background="@color/grey"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_height="2dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -111,8 +123,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_18sdp"
                 android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_24sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-                android:padding="@dimen/_8sdp"
+
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         </LinearLayout>
