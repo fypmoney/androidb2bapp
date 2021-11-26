@@ -211,6 +211,7 @@ object AppConstants {
     const val HOMEVIEW = "HomeView"
     const val ReferralScreen = "ReferralScrren"
     const val CardScreen = "CardScreen"
+    const val OfferScreen = "offerscreen"
     const val StoreScreen = "StoreScreen"
     const val FyperScreen = "FyperScreen"
     const val FEEDSCREEN = "FeedScreen"

@@ -59,8 +59,7 @@ fun setBackgroundDrawable(
     @ColorInt strokeColor: Int?,
     strokeWidth: Float?,
     isRounded: Boolean?,
-    alpha: Int?
-) {
+    alpha: Int?) {
     try {
         val shapeDrawable = GradientDrawable()
         if (isRounded != null && isRounded) {

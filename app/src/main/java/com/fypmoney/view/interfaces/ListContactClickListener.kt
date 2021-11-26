@@ -1,7 +1,7 @@
 package com.fypmoney.view.interfaces
 
 interface ListContactClickListener {
-    fun onItemClicked(pos: Int)
+    fun onItemClicked(pos: kotlin.Int)
 
 
 }

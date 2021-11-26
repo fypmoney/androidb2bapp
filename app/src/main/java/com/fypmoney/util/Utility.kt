@@ -80,12 +80,13 @@ import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
 import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.util.AppConstants.JACKPOTTAB
+import com.fypmoney.util.AppConstants.OfferScreen
 import com.fypmoney.view.fragment.FilterByDateFragment
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
-
+import com.fypmoney.view.storeoffers.OffersScreen
 
 
 /*
@@ -1011,6 +1012,11 @@ object Utility {
             CardScreen -> {
                 intent = Intent(context, HomeView::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, CardScreen)
+
+            }
+            OfferScreen -> {
+                intent = Intent(context, OffersScreen::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, OfferScreen)
 
             }
             StoreScreen -> {

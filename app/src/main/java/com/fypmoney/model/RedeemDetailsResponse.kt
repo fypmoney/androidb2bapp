@@ -5,26 +5,26 @@ import com.google.gson.annotations.SerializedName
 @Keep
 data class RedeemDetailsResponse(
 
-	@field:SerializedName("displayCard")
+    @field:SerializedName("displayCard")
 	val displayCard: String? = null,
 
-	@field:SerializedName("totalPoints")
+    @field:SerializedName("totalPoints")
 	val totalPoints: Int? = null,
 
-	@field:SerializedName("description")
+    @field:SerializedName("description")
 	val description: Any? = null,
 
-	@field:SerializedName("pointsToRedeem")
+    @field:SerializedName("pointsToRedeem")
 	val pointsToRedeem: Int? = null,
 
-	@field:SerializedName("tncLink")
+    @field:SerializedName("tncLink")
 	val tncLink: String? = null,
 
-	@field:SerializedName("alreadyRedeemed")
+    @field:SerializedName("alreadyRedeemed")
 	val alreadyRedeemed: String? = null,
 
-	@field:SerializedName("message")
+    @field:SerializedName("message")
 	val message: String? = null,
 
 
-	)
+    )

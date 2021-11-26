@@ -13,7 +13,6 @@ import com.fypmoney.R
 import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.model.aRewardProductResponse
 import com.fypmoney.view.interfaces.ListContactClickListener
-import com.fypmoney.view.interfaces.ListItemClickListener
 import kotlinx.android.synthetic.main.card_scratch_item.view.*
 
 

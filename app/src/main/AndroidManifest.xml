@@ -171,9 +171,6 @@
             android:name=".view.activity.InviteRejectedView"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.AccountActivationSuccessView"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.activity.StayTunedView"
             android:screenOrientation="portrait" />
         <activity
@@ -237,6 +234,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.rewardsAndWinnings.activity.SpinWheelViewDark"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.storeoffers.OffersScreen"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.AgeAllowedActivationView"
@@ -315,8 +315,9 @@
         <activity
             android:name="com.moe.pushlibrary.activities.MoEActivity"
             android:label="HomeView"
-            android:parentActivityName="com.fypmoney.view.activity.HomeView" >
-        </activity>
+            android:parentActivityName="com.fypmoney.view.activity.HomeView"></activity>
+
+
     </application>
     <queries>
         <intent>
