@@ -29,6 +29,7 @@ import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
+import com.fypmoney.view.storeoffers.OffersScreen
 import com.fypmoney.viewmodel.HomeScreenViewModel
 import kotlinx.android.synthetic.main.screen_home.*
 
@@ -78,7 +79,6 @@ class HomeScreen(val tabchangeListner: HomeTabChangeClickListener) :
         }
         mViewBinding.splitBillsCv.setOnClickListener {
             mViewModel.callSplitBillsStories()
-
         }
         checkForErrorNotice()
     }

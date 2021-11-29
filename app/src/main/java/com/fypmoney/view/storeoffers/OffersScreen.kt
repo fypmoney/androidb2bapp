@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -15,28 +14,26 @@ import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.OffersStoreBinding
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.storeoffers.adapter.SliderAdapter
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.viewmodel.OffersViewModel
-import kotlinx.android.synthetic.main.slide_item_container.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 
 class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
 
-    private var moved: kotlin.Int? = 1
+    private var moved: Int? = 1
     private lateinit var mViewModel: OffersViewModel
     private lateinit var mViewBinding: OffersStoreBinding
 
 
-    override fun getBindingVariable(): kotlin.Int {
+    override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
-    override fun getLayoutId(): kotlin.Int {
+    override fun getLayoutId(): Int {
         return R.layout.offers_store
     }
 
@@ -113,7 +110,7 @@ class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
         viewPager2!!.setPageTransformer(compositePageTransformer)
 
         viewPager2!!.registerOnPageChangeCallback(object : OnPageChangeCallback() {
-            override fun onPageSelected(position: kotlin.Int) {
+            override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 if (position == 0 && moved == 1) {
                     moved = 0

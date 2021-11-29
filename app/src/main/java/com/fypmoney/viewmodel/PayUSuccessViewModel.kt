@@ -54,7 +54,7 @@ class PayUSuccessViewModel(application: Application) : BaseViewModel(application
 
                         Utility.parseDateTime(
                             payUResponse.get()?.txnTime,
-                            inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT,
+                            inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
                             outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT
                         )
 
