@@ -87,5 +87,9 @@
     <color name="reward_continue_button">#48AB5B</color>
     <color name="reward_golden_tickets_text">#F2DC12</color>
     <color name="scratch_button_default">#DC9BEB</color>
+    <color name="colorSelectedMenu">#f7aa11</color>
+    <color name="bgcolor">#0E141C</color>
+    <color name="tvColor">#B2B2B2</color>
+
 
 </resources>

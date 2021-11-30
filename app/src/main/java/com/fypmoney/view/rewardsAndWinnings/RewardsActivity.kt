@@ -243,7 +243,6 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
             AppConstants.JACKPOTTAB -> {
                 viewPager.currentItem = 2
-
             }
 
 

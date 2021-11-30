@@ -989,6 +989,12 @@ Coming really soon!
     <string name="_2">2</string>
     <string name="offer_details_caps">OFFER DETAILS</string>
     <string name="unable_to_open_page_please_try_again_later">Unable to open page. please try again later..</string>
+    <string name="rewards">Rewards</string>
+    <string name="explore">Explore</string>
+    <string name="title_home">Home</string>
+    <string name="my_funds">My Funds</string>
+    <string name="low_balance">Low Balance</string>
+    <string name="quick_action">Quick Actions</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>
