@@ -19,16 +19,13 @@ import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.bindingAdapters.loadImage
-import com.fypmoney.databinding.ViewUserProfileBinding
+import com.fypmoney.databinding.ViewUserNewProfileBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.view.community.SocialCommunityActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
-import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
-import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
-import com.fypmoney.view.webview.WebViewActivity
 import com.fypmoney.viewmodel.UserProfileViewModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -41,7 +38,7 @@ import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.view_home.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.IOException
 
@@ -49,17 +46,17 @@ import java.io.IOException
 /*
 * This class is used as Home Screen
 * */
-class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewModel>(),
+class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewModel>(),
     MyProfileListAdapter.OnListItemClickListener, LogoutBottomSheet.OnLogoutClickListener {
     private lateinit var mViewModel: UserProfileViewModel
-    private lateinit var mViewBinding: ViewUserProfileBinding
+    private lateinit var mViewBinding: ViewUserNewProfileBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_user_profile
+        return R.layout.view_user_new_profile
     }
 
     override fun getViewModel(): UserProfileViewModel {
@@ -85,9 +82,19 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
 
         mViewBinding.playStoreTv.setOnClickListener {
             try {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=$packageName")
+                    )
+                )
             } catch (e: ActivityNotFoundException) {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}")))
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}")
+                    )
+                )
             }
         }
         mViewModel.setInitialData()
@@ -106,11 +113,9 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
         val iconList = ArrayList<Int>()
         iconList.add(R.drawable.ic_privacy)
         iconList.add(R.drawable.ic_interest)
-        iconList.add(R.drawable.ic_community)
-        iconList.add(R.drawable.ic_privacy)
-        iconList.add(R.drawable.ic_privacy)
+        iconList.add(R.drawable.ic_community_setting)
         iconList.add(R.drawable.ic_help)
-        iconList.add(R.drawable.ic_log_out)
+        iconList.add(R.drawable.ic_logout)
         myProfileAdapter.setList(
             iconList1 = iconList,
             resources.getStringArray(R.array.my_profile_title_list).toMutableList()
@@ -227,7 +232,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
                 try {
                     val file = File(getPath(applicationContext, uri))
                     val requestFile =
-                        RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+                        file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
                     val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
                     mViewModel.callProfilePicUploadApi(body)
 
@@ -242,7 +247,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
     private fun loadProfile(url: String?) {
         url?.let {
             loadImage(
-                mViewBinding.userIv,
+                mViewBinding.ivUserProfileImage,
                 it,
                 ContextCompat.getDrawable(this, R.drawable.progress_bar_drawable),
                 true
@@ -293,8 +298,6 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
     }
 
 
-
-
     /*
     * This method is used to call log out
     * */
@@ -321,25 +324,18 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
             2 -> {
                 intentToActivity(SocialCommunityActivity::class.java)
             }
-            3 -> {
-                openWebPageFor(getString(R.string.privacy_policy),"https://www.fypmoney.in/fyp/privacy-policy/")
-            }
-            4 -> {
-                openWebPageFor(getString(R.string.terms_and_conditions),"https://www.fypmoney.in/fyp/terms-of-use/")
-            }
 
-            5 -> {
+            3 -> {
                 callFreshChat(applicationContext)
             }
 
-            6 -> {
+            4 -> {
                 callLogOutBottomSheet()
             }
 
         }
 
     }
-
 
 
 }
