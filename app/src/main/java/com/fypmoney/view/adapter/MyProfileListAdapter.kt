@@ -23,7 +23,7 @@ class MyProfileListAdapter(
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding =
-            MyProfileNewListRowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            MyProfileListRowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         if (iconList.size == 0) {
             binding.image.visibility = View.GONE
         } else {
@@ -32,7 +32,7 @@ class MyProfileListAdapter(
         binding.title = titleList[position]
 
 
-        binding.clItemClick.setOnClickListener {
+        binding.linear.setOnClickListener {
             onItemClickListener.onItemClick(position, titleList[position])
         }
         return binding.root

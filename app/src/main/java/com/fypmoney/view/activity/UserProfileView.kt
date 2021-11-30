@@ -113,9 +113,11 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         val iconList = ArrayList<Int>()
         iconList.add(R.drawable.ic_privacy)
         iconList.add(R.drawable.ic_interest)
-        iconList.add(R.drawable.ic_community_setting)
+        iconList.add(R.drawable.ic_community)
+        iconList.add(R.drawable.ic_privacy)
+        iconList.add(R.drawable.ic_privacy)
         iconList.add(R.drawable.ic_help)
-        iconList.add(R.drawable.ic_logout)
+        iconList.add(R.drawable.ic_log_out)
         myProfileAdapter.setList(
             iconList1 = iconList,
             resources.getStringArray(R.array.my_profile_title_list).toMutableList()
@@ -324,12 +326,18 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
             2 -> {
                 intentToActivity(SocialCommunityActivity::class.java)
             }
-
             3 -> {
+                openWebPageFor(getString(R.string.privacy_policy),"https://www.fypmoney.in/fyp/privacy-policy/")
+            }
+            4 -> {
+                openWebPageFor(getString(R.string.terms_and_conditions),"https://www.fypmoney.in/fyp/terms-of-use/")
+            }
+
+            5 -> {
                 callFreshChat(applicationContext)
             }
 
-            4 -> {
+            6 -> {
                 callLogOutBottomSheet()
             }
 
