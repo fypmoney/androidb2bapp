@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
+import com.fypmoney.databinding.ViewWalkThroughNewTwoBinding
 import com.fypmoney.databinding.ViewWalkThroughTwoBinding
 import com.fypmoney.viewmodel.WalkThroughTwoViewModel
 import kotlinx.android.synthetic.main.view_walk_through_one.*
@@ -16,9 +17,9 @@ import kotlinx.android.synthetic.main.view_walk_through_two.imageView
 /*
 * This class is used as walk through screen
 * */
-class WalkThroughTwoScreen : BaseFragment<ViewWalkThroughTwoBinding, WalkThroughTwoViewModel>() {
+class WalkThroughTwoScreen : BaseFragment<ViewWalkThroughNewTwoBinding, WalkThroughTwoViewModel>() {
     private lateinit var mViewModel: WalkThroughTwoViewModel
-    private lateinit var mViewBinding: ViewWalkThroughTwoBinding
+    private lateinit var mViewBinding: ViewWalkThroughNewTwoBinding
 
 
     override fun getBindingVariable(): Int {
@@ -26,7 +27,7 @@ class WalkThroughTwoScreen : BaseFragment<ViewWalkThroughTwoBinding, WalkThrough
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_walk_through_two
+        return R.layout.view_walk_through_new_two
     }
 
     override fun getViewModel(): WalkThroughTwoViewModel {
@@ -38,14 +39,7 @@ class WalkThroughTwoScreen : BaseFragment<ViewWalkThroughTwoBinding, WalkThrough
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding.viewModel = mViewModel
-        Glide.with(requireContext()).load(R.raw.walk_through_two).into(imageView)
-
-
     }
 
-    override fun onTryAgainClicked() {
-
-    }
-
-
+    override fun onTryAgainClicked() {}
 }

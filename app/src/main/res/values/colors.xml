@@ -30,6 +30,7 @@
     <color name="color_light_pink">#ffe6ee</color>
     <color name="color_light_green">#97dc21</color>
     <color name="text_color_light">#9CA3A5</color>
+    <color name="text_color_walk_through">#cc0E141C</color>
     <color name="text_color_little_dark">#5A6365</color>
     <color name="text_color_dark">#231F20</color>
     <color name="spin_light">#bae6c2</color>

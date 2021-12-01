@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
+import com.fypmoney.databinding.ViewWalkThroughNewFourBinding
 import com.fypmoney.databinding.ViewWalkThroughNewThirdBinding
 import com.fypmoney.databinding.ViewWalkThroughThreeBinding
 import com.fypmoney.viewmodel.WalkThroughThreeViewModel
@@ -17,10 +18,10 @@ import kotlinx.android.synthetic.main.view_walk_through_two.*
 /*
 * This class is used as Add member Screen
 * */
-class WalkThroughThreeScreen : BaseFragment<ViewWalkThroughNewThirdBinding, WalkThroughThreeViewModel>()
+class WalkThroughFourScreen : BaseFragment<ViewWalkThroughNewFourBinding, WalkThroughThreeViewModel>()
 {
     private lateinit var mViewModel: WalkThroughThreeViewModel
-    private lateinit var mViewBinding: ViewWalkThroughNewThirdBinding
+    private lateinit var mViewBinding: ViewWalkThroughNewFourBinding
 
 
     override fun getBindingVariable(): Int {
@@ -28,7 +29,7 @@ class WalkThroughThreeScreen : BaseFragment<ViewWalkThroughNewThirdBinding, Walk
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_walk_through_new_third
+        return R.layout.view_walk_through_new_four
     }
 
     override fun getViewModel(): WalkThroughThreeViewModel {
