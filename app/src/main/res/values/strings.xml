@@ -995,6 +995,7 @@ Coming really soon!
     <string name="my_funds">My Funds</string>
     <string name="low_balance">Low Balance</string>
     <string name="quick_action">Quick Actions</string>
+    <string name="for_you">For you</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>

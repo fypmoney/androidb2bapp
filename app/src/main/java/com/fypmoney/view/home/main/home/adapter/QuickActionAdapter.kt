@@ -34,15 +34,15 @@ class QuickActionAdapter(
 class QuickActionVH(
     private val binding: ItemQuickActionBinding,
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: QuickActionUiModel) -> Unit
+    val onQuickActionClicked: (model: QuickActionUiModel) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(quickAction: QuickActionUiModel) {
         binding.executeAfter {
             lifecycleOwner = this@QuickActionVH.lifecycleOwner
 
-            quickActionAib.setImageResource(quickAction.image)
+            quickActionAib.background = quickAction.image
             quickActionCl.setOnClickListener {
-                onRecentUserClick(quickAction)
+                onQuickActionClicked(quickAction)
             }
             quickActionNameTv.text = quickAction.name
         }

@@ -5,6 +5,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -13,6 +16,7 @@ import com.fypmoney.databinding.ActivityHomeBinding
 import com.fypmoney.extension.onNavDestinationSelected
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserProfileView
 import com.fypmoney.view.home.main.homescreen.viewmodel.HomeActivityVM
@@ -27,6 +31,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
         binding = getViewDataBinding()
         setupNavController()
         observeEvents()
+        trackr {
+            it.name = TrackrEvent.home_screen
+            it.add(
+                TrackrField.user_id, SharedPrefUtils.getLong(
+                    applicationContext,
+                    SharedPrefUtils.SF_KEY_USER_ID
+                ).toString())
+        }
     }
 
 
