@@ -132,7 +132,7 @@ object ApiConstant {
         "services/PockketService/api/jackpot/tickets"
 
     const val Api_OfferList = "services/loyaltyservice/api/fyp-offer"
-    const val API_Explore = "services/loyaltyservice/api/screen-sections/"
+    const val API_Explore = "services/PockketService/api/screen-sections/"
 
 
 }

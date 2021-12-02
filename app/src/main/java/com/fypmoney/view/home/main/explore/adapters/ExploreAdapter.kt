@@ -1,6 +1,7 @@
 package com.fypmoney.view.home.main.explore.adapters
 
 
+import android.app.ActionBar
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintSet
@@ -8,11 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.*
 import com.fypmoney.util.AppConstants
+import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.explore.view.ExploreViewHelper
 import com.fypmoney.view.home.main.explore.viewmodel.ExploreFragmentVM
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.fypmoney.view.home.main.explore.*
 
 
 /**
@@ -20,7 +23,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.Abs
  */
 class ExploreAdapter(
     var viewModel: ExploreFragmentVM,
-    var onFeedItemClickListener: OnFeedItemClickListener,
+    var onExploreItemClickListener: ExploreItemClickListener,
     val feedList: List<SectionContentItem?>?
 ) :
     RecyclerView.Adapter<BaseViewHolder>() {
@@ -127,7 +130,7 @@ class ExploreAdapter(
         override fun onBind(position: Int) {
             mViewHelper = ExploreViewHelper(
                 position,
-                feedList?.get(position), onFeedItemClickListener
+                feedList?.get(position), onExploreItemClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
 
@@ -145,7 +148,7 @@ class ExploreAdapter(
         override fun onBind(position: Int) {
             mViewHelper = ExploreViewHelper(
                 position,
-                feedList?.get(position), onFeedItemClickListener
+                feedList?.get(position), onExploreItemClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             mRowItemBinding.viewModel = viewModel
@@ -168,16 +171,23 @@ class ExploreAdapter(
         override fun onBind(position: Int) {
             mViewHelper = ExploreViewHelper(
                 position,
-                feedList?.get(position), onFeedItemClickListener
+                feedList?.get(position), onExploreItemClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             mRowItemBinding.viewModel = viewModel
 
 
-            val set = ConstraintSet()
-            set.clone(mRowItemBinding.layout)
-            set.setDimensionRatio(mRowItemBinding.image.id, "4:5")
-            set.applyTo(mRowItemBinding.layout)
+//            val set = ConstraintSet()
+//            set.clone(mRowItemBinding.layout)
+//            set.setDimensionRatio(mRowItemBinding.image.id, "4:5")
+//            set.applyTo(mRowItemBinding.layout)
+            val params: ViewGroup.LayoutParams =
+                mRowItemBinding.image.layoutParams as ViewGroup.LayoutParams
+            params.width = feedList?.get(position)?.contentDimensionX!!
+            params.height = feedList?.get(position)?.contentDimensionY!!
+// existing height is ok as is, no need to edit it
+// existing height is ok as is, no need to edit it
+            mRowItemBinding.image.layoutParams = params
 
 
             mRowItemBinding.executePendingBindings()
@@ -194,7 +204,7 @@ class ExploreAdapter(
         override fun onBind(position: Int) {
             mViewHelper = ExploreViewHelper(
                 position,
-                feedList?.get(position), onFeedItemClickListener
+                feedList?.get(position), onExploreItemClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
             mRowItemBinding.viewModel = viewModel
@@ -216,7 +226,7 @@ class ExploreAdapter(
         override fun onBind(position: Int) {
             mViewHelper = ExploreViewHelper(
                 position,
-                feedList?.get(position), onFeedItemClickListener
+                feedList?.get(position), onExploreItemClickListener
             )
             mRowItemBinding?.youtubePlayerView?.addYouTubePlayerListener(object :
                 AbstractYouTubePlayerListener() {

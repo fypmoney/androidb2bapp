@@ -52,7 +52,11 @@ object AppConstants {
     const val FEED_TYPE_EXTWEBVIEW = "EXTWEBVIEW"
     const val FEED_TYPE_EXTWEBVIEW2 = "EXTWEBVIEW1X1"
     const val FEED_TYPE_STORIES = "STORIES"
+    const val EXPLORE_IN_APP_WEBVIEW = "IN_APP_WEB_VIEW"
+    const val EXPLORE_IN_APP = "IN_APP"
+
     const val FEED_RESPONSE = "feed_response"
+    const val EXPLORE_RESPONSE = "explore_response"
     const val FEED_TYPE_IN_APP = "INAPP"
     const val FEED_TYPE_IN_APP_WEBVIEW = "INAPPWEBVIEW"
     const val FEED_TYPE_EXTERNAL_WEBVIEW = "EXTERNALWEBVIEW"

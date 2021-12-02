@@ -94,7 +94,6 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                         SharedPrefUtils.SF_KEY_APP_UPDATE_TYPE,
                         0
                     )
-                    Log.d(TAG,"0")
 
                 }
                 SplashViewModel.AppUpdateState.FORCEUPDATE -> {
@@ -107,20 +106,19 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                         SharedPrefUtils.SF_KEY_APP_UPDATE_TYPE,
                         1
                     )
-                    Log.d(TAG,"1")
+
 
                 }
                 SplashViewModel.AppUpdateState.NOTALLOWED -> {
                     checkUpdate.value = false
                     Utility.showToast(NOT_ALLOWED_MSG)
                     finish()
-                    Log.d(TAG,NOT_ALLOWED_MSG)
 
 
                 }
                 SplashViewModel.AppUpdateState.NOTUPDATE -> {
                     checkUpdate.value = false
-                    Log.d(TAG,"NOTUPDATE")
+
 
                 }
             }

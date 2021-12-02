@@ -36,7 +36,7 @@ class ExploreFragmentVM(application: Application) : BaseViewModel(application) {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_Explore,
-                NetworkUtil.endURL(ApiConstant.API_Explore) + "HOME_SCREEN",
+                NetworkUtil.endURL(ApiConstant.API_Explore) + "EXPLORE",
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
