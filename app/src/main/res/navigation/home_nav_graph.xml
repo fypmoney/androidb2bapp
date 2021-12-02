@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.fypmoney.view.home.main.home.view.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_card"
+            app:destination="@id/navigation_card" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_explore"
@@ -28,4 +32,9 @@
         android:name="com.fypmoney.view.home.main.fyper.view.FyperFragment"
         android:label="@string/fyper_txt"
         tools:layout="@layout/fragment_fyper" />
+    <fragment
+        android:id="@+id/navigation_card"
+        android:name="com.fypmoney.view.card.view.CardFragment"
+        android:label="@string/card"
+        tools:layout="@layout/fragment_card" />
 </navigation>

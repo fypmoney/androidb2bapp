@@ -90,6 +90,7 @@
     <color name="colorSelectedMenu">#f7aa11</color>
     <color name="bgcolor">#0E141C</color>
     <color name="tvColor">#B2B2B2</color>
+    <color name="matBlack">#38414A</color>
 
 
 </resources>

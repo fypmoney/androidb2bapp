@@ -91,7 +91,6 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginStart="@dimen/dp5"
                         android:layout_weight="1"
-
                         android:text="@{viewModel.cardNumber3}"
                         android:textColor="@color/white"
                         android:textSize="15sp"

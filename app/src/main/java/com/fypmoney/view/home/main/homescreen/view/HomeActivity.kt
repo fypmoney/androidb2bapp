@@ -17,6 +17,7 @@ import com.fypmoney.extension.onNavDestinationSelected
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserProfileView
 import com.fypmoney.view.home.main.homescreen.viewmodel.HomeActivityVM
@@ -51,7 +52,48 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
         binding.bottomMenu.setItemSelected(R.id.navigation_home, true)
         binding.bottomMenu.setOnItemSelectedListener { id ->
             onNavDestinationSelected(id, navHomeController)
+            when(id){
+                R.id.navigation_home->{
+                    homeActivityVM.toolbarTitle.value = "Hey ${Utility.getCustomerDataFromPreference()?.firstName},"
+                }
+                R.id.navigation_explore->{
+                    homeActivityVM.toolbarTitle.value = getString(R.string.explore)
+                }
+                R.id.navigation_rewards->{
+                    homeActivityVM.toolbarTitle.value = getString(R.string.rewards)
+                }
+                R.id.navigation_fyper->{
+                    homeActivityVM.toolbarTitle.value = getString(R.string.fyper_txt)
+                }
+            }
         }
+        
+        
+        navHomeController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when(destination.id){
+                R.id.navigation_home, R.id.navigation_explore, R.id.navigation_rewards, R.id.navigation_fyper->{
+                    showToolbar()
+                    showBottomNavigation()
+                }else->{
+                    hideToolbar()
+                    hideBottomNavigation()
+                }
+            }
+        }
+
+    }
+    private fun hideToolbar(){
+        binding.appBar.toGone()
+    }
+    private fun showToolbar(){
+        binding.appBar.toVisible()
+    }
+    private fun showBottomNavigation(){
+        binding.bottomMenu.toVisible()
+    }
+    private fun hideBottomNavigation(){
+        binding.bottomMenu.toGone()
+
     }
 
     private fun observeEvents() {

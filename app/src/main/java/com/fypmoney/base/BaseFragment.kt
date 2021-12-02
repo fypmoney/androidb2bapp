@@ -185,7 +185,9 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     fun setToolbarAndTitle(
         context: Context,
         toolbar: Toolbar,
-        isBackArrowVisible: Boolean? = false, toolbarTitle: String? = null
+        isBackArrowVisible: Boolean? = false, toolbarTitle: String? = null,
+        titleColor:Int = Color.WHITE,
+        backArrowTint:Int = Color.WHITE
     ) {
         val activity = activity as AppCompatActivity?
         activity!!.setSupportActionBar(toolbar)
@@ -193,6 +195,8 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
             context,
             R.drawable.ic_back_new
         )
+
+        upArrow?.setTint(backArrowTint)
 
         activity.supportActionBar?.let {
             if (isBackArrowVisible!!) {
@@ -203,6 +207,7 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
             it.setDisplayShowTitleEnabled(false)
             if (toolbarTitle != null) {
                 toolbar_title.text = toolbarTitle
+                toolbar_title.setTextColor(titleColor)
 
             }
         }

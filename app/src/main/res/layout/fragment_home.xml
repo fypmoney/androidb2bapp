@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -111,6 +113,7 @@
                         app:drawableTint="@color/white"
                         android:textSize="14sp"
                         android:gravity="center"
+                        android:onClick="@{()->viewModel.onViewDetailsClicked()}"
                         android:lineSpacingExtra="14sp"
                         android:fontFamily="@font/product_sans_bold"
                         android:textColor="@color/white"/>

@@ -3,7 +3,9 @@ package com.fypmoney.view.home.main.home.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -141,8 +143,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>() {
                 (binding.quickActionRv.adapter as QuickActionAdapter).submitList(it.quickActionList)
                 homeFragmentVM.prepareCallToActionList()
             }
+            HomeFragmentVM.HomeFragmentEvent.ViewCardDetails -> {
+                askForDevicePassword()
+            }
+            null -> TODO()
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
+                when (resultCode) {
+                    AppCompatActivity.RESULT_OK -> {
+                            findNavController().navigate(R.id.navigation_card)
+                    }
 
+                }
+            }
+        }
+    }
 }

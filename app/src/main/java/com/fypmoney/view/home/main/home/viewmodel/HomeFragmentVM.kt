@@ -37,6 +37,9 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
     init {
     }
 
+    fun onViewDetailsClicked(){
+        _event.value = HomeFragmentEvent.ViewCardDetails
+    }
 
      fun fetchBalance(){
          _state.value = HomeFragmentState.LoadingBalanceState
@@ -125,6 +128,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
     }
     sealed class HomeFragmentEvent{
         data class QuickActionListReady(var quickActionList:List<QuickActionUiModel>):HomeFragmentEvent()
+        object ViewCardDetails:HomeFragmentEvent()
     }
     sealed class QuickActionEvent{
         object AddAction:QuickActionEvent()

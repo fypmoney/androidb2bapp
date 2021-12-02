@@ -19,7 +19,7 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
         application,
         SharedPrefUtils.SF_KEY_PROFILE_IMAGE
     )
-    val userGreetingsTitle:LiveData<String> = MutableLiveData(
+    var toolbarTitle = MutableLiveData(
         "Hey ${Utility.getCustomerDataFromPreference()?.firstName},")
 
     val event:LiveData<HomeActivityEvent>
