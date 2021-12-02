@@ -12,14 +12,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="4dp">
+        android:paddingVertical="4dp"
+        android:descendantFocusability="blocksDescendants">
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/quick_action_aib"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="8dp"
-            android:adjustViewBounds="true"
             tools:background="@drawable/ic_add"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

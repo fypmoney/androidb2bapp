@@ -41,10 +41,13 @@ class QuickActionVH(
             lifecycleOwner = this@QuickActionVH.lifecycleOwner
 
             quickActionAib.background = quickAction.image
-            quickActionCl.setOnClickListener {
+            quickActionNameTv.text = quickAction.name
+            quickActionAib.setOnClickListener {
                 onQuickActionClicked(quickAction)
             }
-            quickActionNameTv.text = quickAction.name
+            quickActionNameTv.setOnClickListener {
+                onQuickActionClicked(quickAction)
+            }
         }
     }
 

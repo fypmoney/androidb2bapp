@@ -12,7 +12,8 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -128,13 +129,14 @@
                 android:paddingVertical="16dp"
                 android:paddingHorizontal="20dp"
                 android:layout_marginStart="18dp"
-                android:layout_marginLeft="18dp"
-                android:layout_marginEnd="18dp"
-                android:layout_marginRight="18dp"
-                android:layout_marginBottom="18dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 app:cnb_addBottomInset="true"
                 app:cnb_addLeftInset="true"
                 app:cnb_addRightInset="true"
+                app:layout_behavior="com.fypmoney.extension.BottomNavigationBehavior"
                 app:cnb_menuResource="@menu/bottom_nav_menu"
                 app:cnb_orientationMode="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"

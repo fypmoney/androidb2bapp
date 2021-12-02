@@ -113,6 +113,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>() {
             HomeFragmentVM.HomeFragmentState.LoadingBalanceState -> {
                 binding.loadingBalanceHdp.clearAnimation()
                 binding.walletBalanceTv.toGone()
+                binding.lowBalanceTv.toGone()
                 binding.loadingBalanceHdp.toVisible()
             }
             is HomeFragmentVM.HomeFragmentState.SuccessBalanceState -> {
