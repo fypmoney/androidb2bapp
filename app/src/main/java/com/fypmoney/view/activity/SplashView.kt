@@ -173,7 +173,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                             if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
 
                                 if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                                    //TODO remove linking if we are not going with new version
+
                                     intentToActivity(HomeActivity::class.java)
                                 } else {
                                     intentToActivity(PermissionsActivity::class.java)

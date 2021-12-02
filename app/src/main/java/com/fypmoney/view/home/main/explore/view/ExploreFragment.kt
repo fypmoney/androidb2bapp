@@ -61,7 +61,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
 
     private fun setObserver() {
         exploreFragmentVM?.rewardHistoryList.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             { list ->
                 setRecyclerView(_binding, list)
             })

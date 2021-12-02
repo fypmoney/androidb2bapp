@@ -82,6 +82,8 @@ import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.util.AppConstants.JACKPOTTAB
 import com.fypmoney.view.activity.OfferDetailActivity
 import com.fypmoney.util.AppConstants.OfferScreen
+import com.fypmoney.util.AppConstants.StoreofferScreen
+import com.fypmoney.util.AppConstants.StoreshopsScreen
 import com.fypmoney.view.fragment.FilterByDateFragment
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -1023,6 +1025,17 @@ object Utility {
             StoreScreen -> {
                 intent = Intent(context, HomeView::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreScreen)
+
+            }
+            StoreofferScreen -> {
+                intent = Intent(context, HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreofferScreen)
+
+            }
+
+            StoreshopsScreen -> {
+                intent = Intent(context, HomeView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreshopsScreen)
 
             }
 

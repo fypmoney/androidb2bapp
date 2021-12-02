@@ -218,6 +218,8 @@ object AppConstants {
     const val TRACKORDER = "TrackOrderScreen"
     const val CHORES = "ChoresScreen"
     const val JACKPOTTAB = "Jackpot"
+    const val StoreofferScreen = "Storeofferscreen"
+    const val StoreshopsScreen = "Storeshopsscreen"
 
     /* Home : "HomeView, 0"
 
