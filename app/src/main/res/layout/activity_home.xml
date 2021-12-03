@@ -12,7 +12,8 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -63,7 +64,7 @@
                     android:textAppearance="@style/TextAppearance.Fyp.Subtitle1"
                     android:textColor="@color/black"
                     tools:text="Hey User"
-                    android:text="@{viewModel.userGreetingsTitle}"
+                    android:text="@{viewModel.toolbarTitle}"
                     android:layout_marginStart="12dp"
                     android:textSize="@dimen/text_18sp" />
 
@@ -117,27 +118,34 @@
             app:layout_constraintTop_toBottomOf="@+id/app_bar"
             app:navGraph="@navigation/home_nav_graph" />
 
+
+            <com.fyp.bubblenavigationbar.ChipNavigationBar
+                android:id="@+id/bottom_menu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:background="@drawable/rounded_rect_white"
+                android:elevation="16dp"
+                android:paddingVertical="16dp"
+                android:paddingHorizontal="20dp"
+                android:layout_marginStart="18dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                app:cnb_addBottomInset="true"
+                app:cnb_addLeftInset="true"
+                app:cnb_addRightInset="true"
+                app:layout_behavior="com.fypmoney.extension.BottomNavigationBehavior"
+                app:cnb_menuResource="@menu/bottom_nav_menu"
+                app:cnb_orientationMode="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.fyp.bubblenavigationbar.ChipNavigationBar
-            android:id="@+id/bottom_menu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:background="@drawable/rounded_rect_white"
-            android:elevation="16dp"
-            android:paddingVertical="16dp"
-            android:paddingHorizontal="20dp"
-            android:layout_marginStart="18dp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginEnd="18dp"
-            android:layout_marginRight="18dp"
-            android:layout_marginBottom="18dp"
-            app:cnb_addBottomInset="true"
-            app:cnb_addLeftInset="true"
-            app:cnb_addRightInset="true"
-            app:cnb_menuResource="@menu/bottom_nav_menu"
-            app:cnb_orientationMode="horizontal" />
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

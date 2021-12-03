@@ -4,17 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM" />
     </data>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         tools:context=".view.home.main.home.view.HomeFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <FrameLayout
                 android:id="@+id/card_fl"
@@ -62,6 +66,18 @@
                         android:fontFamily="@font/product_sans_bold"
                         android:textColor="@color/white"/>
 
+                    <com.fypmoney.view.customview.HorizontalDottedProgress
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/loading_balance_hdp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginEnd="-10dp"
+                        tools:visibility="visible"
+                        app:layout_constraintTop_toBottomOf="@+id/my_funds_tv"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/low_balance_tv"
                         android:layout_width="wrap_content"
@@ -71,6 +87,8 @@
                         android:layout_marginEnd="21dp"
                         android:text="@string/low_balance"
                         android:textSize="17sp"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         android:lineSpacingExtra="17sp"
                         android:paddingHorizontal="@dimen/dp8"
                         android:paddingVertical="4dp"
@@ -95,6 +113,7 @@
                         app:drawableTint="@color/white"
                         android:textSize="14sp"
                         android:gravity="center"
+                        android:onClick="@{()->viewModel.onViewDetailsClicked()}"
                         android:lineSpacingExtra="14sp"
                         android:fontFamily="@font/product_sans_bold"
                         android:textColor="@color/white"/>
@@ -110,37 +129,79 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 app:layout_constraintTop_toBottomOf="@+id/card_fl">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/quick_action_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:text="@string/quick_action"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    android:lineSpacingExtra="14sp"
                     android:fontFamily="@font/product_sans_bold"
-                    android:textColor="@color/black"/>
+                    android:gravity="start"
+                    android:lineSpacingExtra="14sp"
+                    android:text="@string/quick_action"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:drawablePadding="@dimen/dp10"
+                    android:drawableEnd="@drawable/ic_quick_actions"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/quick_action_rv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp30"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:orientation="vertical"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:visibility="visible"
-                    tools:listitem="@layout/item_quick_action"
-                    app:layout_constraintTop_toBottomOf="@+id/quick_action_tv" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@+id/quick_action_tv"
+                    tools:itemCount="5"
+                    app:spanCount="3"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    tools:listitem="@layout/item_quick_action" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/call_to_action_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/quick_action_cl">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/call_to_action_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/product_sans_bold"
+                    android:gravity="start"
+                    android:lineSpacingExtra="14sp"
+                    android:text="@string/for_you"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:drawablePadding="@dimen/dp10"
+                    android:drawableEnd="@drawable/ic_for_you"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/call_to_action_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@+id/call_to_action_tv"
+                    tools:itemCount="5"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_call_to_action_home" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
