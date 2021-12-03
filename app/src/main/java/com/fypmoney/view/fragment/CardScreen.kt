@@ -100,7 +100,7 @@ class CardScreen(val tabchangeListner: HomeTabChangeClickListener) :
         super.onViewCreated(view, savedInstanceState)
 
         mViewBinding = getViewDataBinding()
-        mViewBinding.viewModel = mViewModel
+        mViewBinding .viewModel = mViewModel
         mViewBinding.fragment = this
 
         showCardLayout()

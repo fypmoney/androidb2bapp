@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home__nav_menu"
+        android:title="@string/title_home"
+        app:cnb_backgroundColor="@color/bgcolor"
+        app:cnb_textColor="#FFFFFF"
+        app:cnb_iconColor="@color/colorSelectedMenu"/>
+
+    <item
+        android:id="@+id/navigation_explore"
+        android:icon="@drawable/ic_explore_nav_menu"
+        android:title="@string/explore"
+        app:cnb_backgroundColor="@color/bgcolor"
+        app:cnb_textColor="#FFFFFF"
+        app:cnb_iconColor="@color/colorSelectedMenu" />
+
+    <item
+        android:id="@+id/navigation_rewards"
+        android:icon="@drawable/ic_rewards_nav_menu"
+        android:title="@string/rewards"
+        app:cnb_backgroundColor="@color/bgcolor"
+        app:cnb_textColor="#FFFFFF"
+        app:cnb_iconColor="@color/colorSelectedMenu"/>
+    <item
+        android:id="@+id/navigation_fyper"
+        android:icon="@drawable/ic_fyper_nav_menu"
+        android:title="@string/fyper_txt"
+        app:cnb_backgroundColor="@color/bgcolor"
+        app:cnb_textColor="#FFFFFF"
+        app:cnb_iconColor="@color/colorSelectedMenu" />
+
+</menu>
