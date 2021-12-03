@@ -57,7 +57,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-
                     android:onClick="@{()->viewModel.onNotificationClicked()}"
                     android:padding="5dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -77,7 +76,6 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="10dp"
-
                 android:background="@drawable/circular_red"
                 android:backgroundTint="@color/white"
                 android:onClick="@{()->viewModel.onProfileClicked()}"

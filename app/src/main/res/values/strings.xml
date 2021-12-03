@@ -990,6 +990,24 @@ Coming really soon!
     <string name="offer_details_caps">OFFER DETAILS</string>
     <string name="unable_to_open_page_please_try_again_later">Unable to open page. please try again later..</string>
 
+    <string name="walk_through_details_string_first"><![CDATA[First Step towards Teenagers Financial\n Independence & adulthood]]></string>
+    <string name="walk_through_string_tital_first"><![CDATA[Payment App & Card for\n Teens & Families]]></string>
+    <string name="walk_through_title_two">Manage your Pocket\n Money Digitally</string>
+    <string name="walk_through_details_string_second">Pay anywhere seamlessly with Fyp Visa Card\n and budget your expenses smartly.</string>
+    <string name="walk_through_details_string_third"><![CDATA[Get 5x reward points & upto 50% cashbacks\n on all transactions]]></string>
+    <string name="walk_through_title_string_third">Rewards and Cashback\n on all transactions</string>
+    <string name="walk_through_details_string_four">Fyp is partnered with RBI Regulated bank and\n Visa network</string>
+    <string name="walk_through_details_title_string_four">Bank-Level Security and\n Safety</string>
+
+    <string name="rewards">Rewards</string>
+    <string name="explore">Explore</string>
+    <string name="title_home">Home</string>
+    <string name="my_funds">My Funds</string>
+    <string name="low_balance">Low Balance</string>
+    <string name="quick_action">Quick Actions</string>
+    <string name="for_you">For you</string>
+
+
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>

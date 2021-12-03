@@ -261,6 +261,9 @@
         <activity android:name=".view.activity.PayUSuccessViewCashbackWon"
             android:screenOrientation="portrait"/>
 
+        <activity android:name="com.fypmoney.view.home.main.homescreen.view.HomeActivity"
+            android:screenOrientation="portrait"/>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
