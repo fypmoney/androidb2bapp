@@ -39,7 +39,7 @@ class CardScreenOptionsVH(
     fun bind(cardOptionUiModel: CardOptionUiModel) {
         binding.executeAfter {
             lifecycleOwner = this@CardScreenOptionsVH.lifecycleOwner
-            cardOptionIv.setImageResource(cardOptionUiModel.icon)
+            cardOptionIv.setImageDrawable(cardOptionUiModel.icon)
             cardOptionName.text = cardOptionUiModel.name
 
         }

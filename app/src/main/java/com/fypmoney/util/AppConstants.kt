@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken
 * This class is used to store the Constants of the application
 * */
 object AppConstants {
+    val INTEREST_TYPE: String="InterestType"
     const val FRESH_CHAT_APP_KEY="8dbdc877-4045-4b7c-8a69-1b176c41e71c"
     const val FRESH_CHAT_APP_ID="03bfae8e-f0f7-48a9-948a-b737edd1a38b"
     const val FRESH_CHAT_DOMAIN="msdk.in.freshchat.com"

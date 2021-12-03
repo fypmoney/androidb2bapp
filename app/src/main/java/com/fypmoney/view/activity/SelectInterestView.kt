@@ -6,11 +6,10 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.SelectInterestViewActivityBinding
-import com.fypmoney.databinding.ViewSelectInterestBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SelectInterestViewModel
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_animation.*
 
 /*
@@ -37,15 +36,18 @@ class SelectInterestView :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
+        if (intent.hasExtra(AppConstants.INTEREST_TYPE)){
+
+            val interestScreenType:Boolean=intent.getBooleanExtra(AppConstants.INTEREST_TYPE,false)
+
+
+        // this method help us to hide or un hide items
         setLottieAnimationToolBar(
-            context = this@SelectInterestView,
-            isBackArrowVisible = true,
-            false,
-           imageView =  ivToolBarBack,
-            lottieAnimationView = ivAnimationGift)
-
-
-
+            isBackArrowVisible = interestScreenType,//back arrow visibility
+            isLottieAnimation = !interestScreenType,// lottie animation visibility
+            imageView = ivToolBarBack,//back image view
+            lottieAnimationView = ivAnimationGift)// lottie animation view
+        }
         setObserver()
     }
 
@@ -66,9 +68,7 @@ Create this method for observe the viewModel fields
                 mViewModel.onAnswerLater.value = false
                 finish()
             }
-        }
-
-    }
+        }  }
 
 
 }

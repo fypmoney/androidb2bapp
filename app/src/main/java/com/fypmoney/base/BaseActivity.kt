@@ -419,16 +419,13 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     }
 
     /*
-    * This method will set the toolbar with back navigation arrow and toolbar title
+    * This method will set the lottie animation  with back  arrow
     * */
     fun setLottieAnimationToolBar(
-        context: Context,//context
         isBackArrowVisible: Boolean? = false, //back arrow for back press by default visibility of
-        isLottieAnimation:Boolean?=true, // lottie animation by default on
+        isLottieAnimation:Boolean?=false, // lottie animation by default on
         imageView:ImageView,
-        lottieAnimationView:ImageView
-
-    )
+        lottieAnimationView:ImageView)
     {
         // set back arrow visibility
         if (isBackArrowVisible == true)imageView.visibility=View.VISIBLE

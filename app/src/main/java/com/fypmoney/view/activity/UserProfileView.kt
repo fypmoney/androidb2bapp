@@ -322,7 +322,9 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
             }
 
             1 -> {
-                intentToActivityMain(this@UserProfileView,SelectInterestView::class.java)
+                val intent = Intent(this@UserProfileView, SelectInterestView::class.java)
+                intent.putExtra(AppConstants.INTEREST_TYPE,true)
+                startActivity(intent)
             }
             2 -> {
                 intentToActivityMain(this@UserProfileView,SocialCommunityActivity::class.java)
