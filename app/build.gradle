@@ -24,7 +24,7 @@ android {
         ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 42
+        versionCode 41
         versionName "1.4.2"
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
@@ -233,6 +233,7 @@ dependencies {
     implementation "com.moengage:moe-android-sdk:11.4.01"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':trackr')
+    implementation project(path: ':bubblenavigationbar')
     implementation(name:'adjust-lib', ext:'aar')
     implementation("com.moengage:rich-notification:2.3.00")
     implementation('com.github.simonpercic:oklog3:2.3.0')

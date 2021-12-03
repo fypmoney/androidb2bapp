@@ -19,6 +19,7 @@ import com.fypmoney.util.AppConstants.NOT_ALLOWED_MSG
 import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getReferralCodeFromDynamicLink
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.viewmodel.SplashViewModel
 import kotlinx.android.synthetic.main.view_splash.*
 import java.util.*
@@ -172,7 +173,8 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                             if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
 
                                 if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                                    intentToActivity(HomeView::class.java)
+                                    //TODO remove linking if we are not going with new version
+                                    intentToActivity(HomeActivity::class.java)
                                 } else {
                                     intentToActivity(PermissionsActivity::class.java)
                                 }
@@ -189,7 +191,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                                 Manifest.permission.READ_CONTACTS
                                             )
                                         ) {
-                                            intentToActivity(HomeView::class.java)
+                                            intentToActivity(HomeActivity::class.java)
                                         } else {
                                             intentToActivity(PermissionsActivity::class.java)
                                         }
