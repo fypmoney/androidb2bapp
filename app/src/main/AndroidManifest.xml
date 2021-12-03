@@ -262,7 +262,10 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name="com.fypmoney.view.home.main.homescreen.view.HomeActivity"
-            android:screenOrientation="portrait"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+
+        </activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

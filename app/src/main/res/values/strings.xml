@@ -1006,6 +1006,9 @@ Coming really soon!
     <string name="low_balance">Low Balance</string>
     <string name="quick_action">Quick Actions</string>
     <string name="for_you">For you</string>
+    <string name="three_star">***</string>
+    <string name="unable_to_load_card_details">Unable to load card details..</string>
+    <string name="reload">Reload</string>
 
 
     <string-array name="person_category_array">
