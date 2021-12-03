@@ -997,6 +997,7 @@ Coming really soon!
     <string name="walk_through_title_string_third">Rewards and Cashback\n on all transactions</string>
     <string name="walk_through_details_string_four">Fyp is partnered with RBI Regulated bank and\n Visa network</string>
     <string name="walk_through_details_title_string_four">Bank-Level Security and\n Safety</string>
+    <string name="continue_string">Continue</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>

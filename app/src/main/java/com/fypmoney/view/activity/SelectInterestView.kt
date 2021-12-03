@@ -5,26 +5,28 @@ import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.databinding.SelectInterestViewActivityBinding
 import com.fypmoney.databinding.ViewSelectInterestBinding
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SelectInterestViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.toolbar_animation.*
 
 /*
 * This is used to handle interest of the user
 * */
 class SelectInterestView :
-    BaseActivity<ViewSelectInterestBinding, SelectInterestViewModel>() {
+    BaseActivity<SelectInterestViewActivityBinding, SelectInterestViewModel>() {
     private lateinit var mViewModel: SelectInterestViewModel
-    private lateinit var mViewBinding: ViewSelectInterestBinding
+    private lateinit var mViewBinding: SelectInterestViewActivityBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_select_interest
+        return R.layout.select_interest_view_activity
     }
 
     override fun getViewModel(): SelectInterestViewModel {
@@ -35,10 +37,12 @@ class SelectInterestView :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
-        setToolbarAndTitle(
+        setLottieAnimationToolBar(
             context = this@SelectInterestView,
-            toolbar = toolbar, isBackArrowVisible = true
-        )
+            isBackArrowVisible = true,
+            false,
+           imageView =  ivToolBarBack,
+            lottieAnimationView = ivAnimationGift)
 
 
 

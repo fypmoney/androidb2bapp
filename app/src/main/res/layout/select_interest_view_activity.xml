@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.viewmodel.SelectInterestViewModel" />
+
+    </data>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include
+                    android:id="@+id/toolbar_layout"
+                    layout="@layout/toolbar_animation"
+                    />
+
+
+                <TextView
+                    android:id="@+id/tvTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    style="@style/TextviewBold"
+                    android:textSize="20sp"
+                    android:text="What do you fancy?"
+                    android:textAlignment="center"
+
+                    />
+                <TextView
+                    android:id="@+id/tvInterestDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    style="@style/TextviewRegular"
+                    android:layout_marginHorizontal="@dimen/_25sdp"
+                    android:textSize="12sp"
+                    android:textColor="#cc000000"
+                    android:text="Tell us your interests and get personalized offers on\n your favourite brands. Cool, right?"
+                    android:textAlignment="center" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/margin"
+                    android:layout_marginBottom="@dimen/margin"
+                    android:layout_marginHorizontal="@dimen/_10sdp"
+                    android:nestedScrollingEnabled="false"
+                    app:adapter="@{viewModel.chooseInterestAdapter}"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvInterestDetail"
+                    />
+
+
+
+                <Button
+                    android:id="@+id/btnContinue"
+                    android:layout_width="@dimen/_200sdp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_20"
+                    android:layout_marginEnd="@dimen/margin_20"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:onClick="@{()->viewModel.onSubmitClicked()}"
+                    android:text="@string/continue_string"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/text_color_dark"
+                    android:visibility="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_view"
+                    />
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_20"
+                    android:layout_marginEnd="@dimen/margin_20"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:onClick="@{()->viewModel.onSubmitClicked()}"
+                    android:text="@string/save_btn_text"
+                    android:textAllCaps="false"
+                    app:backgroundTint="@color/text_color_dark"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_view"
+                    />
+
+                <com.google.android.material.textview.MaterialTextView
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:paddingBottom="@dimen/_25sdp"
+                    android:visibility="gone"
+                    android:onClick="@{()->viewModel.answerLaterClicked()}"
+                    android:text="@string/answer_later"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="14sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/btnContinue"
+
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+</layout>
