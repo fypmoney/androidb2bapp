@@ -6,15 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import com.fypmoney.R
-import com.fypmoney.application.PockketApplication
 import com.fypmoney.databinding.MyProfileListRowItemBinding
+import com.fypmoney.databinding.MyProfileNewListRowItemBinding
 
 class MyProfileListAdapter(
     context: Context? = null,
     var onItemClickListener: OnListItemClickListener,
     var fromWhichScreen: String? = null,
-    var elevationValue:Float = 2.0f
+    var elevationValue: Float = 2.0f
 ) :
     ArrayAdapter<LauncherActivity.ListItem>(context!!, 0) {
 
@@ -25,17 +24,16 @@ class MyProfileListAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding =
             MyProfileListRowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        binding.linear.cardElevation = elevationValue
-        if(iconList.size==0){
+        if (iconList.size == 0) {
             binding.image.visibility = View.GONE
-        }else{
+        } else {
             binding.image.setImageResource(iconList[position])
         }
         binding.title = titleList[position]
 
 
         binding.linear.setOnClickListener {
-            onItemClickListener.onItemClick(position,titleList[position])
+            onItemClickListener.onItemClick(position, titleList[position])
         }
         return binding.root
     }
@@ -75,6 +73,6 @@ class MyProfileListAdapter(
     }
 
     interface OnListItemClickListener {
-        fun onItemClick(position: Int,name:String?=null)
+        fun onItemClick(position: Int, name: String? = null)
     }
 }
