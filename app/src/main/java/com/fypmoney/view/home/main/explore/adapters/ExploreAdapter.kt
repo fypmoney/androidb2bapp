@@ -181,8 +181,10 @@ class ExploreAdapter(
 //            set.clone(mRowItemBinding.layout)
 //            set.setDimensionRatio(mRowItemBinding.image.id, "4:5")
 //            set.applyTo(mRowItemBinding.layout)
+
             val params: ViewGroup.LayoutParams =
                 mRowItemBinding.image.layoutParams as ViewGroup.LayoutParams
+
             params.width = feedList?.get(position)?.contentDimensionX!!
             params.height = feedList?.get(position)?.contentDimensionY!!
 // existing height is ok as is, no need to edit it
