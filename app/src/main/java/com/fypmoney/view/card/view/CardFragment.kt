@@ -6,7 +6,9 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -156,14 +158,7 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
     private fun handleEvents(cardEvent: CardFragmentVM.CardEvent) {
         when (cardEvent) {
             is CardFragmentVM.CardEvent.OnCVVClicked -> {
-                if (cardEvent.isCvvVisible) {
-                    binding.cardCvvValueTv.text = cardEvent.cvvValue
-                    binding.viewCvvIv.setImageResource(R.drawable.ic_eye)
-                } else {
-                    binding.cardCvvValueTv.text = getString(R.string.three_star)
-                    binding.viewCvvIv.setImageResource(R.drawable.ic_icon_feather_eye_off)
-
-                }
+                askForDevicePassword()
             }
             CardFragmentVM.CardEvent.AccountStatementEvent -> {
                 intentToActivity(BankTransactionHistoryView::class.java)
@@ -263,5 +258,29 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
             WindowManager.LayoutParams.FLAG_SECURE
         );
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
+                when (resultCode) {
+                    AppCompatActivity.RESULT_OK -> {
+                        requireActivity().runOnUiThread {
+                            if (cardFragmentVM.isCvvVisible) {
+                                binding.cardCvvValueTv.text = cardFragmentVM.virtualCardDetails?.cvv
+                                binding.viewCvvIv.setImageResource(R.drawable.ic_eye)
+                            } else {
+                                binding.cardCvvValueTv.text = getString(R.string.three_star)
+                                binding.viewCvvIv.setImageResource(R.drawable.ic_icon_feather_eye_off)
+
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
 
 }

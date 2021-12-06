@@ -1,13 +1,16 @@
 package com.fypmoney.view.home.main.homescreen.viewmodel
 
 import android.app.Application
+import android.text.format.DateUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 import kotlinx.coroutines.flow.MutableStateFlow
+import java.util.*
 
 class HomeActivityVM(application: Application): BaseViewModel(application) {
 
@@ -19,6 +22,7 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
         application,
         SharedPrefUtils.SF_KEY_PROFILE_IMAGE
     )
+
     var toolbarTitle = MutableLiveData(
         "Hey ${Utility.getCustomerDataFromPreference()?.firstName},")
 
@@ -32,6 +36,26 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
     fun onNotificationClicked(){
         _event.value = HomeActivityEvent.NotificationClicked
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        storeFirstTimeUserLandedOnHomeScreen()
+    }
+
+    private fun storeFirstTimeUserLandedOnHomeScreen() {
+        SharedPrefUtils.getLong(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_IS_USER_LANDED_ON_HOME_SCREEN_TIME
+        ).let {
+            if (it == 0L) {
+                SharedPrefUtils.putLong(
+                    PockketApplication.instance,
+                    SharedPrefUtils.SF_IS_USER_LANDED_ON_HOME_SCREEN_TIME, Date().time
+                )
+            }
+        }
+    }
+
 
 
     sealed class HomeActivityEvent{

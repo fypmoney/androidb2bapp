@@ -71,10 +71,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
         
         navHomeController.addOnDestinationChangedListener { controller, destination, arguments ->
             when(destination.id){
-                R.id.navigation_home, R.id.navigation_explore, R.id.navigation_rewards, R.id.navigation_fyper->{
+                R.id.navigation_home, R.id.navigation_explore,R.id.navigation_fyper->{
                     showToolbar()
                     showBottomNavigation()
-                }else->{
+                }
+                R.id.navigation_rewards->{
+                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
+                    binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
+                    showToolbar()
+                    showBottomNavigation()
+                }
+                else->{
                     hideToolbar()
                     hideBottomNavigation()
                 }

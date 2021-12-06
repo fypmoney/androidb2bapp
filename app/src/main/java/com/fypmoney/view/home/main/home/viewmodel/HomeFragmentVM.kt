@@ -1,6 +1,7 @@
 package com.fypmoney.view.home.main.home.viewmodel
 
 import android.app.Application
+import android.text.format.DateUtils
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,10 +21,12 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.GetWalletBalanceResponse
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.home.main.home.model.CallToActionUiModel
 import com.fypmoney.view.home.main.home.model.QuickActionUiModel
+import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
 
 class HomeFragmentVM(application: Application): BaseViewModel(application) {
     val event:LiveData<HomeFragmentEvent>
@@ -34,7 +37,10 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
         get() = _state
     private val _state = MutableLiveData<HomeFragmentState>()
 
+    val isUserComesFirstTime = checkUserIsLandedFirstTime()
+
     init {
+        callToAction()
     }
 
     fun onViewDetailsClicked(){
@@ -53,6 +59,19 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
              )
          )
      }
+
+     fun callToAction(){
+         _state.value = HomeFragmentState.LoadingBalanceState
+         WebApiCaller.getInstance().request(
+             ApiRequest(
+                 ApiConstant.API_CALLTO_ACTION,
+                 NetworkUtil.endURL(ApiConstant.API_CALLTO_ACTION+"HOME_SCREEN"),
+                 ApiUrl.GET,
+                 BaseRequest(),
+                 this, isProgressBar = false
+             )
+         )
+     }
      fun prepareQuickActionList() {
         val quickActionList = mutableListOf<QuickActionUiModel>()
         quickActionList.add(QuickActionUiModel(id = QuickActionEvent.AddAction,
@@ -64,7 +83,9 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
             image = AppCompatResources.getDrawable(PockketApplication.instance,R.drawable.ic_offers), name = "Offer"))
         _event.value = HomeFragmentEvent.QuickActionListReady(quickActionList)
     }
-     fun prepareCallToActionList() {
+
+/*
+    fun prepareCallToActionList() {
         val callToActionList = mutableListOf<CallToActionUiModel>()
          callToActionList.add(
              CallToActionUiModel(id = 1,
@@ -83,6 +104,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
          )
          _state.value = HomeFragmentState.SuccessCallToActionState(callToActionList)
     }
+*/
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
@@ -97,14 +119,38 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                             UserTrackr.push(map)
                         }
                         _state.value = HomeFragmentState.SuccessBalanceState(accountBalance)
-                        if(accountBalance<10000){
-                            _state.value = HomeFragmentState.LowBalanceAlertState(true)
-                        }else{
-                            _state.value = HomeFragmentState.LowBalanceAlertState(false)
+                        if(!isUserComesFirstTime){
+                            if(accountBalance<10000){
+                                _state.value = HomeFragmentState.LowBalanceAlertState(true)
+                            }else{
+                                _state.value = HomeFragmentState.LowBalanceAlertState(false)
 
+                            }
                         }
                     }
                 }
+            }
+            ApiConstant.API_CALLTO_ACTION->{
+                if (responseData is CallToActionNetworkResponse) {
+                    //Map network model to ui model
+                    val callToActionList = mutableListOf<CallToActionUiModel>()
+                    if(!responseData.data.isNullOrEmpty()){
+                        val callToActionSections = responseData.data[0]?.sectionContent
+                        if (callToActionSections != null) {
+                            for (section in callToActionSections){
+                                callToActionList.add(CallToActionUiModel(id = section?.id!!,
+                                    bannerImage = section.contentResourceUri,
+                                    contentX = section.contentDimensionX,
+                                    contentY = section.contentDimensionY,
+                                    redirectionType = section.redirectionType,
+                                    redirectionResource = section.redirectionResource
+                                ))
+                            }
+                        }
+                        _state.value = HomeFragmentState.SuccessCallToActionState(callToActionList)
+                    }
+                }
+
             }
 
         }
@@ -116,14 +162,30 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
             ApiConstant.API_GET_WALLET_BALANCE->{
                 _state.value = HomeFragmentState.ErrorBalanceState
             }
+            ApiConstant.API_CALLTO_ACTION->{
+                _state.value = HomeFragmentState.ErrorBalanceState
+            }
+        }
+    }
+
+    /**
+     * This function check that user is landed first time on home screen.
+     * return:- true if day is same else false
+     */
+    private fun checkUserIsLandedFirstTime():Boolean{
+        SharedPrefUtils.getLong(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_IS_USER_LANDED_ON_HOME_SCREEN_TIME
+        ).let {
+            return it == 0L || DateUtils.isToday(it)
         }
     }
     sealed class HomeFragmentState{
         object LoadingBalanceState:HomeFragmentState()
+        object LoadingCallToActionState:HomeFragmentState()
         data class SuccessBalanceState(var balance:Int):HomeFragmentState()
         object ErrorBalanceState:HomeFragmentState()
         data class LowBalanceAlertState(var balanceIsLow:Boolean):HomeFragmentState()
-
         data class SuccessCallToActionState(var callToActionList:List<CallToActionUiModel>):HomeFragmentState()
     }
     sealed class HomeFragmentEvent{

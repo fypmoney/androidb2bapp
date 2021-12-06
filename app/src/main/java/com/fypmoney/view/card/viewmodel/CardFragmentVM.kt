@@ -36,9 +36,9 @@ class CardFragmentVM(application: Application) :
 
     var bankProfile: BankProfileResponseDetails? = null
 
-    private var virtualCardDetails: FetchVirtualCardResponseDetails? = null
+    var virtualCardDetails: FetchVirtualCardResponseDetails? = null
 
-    private var isCvvVisible: Boolean = false
+    var isCvvVisible: Boolean = false
 
     val state: LiveData<CardState>
         get() = _state

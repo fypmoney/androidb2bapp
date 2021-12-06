@@ -22,9 +22,10 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/call_to_action_iv"
-                android:layout_width="241dp"
-                android:layout_height="142dp"
-                app:layout_constraintDimensionRatio="2:1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="20dp"
+                android:minHeight="20dp"
                 tools:background="@drawable/ic_offer_banner"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
