@@ -1,13 +1,15 @@
 package com.fypmoney.view.home.main.home.model.networkmodel
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class CallToActionNetworkResponse(
 
 	@field:SerializedName("data")
 	val data: List<DataItem?>? = null
 )
-
+@Keep
 data class SectionContentItem(
 
 	@field:SerializedName("contentResourceUri")
@@ -40,7 +42,7 @@ data class SectionContentItem(
 	@field:SerializedName("status")
 	val status: String? = null
 )
-
+@Keep
 data class DataItem(
 
 	@field:SerializedName("sectionSortOrder")
