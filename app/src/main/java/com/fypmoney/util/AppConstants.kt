@@ -52,6 +52,7 @@ object AppConstants {
     const val FEED_TYPE_EXTWEBVIEW = "EXTWEBVIEW"
     const val FEED_TYPE_EXTWEBVIEW2 = "EXTWEBVIEW1X1"
     const val FEED_TYPE_STORIES = "STORIES"
+    const val EXPLORE_TYPE_STORIES = "STORY"
     const val EXPLORE_IN_APP_WEBVIEW = "IN_APP_WEB_VIEW"
     const val EXPLORE_IN_APP = "IN_APP"
 
@@ -78,6 +79,7 @@ object AppConstants {
     const val CUSTOMER_INFO_RESPONSE = "customer_info_response"
     const val SPLASH_TIME = 4000L
     const val FROM_WHICH_SCREEN = "from_which_screen"
+    const val EXPLORE_ITEM_ID = "explore_item_id"
     const val AMOUNT = "Amount"
     const val REMARKS = "Remarks"
     const val LOGOUT = "logout"
@@ -259,7 +261,7 @@ object AppConstants {
     const val ORDER_CARD_INFO = "order_card_info"
     const val REFER_CODE_CHECKING_VARIABLE = "$@%$"
 
-
+    const val IN_APP_URL = "IN_APP_URL"
     const val ORDER_NUM = "ORDERID"
     const val PRODUCT_HIDE_IMAGE = "HIDE_IMAGE"
     const val SECTION_ID = "SECTIONID"
@@ -267,5 +269,9 @@ object AppConstants {
     const val PRODUCT_CODE = "PRODUCT_CODE"
     const val TRANS_TYPE_EARN = "EARN"
     const val JACKPOT_SCREEN_NAME = "JACKPOT"
+    const val EXT_WEBVIEW = "EXT_REDIRECT"
+    const val SHOW_MORE = "SHOWMORE"
+    const val IN_APP_WITH_CARD = "IN_APP_VIEW_WITH_CARD_OPTION"
+    const val OFFER_REDIRECTION = "OFFER_REDIRECTION"
 
 }

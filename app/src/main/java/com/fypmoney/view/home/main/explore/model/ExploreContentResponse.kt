@@ -18,10 +18,11 @@ data class SectionContentItem(
     val redirectionResource: String? = null,
     val redirectionType: String? = null,
     val sortOrder: Int? = null,
-    val contentDimensionX: Int? = null,
-    val id: Any? = null,
-    val contentType: String? = null,
-    val contentDimensionY: Int? = null,
+    var contentDimensionX: Int? = null,
+    val id: Int? = null,
+    var contentType: String? = null,
+
+    var contentDimensionY: Int? = null,
     val status: String? = null
 )
 

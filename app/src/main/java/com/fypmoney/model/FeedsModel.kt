@@ -14,6 +14,8 @@ data class FeedRequestModel(
 data class FeedResponseModel(
     @SerializedName("data") var getAllFeed: FeedResponseModelDetails?,
 ) : Serializable
+
+
 @Keep
 data class FeedResponseModelDetails(
     @SerializedName("getAllFeed") var getAllFeed: GetAllFeed2?,

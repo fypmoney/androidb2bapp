@@ -22,7 +22,8 @@ class ExploreBaseAdapter(
     val items: ArrayList<ExploreContentResponse>,
     val context: Context,
     val clickInterface: ExploreItemClickListener,
-    val exploreFragmentVM: ExploreFragmentVM
+    val exploreFragmentVM: ExploreFragmentVM,
+    val scale: Float
 ) : RecyclerView.Adapter<ExploreBaseAdapter.ViewHolder>() {
 
 
@@ -57,10 +58,26 @@ class ExploreBaseAdapter(
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         holder.rv_list.layoutManager = layoutManager
         holder.date_tv.text = items[position].sectionDisplayText
+        var arrayList: ArrayList<SectionContentItem> = ArrayList()
 
+        items[position].sectionContent?.forEach { section ->
+            if (section != null) {
+                arrayList.add(section)
+            }
+        }
+
+//        if(items[position].showMore==AppConstants.YES){
+//            var sectionItem = SectionContentItem()
+//         sectionItem.contentDimensionX=80
+//            sectionItem.contentDimensionY=100
+//
+//            sectionItem.showmore="SHOWMORE"
+//            sectionItem.showmoreURI=items[position].showMoreRedirectionResource
+//            arrayList.add(sectionItem)
+//        }
 
         var typeAdapter =
-            ExploreAdapter(exploreFragmentVM, itemClickListener2, items[position].sectionContent)
+            ExploreAdapter(exploreFragmentVM, itemClickListener2, arrayList, context, scale)
         holder.rv_list.adapter = typeAdapter
     }
 

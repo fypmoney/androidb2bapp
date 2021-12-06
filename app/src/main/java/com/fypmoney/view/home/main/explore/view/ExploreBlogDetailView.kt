@@ -1,35 +1,40 @@
-package com.fypmoney.view.activity
+package com.fypmoney.view.home.main.explore.view
 
+import android.content.Intent
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
 import android.view.View
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewUserFeedsDetailBinding
-import com.fypmoney.databinding.ViewUserFeedsInappBinding
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.viewmodel.FeedDetailsViewModel
+import kotlinx.android.synthetic.main.activity_webview.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_user_feeds_inapp.*
+import kotlinx.android.synthetic.main.view_user_feeds_detail.*
+import kotlinx.android.synthetic.main.view_user_feeds_detail.load_progress_bar
 
 /*
 * This is used to show feed details
 * */
-class UserFeedsInAppWebview : BaseActivity<ViewUserFeedsInappBinding, FeedDetailsViewModel>() {
+class ExploreBlogDetailView : BaseActivity<ViewUserFeedsDetailBinding, FeedDetailsViewModel>() {
     private lateinit var mViewModel: FeedDetailsViewModel
-    private lateinit var mViewBinding: ViewUserFeedsInappBinding
+    private lateinit var mViewBinding: ViewUserFeedsDetailBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_user_feeds_inapp
+        return R.layout.view_user_feeds_detail
     }
 
     override fun getViewModel(): FeedDetailsViewModel {
@@ -41,7 +46,7 @@ class UserFeedsInAppWebview : BaseActivity<ViewUserFeedsInappBinding, FeedDetail
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
-            context = this@UserFeedsInAppWebview,
+            context = this@ExploreBlogDetailView,
             toolbar = toolbar1,
             isBackArrowVisible = true
         )
@@ -49,6 +54,7 @@ class UserFeedsInAppWebview : BaseActivity<ViewUserFeedsInappBinding, FeedDetail
 
 
         mViewModel.feedDetails.set(intent.getSerializableExtra(AppConstants.FEED_RESPONSE) as FeedDetails?)
+
         webView.settings.apply {
             javaScriptEnabled = true
         }
@@ -77,14 +83,29 @@ class UserFeedsInAppWebview : BaseActivity<ViewUserFeedsInappBinding, FeedDetail
         val mimeType = "text/html"
         val encoding = "UTF-8"
 
+        //  webView.loadUrl("https://www.google.com/")
+
 
         mViewModel.authorAndDate.set(
             mViewModel.feedDetails.get()?.author + " . " + mViewModel.feedDetails.get()?.readTime + " min read"
         )
 
 
+        when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
+            AppConstants.FEED_TYPE_INAPPWEB -> {
+                mViewModel.isBlogFeedType.set(false)
 
+                if (mViewModel.feedDetails.get()?.action?.url!!.contains("https://www.youtube.com")) {
+                    webView.loadUrl(mViewModel.feedDetails.get()?.action?.url!!)
+                    finish()
 
+                } else {
+                    webView.loadUrl(mViewModel.feedDetails.get()?.action?.url!!)
+
+                }
+            }
+            else -> {
+                mViewModel.isBlogFeedType.set(true)
                 webView.loadDataWithBaseURL(
                     "",
                     mViewModel.feedDetails.get()?.responsiveContent!!,
@@ -92,8 +113,34 @@ class UserFeedsInAppWebview : BaseActivity<ViewUserFeedsInappBinding, FeedDetail
                     encoding,
                     ""
                 )
+            }
 
+        }
+        mViewBinding.toolbar1.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.action_share -> {
+                    mViewModel.feedDetails.get()!!.action?.url?.let { it2 ->
+                        shareLink(
+                            it2
+                        )
 
+                    }
+                    true
+                }
+                else -> {
+                    false
+                }
+            }
+        }
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_blogs, menu)
+        if (mViewModel.feedDetails.get()?.action?.url.isNullOrEmpty()) {
+            menu?.get(0)?.isVisible = false
+        }
+        return true
     }
 
 

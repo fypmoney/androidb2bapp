@@ -76,17 +76,14 @@ import android.util.Log
 import android.view.View
 
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import com.facebook.shimmer.Shimmer
-import com.facebook.shimmer.ShimmerDrawable
 import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.util.AppConstants.JACKPOTTAB
 import com.fypmoney.view.activity.OfferDetailActivity
 import com.fypmoney.util.AppConstants.OfferScreen
 import com.fypmoney.util.AppConstants.StoreofferScreen
 import com.fypmoney.util.AppConstants.StoreshopsScreen
-import com.fypmoney.view.fragment.FilterByDateFragment
+import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 import com.fypmoney.view.storeoffers.OffersScreen
@@ -995,6 +992,9 @@ object Utility {
         return fullName
     }
 
+    fun ExploreRedirection(screenName: SectionContentItem, context: Context) {
+
+    }
 
     fun deeplinkRedirection(screenName: String, context: Context) {
         var intent: Intent? = null
