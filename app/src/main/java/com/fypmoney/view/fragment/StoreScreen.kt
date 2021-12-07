@@ -13,6 +13,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ScreenStoreBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.view_notification.*
 /**
  * This fragment is used for loyalty
  */
-class StoreScreen(val tabchangeListner: HomeTabChangeClickListener) :
+class StoreScreen(val tabchangeListner: HomeTabChangeClickListener, val whichtab: String) :
     BaseFragment<ScreenStoreBinding, StoreScreenViewModel>() {
 
     private lateinit var mViewModel: StoreScreenViewModel
@@ -108,6 +109,11 @@ class StoreScreen(val tabchangeListner: HomeTabChangeClickListener) :
 
         initializeTabs(mViewBinding.tabLayout, mViewBinding.viewPager)
 
+        if (whichtab == AppConstants.StoreshopsScreen) {
+            mViewBinding.viewPager.currentItem = 1
+        } else {
+            mViewBinding.viewPager.currentItem = 0
+        }
         setObservers(requireContext())
 
     }

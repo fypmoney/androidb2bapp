@@ -1,4 +1,4 @@
-package com.fypmoney.view.activity
+package com.fypmoney.view.home.main.explore.ViewDetails
 
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -9,10 +9,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.databinding.ViewExploreInappBinding
 import com.fypmoney.databinding.ViewUserFeedsDetailBinding
 import com.fypmoney.databinding.ViewUserFeedsInappBinding
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
+import com.fypmoney.view.activity.ChoresActivity
+import com.fypmoney.view.home.main.explore.viewmodel.ExploreDetailsViewModel
 import com.fypmoney.viewmodel.FeedDetailsViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_user_feeds_inapp.*
@@ -20,20 +23,20 @@ import kotlinx.android.synthetic.main.view_user_feeds_inapp.*
 /*
 * This is used to show feed details
 * */
-class UserFeedsInAppWebview : BaseActivity<ViewUserFeedsInappBinding, FeedDetailsViewModel>() {
-    private lateinit var mViewModel: FeedDetailsViewModel
-    private lateinit var mViewBinding: ViewUserFeedsInappBinding
+class ExploreInAppWebview : BaseActivity<ViewExploreInappBinding, ExploreDetailsViewModel>() {
+    private lateinit var mViewModel: ExploreDetailsViewModel
+    private lateinit var mViewBinding: ViewExploreInappBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_user_feeds_inapp
+        return R.layout.view_explore_inapp
     }
 
-    override fun getViewModel(): FeedDetailsViewModel {
-        mViewModel = ViewModelProvider(this).get(FeedDetailsViewModel::class.java)
+    override fun getViewModel(): ExploreDetailsViewModel {
+        mViewModel = ViewModelProvider(this).get(ExploreDetailsViewModel::class.java)
         return mViewModel
     }
 
@@ -41,14 +44,16 @@ class UserFeedsInAppWebview : BaseActivity<ViewUserFeedsInappBinding, FeedDetail
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
-            context = this@UserFeedsInAppWebview,
+            context = this@ExploreInAppWebview,
             toolbar = toolbar1,
             isBackArrowVisible = true
         )
 
 
+        var url = intent.getStringExtra(AppConstants.IN_APP_URL)
 
-        mViewModel.feedDetails.set(intent.getSerializableExtra(AppConstants.FEED_RESPONSE) as FeedDetails?)
+
+
         webView.settings.apply {
             javaScriptEnabled = true
         }
@@ -68,33 +73,30 @@ class UserFeedsInAppWebview : BaseActivity<ViewUserFeedsInappBinding, FeedDetail
             override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
                 load_progress_bar.visibility = View.VISIBLE
-
             }
 
         }
 
-        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
+
+
+        if (url != null) {
+            if (url.contains("https://www.youtube.com")) {
+                webView.loadUrl(url)
+                finish()
+
+            } else {
+                webView.loadUrl(url)
+
+            }
+        }
+
         val mimeType = "text/html"
         val encoding = "UTF-8"
 
 
-        mViewModel.authorAndDate.set(
-            mViewModel.feedDetails.get()?.author + " . " + mViewModel.feedDetails.get()?.readTime + " min read"
-        )
-
-
-
-
-                webView.loadDataWithBaseURL(
-                    "",
-                    mViewModel.feedDetails.get()?.responsiveContent!!,
-                    mimeType,
-                    encoding,
-                    ""
-                )
-
-
     }
+
 
 
 }
