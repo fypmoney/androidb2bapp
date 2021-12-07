@@ -322,6 +322,8 @@
             android:name="com.moe.pushlibrary.activities.MoEActivity"
             android:label="HomeView"
             android:parentActivityName="com.fypmoney.view.activity.HomeView"></activity>
+        <activity android:name=".view.home.main.explore.ViewDetails.ExploreInAppWebview" />
+        <activity android:name=".view.home.main.explore.view.ExploreOfferDetailActivity" />
 
 
     </application>

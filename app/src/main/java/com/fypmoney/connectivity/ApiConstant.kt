@@ -132,7 +132,15 @@ object ApiConstant {
         "services/PockketService/api/jackpot/tickets"
 
     const val Api_OfferList = "services/loyaltyservice/api/fyp-offer"
+
     const val API_CALLTO_ACTION = "/services/PockketService/api/actions/screen-sections/"
+
+    const val API_Explore = "services/PockketService/api/screen-sections/"
+
+    const val API_FETCH_FEED_DETAILS = "/services/loyaltyservice/api/feed/"
+
+    const val API_FETCH_OFFER_DETAILS = "/services/loyaltyservice/api/fyp-offer/"
+
 
 }
 

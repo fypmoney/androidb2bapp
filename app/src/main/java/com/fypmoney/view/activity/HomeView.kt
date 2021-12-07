@@ -27,6 +27,8 @@ import com.fypmoney.model.SendMoneyResponseDetails
 import com.fypmoney.model.UpdateTaskGetResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.INSUFFICIENT_ERROR_CODE
+import com.fypmoney.util.AppConstants.StoreofferScreen
+import com.fypmoney.util.AppConstants.StoreshopsScreen
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.AddMoneySuccessBottomSheet
@@ -34,7 +36,6 @@ import com.fypmoney.view.fragment.*
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
-import com.fypmoney.view.storeoffers.OffersScreen
 import com.fypmoney.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.view_home.*
 import java.util.concurrent.atomic.AtomicBoolean
@@ -75,7 +76,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                     setupcard()
                 }
                 AppConstants.StoreScreen -> {
-                    setupStore()
+                    setupStore(StoreofferScreen)
                 }
                 AppConstants.FEEDSCREEN -> {
                     setupFeeds()
@@ -128,7 +129,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 setupcard()
             }
             AppConstants.StoreScreen->{
-                setupStore()
+                setupStore(StoreofferScreen)
             }
             AppConstants.FEEDSCREEN->{
                 setupFeeds()
@@ -151,7 +152,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                     setupFeeds()
                 }
                 R.id.store -> {
-                    setupStore()
+                    setupStore(StoreofferScreen)
                 }
                 R.id.card -> {
                     setupcard()
@@ -205,8 +206,8 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         mViewModel.headerText.set(getString(R.string.card_details_title))
     }
 
-    private fun setupStore() {
-        loadFragment(StoreScreen(tabchangeListner), 4)
+    private fun setupStore(whichtab: String) {
+        loadFragment(StoreScreen(tabchangeListner, whichtab), 4)
         mViewBinding.navigationView.menu.findItem(R.id.store).isChecked = true;
         mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
         mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -280,7 +281,13 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 setupcard()
             }
             AppConstants.StoreScreen -> {
-                setupStore()
+                setupStore(StoreofferScreen)
+            }
+            AppConstants.StoreshopsScreen -> {
+                setupStore(StoreshopsScreen)
+            }
+            AppConstants.StoreofferScreen -> {
+                setupStore(StoreofferScreen)
             }
             AppConstants.FEEDSCREEN -> {
                 setupFeeds()
