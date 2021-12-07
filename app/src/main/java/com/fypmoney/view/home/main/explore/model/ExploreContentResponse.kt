@@ -1,5 +1,8 @@
 package com.fypmoney.view.home.main.explore.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class ExploreContentResponse(
     val sectionSortOrder: Int? = null,
     val actionCardFlag: String? = null,
@@ -13,6 +16,7 @@ data class ExploreContentResponse(
     val status: String? = null
 )
 
+@Keep
 data class SectionContentItem(
     val contentResourceUri: String? = null,
     val redirectionResource: String? = null,

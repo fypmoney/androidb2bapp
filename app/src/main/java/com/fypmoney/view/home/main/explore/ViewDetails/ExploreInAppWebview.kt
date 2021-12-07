@@ -93,15 +93,10 @@ class ExploreInAppWebview : BaseActivity<ViewExploreInappBinding, ExploreDetails
 
         val mimeType = "text/html"
         val encoding = "UTF-8"
-        setObserver()
 
 
     }
 
-    private fun setObserver() {
-
-
-    }
 
 
 }

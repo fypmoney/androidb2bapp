@@ -5,17 +5,22 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.fypmoney.R
+import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.explore.viewmodel.ExploreFragmentVM
+
 import kotlinx.android.synthetic.main.reward_history_base.view.*
 
 import kotlin.collections.ArrayList
+import com.fypmoney.view.home.main.explore.*
 
 
 class ExploreBaseAdapter(
@@ -46,39 +51,71 @@ class ExploreBaseAdapter(
 
 
         holder.rv_list.itemAnimator = DefaultItemAnimator()
-
-        var itemClickListener2 = object : ExploreItemClickListener {
-            override fun onItemClicked(position: Int, sectionContentItem: SectionContentItem) {
-                clickInterface.onItemClicked(position, sectionContentItem)
-
-            }
-        }
-
-        val layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        holder.rv_list.layoutManager = layoutManager
         holder.date_tv.text = items[position].sectionDisplayText
-        var arrayList: ArrayList<SectionContentItem> = ArrayList()
+        if (items[position].sectionContent != null && items[position].sectionContent?.size!! > 1) {
+            var itemClickListener2 = object : ExploreItemClickListener {
+                override fun onItemClicked(position: Int, sectionContentItem: SectionContentItem) {
+                    clickInterface.onItemClicked(position, sectionContentItem)
 
-        items[position].sectionContent?.forEach { section ->
-            if (section != null) {
-                arrayList.add(section)
+                }
             }
+            holder.card.visibility = View.GONE
+            holder.rv_list.visibility = View.VISIBLE
+            val layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            holder.rv_list.layoutManager = layoutManager
+
+            var arrayList: ArrayList<SectionContentItem> = ArrayList()
+
+            items[position].sectionContent?.forEach { section ->
+                if (section != null) {
+                    arrayList.add(section)
+                }
+            }
+
+
+            var typeAdapter =
+                ExploreAdapter(exploreFragmentVM, itemClickListener2, arrayList, context, scale)
+            holder.rv_list.adapter = typeAdapter
+        } else {
+            holder.rv_list.visibility = View.GONE
+            holder.card.visibility = View.VISIBLE
+            val set = ConstraintSet()
+            set.clone(holder.contraint)
+            var ratio =
+                items[position].sectionContent?.get(0)?.contentDimensionX.toString() + ":" + items[position].sectionContent?.get(
+                    0
+                )?.contentDimensionY
+            set.setDimensionRatio(holder.card.id, ratio)
+            set.applyTo(holder.contraint)
+            Glide.with(context).load(items[position].sectionContent?.get(0)?.contentResourceUri)
+                .placeholder(
+                    shimmerDrawable()
+                )
+                .into(holder.baseImage)
+
+
+            holder.viewItem.setOnClickListener(View.OnClickListener {
+
+                items[position].sectionContent?.get(0)?.let { it1 ->
+                    clickInterface.onItemClicked(
+                        position,
+                        it1
+                    )
+                }
+
+            })
+
+//            val params: ViewGroup.LayoutParams =
+//                holder.baseImage.layoutParams as ViewGroup.LayoutParams
+//
+//            params.width = ViewGroup.LayoutParams.MATCH_PARENT
+//            params.height = (scale * items[position].sectionContent?.get(0)?.contentDimensionY!!).toInt()
+//            holder.baseImage.layoutParams = params
+
         }
 
-//        if(items[position].showMore==AppConstants.YES){
-//            var sectionItem = SectionContentItem()
-//         sectionItem.contentDimensionX=80
-//            sectionItem.contentDimensionY=100
-//
-//            sectionItem.showmore="SHOWMORE"
-//            sectionItem.showmoreURI=items[position].showMoreRedirectionResource
-//            arrayList.add(sectionItem)
-//        }
 
-        var typeAdapter =
-            ExploreAdapter(exploreFragmentVM, itemClickListener2, arrayList, context, scale)
-        holder.rv_list.adapter = typeAdapter
     }
 
 
@@ -88,6 +125,11 @@ class ExploreBaseAdapter(
         var rv_list = view.rv_base
 
         var date_tv = view.date_tv
+        var contraint = view.contraint
+        var card = view.main_cv
+        var viewItem = view
+
+        var baseImage = view.base_image
 
 
     }

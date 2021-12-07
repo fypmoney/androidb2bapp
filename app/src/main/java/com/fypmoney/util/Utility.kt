@@ -992,9 +992,7 @@ object Utility {
         return fullName
     }
 
-    fun ExploreRedirection(screenName: SectionContentItem, context: Context) {
 
-    }
 
     fun deeplinkRedirection(screenName: String, context: Context) {
         var intent: Intent? = null
