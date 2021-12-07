@@ -1104,5 +1104,21 @@ object Utility {
         return builder.toString() // Return builders text
     }
 
+    fun stringToCardNumber(input:String): StringBuilder {
+        val result = StringBuilder()
+        for (i in 0 until input.length) {
+            if (i % 4 == 0 && i != 0) {
+                result.append(" ")
+            }
+            result.append(input.get(i))
+        }
+        return result
+    }
 
+    fun onCopyClicked(textToCopy:String,context:Context) {
+        copyTextToClipBoard(
+            context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager,
+            textToCopy
+        )
+    }
 }

@@ -1,5 +1,6 @@
 package com.fypmoney.extension
 
+import android.content.res.Resources
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -50,3 +51,9 @@ fun View.setMargin(left: Float, top: Float, right: Float, bottom: Float) {
     val layoutParams = layoutParams as ViewGroup.MarginLayoutParams
     layoutParams.setMargins(leftPx, topPx, rightPx, bottomPx)
 }
+
+
+val Number.toPx get() = TypedValue.applyDimension(
+    TypedValue.COMPLEX_UNIT_DIP,
+    this.toFloat(),
+    Resources.getSystem().displayMetrics)

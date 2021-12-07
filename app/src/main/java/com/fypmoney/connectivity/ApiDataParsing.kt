@@ -15,6 +15,7 @@ import com.fypmoney.connectivity.ApiConstant.API_UPDATE_PROFILE
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.model.*
+import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
 import com.google.gson.Gson
 import com.payu.india.Payu.PayuConstants
 import okhttp3.ResponseBody
@@ -206,6 +207,9 @@ class ApiDataParsing {
                 }
                 ApiConstant.API_SET_CHANGE_PIN -> {
                     getObject(response, SetPinResponse::class.java)
+                }
+                ApiConstant.API_CALLTO_ACTION -> {
+                    getObject(response, CallToActionNetworkResponse::class.java)
                 }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {

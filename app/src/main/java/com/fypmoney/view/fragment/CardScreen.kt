@@ -448,7 +448,8 @@ class CardScreen(val tabchangeListner: HomeTabChangeClickListener) :
    * */
     private fun callCardBlockUnblockBottomSheet() {
         val bottomSheet =
-            BlockUnblockCardBottomSheet(mViewModel.bankProfileResponse.get()?.cardInfos, this)
+            BlockUnblockCardBottomSheet(mViewModel.bankProfileResponse.get()?.cardInfos,
+                this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "BlockUnblockCard")
     }
@@ -468,7 +469,8 @@ class CardScreen(val tabchangeListner: HomeTabChangeClickListener) :
    * */
     private fun callManageChannelsBottomSheet() {
         val bottomSheet =
-            ManageChannelsBottomSheet(mViewModel.bankProfileResponse.get()?.cardInfos, this)
+            ManageChannelsBottomSheet(mViewModel.bankProfileResponse.get()?.cardInfos,
+                this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "ManageChannels")
     }
@@ -503,7 +505,6 @@ class CardScreen(val tabchangeListner: HomeTabChangeClickListener) :
 
     override fun onSetSpendingLimitButtonClick(updateCardLimitRequest: UpdateCardLimitRequest) {
         mViewModel.callUpdateCardLimitApi(updateCardLimitRequest)
-
     }
 
     override fun onCardSettingClick(

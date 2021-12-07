@@ -316,7 +316,6 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         fetchVirtualCardRequest.checksum = mainObject.getString("checksum")
         return fetchVirtualCardRequest
 
-
     }
 
     /*

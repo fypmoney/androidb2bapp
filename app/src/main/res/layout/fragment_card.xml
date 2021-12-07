@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.card.viewmodel.CardFragmentVM" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -26,99 +29,152 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardCornerRadius="19dp"
+                app:cardCornerRadius="20dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/card_cl"
+                <FrameLayout
                     android:layout_width="229dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:paddingHorizontal="@dimen/dp12"
-                    android:paddingVertical="@dimen/dp12"
                     android:translationZ="1dp">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/card_no_value_tv"
-                        android:layout_width="0dp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/card_cl"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/product_sans_bold"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:paddingHorizontal="@dimen/dp12"
                         android:paddingVertical="@dimen/dp12"
-                        android:drawableEnd="@drawable/ic_copy"
-                        android:layout_marginBottom="2dp"
-                        android:text="4844 4504 0089 0001"
-                        app:layout_constraintBottom_toTopOf="@+id/card_vaild_thr_tv"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:text="4844 4504 0089 0001"
-                        />
+                        android:visibility="gone">
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/card_vaild_thr_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/product_sans_regular"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:alpha=".6"
-                        android:layout_marginBottom="2dp"
-                        android:text="@string/valid_thru"
-                        app:layout_constraintBottom_toTopOf="@+id/card_vaild_thr_value_tv"
-                        app:layout_constraintStart_toStartOf="parent"
-                         />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/card_no_value_tv"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/product_sans_bold"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:onClick="@{()->viewModel.onCopyCardNumber()}"
+                            android:paddingVertical="@dimen/dp12"
+                            android:drawableEnd="@drawable/ic_copy"
+                            android:layout_marginBottom="2dp"
+                            app:layout_constraintBottom_toTopOf="@+id/card_vaild_thr_tv"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            tools:text="4844 4504 0089 0001" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/card_vaild_thr_value_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/product_sans_regular"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        tools:text="01/26" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/card_vaild_thr_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/product_sans_regular"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:alpha=".6"
+                            android:layout_marginBottom="2dp"
+                            android:text="@string/valid_thru"
+                            app:layout_constraintBottom_toTopOf="@+id/card_vaild_thr_value_tv"
+                            app:layout_constraintStart_toStartOf="parent" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/card_cvv_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/product_sans_regular"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:alpha=".6"
-                        android:layout_marginBottom="2dp"
-                        android:text="@string/cvv_details_title"
-                        app:layout_constraintStart_toStartOf="@+id/card_cvv_value_tv"
-                        app:layout_constraintBottom_toTopOf="@+id/card_vaild_thr_value_tv"
-                        />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/card_vaild_thr_value_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/product_sans_regular"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            tools:text="01/26" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/card_cvv_value_tv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/product_sans_regular"
-                        android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:gravity="center"
-                        android:drawablePadding="@dimen/dp6"
-                        android:drawableEnd="@drawable/ic_eye"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        tools:text="839" />
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/card_cvv_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/product_sans_regular"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:alpha=".6"
+                            android:layout_marginBottom="2dp"
+                            android:text="@string/cvv_details_title"
+                            app:layout_constraintStart_toStartOf="@+id/card_cvv_value_tv"
+                            app:layout_constraintBottom_toTopOf="@+id/card_vaild_thr_value_tv" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/card_cvv_value_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/product_sans_regular"
+                            android:textColor="@color/white"
+                            android:textSize="14sp"
+                            android:gravity="center"
+                            android:layout_marginEnd="@dimen/dp8"
+                            android:text="***"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/view_cvv_iv"
+                            tools:text="839" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/view_cvv_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:padding="4dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/card_cvv_value_tv"
+                            android:onClick="@{()->viewModel.onCvvEyeClicked()}"
+                            android:src="@drawable/ic_icon_feather_eye_off"
+                            android:tint="@color/white"
+                            tools:src="@drawable/ic_icon_feather_eye_off" />
 
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/error_card_details_cl"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/error_card_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toTopOf="@+id/reload_card_details_btn"
+                            android:textColor="@color/white"
+                            style="@style/TextviewRegular"
+                            android:textSize="16sp"
+                            android:layout_marginTop="@dimen/dp16"
+                            android:text="@string/unable_to_load_card_details" />
+
+                        <Button
+                            android:id="@+id/reload_card_details_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:onClick="@{()->viewModel.onFetchCardDetails()}"
+                            android:textColor="@color/white"
+                            android:text="@string/reload"
+                            app:icon="@drawable/ic_baseline_refresh_24"
+                            app:iconTint="@color/white"
+                            style="@style/Widget.MaterialComponents.Button.TextButton.Icon" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </FrameLayout>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/card_iv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/ic_card_new"/>
-
+                    android:background="@drawable/ic_card" />
 
 
             </com.google.android.material.card.MaterialCardView>
@@ -131,13 +187,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card_mcv"
-                android:layout_margin="16dp"
+                android:layout_marginTop="16dp"
                 tools:itemCount="4"
                 app:spanCount="3"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_card_option" />
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

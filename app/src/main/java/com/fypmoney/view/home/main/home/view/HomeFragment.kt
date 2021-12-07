@@ -132,6 +132,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>() {
                 }
             }
             is HomeFragmentVM.HomeFragmentState.SuccessCallToActionState -> {
+                binding.shimmerLayout.toGone()
+                binding.callToActionRv.toVisible()
                 (binding.callToActionRv.adapter as CallToActionAdapter).submitList(it.callToActionList)
             }
         }
@@ -141,26 +143,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>() {
         when(it){
             is HomeFragmentVM.HomeFragmentEvent.QuickActionListReady -> {
                 (binding.quickActionRv.adapter as QuickActionAdapter).submitList(it.quickActionList)
-                homeFragmentVM.prepareCallToActionList()
+                //homeFragmentVM.prepareCallToActionList()
+                homeFragmentVM.callToAction()
             }
             HomeFragmentVM.HomeFragmentEvent.ViewCardDetails -> {
-                askForDevicePassword()
+                findNavController().navigate(R.id.navigation_card)
+
             }
             null -> TODO()
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
-                when (resultCode) {
-                    AppCompatActivity.RESULT_OK -> {
-                            findNavController().navigate(R.id.navigation_card)
-                    }
-
-                }
-            }
-        }
-    }
 }

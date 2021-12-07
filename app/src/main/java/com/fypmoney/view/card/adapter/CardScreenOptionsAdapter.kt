@@ -10,7 +10,7 @@ import com.fypmoney.databinding.ItemCardOptionBinding
 import com.fypmoney.extension.executeAfter
 import com.fypmoney.view.card.model.CardOptionUiModel
 
-class CardScreenOptionsAdapter (
+class CardScreenOptionsAdapter(
     private val lifecycleOwner: LifecycleOwner,
     val onCardOptionClicked: (model: CardOptionUiModel) -> Unit
 ) : ListAdapter<CardOptionUiModel, CardScreenOptionsVH>(CardScreenOptionsDiffUtils) {
@@ -41,7 +41,9 @@ class CardScreenOptionsVH(
             lifecycleOwner = this@CardScreenOptionsVH.lifecycleOwner
             cardOptionIv.setImageDrawable(cardOptionUiModel.icon)
             cardOptionName.text = cardOptionUiModel.name
-
+            cardOptionCv.setOnClickListener {
+                onCardActionClicked(cardOptionUiModel)
+            }
         }
     }
 
@@ -53,7 +55,10 @@ object CardScreenOptionsDiffUtils : DiffUtil.ItemCallback<CardOptionUiModel>() {
         return ((oldItem.icon == newItem.icon) && (oldItem.name === oldItem.name))
     }
 
-    override fun areContentsTheSame(oldItem: CardOptionUiModel, newItem: CardOptionUiModel): Boolean {
+    override fun areContentsTheSame(
+        oldItem: CardOptionUiModel,
+        newItem: CardOptionUiModel
+    ): Boolean {
         return oldItem == newItem
     }
 }

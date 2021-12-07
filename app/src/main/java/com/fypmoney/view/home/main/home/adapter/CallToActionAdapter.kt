@@ -2,6 +2,7 @@ package com.fypmoney.view.home.main.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.FrameLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -11,6 +12,9 @@ import com.fypmoney.extension.executeAfter
 import com.fypmoney.util.Utility
 import com.fypmoney.view.home.main.home.model.CallToActionUiModel
 import kotlinx.android.synthetic.main.reward_offer_detail.*
+import androidx.cardview.widget.CardView
+import com.fypmoney.extension.toPx
+
 
 class CallToActionAdapter (
     private val lifecycleOwner: LifecycleOwner,
@@ -45,6 +49,10 @@ class CallToActionVH(
             callToActionCv.setOnClickListener {
                 onCallToActionClicked(callToAction)
             }
+            val layoutParams = callToActionIv.layoutParams
+            layoutParams.width = callToAction.contentX!!.toPx.toInt()
+            layoutParams.height = callToAction.contentY!!.toPx.toInt()
+
             Utility.setImageUsingGlideWithShimmerPlaceholder(imageView = callToActionIv, url = callToAction.bannerImage)
 
         }
