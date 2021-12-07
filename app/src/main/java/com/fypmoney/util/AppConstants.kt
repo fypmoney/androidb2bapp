@@ -263,4 +263,7 @@ object AppConstants {
     const val TRANS_TYPE_EARN = "EARN"
     const val JACKPOT_SCREEN_NAME = "JACKPOT"
 
+    const val USER_TYPE_NEW = "newUser"
+    const val USER_TYPE = "UserType"
+
 }

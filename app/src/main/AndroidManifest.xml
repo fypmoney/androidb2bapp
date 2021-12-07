@@ -171,6 +171,9 @@
             android:name=".view.activity.InviteRejectedView"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activity.UserTypeOnLoginView"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".view.activity.StayTunedView"
             android:screenOrientation="portrait" />
         <activity

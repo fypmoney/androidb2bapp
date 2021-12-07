@@ -93,6 +93,7 @@ class WalkThroughMainView : BaseActivity<ViewWalkThroughMainBinding, WalkThrough
             if (mViewBinding.pager.currentItem < 3) {
                 mViewBinding.pager.currentItem = mViewBinding.pager.currentItem + 1
             } else {
+                //todo open new
                 intentToActivity(FirstScreenView::class.java)
 
             }

@@ -44,7 +44,7 @@ class SelectInterestView :
         // this method help us to hide or un hide items
         setLottieAnimationToolBar(
             isBackArrowVisible = interestScreenType,//back arrow visibility
-            isLottieAnimation = !interestScreenType,// lottie animation visibility
+            isLottieAnimation = interestScreenType,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
             lottieAnimationView = ivAnimationGift)// lottie animation view
         }

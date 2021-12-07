@@ -60,8 +60,8 @@ fun setBackgroundDrawable(
     @ColorInt strokeColor: Int?,
     strokeWidth: Float?,
     isRounded: Boolean?,
-    alpha: Int?
-) {
+    alpha: Int?)
+{
     try {
         val shapeDrawable = GradientDrawable()
         if (isRounded != null && isRounded) {
@@ -75,6 +75,39 @@ fun setBackgroundDrawable(
         if (alpha != null) {
             shapeDrawable.alpha = 75
         }
+        if (cornerRadius != null) {
+            shapeDrawable.cornerRadius = cornerRadius
+        }
+        if (strokeColor != null && strokeWidth != null) {
+            shapeDrawable.setStroke(strokeWidth.toInt(), strokeColor)
+        }
+        view.background = shapeDrawable
+    } catch (e: Exception) {
+        backgroundColor?.let {
+            view.setBackgroundColor(it)
+        }
+    }
+
+}
+fun setBackgroundDrawable(
+    view: View,
+    @ColorInt backgroundColor: Int?,
+    cornerRadius: Float?,
+    @ColorInt strokeColor: Int?,
+    strokeWidth: Float?,
+    isRounded: Boolean?)
+{
+    try {
+        val shapeDrawable = GradientDrawable()
+        if (isRounded != null && isRounded) {
+            shapeDrawable.shape = GradientDrawable.OVAL
+        } else {
+            shapeDrawable.shape = GradientDrawable.RECTANGLE
+        }
+        if (backgroundColor != null) {
+            shapeDrawable.setColor(backgroundColor)
+        }
+
         if (cornerRadius != null) {
             shapeDrawable.cornerRadius = cornerRadius
         }

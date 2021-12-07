@@ -3,17 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <ImageView
+
+    <com.airbnb.lottie.LottieAnimationView
+
         android:id="@+id/ivAnimationGift"
         android:layout_width="@dimen/_52sdp"
         android:layout_height="@dimen/_52sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/ic_gift"
+
         android:layout_marginEnd="@dimen/_10sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:contentDescription="gift animation in interest screen" />
-
+        android:layout_centerInParent="true"
+        android:elevation="@dimen/_4sdp"
+        android:visibility="visible"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/gifting_green" />
 
     <ImageView
         android:id="@+id/ivToolBarBack"
