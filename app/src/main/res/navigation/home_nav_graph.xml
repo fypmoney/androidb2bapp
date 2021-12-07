@@ -29,9 +29,9 @@
 
     <fragment
         android:id="@+id/navigation_fyper"
-        android:name="com.fypmoney.view.home.main.fyper.view.FyperFragment"
+        android:name="com.fypmoney.view.activity.FamilySettingsView"
         android:label="@string/fyper_txt"
-        tools:layout="@layout/fragment_fyper" />
+        tools:layout="@layout/view_family_settings" />
     <fragment
         android:id="@+id/navigation_card"
         android:name="com.fypmoney.view.card.view.CardFragment"

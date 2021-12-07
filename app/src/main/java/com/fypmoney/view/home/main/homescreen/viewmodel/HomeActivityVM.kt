@@ -23,6 +23,7 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
         SharedPrefUtils.SF_KEY_PROFILE_IMAGE
     )
 
+
     var toolbarTitle = MutableLiveData(
         "Hey ${Utility.getCustomerDataFromPreference()?.firstName},")
 
@@ -56,6 +57,14 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
         }
     }
 
+    private fun checkUserIsLandedFirstTime():Boolean{
+        SharedPrefUtils.getLong(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_IS_USER_LANDED_ON_HOME_SCREEN_TIME
+        ).let {
+            return it == 0L || DateUtils.isToday(it)
+        }
+    }
 
 
     sealed class HomeActivityEvent{

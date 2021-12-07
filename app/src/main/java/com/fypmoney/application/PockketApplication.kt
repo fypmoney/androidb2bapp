@@ -29,6 +29,8 @@ class PockketApplication : Application() {
         lateinit var instance: PockketApplication
         var homeScreenErrorMsg: String? = null
         var isNewFeedAvailableData: KeysFound? = null
+        var isLoadMoneyPopupIsShown = false
+
     }
 
     override fun onCreate() {
