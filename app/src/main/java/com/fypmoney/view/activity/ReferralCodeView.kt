@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.databinding.ViewReferralCodeBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.viewmodel.ReferralCodeViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -98,7 +98,7 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
             else -> {
 
                 if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                    startActivity(Intent(this@ReferralCodeView, HomeView::class.java))
+                    startActivity(Intent(this@ReferralCodeView, HomeActivity::class.java))
 
                 } else {
                     startActivity(Intent(this@ReferralCodeView, PermissionsActivity::class.java))

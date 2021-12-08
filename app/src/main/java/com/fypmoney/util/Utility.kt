@@ -3,6 +3,7 @@ package com.fypmoney.util
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.*
+import android.content.ClipboardManager
 import android.content.res.Resources
 import android.database.Cursor
 import android.graphics.BlendMode
@@ -13,12 +14,18 @@ import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract
 import android.provider.Settings
-import android.text.InputFilter
+import android.text.*
 import android.text.InputFilter.LengthFilter
-import android.text.TextUtils
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.DisplayMetrics
+import android.util.Log
 import android.util.Patterns
+import android.view.View
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.ImageView
+import android.widget.TextView
+import android.widget.TextView.BufferType
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.NonNull
@@ -27,6 +34,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
+import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.database.ContactRepository
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.CustomerInfoResponseDetails
@@ -36,13 +44,23 @@ import com.fypmoney.util.AppConstants.DATE_FORMAT_CHANGED
 import com.fypmoney.util.AppConstants.FEEDSCREEN
 import com.fypmoney.util.AppConstants.FyperScreen
 import com.fypmoney.util.AppConstants.HOMEVIEW
+import com.fypmoney.util.AppConstants.JACKPOTTAB
+import com.fypmoney.util.AppConstants.OfferScreen
 import com.fypmoney.util.AppConstants.ReferralScreen
 import com.fypmoney.util.AppConstants.StoreScreen
+import com.fypmoney.util.AppConstants.StoreofferScreen
+import com.fypmoney.util.AppConstants.StoreshopsScreen
 import com.fypmoney.util.AppConstants.TRACKORDER
 import com.fypmoney.view.activity.ChoresActivity
-import com.fypmoney.view.activity.HomeView
+import com.fypmoney.view.activity.OfferDetailActivity
+import com.fypmoney.view.fragment.OffersStoreActivity
+import com.fypmoney.view.fragment.StoresActivity
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
+import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
+import com.fypmoney.view.storeoffers.OffersScreen
 import com.google.gson.Gson
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import kotlinx.coroutines.Dispatchers
@@ -59,35 +77,6 @@ import java.util.*
 import java.util.Calendar.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import android.widget.TextView.BufferType
-
-import android.text.style.ClickableSpan
-
-import android.text.SpannableStringBuilder
-
-import android.widget.TextView
-
-import android.text.Spanned
-
-import android.text.SpannableString
-
-import android.text.method.LinkMovementMethod
-import android.util.Log
-import android.view.View
-
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import com.fypmoney.bindingAdapters.shimmerDrawable
-import com.fypmoney.util.AppConstants.JACKPOTTAB
-import com.fypmoney.view.activity.OfferDetailActivity
-import com.fypmoney.util.AppConstants.OfferScreen
-import com.fypmoney.util.AppConstants.StoreofferScreen
-import com.fypmoney.util.AppConstants.StoreshopsScreen
-import com.fypmoney.view.fragment.OffersStoreActivity
-import com.fypmoney.view.fragment.StoresActivity
-import com.fypmoney.view.ordercard.model.UserDeliveryAddress
-
-import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
-import com.fypmoney.view.storeoffers.OffersScreen
 
 
 /*
@@ -1000,7 +989,7 @@ object Utility {
 
         when (screenName) {
             HOMEVIEW -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
             }
             ReferralScreen -> {
                 intent = Intent(context, ReferAndEarnActivity::class.java)
@@ -1012,7 +1001,7 @@ object Utility {
             }
 
             CardScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, CardScreen)
 
             }
@@ -1022,7 +1011,7 @@ object Utility {
 
             }
             StoreScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreScreen)
 
             }
@@ -1039,12 +1028,12 @@ object Utility {
             }
 
             FEEDSCREEN -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FEEDSCREEN)
 
             }
             FyperScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FyperScreen)
 
             }

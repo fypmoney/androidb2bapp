@@ -12,14 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
-import com.fypmoney.databinding.FragmentExploreBinding
 import com.fypmoney.databinding.FragmentHomeBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.FyperScreen
 import com.fypmoney.util.Utility
+import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.AddMoneyView
 import com.fypmoney.view.activity.ContactListView
@@ -111,7 +112,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), Explore
         }
         with(binding.callToActionRv) {
             adapter = CallToActionAdapter(viewLifecycleOwner, onCallToActionClicked = {
-
+                val redirectionResources = it.redirectionResource?.split(",")?.get(0)
+                    if(redirectionResources==FyperScreen){
+                        findNavController().navigate(R.id.navigation_fyper)
+                    }else if(redirectionResources== AppConstants.JACKPOTTAB){
+                        findNavController().navigate(R.id.navigation_rewards)
+                    }else if(redirectionResources== AppConstants.CardScreen){
+                        findNavController().navigate(R.id.navigation_card)
+                    }else{
+                        redirectionResources?.let { it1 -> deeplinkRedirection(it1,requireContext()) }
+                    }
             })
         }
     }
@@ -319,7 +329,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), Explore
             arrayList,
             requireContext(),
             exploreClickListener2,
-            scale
+            scale,
+            Color.BLACK
         )
         root.exploreHomeRv.adapter = typeAdapter
     }
