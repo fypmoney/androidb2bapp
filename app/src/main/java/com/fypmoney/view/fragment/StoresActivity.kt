@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearSnapHelper
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
+import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.base.PaginationListener
 import com.fypmoney.databinding.FragmentStoreBinding
@@ -39,6 +40,7 @@ import com.fypmoney.viewmodel.NotificationViewModel
 import com.fypmoney.viewmodel.StoreScreenViewModel
 
 import kotlinx.android.synthetic.main.fragment_your_task.view.*
+import kotlinx.android.synthetic.main.toolbar.*
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
@@ -48,7 +50,7 @@ import java.io.InputStream
 import kotlin.collections.ArrayList
 
 
-class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(),
+class StoresActivity : BaseActivity<FragmentStoreBinding, StoreScreenViewModel>(),
     FeedsAdapter.OnFeedItemClickListener {
 
     private lateinit var sharedViewModel: StoreScreenViewModel
@@ -58,11 +60,14 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
     private var typeAdapter: FeedsStoreAdapter? = null
 
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
-
+        setToolbarAndTitle(
+            context = this,
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = "Store"
+        )
         mViewBinding.viewModel = sharedViewModel
         setRecyclerView()
         sharedViewModel.rechargeItemAdapter.setList(
@@ -71,7 +76,8 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
                 arrayListOf(
                     R.drawable.airtel_logo,
                     R.drawable.vi_logo,
-                    R.drawable.jio_logo)
+                    R.drawable.jio_logo
+                )
             )
         )
         mViewBinding.shimmerLayout.startShimmer()
@@ -155,10 +161,10 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
     }
 
     private fun observeInput(sharedViewModel: StoreScreenViewModel) {
-        sharedViewModel.storefeedList.observe(requireActivity(), { list ->
-            if(list.isNullOrEmpty()){
+        sharedViewModel.storefeedList.observe(this, { list ->
+            if (list.isNullOrEmpty()) {
                 mViewBinding.rvStoreFeeds.visibility = View.GONE
-            }else{
+            } else {
                 mViewBinding.shimmerLayout.stopShimmer()
                 typeAdapter?.setList(list)
 
@@ -176,7 +182,7 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
 
     private fun setRecyclerView() {
         val layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         mViewBinding.rvStoreFeeds.layoutManager = layoutManager
 
 
@@ -196,7 +202,7 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
         }
 
 
-        typeAdapter = sharedViewModel?.let { FeedsStoreAdapter(requireActivity(),it, this) }
+        typeAdapter = sharedViewModel?.let { FeedsStoreAdapter(this, it, this) }
         mViewBinding.rvStoreFeeds.adapter = typeAdapter
 
     }
@@ -205,7 +211,7 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
         when (it.displayCard) {
             AppConstants.FEED_TYPE_DEEPLINK -> {
                 it.action?.url?.let {
-                    Utility.deeplinkRedirection(it.split(",")[0], requireContext())
+                    Utility.deeplinkRedirection(it.split(",")[0], this)
 
                 }
             }
@@ -266,11 +272,11 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
         val bottomSheet =
             StoriesBottomSheet(list)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(childFragmentManager, "DidUKnowSheet")
+        bottomSheet.show(supportFragmentManager, "DidUKnowSheet")
     }
 
     private fun intentToActivity(aClass: Class<*>, feedDetails: FeedDetails, type: String? = null) {
-        val intent = Intent(context, aClass)
+        val intent = Intent(this, aClass)
         intent.putExtra(AppConstants.FEED_RESPONSE, feedDetails)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
         intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
@@ -287,11 +293,11 @@ class StoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(
 
     override fun getViewModel(): StoreScreenViewModel {
 
-        parentFragment?.let {
-            sharedViewModel = ViewModelProvider(it).get(StoreScreenViewModel::class.java)
 
-            observeInput(sharedViewModel!!)
-        }
+        sharedViewModel = ViewModelProvider(this).get(StoreScreenViewModel::class.java)
+
+        observeInput(sharedViewModel!!)
+
 
         return sharedViewModel
     }

@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/navigation_rewards"
-        android:name="com.fypmoney.view.home.main.rewards.view.RewardsFragment"
+        android:name="com.fypmoney.view.rewardsAndWinnings.RewardsFragment"
         android:label="@string/rewards"
         tools:layout="@layout/fragment_rewards" />
 

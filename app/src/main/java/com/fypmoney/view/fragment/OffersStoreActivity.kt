@@ -10,6 +10,7 @@ import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentOffersBinding
 import com.fypmoney.model.FeedDetails
@@ -18,12 +19,13 @@ import com.fypmoney.view.adapter.*
 
 import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.view.offfers.OffersStoreFragmentVM
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 import kotlin.collections.ArrayList
 
 
-class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragmentVM>() {
+class OffersStoreActivity : BaseActivity<FragmentOffersBinding, OffersStoreFragmentVM>() {
     private var typeAdapter: OffersTopAdapter? = null
     private var bottomAdapter: OffersBottomAdapter? = null
     private var itemsArrayList: ArrayList<FeedDetails> = ArrayList()
@@ -37,15 +39,20 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
         page = 0
         setRecyclerView()
+        setToolbarAndTitle(
+            context = this,
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = "Offers"
+        )
         setRecyclerViewBottom()
         mViewBinding?.shimmerLayout?.startShimmer()
         mviewModel!!.offerTopList.observe(
-            requireActivity(),
+            this,
             { list ->
                 mViewBinding?.shimmerLayout?.stopShimmer()
                 itemsArrayList.addAll(list)
@@ -54,7 +61,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
 
             })
         mviewModel!!.offerBottomList.observe(
-            requireActivity(),
+            this,
             { list ->
                 mViewBinding?.LoadProgressBar?.visibility = View.GONE
 
@@ -105,7 +112,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
 
     private fun setRecyclerView() {
         val layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         mViewBinding?.featuredOfferRv!!.layoutManager = layoutManager
 
         var itemClickListener2 = object : ListContactClickListener {
@@ -113,7 +120,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
 
             override fun onItemClicked(pos: kotlin.Int) {
 
-                val intent = Intent(requireContext(), OfferDetailActivity::class.java)
+                val intent = Intent(this@OffersStoreActivity, OfferDetailActivity::class.java)
                 intent.putExtra("feedid", itemsArrayList[pos].id)
                 startActivity(intent)
             }
@@ -122,7 +129,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
         }
 
         typeAdapter =
-            OffersTopAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
+            OffersTopAdapter(itemsArrayList, this, itemClickListener2!!)
         mViewBinding?.featuredOfferRv!!.adapter = typeAdapter
     }
 
@@ -137,7 +144,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
     }
 
     private fun setRecyclerViewBottom() {
-        val layoutManager = GridLayoutManager(requireContext(), 2)
+        val layoutManager = GridLayoutManager(this, 2)
         mViewBinding?.offerRv!!.layoutManager = layoutManager
 //        mViewBinding?.offerRv!!.addOnScrollListener(object :
 //            PaginationListener(layoutManager) {
@@ -157,7 +164,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
 
 
             override fun onItemClicked(pos: kotlin.Int) {
-                val intent = Intent(requireContext(), OfferDetailActivity::class.java)
+                val intent = Intent(this@OffersStoreActivity, OfferDetailActivity::class.java)
 
                 intent.putExtra("feedid", bottomArrayList[pos].id)
 
@@ -173,7 +180,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
         }
 
         bottomAdapter =
-            OffersBottomAdapter(bottomArrayList, requireContext(), itemClickListener2!!)
+            OffersBottomAdapter(bottomArrayList, this, itemClickListener2!!)
         mViewBinding?.offerRv!!.adapter = bottomAdapter
     }
     override fun onTryAgainClicked() {

@@ -22,7 +22,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
 
-class RewardsAndVM(application: Application) : BaseViewModel(application) {
+class RewardsFragmentVM(application: Application) : BaseViewModel(application) {
 
     var rewardHistoryList: MutableLiveData<ArrayList<RewardHistoryResponseNew>> = MutableLiveData()
 
@@ -32,18 +32,18 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     var onAddMoneyClicked = MutableLiveData(false)
     var loading = MutableLiveData(false)
     var selectedPosition = ObservableField(-1)
-
+    var selectedPositionScratch = ObservableField(-1)
     val isApiLoading = ObservableField(true)
     val detailsCalling = ObservableField(false)
-
+    var clickedType = ObservableField("")
     var totalmyntsClicked = MutableLiveData(false)
     var orderNumber = MutableLiveData("")
-
+    var spinArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
     val page = ObservableField(0)
-
+    var scratchArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
     var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
     var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
-
+    var coinsBurned: LiveEvent<CoinsBurnedResponse> = LiveEvent()
     var totalJackpotAmount: MutableLiveData<TotalJackpotResponse> = MutableLiveData()
 
     var error: MutableLiveData<ErrorResponseInfo> = MutableLiveData()
@@ -54,7 +54,6 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         MutableLiveData()
 
 
-
     fun onSelectClicked() {
         onAddMoneyClicked.value = true
     }
@@ -62,7 +61,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
     init {
 //        callRewardProductList()
-        callFetchFeedsApi()
+
         callRewardHistory()
         callTotalJackpotCards()
 
@@ -90,7 +89,57 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
     }
 
+    private fun makeFetchFeedJackpotRequest(
+        size: Int? = 5,
+        pageValue: Int? = 0,
+        latitude: String? = "0.0",
+        longitude: String? = "0.0"
+    ): FeedRequestModel {
+        val userInterest =
+            SharedPrefUtils.getArrayList(getApplication(), SharedPrefUtils.SF_KEY_USER_INTEREST)
+        var userInterestValue = StringBuilder()
+        if (!userInterest.isNullOrEmpty()) {
+            for (i in 0 until userInterest.size) {
+                userInterestValue = userInterestValue.append(userInterest.get(i))
+                if (i != userInterest.size - 1) {
+                    userInterestValue = userInterestValue.append("\",\"")
+                } else {
+                    userInterestValue.append("\"")
+                }
 
+            }
+        }
+        val feedRequestModel = FeedRequestModel()
+
+        var gender = 1
+        var feedtype = ""
+
+        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MALE") {
+            gender = 0
+        } else {
+            gender = 1
+        }
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
+            feedtype =
+                gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
+        }
+
+        if (userInterest.isNullOrEmpty()) {
+            feedRequestModel.query =
+                "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME_HOME + "\",screenSection:null,tags :[\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
+
+        } else {
+            feedRequestModel.query =
+                "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME_HOME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
+
+        }
+
+
+
+
+        return feedRequestModel
+
+    }
 
     private fun makeFetchFeedRequest(
         size: Int? = 5,
@@ -165,7 +214,6 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     }
 
 
-
     fun callRewardSummary() {
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -178,6 +226,29 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         )
     }
 
+    fun callRewardsRedeem(code: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_REDEEM_REWARD,
+                NetworkUtil.endURL(ApiConstant.API_REDEEM_REWARD) + code,
+                ApiUrl.POST,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    fun callRewardProductList() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_REWARD_PRODUCTS,
+                NetworkUtil.endURL(ApiConstant.API_GET_REWARD_PRODUCTS),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
 
     fun callTotalRewardsEarnings() {
         WebApiCaller.getInstance().request(
@@ -248,18 +319,30 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
                 if (feeds is FeedResponseModel) {
                     val response = feeds.getAllFeed?.getAllFeed
 
-                        var notificationList: ArrayList<FeedDetails>? =
-                            ArrayList()
-                        response?.feedDetails?.forEach() {
-                            notificationList?.add(it)
-                        }
-                        totalCount.set(response?.total)
-                        rewardfeedList.postValue(notificationList)
+                    var notificationList: ArrayList<FeedDetails>? =
+                        ArrayList()
+                    response?.feedDetails?.forEach() {
+                        notificationList?.add(it)
+                    }
+                    totalCount.set(response?.total)
+                    rewardfeedList.postValue(notificationList)
 
                 }
 
             }
+            ApiConstant.API_REDEEM_REWARD -> {
 
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+                val array = Gson().fromJson<CoinsBurnedResponse>(
+                    json.get("data").toString(),
+                    com.fypmoney.model.CoinsBurnedResponse::class.java
+                )
+
+                coinsBurned.postValue(array)
+
+
+            }
             ApiConstant.API_GET_JACKPOT_CARDS -> {
 
 
@@ -292,7 +375,34 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
             }
 
 
+            ApiConstant.API_GET_REWARD_PRODUCTS -> {
 
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+                val dataObject = json.get("data")?.asJsonObject
+
+                val array = Gson().fromJson<Array<aRewardProductResponse>>(
+                    dataObject?.get("SPIN_WHEEL").toString(),
+                    Array<aRewardProductResponse>::class.java
+                )
+
+                if (array != null) {
+                    val arrayList = ArrayList(array.toMutableList())
+                    spinArrayList.postValue(arrayList)
+                }
+                val spinarray = Gson().fromJson<Array<aRewardProductResponse>>(
+                    dataObject?.get("SCRATCH_CARD").toString(),
+                    Array<aRewardProductResponse>::class.java
+                )
+
+
+                if (spinarray != null) {
+                    val scratchArray = ArrayList(spinarray.toMutableList())
+                    scratchArrayList.postValue(scratchArray)
+                }
+
+
+            }
             ApiConstant.REWARD_PRODUCT_DETAILS -> {
 
 

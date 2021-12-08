@@ -51,11 +51,11 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
     }
 
     override fun getViewModel(): RewardsAndVM {
-        activity?.let {
-            mViewmodel = ViewModelProvider(it).get(RewardsAndVM::class.java)
+
+        mViewmodel = ViewModelProvider(this).get(RewardsAndVM::class.java)
 
 
-        }
+
         return mViewmodel!!
     }
 
@@ -128,6 +128,11 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
 
 
 
+
+        mViewBinding?.loadingGoldenCards?.visibility = View.VISIBLE
+        mViewBinding?.loadingAmountMynts?.visibility = View.VISIBLE
+        mViewBinding?.loadingAmountHdp?.visibility = View.VISIBLE
+
         setRecyclerView()
         mViewmodel?.let { observeInput(it) }
         mViewBinding?.bootomPartCl?.setOnClickListener(View.OnClickListener {
@@ -143,6 +148,19 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (!mViewBinding?.totalRefralWonValueTv?.text.isNullOrEmpty()) {
+            mViewBinding?.loadingAmountHdp?.visibility = View.GONE
+        }
+
+        if (!mViewBinding?.amountGolderTv?.text.isNullOrEmpty()) {
+            mViewBinding?.loadingGoldenCards?.visibility = View.GONE
+        }
+        if (!mViewBinding?.totalMyntsWonValueTv?.text.isNullOrEmpty()) {
+            mViewBinding?.loadingAmountMynts?.visibility = View.GONE
+        }
+    }
 
     override fun onTryAgainClicked() {
 
@@ -162,7 +180,7 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
     }
 
     private fun observeInput(viewModel: RewardsAndVM) {
-        viewModel.rewardfeedList.observe(requireActivity(), { list ->
+        viewModel.rewardfeedList.observe(viewLifecycleOwner, { list ->
             if (list.isNullOrEmpty()) {
 
 
@@ -181,7 +199,7 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
 
 
         viewModel.totalRewardsResponse.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             androidx.lifecycle.Observer { list ->
                 mViewBinding?.loadingAmountHdp?.clearAnimation()
                 mViewBinding?.loadingAmountHdp?.visibility = View.GONE
@@ -192,7 +210,7 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
             })
 
         viewModel.rewardSummaryStatus.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             androidx.lifecycle.Observer { list ->
                 mViewBinding?.loadingAmountMynts?.clearAnimation()
                 mViewBinding?.loadingAmountMynts?.visibility = View.GONE
@@ -205,8 +223,8 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
             })
 
         viewModel.totalJackpotAmount.observe(
-            requireActivity(),
-            androidx.lifecycle.Observer { list ->
+            viewLifecycleOwner,
+            { list ->
                 mViewBinding?.loadingGoldenCards?.clearAnimation()
                 mViewBinding?.loadingGoldenCards?.visibility = View.GONE
                 mViewBinding?.amountGolderTv?.visibility = View.VISIBLE

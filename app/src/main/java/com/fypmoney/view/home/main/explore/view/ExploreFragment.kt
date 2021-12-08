@@ -81,6 +81,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
         exploreFragmentVM?.rewardHistoryList.observe(
             viewLifecycleOwner,
             { list ->
+
                 setRecyclerView(_binding, list)
             })
         exploreFragmentVM?.openBottomSheet.observe(
@@ -134,6 +135,9 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
         root: FragmentExploreBinding,
         list: ArrayList<ExploreContentResponse>
     ) {
+        if (list.size > 0) {
+            root.shimmerLayout.visibility = View.GONE
+        }
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         root.rvExplore.layoutManager = layoutManager
