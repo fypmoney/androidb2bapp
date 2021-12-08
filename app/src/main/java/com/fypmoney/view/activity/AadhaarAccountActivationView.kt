@@ -14,21 +14,17 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.UserTrackr
-import com.fyp.trackr.models.push
 import com.fyp.trackr.models.trackr
 import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAadhaarAccountActivationBinding
-import com.fypmoney.databinding.ViewAadhaarVerificationBinding
-import com.fypmoney.databinding.ViewCommunityBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.LogoutBottomSheet
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.viewmodel.AadhaarAccountActivationViewModel
-import com.moengage.core.internal.MoEConstants
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
@@ -107,7 +103,7 @@ class AadhaarAccountActivationView :
                         it.name = TrackrEvent.kyc_verification_other
                     }
                     if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                        intentToActivity(HomeView::class.java)
+                        intentToActivity(HomeActivity::class.java)
                     } else {
                         intentToActivity(PermissionsActivity::class.java)
                     }
@@ -118,7 +114,7 @@ class AadhaarAccountActivationView :
                         }
                         else -> {
                             if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                                intentToActivity(HomeView::class.java)
+                                intentToActivity(HomeActivity::class.java)
                             } else {
                                 intentToActivity(PermissionsActivity::class.java)
                             }

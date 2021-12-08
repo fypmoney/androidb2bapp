@@ -5,16 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
-
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.viewmodel.CreateAccountSuccessViewModel
 import kotlinx.android.synthetic.main.toolbar.*
-import java.util.HashMap
 
 /*
 * This class is used for show create account success
@@ -56,7 +55,7 @@ class CreateAccountSuccessView :
                 intentToActivity(AadhaarAccountActivationView::class.java)
             else {
                 if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                    intentToActivity(HomeView::class.java)
+                    intentToActivity(HomeActivity::class.java)
                 } else {
                     intentToActivity(PermissionsActivity::class.java)
                 }

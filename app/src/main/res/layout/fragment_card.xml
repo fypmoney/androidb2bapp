@@ -132,6 +132,18 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
+                    <com.fypmoney.view.customview.HorizontalDottedProgress
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/loading_card_details_hdp"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="@dimen/dp16"
+                        android:layout_marginEnd="-30dp"
+                        tools:visibility="visible"
+                        app:layout_constraintTop_toBottomOf="@+id/my_funds_tv"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/error_card_details_cl"
                         android:visibility="gone"
