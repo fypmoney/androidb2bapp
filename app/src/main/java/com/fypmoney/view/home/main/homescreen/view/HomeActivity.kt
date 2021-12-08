@@ -2,8 +2,11 @@ package com.fypmoney.view.home.main.homescreen.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.fyp.trackr.models.TrackrEvent
@@ -21,12 +24,17 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserProfileView
+import com.fypmoney.view.home.main.home.view.HomeFragment
 import com.fypmoney.view.home.main.homescreen.viewmodel.HomeActivityVM
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.concurrent.atomic.AtomicBoolean
 
 class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
 
     private lateinit var binding: ActivityHomeBinding
     private val homeActivityVM by viewModels<HomeActivityVM> { defaultViewModelProviderFactory }
+
+    private val doubleBackPressed = AtomicBoolean(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +59,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
         val navHomeController = navHostFragment.navController
 
         binding.bottomMenu.setItemSelected(R.id.navigation_home, true)
+
         binding.bottomMenu.setOnItemSelectedListener { id ->
             onNavDestinationSelected(id, navHomeController)
             when(id){
@@ -79,7 +88,20 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
         
         navHomeController.addOnDestinationChangedListener { controller, destination, arguments ->
             when(destination.id){
-                R.id.navigation_home,R.id.navigation_fyper,R.id.navigation_rewards,R.id.navigation_explore->{
+                R.id.navigation_home->{
+                    binding.bottomMenu.setItemSelected(R.id.navigation_home, true)
+                    showToolbar()
+                    showBottomNavigation()
+                }
+                R.id.navigation_fyper->{
+                    showToolbar()
+                    showBottomNavigation()
+                }
+                R.id.navigation_rewards->{
+                    showToolbar()
+                    showBottomNavigation()
+                }
+                R.id.navigation_explore->{
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -175,6 +197,23 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
         }
     }
 
+    private fun getCurrentBottomFragment(): Fragment? {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_home)
+        return navHostFragment?.childFragmentManager?.fragments?.get(0)
+    }
+    override fun onBackPressed() {
+        if ( getCurrentBottomFragment() !is HomeFragment) {
+            super.onBackPressed()
+            return
+        }
+        if (doubleBackPressed.get()) {
+            finish()
+            return
+        }
+        doubleBackPressed.compareAndSet(false, true)
+        Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show()
+        Handler().postDelayed({ doubleBackPressed.set(false) }, 2000)
+    }
 
 
 }

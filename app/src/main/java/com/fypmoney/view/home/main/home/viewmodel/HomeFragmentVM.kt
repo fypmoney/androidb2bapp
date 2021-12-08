@@ -20,13 +20,19 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.GetWalletBalanceResponse
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.home.model.CallToActionUiModel
 import com.fypmoney.view.home.main.home.model.QuickActionUiModel
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
+import com.fypmoney.view.storeoffers.model.offerDetailResponse
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 
 class HomeFragmentVM(application: Application): BaseViewModel(application) {
     val event:LiveData<HomeFragmentEvent>
@@ -39,6 +45,10 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
 
     private val isUserComesFirstTime = checkUserIsLandedFirstTime()
 
+    var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
+
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    var feedDetail: MutableLiveData<FeedDetails> = MutableLiveData()
 
     init {
         callToAction()
@@ -85,27 +95,48 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
         _event.value = HomeFragmentEvent.QuickActionListReady(quickActionList)
     }
 
-/*
-    fun prepareCallToActionList() {
-        val callToActionList = mutableListOf<CallToActionUiModel>()
-         callToActionList.add(
-             CallToActionUiModel(id = 1,
-            bannerImage = "https://ibb.co/SXxw3tz",
-                 callToAction = "Add Parent")
-         )
-         callToActionList.add(
-             CallToActionUiModel(id = 2,
-            bannerImage = "https://ibb.co/BN20RBZ",
-                 callToAction = "Add Money")
-         )
-         callToActionList.add(
-             CallToActionUiModel(id = 3,
-            bannerImage = "https://ibb.co/SXxw3tz",
-                 callToAction = "Add Intrest")
-         )
-         _state.value = HomeFragmentState.SuccessCallToActionState(callToActionList)
+    init {
+        callExplporeContent(0)
     }
-*/
+
+    fun callExplporeContent(page: Int) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_Explore,
+                NetworkUtil.endURL(ApiConstant.API_Explore) + "EXPLORE",
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
+    fun callFetchFeedsApi(id: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_FETCH_FEED_DETAILS,
+                NetworkUtil.endURL(ApiConstant.API_FETCH_FEED_DETAILS) + id,
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+
+    }
+
+    fun callFetchOfferApi(id: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_FETCH_OFFER_DETAILS,
+                NetworkUtil.endURL(ApiConstant.API_FETCH_OFFER_DETAILS) + id,
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+
+    }
+
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
@@ -157,10 +188,47 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                 }
 
             }
+            ApiConstant.API_Explore -> {
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson(
+                    json.get("data").toString(),
+                    Array<ExploreContentResponse>::class.java
+                )
+                val arrayList = ArrayList(array.toMutableList())
+                rewardHistoryList.postValue(arrayList)
+            }
+
+            ApiConstant.API_FETCH_FEED_DETAILS -> {
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson<FeedDetails>(
+                    json.get("data").toString(),
+                    FeedDetails::class.java
+                )
+
+                feedDetail.postValue(array)
+
+
+            }
+            ApiConstant.API_FETCH_OFFER_DETAILS -> {
+
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson(
+                    json.get("data").toString(),
+                    Array<offerDetailResponse>::class.java
+                )
+                val arrayList = ArrayList(array.toMutableList())
+                openBottomSheet.postValue(arrayList)
+
+
+            }
 
         }
     }
-
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         when(purpose){
