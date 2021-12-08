@@ -126,9 +126,10 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
 
     override fun onStart() {
         super.onStart()
-        if (!mViewBinding?.totalRefralWonValueTv?.text.isNullOrEmpty()) {
-            mViewBinding?.loadingAmountHdp?.visibility = View.GONE
-        }
+//        if (!mViewBinding?.totalRefralWonValueTv?.text.isNullOrEmpty()) {
+//            mViewBinding?.loadingAmountHdp?.clearAnimation()
+//            mViewBinding?.loadingAmountHdp?.visibility = View.GONE
+//        }
     }
 
     private fun setRecyclerView() {

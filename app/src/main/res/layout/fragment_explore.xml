@@ -9,7 +9,7 @@
 <RelativeLayout
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="90dp"
+    android:paddingBottom="96dp"
     android:background="@color/reward_background"
     android:layout_height="match_parent">
 

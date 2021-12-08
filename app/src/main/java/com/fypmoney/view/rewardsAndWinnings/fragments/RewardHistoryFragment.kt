@@ -67,6 +67,11 @@ class RewardHistoryFragment :
         mViewModel?.let { setObserver(it) }
     }
 
+    override fun onStart() {
+        super.onStart()
+        mViewModel?.callRewardHistory()
+        mViewModel?.callRewardSummary()
+    }
 
     private fun setRecyclerView(root: FragmentRewardHistoryBinding?) {
         val layoutManager =

@@ -27,16 +27,12 @@ import com.fypmoney.view.home.main.rewards.viewmodel.RewardsFragmentVM
 import com.fypmoney.BR
 
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
-import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsJackpotFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
-import kotlinx.android.synthetic.main.toolbar.*
+
 import java.util.ArrayList
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.widget.MarginPageTransformer

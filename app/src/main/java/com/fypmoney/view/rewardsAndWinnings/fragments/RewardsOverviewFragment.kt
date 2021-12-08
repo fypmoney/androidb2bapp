@@ -150,16 +150,16 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
 
     override fun onStart() {
         super.onStart()
-        if (!mViewBinding?.totalRefralWonValueTv?.text.isNullOrEmpty()) {
-            mViewBinding?.loadingAmountHdp?.visibility = View.GONE
-        }
-
-        if (!mViewBinding?.amountGolderTv?.text.isNullOrEmpty()) {
-            mViewBinding?.loadingGoldenCards?.visibility = View.GONE
-        }
-        if (!mViewBinding?.totalMyntsWonValueTv?.text.isNullOrEmpty()) {
-            mViewBinding?.loadingAmountMynts?.visibility = View.GONE
-        }
+//        if (!mViewBinding?.totalRefralWonValueTv?.text.isNullOrEmpty()) {
+//            mViewBinding?.loadingAmountHdp?.visibility = View.GONE
+//        }
+//
+//        if (!mViewBinding?.amountGolderTv?.text.isNullOrEmpty()) {
+//            mViewBinding?.loadingGoldenCards?.visibility = View.GONE
+//        }
+//        if (!mViewBinding?.totalMyntsWonValueTv?.text.isNullOrEmpty()) {
+//            mViewBinding?.loadingAmountMynts?.visibility = View.GONE
+//        }
     }
 
     override fun onTryAgainClicked() {
