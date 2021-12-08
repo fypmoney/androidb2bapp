@@ -59,7 +59,6 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
      * @return layout resource id
      */
     override fun getLayoutId(): Int  = R.layout.fragment_explore
-    private var itemsArrayList: ArrayList<ExploreContentResponse> = ArrayList()
 
     /**
      * Override for set view model
@@ -224,11 +223,10 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
             }
         }
         val scale: Float = requireActivity().resources.displayMetrics.density
-        var typeAdapter = ExploreBaseAdapter(
+        val typeAdapter = ExploreBaseAdapter(
             arrayList,
             requireContext(),
             exploreClickListener2,
-            exploreFragmentVM,
             scale
         )
         root.rvExplore.adapter = typeAdapter

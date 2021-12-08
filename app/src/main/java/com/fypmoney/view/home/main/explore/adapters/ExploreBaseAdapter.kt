@@ -27,7 +27,6 @@ class ExploreBaseAdapter(
     val items: ArrayList<ExploreContentResponse>,
     val context: Context,
     val clickInterface: ExploreItemClickListener,
-    val exploreFragmentVM: ExploreFragmentVM,
     val scale: Float
 ) : RecyclerView.Adapter<ExploreBaseAdapter.ViewHolder>() {
 
@@ -75,7 +74,7 @@ class ExploreBaseAdapter(
 
 
             var typeAdapter =
-                ExploreAdapter(exploreFragmentVM, itemClickListener2, arrayList, context, scale)
+                ExploreAdapter(itemClickListener2, arrayList, context, scale)
             holder.rv_list.adapter = typeAdapter
         } else {
             holder.rv_list.visibility = View.GONE

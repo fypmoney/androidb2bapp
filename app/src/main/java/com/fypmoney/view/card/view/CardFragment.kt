@@ -72,7 +72,7 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
         activity?.window?.setFlags(
             WindowManager.LayoutParams.FLAG_SECURE,
             WindowManager.LayoutParams.FLAG_SECURE
-        );
+        )
         super.onCreate(savedInstanceState)
 
 
