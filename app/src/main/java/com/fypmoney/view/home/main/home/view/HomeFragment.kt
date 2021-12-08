@@ -1,9 +1,10 @@
 package com.fypmoney.view.home.main.home.view
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.fypmoney.BR
@@ -19,6 +20,7 @@ import com.fypmoney.view.activity.ContactListView
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 import com.fypmoney.view.home.main.home.adapter.QuickActionAdapter
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
+import com.fypmoney.view.home.main.homescreen.view.LoadMoneyBottomSheet
 import com.fypmoney.view.storeoffers.OffersScreen
 
 class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>() {
@@ -136,6 +138,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>() {
                 binding.callToActionRv.toVisible()
                 (binding.callToActionRv.adapter as CallToActionAdapter).submitList(it.callToActionList)
             }
+            HomeFragmentVM.HomeFragmentState.LoadingCallToActionState -> TODO()
+            HomeFragmentVM.HomeFragmentState.ShowLoadMoneySheetState -> {
+                val loadMoneyBottomSheet = LoadMoneyBottomSheet()
+                loadMoneyBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+                loadMoneyBottomSheet.show(childFragmentManager, "LoadMoneySheet")
+            }
+            null -> TODO()
         }
     }
 

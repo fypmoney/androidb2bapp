@@ -37,7 +37,8 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
         get() = _state
     private val _state = MutableLiveData<HomeFragmentState>()
 
-    val isUserComesFirstTime = checkUserIsLandedFirstTime()
+    private val isUserComesFirstTime = checkUserIsLandedFirstTime()
+
 
     init {
         callToAction()
@@ -126,6 +127,10 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                                 _state.value = HomeFragmentState.LowBalanceAlertState(false)
 
                             }
+                            if((accountBalance<10000) and !PockketApplication.isLoadMoneyPopupIsShown){
+                                _state.value = HomeFragmentState.ShowLoadMoneySheetState
+                                PockketApplication.isLoadMoneyPopupIsShown = true
+                            }
                         }
                     }
                 }
@@ -186,6 +191,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
         data class SuccessBalanceState(var balance:Int):HomeFragmentState()
         object ErrorBalanceState:HomeFragmentState()
         data class LowBalanceAlertState(var balanceIsLow:Boolean):HomeFragmentState()
+        object ShowLoadMoneySheetState:HomeFragmentState()
         data class SuccessCallToActionState(var callToActionList:List<CallToActionUiModel>):HomeFragmentState()
     }
     sealed class HomeFragmentEvent{

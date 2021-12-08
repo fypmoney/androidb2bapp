@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -54,30 +55,31 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
             onNavDestinationSelected(id, navHomeController)
             when(id){
                 R.id.navigation_home->{
+                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.white))
+                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.black))
                     homeActivityVM.toolbarTitle.value = "Hey ${Utility.getCustomerDataFromPreference()?.firstName},"
                 }
                 R.id.navigation_explore->{
+                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
+                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
                     homeActivityVM.toolbarTitle.value = getString(R.string.explore)
                 }
                 R.id.navigation_rewards->{
+                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
+                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
                     homeActivityVM.toolbarTitle.value = getString(R.string.rewards)
                 }
                 R.id.navigation_fyper->{
+                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.white))
+                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.black))
                     homeActivityVM.toolbarTitle.value = getString(R.string.fyper_txt)
                 }
             }
         }
         
-        
         navHomeController.addOnDestinationChangedListener { controller, destination, arguments ->
             when(destination.id){
-                R.id.navigation_home, R.id.navigation_explore,R.id.navigation_fyper->{
-                    showToolbar()
-                    showBottomNavigation()
-                }
-                R.id.navigation_rewards->{
-                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
-                    binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
+                R.id.navigation_home,R.id.navigation_fyper,R.id.navigation_rewards,R.id.navigation_explore->{
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -89,6 +91,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
         }
 
     }
+
     private fun hideToolbar(){
         binding.appBar.toGone()
     }
@@ -151,6 +154,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
         super.onResume()
         loadProfile(homeActivityVM.userProfileUrl)
     }
+
 
     private fun showNewMessage() {
         if (homeActivityVM.isUnreadNotificationAvailable.isNullOrEmpty()) {

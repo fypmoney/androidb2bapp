@@ -1013,6 +1013,7 @@ Coming really soon!
     <string name="three_star">***</string>
     <string name="unable_to_load_card_details">Unable to load card details..</string>
     <string name="reload">Reload</string>
+    <string name="your_wallet_seems_low_on_n_balance_quick_recharge_now">Your wallet seems low on balance, quick recharge now</string>
 
 
     <string-array name="person_category_array">
