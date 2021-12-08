@@ -138,7 +138,7 @@
                         android:id="@+id/loading_card_details_hdp"
                         android:layout_gravity="center"
                         android:layout_marginTop="20dp"
-                        android:layout_marginBottom="@dimen/dp16"
+                        android:layout_marginBottom="30dp"
                         android:layout_marginEnd="-30dp"
                         tools:visibility="visible"
                         app:layout_constraintTop_toBottomOf="@+id/my_funds_tv"
