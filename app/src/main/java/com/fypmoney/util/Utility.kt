@@ -82,7 +82,8 @@ import com.fypmoney.view.activity.OfferDetailActivity
 import com.fypmoney.util.AppConstants.OfferScreen
 import com.fypmoney.util.AppConstants.StoreofferScreen
 import com.fypmoney.util.AppConstants.StoreshopsScreen
-import com.fypmoney.view.home.main.explore.model.SectionContentItem
+import com.fypmoney.view.fragment.OffersStoreActivity
+import com.fypmoney.view.fragment.StoresActivity
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 
 import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
@@ -1026,13 +1027,13 @@ object Utility {
 
             }
             StoreofferScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, OffersStoreActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreofferScreen)
 
             }
 
             StoreshopsScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, StoresActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreshopsScreen)
 
             }

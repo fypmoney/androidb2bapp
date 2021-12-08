@@ -58,17 +58,17 @@ class StoreScreen(val tabchangeListner: HomeTabChangeClickListener, val whichtab
     private fun initializeTabs(tabLayout: TabLayout, viewPager: ViewPager) {
 
 
-        val adapter = ViewPagerAdapter(childFragmentManager)
-        adapter.addFragment(OffersStoreFragment(), getString(R.string.offers))
-        adapter.addFragment(StoresFragment(), getString(R.string.shops))
+//        val adapter = ViewPagerAdapter(childFragmentManager)
+//        adapter.addFragment(OffersStoreActivity(), getString(R.string.offers))
+//        adapter.addFragment(StoresFragment(), getString(R.string.shops))
 
-
-        viewPager.adapter = adapter
-
-
-        tabLayout.setupWithViewPager(viewPager);
-        tabLayout.tabRippleColor = null;
-        setupTabIcons()
+//
+//        viewPager.adapter = adapter
+//
+//
+//        tabLayout.setupWithViewPager(viewPager);
+//        tabLayout.tabRippleColor = null;
+//        setupTabIcons()
 
 
     }
