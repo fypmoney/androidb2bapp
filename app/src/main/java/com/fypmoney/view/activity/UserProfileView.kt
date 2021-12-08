@@ -133,7 +133,7 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
     private fun setObserver() {
         mViewModel.onLogoutSuccess.observe(this) {
             UserTrackr.logOut()
-            intentToActivity(LoginView::class.java, isFinishAll = true)
+            intentToActivityMain(this@UserProfileView,LoginView::class.java, isFinishAll = true)
         }
 
         mViewModel.onProfileSuccess.observe(this) {
@@ -288,10 +288,11 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         startActivityForResult(intent, 101)
     }
 
+
     /**
      * Method to navigate to the different activity
      */
-    private fun intentToActivity(aClass: Class<*>, isFinishAll: Boolean? = false) {
+    private fun intentToActivityWithSomeData(aClass: Class<*>, isFinishAll: Boolean? = false) {
         val intent = Intent(this@UserProfileView, aClass)
         startActivity(intent)
         if (isFinishAll == true) {
@@ -321,10 +322,12 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
             }
 
             1 -> {
-                intentToActivity(SelectInterestView::class.java)
+                val intent = Intent(this@UserProfileView, SelectInterestView::class.java)
+                intent.putExtra(AppConstants.INTEREST_TYPE,true)
+                startActivity(intent)
             }
             2 -> {
-                intentToActivity(SocialCommunityActivity::class.java)
+                intentToActivityMain(this@UserProfileView,SocialCommunityActivity::class.java)
             }
             3 -> {
                 openWebPageFor(getString(R.string.privacy_policy),"https://www.fypmoney.in/fyp/privacy-policy/")

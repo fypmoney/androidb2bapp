@@ -37,15 +37,7 @@ class WalkThroughOneScreen : BaseFragment<ViewWalkThroughNewOneBinding, WalkThro
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
-        mViewBinding.viewModel = mViewModel
-//        Glide.with(requireContext()).load(R.raw.walk_through_one).into(imageView)
-//        imageView.gifResource = R.raw.walk_through_one
+        mViewBinding.viewModel = mViewModel }
 
-    }
-
-    override fun onTryAgainClicked() {
-
-    }
-
-
+    override fun onTryAgainClicked() {    }
 }

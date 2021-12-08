@@ -18,6 +18,7 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -417,6 +418,34 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
 
     }
 
+    /*
+    * This method will set the lottie animation  with back  arrow
+    * */
+    fun setLottieAnimationToolBar(
+        isBackArrowVisible: Boolean? = false, //back arrow for back press by default visibility of
+        isLottieAnimation:Boolean?=false, // lottie animation by default on
+        imageView:ImageView,
+        lottieAnimationView:ImageView)
+    {
+        // set back arrow visibility
+        if (isBackArrowVisible == true)imageView.visibility=View.VISIBLE
+        else imageView.visibility=View.GONE
+
+        // set lottie animation visibility
+        if (isLottieAnimation == true)lottieAnimationView.visibility=View.VISIBLE
+        else lottieAnimationView.visibility=View.GONE
+
+        imageView.setOnClickListener {
+            finish()
+        }
+
+        lottieAnimationView.setOnClickListener {
+            finish()
+        }
+
+
+    }
+
 
     /*
        * This is used to share the app
@@ -581,4 +610,15 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         startActivity(sendIntent)
     }
 
+
+    /**
+     * Method to navigate to the different activity
+     */
+    fun intentToActivityMain(context: Context,aClass: Class<*>, isFinishAll: Boolean? = false) {
+        val intent = Intent(context, aClass)
+        startActivity(intent)
+        if (isFinishAll == true) {
+            finishAffinity()
+        }
+    }
 }

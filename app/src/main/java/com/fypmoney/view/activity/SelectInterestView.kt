@@ -5,26 +5,27 @@ import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.databinding.ViewSelectInterestBinding
+import com.fypmoney.databinding.SelectInterestViewActivityBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SelectInterestViewModel
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.toolbar_animation.*
 
 /*
 * This is used to handle interest of the user
 * */
 class SelectInterestView :
-    BaseActivity<ViewSelectInterestBinding, SelectInterestViewModel>() {
+    BaseActivity<SelectInterestViewActivityBinding, SelectInterestViewModel>() {
     private lateinit var mViewModel: SelectInterestViewModel
-    private lateinit var mViewBinding: ViewSelectInterestBinding
+    private lateinit var mViewBinding: SelectInterestViewActivityBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_select_interest
+        return R.layout.select_interest_view_activity
     }
 
     override fun getViewModel(): SelectInterestViewModel {
@@ -35,13 +36,18 @@ class SelectInterestView :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
-        setToolbarAndTitle(
-            context = this@SelectInterestView,
-            toolbar = toolbar, isBackArrowVisible = true
-        )
+        if (intent.hasExtra(AppConstants.INTEREST_TYPE)){
+
+            val interestScreenType:Boolean=intent.getBooleanExtra(AppConstants.INTEREST_TYPE,false)
 
 
-
+        // this method help us to hide or un hide items
+        setLottieAnimationToolBar(
+            isBackArrowVisible = interestScreenType,//back arrow visibility
+            isLottieAnimation = interestScreenType,// lottie animation visibility
+            imageView = ivToolBarBack,//back image view
+            lottieAnimationView = ivAnimationGift)// lottie animation view
+        }
         setObserver()
     }
 
@@ -62,9 +68,7 @@ Create this method for observe the viewModel fields
                 mViewModel.onAnswerLater.value = false
                 finish()
             }
-        }
-
-    }
+        }  }
 
 
 }
