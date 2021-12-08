@@ -8,7 +8,6 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -124,6 +123,8 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
             is CardFragmentVM.CardState.Error -> {
                 when (cardState.purpose) {
                     ApiConstant.API_GET_VIRTUAL_CARD_REQUEST, ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
+                        binding.loadingCardDetailsHdp.clearAnimation()
+                        binding.loadingCardDetailsHdp.toGone()
                         binding.errorCardDetailsCl.toVisible()
                         binding.cardCl.toGone()
                     }
@@ -145,12 +146,19 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
                 }
             }
             is CardFragmentVM.CardState.VirtualCardDetails -> {
+                binding.loadingCardDetailsHdp.clearAnimation()
+                binding.loadingCardDetailsHdp.toGone()
                 binding.errorCardDetailsCl.toGone()
                 binding.cardCl.toVisible()
                 binding.cardNoValueTv.text =
                     stringToCardNumber(cardState.virtualCardDetails.card_number)
                 binding.cardVaildThrValueTv.text =
                     cardState.virtualCardDetails.expiry_month + "/" + cardState.virtualCardDetails.expiry_year
+            }
+            CardFragmentVM.CardState.LoadingCardDetails -> {
+                binding.errorCardDetailsCl.toGone()
+                binding.cardCl.toGone()
+                binding.loadingCardDetailsHdp.toVisible()
             }
         }
     }

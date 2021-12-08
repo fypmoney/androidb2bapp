@@ -53,6 +53,7 @@ class CardFragmentVM(application: Application) :
     }
 
     private fun callGetVirtualRequestApi() {
+        _state.value = CardState.LoadingCardDetails
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_VIRTUAL_CARD_REQUEST,
@@ -526,6 +527,7 @@ class CardFragmentVM(application: Application) :
 
     sealed class CardState {
         object Loading : CardState()
+        object LoadingCardDetails : CardState()
 
         data class BankProfilePopulate(
             var bankProfile: BankProfileResponseDetails?
