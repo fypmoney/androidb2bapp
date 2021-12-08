@@ -88,13 +88,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.fypmoney.view.customview.HorizontalDottedProgress
+                    <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/loading_amount_hdp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:layout_gravity="center"
 
+                        android:layout_gravity="center"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/three_dot_amount_loader"
                         app:layout_constraintBottom_toBottomOf="@+id/total_refral_won_value_tv"
 
                         app:layout_constraintStart_toEndOf="@+id/total_refral_won_value_tv"
@@ -175,10 +177,12 @@
 
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.fypmoney.view.customview.HorizontalDottedProgress
+                    <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/loading_amount_mynts"
                         android:layout_width="0dp"
-                        android:visibility="gone"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/three_dot_amount_loader"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         app:layout_constraintBottom_toBottomOf="@+id/total_mynts_won_value_tv"
@@ -249,7 +253,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/amount_golder_tv"
                     style="@style/TextviewBold"
-
+                    android:text="@string/four_dots"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
@@ -263,14 +267,16 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <com.fypmoney.view.customview.HorizontalDottedProgress
+                <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/loading_golden_cards"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_gravity="center"
-                    android:visibility="gone"
 
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/three_dot_amount_loader"
                     app:layout_constraintBottom_toBottomOf="@+id/amount_golder_tv"
 
                     app:layout_constraintStart_toStartOf="parent"

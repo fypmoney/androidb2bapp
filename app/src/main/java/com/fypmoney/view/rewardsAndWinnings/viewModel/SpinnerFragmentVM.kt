@@ -178,6 +178,19 @@ class SpinnerFragmentVM(application: Application) : BaseViewModel(application) {
 
 
             }
+            ApiConstant.API_REDEEM_REWARD -> {
+
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+                val array = Gson().fromJson<CoinsBurnedResponse>(
+                    json.get("data").toString(),
+                    com.fypmoney.model.CoinsBurnedResponse::class.java
+                )
+
+                coinsBurned.postValue(array)
+
+
+            }
 
 
         }
