@@ -1014,6 +1014,7 @@ Coming really soon!
     <string name="unable_to_load_card_details">Unable to load card details..</string>
     <string name="reload">Reload</string>
     <string name="your_wallet_seems_low_on_n_balance_quick_recharge_now">Your wallet seems low on balance, quick recharge now</string>
+    <string name="based_on_the_interests_you_selected_we_have_handpicked_popular_offers_just_for_you">Based on the interests you selected, we have handpicked popular offers just for you</string>
 
 
     <string-array name="person_category_array">

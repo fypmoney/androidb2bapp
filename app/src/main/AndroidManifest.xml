@@ -329,6 +329,7 @@
         <activity android:name=".view.home.main.explore.view.ExploreOfferDetailActivity" />
         <activity android:name=".view.fragment.OffersStoreActivity" />
         <activity android:name=".view.fragment.StoresActivity" />
+        <activity android:name=".view.Register.SelectRelationActivity" />
 
 
     </application>
