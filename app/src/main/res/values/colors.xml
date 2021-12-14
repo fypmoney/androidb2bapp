@@ -96,7 +96,8 @@
     <color name="bgcolor">#0E141C</color>
     <color name="tvColor">#B2B2B2</color>
     <color name="matBlack">#38414A</color>
-
+    <color name="green_selected">#60AF70</color>
+    <color name="green_selected_light">#D1F5D8</color>
 
 
 </resources>

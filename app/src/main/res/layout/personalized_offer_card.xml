@@ -7,6 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/serviceLayout"
         android:layout_width="match_parent"
+
         android:layout_height="@dimen/_45sdp"
         android:layout_margin="@dimen/_5sdp"
         android:background="@drawable/curved_background3"
@@ -30,18 +31,18 @@
         <TextView
             android:id="@+id/tvServiceName"
             style="@style/TextviewRegular"
-            android:layout_width="@dimen/_65sdp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_8sdp"
+            android:ellipsize="end"
             android:fontFamily="@font/poppins_regular"
+            android:maxLines="1"
             android:text="20% cashback"
-
             android:textColor="@color/text_color_dark"
-            android:textSize="12sp"
-
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ivServiceLogo"
-
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -52,10 +53,9 @@
             android:layout_marginTop="4dp"
             android:fontFamily="@font/poppins_regular"
             android:text="Swiggy"
-            android:textColor="#F7AA11"
-
-            android:textSize="10sp"
-
+            android:textColor="@color/text_color_dark"
+            android:id="@+id/brand_name"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/tvServiceName"
             app:layout_constraintTop_toBottomOf="@+id/tvServiceName" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.fypmoney.viewmodel
+package com.fypmoney.view.register.viewModel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
@@ -7,19 +7,21 @@ import com.fypmoney.base.BaseViewModel
 /*
 * This class is used for handling aadhaar verification
 * */
-class UserTypeOnLoginViewModel(application: Application) : BaseViewModel(application) {
-    var isTeenagerClicked = MutableLiveData<Boolean>()
-    var isGuardianClick = MutableLiveData<Boolean>()
+class KycTypeVM(application: Application) : BaseViewModel(application) {
+
+
+    var isAadhaarClicked = MutableLiveData<Boolean>()
+    var isPanClick = MutableLiveData<Boolean>()
     var isContinueClick = MutableLiveData<Boolean>()
 
 
     fun onTeenagerClick() {
-        isTeenagerClicked.value = true
+        isAadhaarClicked.value = true
 
     }
 
     fun onGuardianClick() {
-        isGuardianClick.value = true
+        isPanClick.value = true
     }
 
     fun onContinue() {

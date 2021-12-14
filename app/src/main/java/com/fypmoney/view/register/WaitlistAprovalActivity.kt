@@ -1,30 +1,17 @@
-package com.fypmoney.view.Register
+package com.fypmoney.view.register
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
-import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.TrackrField
-import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.bindingAdapters.loadImage
-import com.fypmoney.databinding.ActivityHomeBinding
 import com.fypmoney.databinding.ActivityWaitlistBinding
-import com.fypmoney.extension.onNavDestinationSelected
-import com.fypmoney.extension.toGone
-import com.fypmoney.extension.toVisible
-import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserProfileView
 import com.fypmoney.view.home.main.homescreen.viewmodel.HomeActivityVM
 
-class PendingRequestActivity : BaseActivity<ActivityWaitlistBinding, HomeActivityVM>() {
+class WaitlistAprovalActivity : BaseActivity<ActivityWaitlistBinding, HomeActivityVM>() {
 
     private lateinit var binding: ActivityWaitlistBinding
     private val homeActivityVM by viewModels<HomeActivityVM> { defaultViewModelProviderFactory }
@@ -36,6 +23,7 @@ class PendingRequestActivity : BaseActivity<ActivityWaitlistBinding, HomeActivit
         observeEvents()
 
     }
+
 
     private fun observeEvents() {
         homeActivityVM.event.observe(this, {

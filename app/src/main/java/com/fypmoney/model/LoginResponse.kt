@@ -86,6 +86,12 @@ data class CustomerInfoResponseDetails(
 
     @SerializedName("langKey") val langKey: String? = null,
 
+    @SerializedName("isInvited") val isInvited: String? = null,
+    @SerializedName("approvalReqId") val approvalReqId: String? = null,
+    @SerializedName("familyRelationId") val familyRelationId: String? = null,
+    @SerializedName("inviteReqStatus") val inviteReqStatus: String? = null,
+    @SerializedName("inviteResponseMessage") val inviteResponseMessage: String? = null,
+
 
     @SerializedName("idAccessToken") val idAccessToken: Any? = null
 ) : Serializable

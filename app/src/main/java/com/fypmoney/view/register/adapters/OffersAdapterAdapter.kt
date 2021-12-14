@@ -1,27 +1,20 @@
-package com.fypmoney.view.Register.adapters
+package com.fypmoney.view.register.adapters
 
 
 import android.content.Context
-import android.os.Build
-import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
-import com.fypmoney.model.AssignedTaskResponse
-import com.fypmoney.view.activity.ChoresActivity
-import com.fypmoney.view.interfaces.ListItemClickListener
-import kotlinx.android.synthetic.main.card_assigned.view.*
+import com.fypmoney.util.Utility
+import com.fypmoney.view.storeoffers.model.offerDetailResponse
+import kotlinx.android.synthetic.main.personalized_offer_card.view.*
 
-import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.*
 
 
-class OffersAdapterAdapter(val items: ArrayList<AssignedTaskResponse>, val context: Context) :
+class OffersAdapterAdapter(val items: ArrayList<offerDetailResponse>, val context: Context) :
     RecyclerView.Adapter<OffersAdapterAdapter.ViewHolder>() {
 
 
@@ -41,11 +34,21 @@ class OffersAdapterAdapter(val items: ArrayList<AssignedTaskResponse>, val conte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
+        holder.offer_title.text = items[position].offerShortTitle
+        holder.brandName.text = items[position].brandName
+        Utility.setImageUsingGlideWithShimmerPlaceholder(
+            imageView = holder.logo,
+            url = items[position].brandLogo
+        )
 
     }
 
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        var offer_title = view.tvServiceName
+        var brandName = view.brand_name
+        var logo = view.ivServiceLogo
 
 
     }

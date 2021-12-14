@@ -1,4 +1,4 @@
-package com.fypmoney.view.Register
+package com.fypmoney.view.register
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,19 +8,18 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityPersonalizedOfferBinding
-import com.fypmoney.model.AssignedTaskResponse
-import com.fypmoney.view.Register.adapters.OffersAdapterAdapter
+import com.fypmoney.view.register.adapters.OffersAdapterAdapter
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserProfileView
-import com.fypmoney.view.adapter.AssignedTasksAdapter
 import com.fypmoney.view.home.main.homescreen.viewmodel.HomeActivityVM
+import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import kotlinx.android.synthetic.main.fragment_assigned_task.view.*
 
 class PersonalisedActivity : BaseActivity<ActivityPersonalizedOfferBinding, HomeActivityVM>() {
 
     private lateinit var binding: ActivityPersonalizedOfferBinding
     private val homeActivityVM by viewModels<HomeActivityVM> { defaultViewModelProviderFactory }
-    private var itemsArrayList: ArrayList<AssignedTaskResponse> = ArrayList()
+    private var itemsArrayList: ArrayList<offerDetailResponse> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewDataBinding()

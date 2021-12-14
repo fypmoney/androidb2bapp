@@ -117,9 +117,14 @@
     <string name="phone_email_empty_error">Please enter Mobile No</string>
     <string name="first_name_empty_error">Please enter first name</string>
     <string name="last_name_empty_error">Please enter last name</string>
+    <string name="pan_empty_error">Please enter PAN number</string>
+    <string name="address_empty_error">Please enter your Address</string>
+    <string name="address_2_empty_error">Please enter your full Address</string>
     <string name="email_empty_error">Please enter email id </string>
     <string name="email_valid_error">Please enter valid email id </string>
     <string name="dob_empty_error">Please enter Date of Birth</string>
+    <string name="gender_empty_error">Select your gender</string>
+    <string name="kyc_empty_error">Select Kyc type</string>
     <string name="select_age_type">Please your age gap</string>
     <string name="otp_length_error">OTP length must be 6</string>
     <string name="phone_email_validity_error">Please enter valid Mobile No. or Email Id</string>
@@ -1015,6 +1020,8 @@ Coming really soon!
     <string name="reload">Reload</string>
     <string name="your_wallet_seems_low_on_n_balance_quick_recharge_now">Your wallet seems low on balance, quick recharge now</string>
     <string name="based_on_the_interests_you_selected_we_have_handpicked_popular_offers_just_for_you">Based on the interests you selected, we have handpicked popular offers just for you</string>
+    <string name="pan">PAN</string>
+    <string name="aadhaar">ADHAR</string>
 
 
     <string-array name="person_category_array">

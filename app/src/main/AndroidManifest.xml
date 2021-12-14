@@ -171,7 +171,7 @@
             android:name=".view.activity.InviteRejectedView"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.UserTypeOnLoginView"
+            android:name=".view.register.UserTypeOnLoginView"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.StayTunedView"
@@ -326,10 +326,40 @@
             android:label="HomeView"
             android:parentActivityName="com.fypmoney.view.activity.HomeView"></activity>
         <activity android:name=".view.home.main.explore.ViewDetails.ExploreInAppWebview" />
-        <activity android:name=".view.home.main.explore.view.ExploreOfferDetailActivity" />
+
         <activity android:name=".view.fragment.OffersStoreActivity" />
         <activity android:name=".view.fragment.StoresActivity" />
-        <activity android:name=".view.Register.SelectRelationActivity" />
+        <activity android:name=".view.register.SelectRelationActivity">
+
+        </activity>
+        <activity android:name=".view.register.InviteParentSiblingActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.register.PendingRequestActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.register.PersonalisedActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.activity.ChooseInterestRegisterView" />
+        <activity android:name=".view.register.PanAdhaarSelectionActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.register.KycDetailsActivity">
+
+        </activity>
 
 
     </application>

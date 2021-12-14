@@ -40,6 +40,8 @@
         <TextView
             android:id="@+id/question_relation"
             style="@style/TextviewRegular"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
@@ -55,10 +57,12 @@
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_offers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:layout_above="@+id/continue_btn"
-            android:id="@+id/rv_offers"
             android:layout_below="@+id/question_relation"
 
             android:layout_marginTop="@dimen/_12sdp" />
@@ -66,22 +70,21 @@
         <Button
 
             android:id="@+id/continue_btn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/_24sdp"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
 
-            android:layout_marginStart="@dimen/_46sdp"
 
             android:layout_marginTop="@dimen/_12sdp"
 
 
-            android:layout_marginEnd="@dimen/_46sdp"
-            android:text="@string/continue_txt"
+            android:layout_marginBottom="@dimen/_24sdp"
+            android:text="Woohoo! That’s great"
 
             android:textAllCaps="false"
-            android:visibility="gone"
+
             app:backgroundTint="@color/text_color_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

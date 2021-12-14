@@ -277,5 +277,5 @@ object AppConstants {
 
     const val USER_TYPE_NEW = "newUser"
     const val USER_TYPE = "UserType"
-
+    const val KYC_type = "kyctype"
 }

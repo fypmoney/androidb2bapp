@@ -343,6 +343,52 @@ object Utility {
 
     }
 
+    fun showDatePickerInDateFormatDialog(
+        context: Context,
+        onDateSelected: OnDateSelectedWithDateFormat,
+        isDateOfBirth: Boolean = false
+    ) {
+        val c: Calendar = getInstance()
+        val mYear = c.get(YEAR)
+        val mMonth = c.get(MONTH)
+        val mDay = c.get(DAY_OF_MONTH)
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, year, monthOfYear, dayOfMonth ->
+                val simpleDateFormat =
+                    SimpleDateFormat("yyyy MM dd", Locale.ROOT)
+                val date: Date? =
+                    simpleDateFormat.parse("${year} ${monthOfYear + 1} $dayOfMonth")
+                val simpleDateFormatDate =
+                    SimpleDateFormat(DATE_FORMAT_CHANGED, Locale.ROOT)
+                // calculateDifferenceBetweenDates(date,getInstance().time)
+                date?.let {
+                    onDateSelected.onDateSelectedWithDateFormat(
+                        SimpleDateFormat(
+                            AppConstants.DATE_TIME_FORMAT_SERVER,
+                            Locale.ROOT
+                        ).format(it),
+                        simpleDateFormatDate.format(it)
+                    )
+
+                }
+            },
+            mYear,
+            mMonth,
+            mDay
+        )
+        if (isDateOfBirth) {
+            datePickerDialog.datePicker.maxDate =
+                (System.currentTimeMillis() - 347039786000)//11 years //Todo
+            datePickerDialog.datePicker.minDate = (System.currentTimeMillis() - 2208984820000)//70
+
+        } else {
+            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+        }
+        datePickerDialog.show()
+
+    }
+
     fun showDatePickerDialogWithStartDate(
         context: Context,
         onDateSelectedwithStart: OnDateSelectedwithStart,
@@ -440,6 +486,11 @@ object Utility {
 
     interface OnDateSelected {
         fun onDateSelected(dateOnEditText: String, dateOnServer: String, yearDifference: Int) {
+        }
+    }
+
+    interface OnDateSelectedWithDateFormat {
+        fun onDateSelectedWithDateFormat(dateOnServer: String?, dateOnEditText: String) {
         }
     }
 

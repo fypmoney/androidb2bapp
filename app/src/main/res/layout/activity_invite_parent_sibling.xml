@@ -5,9 +5,6 @@
 
     <data>
 
-        <variable
-            name="viewModel"
-            type="com.fypmoney.view.home.main.homescreen.viewmodel.HomeActivityVM" />
     </data>
 
     <RelativeLayout
@@ -89,7 +86,7 @@
 
                     android:text="@string/continue_txt"
                     android:textAllCaps="false"
-                    android:visibility="gone"
+
                     app:backgroundTint="@color/text_color_dark"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -130,6 +127,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:src="@drawable/sibling_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="@dimen/_12sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/question_relation" />

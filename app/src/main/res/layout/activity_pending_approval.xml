@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data>
+
+    </data>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,94 +18,256 @@
             tools:layout_editor_absoluteX="-30dp"
             tools:layout_editor_absoluteY="0dp" />
 
-
-        <TextView
-            android:id="@+id/textView2"
-            style="@style/TextviewBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar_layout"
-
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_24sdp"
-            android:gravity="center"
-            android:text="Pending Approval"
-            android:textSize="@dimen/text_18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/question_relation"
-            android:layout_below="@+id/textView2"
-            android:layout_marginTop="@dimen/_8sdp" />
+            android:layout_height="match_parent">
+
+        </ScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar_layout">
 
 
-        <TextView
-            android:id="@+id/question_relation"
-            style="@style/TextviewRegular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/continue_btn"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="@dimen/_24sdp"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_24sdp"
-            android:layout_marginBottom="@dimen/_2sdp"
-            android:gravity="center"
-            android:text="We have sent your request to your pal. Till they approve it, catch up with us on social media.
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/TextviewBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:gravity="center"
+                android:text="Pending Approval"
+                android:textSize="@dimen/text_18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="212dp"
+                android:layout_height="212dp"
+                android:layout_above="@+id/question_relation"
+                android:layout_centerHorizontal="true"
+
+
+                app:layout_constraintBottom_toTopOf="@+id/question_relation"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView2"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/clock_round" />
+
+
+            <TextView
+                android:id="@+id/question_relation"
+                style="@style/TextviewRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/lin"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="@dimen/_24sdp"
+                android:layout_marginEnd="@dimen/_24sdp"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:gravity="center"
+                android:text="We have sent your request to your pal. Till they approve it, catch up with us on social media.
 Insta and Youtube buttons"
-            android:textColor="#221F1F"
-            android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                android:textColor="#221F1F"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/lin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_goneMarginStart="@dimen/_12sdp" />
 
-        <Button
+            <LinearLayout
+                android:id="@+id/lin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/continue_btn"
+                android:layout_marginBottom="@dimen/_12sdp"
+                android:weightSum="2"
+                app:layout_constraintBottom_toTopOf="@+id/continue_btn"
+                app:layout_constraintEnd_toEndOf="parent">
 
-            android:id="@+id/continue_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/skip"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_46sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-
-            android:layout_marginEnd="@dimen/_46sdp"
-
-            android:layout_marginBottom="@dimen/_12sdp"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/insta_cv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
 
 
-            android:text="Send a reminder"
-            android:textAllCaps="false"
+                    android:layout_weight="1"
+                    android:clipToPadding="false"
 
-            android:visibility="gone"
-            app:backgroundTint="@color/text_color_dark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+                    app:cardCornerRadius="14dp"
+                    app:layout_constraintEnd_toEndOf="@+id/graphics_iv"
+                    app:layout_constraintStart_toStartOf="@+id/graphics_iv"
 
-            tools:visibility="visible" />
+                    app:layout_constraintTop_toBottomOf="@+id/graphics_iv"
 
-        <TextView
-            android:id="@+id/skip"
-            style="@style/TextviewBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
+                    >
 
-            android:layout_marginBottom="@dimen/_24sdp"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
 
-            android:gravity="center"
-            android:text="@string/skip_title"
-            android:textColor="#221F1F"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="10dp">
 
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_inssta" />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:gravity="center"
+                            android:text="@string/instagram"
+                            android:textColor="@color/text_color_dark"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/arrow"
+                            app:layout_constraintStart_toEndOf="@+id/image"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/arrow"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:tint="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_dropdown" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/youtube_cv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginStart="@dimen/_3sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:layout_weight="1"
+
+                    android:clipToPadding="false"
+                    app:cardCornerRadius="14dp"
+                    app:layout_constraintEnd_toEndOf="@+id/graphics_iv"
+                    app:layout_constraintStart_toStartOf="@+id/graphics_iv"
+
+
+                    app:layout_constraintTop_toBottomOf="@+id/facebook_cv"
+
+                    >
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="10dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/youtube_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_youtube" />
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:gravity="center"
+                            android:text="@string/youtube"
+                            android:textColor="@color/text_color_dark"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@+id/youtube_arrow"
+                            app:layout_constraintStart_toEndOf="@+id/youtube_image"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/youtube_arrow"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="18dp"
+                            android:tint="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_dropdown" />
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+            <Button
+
+                android:id="@+id/continue_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/skip"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/_46sdp"
+                android:layout_marginEnd="@dimen/_46sdp"
+
+                android:layout_marginBottom="@dimen/_8sdp"
+
+
+                android:text="Send a reminder"
+                android:textAllCaps="false"
+
+
+                app:backgroundTint="@color/text_color_dark"
+                app:layout_constraintBottom_toTopOf="@+id/skip"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible" />
+
+            <TextView
+                android:id="@+id/skip"
+                style="@style/TextviewBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/_18sdp"
+
+                android:gravity="center"
+                android:text="@string/skip_title"
+                android:textColor="#221F1F"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
 
