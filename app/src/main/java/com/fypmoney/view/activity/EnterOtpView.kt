@@ -1,5 +1,6 @@
 package com.fypmoney.view.activity
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
@@ -19,6 +20,8 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewEnterOtpBinding
 import com.fypmoney.receivers.AutoReadOtpUtils
 import com.fypmoney.util.AppConstants
+
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.viewmodel.EnterOtpViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
@@ -217,7 +220,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
 
         mViewModel.onVerificationFail.observe(this) {
             if (it) {
-                intentToActivity(AadhaarAccountActivationView::class.java)
+                intentToActivity(PanAdhaarSelectionActivity::class.java)
                 mViewModel.onVerificationFail.value = false
                 finishAffinity()
             }
@@ -239,6 +242,7 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
         mViewModel.onVerificationSuccess.observe(this) {
             if (it) {
                 when (mViewModel.fromWhichScreen.get()) {
+//
                     AppConstants.AADHAAR_VERIFICATION -> {
                         intentToActivity(
                             ActivationSuccessWithAadhaarView::class.java,
@@ -254,6 +258,29 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                     }
                 }
                 mViewModel.onVerificationSuccess.value = false
+
+
+            }
+
+        }
+        mViewModel.onVerificationSuccessAadhaar.observe(this) {
+            if (it != null) {
+
+
+                val intent = Intent(this, ActivationSuccessWithAadhaarView::class.java)
+                intent.putExtra(AppConstants.POSTKYCKEY, it.postKycScreenCode)
+                val bndlAnimation = ActivityOptions.makeCustomAnimation(
+                    applicationContext,
+                    com.fypmoney.R.anim.slideinleft,
+                    com.fypmoney.R.anim.slideinright
+                ).toBundle()
+                startActivity(intent, bndlAnimation)
+                finishAffinity()
+
+
+
+
+                mViewModel.onVerificationSuccessAadhaar.value = null
 
 
             }

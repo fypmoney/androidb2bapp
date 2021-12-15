@@ -22,7 +22,10 @@ import com.google.gson.JsonParser
 
 class ExploreFragmentVM(application: Application) : BaseViewModel(application) {
 
-
+    private val _text = MutableLiveData<String>().apply {
+        value = "This is dashboard Fragment"
+    }
+    val text: LiveData<String> = _text
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
 
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()

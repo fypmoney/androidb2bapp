@@ -12,10 +12,12 @@ import com.fypmoney.view.register.viewModel.PendingRequestVm
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserProfileView
 import android.os.CountDownTimer
+import android.view.View
 import com.fypmoney.databinding.ActivityPendingApprovalBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.ChooseInterestRegisterView
+import kotlinx.android.synthetic.main.toolbar_animation.*
 import java.lang.Exception
 
 
@@ -31,7 +33,12 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
         binding = getViewDataBinding()
         var phone = intent?.getStringExtra("phone")
 
-
+        setLottieAnimationToolBar(
+            isBackArrowVisible = false,//back arrow visibility
+            isLottieAnimation = true,// lottie animation visibility
+            imageView = ivToolBarBack,//back image view
+            lottieAnimationView = ivAnimationGift
+        )// lottie anima
         pendingRequestVM.callGetCustomerProfileApi()
         timer = object : CountDownTimer(5000, 10) {
             override fun onTick(millisUntilFinished: Long) {}
@@ -43,7 +50,20 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
                 }
             }
         }.start()
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
+            binding.skip.visibility = View.VISIBLE
+        }
+        binding.skip.setOnClickListener(View.OnClickListener {
+            val intent = Intent(this, ChooseInterestRegisterView::class.java)
 
+            val bndlAnimation = ActivityOptions.makeCustomAnimation(
+                applicationContext,
+                com.fypmoney.R.anim.slideinleft,
+                com.fypmoney.R.anim.slideinright
+            ).toBundle()
+            startActivity(intent, bndlAnimation)
+            finishAffinity()
+        })
         binding.instaCv.setOnClickListener {
             openCommunity(AppConstants.INSTAGRAM_PAGE)
         }
@@ -67,14 +87,12 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
     }
 
     private fun observeEvents() {
-        pendingRequestVM.event.observe(this, {
-            handelEvents(it)
-        })
+
 
         pendingRequestVM.user.observe(this, {
 
 
-            if (it.inviteReqStatus == "APPROVED") {
+            if (it.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_APPROVED) {
                 gotData = true
                 timer?.onFinish()
                 timer?.cancel()
@@ -89,8 +107,19 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
                 finish()
 
 
-            } else {
-                Utility.showToast("Not approved")
+            } else if (it.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_DECLINED) {
+                gotData = true
+                timer?.onFinish()
+                timer?.cancel()
+                val intent = Intent(this, InviteParentSiblingActivity::class.java)
+
+                val bndlAnimation = ActivityOptions.makeCustomAnimation(
+                    applicationContext,
+                    com.fypmoney.R.anim.slideinright,
+                    com.fypmoney.R.anim.slideinleft
+                ).toBundle()
+                startActivity(intent, bndlAnimation)
+                finish()
             }
 
         })
@@ -104,18 +133,6 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
 
     }
 
-    private fun handelEvents(it: PendingRequestVm.HomeActivityEvent?) {
-        when (it) {
-            PendingRequestVm.HomeActivityEvent.NotificationClicked -> {
-                startActivity(Intent(this, NotificationView::class.java))
-
-            }
-            PendingRequestVm.HomeActivityEvent.ProfileClicked -> {
-                startActivity(Intent(this, UserProfileView::class.java))
-            }
-
-        }
-    }
 
     override fun onStop() {
         super.onStop()

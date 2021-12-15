@@ -17,6 +17,7 @@ import com.fypmoney.view.home.main.explore.viewmodel.ExploreFragmentVM
  * This adapter class is used to handle feeds
  */
 class ExploreAdapter(
+    var viewModel: ExploreFragmentVM,
     var onExploreItemClickListener: ExploreItemClickListener,
     val exploreList: List<SectionContentItem?>?,
     val context: Context,
@@ -56,6 +57,7 @@ class ExploreAdapter(
                 exploreList?.get(position), onExploreItemClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
+            mRowItemBinding.viewModel = viewModel
 
 
             val params: ViewGroup.LayoutParams =

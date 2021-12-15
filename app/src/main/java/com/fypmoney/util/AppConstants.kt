@@ -73,6 +73,7 @@ object AppConstants {
     const val CONTACT_BROADCAST_KEY = "Contact Broadcast key"
     const val ADD_MEMBER_STATUS_APPROVED = "APPROVED"
     const val ADD_MEMBER_STATUS_INVITED = "INVITED"
+    const val ADD_MEMBER_STATUS_DECLINED = "DECLINED"
     const val YES = "YES"
     const val NO = "NO"
     const val PRODUCT_SPIN = "SPIN_WHEEL"
@@ -278,4 +279,5 @@ object AppConstants {
     const val USER_TYPE_NEW = "newUser"
     const val USER_TYPE = "UserType"
     const val KYC_type = "kyctype"
+    const val POSTKYCKEY = "postkyc"
 }

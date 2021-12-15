@@ -42,11 +42,11 @@ class SelectRelationVM(application: Application) : BaseViewModel(application) {
     }
 
 
-    fun callIsAppUserApi(relationSibling: SendRelationSiblingParentResponse) {
+    fun callIsAppUserApi(relationSibling: SendRelationSiblingParentResponse, userType: String?) {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.Api_Request_Siblin_parent,
-                NetworkUtil.endURL(ApiConstant.Api_Request_Siblin_parent),
+                NetworkUtil.endURL(ApiConstant.Api_Request_Siblin_parent) + userType,
                 ApiUrl.POST,
                 relationSibling,
                 this, isProgressBar = true

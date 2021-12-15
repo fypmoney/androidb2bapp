@@ -1022,6 +1022,9 @@ Coming really soon!
     <string name="based_on_the_interests_you_selected_we_have_handpicked_popular_offers_just_for_you">Based on the interests you selected, we have handpicked popular offers just for you</string>
     <string name="pan">PAN</string>
     <string name="aadhaar">ADHAR</string>
+    <string name="mynts_caps">MYNTS</string>
+    <string name="card_caps">CARD</string>
+    <string name="i_want_to_use">I want to use the app for myself</string>
 
 
     <string-array name="person_category_array">

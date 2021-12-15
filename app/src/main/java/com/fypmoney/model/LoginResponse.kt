@@ -70,7 +70,7 @@ data class CustomerInfoResponseDetails(
     @SerializedName("bankProfile") val bankProfile: BankProfile? = null,
     @SerializedName("profilePicResourceId") val profilePicResourceId: String? = null,
     @SerializedName("cardProductCode") val cardProductCode: String? = null,
-    @SerializedName("postKycScreenCode") val postKycScreenCode: String? = null,
+    @SerializedName("postKycScreenCode") var postKycScreenCode: String? = null,
 
 
     @SerializedName("parent") val parent: Any? = null,
@@ -92,7 +92,7 @@ data class CustomerInfoResponseDetails(
     @SerializedName("inviteReqStatus") val inviteReqStatus: String? = null,
     @SerializedName("inviteResponseMessage") val inviteResponseMessage: String? = null,
 
-
+    @SerializedName("isOldUser") val isOldUser: String? = null,
     @SerializedName("idAccessToken") val idAccessToken: Any? = null
 ) : Serializable
 

@@ -92,16 +92,19 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                             SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
                         )
                     }
-                    postKycScreenCode.value =
-                        responseData.customerInfoResponseDetails?.postKycScreenCode!!
+                    if (postKycScreenCode.value.isNullOrEmpty()) {
+                        postKycScreenCode.value =
+                            responseData.customerInfoResponseDetails?.postKycScreenCode!!
+                    }
+
                     responseData.customerInfoResponseDetails?.postKycScreenCode?.let {
-                        when(it){
-                            "0"->{
+                        when (it) {
+                            "0" -> {
                                 trackr {
                                     it.services = arrayListOf(
                                         TrackrServices.FIREBASE,
                                         TrackrServices.MOENGAGE,
-                                        TrackrServices.FB,TrackrServices.ADJUST
+                                        TrackrServices.FB, TrackrServices.ADJUST
                                     )
                                     it.name = TrackrEvent.kyc_verification_teen
                                 }

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar_animation"
+            tools:layout_editor_absoluteX="-30dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/TextviewBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_46sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_46sdp"
+            android:gravity="center"
+            android:text="Your surprise gift"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/gift_box"
+            android:layout_width="match_parent"
+            android:layout_height="212dp"
+
+            android:layout_above="@+id/tap_once"
+
+
+            android:layout_below="@+id/textView2"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="38dp"
+            android:padding="@dimen/_16sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+
+            app:lottie_rawRes="@raw/gift_box" />
+
+        <TextView
+            android:id="@+id/tap_once"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/_52sdp"
+            android:textSize="18sp"
+            android:layout_marginEnd="@dimen/_52sdp"
+            android:layout_marginBottom="@dimen/_52sdp"
+            android:gravity="center"
+            android:text="Tap on the gift box to unveil your surprise gift"
+            android:textColor="#221F1F" />
+
+
+    </RelativeLayout>
+
+
+</layout>

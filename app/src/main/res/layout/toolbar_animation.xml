@@ -7,13 +7,15 @@
     <com.airbnb.lottie.LottieAnimationView
 
         android:id="@+id/ivAnimationGift"
-        android:layout_width="@dimen/_52sdp"
-        android:layout_height="@dimen/_52sdp"
+        android:layout_width="@dimen/_44sdp"
+        android:layout_height="@dimen/_44sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
         android:layout_marginEnd="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:layout_marginBottom="@dimen/_6sdp"
         android:layout_centerInParent="true"
         android:elevation="@dimen/_4sdp"
         android:visibility="visible"
@@ -27,7 +29,7 @@
         android:layout_height="@dimen/_18sdp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginStart="@dimen/_15sdp"
         android:src="@drawable/ic_back_new"
         android:contentDescription="back icon in interest screen" />

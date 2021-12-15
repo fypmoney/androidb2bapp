@@ -1,7 +1,10 @@
 package com.fypmoney.view.register
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -13,8 +16,11 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.register.viewModel.KycTypeVM
 
-import com.fypmoney.view.activity.CreateAccountView
+
 import com.fypmoney.view.activity.EnterOtpView
+import com.fypmoney.view.fragment.OfferDetailsBottomSheet
+import com.fypmoney.view.fragment.kycDetailsBottomSheet
+import com.fypmoney.view.storeoffers.model.offerDetailResponse
 
 
 class PanAdhaarSelectionActivity :
@@ -39,6 +45,9 @@ class PanAdhaarSelectionActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
+        mViewBinding.moreKycInfo.setOnClickListener {
+            callKycDetailsSheeet()
+        }
 
         setObserver()
     }
@@ -66,6 +75,13 @@ class PanAdhaarSelectionActivity :
 
             }
         }
+    }
+
+    private fun callKycDetailsSheeet() {
+
+        var bottomSheetMessage = kycDetailsBottomSheet()
+        bottomSheetMessage.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetMessage.show(supportFragmentManager, "TASKMESSAGE")
     }
 
     private fun setSelectedUserType(type: String) {
@@ -112,29 +128,4 @@ class PanAdhaarSelectionActivity :
 
     }
 
-    private fun goToEnterOtpScreen(token: String) {
-        val intent = Intent(this, EnterOtpView::class.java)
-        intent.putExtra(
-            AppConstants.MOBILE_TYPE,
-            ""
-        )
-        intent.putExtra(
-            AppConstants.FROM_WHICH_SCREEN, AppConstants.AADHAAR_VERIFICATION
-        )
-
-        intent.putExtra(
-            AppConstants.MOBILE_WITHOUT_COUNTRY_CODE,
-            ""
-        )
-
-        intent.putExtra(
-            AppConstants.KYC_ACTIVATION_TOKEN, token
-
-        )
-        intent.putExtra(
-            AppConstants.KIT_FOUR_DIGIT, ""
-
-        )
-        startActivity(intent)
-    }
 }

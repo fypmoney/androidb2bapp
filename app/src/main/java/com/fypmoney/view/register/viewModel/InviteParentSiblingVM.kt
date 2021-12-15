@@ -18,7 +18,6 @@ import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.register.model.SelectRelationModel
 
 class InviteParentSiblingVM(application: Application) : BaseViewModel(application) {
-    var selectedRelation = ObservableField(SelectRelationModel())
 
 
     var user = MutableLiveData<IsAppUserResponse>()
@@ -26,17 +25,7 @@ class InviteParentSiblingVM(application: Application) : BaseViewModel(applicatio
         "Hey ${Utility.getCustomerDataFromPreference()?.firstName},"
     )
 
-    val event: LiveData<HomeActivityEvent>
-        get() = _event
-    private var _event = LiveEvent<HomeActivityEvent>()
 
-    fun onProfileClicked() {
-        _event.value = HomeActivityEvent.ProfileClicked
-    }
-
-    fun onNotificationClicked() {
-        _event.value = HomeActivityEvent.NotificationClicked
-    }
 
     fun callIsAppUserApi(phone: String) {
 
@@ -73,8 +62,5 @@ class InviteParentSiblingVM(application: Application) : BaseViewModel(applicatio
         super.onError(purpose, errorResponseInfo)
     }
 
-    sealed class HomeActivityEvent {
-        object ProfileClicked : HomeActivityEvent()
-        object NotificationClicked : HomeActivityEvent()
-    }
+
 }

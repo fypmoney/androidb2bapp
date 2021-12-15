@@ -54,7 +54,7 @@ class WaitlistAprovalActivity : BaseActivity<ActivityWaitlistBinding, HomeActivi
     /**
      * @return layout resource id
      */
-    override fun getLayoutId(): Int = R.layout.activity_home
+    override fun getLayoutId(): Int = R.layout.activity_waitlist
 
     /**
      * Override for set view model

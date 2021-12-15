@@ -15,11 +15,15 @@ import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSplashBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.ADD_MEMBER_STATUS_APPROVED
+import com.fypmoney.util.AppConstants.ADD_MEMBER_STATUS_INVITED
 import com.fypmoney.util.AppConstants.NOT_ALLOWED_MSG
 import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getReferralCodeFromDynamicLink
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.register.*
+
 import com.fypmoney.viewmodel.SplashViewModel
 import kotlinx.android.synthetic.main.view_splash.*
 import java.util.*
@@ -160,30 +164,35 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                         SharedPrefUtils.SF_KEY_IS_LOGIN
                     )!!
                 ) {
-                    when {
-                        Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
-                            intentToActivity(CreateAccountView::class.java)
+                when {
+                    Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
+                        intentToActivity(UserTypeOnLoginView::class.java)
+                    }
+                    Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {
+                        intentToActivity(PanAdhaarSelectionActivity::class.java)
+                    }
+                    Utility.getCustomerDataFromPreference()?.isHomeViewed == AppConstants.YES -> {
+                        if (hasPermissions(
+                                this,
+                                Manifest.permission.READ_CONTACTS
+                            )
+                        ) {
+                            intentToActivity(HomeActivity::class.java)
+                        } else {
+                            intentToActivity(PermissionsActivity::class.java)
                         }
-                        Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {
-                            intentToActivity(AadhaarAccountActivationView::class.java)
-                        }
-                        else -> {
-                            if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
+                    }
+                    else -> {
+                        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
 
-                                if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-
-                                    intentToActivity(HomeActivity::class.java)
-                                } else {
-                                    intentToActivity(PermissionsActivity::class.java)
-                                }
-                            }
-                            else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "0") {
-                                when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
-                                    AppConstants.YES -> {
-                                        intentToActivity(ReferralCodeView::class.java)
-                                    }
-
-                                    else -> {
+                            if (!Utility.getCustomerDataFromPreference()?.isInvited.isNullOrEmpty() && Utility.getCustomerDataFromPreference()?.isInvited == AppConstants.YES) {
+                                if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == ADD_MEMBER_STATUS_APPROVED) {
+                                    val userInterest =
+                                        SharedPrefUtils.getArrayList(
+                                            getApplication(),
+                                            SharedPrefUtils.SF_KEY_USER_INTEREST
+                                        )
+                                    if (userInterest != null && userInterest?.size > 0) {
                                         if (hasPermissions(
                                                 this,
                                                 Manifest.permission.READ_CONTACTS
@@ -193,13 +202,88 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                         } else {
                                             intentToActivity(PermissionsActivity::class.java)
                                         }
+                                    } else {
+                                        intentToActivity(ChooseInterestRegisterView::class.java)
+                                    }
+                                } else {
+                                    intentToActivity(PendingRequestActivity::class.java)
+                                }
+
+                            } else {
+
+                                val intent =
+                                    Intent(this@SplashView, InviteParentSiblingActivity::class.java)
+                                intent.putExtra(AppConstants.USER_TYPE, "1")
+                                startActivity(intent)
+                                finish()
+                            }
+                        }
+                            else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "0") {
+                                when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
+                                    AppConstants.YES -> {
+                                        intentToActivity(ReferralCodeView::class.java)
+                                    }
+
+                                    else -> {
+
+                                        val userInterest =
+                                            SharedPrefUtils.getArrayList(
+                                                getApplication(),
+                                                SharedPrefUtils.SF_KEY_USER_INTEREST
+                                            )
+                                        if (userInterest != null && userInterest?.size > 0) {
+                                            if (hasPermissions(
+                                                    this,
+                                                    Manifest.permission.READ_CONTACTS
+                                                )
+                                            ) {
+                                                intentToActivity(HomeActivity::class.java)
+                                            } else {
+                                                intentToActivity(PermissionsActivity::class.java)
+                                            }
+                                        } else {
+                                            intentToActivity(ChooseInterestRegisterView::class.java)
+                                        }
 
                                     }
                                 }
                             }
                             else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "90") {
-                                intentToActivity(AgeAllowedActivationView::class.java)
+                            if (Utility.getCustomerDataFromPreference()?.isInvited == null) {
+
+                                val intent = Intent(this, InviteParentSiblingActivity::class.java)
+                                intent.putExtra(AppConstants.USER_TYPE, "90")
+                                startActivity(intent)
+                                finish()
+
+                            } else {
+                                if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_INVITED) {
+                                    intentToActivity(PendingRequestActivity::class.java)
+                                } else if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_APPROVED) {
+                                    val userInterest =
+                                        SharedPrefUtils.getArrayList(
+                                            getApplication(),
+                                            SharedPrefUtils.SF_KEY_USER_INTEREST
+                                        )
+                                    if (userInterest != null && userInterest?.size > 0) {
+                                        if (hasPermissions(
+                                                this,
+                                                Manifest.permission.READ_CONTACTS
+                                            )
+                                        ) {
+                                            intentToActivity(HomeActivity::class.java)
+                                        } else {
+                                            intentToActivity(PermissionsActivity::class.java)
+                                        }
+                                    } else {
+                                        intentToActivity(ChooseInterestRegisterView::class.java)
+                                    }
+
+
+                                }
+
                             }
+                        }
                             else {
                                 if (Utility.getCustomerDataFromPreference()?.postKycScreenCode == null &&
                                     Utility.getCustomerDataFromPreference()?.userProfile?.gender == null && mViewModel.callCustomer.value == false) {

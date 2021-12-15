@@ -27,6 +27,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/_18sdp"
             android:layout_below="@+id/toolbar_layout">
 
 
@@ -91,14 +92,16 @@ Insta and Youtube buttons"
                 android:layout_marginBottom="@dimen/_12sdp"
                 android:weightSum="2"
                 app:layout_constraintBottom_toTopOf="@+id/continue_btn"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/insta_cv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_2sdp"
+                    android:layout_marginEnd="@dimen/_4sdp"
                     android:layout_marginBottom="@dimen/_2sdp"
 
 
@@ -165,8 +168,8 @@ Insta and Youtube buttons"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
 
-                    android:layout_marginStart="@dimen/_3sdp"
-                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
                     android:layout_weight="1"
 
                     android:clipToPadding="false"
@@ -242,14 +245,14 @@ Insta and Youtube buttons"
 
                 android:text="Send a reminder"
                 android:textAllCaps="false"
+                android:visibility="gone"
 
 
                 app:backgroundTint="@color/text_color_dark"
                 app:layout_constraintBottom_toTopOf="@+id/skip"
                 app:layout_constraintEnd_toEndOf="parent"
 
-                app:layout_constraintStart_toStartOf="parent"
-                tools:visibility="visible" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/skip"
@@ -258,7 +261,7 @@ Insta and Youtube buttons"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="@dimen/_18sdp"
+
 
                 android:gravity="center"
                 android:text="@string/skip_title"

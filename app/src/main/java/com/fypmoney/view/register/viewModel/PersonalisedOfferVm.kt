@@ -31,17 +31,7 @@ class PersonalisedOfferVm(application: Application) : BaseViewModel(application)
         "Hey ${Utility.getCustomerDataFromPreference()?.firstName},"
     )
 
-    val event: LiveData<HomeActivityEvent>
-        get() = _event
-    private var _event = LiveEvent<HomeActivityEvent>()
 
-    fun onProfileClicked() {
-        _event.value = HomeActivityEvent.ProfileClicked
-    }
-
-    fun onNotificationClicked() {
-        _event.value = HomeActivityEvent.NotificationClicked
-    }
 
     init {
         callgetOffer()
@@ -83,8 +73,4 @@ class PersonalisedOfferVm(application: Application) : BaseViewModel(application)
     }
 
 
-    sealed class HomeActivityEvent {
-        object ProfileClicked : HomeActivityEvent()
-        object NotificationClicked : HomeActivityEvent()
-    }
 }

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar_animation"
+            tools:layout_editor_absoluteX="-30dp"
+            tools:layout_editor_absoluteY="0dp" />
+
+
+        <TextView
+            android:id="@+id/textView2"
+            style="@style/TextviewBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/toolbar_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_46sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_46sdp"
+            android:gravity="center"
+            android:text="@string/congratulations"
+            android:textSize="28sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextviewRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:gravity="center"
+                android:text="You have won"
+                android:textColor="#231F20" />
+
+            <ImageView
+                android:id="@+id/mynts_image"
+                android:layout_width="152dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+
+                android:layout_marginTop="@dimen/_12sdp"
+                android:src="@drawable/ic_mynt_won_register"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/mynts_got"
+                style="@style/TextviewRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#231F20"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/user_image"
+                android:layout_width="152dp"
+                android:layout_height="152dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:src="@drawable/ic_user"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/other_reward"
+                style="@style/TextviewRegular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:gravity="center"
+                android:textColor="#231F20"
+
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+
+        <Button
+
+            android:id="@+id/continue_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+
+
+            android:layout_marginTop="@dimen/_12sdp"
+
+
+            android:layout_marginBottom="@dimen/_24sdp"
+            android:text="@string/continue_txt"
+
+            android:textAllCaps="false"
+
+            app:backgroundTint="@color/text_color_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible" />
+
+
+    </RelativeLayout>
+
+
+</layout>

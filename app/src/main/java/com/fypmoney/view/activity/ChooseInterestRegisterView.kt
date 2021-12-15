@@ -39,7 +39,7 @@ class ChooseInterestRegisterView :
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
         setLottieAnimationToolBar(
-            isBackArrowVisible = true,//back arrow visibility
+            isBackArrowVisible = false,//back arrow visibility
             isLottieAnimation = true,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
             lottieAnimationView = ivAnimationGift

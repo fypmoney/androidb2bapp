@@ -19,25 +19,13 @@ import com.fypmoney.view.register.model.SelectRelationModel
 
 
 class PendingRequestVm(application: Application) : BaseViewModel(application) {
-    var selectedRelation = ObservableField(SelectRelationModel())
+
 
     var user = MutableLiveData<CustomerInfoResponseDetails>()
 
     var toolbarTitle = MutableLiveData(
         "Hey ${Utility.getCustomerDataFromPreference()?.firstName},"
     )
-
-    val event: LiveData<HomeActivityEvent>
-        get() = _event
-    private var _event = LiveEvent<HomeActivityEvent>()
-
-    fun onProfileClicked() {
-        _event.value = HomeActivityEvent.ProfileClicked
-    }
-
-    fun onNotificationClicked() {
-        _event.value = HomeActivityEvent.NotificationClicked
-    }
 
 
     fun callGetCustomerProfileApi() {
@@ -46,7 +34,7 @@ class PendingRequestVm(application: Application) : BaseViewModel(application) {
                 purpose = ApiConstant.API_GET_CUSTOMER_INFO,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_GET_CUSTOMER_INFO),
                 request_type = ApiUrl.GET,
-                onResponse = this, isProgressBar = true,
+                onResponse = this, isProgressBar = false,
                 param = ""
             )
         )
@@ -72,8 +60,4 @@ class PendingRequestVm(application: Application) : BaseViewModel(application) {
     }
 
 
-    sealed class HomeActivityEvent {
-        object ProfileClicked : HomeActivityEvent()
-        object NotificationClicked : HomeActivityEvent()
-    }
 }

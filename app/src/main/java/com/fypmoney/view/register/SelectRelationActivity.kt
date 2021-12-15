@@ -11,6 +11,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivitySelectRelationshipBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.register.adapters.SelectRelationAdapter
 
@@ -24,6 +25,7 @@ import kotlin.collections.ArrayList
 
 class SelectRelationActivity : BaseActivity<ActivitySelectRelationshipBinding, SelectRelationVM>() {
 
+    private var userType: String? = "90"
     private var nameOfUser: String? = null
     private var phone: String? = null
     private lateinit var binding: ActivitySelectRelationshipBinding
@@ -39,6 +41,9 @@ class SelectRelationActivity : BaseActivity<ActivitySelectRelationshipBinding, S
         binding.continueBtn.setOnClickListener(View.OnClickListener {
 
         })
+        userType = intent.getStringExtra(AppConstants.USER_TYPE)
+
+
         phone = intent?.getStringExtra("phone")
         nameOfUser = intent?.getStringExtra("name_user")
         binding.continueBtn.setOnClickListener(View.OnClickListener {
@@ -53,7 +58,7 @@ class SelectRelationActivity : BaseActivity<ActivitySelectRelationshipBinding, S
                 }
                 var selectRelationModel =
                     SendRelationSiblingParentResponse(nameOfUser, phone, "NO", relation)
-                selectRelationVM.callIsAppUserApi(selectRelationModel)
+                selectRelationVM.callIsAppUserApi(selectRelationModel, userType)
             } else {
                 Utility.showToast("Select any relation")
             }
@@ -110,6 +115,9 @@ class SelectRelationActivity : BaseActivity<ActivitySelectRelationshipBinding, S
         selectRelationVM.user.observe(this, {
 
             val intent = Intent(this, PendingRequestActivity::class.java)
+            intent.putExtra("phone", phone)
+            intent.putExtra("name_user", nameOfUser)
+
             val bndlAnimation = ActivityOptions.makeCustomAnimation(
                 applicationContext,
                 com.fypmoney.R.anim.slideinleft,
