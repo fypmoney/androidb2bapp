@@ -1,11 +1,14 @@
 package com.fypmoney.view.home.main.homescreen.view
 
+import android.Manifest
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -17,16 +20,21 @@ import com.fypmoney.databinding.ActivityHomeBinding
 import com.fypmoney.extension.onNavDestinationSelected
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
+import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserProfileView
+import com.fypmoney.view.home.main.home.view.HomeFragment
 import com.fypmoney.view.home.main.homescreen.viewmodel.HomeActivityVM
+import java.util.concurrent.atomic.AtomicBoolean
 
-class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
+class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>(), LocationListenerClass.GetCurrentLocationListener {
 
     private lateinit var binding: ActivityHomeBinding
     private val homeActivityVM by viewModels<HomeActivityVM> { defaultViewModelProviderFactory }
+
+    private val doubleBackPressed = AtomicBoolean(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +49,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
                     SharedPrefUtils.SF_KEY_USER_ID
                 ).toString())
         }
+        checkAndAskPermission()
+
+        LocationListenerClass(
+            this, this
+        ).permissions()
+
     }
 
 
@@ -51,35 +65,45 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
         val navHomeController = navHostFragment.navController
 
         binding.bottomMenu.setItemSelected(R.id.navigation_home, true)
+
         binding.bottomMenu.setOnItemSelectedListener { id ->
             onNavDestinationSelected(id, navHomeController)
-            when(id){
-                R.id.navigation_home->{
-                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.white))
-                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.black))
-                    homeActivityVM.toolbarTitle.value = "Hey ${Utility.getCustomerDataFromPreference()?.firstName},"
-                }
-                R.id.navigation_explore->{
-                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
-                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
-                    homeActivityVM.toolbarTitle.value = getString(R.string.explore)
-                }
-                R.id.navigation_rewards->{
-                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
-                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
-                    homeActivityVM.toolbarTitle.value = getString(R.string.rewards)
-                }
-                R.id.navigation_fyper->{
-                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.white))
-                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.black))
-                    homeActivityVM.toolbarTitle.value = getString(R.string.fyper_txt)
-                }
-            }
+
         }
         
         navHomeController.addOnDestinationChangedListener { controller, destination, arguments ->
             when(destination.id){
-                R.id.navigation_home,R.id.navigation_fyper,R.id.navigation_rewards,R.id.navigation_explore->{
+                R.id.navigation_home->{
+                    binding.bottomMenu.setItemSelected(R.id.navigation_home, true)
+                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.white))
+                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.black))
+                    homeActivityVM.toolbarTitle.value = "Hey ${Utility.getCustomerDataFromPreference()?.firstName},"
+                    showToolbar()
+                    showBottomNavigation()
+                }
+                R.id.navigation_fyper->{
+                    binding.bottomMenu.setItemSelected(R.id.navigation_fyper, true)
+
+                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.white))
+                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.black))
+                    homeActivityVM.toolbarTitle.value = getString(R.string.fyper_txt)
+                    showToolbar()
+                    showBottomNavigation()
+                }
+                R.id.navigation_rewards->{
+                    binding.bottomMenu.setItemSelected(R.id.navigation_rewards, true)
+
+                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
+                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
+                    homeActivityVM.toolbarTitle.value = getString(R.string.rewards)
+                    showToolbar()
+                    showBottomNavigation()
+                }
+                R.id.navigation_explore->{
+                    binding.bottomMenu.setItemSelected(R.id.navigation_explore, true)
+                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
+                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
+                    homeActivityVM.toolbarTitle.value = getString(R.string.explore)
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -175,6 +199,51 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>() {
         }
     }
 
+    private fun getCurrentBottomFragment(): Fragment? {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_home)
+        return navHostFragment?.childFragmentManager?.fragments?.get(0)
+    }
+    override fun onBackPressed() {
+        if ( getCurrentBottomFragment() !is HomeFragment) {
+            super.onBackPressed()
+            return
+        }
+        if (doubleBackPressed.get()) {
+            finish()
+            return
+        }
+        doubleBackPressed.compareAndSet(false, true)
+        Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show()
+        Handler().postDelayed({ doubleBackPressed.set(false) }, 2000)
+    }
 
 
+    /*
+    * This method is used to check for permissions
+    * */
+    private fun checkAndAskPermission() {
+        when (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            false -> {
+                homeActivityVM.postLatlong("","",SharedPrefUtils.getLong(
+                    application, key = SharedPrefUtils.SF_KEY_USER_ID
+                ))
+            }
+            else -> {
+                requestPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+        }
+
+    }
+
+    override fun getCurrentLocation(
+        isInternetConnected: Boolean?,
+        latitude: Double,
+        Longitude: Double
+    ) {
+        SharedPrefUtils.getLong(
+            application, key = SharedPrefUtils.SF_KEY_USER_ID
+        ).let {
+            homeActivityVM.postLatlong("$latitude","$Longitude",it)
+        }
+    }
 }

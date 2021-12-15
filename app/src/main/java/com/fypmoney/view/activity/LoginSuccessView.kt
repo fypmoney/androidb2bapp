@@ -5,10 +5,7 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.adjust.sdk.Adjust
-import com.adjust.sdk.AdjustEvent
 import com.fyp.trackr.models.*
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -16,12 +13,12 @@ import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.viewmodel.LoginSuccessViewModel
-import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.view_login_success.*
+import kotlinx.android.synthetic.main.view_walk_through_one.*
 import java.util.*
 import kotlin.concurrent.schedule
-import kotlinx.android.synthetic.main.view_walk_through_one.*
 
 /*
 * This class is used for show login success message
@@ -89,7 +86,7 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                 else-> {
                     if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
                         if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                            intentToActivity(HomeView::class.java)
+                            intentToActivity(HomeActivity::class.java)
                         } else {
                             intentToActivity(PermissionsActivity::class.java)
                         }
@@ -104,7 +101,7 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                                         Manifest.permission.READ_CONTACTS
                                     )
                                 ) {
-                                    intentToActivity(HomeView::class.java)
+                                    intentToActivity(HomeActivity::class.java)
                                 } else {
                                     intentToActivity(PermissionsActivity::class.java)
                                 }

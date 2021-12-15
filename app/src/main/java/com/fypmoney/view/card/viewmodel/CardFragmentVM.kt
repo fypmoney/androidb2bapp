@@ -53,6 +53,7 @@ class CardFragmentVM(application: Application) :
     }
 
     private fun callGetVirtualRequestApi() {
+        _state.value = CardState.LoadingCardDetails
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_VIRTUAL_CARD_REQUEST,
@@ -66,16 +67,15 @@ class CardFragmentVM(application: Application) :
 
     fun prepareInitialCardOption() {
         val cardOptionList = mutableListOf<CardOptionUiModel>()
-        cardOptionList.add(
-            CardOptionUiModel(
-                optionEvent = CardOptionEvent.CardSettings,
-                icon = AppCompatResources.getDrawable(
-                    PockketApplication.instance,
-                    R.drawable.ic_account_statement
-                ),
-                name = PockketApplication.instance.getString(R.string.account_stmt)
-            )
-        )
+        cardOptionList.add(CardOptionUiModel(optionEvent = CardOptionEvent.OrderCard,
+            icon = AppCompatResources.getDrawable(PockketApplication.instance, R.drawable.ic_order_card),
+            name = PockketApplication.instance.getString(R.string.order_card)))
+        cardOptionList.add(CardOptionUiModel(optionEvent = CardOptionEvent.CardSettings,
+            icon = AppCompatResources.getDrawable(PockketApplication.instance, R.drawable.ic_card_settings),
+            name = PockketApplication.instance.getString(R.string.card_settings)))
+        cardOptionList.add(CardOptionUiModel(optionEvent = CardOptionEvent.CardSettings,
+            icon = AppCompatResources.getDrawable(PockketApplication.instance, R.drawable.ic_account_statement),
+            name = PockketApplication.instance.getString(R.string.account_stmt)))
         _state.value = CardState.CardOptionState(cardOptionList)
     }
 
@@ -527,6 +527,7 @@ class CardFragmentVM(application: Application) :
 
     sealed class CardState {
         object Loading : CardState()
+        object LoadingCardDetails : CardState()
 
         data class BankProfilePopulate(
             var bankProfile: BankProfileResponseDetails?

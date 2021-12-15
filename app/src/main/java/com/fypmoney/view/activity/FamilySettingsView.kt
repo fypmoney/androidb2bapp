@@ -21,6 +21,7 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.LeaveFamilyBottomSheet
 import com.fypmoney.view.fragment.UpdateFamilyNameBottomSheet
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.viewmodel.FamilySettingsViewModel
 
@@ -122,7 +123,7 @@ class FamilySettingsView(val tabchangeListner: HomeTabChangeClickListener? = nul
                         R.string.family_settings_family_fypers
                     )
                 )
-                intentToActivity(HomeView::class.java)
+                intentToActivity(HomeActivity::class.java)
                 mViewModel.onLeaveFamilySuccess.value = false
             }
         }

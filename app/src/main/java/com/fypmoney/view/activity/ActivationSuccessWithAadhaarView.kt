@@ -4,11 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.adjust.sdk.Adjust
-import com.adjust.sdk.AdjustEvent
 import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.UserTrackr
-import com.fyp.trackr.models.push
 import com.fyp.trackr.models.trackr
 import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
@@ -17,8 +13,8 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewActivationSuccessWithAadhaarBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.viewmodel.ActivationSuccessWithAadhaarViewModel
-import com.moengage.core.internal.MoEConstants
 import kotlinx.android.synthetic.main.toolbar.*
 
 /*
@@ -66,7 +62,7 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
                 if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "1") {
 
                     if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                        intentToActivity(HomeView::class.java)
+                        intentToActivity(HomeActivity::class.java)
                     } else {
                         intentToActivity(PermissionsActivity::class.java)
                     }
@@ -77,7 +73,7 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
                         }
                         else -> {
                             if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                                intentToActivity(HomeView::class.java)
+                                intentToActivity(HomeActivity::class.java)
                             } else {
                                 intentToActivity(PermissionsActivity::class.java)
                             }
