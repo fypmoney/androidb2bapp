@@ -359,6 +359,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), Explore
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
         intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
         startActivity(intent)
+        //hello
     }
 
     override fun onFeedClick(position: Int, feedDetails: SectionContentItem) {
