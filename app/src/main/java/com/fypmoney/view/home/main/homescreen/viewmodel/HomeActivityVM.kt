@@ -1,20 +1,15 @@
 package com.fypmoney.view.home.main.homescreen.viewmodel
 
 import android.app.Application
-import android.os.Build
+import android.text.format.DateUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
-import com.fypmoney.connectivity.ApiConstant
-import com.fypmoney.connectivity.ApiUrl
-import com.fypmoney.connectivity.network.NetworkUtil
-import com.fypmoney.connectivity.retrofit.ApiRequest
-import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.UserDeviceInfo
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
+import kotlinx.coroutines.flow.MutableStateFlow
 import java.util.*
 
 class HomeActivityVM(application: Application): BaseViewModel(application) {
@@ -62,41 +57,18 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
         }
     }
 
-    fun postLatlong(latitude: String, longitude: String, userId: Long) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_USER_DEVICE_INFO,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_USER_DEVICE_INFO),
-                request_type = ApiUrl.PUT,
-                param = UserDeviceInfo(
-                    latitude = latitude,
-                    longitude = longitude,
-                    userId = userId,
-                    make = Build.BRAND,
-                    model = Build.MODEL,
-                    modelVersion = Build.ID,
-                    timezone = TimeZone.getDefault().getDisplayName(
-                        Locale.ROOT
-                    ),
-                    locale = PockketApplication.instance.resources.configuration.locale.country,
-                    dtoken = SharedPrefUtils.getString(
-                        getApplication(),
-                        SharedPrefUtils.SF_KEY_FIREBASE_TOKEN
-                    ) ?: "",
-                    isHomeViewed = "YES"
-
-                ), onResponse = this,
-                isProgressBar = false
-            )
-        )
+    private fun checkUserIsLandedFirstTime(): Boolean {
+        SharedPrefUtils.getLong(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_IS_USER_LANDED_ON_HOME_SCREEN_TIME
+        ).let {
+            return it == 0L || DateUtils.isToday(it)
+        }
     }
 
 
-
-
-
-    sealed class HomeActivityEvent{
-        object ProfileClicked:HomeActivityEvent()
-        object NotificationClicked:HomeActivityEvent()
+    sealed class HomeActivityEvent {
+        object ProfileClicked : HomeActivityEvent()
+        object NotificationClicked : HomeActivityEvent()
     }
 }

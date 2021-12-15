@@ -38,8 +38,10 @@ data class KycMobileVerifyResponseDetails(
     @SerializedName("showMobileOtpVerificationScreen") val showMobileOtpVerificationScreen: String,
     @SerializedName("showAdharInitScreen") val showAdharInitScreen: String,
     @SerializedName("showAdharOtpVerificationScreen") val showAdharOtpVerificationScreen: String,
-    @SerializedName("message") val message: String
-) : Serializable
+    @SerializedName("message") val message: String,
+    @SerializedName("postKycScreenCode") val postKycScreenCode: String,
+
+    ) : Serializable
 
 @Keep
 data class KycInitRequest(

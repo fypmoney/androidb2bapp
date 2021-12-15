@@ -1,5 +1,6 @@
 package com.fypmoney.services
 
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ContentResolver
@@ -7,7 +8,9 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
+import android.media.AudioAttributes
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -21,7 +24,7 @@ import com.fypmoney.R
 import com.fypmoney.notification.NotificationUtils
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.activity.HomeView
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.moengage.firebase.MoEFireBaseHelper
@@ -132,7 +135,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
                     AppConstants.TYPE_APP_SLIDER_NOTIFICATION -> {
-                        val intent = Intent(applicationContext, HomeActivity::class.java)
+                        val intent = Intent(applicationContext, HomeView::class.java)
                         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.NOTIFICATION)
                         intent.putExtra(
                             AppConstants.NOTIFICATION_APRID,
@@ -157,7 +160,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
                         } catch (e: Exception) {
                             e.printStackTrace()
-                            intentToActivity(HomeActivity::class.java)
+                            intentToActivity(HomeView::class.java)
                         }
 
                     }

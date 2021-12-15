@@ -19,13 +19,14 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.AddMoneyView
+import com.fypmoney.view.activity.HomeView
 import com.fypmoney.view.fragment.PriceBreakupBottomSheet
 import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
-import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.ordercard.model.PinCodeData
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.placeordersuccess.PlaceOrderSuccessActivity
+import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
@@ -326,7 +327,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
     }
     private fun callNotServicebleSheet() {
         val bottomSheet = NotServiceableBottomSheet(onNotifyClick = {
-            intentToActivity(HomeActivity::class.java)
+            intentToActivity(HomeView::class.java)
         })
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "NOTSERVICEABLE")

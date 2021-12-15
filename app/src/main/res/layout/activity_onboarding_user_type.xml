@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.fypmoney.viewmodel.UserTypeOnLoginViewModel" />
+            type="com.fypmoney.view.register.viewModel.UserTypeOnLoginViewModel" />
     </data>
 
 

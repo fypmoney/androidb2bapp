@@ -4,7 +4,11 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.adjust.sdk.Adjust
+import com.adjust.sdk.AdjustEvent
 import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.UserTrackr
+import com.fyp.trackr.models.push
 import com.fyp.trackr.models.trackr
 import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
@@ -13,8 +17,9 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewActivationSuccessWithAadhaarBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.register.InviteParentSiblingActivity
 import com.fypmoney.viewmodel.ActivationSuccessWithAadhaarViewModel
+import com.moengage.core.internal.MoEConstants
 import kotlinx.android.synthetic.main.toolbar.*
 
 /*
@@ -43,8 +48,13 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
             toolbar = toolbar,
             isBackArrowVisible = true
         )
-        trackr { it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)
-            it.name = TrackrEvent.KYCCOMPLETD }
+        trackr {
+            it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)
+            it.name = TrackrEvent.KYCCOMPLETD
+        }
+
+        var postkyc = intent?.getStringExtra(AppConstants.POSTKYCKEY)
+        mViewModel.postKycScreenCode.value = "1"
 
 
 
@@ -61,27 +71,26 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
             if (it) {
                 if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "1") {
 
-                    if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                        intentToActivity(HomeActivity::class.java)
-                    } else {
-                        intentToActivity(PermissionsActivity::class.java)
-                    }
+                    val intent = Intent(this, InviteParentSiblingActivity::class.java)
+                    intent.putExtra(AppConstants.USER_TYPE, "1")
+                    startActivity(intent)
+                    finish()
+
                 } else if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "0") {
                     when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
                         AppConstants.YES -> {
                             intentToActivity(ReferralCodeView::class.java)
                         }
                         else -> {
-                            if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                                intentToActivity(HomeActivity::class.java)
-                            } else {
-                                intentToActivity(PermissionsActivity::class.java)
-                            }
+                            startActivity(Intent(this, ChooseInterestRegisterView::class.java))
 
                         }
                     }
                 } else if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "90") {
-                    intentToActivity(AgeAllowedActivationView::class.java)
+                    val intent = Intent(this, InviteParentSiblingActivity::class.java)
+                    intent.putExtra(AppConstants.USER_TYPE, "90")
+                    startActivity(intent)
+                    finish()
                 }
 
 

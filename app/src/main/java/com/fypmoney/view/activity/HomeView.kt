@@ -33,7 +33,6 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.AddMoneySuccessBottomSheet
 import com.fypmoney.view.fragment.*
-import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
@@ -419,7 +418,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         bottomsheetInsufficient?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomsheetInsufficient?.show(supportFragmentManager, "TASKMESSAGE")
     }
-
     private fun intentToPayActivity(aClass: Class<*>, pay: String? = null) {
         val intent = Intent(this, aClass)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
@@ -497,11 +495,25 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
  * This method is used to check for permissions
  * */
     private fun checkAndAskPermission() {
+        /*when (checkPermission(Manifest.permission.READ_CONTACTS)) {
+            true -> {
+                Utility.getAllContactsInList(
+                    contentResolver,
+                    this,
+                    contactRepository = mViewModel.contactRepository
+                )
+            }
+            else -> {
+                requestPermission(Manifest.permission.READ_CONTACTS)
+            }
+        }*/
         when (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
             false -> {
-                mViewModel.postLatlong("","",SharedPrefUtils.getLong(
-                    application, key = SharedPrefUtils.SF_KEY_USER_ID
-                ))
+                mViewModel.postLatlong(
+                    "", "", SharedPrefUtils.getLong(
+                        application, key = SharedPrefUtils.SF_KEY_USER_ID
+                    )
+                )
             }
             else -> {
                 requestPermission(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -653,7 +665,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                         AddMoneySuccessBottomSheet(
                             it2,
                             it1,onViewDetailsClick=null,successTitle = "Payment Made Successfully to ${sendMoneyResponse.receiverName}",onHomeViewClick = {
-                                intentToActivity(HomeActivity::class.java)
+                                intentToActivity(HomeView::class.java)
                             }
                         )
                     }

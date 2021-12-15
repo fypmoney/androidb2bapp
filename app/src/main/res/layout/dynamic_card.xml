@@ -12,6 +12,9 @@
             name="viewHelper"
             type="com.fypmoney.view.home.main.explore.view.ExploreViewHelper" />
 
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.home.main.explore.viewmodel.ExploreFragmentVM" />
 
     </data>
 

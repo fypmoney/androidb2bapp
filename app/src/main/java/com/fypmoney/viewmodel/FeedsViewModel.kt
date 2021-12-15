@@ -21,7 +21,7 @@ import com.fypmoney.model.FeedResponseModel
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.activity.CreateAccountView
+
 import com.fypmoney.view.adapter.FeedsAdapter
 import com.google.gson.Gson
 import java.lang.Exception

@@ -2,7 +2,6 @@ package com.fypmoney.view.home.main.explore.adapters
 
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,15 +15,20 @@ import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
+import com.fypmoney.view.home.main.explore.viewmodel.ExploreFragmentVM
+
 import kotlinx.android.synthetic.main.reward_history_base.view.*
+
+import kotlin.collections.ArrayList
+import com.fypmoney.view.home.main.explore.*
 
 
 class ExploreBaseAdapter(
     val items: ArrayList<ExploreContentResponse>,
     val context: Context,
     val clickInterface: ExploreItemClickListener,
-    val scale: Float,
-    val titleTextColor:Int = Color.WHITE
+    val exploreFragmentVM: ExploreFragmentVM,
+    val scale: Float
 ) : RecyclerView.Adapter<ExploreBaseAdapter.ViewHolder>() {
 
 
@@ -47,7 +51,6 @@ class ExploreBaseAdapter(
 
 
         holder.rv_list.itemAnimator = DefaultItemAnimator()
-        holder.date_tv.setTextColor(titleTextColor)
         holder.date_tv.text = items[position].sectionDisplayText
         if (items[position].sectionContent != null && items[position].sectionContent?.size!! > 1) {
             var itemClickListener2 = object : ExploreItemClickListener {
@@ -72,7 +75,7 @@ class ExploreBaseAdapter(
 
 
             var typeAdapter =
-                ExploreAdapter(itemClickListener2, arrayList, context, scale)
+                ExploreAdapter(exploreFragmentVM, itemClickListener2, arrayList, context, scale)
             holder.rv_list.adapter = typeAdapter
         } else {
             holder.rv_list.visibility = View.GONE

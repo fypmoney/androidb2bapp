@@ -1,8 +1,7 @@
-package com.fypmoney.view.activity
+package com.fypmoney.view.register
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -10,7 +9,8 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.ActivityOnboardingUserTypeBinding
 import com.fypmoney.util.AppConstants
-import com.fypmoney.viewmodel.UserTypeOnLoginViewModel
+import com.fypmoney.view.activity.CreateAccountView
+import com.fypmoney.view.register.viewModel.UserTypeOnLoginViewModel
 
 /*
 * This class is used to handle account activation via aadhaar card
