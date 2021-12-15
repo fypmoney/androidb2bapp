@@ -50,7 +50,6 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
 
      fun fetchBalance(){
          _state.value = HomeFragmentState.LoadingBalanceState
-
          WebApiCaller.getInstance().request(
              ApiRequest(
                  ApiConstant.API_GET_WALLET_BALANCE,
