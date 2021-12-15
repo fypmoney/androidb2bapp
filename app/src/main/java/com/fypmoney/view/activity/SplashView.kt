@@ -217,6 +217,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                 startActivity(intent)
                                 finish()
                             }
+
                         }
                             else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "0") {
                                 when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
