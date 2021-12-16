@@ -20,38 +20,61 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.GetWalletBalanceResponse
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.home.model.CallToActionUiModel
 import com.fypmoney.view.home.main.home.model.QuickActionUiModel
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
+import com.fypmoney.view.storeoffers.model.offerDetailResponse
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 
 class HomeFragmentVM(application: Application): BaseViewModel(application) {
-    val event:LiveData<HomeFragmentEvent>
+    val event: LiveData<HomeFragmentEvent>
         get() = _event
     private val _event = LiveEvent<HomeFragmentEvent>()
 
-    val state:LiveData<HomeFragmentState>
+    val state: LiveData<HomeFragmentState>
         get() = _state
     private val _state = MutableLiveData<HomeFragmentState>()
-
+    var offerList: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
     private val isUserComesFirstTime = checkUserIsLandedFirstTime()
 
+    var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
+
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    var feedDetail: MutableLiveData<FeedDetails> = MutableLiveData()
 
     init {
         callToAction()
+        callgetOffer()
     }
 
-    fun onViewDetailsClicked(){
+    private fun callgetOffer() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.Api_LIGHTENING_DEALS,
+                NetworkUtil.endURL(ApiConstant.Api_LIGHTENING_DEALS),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    fun onViewDetailsClicked() {
         _event.value = HomeFragmentEvent.ViewCardDetails
     }
 
-     fun fetchBalance(){
-         _state.value = HomeFragmentState.LoadingBalanceState
-         WebApiCaller.getInstance().request(
-             ApiRequest(
+    fun fetchBalance() {
+        _state.value = HomeFragmentState.LoadingBalanceState
+        WebApiCaller.getInstance().request(
+            ApiRequest(
                  ApiConstant.API_GET_WALLET_BALANCE,
                  NetworkUtil.endURL(ApiConstant.API_GET_WALLET_BALANCE),
                  ApiUrl.GET,
@@ -75,44 +98,87 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
      }
      fun prepareQuickActionList() {
         val quickActionList = mutableListOf<QuickActionUiModel>()
-        quickActionList.add(QuickActionUiModel(id = QuickActionEvent.AddAction,
-            image = AppCompatResources.getDrawable(PockketApplication.instance,R.drawable.ic_add),
-            name = "Add"))
-        quickActionList.add(QuickActionUiModel(id = QuickActionEvent.PayAction,
-            image = AppCompatResources.getDrawable(PockketApplication.instance,R.drawable.ic_pay), name = "Pay"))
-        quickActionList.add(QuickActionUiModel(id = QuickActionEvent.OfferAction,
-            image = AppCompatResources.getDrawable(PockketApplication.instance,R.drawable.ic_offers), name = "Offer"))
-        _event.value = HomeFragmentEvent.QuickActionListReady(quickActionList)
+         quickActionList.add(
+             QuickActionUiModel(
+                 id = QuickActionEvent.AddAction,
+                 image = AppCompatResources.getDrawable(
+                     PockketApplication.instance,
+                     R.drawable.ic_add
+                 ),
+                 name = "Add"
+             )
+         )
+         quickActionList.add(
+             QuickActionUiModel(
+                 id = QuickActionEvent.PayAction,
+                 image = AppCompatResources.getDrawable(
+                     PockketApplication.instance,
+                     R.drawable.ic_pay
+                 ), name = "Pay"
+             )
+         )
+         quickActionList.add(
+             QuickActionUiModel(
+                 id = QuickActionEvent.OfferAction,
+                 image = AppCompatResources.getDrawable(
+                     PockketApplication.instance,
+                     R.drawable.ic_offers
+                 ), name = "Offer"
+             )
+         )
+         _event.value = HomeFragmentEvent.QuickActionListReady(quickActionList)
+     }
+
+    init {
+        callExplporeContent()
     }
 
-/*
-    fun prepareCallToActionList() {
-        val callToActionList = mutableListOf<CallToActionUiModel>()
-         callToActionList.add(
-             CallToActionUiModel(id = 1,
-            bannerImage = "https://ibb.co/SXxw3tz",
-                 callToAction = "Add Parent")
-         )
-         callToActionList.add(
-             CallToActionUiModel(id = 2,
-            bannerImage = "https://ibb.co/BN20RBZ",
-                 callToAction = "Add Money")
-         )
-         callToActionList.add(
-             CallToActionUiModel(id = 3,
-            bannerImage = "https://ibb.co/SXxw3tz",
-                 callToAction = "Add Intrest")
-         )
-         _state.value = HomeFragmentState.SuccessCallToActionState(callToActionList)
+    fun callExplporeContent() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_Explore,
+                NetworkUtil.endURL(ApiConstant.API_Explore) + "HOME_SCREEN",
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
     }
-*/
+
+    fun callFetchFeedsApi(id: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_FETCH_FEED_DETAILS,
+                NetworkUtil.endURL(ApiConstant.API_FETCH_FEED_DETAILS) + id,
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+
+    }
+
+    fun callFetchOfferApi(id: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_FETCH_OFFER_DETAILS,
+                NetworkUtil.endURL(ApiConstant.API_FETCH_OFFER_DETAILS) + id,
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+
+    }
+
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
-        when(purpose){
+        when (purpose) {
             ApiConstant.API_GET_WALLET_BALANCE -> {
                 if (responseData is GetWalletBalanceResponse) {
-                    responseData.getWalletBalanceResponseDetails.accountBalance.toIntOrNull()?.let { accountBalance->
+                    responseData.getWalletBalanceResponseDetails.accountBalance.toIntOrNull()
+                        ?.let { accountBalance ->
                         currentFormattedDate()?.let {
                             val map = hashMapOf<String,Any>()
                             map[CUSTOM_USER_WALLET_BALANCE] = accountBalance
@@ -143,13 +209,15 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                         val callToActionSections = responseData.data[0]?.sectionContent
                         if (callToActionSections != null) {
                             for (section in callToActionSections){
-                                callToActionList.add(CallToActionUiModel(id = section?.id!!,
-                                    bannerImage = section.contentResourceUri,
-                                    contentX = section.contentDimensionX,
-                                    contentY = section.contentDimensionY,
-                                    redirectionType = section.redirectionType,
-                                    redirectionResource = section.redirectionResource
-                                )
+                                callToActionList.add(
+                                    CallToActionUiModel(
+                                        id = section?.id!!,
+                                        bannerImage = section.contentResourceUri,
+                                        contentX = section.contentDimensionX,
+                                        contentY = section.contentDimensionY,
+                                        redirectionType = section.redirectionType,
+                                        redirectionResource = section.redirectionResource
+                                    )
                                 )
                             }
                         }
@@ -158,10 +226,60 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                 }
 
             }
+            ApiConstant.Api_LIGHTENING_DEALS -> {
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+//                var feeds = getObject(responseData.toString(),Array<offerDetailResponse>::class.java)
+                if (json != null && json.get("data").toString() != "[]") {
+                    val array = Gson().fromJson(
+                        json.get("data").toString(),
+                        Array<offerDetailResponse>::class.java
+                    )
+                    val arrayList = ArrayList(array.toMutableList())
+                    offerList.postValue(arrayList)
+                }
+            }
+            ApiConstant.API_Explore -> {
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson(
+                    json.get("data").toString(),
+                    Array<ExploreContentResponse>::class.java
+                )
+                val arrayList = ArrayList(array.toMutableList())
+                rewardHistoryList.postValue(arrayList)
+            }
+
+            ApiConstant.API_FETCH_FEED_DETAILS -> {
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson<FeedDetails>(
+                    json.get("data").toString(),
+                    FeedDetails::class.java
+                )
+
+                feedDetail.postValue(array)
+
+
+            }
+            ApiConstant.API_FETCH_OFFER_DETAILS -> {
+
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson(
+                    json.get("data").toString(),
+                    Array<offerDetailResponse>::class.java
+                )
+                val arrayList = ArrayList(array.toMutableList())
+                openBottomSheet.postValue(arrayList)
+
+
+            }
 
         }
     }
-
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         when(purpose){

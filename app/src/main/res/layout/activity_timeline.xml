@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+
+    </data>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/_10sdp"
+
+            >
+
+            <include
+                android:id="@+id/toolbarAnimation"
+                layout="@layout/toolbar_animation" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvTitleUserType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Step 1"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbarAnimation"
+
+                    />
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" of 3"
+                    android:textAlignment="center"
+                    android:textColor="#C3C3C3"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbarAnimation"
+
+                    />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:progress="10"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:progressBackgroundTint="#F2F2F2"
+                android:progressTint="@color/text_color_dark"
+                android:layout_marginEnd="@dimen/_16sdp"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_height="@dimen/_5sdp" />
+
+
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:backgroundTint="#F1ECFE"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:layout_constraintTop_toBottomOf="@+id/more_kyc_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginEnd="@dimen/_12sdp"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:src="@drawable/ic_check_green_tick"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/ivUserTypeIcon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginBottom="@dimen/_6sdp"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:contentDescription="userTypeIcon"
+                        android:src="@drawable/ic_timeline_account_creation" />
+
+
+                    <TextView
+                        android:id="@+id/tvUserType"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Step 1"
+                        style="@style/TextviewBold"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="20sp"
+
+
+                        app:layout_constraintStart_toEndOf="@+id/ivUserTypeIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:text="Account creation"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="14sp"
+
+
+                        app:layout_constraintStart_toEndOf="@+id/ivUserTypeIcon"
+                        app:layout_constraintTop_toBottomOf="@+id/tvUserType" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:backgroundTint="#EDFFEE"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:layout_constraintTop_toBottomOf="@+id/more_kyc_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginEnd="@dimen/_12sdp"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:src="@drawable/ic_check_green_tick"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/step2"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginBottom="@dimen/_6sdp"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:contentDescription="userTypeIcon"
+                        android:src="@drawable/ic_timline_step2" />
+
+
+                    <TextView
+
+                        android:id="@+id/textView5"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:text="Step 2"
+                        android:textColor="@color/text_color_dark"
+
+
+                        android:textSize="20sp"
+                        app:layout_constraintStart_toEndOf="@+id/step2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:text="KYC verification"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="14sp"
+
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/step2"
+                        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:backgroundTint="#FFE8EA"
+                app:cardCornerRadius="@dimen/_15sdp"
+                app:layout_constraintTop_toBottomOf="@+id/more_kyc_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_marginEnd="@dimen/_12sdp"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:src="@drawable/ic_check_green_tick"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginBottom="@dimen/_6sdp"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        android:contentDescription="userTypeIcon"
+                        android:src="@drawable/ic_timlinestep3" />
+
+
+                    <TextView
+                        android:id="@+id/tvUserType"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:text="Step 1"
+                        style="@style/TextviewBold"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="20sp"
+
+
+                        app:layout_constraintStart_toEndOf="@+id/ivUserTypeIcon"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
+                        android:text="Account creation"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="14sp"
+
+
+                        app:layout_constraintStart_toEndOf="@+id/ivUserTypeIcon"
+                        app:layout_constraintTop_toBottomOf="@+id/tvUserType" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnContinue"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvPan"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_15sdp"
+                android:textColor="@color/white"
+                android:text="Continue"
+                android:onClick="@{()->viewModel.onContinue()}"
+
+                />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</layout>

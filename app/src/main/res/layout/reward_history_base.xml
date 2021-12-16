@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/date_tv"
             android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/_6sdp" />
+            android:layout_marginTop="@dimen/_4sdp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

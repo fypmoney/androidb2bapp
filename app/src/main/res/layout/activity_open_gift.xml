@@ -61,12 +61,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/_52sdp"
-            android:textSize="18sp"
             android:layout_marginEnd="@dimen/_52sdp"
             android:layout_marginBottom="@dimen/_52sdp"
             android:gravity="center"
             android:text="Tap on the gift box to unveil your surprise gift"
-            android:textColor="#221F1F" />
+            android:textColor="#221F1F"
+            android:textSize="18sp" />
 
 
     </RelativeLayout>

@@ -250,14 +250,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                 }
                             }
                             else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "90") {
-                            if (Utility.getCustomerDataFromPreference()?.isInvited == null) {
-
-                                val intent = Intent(this, InviteParentSiblingActivity::class.java)
-                                intent.putExtra(AppConstants.USER_TYPE, "90")
-                                startActivity(intent)
-                                finish()
-
-                            } else {
+                            if (!Utility.getCustomerDataFromPreference()?.isInvited.isNullOrEmpty() && Utility.getCustomerDataFromPreference()?.isInvited == AppConstants.YES) {
                                 if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_INVITED) {
                                     intentToActivity(PendingRequestActivity::class.java)
                                 } else if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_APPROVED) {
@@ -282,6 +275,13 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
 
 
                                 }
+
+                            } else {
+                                val intent = Intent(this, InviteParentSiblingActivity::class.java)
+                                intent.putExtra(AppConstants.USER_TYPE, "90")
+                                startActivity(intent)
+                                finish()
+
 
                             }
                         }

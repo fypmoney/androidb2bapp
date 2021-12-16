@@ -84,6 +84,7 @@ import com.fypmoney.util.AppConstants.StoreofferScreen
 import com.fypmoney.util.AppConstants.StoreshopsScreen
 import com.fypmoney.view.fragment.OffersStoreActivity
 import com.fypmoney.view.fragment.StoresActivity
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 
 import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
@@ -1051,7 +1052,7 @@ object Utility {
 
         when (screenName) {
             HOMEVIEW -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
             }
             ReferralScreen -> {
                 intent = Intent(context, ReferAndEarnActivity::class.java)
@@ -1063,7 +1064,7 @@ object Utility {
             }
 
             CardScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, CardScreen)
 
             }
@@ -1073,7 +1074,7 @@ object Utility {
 
             }
             StoreScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreScreen)
 
             }
@@ -1090,12 +1091,12 @@ object Utility {
             }
 
             FEEDSCREEN -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FEEDSCREEN)
 
             }
             FyperScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FyperScreen)
 
             }

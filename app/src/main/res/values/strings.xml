@@ -1025,6 +1025,7 @@ Coming really soon!
     <string name="mynts_caps">MYNTS</string>
     <string name="card_caps">CARD</string>
     <string name="i_want_to_use">I want to use the app for myself</string>
+    <string name="offers_for_you">Offers for you</string>
 
 
     <string-array name="person_category_array">

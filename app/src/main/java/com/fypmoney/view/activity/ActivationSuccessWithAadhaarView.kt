@@ -54,7 +54,7 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
         }
 
         var postkyc = intent?.getStringExtra(AppConstants.POSTKYCKEY)
-        mViewModel.postKycScreenCode.value = "1"
+        mViewModel.postKycScreenCode.value = postkyc
 
 
 

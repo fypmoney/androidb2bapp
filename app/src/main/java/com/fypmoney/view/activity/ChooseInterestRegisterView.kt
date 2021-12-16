@@ -9,9 +9,8 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.SelectInterestViewActivityBinding
 import com.fypmoney.util.Utility
-import com.fypmoney.view.register.PersonalisedActivity
+import com.fypmoney.view.register.PersonalisedOffersActivity
 import com.fypmoney.viewmodel.SelectInterestViewModel
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar_animation.*
 
 /*
@@ -58,7 +57,7 @@ Create this method for observe the viewModel fields
             if (it) {
                 Utility.showToast("Your interest has been updated successfully")
                 mViewModel.onUpdateProfileSuccess.value = false
-                val intent = Intent(this, PersonalisedActivity::class.java)
+                val intent = Intent(this, PersonalisedOffersActivity::class.java)
 
                 val bndlAnimation = ActivityOptions.makeCustomAnimation(
                     applicationContext,

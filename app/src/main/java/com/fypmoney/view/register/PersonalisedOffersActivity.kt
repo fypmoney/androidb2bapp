@@ -13,7 +13,8 @@ import com.fypmoney.view.register.adapters.OffersAdapterAdapter
 import com.fypmoney.view.register.viewModel.PersonalisedOfferVm
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 
-class PersonalisedActivity : BaseActivity<ActivityPersonalizedOfferBinding, PersonalisedOfferVm>() {
+class PersonalisedOffersActivity :
+    BaseActivity<ActivityPersonalizedOfferBinding, PersonalisedOfferVm>() {
 
     private var typeAdapter: OffersAdapterAdapter? = null
     private lateinit var binding: ActivityPersonalizedOfferBinding

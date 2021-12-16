@@ -54,6 +54,9 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
             binding.skip.visibility = View.VISIBLE
         }
         binding.skip.setOnClickListener(View.OnClickListener {
+            gotData = true
+            timer?.onFinish()
+            timer?.cancel()
             val intent = Intent(this, ChooseInterestRegisterView::class.java)
 
             val bndlAnimation = ActivityOptions.makeCustomAnimation(

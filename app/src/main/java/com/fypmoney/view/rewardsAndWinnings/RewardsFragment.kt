@@ -130,7 +130,9 @@ class RewardsFragment : BaseFragment<FragmentRewardsBinding, RewardsFragmentVM>(
 
 
             tab.text = when (position) {
-                0 -> getString(R.string.overview)
+                0 -> {
+                    getString(R.string.overview)
+                }
                 1 -> getString(R.string.arcade)
                 2 -> getString(R.string.jackpot)
                 3 -> getString(R.string.history)

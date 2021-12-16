@@ -170,9 +170,6 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
     override fun onStart() {
         super.onStart()
-        mViewModel?.callTotalRewardsEarnings()
-        mViewModel?.callRewardSummary()
-        mViewModel?.callRewardHistory()
 
 
     }
@@ -260,54 +257,12 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
     override fun getViewModel(): RewardsAndVM {
         mViewModel = ViewModelProvider(this).get(RewardsAndVM::class.java)
-        setObserver(mViewModel!!)
+
 
         return mViewModel!!
     }
 
-    private fun setObserver(mViewModel: RewardsAndVM) {
-        mViewModel?.redeemproductDetails.observe(this) {
-            if (it != null) {
-                mViewModel?.redeemproductDetails.postValue(null)
-                Glide.with(this).asDrawable().load(it.scratchResourceHide)
-                    .into(object : CustomTarget<Drawable?>() {
 
-                        override fun onLoadCleared(@Nullable placeholder: Drawable?) {
-
-                        }
-
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            transition: Transition<in Drawable?>?
-                        ) {
-                            val intent =
-                                Intent(this@RewardsActivity, ScratchCardActivity::class.java)
-                            intent.putExtra(AppConstants.SECTION_ID, it.sectionId)
-                            intent.putExtra(AppConstants.NO_GOLDED_CARD, it.noOfJackpotTicket)
-                            it.sectionList?.forEachIndexed { pos, item ->
-                                if (item != null) {
-                                    ScratchCardActivity.sectionArrayList.add(item)
-                                }
-                            }
-                            ScratchCardActivity.imageScratch = resource
-
-                            intent.putExtra(
-                                AppConstants.ORDER_NUM,
-                                mViewModel.orderNumber.value
-                            )
-                            intent.putExtra(
-                                AppConstants.PRODUCT_HIDE_IMAGE,
-                                it.scratchResourceShow
-                            )
-                            startActivity(intent)
-                        }
-                    })
-
-            }
-
-
-        }
-    }
 
 
 }

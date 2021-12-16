@@ -58,11 +58,9 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
 
 
     /**
-     *
      * Override for set view model
      *
      * @return view model instance
-     *
      */
     override fun getViewModel(): CardFragmentVM = cardFragmentVM
 
@@ -74,7 +72,7 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
         activity?.window?.setFlags(
             WindowManager.LayoutParams.FLAG_SECURE,
             WindowManager.LayoutParams.FLAG_SECURE
-        );
+        )
         super.onCreate(savedInstanceState)
 
 
@@ -126,6 +124,8 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
             is CardFragmentVM.CardState.Error -> {
                 when (cardState.purpose) {
                     ApiConstant.API_GET_VIRTUAL_CARD_REQUEST, ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
+                        binding.loadingCardDetailsHdp.clearAnimation()
+                        binding.loadingCardDetailsHdp.toGone()
                         binding.errorCardDetailsCl.toVisible()
                         binding.cardCl.toGone()
                     }
@@ -147,12 +147,19 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
                 }
             }
             is CardFragmentVM.CardState.VirtualCardDetails -> {
+                binding.loadingCardDetailsHdp.clearAnimation()
+                binding.loadingCardDetailsHdp.toGone()
                 binding.errorCardDetailsCl.toGone()
                 binding.cardCl.toVisible()
                 binding.cardNoValueTv.text =
                     stringToCardNumber(cardState.virtualCardDetails.card_number)
                 binding.cardVaildThrValueTv.text =
                     cardState.virtualCardDetails.expiry_month + "/" + cardState.virtualCardDetails.expiry_year
+            }
+            CardFragmentVM.CardState.LoadingCardDetails -> {
+                binding.errorCardDetailsCl.toGone()
+                binding.cardCl.toGone()
+                binding.loadingCardDetailsHdp.toVisible()
             }
         }
     }
