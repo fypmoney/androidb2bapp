@@ -58,6 +58,7 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
 
 
     /**
+     *
      * Override for set view model
      *
      * @return view model instance
