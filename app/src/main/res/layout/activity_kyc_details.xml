@@ -46,20 +46,20 @@
                     android:layout_marginTop="20dp"
                     android:text="PAN/Aadhaar no*" />
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <EditText
                     android:id="@+id/pan_number"
-                    android:textAllCaps="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/pan_number_title"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                    android:hint=""
-                    android:imeOptions="actionDone"
-                    android:inputType="textEmailAddress"
+
+
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                    android:inputType="textCapCharacters"
                     android:text="@={viewModel.panNumber}"
+
 
                     android:textSize="@dimen/_14sdp" />
 
@@ -169,7 +169,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/dob_title"
-                            android:layout_marginTop="@dimen/edittextMarginTop"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:layout_marginEnd="@dimen/_12sdp"
                             android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray_8"
                             android:digits="qwertyuiopasdfghjklzxcvbnm ., QWERTYUIOPASDFGHJKLZXCVBNM"
@@ -206,7 +206,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_30sdp"
                             android:layout_below="@+id/gender"
-                            android:layout_marginTop="8dp"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
 
 
@@ -237,8 +237,8 @@
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:hint="Address line 1"
                     android:imeOptions="actionDone"
-                    android:maxLength="150"
                     android:inputType="textEmailAddress"
+                    android:maxLength="75"
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
                     android:text="@={viewModel.address}"
@@ -268,9 +268,9 @@
                     android:hint="Address line 2"
                     android:imeOptions="actionDone"
                     android:inputType="textEmailAddress"
+                    android:maxLength="75"
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                    android:maxLength="150"
                     android:text="@={viewModel.address2}"
                     android:textSize="@dimen/_14sdp" />
 

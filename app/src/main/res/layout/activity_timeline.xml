@@ -342,16 +342,18 @@
                     <TextView
 
                         style="@style/TextviewRegular"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
 
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_10sdp"
                         android:text="@string/personalize_your_app_experience"
                         android:textColor="@color/text_color_dark"
                         android:textSize="14sp"
-                        android:layout_marginStart="@dimen/_10sdp"
+                        android:layout_marginEnd="@dimen/_8sdp"
 
 
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/step3_tick"
                         app:layout_constraintStart_toEndOf="@+id/imageView6"
                         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
@@ -385,33 +387,40 @@
                 android:layout_marginEnd="@dimen/_20sdp"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
 
 
                     android:textSize="30sp"
-                    android:layout_height="wrap_content">
+                    android:src="@drawable/smiley_with_heart"
 
-                </TextView>
+                    android:layout_height="@dimen/_24sdp">
+
+                </ImageView>
 
                 <TextView
                     android:layout_width="wrap_content"
                     style="@style/TextviewBold"
                     android:gravity="center"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
                     android:layout_weight="6"
-                    android:text="Complete step 3 to unlock a surprise gift"
+                    android:text="@string/complete_all_3_steps_to_unlock_a_surprise_gift"
                     android:textSize="24sp"
                     android:layout_height="wrap_content">
 
                 </TextView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:text="U+1F60D"
-                    android:textSize="30sp"
-                    android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="@dimen/_24sdp"
 
-                </TextView>
+
+                    android:textSize="30sp"
+                    android:src="@drawable/smiley_with_heart"
+
+                    android:layout_height="@dimen/_24sdp">
+
+                </ImageView>
             </LinearLayout>
 
             <LinearLayout

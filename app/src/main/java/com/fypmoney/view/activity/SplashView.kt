@@ -186,7 +186,9 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                         if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
 
                             if (!Utility.getCustomerDataFromPreference()?.isInvited.isNullOrEmpty() && Utility.getCustomerDataFromPreference()?.isInvited == AppConstants.YES) {
-                                if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == ADD_MEMBER_STATUS_APPROVED) {
+                                if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_INVITED) {
+                                    intentToActivity(PendingRequestActivity::class.java)
+                                } else if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_APPROVED) {
                                     val userInterest =
                                         SharedPrefUtils.getArrayList(
                                             getApplication(),
@@ -205,10 +207,11 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                     } else {
                                         intentToActivity(ChooseInterestRegisterView::class.java)
                                     }
-                                } else {
-                                    intentToActivity(PendingRequestActivity::class.java)
-                                }
 
+
+                                } else {
+                                    intentToActivity(InviteParentSiblingActivity::class.java)
+                                }
                             } else {
 
                                 val intent =
@@ -274,6 +277,8 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                     }
 
 
+                                } else {
+                                    intentToActivity(InviteParentSiblingActivity::class.java)
                                 }
 
                             } else {

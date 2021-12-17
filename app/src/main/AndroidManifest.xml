@@ -364,15 +364,15 @@
         <activity
             android:name=".view.register.PersonalisedOffersActivity"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".view.activity.ChooseInterestRegisterView"
             android:screenOrientation="portrait">
-
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".view.register.PanAdhaarSelectionActivity"

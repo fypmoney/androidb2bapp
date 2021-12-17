@@ -1,17 +1,23 @@
 package com.fypmoney.view.activity
 
+import android.Manifest
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewCreateAccountBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.viewmodel.CreateAccountViewModel
 import kotlinx.android.synthetic.main.screen_home.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -180,7 +186,22 @@ Create this method for observe the viewModel fields
         }
         mViewModel.onUpdateProfileSuccess.observe(this) {
             if (it) {
-                intentToActivity(CreateAccountSuccessView::class.java)
+                if (Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO)
+                    intentToActivity(PanAdhaarSelectionActivity::class.java)
+                else {
+                    if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+                        intentToActivity(HomeActivity::class.java)
+                    } else {
+                        intentToActivity(PermissionsActivity::class.java)
+                    }
+
+
+                }
+                trackr {
+                    it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)
+                    it.name = TrackrEvent.KYCCOMPLETD
+                }
+
                 mViewModel.onUpdateProfileSuccess.value = false
             }
         }

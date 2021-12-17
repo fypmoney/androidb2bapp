@@ -65,6 +65,7 @@ Create this method for observe the viewModel fields
                     com.fypmoney.R.anim.slideinright
                 ).toBundle()
                 startActivity(intent, bndlAnimation)
+                finishAffinity()
             }
         }
         mViewModel.onAnswerLater.observe(this) {

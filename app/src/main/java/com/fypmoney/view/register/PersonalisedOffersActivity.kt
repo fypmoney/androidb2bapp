@@ -26,7 +26,7 @@ class PersonalisedOffersActivity :
         binding = getViewDataBinding()
 
         binding.continueBtn.setOnClickListener(View.OnClickListener {
-            intentToActivity(OpenGiftActivity::class.java)
+            intentToActivity(OpenGiftActivity::class.java, true)
         })
         setLottieAnimationToolBar(
             isBackArrowVisible = false,//back arrow visibility

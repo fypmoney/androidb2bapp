@@ -26,11 +26,11 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar_layout"
             android:layout_centerHorizontal="true"
-            android:layout_marginStart="@dimen/_46sdp"
+            android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_24sdp"
-            android:layout_marginEnd="@dimen/_46sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
             android:gravity="center"
-            android:text="Personalized Offers"
+            android:text="Your Personalized Offers"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,13 +40,13 @@
         <TextView
             android:id="@+id/question_relation"
             style="@style/TextviewRegular"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView2"
             android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_12sdp"
             android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:layout_marginBottom="@dimen/_2sdp"
             android:gravity="center"
             android:text="@string/based_on_the_interests_you_selected_we_have_handpicked_popular_offers_just_for_you"
@@ -60,12 +60,11 @@
             android:id="@+id/rv_offers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginEnd="@dimen/_12sdp"
             android:layout_above="@+id/continue_btn"
             android:layout_below="@+id/question_relation"
-
-            android:layout_marginTop="@dimen/_12sdp" />
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp" />
 
         <Button
 

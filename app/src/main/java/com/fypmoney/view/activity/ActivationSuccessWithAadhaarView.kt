@@ -50,14 +50,10 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
             imageView = ivToolBarBack,//back image view
             lottieAnimationView = ivAnimationGift
         )
-        trackr {
-            it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)
-            it.name = TrackrEvent.KYCCOMPLETD
-        }
 
         var postkyc = intent?.getStringExtra(AppConstants.POSTKYCKEY)
         mViewModel.postKycScreenCode.value = postkyc
-//        mViewModel.postKycScreenCode.value = "90"
+        mViewModel.postKycScreenCode.value = "90"
 
 
         setObserver()

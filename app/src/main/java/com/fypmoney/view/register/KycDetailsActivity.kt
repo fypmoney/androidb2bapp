@@ -33,6 +33,8 @@ import android.R.attr.inputType
 
 import android.R.attr.password
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import android.text.InputFilter
+import android.text.InputFilter.AllCaps
 
 
 class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailViewModel>(),
@@ -57,10 +59,18 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
 
         if (kyc_type == getString(R.string.pan)) {
             binding.panNumberTitle.text = "PAN*"
-            binding.panNumber.setInputType(InputType.TYPE_CLASS_TEXT)
+
+
+            binding.panNumber.filters = arrayOf<InputFilter>(
+                AllCaps(),
+                InputFilter.LengthFilter(10)
+            )
 
 
         } else {
+            binding.panNumber.filters = arrayOf<InputFilter>(
+                InputFilter.LengthFilter(12)
+            )
             binding.panNumber.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_CLASS_NUMBER)
             binding.panNumberTitle.text = "Aadhaar no*"
         }

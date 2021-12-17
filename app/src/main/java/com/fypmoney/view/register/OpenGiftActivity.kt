@@ -53,7 +53,7 @@ class OpenGiftActivity : BaseActivity<ActivityOpenGiftBinding, HomeActivityVM>()
                     com.fypmoney.R.anim.slideinright
                 ).toBundle()
                 startActivity(intent, bndlAnimation)
-                finish()
+                finishAffinity()
 
             }
 

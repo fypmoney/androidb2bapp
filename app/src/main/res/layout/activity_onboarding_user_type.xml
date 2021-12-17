@@ -154,7 +154,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
                             android:layout_marginTop="@dimen/_15sdp"
-                            android:text="Guardian"
+                            android:text="@string/parent_sibling"
                             android:textColor="@color/black"
                             android:textSize="18sp"
                             android:textStyle="bold"

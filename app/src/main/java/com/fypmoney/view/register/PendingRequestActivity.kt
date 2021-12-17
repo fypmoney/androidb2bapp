@@ -107,7 +107,7 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
                     com.fypmoney.R.anim.slideinright
                 ).toBundle()
                 startActivity(intent, bndlAnimation)
-                finish()
+                finishAffinity()
 
 
             } else if (it.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_DECLINED) {
@@ -122,7 +122,7 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
                     com.fypmoney.R.anim.slideinleft
                 ).toBundle()
                 startActivity(intent, bndlAnimation)
-                finish()
+                finishAffinity()
             }
 
         })

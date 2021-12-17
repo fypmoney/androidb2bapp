@@ -36,7 +36,7 @@
 
                     android:layout_height="@dimen/_64sdp"
                     android:layout_marginTop="@dimen/_6sdp"
-                    android:src="@drawable/opps_smiley"
+                    android:src="@drawable/smiley_invite"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -50,7 +50,7 @@
                     android:layout_marginTop="@dimen/_24sdp"
                     android:layout_marginEnd="@dimen/_42sdp"
                     android:gravity="center"
-                    android:text="Have a sibling / parent on Fyp? Enter registered phone no. to join the family"
+                    android:text="You need a teenager sibling/parent to use Fyp. Enter their registered mobile no."
                     android:textSize="@dimen/text_18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -65,6 +65,8 @@
                     android:layout_marginEnd="@dimen/_44sdp"
                     android:background="@drawable/round_rectangle_10_light_grey_stroke"
                     android:gravity="center"
+                    android:inputType="number"
+
                     android:textColor="#9FA1A4"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -123,13 +125,13 @@
                     app:layout_constraintTop_toBottomOf="@+id/view4" />
 
                 <ImageView
+                    android:id="@+id/share_invite"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_16sdp"
-                    android:id="@+id/share_invite"
+                    android:layout_marginBottom="@dimen/_12sdp"
                     android:src="@drawable/sibling_parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="@dimen/_12sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/question_relation" />

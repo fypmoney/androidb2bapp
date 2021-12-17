@@ -104,7 +104,9 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                     if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
 
                         if (!Utility.getCustomerDataFromPreference()?.isInvited.isNullOrEmpty() && Utility.getCustomerDataFromPreference()?.isInvited == AppConstants.YES) {
-                            if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_APPROVED) {
+                            if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_INVITED) {
+                                intentToActivity(PendingRequestActivity::class.java)
+                            } else if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_APPROVED) {
                                 val userInterest =
                                     SharedPrefUtils.getArrayList(
                                         getApplication(),
@@ -123,8 +125,10 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                                 } else {
                                     intentToActivity(ChooseInterestRegisterView::class.java)
                                 }
+
+
                             } else {
-                                intentToActivity(PendingRequestActivity::class.java)
+                                intentToActivity(InviteParentSiblingActivity::class.java)
                             }
 
                         } else {
@@ -187,6 +191,8 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                                 }
 
 
+                            } else {
+                                intentToActivity(InviteParentSiblingActivity::class.java)
                             }
 
                         } else {
