@@ -244,7 +244,7 @@ object AppConstants {
      Track Order : "TrackOrderScreen, 6"
 
      Chores :" ChoresScreen, 7"*/
-   const val ERROR_TYPE_AFTER_SPIN = "AfterSpin"
+    const val ERROR_TYPE_AFTER_SPIN = "AfterSpin"
     const val INSUFFICIENT_ERROR_CODE = "PKT_2037"
     const val AADHAR_VERIFICATION_ERROR_CODE = "PKT_2006"
     const val NEW = "Received"
@@ -253,6 +253,9 @@ object AppConstants {
     const val Pay = "Pay"
     const val REFER_MSG_SHARED_1 = "REFERAL_PKYC0"
     const val REFER_MSG_SHARED_2 = "REFERAL_PKYC1"
+
+    const val ONBOARD_SHARE_90 = "ONBOARD_SHARE_90"
+    const val ONBOARD_SHARE_1 = "ONBOARD_SHARE_1"
     const val CARD_ORDER_FLAG = "CARD_ORDER_FLAG"
     const val REFER_LINE1 = "REFER_LINE1"
     const val REFER_LINE2 = "REFER_LINE2"

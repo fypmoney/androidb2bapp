@@ -22,6 +22,8 @@ import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
 import com.fypmoney.util.AppConstants.ERROR_MESSAGE_HOME
 import com.fypmoney.util.AppConstants.IS_NEW_FEED_AVAILABLE
+import com.fypmoney.util.AppConstants.ONBOARD_SHARE_1
+import com.fypmoney.util.AppConstants.ONBOARD_SHARE_90
 import com.fypmoney.util.AppConstants.REFEREE_CASHBACK
 import com.fypmoney.util.AppConstants.REFER_LINE1
 import com.fypmoney.util.AppConstants.REFER_LINE2
@@ -143,7 +145,9 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
             "REFERAL_PKYC0",
             "REFERAL_PKYC1",
             "ERROR_MESSAGE_HOME",
-            "IS_NEW_FEED_AVAILABLE"
+            "IS_NEW_FEED_AVAILABLE",
+            "ONBOARD_SHARE_90",
+            "ONBOARD_SHARE_1"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -252,7 +256,20 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                     it.value
                                 )
                             }
-
+                            ONBOARD_SHARE_90 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_REGISTER_MSG_90,
+                                    it.value
+                                )
+                            }
+                            ONBOARD_SHARE_1 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_REGISTER_MSG_1,
+                                    it.value
+                                )
+                            }
                             REFER_MSG_SHARED_2 -> {
                                 SharedPrefUtils.putString(
                                     getApplication(),

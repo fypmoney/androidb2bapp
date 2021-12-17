@@ -9,7 +9,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityYourGiftsBinding
-import com.fypmoney.view.activity.HomeView
+
 import com.fypmoney.view.activity.PermissionsActivity
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.register.viewModel.YourgiftVM

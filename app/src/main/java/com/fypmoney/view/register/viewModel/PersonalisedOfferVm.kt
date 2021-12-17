@@ -41,8 +41,8 @@ class PersonalisedOfferVm(application: Application) : BaseViewModel(application)
     private fun callgetOffer() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.Api_OfferList,
-                NetworkUtil.endURL(ApiConstant.Api_OfferList),
+                ApiConstant.Api_LIGHTENING_DEALS,
+                NetworkUtil.endURL(ApiConstant.Api_LIGHTENING_DEALS),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = true
@@ -53,7 +53,7 @@ class PersonalisedOfferVm(application: Application) : BaseViewModel(application)
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.Api_OfferList -> {
+            ApiConstant.Api_LIGHTENING_DEALS -> {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 //                var feeds = getObject(responseData.toString(),Array<offerDetailResponse>::class.java)
 

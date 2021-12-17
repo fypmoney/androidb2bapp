@@ -74,9 +74,11 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                 if (responseData is CustomerInfoResponse) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
 //                    Utility.getCustomerDataFromPreference()?.postKycScreenCode = "0"
-                    onApiSuccess.value = true
-                    trackr { it.services = arrayListOf(TrackrServices.ADJUST,TrackrServices.FIREBASE)
-                        it.name = TrackrEvent.LOGINSUCCESS }
+
+                    trackr {
+                        it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)
+                        it.name = TrackrEvent.LOGINSUCCESS
+                    }
 
                     SharedPrefUtils.putString(
                         getApplication(),

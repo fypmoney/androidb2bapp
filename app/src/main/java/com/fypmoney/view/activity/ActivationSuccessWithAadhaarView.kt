@@ -21,6 +21,7 @@ import com.fypmoney.view.register.InviteParentSiblingActivity
 import com.fypmoney.viewmodel.ActivationSuccessWithAadhaarViewModel
 import com.moengage.core.internal.MoEConstants
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar_animation.*
 
 /*
 * This class is used to show success message on account activation with Aadhaar
@@ -43,10 +44,11 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setToolbarAndTitle(
-            context = this@ActivationSuccessWithAadhaarView,
-            toolbar = toolbar,
-            isBackArrowVisible = true
+        setLottieAnimationToolBar(
+            isBackArrowVisible = false,//back arrow visibility
+            isLottieAnimation = true,// lottie animation visibility
+            imageView = ivToolBarBack,//back image view
+            lottieAnimationView = ivAnimationGift
         )
         trackr {
             it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)
@@ -55,7 +57,7 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
 
         var postkyc = intent?.getStringExtra(AppConstants.POSTKYCKEY)
         mViewModel.postKycScreenCode.value = postkyc
-
+//        mViewModel.postKycScreenCode.value = "90"
 
 
         setObserver()

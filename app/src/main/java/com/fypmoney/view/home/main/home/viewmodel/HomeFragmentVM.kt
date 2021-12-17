@@ -62,7 +62,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                 NetworkUtil.endURL(ApiConstant.Api_LIGHTENING_DEALS),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
     }

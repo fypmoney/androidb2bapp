@@ -11,12 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <include
-            android:id="@+id/toolbar_layout"
-            layout="@layout/toolbar_animation"
-            tools:layout_editor_absoluteX="-30dp"
-            tools:layout_editor_absoluteY="0dp" />
+<TextView
+    android:layout_width="wrap_content"
+    android:text="🥳"
+    android:visibility="gone"
+    android:layout_height="wrap_content" />
 
 
         <TextView

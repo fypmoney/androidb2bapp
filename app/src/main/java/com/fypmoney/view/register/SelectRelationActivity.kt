@@ -20,6 +20,7 @@ import com.fypmoney.view.register.viewModel.SelectRelationVM
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserProfileView
 import com.fypmoney.view.register.model.SelectRelationModel
+import kotlinx.android.synthetic.main.toolbar_animation.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -42,7 +43,12 @@ class SelectRelationActivity : BaseActivity<ActivitySelectRelationshipBinding, S
 
         })
         userType = intent.getStringExtra(AppConstants.USER_TYPE)
-
+        setLottieAnimationToolBar(
+            isBackArrowVisible = true,//back arrow visibility
+            isLottieAnimation = true,// lottie animation visibility
+            imageView = ivToolBarBack,//back image view
+            lottieAnimationView = ivAnimationGift
+        )// lottie anima
 
         phone = intent?.getStringExtra("phone")
         nameOfUser = intent?.getStringExtra("name_user")

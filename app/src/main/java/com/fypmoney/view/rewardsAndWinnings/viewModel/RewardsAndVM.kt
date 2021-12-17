@@ -36,7 +36,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     val isApiLoading = ObservableField(true)
     val detailsCalling = ObservableField(false)
 
-    var totalmyntsClicked = MutableLiveData(false)
+
     var orderNumber = MutableLiveData("")
 
     val page = ObservableField(0)

@@ -167,7 +167,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             }
             is HomeFragmentVM.HomeFragmentState.SuccessCallToActionState -> {
                 binding.shimmerLayout.toGone()
-                binding.callToActionRv.toVisible()
+                if (it.callToActionList.size > 0) {
+                    binding.callToActionRv.toVisible()
+                    binding.callToActionCl.toVisible()
+                }
+
                 (binding.callToActionRv.adapter as CallToActionAdapter).submitList(it.callToActionList)
             }
             HomeFragmentVM.HomeFragmentState.LoadingCallToActionState -> TODO()

@@ -39,6 +39,7 @@ import com.fypmoney.util.AppConstants.PLAY_STORE_URL
 import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getInviteLinkWithExtraData
 import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getInviteLinkWithNoData
 import com.fypmoney.view.activity.LoginView
+import com.fypmoney.view.register.TimeLineActivity
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.view.webview.WebViewActivity
@@ -440,7 +441,9 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         }
 
         lottieAnimationView.setOnClickListener {
-            finish()
+            val intent = Intent(this@BaseActivity, TimeLineActivity::class.java)
+
+            startActivity(intent)
         }
 
 
@@ -516,12 +519,13 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     }
 
 
-    private fun onInviteUser(content:String) {
+    fun onInviteUser(content: String) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_TEXT, content)
         startActivity(Intent.createChooser(intent, "Share Link"))
     }
+
     override fun onTryAgainClicked() {
 
     }

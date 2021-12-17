@@ -31,7 +31,7 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewDataBinding()
-        var phone = intent?.getStringExtra("phone")
+
 
         setLottieAnimationToolBar(
             isBackArrowVisible = false,//back arrow visibility

@@ -43,10 +43,11 @@ class SelectRelationVM(application: Application) : BaseViewModel(application) {
 
 
     fun callIsAppUserApi(relationSibling: SendRelationSiblingParentResponse, userType: String?) {
+      var postKyc = Utility.getCustomerDataFromPreference()?.postKycScreenCode
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.Api_Request_Siblin_parent,
-                NetworkUtil.endURL(ApiConstant.Api_Request_Siblin_parent) + userType,
+                NetworkUtil.endURL(ApiConstant.Api_Request_Siblin_parent) + postKyc,
                 ApiUrl.POST,
                 relationSibling,
                 this, isProgressBar = true

@@ -1,8 +1,10 @@
 package com.fypmoney.view.register
 
 import android.Manifest
+import android.R.attr
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.view.View
 import androidx.activity.viewModels
 import com.fypmoney.BR
@@ -24,8 +26,13 @@ import com.fypmoney.R
 import com.fypmoney.databinding.ActivityKycDetailsBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.activity.*
+import kotlinx.android.synthetic.main.toolbar_animation.*
 import java.util.*
 import kotlin.collections.ArrayList
+import android.R.attr.inputType
+
+import android.R.attr.password
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 
 
 class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailViewModel>(),
@@ -50,9 +57,11 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
 
         if (kyc_type == getString(R.string.pan)) {
             binding.panNumberTitle.text = "PAN*"
+            binding.panNumber.setInputType(InputType.TYPE_CLASS_TEXT)
 
 
         } else {
+            binding.panNumber.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_CLASS_NUMBER)
             binding.panNumberTitle.text = "Aadhaar no*"
         }
         kycDetailsVM.kycType.value = kyc_type
@@ -67,6 +76,12 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
             android.R.layout.simple_spinner_dropdown_item
         )
         binding.spinnerGender.adapter = ad
+        setLottieAnimationToolBar(
+            isBackArrowVisible = true,//back arrow visibility
+            isLottieAnimation = true,// lottie animation visibility
+            imageView = ivToolBarBack,//back image view
+            lottieAnimationView = ivAnimationGift
+        )// lottie anima
     }
 
     private fun setObserver() {
@@ -84,7 +99,7 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
                         it.name = TrackrEvent.kyc_verification_other
                     }
                     if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                        intentToActivity(HomeView::class.java)
+                        intentToActivity(HomeActivity::class.java)
                     } else {
                         intentToActivity(PermissionsActivity::class.java)
                     }
@@ -95,7 +110,7 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
                         }
                         else -> {
                             if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                                intentToActivity(HomeView::class.java)
+                                intentToActivity(HomeActivity::class.java)
                             } else {
                                 intentToActivity(PermissionsActivity::class.java)
                             }

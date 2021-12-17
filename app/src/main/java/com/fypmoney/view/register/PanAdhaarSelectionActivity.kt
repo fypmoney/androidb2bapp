@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -21,6 +22,7 @@ import com.fypmoney.view.activity.EnterOtpView
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.fragment.kycDetailsBottomSheet
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
+import kotlinx.android.synthetic.main.toolbar_animation.*
 
 
 class PanAdhaarSelectionActivity :
@@ -48,8 +50,33 @@ class PanAdhaarSelectionActivity :
         mViewBinding.moreKycInfo.setOnClickListener {
             callKycDetailsSheeet()
         }
-
+        setLottieAnimationToolBar(
+            isBackArrowVisible = false,//back arrow visibility
+            isLottieAnimation = true,// lottie animation visibility
+            imageView = ivToolBarBack,//back image view
+            lottieAnimationView = ivAnimationGift
+        )
         setObserver()
+        setBackgrounds()
+    }
+
+    private fun setBackgrounds() {
+        setBackgroundDrawable(
+            mViewBinding.cvAadhaar,
+            ContextCompat.getColor(this, R.color.screenBackground),
+            38f,
+            ContextCompat.getColor(this, R.color.screenBackground),
+            0f,
+            false
+        )
+        setBackgroundDrawable(
+            mViewBinding.cvPan,
+            ContextCompat.getColor(this, R.color.screenBackground),
+            38f,
+            ContextCompat.getColor(this, R.color.screenBackground),
+            0f,
+            false
+        )
     }
 
     private fun setObserver() {
@@ -88,18 +115,18 @@ class PanAdhaarSelectionActivity :
         if (type == getString(R.string.pan)) {
             setBackgroundDrawable(
                 mViewBinding.cvAadhaar,
-                resources.getColor(R.color.white),
+                ContextCompat.getColor(this, R.color.screenBackground),
                 38f,
-                resources.getColor(R.color.white),
+                ContextCompat.getColor(this, R.color.screenBackground),
                 0f,
                 false
             )
 
             setBackgroundDrawable(
                 mViewBinding.cvPan,
-                resources.getColor(R.color.green_selected_light),
+                ContextCompat.getColor(this, R.color.green_selected_light),
                 38f,
-                resources.getColor(R.color.green_selected),
+                ContextCompat.getColor(this, R.color.green_selected),
                 4f,
                 false
             )
@@ -108,17 +135,17 @@ class PanAdhaarSelectionActivity :
         } else {
             setBackgroundDrawable(
                 mViewBinding.cvAadhaar,
-                resources.getColor(R.color.green_selected_light),
+                ContextCompat.getColor(this, R.color.green_selected_light),
                 38f,
-                resources.getColor(R.color.green_selected),
+                ContextCompat.getColor(this, R.color.green_selected),
                 4f,
                 false
             )
             setBackgroundDrawable(
                 mViewBinding.cvPan,
-                resources.getColor(R.color.white),
+                ContextCompat.getColor(this, R.color.screenBackground),
                 38f,
-                resources.getColor(R.color.white),
+                ContextCompat.getColor(this, R.color.screenBackground),
                 0f,
                 false
             )

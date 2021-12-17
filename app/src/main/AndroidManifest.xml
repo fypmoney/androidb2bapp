@@ -172,7 +172,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.register.UserTypeOnLoginView"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.activity.StayTunedView"
             android:screenOrientation="portrait" />
@@ -351,7 +356,10 @@
         <activity
             android:name=".view.register.PendingRequestActivity"
             android:screenOrientation="portrait">
-
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".view.register.PersonalisedOffersActivity"
@@ -364,10 +372,7 @@
         <activity
             android:name=".view.activity.ChooseInterestRegisterView"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".view.register.PanAdhaarSelectionActivity"
@@ -388,7 +393,10 @@
         <activity
             android:name=".view.register.YourGiftsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.register.WaitlistAprovalActivity" />
+        <activity android:name=".view.register.WaitlistAprovalActivity">
+
+        </activity>
+        <activity android:name=".view.register.TimeLineActivity"></activity>
 
 
     </application>

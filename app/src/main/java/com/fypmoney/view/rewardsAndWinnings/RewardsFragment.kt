@@ -1,26 +1,14 @@
 package com.fypmoney.view.rewardsAndWinnings
 
-import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
-import android.view.ViewGroup
-import androidx.annotation.Nullable
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.viewModels
-import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
-import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.trackr
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentRewardsBinding
 import com.fypmoney.view.home.main.rewards.viewmodel.RewardsFragmentVM
@@ -39,6 +27,7 @@ import androidx.viewpager2.widget.MarginPageTransformer
 import com.fypmoney.R
 
 import com.fypmoney.view.home.main.rewards.ViewPagerFragmentAdapter
+import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.google.android.material.tabs.TabLayoutMediator
 
 
@@ -88,7 +77,14 @@ class RewardsFragment : BaseFragment<FragmentRewardsBinding, RewardsFragmentVM>(
 
 
         myViewPager2 = _binding.viewPager
-        initializeTabs(_binding.tabLayout, requireActivity().intent)
+        Handler(Looper.getMainLooper()).postDelayed({
+            try {
+                initializeTabs(_binding.tabLayout, requireActivity().intent)
+            } catch (e: Exception) {
+
+            }
+
+        }, 200)
 
 
     }
@@ -106,15 +102,27 @@ class RewardsFragment : BaseFragment<FragmentRewardsBinding, RewardsFragmentVM>(
 //
 //        binding.viewPager.adapter = adapter
 //        binding.viewPager.offscreenPageLimit = 0
+        var tabchangeListner = object : HomeTabChangeClickListener {
+            override fun tabchange(pos: Int, str: String) {
+                when (str) {
+                    getString(R.string.jackpot) -> {
+                        binding.viewPager.currentItem = 2
+                    }
+                    getString(R.string.reward_history) -> {
+                        binding.viewPager.currentItem = 3
+                    }
+                }
 
+            }
+
+        }
 
         // add Fragments in your ViewPagerFragmentAdapter class
 
         // add Fragments in your ViewPagerFragmentAdapter class
-        arrayList.add(RewardsOverviewFragment())
+        arrayList.add(RewardsOverviewFragment(tabchangeListner))
         arrayList.add(RewardsSpinnerListFragment())
         arrayList.add(RewardsJackpotFragment())
-
         arrayList.add(RewardHistoryFragment())
 
 

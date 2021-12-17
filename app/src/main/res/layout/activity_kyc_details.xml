@@ -48,6 +48,7 @@
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/pan_number"
+                    android:textAllCaps="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/pan_number_title"
@@ -236,10 +237,11 @@
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:hint="Address line 1"
                     android:imeOptions="actionDone"
+                    android:maxLength="150"
                     android:inputType="textEmailAddress"
                     android:paddingStart="@dimen/edittextHintPaddingStart"
-                    android:text="@={viewModel.address}"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                    android:text="@={viewModel.address}"
 
                     android:textSize="@dimen/_14sdp" />
 
@@ -268,6 +270,7 @@
                     android:inputType="textEmailAddress"
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                    android:maxLength="150"
                     android:text="@={viewModel.address2}"
                     android:textSize="@dimen/_14sdp" />
 
@@ -292,9 +295,10 @@
                     android:layout_marginTop="8dp"
 
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                    android:hint="021 132"
+                    android:hint="Ex. for Delhi: 110001"
                     android:imeOptions="actionDone"
                     android:inputType="number"
+                    android:maxLength="6"
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
                     android:text="@={viewModel.pincode}"

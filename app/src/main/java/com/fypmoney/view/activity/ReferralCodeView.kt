@@ -16,6 +16,7 @@ import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.view.register.UserTypeOnLoginView
 import com.fypmoney.viewmodel.ReferralCodeViewModel
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar_animation.*
 
 /*
 * This class is used for show referral code
@@ -38,11 +39,12 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setToolbarAndTitle(
-            context = this@ReferralCodeView,
-            toolbar = toolbar,
-            isBackArrowVisible = true
-        )
+        setLottieAnimationToolBar(
+            isBackArrowVisible = false,//back arrow visibility
+            isLottieAnimation = true,// lottie animation visibility
+            imageView = ivToolBarBack,//back image view
+            lottieAnimationView = ivAnimationGift
+        )// lottie anima
         setObserver()
     }
 

@@ -51,18 +51,20 @@
 
             android:layout_above="@+id/get_code"
             android:layout_centerHorizontal="true"
+            android:layout_marginStart="@dimen/_38sdp"
             android:layout_marginTop="@dimen/_16sdp"
-            android:layout_marginBottom="@dimen/_2sdp"
 
+            android:layout_marginEnd="@dimen/_38sdp"
+            android:layout_marginBottom="@dimen/_6sdp"
             android:gravity="center"
-            android:text="We’ll notify you when the app is available Got code?"
+            android:text="We’ll notify you once the app is available. Or you can ask for the mobile number of anyone who is on Fyp."
             android:textColor="#221F1F"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-        <TextView
+        <Button
             android:id="@+id/get_code"
             style="@style/TextviewBold"
             android:layout_width="wrap_content"
@@ -70,11 +72,12 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
 
-            android:layout_marginBottom="@dimen/_52sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
 
             android:gravity="center"
-            android:text="Got code?"
-            android:textColor="#221F1F"
+            android:text="I have the number"
+
+            android:textColor="@color/white"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

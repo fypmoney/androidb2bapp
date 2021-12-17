@@ -18,6 +18,7 @@ import com.fypmoney.model.KycActivateAccountResponseDetails
 import com.fypmoney.model.KycInitResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.getString
 import com.fypmoney.util.Utility
 import com.fypmoney.view.register.model.SendKycDetails
 import java.util.*
@@ -56,6 +57,14 @@ class KycdetailViewModel(application: Application) : BaseViewModel(application) 
             TextUtils.isEmpty(panNumber.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.pan_empty_error))
             }
+            kycType.value == "PAN" && panNumber.value?.length != 10 -> {
+
+                Utility.showToast(PockketApplication.instance.getString(R.string.pan_lenght_error))
+            }
+            kycType.value == "ADHAR" && panNumber.value?.length != 12 -> {
+
+                Utility.showToast(PockketApplication.instance.getString(R.string.aadhaar_lenght_error))
+            }
             TextUtils.isEmpty(firstName.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.first_name_empty_error))
             }
@@ -77,7 +86,9 @@ class KycdetailViewModel(application: Application) : BaseViewModel(application) 
             TextUtils.isEmpty(pincode.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.pin_empty_error))
             }
-
+            pincode.value?.length != 6 -> {
+                Utility.showToast(PockketApplication.instance.getString(R.string.pin_lenght_error))
+            }
 
             TextUtils.isEmpty(kycType.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.kyc_empty_error))

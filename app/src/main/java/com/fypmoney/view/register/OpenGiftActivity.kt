@@ -4,6 +4,8 @@ import android.animation.Animator
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
@@ -21,6 +23,7 @@ import com.fypmoney.view.activity.UserProfileView
 import com.fypmoney.view.home.main.homescreen.viewmodel.HomeActivityVM
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import kotlinx.android.synthetic.main.fragment_assigned_task.view.*
+import kotlinx.android.synthetic.main.toolbar.*
 import java.lang.Exception
 
 class OpenGiftActivity : BaseActivity<ActivityOpenGiftBinding, HomeActivityVM>() {
@@ -31,8 +34,10 @@ class OpenGiftActivity : BaseActivity<ActivityOpenGiftBinding, HomeActivityVM>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewDataBinding()
+        Handler(Looper.getMainLooper()).postDelayed({
+            binding.giftBox.playAnimation()
+        }, 300)
 
-        binding.giftBox.setOnClickListener { binding.giftBox.playAnimation() }
         binding.giftBox.addAnimatorListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator?) {
                 Log.e("Animation:", "start")

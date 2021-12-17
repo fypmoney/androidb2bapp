@@ -18,6 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:paddingBottom="@dimen/_20sdp"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
@@ -33,7 +34,7 @@
 
                 android:textSize="18sp"
 
-                android:text="Why do we require your\nAadhaar card?"
+                android:text="Know about KYC"
 
                 android:textAlignment="center" />
 
@@ -62,10 +63,10 @@
                     android:layout_marginStart="@dimen/_10sdp"
 
                     android:textAlignment="viewStart"
+                    android:text="KYC (Know Your Customer) is a process of verifying a customer’s identity and address."
 
                     android:textColor="@color/text_color_faded"
-                    android:textSize="@dimen/_10sdp"
-                    tools:text="sfsfsfsf" />
+                    android:textSize="@dimen/_10sdp" />
 
             </LinearLayout>
 
@@ -97,7 +98,7 @@
 
                     android:textColor="@color/text_color_faded"
                     android:textSize="@dimen/_10sdp"
-                    tools:text="sfsfsfsf" />
+                    android:text="According to RBI guidelines, completing KYC is a mandatory procedure to open any wallet/bank accounts." />
 
             </LinearLayout>
 
@@ -129,7 +130,7 @@
 
                     android:textColor="@color/text_color_faded"
                     android:textSize="@dimen/_10sdp"
-                    tools:text="sfsfsfsf" />
+                    android:text="KYC process is done by our partnered bank and Fyp does not store any sensitive information." />
 
             </LinearLayout>
 
@@ -161,7 +162,7 @@
 
                     android:textColor="@color/text_color_faded"
                     android:textSize="@dimen/_10sdp"
-                    tools:text="sfsfsfsf" />
+                    android:text="The process can be completed using your Aadhaar card or PAN card." />
 
             </LinearLayout>
 

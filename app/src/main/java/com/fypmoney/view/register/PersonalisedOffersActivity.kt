@@ -12,6 +12,7 @@ import com.fypmoney.databinding.ActivityPersonalizedOfferBinding
 import com.fypmoney.view.register.adapters.OffersAdapterAdapter
 import com.fypmoney.view.register.viewModel.PersonalisedOfferVm
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
+import kotlinx.android.synthetic.main.toolbar_animation.*
 
 class PersonalisedOffersActivity :
     BaseActivity<ActivityPersonalizedOfferBinding, PersonalisedOfferVm>() {
@@ -27,7 +28,12 @@ class PersonalisedOffersActivity :
         binding.continueBtn.setOnClickListener(View.OnClickListener {
             intentToActivity(OpenGiftActivity::class.java)
         })
-
+        setLottieAnimationToolBar(
+            isBackArrowVisible = false,//back arrow visibility
+            isLottieAnimation = true,// lottie animation visibility
+            imageView = ivToolBarBack,//back image view
+            lottieAnimationView = ivAnimationGift
+        )// lottie anima
 
         setRecyclerView(binding)
         setObserver()

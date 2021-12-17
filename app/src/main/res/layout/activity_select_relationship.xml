@@ -40,6 +40,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_relations"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_10sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/continue_btn"

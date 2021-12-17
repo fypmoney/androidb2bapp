@@ -118,6 +118,8 @@
     <string name="first_name_empty_error">Please enter first name</string>
     <string name="last_name_empty_error">Please enter last name</string>
     <string name="pan_empty_error">Please enter PAN number</string>
+    <string name="pan_lenght_error">Enter correct PAN</string>
+    <string name="aadhaar_lenght_error">Enter correct Aadhaar</string>
     <string name="address_empty_error">Please enter your Address</string>
     <string name="address_2_empty_error">Please enter your full Address</string>
     <string name="email_empty_error">Please enter email id </string>
@@ -724,6 +726,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="road_no">Road Name, Area, Colony*</string>
     <string name="landmark">Landmark (Optional)</string>
     <string name="pin_empty_error">Please enter pin code</string>
+    <string name="pin_lenght_error">Enter correct pin code</string>
     <string name="state_empty_error">Please choose state</string>
     <string name="city_empty_error">Please choose city</string>
     <string name="hno_empty_error">Please enter House number and Building name</string>
@@ -1026,6 +1029,11 @@ Coming really soon!
     <string name="card_caps">CARD</string>
     <string name="i_want_to_use">I want to use the app for myself</string>
     <string name="offers_for_you">Offers for you</string>
+    <string name="i_am_a_teenager_and_my_age_is_between_11_21_years_old">I am a teenager and my age is between 11-21 years old.</string>
+
+    <string name="reward_history">History</string>
+    <string name="personalize_your_app_experience">Personalize your app experience</string>
+    <string name="smiley">U+1F60D</string>
 
 
     <string-array name="person_category_array">

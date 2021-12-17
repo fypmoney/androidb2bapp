@@ -98,6 +98,7 @@
     <color name="matBlack">#38414A</color>
     <color name="green_selected">#60AF70</color>
     <color name="green_selected_light">#D1F5D8</color>
+    <color name="text_grey">#AAB0B2</color>
 
 
 </resources>

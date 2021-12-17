@@ -10,7 +10,9 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityInviteParentSiblingBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.util.dynamiclinks.DynamicLinksUtil
 import com.fypmoney.view.activity.ChooseInterestRegisterView
 import com.fypmoney.view.register.viewModel.InviteParentSiblingVM
 import com.fypmoney.view.activity.NotificationView
@@ -20,7 +22,7 @@ import kotlinx.android.synthetic.main.toolbar_animation.*
 class InviteParentSiblingActivity :
     BaseActivity<ActivityInviteParentSiblingBinding, InviteParentSiblingVM>() {
 
-    private var userType: String? = "90"
+
     private lateinit var binding: ActivityInviteParentSiblingBinding
     private val inviteParentSiblingVM by viewModels<InviteParentSiblingVM> { defaultViewModelProviderFactory }
 
@@ -34,13 +36,16 @@ class InviteParentSiblingActivity :
             lottieAnimationView = ivAnimationGift
         )// lottie anima
         observeEvents()
-        userType = intent.getStringExtra(AppConstants.USER_TYPE)
 
-        if (userType == "90") {
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
             binding.skip.text = getString(R.string.skip_title)
         } else {
             binding.skip.text = getString(R.string.i_want_to_use)
         }
+        binding.shareInvite.setOnClickListener(View.OnClickListener {
+            Utility.getCustomerDataFromPreference()?.postKycScreenCode = "90"
+            shareUser()
+        })
         binding.skip.setOnClickListener(View.OnClickListener {
             if (binding.skip.text == getString(R.string.i_want_to_use)) {
                 val intent = Intent(this, WaitlistAprovalActivity::class.java)
@@ -84,6 +89,43 @@ class InviteParentSiblingActivity :
         }
 
 
+    }
+
+    fun shareUser() {
+        var content: String? = null
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null
+            && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1"
+        ) {
+            if (!SharedPrefUtils.getString(
+                    applicationContext,
+                    SharedPrefUtils.SF_REGISTER_MSG_1
+                ).isNullOrEmpty()
+            ) {
+                content = SharedPrefUtils.getString(
+                    applicationContext,
+                    SharedPrefUtils.SF_REGISTER_MSG_1
+                )
+
+            }
+
+        }
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null
+            && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "90"
+        ) {
+            if (!SharedPrefUtils.getString(
+                    applicationContext,
+                    SharedPrefUtils.SF_REGISTER_MSG_90
+                ).isNullOrEmpty()
+            ) {
+                content = SharedPrefUtils.getString(
+                    applicationContext,
+                    SharedPrefUtils.SF_REGISTER_MSG_90
+                )
+
+            }
+
+        }
+        content?.let { onInviteUser(DynamicLinksUtil.getInviteLinkWithNoData(it)) }
     }
 
 

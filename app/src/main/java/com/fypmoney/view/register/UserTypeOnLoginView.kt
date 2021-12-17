@@ -9,8 +9,10 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.ActivityOnboardingUserTypeBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.CreateAccountView
 import com.fypmoney.view.register.viewModel.UserTypeOnLoginViewModel
+import kotlinx.android.synthetic.main.toolbar_animation.*
 
 /*
 * This class is used to handle account activation via aadhaar card
@@ -38,6 +40,12 @@ class UserTypeOnLoginView :
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
         setObserver()
+        setLottieAnimationToolBar(
+            isBackArrowVisible = false,//back arrow visibility
+            isLottieAnimation = true,// lottie animation visibility
+            imageView = ivToolBarBack,//back image view
+            lottieAnimationView = ivAnimationGift
+        )
     }
 
      private fun setObserver() {
@@ -55,7 +63,7 @@ class UserTypeOnLoginView :
          mViewModel.isContinueClick.observe(this) {
              if (userTypeSelected =="NoUser"){
                  //todo show message according to user
-
+                 Utility.showToast("Select user type")
              }else {
                  val intent = Intent(this, CreateAccountView::class.java)
                  intent.putExtra(AppConstants.USER_TYPE_NEW, true)

@@ -40,7 +40,7 @@ import com.fypmoney.util.AppConstants.ReferralScreen
 import com.fypmoney.util.AppConstants.StoreScreen
 import com.fypmoney.util.AppConstants.TRACKORDER
 import com.fypmoney.view.activity.ChoresActivity
-import com.fypmoney.view.activity.HomeView
+
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
 import com.google.gson.Gson
@@ -1059,8 +1059,8 @@ object Utility {
 
             }
             JACKPOTTAB -> {
-                intent = Intent(context, RewardsActivity::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, JACKPOTTAB)
+//                intent = Intent(context, RewardsActivity::class.java)
+//                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, JACKPOTTAB)
             }
 
             CardScreen -> {

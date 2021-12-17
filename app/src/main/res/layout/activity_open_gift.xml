@@ -12,11 +12,7 @@
         android:layout_height="match_parent">
 
 
-        <include
-            android:id="@+id/toolbar_layout"
-            layout="@layout/toolbar_animation"
-            tools:layout_editor_absoluteX="-30dp"
-            tools:layout_editor_absoluteY="0dp" />
+
 
 
         <TextView
@@ -24,7 +20,7 @@
             style="@style/TextviewBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar_layout"
+
             android:layout_centerHorizontal="true"
             android:layout_marginStart="@dimen/_46sdp"
             android:layout_marginTop="@dimen/_24sdp"
@@ -62,6 +58,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginStart="@dimen/_52sdp"
             android:layout_marginEnd="@dimen/_52sdp"
+            android:visibility="invisible"
             android:layout_marginBottom="@dimen/_52sdp"
             android:gravity="center"
             android:text="Tap on the gift box to unveil your surprise gift"
