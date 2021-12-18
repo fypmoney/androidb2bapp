@@ -160,6 +160,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
+            android:visibility="gone"
             android:paddingHorizontal="16dp"
             android:paddingVertical="40dp"
             android:background="@drawable/ic_total_referral_won"

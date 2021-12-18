@@ -14,22 +14,17 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityOpenGiftBinding
-import com.fypmoney.databinding.ActivityPersonalizedOfferBinding
-import com.fypmoney.databinding.ActivityYourGiftsBinding
-import com.fypmoney.view.activity.ChooseInterestRegisterView
-import com.fypmoney.view.register.adapters.OffersAdapterAdapter
-import com.fypmoney.view.activity.NotificationView
-import com.fypmoney.view.activity.UserProfileView
-import com.fypmoney.view.home.main.homescreen.viewmodel.HomeActivityVM
+import com.fypmoney.view.Register.viewModel.openGiftVM
+
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import kotlinx.android.synthetic.main.fragment_assigned_task.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import java.lang.Exception
 
-class OpenGiftActivity : BaseActivity<ActivityOpenGiftBinding, HomeActivityVM>() {
+class OpenGiftActivity : BaseActivity<ActivityOpenGiftBinding, openGiftVM>() {
 
     private lateinit var binding: ActivityOpenGiftBinding
-    private val homeActivityVM by viewModels<HomeActivityVM> { defaultViewModelProviderFactory }
+    private val homeActivityVM by viewModels<openGiftVM> { defaultViewModelProviderFactory }
     private var itemsArrayList: ArrayList<offerDetailResponse> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,7 +81,7 @@ class OpenGiftActivity : BaseActivity<ActivityOpenGiftBinding, HomeActivityVM>()
      *
      * @return view model instance
      */
-    override fun getViewModel(): HomeActivityVM = homeActivityVM
+    override fun getViewModel(): openGiftVM = homeActivityVM
 
 
 }

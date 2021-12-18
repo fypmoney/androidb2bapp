@@ -424,9 +424,10 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     * */
     fun setLottieAnimationToolBar(
         isBackArrowVisible: Boolean? = false, //back arrow for back press by default visibility of
-        isLottieAnimation:Boolean?=false, // lottie animation by default on
-        imageView:ImageView,
-        lottieAnimationView:ImageView)
+        isLottieAnimation: Boolean? = false, // lottie animation by default on
+        imageView: ImageView,
+        lottieAnimationView: ImageView, toolbarTitle: String? = null
+    )
     {
         // set back arrow visibility
         if (isBackArrowVisible == true)imageView.visibility=View.VISIBLE
@@ -445,7 +446,11 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
 
             startActivity(intent)
         }
+        if (toolbarTitle != null) {
+            toolbar_title.text = toolbarTitle
+            toolbar_title.setTextColor(titleColor)
 
+        }
 
     }
 

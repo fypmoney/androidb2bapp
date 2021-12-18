@@ -16,15 +16,22 @@
     android:text="🥳"
     android:visibility="gone"
     android:layout_height="wrap_content" />
-
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:id="@+id/smiley"
+    android:layout_marginTop="@dimen/_30sdp"
+    android:src="@drawable/gift_won_smiley"
+    android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/textView2"
             style="@style/TextviewBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar_layout"
+            android:layout_below="@+id/smiley"
             android:layout_centerHorizontal="true"
+
             android:layout_marginStart="@dimen/_46sdp"
             android:layout_marginTop="@dimen/_24sdp"
             android:layout_marginEnd="@dimen/_46sdp"
@@ -50,50 +57,123 @@
                 android:text="You have won"
                 android:textColor="#231F20" />
 
-            <ImageView
-                android:id="@+id/mynts_image"
-                android:layout_width="152dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
 
-                android:layout_marginTop="@dimen/_12sdp"
-                android:src="@drawable/ic_mynt_won_register"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/mynts_got"
-                style="@style/TextviewRegular"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:gravity="center"
-                android:text=""
-                android:textColor="#231F20"
-                android:visibility="gone" />
+                android:layout_marginTop="@dimen/_24sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:id="@+id/mynts_layout"
+                android:background="@drawable/ic_order_card_price_bg">
 
-            <ImageView
-                android:id="@+id/user_image"
-                android:layout_width="152dp"
-                android:layout_height="152dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/_12sdp"
-                android:src="@drawable/ic_user"
-                android:visibility="gone" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/card_mynt"
+                    android:layout_width="36dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="18dp"
+                    app:srcCompat="@drawable/mynt"
+                    android:layout_marginTop="@dimen/dp24"
+                    android:layout_marginBottom="@dimen/dp24"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
 
-            <TextView
-                android:id="@+id/other_reward"
-                style="@style/TextviewRegular"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/free_mynt"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginStart="@dimen/_38sdp"
+                    android:text="@string/free"
+                    android:textColor="@color/grey2"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_mynt"
+                    app:layout_constraintStart_toEndOf="@+id/card_mynt"
+                    app:layout_constraintTop_toTopOf="@+id/card_mynt" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mynts_won"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp20"
+                    tools:text="₹399"
+                    android:textColor="@color/color_orange"
+                    android:textSize="31sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_mynt"
+                    app:layout_constraintStart_toEndOf="@+id/free_mynt"
+                    app:layout_constraintTop_toTopOf="@+id/card_mynt" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
+                android:id="@+id/card_layout"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:gravity="center"
-                android:textColor="#231F20"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/dp16"
+                android:background="@drawable/ic_order_card_price_bg">
 
-                android:visibility="gone" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/card_iv"
+                    android:layout_width="36dp"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="18dp"
+                    app:srcCompat="@drawable/ic_mini_card"
+                    android:layout_marginTop="@dimen/dp24"
+                    android:layout_marginBottom="@dimen/dp24"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/card_offer_price_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_38sdp"
+                    android:text="@string/fyp_card_for_just"
+                    android:textColor="@color/grey2"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_iv"
+                    app:layout_constraintStart_toEndOf="@+id/card_iv"
+                    app:layout_constraintTop_toTopOf="@+id/card_iv" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/card_offer_price_value_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp20"
+                    tools:text="₹399"
+                    android:textColor="@color/color_orange"
+                    android:textSize="31sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/card_iv"
+                    app:layout_constraintStart_toEndOf="@+id/card_offer_price_tv"
+                    app:layout_constraintTop_toTopOf="@+id/card_iv" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/card_actual_price_value_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey2"
+                    android:background="@drawable/strike_through_textview_drawable"
+                    android:textSize="20sp"
+                    android:gravity="end"
+                    android:text="₹799"
+
+                    app:layout_constraintEnd_toEndOf="@+id/card_offer_price_value_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/card_offer_price_value_tv"
+                    tools:text="₹799" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </LinearLayout>
 
@@ -112,7 +192,7 @@
 
 
             android:layout_marginBottom="@dimen/_24sdp"
-            android:text="@string/continue_txt"
+            android:text="@string/continue_to_home"
 
             android:textAllCaps="false"
 

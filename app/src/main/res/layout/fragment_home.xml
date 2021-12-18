@@ -248,7 +248,7 @@
                     tools:visibility="visible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="20dp"
+
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     app:layout_constraintTop_toBottomOf="@+id/quick_action_cl">
@@ -256,6 +256,7 @@
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/call_to_action_tv"
                         android:layout_width="0dp"
+                        android:layout_marginStart="20dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/product_sans_bold"
                         android:gravity="start"
@@ -264,7 +265,7 @@
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:drawablePadding="@dimen/dp10"
-                        android:drawableEnd="@drawable/ic_for_you"
+
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
@@ -275,6 +276,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:visibility="gone"
+                        android:paddingStart="20dp"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginTop="10dp"
                         app:layout_constraintTop_toBottomOf="@+id/call_to_action_tv"
@@ -286,6 +288,8 @@
                         tools:visibility="visible"
                         android:id="@+id/shimmerLayout"
                         android:layout_width="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginTop="10dp"
@@ -315,7 +319,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginStart="20dp"
+
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     app:layout_constraintTop_toBottomOf="@+id/call_to_action_cl">
@@ -327,24 +331,48 @@
                         android:fontFamily="@font/product_sans_bold"
                         android:gravity="start"
                         android:lineSpacingExtra="14sp"
+                        android:layout_marginStart="20dp"
                         android:visibility="gone"
                         android:text="@string/offers_for_you"
                         android:textColor="@color/black"
                         android:textSize="20sp"
-                        android:drawablePadding="@dimen/dp10"
-                        android:drawableEnd="@drawable/ic_for_you"
+
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_margin="@dimen/_4sdp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:cardCornerRadius="@dimen/_8sdp">
 
+                        <ImageView
+                            android:id="@+id/to_interest_screen"
+                            android:layout_width="@dimen/_180sdp"
+
+                            android:elevation="-2dp"
+                            android:src="@drawable/ic_interest"
+                            android:visibility="gone"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintTop_toBottomOf="@+id/lightening_deals_title"
+
+                            android:layout_height="@dimen/_180sdp" />
+
+                    </com.google.android.material.card.MaterialCardView>
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/lightening_deals_rv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+
                         android:visibility="gone"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginTop="10dp"
+                        android:paddingEnd="10dp"
                         app:layout_constraintTop_toBottomOf="@+id/lightening_deals_title"
                         tools:itemCount="5"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -355,6 +383,8 @@
                         android:id="@+id/shimmerLayout_lightening"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginTop="10dp"
                         app:shimmer_auto_start="true"

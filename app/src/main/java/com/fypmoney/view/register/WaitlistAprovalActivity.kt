@@ -9,15 +9,15 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityWaitlistBinding
-import com.fypmoney.view.activity.NotificationView
-import com.fypmoney.view.activity.UserProfileView
-import com.fypmoney.view.home.main.homescreen.viewmodel.HomeActivityVM
+import com.fypmoney.view.Register.viewModel.WaitingGiftVM
+
+
 import kotlinx.android.synthetic.main.toolbar_animation.*
 
-class WaitlistAprovalActivity : BaseActivity<ActivityWaitlistBinding, HomeActivityVM>() {
+class WaitlistAprovalActivity : BaseActivity<ActivityWaitlistBinding, WaitingGiftVM>() {
 
     private lateinit var binding: ActivityWaitlistBinding
-    private val homeActivityVM by viewModels<HomeActivityVM> { defaultViewModelProviderFactory }
+    private val homeActivityVM by viewModels<WaitingGiftVM> { defaultViewModelProviderFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,29 +40,9 @@ class WaitlistAprovalActivity : BaseActivity<ActivityWaitlistBinding, HomeActivi
             startActivity(intent, bndlAnimation)
             finishAffinity()
         })
-        observeEvents()
 
     }
 
-
-    private fun observeEvents() {
-        homeActivityVM.event.observe(this, {
-            handelEvents(it)
-        })
-    }
-
-    private fun handelEvents(it: HomeActivityVM.HomeActivityEvent?) {
-        when (it) {
-            HomeActivityVM.HomeActivityEvent.NotificationClicked -> {
-                startActivity(Intent(this, NotificationView::class.java))
-
-            }
-            HomeActivityVM.HomeActivityEvent.ProfileClicked -> {
-                startActivity(Intent(this, UserProfileView::class.java))
-            }
-
-        }
-    }
 
     /**
      * Override for set binding variable
@@ -81,7 +61,7 @@ class WaitlistAprovalActivity : BaseActivity<ActivityWaitlistBinding, HomeActivi
      *
      * @return view model instance
      */
-    override fun getViewModel(): HomeActivityVM = homeActivityVM
+    override fun getViewModel(): WaitingGiftVM = homeActivityVM
 
 
 }
