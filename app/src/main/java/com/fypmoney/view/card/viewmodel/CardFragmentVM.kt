@@ -89,7 +89,7 @@ class CardFragmentVM(application: Application) :
         )
         cardOptionList.add(
             CardOptionUiModel(
-                optionEvent = CardOptionEvent.CardSettings,
+                optionEvent = CardOptionEvent.AccountStatement,
                 icon = AppCompatResources.getDrawable(
                     PockketApplication.instance,
                     R.drawable.ic_account_statement

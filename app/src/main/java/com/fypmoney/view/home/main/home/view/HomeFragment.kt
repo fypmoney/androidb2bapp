@@ -34,7 +34,6 @@ import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
-import com.fypmoney.view.home.main.home.adapter.QuickActionAdapter
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.home.main.homescreen.view.LoadMoneyBottomSheet
 import com.fypmoney.view.register.adapters.OffersHomeAdapter
@@ -88,7 +87,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         _binding = getViewDataBinding()
         setupRecyclerView()
         setUpObserver()
-        homeFragmentVM.prepareQuickActionList()
+       // homeFragmentVM.prepareQuickActionList()
+        homeFragmentVM.callToAction()
         setObserver()
         setRecyclerView(_binding)
     }
@@ -96,7 +96,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
 
     private fun setupRecyclerView() {
-        with(binding.quickActionRv) {
+        /*with(binding.quickActionRv) {
             adapter = QuickActionAdapter(viewLifecycleOwner, onQuickActionClicked = {
                 when(it.id){
                     HomeFragmentVM.QuickActionEvent.AddAction -> {
@@ -114,7 +114,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                     }
                 }
             })
-        }
+        }*/
         with(binding.callToActionRv) {
             adapter = CallToActionAdapter(viewLifecycleOwner, onCallToActionClicked = {
                 val redirectionResources = it.redirectionResource?.split(",")?.get(0)
@@ -167,14 +167,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             }
             is HomeFragmentVM.HomeFragmentState.SuccessCallToActionState -> {
                 binding.shimmerLayout.toGone()
-                if (it.callToActionList.size > 0) {
+                if (it.callToActionList.isNotEmpty()) {
+                    binding.callToActionTv.text = it.sectionTitle
                     binding.callToActionRv.toVisible()
                     binding.callToActionCl.toVisible()
                 }
 
                 (binding.callToActionRv.adapter as CallToActionAdapter).submitList(it.callToActionList)
             }
-            HomeFragmentVM.HomeFragmentState.LoadingCallToActionState -> TODO()
+            HomeFragmentVM.HomeFragmentState.LoadingCallToActionState -> {
+
+            }
             HomeFragmentVM.HomeFragmentState.ShowLoadMoneySheetState -> {
                 val loadMoneyBottomSheet = LoadMoneyBottomSheet()
                 loadMoneyBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
@@ -186,16 +189,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
     private fun handelEvents(it: HomeFragmentVM.HomeFragmentEvent?) {
         when(it){
-            is HomeFragmentVM.HomeFragmentEvent.QuickActionListReady -> {
-                (binding.quickActionRv.adapter as QuickActionAdapter).submitList(it.quickActionList)
-                //homeFragmentVM.prepareCallToActionList()
-                homeFragmentVM.callToAction()
-            }
             HomeFragmentVM.HomeFragmentEvent.ViewCardDetails -> {
                 findNavController().navigate(R.id.navigation_card)
 
             }
-            null -> TODO()
+            HomeFragmentVM.HomeFragmentEvent.AddAction -> {
+                val intent = Intent(requireActivity(), AddMoneyView::class.java)
+                startActivity(intent)
+            }
+            HomeFragmentVM.HomeFragmentEvent.PayAction -> {
+                val intent = Intent(requireActivity(), ContactListView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.PAY)
+                startActivity(intent)
+            }
+            HomeFragmentVM.HomeFragmentEvent.UpiScanAction -> {
+                val upiComingSoonBottomSheet = UpiComingSoonBottomSheet()
+                upiComingSoonBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+                upiComingSoonBottomSheet.show(childFragmentManager, "UpiComingSoonBottomSheet")
+            }
+
         }
     }
 
@@ -357,8 +369,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                     }
                     AppConstants.EXPLORE_TYPE_STORIES -> {
                         if (!it.redirectionResource.isNullOrEmpty()) {
-//
-
                             homeFragmentVM.callFetchFeedsApi(it.redirectionResource)
 
                         }

@@ -99,6 +99,9 @@
     <color name="green_selected">#60AF70</color>
     <color name="green_selected_light">#D1F5D8</color>
     <color name="text_grey">#AAB0B2</color>
+    <color name="red1">#FF0000</color>
+    <color name="grey2">#B0B7B9</color>
+    <color name="textColor1">#221F1F</color>
 
 
 </resources>

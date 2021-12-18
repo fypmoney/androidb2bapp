@@ -2,7 +2,6 @@ package com.fypmoney.view.home.main.home.viewmodel
 
 import android.app.Application
 import android.text.format.DateUtils
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.currentFormattedDate
@@ -10,7 +9,6 @@ import com.fyp.trackr.models.CUSTOM_USER_WALLET_BALANCE
 import com.fyp.trackr.models.CUSTOM_USER_WALLET_BALANCE_UPDATE_TIME
 import com.fyp.trackr.models.UserTrackr
 import com.fyp.trackr.models.push
-import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -23,11 +21,9 @@ import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.GetWalletBalanceResponse
 import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.home.model.CallToActionUiModel
-import com.fypmoney.view.home.main.home.model.QuickActionUiModel
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.google.gson.Gson
@@ -48,7 +44,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
 
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
-    var feedDetail: MutableLiveData<FeedDetails> = MutableLiveData()
+    var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
     init {
         callToAction()
@@ -69,6 +65,17 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
 
     fun onViewDetailsClicked() {
         _event.value = HomeFragmentEvent.ViewCardDetails
+    }
+
+    fun onAddMoneyClicked(){
+        _event.value = HomeFragmentEvent.AddAction
+
+    }
+    fun onPayMoneyClicked(){
+        _event.value = HomeFragmentEvent.PayAction
+    }
+    fun onUpiScanClicked(){
+        _event.value = HomeFragmentEvent.UpiScanAction
     }
 
     fun fetchBalance() {
@@ -96,6 +103,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
              )
          )
      }
+/*
      fun prepareQuickActionList() {
         val quickActionList = mutableListOf<QuickActionUiModel>()
          quickActionList.add(
@@ -128,6 +136,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
          )
          _event.value = HomeFragmentEvent.QuickActionListReady(quickActionList)
      }
+*/
 
     init {
         callExplporeContent()
@@ -221,7 +230,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                                 )
                             }
                         }
-                        _state.value = HomeFragmentState.SuccessCallToActionState(callToActionList)
+                        _state.value = HomeFragmentState.SuccessCallToActionState(callToActionList,responseData.data[0]?.sectionDisplayText)
                     }
                 }
 
@@ -311,15 +320,18 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
         object ErrorBalanceState:HomeFragmentState()
         data class LowBalanceAlertState(var balanceIsLow:Boolean):HomeFragmentState()
         object ShowLoadMoneySheetState:HomeFragmentState()
-        data class SuccessCallToActionState(var callToActionList:List<CallToActionUiModel>):HomeFragmentState()
+        data class SuccessCallToActionState(var callToActionList:List<CallToActionUiModel>,var sectionTitle:String?):HomeFragmentState()
     }
     sealed class HomeFragmentEvent{
-        data class QuickActionListReady(var quickActionList:List<QuickActionUiModel>):HomeFragmentEvent()
+        //data class QuickActionListReady(var quickActionList:List<QuickActionUiModel>):HomeFragmentEvent()
         object ViewCardDetails:HomeFragmentEvent()
+        object AddAction:HomeFragmentEvent()
+        object PayAction:HomeFragmentEvent()
+        object UpiScanAction:HomeFragmentEvent()
     }
-    sealed class QuickActionEvent{
+   /* sealed class QuickActionEvent{
         object AddAction:QuickActionEvent()
         object PayAction:QuickActionEvent()
         object OfferAction:QuickActionEvent()
-    }
+    }*/
 }
