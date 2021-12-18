@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.SystemClock
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -44,9 +43,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
         binding = getViewDataBinding()
         setupNavController()
         observeEvents()
-        binding.help.setOnClickListener(View.OnClickListener {
+        binding.help.setOnClickListener {
             callFreshChat(applicationContext)
-        })
+        }
         trackr {
             it.name = TrackrEvent.home_screen
             it.add(
@@ -183,6 +182,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
 
     override fun onStart() {
         super.onStart()
+        homeActivityVM.storeFirstTimeUserLandedOnHomeScreen()
         showNewMessage()
 
     }
@@ -263,4 +263,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
             homeActivityVM.postLatlong("$latitude", "$Longitude", it)
         }
     }
+
+
 }
