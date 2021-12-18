@@ -22,9 +22,7 @@ import com.fypmoney.util.AppConstants.FyperScreen
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.view.StoreWebpageOpener2
-import com.fypmoney.view.activity.AddMoneyView
-import com.fypmoney.view.activity.ContactListView
-import com.fypmoney.view.activity.UserFeedsDetailView
+import com.fypmoney.view.activity.*
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
@@ -218,14 +216,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
                 setRecyclerView(_binding, list)
             })
+        _binding.toInterestScreen.setOnClickListener(View.OnClickListener {
+            var intent = Intent(requireContext(), ChooseInterestHomeView::class.java)
+
+            startActivity(intent)
+        })
         homeFragmentVM.offerList.observe(viewLifecycleOwner, {
             itemsArrayList.clear()
             itemsArrayList.addAll(it)
+
             if (itemsArrayList.size > 0) {
-               itemsArrayList.add(offerDetailResponse())
+
+                itemsArrayList.add(offerDetailResponse())
                 _binding.shimmerLayoutLightening.visibility = View.GONE
                 _binding.lighteningDealsTitle.visibility = View.VISIBLE
                 _binding.lighteningDealsRv.visibility = View.VISIBLE
+                _binding.toInterestScreen.visibility = View.GONE
+            } else {
+                _binding.shimmerLayoutLightening.visibility = View.GONE
+                _binding.toInterestScreen.visibility = View.VISIBLE
+                _binding.lighteningDealsTitle.visibility = View.VISIBLE
+                _binding.lighteningDealsRv.visibility = View.GONE
             }
             typeAdapter?.notifyDataSetChanged()
         })

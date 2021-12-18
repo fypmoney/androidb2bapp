@@ -17,9 +17,8 @@ import com.fypmoney.databinding.ActivityTimelineBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.Register.viewModel.TimelineViewModel
-import com.fypmoney.view.activity.LoginView
 
-import com.fypmoney.view.register.viewModel.PendingRequestVm
+import com.fypmoney.view.activity.LoginView
 
 
 class TimeLineActivity : BaseActivity<ActivityTimelineBinding, TimelineViewModel>() {
