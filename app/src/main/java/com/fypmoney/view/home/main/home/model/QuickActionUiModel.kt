@@ -5,7 +5,7 @@ import androidx.annotation.Keep
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 @Keep
 data class QuickActionUiModel(
-    var id: HomeFragmentVM.QuickActionEvent,
+    var id: HomeFragmentVM,
     var image:Drawable?,
     var name:String
 )

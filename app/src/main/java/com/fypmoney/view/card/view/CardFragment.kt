@@ -8,7 +8,6 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -167,7 +166,12 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
     private fun handleEvents(cardEvent: CardFragmentVM.CardEvent) {
         when (cardEvent) {
             is CardFragmentVM.CardEvent.OnCVVClicked -> {
-                askForDevicePassword()
+                if(!cardFragmentVM.isCvvVisible){
+                    askForDevicePassword()
+                }else{
+                    binding.cardCvvValueTv.text = getString(R.string.three_star)
+                    binding.viewCvvIv.setImageResource(R.drawable.ic_icon_feather_eye_off)
+                }
             }
             CardFragmentVM.CardEvent.AccountStatementEvent -> {
                 intentToActivity(BankTransactionHistoryView::class.java)

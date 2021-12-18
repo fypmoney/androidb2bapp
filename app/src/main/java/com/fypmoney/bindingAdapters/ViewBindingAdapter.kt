@@ -188,9 +188,15 @@ fun setSomePartOfTextInColor(
     textView: TextView,
     normalText: String,
     colorText: String,
-    colorCode: String
+    colorCode: String,
+    remainingNormalText:String? = null
 ) {
-    val spannableText = "$normalText $colorText"
+    val spannableText = if(remainingNormalText!=null){
+        "$normalText $colorText $remainingNormalText"
+    }else{
+        "$normalText $colorText"
+    }
+
 
     val spannable: Spannable = SpannableString(spannableText)
 

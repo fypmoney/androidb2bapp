@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.ordercard.cardofferdetails.CardOfferDetailsVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor"
+        tools:context=".view.ordercard.cardofferdetails.CardOfferDetailsActivity">
+
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.core.widget.NestedScrollView
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:id="@+id/card_price_fl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="16dp"
+                    android:paddingHorizontal="@dimen/dp20"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/offer_time_period_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/limited_period"
+                        android:textColor="@color/white"
+                        android:paddingHorizontal="16dp"
+                        android:translationZ="1dp"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_gravity="end|top"
+                        android:paddingVertical="@dimen/dp5"
+                        app:customBackgroundColor="@{@color/red1}"
+                        app:customIsRounded="@{false}"
+                        app:customCornerRadius="@{@dimen/dp6}"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp16"
+                        android:background="@drawable/ic_order_card_price_bg">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/card_iv"
+                            android:layout_width="36dp"
+                            android:layout_height="56dp"
+                            android:layout_marginStart="18dp"
+                            app:srcCompat="@drawable/ic_mini_card"
+                            android:layout_marginTop="@dimen/dp24"
+                            android:layout_marginBottom="@dimen/dp24"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/card_offer_price_tv"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_40"
+                            android:text="@string/fyp_card_for_just"
+                            android:textColor="@color/grey2"
+                            android:textSize="21sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/card_iv"
+                            app:layout_constraintStart_toEndOf="@+id/card_iv"
+                            app:layout_constraintTop_toTopOf="@+id/card_iv" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/card_offer_price_value_tv"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp20"
+                            tools:text="₹399"
+                            android:textColor="@color/color_orange"
+                            android:textSize="31sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/card_iv"
+                            app:layout_constraintStart_toEndOf="@+id/card_offer_price_tv"
+                            app:layout_constraintTop_toTopOf="@+id/card_iv" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/card_actual_price_value_tv"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/grey2"
+                            android:background="@drawable/strike_through_textview_drawable"
+                            android:textSize="20sp"
+                            android:gravity="end"
+                            app:layout_constraintEnd_toEndOf="@+id/card_offer_price_value_tv"
+                            app:layout_constraintTop_toBottomOf="@+id/card_offer_price_value_tv"
+                            tools:text="₹799" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </FrameLayout>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/offer_details_heading_tv"
+                    style="@style/TextviewBold"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/your_fyp_card_comes_with_great_benefits"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
+                    android:gravity="center"
+                    android:layout_marginHorizontal="30dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_price_fl"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/title_1_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginStart="24dp"
+                    app:srcCompat="@drawable/ic_coin_rounded"
+                    app:layout_constraintTop_toBottomOf="@+id/offer_details_heading_tv"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/title_1_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/earn_5x_mynts_on_both_online_and_offline_transactions"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:gravity="start"
+                    android:layout_marginStart="@dimen/dp20"
+                    android:layout_marginEnd="@dimen/dp20"
+                    app:layout_constraintStart_toEndOf="@+id/title_1_iv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/title_1_iv"
+                    app:layout_constraintBottom_toBottomOf="@+id/title_1_iv"/>
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/title_2_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginStart="24dp"
+                    app:srcCompat="@drawable/ic_card_rounded"
+                    app:layout_constraintTop_toBottomOf="@+id/title_1_iv"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/title_2_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/on_offline_transactions"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:gravity="start"
+                    android:layout_marginStart="@dimen/dp20"
+                    android:layout_marginEnd="@dimen/dp20"
+                    app:layout_constraintStart_toEndOf="@+id/title_2_iv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/title_2_iv"
+                    app:layout_constraintBottom_toBottomOf="@+id/title_2_iv"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/title_3_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginStart="24dp"
+                    app:srcCompat="@drawable/ic_seat_rounded"
+                    app:layout_constraintTop_toBottomOf="@+id/title_2_iv"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/title_3_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/get_one_airport_lounge_access_worth_1500"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:gravity="start"
+                    android:layout_marginStart="@dimen/dp20"
+                    android:layout_marginEnd="@dimen/dp20"
+                    app:layout_constraintStart_toEndOf="@+id/title_3_iv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/title_3_iv"
+                    app:layout_constraintBottom_toBottomOf="@+id/title_3_iv"/>
+
+
+                <Button
+                    android:id="@+id/continue_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/continue_txt"
+                    android:textSize="18sp"
+                    android:layout_marginTop="40dp"
+                    android:onClick="@{()->viewModel.onContinueClicked()}"
+                    android:backgroundTint="@color/color_task_card_green"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/title_3_iv"
+                    android:layout_marginBottom="@dimen/dp20"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
