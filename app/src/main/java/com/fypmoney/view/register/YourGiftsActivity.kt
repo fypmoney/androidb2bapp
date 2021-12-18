@@ -9,6 +9,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityYourGiftsBinding
+import com.fypmoney.util.Utility
 
 import com.fypmoney.view.activity.PermissionsActivity
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
@@ -49,14 +50,16 @@ class YourGiftsActivity : BaseActivity<ActivityYourGiftsBinding, YourgiftVM>() {
 
                 list.forEach {
                     if (it.giftType == getString(R.string.mynts_caps)) {
-                        binding.myntsGot.visibility = View.VISIBLE
-                        binding.myntsImage.visibility = View.VISIBLE
-                        binding.myntsGot.text = it.message
+
+                        binding.myntsLayout.visibility = View.VISIBLE
+                        binding.myntsWon.text = it.message
 
                     } else if (it.giftType == getString(R.string.card_caps)) {
-                        binding.userImage.visibility = View.VISIBLE
-                        binding.otherReward.text = it.message
-                        binding.otherReward.visibility = View.VISIBLE
+
+
+                        binding.cardOfferPriceValueTv.text =
+                            "₹" + Utility.convertToRs(it.value.toString())
+                        binding.cardLayout.visibility = View.VISIBLE
                     }
                 }
             })
