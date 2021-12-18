@@ -1,11 +1,8 @@
-package com.fypmoney.view.Register.viewModel
+package com.fypmoney.view.register.viewModel
 
 import android.app.Application
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -14,12 +11,9 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.CustomerInfoResponse
-import com.fypmoney.model.ProfileImageUploadResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import okhttp3.MultipartBody
 
 /*
 * This is used to handle user profile

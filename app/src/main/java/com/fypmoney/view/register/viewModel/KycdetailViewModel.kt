@@ -15,13 +15,8 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.InterestEntity
 import com.fypmoney.model.KycActivateAccountResponse
 import com.fypmoney.model.KycActivateAccountResponseDetails
-import com.fypmoney.model.KycInitResponse
-import com.fypmoney.util.AppConstants
-import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.SharedPrefUtils.Companion.getString
 import com.fypmoney.util.Utility
 import com.fypmoney.view.register.model.SendKycDetails
-import java.util.*
 import kotlin.collections.ArrayList
 
 /*

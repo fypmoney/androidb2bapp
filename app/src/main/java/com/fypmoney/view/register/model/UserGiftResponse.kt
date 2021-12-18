@@ -1,5 +1,7 @@
 package com.fypmoney.view.register.model
+import androidx.annotation.Keep
 
+@Keep
 data class UserGiftResponse(
     val giftCode: String? = null,
     val giftResourceId: Any? = null,

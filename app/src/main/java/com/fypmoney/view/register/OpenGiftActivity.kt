@@ -7,19 +7,16 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.View
 import androidx.activity.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityOpenGiftBinding
-import com.fypmoney.view.Register.viewModel.openGiftVM
+import com.fypmoney.view.register.viewModel.openGiftVM
 
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import kotlinx.android.synthetic.main.fragment_assigned_task.view.*
 import kotlinx.android.synthetic.main.toolbar.*
-import java.lang.Exception
 
 class OpenGiftActivity : BaseActivity<ActivityOpenGiftBinding, openGiftVM>() {
 

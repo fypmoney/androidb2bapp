@@ -9,7 +9,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityWaitlistBinding
-import com.fypmoney.view.Register.viewModel.WaitingGiftVM
+import com.fypmoney.view.register.viewModel.WaitingGiftVM
 
 
 import kotlinx.android.synthetic.main.toolbar_animation.*

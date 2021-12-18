@@ -1,5 +1,8 @@
 package com.fypmoney.view.register.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class SendKycDetails(
     var documentIdentifier: String? = null,
     var firstName: String? = null,

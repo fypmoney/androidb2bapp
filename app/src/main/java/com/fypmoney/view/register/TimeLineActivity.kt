@@ -1,7 +1,5 @@
 package com.fypmoney.view.register
 
-import android.Manifest
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -11,12 +9,11 @@ import com.fyp.trackr.models.logOut
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.base.BaseViewModel
 import com.fypmoney.databinding.ActivityTimelineBinding
 
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.view.Register.viewModel.TimelineViewModel
+import com.fypmoney.view.register.viewModel.TimelineViewModel
 
 import com.fypmoney.view.activity.LoginView
 

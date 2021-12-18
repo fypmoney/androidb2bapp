@@ -2,7 +2,6 @@ package com.fypmoney.view.register.viewModel
 
 import android.app.Application
 import androidx.databinding.ObservableField
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -14,7 +13,6 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.util.Utility
-import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.register.model.SelectRelationModel
 
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
