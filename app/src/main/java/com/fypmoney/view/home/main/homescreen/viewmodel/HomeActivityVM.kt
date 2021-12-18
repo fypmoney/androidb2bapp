@@ -43,13 +43,10 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
         _event.value = HomeActivityEvent.NotificationClicked
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        storeFirstTimeUserLandedOnHomeScreen()
-    }
 
-    private fun storeFirstTimeUserLandedOnHomeScreen() {
-        SharedPrefUtils.getLong(
+
+    public fun storeFirstTimeUserLandedOnHomeScreen() {
+         SharedPrefUtils.getLong(
             PockketApplication.instance,
             SharedPrefUtils.SF_IS_USER_LANDED_ON_HOME_SCREEN_TIME
         ).let {
