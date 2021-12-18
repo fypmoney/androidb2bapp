@@ -43,7 +43,7 @@
                     android:layout_marginStart="@dimen/_18sdp"
                     android:layout_marginTop="@dimen/_25sdp"
                     android:onClick="@{()->viewModel.onProfileClicked()}"
-                    android:padding="4dp"
+
                     android:src="@drawable/ic_profile_img"
                     app:customBackgroundColor="@{@color/text_color_little_dark}"
                     app:customIsRounded="@{true}"
@@ -54,20 +54,22 @@
 
                     >
 
+
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivUserProfileImage"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_margin="4dp"
                         android:scaleType="center"
                         app:srcCompat="@drawable/ic_profile_img" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/edit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|bottom"
-                        android:onClick="@{()->viewModel.onProfileClicked()}"
-                        android:visibility="gone"
+                        android:layout_width="@dimen/_22sdp"
+
+                        android:layout_height="@dimen/_22sdp"
+                        android:layout_gravity="end"
+
                         app:srcCompat="@drawable/ic_edit" />
 
 
