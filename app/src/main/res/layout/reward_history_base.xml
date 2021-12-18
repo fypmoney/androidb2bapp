@@ -33,33 +33,33 @@
             android:layout_marginTop="@dimen/_4sdp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_below="@+id/date_tv"
             android:id="@+id/contraint"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/date_tv">
 
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/main_cv"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:backgroundTint="@color/background_light_dark"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginBottom="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_8sdp"
-                app:cardCornerRadius="10dp">
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:backgroundTint="@color/background_light_dark"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/base_image"
                     android:layout_width="match_parent"
-                    android:minHeight="10dp"
+                    android:layout_height="match_parent"
                     android:minWidth="10dp"
-                    tools:src="@drawable/jackpot_banner"
-                    android:layout_height="match_parent" />
+                    android:minHeight="10dp"
+                    tools:src="@drawable/jackpot_banner" />
 
 
             </androidx.cardview.widget.CardView>

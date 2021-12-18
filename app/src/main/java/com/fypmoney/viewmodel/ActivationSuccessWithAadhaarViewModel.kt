@@ -148,6 +148,8 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                         userProfile.dob?.let { it1 -> UserTrackr.setDateOfBirthDate(it1) }
 
                     }
+//                    Utility.getCustomerDataFromPreference()?.postKycScreenCode="90"
+//                    postKycScreenCode.value = "90"
 
 
                 }

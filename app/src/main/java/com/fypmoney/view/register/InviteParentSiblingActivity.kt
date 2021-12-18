@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -39,11 +40,31 @@ class InviteParentSiblingActivity :
 
         if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
             binding.skip.text = getString(R.string.skip_title)
+            binding.questionRelation.text =
+                "Is your child already on Fyp? Enter their registered mobile no."
+            binding.textView2.text = "Don’t have your child on Fyp? Invite your child on this app"
+            binding.shareInvite.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.sibling_invite
+                )
+            )
+
         } else {
+            binding.questionRelation.text =
+                "Don’t have a teenager sibling/ parent on Fyp? Invite them now!"
+            binding.textView2.text =
+                "You need a teenager sibling/parent to use Fyp. Enter their registered mobile no."
             binding.skip.text = getString(R.string.i_want_to_use)
+            binding.shareInvite.setImageDrawable(
+                ContextCompat.getDrawable(
+                    this,
+                    R.drawable.sibling_parent
+                )
+            )
         }
         binding.shareInvite.setOnClickListener(View.OnClickListener {
-            Utility.getCustomerDataFromPreference()?.postKycScreenCode = "90"
+//            Utility.getCustomerDataFromPreference()?.postKycScreenCode = "90"
             shareUser()
         })
         binding.skip.setOnClickListener(View.OnClickListener {

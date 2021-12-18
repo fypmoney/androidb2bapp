@@ -210,6 +210,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             itemsArrayList.clear()
             itemsArrayList.addAll(it)
             if (itemsArrayList.size > 0) {
+               itemsArrayList.add(offerDetailResponse())
                 _binding.shimmerLayoutLightening.visibility = View.GONE
                 _binding.lighteningDealsTitle.visibility = View.VISIBLE
                 _binding.lighteningDealsRv.visibility = View.VISIBLE
@@ -253,7 +254,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     private fun setRecyclerView(root: FragmentHomeBinding) {
         var itemClickListener2 = object : ListOfferClickListener {
             override fun onItemClicked(pos: offerDetailResponse, position: String) {
-                callOfferDetailsSheeet(pos)
+                if (position == "middle") {
+                    callOfferDetailsSheeet(pos)
+                } else {
+                    var intent = Intent(requireContext(), OffersScreen::class.java)
+                    intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.OfferScreen)
+                    startActivity(intent)
+                }
+
             }
         }
         val layoutManager =

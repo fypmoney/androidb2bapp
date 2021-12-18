@@ -52,6 +52,8 @@ class SelectRelationActivity : BaseActivity<ActivitySelectRelationshipBinding, S
 
         phone = intent?.getStringExtra("phone")
         nameOfUser = intent?.getStringExtra("name_user")
+
+        binding.textView2.text = "Tell us your relationship with " + nameOfUser
         binding.continueBtn.setOnClickListener(View.OnClickListener {
             if (selectRelationVM.selectedRelation.get() != null) {
 

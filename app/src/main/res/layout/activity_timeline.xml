@@ -440,6 +440,7 @@
                     android:layout_marginTop="@dimen/_25sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
                     android:text="Get Help?"
+                    android:layout_marginBottom="@dimen/_20sdp"
                     android:layout_gravity="center_horizontal"
                     android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"

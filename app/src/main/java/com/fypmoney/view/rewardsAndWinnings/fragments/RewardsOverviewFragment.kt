@@ -142,10 +142,11 @@ class RewardsOverviewFragment(val tabchangeListner: HomeTabChangeClickListener) 
             startActivity(intent)
         })
         mViewBinding?.totalMyntsLayout?.setOnClickListener(View.OnClickListener {
-            tabchangeListner.tabchange(0, getString(R.string.jackpot))
+            tabchangeListner.tabchange(0, getString(R.string.reward_history))
         })
         mViewBinding?.goldenCardLayout?.setOnClickListener(View.OnClickListener {
-            tabchangeListner.tabchange(0, getString(R.string.reward_history))
+
+            tabchangeListner.tabchange(0, getString(R.string.jackpot))
         })
 
     }

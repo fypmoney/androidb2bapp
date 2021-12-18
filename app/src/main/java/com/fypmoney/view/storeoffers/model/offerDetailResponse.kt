@@ -20,9 +20,9 @@ data class offerDetailResponse(
     val status: String? = null,
 
     val offerContent: String? = null,
-    val rfu2: Any? = null,
+    val rfu2: String? = null,
     val rfu1: Any? = null,
     val rfu3: Any? = null,
     val offerShortTitle: String? = null,
-    )
+)
 

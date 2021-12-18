@@ -24,7 +24,7 @@ import java.lang.Exception
 class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, PendingRequestVm>() {
 
     private var gotData: Boolean = false
-    private var timer: CountDownTimer? = null
+//    private var timer: CountDownTimer? = null
     private lateinit var binding: ActivityPendingApprovalBinding
     private val pendingRequestVM by viewModels<PendingRequestVm> { defaultViewModelProviderFactory }
 
@@ -40,23 +40,23 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
             lottieAnimationView = ivAnimationGift
         )// lottie anima
         pendingRequestVM.callGetCustomerProfileApi()
-        timer = object : CountDownTimer(5000, 10) {
-            override fun onTick(millisUntilFinished: Long) {}
-            override fun onFinish() {
-                try {
-                    yourMethod()
-                } catch (e: Exception) {
-
-                }
-            }
-        }.start()
+//        timer = object : CountDownTimer(8600000, 10) {
+//            override fun onTick(millisUntilFinished: Long) {}
+//            override fun onFinish() {
+//                try {
+//                    yourMethod()
+//                } catch (e: Exception) {
+//
+//                }
+//            }
+//        }.start()
         if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
             binding.skip.visibility = View.VISIBLE
         }
         binding.skip.setOnClickListener(View.OnClickListener {
             gotData = true
-            timer?.onFinish()
-            timer?.cancel()
+//            timer?.onFinish()
+//            timer?.cancel()
             val intent = Intent(this, ChooseInterestRegisterView::class.java)
 
             val bndlAnimation = ActivityOptions.makeCustomAnimation(
@@ -81,7 +81,7 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
 
     override fun onStart() {
         super.onStart()
-        timer?.start()
+//        timer?.start()
     }
 
     private fun openCommunity(url: String) {
@@ -97,8 +97,8 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
 
             if (it.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_APPROVED) {
                 gotData = true
-                timer?.onFinish()
-                timer?.cancel()
+//                timer?.onFinish()
+//                timer?.cancel()
                 val intent = Intent(this, ChooseInterestRegisterView::class.java)
 
                 val bndlAnimation = ActivityOptions.makeCustomAnimation(
@@ -112,8 +112,8 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
 
             } else if (it.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_DECLINED) {
                 gotData = true
-                timer?.onFinish()
-                timer?.cancel()
+//                timer?.onFinish()
+//                timer?.cancel()
                 val intent = Intent(this, InviteParentSiblingActivity::class.java)
 
                 val bndlAnimation = ActivityOptions.makeCustomAnimation(
@@ -131,7 +131,7 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
     fun yourMethod() {
         if (!gotData) {
             pendingRequestVM.callGetCustomerProfileApi()
-            timer?.start()
+//            timer?.start()
         }
 
     }
@@ -139,7 +139,8 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
 
     override fun onStop() {
         super.onStop()
-        timer?.onFinish()
+//        timer?.onFinish()
+//        timer?.cancel()
     }
 
     /**

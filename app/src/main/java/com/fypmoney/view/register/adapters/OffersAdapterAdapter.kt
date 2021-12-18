@@ -34,7 +34,7 @@ class OffersAdapterAdapter(val items: ArrayList<offerDetailResponse>, val contex
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.offer_title.text = items[position].offerShortTitle
+        holder.offer_title.text = items[position].rfu2
         holder.brandName.text = items[position].brandName
         Utility.setImageUsingGlideWithShimmerPlaceholder(
             imageView = holder.logo,
