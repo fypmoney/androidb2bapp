@@ -38,6 +38,7 @@ import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.home.main.homescreen.view.LoadMoneyBottomSheet
 import com.fypmoney.view.register.adapters.OffersHomeAdapter
 import com.fypmoney.view.storeoffers.ListOfferClickListener
+import com.fypmoney.view.storeoffers.OffersScreen
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 
