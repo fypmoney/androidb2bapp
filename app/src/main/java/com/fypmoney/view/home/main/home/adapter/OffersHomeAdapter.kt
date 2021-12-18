@@ -43,11 +43,21 @@ class OffersHomeAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.card.setOnClickListener(View.OnClickListener {
-            itemClickListener2.onItemClicked(items[position], "")
-        })
+            if (items.size - 1 != position) {
+                itemClickListener2.onItemClicked(items[position], "middle")
+            } else {
+                itemClickListener2.onItemClicked(items[position], "last")
+            }
 
-        Glide.with(context).load(items[position].offerImage).placeholder(shimmerDrawable())
-            .into(holder.logo)
+        })
+        if (items.size - 1 != position) {
+            Glide.with(context).load(items[position].rfu1).placeholder(shimmerDrawable())
+                .into(holder.logo)
+        } else {
+            Glide.with(context).load(R.drawable.view_more).placeholder(shimmerDrawable())
+                .into(holder.logo)
+        }
+
 
     }
 

@@ -283,7 +283,7 @@ Create this method for observe the viewModel fields
      */
     private fun intentToActivity(aClass: Class<*>) {
         startActivity(Intent(this@CreateAccountView, aClass))
-        finish()
+        finishAffinity()
     }
 
 

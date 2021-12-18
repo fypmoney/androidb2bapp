@@ -1050,6 +1050,8 @@ Coming really soon!
     <string name="_1500"> ₹1500</string>
     <string name="we_are_striving_hard_to_give_you_the_ultimate_upi_experience">We are striving hard to give you the \nultimate UPI experience.</string>
     <string name="coming_super_soon">Coming Super Soon</string>
+    <string name="don_t_have_a_teenager_sibling_parent_on_fyp_invite_them_now">Don’t have a teenager sibling/ parent on Fyp? Invite them now!</string>
+
 
     <string-array name="person_category_array">
         <item>Minor</item>

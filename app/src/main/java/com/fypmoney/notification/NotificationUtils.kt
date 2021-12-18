@@ -44,7 +44,9 @@ object NotificationUtils {
                  channel.setSound(
                      Uri.parse(
                          ContentResolver.SCHEME_ANDROID_RESOURCE
-                                 + "://" + BuildConfig.APPLICATION_ID + "/" + R.raw.diwali_push_sound), audioAttributes)
+                                 + "://" + BuildConfig.APPLICATION_ID + "/" + R.raw.notification_sound
+                     ), audioAttributes
+                 )
              }else{
                  channel.setSound(
                      Uri.parse(
