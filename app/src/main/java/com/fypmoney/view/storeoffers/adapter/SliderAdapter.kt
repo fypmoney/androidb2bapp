@@ -32,10 +32,24 @@ class SliderAdapter(
     }
 
     override fun onBindViewHolder(holder: SliderViewHolder, position: kotlin.Int) {
-         holder.setImage(sliderItems[position].offerImage)
+
+        if (position != sliderItems.size - 1)
+            holder.setImage(sliderItems[position].offerImage)
+        else
+            holder.imageView.setImageResource(R.drawable.view_more)
         holder.card.setOnClickListener {
+            if (position != sliderItems.size - 1) {
                 itemClickListener2.onItemClicked(sliderItems[position], "middle")
+            } else {
+                itemClickListener2.onItemClicked(sliderItems[position], "last")
+            }
+
         }
+
+
+        //        if (position == sliderItems.size - 2) {
+//            viewPager2.post(runnable)
+//        }
     }
 
     override fun getItemCount(): kotlin.Int {
