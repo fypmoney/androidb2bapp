@@ -236,7 +236,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             } else {
                 _binding.shimmerLayoutLightening.visibility = View.GONE
                 _binding.toInterestScreen.visibility = View.VISIBLE
-                _binding.lighteningDealsTitle.visibility = View.VISIBLE
+//                _binding.lighteningDealsTitle.visibility = View.VISIBLE
                 _binding.lighteningDealsRv.visibility = View.GONE
             }
             typeAdapter?.notifyDataSetChanged()

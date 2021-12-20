@@ -14,8 +14,8 @@
 
         <ProgressBar
             android:id="@+id/loader"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_60sdp"
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
             android:layout_centerHorizontal="true"
             android:indeterminateTint="@color/text_color_light"
             android:elevation="@dimen/_6sdp"

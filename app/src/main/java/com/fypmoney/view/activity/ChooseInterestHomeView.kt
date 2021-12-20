@@ -2,6 +2,7 @@ package com.fypmoney.view.activity
 
 import android.app.ActivityOptions
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -9,8 +10,10 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.SelectInterestViewActivityBinding
 import com.fypmoney.util.Utility
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.register.PersonalisedOffersActivity
 import com.fypmoney.viewmodel.SelectInterestViewModel
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar_animation.*
 
 /*
@@ -37,14 +40,13 @@ class ChooseInterestHomeView :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
-        setLottieAnimationToolBar(
-            isBackArrowVisible = true,//back arrow visibility
-            isLottieAnimation = false,// lottie animation visibility
-            imageView = ivToolBarBack,//back image view
-            lottieAnimationView = ivAnimationGift,
-            toolbarTitle = "Choose interest"
-        )// lottie animation view
-
+        setToolbarAndTitle(
+            context = this,
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = "Choose Interests",
+            titleColor = Color.BLACK,
+            backArrowTint = Color.BLACK
+        )
 
         setObserver()
     }
@@ -58,15 +60,11 @@ Create this method for observe the viewModel fields
             if (it) {
                 Utility.showToast("Your interest has been updated successfully")
                 mViewModel.onUpdateProfileSuccess.value = false
-                val intent = Intent(this, PersonalisedOffersActivity::class.java)
+                val intent = Intent(this, HomeActivity::class.java)
 
-                val bndlAnimation = ActivityOptions.makeCustomAnimation(
-                    applicationContext,
-                    com.fypmoney.R.anim.slideinleft,
-                    com.fypmoney.R.anim.slideinright
-                ).toBundle()
-                startActivity(intent, bndlAnimation)
-                finishAffinity()
+
+                startActivity(intent)
+                finish()
 
 
             }

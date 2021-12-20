@@ -59,7 +59,7 @@
         android:layout_width="@dimen/_135sdp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="30dp"
         app:cardBackgroundColor="@color/black"
         android:onClick="@{()->viewModel.onMainClicked()}"
         app:layout_constraintStart_toStartOf="parent"
