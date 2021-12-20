@@ -84,7 +84,7 @@ class RewardsFragment : BaseFragment<FragmentRewardsBinding, RewardsFragmentVM>(
 
             }
 
-        }, 200)
+        }, 150)
 
 
     }

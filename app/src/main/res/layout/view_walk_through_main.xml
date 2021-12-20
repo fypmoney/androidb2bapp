@@ -81,7 +81,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:text="Get Started"
-                android:padding="@dimen/_12sdp"
+                android:padding="@dimen/_10sdp"
                 android:textColor="@color/white"
                 android:textAlignment="center"
                 android:textSize="@dimen/text_18sp"

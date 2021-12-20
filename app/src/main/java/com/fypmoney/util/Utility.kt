@@ -714,7 +714,11 @@ object Utility {
             SharedPrefUtils.SF_KEY_IS_LOGIN,
             false
         )
-
+        SharedPrefUtils.putArrayList(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_INTEREST,
+            null
+        )
         SharedPrefUtils.putString(
             PockketApplication.instance,
             SharedPrefUtils.SF_KEY_ACCESS_TOKEN,
