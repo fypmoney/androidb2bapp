@@ -46,7 +46,7 @@
                     android:layout_marginTop="20dp"
                     android:text="PAN/Aadhaar no*" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/pan_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -55,9 +55,9 @@
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
 
 
+                    android:inputType="textCapCharacters"
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                    android:inputType="textCapCharacters"
                     android:text="@={viewModel.panNumber}"
 
 
