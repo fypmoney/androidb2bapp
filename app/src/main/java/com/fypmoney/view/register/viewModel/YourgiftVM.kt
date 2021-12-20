@@ -10,7 +10,6 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
-import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.register.model.UserGiftResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -22,10 +21,10 @@ class YourgiftVM(application: Application) : BaseViewModel(application) {
     var giftsList: MutableLiveData<ArrayList<UserGiftResponse>> = MutableLiveData()
 
     init {
-        callFetchFeedsApi()
+        callUserGiftsApi()
     }
 
-    fun callFetchFeedsApi() {
+    fun callUserGiftsApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.Api_Your_Gifts,

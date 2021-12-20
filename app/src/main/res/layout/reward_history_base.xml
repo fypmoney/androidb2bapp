@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-
+        android:clipToPadding="false"
         android:layout_height="wrap_content">
 
         <TextView
@@ -36,6 +36,7 @@
             android:id="@+id/contraint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:clipToPadding="false"
             android:layout_below="@+id/date_tv">
 
 
@@ -46,9 +47,12 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginBottom="@dimen/_8sdp"
+                android:clipToPadding="false"
+                android:layout_marginBottom="@dimen/_2sdp"
                 android:backgroundTint="@color/background_light_dark"
                 app:cardCornerRadius="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -59,6 +63,7 @@
                     android:layout_height="match_parent"
                     android:minWidth="10dp"
                     android:minHeight="10dp"
+                    android:scaleType="centerCrop"
                     tools:src="@drawable/jackpot_banner" />
 
 

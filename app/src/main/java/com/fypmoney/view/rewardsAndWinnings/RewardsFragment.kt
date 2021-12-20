@@ -79,7 +79,10 @@ class RewardsFragment : BaseFragment<FragmentRewardsBinding, RewardsFragmentVM>(
         myViewPager2 = _binding.viewPager
         Handler(Looper.getMainLooper()).postDelayed({
             try {
+
                 initializeTabs(_binding.tabLayout, requireActivity().intent)
+                _binding.loader.visibility = View.GONE
+
             } catch (e: Exception) {
 
             }

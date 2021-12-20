@@ -132,6 +132,8 @@ class SelectRelationActivity : BaseActivity<ActivitySelectRelationshipBinding, S
                 com.fypmoney.R.anim.slideinright
             ).toBundle()
             startActivity(intent, bndlAnimation)
+            finishAffinity()
+
 
         })
     }

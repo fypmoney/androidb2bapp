@@ -140,7 +140,7 @@
                         android:layout_marginTop="@dimen/_20sdp"
                         android:layout_marginBottom="@dimen/_20sdp"
                         android:contentDescription="userTypeIcon"
-                        android:src="@drawable/ic_parent" />
+                        android:src="@drawable/ic_parent_usertype" />
 
                     <LinearLayout
                         android:layout_gravity="center_vertical"

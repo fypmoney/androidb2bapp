@@ -56,7 +56,7 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
         binding.spinnerGender.onItemSelectedListener = this
 
         kyc_type = intent.getStringExtra(AppConstants.KYC_type)
-
+        kycDetailsVM.kycType.value = kyc_type
         if (kyc_type == getString(R.string.pan)) {
             binding.panNumberTitle.text = "PAN*"
 
@@ -74,7 +74,6 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
             binding.panNumber.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_CLASS_NUMBER)
             binding.panNumberTitle.text = "Aadhaar no*"
         }
-        kycDetailsVM.kycType.value = kyc_type
 
 
         val ad: ArrayAdapter<*> = ArrayAdapter<Any?>(
