@@ -22,7 +22,10 @@ import com.fypmoney.util.AppConstants.FyperScreen
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.view.StoreWebpageOpener2
-import com.fypmoney.view.activity.*
+import com.fypmoney.view.activity.AddMoneyView
+import com.fypmoney.view.activity.ChooseInterestHomeView
+import com.fypmoney.view.activity.ContactListView
+import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
@@ -84,11 +87,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         super.onViewCreated(view, savedInstanceState)
         _binding = getViewDataBinding()
         setupRecyclerView()
-        setUpObserver()
-       // homeFragmentVM.prepareQuickActionList()
-        homeFragmentVM.callToAction()
-        setObserver()
         setRecyclerView(_binding)
+        setObserver()
+        setUpObserver()
     }
 
 

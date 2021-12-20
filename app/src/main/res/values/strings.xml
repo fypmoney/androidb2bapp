@@ -338,6 +338,7 @@
     <string name="contact_permission">Contact</string>
     <string name="location_permission">Location</string>
     <string name="family_notification_screen_title">Family Notification</string>
+    <string name="family">Family</string>
 
     <!--
      Notification
