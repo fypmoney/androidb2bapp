@@ -55,9 +55,9 @@
             android:layout_marginTop="@dimen/_16sdp"
 
             android:layout_marginEnd="@dimen/_38sdp"
-            android:layout_marginBottom="@dimen/_6sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
             android:gravity="center"
-            android:text="We’ll notify you once the app is available. Or you can ask for the mobile number of anyone who is on Fyp."
+            android:text="We’ll notify you once the app is available for you. You can also add your teenager sibiling/ parent mobile registered with Fyp"
             android:textColor="#221F1F"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"

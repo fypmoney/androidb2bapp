@@ -349,9 +349,15 @@
         <activity
             android:name=".view.register.YourGiftsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.register.WaitlistAprovalActivity"></activity>
-        <activity android:name=".view.register.TimeLineActivity" />
-        <activity android:name=".view.activity.ChooseInterestHomeView" />
+        <activity
+            android:name=".view.register.WaitlistAprovalActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".view.register.TimeLineActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.activity.ChooseInterestHomeView"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
