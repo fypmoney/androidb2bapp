@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.fypmoney.databinding.MyProfileListRowItemBinding
-import com.fypmoney.databinding.MyProfileNewListRowItemBinding
 
 class MyProfileListAdapter(
     context: Context? = null,
@@ -24,6 +23,7 @@ class MyProfileListAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val binding =
             MyProfileListRowItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        binding.linear.elevation = elevationValue
         if (iconList.size == 0) {
             binding.image.visibility = View.GONE
         } else {

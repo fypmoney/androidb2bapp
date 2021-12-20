@@ -49,6 +49,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
     init {
         callToAction()
         callgetOffer()
+        callExplporeContent()
     }
 
     private fun callgetOffer() {
@@ -138,9 +139,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
      }
 */
 
-    init {
-        callExplporeContent()
-    }
+
 
     fun callExplporeContent() {
         WebApiCaller.getInstance().request(
