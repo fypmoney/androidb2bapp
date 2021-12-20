@@ -1,22 +1,21 @@
 package com.fypmoney.viewmodel
 
  import android.app.Application
-import android.text.TextUtils
-import androidx.databinding.ObservableField
-import androidx.lifecycle.MutableLiveData
-import com.fypmoney.R
-import com.fypmoney.application.PockketApplication
-import com.fypmoney.base.BaseViewModel
-import com.fypmoney.connectivity.ApiConstant
-import com.fypmoney.connectivity.ApiUrl
-import com.fypmoney.connectivity.ErrorResponseInfo
-import com.fypmoney.connectivity.network.NetworkUtil
-import com.fypmoney.connectivity.retrofit.ApiRequest
-import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.FeedResponseModel
-import com.fypmoney.model.GetWalletBalanceResponse
-import com.fypmoney.util.Utility
+ import android.text.TextUtils
+ import androidx.databinding.ObservableField
+ import androidx.lifecycle.MutableLiveData
+ import com.fypmoney.R
+ import com.fypmoney.application.PockketApplication
+ import com.fypmoney.base.BaseViewModel
+ import com.fypmoney.connectivity.ApiConstant
+ import com.fypmoney.connectivity.ApiUrl
+ import com.fypmoney.connectivity.ErrorResponseInfo
+ import com.fypmoney.connectivity.network.NetworkUtil
+ import com.fypmoney.connectivity.retrofit.ApiRequest
+ import com.fypmoney.connectivity.retrofit.WebApiCaller
+ import com.fypmoney.model.BaseRequest
+ import com.fypmoney.model.GetWalletBalanceResponse
+ import com.fypmoney.util.Utility
 
 /*
 * This class is used to handle add money functionality
@@ -25,7 +24,7 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
     var onAddClicked = MutableLiveData(false)
     var setEdittextLength = MutableLiveData(false)
     var availableAmount = ObservableField(application.getString(R.string.dummy_amount))
-    var amountSelected = ObservableField<String>()
+    var amountSelected = ObservableField<String>("1000") //prefilled amount
     var isFetchBalanceVisible = ObservableField(true)
     var remainingLoadLimit = ObservableField<String>()
     var remainingLoadLimitAmount = ObservableField<String>()

@@ -4,26 +4,21 @@ import android.Manifest
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
-
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewSplashBinding
 import com.fypmoney.util.AppConstants
-import com.fypmoney.util.AppConstants.ADD_MEMBER_STATUS_APPROVED
-import com.fypmoney.util.AppConstants.ADD_MEMBER_STATUS_INVITED
 import com.fypmoney.util.AppConstants.NOT_ALLOWED_MSG
-import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getReferralCodeFromDynamicLink
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getReferralCodeFromDynamicLink
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.register.*
-
 import com.fypmoney.viewmodel.SplashViewModel
 import kotlinx.android.synthetic.main.view_splash.*
 import java.util.*
@@ -89,9 +84,6 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         mViewModel.appUpdateState.observe(this, {
             when(it){
                 SplashViewModel.AppUpdateState.FLEXIBLE -> {
-                    /*checkUpdate.value = true
-                    updateType = 0
-                    checkForAppUpdate()*/
                     PockketApplication.instance.appUpdateRequired = true
                     SharedPrefUtils.putInt(
                         applicationContext,
@@ -101,9 +93,6 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
 
                 }
                 SplashViewModel.AppUpdateState.FORCEUPDATE -> {
-                    /*checkUpdate.value = true
-                    updateType = 1
-                    checkForAppUpdate()*/
                     PockketApplication.instance.appUpdateRequired = true
                     SharedPrefUtils.putInt(
                         applicationContext,

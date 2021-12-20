@@ -1,9 +1,6 @@
 package com.fypmoney.view.activity
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -21,7 +18,6 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.LeaveFamilyBottomSheet
 import com.fypmoney.view.fragment.UpdateFamilyNameBottomSheet
-import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.viewmodel.FamilySettingsViewModel
 
@@ -55,20 +51,23 @@ class FamilySettingsView(val tabchangeListner: HomeTabChangeClickListener? = nul
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
 
-//        mViewBinding.image.gifResource = R.raw.family
         Glide.with(requireActivity()).asGif().load(R.raw.family).into(mViewBinding.image)
-        mViewModel.callGetMemberApi()
         val lbm = LocalBroadcastManager.getInstance(requireContext())
-        lbm.registerReceiver(receiver, IntentFilter(AppConstants.AFTER_ADD_MEMBER_BROADCAST_NAME))
+        //lbm.registerReceiver(receiver, IntentFilter(AppConstants.AFTER_ADD_MEMBER_BROADCAST_NAME))
 
         setObserver()
     }
 
-    var receiver: BroadcastReceiver = object : BroadcastReceiver() {
+    override fun onResume() {
+        super.onResume()
+        mViewModel.callGetMemberApi()
+    }
+
+    /*var receiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             mViewModel.callGetMemberApi()
         }
-    }
+    }*/
 
     /**
      * Create this method for observe the viewModel fields
@@ -123,7 +122,7 @@ class FamilySettingsView(val tabchangeListner: HomeTabChangeClickListener? = nul
                         R.string.family_settings_family_fypers
                     )
                 )
-                intentToActivity(HomeActivity::class.java)
+                mViewModel.callGetMemberApi()
                 mViewModel.onLeaveFamilySuccess.value = false
             }
         }
@@ -170,7 +169,7 @@ class FamilySettingsView(val tabchangeListner: HomeTabChangeClickListener? = nul
 
     override fun onDestroy() {
         super.onDestroy()
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver)
+        //LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver)
     }
 
     override fun onTryAgainClicked() {

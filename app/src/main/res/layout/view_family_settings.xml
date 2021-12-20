@@ -14,7 +14,7 @@
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
-        android:paddingBottom="94dp"
+        android:layout_marginBottom="94dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -25,7 +25,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_marginStart="@dimen/dp16"
         android:layout_marginEnd="@dimen/dp16">
 
@@ -34,7 +33,6 @@
             android:layout_width="match_parent"
             android:layout_height="244dp"
             android:layout_marginTop="30dp"
-
             android:orientation="vertical">
 
 
@@ -65,7 +63,7 @@
             android:layout_marginBottom="20dp"
             android:layout_below="@id/linear_layout"
             android:text="@{viewModel.username}"
-            android:textSize="20dp"
+            android:textSize="20sp"
             />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -106,7 +104,7 @@
             android:layout_below="@+id/heading"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=visible}">
+            android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=gone}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -147,6 +145,7 @@
             android:layout_below="@id/heading1"
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
+            android:visibility="@{viewModel.isFamilyFiperVisiblePending?View.VISIBLE:View.GONE,default=gone}"
             app:adapter="@{viewModel.pendingAdapter}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
