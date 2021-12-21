@@ -480,6 +480,7 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="add_money_screen_text1">" for the current month"</string>
     <string name="add_money_empty_error">Please enter amount</string>
     <string name="minimum_load_amount">Minimum Load Amount is ₹10</string>
+    <string name="maximum_load_amount">You can add upto ₹5000 at a time</string>
     <string name="add_money_trans_success_title">Money Added successfully</string>
 
     <!--

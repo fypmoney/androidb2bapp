@@ -1,6 +1,8 @@
 package com.fypmoney.view.register
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.InputFilter
 import android.text.InputFilter.AllCaps
@@ -21,6 +23,8 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.ChooseInterestRegisterView
 import com.fypmoney.view.activity.EnterOtpView
 import com.fypmoney.view.activity.ReferralCodeView
+import com.fypmoney.view.fragment.kycDetailsBottomSheet
+import com.fypmoney.view.fragment.kycTanCBottomSheet
 import com.fypmoney.view.register.viewModel.KycdetailViewModel
 import kotlinx.android.synthetic.main.toolbar_animation.*
 
@@ -61,6 +65,9 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
             binding.panNumber.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_CLASS_NUMBER)
             binding.panNumberTitle.text = "Aadhaar no*"
         }
+        binding.hereby.setOnClickListener {
+            callKycDetailsSheeet()
+        }
 
 
         val ad: ArrayAdapter<*> = ArrayAdapter<Any?>(
@@ -80,6 +87,13 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
         )// lottie anima
 
 
+    }
+
+    private fun callKycDetailsSheeet() {
+
+        var bottomSheetMessage = kycTanCBottomSheet()
+        bottomSheetMessage.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetMessage.show(supportFragmentManager, "TASKMESSAGE")
     }
 
     private fun setObserver() {
