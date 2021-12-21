@@ -232,6 +232,7 @@
     <!--Home Screen-->
 
     <string name="interest_error">Please select interest</string>
+    <string name="interest_only_three">You need to select 3 interests</string>
     <string name="balance_text">Available Balance</string>
     <string name="set_upi_id_text">Set up your UPI ID</string>
     <string name="register_for_upi_title">Register now and start UPI payments</string>

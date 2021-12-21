@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.databinding.SelectInterestRegisterActivityBinding
 import com.fypmoney.databinding.SelectInterestViewActivityBinding
 import com.fypmoney.util.Utility
 import com.fypmoney.view.register.PersonalisedOffersActivity
@@ -17,16 +18,16 @@ import kotlinx.android.synthetic.main.toolbar_animation.*
 * This is used to handle interest of the user
 * */
 class ChooseInterestRegisterView :
-    BaseActivity<SelectInterestViewActivityBinding, SelectInterestViewModel>() {
+    BaseActivity<SelectInterestRegisterActivityBinding, SelectInterestViewModel>() {
     private lateinit var mViewModel: SelectInterestViewModel
-    private lateinit var mViewBinding: SelectInterestViewActivityBinding
+    private lateinit var mViewBinding: SelectInterestRegisterActivityBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.select_interest_view_activity
+        return R.layout.select_interest_register_activity
     }
 
     override fun getViewModel(): SelectInterestViewModel {
