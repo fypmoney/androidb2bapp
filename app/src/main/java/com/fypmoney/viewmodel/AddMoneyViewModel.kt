@@ -43,7 +43,10 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
                 TextUtils.isEmpty(amountSelected.get()) -> {
                     Utility.showToast(PockketApplication.instance.getString(R.string.add_money_empty_error))
                 }
-                it < 10 -> {
+                it > 5000 -> {
+                    Utility.showToast(PockketApplication.instance.getString(R.string.maximum_load_amount))
+                }
+                it < 50 -> {
                     Utility.showToast(PockketApplication.instance.getString(R.string.minimum_load_amount))
                 }
                 else -> {

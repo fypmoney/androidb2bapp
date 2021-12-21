@@ -304,17 +304,24 @@
                     android:text="@={viewModel.pincode}"
                     android:textSize="@dimen/_14sdp" />
 
-
-
-
-                <Button
-                    android:id="@+id/btnCreateAccount"
+                <TextView
+                    android:id="@+id/hereby"
+                    style="@style/TextviewRegular"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/pincode_ed"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:gravity="center"
+                    android:text="By clicking on continue, you agree to Terms of Service" />
+
+                <Button
+                    android:id="@+id/btnCreateAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/hereby"
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="@dimen/_17sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_17sdp"
                     android:layout_marginBottom="5dp"
                     android:enabled="true"
