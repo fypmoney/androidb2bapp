@@ -64,8 +64,7 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-
-        mViewModel.GiftsSuccess.observe(this)
+        mViewModel.onContinueClicked.observe(this)
         {
             if (it) {
                 if (mViewModel.postKycScreenCode.value != null && mViewModel.postKycScreenCode.value == "1") {
@@ -91,15 +90,6 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
                     startActivity(intent)
                     finish()
                 }
-                mViewModel.GiftsSuccess.value = false
-            }
-
-        }
-        mViewModel.onContinueClicked.observe(this)
-        {
-            if (it) {
-                mViewModel.callUserGiftsApi()
-
 
 
                 mViewModel.onContinueClicked.value = false

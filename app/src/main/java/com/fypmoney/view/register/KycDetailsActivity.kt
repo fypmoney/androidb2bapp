@@ -107,25 +107,12 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
                         )
                         it.name = TrackrEvent.kyc_verification_other
                     }
-                    if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                        intentToActivity(HomeActivity::class.java)
-                    } else {
-                        intentToActivity(PermissionsActivity::class.java)
-                    }
-                } else if (kycDetailsVM.postKycScreenCode.value != null && kycDetailsVM.postKycScreenCode.value == "0") {
-                    when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
-                        AppConstants.YES -> {
-                            intentToActivity(ReferralCodeView::class.java)
-                        }
-                        else -> {
-                            if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                                intentToActivity(HomeActivity::class.java)
-                            } else {
-                                intentToActivity(PermissionsActivity::class.java)
-                            }
+                    val intent = Intent(this, InviteParentSiblingActivity::class.java)
+                    intent.putExtra(AppConstants.USER_TYPE, "1")
+                    startActivity(intent)
+                    finish()
 
-                        }
-                    }
+                } else if (kycDetailsVM.postKycScreenCode.value != null && kycDetailsVM.postKycScreenCode.value == "0") {
                     trackr {
                         it.services = arrayListOf(
                             TrackrServices.FIREBASE,
@@ -134,7 +121,17 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
                         )
                         it.name = TrackrEvent.kyc_verification_teen
                     }
-                    intentToActivity(ReferralCodeView::class.java, true)
+                    when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
+                        AppConstants.YES -> {
+                            intentToActivity(ReferralCodeView::class.java)
+                        }
+                        else -> {
+                            startActivity(Intent(this, ChooseInterestRegisterView::class.java))
+
+                        }
+                    }
+
+
                 } else if (kycDetailsVM.postKycScreenCode.value != null && kycDetailsVM.postKycScreenCode.value == "90") {
                     trackr {
                         it.services = arrayListOf(
@@ -144,7 +141,10 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
                         )
                         it.name = TrackrEvent.kyc_verification_adult
                     }
-                    intentToActivity(AgeAllowedActivationView::class.java, true)
+                    val intent = Intent(this, InviteParentSiblingActivity::class.java)
+                    intent.putExtra(AppConstants.USER_TYPE, "90")
+                    startActivity(intent)
+                    finish()
                 }
 
             }

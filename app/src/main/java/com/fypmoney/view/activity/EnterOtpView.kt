@@ -14,6 +14,9 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
+import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -266,7 +269,14 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
         mViewModel.onVerificationSuccessAadhaar.observe(this) {
             if (it != null) {
 
-
+                trackr {
+                    it.services = arrayListOf(
+                        TrackrServices.FIREBASE,
+                        TrackrServices.MOENGAGE,
+                        TrackrServices.FB, TrackrServices.ADJUST
+                    )
+                    it.name = TrackrEvent.kyc_verification
+                }
                 val intent = Intent(this, ActivationSuccessWithAadhaarView::class.java)
                 intent.putExtra(AppConstants.POSTKYCKEY, it.postKycScreenCode)
                 val bndlAnimation = ActivityOptions.makeCustomAnimation(
