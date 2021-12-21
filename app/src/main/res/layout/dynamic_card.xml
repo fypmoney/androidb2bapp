@@ -27,7 +27,7 @@
 
         android:layout_marginBottom="@dimen/_8sdp"
         android:layout_marginTop="@dimen/_8sdp"
-        app:cardCornerRadius="10dp"
+        app:cardCornerRadius="@dimen/dp16"
         android:onClick="@{()->viewHelper.onFeedButtonClick()}">
 
 

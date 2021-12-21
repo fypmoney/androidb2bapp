@@ -47,7 +47,6 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
     init {
-        callToAction()
         callgetOffer()
         callExplporeContent()
     }
@@ -93,7 +92,6 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
      }
 
      fun callToAction(){
-         _state.value = HomeFragmentState.LoadingBalanceState
          WebApiCaller.getInstance().request(
              ApiRequest(
                  ApiConstant.API_CALLTO_ACTION,
@@ -295,7 +293,6 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                 _state.value = HomeFragmentState.ErrorBalanceState
             }
             ApiConstant.API_CALLTO_ACTION->{
-                _state.value = HomeFragmentState.ErrorBalanceState
             }
         }
     }

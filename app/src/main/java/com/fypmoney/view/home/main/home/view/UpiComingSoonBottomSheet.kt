@@ -1,5 +1,7 @@
 package com.fypmoney.view.home.main.home.view
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.viewModels
 import com.fypmoney.R
 import com.fypmoney.base.BaseBottomSheetFragment
@@ -17,4 +19,26 @@ class UpiComingSoonBottomSheet: BaseBottomSheetFragment<BottomsheetUpiComingSoon
         get() = UpiComingSoonBottomSheet::class.java.simpleName
     override val layoutId: Int
         get() = R.layout.bottomsheet_upi_coming_soon
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setUpBinding()
+        setupObserver()
+    }
+
+    private fun setUpBinding(){
+        binding.apply {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = upiScanComingSoonViewModel
+        }
+    }
+    private fun setupObserver() {
+        upiScanComingSoonViewModel.event.observe(viewLifecycleOwner,{
+            when(it){
+                UpiComingSoonVM.UpiComingSoonEvent.GotItEvent -> {
+                    dismiss()
+                }
+            }
+        })
+    }
 }

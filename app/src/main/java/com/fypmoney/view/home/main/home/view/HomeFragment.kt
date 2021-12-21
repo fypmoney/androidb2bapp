@@ -90,6 +90,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         setRecyclerView(_binding)
         setObserver()
         setUpObserver()
+        homeFragmentVM.callToAction()
     }
 
 
@@ -170,6 +171,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                     binding.callToActionTv.text = it.sectionTitle
                     binding.callToActionRv.toVisible()
                     binding.callToActionCl.toVisible()
+                }else{
+                    binding.callToActionRv.toGone()
+                    binding.callToActionCl.toGone()
                 }
 
                 (binding.callToActionRv.adapter as CallToActionAdapter).submitList(it.callToActionList)

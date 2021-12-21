@@ -54,13 +54,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:gravity="center"
-                android:text="You have won"
+                android:text="@string/you_have_won"
                 android:textColor="#231F20" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_24sdp"
                 android:layout_marginStart="@dimen/_20sdp"
@@ -97,15 +96,16 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/mynts_won"
                     style="@style/TextviewRegular"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp20"
-                    tools:text="₹399"
                     android:textColor="@color/color_orange"
                     android:textSize="31sp"
                     app:layout_constraintBottom_toBottomOf="@+id/card_mynt"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/free_mynt"
-                    app:layout_constraintTop_toTopOf="@+id/card_mynt" />
+                    app:layout_constraintTop_toTopOf="@+id/card_mynt"
+                    tools:text="₹399" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -147,28 +147,30 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/card_offer_price_value_tv"
                     style="@style/TextviewRegular"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp20"
-                    tools:text="₹399"
                     android:textColor="@color/color_orange"
                     android:textSize="31sp"
                     app:layout_constraintBottom_toBottomOf="@+id/card_iv"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/card_offer_price_tv"
-                    app:layout_constraintTop_toTopOf="@+id/card_iv" />
+                    app:layout_constraintTop_toTopOf="@+id/card_iv"
+                    tools:text="₹399" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/card_actual_price_value_tv"
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/grey2"
                     android:background="@drawable/strike_through_textview_drawable"
-                    android:textSize="20sp"
                     android:gravity="end"
                     android:text="₹799"
+                    android:textColor="@color/grey2"
+                    android:textSize="20sp"
 
                     app:layout_constraintEnd_toEndOf="@+id/card_offer_price_value_tv"
+                    app:layout_constraintStart_toEndOf="@+id/card_offer_price_tv"
                     app:layout_constraintTop_toBottomOf="@+id/card_offer_price_value_tv"
                     tools:text="₹799" />
 
@@ -186,16 +188,10 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-
-
             android:layout_marginTop="@dimen/_12sdp"
-
-
             android:layout_marginBottom="@dimen/_24sdp"
             android:text="@string/continue_to_home"
-
             android:textAllCaps="false"
-
             app:backgroundTint="@color/text_color_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

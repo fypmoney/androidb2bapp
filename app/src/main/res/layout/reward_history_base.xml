@@ -50,9 +50,8 @@
                 android:clipToPadding="false"
                 android:layout_marginBottom="@dimen/_2sdp"
                 android:backgroundTint="@color/background_light_dark"
-                app:cardCornerRadius="15dp"
+                app:cardCornerRadius="@dimen/dp16"
                 app:layout_constraintBottom_toBottomOf="parent"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">

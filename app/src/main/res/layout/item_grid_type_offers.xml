@@ -9,7 +9,7 @@
         android:id="@+id/grid_offer_cv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="18dp"
+        app:cardCornerRadius="@dimen/dp16"
         app:cardUseCompatPadding="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
