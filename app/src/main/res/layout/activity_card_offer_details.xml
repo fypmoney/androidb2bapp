@@ -117,7 +117,7 @@
                             android:gravity="end"
                             app:layout_constraintEnd_toEndOf="@+id/card_offer_price_value_tv"
                             app:layout_constraintTop_toBottomOf="@+id/card_offer_price_value_tv"
-                            tools:text="₹799" />
+                            tools:text="₹399" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
