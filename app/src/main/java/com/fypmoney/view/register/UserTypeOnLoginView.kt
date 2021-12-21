@@ -62,7 +62,7 @@ class UserTypeOnLoginView :
          }
          mViewModel.isContinueClick.observe(this) {
              if (userTypeSelected =="NoUser"){
-                 //todo show message according to user
+
                  Utility.showToast("Select user type")
              }else {
                  val intent = Intent(this, CreateAccountView::class.java)
@@ -98,7 +98,7 @@ class UserTypeOnLoginView :
             )
         } else {
             mViewBinding.ivUserTypeIcon.setImageDrawable(getDrawable(R.drawable.ic_teenager_selected))
-            mViewBinding.ivUserTypeParentIcon.setImageDrawable(getDrawable(R.drawable.ic_parent))
+            mViewBinding.ivUserTypeParentIcon.setImageDrawable(getDrawable(R.drawable.ic_parent_usertype))
 
             setBackgroundDrawable(
                 mViewBinding.cvUserParent,

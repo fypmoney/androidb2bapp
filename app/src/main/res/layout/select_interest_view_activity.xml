@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content">
                 <include
                     android:id="@+id/toolbar_layout"
-                    layout="@layout/toolbar_animation"
+                    layout="@layout/toolbar"
                     />
 
 

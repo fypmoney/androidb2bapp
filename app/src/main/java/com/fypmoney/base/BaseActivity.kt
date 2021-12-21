@@ -447,6 +447,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
             startActivity(intent)
         }
         if (toolbarTitle != null) {
+            toolbar_title.visibility = View.VISIBLE
             toolbar_title.text = toolbarTitle
             toolbar_title.setTextColor(titleColor)
 

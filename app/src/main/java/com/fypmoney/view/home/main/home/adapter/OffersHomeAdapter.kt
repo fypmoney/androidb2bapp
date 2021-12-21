@@ -54,7 +54,7 @@ class OffersHomeAdapter(
             Glide.with(context).load(items[position].rfu1).placeholder(shimmerDrawable())
                 .into(holder.logo)
         } else {
-            Glide.with(context).load(R.drawable.view_more).placeholder(shimmerDrawable())
+            Glide.with(context).load(R.drawable.ic_view_more_grey).placeholder(shimmerDrawable())
                 .into(holder.logo)
         }
 
