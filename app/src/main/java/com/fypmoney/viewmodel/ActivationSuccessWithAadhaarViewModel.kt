@@ -37,15 +37,9 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
     * This method is used to handle continue
     * */
     init {
-        trackr {
-            it.services = arrayListOf(
-                TrackrServices.FIREBASE,
-                TrackrServices.MOENGAGE,
-                TrackrServices.FB,TrackrServices.ADJUST
-            )
-            it.name = TrackrEvent.kyc_verification
-        }
+
         callGetCustomerProfileApi()
+        callUserGiftsApi()
     }
 
     fun onContinueClicked() {
