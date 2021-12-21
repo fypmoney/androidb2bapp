@@ -15,9 +15,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/_20sdp"
-
-            >
+            android:layout_marginBottom="@dimen/_20sdp">
 
             <include
                 android:id="@+id/toolbarAnimation"
@@ -27,7 +25,7 @@
                 android:id="@+id/tvTitleUserType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Complete your KYC"
+                android:text="@string/complete_your_kyc"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="30sp"
@@ -48,11 +46,11 @@
                 android:id="@+id/kyc_details_tv"
                 app:layout_constraintTop_toBottomOf="@+id/tvTitleUserType"
                 android:layout_height="wrap_content"
-                android:text="KYC process is a mandated by RBI to verify user identity for opening any wallet/bank accounts" />
+                android:text="@string/kyc_process_is_a_mandated_by_rbi_to_verify_user_identity_for_opening_any_wallet_bank_accounts" />
 
             <TextView
                 android:layout_width="match_parent"
-                android:text="Fyp is in association with"
+                android:text="@string/fyp_is_in_association_with"
                 android:id="@+id/fyp_msg"
                 style="@style/TextviewBold"
                 android:textSize="14sp"
@@ -125,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_12sdp"
-                    android:text="Know all about KYC"
+                    android:text="@string/know_all_about_kyc"
                     android:textColor="@color/text_color_dark" />
             </LinearLayout>
 
@@ -255,10 +253,9 @@
                 android:layout_width="@dimen/_200sdp"
                 android:layout_height="wrap_content"
                 android:onClick="@{()->viewModel.onContinue()}"
-                android:text="Continue"
+                android:text="@string/continue_txt"
                 android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

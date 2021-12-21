@@ -76,7 +76,7 @@
             android:layout_marginBottom="@dimen/_16sdp"
 
             android:gravity="center"
-            android:text="I have the number"
+            android:text="@string/i_have_the_number"
 
             android:textColor="@color/white"
             android:textSize="14sp"

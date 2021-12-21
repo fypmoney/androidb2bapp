@@ -295,7 +295,7 @@
                     android:layout_marginTop="8dp"
 
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                    android:hint="Ex. for Delhi: 110001"
+                    android:hint="@string/ex_for_delhi_110001"
                     android:imeOptions="actionDone"
                     android:inputType="number"
                     android:maxLength="6"
@@ -303,6 +303,9 @@
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
                     android:text="@={viewModel.pincode}"
                     android:textSize="@dimen/_14sdp" />
+
+
+
 
                 <Button
                     android:id="@+id/btnCreateAccount"
@@ -312,7 +315,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginStart="@dimen/_17sdp"
                     android:layout_marginTop="@dimen/_20sdp"
-
                     android:layout_marginEnd="@dimen/_17sdp"
                     android:layout_marginBottom="5dp"
                     android:enabled="true"

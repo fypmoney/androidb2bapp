@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -35,6 +36,7 @@
     android:id="@+id/clButton"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    tools:visiblity = "visible"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintBottom_toBottomOf="parent"
@@ -69,6 +71,7 @@
         android:layout_centerHorizontal="true"
         app:cardCornerRadius="@dimen/_22sdp"
         android:visibility="gone"
+        tools:visiblity="visible"
         >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -80,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_10sdp"
                 android:padding="@dimen/_10sdp"
-                android:text="Get Started"
+                android:text="@string/get_started"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_18sp"

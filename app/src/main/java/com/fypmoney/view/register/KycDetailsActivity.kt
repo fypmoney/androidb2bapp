@@ -1,40 +1,28 @@
 package com.fypmoney.view.register
 
-import android.Manifest
-import android.R.attr
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputFilter.AllCaps
 import android.text.InputType
 import android.view.View
-import androidx.activity.viewModels
-import com.fypmoney.BR
-
-import com.fypmoney.base.BaseActivity
-
-import com.fypmoney.util.Utility
-
-import com.fypmoney.view.register.viewModel.KycdetailViewModel
-import com.fypmoney.view.storeoffers.model.offerDetailResponse
-
-import android.widget.ArrayAdapter
-
 import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
 import com.fyp.trackr.services.TrackrServices
+import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityKycDetailsBinding
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.activity.*
+import com.fypmoney.util.Utility
+import com.fypmoney.view.activity.ChooseInterestRegisterView
+import com.fypmoney.view.activity.EnterOtpView
+import com.fypmoney.view.activity.ReferralCodeView
+import com.fypmoney.view.register.viewModel.KycdetailViewModel
 import kotlinx.android.synthetic.main.toolbar_animation.*
-import java.util.*
-import kotlin.collections.ArrayList
-import android.R.attr.inputType
-
-import android.R.attr.password
-import com.fypmoney.view.home.main.homescreen.view.HomeActivity
-import android.text.InputFilter
-import android.text.InputFilter.AllCaps
 
 
 class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailViewModel>(),
@@ -46,7 +34,6 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
     )
 
     private val kycDetailsVM by viewModels<KycdetailViewModel> { defaultViewModelProviderFactory }
-    private var itemsArrayList: ArrayList<offerDetailResponse> = ArrayList()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewDataBinding()
@@ -91,6 +78,8 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
             imageView = ivToolBarBack,//back image view
             lottieAnimationView = ivAnimationGift
         )// lottie anima
+
+
     }
 
     private fun setObserver() {
@@ -231,6 +220,7 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
     override fun onNothingSelected(parent: AdapterView<*>?) {
 
     }
+
 
 
 }

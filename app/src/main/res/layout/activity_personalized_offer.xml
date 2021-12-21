@@ -80,7 +80,7 @@
 
 
             android:layout_marginBottom="@dimen/_24sdp"
-            android:text="Woohoo! That’s great"
+            android:text="@string/woohoo_that_s_great"
 
             android:textAllCaps="false"
 

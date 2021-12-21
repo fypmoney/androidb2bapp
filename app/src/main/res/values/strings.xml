@@ -127,6 +127,7 @@
     <string name="dob_empty_error">Please enter Date of Birth</string>
     <string name="gender_empty_error">Select your gender</string>
     <string name="kyc_empty_error">Select Kyc type</string>
+    <string name="please_accept_terms_and_conditions">Please accept Terms and conditions</string>
     <string name="select_age_type">Please your age gap</string>
     <string name="otp_length_error">OTP length must be 6</string>
     <string name="phone_email_validity_error">Please enter valid Mobile No. or Email Id</string>
@@ -910,6 +911,7 @@ Coming really soon!
     <string name="your_order_has_been_placed_n_successfully">Your order has been placed \n successfully!</string>
     <string name="net_paid">Net Paid</string>
     <string name="by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy">"By tapping Activate Now, you agree to the %1$s &amp; %2$s"</string>
+    <string name="by_tapping_continue_you_agree_to_the_terms_of_service_privacy_policy">"By tapping Continue, you agree to the %1$s &amp; %2$s"</string>
     <string name="set">Set</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="congratulations">Congratulations!</string>
@@ -945,7 +947,7 @@ Coming really soon!
     <string name="visit_store">Redeem Offer</string>
     <string name="age_11_19">Age 11–21</string>
     <string name="teenager">Teenager</string>
-    <string name="fetching_your_card_details">Fetching your card details...</string>
+    <string name="fetching_your_card_details">Fetching your card details…</string>
     <string name="terms_and_conditions_apply">Terms and conditions apply</string>
     <string name="copy_code_and_use_at_checkout">Copy code and use at checkout</string>
     <string name="details">Details</string>
@@ -1055,6 +1057,15 @@ Coming really soon!
     <string name="free">Free</string>
     <string name="continue_to_home">Continue to Home</string>
     <string name="you_have_won">You have won</string>
+    <string name="get_started">Get Started</string>
+    <string name="woohoo_that_s_great">Woohoo! That’s great</string>
+    <string name="get_help_question_mark">Get Help?</string>
+    <string name="i_have_the_number">I have the number</string>
+    <string name="complete_your_kyc">Complete your KYC</string>
+    <string name="kyc_process_is_a_mandated_by_rbi_to_verify_user_identity_for_opening_any_wallet_bank_accounts">KYC process is a mandated by RBI to verify user identity for opening any wallet/bank accounts</string>
+    <string name="fyp_is_in_association_with">Fyp is in association with</string>
+    <string name="know_all_about_kyc">Know all about KYC</string>
+    <string name="ex_for_delhi_110001">Ex. for Delhi: 110001</string>
 
 
     <string-array name="person_category_array">
