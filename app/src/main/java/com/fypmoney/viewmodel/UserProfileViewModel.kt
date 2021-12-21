@@ -155,6 +155,13 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
 
                         )
 
+                    } else {
+                        SharedPrefUtils.putArrayList(
+                            getApplication(),
+                            SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
+
+                        )
+
                     }
 
                     if (responseData.customerInfoResponseDetails?.bankProfile?.isAccountActive == "YES") {

@@ -51,7 +51,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
         callExplporeContent()
     }
 
-    private fun callgetOffer() {
+    fun callgetOffer() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.Api_LIGHTENING_DEALS,
@@ -243,6 +243,8 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                     )
                     val arrayList = ArrayList(array.toMutableList())
                     offerList.postValue(arrayList)
+                } else {
+                    offerList.postValue(null)
                 }
             }
             ApiConstant.API_Explore -> {

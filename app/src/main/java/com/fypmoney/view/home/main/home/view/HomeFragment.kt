@@ -80,6 +80,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
     override fun onStart() {
         super.onStart()
+        homeFragmentVM.callgetOffer()
         homeFragmentVM.fetchBalance()
     }
 
@@ -91,6 +92,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         setObserver()
         setUpObserver()
         homeFragmentVM.callToAction()
+
     }
 
 
@@ -221,29 +223,36 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
                 setRecyclerView(_binding, list)
             })
-        _binding.toInterestScreen.setOnClickListener(View.OnClickListener {
+        _binding.toInterestScreen.setOnClickListener {
             var intent = Intent(requireContext(), ChooseInterestHomeView::class.java)
 
             startActivity(intent)
-        })
+        }
         homeFragmentVM.offerList.observe(viewLifecycleOwner, {
-            itemsArrayList.clear()
-            itemsArrayList.addAll(it)
+            if (it != null) {
+                itemsArrayList.clear()
+                itemsArrayList.addAll(it)
 
-            if (itemsArrayList.size > 0) {
+                if (itemsArrayList.size > 0) {
 
-                itemsArrayList.add(offerDetailResponse())
-                _binding.shimmerLayoutLightening.visibility = View.GONE
-                _binding.lighteningDealsTitle.visibility = View.VISIBLE
-                _binding.lighteningDealsRv.visibility = View.VISIBLE
-                _binding.toInterestScreen.visibility = View.GONE
+                    itemsArrayList.add(offerDetailResponse())
+                    _binding.shimmerLayoutLightening.visibility = View.GONE
+                    _binding.lighteningDealsTitle.visibility = View.VISIBLE
+                    _binding.lighteningDealsRv.visibility = View.VISIBLE
+                    _binding.toInterestScreen.visibility = View.GONE
+                } else {
+                    _binding.shimmerLayoutLightening.visibility = View.GONE
+                    _binding.toInterestScreen.visibility = View.VISIBLE
+//                _binding.lighteningDealsTitle.visibility = View.VISIBLE
+                    _binding.lighteningDealsRv.visibility = View.GONE
+                }
+                typeAdapter?.notifyDataSetChanged()
             } else {
                 _binding.shimmerLayoutLightening.visibility = View.GONE
                 _binding.toInterestScreen.visibility = View.VISIBLE
 //                _binding.lighteningDealsTitle.visibility = View.VISIBLE
                 _binding.lighteningDealsRv.visibility = View.GONE
             }
-            typeAdapter?.notifyDataSetChanged()
         })
 
         homeFragmentVM?.openBottomSheet.observe(

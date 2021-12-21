@@ -60,11 +60,11 @@ Create this method for observe the viewModel fields
             if (it) {
                 Utility.showToast("Your interest has been updated successfully")
                 mViewModel.onUpdateProfileSuccess.value = false
-                val intent = Intent(this, HomeActivity::class.java)
-
-
-                startActivity(intent)
-                finish()
+//                val intent = Intent(this, HomeActivity::class.java)
+//
+//
+//                startActivity(intent)
+                onBackPressed()
 
 
             }
