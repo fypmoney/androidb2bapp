@@ -3,7 +3,6 @@ package com.fypmoney.view.register
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -13,13 +12,12 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivitySelectRelationshipBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.view.register.adapters.SelectRelationAdapter
-
-import com.fypmoney.view.register.model.SendRelationSiblingParentResponse
-import com.fypmoney.view.register.viewModel.SelectRelationVM
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserProfileView
+import com.fypmoney.view.register.adapters.SelectRelationAdapter
 import com.fypmoney.view.register.model.SelectRelationModel
+import com.fypmoney.view.register.model.SendRelationSiblingParentResponse
+import com.fypmoney.view.register.viewModel.SelectRelationVM
 import kotlinx.android.synthetic.main.toolbar_animation.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -39,9 +37,6 @@ class SelectRelationActivity : BaseActivity<ActivitySelectRelationshipBinding, S
         observeEvents()
 
         setRecyclerview()
-        binding.continueBtn.setOnClickListener(View.OnClickListener {
-
-        })
         userType = intent.getStringExtra(AppConstants.USER_TYPE)
         setLottieAnimationToolBar(
             isBackArrowVisible = true,//back arrow visibility
@@ -54,7 +49,7 @@ class SelectRelationActivity : BaseActivity<ActivitySelectRelationshipBinding, S
         nameOfUser = intent?.getStringExtra("name_user")
 
         binding.textView2.text = "Tell us your relationship with " + nameOfUser
-        binding.continueBtn.setOnClickListener(View.OnClickListener {
+        binding.continueBtn.setOnClickListener {
             if (selectRelationVM.selectedRelation.get() != null) {
 
 
@@ -72,7 +67,7 @@ class SelectRelationActivity : BaseActivity<ActivitySelectRelationshipBinding, S
             }
 
 
-        })
+        }
 
     }
 
