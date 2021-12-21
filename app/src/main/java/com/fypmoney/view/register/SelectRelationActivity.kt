@@ -3,6 +3,7 @@ package com.fypmoney.view.register
 import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
