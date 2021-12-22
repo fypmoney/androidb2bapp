@@ -18,6 +18,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.ChooseInterestRegisterView
 import kotlinx.android.synthetic.main.toolbar_animation.*
+import kotlinx.android.synthetic.main.view_chores.*
 import java.lang.Exception
 
 
@@ -31,14 +32,16 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewDataBinding()
-
+        binding.swipetorefresh.setOnRefreshListener {
+            pendingRequestVM.onRefresh()
+        }
 
         setLottieAnimationToolBar(
             isBackArrowVisible = false,//back arrow visibility
             isLottieAnimation = true,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
             lottieAnimationView = ivAnimationGift
-        )// lottie anima
+        )
         pendingRequestVM.callGetCustomerProfileApi()
 //        timer = object : CountDownTimer(8600000, 10) {
 //            override fun onTick(millisUntilFinished: Long) {}
@@ -93,7 +96,7 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
 
 
         pendingRequestVM.user.observe(this, {
-
+            binding.swipetorefresh!!.isRefreshing = false
 
             if (it.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_APPROVED) {
                 gotData = true

@@ -23,6 +23,11 @@ class PendingRequestVm(application: Application) : BaseViewModel(application) {
         "Hey ${Utility.getCustomerDataFromPreference()?.firstName},"
     )
 
+    fun onRefresh() {
+
+
+        callGetCustomerProfileApi()
+    }
 
     fun callGetCustomerProfileApi() {
         WebApiCaller.getInstance().request(
