@@ -147,6 +147,13 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
 
                         )
 
+                    } else {
+                        SharedPrefUtils.putArrayList(
+                            getApplication(),
+                            SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
+
+                        )
+
                     }
                     onApiSuccess.value = true
 
