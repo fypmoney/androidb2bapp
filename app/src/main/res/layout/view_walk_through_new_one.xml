@@ -33,6 +33,8 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageView"
                 android:layout_width="0dp"
+                android:layout_marginStart="@dimen/_24sdp"
+                android:layout_marginEnd="@dimen/_24sdp"
                 android:layout_height="0dp"
                 android:translationZ="@dimen/_1sdp"
                 android:src="@drawable/iv_onboarding_new_one"

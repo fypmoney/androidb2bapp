@@ -134,7 +134,7 @@
             app:layout_constraintStart_toStartOf="@+id/blur"
             android:layout_height="0dp">
 
-            <com.fypmoney.view.customview.blurr.BlurLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="@+id/blur"
@@ -191,7 +191,7 @@
                 </RelativeLayout>
 
 
-            </com.fypmoney.view.customview.blurr.BlurLayout>
+            </RelativeLayout>
 
         </androidx.cardview.widget.CardView>
 

@@ -36,6 +36,8 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     var onLoginSuccess = MutableLiveData<Boolean>()
     var cancelTimer = MutableLiveData<Boolean>()
     var onVerificationSuccess = MutableLiveData<Boolean>()
+
+    var onVerificationSuccessAadhaar = MutableLiveData<KycMobileVerifyResponseDetails>()
     var onVerificationFail = MutableLiveData<Boolean>()
     var otp = ObservableField<String>()
     var resendOtpSuccess = MutableLiveData(true)
@@ -307,8 +309,8 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
             ApiConstant.API_KYC_MOBILE_VERIFICATION -> {
                 if (responseData is KycMobileVerifyResponse) {
 
-                    if (responseData.kycMobileVerifyResponseDetails.showAdharInitScreen == AppConstants.YES)
-                        onVerificationSuccess.value = true
+
+                    onVerificationSuccessAadhaar.value = responseData.kycMobileVerifyResponseDetails
 
 
                 }

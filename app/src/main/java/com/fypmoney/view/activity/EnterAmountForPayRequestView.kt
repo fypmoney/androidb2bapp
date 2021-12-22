@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.view_add_money.*
 import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.*
 import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.add_money_editext
 import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.btnSendOtp
+import java.lang.NumberFormatException
 
 
 class EnterAmountForPayRequestView :

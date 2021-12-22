@@ -10,9 +10,11 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/call_to_action_cv"
         android:layout_width="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:clipToPadding="false"
         android:layout_height="wrap_content"
         app:cardElevation="2dp"
-        app:cardCornerRadius="@dimen/dp8"
+        app:cardCornerRadius="@dimen/dp16"
         app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
@@ -25,6 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:minWidth="20dp"
+                android:scaleType="centerCrop"
                 android:minHeight="20dp"
                 tools:background="@drawable/ic_offer_banner"
                 app:layout_constraintStart_toStartOf="parent"

@@ -1,6 +1,7 @@
 package com.fypmoney.view.storeoffers
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -15,7 +16,9 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.OffersStoreBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
+import com.fypmoney.view.fragment.OffersStoreActivity
 import com.fypmoney.view.storeoffers.adapter.SliderAdapter
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.viewmodel.OffersViewModel
@@ -24,7 +27,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
 
-    private var moved: Int? = 1
+
     private lateinit var mViewModel: OffersViewModel
     private lateinit var mViewBinding: OffersStoreBinding
 
@@ -44,7 +47,6 @@ class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
     }
 
     private var viewPager2: ViewPager2? = null
-    private val sliderHandler = Handler()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,8 +70,6 @@ class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
     }
 
 
-    private val sliderRunnable =
-        Runnable { viewPager2!!.currentItem = viewPager2!!.currentItem + 1 }
 
     private fun setObservers(requireContext: Context) {
 
@@ -82,15 +82,29 @@ class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
     }
 
     private fun setListSlider(arrayList: ArrayList<offerDetailResponse>) {
-        moved = 1
 
 
         var itemClickListener2 = object : ListOfferClickListener {
 
 
             override fun onItemClicked(pos: offerDetailResponse, position: String) {
-                callOfferDetailsSheeet(pos)
-            }        }
+                if (position == "last") {
+                    var intent = Intent(this@OffersScreen, OffersStoreActivity::class.java)
+                    intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.StoreScreen)
+                    startActivity(intent)
+
+//                    Toast.makeText(this@OffersScreen,"Clicked",Toast.LENGTH_SHORT).show()
+                } else {
+                    callOfferDetailsSheeet(pos)
+                }
+
+
+            }
+
+
+        }
+        var offerdetails = offerDetailResponse()
+        arrayList.add(offerdetails)
         viewPager2!!.adapter = null
         viewPager2!!.adapter =
             SliderAdapter(arrayList, viewPager2!!, itemClickListener2, this)
@@ -109,17 +123,7 @@ class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
 
         viewPager2!!.setPageTransformer(compositePageTransformer)
 
-        viewPager2!!.registerOnPageChangeCallback(object : OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                if (position == 0 && moved == 1) {
-                    moved = 0
-                    sliderHandler.removeCallbacks(sliderRunnable)
-                    sliderHandler.postDelayed(sliderRunnable, 10) // slide duration 2 seconds
-                }
 
-            }
-        })
     }
 
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
@@ -136,12 +140,12 @@ class OffersScreen : BaseActivity<OffersStoreBinding, OffersViewModel>() {
 
     override fun onPause() {
         super.onPause()
-        sliderHandler.removeCallbacks(sliderRunnable)
+
     }
 
     override fun onResume() {
         super.onResume()
-        sliderHandler.postDelayed(sliderRunnable, 2000)
+
     }
 
 }

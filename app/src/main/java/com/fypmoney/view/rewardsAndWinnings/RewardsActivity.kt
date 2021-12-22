@@ -4,11 +4,9 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
@@ -29,15 +27,11 @@ import com.fypmoney.databinding.ViewRewardsBinding
 import kotlinx.android.synthetic.main.toolbar.*
 
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
 import com.fypmoney.R
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.activity.HomeView
-import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
+
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsJackpotFragment
@@ -78,16 +72,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
 
 
-        mViewModel?.totalmyntsClicked?.observe(
-            this,
-            androidx.lifecycle.Observer { list ->
-                if (list) {
-                    viewPager.currentItem = 3
-                    mViewModel?.totalmyntsClicked?.postValue(false)
 
-                }
-            }
-        )
         mViewModel?.error?.observe(
             this,
             androidx.lifecycle.Observer { list ->
@@ -170,9 +155,6 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
     override fun onStart() {
         super.onStart()
-        mViewModel?.callTotalRewardsEarnings()
-        mViewModel?.callRewardSummary()
-        mViewModel?.callRewardHistory()
 
 
     }
@@ -182,7 +164,7 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
-        adapter.addFragment(RewardsOverviewFragment(), getString(R.string.overview))
+//        adapter.addFragment(RewardsOverviewFragment(), getString(R.string.overview))
 
         adapter.addFragment(RewardsSpinnerListFragment(), getString(R.string.arcade))
         adapter.addFragment(RewardsJackpotFragment(), getString(R.string.jackpot))
@@ -260,54 +242,12 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
     override fun getViewModel(): RewardsAndVM {
         mViewModel = ViewModelProvider(this).get(RewardsAndVM::class.java)
-        setObserver(mViewModel!!)
+
 
         return mViewModel!!
     }
 
-    private fun setObserver(mViewModel: RewardsAndVM) {
-        mViewModel?.redeemproductDetails.observe(this) {
-            if (it != null) {
-                mViewModel?.redeemproductDetails.postValue(null)
-                Glide.with(this).asDrawable().load(it.scratchResourceHide)
-                    .into(object : CustomTarget<Drawable?>() {
 
-                        override fun onLoadCleared(@Nullable placeholder: Drawable?) {
-
-                        }
-
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            transition: Transition<in Drawable?>?
-                        ) {
-                            val intent =
-                                Intent(this@RewardsActivity, ScratchCardActivity::class.java)
-                            intent.putExtra(AppConstants.SECTION_ID, it.sectionId)
-                            intent.putExtra(AppConstants.NO_GOLDED_CARD, it.noOfJackpotTicket)
-                            it.sectionList?.forEachIndexed { pos, item ->
-                                if (item != null) {
-                                    ScratchCardActivity.sectionArrayList.add(item)
-                                }
-                            }
-                            ScratchCardActivity.imageScratch = resource
-
-                            intent.putExtra(
-                                AppConstants.ORDER_NUM,
-                                mViewModel.orderNumber.value
-                            )
-                            intent.putExtra(
-                                AppConstants.PRODUCT_HIDE_IMAGE,
-                                it.scratchResourceShow
-                            )
-                            startActivity(intent)
-                        }
-                    })
-
-            }
-
-
-        }
-    }
 
 
 }

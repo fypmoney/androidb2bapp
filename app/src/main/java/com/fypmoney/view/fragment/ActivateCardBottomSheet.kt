@@ -2,9 +2,7 @@ package com.fypmoney.view.fragment
 
 
 import android.app.Dialog
-import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -13,33 +11,27 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.databinding.BottomSheetActivateCardBinding
-import com.fypmoney.databinding.BottomSheetSetSpendingLimitBinding
 import com.fypmoney.util.Utility
 import com.fypmoney.util.textview.ClickableSpanListener
 import com.fypmoney.util.textview.MyStoreClickableSpan
-import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
-import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
-import com.fypmoney.view.webview.WebViewActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.mukesh.OtpView
-import kotlinx.android.synthetic.main.view_enter_otp.*
 
 
 class ActivateCardBottomSheet(
     var onActivateCardClickListener: OnActivateCardClickListener,
     var onDismissListner: OnActivateSheetDismissListner? = null
-) :
-    BottomSheetDialogFragment() {
+) : BottomSheetDialogFragment() {
+
     lateinit var binding: BottomSheetActivateCardBinding
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     var otp = ObservableField<String>()
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         BottomSheetDialog(requireContext(), theme)
 
@@ -58,8 +50,6 @@ class ActivateCardBottomSheet(
             container,
             false
         )
-
-
         return binding.root
     }
 

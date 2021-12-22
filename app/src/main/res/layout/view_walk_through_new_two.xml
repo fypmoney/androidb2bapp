@@ -34,6 +34,8 @@
                 android:id="@+id/imageView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:layout_marginStart="@dimen/_24sdp"
+                android:layout_marginEnd="@dimen/_24sdp"
                 android:translationZ="@dimen/_1sdp"
                 android:src="@drawable/onboarding_two"
                 app:layout_constraintStart_toStartOf="parent"

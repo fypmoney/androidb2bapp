@@ -7,12 +7,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.databinding.ViewReferralCodeBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
+import com.fypmoney.view.register.UserTypeOnLoginView
 import com.fypmoney.viewmodel.ReferralCodeViewModel
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.android.synthetic.main.toolbar_animation.*
 
 /*
 * This class is used for show referral code
@@ -35,11 +39,12 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setToolbarAndTitle(
-            context = this@ReferralCodeView,
-            toolbar = toolbar,
-            isBackArrowVisible = true
-        )
+        setLottieAnimationToolBar(
+            isBackArrowVisible = false,//back arrow visibility
+            isLottieAnimation = true,// lottie animation visibility
+            imageView = ivToolBarBack,//back image view
+            lottieAnimationView = ivAnimationGift
+        )// lottie anima
         setObserver()
     }
 
@@ -82,7 +87,7 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
         when {
             (intent.getStringExtra(AppConstants.IS_PROFILE_COMPLETED) == AppConstants.NO) or
                     (Utility.getCustomerDataFromPreference()?.isProfileCompleted==AppConstants.NO)-> {
-                startActivity(Intent(this@ReferralCodeView, CreateAccountView::class.java))
+                startActivity(Intent(this@ReferralCodeView, UserTypeOnLoginView::class.java))
                 finishAffinity()
 
             }
@@ -90,20 +95,14 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
                 startActivity(
                     Intent(
                         this@ReferralCodeView,
-                        AadhaarAccountActivationView::class.java
+                        PanAdhaarSelectionActivity::class.java
                     )
                 )
                 finishAffinity()
             }
             else -> {
+                startActivity(Intent(this@ReferralCodeView, ChooseInterestRegisterView::class.java))
 
-                if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                    startActivity(Intent(this@ReferralCodeView, HomeActivity::class.java))
-
-                } else {
-                    startActivity(Intent(this@ReferralCodeView, PermissionsActivity::class.java))
-
-                }
                 finishAffinity()
 
             }

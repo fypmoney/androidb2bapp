@@ -52,8 +52,8 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     }
 
     private val tabIcons = intArrayOf(
-        com.fypmoney.R.drawable.ic_timeline_tab,
-        com.fypmoney.R.drawable.ic_request_tab_noti,
+        R.drawable.ic_timeline_tab,
+        R.drawable.ic_request_tab_noti,
 
         )
 

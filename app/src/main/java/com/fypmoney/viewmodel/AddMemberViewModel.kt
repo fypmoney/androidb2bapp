@@ -51,11 +51,11 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
     var iconList = mutableListOf<Int>()
     var relationAdapter = RelationAdapter(this)
     var selectedCountryCode = ObservableField<String>()
-    var selectedRelationPosition = ObservableField(0)
+    var selectedRelationPosition = ObservableField(-1)
     var parentName = ObservableField<String>()
     var contactResult = ObservableField(ContactEntity())
     var isGuarantor = ObservableField<String>()
-    var selectedRelationList = ObservableArrayList<RelationModel>()
+    var selectedRelationList = ObservableField<RelationModel>()
 
 
     init {
@@ -89,7 +89,7 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
             TextUtils.isEmpty(mobile.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.phone_email_empty_error))
             }
-            selectedRelationList.isNullOrEmpty() -> {
+            selectedRelationList.get() == null -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.relation_empty_error))
 
             }
@@ -126,18 +126,18 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
 * */
 
     fun callAddMemberApi() {
-        if (selectedRelationList.isNotEmpty()) {
+        if (selectedRelationList.get() != null) {
             SharedPrefUtils.putString(
                 getApplication(),
                 SharedPrefUtils.SF_KEY_SELECTED_RELATION,
-                selectedRelationList.get(0).relationName
+                selectedRelationList.get()!!.relationName
             )
         }
 
         progressDialog.value = true
-        if (selectedRelationList.isNotEmpty()) {
+        if (selectedRelationList.get() != null) {
             var relation =
-                selectedRelationList.get(0).relationName?.toUpperCase(Locale.getDefault())!!
+                selectedRelationList.get()!!.relationName?.toUpperCase(Locale.getDefault())!!
             if (relation == "KIDS") {
                 relation = "CHILD"
 

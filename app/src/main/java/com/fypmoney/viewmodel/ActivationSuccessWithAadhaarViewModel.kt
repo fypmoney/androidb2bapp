@@ -12,10 +12,15 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
+import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.register.model.UserGiftResponse
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.moengage.core.internal.MoEConstants
 
 /*
@@ -24,27 +29,36 @@ import com.moengage.core.internal.MoEConstants
 class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseViewModel(application) {
     private val TAG: String = ActivationSuccessWithAadhaarViewModel::class.java.simpleName
     var onContinueClicked = MutableLiveData<Boolean>()
+
+    var GiftsSuccess = MutableLiveData<Boolean>()
     var postKycScreenCode = MutableLiveData<String>()
 
     /*
     * This method is used to handle continue
     * */
     init {
-        trackr {
-            it.services = arrayListOf(
-                TrackrServices.FIREBASE,
-                TrackrServices.MOENGAGE,
-                TrackrServices.FB,TrackrServices.ADJUST
-            )
-            it.name = TrackrEvent.kyc_verification
-        }
+
         callGetCustomerProfileApi()
+        callUserGiftsApi()
     }
+
     fun onContinueClicked() {
         if (Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.YES)
             onContinueClicked.value = true
     }
 
+    fun callUserGiftsApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.Api_Your_Gifts,
+                NetworkUtil.endURL(ApiConstant.Api_Your_Gifts),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+
+    }
 
     /*
     *This method is used to call get customer profile API
@@ -64,6 +78,10 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
+            ApiConstant.Api_Your_Gifts -> {
+                GiftsSuccess.value = true
+
+            }
             ApiConstant.API_GET_CUSTOMER_INFO -> {
                 if (responseData is CustomerInfoResponse) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
@@ -92,16 +110,19 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                             SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
                         )
                     }
-                    postKycScreenCode.value =
-                        responseData.customerInfoResponseDetails?.postKycScreenCode!!
+                    if (postKycScreenCode.value.isNullOrEmpty()) {
+                        postKycScreenCode.value =
+                            responseData.customerInfoResponseDetails?.postKycScreenCode!!
+                    }
+
                     responseData.customerInfoResponseDetails?.postKycScreenCode?.let {
-                        when(it){
-                            "0"->{
+                        when (it) {
+                            "0" -> {
                                 trackr {
                                     it.services = arrayListOf(
                                         TrackrServices.FIREBASE,
                                         TrackrServices.MOENGAGE,
-                                        TrackrServices.FB,TrackrServices.ADJUST
+                                        TrackrServices.FB, TrackrServices.ADJUST
                                     )
                                     it.name = TrackrEvent.kyc_verification_teen
                                 }
@@ -145,6 +166,8 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                         userProfile.dob?.let { it1 -> UserTrackr.setDateOfBirthDate(it1) }
 
                     }
+//                    Utility.getCustomerDataFromPreference()?.postKycScreenCode="90"
+//                    postKycScreenCode.value = "90"
 
 
                 }

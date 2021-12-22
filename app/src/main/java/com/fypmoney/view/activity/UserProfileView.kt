@@ -23,7 +23,8 @@ import com.fypmoney.databinding.ViewUserNewProfileBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.adapter.MyProfileListAdapter
+
+import com.fypmoney.view.adapter.MyUserprofileAdapter
 import com.fypmoney.view.community.SocialCommunityActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
 import com.fypmoney.viewmodel.UserProfileViewModel
@@ -47,7 +48,7 @@ import java.io.IOException
 * This class is used as Home Screen
 * */
 class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewModel>(),
-    MyProfileListAdapter.OnListItemClickListener, LogoutBottomSheet.OnLogoutClickListener {
+    MyUserprofileAdapter.OnListItemClickListener, LogoutBottomSheet.OnLogoutClickListener {
     private lateinit var mViewModel: UserProfileViewModel
     private lateinit var mViewBinding: ViewUserNewProfileBinding
 
@@ -69,7 +70,9 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = this@UserProfileView,
-            toolbar = toolbar,
+            toolbar = toolbar, backArrowTint = Color.WHITE,
+            titleColor = Color.WHITE,
+
             isBackArrowVisible = true, toolbarTitle = getString(R.string.my_profile_title)
         )
 
@@ -107,12 +110,12 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
             e.printStackTrace()
 
         }
-        val myProfileAdapter = MyProfileListAdapter(applicationContext, this)
+        val myProfileAdapter = MyUserprofileAdapter(applicationContext, this)
         mViewBinding.profileList.adapter = myProfileAdapter
 
         val iconList = ArrayList<Int>()
         iconList.add(R.drawable.ic_privacy)
-        iconList.add(R.drawable.ic_interest)
+//        iconList.add(R.drawable.ic_interest)
         iconList.add(R.drawable.ic_community)
         iconList.add(R.drawable.ic_privacy)
         iconList.add(R.drawable.ic_privacy)
@@ -321,26 +324,28 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                 Utility.goToAppSettings(applicationContext)
             }
 
+
             1 -> {
-                val intent = Intent(this@UserProfileView, SelectInterestView::class.java)
-                intent.putExtra(AppConstants.INTEREST_TYPE,true)
-                startActivity(intent)
+                intentToActivityMain(this@UserProfileView, SocialCommunityActivity::class.java)
             }
             2 -> {
-                intentToActivityMain(this@UserProfileView,SocialCommunityActivity::class.java)
+                openWebPageFor(
+                    getString(R.string.privacy_policy),
+                    "https://www.fypmoney.in/fyp/privacy-policy/"
+                )
             }
             3 -> {
-                openWebPageFor(getString(R.string.privacy_policy),"https://www.fypmoney.in/fyp/privacy-policy/")
-            }
-            4 -> {
-                openWebPageFor(getString(R.string.terms_and_conditions),"https://www.fypmoney.in/fyp/terms-of-use/")
+                openWebPageFor(
+                    getString(R.string.terms_and_conditions),
+                    "https://www.fypmoney.in/fyp/terms-of-use/"
+                )
             }
 
-            5 -> {
+            4 -> {
                 callFreshChat(applicationContext)
             }
 
-            6 -> {
+            5 -> {
                 callLogOutBottomSheet()
             }
 

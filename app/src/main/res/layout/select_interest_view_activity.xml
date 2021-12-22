@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content">
                 <include
                     android:id="@+id/toolbar_layout"
-                    layout="@layout/toolbar_animation"
+                    layout="@layout/toolbar"
                     />
 
 
@@ -36,7 +36,7 @@
                     android:layout_marginTop="@dimen/_5sdp"
                     style="@style/TextviewBold"
                     android:textSize="20sp"
-                    android:text="What do you fancy?"
+                    android:text="Personalize your Cashback Offers"
                     android:textAlignment="center"
 
                     />
@@ -52,7 +52,7 @@
                     android:layout_marginHorizontal="@dimen/_25sdp"
                     android:textSize="12sp"
                     android:textColor="#cc000000"
-                    android:text="Tell us your interests and get personalized offers on\n your favourite brands. Cool, right?"
+                    android:text="Select maximum 3 categories and we would activate exclusive cashback offers only for you. Cool, right?"
                     android:textAlignment="center" />
 
                 <androidx.recyclerview.widget.RecyclerView

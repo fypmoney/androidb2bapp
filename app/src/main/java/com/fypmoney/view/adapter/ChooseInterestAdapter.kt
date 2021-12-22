@@ -14,6 +14,7 @@ import com.fypmoney.bindingAdapters.setAnimationToViewInXAxis
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.ChooseInterestRowItemBinding
 import com.fypmoney.model.InterestEntity
+import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SelectInterestViewModel
 
 
@@ -53,10 +54,15 @@ class ChooseInterestAdapter(var viewModel: SelectInterestViewModel) :
                 setColorAndIconBackgroundsChange(it[position].isSelected)
             }
             mRowItemBinding.serviceLayout.setOnClickListener {
-                chooseInterestList?.get(position)?.isSelected =
-                    chooseInterestList?.get(position)?.isSelected != true
+                if (viewModel.selectedInterestList.size < 3 || chooseInterestList?.get(position)?.isSelected == true) {
+                    chooseInterestList?.get(position)?.isSelected =
+                        chooseInterestList?.get(position)?.isSelected != true
 
-                setColorAndIconBackgroundsChange(chooseInterestList?.get(position)?.isSelected!!)
+                    setColorAndIconBackgroundsChange(chooseInterestList?.get(position)?.isSelected!!)
+                } else {
+                    Utility.showToast("Max 3 can be selected")
+                }
+
             }
             mRowItemBinding.executePendingBindings()
         }

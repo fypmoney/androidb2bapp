@@ -166,7 +166,12 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
     private fun handleEvents(cardEvent: CardFragmentVM.CardEvent) {
         when (cardEvent) {
             is CardFragmentVM.CardEvent.OnCVVClicked -> {
-                askForDevicePassword()
+                if(!cardFragmentVM.isCvvVisible){
+                    askForDevicePassword()
+                }else{
+                    binding.cardCvvValueTv.text = getString(R.string.three_star)
+                    binding.viewCvvIv.setImageResource(R.drawable.ic_icon_feather_eye_off)
+                }
             }
             CardFragmentVM.CardEvent.AccountStatementEvent -> {
                 intentToActivity(BankTransactionHistoryView::class.java)

@@ -24,7 +24,7 @@ class ExploreBaseAdapter(
     val context: Context,
     val clickInterface: ExploreItemClickListener,
     val scale: Float,
-    val titleTextColor:Int = Color.WHITE
+    val titleTextColor: Int = Color.WHITE
 ) : RecyclerView.Adapter<ExploreBaseAdapter.ViewHolder>() {
 
 
@@ -48,7 +48,12 @@ class ExploreBaseAdapter(
 
         holder.rv_list.itemAnimator = DefaultItemAnimator()
         holder.date_tv.setTextColor(titleTextColor)
-        holder.date_tv.text = items[position].sectionDisplayText
+        if (items[position].sectionDisplayText.isNullOrEmpty()) {
+            holder.date_tv.visibility = View.GONE
+        } else {
+            holder.date_tv.text = items[position].sectionDisplayText
+        }
+
         if (items[position].sectionContent != null && items[position].sectionContent?.size!! > 1) {
             var itemClickListener2 = object : ExploreItemClickListener {
                 override fun onItemClicked(position: Int, sectionContentItem: SectionContentItem) {

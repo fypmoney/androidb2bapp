@@ -98,7 +98,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Spin
         setRvScratchCard()
         dialogInsufficientFund = Dialog(requireContext())
         buyProductDialog = Dialog(requireContext())
-        observeInput(mViewmodel!!)
+        mViewmodel?.let { observeInput(it) }
 
 
     }

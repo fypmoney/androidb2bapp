@@ -23,6 +23,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.AddMoneyView
+import com.fypmoney.view.activity.ChooseInterestHomeView
 import com.fypmoney.view.activity.ContactListView
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
@@ -34,20 +35,23 @@ import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
-import com.fypmoney.view.home.main.home.adapter.QuickActionAdapter
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.home.main.homescreen.view.LoadMoneyBottomSheet
+import com.fypmoney.view.register.adapters.OffersHomeAdapter
+import com.fypmoney.view.storeoffers.ListOfferClickListener
 import com.fypmoney.view.storeoffers.OffersScreen
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 
-class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), ExploreAdapter.OnFeedItemClickListener {
+class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
+    ExploreAdapter.OnFeedItemClickListener {
 
-    private  val homeFragmentVM by viewModels<HomeFragmentVM> {
+    private var typeAdapter: OffersHomeAdapter? = null
+    private val homeFragmentVM by viewModels<HomeFragmentVM> {
         defaultViewModelProviderFactory
     }
-    private lateinit var  _binding: FragmentHomeBinding
-
+    private lateinit var _binding: FragmentHomeBinding
+    private var itemsArrayList: ArrayList<offerDetailResponse> = ArrayList()
 
     private val binding get() = _binding
 
@@ -76,6 +80,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), Explore
 
     override fun onStart() {
         super.onStart()
+        homeFragmentVM.callgetOffer()
         homeFragmentVM.fetchBalance()
     }
 
@@ -83,15 +88,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), Explore
         super.onViewCreated(view, savedInstanceState)
         _binding = getViewDataBinding()
         setupRecyclerView()
-        setUpObserver()
-        homeFragmentVM.prepareQuickActionList()
+        setRecyclerView(_binding)
         setObserver()
+        setUpObserver()
+        homeFragmentVM.callToAction()
+
     }
 
 
 
     private fun setupRecyclerView() {
-        with(binding.quickActionRv) {
+        /*with(binding.quickActionRv) {
             adapter = QuickActionAdapter(viewLifecycleOwner, onQuickActionClicked = {
                 when(it.id){
                     HomeFragmentVM.QuickActionEvent.AddAction -> {
@@ -109,19 +116,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), Explore
                     }
                 }
             })
-        }
+        }*/
         with(binding.callToActionRv) {
             adapter = CallToActionAdapter(viewLifecycleOwner, onCallToActionClicked = {
                 val redirectionResources = it.redirectionResource?.split(",")?.get(0)
-                    if(redirectionResources==FyperScreen){
-                        findNavController().navigate(R.id.navigation_fyper)
-                    }else if(redirectionResources== AppConstants.JACKPOTTAB){
-                        findNavController().navigate(R.id.navigation_rewards)
-                    }else if(redirectionResources== AppConstants.CardScreen){
-                        findNavController().navigate(R.id.navigation_card)
-                    }else{
-                        redirectionResources?.let { it1 -> deeplinkRedirection(it1,requireContext()) }
-                    }
+                if (redirectionResources == FyperScreen) {
+                    findNavController().navigate(R.id.navigation_fyper)
+                } else if (redirectionResources == AppConstants.JACKPOTTAB) {
+                    findNavController().navigate(R.id.navigation_rewards)
+                } else if (redirectionResources == AppConstants.CardScreen) {
+                    findNavController().navigate(R.id.navigation_card)
+                } else {
+                    redirectionResources?.let { it1 -> deeplinkRedirection(it1, requireContext()) }
+                }
             })
         }
     }
@@ -162,10 +169,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), Explore
             }
             is HomeFragmentVM.HomeFragmentState.SuccessCallToActionState -> {
                 binding.shimmerLayout.toGone()
-                binding.callToActionRv.toVisible()
+                if (it.callToActionList.isNotEmpty()) {
+                    binding.callToActionTv.text = it.sectionTitle
+                    binding.callToActionRv.toVisible()
+                    binding.callToActionCl.toVisible()
+                }else{
+                    binding.callToActionRv.toGone()
+                    binding.callToActionCl.toGone()
+                }
+
                 (binding.callToActionRv.adapter as CallToActionAdapter).submitList(it.callToActionList)
             }
-            HomeFragmentVM.HomeFragmentState.LoadingCallToActionState -> TODO()
+            HomeFragmentVM.HomeFragmentState.LoadingCallToActionState -> {
+
+            }
             HomeFragmentVM.HomeFragmentState.ShowLoadMoneySheetState -> {
                 val loadMoneyBottomSheet = LoadMoneyBottomSheet()
                 loadMoneyBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
@@ -177,16 +194,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), Explore
 
     private fun handelEvents(it: HomeFragmentVM.HomeFragmentEvent?) {
         when(it){
-            is HomeFragmentVM.HomeFragmentEvent.QuickActionListReady -> {
-                (binding.quickActionRv.adapter as QuickActionAdapter).submitList(it.quickActionList)
-                //homeFragmentVM.prepareCallToActionList()
-                homeFragmentVM.callToAction()
-            }
             HomeFragmentVM.HomeFragmentEvent.ViewCardDetails -> {
                 findNavController().navigate(R.id.navigation_card)
 
             }
-            null -> TODO()
+            HomeFragmentVM.HomeFragmentEvent.AddAction -> {
+                val intent = Intent(requireActivity(), AddMoneyView::class.java)
+                startActivity(intent)
+            }
+            HomeFragmentVM.HomeFragmentEvent.PayAction -> {
+                val intent = Intent(requireActivity(), ContactListView::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.PAY)
+                startActivity(intent)
+            }
+            HomeFragmentVM.HomeFragmentEvent.UpiScanAction -> {
+                val upiComingSoonBottomSheet = UpiComingSoonBottomSheet()
+                upiComingSoonBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+                upiComingSoonBottomSheet.show(childFragmentManager, "UpiComingSoonBottomSheet")
+            }
+
         }
     }
 
@@ -197,6 +223,38 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), Explore
 
                 setRecyclerView(_binding, list)
             })
+        _binding.toInterestScreen.setOnClickListener {
+            var intent = Intent(requireContext(), ChooseInterestHomeView::class.java)
+
+            startActivity(intent)
+        }
+        homeFragmentVM.offerList.observe(viewLifecycleOwner, {
+            if (it != null) {
+                itemsArrayList.clear()
+                itemsArrayList.addAll(it)
+
+                if (itemsArrayList.size > 0) {
+
+                    itemsArrayList.add(offerDetailResponse())
+                    _binding.shimmerLayoutLightening.visibility = View.GONE
+                    _binding.lighteningDealsTitle.visibility = View.VISIBLE
+                    _binding.lighteningDealsRv.visibility = View.VISIBLE
+                    _binding.toInterestScreen.visibility = View.GONE
+                } else {
+                    _binding.shimmerLayoutLightening.visibility = View.GONE
+                    _binding.toInterestScreen.visibility = View.VISIBLE
+//                _binding.lighteningDealsTitle.visibility = View.VISIBLE
+                    _binding.lighteningDealsRv.visibility = View.GONE
+                }
+                typeAdapter?.notifyDataSetChanged()
+            } else {
+                _binding.shimmerLayoutLightening.visibility = View.GONE
+                _binding.toInterestScreen.visibility = View.VISIBLE
+//                _binding.lighteningDealsTitle.visibility = View.VISIBLE
+                _binding.lighteningDealsRv.visibility = View.GONE
+            }
+        })
+
         homeFragmentVM?.openBottomSheet.observe(
             viewLifecycleOwner,
             { list ->
@@ -229,6 +287,29 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), Explore
             })
 
     }
+
+    private fun setRecyclerView(root: FragmentHomeBinding) {
+        var itemClickListener2 = object : ListOfferClickListener {
+            override fun onItemClicked(pos: offerDetailResponse, position: String) {
+                if (position == "middle") {
+                    callOfferDetailsSheeet(pos)
+                } else {
+                    var intent = Intent(requireContext(), OffersScreen::class.java)
+                    intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.OfferScreen)
+                    startActivity(intent)
+                }
+
+            }
+        }
+        val layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        root.lighteningDealsRv.layoutManager = layoutManager
+
+        typeAdapter = OffersHomeAdapter(itemsArrayList, requireContext(), itemClickListener2)
+        root.lighteningDealsRv.adapter = typeAdapter
+
+    }
+
 
     private fun setRecyclerView(
         root: FragmentHomeBinding,
@@ -270,7 +351,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), Explore
 
                         val intent = Intent(requireContext(), ExploreInAppWebview::class.java)
 //        intent.putExtra(AppConstants.EXPLORE_RESPONSE, feedDetails)
-                        intent.putExtra(AppConstants.FROM_WHICH_SCREEN,
+                        intent.putExtra(
+                            AppConstants.FROM_WHICH_SCREEN,
                             AppConstants.EXPLORE_IN_APP_WEBVIEW
                         )
                         intent.putExtra(AppConstants.IN_APP_URL, it.redirectionResource)
@@ -312,8 +394,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), Explore
                     }
                     AppConstants.EXPLORE_TYPE_STORIES -> {
                         if (!it.redirectionResource.isNullOrEmpty()) {
-//
-
                             homeFragmentVM.callFetchFeedsApi(it.redirectionResource)
 
                         }
@@ -359,7 +439,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding,HomeFragmentVM>(), Explore
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
         intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
         startActivity(intent)
-        //hello
     }
 
     override fun onFeedClick(position: Int, feedDetails: SectionContentItem) {

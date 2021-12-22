@@ -39,6 +39,7 @@ import com.fypmoney.util.AppConstants.PLAY_STORE_URL
 import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getInviteLinkWithExtraData
 import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getInviteLinkWithNoData
 import com.fypmoney.view.activity.LoginView
+import com.fypmoney.view.register.TimeLineActivity
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.view.webview.WebViewActivity
@@ -423,9 +424,10 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     * */
     fun setLottieAnimationToolBar(
         isBackArrowVisible: Boolean? = false, //back arrow for back press by default visibility of
-        isLottieAnimation:Boolean?=false, // lottie animation by default on
-        imageView:ImageView,
-        lottieAnimationView:ImageView)
+        isLottieAnimation: Boolean? = false, // lottie animation by default on
+        imageView: ImageView,
+        lottieAnimationView: ImageView, toolbarTitle: String? = null
+    )
     {
         // set back arrow visibility
         if (isBackArrowVisible == true)imageView.visibility=View.VISIBLE
@@ -440,9 +442,16 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         }
 
         lottieAnimationView.setOnClickListener {
-            finish()
-        }
+            val intent = Intent(this@BaseActivity, TimeLineActivity::class.java)
 
+            startActivity(intent)
+        }
+        if (toolbarTitle != null) {
+            toolbar_title.visibility = View.VISIBLE
+            toolbar_title.text = toolbarTitle
+            toolbar_title.setTextColor(titleColor)
+
+        }
 
     }
 
@@ -516,12 +525,13 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     }
 
 
-    private fun onInviteUser(content:String) {
+    fun onInviteUser(content: String) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_TEXT, content)
         startActivity(Intent.createChooser(intent, "Share Link"))
     }
+
     override fun onTryAgainClicked() {
 
     }

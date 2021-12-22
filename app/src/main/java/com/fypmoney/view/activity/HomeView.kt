@@ -499,9 +499,11 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     private fun checkAndAskPermission() {
         when (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
             false -> {
-                mViewModel.postLatlong("","",SharedPrefUtils.getLong(
-                    application, key = SharedPrefUtils.SF_KEY_USER_ID
-                ))
+                mViewModel.postLatlong(
+                    "", "", SharedPrefUtils.getLong(
+                        application, key = SharedPrefUtils.SF_KEY_USER_ID
+                    )
+                )
             }
             else -> {
                 requestPermission(Manifest.permission.ACCESS_FINE_LOCATION)

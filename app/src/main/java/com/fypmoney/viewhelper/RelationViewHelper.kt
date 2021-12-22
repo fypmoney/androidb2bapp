@@ -9,25 +9,31 @@ class RelationViewHelper(var adapter: RelationAdapter,var position: Int, var rel
     var isBackgroundHighlight = ObservableField<Boolean>()
 
     fun init() {
+        if (viewModel.selectedRelationPosition.get() == position) {
+            isBackgroundHighlight.set(true)
+        } else {
+            isBackgroundHighlight.set(false)
+        }
+
     }
 
 
     fun onItemClicked() {
-        if (viewModel.selectedRelationList.size < 1) {
-            relationModel?.isSelected = relationModel?.isSelected != true
-            viewModel.selectedRelationList.add(relationModel!!)
-            isBackgroundHighlight.set(true)
-        } else if (viewModel.selectedRelationList.size == 1) {
-            if (viewModel.selectedRelationList[0].relationName == relationModel?.relationName) {
-                relationModel?.isSelected = relationModel?.isSelected != true
-                isBackgroundHighlight.set(false)
-                relationModel?.let {
-                    viewModel.selectedRelationList.remove(it)
-
-                }
-            }
-
-        }
+//        if (viewModel.selectedRelationList.size < 1) {
+//            relationModel?.isSelected = relationModel?.isSelected != true
+//            viewModel.selectedRelationList.add(relationModel!!)
+//            isBackgroundHighlight.set(true)
+//        } else if (viewModel.selectedRelationList.size == 1) {
+//            if (viewModel.selectedRelationList[0].relationName == relationModel?.relationName) {
+//                relationModel?.isSelected = relationModel?.isSelected != true
+//
+//                relationModel?.let {
+//                    viewModel.selectedRelationList.remove(it)
+//
+//                }
+//            }
+//
+//        }
     }
 
 

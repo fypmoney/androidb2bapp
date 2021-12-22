@@ -24,10 +24,12 @@ import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.adapter.FeedsRewardsAdapter
 
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
+import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.view.rewardsAndWinnings.CashBackWonHistoryActivity
 
 
-class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, RewardsAndVM>(),
+class RewardsOverviewFragment(val tabchangeListner: HomeTabChangeClickListener) :
+    BaseFragment<FragmentRewardsOverviewBinding, RewardsAndVM>(),
     FeedsAdapter.OnFeedItemClickListener {
 
     private var mLastClickTime: Long = 0
@@ -140,10 +142,11 @@ class RewardsOverviewFragment : BaseFragment<FragmentRewardsOverviewBinding, Rew
             startActivity(intent)
         })
         mViewBinding?.totalMyntsLayout?.setOnClickListener(View.OnClickListener {
-            mViewmodel?.totalmyntsClicked?.postValue(true)
+            tabchangeListner.tabchange(0, getString(R.string.reward_history))
         })
         mViewBinding?.goldenCardLayout?.setOnClickListener(View.OnClickListener {
-            mViewmodel?.totalmyntsClicked?.postValue(true)
+
+            tabchangeListner.tabchange(0, getString(R.string.jackpot))
         })
 
     }

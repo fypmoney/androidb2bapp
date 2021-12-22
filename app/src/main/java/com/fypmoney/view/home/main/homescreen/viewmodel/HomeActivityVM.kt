@@ -36,10 +36,11 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
         get() = _event
     private var _event = LiveEvent<HomeActivityEvent>()
 
-    fun onProfileClicked(){
+    fun onProfileClicked() {
         _event.value = HomeActivityEvent.ProfileClicked
     }
-    fun onNotificationClicked(){
+
+    fun onNotificationClicked() {
         _event.value = HomeActivityEvent.NotificationClicked
     }
 
@@ -92,11 +93,8 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
     }
 
 
-
-
-
-    sealed class HomeActivityEvent{
-        object ProfileClicked:HomeActivityEvent()
-        object NotificationClicked:HomeActivityEvent()
+    sealed class HomeActivityEvent {
+        object ProfileClicked : HomeActivityEvent()
+        object NotificationClicked : HomeActivityEvent()
     }
 }

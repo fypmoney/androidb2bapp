@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.SystemClock
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -29,11 +30,12 @@ import com.fypmoney.view.home.main.home.view.HomeFragment
 import com.fypmoney.view.home.main.homescreen.viewmodel.HomeActivityVM
 import java.util.concurrent.atomic.AtomicBoolean
 
-class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>(), LocationListenerClass.GetCurrentLocationListener {
+class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
+    LocationListenerClass.GetCurrentLocationListener {
 
     private lateinit var binding: ActivityHomeBinding
     private val homeActivityVM by viewModels<HomeActivityVM> { defaultViewModelProviderFactory }
-
+    private var mLastClickTime: Long = 0
     private val doubleBackPressed = AtomicBoolean(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,13 +43,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>(), Locatio
         binding = getViewDataBinding()
         setupNavController()
         observeEvents()
+        binding.help.setOnClickListener {
+            callFreshChat(applicationContext)
+        }
         trackr {
             it.name = TrackrEvent.home_screen
             it.add(
                 TrackrField.user_id, SharedPrefUtils.getLong(
                     applicationContext,
                     SharedPrefUtils.SF_KEY_USER_ID
-                ).toString())
+                ).toString()
+            )
         }
         checkAndAskPermission()
 
@@ -68,20 +74,20 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>(), Locatio
 
         binding.bottomMenu.setOnItemSelectedListener { id ->
             onNavDestinationSelected(id, navHomeController)
-
         }
-        
+
         navHomeController.addOnDestinationChangedListener { controller, destination, arguments ->
-            when(destination.id){
-                R.id.navigation_home->{
+            when (destination.id) {
+                R.id.navigation_home -> {
                     binding.bottomMenu.setItemSelected(R.id.navigation_home, true)
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.white))
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.black))
-                    homeActivityVM.toolbarTitle.value = "Hey ${Utility.getCustomerDataFromPreference()?.firstName},"
+                    homeActivityVM.toolbarTitle.value =
+                        "Hey ${Utility.getCustomerDataFromPreference()?.firstName},"
                     showToolbar()
                     showBottomNavigation()
                 }
-                R.id.navigation_fyper->{
+                R.id.navigation_fyper -> {
                     binding.bottomMenu.setItemSelected(R.id.navigation_fyper, true)
 
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.white))
@@ -90,7 +96,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>(), Locatio
                     showToolbar()
                     showBottomNavigation()
                 }
-                R.id.navigation_rewards->{
+                R.id.navigation_rewards -> {
                     binding.bottomMenu.setItemSelected(R.id.navigation_rewards, true)
 
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
@@ -99,7 +105,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>(), Locatio
                     showToolbar()
                     showBottomNavigation()
                 }
-                R.id.navigation_explore->{
+                R.id.navigation_explore -> {
                     binding.bottomMenu.setItemSelected(R.id.navigation_explore, true)
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
@@ -107,7 +113,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>(), Locatio
                     showToolbar()
                     showBottomNavigation()
                 }
-                else->{
+                else -> {
                     hideToolbar()
                     hideBottomNavigation()
                 }
@@ -139,6 +145,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>(), Locatio
     private fun handelEvents(it: HomeActivityVM.HomeActivityEvent?) {
         when(it){
             HomeActivityVM.HomeActivityEvent.NotificationClicked -> {
+                if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
+                    return;
+                }
+                mLastClickTime = SystemClock.elapsedRealtime();
                 startActivity(Intent(this, NotificationView::class.java))
 
             }
@@ -195,16 +205,19 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>(), Locatio
                 binding.myProfileIv,
                 it,
                 ContextCompat.getDrawable(this, R.drawable.ic_profile_img),
-                true)
+                true
+            )
         }
     }
 
     private fun getCurrentBottomFragment(): Fragment? {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_home)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_home)
         return navHostFragment?.childFragmentManager?.fragments?.get(0)
     }
+
     override fun onBackPressed() {
-        if ( getCurrentBottomFragment() !is HomeFragment) {
+        if (getCurrentBottomFragment() !is HomeFragment) {
             super.onBackPressed()
             return
         }
@@ -224,9 +237,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>(), Locatio
     private fun checkAndAskPermission() {
         when (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
             false -> {
-                homeActivityVM.postLatlong("","",SharedPrefUtils.getLong(
-                    application, key = SharedPrefUtils.SF_KEY_USER_ID
-                ))
+                homeActivityVM.postLatlong(
+                    "", "", SharedPrefUtils.getLong(
+                        application, key = SharedPrefUtils.SF_KEY_USER_ID
+                    )
+                )
             }
             else -> {
                 requestPermission(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -243,7 +258,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding,HomeActivityVM>(), Locatio
         SharedPrefUtils.getLong(
             application, key = SharedPrefUtils.SF_KEY_USER_ID
         ).let {
-            homeActivityVM.postLatlong("$latitude","$Longitude",it)
+            homeActivityVM.postLatlong("$latitude", "$Longitude", it)
         }
     }
 }

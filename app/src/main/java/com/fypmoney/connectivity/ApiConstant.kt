@@ -39,8 +39,9 @@ object ApiConstant {
 
 
     const val API_UPDATE_FAMILY_NAME = "/services/authservice/api/family-detail?name="
-    const val API_KYC_ACTIVATE_ACCOUNT = "/services/PockketService/api/activate/account/init"
-    const val API_KYC_MOBILE_VERIFICATION = "/services/PockketService/api/mobile/verification"
+    const val API_KYC_ACTIVATE_ACCOUNT = "/services/PockketService/api/activate/account/init/v1"
+    const val API_KYC_MOBILE_VERIFICATION = "/services/PockketService/api/mobile/verification/v1"
+
     const val API_KYC_INIT = "/services/PockketService/api/kyc/init"
     const val API_KYC_VERIFICATION = "/services/PockketService/api/kyc/verification"
     const val API_GET_WALLET_BALANCE = "/services/PockketService/api/get/walletBalance"
@@ -132,6 +133,7 @@ object ApiConstant {
         "services/PockketService/api/jackpot/tickets"
 
     const val Api_OfferList = "services/loyaltyservice/api/fyp-offer"
+    const val Api_LIGHTENING_DEALS = "services/PockketService/api/lightening-deals"
 
     const val API_CALLTO_ACTION = "/services/PockketService/api/actions/screen-sections/"
 
@@ -140,7 +142,8 @@ object ApiConstant {
     const val API_FETCH_FEED_DETAILS = "/services/loyaltyservice/api/feed/"
 
     const val API_FETCH_OFFER_DETAILS = "/services/loyaltyservice/api/fyp-offer/"
-
+    const val Api_Request_Siblin_parent = "services/authservice/api/family-member/userKycCode/"
+    const val Api_Your_Gifts = "services/loyaltyservice/api/onboarding-gifts"
 
 }
 

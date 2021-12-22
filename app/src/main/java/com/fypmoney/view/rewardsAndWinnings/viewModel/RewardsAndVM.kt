@@ -27,7 +27,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     var rewardHistoryList: MutableLiveData<ArrayList<RewardHistoryResponseNew>> = MutableLiveData()
 
     var latitude = ObservableField<Double>()
-    var redeemproductDetails = LiveEvent<aRewardProductResponse>()
+
     val longitude = ObservableField<Double>()
     var onAddMoneyClicked = MutableLiveData(false)
     var loading = MutableLiveData(false)
@@ -36,7 +36,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     val isApiLoading = ObservableField(true)
     val detailsCalling = ObservableField(false)
 
-    var totalmyntsClicked = MutableLiveData(false)
+
     var orderNumber = MutableLiveData("")
 
     val page = ObservableField(0)
@@ -63,7 +63,9 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     init {
 //        callRewardProductList()
         callFetchFeedsApi()
-        callRewardHistory()
+        callRewardSummary()
+
+        callTotalRewardsEarnings()
         callTotalJackpotCards()
 
     }
@@ -74,21 +76,6 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
     }
 
-    fun callProductsDetailsApi(orderId: String?) {
-        detailsCalling.set(true)
-        orderNumber.value = orderId
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.REWARD_PRODUCT_DETAILS,
-                NetworkUtil.endURL(ApiConstant.REWARD_PRODUCT_DETAILS + orderId),
-                ApiUrl.GET,
-                BaseRequest(),
-                this, isProgressBar = true
-            )
-        )
-
-
-    }
 
 
 
@@ -293,20 +280,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
 
 
-            ApiConstant.REWARD_PRODUCT_DETAILS -> {
 
-
-                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-
-                val spinDetails = Gson().fromJson(
-                    json.get("data"),
-                    aRewardProductResponse::class.java
-                )
-
-                redeemproductDetails.value = spinDetails
-
-
-            }
 
             ApiConstant.API_REWARD_SUMMARY -> {
 
@@ -332,9 +306,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         super.onError(purpose, errorResponseInfo)
         loading.postValue(false)
         when (purpose) {
-            ApiConstant.API_REDEEM_REWARD -> {
-                error.postValue(errorResponseInfo)
-            }
+
         }
     }
 

@@ -19,7 +19,7 @@ import com.fypmoney.model.InterestEntity
 // Annotates class to be a Room Database with a table (entity) of the Word class
 @Database(
     entities = [ContactEntity::class, MemberEntity::class, InterestEntity::class],
-    version = 6
+    version = 8
 )
 abstract class AppDatabase : RoomDatabase() {
 

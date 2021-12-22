@@ -68,7 +68,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/title_tv_1"
-                    app:layout_constraintBottom_toTopOf="@+id/card_price_tv">
+                    app:layout_constraintBottom_toTopOf="@+id/card_price_fl">
 
                     <VideoView
                         android:id="@+id/card_front_aiv"
@@ -79,9 +79,95 @@
                 </FrameLayout>
 
 
+                <FrameLayout
+                    android:id="@+id/card_price_fl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="16dp"
+                    android:paddingHorizontal="@dimen/dp20"
+                    app:layout_constraintBottom_toTopOf="@+id/get_this_card_btn">
+
+                    <TextView
+                        android:id="@+id/offer_time_period_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/limited_period"
+                        android:textColor="@color/white"
+                        android:paddingHorizontal="16dp"
+                        android:translationZ="1dp"
+                        android:textSize="16sp"
+                        android:gravity="center"
+                        android:layout_gravity="end|top"
+                        android:paddingVertical="@dimen/dp5"
+                        app:customBackgroundColor="@{@color/red1}"
+                        app:customIsRounded="@{false}"
+                        app:customCornerRadius="@{@dimen/dp6}"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp16"
+                        android:background="@drawable/ic_order_card_price_bg">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/card_iv"
+                            android:layout_width="36dp"
+                            android:layout_height="56dp"
+                            android:layout_marginStart="18dp"
+                            app:srcCompat="@drawable/ic_mini_card"
+                            android:layout_marginTop="@dimen/dp24"
+                            android:layout_marginBottom="@dimen/dp24"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/card_offer_price_tv"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp_40"
+                            android:text="@string/fyp_card_for_just"
+                            android:textColor="@color/grey2"
+                            android:textSize="21sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/card_iv"
+                            app:layout_constraintStart_toEndOf="@+id/card_iv"
+                            app:layout_constraintTop_toTopOf="@+id/card_iv" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/card_offer_price_value_tv"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dp20"
+                            tools:text="₹399"
+                            android:textColor="@color/color_orange"
+                            android:textSize="31sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/card_iv"
+                            app:layout_constraintStart_toEndOf="@+id/card_offer_price_tv"
+                            app:layout_constraintTop_toTopOf="@+id/card_iv" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/card_actual_price_value_tv"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/grey2"
+                            android:background="@drawable/strike_through_textview_drawable"
+                            android:textSize="20sp"
+                            android:gravity="end"
+                            app:layout_constraintEnd_toEndOf="@+id/card_offer_price_value_tv"
+                            app:layout_constraintTop_toBottomOf="@+id/card_offer_price_value_tv"
+                            tools:text="₹399" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </FrameLayout>
 
 
-                <TextView
+                <!--<TextView
                     android:id="@+id/card_price_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -101,13 +187,13 @@
                     android:layout_marginBottom="26dp"
                     app:layout_constraintBottom_toTopOf="@+id/get_this_card_btn"/>
 
-
+-->
 
                 <Button
                     android:id="@+id/get_this_card_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/check_offer"
+                    android:text="@string/order_now"
                     android:textSize="18sp"
                     android:onClick="@{()->viewModel.onOrderCardClicked()}"
                     android:backgroundTint="@color/color_task_card_green"
