@@ -116,6 +116,7 @@
     <string name="phone_no_email">Mobile No. or Email Id</string>
     <string name="phone_email_empty_error">Please enter Mobile No</string>
     <string name="first_name_empty_error">Please enter first name</string>
+    <string name="full_name_empty_error">Please enter your name</string>
     <string name="last_name_empty_error">Please enter last name</string>
     <string name="pan_empty_error">Please enter PAN number</string>
     <string name="pan_lenght_error">Enter correct PAN</string>

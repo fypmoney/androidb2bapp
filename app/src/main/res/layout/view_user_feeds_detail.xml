@@ -48,6 +48,7 @@
                 app:IMAGE_URL="@{viewModel.feedDetails.resourceId}"                app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.7"
                 app:position="@{1}"
+                app:TYPE="@{1}"
                 android:contentDescription="@null" />
 
             <com.google.android.material.appbar.MaterialToolbar

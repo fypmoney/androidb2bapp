@@ -61,11 +61,9 @@ class KycdetailViewModel(application: Application) : BaseViewModel(application) 
                 Utility.showToast(PockketApplication.instance.getString(R.string.aadhaar_lenght_error))
             }
             TextUtils.isEmpty(firstName.value) -> {
-                Utility.showToast(PockketApplication.instance.getString(R.string.first_name_empty_error))
+                Utility.showToast(PockketApplication.instance.getString(R.string.full_name_empty_error))
             }
-            TextUtils.isEmpty(lastName.value) -> {
-                Utility.showToast(PockketApplication.instance.getString(R.string.last_name_empty_error))
-            }
+
             TextUtils.isEmpty(dobDate.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.dob_empty_error))
             }
@@ -92,7 +90,7 @@ class KycdetailViewModel(application: Application) : BaseViewModel(application) 
 
                 var sendkycDetails = SendKycDetails()
                 sendkycDetails.firstName = firstName.value
-                sendkycDetails.lastName = lastName.value
+                sendkycDetails.lastName = ""
                 sendkycDetails.documentIdentifier = panNumber.value
                 sendkycDetails.address = address.value + ", " + address2.value
                 sendkycDetails.dob = dobDate.value

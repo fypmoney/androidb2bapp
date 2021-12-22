@@ -65,15 +65,16 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:weightSum="2"
+
                     android:layout_marginTop="@dimen/_4sdp"
                     android:id="@+id/lin_name"
+                    android:orientation="vertical"
                     android:layout_below="@+id/pan_number"
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
-                        android:layout_weight="1"
+
                         android:layout_height="wrap_content">
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -83,8 +84,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
 
-                            android:layout_marginTop="10dp"
-                            android:text="@string/first_name_label" />
+                            android:layout_marginTop="10dp" />
 
 
                         <androidx.appcompat.widget.AppCompatEditText
@@ -93,12 +93,12 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/verification_title"
                             android:layout_marginTop="@dimen/edittextMarginTop"
-                            android:layout_marginEnd="@dimen/_12sdp"
+
                             android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray_8"
                             android:digits="qwertyuiopasdfghjklzxcvbnm ., QWERTYUIOPASDFGHJKLZXCVBNM"
-                            android:hint="@string/first_name_hint"
+                            android:hint="Enter your full name"
                             android:inputType="textCapWords"
-                            android:maxLength="20"
+                            android:maxLength="50"
                             android:paddingStart="@dimen/edittextHintPaddingStart"
                             android:paddingEnd="@dimen/edittextHintPaddingEnd"
                             android:singleLine="true"
@@ -106,36 +106,6 @@
                             android:textSize="@dimen/_14sdp" />
                     </RelativeLayout>
 
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_height="wrap_content">
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/et_last_name_label"
-                            style="@style/TextviewRegular"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
-                            android:layout_marginTop="10dp"
-                            android:text="@string/last_name_label" />
-
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/et_last_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/et_last_name_label"
-                            android:layout_marginTop="8dp"
-                            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-                            android:digits="qwertyuiopasdfghjklzxcvbnm ., QWERTYUIOPASDFGHJKLZXCVBNM"
-                            android:hint="@string/last_name_hint"
-                            android:imeOptions="actionNext"
-                            android:maxLength="20"
-                            android:paddingStart="@dimen/edittextHintPaddingStart"
-                            android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                            android:text="@={viewModel.lastName}"
-                            android:textSize="@dimen/_14sdp" />
-                    </RelativeLayout>
 
                 </LinearLayout>
 

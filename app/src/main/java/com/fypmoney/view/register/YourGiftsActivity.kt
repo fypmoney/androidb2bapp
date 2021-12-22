@@ -26,9 +26,9 @@ class YourGiftsActivity : BaseActivity<ActivityYourGiftsBinding, YourgiftVM>() {
         binding = getViewDataBinding()
         binding.continueBtn.setOnClickListener(View.OnClickListener {
             if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                intentToActivity(HomeActivity::class.java)
+                intentToActivity(HomeActivity::class.java, true)
             } else {
-                intentToActivity(PermissionsActivity::class.java)
+                intentToActivity(PermissionsActivity::class.java, true)
             }
         })
 

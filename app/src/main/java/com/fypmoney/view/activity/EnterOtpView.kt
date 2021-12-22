@@ -223,9 +223,9 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
 
         mViewModel.onVerificationFail.observe(this) {
             if (it) {
-                intentToActivity(PanAdhaarSelectionActivity::class.java)
+
                 mViewModel.onVerificationFail.value = false
-                finishAffinity()
+                finish()
             }
         }
         mViewModel.resendOtpSuccess.observe(this) {

@@ -50,7 +50,7 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
         kycDetailsVM.kycType.value = kyc_type
         if (kyc_type == getString(R.string.pan)) {
             binding.panNumberTitle.text = "PAN*"
-
+            binding.verificationTitle.text = "Full  Name as mentioned in PAN"
 
             binding.panNumber.filters = arrayOf<InputFilter>(
                 AllCaps(),
@@ -59,6 +59,7 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
 
 
         } else {
+            binding.verificationTitle.text = "Full  Name as mentioned in Aadhaar"
             binding.panNumber.filters = arrayOf<InputFilter>(
                 InputFilter.LengthFilter(12)
             )
