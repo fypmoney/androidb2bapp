@@ -119,16 +119,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         }*/
         with(binding.callToActionRv) {
             adapter = CallToActionAdapter(viewLifecycleOwner, onCallToActionClicked = {
-                val redirectionResources = it.redirectionResource?.split(",")?.get(0)
-                if (redirectionResources == FyperScreen) {
-                    findNavController().navigate(R.id.navigation_fyper)
-                } else if (redirectionResources == AppConstants.JACKPOTTAB) {
-                    findNavController().navigate(R.id.navigation_rewards)
-                } else if (redirectionResources == AppConstants.CardScreen) {
-                    findNavController().navigate(R.id.navigation_card)
-                } else {
-                    redirectionResources?.let { it1 -> deeplinkRedirection(it1, requireContext()) }
-                }
+                openExploreFeatures(it.redirectionType, it.redirectionResource)
+
             })
         }
     }
@@ -329,77 +321,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             }
         }
         var exploreClickListener2 = object : ExploreItemClickListener {
-            override fun onItemClicked(position: Int, it: SectionContentItem) {
-
-                when (it.redirectionType) {
-                    AppConstants.EXPLORE_IN_APP -> {
-                        it.redirectionResource?.let { uri ->
-
-                            val screen = uri.split(",")[0]
-                            if (screen == AppConstants.StoreScreen || screen == AppConstants.CardScreen || screen == AppConstants.FEEDSCREEN || screen == AppConstants.FyperScreen) {
-//                                tabchangeListner.tabchange(0, screen)
-                            } else {
-
-                                Utility.deeplinkRedirection(screen, requireContext())
-                            }
-
-
-                        }
-
-                    }
-                    AppConstants.EXPLORE_IN_APP_WEBVIEW -> {
-
-                        val intent = Intent(requireContext(), ExploreInAppWebview::class.java)
-//        intent.putExtra(AppConstants.EXPLORE_RESPONSE, feedDetails)
-                        intent.putExtra(
-                            AppConstants.FROM_WHICH_SCREEN,
-                            AppConstants.EXPLORE_IN_APP_WEBVIEW
-                        )
-                        intent.putExtra(AppConstants.IN_APP_URL, it.redirectionResource)
-
-                        startActivity(intent)
-                    }
-                    AppConstants.IN_APP_WITH_CARD -> {
-
-                        val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)
-//        intent.putExtra(AppConstants.EXPLORE_RESPONSE, feedDetails)
-
-                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
-                        startActivity(intent)
-                    }
-                    AppConstants.OFFER_REDIRECTION -> {
-                        homeFragmentVM.callFetchOfferApi(it.redirectionResource)
-
-                    }
-
-
-                    AppConstants.FEED_TYPE_BLOG -> {
-                        homeFragmentVM.callFetchFeedsApi(it.redirectionResource)
-
-                    }
-
-                    AppConstants.EXT_WEBVIEW -> {
-                        if (it.redirectionResource != null) {
-                            startActivity(
-                                Intent.createChooser(
-                                    Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse(it.redirectionResource)
-                                    ), getString(R.string.browse_with)
-                                )
-                            )
-                        }
-
-
-                    }
-                    AppConstants.EXPLORE_TYPE_STORIES -> {
-                        if (!it.redirectionResource.isNullOrEmpty()) {
-                            homeFragmentVM.callFetchFeedsApi(it.redirectionResource)
-
-                        }
-
-                    }
-                }
+            override fun onItemClicked(position: Int, it1: SectionContentItem) {
+                openExploreFeatures(it1.redirectionType, it1.redirectionResource)
 
 
             }
@@ -414,6 +337,87 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         )
         root.exploreHomeRv.adapter = typeAdapter
     }
+
+    private fun openExploreFeatures(redirectionType: String?, redirectionResource: String?) {
+        when (redirectionType) {
+            AppConstants.EXPLORE_IN_APP -> {
+                redirectionResource?.let { uri ->
+
+                    val redirectionResources = uri?.split(",")?.get(0)
+                    if (redirectionResources == FyperScreen) {
+                        findNavController().navigate(R.id.navigation_fyper)
+                    } else if (redirectionResources == AppConstants.JACKPOTTAB) {
+                        findNavController().navigate(R.id.navigation_rewards)
+                    } else if (redirectionResources == AppConstants.CardScreen) {
+                        findNavController().navigate(R.id.navigation_card)
+                    } else {
+                        redirectionResources?.let { it1 ->
+                            deeplinkRedirection(
+                                it1,
+                                requireContext()
+                            )
+                        }
+                    }
+
+
+                }
+
+            }
+            AppConstants.EXPLORE_IN_APP_WEBVIEW -> {
+
+                val intent = Intent(requireContext(), ExploreInAppWebview::class.java)
+//        intent.putExtra(AppConstants.EXPLORE_RESPONSE, feedDetails)
+                intent.putExtra(
+                    AppConstants.FROM_WHICH_SCREEN,
+                    AppConstants.EXPLORE_IN_APP_WEBVIEW
+                )
+                intent.putExtra(AppConstants.IN_APP_URL, redirectionResource)
+
+                startActivity(intent)
+            }
+            AppConstants.IN_APP_WITH_CARD -> {
+
+                val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)
+//        intent.putExtra(AppConstants.EXPLORE_RESPONSE, feedDetails)
+
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, redirectionResource)
+                startActivity(intent)
+            }
+            AppConstants.OFFER_REDIRECTION -> {
+                homeFragmentVM.callFetchOfferApi(redirectionResource)
+
+            }
+
+
+            AppConstants.FEED_TYPE_BLOG -> {
+                homeFragmentVM.callFetchFeedsApi(redirectionResource)
+
+            }
+
+            AppConstants.EXT_WEBVIEW -> {
+                if (redirectionResource != null) {
+                    startActivity(
+                        Intent.createChooser(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(redirectionResource)
+                            ), getString(R.string.browse_with)
+                        )
+                    )
+                }
+
+
+            }
+            AppConstants.EXPLORE_TYPE_STORIES -> {
+                if (!redirectionResource.isNullOrEmpty()) {
+                    homeFragmentVM.callFetchFeedsApi(redirectionResource)
+
+                }
+
+            }
+        }
+    }
+
 
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
 

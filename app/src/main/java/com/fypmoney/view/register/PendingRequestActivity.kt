@@ -24,7 +24,6 @@ import java.lang.Exception
 
 class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, PendingRequestVm>() {
 
-    private var gotData: Boolean = false
 //    private var timer: CountDownTimer? = null
     private lateinit var binding: ActivityPendingApprovalBinding
     private val pendingRequestVM by viewModels<PendingRequestVm> { defaultViewModelProviderFactory }
@@ -56,8 +55,13 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
         if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
             binding.skip.visibility = View.VISIBLE
         }
+        binding.continueBtn.setOnClickListener {
+            val intent = Intent(this, InviteParentSiblingActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
         binding.skip.setOnClickListener(View.OnClickListener {
-            gotData = true
+
 //            timer?.onFinish()
 //            timer?.cancel()
             val intent = Intent(this, ChooseInterestRegisterView::class.java)
@@ -99,7 +103,7 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
             binding.swipetorefresh!!.isRefreshing = false
 
             if (it.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_APPROVED) {
-                gotData = true
+
 //                timer?.onFinish()
 //                timer?.cancel()
                 val intent = Intent(this, ChooseInterestRegisterView::class.java)
@@ -114,7 +118,7 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
 
 
             } else if (it.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_DECLINED) {
-                gotData = true
+
 //                timer?.onFinish()
 //                timer?.cancel()
                 val intent = Intent(this, InviteParentSiblingActivity::class.java)
@@ -131,13 +135,6 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
         })
     }
 
-    fun yourMethod() {
-        if (!gotData) {
-            pendingRequestVM.callGetCustomerProfileApi()
-//            timer?.start()
-        }
-
-    }
 
 
     override fun onStop() {
