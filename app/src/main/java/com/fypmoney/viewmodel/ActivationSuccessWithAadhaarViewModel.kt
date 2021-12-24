@@ -132,9 +132,9 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                                     it.services = arrayListOf(
                                         TrackrServices.FIREBASE,
                                         TrackrServices.MOENGAGE,
-                                        TrackrServices.FB,TrackrServices.ADJUST
+                                        TrackrServices.FB, TrackrServices.ADJUST
                                     )
-                                    it.name = TrackrEvent.kyc_verification_other
+                                    it.name = TrackrEvent.kyc_verification_adult
                                 }
                             }
                             "90"->{
@@ -142,10 +142,11 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                                     it.services = arrayListOf(
                                         TrackrServices.FIREBASE,
                                         TrackrServices.MOENGAGE,
-                                        TrackrServices.FB,TrackrServices.ADJUST
+                                        TrackrServices.FB, TrackrServices.ADJUST
                                     )
-                                    it.name = TrackrEvent.kyc_verification_adult
+                                    it.name = TrackrEvent.kyc_verification_other
                                 }
+
                             }
                             else -> {
                                 Log.d(TAG , "No data found for KYC $it")
