@@ -144,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginEnd="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
 
 
                     android:layout_marginTop="@dimen/_20sdp"
@@ -191,6 +191,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cvPan"
+                    android:visibility="gone"
                     android:layout_weight="1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
