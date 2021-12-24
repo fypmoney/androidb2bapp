@@ -19,6 +19,7 @@ import com.fypmoney.view.referandearn.viewmodel.ReferAndEarnActivityVM
 import kotlinx.android.synthetic.main.toolbar.*
 
 class ReferAndEarnActivity : BaseActivity<ActivityReferAndEarnBinding,ReferAndEarnActivityVM>() {
+    private var referMessage: String? = null
     private lateinit var mViewModel: ReferAndEarnActivityVM
     private lateinit var mViewBinding: ActivityReferAndEarnBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,38 +39,35 @@ class ReferAndEarnActivity : BaseActivity<ActivityReferAndEarnBinding,ReferAndEa
     }
 
     private fun setUpViews() {
-        mViewBinding.referalCodeValueTv.text =  Utility.getCustomerDataFromPreference()?.referralCode
-        mViewBinding.referAndEarnTitleTv.text =  SharedPrefUtils.getString(
-            PockketApplication.instance,
-            SharedPrefUtils.SF_KEY_REFER_LINE1
-        )
-        mViewBinding.referAndEarnSubTitleTv.text =  SharedPrefUtils.getString(
-            PockketApplication.instance,
-            SharedPrefUtils.SF_KEY_REFER_LINE2
-        )
+        mViewBinding.referalCodeValueTv.text = Utility.getCustomerDataFromPreference()?.referralCode
+//        mViewBinding.referAndEarnTitleTv.text =  SharedPrefUtils.getString(
+//            PockketApplication.instance,
+//            SharedPrefUtils.SF_KEY_REFER_LINE1
+//        )
+//        mViewBinding.referAndEarnSubTitleTv.text =  SharedPrefUtils.getString(
+//            PockketApplication.instance,
+//            SharedPrefUtils.SF_KEY_REFER_LINE2
+//        )
     }
 
     private fun setUpObserver() {
+
+        mViewModel.referResponse.observe(this, {
+
+            mViewBinding.referAndEarnTitleTv.text = it.referLine1
+
+            mViewBinding.referAndEarnSubTitleTv.text = it.referLine2
+
+            referMessage = it.referMessage
+
+            mViewBinding.thirdMessage.text = it.rfu1
+
+
+        })
         mViewModel.event.observe(this, {
             handelEvents(it)
         })
-        mViewModel.state.observe(this,{
-            when(it){
-                ReferAndEarnActivityVM.ReferAndEarnState.Error -> {
-                    mViewBinding.totalRefralWonValueTv.text =  "N/A"
 
-                }
-                ReferAndEarnActivityVM.ReferAndEarnState.Loading -> {
-                    mViewBinding.loadingAmountHdp.visibility = View.VISIBLE
-                }
-                is ReferAndEarnActivityVM.ReferAndEarnState.PopulateData -> {
-                    mViewBinding.loadingAmountHdp.clearAnimation()
-                    mViewBinding.loadingAmountHdp.visibility = View.GONE
-                    mViewBinding.totalRefralWonValueTv.text =  Utility.convertToRs("${it.totalAmount}")
-
-                }
-            }
-        })
     }
 
     private fun handelEvents(it: ReferAndEarnActivityVM.ReferAndEarnEvent?) {
@@ -81,7 +79,13 @@ class ReferAndEarnActivity : BaseActivity<ActivityReferAndEarnBinding,ReferAndEa
                 )
             }
             ReferAndEarnActivityVM.ReferAndEarnEvent.ShareReferCode -> {
-                inviteUser()
+
+                if (referMessage != null) {
+                    onInviteUser(referMessage!!)
+                } else {
+                    Utility.showToast("Loading")
+                }
+
             }
         }
     }
