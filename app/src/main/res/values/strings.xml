@@ -777,8 +777,8 @@ By tapping on Create Account, you agree to the Terms of Service & Privacy Policy
     <string name="create_your_own_task">Create your own task</string>
     <string name="amount">Recharge amount</string>
     <string name="refer_and_earn"><![CDATA[Refer & Earn]]></string>
-    <string name="refer_to_your_friend_and_get_a_cash_reward_of_50">Fyp is better with friends! \n Invite your friends and earn ₹%1$s</string>
-    <string name="share_referral_code_with_your_friend_and_after_they_install_both_of_you_will_get_50_cash_rewards">Share referral code with your friends. After they complete their KYC, both will receive  ₹%1$s cash rewards.</string>
+    <string name="refer_to_your_friend_and_get_a_cash_reward_of_50">Fyp is better with friends! </string>
+    <string name="share_referral_code_with_your_friend_and_after_they_install_both_of_you_will_get_50_cash_rewards">Share referral code with your friends. After they complete their KYC.</string>
     <string name="your_referral_code">Your referral code</string>
     <string name="copy_text">Copy Text</string>
     <string name="total_referral_won">Total Referral Earnings</string>
