@@ -5,16 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityYourGiftsBinding
 import com.fypmoney.util.Utility
-
 import com.fypmoney.view.activity.PermissionsActivity
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.register.viewModel.YourgiftVM
-import com.fypmoney.view.storeoffers.model.offerDetailResponse
 
 class YourGiftsActivity : BaseActivity<ActivityYourGiftsBinding, YourgiftVM>() {
 
@@ -24,13 +24,16 @@ class YourGiftsActivity : BaseActivity<ActivityYourGiftsBinding, YourgiftVM>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewDataBinding()
-        binding.continueBtn.setOnClickListener(View.OnClickListener {
+        binding.continueBtn.setOnClickListener {
+            trackr {
+                it.name = TrackrEvent.onboard_offer_screen_continue
+            }
             if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
                 intentToActivity(HomeActivity::class.java, true)
             } else {
                 intentToActivity(PermissionsActivity::class.java, true)
             }
-        })
+        }
 
         setObserver()
     }

@@ -76,7 +76,9 @@ class CreateAccountView :
                 isBackArrowVisible = isNewUser,//back arrow visibility
                 isLottieAnimation = isNewUser,// lottie animation visibility
                 imageView = ivToolBarBack,//back image view
-                lottieAnimationView = ivAnimationGift
+                lottieAnimationView = ivAnimationGift,
+                        screenName = CreateAccountView::class.java.simpleName
+
             )// lottie animation view
         } else {
             // this method help us to hide or un hide items
@@ -84,7 +86,9 @@ class CreateAccountView :
                 isBackArrowVisible = !isNewUser,//back arrow visibility
                 isLottieAnimation = isNewUser,// lottie animation visibility
                 imageView = ivToolBarBack,//back image view
-                lottieAnimationView = ivAnimationGift
+                lottieAnimationView = ivAnimationGift,
+                screenName = CreateAccountView::class.java.simpleName
+
             )// lottie animation view
         }
 

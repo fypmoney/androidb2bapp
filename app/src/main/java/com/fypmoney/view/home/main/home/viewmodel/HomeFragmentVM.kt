@@ -5,10 +5,7 @@ import android.text.format.DateUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.currentFormattedDate
-import com.fyp.trackr.models.CUSTOM_USER_WALLET_BALANCE
-import com.fyp.trackr.models.CUSTOM_USER_WALLET_BALANCE_UPDATE_TIME
-import com.fyp.trackr.models.UserTrackr
-import com.fyp.trackr.models.push
+import com.fyp.trackr.models.*
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -68,13 +65,22 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
     }
 
     fun onAddMoneyClicked(){
+        trackr {
+            it.name = TrackrEvent.home_add_money_click
+        }
         _event.value = HomeFragmentEvent.AddAction
 
     }
     fun onPayMoneyClicked(){
+        trackr {
+            it.name = TrackrEvent.home_pay_money_click
+        }
         _event.value = HomeFragmentEvent.PayAction
     }
     fun onUpiScanClicked(){
+        trackr {
+            it.name = TrackrEvent.home_upi_click
+        }
         _event.value = HomeFragmentEvent.UpiScanAction
     }
 

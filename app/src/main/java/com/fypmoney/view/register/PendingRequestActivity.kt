@@ -4,22 +4,19 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.view.register.viewModel.PendingRequestVm
-import com.fypmoney.view.activity.NotificationView
-import com.fypmoney.view.activity.UserProfileView
-import android.os.CountDownTimer
-import android.view.View
 import com.fypmoney.databinding.ActivityPendingApprovalBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.ChooseInterestRegisterView
+import com.fypmoney.view.register.viewModel.PendingRequestVm
 import kotlinx.android.synthetic.main.toolbar_animation.*
-import kotlinx.android.synthetic.main.view_chores.*
-import java.lang.Exception
 
 
 class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, PendingRequestVm>() {
@@ -39,7 +36,9 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
             isBackArrowVisible = false,//back arrow visibility
             isLottieAnimation = true,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
-            lottieAnimationView = ivAnimationGift
+            lottieAnimationView = ivAnimationGift,
+            screenName = PendingRequestActivity::class.java.simpleName
+
         )
         pendingRequestVM.callGetCustomerProfileApi()
 //        timer = object : CountDownTimer(8600000, 10) {
@@ -60,10 +59,11 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
             startActivity(intent)
             finish()
         }
-        binding.skip.setOnClickListener(View.OnClickListener {
+        binding.skip.setOnClickListener {
 
-//            timer?.onFinish()
-//            timer?.cancel()
+            trackr {
+                it.name = TrackrEvent.onboard_pending_approval_skip
+            }
             val intent = Intent(this, ChooseInterestRegisterView::class.java)
 
             val bndlAnimation = ActivityOptions.makeCustomAnimation(
@@ -73,7 +73,7 @@ class PendingRequestActivity : BaseActivity<ActivityPendingApprovalBinding, Pend
             ).toBundle()
             startActivity(intent, bndlAnimation)
             finishAffinity()
-        })
+        }
         binding.instaCv.setOnClickListener {
             openCommunity(AppConstants.INSTAGRAM_PAGE)
         }

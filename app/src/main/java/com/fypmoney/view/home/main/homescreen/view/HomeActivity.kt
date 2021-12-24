@@ -79,6 +79,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
         navHomeController.addOnDestinationChangedListener { controller, destination, arguments ->
             when (destination.id) {
                 R.id.navigation_home -> {
+                    trackr {
+                        it.name = TrackrEvent.tab_home_click
+                    }
                     binding.bottomMenu.setItemSelected(R.id.navigation_home, true)
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.white))
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.black))
@@ -88,6 +91,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     showBottomNavigation()
                 }
                 R.id.navigation_fyper -> {
+                    trackr {
+                        it.name = TrackrEvent.tab_family_click
+                    }
                     binding.bottomMenu.setItemSelected(R.id.navigation_fyper, true)
 
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.white))
@@ -97,6 +103,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     showBottomNavigation()
                 }
                 R.id.navigation_rewards -> {
+                    trackr {
+                        it.name = TrackrEvent.tab_reward_click
+                    }
                     binding.bottomMenu.setItemSelected(R.id.navigation_rewards, true)
 
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
@@ -106,6 +115,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     showBottomNavigation()
                 }
                 R.id.navigation_explore -> {
+                    trackr {
+                        it.name = TrackrEvent.tab_explore_click
+                    }
                     binding.bottomMenu.setItemSelected(R.id.navigation_explore, true)
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))

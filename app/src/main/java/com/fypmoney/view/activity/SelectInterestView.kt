@@ -9,7 +9,6 @@ import com.fypmoney.databinding.SelectInterestViewActivityBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SelectInterestViewModel
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar_animation.*
 
 /*
@@ -46,7 +45,10 @@ class SelectInterestView :
             isBackArrowVisible = interestScreenType,//back arrow visibility
             isLottieAnimation = interestScreenType,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
-            lottieAnimationView = ivAnimationGift)// lottie animation view
+            lottieAnimationView = ivAnimationGift,
+            screenName = SelectInterestView::class.java.simpleName
+
+        )// lottie animation view
         }
         setObserver()
     }

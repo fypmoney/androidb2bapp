@@ -9,6 +9,9 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -119,6 +122,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         }*/
         with(binding.callToActionRv) {
             adapter = CallToActionAdapter(viewLifecycleOwner, onCallToActionClicked = {
+                trackr {it1->
+                    it1.name = TrackrEvent.home_action_click
+                    it1.add(TrackrField.action_content_id,it.id)
+                }
                 openExploreFeatures(it.redirectionType, it.redirectionResource)
 
             })
@@ -322,6 +329,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         }
         var exploreClickListener2 = object : ExploreItemClickListener {
             override fun onItemClicked(position: Int, it1: SectionContentItem) {
+                trackr {
+                    it.name = TrackrEvent.home_explore_click
+                    it.add(TrackrField.explore_content_id,it1.id)
+                }
                 openExploreFeatures(it1.redirectionType, it1.redirectionResource)
 
 

@@ -1,16 +1,8 @@
 package com.fypmoney.view.activity
 
-import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.adjust.sdk.Adjust
-import com.adjust.sdk.AdjustEvent
-import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.UserTrackr
-import com.fyp.trackr.models.push
-import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -19,7 +11,6 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.register.InviteParentSiblingActivity
 import com.fypmoney.viewmodel.ActivationSuccessWithAadhaarViewModel
-import com.moengage.core.internal.MoEConstants
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar_animation.*
 
@@ -48,7 +39,8 @@ class ActivationSuccessWithAadhaarView : BaseActivity<ViewActivationSuccessWithA
             isBackArrowVisible = false,//back arrow visibility
             isLottieAnimation = true,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
-            lottieAnimationView = ivAnimationGift
+            lottieAnimationView = ivAnimationGift,
+            screenName = ActivationSuccessWithAadhaarView::class.java.simpleName
         )
 
         var postkyc = intent?.getStringExtra(AppConstants.POSTKYCKEY)

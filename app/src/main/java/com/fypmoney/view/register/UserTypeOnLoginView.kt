@@ -3,6 +3,9 @@ package com.fypmoney.view.register
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -13,6 +16,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.CreateAccountView
 import com.fypmoney.view.register.viewModel.UserTypeOnLoginViewModel
 import kotlinx.android.synthetic.main.toolbar_animation.*
+import java.util.*
 
 /*
 * This class is used to handle account activation via aadhaar card
@@ -44,7 +48,9 @@ class UserTypeOnLoginView :
             isBackArrowVisible = false,//back arrow visibility
             isLottieAnimation = true,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
-            lottieAnimationView = ivAnimationGift
+            lottieAnimationView = ivAnimationGift,
+            screenName = UserTypeOnLoginView::class.java.simpleName
+
         )
     }
 
@@ -65,6 +71,11 @@ class UserTypeOnLoginView :
 
                  Utility.showToast("Select user type")
              }else {
+                 trackr {
+                     it.name = TrackrEvent.cust_type_select
+                     it.add(
+                         TrackrField.cust_type, userTypeSelected.toLowerCase(Locale.ENGLISH))
+                 }
                  val intent = Intent(this, CreateAccountView::class.java)
                  intent.putExtra(AppConstants.USER_TYPE_NEW, true)
                  intent.putExtra(AppConstants.USER_TYPE, userTypeSelected)

@@ -64,7 +64,6 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
     override fun getViewModel(): CardFragmentVM = cardFragmentVM
 
     override fun onTryAgainClicked() {
-        TODO("Not yet implemented")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

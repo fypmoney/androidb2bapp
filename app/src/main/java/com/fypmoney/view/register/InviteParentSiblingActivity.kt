@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -16,8 +19,6 @@ import com.fypmoney.util.Utility
 import com.fypmoney.util.dynamiclinks.DynamicLinksUtil
 import com.fypmoney.view.activity.ChooseInterestRegisterView
 import com.fypmoney.view.register.viewModel.InviteParentSiblingVM
-import com.fypmoney.view.activity.NotificationView
-import com.fypmoney.view.activity.UserProfileView
 import kotlinx.android.synthetic.main.toolbar_animation.*
 
 class InviteParentSiblingActivity :
@@ -34,7 +35,9 @@ class InviteParentSiblingActivity :
             isBackArrowVisible = false,//back arrow visibility
             isLottieAnimation = true,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
-            lottieAnimationView = ivAnimationGift
+            lottieAnimationView = ivAnimationGift,
+            screenName = InviteParentSiblingActivity::class.java.simpleName
+
         )// lottie anima
         observeEvents()
 
@@ -65,25 +68,34 @@ class InviteParentSiblingActivity :
         }
         binding.shareInvite.setOnClickListener(View.OnClickListener {
 //            Utility.getCustomerDataFromPreference()?.postKycScreenCode = "90"
+            trackr {
+                it.name = TrackrEvent.onboard_invite_share
+            }
             shareUser()
         })
         binding.skip.setOnClickListener(View.OnClickListener {
             if (binding.skip.text == getString(R.string.i_want_to_use)) {
+                trackr {
+                    it.name = TrackrEvent.onboard_invite_use_myself
+                }
                 val intent = Intent(this, WaitlistAprovalActivity::class.java)
                 val bndlAnimation = ActivityOptions.makeCustomAnimation(
                     applicationContext,
-                    com.fypmoney.R.anim.slideinleft,
-                    com.fypmoney.R.anim.slideinright
+                    R.anim.slideinleft,
+                    R.anim.slideinright
                 ).toBundle()
                 startActivity(intent, bndlAnimation)
                 finish()
 
             } else if (binding.skip.text == getString(R.string.skip_title)) {
+                trackr {
+                    it.name = TrackrEvent.onboard_invite_skip
+                }
                 val intent = Intent(this, ChooseInterestRegisterView::class.java)
                 val bndlAnimation = ActivityOptions.makeCustomAnimation(
                     applicationContext,
-                    com.fypmoney.R.anim.slideinleft,
-                    com.fypmoney.R.anim.slideinright
+                    R.anim.slideinleft,
+                    R.anim.slideinright
                 ).toBundle()
                 startActivity(intent, bndlAnimation)
                 finish()
@@ -99,6 +111,11 @@ class InviteParentSiblingActivity :
                     Utility.showToast("Enter a valid number")
                 } else {
 
+                    trackr {
+                        it.name = TrackrEvent.onboard_invite_enter_mobile
+                        it.add(
+                            TrackrField.post_kyc_flag, Utility.getCustomerDataFromPreference()?.postKycScreenCode)
+                    }
                     inviteParentSiblingVM.callIsAppUserApi(binding.phoneEd.text.toString())
 
                 }
@@ -163,8 +180,8 @@ class InviteParentSiblingActivity :
 
                 val bndlAnimation = ActivityOptions.makeCustomAnimation(
                     applicationContext,
-                    com.fypmoney.R.anim.slideinleft,
-                    com.fypmoney.R.anim.slideinright
+                    R.anim.slideinleft,
+                    R.anim.slideinright
                 ).toBundle()
                 startActivity(intent, bndlAnimation)
 

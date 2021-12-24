@@ -23,7 +23,6 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.ChooseInterestRegisterView
 import com.fypmoney.view.activity.EnterOtpView
 import com.fypmoney.view.activity.ReferralCodeView
-import com.fypmoney.view.fragment.kycDetailsBottomSheet
 import com.fypmoney.view.fragment.kycTanCBottomSheet
 import com.fypmoney.view.register.viewModel.KycdetailViewModel
 import kotlinx.android.synthetic.main.toolbar_animation.*
@@ -84,7 +83,9 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
             isBackArrowVisible = true,//back arrow visibility
             isLottieAnimation = true,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
-            lottieAnimationView = ivAnimationGift
+            lottieAnimationView = ivAnimationGift,
+            screenName = KycDetailsActivity::class.java.simpleName
+
         )// lottie anima
 
 

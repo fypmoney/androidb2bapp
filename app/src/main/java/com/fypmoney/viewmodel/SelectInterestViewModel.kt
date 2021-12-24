@@ -1,9 +1,11 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -13,7 +15,6 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.database.InterestRepository
 import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.InterestEntity
 import com.fypmoney.model.InterestResponse
@@ -66,6 +67,10 @@ class SelectInterestViewModel(application: Application) : BaseViewModel(applicat
                 Utility.showToast(PockketApplication.instance.getString(R.string.interest_error))
             }
             else -> {
+                trackr {
+                    it.name = TrackrEvent.onboard_interest_selection
+                    it.add(TrackrField.interest_code,selectedInterestList.toString())
+                }
                 WebApiCaller.getInstance().request(
                     ApiRequest(
                         purpose = ApiConstant.API_UPDATE_PROFILE,

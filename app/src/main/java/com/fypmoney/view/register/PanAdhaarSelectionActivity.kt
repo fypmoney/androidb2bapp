@@ -1,28 +1,26 @@
 package com.fypmoney.view.register
 
+
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.ActivityKycTypeBinding
-
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.view.register.viewModel.KycTypeVM
-
-
-import com.fypmoney.view.activity.EnterOtpView
-import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.fragment.kycDetailsBottomSheet
-import com.fypmoney.view.storeoffers.model.offerDetailResponse
+import com.fypmoney.view.register.viewModel.KycTypeVM
 import kotlinx.android.synthetic.main.toolbar_animation.*
+import java.util.*
 
 
 class PanAdhaarSelectionActivity :
@@ -54,7 +52,9 @@ class PanAdhaarSelectionActivity :
             isBackArrowVisible = false,//back arrow visibility
             isLottieAnimation = true,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
-            lottieAnimationView = ivAnimationGift
+            lottieAnimationView = ivAnimationGift,
+            screenName = PanAdhaarSelectionActivity::class.java.simpleName
+
         )
         setObserver()
         setBackgrounds()
@@ -96,6 +96,11 @@ class PanAdhaarSelectionActivity :
                 Utility.showToast("Select any one")
 
             } else {
+                trackr {
+                    it.name = TrackrEvent.onboard_doc_sel
+                    it.add(
+                        TrackrField.document_type, userTypeSelected.toLowerCase(Locale.ENGLISH))
+                }
                 val intent = Intent(this, KycDetailsActivity::class.java)
                 intent.putExtra(AppConstants.KYC_type, userTypeSelected)
                 startActivity(intent)

@@ -8,7 +8,6 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.SelectInterestRegisterActivityBinding
-import com.fypmoney.databinding.SelectInterestViewActivityBinding
 import com.fypmoney.util.Utility
 import com.fypmoney.view.register.PersonalisedOffersActivity
 import com.fypmoney.viewmodel.SelectInterestViewModel
@@ -42,7 +41,9 @@ class ChooseInterestRegisterView :
             isBackArrowVisible = false,//back arrow visibility
             isLottieAnimation = true,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
-            lottieAnimationView = ivAnimationGift
+            lottieAnimationView = ivAnimationGift,
+            screenName = ChooseInterestRegisterView::class.java.simpleName
+
         )// lottie animation view
 
 

@@ -31,4 +31,8 @@ data class InterestEntity(
     @ColumnInfo(name = "status")
     var status: String?,
     var isSelected: Boolean
-)
+){
+    override fun toString(): String {
+        return code!!
+    }
+}

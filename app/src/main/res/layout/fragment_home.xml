@@ -43,7 +43,7 @@
                         android:id="@+id/card_iv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_card_home" />
+                        app:srcCompat="@drawable/ic_card_home" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"

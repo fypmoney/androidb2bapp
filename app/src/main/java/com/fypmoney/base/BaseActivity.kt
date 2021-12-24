@@ -30,8 +30,7 @@ import androidx.fragment.app.Fragment
 import com.freshchat.consumer.sdk.FaqOptions
 import com.freshchat.consumer.sdk.Freshchat
 import com.freshchat.consumer.sdk.FreshchatConfig
-import com.fyp.trackr.models.UserTrackr
-import com.fyp.trackr.models.logOut
+import com.fyp.trackr.models.*
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.util.*
@@ -426,7 +425,9 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         isBackArrowVisible: Boolean? = false, //back arrow for back press by default visibility of
         isLottieAnimation: Boolean? = false, // lottie animation by default on
         imageView: ImageView,
-        lottieAnimationView: ImageView, toolbarTitle: String? = null
+        lottieAnimationView: ImageView,
+        toolbarTitle: String? = null,
+        screenName: String
     )
     {
         // set back arrow visibility
@@ -442,8 +443,11 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         }
 
         lottieAnimationView.setOnClickListener {
+            trackr {
+                it.name = TrackrEvent.onboard_usertimeline_icon_click
+                it.add(TrackrField.form_which_screen,screenName)
+            }
             val intent = Intent(this@BaseActivity, TimeLineActivity::class.java)
-
             startActivity(intent)
         }
         if (toolbarTitle != null) {

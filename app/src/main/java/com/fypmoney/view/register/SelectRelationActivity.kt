@@ -7,6 +7,9 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -43,7 +46,9 @@ class SelectRelationActivity : BaseActivity<ActivitySelectRelationshipBinding, S
             isBackArrowVisible = true,//back arrow visibility
             isLottieAnimation = true,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
-            lottieAnimationView = ivAnimationGift
+            lottieAnimationView = ivAnimationGift,
+            screenName = SelectRelationActivity::class.java.simpleName
+
         )// lottie anima
 
         phone = intent?.getStringExtra("phone")
@@ -59,6 +64,11 @@ class SelectRelationActivity : BaseActivity<ActivitySelectRelationshipBinding, S
                 if (relation == "KID") {
                     relation = "CHILD"
 
+                }
+                trackr {
+                    it.name = TrackrEvent.onboard_invite_choose_relation
+                    it.add(
+                        TrackrField.relation_key, relation?.toLowerCase(Locale.ENGLISH))
                 }
                 var selectRelationModel =
                     SendRelationSiblingParentResponse(nameOfUser, phone, "NO", relation)

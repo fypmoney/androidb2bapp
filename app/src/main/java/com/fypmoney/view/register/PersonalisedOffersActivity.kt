@@ -2,9 +2,10 @@ package com.fypmoney.view.register
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -25,14 +26,19 @@ class PersonalisedOffersActivity :
         super.onCreate(savedInstanceState)
         binding = getViewDataBinding()
 
-        binding.continueBtn.setOnClickListener(View.OnClickListener {
+        binding.continueBtn.setOnClickListener {
+            trackr {
+                it.name = TrackrEvent.onboard_personal_offer_continue
+            }
             intentToActivity(OpenGiftActivity::class.java, true)
-        })
+        }
         setLottieAnimationToolBar(
             isBackArrowVisible = false,//back arrow visibility
             isLottieAnimation = true,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
-            lottieAnimationView = ivAnimationGift
+            lottieAnimationView = ivAnimationGift,
+            screenName = PersonalisedOffersActivity::class.java.simpleName
+
         )// lottie anima
 
         setRecyclerView(binding)

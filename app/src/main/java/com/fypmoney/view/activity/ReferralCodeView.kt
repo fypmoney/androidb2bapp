@@ -1,17 +1,14 @@
 package com.fypmoney.view.activity
 
-import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.databinding.ViewReferralCodeBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-
 import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.view.register.UserTypeOnLoginView
 import com.fypmoney.viewmodel.ReferralCodeViewModel
@@ -43,7 +40,9 @@ class ReferralCodeView : BaseActivity<ViewReferralCodeBinding, ReferralCodeViewM
             isBackArrowVisible = false,//back arrow visibility
             isLottieAnimation = true,// lottie animation visibility
             imageView = ivToolBarBack,//back image view
-            lottieAnimationView = ivAnimationGift
+            lottieAnimationView = ivAnimationGift,
+            screenName = ReferralCodeView::class.java.simpleName
+
         )// lottie anima
         setObserver()
     }

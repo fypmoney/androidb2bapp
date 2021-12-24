@@ -4,11 +4,15 @@ import android.app.Application
 import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.TrackrField
+import com.fyp.trackr.models.trackr
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
+import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
@@ -17,7 +21,6 @@ import com.fypmoney.model.KycActivateAccountResponse
 import com.fypmoney.model.KycActivateAccountResponseDetails
 import com.fypmoney.util.Utility
 import com.fypmoney.view.register.model.SendKycDetails
-import kotlin.collections.ArrayList
 
 /*
 * This is used to handle account creation related functionality
@@ -134,12 +137,30 @@ class KycdetailViewModel(application: Application) : BaseViewModel(application) 
         when (purpose) {
             ApiConstant.API_KYC_ACTIVATE_ACCOUNT -> {
                 if (responseData is KycActivateAccountResponse) {
+                    trackr {
+                        it.name = TrackrEvent.kyc_detail_fill_action
+                        it.add(
+                            TrackrField.status, "success")
+                    }
                     postKycScreenCode.value =
                         responseData.kycActivateAccountResponseDetails.postKycScreenCode
                     onActivateAccountSuccess.value = responseData.kycActivateAccountResponseDetails
                 }
             }
 
+        }
+    }
+
+    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
+        super.onError(purpose, errorResponseInfo)
+        when(purpose){
+            ApiConstant.API_KYC_ACTIVATE_ACCOUNT->{
+                trackr {
+                    it.name = TrackrEvent.kyc_detail_fill_action
+                    it.add(
+                        TrackrField.status, errorResponseInfo.errorCode)
+                }
+            }
         }
     }
 
