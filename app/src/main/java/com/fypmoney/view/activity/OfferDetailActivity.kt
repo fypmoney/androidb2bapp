@@ -16,15 +16,12 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.RewardOfferDetailBinding
 import com.fypmoney.util.AppConstants
-
 import com.fypmoney.util.Utility
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.adapter.offerpointsAdapter
 import com.fypmoney.view.interfaces.ListContactClickListener
-import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.viewmodel.OffersDetailsViewModel
-
 import kotlinx.android.synthetic.main.reward_offer_detail.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -37,11 +34,11 @@ class OfferDetailActivity :
     private var typeAdapter: offerpointsAdapter? = null
     private lateinit var mViewModel: OffersDetailsViewModel
     private var itemsArrayList: ArrayList<String> = ArrayList()
-    override fun getBindingVariable(): kotlin.Int {
+    override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
-    override fun getLayoutId(): kotlin.Int {
+    override fun getLayoutId(): Int {
         return R.layout.reward_offer_detail
     }
 
@@ -135,7 +132,7 @@ class OfferDetailActivity :
         var itemClickListener2 = object : ListContactClickListener {
 
 
-            override fun onItemClicked(pos: kotlin.Int) {
+            override fun onItemClicked(pos: Int) {
 
             }
 

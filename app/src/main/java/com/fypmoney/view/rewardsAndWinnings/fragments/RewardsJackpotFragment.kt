@@ -107,6 +107,7 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
         }
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
@@ -123,6 +124,13 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
 
     }
 
+    override fun onStart() {
+        super.onStart()
+//        if (!mViewBinding?.totalRefralWonValueTv?.text.isNullOrEmpty()) {
+//            mViewBinding?.loadingAmountHdp?.clearAnimation()
+//            mViewBinding?.loadingAmountHdp?.visibility = View.GONE
+//        }
+    }
 
     private fun setRecyclerView() {
         val layoutManager =
@@ -148,7 +156,7 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
 
     private fun observeInput(mViewModel: RewardsJackpotVM) {
 
-        mViewModel.jackpotfeedList.observe(requireActivity(), { list ->
+        mViewModel.jackpotfeedList.observe(viewLifecycleOwner, { list ->
             if (!list.isNullOrEmpty()) {
                 mViewBinding?.shimmerLayout?.stopShimmer()
 
@@ -162,7 +170,7 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
 
 
         mViewModel.totalJackpotAmount.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             androidx.lifecycle.Observer { list ->
                 mViewBinding?.loadingAmountHdp?.clearAnimation()
                 mViewBinding?.loadingAmountHdp?.visibility = View.GONE

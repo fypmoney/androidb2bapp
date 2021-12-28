@@ -12,12 +12,12 @@
 
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
+        android:layout_marginBottom="94dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:layout_marginBottom="@dimen/_12sdp"
         android:scrollbars="vertical"
      >
 
@@ -25,15 +25,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/screenMarginLeft"
-        android:layout_marginEnd="@dimen/screenMarginRight">
+        android:layout_marginStart="@dimen/dp16"
+        android:layout_marginEnd="@dimen/dp16">
 
         <RelativeLayout
             android:id="@id/linear_layout"
             android:layout_width="match_parent"
             android:layout_height="244dp"
             android:layout_marginTop="30dp"
-
             android:orientation="vertical">
 
 
@@ -64,7 +63,7 @@
             android:layout_marginBottom="20dp"
             android:layout_below="@id/linear_layout"
             android:text="@{viewModel.username}"
-            android:textSize="20dp"
+            android:textSize="20sp"
             />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -105,7 +104,7 @@
             android:layout_below="@+id/heading"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=visible}">
+            android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=gone}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
@@ -146,6 +145,7 @@
             android:layout_below="@id/heading1"
             android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
+            android:visibility="@{viewModel.isFamilyFiperVisiblePending?View.VISIBLE:View.GONE,default=gone}"
             app:adapter="@{viewModel.pendingAdapter}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
@@ -231,7 +231,7 @@
             android:padding="15dp"
             android:onClick="@{()->viewModel.onChoresClicked()}"
             android:layout_marginTop="30dp"
-            android:visibility="@{viewModel.isNoDataFoundVisible?View.GONE:View.VISIBLE,default=gone}"
+            android:visibility="gone"
             android:layout_marginBottom="30dp"
             android:layout_below="@id/recycler_view1">
 
@@ -269,7 +269,6 @@
 
         <Button
             android:id="@+id/verifyButton"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -280,11 +279,12 @@
             android:layout_marginEnd="20dp"
             android:visibility="@{viewModel.isFamilyFiperVisible?View.VISIBLE:View.GONE,default=gone}"
             android:text="@string/leave_family"
-
             android:onClick="@{()->viewModel.onLeaveFamilyClicked()}" />
 
 
 
 
-    </RelativeLayout></ScrollView>
+    </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
 </layout>

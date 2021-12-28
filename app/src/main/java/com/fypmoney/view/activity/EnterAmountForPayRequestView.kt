@@ -24,6 +24,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.AddMoneySuccessBottomSheet
 import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
 import com.fypmoney.view.fragment.TransactionFailBottomSheet
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.viewmodel.EnterAmountForPayRequestViewModel
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -150,7 +151,7 @@ class EnterAmountForPayRequestView :
                     callBottomSheet()
                 }
                 AppConstants.API_SUCCESS -> {
-                    intentToActivity(HomeView::class.java)
+                    intentToActivity(HomeActivity::class.java)
                 }
                 AppConstants.INSUFFICIENT_ERROR_CODE -> {
                     callInsuficientFundMessageSheet(Utility.convertToRs(mViewModel.amountToBeAdded))
@@ -214,7 +215,7 @@ class EnterAmountForPayRequestView :
                     AddMoneySuccessBottomSheet(
                         it,
                         it1,onViewDetailsClick=null,successTitle = "Payment Made Successfully to ${sendMoneyResponse.sendMoneyResponseDetails.receiverName}",onHomeViewClick = {
-                            intentToHomeActivity(HomeView::class.java)
+                            intentToHomeActivity(HomeActivity::class.java)
                         }
                     )
                 }

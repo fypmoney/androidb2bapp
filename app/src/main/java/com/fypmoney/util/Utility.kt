@@ -40,7 +40,7 @@ import com.fypmoney.util.AppConstants.ReferralScreen
 import com.fypmoney.util.AppConstants.StoreScreen
 import com.fypmoney.util.AppConstants.TRACKORDER
 import com.fypmoney.view.activity.ChoresActivity
-import com.fypmoney.view.activity.HomeView
+
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
 import com.google.gson.Gson
@@ -76,15 +76,16 @@ import android.util.Log
 import android.view.View
 
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import com.facebook.shimmer.Shimmer
-import com.facebook.shimmer.ShimmerDrawable
 import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.util.AppConstants.JACKPOTTAB
 import com.fypmoney.view.activity.OfferDetailActivity
 import com.fypmoney.util.AppConstants.OfferScreen
-import com.fypmoney.view.fragment.FilterByDateFragment
+import com.fypmoney.util.AppConstants.StoreofferScreen
+import com.fypmoney.util.AppConstants.StoreshopsScreen
+import com.fypmoney.view.fragment.OffersStoreActivity
+import com.fypmoney.view.fragment.StoresActivity
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 import com.fypmoney.view.storeoffers.OffersScreen
@@ -343,6 +344,52 @@ object Utility {
 
     }
 
+    fun showDatePickerInDateFormatDialog(
+        context: Context,
+        onDateSelected: OnDateSelectedWithDateFormat,
+        isDateOfBirth: Boolean = false
+    ) {
+        val c: Calendar = getInstance()
+        val mYear = c.get(YEAR)
+        val mMonth = c.get(MONTH)
+        val mDay = c.get(DAY_OF_MONTH)
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, year, monthOfYear, dayOfMonth ->
+                val simpleDateFormat =
+                    SimpleDateFormat("yyyy MM dd", Locale.ROOT)
+                val date: Date? =
+                    simpleDateFormat.parse("${year} ${monthOfYear + 1} $dayOfMonth")
+                val simpleDateFormatDate =
+                    SimpleDateFormat(DATE_FORMAT_CHANGED, Locale.ROOT)
+                // calculateDifferenceBetweenDates(date,getInstance().time)
+                date?.let {
+                    onDateSelected.onDateSelectedWithDateFormat(
+                        SimpleDateFormat(
+                            AppConstants.DATE_TIME_FORMAT_SERVER,
+                            Locale.ROOT
+                        ).format(it),
+                        simpleDateFormatDate.format(it)
+                    )
+
+                }
+            },
+            mYear,
+            mMonth,
+            mDay
+        )
+        if (isDateOfBirth) {
+            datePickerDialog.datePicker.maxDate =
+                (System.currentTimeMillis() - 347039786000)//11 years //Todo
+            datePickerDialog.datePicker.minDate = (System.currentTimeMillis() - 2208984820000)//70
+
+        } else {
+            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+        }
+        datePickerDialog.show()
+
+    }
+
     fun showDatePickerDialogWithStartDate(
         context: Context,
         onDateSelectedwithStart: OnDateSelectedwithStart,
@@ -440,6 +487,11 @@ object Utility {
 
     interface OnDateSelected {
         fun onDateSelected(dateOnEditText: String, dateOnServer: String, yearDifference: Int) {
+        }
+    }
+
+    interface OnDateSelectedWithDateFormat {
+        fun onDateSelectedWithDateFormat(dateOnServer: String?, dateOnEditText: String) {
         }
     }
 
@@ -662,7 +714,11 @@ object Utility {
             SharedPrefUtils.SF_KEY_IS_LOGIN,
             false
         )
-
+        SharedPrefUtils.putArrayList(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_INTEREST,
+            null
+        )
         SharedPrefUtils.putString(
             PockketApplication.instance,
             SharedPrefUtils.SF_KEY_ACCESS_TOKEN,
@@ -994,24 +1050,25 @@ object Utility {
     }
 
 
+
     fun deeplinkRedirection(screenName: String, context: Context) {
         var intent: Intent? = null
 
         when (screenName) {
             HOMEVIEW -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
             }
             ReferralScreen -> {
                 intent = Intent(context, ReferAndEarnActivity::class.java)
 
             }
             JACKPOTTAB -> {
-                intent = Intent(context, RewardsActivity::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, JACKPOTTAB)
+//                intent = Intent(context, RewardsActivity::class.java)
+//                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, JACKPOTTAB)
             }
 
             CardScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, CardScreen)
 
             }
@@ -1021,18 +1078,29 @@ object Utility {
 
             }
             StoreScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreScreen)
+
+            }
+            StoreofferScreen -> {
+                intent = Intent(context, OffersStoreActivity::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreofferScreen)
+
+            }
+
+            StoreshopsScreen -> {
+                intent = Intent(context, StoresActivity::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreshopsScreen)
 
             }
 
             FEEDSCREEN -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FEEDSCREEN)
 
             }
             FyperScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FyperScreen)
 
             }
@@ -1093,5 +1161,21 @@ object Utility {
         return builder.toString() // Return builders text
     }
 
+    fun stringToCardNumber(input:String): StringBuilder {
+        val result = StringBuilder()
+        for (i in 0 until input.length) {
+            if (i % 4 == 0 && i != 0) {
+                result.append(" ")
+            }
+            result.append(input.get(i))
+        }
+        return result
+    }
 
+    fun onCopyClicked(textToCopy:String,context:Context) {
+        copyTextToClipBoard(
+            context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager,
+            textToCopy
+        )
+    }
 }

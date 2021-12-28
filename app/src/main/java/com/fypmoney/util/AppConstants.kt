@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken
 * This class is used to store the Constants of the application
 * */
 object AppConstants {
+    val INTEREST_TYPE: String="InterestType"
     const val FRESH_CHAT_APP_KEY="8dbdc877-4045-4b7c-8a69-1b176c41e71c"
     const val FRESH_CHAT_APP_ID="03bfae8e-f0f7-48a9-948a-b737edd1a38b"
     const val FRESH_CHAT_DOMAIN="msdk.in.freshchat.com"
@@ -52,7 +53,12 @@ object AppConstants {
     const val FEED_TYPE_EXTWEBVIEW = "EXTWEBVIEW"
     const val FEED_TYPE_EXTWEBVIEW2 = "EXTWEBVIEW1X1"
     const val FEED_TYPE_STORIES = "STORIES"
+    const val EXPLORE_TYPE_STORIES = "STORY"
+    const val EXPLORE_IN_APP_WEBVIEW = "IN_APP_WEB_VIEW"
+    const val EXPLORE_IN_APP = "IN_APP"
+
     const val FEED_RESPONSE = "feed_response"
+    const val EXPLORE_RESPONSE = "explore_response"
     const val FEED_TYPE_IN_APP = "INAPP"
     const val FEED_TYPE_IN_APP_WEBVIEW = "INAPPWEBVIEW"
     const val FEED_TYPE_EXTERNAL_WEBVIEW = "EXTERNALWEBVIEW"
@@ -67,6 +73,7 @@ object AppConstants {
     const val CONTACT_BROADCAST_KEY = "Contact Broadcast key"
     const val ADD_MEMBER_STATUS_APPROVED = "APPROVED"
     const val ADD_MEMBER_STATUS_INVITED = "INVITED"
+    const val ADD_MEMBER_STATUS_DECLINED = "DECLINED"
     const val YES = "YES"
     const val NO = "NO"
     const val PRODUCT_SPIN = "SPIN_WHEEL"
@@ -74,6 +81,7 @@ object AppConstants {
     const val CUSTOMER_INFO_RESPONSE = "customer_info_response"
     const val SPLASH_TIME = 4000L
     const val FROM_WHICH_SCREEN = "from_which_screen"
+    const val EXPLORE_ITEM_ID = "explore_item_id"
     const val AMOUNT = "Amount"
     const val REMARKS = "Remarks"
     const val LOGOUT = "logout"
@@ -218,6 +226,8 @@ object AppConstants {
     const val TRACKORDER = "TrackOrderScreen"
     const val CHORES = "ChoresScreen"
     const val JACKPOTTAB = "Jackpot"
+    const val StoreofferScreen = "Storeofferscreen"
+    const val StoreshopsScreen = "Storeshopsscreen"
 
     /* Home : "HomeView, 0"
 
@@ -234,7 +244,7 @@ object AppConstants {
      Track Order : "TrackOrderScreen, 6"
 
      Chores :" ChoresScreen, 7"*/
-   const val ERROR_TYPE_AFTER_SPIN = "AfterSpin"
+    const val ERROR_TYPE_AFTER_SPIN = "AfterSpin"
     const val INSUFFICIENT_ERROR_CODE = "PKT_2037"
     const val AADHAR_VERIFICATION_ERROR_CODE = "PKT_2006"
     const val NEW = "Received"
@@ -243,6 +253,9 @@ object AppConstants {
     const val Pay = "Pay"
     const val REFER_MSG_SHARED_1 = "REFERAL_PKYC0"
     const val REFER_MSG_SHARED_2 = "REFERAL_PKYC1"
+
+    const val ONBOARD_SHARE_90 = "ONBOARD_SHARE_90"
+    const val ONBOARD_SHARE_1 = "ONBOARD_SHARE_1"
     const val CARD_ORDER_FLAG = "CARD_ORDER_FLAG"
     const val REFER_LINE1 = "REFER_LINE1"
     const val REFER_LINE2 = "REFER_LINE2"
@@ -253,7 +266,7 @@ object AppConstants {
     const val ORDER_CARD_INFO = "order_card_info"
     const val REFER_CODE_CHECKING_VARIABLE = "$@%$"
 
-
+    const val IN_APP_URL = "IN_APP_URL"
     const val ORDER_NUM = "ORDERID"
     const val PRODUCT_HIDE_IMAGE = "HIDE_IMAGE"
     const val SECTION_ID = "SECTIONID"
@@ -261,5 +274,13 @@ object AppConstants {
     const val PRODUCT_CODE = "PRODUCT_CODE"
     const val TRANS_TYPE_EARN = "EARN"
     const val JACKPOT_SCREEN_NAME = "JACKPOT"
+    const val EXT_WEBVIEW = "EXT_REDIRECT"
+    const val SHOW_MORE = "SHOWMORE"
+    const val IN_APP_WITH_CARD = "IN_APP_VIEW_WITH_CARD_OPTION"
+    const val OFFER_REDIRECTION = "OFFER_REDIRECTION"
 
+    const val USER_TYPE_NEW = "newUser"
+    const val USER_TYPE = "UserType"
+    const val KYC_type = "kyctype"
+    const val POSTKYCKEY = "postkyc"
 }

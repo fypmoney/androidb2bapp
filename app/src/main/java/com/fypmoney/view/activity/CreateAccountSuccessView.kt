@@ -12,6 +12,9 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.register.KycDetailsActivity
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.viewmodel.CreateAccountSuccessViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import java.util.HashMap
@@ -53,10 +56,10 @@ class CreateAccountSuccessView :
     private fun setObserver() {
         mViewModel.onActivateAccountClicked.observe(this) {
             if (Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO)
-                intentToActivity(AadhaarAccountActivationView::class.java)
+                intentToActivity(PanAdhaarSelectionActivity::class.java)
             else {
                 if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                    intentToActivity(HomeView::class.java)
+                    intentToActivity(HomeActivity::class.java)
                 } else {
                     intentToActivity(PermissionsActivity::class.java)
                 }

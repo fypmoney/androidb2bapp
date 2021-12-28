@@ -19,16 +19,14 @@ import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.bindingAdapters.loadImage
-import com.fypmoney.databinding.ViewUserProfileBinding
+import com.fypmoney.databinding.ViewUserNewProfileBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.adapter.MyProfileListAdapter
+
+import com.fypmoney.view.adapter.MyUserprofileAdapter
 import com.fypmoney.view.community.SocialCommunityActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
-import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
-import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
-import com.fypmoney.view.webview.WebViewActivity
 import com.fypmoney.viewmodel.UserProfileViewModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -41,7 +39,7 @@ import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.view_home.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.io.IOException
 
@@ -49,17 +47,17 @@ import java.io.IOException
 /*
 * This class is used as Home Screen
 * */
-class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewModel>(),
-    MyProfileListAdapter.OnListItemClickListener, LogoutBottomSheet.OnLogoutClickListener {
+class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewModel>(),
+    MyUserprofileAdapter.OnListItemClickListener, LogoutBottomSheet.OnLogoutClickListener {
     private lateinit var mViewModel: UserProfileViewModel
-    private lateinit var mViewBinding: ViewUserProfileBinding
+    private lateinit var mViewBinding: ViewUserNewProfileBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_user_profile
+        return R.layout.view_user_new_profile
     }
 
     override fun getViewModel(): UserProfileViewModel {
@@ -72,7 +70,9 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = this@UserProfileView,
-            toolbar = toolbar,
+            toolbar = toolbar, backArrowTint = Color.WHITE,
+            titleColor = Color.WHITE,
+
             isBackArrowVisible = true, toolbarTitle = getString(R.string.my_profile_title)
         )
 
@@ -85,9 +85,19 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
 
         mViewBinding.playStoreTv.setOnClickListener {
             try {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$packageName")))
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("market://details?id=$packageName")
+                    )
+                )
             } catch (e: ActivityNotFoundException) {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}")))
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=${BuildConfig.APPLICATION_ID}")
+                    )
+                )
             }
         }
         mViewModel.setInitialData()
@@ -100,12 +110,12 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
             e.printStackTrace()
 
         }
-        val myProfileAdapter = MyProfileListAdapter(applicationContext, this)
+        val myProfileAdapter = MyUserprofileAdapter(applicationContext, this)
         mViewBinding.profileList.adapter = myProfileAdapter
 
         val iconList = ArrayList<Int>()
         iconList.add(R.drawable.ic_privacy)
-        iconList.add(R.drawable.ic_interest)
+//        iconList.add(R.drawable.ic_interest)
         iconList.add(R.drawable.ic_community)
         iconList.add(R.drawable.ic_privacy)
         iconList.add(R.drawable.ic_privacy)
@@ -126,7 +136,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
     private fun setObserver() {
         mViewModel.onLogoutSuccess.observe(this) {
             UserTrackr.logOut()
-            intentToActivity(LoginView::class.java, isFinishAll = true)
+            intentToActivityMain(this@UserProfileView,LoginView::class.java, isFinishAll = true)
         }
 
         mViewModel.onProfileSuccess.observe(this) {
@@ -227,7 +237,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
                 try {
                     val file = File(getPath(applicationContext, uri))
                     val requestFile =
-                        RequestBody.create("multipart/form-data".toMediaTypeOrNull(), file)
+                        file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
                     val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
                     mViewModel.callProfilePicUploadApi(body)
 
@@ -242,7 +252,7 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
     private fun loadProfile(url: String?) {
         url?.let {
             loadImage(
-                mViewBinding.userIv,
+                mViewBinding.ivUserProfileImage,
                 it,
                 ContextCompat.getDrawable(this, R.drawable.progress_bar_drawable),
                 true
@@ -281,18 +291,17 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
         startActivityForResult(intent, 101)
     }
 
+
     /**
      * Method to navigate to the different activity
      */
-    private fun intentToActivity(aClass: Class<*>, isFinishAll: Boolean? = false) {
+    private fun intentToActivityWithSomeData(aClass: Class<*>, isFinishAll: Boolean? = false) {
         val intent = Intent(this@UserProfileView, aClass)
         startActivity(intent)
         if (isFinishAll == true) {
             finishAffinity()
         }
     }
-
-
 
 
     /*
@@ -315,31 +324,34 @@ class UserProfileView : BaseActivity<ViewUserProfileBinding, UserProfileViewMode
                 Utility.goToAppSettings(applicationContext)
             }
 
+
             1 -> {
-                intentToActivity(SelectInterestView::class.java)
+                intentToActivityMain(this@UserProfileView, SocialCommunityActivity::class.java)
             }
             2 -> {
-                intentToActivity(SocialCommunityActivity::class.java)
+                openWebPageFor(
+                    getString(R.string.privacy_policy),
+                    "https://www.fypmoney.in/fyp/privacy-policy/"
+                )
             }
             3 -> {
-                openWebPageFor(getString(R.string.privacy_policy),"https://www.fypmoney.in/fyp/privacy-policy/")
-            }
-            4 -> {
-                openWebPageFor(getString(R.string.terms_and_conditions),"https://www.fypmoney.in/fyp/terms-of-use/")
+                openWebPageFor(
+                    getString(R.string.terms_and_conditions),
+                    "https://www.fypmoney.in/fyp/terms-of-use/"
+                )
             }
 
-            5 -> {
+            4 -> {
                 callFreshChat(applicationContext)
             }
 
-            6 -> {
+            5 -> {
                 callLogOutBottomSheet()
             }
 
         }
 
     }
-
 
 
 }

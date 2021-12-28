@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
+import com.fypmoney.databinding.ViewWalkThroughNewOneBinding
 import com.fypmoney.databinding.ViewWalkThroughOneBinding
 import com.fypmoney.viewmodel.WalkThroughOneViewModel
 import kotlinx.android.synthetic.main.view_walk_through_one.*
@@ -15,9 +16,9 @@ import kotlinx.android.synthetic.main.view_walk_through_one.*
 /*
 * This class is used as Add member Screen
 * */
-class WalkThroughOneScreen : BaseFragment<ViewWalkThroughOneBinding, WalkThroughOneViewModel>() {
+class WalkThroughOneScreen : BaseFragment<ViewWalkThroughNewOneBinding, WalkThroughOneViewModel>() {
     private lateinit var mViewModel: WalkThroughOneViewModel
-    private lateinit var mViewBinding: ViewWalkThroughOneBinding
+    private lateinit var mViewBinding: ViewWalkThroughNewOneBinding
 
 
     override fun getBindingVariable(): Int {
@@ -25,7 +26,7 @@ class WalkThroughOneScreen : BaseFragment<ViewWalkThroughOneBinding, WalkThrough
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_walk_through_one
+        return R.layout.view_walk_through_new_one
     }
 
     override fun getViewModel(): WalkThroughOneViewModel {
@@ -36,15 +37,7 @@ class WalkThroughOneScreen : BaseFragment<ViewWalkThroughOneBinding, WalkThrough
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
-        mViewBinding.viewModel = mViewModel
-        Glide.with(requireContext()).load(R.raw.walk_through_one).into(imageView)
-//        imageView.gifResource = R.raw.walk_through_one
+        mViewBinding.viewModel = mViewModel }
 
-    }
-
-    override fun onTryAgainClicked() {
-
-    }
-
-
+    override fun onTryAgainClicked() {    }
 }

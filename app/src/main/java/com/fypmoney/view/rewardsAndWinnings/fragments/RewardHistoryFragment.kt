@@ -16,11 +16,14 @@ import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.rewardsAndWinnings.activity.RewardsHistoryView
 import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardHistoryFragmentVM
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsHistoryVM
 
 import kotlin.math.roundToInt
 
 
-class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, RewardsAndVM>() {
+class RewardHistoryFragment :
+    BaseFragment<FragmentRewardHistoryBinding, RewardHistoryFragmentVM>() {
     companion object {
         var page = 0
     }
@@ -28,7 +31,7 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
     private var rewardAdapterHistory: RewardsHistoryLeaderboardAdapter? = null
     private var itemsArrayList: ArrayList<HistoryItem> = ArrayList()
     private var mViewBinding: FragmentRewardHistoryBinding? = null
-    private var mViewModel: RewardsAndVM? = null
+    private var mViewModel: RewardHistoryFragmentVM? = null
     override fun onTryAgainClicked() {
 
     }
@@ -42,10 +45,10 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
         return R.layout.fragment_reward_history
     }
 
-    override fun getViewModel(): RewardsAndVM {
-        activity?.let {
-            mViewModel = ViewModelProvider(it).get(RewardsAndVM::class.java)
-        }
+    override fun getViewModel(): RewardHistoryFragmentVM {
+
+        mViewModel = ViewModelProvider(this).get(RewardHistoryFragmentVM::class.java)
+
 
         return mViewModel!!
     }
@@ -64,6 +67,11 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
         mViewModel?.let { setObserver(it) }
     }
 
+    override fun onStart() {
+        super.onStart()
+        mViewModel?.callRewardHistory()
+        mViewModel?.callRewardSummary()
+    }
 
     private fun setRecyclerView(root: FragmentRewardHistoryBinding?) {
         val layoutManager =
@@ -95,10 +103,11 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
             RewardsHistoryLeaderboardAdapter(itemsArrayList, requireContext(), itemClickListener2)
         root?.rvHistory?.adapter = rewardAdapterHistory
     }
-    private fun setObserver(sharedViewModel: RewardsAndVM) {
+
+    private fun setObserver(sharedViewModel: RewardHistoryFragmentVM) {
 
         sharedViewModel.rewardHistoryList.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             androidx.lifecycle.Observer { list ->
                 itemsArrayList.clear()
                 list.forEach { item ->
@@ -124,7 +133,7 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
 
             })
         sharedViewModel.rewardSummaryStatus.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             androidx.lifecycle.Observer { list ->
                 mViewBinding?.contraint?.visibility = View.VISIBLE
                 mViewBinding?.shimmerLayout?.visibility = View.GONE

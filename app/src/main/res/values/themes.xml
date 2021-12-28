@@ -202,6 +202,17 @@
         <item name="fontFamily">@font/product_sans_regular</item>
     </style>
 
+    <!--
+  Textview product sans regular
+  -->
+    <style name="TextviewRegularWalkThrough" parent="Widget.AppCompat.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/text_color_walk_through</item>
+        <item name="android:textSize">@dimen/textSize_14</item>
+        <item name="fontFamily">@font/product_sans_regular</item>
+    </style>
+
     <style name="newsted">
         <item name="android:background">@drawable/rounded_corner</item>
 
@@ -436,5 +447,12 @@
     <style name="EditTextThemeOverlay" parent="Theme.MaterialComponents.Light">
         <item name="colorAccent">@android:color/holo_blue_light</item>
         <item name="boxBackgroundMode">none</item>
+    </style>
+
+    <style name="TextAppearance.Fyp.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/product_sans_bold</item>
+        <item name="android:fontFamily">@font/product_sans_bold</item>
+        <item name="android:textSize">@dimen/text_18sp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 </resources>

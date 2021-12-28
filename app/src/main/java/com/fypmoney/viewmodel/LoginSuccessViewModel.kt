@@ -73,9 +73,12 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
             ApiConstant.API_GET_CUSTOMER_INFO -> {
                 if (responseData is CustomerInfoResponse) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
-                    onApiSuccess.value=true
-                    trackr { it.services = arrayListOf(TrackrServices.ADJUST,TrackrServices.FIREBASE)
-                        it.name = TrackrEvent.LOGINSUCCESS }
+//                    Utility.getCustomerDataFromPreference()?.postKycScreenCode = "0"
+
+                    trackr {
+                        it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)
+                        it.name = TrackrEvent.LOGINSUCCESS
+                    }
 
                     SharedPrefUtils.putString(
                         getApplication(),
@@ -138,6 +141,13 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                             interestList.add(it.name!!)
                         }
 
+                        SharedPrefUtils.putArrayList(
+                            getApplication(),
+                            SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
+
+                        )
+
+                    } else {
                         SharedPrefUtils.putArrayList(
                             getApplication(),
                             SharedPrefUtils.SF_KEY_USER_INTEREST, interestList

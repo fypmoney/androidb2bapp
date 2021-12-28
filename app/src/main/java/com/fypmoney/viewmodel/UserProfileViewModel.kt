@@ -5,7 +5,6 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -132,11 +131,12 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
 
                     // again update the saved data in preference
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
-
-                    SharedPrefUtils.putLong(
-                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
-                        value = responseData.customerInfoResponseDetails?.id!!
-                    )
+                    responseData.customerInfoResponseDetails?.id?.let {
+                        SharedPrefUtils.putLong(
+                            getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
+                            value = it
+                        )
+                    }
                     // Save the user phone in shared preference
                     SharedPrefUtils.putString(
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE,
@@ -149,6 +149,13 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
                             interestList.add(it.name!!)
                         }
 
+                        SharedPrefUtils.putArrayList(
+                            getApplication(),
+                            SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
+
+                        )
+
+                    } else {
                         SharedPrefUtils.putArrayList(
                             getApplication(),
                             SharedPrefUtils.SF_KEY_USER_INTEREST, interestList

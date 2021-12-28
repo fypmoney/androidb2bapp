@@ -16,6 +16,9 @@ import com.fypmoney.databinding.ViewLoginSuccessBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.register.*
+
 import com.fypmoney.viewmodel.LoginSuccessViewModel
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.view_login_success.*
@@ -80,18 +83,61 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
         mViewModel.onApiSuccess.observe(this) {
             when {
                 Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
-                    intentToActivity(CreateAccountView::class.java)
+                    intentToActivity(UserTypeOnLoginView::class.java)
 
                 }
                 Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {
-                    intentToActivity(AadhaarAccountActivationView::class.java)
+                    intentToActivity(PanAdhaarSelectionActivity::class.java)
                 }
-                else-> {
+                Utility.getCustomerDataFromPreference()?.isHomeViewed == AppConstants.YES -> {
+                    if (hasPermissions(
+                            this,
+                            Manifest.permission.READ_CONTACTS
+                        )
+                    ) {
+                        intentToActivity(HomeActivity::class.java)
+                    } else {
+                        intentToActivity(PermissionsActivity::class.java)
+                    }
+                }
+                else -> {
                     if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
-                        if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
-                            intentToActivity(HomeView::class.java)
+
+                        if (!Utility.getCustomerDataFromPreference()?.isInvited.isNullOrEmpty() && Utility.getCustomerDataFromPreference()?.isInvited == AppConstants.YES) {
+                            if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_INVITED) {
+                                intentToActivity(PendingRequestActivity::class.java)
+                            } else if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_APPROVED) {
+                                val userInterest =
+                                    SharedPrefUtils.getArrayList(
+                                        getApplication(),
+                                        SharedPrefUtils.SF_KEY_USER_INTEREST
+                                    )
+                                if (userInterest != null && userInterest?.size > 0) {
+                                    if (hasPermissions(
+                                            this,
+                                            Manifest.permission.READ_CONTACTS
+                                        )
+                                    ) {
+                                        intentToActivity(HomeActivity::class.java)
+                                    } else {
+                                        intentToActivity(PermissionsActivity::class.java)
+                                    }
+                                } else {
+                                    intentToActivity(ChooseInterestRegisterView::class.java)
+                                }
+
+
+                            } else {
+                                intentToActivity(InviteParentSiblingActivity::class.java)
+                            }
+
                         } else {
-                            intentToActivity(PermissionsActivity::class.java)
+                            val intent = Intent(this, InviteParentSiblingActivity::class.java)
+                            intent.putExtra(AppConstants.USER_TYPE, "1")
+                            startActivity(intent)
+                            finish()
+
+
                         }
                     } else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "0") {
                         when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
@@ -99,20 +145,64 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
                                 intentToActivity(ReferralCodeView::class.java)
                             }
                             else -> {
-                                if (hasPermissions(
-                                        this,
-                                        Manifest.permission.READ_CONTACTS
+                                val userInterest =
+                                    SharedPrefUtils.getArrayList(
+                                        getApplication(),
+                                        SharedPrefUtils.SF_KEY_USER_INTEREST
                                     )
-                                ) {
-                                    intentToActivity(HomeView::class.java)
+                                if (userInterest != null && userInterest?.size > 0) {
+                                    if (hasPermissions(
+                                            this,
+                                            Manifest.permission.READ_CONTACTS
+                                        )
+                                    ) {
+                                        intentToActivity(HomeActivity::class.java)
+                                    } else {
+                                        intentToActivity(PermissionsActivity::class.java)
+                                    }
                                 } else {
-                                    intentToActivity(PermissionsActivity::class.java)
+                                    intentToActivity(ChooseInterestRegisterView::class.java)
                                 }
 
                             }
                         }
                     } else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "90") {
-                        intentToActivity(AgeAllowedActivationView::class.java)
+                        if (!Utility.getCustomerDataFromPreference()?.isInvited.isNullOrEmpty() && Utility.getCustomerDataFromPreference()?.isInvited == AppConstants.YES) {
+                            if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_INVITED) {
+                                intentToActivity(PendingRequestActivity::class.java)
+                            } else if (Utility.getCustomerDataFromPreference()?.inviteReqStatus == AppConstants.ADD_MEMBER_STATUS_APPROVED) {
+                                val userInterest =
+                                    SharedPrefUtils.getArrayList(
+                                        getApplication(),
+                                        SharedPrefUtils.SF_KEY_USER_INTEREST
+                                    )
+                                if (userInterest != null && userInterest?.size > 0) {
+                                    if (hasPermissions(
+                                            this,
+                                            Manifest.permission.READ_CONTACTS
+                                        )
+                                    ) {
+                                        intentToActivity(HomeActivity::class.java)
+                                    } else {
+                                        intentToActivity(PermissionsActivity::class.java)
+                                    }
+                                } else {
+                                    intentToActivity(ChooseInterestRegisterView::class.java)
+                                }
+
+
+                            } else {
+                                intentToActivity(InviteParentSiblingActivity::class.java)
+                            }
+
+                        } else {
+                            val intent = Intent(this, InviteParentSiblingActivity::class.java)
+                            intent.putExtra(AppConstants.USER_TYPE, "90")
+                            startActivity(intent)
+                            finish()
+
+
+                        }
                     }
 
 

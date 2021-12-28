@@ -18,6 +18,7 @@ import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
 import androidx.appcompat.widget.Toolbar
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -29,8 +30,7 @@ import androidx.fragment.app.Fragment
 import com.freshchat.consumer.sdk.FaqOptions
 import com.freshchat.consumer.sdk.Freshchat
 import com.freshchat.consumer.sdk.FreshchatConfig
-import com.fyp.trackr.models.UserTrackr
-import com.fyp.trackr.models.logOut
+import com.fyp.trackr.models.*
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.util.*
@@ -38,6 +38,7 @@ import com.fypmoney.util.AppConstants.PLAY_STORE_URL
 import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getInviteLinkWithExtraData
 import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getInviteLinkWithNoData
 import com.fypmoney.view.activity.LoginView
+import com.fypmoney.view.register.TimeLineActivity
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.view.webview.WebViewActivity
@@ -417,6 +418,47 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
 
     }
 
+    /*
+    * This method will set the lottie animation  with back  arrow
+    * */
+    fun setLottieAnimationToolBar(
+        isBackArrowVisible: Boolean? = false, //back arrow for back press by default visibility of
+        isLottieAnimation: Boolean? = false, // lottie animation by default on
+        imageView: ImageView,
+        lottieAnimationView: ImageView,
+        toolbarTitle: String? = null,
+        screenName: String
+    )
+    {
+        // set back arrow visibility
+        if (isBackArrowVisible == true)imageView.visibility=View.VISIBLE
+        else imageView.visibility=View.GONE
+
+        // set lottie animation visibility
+        if (isLottieAnimation == true)lottieAnimationView.visibility=View.VISIBLE
+        else lottieAnimationView.visibility=View.GONE
+
+        imageView.setOnClickListener {
+            finish()
+        }
+
+        lottieAnimationView.setOnClickListener {
+            trackr {
+                it.name = TrackrEvent.onboard_usertimeline_icon_click
+                it.add(TrackrField.form_which_screen,screenName)
+            }
+            val intent = Intent(this@BaseActivity, TimeLineActivity::class.java)
+            startActivity(intent)
+        }
+        if (toolbarTitle != null) {
+            toolbar_title.visibility = View.VISIBLE
+            toolbar_title.text = toolbarTitle
+            toolbar_title.setTextColor(titleColor)
+
+        }
+
+    }
+
 
     /*
        * This is used to share the app
@@ -487,12 +529,13 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     }
 
 
-    private fun onInviteUser(content:String) {
+    fun onInviteUser(content: String) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
         intent.putExtra(Intent.EXTRA_TEXT, content)
         startActivity(Intent.createChooser(intent, "Share Link"))
     }
+
     override fun onTryAgainClicked() {
 
     }
@@ -581,4 +624,15 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
         startActivity(sendIntent)
     }
 
+
+    /**
+     * Method to navigate to the different activity
+     */
+    fun intentToActivityMain(context: Context,aClass: Class<*>, isFinishAll: Boolean? = false) {
+        val intent = Intent(context, aClass)
+        startActivity(intent)
+        if (isFinishAll == true) {
+            finishAffinity()
+        }
+    }
 }

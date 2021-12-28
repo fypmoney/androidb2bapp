@@ -39,8 +39,9 @@ object ApiConstant {
 
 
     const val API_UPDATE_FAMILY_NAME = "/services/authservice/api/family-detail?name="
-    const val API_KYC_ACTIVATE_ACCOUNT = "/services/PockketService/api/activate/account/init"
-    const val API_KYC_MOBILE_VERIFICATION = "/services/PockketService/api/mobile/verification"
+    const val API_KYC_ACTIVATE_ACCOUNT = "/services/PockketService/api/activate/account/init/v1"
+    const val API_KYC_MOBILE_VERIFICATION = "/services/PockketService/api/mobile/verification/v1"
+
     const val API_KYC_INIT = "/services/PockketService/api/kyc/init"
     const val API_KYC_VERIFICATION = "/services/PockketService/api/kyc/verification"
     const val API_GET_WALLET_BALANCE = "/services/PockketService/api/get/walletBalance"
@@ -81,16 +82,20 @@ object ApiConstant {
 
   const val PAYU_PRODUCTION_URL = "/merchant/postservice.php?form=2"
 
-  const val GET_USER_CARDS = "get_user_cards"
+    const val GET_USER_CARDS = "get_user_cards"
 
     const val CHECK_APP_UPDATE = "/app/version"
     const val API_TASK_DETAIL = "/services/PockketService/internal/approval-request/V1/"
     const val API_TASK_UPDATE = "/services/loyaltyservice/api/task"
-  const val API_HISTORY_TASK =
-    "/services/loyaltyservice/api/task/history"
+    const val API_HISTORY_TASK =
+        "/services/loyaltyservice/api/task/history"
 
     const val TOP_TEN_USER_API = "/services/PockketService/api/recent/wallet/transaction"
     const val TOTAL_REFERRAL_CASHBACK_API = "/services/PockketService/api/total/referral/points"
+
+    const val REFERRAL_SCREEN_MESSAGES_API = "/services/authservice/api/user-additional-data"
+
+
     const val API_STORY = "/services/loyaltyservice/api/story/split"
     const val API_GET_REWARDS_API = "/services/authservice/api/rewards/v2"
     const val API_SPIN_WHEEL = "/services/authservice/api/spin-wheel/v2/1"
@@ -132,6 +137,17 @@ object ApiConstant {
         "services/PockketService/api/jackpot/tickets"
 
     const val Api_OfferList = "services/loyaltyservice/api/fyp-offer"
+    const val Api_LIGHTENING_DEALS = "services/PockketService/api/lightening-deals"
+
+    const val API_CALLTO_ACTION = "/services/PockketService/api/actions/screen-sections/"
+
+    const val API_Explore = "services/PockketService/api/screen-sections/"
+
+    const val API_FETCH_FEED_DETAILS = "/services/loyaltyservice/api/feed/"
+
+    const val API_FETCH_OFFER_DETAILS = "/services/loyaltyservice/api/fyp-offer/"
+    const val Api_Request_Siblin_parent = "services/authservice/api/family-member/userKycCode/"
+    const val Api_Your_Gifts = "services/loyaltyservice/api/onboarding-gifts"
 
 }
 

@@ -106,12 +106,14 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <com.fypmoney.view.customview.HorizontalDottedProgress
+                    <com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/loading_amount_hdp"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/three_dot_amount_loader"
                         app:layout_constraintBottom_toBottomOf="@+id/total_refral_won_value_tv"
 
                         app:layout_constraintStart_toEndOf="@+id/total_refral_won_value_tv"
