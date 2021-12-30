@@ -6,8 +6,6 @@ import androidx.preference.PreferenceManager
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.lang.ClassCastException
-import java.lang.Exception
 import java.lang.reflect.Type
 
 
@@ -55,6 +53,7 @@ class SharedPrefUtils {
         const val SF_REFFERAL_MSG_2 = "refer_share_message_1"
         const val SF_IS_USER_LANDED_ON_HOME_SCREEN_TIME = "is_user_landed_on_home_screen_time"
         const val SF_REFERRAL_CODE_FROM_INVITE_LINK = "referral_code_from_invite_link"
+        const val SF_IS_INSTALLED_APPS_SYNCED = "is_installed_apps_is_syncd"
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(context)

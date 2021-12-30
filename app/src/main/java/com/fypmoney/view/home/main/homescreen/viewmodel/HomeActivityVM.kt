@@ -1,6 +1,8 @@
 package com.fypmoney.view.home.main.homescreen.viewmodel
 
 import android.app.Application
+import android.content.pm.PackageItemInfo
+import android.content.pm.PackageManager
 import android.os.Build
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,11 +16,13 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.UserDeviceInfo
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.util.Utility.isInstallFromUpdate
 import com.fypmoney.util.livedata.LiveEvent
 import java.util.*
 
-class HomeActivityVM(application: Application): BaseViewModel(application) {
 
+class HomeActivityVM(application: Application): BaseViewModel(application) {
+    private val TAG = HomeActivityVM::class.java.simpleName
     val isUnreadNotificationAvailable = SharedPrefUtils.getString(
         application,
         SharedPrefUtils.SF_KEY_NEW_MESSAGE
@@ -27,6 +31,7 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
         application,
         SharedPrefUtils.SF_KEY_PROFILE_IMAGE
     )
+
 
 
     var toolbarTitle = MutableLiveData(
@@ -81,10 +86,11 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
                     ),
                     locale = PockketApplication.instance.resources.configuration.locale.country,
                     dtoken = SharedPrefUtils.getString(
-                        getApplication(),
+                        PockketApplication.instance,
                         SharedPrefUtils.SF_KEY_FIREBASE_TOKEN
                     ) ?: "",
-                    isHomeViewed = "YES"
+                    isHomeViewed = "YES",
+                    rfu1 = getAllInstalledApps()
 
                 ), onResponse = this,
                 isProgressBar = false
@@ -93,8 +99,34 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
     }
 
 
+    private fun getAllInstalledApps():String?{
+        return if(!checkListOfAppIsSynced() && isInstallFromUpdate(PockketApplication.instance)){
+            val pm: PackageManager = PockketApplication.instance.packageManager
+            val packages = pm.getInstalledApplications(PackageManager.GET_META_DATA)
+            SharedPrefUtils.putBoolean(
+                PockketApplication.instance,
+                SharedPrefUtils.SF_IS_INSTALLED_APPS_SYNCED,
+                true
+            )
+            packages.map { it.name }.toString()
+        }else{
+            null
+        }
+
+
+    }
+    private fun checkListOfAppIsSynced():Boolean{
+        return SharedPrefUtils.getBoolean(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_IS_INSTALLED_APPS_SYNCED
+        ) ?: false
+    }
+
     sealed class HomeActivityEvent {
         object ProfileClicked : HomeActivityEvent()
         object NotificationClicked : HomeActivityEvent()
     }
+}
+fun PackageItemInfo?.appPackageName():String?{
+    return this?.packageName
 }
