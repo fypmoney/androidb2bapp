@@ -55,11 +55,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                 ).toString()
             )
         }
-        checkAndAskPermission()
 
         LocationListenerClass(
             this, this
         ).permissions()
+        checkAndAskPermission()
 
     }
 

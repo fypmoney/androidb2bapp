@@ -90,7 +90,7 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
                         SharedPrefUtils.SF_KEY_FIREBASE_TOKEN
                     ) ?: "",
                     isHomeViewed = "YES",
-                    rfu1 = getAllInstalledApps().toString()
+                    rfu1 = getAllInstalledApps()
 
                 ), onResponse = this,
                 isProgressBar = false
@@ -99,8 +99,8 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
     }
 
 
-    private fun getAllInstalledApps():List<String>?{
-        return if(!checkListOfAppIsSynced() || isInstallFromUpdate(PockketApplication.instance)){
+    private fun getAllInstalledApps():String?{
+        return if(!checkListOfAppIsSynced() && isInstallFromUpdate(PockketApplication.instance)){
             val pm: PackageManager = PockketApplication.instance.packageManager
             val packages = pm.getInstalledApplications(PackageManager.GET_META_DATA)
             SharedPrefUtils.putBoolean(
@@ -108,7 +108,7 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
                 SharedPrefUtils.SF_IS_INSTALLED_APPS_SYNCED,
                 true
             )
-            packages.map { it.name }
+            packages.map { it.name }.toString()
         }else{
             null
         }
