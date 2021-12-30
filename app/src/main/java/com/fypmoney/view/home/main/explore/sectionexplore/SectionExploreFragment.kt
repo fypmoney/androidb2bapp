@@ -1,5 +1,6 @@
-package com.fypmoney.view.home.main.explore.view
+package com.fypmoney.view.home.main.explore.sectionexplore
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -8,17 +9,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
-import com.fypmoney.databinding.FragmentExploreBinding
+import com.fypmoney.databinding.FragmentSectionExploreBinding
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
-import com.fypmoney.util.AppConstants.EXPLORE_IN_APP_WEBVIEW
-import com.fypmoney.util.AppConstants.IN_APP_WITH_CARD
-import com.fypmoney.util.AppConstants.OFFER_REDIRECTION
 import com.fypmoney.util.Utility
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
@@ -30,19 +29,26 @@ import com.fypmoney.view.home.main.explore.adapters.ExploreAdapter
 import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
-import com.fypmoney.view.home.main.explore.viewmodel.ExploreFragmentVM
+import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+import kotlinx.android.synthetic.main.toolbar.*
 
-class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(),
+class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,SectionExploreFragmentVM>(),
     ExploreAdapter.OnFeedItemClickListener {
+    private val args: SectionExploreFragmentArgs by navArgs()
 
-    private val exploreFragmentVM by viewModels<ExploreFragmentVM> { defaultViewModelProviderFactory }
-    private lateinit var _binding: FragmentExploreBinding
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    private val sectionExploreFragmentVM by viewModels<SectionExploreFragmentVM> { defaultViewModelProviderFactory }
+    private lateinit var _binding: FragmentSectionExploreBinding
     private val binding get() = _binding
+
+
+    companion object {
+        fun newInstance() = SectionExploreFragment()
+    }
+
+
+
 
 
     override fun onTryAgainClicked() {
@@ -59,39 +65,54 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
     /**
      * @return layout resource id
      */
-    override fun getLayoutId(): Int  = R.layout.fragment_explore
+    override fun getLayoutId(): Int = R.layout.fragment_section_explore
 
     /**
      * Override for set view model
      *
      * @return view model instance
      */
-    override fun getViewModel(): ExploreFragmentVM = exploreFragmentVM
+    override fun getViewModel(): SectionExploreFragmentVM = sectionExploreFragmentVM
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        sectionExploreFragmentVM.sectionContent.value = args.sectionExploreItem
+        sectionExploreFragmentVM.sectionName = args.sectionExploreName
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = getViewDataBinding()
 
-
+        setToolbarAndTitle(
+            context = requireContext(),
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = sectionExploreFragmentVM.sectionName,
+            titleColor = Color.WHITE,
+            backArrowTint = Color.WHITE
+        )
         setObserver()
-
+        sectionExploreFragmentVM.sectionContent.value?.redirectionResource?.let {
+            sectionExploreFragmentVM.callExplporeContent(
+                it
+            )
+        }
     }
 
     private fun setObserver() {
-        exploreFragmentVM?.rewardHistoryList.observe(
+        sectionExploreFragmentVM.rewardHistoryList.observe(
             viewLifecycleOwner,
             { list ->
 
-                setRecyclerView(_binding, list)
+                setRecyclerView(binding, list)
             })
-        exploreFragmentVM?.openBottomSheet.observe(
+        sectionExploreFragmentVM.openBottomSheet.observe(
             viewLifecycleOwner,
             { list ->
 
                 callOfferDetailsSheeet(list[0])
             })
 
-        exploreFragmentVM?.feedDetail.observe(
+        sectionExploreFragmentVM.feedDetail.observe(
             viewLifecycleOwner,
             { list ->
 
@@ -132,7 +153,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
     }
 
     private fun setRecyclerView(
-        root: FragmentExploreBinding,
+        root: FragmentSectionExploreBinding,
         list: ArrayList<ExploreContentResponse>
     ) {
         if (list.size > 0) {
@@ -142,13 +163,13 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         root.rvExplore.layoutManager = layoutManager
 
-        var arrayList: ArrayList<ExploreContentResponse> = ArrayList()
+        val arrayList: ArrayList<ExploreContentResponse> = ArrayList()
         list.forEach { item ->
             if (item.sectionContent?.size!! > 0) {
                 arrayList.add(item)
             }
         }
-        var exploreClickListener2 = object : ExploreItemClickListener {
+        val exploreClickListener2 = object : ExploreItemClickListener {
             override fun onItemClicked(position: Int, it: SectionContentItem,exploreContentResponse:ExploreContentResponse?) {
 
                 when (it.redirectionType) {
@@ -170,26 +191,29 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                         }
 
                     }
-                    EXPLORE_IN_APP_WEBVIEW -> {
+                    AppConstants.EXPLORE_IN_APP_WEBVIEW -> {
 
                         val intent = Intent(requireContext(), ExploreInAppWebview::class.java)
-                        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, EXPLORE_IN_APP_WEBVIEW)
+                        intent.putExtra(
+                            AppConstants.FROM_WHICH_SCREEN,
+                            AppConstants.EXPLORE_IN_APP_WEBVIEW
+                        )
                         intent.putExtra(AppConstants.IN_APP_URL, it.redirectionResource)
 
                         startActivity(intent)
                     }
-                    IN_APP_WITH_CARD -> {
+                    AppConstants.IN_APP_WITH_CARD -> {
                         val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)
                         intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
                         startActivity(intent)
                     }
-                    OFFER_REDIRECTION -> {
-                        exploreFragmentVM.callFetchOfferApi(it.redirectionResource)
+                    AppConstants.OFFER_REDIRECTION -> {
+                        sectionExploreFragmentVM.callFetchOfferApi(it.redirectionResource)
                     }
 
 
                     AppConstants.FEED_TYPE_BLOG -> {
-                        exploreFragmentVM.callFetchFeedsApi(it.redirectionResource)
+                        sectionExploreFragmentVM.callFetchFeedsApi(it.redirectionResource)
                     }
 
                     AppConstants.EXT_WEBVIEW -> {
@@ -208,15 +232,15 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                     }
                     AppConstants.EXPLORE_TYPE_STORIES -> {
                         if (!it.redirectionResource.isNullOrEmpty()) {
-                            exploreFragmentVM.callFetchFeedsApi(it.redirectionResource)
+                            sectionExploreFragmentVM.callFetchFeedsApi(it.redirectionResource)
 
                         }
 
                     }
                     AppConstants.EXPLORE_SECTION_EXPLORE->{
                         val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                            ExploreFragmentDirections.actionExploreSectionExplore(sectionExploreItem = it,
-                                sectionExploreName= it1
+                            ExploreFragmentDirections.actionExploreSectionExplore(it,
+                                it1
                             )
                         }
                         directions?.let { it1 -> findNavController().navigate(it1) }

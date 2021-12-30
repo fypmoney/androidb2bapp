@@ -55,9 +55,9 @@ class ExploreBaseAdapter(
         }
 
         if (items[position].sectionContent != null && items[position].sectionContent?.size!! > 1) {
-            var itemClickListener2 = object : ExploreItemClickListener {
-                override fun onItemClicked(position: Int, sectionContentItem: SectionContentItem) {
-                    clickInterface.onItemClicked(position, sectionContentItem)
+            val itemClickListener2 = object : ExploreItemClickListener {
+                override fun onItemClicked(position: Int, sectionContentItem: SectionContentItem,exploreContentResponse: ExploreContentResponse?) {
+                    clickInterface.onItemClicked(position, sectionContentItem,exploreContentResponse)
 
                 }
             }
@@ -67,7 +67,7 @@ class ExploreBaseAdapter(
                 LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             holder.rv_list.layoutManager = layoutManager
 
-            var arrayList: ArrayList<SectionContentItem> = ArrayList()
+            val arrayList: ArrayList<SectionContentItem> = ArrayList()
 
             items[position].sectionContent?.forEach { section ->
                 if (section != null) {
@@ -76,8 +76,8 @@ class ExploreBaseAdapter(
             }
 
 
-            var typeAdapter =
-                ExploreAdapter(itemClickListener2, arrayList, context, scale)
+            val typeAdapter =
+                ExploreAdapter(itemClickListener2, arrayList, context, scale,items[position])
             holder.rv_list.adapter = typeAdapter
         } else {
             holder.rv_list.visibility = View.GONE
@@ -97,24 +97,17 @@ class ExploreBaseAdapter(
                 .into(holder.baseImage)
 
 
-            holder.viewItem.setOnClickListener(View.OnClickListener {
+            holder.viewItem.setOnClickListener {
 
                 items[position].sectionContent?.get(0)?.let { it1 ->
                     clickInterface.onItemClicked(
                         position,
-                        it1
+                        it1,
+                        items[position]
                     )
                 }
 
-            })
-
-//            val params: ViewGroup.LayoutParams =
-//                holder.baseImage.layoutParams as ViewGroup.LayoutParams
-//
-//            params.width = ViewGroup.LayoutParams.MATCH_PARENT
-//            params.height = (scale * items[position].sectionContent?.get(0)?.contentDimensionY!!).toInt()
-//            holder.baseImage.layoutParams = params
-
+            }
         }
 
 

@@ -56,6 +56,7 @@ object AppConstants {
     const val EXPLORE_TYPE_STORIES = "STORY"
     const val EXPLORE_IN_APP_WEBVIEW = "IN_APP_WEB_VIEW"
     const val EXPLORE_IN_APP = "IN_APP"
+    const val EXPLORE_SECTION_EXPLORE = "EXPLORE"
 
     const val FEED_RESPONSE = "feed_response"
     const val EXPLORE_RESPONSE = "explore_response"

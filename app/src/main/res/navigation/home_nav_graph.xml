@@ -19,7 +19,10 @@
         android:id="@+id/navigation_explore"
         android:name="com.fypmoney.view.home.main.explore.view.ExploreFragment"
         android:label="@string/explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore" >
+        <action android:id="@+id/action_explore_section_explore"
+            app:destination="@+id/navigation_section_explore"/>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_rewards"
@@ -37,4 +40,18 @@
         android:name="com.fypmoney.view.card.view.CardFragment"
         android:label="@string/card"
         tools:layout="@layout/fragment_card" />
+    <fragment
+        android:id="@+id/navigation_section_explore"
+        android:name="com.fypmoney.view.home.main.explore.sectionexplore.SectionExploreFragment"
+        android:label="@string/section_explore"
+        tools:layout="@layout/fragment_section_explore" >
+        <argument
+            android:name="sectionExploreItem"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.home.main.explore.model.SectionContentItem"
+            app:nullable="true" />
+        <argument
+            android:name="sectionExploreName"
+            app:argType="string" />
+    </fragment>
 </navigation>
