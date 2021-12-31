@@ -1,7 +1,6 @@
 package com.fypmoney.view.home.main.homescreen.viewmodel
 
 import android.app.Application
-import android.content.pm.PackageItemInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.lifecycle.LiveData
@@ -16,7 +15,6 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.UserDeviceInfo
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.util.Utility.isInstallFromUpdate
 import com.fypmoney.util.livedata.LiveEvent
 import java.util.*
 
@@ -100,7 +98,7 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
 
 
     private fun getAllInstalledApps():String?{
-        return if(!checkListOfAppIsSynced() && isInstallFromUpdate(PockketApplication.instance)){
+        return if(!checkListOfAppIsSynced()){
             val pm: PackageManager = PockketApplication.instance.packageManager
             val packages = pm.getInstalledApplications(PackageManager.GET_META_DATA)
             SharedPrefUtils.putBoolean(
@@ -126,7 +124,4 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
         object ProfileClicked : HomeActivityEvent()
         object NotificationClicked : HomeActivityEvent()
     }
-}
-fun PackageItemInfo?.appPackageName():String?{
-    return this?.packageName
 }
