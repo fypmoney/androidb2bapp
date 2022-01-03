@@ -238,7 +238,7 @@ dependencies {
     implementation(name:'adjust-lib', ext:'aar')
     implementation("com.moengage:rich-notification:2.3.00")
     implementation('com.github.simonpercic:oklog3:2.3.0')
-
+    implementation 'com.amazonaws:ivs-player:1.6.0'
 }
 apollo {
     generateKotlinModels.set(true)

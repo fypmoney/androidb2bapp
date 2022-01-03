@@ -358,6 +358,13 @@
         <activity
             android:name=".view.activity.ChooseInterestHomeView"
             android:screenOrientation="portrait" />
+        <activity android:name=".view.activity.VideoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
