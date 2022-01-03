@@ -1,7 +1,6 @@
-package com.fypmoney.view.fragment
+package com.fypmoney.view.register.fragments
 
 
-import android.R.attr
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -12,11 +11,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import com.fypmoney.R
-
+import com.fypmoney.databinding.BottomKycDetailsBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-
-import com.fypmoney.databinding.BottomKycDetailsBinding
 
 
 class kycDetailsBottomSheet(

@@ -131,15 +131,42 @@
 
                 </FrameLayout>
 
+                <FrameLayout
+                    android:id="@+id/notice_alert_fl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:customStrokeWidth="@{@dimen/dp1}"
+                    app:customBackgroundColor="@{@color/color_little_orange}"
+                    app:customIsRounded="@{false}"
+                    app:customCornerRadius="@{@dimen/dp16}"
+                    android:layout_marginHorizontal="16dp"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_fl">
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/notice_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/color_orange"
+                        tools:text="Error Message on home screen"/>
+
+                </FrameLayout>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/quick_action_cl"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_fl">
+                    app:layout_constraintTop_toBottomOf="@+id/notice_alert_fl">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/quick_action_tv"

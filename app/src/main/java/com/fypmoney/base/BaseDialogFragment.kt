@@ -18,6 +18,7 @@ abstract class BaseDialogFragment<VDB : ViewDataBinding> : DialogFragment() {
     protected var binding by autoCleared<VDB>()
     abstract val baseFragmentVM: BaseViewModel
     abstract val customTag: String
+    open var widthHeightFull:Boolean = false
 
     @get:LayoutRes
     abstract val layoutId: Int
@@ -55,8 +56,14 @@ abstract class BaseDialogFragment<VDB : ViewDataBinding> : DialogFragment() {
 
     override fun onResume() {
         super.onResume()
-        val width = (resources.displayMetrics.widthPixels * .95).toInt()
-        dialog?.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
-        dialog?.window?.setBackgroundDrawableResource(R.color.transparent)
+        if(widthHeightFull){
+            dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            dialog?.window?.setBackgroundDrawableResource(R.color.transparent)
+        }else{
+            val width = (resources.displayMetrics.widthPixels * .95).toInt()
+            dialog?.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
+            dialog?.window?.setBackgroundDrawableResource(R.color.transparent)
+        }
+
     }
 }

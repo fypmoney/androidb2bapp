@@ -14,6 +14,7 @@ import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentHomeBinding
 import com.fypmoney.extension.toGone
@@ -95,9 +96,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         setObserver()
         setUpObserver()
         homeFragmentVM.callToAction()
+        checkForErrorNotice()
 
     }
 
+    private fun checkForErrorNotice() {
+        PockketApplication.homeScreenErrorMsg?.let{
+            if(it.isNotEmpty()){
+                binding.noticeAlertFl.toVisible()
+                binding.noticeTv.text = it
+            }else{
+                binding.noticeAlertFl.toGone()
+            }
+
+        }
+    }
 
 
     private fun setupRecyclerView() {
