@@ -992,6 +992,7 @@ Coming really soon!
     <string name="golden_card">\nGolden Tickets</string>
     <string name="you_won_1">You won </string>
     <string name="play">Play</string>
+    <string name="playing">Playing</string>
     <string name="please_wait_loading_contact_list">Please wait,loading contact list...</string>
     <string name="please_allow_us_to_read_your_contacts">Please allow us to read your contacts.</string>
     <string name="not_available_at_this_time">Not Available at this time</string>
@@ -1104,4 +1105,9 @@ Coming really soon!
         <item>Real time activity notification</item>
         <item>Easy card locking</item>
     </string-array>
+
+    <string name="close_button">Close</string>
+    <string name="buffering">Buffering…</string>
+    <string name="paused">Paused</string>
+    <string name="ended">Ended</string>
 </resources>

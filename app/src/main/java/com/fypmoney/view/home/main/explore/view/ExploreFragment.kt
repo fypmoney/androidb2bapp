@@ -6,6 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
@@ -16,9 +17,13 @@ import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.EXPLORE_IN_APP_WEBVIEW
+import com.fypmoney.util.AppConstants.EXT_WEBVIEW
+import com.fypmoney.util.AppConstants.FEED_TYPE_EXTERNAL_WEBVIEW
 import com.fypmoney.util.AppConstants.IN_APP_WITH_CARD
 import com.fypmoney.util.AppConstants.OFFER_REDIRECTION
 import com.fypmoney.util.Utility
+import com.fypmoney.util.videoplayer.VideoActivity
+import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
@@ -31,7 +36,9 @@ import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.explore.viewmodel.ExploreFragmentVM
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
+import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+import com.fypmoney.view.webview.WebViewActivity
 
 class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(),
     ExploreAdapter.OnFeedItemClickListener {
@@ -71,6 +78,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
         super.onViewCreated(view, savedInstanceState)
         _binding = getViewDataBinding()
 
+//        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         setObserver()
 
@@ -164,6 +172,13 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
 
 
                         }
+
+                    }
+                    EXT_WEBVIEW -> {
+                        val intent = Intent(requireActivity(), VideoActivity2::class.java)
+                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
+
+                        startActivity(intent)
 
                     }
                     EXPLORE_IN_APP_WEBVIEW -> {
