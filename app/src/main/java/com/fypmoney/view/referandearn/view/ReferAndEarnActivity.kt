@@ -2,18 +2,13 @@ package com.fypmoney.view.referandearn.view
 
 import android.content.ClipboardManager
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityReferAndEarnBinding
-import com.fypmoney.util.AppConstants
-import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.referandearn.viewmodel.ReferAndEarnActivityVM
 import kotlinx.android.synthetic.main.toolbar.*
@@ -81,7 +76,7 @@ class ReferAndEarnActivity : BaseActivity<ActivityReferAndEarnBinding,ReferAndEa
             ReferAndEarnActivityVM.ReferAndEarnEvent.ShareReferCode -> {
 
                 if (referMessage != null) {
-                    onInviteUser(referMessage!!)
+                    shareInviteCodeFromReferal(referMessage!!)
                 } else {
                     Utility.showToast("Loading")
                 }
