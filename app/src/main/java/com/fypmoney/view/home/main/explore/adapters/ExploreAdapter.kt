@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
-import com.fypmoney.databinding.*
+import com.fypmoney.databinding.DynamicCardBinding
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
+import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.explore.view.ExploreViewHelper
-import com.fypmoney.view.home.main.explore.viewmodel.ExploreFragmentVM
 
 
 /**
@@ -20,7 +20,8 @@ class ExploreAdapter(
     var onExploreItemClickListener: ExploreItemClickListener,
     val exploreList: List<SectionContentItem?>?,
     val context: Context,
-    val scale: Float
+    val scale: Float,
+    var exploreContentResponse:ExploreContentResponse
 ) :
     RecyclerView.Adapter<BaseViewHolder>() {
 
@@ -53,7 +54,9 @@ class ExploreAdapter(
         override fun onBind(position: Int) {
             mViewHelper = ExploreViewHelper(
                 position,
-                exploreList?.get(position), onExploreItemClickListener
+                exploreList?.get(position),
+                onExploreItemClickListener,
+                exploreContentResponse = exploreContentResponse
             )
             mRowItemBinding!!.viewHelper = mViewHelper
 

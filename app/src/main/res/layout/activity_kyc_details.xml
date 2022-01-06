@@ -42,19 +42,26 @@
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
                     android:layout_marginTop="20dp"
-                    android:text="PAN/Aadhaar no*" />
+                    android:text="@string/aadhaar_no" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/aadhar_card_info_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:tint="@color/black"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="20dp"
+                    android:onClick="@{()->viewModel.onAadharCardInfoClicked()}"
+                    android:src="@drawable/ic_baseline_info_24"/>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/pan_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/pan_number_title"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
-
-
                     android:inputType="textCapCharacters"
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"

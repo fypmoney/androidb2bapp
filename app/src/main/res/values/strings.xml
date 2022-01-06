@@ -1072,6 +1072,8 @@ Coming really soon!
     <string name="your_surprise_gift">Your surprise gift</string>
     <string name="tap_on_the_gift_box_to_unveil_your_surprise_gift">Tap on the gift box to unveil your surprise gift</string>
     <string name="tell_us_your_relation">\"Tell us your relationship with \"</string>
+    <string name="section_explore">Section Explore</string>
+    <string name="aadhaar_no">Aadhaar no*</string>
 
 
     <string-array name="person_category_array">

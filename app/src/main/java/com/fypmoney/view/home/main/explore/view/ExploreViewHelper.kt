@@ -1,9 +1,9 @@
 package com.fypmoney.view.home.main.explore.view
 
 import androidx.databinding.ObservableField
-import com.fypmoney.R
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
+import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 
 /*
@@ -12,9 +12,10 @@ import com.fypmoney.view.home.main.explore.model.SectionContentItem
 class ExploreViewHelper(
     var position: Int,
     var oneSection: SectionContentItem?,
-    var onFeedItemClickListener: ExploreItemClickListener, var type: Int? = 0
+    var onFeedItemClickListener: ExploreItemClickListener,
+    var type: Int? = 0,
+    var exploreContentResponse: ExploreContentResponse
 ) {
-    var isButtonVisible = ObservableField(true)
     var isTitleVisible = ObservableField(true)
 
     init {
@@ -35,7 +36,7 @@ class ExploreViewHelper(
     * This is used to handle button click
     * */
     fun onFeedButtonClick() {
-        onFeedItemClickListener.onItemClicked(position, oneSection!!)
+        onFeedItemClickListener.onItemClicked(position, oneSection!!,exploreContentResponse)
 
     }
 
