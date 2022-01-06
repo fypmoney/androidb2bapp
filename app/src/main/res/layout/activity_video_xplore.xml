@@ -5,6 +5,11 @@
 
     <data>
 
+        <variable
+            name="data"
+            type="com.fypmoney.util.videoplayer.VideoExploreViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <LinearLayout
@@ -20,19 +25,193 @@
             android:layout_width="match_parent"
             android:layout_weight="2"
             android:layout_height="0dp"
-            android:layout_above="@+id/relativeLayout8"
-            android:background="@color/reward_background">
+            android:layout_above="@+id/relativeLayout8">
 
-
-            <com.amazonaws.ivs.player.PlayerView
-                android:id="@+id/playerView"
-
-                android:layout_width="match_parent"
+            <FrameLayout
                 android:layout_height="match_parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:layout_editor_absoluteX="-81dp">
+                android:keepScreenOn="true"
+                tools:context=".activities.VideoActivity2"
+                android:layout_width="match_parent">
 
-            </com.amazonaws.ivs.player.PlayerView>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:animateLayoutChanges="true"
+                    android:elevation="1dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <FrameLayout
+                        android:id="@+id/player_root"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <SurfaceView
+                            android:id="@+id/surface_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center" />
+
+                        <ProgressBar
+                            android:id="@+id/pb_buffering"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:indeterminateTint="@color/white"
+                            android:indeterminate="true"
+                            android:scaleType="center"
+                            android:visibility="@{data.buffering ? View.VISIBLE : View.GONE}"
+                            tools:visibility="visible" />
+                    </FrameLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/player_controls_root"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/player_controls"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:visibility="@{data.showControls ? View.VISIBLE : View.GONE}"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:background="@color/black"
+                                android:alpha=".40"
+
+                                android:layout_height="match_parent" />
+
+                            <LinearLayout
+                                android:paddingBottom="@dimen/_12sdp"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintBottom_toBottomOf="parent">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:text="Like"
+                                    style="@style/TextviewBold"
+                                    android:layout_weight="1"
+                                    android:textSize="18sp"
+
+                                    android:gravity="center"
+                                    android:textColor="@color/white"
+
+                                    android:layout_height="wrap_content" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:text="Share"
+                                    style="@style/TextviewBold"
+                                    android:layout_weight="1"
+                                    android:textSize="18sp"
+                                    android:gravity="center"
+                                    android:textColor="@color/white"
+
+                                    android:layout_height="wrap_content" />
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:id="@+id/tv_progress_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
+                                android:gravity="start"
+                                android:text="@{data.progress}"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:visibility="@{data.progressVisible ? View.VISIBLE : View.GONE}"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="Progress text" />
+
+                            <TextView
+                                android:id="@+id/tv_duration_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
+                                android:gravity="end"
+                                android:text="@{data.duration}"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:visibility="@{data.durationVisible ? View.VISIBLE : View.GONE}"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                tools:text="Duration text" />
+
+                            <ImageView
+                                android:id="@+id/play_button_view"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:layout_marginBottom="@dimen/dimen_small"
+                                android:clickable="true"
+                                android:contentDescription="@null"
+                                android:focusable="true"
+                                android:src="@{data.isPlaying ? @drawable/ic_pause_button : @drawable/ic_play_button}"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/status_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_small"
+                                android:layout_marginBottom="@dimen/dimen_small"
+                                android:gravity="center"
+                                android:textAlignment="center"
+                                android:textSize="32sp"
+                                android:textColor="@color/yellow"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/play_button_view"
+                                tools:text="text" />
+
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <SeekBar
+                            android:id="@+id/seek_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:visibility="gone"
+                            android:max="@{data.seekBarMax}"
+                            android:progress="@{data.seekBarProgress}"
+                            android:progressDrawable="@drawable/seekbar_progress"
+                            android:secondaryProgress="@{data.seekBarSecondaryProgress}"
+                            android:thumb="@drawable/seekbar_thumb"
+                            app:layout_constraintBottom_toBottomOf="@id/guideline"
+                            app:layout_constraintTop_toTopOf="@id/guideline" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guideline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintGuide_end="100dp" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </FrameLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

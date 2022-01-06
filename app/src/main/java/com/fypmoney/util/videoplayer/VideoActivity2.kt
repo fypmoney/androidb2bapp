@@ -12,15 +12,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.amazonaws.ivs.player.Player
 import com.amazonaws.ivs.player.ViewUtil
+import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityVideo2Binding
 import com.fypmoney.util.launchMain
 import kotlinx.android.synthetic.main.activity_video2.*
 
 
-class VideoActivity2 : AppCompatActivity(), SurfaceHolder.Callback {
+class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
+    SurfaceHolder.Callback {
+    private lateinit var viewModel: VideoViewModel
     val HIDE_CONTROLS_DELAY = 1800L
 
     val TAG = "VideoPlayer"
@@ -33,9 +38,7 @@ class VideoActivity2 : AppCompatActivity(), SurfaceHolder.Callback {
         }
     }
 
-    private val viewModel: VideoViewModel by lazy {
-        VideoViewModel(application)
-    }
+
 
 
     override fun onConfigurationChanged(newConfig: Configuration) {
@@ -250,5 +253,18 @@ class VideoActivity2 : AppCompatActivity(), SurfaceHolder.Callback {
     override fun surfaceCreated(holder: SurfaceHolder) {
         Log.d(TAG, "Surface created")
         viewModel.updateSurface(holder.surface)
+    }
+
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
+    }
+
+    override fun getLayoutId(): Int {
+        return R.layout.activity_video2
+    }
+
+    override fun getViewModel(): VideoViewModel {
+        viewModel = ViewModelProvider(this).get(VideoViewModel::class.java)
+        return viewModel!!
     }
 }

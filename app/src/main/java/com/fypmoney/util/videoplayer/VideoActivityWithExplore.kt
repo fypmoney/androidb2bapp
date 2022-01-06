@@ -5,19 +5,24 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.text.TextUtils
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.SeekBar
 import android.widget.Spinner
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.amazonaws.ivs.player.*
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.databinding.ActivityVideo2Binding
 
 
 import com.fypmoney.databinding.ActivityVideoXploreBinding
@@ -26,6 +31,7 @@ import com.fypmoney.model.FeedDetails
 
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.util.launchMain
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
@@ -38,14 +44,33 @@ import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+import kotlinx.android.synthetic.main.activity_video2.*
+import kotlinx.android.synthetic.main.activity_video_xplore.*
+import kotlinx.android.synthetic.main.activity_video_xplore.play_button_view
+import kotlinx.android.synthetic.main.activity_video_xplore.player_controls
+import kotlinx.android.synthetic.main.activity_video_xplore.player_root
+import kotlinx.android.synthetic.main.activity_video_xplore.seek_bar
+import kotlinx.android.synthetic.main.activity_video_xplore.status_text
+import kotlinx.android.synthetic.main.activity_video_xplore.surface_view
+
 import java.nio.ByteBuffer
 import java.util.ArrayList
 
-class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoVM>() {
+class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoExploreViewModel>(),
+    SurfaceHolder.Callback {
 
     private var mViewBinding: ActivityVideoXploreBinding? = null
-    private lateinit var mViewModel1: VideoVM
+    private lateinit var viewModel: VideoExploreViewModel
+    private val timerHandler = Handler()
 
+    val HIDE_CONTROLS_DELAY = 1800L
+    private val timerRunnable = kotlinx.coroutines.Runnable {
+        launchMain {
+            Log.d(TAG, "Hiding controls")
+
+            viewModel.toggleControls(false)
+        }
+    }
     val TAG = "Videoplayer"
 
 
@@ -53,29 +78,26 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoV
         super.onCreate(savedInstanceState)
 
         mViewBinding = getViewDataBinding()
+        mViewBinding!!.data = viewModel
         val url = intent?.getStringExtra(ARG_WEB_URL_TO_OPEN)
         val pageTitle = intent?.getStringExtra(ARG_WEB_PAGE_TITLE)
 
 
-        mViewBinding?.playerView?.player?.load(Uri.parse("https://fcc3ddae59ed.us-west-2.playback.live-video.net/api/video/v1/us-west-2.893648527354.channel.DmumNckWFTqz.m3u8"))
 
-
-
-
-        mViewModel1?.rewardHistoryList.observe(
+        viewModel?.rewardHistoryList.observe(
             this,
             { list ->
 
                 setRecyclerView(mViewBinding!!, list)
             })
-        mViewModel1?.openBottomSheet.observe(
+        viewModel?.openBottomSheet.observe(
             this,
             { list ->
 
                 callOfferDetailsSheeet(list[0])
             })
 
-        mViewModel1?.feedDetail.observe(
+        viewModel?.feedDetail.observe(
             this,
             { list ->
 
@@ -99,6 +121,167 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoV
 
             })
 
+        surface_view.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            if (left != oldLeft || top != oldTop || right != oldRight || bottom != oldBottom) {
+                val width = viewModel.playerParamsChanged.value?.first
+                val height = viewModel.playerParamsChanged.value?.second
+                if (width != null && height != null) {
+                    surface_view.post {
+                        Log.d(
+                            TAG,
+                            "On rotation player layout params changed $width $height"
+                        )
+                        ViewUtil.setLayoutParams(surface_view, width, height)
+                    }
+                }
+            }
+        }
+
+
+
+        viewModel.playerState.observe(this, Observer { state ->
+            when (state) {
+                Player.State.BUFFERING -> {
+                    // Indicates that the Player is buffering content
+                    viewModel.buffering.value = true
+                    viewModel.buttonState.value = PlayingState.PLAYING
+                    status_text.setTextColor(Color.WHITE)
+                    status_text.text = getString(R.string.buffering)
+                }
+                Player.State.IDLE -> {
+                    // Indicates that the Player is idle
+                    viewModel.buffering.value = false
+                    viewModel.buttonState.value = PlayingState.PAUSED
+                    status_text.setTextColor(Color.WHITE)
+                    status_text.text = getString(R.string.paused)
+                }
+                Player.State.READY -> {
+                    // Indicates that the Player is ready to play the loaded source
+                    viewModel.buffering.value = false
+                    viewModel.buttonState.value = PlayingState.PAUSED
+                    status_text.setTextColor(Color.WHITE)
+                    status_text.text = getString(R.string.paused)
+                }
+                Player.State.ENDED -> {
+                    // Indicates that the Player reached the end of the stream
+                    viewModel.buffering.value = false
+                    viewModel.buttonState.value = PlayingState.PAUSED
+                    status_text.setTextColor(Color.WHITE)
+                    status_text.text = getString(R.string.ended)
+                }
+                Player.State.PLAYING -> {
+                    // Indicates that the Player is playing
+                    viewModel.buffering.value = false
+                    viewModel.buttonState.value = PlayingState.PLAYING
+                    status_text.setTextColor(Color.WHITE)
+                    status_text.text = getString(R.string.playing)
+                }
+                else -> { /* Ignored */
+                }
+            }
+        })
+
+        viewModel.buttonState.observe(this, Observer { state ->
+            viewModel.isPlaying.value = state == PlayingState.PLAYING
+        })
+
+        viewModel.playerParamsChanged.observe(this, Observer {
+            Log.d(TAG, "Player layout params changed ${it.first} ${it.second}")
+            ViewUtil.setLayoutParams(surface_view, it.first, it.second)
+        })
+
+        viewModel.errorHappened.observe(this, Observer {
+            Log.d(TAG, "Error dialog is shown")
+
+        })
+
+        initSurface()
+        initButtons()
+        viewModel.playerStart(surface_view.holder.surface)
+
+    }
+
+    private fun initSurface() {
+        surface_view.holder.addCallback(this)
+        player_root.setOnClickListener {
+            Log.d(TAG, "Player screen clicked")
+            when (player_controls.visibility) {
+                View.VISIBLE -> {
+                    viewModel.toggleControls(false)
+                }
+                View.GONE -> {
+                    viewModel.toggleControls(true)
+                    restartTimer()
+                }
+            }
+        }
+
+        seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                restartTimer()
+                if (fromUser) {
+                    viewModel.playerSeekTo(progress.toLong())
+                }
+            }
+        })
+    }
+
+    private fun initButtons() {
+        player_controls.setOnClickListener {
+            restartTimer()
+            when (viewModel.buttonState.value) {
+                PlayingState.PLAYING -> {
+                    viewModel.buttonState.value = PlayingState.PAUSED
+                    viewModel.pause()
+                }
+                PlayingState.PAUSED -> {
+                    viewModel.buttonState.value = PlayingState.PLAYING
+                    viewModel.play()
+                }
+            }
+        }
+        play_button_view.setOnClickListener {
+            restartTimer()
+            when (viewModel.buttonState.value) {
+                PlayingState.PLAYING -> {
+                    viewModel.buttonState.value = PlayingState.PAUSED
+                    viewModel.pause()
+                }
+                PlayingState.PAUSED -> {
+                    viewModel.buttonState.value = PlayingState.PLAYING
+                    viewModel.play()
+                }
+            }
+        }
+
+
+
+
+
+        restartTimer()
+    }
+
+    private fun restartTimer() {
+        timerHandler.removeCallbacks(timerRunnable)
+        timerHandler.postDelayed(timerRunnable, HIDE_CONTROLS_DELAY)
+    }
+
+    override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
+        /* Ignored */
+    }
+
+    override fun surfaceDestroyed(holder: SurfaceHolder) {
+        Log.d(TAG, "Surface destroyed")
+        viewModel.updateSurface(null)
+    }
+
+    override fun surfaceCreated(holder: SurfaceHolder) {
+        Log.d(TAG, "Surface created")
+        viewModel.updateSurface(holder.surface)
     }
 
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
@@ -194,13 +377,13 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoV
                         startActivity(intent)
                     }
                     AppConstants.OFFER_REDIRECTION -> {
-                        mViewModel1.callFetchOfferApi(it.redirectionResource)
+                        viewModel.callFetchOfferApi(it.redirectionResource)
 
                     }
 
 
                     AppConstants.FEED_TYPE_BLOG -> {
-                        mViewModel1.callFetchFeedsApi(it.redirectionResource)
+                        viewModel.callFetchFeedsApi(it.redirectionResource)
 
                     }
 
@@ -222,7 +405,7 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoV
                         if (!it.redirectionResource.isNullOrEmpty()) {
 //
 
-                            mViewModel1.callFetchFeedsApi(it.redirectionResource)
+                            viewModel.callFetchFeedsApi(it.redirectionResource)
 
                         }
 
@@ -243,130 +426,22 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoV
     }
 
 
-    override fun onStart() {
-        super.onStart()
-        mViewBinding?.playerView?.player?.play()
+    override fun onResume() {
+        super.onResume()
+        viewModel.play()
     }
 
-    override fun onStop() {
-        super.onStop()
-        mViewBinding?.playerView?.player?.pause()
+    override fun onPause() {
+        super.onPause()
+        viewModel.pause()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mViewBinding?.playerView?.player?.release()
+        viewModel.playerRelease()
+
+        surface_view.holder.removeCallback(this)
     }
-
-
-    private fun handlePlayerEvents() {
-        mViewBinding?.playerView?.player?.apply {
-            // Listen to changes on the player
-            addListener(object : Player.Listener() {
-                override fun onAnalyticsEvent(p0: String, p1: String) {}
-                override fun onDurationChanged(p0: Long) {
-                    // If the video is a VOD, you can seek to a duration in the video
-                    Log.i("IVSPlayer", "New duration: $duration")
-                    seekTo(p0)
-                }
-
-                override fun onError(p0: PlayerException) {}
-                override fun onMetadata(type: String, data: ByteBuffer) {}
-                override fun onQualityChanged(p0: Quality) {
-                    Log.i("IVSPlayer", "Quality changed to " + p0);
-                    updateQuality()
-                }
-
-                override fun onRebuffering() {}
-                override fun onSeekCompleted(p0: Long) {}
-                override fun onVideoSizeChanged(p0: Int, p1: Int) {}
-                override fun onCue(cue: Cue) {
-                    when (cue) {
-                        is TextMetadataCue -> Log.i(
-                            "IVSPlayer",
-                            "Received Text Metadata: ${cue.text}"
-                        )
-                    }
-                }
-
-                override fun onStateChanged(state: Player.State) {
-                    Log.i("PlayerLog", "Current state: ${state}")
-                    when (state) {
-                        Player.State.BUFFERING,
-                        Player.State.READY -> {
-                            updateQuality()
-                        }
-                        Player.State.IDLE,
-                        Player.State.ENDED -> {
-                            // no-op
-                        }
-                        Player.State.PLAYING -> {
-                            // Qualities will be dependent on the video loaded, and can
-                            // be retrieved from the player
-                            Log.i("IVSPlayer", "Available Qualities: ${qualities}")
-                        }
-                    }
-                }
-            })
-        }
-    }
-
-    private fun updateQuality() {
-        val qualitySpinner = mViewBinding?.qualitySpinner
-        var auto = "auto"
-        val currentQuality: String = mViewBinding?.playerView?.player?.getQuality()?.getName()!!
-        if (mViewBinding?.playerView?.player?.isAutoQualityMode() == true && !TextUtils.isEmpty(
-                currentQuality
-            )
-        ) {
-            auto += " ($currentQuality)"
-        }
-        var selected = 0
-        val names: ArrayList<String?> = ArrayList()
-        for (quality in mViewBinding?.playerView?.player?.getQualities()!!) {
-            names.add(quality.name)
-        }
-        names.add(0, auto)
-        if (mViewBinding?.playerView?.player?.isAutoQualityMode() != true) {
-            for (i in 0 until names.size) {
-                if (names.get(i).equals(currentQuality)) {
-                    selected = i
-                }
-            }
-        }
-        val qualityAdapter: ArrayAdapter<String?> = ArrayAdapter<String?>(
-            this,
-            android.R.layout.simple_spinner_item, names
-        )
-        qualityAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line)
-        qualitySpinner?.setOnItemSelectedListener(null)
-        qualitySpinner?.setAdapter(qualityAdapter)
-        qualitySpinner?.setSelection(selected, false)
-        qualitySpinner?.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                val name = qualityAdapter.getItem(position)
-                if (name != null && name.startsWith("auto")) {
-                    mViewBinding?.playerView?.player?.setAutoQualityMode(true)
-                } else {
-                    for (quality in mViewBinding?.playerView?.player?.getQualities()!!) {
-                        if (quality.name.equals(name, ignoreCase = true)) {
-                            Log.i("IVSPlayer", "Quality Selected: " + quality);
-                            mViewBinding?.playerView?.player?.setQuality(quality)
-                            break
-                        }
-                    }
-                }
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        })
-    }
-
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -376,9 +451,9 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoV
         return R.layout.activity_video_xplore
     }
 
-    override fun getViewModel(): VideoVM {
-        mViewModel1 = ViewModelProvider(this).get(VideoVM::class.java)
-        return mViewModel1
+    override fun getViewModel(): VideoExploreViewModel {
+        viewModel = ViewModelProvider(this).get(VideoExploreViewModel::class.java)
+        return viewModel
     }
 
 }

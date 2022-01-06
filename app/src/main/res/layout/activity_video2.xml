@@ -42,6 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:indeterminate="true"
+                    android:indeterminateTint="@color/white"
                     android:scaleType="center"
                     android:visibility="@{data.buffering ? View.VISIBLE : View.GONE}"
                     tools:visibility="visible" />

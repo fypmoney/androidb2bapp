@@ -11,6 +11,7 @@ import com.amazonaws.ivs.player.MediaPlayer
 import com.amazonaws.ivs.player.MediaType
 import com.amazonaws.ivs.player.Player
 import com.amazonaws.ivs.player.TextMetadataCue
+import com.fypmoney.base.BaseViewModel
 import com.fypmoney.util.setListener
 
 import java.nio.charset.StandardCharsets
@@ -18,7 +19,7 @@ import java.nio.charset.StandardCharsets
 class VideoViewModel(
     private val context: Application,
 
-    ) : ViewModel() {
+    ) : BaseViewModel(context) {
 
     private var player: MediaPlayer? = null
     private var playerListener: Player.Listener? = null
@@ -57,6 +58,7 @@ class VideoViewModel(
 
 
     init {
+        buffering.postValue(true)
         initPlayer()
         setPlayerListener()
         initDefault()

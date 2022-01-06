@@ -21,9 +21,11 @@ import com.fypmoney.util.AppConstants.EXT_WEBVIEW
 import com.fypmoney.util.AppConstants.FEED_TYPE_EXTERNAL_WEBVIEW
 import com.fypmoney.util.AppConstants.IN_APP_WITH_CARD
 import com.fypmoney.util.AppConstants.OFFER_REDIRECTION
+import com.fypmoney.util.AppConstants.TYPE_VIDEO
 import com.fypmoney.util.Utility
 import com.fypmoney.util.videoplayer.VideoActivity
 import com.fypmoney.util.videoplayer.VideoActivity2
+import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
@@ -159,6 +161,33 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
             override fun onItemClicked(position: Int, it: SectionContentItem) {
 
                 when (it.redirectionType) {
+
+                    EXT_WEBVIEW -> {
+                        val intent = Intent(requireActivity(), VideoActivity2::class.java)
+                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
+
+                        startActivity(intent)
+
+                    }
+                    AppConstants.EXPLORE_TYPE_STORIES -> {
+                        val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
+                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
+
+                        startActivity(intent)
+                    }
+                    TYPE_VIDEO -> {
+                        val intent = Intent(requireActivity(), VideoActivity2::class.java)
+                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
+
+                        startActivity(intent)
+
+                    }
+                    AppConstants.TYPE_VIDEO_EXPLORE -> {
+                        val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
+                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
+
+                        startActivity(intent)
+                    }
                     AppConstants.EXPLORE_IN_APP -> {
                         it.redirectionResource?.let { uri ->
 
@@ -172,13 +201,6 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
 
 
                         }
-
-                    }
-                    EXT_WEBVIEW -> {
-                        val intent = Intent(requireActivity(), VideoActivity2::class.java)
-                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
-
-                        startActivity(intent)
 
                     }
                     EXPLORE_IN_APP_WEBVIEW -> {

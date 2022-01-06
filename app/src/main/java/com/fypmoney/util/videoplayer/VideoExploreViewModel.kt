@@ -2,9 +2,11 @@ package com.fypmoney.util.videoplayer
 
 import android.app.Application
 import android.net.Uri
+import android.os.Handler
 import android.util.Log
 import android.view.Surface
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.amazonaws.ivs.player.MediaPlayer
 import com.amazonaws.ivs.player.MediaType
 import com.amazonaws.ivs.player.Player
@@ -23,38 +25,54 @@ import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+
 import java.nio.charset.StandardCharsets
 
-class VideoVM(
-    val context: Application
+class VideoExploreViewModel(
+    private val context: Application,
 
-) : BaseViewModel(context) {
+    ) : BaseViewModel(context) {
+
     private var player: MediaPlayer? = null
     private var playerListener: Player.Listener? = null
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
     var feedDetail: MutableLiveData<FeedDetails> = MutableLiveData()
+    private val updateSeekBarTask = object : Runnable {
+        override fun run() {
+            progress.value = player?.position?.timeString()
+            seekBarProgress.value = player?.position?.toInt()
+            seekBarSecondaryProgress.value = player?.bufferedPosition?.toInt()
 
-    val TAG = "VideoActivtyEXPLOREVM"
-    val liveStream = MutableLiveData<Boolean>()
-    val showLabel = MutableLiveData<Boolean>()
-    val url = MutableLiveData<String>()
-    val playerParamsChanged = MutableLiveData<Pair<Int, Int>>()
-    val errorHappened = MutableLiveData<Pair<String, String>>()
+        }
+    }
+    private val url = MutableLiveData<String>()
+    val playerState = MutableLiveData<Player.State>()
+    val buttonState = MutableLiveData<PlayingState>()
+
+    val selectedRateValue = MutableLiveData<String>()
+
+    val duration = MutableLiveData<String>()
+    val progress = MutableLiveData<String>()
+
     val durationVisible = MutableLiveData<Boolean>()
     val progressVisible = MutableLiveData<Boolean>()
     val seekBarVisible = MutableLiveData<Boolean>()
     val showControls = MutableLiveData<Boolean>()
-    val LINK =
-        "https://fcc3ddae59ed.us-west-2.playback.live-video.net/api/video/v1/us-west-2.893648527354.channel.xhP3ExfcX8ON.m3u8"
-    val playerState = MutableLiveData<Player.State>()
+    val buffering = MutableLiveData<Boolean>()
+    val isPlaying = MutableLiveData<Boolean>()
 
+    val seekBarMax = MutableLiveData<Int>()
     val seekBarProgress = MutableLiveData<Int>()
     val seekBarSecondaryProgress = MutableLiveData<Int>()
 
-    init {
-        url.value = LINK
+    val playerParamsChanged = MutableLiveData<Pair<Int, Int>>()
+    val errorHappened = MutableLiveData<Pair<String, String>>()
+    val TAG = "VideoActivty"
 
+
+    init {
+        buffering.postValue(true)
         callExplporeContent(0)
         initPlayer()
         setPlayerListener()
@@ -62,13 +80,7 @@ class VideoVM(
 
     }
 
-    val buffering = MutableLiveData<Boolean>()
-    val isPlaying = MutableLiveData<Boolean>()
 
-    val duration = MutableLiveData<String>()
-    val progress = MutableLiveData<String>()
-    val seekBarMax = MutableLiveData<Int>()
-    val buttonState = MutableLiveData<PlayingState>()
     val PlaybackRate = listOf("2.0", "1.5", "1.0", "0.5")
     val PLAYBACK_RATE_DEFAULT = "1.0"
     private fun initDefault() {
@@ -77,15 +89,8 @@ class VideoVM(
             "https://fcc3ddae59ed.us-west-2.playback.live-video.net/api/video/v1/us-west-2.893648527354.channel.xhP3ExfcX8ON.m3u8"
 
 
-    }
+        selectedRateValue.value = PLAYBACK_RATE_DEFAULT
 
-    private val updateSeekBarTask = object : Runnable {
-        override fun run() {
-            progress.value = player?.position?.timeString()
-            seekBarProgress.value = player?.position?.toInt()
-            seekBarSecondaryProgress.value = player?.bufferedPosition?.toInt()
-
-        }
     }
 
     private fun initPlayer() {
@@ -191,16 +196,6 @@ class VideoVM(
     }
 
 
-//    fun getPlayBackRates(): List<OptionDataItem> {
-//        return Configuration.PlaybackRate.toMutableList().map {
-//            OptionDataItem(
-//                it,
-//                selectedRateValue.value == it || selectedQualityValue.value == Configuration.PLAYBACK_RATE_DEFAULT
-//            )
-//        }
-//    }
-
-
     fun callFetchOfferApi(id: String?) {
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -284,5 +279,6 @@ class VideoVM(
             )
         )
     }
+
 
 }
