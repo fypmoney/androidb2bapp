@@ -8,7 +8,6 @@ import android.util.Log
 import android.view.SurfaceHolder
 import android.view.View
 import android.widget.SeekBar
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -20,6 +19,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityVideo2Binding
 import com.fypmoney.util.launchMain
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import kotlinx.android.synthetic.main.activity_video2.*
 
 
@@ -59,7 +59,7 @@ class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
                 data = viewModel
                 lifecycleOwner = this@VideoActivity2
             }
-
+        val url = intent?.getStringExtra(ARG_WEB_URL_TO_OPEN)
         // Surface view listener for rotation handling
         surface_view.addOnLayoutChangeListener(
             object : View.OnLayoutChangeListener {
@@ -89,8 +89,21 @@ class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
                     }
                 }
             }
-        )
 
+
+        )
+        seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                restartTimer()
+                if (fromUser) {
+                    viewModel.playerSeekTo(progress.toLong())
+                }
+            }
+        })
 
 
         viewModel.playerState.observe(this, Observer { state ->
@@ -151,7 +164,7 @@ class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
 
         initSurface()
         initButtons()
-        viewModel.playerStart(surface_view.holder.surface)
+        viewModel.playerStart(surface_view.holder.surface, url)
     }
 
 

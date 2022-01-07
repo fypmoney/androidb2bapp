@@ -23,7 +23,7 @@
         <clip>
             <shape android:shape="line">
                 <stroke
-                    android:color="#ED7E18"
+                    android:color="@color/green_selected_light"
                     android:width="4dp" />
             </shape>
         </clip>

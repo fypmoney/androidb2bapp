@@ -2,11 +2,9 @@ package com.fypmoney.util.videoplayer
 
 import android.app.Application
 import android.net.Uri
-import android.os.Handler
 import android.util.Log
 import android.view.Surface
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.amazonaws.ivs.player.MediaPlayer
 import com.amazonaws.ivs.player.MediaType
 import com.amazonaws.ivs.player.Player
@@ -32,7 +30,7 @@ class VideoViewModel(
 
         }
     }
-    private val url = MutableLiveData<String>()
+
     val playerState = MutableLiveData<Player.State>()
     val buttonState = MutableLiveData<PlayingState>()
 
@@ -69,8 +67,6 @@ class VideoViewModel(
     val PLAYBACK_RATE_DEFAULT = "1.0"
     private fun initDefault() {
         buttonState.value = PlayingState.PLAYING
-        url.value =
-            "https://fcc3ddae59ed.us-west-2.playback.live-video.net/api/video/v1/us-west-2.893648527354.channel.xhP3ExfcX8ON.m3u8"
 
 
         selectedRateValue.value = PLAYBACK_RATE_DEFAULT
@@ -151,12 +147,15 @@ class VideoViewModel(
         player = null
     }
 
-    fun playerStart(surface: Surface) {
+    fun playerStart(surface: Surface, url: String?) {
         Log.d(TAG, "Starting player")
+
+        var urlConst =
+            "https://filesamples.com/samples/video/mp4/sample_1280x720_surfing_with_audio.mp4"
         initPlayer()
         updateSurface(surface)
         setPlayerListener()
-        playerLoadStream(Uri.parse(url.value))
+        playerLoadStream(Uri.parse(urlConst))
         play()
     }
 

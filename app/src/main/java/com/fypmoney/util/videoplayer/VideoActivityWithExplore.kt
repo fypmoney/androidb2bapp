@@ -6,15 +6,10 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
-import android.text.TextUtils
 import android.util.Log
 import android.view.SurfaceHolder
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import android.widget.SeekBar
-import android.widget.Spinner
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +17,6 @@ import com.amazonaws.ivs.player.*
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.databinding.ActivityVideo2Binding
 
 
 import com.fypmoney.databinding.ActivityVideoXploreBinding
@@ -53,7 +47,6 @@ import kotlinx.android.synthetic.main.activity_video_xplore.seek_bar
 import kotlinx.android.synthetic.main.activity_video_xplore.status_text
 import kotlinx.android.synthetic.main.activity_video_xplore.surface_view
 
-import java.nio.ByteBuffer
 import java.util.ArrayList
 
 class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoExploreViewModel>(),
@@ -197,7 +190,7 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
 
         initSurface()
         initButtons()
-        viewModel.playerStart(surface_view.holder.surface)
+        viewModel.playerStart(surface_view.holder.surface, url)
 
     }
 

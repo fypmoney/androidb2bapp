@@ -2,11 +2,9 @@ package com.fypmoney.util.videoplayer
 
 import android.app.Application
 import android.net.Uri
-import android.os.Handler
 import android.util.Log
 import android.view.Surface
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.amazonaws.ivs.player.MediaPlayer
 import com.amazonaws.ivs.player.MediaType
 import com.amazonaws.ivs.player.Player
@@ -167,12 +165,12 @@ class VideoExploreViewModel(
         player = null
     }
 
-    fun playerStart(surface: Surface) {
+    fun playerStart(surface: Surface, url: String?) {
         Log.d(TAG, "Starting player")
         initPlayer()
         updateSurface(surface)
         setPlayerListener()
-        playerLoadStream(Uri.parse(url.value))
+        playerLoadStream(Uri.parse(url))
         play()
     }
 
