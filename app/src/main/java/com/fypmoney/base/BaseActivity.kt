@@ -529,6 +529,21 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     }
 
 
+    fun shareInviteCodeFromReferal(content:String?){
+        content.let {it->
+            Utility.getCustomerDataFromPreference()?.referralCode?.let { it1 ->
+                val contentWithCode = content?.replace(AppConstants.REFER_CODE_CHECKING_VARIABLE, it1)
+                contentWithCode?.let { it2 ->
+                    getInviteLinkWithExtraData(
+                        it2,
+                        it1
+                    ) {
+                        onInviteUser(it)
+                    }
+                }
+            }
+        }
+    }
     fun onInviteUser(content: String) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"

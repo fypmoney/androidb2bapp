@@ -17,7 +17,7 @@ import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.ActivityKycTypeBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.view.fragment.kycDetailsBottomSheet
+import com.fypmoney.view.register.fragments.kycDetailsBottomSheet
 import com.fypmoney.view.register.viewModel.KycTypeVM
 import kotlinx.android.synthetic.main.toolbar_animation.*
 import java.util.*

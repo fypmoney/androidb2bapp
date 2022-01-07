@@ -6,21 +6,17 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewContactListBinding
-import com.fypmoney.databinding.ViewContactsBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.PERMISSION_CODE
 import com.fypmoney.util.DialogUtils
@@ -218,7 +214,9 @@ class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewMode
     }
 
     override fun onShareClickListener(referralCode: String) {
-        inviteUser()
+        SharedPrefUtils.getString(this,SharedPrefUtils.SF_KEY_REFERAL_GLOBAL_MSG)?.let {
+            shareInviteCodeFromReferal(it)
+        }
     }
 
     override fun onInviteButtonClick() {

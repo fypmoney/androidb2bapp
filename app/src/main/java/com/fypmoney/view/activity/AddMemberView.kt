@@ -1,14 +1,10 @@
 package com.fypmoney.view.activity
 
 import android.content.ClipboardManager
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
-import androidx.appcompat.widget.AppCompatSpinner
 import androidx.lifecycle.ViewModelProvider
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.fypmoney.BR
@@ -18,8 +14,8 @@ import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.databinding.ViewAddMemberBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.adapter.CountryCodeArrayAdapter
 import com.fypmoney.view.fragment.InviteBottomSheet
 import com.fypmoney.view.fragment.InviteMemberBottomSheet
 import com.fypmoney.view.fragment.StayTunedBottomSheet
@@ -213,7 +209,9 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
     }
 
     override fun onShareClickListener(referralCode: String) {
-        inviteUser()
+        SharedPrefUtils.getString(this, SharedPrefUtils.SF_KEY_REFERAL_GLOBAL_MSG)?.let {
+            shareInviteCodeFromReferal(it)
+        }
     }
 
     override fun onInviteButtonClick() {

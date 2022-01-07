@@ -16,7 +16,6 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.InterestEntity
 import com.fypmoney.model.KycActivateAccountResponse
 import com.fypmoney.model.KycActivateAccountResponseDetails
 import com.fypmoney.util.Utility
@@ -41,8 +40,8 @@ class KycdetailViewModel(application: Application) : BaseViewModel(application) 
     var gender = MutableLiveData<String>()
     var onActivateAccountSuccess = MutableLiveData<KycActivateAccountResponseDetails>()
     var onDobClicked = MutableLiveData(false)
+    var onAadharCardInfoClicked = MutableLiveData(false)
 
-    var selectedInterestList = ArrayList<InterestEntity>()
 
     // this method check is email is valid or not
 
@@ -110,6 +109,10 @@ class KycdetailViewModel(application: Application) : BaseViewModel(application) 
 
             }
         }
+    }
+
+    fun onAadharCardInfoClicked(){
+        onAadharCardInfoClicked.value = true
     }
 
     private fun callKycAccountActivationApi(sendkycDetails: SendKycDetails) {

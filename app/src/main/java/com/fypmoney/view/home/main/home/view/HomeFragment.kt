@@ -14,6 +14,7 @@ import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentHomeBinding
 import com.fypmoney.extension.toGone
@@ -95,9 +96,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         setObserver()
         setUpObserver()
         homeFragmentVM.callToAction()
+        checkForErrorNotice()
 
     }
 
+    private fun checkForErrorNotice() {
+        PockketApplication.homeScreenErrorMsg?.let{
+            if(it.isNotEmpty()){
+                binding.noticeAlertFl.toVisible()
+                binding.noticeTv.text = it
+            }else{
+                binding.noticeAlertFl.toGone()
+            }
+
+        }
+    }
 
 
     private fun setupRecyclerView() {
@@ -126,7 +139,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                     it1.name = TrackrEvent.home_action_click
                     it1.add(TrackrField.action_content_id,it.id)
                 }
-                openExploreFeatures(it.redirectionType, it.redirectionResource)
+                openExploreFeatures(
+                    it.redirectionType,
+                    it.redirectionResource,
+                )
 
             })
         }
@@ -328,7 +344,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             }
         }
         var exploreClickListener2 = object : ExploreItemClickListener {
-            override fun onItemClicked(position: Int, it1: SectionContentItem) {
+            override fun onItemClicked(position: Int, it1: SectionContentItem,exploreContentResponse: ExploreContentResponse?) {
                 trackr {
                     it.name = TrackrEvent.home_explore_click
                     it.add(TrackrField.explore_content_id,it1.id)
@@ -349,7 +365,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         root.exploreHomeRv.adapter = typeAdapter
     }
 
-    private fun openExploreFeatures(redirectionType: String?, redirectionResource: String?) {
+    private fun openExploreFeatures(
+        redirectionType: String?,
+        redirectionResource: String?
+    ) {
         when (redirectionType) {
             AppConstants.EXPLORE_IN_APP -> {
                 redirectionResource?.let { uri ->
@@ -389,8 +408,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             AppConstants.IN_APP_WITH_CARD -> {
 
                 val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)
-//        intent.putExtra(AppConstants.EXPLORE_RESPONSE, feedDetails)
-
                 intent.putExtra(ARG_WEB_URL_TO_OPEN, redirectionResource)
                 startActivity(intent)
             }

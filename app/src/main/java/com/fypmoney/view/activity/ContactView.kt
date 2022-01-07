@@ -200,7 +200,9 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
     }
 
     override fun onShareClickListener(referralCode: String) {
-        inviteUser()
+        SharedPrefUtils.getString(this,SharedPrefUtils.SF_KEY_REFERAL_GLOBAL_MSG)?.let {
+            shareInviteCodeFromReferal(it)
+        }
     }
 
     override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {

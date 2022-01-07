@@ -6,6 +6,8 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id("com.apollographql.apollo").version("2.4.6")
+    id 'androidx.navigation.safeargs.kotlin'
+
 }
 
 android {
@@ -24,7 +26,7 @@ android {
         ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 50
+        versionCode 49
         versionName "2.0.3"
 
         multiDexEnabled = true
@@ -38,9 +40,9 @@ android {
 
     buildTypes {
         release {
-            debuggable false
-            minifyEnabled true
-            shrinkResources true
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
@@ -224,7 +226,7 @@ dependencies {
     //play core lib
     implementation 'com.google.android.play:core:1.10.1'
     debugImplementation "com.github.chuckerteam.chucker:library:3.2.0"
-    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.2.0"
+    releaseImplementation "com.github.chuckerteam.chucker:library:3.2.0"
 //"com.github.chuckerteam.chucker:library-no-op:3.2.0"
 
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.1'
