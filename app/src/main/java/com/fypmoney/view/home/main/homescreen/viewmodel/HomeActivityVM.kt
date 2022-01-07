@@ -100,13 +100,13 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
     private fun getAllInstalledApps():String?{
         return if(!checkListOfAppIsSynced()){
             val pm: PackageManager = PockketApplication.instance.packageManager
-            val packages = pm.getInstalledApplications(PackageManager.GET_META_DATA)
+            val listOfApplication = pm.getInstalledPackages(0);
             SharedPrefUtils.putBoolean(
                 PockketApplication.instance,
                 SharedPrefUtils.SF_IS_INSTALLED_APPS_SYNCED,
                 true
             )
-            packages.map { it.name }.toString()
+            listOfApplication.map { it.applicationInfo.loadLabel(pm) }.toString()
         }else{
             null
         }

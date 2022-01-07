@@ -11,14 +11,17 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
+import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.SettingsRequest
 import com.fypmoney.model.SettingsResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.referandearn.model.ReferMessageResponse
 import com.google.gson.Gson
-import com.moengage.core.internal.MoEConstants
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.moengage.core.internal.MoEConstants.*
 
 /*
@@ -36,6 +39,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
     fun onContinueClicked() {
         callGetCustomerProfileApi()
         callSettingsApi()
+        callReferScreenMessages()
     }
 
     private fun callSettingsApi() {
@@ -48,6 +52,17 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                 request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = false,
                 param = request
+            )
+        )
+    }
+    private fun callReferScreenMessages() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.REFERRAL_SCREEN_MESSAGES_API,
+                NetworkUtil.endURL(ApiConstant.REFERRAL_SCREEN_MESSAGES_API),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
             )
         )
     }
@@ -210,9 +225,31 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                     it.value
                                 )
                             }
+
                         }
                     }
                 }
+
+
+            }
+            ApiConstant.REFERRAL_SCREEN_MESSAGES_API -> {
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val data = Gson().fromJson(
+                    json.get("data").toString(),
+                    ReferMessageResponse::class.java
+                )
+                SharedPrefUtils.putString(
+                    getApplication(),
+                    SharedPrefUtils.SF_KEY_REFER_LINE2,
+                    data.referLine2
+                )
+                SharedPrefUtils.putString(
+                    getApplication(),
+                    SharedPrefUtils.SF_KEY_REFERAL_GLOBAL_MSG,
+                    data.referMessage
+                )
+
 
             }
         }

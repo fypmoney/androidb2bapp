@@ -15,6 +15,7 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
+import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.SettingsRequest
 import com.fypmoney.model.SettingsResponse
@@ -32,7 +33,10 @@ import com.fypmoney.util.AppConstants.REFER_MSG_SHARED_2
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_APP_VERSION_CODE
 import com.fypmoney.util.Utility
+import com.fypmoney.view.referandearn.model.ReferMessageResponse
 import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.moengage.core.internal.MoEConstants
 import com.moengage.firebase.MoEFireBaseHelper
 
@@ -60,10 +64,16 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
             )!!
         ) {
             callSettingsApi()
+            callReferScreenMessages()
             SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let {
                 if(Utility.getCustomerDataFromPreference()==null ||
                     (it < BuildConfig.VERSION_CODE)||(it > BuildConfig.VERSION_CODE)){
                     SharedPrefUtils.putInt(app,SF_KEY_APP_VERSION_CODE, BuildConfig.VERSION_CODE)
+                    SharedPrefUtils.putBoolean(
+                        PockketApplication.instance,
+                        SharedPrefUtils.SF_IS_INSTALLED_APPS_SYNCED,
+                        false
+                    )
                     callGetCustomerProfileApi()
                 }
                 if(it==0){
@@ -156,6 +166,18 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = false,
                 param = request
+            )
+        )
+    }
+
+    private fun callReferScreenMessages() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.REFERRAL_SCREEN_MESSAGES_API,
+                NetworkUtil.endURL(ApiConstant.REFERRAL_SCREEN_MESSAGES_API),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
             )
         )
     }
@@ -310,7 +332,26 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 }
 
         }
+            ApiConstant.REFERRAL_SCREEN_MESSAGES_API -> {
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
+                val data = Gson().fromJson(
+                    json.get("data").toString(),
+                    ReferMessageResponse::class.java
+                )
+                SharedPrefUtils.putString(
+                    getApplication(),
+                    SharedPrefUtils.SF_KEY_REFER_LINE2,
+                    data.referLine2
+                )
+                SharedPrefUtils.putString(
+                    getApplication(),
+                    SharedPrefUtils.SF_KEY_REFERAL_GLOBAL_MSG,
+                    data.referMessage
+                )
+
+
+            }
 
         }
 

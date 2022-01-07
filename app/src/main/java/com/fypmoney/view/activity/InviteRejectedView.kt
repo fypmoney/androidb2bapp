@@ -9,10 +9,9 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewInviteRejectedBinding
-import com.fypmoney.databinding.ViewStayTunedBinding
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.InviteBottomSheet
-import com.fypmoney.viewmodel.InviteMemberViewModel
 import com.fypmoney.viewmodel.InviteRejectedViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -80,6 +79,8 @@ class InviteRejectedView : BaseActivity<ViewInviteRejectedBinding, InviteRejecte
     }
 
     override fun onShareClickListener(referralCode: String) {
-        inviteUser()
+        SharedPrefUtils.getString(this, SharedPrefUtils.SF_KEY_REFERAL_GLOBAL_MSG)?.let {
+            shareInviteCodeFromReferal(it)
+        }
     }
 }

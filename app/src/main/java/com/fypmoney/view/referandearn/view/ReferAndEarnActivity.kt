@@ -35,14 +35,7 @@ class ReferAndEarnActivity : BaseActivity<ActivityReferAndEarnBinding,ReferAndEa
 
     private fun setUpViews() {
         mViewBinding.referalCodeValueTv.text = Utility.getCustomerDataFromPreference()?.referralCode
-//        mViewBinding.referAndEarnTitleTv.text =  SharedPrefUtils.getString(
-//            PockketApplication.instance,
-//            SharedPrefUtils.SF_KEY_REFER_LINE1
-//        )
-//        mViewBinding.referAndEarnSubTitleTv.text =  SharedPrefUtils.getString(
-//            PockketApplication.instance,
-//            SharedPrefUtils.SF_KEY_REFER_LINE2
-//        )
+
     }
 
     private fun setUpObserver() {
