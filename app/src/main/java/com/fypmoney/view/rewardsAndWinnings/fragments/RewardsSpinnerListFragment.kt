@@ -1,5 +1,6 @@
 package com.fypmoney.view.rewardsAndWinnings.fragments
 
+
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -30,26 +31,24 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentSpinnerListBinding
 import com.fypmoney.model.aRewardProductResponse
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
-import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
-import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import com.fypmoney.view.adapter.ScratchItemAdapter
 import com.fypmoney.view.adapter.SpinnerAdapter
 import com.fypmoney.view.interfaces.ListContactClickListener
-import com.fypmoney.view.rewardsAndWinnings.viewModel.SpinWheelProductViewModel
+import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
+import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import com.fypmoney.view.rewardsAndWinnings.viewModel.SpinnerFragmentVM
-
 import kotlinx.android.synthetic.main.dialog_burn_mynts.*
 import kotlinx.android.synthetic.main.dialog_burn_mynts.clicked
 import kotlinx.android.synthetic.main.dialog_burn_mynts.spin_green
 import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
 
 
-import kotlin.collections.ArrayList
-
-
 class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, SpinnerFragmentVM>() {
     companion object {
+        fun newInstance(): RewardsSpinnerListFragment {
+            return RewardsSpinnerListFragment()
+        }
+
         var page = 0
 
     }

@@ -20,15 +20,18 @@ import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.activity.UserFeedsInAppWebview
 import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.adapter.FeedsRewardsJackpotAdapter
-
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsJackpotVM
-import kotlin.collections.ArrayList
 
 
 class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, RewardsJackpotVM>(),
     FeedsAdapter.OnFeedItemClickListener {
 
+    companion object{
+        fun newInstance():RewardsJackpotFragment{
+            return RewardsJackpotFragment()
+        }
+    }
     var feedList: ArrayList<FeedDetails>? = ArrayList()
     private var mViewBinding: FragmentJackpotOverviewBinding? = null
     private var jackpotViewModel: RewardsJackpotVM? = null

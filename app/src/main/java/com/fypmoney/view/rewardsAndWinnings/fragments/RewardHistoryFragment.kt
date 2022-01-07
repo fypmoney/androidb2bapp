@@ -11,14 +11,11 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentRewardHistoryBinding
 import com.fypmoney.model.HistoryItem
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryLeaderboardAdapter
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.rewardsAndWinnings.activity.RewardsHistoryView
 import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
+import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryLeaderboardAdapter
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardHistoryFragmentVM
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsHistoryVM
-
 import kotlin.math.roundToInt
 
 
@@ -26,6 +23,9 @@ class RewardHistoryFragment :
     BaseFragment<FragmentRewardHistoryBinding, RewardHistoryFragmentVM>() {
     companion object {
         var page = 0
+        fun newInstance():RewardHistoryFragment{
+            return RewardHistoryFragment()
+        }
     }
 
     private var rewardAdapterHistory: RewardsHistoryLeaderboardAdapter? = null

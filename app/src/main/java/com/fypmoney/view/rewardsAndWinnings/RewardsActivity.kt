@@ -1,5 +1,6 @@
 package com.fypmoney.view.rewardsAndWinnings
 
+
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -7,38 +8,29 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
-import com.fypmoney.BR
-
-import com.fypmoney.base.BaseActivity
-
-import com.fypmoney.view.fragment.*
-
-import com.google.android.material.tabs.TabLayout
-
-import java.util.ArrayList
-
-
-import com.fypmoney.databinding.ViewRewardsBinding
-import kotlinx.android.synthetic.main.toolbar.*
-
-import androidx.core.content.ContextCompat
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
+import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.base.BaseActivity
+import com.fypmoney.databinding.ViewRewardsBinding
 import com.fypmoney.util.AppConstants
-
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
+import com.fypmoney.view.fragment.*
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsJackpotFragment
-import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
+import kotlinx.android.synthetic.main.toolbar.*
+import java.util.*
 
 
 class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
@@ -166,9 +158,9 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
 //        adapter.addFragment(RewardsOverviewFragment(), getString(R.string.overview))
 
-        adapter.addFragment(RewardsSpinnerListFragment(), getString(R.string.arcade))
-        adapter.addFragment(RewardsJackpotFragment(), getString(R.string.jackpot))
-        adapter.addFragment(RewardHistoryFragment(), getString(R.string.history))
+        adapter.addFragment(RewardsSpinnerListFragment.newInstance(), getString(R.string.arcade))
+        adapter.addFragment(RewardsJackpotFragment.newInstance(), getString(R.string.jackpot))
+        adapter.addFragment(RewardHistoryFragment.newInstance(), getString(R.string.history))
 
         viewPager.adapter = adapter
         viewPager.offscreenPageLimit = 0

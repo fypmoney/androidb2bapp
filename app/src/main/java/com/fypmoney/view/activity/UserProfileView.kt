@@ -10,6 +10,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fyp.trackr.models.UserTrackr
@@ -23,8 +24,8 @@ import com.fypmoney.databinding.ViewUserNewProfileBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-
-import com.fypmoney.view.adapter.MyUserprofileAdapter
+import com.fypmoney.view.adapter.GlobalListAdapter
+import com.fypmoney.view.adapter.ListUiModel
 import com.fypmoney.view.community.SocialCommunityActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
 import com.fypmoney.viewmodel.UserProfileViewModel
@@ -47,8 +48,7 @@ import java.io.IOException
 /*
 * This class is used as Home Screen
 * */
-class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewModel>(),
-    MyUserprofileAdapter.OnListItemClickListener, LogoutBottomSheet.OnLogoutClickListener {
+class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewModel>(), LogoutBottomSheet.OnLogoutClickListener {
     private lateinit var mViewModel: UserProfileViewModel
     private lateinit var mViewBinding: ViewUserNewProfileBinding
 
@@ -110,24 +110,73 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
             e.printStackTrace()
 
         }
-        val myProfileAdapter = MyUserprofileAdapter(applicationContext, this)
-        mViewBinding.profileList.adapter = myProfileAdapter
 
-        val iconList = ArrayList<Int>()
-        iconList.add(R.drawable.ic_privacy)
-//        iconList.add(R.drawable.ic_interest)
-        iconList.add(R.drawable.ic_community)
-        iconList.add(R.drawable.ic_privacy)
-        iconList.add(R.drawable.ic_privacy)
-        iconList.add(R.drawable.ic_help)
-        iconList.add(R.drawable.ic_log_out)
-        myProfileAdapter.setList(
-            iconList1 = iconList,
-            resources.getStringArray(R.array.my_profile_title_list).toMutableList()
-        )
+        mViewBinding.profileList.adapter = GlobalListAdapter(this@UserProfileView,
+            onListItemClicked = {
+            when (it.postion) {
+                0 -> {
+                    Utility.goToAppSettings(applicationContext)
+                }
+
+
+                1 -> {
+                    intentToActivityMain(this@UserProfileView, SocialCommunityActivity::class.java)
+                }
+                2 -> {
+                    openWebPageFor(
+                        getString(R.string.privacy_policy),
+                        "https://www.fypmoney.in/fyp/privacy-policy/"
+                    )
+                }
+                3 -> {
+                    openWebPageFor(
+                        getString(R.string.terms_and_conditions),
+                        "https://www.fypmoney.in/fyp/terms-of-use/"
+                    )
+                }
+
+                4 -> {
+                    callFreshChat(applicationContext)
+                }
+
+                5 -> {
+                    callLogOutBottomSheet()
+                }
+
+            }
+
+        })
+        (mViewBinding.profileList.adapter as GlobalListAdapter).submitList(prepareOptions())
+
         mViewModel.callGetCustomerProfileApi()
 
         setObserver()
+    }
+
+    private fun prepareOptions(): ArrayList<ListUiModel> {
+
+        val iconList = ArrayList<ListUiModel>()
+        iconList.add(ListUiModel(postion = 0,
+            name = getString(R.string.privacy_settings),
+            icon = AppCompatResources.getDrawable(this,R.drawable.ic_privacy) ))
+        iconList.add(ListUiModel(postion = 1,
+            name = getString(R.string.community_settings),
+            icon = AppCompatResources.getDrawable(this,R.drawable.ic_community) ))
+        iconList.add(ListUiModel(postion = 2,
+            name = getString(R.string.privacy_policy),
+            icon = AppCompatResources.getDrawable(this,R.drawable.ic_privacy) ))
+        iconList.add(ListUiModel(postion = 3,
+            name = getString(R.string.t_n_c),
+            icon = AppCompatResources.getDrawable(this,R.drawable.ic_privacy) ))
+        iconList.add(ListUiModel(postion = 4,
+            name = getString(R.string.help),
+            icon = AppCompatResources.getDrawable(this,R.drawable.ic_help) ))
+        iconList.add(ListUiModel(postion = 5,
+            name = getString(R.string.log_out),
+            icon = AppCompatResources.getDrawable(this,R.drawable.ic_log_out) ))
+
+
+        return iconList
     }
 
     /**
@@ -318,40 +367,7 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         mViewModel.callLogOutApi()
     }
 
-    override fun onItemClick(position: Int, name: String?) {
-        when (position) {
-            0 -> {
-                Utility.goToAppSettings(applicationContext)
-            }
 
-
-            1 -> {
-                intentToActivityMain(this@UserProfileView, SocialCommunityActivity::class.java)
-            }
-            2 -> {
-                openWebPageFor(
-                    getString(R.string.privacy_policy),
-                    "https://www.fypmoney.in/fyp/privacy-policy/"
-                )
-            }
-            3 -> {
-                openWebPageFor(
-                    getString(R.string.terms_and_conditions),
-                    "https://www.fypmoney.in/fyp/terms-of-use/"
-                )
-            }
-
-            4 -> {
-                callFreshChat(applicationContext)
-            }
-
-            5 -> {
-                callLogOutBottomSheet()
-            }
-
-        }
-
-    }
 
 
 }

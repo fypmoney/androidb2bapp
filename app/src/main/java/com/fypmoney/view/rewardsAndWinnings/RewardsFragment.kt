@@ -9,26 +9,23 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.viewpager2.widget.MarginPageTransformer
+import androidx.viewpager2.widget.ViewPager2
+import com.fypmoney.BR
+import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentRewardsBinding
-import com.fypmoney.view.home.main.rewards.viewmodel.RewardsFragmentVM
-import com.fypmoney.BR
-
 import com.fypmoney.util.AppConstants
+import com.fypmoney.view.home.main.rewards.ViewPagerFragmentAdapter
+import com.fypmoney.view.home.main.rewards.viewmodel.RewardsFragmentVM
+import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsJackpotFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment
 import com.google.android.material.tabs.TabLayout
-
-import java.util.ArrayList
-import androidx.viewpager2.widget.ViewPager2
-import androidx.viewpager2.widget.MarginPageTransformer
-import com.fypmoney.R
-
-import com.fypmoney.view.home.main.rewards.ViewPagerFragmentAdapter
-import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.google.android.material.tabs.TabLayoutMediator
+import java.util.*
 
 
 class RewardsFragment : BaseFragment<FragmentRewardsBinding, RewardsFragmentVM>() {
@@ -123,10 +120,10 @@ class RewardsFragment : BaseFragment<FragmentRewardsBinding, RewardsFragmentVM>(
         // add Fragments in your ViewPagerFragmentAdapter class
 
         // add Fragments in your ViewPagerFragmentAdapter class
-        arrayList.add(RewardsOverviewFragment(tabchangeListner))
-        arrayList.add(RewardsSpinnerListFragment())
-        arrayList.add(RewardsJackpotFragment())
-        arrayList.add(RewardHistoryFragment())
+        arrayList.add(RewardsOverviewFragment.newInstance(tabchangeListner))
+        arrayList.add(RewardsSpinnerListFragment.newInstance())
+        arrayList.add(RewardsJackpotFragment.newInstance())
+        arrayList.add(RewardHistoryFragment.newInstance())
 
 
         myAdapter = ViewPagerFragmentAdapter(childFragmentManager, lifecycle, arrayList)

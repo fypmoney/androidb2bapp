@@ -17,15 +17,14 @@ import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.activity.UserFeedsInAppWebview
 import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.adapter.FeedsRewardsAdapter
-
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.view.rewardsAndWinnings.CashBackWonHistoryActivity
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 
 
 class RewardsOverviewFragment(val tabchangeListner: HomeTabChangeClickListener) :
@@ -36,6 +35,9 @@ class RewardsOverviewFragment(val tabchangeListner: HomeTabChangeClickListener) 
 
     companion object {
         var page = 0
+        fun newInstance( tabchangeListner: HomeTabChangeClickListener):RewardsOverviewFragment{
+            return RewardsOverviewFragment(tabchangeListner)
+        }
 
     }
 

@@ -177,7 +177,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 NetworkUtil.endURL(ApiConstant.REFERRAL_SCREEN_MESSAGES_API),
                 ApiUrl.GET,
                 BaseRequest(),
-                this, isProgressBar = true
+                this, isProgressBar = false
             )
         )
     }

@@ -5,7 +5,6 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
-import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
@@ -17,9 +16,7 @@ import com.adjust.sdk.Adjust
 import com.adjust.sdk.AdjustConfig
 import com.adjust.sdk.AdjustEvent
 import com.facebook.appevents.AppEventsLogger
-import com.facebook.internal.Utility
 import com.fyp.trackr.BuildConfig
-import com.fyp.trackr.R
 import com.fyp.trackr.SERVER_DATE_TIME_FORMAT1
 import com.fyp.trackr.models.AnalyticsEvent
 import com.fyp.trackr.models.ScreenEvent

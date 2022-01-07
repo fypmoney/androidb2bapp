@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import com.fypmoney.databinding.MyProfileListRowItemBinding
-import com.fypmoney.databinding.MyProfileNewListRowItemBinding
 import com.fypmoney.databinding.UserProfileListRowItemBinding
 
 class MyUserprofileAdapter(
@@ -34,7 +32,7 @@ class MyUserprofileAdapter(
         } else {
             binding.image.setImageResource(iconList[position])
         }
-        binding.title = titleList[position]
+        //binding.title = titleList[position]
 
 
         binding.linear.setOnClickListener {
