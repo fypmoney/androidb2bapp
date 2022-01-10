@@ -17,13 +17,13 @@ import com.fypmoney.databinding.ViewPurchaseGiftCardBinding
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.fragment.GiftCardPurchasedBottomSheet
+import com.fypmoney.view.giftCardModule.fragments.GiftCardPurchasedBottomSheet
 import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardRequest
 import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardResponse
 import com.fypmoney.view.giftCardModule.model.VoucherDetailsItem
 import com.fypmoney.view.giftCardModule.model.VoucherProductItem
 
-import com.fypmoney.viewmodel.PurchaseGiftViewModel
+import com.fypmoney.view.giftCardModule.viewModel.PurchaseGiftViewModel
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -62,6 +62,8 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = "Myntra E Gift Card"
         )
+
+
         mViewBinding.payAndPurchase.setOnClickListener(View.OnClickListener {
             if (selectedContact != null && selectedGiftCard != null) {
                 var purchase = PurchaseGiftCardRequest()
@@ -96,9 +98,27 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
             if (hasFocus) {
                 mViewBinding.contactsHeading.visibility = View.INVISIBLE
             } else {
-                mViewBinding.contactsHeading.visibility = View.VISIBLE
+                if (mViewBinding.search.isIconified) {
+                    mViewBinding.contactsHeading.visibility = View.VISIBLE
+                }
             }
         }
+        mViewBinding.notFyperSelected.setOnClickListener(View.OnClickListener {
+
+        })
+        mViewBinding.search.setOnCloseListener {
+            mViewBinding.contactsHeading.visibility = View.VISIBLE
+            false
+        }
+
+
+//        val closeButton: ImageView = mViewBinding.search.findViewById(com.fypmoney.R.id.search_close_btn) as ImageView
+//        closeButton.setOnClickListener {
+//            mViewBinding.contactsHeading.visibility = View.VISIBLE
+//            mViewBinding.search.isIconified=false
+//
+//        }
+
         mViewBinding.search.setOnQueryTextListener(object :
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -223,6 +243,13 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
             }
         }
 
+    }
+
+    override fun onBackPressed() {
+        if (!mViewBinding.search.isIconified) {
+            mViewBinding.search.isIconified = true
+            mViewBinding.contactsHeading.visibility = View.VISIBLE
+        } else super.onBackPressed()
     }
 
     private fun GiftCardPurchased(list: PurchaseGiftCardResponse?) {

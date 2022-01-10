@@ -1,4 +1,4 @@
-package com.fypmoney.view.fragment
+package com.fypmoney.view.giftCardModule.fragments
 
 
 import android.app.Dialog

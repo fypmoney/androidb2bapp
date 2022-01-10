@@ -3,8 +3,7 @@ package com.fypmoney.view.giftCardModule
 import androidx.databinding.ObservableField
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.util.Utility
-import com.fypmoney.viewmodel.ContactViewModel
-import com.fypmoney.viewmodel.PurchaseGiftViewModel
+import com.fypmoney.view.giftCardModule.viewModel.PurchaseGiftViewModel
 
 
 /*

@@ -24,7 +24,6 @@ class GiftCardAdapter(
             lifecycleOwner,
             onRecentUserClick
         )
-
     }
 
     override fun onBindViewHolder(holder: GiftCardVH, position: Int) {

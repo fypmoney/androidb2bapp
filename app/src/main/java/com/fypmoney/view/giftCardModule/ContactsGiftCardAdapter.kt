@@ -1,7 +1,6 @@
 package com.fypmoney.view.giftCardModule
 
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,11 +9,8 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ContactRowGiftCardItemBinding
-import com.fypmoney.databinding.ContactRowItemBinding
 import com.fypmoney.util.Utility
-import com.fypmoney.viewhelper.ContactViewHelper
-import com.fypmoney.viewmodel.ContactViewModel
-import com.fypmoney.viewmodel.PurchaseGiftViewModel
+import com.fypmoney.view.giftCardModule.viewModel.PurchaseGiftViewModel
 
 
 /**

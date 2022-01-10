@@ -83,12 +83,7 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
 
 
             })
-        mviewModel?.offerBottomList?.observe(viewLifecycleOwner, {
-            (mViewBinding?.giftcardRv?.adapter as GiftCardAdapter).run {
-                submitList(it)
-            }
 
-        })
         mviewModel!!.offerBottomList.observe(
             requireActivity(),
             { list ->
@@ -114,7 +109,6 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
 
             })
 
-        setUpRecyclerView()
     }
 
     override fun onResume() {
@@ -147,24 +141,6 @@ class OffersStoreFragment : BaseFragment<FragmentOffersBinding, OffersStoreFragm
         mViewBinding?.featuredOfferRv!!.adapter = typeAdapter
     }
 
-    private fun setUpRecyclerView() {
-        val giftCardAdapter = GiftCardAdapter(
-            viewLifecycleOwner, onRecentUserClick = {
-                val intent = Intent(requireContext(), PurchaseGiftCardScreen::class.java)
-                startActivity(intent)
-            }
-        )
-
-
-        with(mViewBinding!!.giftcardRv) {
-            adapter = giftCardAdapter
-            layoutManager = LinearLayoutManager(
-                requireContext(),
-                RecyclerView.HORIZONTAL,
-                false
-            )
-        }
-    }
 
 
     private fun setRecyclerViewBottom() {

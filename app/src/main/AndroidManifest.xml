@@ -113,10 +113,7 @@
         <activity
             android:name=".view.activity.CreateAccountView"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".view.activity.LoginSuccessView"
@@ -257,14 +254,22 @@
 
         <activity
             android:name=".view.rewardsAndWinnings.activity.RewardsHistoryView"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".view.rewardsAndWinnings.CashBackWonHistoryActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.rewardsAndWinnings.CashBackWonHistoryActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".view.activity.PayUSuccessViewCashbackWon"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.PayUSuccessViewCashbackWon"
+            android:screenOrientation="portrait" />
         <activity android:name=".view.giftCardModule.PurchaseGiftCardScreen" />
+        <activity android:name=".view.giftCardModule.GiftCardsListScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

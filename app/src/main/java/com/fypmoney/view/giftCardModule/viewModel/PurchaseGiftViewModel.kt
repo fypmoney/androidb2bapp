@@ -1,4 +1,4 @@
-package com.fypmoney.viewmodel
+package com.fypmoney.view.giftCardModule.viewModel
 
 import android.app.Application
 import androidx.databinding.ObservableArrayList
