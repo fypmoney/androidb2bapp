@@ -22,6 +22,7 @@ import com.fypmoney.view.giftCardModule.ContactsGiftCardAdapter
 import com.fypmoney.view.giftCardModule.model.GiftProductResponse
 import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardRequest
 import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardResponse
+import com.fypmoney.view.giftCardModule.model.VoucherProductItem
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -38,6 +39,9 @@ class PurchaseGiftViewModel(application: Application) : BaseViewModel(applicatio
 
     var selectedPosition = ObservableField(-1)
     var searchedContact = ObservableField<String>()
+    var selectedContactFromList = ObservableField<ContactEntity>()
+    var selectedGiftCard = ObservableField<VoucherProductItem>()
+
     var productList = MutableLiveData<GiftProductResponse>()
     var giftpurchased = MutableLiveData<PurchaseGiftCardResponse>()
     var emptyContactListError = MutableLiveData<Boolean>()
@@ -93,28 +97,7 @@ class PurchaseGiftViewModel(application: Application) : BaseViewModel(applicatio
 
     }
 
-    fun onQueryTextChange(s: String) {
-        searchedContact.set(s.toString())
-        val list = contactAdapter.newContactList?.filter {
-            it.firstName!!.contains(s, ignoreCase = true) || it.contactNumber?.contains(s)!!
-        }
-        if (list?.size != 0) {
-            contactAdapter.setList(list)
-        } else {
-            contactAdapter.newSearchList?.clear()
-            val contactEntity = ContactEntity()
-            contactEntity.contactNumber = searchedContact.get()
-            contactEntity.firstName =
-                PockketApplication.instance.getString(R.string.new_number_text)
 
-            contactAdapter.newSearchList?.add(contactEntity)
-            contactAdapter.setList(contactAdapter.newSearchList)
-            if (searchedContact.get()?.length == 10) {
-                callIsAppUserApi()
-            }
-        }
-
-    }
 
     fun callContactSyncApi() {
 

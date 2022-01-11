@@ -17,6 +17,7 @@ import com.fypmoney.databinding.ViewPurchaseGiftCardBinding
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.giftCardModule.fragments.GiftCardNotFyperBottomSheet
 import com.fypmoney.view.giftCardModule.fragments.GiftCardPurchasedBottomSheet
 import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardRequest
 import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardResponse
@@ -33,10 +34,10 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
     DialogUtils.OnAlertDialogClickListener,
     Utility.OnAllContactsAddedListener {
 
+    private var giftCardpurchaseBottomSheet: GiftCardNotFyperBottomSheet? = null
     private var giftCardAdapter: GiftProductListAdapter? = null
     private var giftList: List<VoucherProductItem?>? = ArrayList()
-    private var selectedGiftCard: VoucherProductItem? = null
-    private var selectedContact: ContactEntity? = null
+
     private lateinit var mViewModel: PurchaseGiftViewModel
     private lateinit var mViewBinding: ViewPurchaseGiftCardBinding
 
@@ -65,12 +66,13 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
 
 
         mViewBinding.payAndPurchase.setOnClickListener(View.OnClickListener {
-            if (selectedContact != null && selectedGiftCard != null) {
+            if (mViewModel.selectedContactFromList.get() != null && mViewModel.selectedGiftCard.get() != null) {
                 var purchase = PurchaseGiftCardRequest()
-                purchase.destinationMobileNo = selectedContact?.contactNumber
+                purchase.destinationMobileNo =
+                    mViewModel.selectedContactFromList.get()?.contactNumber
                 purchase.destinationName =
-                    selectedContact?.firstName + " " + selectedContact?.lastName
-                if (selectedContact?.isAppUser == true)
+                    mViewModel.selectedContactFromList.get()?.firstName + " " + mViewModel.selectedContactFromList.get()?.lastName
+                if (mViewModel.selectedContactFromList.get()?.isAppUser == true)
                     purchase.giftedPerson = "FYPUSER"
                 else
                     purchase.giftedPerson = "NOTFYPUSER"
@@ -78,7 +80,7 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
                 purchase.destinationEmail = "ranjeet@ranjeet.in"
 
                 var voucher = VoucherDetailsItem()
-                voucher.voucherProductId = selectedGiftCard?.id
+                voucher.voucherProductId = mViewModel.selectedGiftCard.get()?.id
                 val supplierNames: List<VoucherDetailsItem> = Arrays.asList(voucher)
                 purchase.voucherDetails = supplierNames
                 mViewModel.purchaseGiftCardRequest(purchase)
@@ -104,7 +106,7 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
             }
         }
         mViewBinding.notFyperSelected.setOnClickListener(View.OnClickListener {
-
+            GiftCardNotFyperSheet()
         })
         mViewBinding.search.setOnCloseListener {
             mViewBinding.contactsHeading.visibility = View.VISIBLE
@@ -203,8 +205,8 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
             }
         }
         mViewModel.onItemClicked.observe(this) {
-            selectedContact = it
-            if (selectedGiftCard != null) {
+            mViewModel.selectedContactFromList.set(it)
+            if (mViewModel.selectedGiftCard.get() != null) {
                 mViewBinding.payAndPurchase.isEnabled = true
 
             }
@@ -253,12 +255,21 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
     }
 
     private fun GiftCardPurchased(list: PurchaseGiftCardResponse?) {
-
+        giftCardpurchaseBottomSheet?.dismiss()
         var bottomSheetMessage2 =
             GiftCardPurchasedBottomSheet(list)
         bottomSheetMessage2.isCancelable = false
         bottomSheetMessage2?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheetMessage2?.show(supportFragmentManager, "TASKMESSAGE")
+    }
+
+    private fun GiftCardNotFyperSheet() {
+
+        giftCardpurchaseBottomSheet =
+            GiftCardNotFyperBottomSheet(mViewModel)
+        giftCardpurchaseBottomSheet?.isCancelable = true
+        giftCardpurchaseBottomSheet?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        giftCardpurchaseBottomSheet?.show(supportFragmentManager, "TASKMESSAGE")
     }
 
     private fun setUpRecyclerView() {
@@ -267,8 +278,8 @@ class PurchaseGiftCardScreen : BaseActivity<ViewPurchaseGiftCardBinding, Purchas
                 giftList?.forEachIndexed { pos, item ->
                     if (it == pos) {
                         giftList?.get(pos)?.selected = true
-                        selectedGiftCard = giftList!![pos]
-                        if (selectedContact != null) {
+                        mViewModel.selectedGiftCard.set(giftList!![pos])
+                        if (mViewModel.selectedContactFromList.get() != null) {
                             mViewBinding.payAndPurchase.isEnabled = true
 
                         }
