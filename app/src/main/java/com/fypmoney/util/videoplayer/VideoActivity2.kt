@@ -92,6 +92,11 @@ class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
 
 
         )
+
+        mute.setOnClickListener(View.OnClickListener {
+            viewModel.mutePlayer()
+
+        })
         seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 

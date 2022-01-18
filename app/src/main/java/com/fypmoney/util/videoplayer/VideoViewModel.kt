@@ -2,6 +2,7 @@ package com.fypmoney.util.videoplayer
 
 import android.app.Application
 import android.net.Uri
+import android.os.Handler
 import android.util.Log
 import android.view.Surface
 import androidx.lifecycle.MutableLiveData
@@ -21,15 +22,18 @@ class VideoViewModel(
 
     private var player: MediaPlayer? = null
     private var playerListener: Player.Listener? = null
+    private val handler = Handler()
 
     private val updateSeekBarTask = object : Runnable {
         override fun run() {
             progress.value = player?.position?.timeString()
             seekBarProgress.value = player?.position?.toInt()
             seekBarSecondaryProgress.value = player?.bufferedPosition?.toInt()
+            handler.postDelayed(this, 500)
 
         }
     }
+
 
     val playerState = MutableLiveData<Player.State>()
     val buttonState = MutableLiveData<PlayingState>()
@@ -45,7 +49,7 @@ class VideoViewModel(
     val showControls = MutableLiveData<Boolean>()
     val buffering = MutableLiveData<Boolean>()
     val isPlaying = MutableLiveData<Boolean>()
-
+    val isMute = MutableLiveData<Boolean>()
     val seekBarMax = MutableLiveData<Int>()
     val seekBarProgress = MutableLiveData<Int>()
     val seekBarSecondaryProgress = MutableLiveData<Int>()
@@ -176,6 +180,18 @@ class VideoViewModel(
         // Seeks to a specified position in the stream, in milliseconds
         player?.seekTo(position)
         progress.value = player?.position?.timeString()
+    }
+
+    fun mutePlayer() {
+        if (player?.isMuted == false) {
+            player?.isMuted = true
+            isMute.postValue(true)
+        } else {
+            isMute.postValue(false)
+            player?.isMuted = false
+        }
+
+
     }
 
 
