@@ -61,38 +61,25 @@ class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
             }
         val url = intent?.getStringExtra(ARG_WEB_URL_TO_OPEN)
         // Surface view listener for rotation handling
-        surface_view.addOnLayoutChangeListener(
-            object : View.OnLayoutChangeListener {
-                override fun onLayoutChange(
-                    v: View?,
-                    left: Int,
-                    top: Int,
-                    right: Int,
-                    bottom: Int,
-                    oldLeft: Int,
-                    oldTop: Int,
-                    oldRight: Int,
-                    oldBottom: Int
-                ) {
-                    if (left != oldLeft || top != oldTop || right != oldRight || bottom != oldBottom) {
-                        val width = viewModel.playerParamsChanged.value?.first
-                        val height = viewModel.playerParamsChanged.value?.second
-                        if (width != null && height != null) {
-                            surface_view.post {
-                                Log.d(
-                                    TAG,
-                                    "On rotation player layout params changed $width $height"
-                                )
-                                ViewUtil.setLayoutParams(surface_view, width, height)
-                            }
-                        }
+        surface_view.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            if (left != oldLeft || top != oldTop || right != oldRight || bottom != oldBottom) {
+                val width = viewModel.playerParamsChanged.value?.first
+                val height = viewModel.playerParamsChanged.value?.second
+                if (width != null && height != null) {
+                    surface_view.post {
+                        Log.d(
+                            TAG,
+                            "On rotation player layout params changed $width $height"
+                        )
+                        ViewUtil.setLayoutParams(surface_view, width, height)
                     }
                 }
             }
+        }
 
-
-        )
-
+        val decorView = window.decorView
+        val uiOptions = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
+        decorView.systemUiVisibility = uiOptions
         mute.setOnClickListener(View.OnClickListener {
             viewModel.mutePlayer()
 

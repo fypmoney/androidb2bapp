@@ -167,6 +167,7 @@ class VideoExploreViewModel(
 
     fun playerStart(surface: Surface, url: String?) {
         Log.d(TAG, "Starting player")
+
         initPlayer()
         updateSurface(surface)
         setPlayerListener()

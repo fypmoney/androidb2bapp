@@ -161,20 +161,6 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
             override fun onItemClicked(position: Int, it: SectionContentItem) {
 
                 when (it.redirectionType) {
-
-                    EXT_WEBVIEW -> {
-                        val intent = Intent(requireActivity(), VideoActivity2::class.java)
-                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
-
-                        startActivity(intent)
-
-                    }
-                    AppConstants.EXPLORE_TYPE_STORIES -> {
-                        val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
-                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
-
-                        startActivity(intent)
-                    }
                     TYPE_VIDEO -> {
                         val intent = Intent(requireActivity(), VideoActivity2::class.java)
                         intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
@@ -184,6 +170,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                     }
                     AppConstants.TYPE_VIDEO_EXPLORE -> {
                         val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
+                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
                         intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
 
                         startActivity(intent)

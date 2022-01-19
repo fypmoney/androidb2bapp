@@ -154,12 +154,12 @@ class VideoViewModel(
     fun playerStart(surface: Surface, url: String?) {
         Log.d(TAG, "Starting player")
 
-        var urlConst =
-            "https://filesamples.com/samples/video/mp4/sample_1280x720_surfing_with_audio.mp4"
+//        var urlConst =
+//            "https://cdn.videvo.net/videvo_files/video/free/2019-03/large_watermarked/181004_10_LABORATORIES-SCIENCE_08_preview.mp4"
         initPlayer()
         updateSurface(surface)
         setPlayerListener()
-        playerLoadStream(Uri.parse(urlConst))
+        playerLoadStream(Uri.parse(url))
         play()
     }
 
