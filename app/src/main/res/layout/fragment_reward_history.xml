@@ -9,8 +9,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/reward_background">
 
+
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/toolbar" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -247,14 +252,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/contraint"
+            android:layout_below="@+id/layout_toolbar"
             android:layout_width="match_parent"
             android:visibility="invisible"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:layout_marginEnd="@dimen/_10sdp"
-
-
             android:elevation="@dimen/_2sdp">
 
             <RelativeLayout

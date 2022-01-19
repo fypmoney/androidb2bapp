@@ -22,6 +22,7 @@ import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.adapter.FeedsRewardsJackpotAdapter
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsJackpotVM
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, RewardsJackpotVM>(),
@@ -115,6 +116,13 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
 
+        setToolbarAndTitle(
+            context = requireContext(),
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.jackpot),
+            titleColor = Color.WHITE,
+            backArrowTint = Color.WHITE
+        )
         setRecyclerView()
 
         jackpotViewModel?.let { observeInput(it) }

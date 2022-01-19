@@ -46,7 +46,8 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/dp12"
                         android:paddingVertical="@dimen/dp12"
-                        android:visibility="gone">
+                        android:visibility="gone"
+                        tools:visibility="visible">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/card_no_value_tv"

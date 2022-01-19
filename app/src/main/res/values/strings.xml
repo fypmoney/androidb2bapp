@@ -60,6 +60,7 @@
     <string name="something_went_wrong_error">Something went wrong</string>
     <string name="something_went_wrong_error1">Something went wrong, please try again</string>
     <string name="internet_not_connected">Please check your internet connection</string>
+    <string name="please_try_again_after_some_time">Please try after sometime</string>
     <string name="continue_btn_text">Continue</string>
     <string name="submit_btn_text">Submit</string>
     <string name="add_money_btn_text">Add Money</string>
@@ -833,6 +834,7 @@ Coming really soon!
     <string name="payment_made_successfully">Payment Made Successfully</string>
 
     <string name="view_details">View Details</string>
+    <string name="view_card">View Card</string>
     <string name="press_again_to_exit">Press BACK again to exit.</string>
     <string name="load_money">Load Money</string>
     <string name="insufficient_bank_balance">Insufficient bank balance</string>
@@ -973,6 +975,7 @@ Coming really soon!
     <string name="refer_a_friend_and_when_they_complete_their_kyc_you_earn_mynts">Refer a friend and when they complete their KYC you earn mynts</string>
     <string name="total_savings">Total Savings</string>
     <string name="your_mynts">Your Mynts</string>
+    <string name="reedem_mynts">Redeem Mynts</string>
     <string name="view_more">View more</string>
     <string name="have">Have</string>
     <string name="spent">Spent</string>

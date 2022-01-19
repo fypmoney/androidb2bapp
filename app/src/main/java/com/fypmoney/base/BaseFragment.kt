@@ -17,7 +17,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.biometric.BiometricManager.Authenticators.*
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_WEAK
+import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
 import androidx.biometric.BiometricPrompt
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.finishAffinity
@@ -183,6 +184,38 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
   * This method will set the toolbar with back navigation arrow and toolbar title
   * */
     fun setToolbarAndTitle(
+        context: Context,
+        toolbar: Toolbar,
+        isBackArrowVisible: Boolean? = false, toolbarTitle: String? = null,
+        titleColor:Int = Color.WHITE,
+        backArrowTint:Int = Color.WHITE
+    ) {
+        val activity = activity as AppCompatActivity?
+        activity!!.setSupportActionBar(toolbar)
+        val upArrow = ContextCompat.getDrawable(
+            context,
+            R.drawable.ic_back_new
+        )
+
+        upArrow?.setTint(backArrowTint)
+
+        activity.supportActionBar?.let {
+            if (isBackArrowVisible!!) {
+                it.setHomeAsUpIndicator(upArrow)
+                it.setDisplayHomeAsUpEnabled(true)
+            }
+            it.setDisplayShowHomeEnabled(true)
+            it.setDisplayShowTitleEnabled(false)
+            if (toolbarTitle != null) {
+                toolbar_title.text = toolbarTitle
+                toolbar_title.setTextColor(titleColor)
+
+            }
+        }
+
+    }
+
+    fun setToolbarBackgroundAndTitle(
         context: Context,
         toolbar: Toolbar,
         isBackArrowVisible: Boolean? = false, toolbarTitle: String? = null,

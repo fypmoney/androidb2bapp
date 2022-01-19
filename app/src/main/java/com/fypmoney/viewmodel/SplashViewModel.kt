@@ -359,6 +359,8 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        moveToNextScreen.value = true
+
     }
 
 

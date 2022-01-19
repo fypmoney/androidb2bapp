@@ -41,6 +41,7 @@ import kotlinx.android.synthetic.main.dialog_burn_mynts.*
 import kotlinx.android.synthetic.main.dialog_burn_mynts.clicked
 import kotlinx.android.synthetic.main.dialog_burn_mynts.spin_green
 import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, SpinnerFragmentVM>() {
@@ -93,6 +94,13 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Spin
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
 
+        setToolbarAndTitle(
+            context = requireContext(),
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.arcade),
+            titleColor = Color.WHITE,
+            backArrowTint = Color.WHITE
+        )
         setRecyclerView()
         setRvScratchCard()
         dialogInsufficientFund = Dialog(requireContext())

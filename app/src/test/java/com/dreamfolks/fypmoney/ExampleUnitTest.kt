@@ -2,9 +2,8 @@ package com.dreamfolks.fypmoney
 
 import com.fypmoney.util.Utility
 import com.fypmoney.util.roundOfAmountToCeli
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -23,5 +22,11 @@ class ExampleUnitTest {
         val amountInRuppes = Utility.convertToRs(amountInPaisa)
         val round = roundOfAmountToCeli(amountInRuppes!!)
         assertEquals(61, round)
+    }
+    @Test
+    fun format_string_to_card_number() {
+        val cardNumber = "4456970100000228"
+        val formattedCardNumber = Utility.stringToCardNumber(cardNumber)
+        assertEquals(StringBuilder("4456 9701 0000 0228"), formattedCardNumber)
     }
 }

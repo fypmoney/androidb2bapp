@@ -17,7 +17,6 @@ import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility.onCopyClicked
-import com.fypmoney.util.Utility.stringToCardNumber
 import com.fypmoney.view.activity.BankTransactionHistoryView
 import com.fypmoney.view.activity.SetPinView
 import com.fypmoney.view.card.adapter.CardScreenOptionsAdapter
@@ -149,8 +148,7 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
                 binding.loadingCardDetailsHdp.toGone()
                 binding.errorCardDetailsCl.toGone()
                 binding.cardCl.toVisible()
-                binding.cardNoValueTv.text =
-                    stringToCardNumber(cardState.virtualCardDetails.card_number)
+                binding.cardNoValueTv.text = cardState.virtualCardDetails.card_number
                 binding.cardVaildThrValueTv.text =
                     cardState.virtualCardDetails.expiry_month + "/" + cardState.virtualCardDetails.expiry_year
             }

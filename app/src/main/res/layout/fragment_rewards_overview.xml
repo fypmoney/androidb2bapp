@@ -9,12 +9,16 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:background="@color/reward_background"
+        >
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="96dp"
+            >
 
             <LinearLayout
                 android:id="@+id/amount_mynts"
@@ -155,9 +159,8 @@
                         android:layout_marginStart="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_6sdp"
                         android:layout_marginBottom="@dimen/_18sdp"
-
                         android:alpha=".40"
-                        android:text="@string/your_mynts"
+                        android:text="@string/reedem_mynts"
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -287,7 +290,59 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.facebook.shimmer.ShimmerFrameLayout
+            <FrameLayout
+                android:id="@+id/explore_cl"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_below="@+id/golden_card_layout"
+                >
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/explore_shimmer_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    tools:visibility="gone">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <include layout="@layout/shimmer_placeholder_layout" />
+
+                        <include layout="@layout/shimmer_placeholder_layout" />
+
+                        <include layout="@layout/shimmer_placeholder_layout" />
+
+                        <include layout="@layout/shimmer_placeholder_layout" />
+
+                        <include layout="@layout/shimmer_placeholder_layout" />
+
+                        <include layout="@layout/shimmer_placeholder_layout" />
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/explore_home_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_2sdp"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="5"
+                    tools:listitem="@layout/item_grid_type_offers" />
+
+            </FrameLayout>
+
+            <!--<com.facebook.shimmer.ShimmerFrameLayout
                 android:layout_marginStart="@dimen/_16sdp"
                 android:layout_marginEnd="@dimen/_16sdp"
                 android:id="@+id/shimmerLayout"
@@ -336,7 +391,7 @@
                 android:layout_alignParentBottom="true"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                app:lottie_rawRes="@raw/dots_animation" />
+                app:lottie_rawRes="@raw/dots_animation" />-->
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

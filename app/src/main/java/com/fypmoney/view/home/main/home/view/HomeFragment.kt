@@ -251,8 +251,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 if (itemsArrayList.size > 0) {
 
                     itemsArrayList.add(offerDetailResponse())
+                    //set Offers  for you title dynamic
                     _binding.shimmerLayoutLightening.visibility = View.GONE
+                    if(!itemsArrayList[0].rfu2.isNullOrEmpty()){
+                        _binding.lighteningDealsTitle.text = itemsArrayList[0].rfu2
+                    }
                     _binding.lighteningDealsTitle.visibility = View.VISIBLE
+
                     _binding.lighteningDealsRv.visibility = View.VISIBLE
                     _binding.toInterestScreen.visibility = View.GONE
                 } else {
