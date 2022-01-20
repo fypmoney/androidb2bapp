@@ -46,6 +46,9 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
     fun onNotificationClicked() {
         _event.value = HomeActivityEvent.NotificationClicked
     }
+    fun onTransactionHistoryClicked() {
+        _event.value = HomeActivityEvent.TransactionHistoryClicked
+    }
 
     override fun onCleared() {
         super.onCleared()
@@ -123,5 +126,6 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
     sealed class HomeActivityEvent {
         object ProfileClicked : HomeActivityEvent()
         object NotificationClicked : HomeActivityEvent()
+        object TransactionHistoryClicked : HomeActivityEvent()
     }
 }

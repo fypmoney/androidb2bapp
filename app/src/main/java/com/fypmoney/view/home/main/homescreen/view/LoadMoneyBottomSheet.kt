@@ -15,6 +15,7 @@ import com.fypmoney.databinding.BottomsheetLoadMoneyBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.AddMoneyUpiDebitView
+import com.fypmoney.view.fragment.MaxLoadAmountReachedWarningDialogFragment
 import com.fypmoney.viewmodel.AddMoneyViewModel
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.view_add_money.*
@@ -110,6 +111,13 @@ class LoadMoneyBottomSheet:BaseBottomSheetFragment<BottomsheetLoadMoneyBinding>(
                 intentToActivity(AddMoneyUpiDebitView::class.java)
                 // callBottomSheet(mViewModel.amountSelected.get()!!, getString(R.string.dummy_amount))
                 loadMoneyBottomSheetVM.onAddClicked.value = false
+            }
+        }
+        loadMoneyBottomSheetVM.maxLoadLimitReached.observe(this) {
+            if (it) {
+                val showMaxLoadAmountReachedWarningDialogFragment = MaxLoadAmountReachedWarningDialogFragment()
+                showMaxLoadAmountReachedWarningDialogFragment.show(requireParentFragment().childFragmentManager, "showMaxLoadAmountReachedWarningDialogFragment")
+                loadMoneyBottomSheetVM.maxLoadLimitReached.value = false
             }
         }
     }

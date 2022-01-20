@@ -228,7 +228,11 @@ class RewardsOverviewFragment() :
                         findNavController().navigate(R.id.navigation_rewards)
                     } else if (redirectionResources == AppConstants.CardScreen) {
                         findNavController().navigate(R.id.navigation_card)
-                    } else {
+                    } else if (redirectionResources == AppConstants.RewardHistory) {
+                        findNavController().navigate(R.id.navigation_rewards_history)
+                    }else if (redirectionResources == AppConstants.ARCADE) {
+                        findNavController().navigate(R.id.navigation_arcade)
+                    }else {
                         redirectionResources?.let { it1 ->
                             Utility.deeplinkRedirection(
                                 it1,

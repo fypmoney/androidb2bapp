@@ -1083,6 +1083,8 @@ Coming really soon!
     <string name="t_n_c">Terms &amp; Conditions</string>
     <string name="help">Help?</string>
     <string name="log_out">Log out</string>
+    <string name="no_savings_yet_start_transaction_to_save_now">No savings yet. Start transaction to save now!</string>
+    <string name="you_can_not_add_more_funds_since_you_have_already_exceeded_your_monthly_limit">You can not add more funds since you have already exceeded your monthly limit</string>
 
     <string-array name="person_category_array">
         <item>Minor</item>

@@ -8,7 +8,7 @@ import com.fypmoney.base.BaseDialogFragment
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.databinding.DialogFragmentAadharCardInfoBinding
 
-class AadharCardInfoDialogFragment(): BaseDialogFragment<DialogFragmentAadharCardInfoBinding>(){
+class AadharCardInfoDialogFragment: BaseDialogFragment<DialogFragmentAadharCardInfoBinding>(){
     private val aadharCardInfoDialogFragmentVM by viewModels<AadharCardInfoDialogFragmentVM> { defaultViewModelProviderFactory }
     override val baseFragmentVM: BaseViewModel
         get() = aadharCardInfoDialogFragmentVM

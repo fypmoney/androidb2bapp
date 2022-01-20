@@ -227,6 +227,8 @@ object AppConstants {
     const val TRACKORDER = "TrackOrderScreen"
     const val CHORES = "ChoresScreen"
     const val JACKPOTTAB = "Jackpot"
+    const val ARCADE = "Arcade"
+    const val RewardHistory = "RewardHistory"
     const val StoreofferScreen = "Storeofferscreen"
     const val StoreshopsScreen = "Storeshopsscreen"
 

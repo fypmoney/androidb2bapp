@@ -24,6 +24,7 @@ import com.fypmoney.extension.toVisible
 import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.activity.BankTransactionHistoryView
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserProfileView
 import com.fypmoney.view.home.main.home.view.HomeFragment
@@ -87,6 +88,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.black))
                     homeActivityVM.toolbarTitle.value =
                         "Hey ${Utility.getCustomerDataFromPreference()?.firstName},"
+                    binding.help.toVisible()
+                    binding.framne.toVisible()
+                    binding.transactionHistoryAiv.toGone()
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -99,6 +103,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.white))
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.black))
                     homeActivityVM.toolbarTitle.value = getString(R.string.fyper_txt)
+                    binding.help.toVisible()
+                    binding.framne.toVisible()
+                    binding.transactionHistoryAiv.toGone()
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -111,6 +118,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
                     homeActivityVM.toolbarTitle.value = getString(R.string.rewards)
+                    binding.help.toGone()
+                    binding.framne.toGone()
+                    binding.transactionHistoryAiv.toVisible()
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -122,6 +132,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
                     homeActivityVM.toolbarTitle.value = getString(R.string.explore)
+                    binding.help.toVisible()
+                    binding.framne.toVisible()
+                    binding.transactionHistoryAiv.toGone()
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -167,7 +180,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
             HomeActivityVM.HomeActivityEvent.ProfileClicked -> {
                 startActivity(Intent(this, UserProfileView::class.java))
             }
-
+            HomeActivityVM.HomeActivityEvent.TransactionHistoryClicked ->{
+                startActivity(Intent(this, BankTransactionHistoryView::class.java))
+            }
+            else -> {}
         }
     }
 
