@@ -225,7 +225,7 @@ class RewardsOverviewFragment() :
                     if (redirectionResources == AppConstants.FyperScreen) {
                         findNavController().navigate(R.id.navigation_fyper)
                     } else if (redirectionResources == AppConstants.JACKPOTTAB) {
-                        findNavController().navigate(R.id.navigation_rewards)
+                        findNavController().navigate(R.id.navigation_jackpot)
                     } else if (redirectionResources == AppConstants.CardScreen) {
                         findNavController().navigate(R.id.navigation_card)
                     } else if (redirectionResources == AppConstants.RewardHistory) {

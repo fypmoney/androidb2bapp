@@ -6,7 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,13 +18,10 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.ACTIONFLAG
 import com.fypmoney.util.AppConstants.EXPLORE_IN_APP_WEBVIEW
-import com.fypmoney.util.AppConstants.EXT_WEBVIEW
-import com.fypmoney.util.AppConstants.FEED_TYPE_EXTERNAL_WEBVIEW
 import com.fypmoney.util.AppConstants.IN_APP_WITH_CARD
 import com.fypmoney.util.AppConstants.OFFER_REDIRECTION
 import com.fypmoney.util.AppConstants.TYPE_VIDEO
 import com.fypmoney.util.Utility
-import com.fypmoney.util.videoplayer.VideoActivity
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
@@ -40,9 +36,7 @@ import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.explore.viewmodel.ExploreFragmentVM
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
-import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
-import com.fypmoney.view.webview.WebViewActivity
 
 class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(),
     ExploreAdapter.OnFeedItemClickListener {
@@ -184,7 +178,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                             if (redirectionResources == AppConstants.FyperScreen) {
                                 findNavController().navigate(R.id.navigation_fyper)
                             } else if (redirectionResources == AppConstants.JACKPOTTAB) {
-                                findNavController().navigate(R.id.navigation_rewards)
+                                findNavController().navigate(R.id.navigation_jackpot)
                             } else if (redirectionResources == AppConstants.CardScreen) {
                                 findNavController().navigate(R.id.navigation_card)
                             } else if (redirectionResources == AppConstants.RewardHistory) {

@@ -1,5 +1,6 @@
 package com.fypmoney.util.videoplayer
 
+
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -17,12 +18,9 @@ import com.amazonaws.ivs.player.*
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-
-
 import com.fypmoney.databinding.ActivityVideoXploreBinding
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
-
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.util.launchMain
@@ -45,8 +43,7 @@ import kotlinx.android.synthetic.main.activity_video_xplore.player_root
 import kotlinx.android.synthetic.main.activity_video_xplore.seek_bar
 import kotlinx.android.synthetic.main.activity_video_xplore.status_text
 import kotlinx.android.synthetic.main.activity_video_xplore.surface_view
-
-import java.util.ArrayList
+import java.util.*
 
 class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoExploreViewModel>(),
     SurfaceHolder.Callback {
@@ -320,8 +317,12 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
             }
         }
         var exploreClickListener2 = object : ExploreItemClickListener {
-            override fun onItemClicked(position: Int, it: SectionContentItem) {
 
+            override fun onItemClicked(
+                position: Int,
+                it: SectionContentItem,
+                exploreContentResponse: ExploreContentResponse?
+            ) {
                 when (it.redirectionType) {
                     AppConstants.EXPLORE_IN_APP -> {
                         it.redirectionResource?.let { uri ->
@@ -403,7 +404,6 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
 
                     }
                 }
-
 
             }
         }
