@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
@@ -24,7 +25,6 @@ import com.fypmoney.extension.toVisible
 import com.fypmoney.listener.LocationListenerClass
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.activity.BankTransactionHistoryView
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserProfileView
 import com.fypmoney.view.home.main.home.view.HomeFragment
@@ -181,7 +181,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                 startActivity(Intent(this, UserProfileView::class.java))
             }
             HomeActivityVM.HomeActivityEvent.TransactionHistoryClicked ->{
-                startActivity(Intent(this, BankTransactionHistoryView::class.java))
+                //startActivity(Intent(this, BankTransactionHistoryView::class.java))
+                findNavController(R.id.nav_host_fragment_activity_home).navigate(R.id.navigation_rewards_history)
             }
             else -> {}
         }
