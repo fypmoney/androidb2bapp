@@ -68,6 +68,7 @@ data class SectionContentItem(
     var contentDimensionX: Int? = null,
     val id: Int? = null,
     var contentType: String? = null,
+    var actionFlagCode: String? = null,
     var contentDimensionY: Int? = null,
     val status: String? = null
 ):Parcelable {

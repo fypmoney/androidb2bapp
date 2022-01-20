@@ -17,6 +17,7 @@ import com.fypmoney.databinding.FragmentExploreBinding
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.ACTIONFLAG
 import com.fypmoney.util.AppConstants.EXPLORE_IN_APP_WEBVIEW
 import com.fypmoney.util.AppConstants.EXT_WEBVIEW
 import com.fypmoney.util.AppConstants.FEED_TYPE_EXTERNAL_WEBVIEW
@@ -172,7 +173,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                     AppConstants.TYPE_VIDEO_EXPLORE -> {
                         val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
                         intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
-                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
+                        intent.putExtra(ACTIONFLAG, it.actionFlagCode)
 
                         startActivity(intent)
                     }

@@ -36,7 +36,6 @@ import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
-import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import kotlinx.android.synthetic.main.activity_video2.*
 import kotlinx.android.synthetic.main.activity_video_xplore.*
@@ -73,9 +72,9 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
         mViewBinding = getViewDataBinding()
         mViewBinding!!.data = viewModel
         val url = intent?.getStringExtra(ARG_WEB_URL_TO_OPEN)
-        val pageTitle = intent?.getStringExtra(ARG_WEB_PAGE_TITLE)
+        val ACTIONFLAG = intent?.getStringExtra(AppConstants.ACTIONFLAG)
 
-
+        viewModel.callExplporeContent(ACTIONFLAG)
 
         viewModel?.rewardHistoryList.observe(
             this,
