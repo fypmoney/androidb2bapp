@@ -367,7 +367,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".util.videoplayer.VideoActivityWithExplore">
+        <activity
+            android:name=".util.videoplayer.VideoActivityWithExplore"
+            android:theme="@style/video.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
