@@ -71,7 +71,7 @@ class VideoExploreViewModel(
 
     init {
         buffering.postValue(true)
-        callExplporeContent(0)
+
         initPlayer()
         setPlayerListener()
         initDefault()
@@ -267,11 +267,11 @@ class VideoExploreViewModel(
 
     }
 
-    fun callExplporeContent(page: Int) {
+    fun callExplporeContent(page: String?) {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_Explore,
-                NetworkUtil.endURL(ApiConstant.API_Explore) + "EXPLORE",
+                NetworkUtil.endURL(ApiConstant.API_Explore) + page,
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false

@@ -75,6 +75,8 @@ object AppConstants {
     const val ADD_MEMBER_STATUS_APPROVED = "APPROVED"
     const val ADD_MEMBER_STATUS_INVITED = "INVITED"
     const val ADD_MEMBER_STATUS_DECLINED = "DECLINED"
+    const val ACTIONFLAG = "ACTIONFLAG"
+
     const val YES = "YES"
     const val NO = "NO"
     const val PRODUCT_SPIN = "SPIN_WHEEL"
