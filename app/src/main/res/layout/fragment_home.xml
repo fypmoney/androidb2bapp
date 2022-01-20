@@ -266,19 +266,19 @@
                             android:id="@+id/scan_upi_btn"
                             style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                             android:layout_width="45dp"
-                            android:layout_alignTop="@+id/lin"
-                            android:layout_alignBottom="@+id/lin"
-
                             android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/lin"
+
+                            android:layout_alignBottom="@+id/lin"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:layout_gravity="center_vertical"
                             android:layout_marginStart="12dp"
                             android:layout_marginEnd="@dimen/_2sdp"
                             android:backgroundTint="#283039"
-                            android:paddingVertical="10dp"
-
                             android:onClick="@{()->viewModel.onUpiScanClicked()}"
+
+                            android:paddingVertical="10dp"
                             android:textColor="@color/white"
                             app:cornerRadius="@dimen/dp16"
                             app:icon="@drawable/ic_upi_scan"
