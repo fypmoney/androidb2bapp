@@ -16,6 +16,7 @@ import com.adjust.sdk.Adjust
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.freshchat.consumer.sdk.Freshchat
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.notification.NotificationUtils
@@ -38,7 +39,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         Log.d("FCMToken", s)
         MoEFireBaseHelper.getInstance().passPushToken(applicationContext,s)
         Adjust.setPushToken(s, applicationContext);
-
+        Freshchat.getInstance(this).setPushRegistrationToken(s)
         SharedPrefUtils.putString(applicationContext, SharedPrefUtils.SF_KEY_FIREBASE_TOKEN, s)
 
     }
@@ -52,6 +53,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         if (MoEPushHelper.getInstance().isFromMoEngagePlatform(remoteMessage.data)){
             MoEFireBaseHelper.getInstance().passPushPayload(applicationContext, remoteMessage.data)
+        }else if (Freshchat.isFreshchatNotification(remoteMessage)) {
+            Freshchat.handleFcmMessage(this, remoteMessage)
         }else{
             // your app's business logic to show notification
             val res = remoteMessage.data["notificationType"]
@@ -167,6 +170,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
         return Intent()
     }
+
 
 
 }

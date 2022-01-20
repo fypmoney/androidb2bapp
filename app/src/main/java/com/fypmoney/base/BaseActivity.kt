@@ -29,7 +29,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import com.freshchat.consumer.sdk.FaqOptions
 import com.freshchat.consumer.sdk.Freshchat
-import com.freshchat.consumer.sdk.FreshchatConfig
 import com.fyp.trackr.models.*
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -569,20 +568,9 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
   * This method is used to call fresh chat
   * */
     fun callFreshChat(context: Context) {
-        val fresh = Freshchat.getInstance(context)
-        val config = FreshchatConfig(
-            AppConstants.FRESH_CHAT_APP_ID,
-            AppConstants.FRESH_CHAT_APP_KEY
-        )
-        config.domain = AppConstants.FRESH_CHAT_DOMAIN
-        config.isCameraCaptureEnabled = true
-        config.isGallerySelectionEnabled = true
-        config.isResponseExpectationEnabled = true
-        config.isTeamMemberInfoVisible = true
+        val fresh = PockketApplication.instance.freshchat
 
-        config.isUserEventsTrackingEnabled = true
-
-        val user = fresh.user.apply {
+        val user = fresh?.user?.apply {
             firstName = SharedPrefUtils.getString(
                 application,
                 SharedPrefUtils.SF_KEY_USER_FIRST_NAME
@@ -593,14 +581,15 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
             )
 
         }
-        user.setPhone(
+        user?.setPhone(
             "+91",SharedPrefUtils.getString(
                 application,
                 SharedPrefUtils.SF_KEY_USER_MOBILE)
 
         )
-        fresh.user = user
-        fresh.init(config)
+        if (user != null) {
+            fresh.user = user
+        }
         val faqOptions = FaqOptions()
             .showFaqCategoriesAsGrid(false)
             .showContactUsOnAppBar(true)
