@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
 import com.freshchat.consumer.sdk.FaqOptions
 import com.freshchat.consumer.sdk.Freshchat
 import com.freshchat.consumer.sdk.FreshchatConfig
@@ -64,6 +65,7 @@ BaseActivity<T : ViewDataBinding, V : BaseViewModel> :
     val PERMISSION_READ_CONTACTS = 1
     val PERMISSION_WRITE_EXTERNAL_STORAGE = 2
     private val TAG = BaseActivity::class.java.simpleName
+    var navController: NavController? = null
 
     /**
      * Override for set binding variable

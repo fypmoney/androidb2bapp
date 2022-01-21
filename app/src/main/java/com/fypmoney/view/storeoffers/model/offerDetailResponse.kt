@@ -1,7 +1,7 @@
 package com.fypmoney.view.storeoffers.model
 
 import androidx.annotation.Keep
-import kotlin.Int
+
 @Keep
 data class offerDetailResponse(
     val brandName: String? = null,
@@ -22,7 +22,7 @@ data class offerDetailResponse(
     val offerContent: String? = null,
     val rfu2: String? = null,
     val rfu1: Any? = null,
-    val rfu3: Any? = null,
+    val rfu3: String? = null,
     val offerShortTitle: String? = null,
 )
 

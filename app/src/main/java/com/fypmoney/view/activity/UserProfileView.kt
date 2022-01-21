@@ -114,12 +114,12 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         mViewBinding.profileList.adapter = GlobalListAdapter(this@UserProfileView,
             onListItemClicked = {
             when (it.postion) {
-                0 -> {
+                1 -> {
                     Utility.goToAppSettings(applicationContext)
                 }
 
 
-                1 -> {
+                0 -> {
                     startActivity(Intent(this@UserProfileView, BankTransactionHistoryView::class.java))
                 }
 
@@ -161,11 +161,11 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
 
         val iconList = ArrayList<ListUiModel>()
         iconList.add(ListUiModel(postion = 0,
-            name = getString(R.string.privacy_settings),
-            icon = AppCompatResources.getDrawable(this,R.drawable.ic_privacy) ))
-        iconList.add(ListUiModel(postion = 1,
             name = getString(R.string.trans_history_heading),
             icon = AppCompatResources.getDrawable(this,R.drawable.ic_account_statement) ))
+        iconList.add(ListUiModel(postion = 1,
+            name = getString(R.string.privacy_settings),
+            icon = AppCompatResources.getDrawable(this,R.drawable.ic_privacy) ))
         iconList.add(ListUiModel(postion = 2,
             name = getString(R.string.community_settings),
             icon = AppCompatResources.getDrawable(this,R.drawable.ic_community) ))

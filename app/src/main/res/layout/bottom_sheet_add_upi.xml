@@ -44,7 +44,7 @@
             android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
             android:hint="@string/upi_id_hint"
             android:inputType="text"
-            android:maxLength="26"
+            android:maxLength="100"
             android:padding="10dp"
             android:singleLine="true" />
 

@@ -80,16 +80,19 @@
                     app:srcCompat="@drawable/ic_support" />
 
 
-                <androidx.appcompat.widget.AppCompatImageView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/transaction_history_aiv"
+                    style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
+                    android:text="@string/history"
+                    android:textColor="@color/spin_light"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     android:onClick="@{()->viewModel.onTransactionHistoryClicked()}"
-                    app:srcCompat="@drawable/ic_account_statement" />
+                    />
 
                 <FrameLayout
                     android:layout_width="wrap_content"

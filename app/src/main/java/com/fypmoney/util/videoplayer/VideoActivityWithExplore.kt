@@ -327,12 +327,25 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
                     AppConstants.EXPLORE_IN_APP -> {
                         it.redirectionResource?.let { uri ->
 
-                            val screen = uri.split(",")[0]
-                            if (screen == AppConstants.StoreScreen || screen == AppConstants.CardScreen || screen == AppConstants.FEEDSCREEN || screen == AppConstants.FyperScreen) {
-//                                tabchangeListner.tabchange(0, screen)
+                            val redirectionResources = uri?.split(",")?.get(0)
+                            if (redirectionResources == AppConstants.FyperScreen) {
+                                navController?.navigate(R.id.navigation_fyper)
+                            } else if (redirectionResources == AppConstants.JACKPOTTAB) {
+                                navController?.navigate(R.id.navigation_jackpot)
+                            } else if (redirectionResources == AppConstants.CardScreen) {
+                                navController?.navigate(R.id.navigation_card)
+                            } else if (redirectionResources == AppConstants.RewardHistory) {
+                                navController?.navigate(R.id.navigation_rewards_history)
+                            }else if (redirectionResources == AppConstants.ARCADE) {
+                                navController?.navigate(R.id.navigation_arcade)
                             } else {
 
-                                Utility.deeplinkRedirection(screen, this@VideoActivityWithExplore)
+                                redirectionResources?.let { it1 ->
+                                    Utility.deeplinkRedirection(
+                                        it1,
+                                        this@VideoActivityWithExplore
+                                    )
+                                }
                             }
 
 

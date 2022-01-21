@@ -70,7 +70,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_home) as NavHostFragment
         val navHomeController = navHostFragment.navController
-
+        navController = navHomeController
         binding.bottomMenu.setItemSelected(R.id.navigation_home, true)
 
         binding.bottomMenu.setOnItemSelectedListener { id ->
@@ -91,6 +91,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.help.toVisible()
                     binding.framne.toVisible()
                     binding.transactionHistoryAiv.toGone()
+                    binding.myProfileIv.toVisible()
+                    binding.toolbarTitleTv.toVisible()
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -106,6 +108,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.help.toVisible()
                     binding.framne.toVisible()
                     binding.transactionHistoryAiv.toGone()
+                    binding.myProfileIv.toGone()
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -121,6 +124,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.help.toGone()
                     binding.framne.toGone()
                     binding.transactionHistoryAiv.toVisible()
+                    binding.myProfileIv.toGone()
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -134,6 +138,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     homeActivityVM.toolbarTitle.value = getString(R.string.explore)
                     binding.help.toVisible()
                     binding.framne.toVisible()
+                    binding.myProfileIv.toGone()
                     binding.transactionHistoryAiv.toGone()
                     showToolbar()
                     showBottomNavigation()

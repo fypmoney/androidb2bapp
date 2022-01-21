@@ -127,6 +127,20 @@
 
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
+            <com.fypmoney.view.customview.PrimaryButton
+                android:id="@+id/shop_now_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/perfect"
+                android:textSize="16sp"
+                app:text="Shop Now"
+                app:enabled="true"
+                app:enabled_bg="@color/black"
+                app:disabled_bg="@color/buttonUnselectedColor"
+                android:layout_marginTop="@dimen/dp20"
+                android:layout_marginBottom="@dimen/dp10"
+                android:layout_gravity="center_horizontal"/>
+
         </LinearLayout>
 
 

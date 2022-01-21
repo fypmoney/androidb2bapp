@@ -107,6 +107,9 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Spin
         buyProductDialog = Dialog(requireContext())
         mViewmodel?.let { observeInput(it) }
 
+        trackr {
+            it.name = TrackrEvent.open_arcade
+        }
 
     }
 

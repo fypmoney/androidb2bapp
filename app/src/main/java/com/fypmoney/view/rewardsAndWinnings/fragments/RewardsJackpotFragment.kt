@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -123,6 +125,10 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
+
+        trackr {
+            it.name = TrackrEvent.open_jackpot
+        }
         setRecyclerView()
 
         jackpotViewModel?.let { observeInput(it) }
