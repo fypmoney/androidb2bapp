@@ -14,7 +14,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:weightSum="3"
+        android:weightSum="10"
         android:orientation="vertical"
 
         android:layout_height="match_parent">
@@ -23,7 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout"
             android:layout_width="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="8"
             android:layout_height="0dp"
             android:layout_above="@+id/relativeLayout8">
 
@@ -39,15 +39,22 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
+                    <include
+                        android:id="@+id/layout_toolbar"
+
+                        layout="@layout/toolbar_video" />
+
                     <FrameLayout
                         android:id="@+id/player_root"
                         android:layout_width="match_parent"
+                        android:background="@color/color_dark_black"
                         android:layout_height="match_parent">
 
                         <SurfaceView
                             android:id="@+id/surface_view"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
+
                             android:layout_gravity="center" />
 
                         <ProgressBar
@@ -154,30 +161,61 @@
                                 app:layout_constraintTop_toBottomOf="@id/play_button_view"
                                 tools:text="text" />
 
+                            <TextView
+                                android:id="@+id/tv_progress_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
+                                android:gravity="start"
+                                app:layout_constraintTop_toBottomOf="@+id/seek_bar"
 
+                                android:text="@{data.progress}"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:visibility="@{data.progressVisible ? View.VISIBLE : View.GONE}"
+                                app:layout_constraintStart_toStartOf="parent"
+
+                                tools:text="Progress text" />
+
+                            <TextView
+                                android:id="@+id/tv_duration_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="8dp"
+                                android:gravity="end"
+                                app:layout_constraintTop_toBottomOf="@+id/seek_bar"
+
+                                android:text="@{data.duration}"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:visibility="@{data.durationVisible ? View.VISIBLE : View.GONE}"
+                                app:layout_constraintEnd_toEndOf="parent"
+
+                                tools:text="Duration text" />
+
+                            <SeekBar
+                                android:id="@+id/seek_bar"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+
+                                android:max="@{data.seekBarMax}"
+                                android:progress="@{data.seekBarProgress}"
+                                android:progressDrawable="@drawable/seekbar_progress"
+                                android:secondaryProgress="@{data.seekBarSecondaryProgress}"
+                                android:thumb="@drawable/seekbar_thumb"
+                                app:layout_constraintBottom_toBottomOf="@id/guideline"
+                                app:layout_constraintTop_toTopOf="@id/guideline" />
+
+                            <androidx.constraintlayout.widget.Guideline
+                                android:id="@+id/guideline"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintGuide_end="100dp" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <SeekBar
-                            android:id="@+id/seek_bar"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:visibility="gone"
-                            android:max="@{data.seekBarMax}"
-                            android:progress="@{data.seekBarProgress}"
-                            android:progressDrawable="@drawable/seekbar_progress"
-                            android:secondaryProgress="@{data.seekBarSecondaryProgress}"
-                            android:thumb="@drawable/seekbar_thumb"
-                            app:layout_constraintBottom_toBottomOf="@id/guideline"
-                            app:layout_constraintTop_toTopOf="@id/guideline" />
-
-                        <androidx.constraintlayout.widget.Guideline
-                            android:id="@+id/guideline"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintGuide_end="100dp" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -193,15 +231,11 @@
         <RelativeLayout
             android:id="@+id/relativeLayout8"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-
+            android:layout_weight="2"
             android:layout_height="0dp"
-
             android:background="@color/reward_background"
-
             android:orientation="vertical"
             android:maxHeight="10dp"
-
             android:paddingBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent">
 

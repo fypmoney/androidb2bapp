@@ -21,6 +21,7 @@ import com.fypmoney.databinding.ActivityVideo2Binding
 import com.fypmoney.util.launchMain
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import kotlinx.android.synthetic.main.activity_video2.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
@@ -59,6 +60,13 @@ class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
                 data = viewModel
                 lifecycleOwner = this@VideoActivity2
             }
+        setToolbarAndTitle(
+            context = this,
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = "",
+            backArrowTint = Color.WHITE
+        )
+
         val url = intent?.getStringExtra(ARG_WEB_URL_TO_OPEN)
         // Surface view listener for rotation handling
         surface_view.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->

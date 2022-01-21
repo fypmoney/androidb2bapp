@@ -2,6 +2,7 @@ package com.fypmoney.util.videoplayer
 
 import android.app.Application
 import android.net.Uri
+import android.os.Handler
 import android.util.Log
 import android.view.Surface
 import androidx.lifecycle.MutableLiveData
@@ -36,12 +37,13 @@ class VideoExploreViewModel(
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
     var feedDetail: MutableLiveData<FeedDetails> = MutableLiveData()
+    private val handler = Handler()
     private val updateSeekBarTask = object : Runnable {
         override fun run() {
             progress.value = player?.position?.timeString()
             seekBarProgress.value = player?.position?.toInt()
             seekBarSecondaryProgress.value = player?.bufferedPosition?.toInt()
-
+            handler.postDelayed(this, 500)
         }
     }
     private val url = MutableLiveData<String>()
@@ -94,6 +96,7 @@ class VideoExploreViewModel(
     private fun initPlayer() {
         // Media player initialization
         player = MediaPlayer(context)
+
     }
 
     private fun setPlayerListener() {
