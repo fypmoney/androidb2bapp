@@ -31,7 +31,7 @@ class VideoExploreViewModel(
     private val context: Application,
 
     ) : BaseViewModel(context) {
-
+    val isMute = MutableLiveData<Boolean>()
     private var player: MediaPlayer? = null
     private var playerListener: Player.Listener? = null
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
@@ -80,6 +80,17 @@ class VideoExploreViewModel(
 
     }
 
+    fun mutePlayer() {
+        if (player?.isMuted == false) {
+            player?.isMuted = true
+            isMute.postValue(true)
+        } else {
+            isMute.postValue(false)
+            player?.isMuted = false
+        }
+
+
+    }
 
     val PlaybackRate = listOf("2.0", "1.5", "1.0", "0.5")
     val PLAYBACK_RATE_DEFAULT = "1.0"
