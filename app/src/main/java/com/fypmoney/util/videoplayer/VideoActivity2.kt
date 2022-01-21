@@ -85,20 +85,19 @@ class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
             }
         }
 
-        val decorView = window.decorView
-        val uiOptions = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
-        decorView.systemUiVisibility = uiOptions
-        mute.setOnClickListener(View.OnClickListener {
+
+
+        mute.setOnClickListener {
             viewModel.mutePlayer()
 
-        })
+        }
         seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                restartTimer()
+
                 if (fromUser) {
                     viewModel.playerSeekTo(progress.toLong())
                 }
@@ -137,6 +136,9 @@ class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
                     status_text.text = getString(R.string.ended)
                 }
                 Player.State.PLAYING -> {
+                    val decorView = window.decorView
+                    val uiOptions = (View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
+                    decorView.systemUiVisibility = uiOptions
                     // Indicates that the Player is playing
                     viewModel.buffering.value = false
                     viewModel.buttonState.value = PlayingState.PLAYING
@@ -200,18 +202,7 @@ class VideoActivity2 : BaseActivity<ActivityVideo2Binding, VideoViewModel>(),
             }
         }
 
-        seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                restartTimer()
-                if (fromUser) {
-                    viewModel.playerSeekTo(progress.toLong())
-                }
-            }
-        })
     }
 
     private fun initButtons() {
