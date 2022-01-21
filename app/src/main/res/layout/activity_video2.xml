@@ -25,15 +25,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <include
+                android:id="@+id/layout_toolbar"
+
+                layout="@layout/toolbar_video" />
+
             <FrameLayout
                 android:id="@+id/player_root"
                 android:layout_width="match_parent"
+                android:background="@color/color_dark_black"
                 android:layout_height="match_parent">
 
                 <SurfaceView
                     android:id="@+id/surface_view"
+
+
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center" />
 
                 <ProgressBar

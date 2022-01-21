@@ -369,7 +369,8 @@
         </activity>
         <activity
             android:name=".util.videoplayer.VideoActivityWithExplore"
-            android:theme="@style/video.FullScreen">
+            android:theme="@style/video.FullScreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 

@@ -45,6 +45,7 @@ import kotlinx.android.synthetic.main.activity_video_xplore.player_root
 import kotlinx.android.synthetic.main.activity_video_xplore.seek_bar
 import kotlinx.android.synthetic.main.activity_video_xplore.status_text
 import kotlinx.android.synthetic.main.activity_video_xplore.surface_view
+import kotlinx.android.synthetic.main.toolbar.*
 
 import java.util.ArrayList
 
@@ -73,7 +74,12 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
         mViewBinding!!.data = viewModel
         val url = intent?.getStringExtra(ARG_WEB_URL_TO_OPEN)
         val ACTIONFLAG = intent?.getStringExtra(AppConstants.ACTIONFLAG)
-
+        setToolbarAndTitle(
+            context = this,
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = "",
+            backArrowTint = Color.WHITE
+        )
         viewModel.callExplporeContent(ACTIONFLAG)
 
         viewModel?.rewardHistoryList.observe(
