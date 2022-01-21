@@ -36,7 +36,9 @@ import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import kotlinx.android.synthetic.main.activity_video2.*
+
 import kotlinx.android.synthetic.main.activity_video_xplore.*
+import kotlinx.android.synthetic.main.activity_video_xplore.mute
 import kotlinx.android.synthetic.main.activity_video_xplore.play_button_view
 import kotlinx.android.synthetic.main.activity_video_xplore.player_controls
 import kotlinx.android.synthetic.main.activity_video_xplore.player_root
@@ -134,8 +136,22 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
             }
         }
 
+        seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
 
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+
+                if (fromUser) {
+                    viewModel.playerSeekTo(progress.toLong())
+                }
+            }
+        })
+        mute.setOnClickListener(View.OnClickListener {
+            viewModel.mutePlayer()
+
+        })
         viewModel.playerState.observe(this, Observer { state ->
             when (state) {
                 Player.State.BUFFERING -> {
@@ -213,18 +229,7 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
             }
         }
 
-        seek_bar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                restartTimer()
-                if (fromUser) {
-                    viewModel.playerSeekTo(progress.toLong())
-                }
-            }
-        })
     }
 
     private fun initButtons() {
