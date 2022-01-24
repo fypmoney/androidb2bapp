@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
@@ -69,7 +70,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_home) as NavHostFragment
         val navHomeController = navHostFragment.navController
-
+        navController = navHomeController
         binding.bottomMenu.setItemSelected(R.id.navigation_home, true)
 
         binding.bottomMenu.setOnItemSelectedListener { id ->
@@ -87,6 +88,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.black))
                     homeActivityVM.toolbarTitle.value =
                         "Hey ${Utility.getCustomerDataFromPreference()?.firstName},"
+                    binding.help.toVisible()
+                    binding.framne.toVisible()
+                    binding.transactionHistoryAiv.toGone()
+                    binding.myProfileIv.toVisible()
+                    binding.toolbarTitleTv.toVisible()
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -99,6 +105,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.white))
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.black))
                     homeActivityVM.toolbarTitle.value = getString(R.string.fyper_txt)
+                    binding.help.toVisible()
+                    binding.framne.toVisible()
+                    binding.transactionHistoryAiv.toGone()
+                    binding.myProfileIv.toGone()
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -111,6 +121,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
                     homeActivityVM.toolbarTitle.value = getString(R.string.rewards)
+                    binding.help.toGone()
+                    binding.framne.toGone()
+                    binding.transactionHistoryAiv.toVisible()
+                    binding.myProfileIv.toGone()
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -122,6 +136,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
                     homeActivityVM.toolbarTitle.value = getString(R.string.explore)
+                    binding.help.toVisible()
+                    binding.framne.toVisible()
+                    binding.myProfileIv.toGone()
+                    binding.transactionHistoryAiv.toGone()
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -167,7 +185,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
             HomeActivityVM.HomeActivityEvent.ProfileClicked -> {
                 startActivity(Intent(this, UserProfileView::class.java))
             }
-
+            HomeActivityVM.HomeActivityEvent.TransactionHistoryClicked ->{
+                //startActivity(Intent(this, BankTransactionHistoryView::class.java))
+                findNavController(R.id.nav_host_fragment_activity_home).navigate(R.id.navigation_rewards_history)
+            }
+            else -> {}
         }
     }
 

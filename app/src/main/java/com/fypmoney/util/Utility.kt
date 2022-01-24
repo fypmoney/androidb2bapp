@@ -1156,7 +1156,7 @@ object Utility {
 
     fun stringToCardNumber(input:String): StringBuilder {
         val result = StringBuilder()
-        for (i in 0 until input.length) {
+        for (i in input.indices) {
             if (i % 4 == 0 && i != 0) {
                 result.append(" ")
             }

@@ -114,32 +114,36 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         mViewBinding.profileList.adapter = GlobalListAdapter(this@UserProfileView,
             onListItemClicked = {
             when (it.postion) {
-                0 -> {
+                1 -> {
                     Utility.goToAppSettings(applicationContext)
                 }
 
 
-                1 -> {
+                0 -> {
+                    startActivity(Intent(this@UserProfileView, BankTransactionHistoryView::class.java))
+                }
+
+                2 -> {
                     intentToActivityMain(this@UserProfileView, SocialCommunityActivity::class.java)
                 }
-                2 -> {
+                3 -> {
                     openWebPageFor(
                         getString(R.string.privacy_policy),
                         "https://www.fypmoney.in/fyp/privacy-policy/"
                     )
                 }
-                3 -> {
+                4 -> {
                     openWebPageFor(
                         getString(R.string.terms_and_conditions),
                         "https://www.fypmoney.in/fyp/terms-of-use/"
                     )
                 }
 
-                4 -> {
+                5 -> {
                     callFreshChat(applicationContext)
                 }
 
-                5 -> {
+                6 -> {
                     callLogOutBottomSheet()
                 }
 
@@ -157,21 +161,24 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
 
         val iconList = ArrayList<ListUiModel>()
         iconList.add(ListUiModel(postion = 0,
+            name = getString(R.string.trans_history_heading),
+            icon = AppCompatResources.getDrawable(this,R.drawable.ic_account_statement) ))
+        iconList.add(ListUiModel(postion = 1,
             name = getString(R.string.privacy_settings),
             icon = AppCompatResources.getDrawable(this,R.drawable.ic_privacy) ))
-        iconList.add(ListUiModel(postion = 1,
+        iconList.add(ListUiModel(postion = 2,
             name = getString(R.string.community_settings),
             icon = AppCompatResources.getDrawable(this,R.drawable.ic_community) ))
-        iconList.add(ListUiModel(postion = 2,
+        iconList.add(ListUiModel(postion = 3,
             name = getString(R.string.privacy_policy),
             icon = AppCompatResources.getDrawable(this,R.drawable.ic_privacy) ))
-        iconList.add(ListUiModel(postion = 3,
+        iconList.add(ListUiModel(postion = 4,
             name = getString(R.string.t_n_c),
             icon = AppCompatResources.getDrawable(this,R.drawable.ic_privacy) ))
-        iconList.add(ListUiModel(postion = 4,
+        iconList.add(ListUiModel(postion = 5,
             name = getString(R.string.help),
             icon = AppCompatResources.getDrawable(this,R.drawable.ic_help) ))
-        iconList.add(ListUiModel(postion = 5,
+        iconList.add(ListUiModel(postion = 6,
             name = getString(R.string.log_out),
             icon = AppCompatResources.getDrawable(this,R.drawable.ic_log_out) ))
 

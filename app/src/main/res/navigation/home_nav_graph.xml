@@ -26,9 +26,9 @@
 
     <fragment
         android:id="@+id/navigation_rewards"
-        android:name="com.fypmoney.view.rewardsAndWinnings.RewardsFragment"
+        android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment"
         android:label="@string/rewards"
-        tools:layout="@layout/fragment_rewards" />
+        tools:layout="@layout/fragment_rewards_overview" />
 
     <fragment
         android:id="@+id/navigation_fyper"
@@ -54,4 +54,20 @@
             android:name="sectionExploreName"
             app:argType="string" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_rewards_history"
+        android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment"
+        android:label="@string/reward_history"
+        tools:layout="@layout/fragment_reward_history" />
+    <fragment
+        android:id="@+id/navigation_arcade"
+        android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment"
+        android:label="@string/arcade"
+        tools:layout="@layout/fragment_spinner_list" />
+    <fragment
+        android:id="@+id/navigation_jackpot"
+        android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsJackpotFragment"
+        android:label="@string/jackpot"
+        tools:layout="@layout/fragment_jackpot_overview" />
 </navigation>

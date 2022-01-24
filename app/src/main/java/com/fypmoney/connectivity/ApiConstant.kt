@@ -145,7 +145,7 @@ object ApiConstant {
 
     const val API_FETCH_FEED_DETAILS = "/services/loyaltyservice/api/feed/"
 
-    const val API_FETCH_OFFER_DETAILS = "/services/loyaltyservice/api/fyp-offer/"
+    const val API_FETCH_OFFER_DETAILS = "/services/PockketService/api/fyp-offer/"
     const val Api_Request_Siblin_parent = "services/authservice/api/family-member/userKycCode/"
     const val Api_Your_Gifts = "services/loyaltyservice/api/onboarding-gifts"
 

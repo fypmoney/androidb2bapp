@@ -1,8 +1,8 @@
 package com.fypmoney.view.fragment
 
 
-import android.R.attr
 import android.app.Dialog
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,30 +13,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.fypmoney.R
-import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.databinding.BottomSheetOfferDetailBinding
+import com.fypmoney.util.Utility
+import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.adapter.offerpointsAdapter
 import com.fypmoney.view.interfaces.ListContactClickListener
-
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_offer_detail.view.*
-import kotlinx.android.synthetic.main.bottom_sheet_offer_detail.view.recycler_view
-import org.json.JSONObject
-
-import android.R.attr.data
-import androidx.core.content.ContextCompat
-import com.fypmoney.bindingAdapters.setBackgroundDrawable
-import com.fypmoney.model.HistoryItem
-import com.fypmoney.util.Utility
-import kotlinx.android.synthetic.main.bottom_sheet_offer_detail.view.logo
-import kotlinx.android.synthetic.main.reward_offer_detail.*
-import kotlinx.android.synthetic.main.slide_item_container.*
-import kotlinx.android.synthetic.main.slide_item_container.view.*
-
 import org.json.JSONArray
 
 
@@ -75,6 +62,17 @@ class OfferDetailsBottomSheet(
         view.brandName.text = offerDetails.brandName
 
         view.offer_title.text = offerDetails.offerShortTitle
+
+        offerDetails.rfu3?.let { it->
+            view.shop_now_btn.setOnClickListener { it1->
+                val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, it)
+                startActivity(intent)
+            }
+        }
+
+
+
 
         try {
             val jsonArr = JSONArray(offerDetails?.tnc)

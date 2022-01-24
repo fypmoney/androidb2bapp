@@ -14,6 +14,7 @@ import com.fypmoney.databinding.ViewAddMoneyBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.util.roundOfAmountToCeli
+import com.fypmoney.view.fragment.MaxLoadAmountReachedWarningDialogFragment
 import com.fypmoney.viewmodel.AddMoneyViewModel
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.bottom_sheet_redeem_coins.view.*
@@ -22,7 +23,6 @@ import kotlinx.android.synthetic.main.view_add_money.*
 import kotlinx.android.synthetic.main.view_add_money.add_money_editext
 import kotlinx.android.synthetic.main.view_add_money.btnSendOtp
 import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.*
-import java.lang.NumberFormatException
 
 /*
 * This class is used to add money
@@ -124,6 +124,13 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
                     intentToActivity(AddMoneyUpiDebitView::class.java)
                     // callBottomSheet(mViewModel.amountSelected.get()!!, getString(R.string.dummy_amount))
                     mViewModel.onAddClicked.value = false
+                }
+            }
+            mViewModel.maxLoadLimitReached.observe(this) {
+                if (it) {
+                    val showMaxLoadAmountReachedWarningDialogFragment = MaxLoadAmountReachedWarningDialogFragment()
+                    showMaxLoadAmountReachedWarningDialogFragment.show(supportFragmentManager, "showMaxLoadAmountReachedWarningDialogFragment")
+                    mViewModel.maxLoadLimitReached.value = false
                 }
             }
         }

@@ -79,22 +79,23 @@ class CardFragmentVM(application: Application) :
         )
         cardOptionList.add(
             CardOptionUiModel(
+                optionEvent = CardOptionEvent.AccountStatement,
+                icon = AppCompatResources.getDrawable(
+                    PockketApplication.instance,
+                    R.drawable.ic_account_statement
+                ),
+                name = PockketApplication.instance.getString(R.string.trans_history_heading)
+            )
+        )
+
+        cardOptionList.add(
+            CardOptionUiModel(
                 optionEvent = CardOptionEvent.CardSettings,
                 icon = AppCompatResources.getDrawable(
                     PockketApplication.instance,
                     R.drawable.ic_card_settings
                 ),
                 name = PockketApplication.instance.getString(R.string.card_settings)
-            )
-        )
-        cardOptionList.add(
-            CardOptionUiModel(
-                optionEvent = CardOptionEvent.AccountStatement,
-                icon = AppCompatResources.getDrawable(
-                    PockketApplication.instance,
-                    R.drawable.ic_account_statement
-                ),
-                name = PockketApplication.instance.getString(R.string.account_stmt)
             )
         )
         _state.value = CardState.CardOptionState(cardOptionList)
@@ -102,16 +103,6 @@ class CardFragmentVM(application: Application) :
 
     private fun prepareTrackCardOption() {
         val cardOptionList = mutableListOf<CardOptionUiModel>()
-        cardOptionList.add(
-            CardOptionUiModel(
-                optionEvent = CardOptionEvent.CardSettings,
-                icon = AppCompatResources.getDrawable(
-                    PockketApplication.instance,
-                    R.drawable.ic_card_settings
-                ),
-                name = PockketApplication.instance.getString(R.string.card_settings)
-            )
-        )
         cardOptionList.add(
             CardOptionUiModel(
                 optionEvent = CardOptionEvent.TrackOrder,
@@ -129,7 +120,17 @@ class CardFragmentVM(application: Application) :
                     PockketApplication.instance,
                     R.drawable.ic_account_statement
                 ),
-                name = PockketApplication.instance.getString(R.string.account_stmt)
+                name = PockketApplication.instance.getString(R.string.trans_history_heading)
+            )
+        )
+        cardOptionList.add(
+            CardOptionUiModel(
+                optionEvent = CardOptionEvent.CardSettings,
+                icon = AppCompatResources.getDrawable(
+                    PockketApplication.instance,
+                    R.drawable.ic_card_settings
+                ),
+                name = PockketApplication.instance.getString(R.string.card_settings)
             )
         )
         _state.value = CardState.CardOptionState(cardOptionList)
@@ -149,16 +150,6 @@ class CardFragmentVM(application: Application) :
         )
         cardOptionList.add(
             CardOptionUiModel(
-                optionEvent = CardOptionEvent.CardSettings,
-                icon = AppCompatResources.getDrawable(
-                    PockketApplication.instance,
-                    R.drawable.ic_card_settings
-                ),
-                name = PockketApplication.instance.getString(R.string.card_settings)
-            )
-        )
-        cardOptionList.add(
-            CardOptionUiModel(
                 optionEvent = CardOptionEvent.TrackOrder,
                 icon = AppCompatResources.getDrawable(
                     PockketApplication.instance,
@@ -174,14 +165,10 @@ class CardFragmentVM(application: Application) :
                     PockketApplication.instance,
                     R.drawable.ic_account_statement
                 ),
-                name = PockketApplication.instance.getString(R.string.account_stmt)
+                name = PockketApplication.instance.getString(R.string.trans_history_heading)
             )
         )
-        _state.value = CardState.CardOptionState(cardOptionList)
-    }
 
-    private fun prepareEnabledCardOption() {
-        val cardOptionList = mutableListOf<CardOptionUiModel>()
         cardOptionList.add(
             CardOptionUiModel(
                 optionEvent = CardOptionEvent.CardSettings,
@@ -192,6 +179,11 @@ class CardFragmentVM(application: Application) :
                 name = PockketApplication.instance.getString(R.string.card_settings)
             )
         )
+        _state.value = CardState.CardOptionState(cardOptionList)
+    }
+
+    private fun prepareEnabledCardOption() {
+        val cardOptionList = mutableListOf<CardOptionUiModel>()
         cardOptionList.add(
             CardOptionUiModel(
                 optionEvent = CardOptionEvent.AccountStatement,
@@ -199,7 +191,17 @@ class CardFragmentVM(application: Application) :
                     PockketApplication.instance,
                     R.drawable.ic_account_statement
                 ),
-                name = PockketApplication.instance.getString(R.string.account_stmt)
+                name = PockketApplication.instance.getString(R.string.trans_history_heading)
+            )
+        )
+        cardOptionList.add(
+            CardOptionUiModel(
+                optionEvent = CardOptionEvent.CardSettings,
+                icon = AppCompatResources.getDrawable(
+                    PockketApplication.instance,
+                    R.drawable.ic_card_settings
+                ),
+                name = PockketApplication.instance.getString(R.string.card_settings)
             )
         )
         _state.value = CardState.CardOptionState(cardOptionList)

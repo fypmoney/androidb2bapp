@@ -1,6 +1,7 @@
 package com.fypmoney.view.rewardsAndWinnings.fragments
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -16,6 +17,7 @@ import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryLeaderboardAdapter
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardHistoryFragmentVM
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.math.roundToInt
 
 
@@ -57,6 +59,13 @@ class RewardHistoryFragment :
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
 
+        setToolbarAndTitle(
+            context = requireContext(),
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.reward_history),
+            titleColor = Color.WHITE,
+            backArrowTint = Color.WHITE
+        )
         mViewBinding?.showHistory?.setOnClickListener {
 
             val intent = Intent(requireContext(), RewardsHistoryView::class.java)

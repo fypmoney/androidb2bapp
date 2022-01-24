@@ -68,6 +68,7 @@ data class SectionContentItem(
     var contentDimensionX: Int? = null,
     val id: Int? = null,
     var contentType: String? = null,
+    var actionFlagCode: String? = null,
     var contentDimensionY: Int? = null,
     val status: String? = null
 ):Parcelable {
@@ -79,8 +80,7 @@ data class SectionContentItem(
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readValue(Int::class.java.classLoader) as? Int,
         parcel.readString(),
-        parcel.readValue(Int::class.java.classLoader) as? Int,
-        parcel.readString()
+        parcel.readString(),
     ) {
     }
 

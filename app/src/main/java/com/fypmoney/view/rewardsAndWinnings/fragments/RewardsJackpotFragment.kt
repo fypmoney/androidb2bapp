@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -22,6 +24,7 @@ import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.adapter.FeedsRewardsJackpotAdapter
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsJackpotVM
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, RewardsJackpotVM>(),
@@ -115,6 +118,17 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
 
+        setToolbarAndTitle(
+            context = requireContext(),
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.jackpot),
+            titleColor = Color.WHITE,
+            backArrowTint = Color.WHITE
+        )
+
+        trackr {
+            it.name = TrackrEvent.open_jackpot
+        }
         setRecyclerView()
 
         jackpotViewModel?.let { observeInput(it) }

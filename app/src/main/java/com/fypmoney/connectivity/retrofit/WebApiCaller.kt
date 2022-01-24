@@ -1,6 +1,5 @@
 package com.fypmoney.connectivity.retrofit
 
-import android.util.Log
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -9,7 +8,6 @@ import com.fypmoney.connectivity.ApiDataParsing
 import com.fypmoney.connectivity.ApiUrl
 import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
-import com.fypmoney.connectivity.network.NetworkUtil.Companion.isNetworkAvailable
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
@@ -472,7 +470,7 @@ class WebApiCaller {
                         request.onResponse.onError(
                             purpose = request.purpose,
                             ErrorResponseInfo(
-                                errorCode = "101",
+                                errorCode = "102",
                                 msg = ""
                             )
                         )

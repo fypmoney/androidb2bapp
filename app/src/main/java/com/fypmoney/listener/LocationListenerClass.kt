@@ -47,7 +47,11 @@ class LocationListenerClass(
                 if (NetworkUtil.isNetworkAvailable()) {
                     locationManager =
                         context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-                    if (locationManager != null) {
+                    if (locationManager != null && locationManager!!.isProviderEnabled(
+                            LocationManager.GPS_PROVIDER
+                        )
+                    ) {
+
                         locationManager?.requestLocationUpdates(
                             LocationManager.NETWORK_PROVIDER,
                             5000,

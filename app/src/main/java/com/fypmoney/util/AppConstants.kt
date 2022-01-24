@@ -58,6 +58,8 @@ object AppConstants {
     const val EXPLORE_IN_APP = "IN_APP"
     const val EXPLORE_SECTION_EXPLORE = "EXPLORE"
 
+    const val TYPE_VIDEO = "VIDEO"
+    const val TYPE_VIDEO_EXPLORE = "VIDEO_EXPLORE"
     const val FEED_RESPONSE = "feed_response"
     const val EXPLORE_RESPONSE = "explore_response"
     const val FEED_TYPE_IN_APP = "INAPP"
@@ -75,6 +77,8 @@ object AppConstants {
     const val ADD_MEMBER_STATUS_APPROVED = "APPROVED"
     const val ADD_MEMBER_STATUS_INVITED = "INVITED"
     const val ADD_MEMBER_STATUS_DECLINED = "DECLINED"
+    const val ACTIONFLAG = "ACTIONFLAG"
+
     const val YES = "YES"
     const val NO = "NO"
     const val PRODUCT_SPIN = "SPIN_WHEEL"
@@ -227,6 +231,8 @@ object AppConstants {
     const val TRACKORDER = "TrackOrderScreen"
     const val CHORES = "ChoresScreen"
     const val JACKPOTTAB = "Jackpot"
+    const val ARCADE = "Arcade"
+    const val RewardHistory = "RewardHistory"
     const val StoreofferScreen = "Storeofferscreen"
     const val StoreshopsScreen = "Storeshopsscreen"
 

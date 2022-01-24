@@ -22,6 +22,7 @@ package com.fypmoney.viewmodel
 * */
 class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
     var onAddClicked = MutableLiveData(false)
+    var maxLoadLimitReached = MutableLiveData(false)
     var setEdittextLength = MutableLiveData(false)
     var availableAmount = ObservableField(application.getString(R.string.dummy_amount))
     var amountSelected = ObservableField<String>("1000") //prefilled amount
@@ -48,6 +49,9 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
                 }
                 it < 50 -> {
                     Utility.showToast(PockketApplication.instance.getString(R.string.minimum_load_amount))
+                }
+                remainingLoadLimitAmount.get() != null && it>remainingLoadLimitAmount.get()!!.toInt()->{
+                    maxLoadLimitReached.value = true
                 }
                 else -> {
                     onAddClicked.value = true

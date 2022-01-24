@@ -16,10 +16,14 @@ import com.fypmoney.databinding.FragmentExploreBinding
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.ACTIONFLAG
 import com.fypmoney.util.AppConstants.EXPLORE_IN_APP_WEBVIEW
 import com.fypmoney.util.AppConstants.IN_APP_WITH_CARD
 import com.fypmoney.util.AppConstants.OFFER_REDIRECTION
+import com.fypmoney.util.AppConstants.TYPE_VIDEO
 import com.fypmoney.util.Utility
+import com.fypmoney.util.videoplayer.VideoActivity2
+import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
@@ -72,6 +76,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
         super.onViewCreated(view, savedInstanceState)
         _binding = getViewDataBinding()
 
+//        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         setObserver()
 
@@ -152,6 +157,20 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
             override fun onItemClicked(position: Int, it: SectionContentItem,exploreContentResponse:ExploreContentResponse?) {
 
                 when (it.redirectionType) {
+                    TYPE_VIDEO -> {
+                        val intent = Intent(requireActivity(), VideoActivity2::class.java)
+                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
+
+                        startActivity(intent)
+
+                    }
+                    AppConstants.TYPE_VIDEO_EXPLORE -> {
+                        val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
+                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
+                        intent.putExtra(ACTIONFLAG, it.actionFlagCode)
+
+                        startActivity(intent)
+                    }
                     AppConstants.EXPLORE_IN_APP -> {
                         it.redirectionResource?.let { uri ->
 
@@ -159,10 +178,14 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                             if (redirectionResources == AppConstants.FyperScreen) {
                                 findNavController().navigate(R.id.navigation_fyper)
                             } else if (redirectionResources == AppConstants.JACKPOTTAB) {
-                                findNavController().navigate(R.id.navigation_rewards)
+                                findNavController().navigate(R.id.navigation_jackpot)
                             } else if (redirectionResources == AppConstants.CardScreen) {
                                 findNavController().navigate(R.id.navigation_card)
-                            } else {
+                            } else if (redirectionResources == AppConstants.RewardHistory) {
+                                findNavController().navigate(R.id.navigation_rewards_history)
+                            }else if (redirectionResources == AppConstants.ARCADE) {
+                                findNavController().navigate(R.id.navigation_arcade)
+                            }else {
                                 Utility.deeplinkRedirection(redirectionResources, requireContext())
                             }
 

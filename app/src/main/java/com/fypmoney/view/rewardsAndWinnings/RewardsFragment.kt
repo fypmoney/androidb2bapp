@@ -19,10 +19,6 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.view.home.main.rewards.ViewPagerFragmentAdapter
 import com.fypmoney.view.home.main.rewards.viewmodel.RewardsFragmentVM
 import com.fypmoney.view.interfaces.HomeTabChangeClickListener
-import com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment
-import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsJackpotFragment
-import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment
-import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import java.util.*
@@ -120,10 +116,11 @@ class RewardsFragment : BaseFragment<FragmentRewardsBinding, RewardsFragmentVM>(
         // add Fragments in your ViewPagerFragmentAdapter class
 
         // add Fragments in your ViewPagerFragmentAdapter class
-        arrayList.add(RewardsOverviewFragment.newInstance(tabchangeListner))
+        //arrayList.add(RewardsOverviewFragment.newInstance(tabchangeListner))
+        /*
         arrayList.add(RewardsSpinnerListFragment.newInstance())
         arrayList.add(RewardsJackpotFragment.newInstance())
-        arrayList.add(RewardHistoryFragment.newInstance())
+        arrayList.add(RewardHistoryFragment.newInstance())*/
 
 
         myAdapter = ViewPagerFragmentAdapter(childFragmentManager, lifecycle, arrayList)

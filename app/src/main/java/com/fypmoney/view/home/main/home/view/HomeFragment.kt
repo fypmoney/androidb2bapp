@@ -251,8 +251,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 if (itemsArrayList.size > 0) {
 
                     itemsArrayList.add(offerDetailResponse())
+                    //set Offers  for you title dynamic
                     _binding.shimmerLayoutLightening.visibility = View.GONE
+                    if(!itemsArrayList[0].rfu2.isNullOrEmpty()){
+                        _binding.lighteningDealsTitle.text = itemsArrayList[0].rfu2
+                    }
                     _binding.lighteningDealsTitle.visibility = View.VISIBLE
+
                     _binding.lighteningDealsRv.visibility = View.VISIBLE
                     _binding.toInterestScreen.visibility = View.GONE
                 } else {
@@ -377,9 +382,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                     if (redirectionResources == FyperScreen) {
                         findNavController().navigate(R.id.navigation_fyper)
                     } else if (redirectionResources == AppConstants.JACKPOTTAB) {
-                        findNavController().navigate(R.id.navigation_rewards)
+                        findNavController().navigate(R.id.navigation_jackpot)
                     } else if (redirectionResources == AppConstants.CardScreen) {
                         findNavController().navigate(R.id.navigation_card)
+                    }else if (redirectionResources == AppConstants.RewardHistory) {
+                        findNavController().navigate(R.id.navigation_rewards_history)
+                    }else if (redirectionResources == AppConstants.ARCADE) {
+                        findNavController().navigate(R.id.navigation_arcade)
                     } else {
                         redirectionResources?.let { it1 ->
                             deeplinkRedirection(

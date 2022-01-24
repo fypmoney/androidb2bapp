@@ -7,7 +7,19 @@
 
     </data>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/reward_background">
+
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/toolbar_with_custom_background"/>
+
     <androidx.core.widget.NestedScrollView
+        app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:background="@drawable/jackpot_radial_gradient"
         android:layout_height="wrap_content">
@@ -15,7 +27,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="50dp">
 
             <ImageView
                 android:id="@+id/banner"
@@ -180,4 +193,5 @@
 
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
