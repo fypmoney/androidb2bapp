@@ -207,7 +207,8 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
                 val bottomSheet =
                     ManageChannelsBottomSheet(
                         cardEvent.bankProfile?.cardInfos,
-                        cardEvent.bottomSheetDismissListener
+                        cardEvent.bottomSheetDismissListener,
+                        cardFragmentVM.bankProfile
                     )
                 bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
                 bottomSheet.show(childFragmentManager, "ManageChannels")

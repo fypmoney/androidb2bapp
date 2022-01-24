@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_11sdp"
-                    android:text="KYC Verified"
+                    android:text="@{viewModel.kycType}"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:alpha="60"

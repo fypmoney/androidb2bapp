@@ -176,6 +176,7 @@ data class BankProfileResponseDetails(
     @SerializedName("posLimit") val posLimit: String? = null,
     @SerializedName("ecomLimit") val ecomLimit: String? = null,
     @SerializedName("atmLimit") val atmLimit: String? = null,
+    @SerializedName("kycType") val kycType: String? = "MINIMUM",
     @SerializedName("clLimit") val clLimit: String? = null,
     @SerializedName("cardInfos") val cardInfos: List<CardInfoDetails>? = null,
 ) : Serializable
