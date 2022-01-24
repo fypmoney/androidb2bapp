@@ -206,7 +206,7 @@
                         android:textAlignment="center"
                         android:textColor="@color/white"
                         android:layout_marginEnd="@dimen/_16sdp"
-                        android:textSize="22sp"
+                        android:textSize="20sp"
 
                         app:layout_constraintBottom_toTopOf="@+id/seek_bar"
                         app:layout_constraintEnd_toEndOf="parent"
