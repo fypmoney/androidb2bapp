@@ -1,9 +1,10 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -275,11 +276,17 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
             }
             ApiConstant.API_SET_CHANGE_PIN -> {
                 if (responseData is SetPinResponse) {
+                    trackr { it1->
+                        it1.name = TrackrEvent.pin_success
+                    }
                     onSetPinSuccess.value = responseData.setPinResponseDetails!!
                 }
             }
             ApiConstant.API_ACTIVATE_CARD -> {
                 if (responseData is ActivateCardResponse) {
+                    trackr { it1->
+                        it1.name = TrackrEvent.card_activate_success
+                    }
                     callGetBankProfileApi()
                     Utility.showToast(responseData.activateCardResponseDetails?.message)
                     onActivateCardInit.value = true
@@ -308,7 +315,6 @@ class CardScreenViewModel(application: Application) : BaseViewModel(application)
         fetchVirtualCardRequest.p2 = mainObject.getString("p2")
         fetchVirtualCardRequest.checksum = mainObject.getString("checksum")
         return fetchVirtualCardRequest
-
 
     }
 

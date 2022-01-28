@@ -17,7 +17,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{()->viewHelper.onItemClicked()}"
+        android:id="@+id/relation_layout"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView

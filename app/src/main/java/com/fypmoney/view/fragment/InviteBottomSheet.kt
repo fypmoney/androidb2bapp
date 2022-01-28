@@ -14,7 +14,9 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.databinding.BottomSheetInviteBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -50,8 +52,25 @@ class InviteBottomSheet(
         val shareButton = view.findViewById<Button>(R.id.button_share)!!
 
         referralCode.text = Utility.getCustomerDataFromPreference()?.referralCode
-        referralMsg.text = Utility.getCustomerDataFromPreference()?.referralMsg
+        var referralMsgValue: String? = ""
+        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null
+            && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "0") {
+            referralMsgValue = if (!SharedPrefUtils.getString(
+                    PockketApplication.instance,
+                    SharedPrefUtils.SF_KEY_REFER_LINE2
+                ).isNullOrEmpty()
+            ) {
+                SharedPrefUtils.getString(
+                    PockketApplication.instance,
+                    SharedPrefUtils.SF_KEY_REFER_LINE2)
 
+            } else {
+                ""
+            }
+
+        }
+
+        referralMsg.text = referralMsgValue
 
         referralCode.setOnClickListener {
             Utility.copyTextToClipBoard(

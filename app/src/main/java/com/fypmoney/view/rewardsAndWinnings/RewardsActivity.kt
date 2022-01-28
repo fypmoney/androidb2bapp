@@ -1,49 +1,36 @@
 package com.fypmoney.view.rewardsAndWinnings
 
+
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.Nullable
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
-import com.fypmoney.BR
-
-import com.fypmoney.base.BaseActivity
-
-import com.fypmoney.view.fragment.*
-
-import com.google.android.material.tabs.TabLayout
-
-import java.util.ArrayList
-
-
-import com.fypmoney.databinding.ViewRewardsBinding
-import kotlinx.android.synthetic.main.toolbar.*
-
-import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
+import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.base.BaseActivity
+import com.fypmoney.databinding.ViewRewardsBinding
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
+import com.fypmoney.view.fragment.*
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment
-import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment
+import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsJackpotFragment
 import com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
+import kotlinx.android.synthetic.main.toolbar.*
+import java.util.*
 
 
 class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
@@ -73,20 +60,11 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         tabLayout = findViewById(R.id.tabLayout)
         viewPager = findViewById(R.id.viewPager)
 
-        initializeTabs(tabLayout)
+        initializeTabs(tabLayout, intent)
 
 
 
-        mViewModel?.totalmyntsClicked?.observe(
-            this,
-            androidx.lifecycle.Observer { list ->
-                if (list) {
-                    viewPager.currentItem = 2
-                    mViewModel?.totalmyntsClicked?.postValue(false)
 
-                }
-            }
-        )
         mViewModel?.error?.observe(
             this,
             androidx.lifecycle.Observer { list ->
@@ -166,30 +144,26 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
         }
     }
 
-    override fun onActivityReenter(resultCode: Int, data: Intent?) {
-        super.onActivityReenter(resultCode, data)
-
-    }
 
     override fun onStart() {
         super.onStart()
-        mViewModel?.callTotalRewardsEarnings()
-        mViewModel?.callRewardSummary()
-        mViewModel?.callRewardHistory()
+
 
     }
 
-    private fun initializeTabs(tabLayout: TabLayout) {
+    private fun initializeTabs(tabLayout: TabLayout, intent: Intent) {
 
 
         val adapter = ViewPagerAdapter(supportFragmentManager)
 
-        adapter.addFragment(RewardsOverviewFragment(), getString(R.string.overview))
-        adapter.addFragment(RewardsSpinnerListFragment(), getString(R.string.arcade))
-        adapter.addFragment(RewardHistoryFragment(), getString(R.string.history))
+//        adapter.addFragment(RewardsOverviewFragment(), getString(R.string.overview))
+
+        adapter.addFragment(RewardsSpinnerListFragment.newInstance(), getString(R.string.arcade))
+        adapter.addFragment(RewardsJackpotFragment.newInstance(), getString(R.string.jackpot))
+        adapter.addFragment(RewardHistoryFragment.newInstance(), getString(R.string.history))
 
         viewPager.adapter = adapter
-        viewPager.offscreenPageLimit = 1
+        viewPager.offscreenPageLimit = 0
 
         tabLayout.setupWithViewPager(viewPager)
         tabLayout.getTabAt(0)?.view?.background = ContextCompat.getDrawable(
@@ -211,11 +185,21 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
                         this@RewardsActivity,
                         com.fypmoney.R.drawable.tab_two_rewards
                     )
-
+                    trackr {
+                        it.name = TrackrEvent.open_arcade
+                    }
+                } else if (tab.position == 2) {
+                    tab.view.background = ContextCompat.getDrawable(
+                        this@RewardsActivity,
+                        com.fypmoney.R.drawable.tab_third_rewards
+                    )
+                    trackr {
+                        it.name = TrackrEvent.open_jackpot
+                    }
                 } else {
                     tab.view.background = ContextCompat.getDrawable(
                         this@RewardsActivity,
-                        com.fypmoney.R.drawable.tab_three_rewards
+                        com.fypmoney.R.drawable.tab_four_rewards
                     )
 
                 }
@@ -227,6 +211,16 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+
+
+
+        when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
+            AppConstants.JACKPOTTAB -> {
+                viewPager.currentItem = 2
+            }
+
+
+        }
     }
 
 
@@ -240,53 +234,12 @@ class RewardsActivity : BaseActivity<ViewRewardsBinding, RewardsAndVM>() {
 
     override fun getViewModel(): RewardsAndVM {
         mViewModel = ViewModelProvider(this).get(RewardsAndVM::class.java)
-        setObserver(mViewModel!!)
+
 
         return mViewModel!!
     }
 
-    private fun setObserver(mViewModel: RewardsAndVM) {
-        mViewModel?.redeemproductDetails.observe(this) {
-            if (it != null) {
-                mViewModel?.redeemproductDetails.postValue(null)
-                Glide.with(this).asDrawable().load(it.scratchResourceHide)
-                    .into(object : CustomTarget<Drawable?>() {
 
-                        override fun onLoadCleared(@Nullable placeholder: Drawable?) {
-
-                        }
-
-                        override fun onResourceReady(
-                            resource: Drawable,
-                            transition: Transition<in Drawable?>?
-                        ) {
-                            val intent =
-                                Intent(this@RewardsActivity, ScratchCardActivity::class.java)
-                            intent.putExtra(AppConstants.SECTION_ID, it.sectionId)
-                            it.sectionList?.forEachIndexed { pos, item ->
-                                if (item != null) {
-                                    ScratchCardActivity.sectionArrayList.add(item)
-                                }
-                            }
-                            ScratchCardActivity.imageScratch = resource
-
-                            intent.putExtra(
-                                AppConstants.ORDER_NUM,
-                                mViewModel.orderNumber.value
-                            )
-                            intent.putExtra(
-                                AppConstants.PRODUCT_HIDE_IMAGE,
-                                it.scratchResourceShow
-                            )
-                            startActivity(intent)
-                        }
-                    })
-
-            }
-
-
-        }
-    }
 
 
 }

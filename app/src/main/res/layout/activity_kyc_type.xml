@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.register.viewModel.KycTypeVM" />
+
+    </data>
+
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/_20sdp">
+
+            <include
+                android:id="@+id/toolbarAnimation"
+                layout="@layout/toolbar_animation" />
+
+            <TextView
+                android:id="@+id/tvTitleUserType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/complete_your_kyc"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/toolbarAnimation"
+
+                />
+
+            <TextView
+                style="@style/TextviewRegular"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/_24sdp"
+                android:layout_marginEnd="@dimen/_24sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/_12sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center"
+                android:id="@+id/kyc_details_tv"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitleUserType"
+                android:layout_height="wrap_content"
+                android:text="@string/kyc_process_is_a_mandated_by_rbi_to_verify_user_identity_for_opening_any_wallet_bank_accounts" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="@string/fyp_is_in_association_with"
+                android:id="@+id/fyp_msg"
+                style="@style/TextviewBold"
+                android:textSize="14sp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/kyc_details_tv"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/visa_pan"
+                app:layout_constraintTop_toBottomOf="@+id/fyp_msg"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/yes_bank_logo" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_visa" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/select_doc"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="@dimen/_38sdp"
+                android:textSize="14sp"
+                android:layout_height="wrap_content"
+                android:text="Select a document to complete your KYC"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="@style/TextviewBold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/visa_pan" />
+
+            <LinearLayout
+                android:id="@+id/more_kyc_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/round_dark_grey_rewards_18"
+                android:backgroundTint="#FFEEDD"
+                android:gravity="center"
+
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintBottom_toTopOf="@+id/btnContinue"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lin"
+                app:layout_constraintVertical_bias="0.594">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:src="@drawable/ic_info_24"
+                    app:tint="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:text="@string/know_all_about_kyc"
+                    android:textColor="@color/text_color_dark" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:id="@+id/lin"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/select_doc"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                android:layout_height="0dp">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvAadhaar"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+
+
+                    android:layout_marginTop="@dimen/_20sdp"
+                    app:cardCornerRadius="@dimen/_15sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:onClick="@{()->viewModel.onTeenagerClick()}">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/ivUserTypeIcon"
+                            android:layout_width="@dimen/_75sdp"
+                            android:layout_height="@dimen/_75sdp"
+
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginBottom="@dimen/_14sdp"
+                            android:contentDescription="userTypeIcon"
+                            android:src="@drawable/aadhaar_logo" />
+
+
+                        <TextView
+                            android:id="@+id/tvUserType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginBottom="@dimen/_12sdp"
+
+                            android:text="Aadhaar card"
+                            android:textColor="@color/text_color_dark"
+                            android:textSize="12sp"
+
+
+                            />
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cvPan"
+                    android:visibility="gone"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:elevation="@dimen/_10sdp"
+
+                    app:cardCornerRadius="@dimen/_15sdp"
+                    app:layout_constraintBottom_toTopOf="@+id/btnContinue"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    android:onClick="@{()->viewModel.onGuardianClick()}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/cvAadhaar">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/ivUserTypeParentIcon"
+                            android:layout_width="@dimen/_75sdp"
+                            android:layout_height="@dimen/_75sdp"
+
+                            android:layout_marginTop="@dimen/_15sdp"
+                            android:layout_marginBottom="@dimen/_14sdp"
+                            android:contentDescription="userTypeIcon"
+                            android:src="@drawable/ic_pan" />
+
+
+                        <TextView
+                            android:id="@+id/tvUserParentType"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+
+                            android:text="PAN card"
+                            android:layout_marginBottom="@dimen/_12sdp"
+
+
+                            android:textColor="@color/text_color_dark"
+                            android:textSize="12sp"
+
+
+                            />
+
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </LinearLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnContinue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.onContinue()}"
+                android:text="@string/continue_txt"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

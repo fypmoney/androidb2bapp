@@ -11,14 +11,17 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
+import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.SettingsRequest
 import com.fypmoney.model.SettingsResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.referandearn.model.ReferMessageResponse
 import com.google.gson.Gson
-import com.moengage.core.internal.MoEConstants
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.moengage.core.internal.MoEConstants.*
 
 /*
@@ -36,6 +39,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
     fun onContinueClicked() {
         callGetCustomerProfileApi()
         callSettingsApi()
+        callReferScreenMessages()
     }
 
     private fun callSettingsApi() {
@@ -48,6 +52,17 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                 request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = false,
                 param = request
+            )
+        )
+    }
+    private fun callReferScreenMessages() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.REFERRAL_SCREEN_MESSAGES_API,
+                NetworkUtil.endURL(ApiConstant.REFERRAL_SCREEN_MESSAGES_API),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
             )
         )
     }
@@ -73,9 +88,12 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
             ApiConstant.API_GET_CUSTOMER_INFO -> {
                 if (responseData is CustomerInfoResponse) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
-                    onApiSuccess.value=true
-                    trackr { it.services = arrayListOf(TrackrServices.ADJUST,TrackrServices.FIREBASE)
-                        it.name = TrackrEvent.LOGINSUCCESS }
+//                    Utility.getCustomerDataFromPreference()?.postKycScreenCode = "0"
+
+                    trackr {
+                        it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)
+                        it.name = TrackrEvent.LOGINSUCCESS
+                    }
 
                     SharedPrefUtils.putString(
                         getApplication(),
@@ -122,13 +140,15 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                         map[USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
                         map[USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
                         map[USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
-
-                        map[USER_ATTRIBUTE_USER_BDAY] = it.userProfile?.dob.toString()
                         map[USER_ATTRIBUTE_USER_GENDER] = it.userProfile?.gender.toString()
                         map[CUSTOM_USER_POST_KYC_CODE] = it.postKycScreenCode.toString()
-
                         UserTrackr.push(map)
                         UserTrackr.login( it.mobile.toString())
+                        it.userProfile?.dob?.let { it1 ->
+                            UserTrackr.setDateOfBirthDate(
+                                it1
+                            )
+                        }
                     }
                     val interestList = ArrayList<String>()
                     if (responseData.customerInfoResponseDetails?.userInterests?.isNullOrEmpty() == false) {
@@ -136,6 +156,13 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                             interestList.add(it.name!!)
                         }
 
+                        SharedPrefUtils.putArrayList(
+                            getApplication(),
+                            SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
+
+                        )
+
+                    } else {
                         SharedPrefUtils.putArrayList(
                             getApplication(),
                             SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
@@ -198,9 +225,31 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                     it.value
                                 )
                             }
+
                         }
                     }
                 }
+
+
+            }
+            ApiConstant.REFERRAL_SCREEN_MESSAGES_API -> {
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val data = Gson().fromJson(
+                    json.get("data").toString(),
+                    ReferMessageResponse::class.java
+                )
+                SharedPrefUtils.putString(
+                    getApplication(),
+                    SharedPrefUtils.SF_KEY_REFER_LINE2,
+                    data.referLine2
+                )
+                SharedPrefUtils.putString(
+                    getApplication(),
+                    SharedPrefUtils.SF_KEY_REFERAL_GLOBAL_MSG,
+                    data.referMessage
+                )
+
 
             }
         }

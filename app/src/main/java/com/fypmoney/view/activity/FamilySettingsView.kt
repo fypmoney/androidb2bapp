@@ -1,9 +1,6 @@
 package com.fypmoney.view.activity
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -19,17 +16,19 @@ import com.fypmoney.databinding.ViewFamilySettingsBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.customview.GifView
 import com.fypmoney.view.fragment.LeaveFamilyBottomSheet
 import com.fypmoney.view.fragment.UpdateFamilyNameBottomSheet
+import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.viewmodel.FamilySettingsViewModel
-import kotlinx.android.synthetic.main.view_walk_through_three.*
 
 
 /*
 * This class is used as Home Screen
+* TODO this will replace later with Fyper Fragment
 * */
-class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySettingsViewModel>(),
+
+class FamilySettingsView(val tabchangeListner: HomeTabChangeClickListener? = null) :
+    BaseFragment<ViewFamilySettingsBinding, FamilySettingsViewModel>(),
     UpdateFamilyNameBottomSheet.OnUpdateFamilyClickListener,
     LeaveFamilyBottomSheet.OnLeaveFamilyClickListener {
     private lateinit var mViewModel: FamilySettingsViewModel
@@ -52,20 +51,23 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
 
-//        mViewBinding.image.gifResource = R.raw.family
         Glide.with(requireActivity()).asGif().load(R.raw.family).into(mViewBinding.image)
-        mViewModel.callGetMemberApi()
         val lbm = LocalBroadcastManager.getInstance(requireContext())
-        lbm.registerReceiver(receiver, IntentFilter(AppConstants.AFTER_ADD_MEMBER_BROADCAST_NAME))
+        //lbm.registerReceiver(receiver, IntentFilter(AppConstants.AFTER_ADD_MEMBER_BROADCAST_NAME))
 
         setObserver()
     }
 
-    var receiver: BroadcastReceiver = object : BroadcastReceiver() {
+    override fun onResume() {
+        super.onResume()
+        mViewModel.callGetMemberApi()
+    }
+
+    /*var receiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             mViewModel.callGetMemberApi()
         }
-    }
+    }*/
 
     /**
      * Create this method for observe the viewModel fields
@@ -120,7 +122,7 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
                         R.string.family_settings_family_fypers
                     )
                 )
-                intentToActivity(HomeView::class.java)
+                mViewModel.callGetMemberApi()
                 mViewModel.onLeaveFamilySuccess.value = false
             }
         }
@@ -167,7 +169,7 @@ class FamilySettingsView : BaseFragment<ViewFamilySettingsBinding, FamilySetting
 
     override fun onDestroy() {
         super.onDestroy()
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver)
+        //LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(receiver)
     }
 
     override fun onTryAgainClicked() {

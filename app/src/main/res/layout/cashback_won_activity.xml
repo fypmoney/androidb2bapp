@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -66,7 +67,7 @@
             android:id="@+id/empty_screen"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-
+            tools:visibility = "visible"
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -86,7 +87,7 @@
                 android:paddingRight="@dimen/_34sdp"
                 android:textColor="#9CA3A5"
                 android:gravity="center"
-                android:text="@string/looks_like_you_haven_t_any_referred_a_yet"
+                android:text="@string/no_savings_yet_start_transaction_to_save_now"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 

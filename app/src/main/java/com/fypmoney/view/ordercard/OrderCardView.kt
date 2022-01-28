@@ -5,27 +5,19 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
-import androidx.databinding.adapters.ViewBindingAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
-import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewOrderCardBinding
-import com.fypmoney.util.Utility
-import com.fypmoney.bindingAdapters.setSomePartOfTextInColor
 import com.fypmoney.util.AppConstants.ORDER_CARD_INFO
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.fypmoney.view.ordercard.activateofflinecard.ScanCardKitNumberActivity
-import com.fypmoney.view.ordercard.cardorderoffer.CardOrderOfferActivity
-import com.google.common.base.Ascii.RS
-import com.google.firebase.analytics.FirebaseAnalytics
+import com.fypmoney.view.ordercard.cardofferdetails.CardOfferDetailsActivity
 import kotlinx.android.synthetic.main.activity_notify_me_order_card.*
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -104,10 +96,10 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
             }
             is OrderCardViewModel.OrderCardState.Success -> {
                 Utility.convertToRs("${it.userOfferCard.basePrice}")?.let { it1 ->
-                    setSomePartOfTextInColor(mViewBinding.cardPriceTv,getString(R.string.fyp_card_price),
-                        getString(R.string.Rs)+it1,
-                        "#F7AA11"
-                    )
+                    mViewBinding.cardActualPriceValueTv.text = getString(R.string.Rs)+it1
+                }
+                Utility.convertToRs("${it.userOfferCard.mrp}")?.let { it1 ->
+                    mViewBinding.cardOfferPriceValueTv.text = getString(R.string.Rs)+it1
                 }
             }
         }
@@ -117,14 +109,14 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
         when (it) {
             OrderCardViewModel.OrderCardEvent.GetOrderCardEvent -> {
                 trackr {
-                    it.name = TrackrEvent.check_offer
+                    it.name = TrackrEvent.order_now
                     it.add(
                         TrackrField.user_id,SharedPrefUtils.getLong(
                         applicationContext,
                         SharedPrefUtils.SF_KEY_USER_ID
                     ).toString())
                 }
-                val intent = Intent(this@OrderCardView,CardOrderOfferActivity::class.java)
+                val intent = Intent(this@OrderCardView, CardOfferDetailsActivity::class.java)
                 intent.putExtra(ORDER_CARD_INFO,mViewModel.userOfferCard)
                 startActivity(intent)
             }

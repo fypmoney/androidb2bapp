@@ -77,29 +77,14 @@ class UserFeedsInAppWebview : BaseActivity<ViewUserFeedsInappBinding, FeedDetail
         val mimeType = "text/html"
         val encoding = "UTF-8"
 
-        //  webView.loadUrl("https://www.google.com/")
-
 
         mViewModel.authorAndDate.set(
             mViewModel.feedDetails.get()?.author + " . " + mViewModel.feedDetails.get()?.readTime + " min read"
         )
 
 
-        when (intent.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
-            AppConstants.FEED_TYPE_INAPPWEB -> {
-                mViewModel.isBlogFeedType.set(false)
 
-                if (mViewModel.feedDetails.get()?.action?.url!!.contains("https://www.youtube.com")) {
-                    webView.loadUrl(mViewModel.feedDetails.get()?.action?.url!!)
-                    finish()
 
-                } else {
-                    webView.loadUrl(mViewModel.feedDetails.get()?.action?.url!!)
-
-                }
-            }
-            else -> {
-                mViewModel.isBlogFeedType.set(true)
                 webView.loadDataWithBaseURL(
                     "",
                     mViewModel.feedDetails.get()?.responsiveContent!!,
@@ -107,9 +92,6 @@ class UserFeedsInAppWebview : BaseActivity<ViewUserFeedsInappBinding, FeedDetail
                     encoding,
                     ""
                 )
-            }
-
-        }
 
 
     }

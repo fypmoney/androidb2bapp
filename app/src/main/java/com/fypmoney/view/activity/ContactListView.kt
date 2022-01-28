@@ -11,15 +11,14 @@ import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewContactListBinding
-import com.fypmoney.databinding.ViewContactsBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.PERMISSION_CODE
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
@@ -33,6 +32,7 @@ import kotlinx.android.synthetic.main.view_contacts.*
 /*
 * This is used to handle contacts
 * */
+
 class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewModel>(),
     DialogUtils.OnAlertDialogClickListener, InviteBottomSheet.OnShareClickListener,
     InviteMemberBottomSheet.OnInviteButtonClickListener, Utility.OnAllContactsAddedListener {
@@ -64,8 +64,6 @@ class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewMode
         setObserver()
         checkAndAskPermission()
     }
-
-
     /**
      * Create this method for observe the viewModel fields
      */
@@ -160,11 +158,8 @@ class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewMode
                     )
                 } else {
                     //set to never ask again
-                    SharedPrefUtils.putBoolean(
-                        applicationContext,
-                        SharedPrefUtils.SF_KEY_STORAGE_PERMANENTLY_DENY,
-                        true
-                    )
+                    Utility.showToast(getString(R.string.please_allow_us_to_read_your_contacts))
+                    Utility.goToAppSettingsPermission(this@ContactListView,PERMISSION_CODE)
                 }
             }
         }
@@ -178,28 +173,16 @@ class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewMode
     private fun checkAndAskPermission() {
         when (checkPermission(Manifest.permission.READ_CONTACTS)) {
             true -> {
-                mViewModel.progressDialog.value = true
-                mViewModel.callContactSyncApi()
-
+                Utility.getAllContactsInList(
+                    contentResolver,
+                    this,
+                    contactRepository = mViewModel.contactRepository
+                )
             }
             else -> {
                 requestPermission(Manifest.permission.READ_CONTACTS)
             }
         }
-    }
-
-
-    /*
-    * This method is used to call the Broadcast receiver
-    * */
-    private fun callBroadCast(contactEntity: ContactEntity) {
-        val intent = Intent(AppConstants.CONTACT_BROADCAST_NAME)
-        intent.putExtra(
-            AppConstants.CONTACT_BROADCAST_KEY,
-            contactEntity
-        )
-        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
-        finish()
     }
 
     override fun onPositiveButtonClick(uniqueIdentifier: String) {
@@ -231,7 +214,9 @@ class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewMode
     }
 
     override fun onShareClickListener(referralCode: String) {
-        inviteUser()
+        SharedPrefUtils.getString(this,SharedPrefUtils.SF_KEY_REFERAL_GLOBAL_MSG)?.let {
+            shareInviteCodeFromReferal(it)
+        }
     }
 
     override fun onInviteButtonClick() {
@@ -246,5 +231,14 @@ class ContactListView : BaseActivity<ViewContactListBinding, ContactListViewMode
 
     override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {
         mViewModel.callContactSyncApi()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode== PERMISSION_CODE){
+            if(resultCode== RESULT_OK){
+                checkAndAskPermission()
+            }
+        }
     }
 }

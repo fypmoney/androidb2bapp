@@ -4,33 +4,24 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.bindingAdapters.roundedImageView
 import com.fypmoney.databinding.RewardOfferDetailBinding
-import com.fypmoney.databinding.ViewAgeAllowedAccountBinding
-import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
-
 import com.fypmoney.util.Utility
 import com.fypmoney.view.StoreWebpageOpener2
-import com.fypmoney.view.adapter.OffersTopAdapter
 import com.fypmoney.view.adapter.offerpointsAdapter
 import com.fypmoney.view.interfaces.ListContactClickListener
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.viewmodel.OffersDetailsViewModel
-
 import kotlinx.android.synthetic.main.reward_offer_detail.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -125,10 +116,10 @@ class OfferDetailActivity :
 
         view_details_tv.setOnClickListener {
             mViewModel.action.value?.url?.let {
-                val intent2 = Intent(this, StoreWebpageOpener2::class.java)
-                StoreWebpageOpener2.url =it
-//                    intent2.putExtra("title", mViewModel.offerDetail.value?.title)
-                startActivity(intent2)
+                val intent = Intent(this, StoreWebpageOpener2::class.java)
+                //intent.putExtra(ARG_WEB_PAGE_TITLE, mViewModel.offerDetail.value?.title)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, it)
+                startActivity(intent)
             }
 
         }
@@ -142,16 +133,7 @@ class OfferDetailActivity :
 
 
             override fun onItemClicked(pos: Int) {
-//
-//                val intent = Intent(this@OfferDetailActivity, OfferDetailActivity::class.java)
-//
-//                intent.putExtra("feedid",itemsArrayList[pos].id)
-//
-//
-//
-//
-//
-//                startActivity(intent)
+
             }
 
 

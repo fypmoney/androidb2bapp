@@ -3,6 +3,11 @@ package com.fypmoney.application
 import android.app.Application
 import android.app.NotificationManager
 import android.content.Context
+import android.net.Uri
+import androidx.core.app.NotificationManagerCompat
+import com.freshchat.consumer.sdk.Freshchat
+import com.freshchat.consumer.sdk.FreshchatConfig
+import com.freshchat.consumer.sdk.FreshchatNotificationConfig
 import com.fyp.trackr.base.Trackr
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
@@ -11,6 +16,7 @@ import com.fypmoney.notification.NotificationUtils
 import com.fypmoney.notification.NotificationUtils.FESTIVAL_PROMOTIONAL_CHANNEL_ID
 import com.fypmoney.notification.NotificationUtils.PROMOTIONAL_CHANNEL_ID
 import com.fypmoney.notification.NotificationUtils.TRANSACTION_CHANNEL_ID
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.moe.pushlibrary.MoEHelper
@@ -24,11 +30,14 @@ import com.vanniktech.emoji.google.GoogleEmojiProvider
 
 class PockketApplication : Application() {
     var appUpdateRequired: Boolean = false
+     var freshchat: Freshchat? = null
 
     companion object {
         lateinit var instance: PockketApplication
         var homeScreenErrorMsg: String? = null
         var isNewFeedAvailableData: KeysFound? = null
+        var isLoadMoneyPopupIsShown = false
+
     }
 
     override fun onCreate() {
@@ -37,6 +46,8 @@ class PockketApplication : Application() {
         super.onCreate()
         instance = this
         EmojiManager.install(GoogleEmojiProvider())
+
+        initialiseFreshchat()
 
         //Check User is logged in or not.
         if(SharedPrefUtils.getBoolean(
@@ -106,5 +117,56 @@ class PockketApplication : Application() {
         }
     }
 
+    private fun initialiseFreshchat() {
+        val config = FreshchatConfig(
+            AppConstants.FRESH_CHAT_APP_ID,
+            AppConstants.FRESH_CHAT_APP_KEY
+        )
+        config.domain = AppConstants.FRESH_CHAT_DOMAIN
+        config.isCameraCaptureEnabled = true
+        config.isGallerySelectionEnabled = true
+        config.isResponseExpectationEnabled = true
+        config.isTeamMemberInfoVisible = true
+
+        config.isUserEventsTrackingEnabled = true
+
+        val freshChat = getFreshchatInstance(applicationContext)
+        val user = freshChat.user.apply {
+            firstName = SharedPrefUtils.getString(
+                this@PockketApplication,
+                SharedPrefUtils.SF_KEY_USER_FIRST_NAME
+            )
+            lastName = SharedPrefUtils.getString(
+                this@PockketApplication,
+                SharedPrefUtils.SF_KEY_USER_LAST_NAME
+            )
+
+        }
+        user.setPhone(
+            "+91",SharedPrefUtils.getString(
+                this@PockketApplication,
+                SharedPrefUtils.SF_KEY_USER_MOBILE)
+
+        )
+        freshChat.user = user
+        freshChat.init(config)
+        val soundUri =
+            Uri.parse("android.resource://" + applicationContext.packageName + "/" + R.raw.notification_sound)
+        val notificationConfig = FreshchatNotificationConfig().apply {
+            smallIcon = R.drawable.ic_notification
+            largeIcon = R.mipmap.ic_launcher_round
+            isNotificationSoundEnabled = true
+            notificationSound = soundUri
+            importance = NotificationManagerCompat.IMPORTANCE_MAX
+        }
+        freshChat.setNotificationConfig(notificationConfig)
+    }
+
+    private fun getFreshchatInstance(context: Context): Freshchat {
+        if (freshchat == null) {
+            freshchat = Freshchat.getInstance(context)
+        }
+        return freshchat!!
+    }
 
 }

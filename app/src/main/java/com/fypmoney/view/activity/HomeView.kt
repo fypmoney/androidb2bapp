@@ -13,7 +13,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.facebook.appevents.AppEventsLogger
 import com.fyp.trackr.models.*
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -28,11 +27,15 @@ import com.fypmoney.model.SendMoneyResponseDetails
 import com.fypmoney.model.UpdateTaskGetResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.INSUFFICIENT_ERROR_CODE
+import com.fypmoney.util.AppConstants.StoreofferScreen
+import com.fypmoney.util.AppConstants.StoreshopsScreen
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.AddMoneySuccessBottomSheet
 import com.fypmoney.view.fragment.*
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
+import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.HomeViewModel
 import kotlinx.android.synthetic.main.view_home.*
@@ -62,8 +65,30 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     companion object {
         lateinit var mViewModel: HomeViewModel
     }
+
     override fun getLayoutId(): Int {
         return R.layout.view_home
+    }
+
+    var tabchangeListner = object : HomeTabChangeClickListener {
+        override fun tabchange(pos: Int, str: String) {
+            when (str) {
+                AppConstants.CardScreen -> {
+                    setupcard()
+                }
+                AppConstants.StoreScreen -> {
+                    setupStore(StoreofferScreen)
+                }
+                AppConstants.FEEDSCREEN -> {
+                    setupFeeds()
+                }
+                AppConstants.FyperScreen -> {
+                    setupFamily()
+                }
+            }
+
+        }
+
     }
 
     override fun getViewModel(): HomeViewModel {
@@ -76,7 +101,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         mViewBinding = getViewDataBinding()
         setObserver()
         checkAndAskPermission()
-        loadFragment(HomeScreen(),1)
+        loadFragment(HomeScreen(tabchangeListner), 1)
 
         trackr {
             it.name = TrackrEvent.home_screen
@@ -105,7 +130,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 setupcard()
             }
             AppConstants.StoreScreen->{
-                setupStore()
+                setupStore(StoreofferScreen)
             }
             AppConstants.FEEDSCREEN->{
                 setupFeeds()
@@ -128,7 +153,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                     setupFeeds()
                 }
                 R.id.store -> {
-                    setupStore()
+                    setupStore(StoreofferScreen)
                 }
                 R.id.card -> {
                     setupcard()
@@ -148,20 +173,20 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     private fun setupBadegs() {
         PockketApplication.isNewFeedAvailableData?.let{
             val badge = mViewBinding.navigationView.getOrCreateBadge(R.id.feeds)
-             it.value.toIntOrNull()?.let { count->
-                 if(count!=0){
-                     badge.isVisible = true
-                     badge.number = count
-                 }else{
-                     badge.isVisible = false
-                 }
+            it.value.toIntOrNull()?.let { count ->
+                if (count != 0) {
+                    badge.isVisible = true
+                    badge.number = count
+                } else {
+                    badge.isVisible = false
+                }
             }
         }
     }
 
 
     private fun setupFamily() {
-        loadFragment(FamilySettingsView(), 5)
+        loadFragment(FamilySettingsView(tabchangeListner), 5)
         mViewBinding.navigationView.menu.findItem(R.id.family).isChecked = true;
         mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
         mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -174,7 +199,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     }
 
     private fun setupcard() {
-        loadFragment(CardScreen(), 3)
+        loadFragment(CardScreen(tabchangeListner), 3)
         mViewBinding.navigationView.menu.findItem(R.id.card).isChecked = true;
         mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.black))
         mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this, R.color.white))
@@ -182,8 +207,8 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         mViewModel.headerText.set(getString(R.string.card_details_title))
     }
 
-    private fun setupStore() {
-        loadFragment(StoreScreen(), 4)
+    private fun setupStore(whichtab: String) {
+        loadFragment(StoreScreen(tabchangeListner, whichtab), 4)
         mViewBinding.navigationView.menu.findItem(R.id.store).isChecked = true;
         mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
         mViewBinding.toolbarTitle.setTextColor(ContextCompat.getColor(this, R.color.black))
@@ -192,7 +217,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     }
 
     private fun setupFeeds() {
-        loadFragment(UserFeedsView(), 2)
+        loadFragment(UserFeedsView(tabchangeListner), 2)
         mViewBinding.navigationView.menu.findItem(R.id.feeds).isChecked = true;
 
         mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
@@ -202,7 +227,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     }
 
     private fun setupHome() {
-        loadFragment(HomeScreen(), 1)
+        loadFragment(HomeScreen(tabchangeListner), 1)
         mViewBinding.navigationView.menu.findItem(R.id.home).isChecked = true;
         mViewBinding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.black))
         mViewBinding.toolbarTitle.setTextColor(
@@ -243,6 +268,39 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        when (intent?.getStringExtra(AppConstants.FROM_WHICH_SCREEN)) {
+            AppConstants.STAY_TUNED_BOTTOM_SHEET -> {
+                setupFamily()
+
+            }
+            AppConstants.NOTIFICATION -> {
+                mViewModel.callGetFamilyNotificationApi(intent.getStringExtra(AppConstants.NOTIFICATION_APRID))
+            }
+            AppConstants.CardScreen -> {
+                setupcard()
+            }
+            AppConstants.StoreScreen -> {
+                setupStore(StoreofferScreen)
+            }
+            AppConstants.StoreshopsScreen -> {
+                setupStore(StoreshopsScreen)
+            }
+            AppConstants.StoreofferScreen -> {
+                setupStore(StoreofferScreen)
+            }
+            AppConstants.FEEDSCREEN -> {
+                setupFeeds()
+            }
+            AppConstants.FyperScreen -> {
+                setupFamily()
+            }
+
+        }
+
+    }
+
     private fun loadProfile(url: String?) {
         url?.let {
             loadImage(
@@ -259,13 +317,6 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.onFeedClicked.observe(this) {
-            if (it) {
-                intentToActivity(UserFeedsView::class.java)
-                mViewModel.onFeedClicked.value = false
-            }
-        }
-
         mViewModel.sendMoneyApiResponse.observe(this) {
             callTransactionSuccessBottomSheet(it)
         }
@@ -315,7 +366,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                 callInsuficientFundMessageSheet(Utility.convertToRs(mViewModel.amountToBeAdded))
             }
         })
-        mViewModel.bottomSheetStatus.observe(this, androidx.lifecycle.Observer { list ->
+        mViewModel.bottomSheetStatus.observe(this, { list ->
             bottomSheetMessage?.dismiss()
             taskMessageBottomSheet3?.dismiss()
             if (list.currentState == "ACCEPT") {
@@ -368,6 +419,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         bottomsheetInsufficient?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomsheetInsufficient?.show(supportFragmentManager, "TASKMESSAGE")
     }
+
     private fun intentToPayActivity(aClass: Class<*>, pay: String? = null) {
         val intent = Intent(this, aClass)
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, pay)
@@ -445,23 +497,13 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
  * This method is used to check for permissions
  * */
     private fun checkAndAskPermission() {
-        when (checkPermission(Manifest.permission.READ_CONTACTS)) {
-            true -> {
-                Utility.getAllContactsInList(
-                    contentResolver,
-                    this,
-                    contactRepository = mViewModel.contactRepository
-                )
-            }
-            else -> {
-                requestPermission(Manifest.permission.READ_CONTACTS)
-            }
-        }
         when (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
             false -> {
-                mViewModel.postLatlong("","",SharedPrefUtils.getLong(
-                    application, key = SharedPrefUtils.SF_KEY_USER_ID
-                ))
+                mViewModel.postLatlong(
+                    "", "", SharedPrefUtils.getLong(
+                        application, key = SharedPrefUtils.SF_KEY_USER_ID
+                    )
+                )
             }
             else -> {
                 requestPermission(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -513,11 +555,11 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                     ) == PackageManager.PERMISSION_GRANTED
                 ) {
                     //allow
-                    var list = Utility.getAllContactsInList(
+                    /*var list = Utility.getAllContactsInList(
                         contentResolver,
                         this,
                         contactRepository = mViewModel.contactRepository
-                    )
+                    )*/
 
                 } else {
                     //set to never ask again
@@ -534,7 +576,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
     }
 
     override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {
-        mViewModel.callContactSyncApi()
+        //mViewModel.callContactSyncApi()
     }
 
     private fun setCurrentFragment(fragment: Fragment) =
@@ -613,7 +655,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
                         AddMoneySuccessBottomSheet(
                             it2,
                             it1,onViewDetailsClick=null,successTitle = "Payment Made Successfully to ${sendMoneyResponse.receiverName}",onHomeViewClick = {
-                                intentToActivity(HomeView::class.java)
+                                intentToActivity(HomeActivity::class.java)
                             }
                         )
                     }

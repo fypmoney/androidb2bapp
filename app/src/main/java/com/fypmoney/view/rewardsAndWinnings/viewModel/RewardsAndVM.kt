@@ -15,6 +15,10 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
+import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
+import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
+import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -22,67 +26,83 @@ import com.google.gson.JsonParser
 
 class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
-    var rewardHistoryList: MutableLiveData<ArrayList<RewardHistoryResponseNew>> = MutableLiveData()
+    //var rewardHistoryList: MutableLiveData<ArrayList<RewardHistoryResponseNew>> = MutableLiveData()
+    var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
 
     var latitude = ObservableField<Double>()
-    var redeemproductDetails = LiveEvent<aRewardProductResponse>()
+
     val longitude = ObservableField<Double>()
     var onAddMoneyClicked = MutableLiveData(false)
     var loading = MutableLiveData(false)
     var selectedPosition = ObservableField(-1)
-    var selectedPositionScratch = ObservableField(-1)
+
     val isApiLoading = ObservableField(true)
     val detailsCalling = ObservableField(false)
-    var clickedType = ObservableField("")
-    var totalmyntsClicked = MutableLiveData(false)
+
+
     var orderNumber = MutableLiveData("")
-    var spinArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
+
     val page = ObservableField(0)
-    var scratchArrayList: MutableLiveData<ArrayList<aRewardProductResponse>> = MutableLiveData()
+
     var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
     var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
-    var coinsBurned: LiveEvent<CoinsBurnedResponse> = LiveEvent()
+
+    var totalJackpotAmount: MutableLiveData<TotalJackpotResponse> = MutableLiveData()
+
     var error: MutableLiveData<ErrorResponseInfo> = MutableLiveData()
     var totalCount = ObservableField(0)
+
     var bottomSheetStatus: MutableLiveData<UpdateTaskGetResponse> = MutableLiveData()
-    var rewardfeedList: MutableLiveData<ArrayList<FeedDetails>> =
-        MutableLiveData()
+    /*var rewardfeedList: MutableLiveData<ArrayList<FeedDetails>> =
+        MutableLiveData()*/
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
+
+
+
     fun onSelectClicked() {
         onAddMoneyClicked.value = true
     }
 
 
     init {
+//        callRewardProductList()
+        //callFetchFeedsApi()
+        callRewardSummary()
+        callExplporeContent()
 
-
-
-        callRewardProductList()
-
-        callFetchFeedsApi()
-        callRewardHistory()
-    }
-
-
-    fun onRefresh() {
-
+        callTotalRewardsEarnings()
+        callTotalJackpotCards()
 
     }
 
-    fun callProductsDetailsApi(orderId: String?) {
-        detailsCalling.set(true)
-        orderNumber.value = orderId
+
+    fun callExplporeContent() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.REWARD_PRODUCT_DETAILS,
-                NetworkUtil.endURL(ApiConstant.REWARD_PRODUCT_DETAILS + orderId),
+                ApiConstant.API_Explore,
+                NetworkUtil.endURL(ApiConstant.API_Explore) + "REWARDS",
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
+
+    fun callFetchOfferApi(id: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_FETCH_OFFER_DETAILS,
+                NetworkUtil.endURL(ApiConstant.API_FETCH_OFFER_DETAILS) + id,
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = true
             )
         )
 
-
     }
+
 
 
     private fun makeFetchFeedRequest(
@@ -137,7 +157,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
     }
 
-    fun callFetchFeedsApi(
+    /*fun callFetchFeedsApi(
         isProgressBarVisible: Boolean? = false,
         latitude: Double? = 0.0,
         longitude: Double? = 0.0
@@ -155,7 +175,9 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
             )
         )
 
-    }
+    }*/
+
+
 
     fun callRewardSummary() {
         WebApiCaller.getInstance().request(
@@ -169,28 +191,17 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         )
     }
 
-    fun callRewardsRedeem(code: String?) {
+    fun callFetchFeedsApi(id: String?) {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_REDEEM_REWARD,
-                NetworkUtil.endURL(ApiConstant.API_REDEEM_REWARD) + code,
-                ApiUrl.POST,
+                ApiConstant.API_FETCH_FEED_DETAILS,
+                NetworkUtil.endURL(ApiConstant.API_FETCH_FEED_DETAILS) + id,
+                ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = true
             )
         )
-    }
 
-    fun callRewardProductList() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_GET_REWARD_PRODUCTS,
-                NetworkUtil.endURL(ApiConstant.API_GET_REWARD_PRODUCTS),
-                ApiUrl.GET,
-                BaseRequest(),
-                this, isProgressBar = false
-            )
-        )
     }
 
     fun callTotalRewardsEarnings() {
@@ -205,11 +216,23 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         )
     }
 
+    fun callTotalJackpotCards() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_JACKPOT_CARDS,
+                NetworkUtil.endURL(ApiConstant.API_GET_JACKPOT_CARDS),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
     private fun <T> getObject(response: String, instance: Class<T>): Any? {
         return Gson().fromJson(response, instance)
     }
 
-    fun callRewardHistory() {
+    /*fun callRewardHistory() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.RewardsHistory,
@@ -224,19 +247,19 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
                 this, isProgressBar = false
             )
         )
-    }
+    }*/
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         loading.postValue(false)
         when (purpose) {
 
-            ApiConstant.RewardsHistory -> {
+            /*ApiConstant.RewardsHistory -> {
 
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<Array<RewardHistoryResponseNew>>(
+                val array = Gson().fromJson(
                     json.get("data").toString(),
                     Array<RewardHistoryResponseNew>::class.java
                 )
@@ -244,38 +267,67 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
                 rewardHistoryList.postValue(arrayList)
 
 
-            }
-            ApiConstant.API_FETCH_ALL_FEEDS -> {
-                var feeds = getObject(responseData.toString(), FeedResponseModel::class.java)
-                if (feeds is FeedResponseModel) {
-
-                    // Save the access token in shared preference
-                    val response = feeds.getAllFeed?.getAllFeed
-                    // check total count and if greater than 0 set list else set no data found
-                    var notificationList: ArrayList<FeedDetails>? =
-                        ArrayList()
-                    response?.feedDetails?.forEach() {
-                        notificationList?.add(it)
-                    }
-                    totalCount.set(response?.total)
-                    rewardfeedList.postValue(notificationList)
-
-                }
-
-            }
-            ApiConstant.API_REDEEM_REWARD -> {
+            }*/
+            ApiConstant.API_FETCH_OFFER_DETAILS -> {
 
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
-                val array = Gson().fromJson<CoinsBurnedResponse>(
-                    json.get("data").toString(),
-                    com.fypmoney.model.CoinsBurnedResponse::class.java
-                )
 
-                coinsBurned.postValue(array)
+                val array = Gson().fromJson(
+                    json.get("data").toString(),
+                    Array<offerDetailResponse>::class.java
+                )
+                val arrayList = ArrayList(array.toMutableList())
+                openBottomSheet.postValue(arrayList)
+
+
+            }/*
+            ApiConstant.API_FETCH_ALL_FEEDS -> {
+                var feeds = getObject(responseData.toString(), FeedResponseModel::class.java)
+                if (feeds is FeedResponseModel) {
+                    val response = feeds.getAllFeed?.getAllFeed
+
+                        var notificationList: ArrayList<FeedDetails>? =
+                            ArrayList()
+                        response?.feedDetails?.forEach() {
+                            notificationList?.add(it)
+                        }
+                        totalCount.set(response?.total)
+                        rewardfeedList.postValue(notificationList)
+
+                }
+
+            }*/
+
+            ApiConstant.API_GET_JACKPOT_CARDS -> {
+
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+                if (json != null && json.get("data").toString() != "[]") {
+                    val array = Gson().fromJson<TotalJackpotResponse>(
+                        json.get("data").toString(),
+                        TotalJackpotResponse::class.java
+                    )
+
+                    totalJackpotAmount.postValue(array)
+                }
 
 
             }
+            ApiConstant.API_FETCH_FEED_DETAILS -> {
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson<FeedDetails>(
+                    json.get("data").toString(),
+                    FeedDetails::class.java
+                )
+
+                feedDetail.postValue(array)
+
+
+            }
+
 
             ApiConstant.API_GET_REWARD_EARNINGS -> {
 
@@ -283,7 +335,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
                 val array = Gson().fromJson<totalRewardsResponse>(
                     json.get("data").toString(),
-                    com.fypmoney.model.totalRewardsResponse::class.java
+                    com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse::class.java
                 )
 
                 totalRewardsResponse.postValue(array)
@@ -292,57 +344,18 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
             }
 
 
-            ApiConstant.API_GET_REWARD_PRODUCTS -> {
-
-
-                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-                val dataObject = json.get("data")?.asJsonObject
-
-                val array = Gson().fromJson<Array<aRewardProductResponse>>(
-                    dataObject?.get("SPIN_WHEEL").toString(),
-                    Array<aRewardProductResponse>::class.java
-                )
-
-                if (array != null) {
-                    val arrayList = ArrayList(array.toMutableList())
-                    spinArrayList.postValue(arrayList)
-                }
-                val spinarray = Gson().fromJson<Array<aRewardProductResponse>>(
-                    dataObject?.get("SCRATCH_CARD").toString(),
-                    Array<aRewardProductResponse>::class.java
-                )
-
-
-                if (spinarray != null) {
-                    val scratchArray = ArrayList(spinarray.toMutableList())
-                    scratchArrayList.postValue(scratchArray)
-                }
-
-
-//                 var itemsArrayList: ArrayList<aRewardProductResponse> = ArrayList()
-//
-//                spinObject.forEachIndexed{pos,item->
-//                    val images = Gson().fromJson(item, aRewardProductResponse::class.java)
-////
-//                    itemsArrayList.add(images)
-//                }
-
-
-            }
-            ApiConstant.REWARD_PRODUCT_DETAILS -> {
-
-
+            ApiConstant.API_Explore -> {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
-                val spinDetails = Gson().fromJson(
-                    json.get("data"),
-                    com.fypmoney.model.aRewardProductResponse::class.java
+                val array = Gson().fromJson(
+                    json.get("data").toString(),
+                    Array<ExploreContentResponse>::class.java
                 )
-
-                redeemproductDetails.value = spinDetails
-
-
+                val arrayList = ArrayList(array.toMutableList())
+                rewardHistoryList.postValue(arrayList)
             }
+
+
             ApiConstant.API_REWARD_SUMMARY -> {
 
 
@@ -367,14 +380,8 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         super.onError(purpose, errorResponseInfo)
         loading.postValue(false)
         when (purpose) {
-            ApiConstant.API_REDEEM_REWARD -> {
-                error.postValue(errorResponseInfo)
-
-            }
 
         }
-
-
     }
 
 

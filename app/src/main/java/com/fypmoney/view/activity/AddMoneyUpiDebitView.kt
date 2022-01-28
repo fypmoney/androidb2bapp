@@ -8,17 +8,10 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.TextPaint
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
 import android.view.View
 import android.webkit.WebView
-import android.widget.ProgressBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModelProvider
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
@@ -30,7 +23,6 @@ import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAddMoneyUpiDebitBinding
 import com.fypmoney.model.AddNewCardDetails
-import com.fypmoney.model.SavedCardResponseDetails
 import com.fypmoney.model.UpiModel
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
@@ -39,27 +31,20 @@ import com.fypmoney.view.AddMoneySuccessBottomSheet
 import com.fypmoney.view.fragment.AddNewCardBottomSheet
 import com.fypmoney.view.fragment.AddUpiBottomSheet
 import com.fypmoney.view.fragment.TransactionFailBottomSheet
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.viewmodel.AddMoneyUpiDebitViewModel
 import com.payu.custombrowser.*
 import com.payu.custombrowser.bean.CustomBrowserConfig
 import com.payu.custombrowser.bean.CustomBrowserResultData
-import com.payu.india.Interfaces.PaymentRelatedDetailsListener
-import com.payu.india.Interfaces.ValueAddedServiceApiListener
-import com.payu.india.Model.MerchantWebService
 import com.payu.india.Model.PayuConfig
-import com.payu.india.Model.PayuResponse
 import com.payu.india.Payu.PayuConstants
-import com.payu.india.PostParams.MerchantWebServicePostParams
 import com.payu.india.PostParams.PaymentPostParams
-import com.payu.india.Tasks.GetPaymentRelatedDetailsTask
 import com.payu.paymentparamhelper.PaymentParams
-import com.payu.paymentparamhelper.PostData
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_gateway.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 import kotlinx.android.synthetic.main.view_add_money_upi_debit.*
-
 
 
 open class AddMoneyUpiDebitView :
@@ -128,6 +113,13 @@ open class AddMoneyUpiDebitView :
         mViewModel.onStep2Response.observe(this) {
             when (it) {
                 AppConstants.API_SUCCESS -> {
+                    trackr {
+                        it.services = arrayListOf(
+                            TrackrServices.FIREBASE,
+                            TrackrServices.MOENGAGE,
+                            TrackrServices.FB,TrackrServices.ADJUST)
+                        it.name = TrackrEvent.load_money_success
+                    }
                     callTransactionSuccessBottomSheet()
                 }
                 AppConstants.API_FAIL -> {
@@ -204,7 +196,7 @@ open class AddMoneyUpiDebitView :
                         it1,onViewDetailsClick={
                             callViewPaymentDetails()
                         },onHomeViewClick = {
-                            intentToHomeActivity(HomeView::class.java)
+                            intentToHomeActivity(HomeActivity::class.java)
                         }
                     )
                 }
@@ -300,7 +292,6 @@ open class AddMoneyUpiDebitView :
 
             override fun setCBProperties(webview: WebView, payUCustomBrowser: Bank) {
                 webview.webChromeClient = PayUWebChromeClient(payUCustomBrowser)
-
             }
 
             override fun onBackApprove() {

@@ -11,11 +11,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/toolbar" />
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/data_nsv"
-            app:layout_constraintBottom_toTopOf="@+id/LoadProgressBar"
+            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:fillViewport="true">
 
 

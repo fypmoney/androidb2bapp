@@ -1,5 +1,8 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class CoinsBurnedResponse(
     val orderNo: String? = null,
     val loyaltyPointsBurnt: Int? = null,
@@ -14,6 +17,8 @@ data class CoinsBurnedResponse(
     val rewardProductCode: String? = null,
     val productType: Any? = null,
     val fullfillmentDescription: Any? = null,
-    val sectionId: Int? = null
+    val sectionId: Int? = null,
+    val noOfJackpotTicket: Int? = null
+
 )
 

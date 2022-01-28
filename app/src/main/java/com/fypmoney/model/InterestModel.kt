@@ -22,6 +22,8 @@ data class InterestEntity(
     var code: String?,
     @ColumnInfo(name = "resourceId")
     var resourceId: String?,
+    @ColumnInfo(name = "resourceIdAfterSelection")
+    var resourceIdAfterSelection: String?,
     @ColumnInfo(name = "backgroundColor")
     var backgroundColor: String?,
     @ColumnInfo(name = "description")
@@ -29,4 +31,8 @@ data class InterestEntity(
     @ColumnInfo(name = "status")
     var status: String?,
     var isSelected: Boolean
-)
+){
+    override fun toString(): String {
+        return code!!
+    }
+}

@@ -24,7 +24,7 @@ class RewardsHistoryLeaderboardAdapter(
     val clickInterface: ListRewardsItemClickListener
 ) : RecyclerView.Adapter<RewardsHistoryLeaderboardAdapter.ViewHolder>() {
 
-    private var mLastClickTime: Long = 0
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(
@@ -42,48 +42,80 @@ class RewardsHistoryLeaderboardAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.numberofMynts.text = items[position].points.toString() + " Mynts"
+        (items[position].points.toString() + " Mynts").also { holder.numberofMynts.text = it }
         holder.desc.text = items[position].eventDescription.toString()
 
-        if (items[position].cashbackWonForProduct != null && items[position].cashbackWonForProduct!! > 0) {
-            holder.note.visibility = View.VISIBLE
 
 
-            holder.amount.visibility = View.VISIBLE
 
-            holder.won_tv.visibility = View.VISIBLE
-            holder.status_tv.visibility = View.INVISIBLE
-            holder.amount.text =
-                "₹" + Utility.convertToRs(items[position].cashbackWonForProduct.toString())
-
-            holder.productType.setImageDrawable(
-                ContextCompat.getDrawable(
-                    context,
-                    R.drawable.ic_mynt_coin
-                )
-            )
+        if (items[position].isFullFilled == AppConstants.NO) {
+            holder.note.visibility = View.INVISIBLE
 
 
-        } else {
+            holder.amount.visibility = View.INVISIBLE
 
-            if (items[position]?.cashbackWonForProduct != null) {
-                holder.amount.text =
-                    "₹" + Utility.convertToRs(items[position]?.cashbackWonForProduct.toString())
-            } else {
-                holder.amount.text =
-                    "₹0"
-            }
-            if (items[position].transactionType == AppConstants.TRANS_TYPE_EARN) {
-                holder.amount.visibility = View.INVISIBLE
+            holder.won_tv.visibility = View.INVISIBLE
 
-            }
-            holder.note.visibility = View.GONE
-//            holder.amount.visibility = View.INVISIBLE
             holder.status_tv.visibility = View.VISIBLE
+        } else {
+            holder.status_tv.visibility = View.INVISIBLE
+            if (items[position].noOfJackpotTicket == null) {
+                if (items[position].cashbackWonForProduct != null && items[position].cashbackWonForProduct!! > 0) {
+                    holder.note.visibility = View.VISIBLE
+
+
+                    holder.amount.visibility = View.VISIBLE
+
+                    holder.won_tv.visibility = View.VISIBLE
+                    holder.status_tv.visibility = View.INVISIBLE
+
+                    holder.amount.text =
+                        " ₹" + Utility.convertToRs(items[position].cashbackWonForProduct.toString())
+
+
+                    holder.note.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            context,
+                            R.drawable.cash
+                        )
+                    )
+
+                } else {
+                    holder.note.visibility = View.INVISIBLE
+//           holder.amount.visibility=View.INVISIBLE
+
+                    if (items[position].transactionType == AppConstants.TRANS_TYPE_EARN) {
+                        holder.amount.visibility = View.INVISIBLE
+
+                    }
+                    holder.amount.text = "₹0"
+//           holder.amount.visibility=View.INVISIBLE
+                    holder.amount.visibility = View.VISIBLE
+
+                    holder.won_tv.visibility = View.VISIBLE
+//            holder.amount.visibility = View.INVISIBLE
+                    holder.status_tv.visibility = View.INVISIBLE
+
+
+                }
+
+            } else {
+                holder.amount.text = items[position].noOfJackpotTicket.toString()
+                holder.note.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ticket))
+                holder.amount.text = items[position].noOfJackpotTicket.toString()
+
+
+//            holder.amount.visibility = View.INVISIBLE
+                holder.status_tv.visibility = View.INVISIBLE
+
+            }
+        }
+
+        if (!items[position].fullfillmentDescription.isNullOrEmpty()) {
+            holder.won_tv.text = items[position].fullfillmentDescription.toString()
 
 
         }
-
         if (items[position].productType == AppConstants.PRODUCT_SPIN) {
             holder.productType.setImageDrawable(
                 ContextCompat.getDrawable(
@@ -108,32 +140,15 @@ class RewardsHistoryLeaderboardAdapter(
                     R.drawable.ic_mynt_coin
                 )
             )
-
-        }
-
-        if (items[position].isFullFilled == AppConstants.NO) {
-            holder.note.visibility = View.INVISIBLE
-
-
             holder.amount.visibility = View.INVISIBLE
-
+            holder.note.visibility = View.INVISIBLE
             holder.won_tv.visibility = View.INVISIBLE
 
-            holder.status_tv.visibility = View.VISIBLE
-        } else {
-            holder.status_tv.visibility = View.INVISIBLE
         }
-
-        if (!items[position].fullfillmentDescription.isNullOrEmpty()) {
-            holder.won_tv.text = items[position].fullfillmentDescription.toString()
-        }
-
-
-
 
         holder.card.setOnClickListener(View.OnClickListener {
-         if (items[position].isFullFilled == AppConstants.NO)
-            clickInterface.onItemClicked(items[position])
+            if (items[position].isFullFilled == AppConstants.NO)
+                clickInterface.onItemClicked(items[position])
         })
 
 
@@ -152,10 +167,6 @@ class RewardsHistoryLeaderboardAdapter(
         var note = view.note
         var productType = view.productType
 
-
-//        init {
-//            offer.z = context.resources.getDimension(R.dimen.list_item_elevation)
-//        }
 
     }
 }

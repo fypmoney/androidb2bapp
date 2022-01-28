@@ -204,18 +204,21 @@ class AddMoneyUpiDebitViewModel(application: Application) : BaseViewModel(applic
         mPaymentParams.productInfo = resultData.productName
         mPaymentParams.firstName = resultData.userFirstName
         mPaymentParams.phone = resultData.phone
-        if (SharedPrefUtils.getString(
-                getApplication(),
-                SharedPrefUtils.SF_KEY_USER_EMAIL
-            ) == null
-        ) {
-            mPaymentParams.email = ""
-        } else {
-            mPaymentParams.email = SharedPrefUtils.getString(
-                getApplication(),
-                SharedPrefUtils.SF_KEY_USER_EMAIL
-            )
-        }
+//        if (SharedPrefUtils.getString(
+//                getApplication(),
+//                SharedPrefUtils.SF_KEY_USER_EMAIL
+//            ) == null
+//        ) {
+//            mPaymentParams.email = ""
+//        } else {
+//
+//            mPaymentParams.email = SharedPrefUtils.getString(
+//                getApplication(),
+//                SharedPrefUtils.SF_KEY_USER_EMAIL
+//            )
+//        }
+
+        mPaymentParams.email = ""
         mPaymentParams.txnId = resultData.txnId
         mPaymentParams.surl = " https://payuresponse.firebaseapp.com/success"
         mPaymentParams.furl = "https://payuresponse.firebaseapp.com/failure"

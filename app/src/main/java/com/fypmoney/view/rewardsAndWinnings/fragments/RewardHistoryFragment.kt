@@ -1,6 +1,7 @@
 package com.fypmoney.view.rewardsAndWinnings.fragments
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -11,40 +12,28 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentRewardHistoryBinding
 import com.fypmoney.model.HistoryItem
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryLeaderboardAdapter
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.rewardsAndWinnings.activity.RewardsHistoryView
 import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
+import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryLeaderboardAdapter
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
-
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardHistoryFragmentVM
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.math.roundToInt
 
 
-class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, RewardsAndVM>() {
+class RewardHistoryFragment :
+    BaseFragment<FragmentRewardHistoryBinding, RewardHistoryFragmentVM>() {
     companion object {
         var page = 0
+        fun newInstance():RewardHistoryFragment{
+            return RewardHistoryFragment()
+        }
     }
 
-    private var typeAdapterHistory: RewardsHistoryLeaderboardAdapter? = null
+    private var rewardAdapterHistory: RewardsHistoryLeaderboardAdapter? = null
     private var itemsArrayList: ArrayList<HistoryItem> = ArrayList()
     private var mViewBinding: FragmentRewardHistoryBinding? = null
-    private var sharedViewModel: RewardsAndVM? = null
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        mViewBinding = getViewDataBinding()
-
-        mViewBinding?.showHistory?.setOnClickListener(View.OnClickListener {
-
-            val intent = Intent(requireContext(), RewardsHistoryView::class.java)
-            requireContext().startActivity(intent)
-        })
-
-        setRecyclerView(mViewBinding)
-        sharedViewModel?.let { setObserver(it) }
-    }
-
-
+    private var mViewModel: RewardHistoryFragmentVM? = null
     override fun onTryAgainClicked() {
 
     }
@@ -58,14 +47,39 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
         return R.layout.fragment_reward_history
     }
 
-    override fun getViewModel(): RewardsAndVM {
-        activity?.let {
-            sharedViewModel = ViewModelProvider(it).get(RewardsAndVM::class.java)
+    override fun getViewModel(): RewardHistoryFragmentVM {
 
-//            setObserver(sharedViewModel!!)
+        mViewModel = ViewModelProvider(this).get(RewardHistoryFragmentVM::class.java)
+
+
+        return mViewModel!!
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mViewBinding = getViewDataBinding()
+
+        setToolbarAndTitle(
+            context = requireContext(),
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.reward_history),
+            titleColor = Color.WHITE,
+            backArrowTint = Color.WHITE
+        )
+        mViewBinding?.showHistory?.setOnClickListener {
+
+            val intent = Intent(requireContext(), RewardsHistoryView::class.java)
+            requireContext().startActivity(intent)
         }
 
-        return sharedViewModel!!
+        setRecyclerView(mViewBinding)
+        mViewModel?.let { setObserver(it) }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mViewModel?.callRewardHistory()
+        mViewModel?.callRewardSummary()
     }
 
     private fun setRecyclerView(root: FragmentRewardHistoryBinding?) {
@@ -84,29 +98,25 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
                         AppConstants.ORDER_NUM,
                         historyItem.orderNumber.toString()
                     )
+                    intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
                     startActivity(intent)
 
-//                    val args = Bundle()
-//                    args.putSerializable("ARRAYLIST", itemsArrayList as Serializable)
-//                    intent.putExtra("BUNDLE", args)
-
-
                 } else {
-                    sharedViewModel?.callProductsDetailsApi(historyItem.orderNumber)
-
+                    mViewModel?.callProductsDetailsApi(historyItem.orderNumber)
 
                 }
             }
         }
 
-        typeAdapterHistory =
+        rewardAdapterHistory =
             RewardsHistoryLeaderboardAdapter(itemsArrayList, requireContext(), itemClickListener2)
-        root?.rvHistory?.adapter = typeAdapterHistory
+        root?.rvHistory?.adapter = rewardAdapterHistory
     }
-    private fun setObserver(sharedViewModel: RewardsAndVM) {
+
+    private fun setObserver(sharedViewModel: RewardHistoryFragmentVM) {
 
         sharedViewModel.rewardHistoryList.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             androidx.lifecycle.Observer { list ->
                 itemsArrayList.clear()
                 list.forEach { item ->
@@ -127,12 +137,12 @@ class RewardHistoryFragment : BaseFragment<FragmentRewardHistoryBinding, Rewards
 
 
                 }
-                typeAdapterHistory?.notifyDataSetChanged()
+                rewardAdapterHistory?.notifyDataSetChanged()
 
 
             })
         sharedViewModel.rewardSummaryStatus.observe(
-            requireActivity(),
+            viewLifecycleOwner,
             androidx.lifecycle.Observer { list ->
                 mViewBinding?.contraint?.visibility = View.VISIBLE
                 mViewBinding?.shimmerLayout?.visibility = View.GONE

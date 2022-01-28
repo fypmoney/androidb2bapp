@@ -19,7 +19,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -35,6 +34,7 @@ import com.fypmoney.view.CardSettingClickListener
 import com.fypmoney.view.activity.BankTransactionHistoryView
 import com.fypmoney.view.activity.SetPinView
 import com.fypmoney.view.adapter.MyProfileListAdapter
+import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.view.ordercard.OrderCardView
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
 import com.fypmoney.view.setpindialog.SetPinDialogFragment
@@ -43,8 +43,6 @@ import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.view.webview.WebViewActivity
 import com.fypmoney.viewmodel.CardScreenViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.android.synthetic.main.bottomsheet_add_money_success_view.view.*
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.virtual_card_back_layout.*
 import kotlinx.android.synthetic.main.virtual_card_back_layout.view.*
@@ -54,7 +52,8 @@ import kotlinx.android.synthetic.main.virtual_card_front_layout.*
 /**
  * This fragment is used for handling card
  */
-class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
+class CardScreen(val tabchangeListner: HomeTabChangeClickListener) :
+    BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
     MyProfileListAdapter.OnListItemClickListener,
     CardSettingsBottomSheet.OnCardSettingsClickListener,
     SetSpendingLimitBottomSheet.OnSetSpendingLimitClickListener, CardSettingClickListener,
@@ -101,7 +100,7 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
         super.onViewCreated(view, savedInstanceState)
 
         mViewBinding = getViewDataBinding()
-        mViewBinding.viewModel = mViewModel
+        mViewBinding .viewModel = mViewModel
         mViewBinding.fragment = this
 
         showCardLayout()
@@ -449,7 +448,8 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
    * */
     private fun callCardBlockUnblockBottomSheet() {
         val bottomSheet =
-            BlockUnblockCardBottomSheet(mViewModel.bankProfileResponse.get()?.cardInfos, this)
+            BlockUnblockCardBottomSheet(mViewModel.bankProfileResponse.get()?.cardInfos,
+                this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "BlockUnblockCard")
     }
@@ -469,7 +469,8 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
    * */
     private fun callManageChannelsBottomSheet() {
         val bottomSheet =
-            ManageChannelsBottomSheet(mViewModel.bankProfileResponse.get()?.cardInfos, this)
+            ManageChannelsBottomSheet(mViewModel.bankProfileResponse.get()?.cardInfos,
+                this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(childFragmentManager, "ManageChannels")
     }
@@ -504,7 +505,6 @@ class CardScreen : BaseFragment<ScreenCardBinding, CardScreenViewModel>(),
 
     override fun onSetSpendingLimitButtonClick(updateCardLimitRequest: UpdateCardLimitRequest) {
         mViewModel.callUpdateCardLimitApi(updateCardLimitRequest)
-
     }
 
     override fun onCardSettingClick(

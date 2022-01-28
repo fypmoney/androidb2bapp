@@ -1,5 +1,6 @@
 package com.fypmoney.view.rewardsAndWinnings
 
+
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -7,20 +8,16 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
-
-import com.fypmoney.base.BaseActivity
-
-
-import kotlinx.android.synthetic.main.toolbar.*
 import com.fypmoney.R
+import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.PaginationListener
 import com.fypmoney.databinding.CashbackWonActivityBinding
 import com.fypmoney.model.BankTransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.activity.PayUSuccessView
 import com.fypmoney.view.activity.PayUSuccessViewCashbackWon
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsCashbackwonVM
 import kotlinx.android.synthetic.main.cashback_won_activity.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class CashBackWonHistoryActivity :
@@ -97,7 +94,7 @@ class CashBackWonHistoryActivity :
 
     }
     private fun setObserver(mViewModel: RewardsCashbackwonVM) {
-        mViewModel?.rewardHistoryList.observe(this, androidx.lifecycle.Observer { list ->
+        mViewModel?.rewardHistoryList.observe(this, { list ->
             if (list != null) {
 
 

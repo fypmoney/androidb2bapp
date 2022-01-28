@@ -2,7 +2,7 @@ package com.fypmoney.view.adapter
 
 
 import android.graphics.Color
-import android.graphics.PorterDuff
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.bindingAdapters.loadImage
+import com.fypmoney.bindingAdapters.setAnimationToViewInXAxis
+import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.ChooseInterestRowItemBinding
 import com.fypmoney.model.InterestEntity
+import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.SelectInterestViewModel
 
 
@@ -43,68 +46,106 @@ class ChooseInterestAdapter(var viewModel: SelectInterestViewModel) :
     ) : BaseViewHolder(itemView = mRowItemBinding!!.root) {
         override fun onBind(position: Int) {
             mRowItemBinding!!.viewModel = viewModel
+
+            // set interest types
             mRowItemBinding.tvServiceName.text = chooseInterestList?.get(position)?.name
-            chooseInterestList?.get(position)?.resourceId.let {
-                loadImage(mRowItemBinding.ivServiceLogo,it,
-                    ContextCompat.getDrawable(mRowItemBinding.ivServiceLogo.context, R.drawable.ic_sports),true)
-
-            }
-            chooseInterestList?.let {
-             if(it[position].isSelected){
-                 mRowItemBinding.serviceLayout.background.setColorFilter(
-                     Color.parseColor(it[position].backgroundColor),
-                     PorterDuff.Mode.SRC_ATOP
-                 )
-                 mRowItemBinding.intrestIconFl.background.setColorFilter(
-                     Color.parseColor(it[position].backgroundColor),
-                     PorterDuff.Mode.SRC_ATOP
-                 )
-                 viewModel.selectedInterestList.add(it[position])
-
-             }else{
-                 mRowItemBinding.serviceLayout.background.setColorFilter(
-                     Color.WHITE,
-                     PorterDuff.Mode.SRC_ATOP
-                 )
-                 mRowItemBinding.intrestIconFl.background.setColorFilter(
-                     Color.parseColor("#f4f4f4"),
-                     PorterDuff.Mode.SRC_ATOP
-                 )
-                 viewModel.selectedInterestList.remove(it[position])
-
-             }
+            // set image of interest
+            chooseInterestList?.let { it ->
+                setColorAndIconBackgroundsChange(it[position].isSelected)
             }
             mRowItemBinding.serviceLayout.setOnClickListener {
-                chooseInterestList?.get(position)?.isSelected = chooseInterestList?.get(position)?.isSelected != true
-                if (chooseInterestList?.get(position)?.isSelected!!) {
+                if (viewModel.selectedInterestList.size < 3 || chooseInterestList?.get(position)?.isSelected == true) {
+                    chooseInterestList?.get(position)?.isSelected =
+                        chooseInterestList?.get(position)?.isSelected != true
 
-                    mRowItemBinding.serviceLayout.background.setColorFilter(
-                        Color.parseColor(chooseInterestList?.get(position)?.backgroundColor),
-                        PorterDuff.Mode.SRC_ATOP
-                    )
-                    mRowItemBinding.intrestIconFl.setBackgroundResource(0)
-                    mRowItemBinding.intrestIconFl.setBackgroundColor(Color.parseColor
-                        (chooseInterestList?.get(position)?.backgroundColor))
-                    /*mRowItemBinding.intrestIconFl.background.setColorFilter(
-                        Color.parseColor(chooseInterestList?.get(position)?.backgroundColor),
-                        PorterDuff.Mode.SRC_ATOP
-                    )*/
-
-                    chooseInterestList?.get(position)?.let { viewModel.selectedInterestList.add(it) }
+                    setColorAndIconBackgroundsChange(chooseInterestList?.get(position)?.isSelected!!)
                 } else {
-                    mRowItemBinding.serviceLayout.background.setColorFilter(
-                        Color.WHITE,
-                        PorterDuff.Mode.SRC_ATOP
-                    )
-                    mRowItemBinding.intrestIconFl.background = ContextCompat.getDrawable(mRowItemBinding.intrestIconFl.context,R.drawable.curved_background4)
-                    chooseInterestList?.get(position)?.let { viewModel.selectedInterestList.remove(it) }
+                    Utility.showToast("Max 3 can be selected")
                 }
+
             }
             mRowItemBinding.executePendingBindings()
         }
 
+        private fun setColorAndIconBackgroundsChange(selected: Boolean) {
+            when (selected) {
+                true -> {
+                    Log.e("true", "setColorAndIconBackgroundsChange:in here according of me selected ", )
+                    val data: InterestEntity? = chooseInterestList?.get(position)
+
+                    // set interest icon background color
+                    mRowItemBinding?.intrestIconFl?.setBackgroundColor(
+                        Color.parseColor(chooseInterestList?.get(position)?.backgroundColor),
+                    )
+                    //set icon
+                    data?.resourceIdAfterSelection.let {
+                        if (mRowItemBinding != null) {
+                            loadImage(
+                                mRowItemBinding.ivServiceLogo, it,
+                                ContextCompat.getDrawable(
+                                    mRowItemBinding.ivServiceLogo.context,
+                                    R.drawable.ic_sports
+                                ), false
+                            )
+                        }
+                    }
+
+                    // first make drawable programmatically and set background color
+                    if (mRowItemBinding != null) {
+                        setBackgroundDrawable(
+                            mRowItemBinding.background,//view
+                            Color.parseColor(chooseInterestList?.get(position)?.backgroundColor),//background color
+                            30f,//radius of view
+                            false// drawable type
+                        )
+                    }
+
+                    // setAnimation To View in x axis positive
+                    if (mRowItemBinding != null) {
+                        setAnimationToViewInXAxis(
+                            mRowItemBinding.background,//view
+                            0f,// animation start from in x axis
+                            1f,// animation end from in x axis
+                            650// animation speed
+                        )
+                    }
 
 
+
+                    chooseInterestList?.get(position)
+                        ?.let { viewModel.selectedInterestList.add(it) }
+                }
+                false -> {
+                    Log.e("false", "setColorAndIconBackgroundsChange:in here according of me Unselected ", )
+
+                    chooseInterestList?.get(position)?.resourceId.let {
+                        if (mRowItemBinding != null) {
+                            loadImage(
+                                mRowItemBinding.ivServiceLogo, it,
+                                ContextCompat.getDrawable(
+                                    mRowItemBinding.ivServiceLogo.context,
+                                    R.drawable.ic_sports
+                                ), false
+                            )
+                        }
+                    }
+                    mRowItemBinding?.intrestIconFl?.setBackgroundResource(R.drawable.curved_background4)
+
+                    // setAnimation To View in x axis positive
+                    if (mRowItemBinding != null) {
+                        setAnimationToViewInXAxis(
+                            mRowItemBinding.background,//view
+                            1f,// animation start from in x axis
+                            0f,// animation end from in x axis
+                            650// animation speed
+                        )
+                    }
+
+                    viewModel.selectedInterestList.remove(chooseInterestList?.get(position))
+
+                }
+            }
+        }
     }
 
     /**
@@ -120,3 +161,8 @@ class ChooseInterestAdapter(var viewModel: SelectInterestViewModel) :
 
 
 }
+
+
+
+
+

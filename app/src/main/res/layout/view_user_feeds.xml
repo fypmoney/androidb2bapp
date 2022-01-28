@@ -22,7 +22,6 @@
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_container"
             android:layout_width="match_parent"
-
             android:layout_height="match_parent"
             app:onRefreshListener="@{() -> viewModel.onRefresh()}"
             app:refreshing="@{viewModel.isLoading}">

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/reward_background">
+
+    <include
+        android:id="@+id/layout_toolbar"
+        layout="@layout/toolbar_with_custom_background"/>
+
+    <androidx.core.widget.NestedScrollView
+        app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:background="@drawable/jackpot_radial_gradient"
+        android:layout_height="wrap_content">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="50dp">
+
+            <ImageView
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_28sdp"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:layout_marginEnd="@dimen/_28sdp"
+                android:src="@drawable/jackpot_banner" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_below="@+id/banner"
+                android:id="@+id/amount_mynts"
+                android:layout_marginTop="@dimen/_12sdp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/bootom_part_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginStart="@dimen/_14sdp"
+                    android:paddingTop="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_14sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="parent">
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayout6"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:alpha=".10"
+                        android:background="@drawable/round_dark_grey_rewards_18"
+                        android:backgroundTint="@color/grey"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_marginTop="@dimen/_2sdp"
+
+
+                        android:layout_marginBottom="@dimen/_6sdp"
+                        android:src="@drawable/golden_cards"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/total_refral_won_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:layout_marginBottom="@dimen/_18sdp"
+                        android:alpha=".8"
+                        android:layout_marginEnd="@dimen/_12sdp"
+
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView4"
+                        app:layout_constraintStart_toStartOf="@+id/total_refral_won_value_tv"
+                        app:layout_constraintTop_toBottomOf="@+id/total_refral_won_value_tv" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/total_refral_won_value_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_14sdp"
+                        android:textColor="@color/color_orange"
+                        android:textSize="28sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/loading_amount_hdp"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/three_dot_amount_loader"
+                        app:layout_constraintBottom_toBottomOf="@+id/total_refral_won_value_tv"
+
+                        app:layout_constraintStart_toEndOf="@+id/total_refral_won_value_tv"
+                        app:layout_constraintTop_toTopOf="@+id/total_refral_won_value_tv"
+                        tools:visibility="visible" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:id="@+id/shimmerLayout"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:layout_below="@+id/amount_mynts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                    <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                    <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/amount_mynts"
+                android:layout_marginTop="@dimen/dp10"
+                android:layout_marginBottom="@dimen/_8sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/LoadProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_30sdp"
+
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="@dimen/_4sdp"
+
+                android:visibility="gone"
+                android:layout_alignParentBottom="true"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/dots_animation" />
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

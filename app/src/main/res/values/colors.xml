@@ -30,6 +30,7 @@
     <color name="color_light_pink">#ffe6ee</color>
     <color name="color_light_green">#97dc21</color>
     <color name="text_color_light">#9CA3A5</color>
+    <color name="text_color_walk_through">#cc0E141C</color>
     <color name="text_color_little_dark">#5A6365</color>
     <color name="text_color_dark">#231F20</color>
     <color name="spin_light">#bae6c2</color>
@@ -82,5 +83,25 @@
     <color name="transparent">#0000</color>
     <color name="link_color">#007AFF</color>
     <color name="black_overlay">#10000000</color>
+    <color name="reward_background">#090B12</color>
+    <color name="reward_tab_text_color">#a3a3a3</color>
+    <color name="reward_continue_button">#48AB5B</color>
+    <color name="reward_golden_tickets_text">#F2DC12</color>
+    <color name="select_user_type_stock_color">#FA4856</color>
+    <color name="scratch_button_default">#DC9BEB</color>
+
+    <color name="my_profile_background_color">#F4F4F4</color>
+
+    <color name="colorSelectedMenu">#f7aa11</color>
+    <color name="bgcolor">#0E141C</color>
+    <color name="tvColor">#B2B2B2</color>
+    <color name="matBlack">#38414A</color>
+    <color name="green_selected">#60AF70</color>
+    <color name="green_selected_light">#D1F5D8</color>
+    <color name="text_grey">#AAB0B2</color>
+    <color name="red1">#FF0000</color>
+    <color name="grey2">#B0B7B9</color>
+    <color name="textColor1">#221F1F</color>
+
 
 </resources>

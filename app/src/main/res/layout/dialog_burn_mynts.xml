@@ -44,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_marginTop="@dimen/_60sdp"
+            android:layout_marginTop="@dimen/_70sdp"
             android:elevation="@dimen/_2sdp"
 
             android:gravity="center_horizontal"
@@ -69,7 +69,7 @@
                 android:layout_marginStart="@dimen/_4sdp"
 
                 android:text=""
-                android:textColor="@color/white"
+                android:textColor="@color/spin_light"
                 android:textSize="24sp" />
         </LinearLayout>
 
@@ -77,8 +77,11 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_22sdp"
             android:gravity="center"
+            style="@style/TextviewRegular"
+            android:alpha=".80"
+            android:textSize="14sp"
             android:text="@string/will_be_deducted_from_your_balance_nto_spin_the_wheel"
             android:textColor="@color/cb_grey"
             app:layout_constraintEnd_toEndOf="parent"
@@ -89,7 +92,7 @@
             android:id="@+id/clicked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_24sdp"
             android:layout_marginBottom="@dimen/_18sdp"
             android:backgroundTint="#48AB5B"
             android:text=""

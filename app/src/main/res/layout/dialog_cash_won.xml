@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_marginStart="@dimen/_32sdp"
-    android:layout_marginEnd="@dimen/_32sdp"
+    android:layout_marginStart="@dimen/_36sdp"
+    android:layout_marginEnd="@dimen/_36sdp"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -11,15 +11,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-50dp"
+        android:layout_marginBottom="-70dp"
         android:elevation="@dimen/_2sdp"
         android:src="@drawable/ic_wallet_updated"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <RelativeLayout
         android:layout_width="match_parent"
+        android:id="@+id/rect_dialog"
         android:layout_below="@+id/spin_green"
         android:background="@drawable/round_dark_grey_rewards_dialod"
         android:layout_height="wrap_content">
@@ -39,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="@dimen/_52sdp"
+                android:layout_marginTop="@dimen/_70sdp"
                 android:elevation="@dimen/_2sdp"
                 android:gravity="center_horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +63,22 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/golden_cards_won"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_72sdp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:textSize="22sp"
+                android:text=""
+                style="@style/TextviewBold"
+                android:textColor="@color/color_orange"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/better_next_time"
                 style="@style/TextviewBold"
@@ -81,10 +99,12 @@
                 android:id="@+id/luckonside_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_22sdp"
                 android:gravity="center"
                 android:text="Luck is on your side"
                 android:textColor="#BAE6C2"
+                style="@style/TextviewBold"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layout" />
@@ -95,6 +115,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:gravity="center"
+                android:alpha=".80"
+                android:textSize="12sp"
+                style="@style/TextviewRegular"
                 android:text="Will be deducted from your balance \nto spin the wheel."
                 android:textColor="@color/cb_grey"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -110,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/contraint"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_14sdp"
             android:layout_marginBottom="@dimen/_12sdp"
             android:backgroundTint="#48AB5B"
             android:text="Claim your rewards" />

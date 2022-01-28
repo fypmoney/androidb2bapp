@@ -11,7 +11,8 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewTrackOrderBinding
 import com.fypmoney.model.PackageStatusList
 import com.fypmoney.util.Utility
-import com.fypmoney.view.activity.HomeView
+
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.view.webview.WebViewActivity
@@ -91,7 +92,7 @@ class TrackOrderView : BaseActivity<ViewTrackOrderBinding, TrackOrderViewModel>(
 
 
     override fun onBackPressed() {
-        startActivity(Intent(this@TrackOrderView, HomeView::class.java))
+        startActivity(Intent(this@TrackOrderView, HomeActivity::class.java))
         finish()
     }
 

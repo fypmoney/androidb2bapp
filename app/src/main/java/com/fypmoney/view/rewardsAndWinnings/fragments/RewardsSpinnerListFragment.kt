@@ -1,5 +1,6 @@
 package com.fypmoney.view.rewardsAndWinnings.fragments
 
+
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
@@ -24,62 +25,91 @@ import com.bumptech.glide.request.transition.Transition
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentSpinnerListBinding
 import com.fypmoney.model.aRewardProductResponse
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
-import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
-import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import com.fypmoney.view.adapter.ScratchItemAdapter
 import com.fypmoney.view.adapter.SpinnerAdapter
 import com.fypmoney.view.interfaces.ListContactClickListener
-
+import com.fypmoney.view.rewardsAndWinnings.activity.ScratchCardActivity
+import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
+import com.fypmoney.view.rewardsAndWinnings.viewModel.SpinnerFragmentVM
 import kotlinx.android.synthetic.main.dialog_burn_mynts.*
+import kotlinx.android.synthetic.main.dialog_burn_mynts.clicked
+import kotlinx.android.synthetic.main.dialog_burn_mynts.spin_green
+import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 
-import kotlin.collections.ArrayList
-
-
-class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, RewardsAndVM>() {
+class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, SpinnerFragmentVM>() {
     companion object {
+        fun newInstance(): RewardsSpinnerListFragment {
+            return RewardsSpinnerListFragment()
+        }
+
         var page = 0
 
     }
 
-    private var sharedViewModel: RewardsAndVM? = null
-    private var dialogDialog: Dialog? = null
+    private var mViewmodel: SpinnerFragmentVM? = null
+    private var buyProductDialog: Dialog? = null
     private var itemsArrayList: ArrayList<aRewardProductResponse> = ArrayList()
     private var scratchArrayList: ArrayList<aRewardProductResponse> = ArrayList()
 
-    private var typeAdapter: SpinnerAdapter? = null
+    private var spinnerAdapter: SpinnerAdapter? = null
     private var scratchAdapter: ScratchItemAdapter? = null
     private var mViewBinding: FragmentSpinnerListBinding? = null
-
+    private var dialogInsufficientFund: Dialog? = null
     val startForResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == 52) {
+            if (result.resultCode == 23) {
+                mViewmodel?.totalmyntsClicked?.postValue(true)
 
 
             }
 
         }
 
+    override fun getBindingVariable(): kotlin.Int {
+        return BR.viewModel
+    }
+
+    override fun getLayoutId(): kotlin.Int {
+        return R.layout.fragment_spinner_list
+    }
+
+    override fun getViewModel(): SpinnerFragmentVM {
+
+        mViewmodel = ViewModelProvider(this).get(SpinnerFragmentVM::class.java)
+
+
+
+        return mViewmodel!!
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
 
+        setToolbarAndTitle(
+            context = requireContext(),
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.arcade),
+            titleColor = Color.WHITE,
+            backArrowTint = Color.WHITE
+        )
         setRecyclerView()
         setRvScratchCard()
-        dialogDialog = Dialog(requireContext())
+        dialogInsufficientFund = Dialog(requireContext())
+        buyProductDialog = Dialog(requireContext())
+        mViewmodel?.let { observeInput(it) }
 
         trackr {
             it.name = TrackrEvent.open_arcade
         }
-
 
     }
 
@@ -88,10 +118,96 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
     }
 
-    private fun observeInput(sharedViewModel: RewardsAndVM) {
+    private fun callInsuficientFundDialog(msg: String) {
+        dialogInsufficientFund?.setCancelable(false)
+        dialogInsufficientFund?.setCanceledOnTouchOutside(false)
+        dialogInsufficientFund?.setContentView(R.layout.dialog_rewards_insufficient)
 
-        sharedViewModel.spinArrayList.observe(
-            requireActivity(),
+        val wlp = dialogInsufficientFund?.window?.attributes
+
+        wlp?.width = ViewGroup.LayoutParams.MATCH_PARENT
+        dialogInsufficientFund?.setCanceledOnTouchOutside(false)
+
+
+
+
+        dialogInsufficientFund?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        dialogInsufficientFund?.window?.attributes = wlp
+        dialogInsufficientFund?.error_msg?.text = msg
+
+
+
+        dialogInsufficientFund?.clicked?.setOnClickListener(View.OnClickListener {
+
+
+            trackr {
+
+                it.name = TrackrEvent.insufficient_mynts
+
+            }
+            dialogInsufficientFund?.dismiss()
+        })
+
+
+        dialogInsufficientFund?.show()
+    }
+
+    private fun observeInput(mviewModel: SpinnerFragmentVM) {
+
+        mViewmodel?.error?.observe(
+            viewLifecycleOwner,
+            { list ->
+                if (list.errorCode == "PKT_2051") {
+
+                    callInsuficientFundDialog(list.msg)
+                }
+
+            }
+        )
+        mViewmodel?.redeemproductDetails?.observe(this) {
+            if (it != null) {
+                mViewmodel?.redeemproductDetails?.postValue(null)
+                Glide.with(this).asDrawable().load(it.scratchResourceHide)
+                    .into(object : CustomTarget<Drawable?>() {
+
+                        override fun onLoadCleared(@Nullable placeholder: Drawable?) {
+
+                        }
+
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            transition: Transition<in Drawable?>?
+                        ) {
+                            val intent =
+                                Intent(requireContext(), ScratchCardActivity::class.java)
+                            intent.putExtra(AppConstants.SECTION_ID, it.sectionId)
+                            intent.putExtra(AppConstants.NO_GOLDED_CARD, it.noOfJackpotTicket)
+                            it.sectionList?.forEachIndexed { pos, item ->
+                                if (item != null) {
+                                    ScratchCardActivity.sectionArrayList.add(item)
+                                }
+                            }
+                            ScratchCardActivity.imageScratch = resource
+
+                            intent.putExtra(
+                                AppConstants.ORDER_NUM,
+                                mViewmodel?.orderNumber?.value
+                            )
+                            intent.putExtra(
+                                AppConstants.PRODUCT_HIDE_IMAGE,
+                                it.scratchResourceShow
+                            )
+                            startActivity(intent)
+                        }
+                    })
+
+            }
+
+
+        }
+        mviewModel.spinArrayList.observe(
+            viewLifecycleOwner,
             androidx.lifecycle.Observer { list ->
 
                 itemsArrayList.clear()
@@ -99,23 +215,23 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                 mViewBinding?.shimmerLayout?.stopShimmer()
 
                 itemsArrayList.addAll(list)
-                typeAdapter?.notifyDataSetChanged()
+                spinnerAdapter?.notifyDataSetChanged()
 
             })
-        sharedViewModel.error.observe(
-            this,
+        mviewModel.error.observe(
+            viewLifecycleOwner,
             androidx.lifecycle.Observer { list ->
 
                 if (list.errorCode == "PKT_2051") {
-                    dialogDialog?.dismiss()
+                    buyProductDialog?.dismiss()
 
 
                 }
 
             }
         )
-        sharedViewModel.scratchArrayList.observe(
-            requireActivity(),
+        mviewModel.scratchArrayList.observe(
+            viewLifecycleOwner,
             androidx.lifecycle.Observer { list ->
                 mViewBinding?.shimmerscratch?.visibility = View.GONE
                 mViewBinding?.shimmerscratch?.stopShimmer()
@@ -127,26 +243,27 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
             })
 
-        sharedViewModel.coinsBurned.observe(
-            requireActivity(),
+        mviewModel.coinsBurned.observe(
+            viewLifecycleOwner,
             androidx.lifecycle.Observer { list ->
-                dialogDialog?.dismiss()
+                buyProductDialog?.dismiss()
                 if (list != null) {
-                    sharedViewModel.coinsBurned.postValue(null)
+                    mviewModel.coinsBurned.postValue(null)
 
-                    when (sharedViewModel.clickedType.get()) {
+                    when (mviewModel.clickedType.get()) {
                         AppConstants.PRODUCT_SPIN -> {
                             val intent = Intent(requireContext(), SpinWheelViewDark::class.java)
                             SpinWheelViewDark.sectionArrayList.clear()
                             intent.putExtra(AppConstants.ORDER_NUM, list.orderNo)
+                            intent.putExtra(AppConstants.NO_GOLDED_CARD, list.noOfJackpotTicket)
                             intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
                             intent.putExtra(
                                 AppConstants.PRODUCT_CODE,
-                                itemsArrayList[sharedViewModel.selectedPosition.get()!!].code
+                                itemsArrayList[mviewModel.selectedPosition.get()!!].code
                             )
 
 
-                            itemsArrayList[sharedViewModel.selectedPosition.get()!!].sectionList?.forEachIndexed { pos, item ->
+                            itemsArrayList[mviewModel.selectedPosition.get()!!].sectionList?.forEachIndexed { pos, item ->
                                 if (item != null) {
                                     SpinWheelViewDark.sectionArrayList.add(item)
                                 }
@@ -156,7 +273,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                         }
                         AppConstants.PRODUCT_SCRATCH -> {
                             Glide.with(this).asDrawable()
-                                .load(scratchArrayList[sharedViewModel.selectedPositionScratch.get()!!].scratchResourceHide)
+                                .load(scratchArrayList[mviewModel.selectedPositionScratch.get()!!].scratchResourceHide)
                                 .into(object : CustomTarget<Drawable?>() {
 
                                     override fun onLoadCleared(@Nullable placeholder: Drawable?) {
@@ -171,10 +288,14 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                                             Intent(requireContext(), ScratchCardActivity::class.java)
                                         intent.putExtra(AppConstants.SECTION_ID, list.sectionId)
                                         intent.putExtra(
+                                            AppConstants.NO_GOLDED_CARD,
+                                            list.noOfJackpotTicket
+                                        )
+                                        intent.putExtra(
                                             AppConstants.PRODUCT_CODE,
                                             list.rewardProductCode
                                         )
-                                        scratchArrayList[sharedViewModel.selectedPositionScratch.get()!!].sectionList?.forEachIndexed { pos, item ->
+                                        scratchArrayList[mviewModel.selectedPositionScratch.get()!!].sectionList?.forEachIndexed { pos, item ->
                                             if (item != null) {
                                                 ScratchCardActivity.sectionArrayList.add(item)
                                             }
@@ -187,9 +308,9 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                                         )
                                         intent.putExtra(
                                             AppConstants.PRODUCT_HIDE_IMAGE,
-                                            scratchArrayList[sharedViewModel.selectedPositionScratch.get()!!].scratchResourceShow
+                                            scratchArrayList[mviewModel.selectedPositionScratch.get()!!].scratchResourceShow
                                         )
-                                        startActivity(intent)
+                                        startForResult.launch(intent)
                                     }
                                 })
 
@@ -205,24 +326,24 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
     }
 
     internal fun showBurnDialog(
-        i: Int,
+        i: kotlin.Int,
         type: String,
         appDisplayText: String?,
         detailResource: String?
     ) {
 
-        dialogDialog?.progress_image?.visibility = View.VISIBLE
-        dialogDialog?.setCancelable(true)
-        dialogDialog?.setCanceledOnTouchOutside(true)
-        dialogDialog?.setContentView(R.layout.dialog_burn_mynts)
+        buyProductDialog?.progress_image?.visibility = View.VISIBLE
+        buyProductDialog?.setCancelable(true)
+        buyProductDialog?.setCanceledOnTouchOutside(true)
+        buyProductDialog?.setContentView(R.layout.dialog_burn_mynts)
 
-        val wlp = dialogDialog?.window!!.attributes
+        val wlp = buyProductDialog?.window!!.attributes
 
         wlp.width = ViewGroup.LayoutParams.MATCH_PARENT
 
-        dialogDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        buyProductDialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        dialogDialog?.spin_green?.let {
+        buyProductDialog?.spin_green?.let {
             Glide.with(requireContext()).load(detailResource)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(
@@ -231,7 +352,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                         target: Target<Drawable>?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        dialogDialog?.progress_image?.visibility = View.INVISIBLE
+                        buyProductDialog?.progress_image?.visibility = View.INVISIBLE
                         return false
                     }
 
@@ -242,7 +363,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
                         dataSource: DataSource?,
                         isFirstResource: Boolean
                     ): Boolean {
-                        dialogDialog?.progress_image?.visibility = View.INVISIBLE
+                        buyProductDialog?.progress_image?.visibility = View.INVISIBLE
 
                         return false
                     }
@@ -251,42 +372,42 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         }
 
         if (appDisplayText != null) {
-            dialogDialog?.amount_to_enter?.text = appDisplayText
-            dialogDialog?.clicked?.text = "Burn $appDisplayText Mynts"
+            buyProductDialog?.amount_to_enter?.text = appDisplayText
+            buyProductDialog?.clicked?.text = "Burn $appDisplayText Mynts"
 
         }
 
-        dialogDialog?.window?.attributes = wlp
+        buyProductDialog?.window?.attributes = wlp
         when (type) {
             AppConstants.PRODUCT_SPIN -> {
 
 
-                dialogDialog?.textView?.text =
+                buyProductDialog?.textView?.text =
                     getString(R.string.will_be_deducted_from_your_balance_nto_spin_the_wheel)
 
             }
             AppConstants.PRODUCT_SCRATCH -> {
-                dialogDialog?.textView?.text =
+                buyProductDialog?.textView?.text =
                     getString(R.string.will_be_deducted_from_your_balance_scratch)
 
             }
         }
 
 
-        dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
+        buyProductDialog?.clicked?.setOnClickListener(View.OnClickListener {
             when (type) {
                 AppConstants.PRODUCT_SPIN -> {
-                    sharedViewModel?.selectedPosition?.set(i)
-                    sharedViewModel?.clickedType?.set(AppConstants.PRODUCT_SPIN)
-                    sharedViewModel?.callRewardsRedeem(itemsArrayList[i].code)
+                    mViewmodel?.selectedPosition?.set(i)
+                    mViewmodel?.clickedType?.set(AppConstants.PRODUCT_SPIN)
+                    mViewmodel?.callRewardsRedeem(itemsArrayList[i].code)
 
 
                 }
                 AppConstants.PRODUCT_SCRATCH -> {
-                    sharedViewModel?.clickedType?.set(AppConstants.PRODUCT_SCRATCH)
-                    sharedViewModel?.selectedPositionScratch?.set(i)
+                    mViewmodel?.clickedType?.set(AppConstants.PRODUCT_SCRATCH)
+                    mViewmodel?.selectedPositionScratch?.set(i)
 
-                    sharedViewModel?.callRewardsRedeem(scratchArrayList[i].code)
+                    mViewmodel?.callRewardsRedeem(scratchArrayList[i].code)
 
 
                 }
@@ -295,7 +416,7 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         })
 
 
-        dialogDialog?.show()
+        buyProductDialog?.show()
     }
 
 
@@ -308,17 +429,17 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         val itemClickListener2 = object : ListContactClickListener {
 
 
-            override fun onItemClicked(pos: Int) {
-                    itemsArrayList[pos].code?.let { it1 ->
-                        trackr {
+            override fun onItemClicked(pos: kotlin.Int) {
+                itemsArrayList[pos].code?.let { it1 ->
+                    trackr {
 
-                            it.name = TrackrEvent.spin
-                            it.add(TrackrField.spin_product_code, it1)
-                        }
+                        it.name = TrackrEvent.spin
+                        it.add(TrackrField.spin_product_code, it1)
                     }
+                }
 
 
-                    showBurnDialog(
+                showBurnDialog(
                         pos,
                         AppConstants.PRODUCT_SPIN,
                         itemsArrayList[pos].appDisplayText,
@@ -329,8 +450,14 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
             }
         }
 
-        typeAdapter = SpinnerAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
-        mViewBinding?.rvSpinner?.adapter = typeAdapter
+        spinnerAdapter = SpinnerAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
+        mViewBinding?.rvSpinner?.adapter = spinnerAdapter
+        if (itemsArrayList.size > 0) {
+
+            mViewBinding?.shimmerLayout?.visibility = View.GONE
+            mViewBinding?.shimmerLayout?.stopShimmer()
+        }
+
     }
 
     private fun setRvScratchCard() {
@@ -340,17 +467,17 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
 
 
         val itemClickListener2 = object : ListContactClickListener {
-            override fun onItemClicked(pos: Int) {
-                    scratchArrayList[pos].code?.let { it1 ->
-                        trackr {
+            override fun onItemClicked(pos: kotlin.Int) {
+                scratchArrayList[pos].code?.let { it1 ->
+                    trackr {
 
-                            it.name = TrackrEvent.scratch
-                            it.add(TrackrField.spin_product_code, it1)
-                        }
+                        it.name = TrackrEvent.scratch
+                        it.add(TrackrField.spin_product_code, it1)
                     }
+                }
 
-                    showBurnDialog(
-                        pos,
+                showBurnDialog(
+                    pos,
                         AppConstants.PRODUCT_SCRATCH,
                         scratchArrayList[pos].appDisplayText,
                         scratchArrayList[pos].detailResource
@@ -363,24 +490,13 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Rewa
         scratchAdapter =
             ScratchItemAdapter(scratchArrayList, requireContext(), itemClickListener2!!)
         mViewBinding?.rvScratch!!.adapter = scratchAdapter
-    }
-
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
-    }
-
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_spinner_list
-    }
-
-    override fun getViewModel(): RewardsAndVM {
-        activity?.let {
-            sharedViewModel = ViewModelProvider(it).get(RewardsAndVM::class.java)
-            observeInput(sharedViewModel!!)
-
+        if (scratchArrayList.size > 0) {
+            mViewBinding?.shimmerscratch?.visibility = View.GONE
+            mViewBinding?.shimmerscratch?.stopShimmer()
         }
-        return sharedViewModel!!
     }
+
+
 
 
 }

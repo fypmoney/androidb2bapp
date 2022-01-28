@@ -10,8 +10,8 @@ import com.fypmoney.databinding.*
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.viewhelper.FeedsViewHelper
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
+import com.fypmoney.viewhelper.FeedsViewHelper
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
@@ -90,17 +90,17 @@ class FeedsRewardsAdapter(
                 feedList?.get(position), onFeedItemClickListener
             )
             mRowItemBinding!!.viewHelper = mViewHelper
-            mRowItemBinding.viewModel = viewModel
+
 
 
             try {
                 if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
                     viewModel.page.set(viewModel.page.get()!! + 1)
-                    viewModel.callFetchFeedsApi(
+                    /*viewModel.callFetchFeedsApi(
                         latitude = viewModel.latitude.get(),
                         longitude = viewModel.longitude.get()
-                    )
+                    )*/
 
                 }
             } catch (e: Exception) {
@@ -133,10 +133,10 @@ class FeedsRewardsAdapter(
                 if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
                     viewModel.page.set(viewModel.page.get()!! + 1)
-                    viewModel.callFetchFeedsApi(
+                    /*viewModel.callFetchFeedsApi(
                         latitude = viewModel.latitude.get(),
                         longitude = viewModel.longitude.get()
-                    )
+                    )*/
 
                 }
             } catch (e: Exception) {
@@ -185,10 +185,10 @@ class FeedsRewardsAdapter(
                 if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
                     viewModel.page.set(viewModel.page.get()!! + 1)
-                    viewModel.callFetchFeedsApi(
+                    /*viewModel.callFetchFeedsApi(
                         latitude = viewModel.latitude.get(),
                         longitude = viewModel.longitude.get()
-                    )
+                    )*/
 
                 }
             } catch (e: Exception) {
@@ -250,10 +250,10 @@ class FeedsRewardsAdapter(
                 if (position == feedList?.size!! - 1 && viewModel.totalCount.get()!! > feedList?.size!!) {
                     viewModel.isApiLoading.set(true)
                     viewModel.page.set(viewModel.page.get()!! + 1)
-                    viewModel.callFetchFeedsApi(
+                    /*viewModel.callFetchFeedsApi(
                         latitude = viewModel.latitude.get(),
                         longitude = viewModel.longitude.get()
-                    )
+                    )*/
 
                 }
             } catch (e: Exception) {

@@ -34,7 +34,7 @@
             android:layout_gravity="center"
             android:padding="1dp"
             android:background="@drawable/card_shape"
-            app:srcCompat="@drawable/ic_card_new">
+            app:srcCompat="@drawable/ic_card__new">
 
         </androidx.appcompat.widget.AppCompatImageView>
 

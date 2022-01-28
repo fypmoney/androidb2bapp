@@ -1,7 +1,10 @@
 package com.fypmoney.util
 
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.*
+import android.content.ClipboardManager
+import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.database.Cursor
 import android.graphics.BlendMode
@@ -12,12 +15,18 @@ import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract
 import android.provider.Settings
-import android.text.InputFilter
+import android.text.*
 import android.text.InputFilter.LengthFilter
-import android.text.TextUtils
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.DisplayMetrics
+import android.util.Log
 import android.util.Patterns
+import android.view.View
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
 import android.widget.ImageView
+import android.widget.TextView
+import android.widget.TextView.BufferType
 import android.widget.Toast
 import androidx.annotation.ColorInt
 import androidx.annotation.NonNull
@@ -26,6 +35,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
+import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.database.ContactRepository
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.CustomerInfoResponseDetails
@@ -35,13 +45,22 @@ import com.fypmoney.util.AppConstants.DATE_FORMAT_CHANGED
 import com.fypmoney.util.AppConstants.FEEDSCREEN
 import com.fypmoney.util.AppConstants.FyperScreen
 import com.fypmoney.util.AppConstants.HOMEVIEW
+import com.fypmoney.util.AppConstants.JACKPOTTAB
+import com.fypmoney.util.AppConstants.OfferScreen
 import com.fypmoney.util.AppConstants.ReferralScreen
 import com.fypmoney.util.AppConstants.StoreScreen
+import com.fypmoney.util.AppConstants.StoreofferScreen
+import com.fypmoney.util.AppConstants.StoreshopsScreen
 import com.fypmoney.util.AppConstants.TRACKORDER
 import com.fypmoney.view.activity.ChoresActivity
-import com.fypmoney.view.activity.HomeView
+import com.fypmoney.view.activity.OfferDetailActivity
+import com.fypmoney.view.fragment.OffersStoreActivity
+import com.fypmoney.view.fragment.StoresActivity
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
+import com.fypmoney.view.storeoffers.OffersScreen
 import com.google.gson.Gson
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import kotlinx.coroutines.Dispatchers
@@ -58,28 +77,6 @@ import java.util.*
 import java.util.Calendar.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import android.widget.TextView.BufferType
-
-import android.text.style.ClickableSpan
-
-import android.text.SpannableStringBuilder
-
-import android.widget.TextView
-
-import android.text.Spanned
-
-import android.text.SpannableString
-
-import android.text.method.LinkMovementMethod
-import android.util.Log
-import android.view.View
-
-import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import com.facebook.shimmer.Shimmer
-import com.facebook.shimmer.ShimmerDrawable
-import com.fypmoney.bindingAdapters.shimmerDrawable
-import com.fypmoney.view.fragment.FilterByDateFragment
-import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 
 
 /*
@@ -335,6 +332,52 @@ object Utility {
 
     }
 
+    fun showDatePickerInDateFormatDialog(
+        context: Context,
+        onDateSelected: OnDateSelectedWithDateFormat,
+        isDateOfBirth: Boolean = false
+    ) {
+        val c: Calendar = getInstance()
+        val mYear = c.get(YEAR)
+        val mMonth = c.get(MONTH)
+        val mDay = c.get(DAY_OF_MONTH)
+        val datePickerDialog = DatePickerDialog(
+            context,
+            { _, year, monthOfYear, dayOfMonth ->
+                val simpleDateFormat =
+                    SimpleDateFormat("yyyy MM dd", Locale.ROOT)
+                val date: Date? =
+                    simpleDateFormat.parse("${year} ${monthOfYear + 1} $dayOfMonth")
+                val simpleDateFormatDate =
+                    SimpleDateFormat(DATE_FORMAT_CHANGED, Locale.ROOT)
+                // calculateDifferenceBetweenDates(date,getInstance().time)
+                date?.let {
+                    onDateSelected.onDateSelectedWithDateFormat(
+                        SimpleDateFormat(
+                            AppConstants.DATE_TIME_FORMAT_SERVER,
+                            Locale.ROOT
+                        ).format(it),
+                        simpleDateFormatDate.format(it)
+                    )
+
+                }
+            },
+            mYear,
+            mMonth,
+            mDay
+        )
+        if (isDateOfBirth) {
+            datePickerDialog.datePicker.maxDate =
+                (System.currentTimeMillis() - 347039786000)//11 years //Todo
+            datePickerDialog.datePicker.minDate = (System.currentTimeMillis() - 2208984820000)//70
+
+        } else {
+            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+        }
+        datePickerDialog.show()
+
+    }
+
     fun showDatePickerDialogWithStartDate(
         context: Context,
         onDateSelectedwithStart: OnDateSelectedwithStart,
@@ -410,6 +453,16 @@ object Utility {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(intent)
     }
+    fun goToAppSettingsPermission(context: Activity,requestCode:Int) {
+        val intent = Intent(
+            Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+            Uri.parse(AppConstants.APP_SETTINGS_PACKAGE_TEXT + context.packageName)
+        )
+        intent.addCategory(Intent.CATEGORY_DEFAULT)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        context.startActivityForResult(intent, requestCode)
+
+    }
 
     /*
     * This method is used to check if user is login or not
@@ -425,6 +478,11 @@ object Utility {
         }
     }
 
+    interface OnDateSelectedWithDateFormat {
+        fun onDateSelectedWithDateFormat(dateOnServer: String?, dateOnEditText: String) {
+        }
+    }
+
     interface OnDateSelectedwithStart {
         fun onDateSelectedwithStart(
             dateOnEditText: String,
@@ -433,119 +491,6 @@ object Utility {
             c: Calendar
         ) {
         }
-    }
-
-    /*
-    * This method will return all the contacts from the phone book
-    * */
-    fun getAllContacts(
-        contentResolver: ContentResolver,
-        contactRepository: ContactRepository, onAllContactsAddedListener: OnAllContactsAddedListener
-    ) {
-        val contactList = mutableListOf<ContactEntity>()
-        GlobalScope.launch(Dispatchers.Main) {
-            // Switch to a background (IO) thread
-            withContext(Dispatchers.IO) {
-                val lastDate: String? = SharedPrefUtils.getString(
-                    PockketApplication.instance,
-                    SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
-                )
-                val contacts: Cursor?
-                if (lastDate != null) {
-                    contacts = contentResolver.query(
-                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                        null,
-                        ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP + " >= ?",
-                        arrayOf(lastDate),
-                        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY + " ASC"
-                    )
-                } else {
-                    contacts = contentResolver.query(
-                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                        null,
-                        null,
-                        null,
-                        ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY + " ASC"
-                    )
-                }
-
-
-                // Loop through the contacts
-                while (contacts?.moveToNext()!!) {
-                    val contactEntity = ContactEntity()
-                    // Get the current contact name
-                    val name = contacts.getString(
-                        contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY)
-                    )
-                    var lastName: String? = if (name?.trim()?.split(" ")?.size ?: 0 > 1) {
-                        ""
-                    } else {
-                        null
-                    }
-                    val list = name?.trim()?.split(" ")
-                    list?.forEachIndexed { index, s ->
-                        if (index > 0) {
-                            lastName = "$lastName${s.trim()} "
-                        }
-
-                    }
-                    if (list?.isNotEmpty() == true)
-                        contactEntity.firstName = list[0].trim()
-                    // Get the current contact last name
-                    contactEntity.lastName = lastName?.trim()
-                    // Get the current contact phone number
-                    val number = contacts.getString(
-                        contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
-                    )
-                    var updatedNumber = number.replace(" ", "").trim()
-//                    if(updatedNumber.length>10){
-//                        updatedNumber = updatedNumber.takeLast(10)
-//                    }
-                    contactEntity.contactNumber = updatedNumber
-
-
-                    /*  // Get the current contact lookup key
-                      contactEntity.lookupKey = contacts.getString(
-                          contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LOOKUP_KEY)
-
-                      )*/
-                    // Get the current contact id
-                    contactEntity.phoneBookIdentifier = contacts.getString(
-                        contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
-                    )
-
-                    /*     // Get the current contact id
-                         contactEntity.email = contacts.getString(
-                             contacts.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA)
-                         )
-
-                         Log.d("hdddhdhdh", contactEntity.email!!)
-             */
-                    setLastContactSinkDate()
-                    contactList.add(contactEntity)
-                }
-                contacts.close()
-
-            }
-            // switch to the main thread
-            if (SharedPrefUtils.getString(
-                    PockketApplication.instance,
-                    SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
-                ) == null
-            ) {
-                contactRepository.insertAllContacts(contactList)
-            } else {
-                if (!contactList.isNullOrEmpty()) {
-                    contactList.forEach {
-                        contactRepository.deleteContactsBasedOnLookupKey(it.phoneBookIdentifier!!)
-                    }
-                    contactRepository.insertAllContacts(contactList)
-                }
-            }
-            onAllContactsAddedListener.onAllContactsSynced()
-        }
-
-
     }
 
     interface OnAllContactsAddedListener {
@@ -568,8 +513,6 @@ object Utility {
 
 
                 val contacts: Cursor?
-                //  GlobalScope.launch(Dispatchers.Main) {
-                // Switch to a background (IO) thread
 
                 val lastDate: String? = SharedPrefUtils.getString(
                     PockketApplication.instance,
@@ -701,9 +644,7 @@ object Utility {
         return phone
     }
 
-    fun canGetLocation(context: Context): Boolean {
-        return isLocationEnabled(context) // application context
-    }
+
 
     /*
     * This method will check if location is enabled or not
@@ -761,7 +702,11 @@ object Utility {
             SharedPrefUtils.SF_KEY_IS_LOGIN,
             false
         )
-
+        SharedPrefUtils.putArrayList(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_USER_INTEREST,
+            null
+        )
         SharedPrefUtils.putString(
             PockketApplication.instance,
             SharedPrefUtils.SF_KEY_ACCESS_TOKEN,
@@ -824,6 +769,11 @@ object Utility {
             PockketApplication.instance,
             SharedPrefUtils.SF_KEY_USER_DELIVERY_ADDRESS,
             ""
+        )
+        SharedPrefUtils.putBoolean(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_IS_INSTALLED_APPS_SYNCED,
+            false
         )
     }
 
@@ -995,6 +945,7 @@ object Utility {
     }
 
 
+
     /*
     * This method is used to compare dates
     * */
@@ -1092,34 +1043,57 @@ object Utility {
     }
 
 
+
     fun deeplinkRedirection(screenName: String, context: Context) {
         var intent: Intent? = null
 
         when (screenName) {
             HOMEVIEW -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
             }
             ReferralScreen -> {
                 intent = Intent(context, ReferAndEarnActivity::class.java)
 
             }
+            JACKPOTTAB -> {
+//                intent = Intent(context, RewardsActivity::class.java)
+//                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, JACKPOTTAB)
+            }
+
             CardScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, CardScreen)
 
             }
+            OfferScreen -> {
+                intent = Intent(context, OffersScreen::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, OfferScreen)
+
+            }
             StoreScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreScreen)
 
             }
+            StoreofferScreen -> {
+                intent = Intent(context, OffersStoreActivity::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreofferScreen)
+
+            }
+
+            StoreshopsScreen -> {
+                intent = Intent(context, StoresActivity::class.java)
+                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, StoreshopsScreen)
+
+            }
+
             FEEDSCREEN -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FEEDSCREEN)
 
             }
             FyperScreen -> {
-                intent = Intent(context, HomeView::class.java)
+                intent = Intent(context, HomeActivity::class.java)
                 intent.putExtra(AppConstants.FROM_WHICH_SCREEN, FyperScreen)
 
             }
@@ -1131,7 +1105,16 @@ object Utility {
                 intent = Intent(context, ChoresActivity::class.java)
 
             }
+            else -> {
+                if (screenName.startsWith("offerdetails_")) {
+                    intent = Intent(context, OfferDetailActivity::class.java)
+                    var feedId = screenName.split("_")[1]
+                    intent.putExtra("feedid", feedId)
+
+                }
+            }
         }
+
         intent?.let {
             context.startActivity(intent)
 
@@ -1169,5 +1152,50 @@ object Utility {
             }
         }
         return builder.toString() // Return builders text
+    }
+
+    fun stringToCardNumber(input:String): StringBuilder {
+        val result = StringBuilder()
+        for (i in input.indices) {
+            if (i % 4 == 0 && i != 0) {
+                result.append(" ")
+            }
+            result.append(input.get(i))
+        }
+        return result
+    }
+
+    fun onCopyClicked(textToCopy:String,context:Context) {
+        copyTextToClipBoard(
+            context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager,
+            textToCopy
+        )
+    }
+
+    fun isFirstInstall(context: Context): Boolean {
+        return try {
+            val firstInstallTime =
+                context.packageManager.getPackageInfo(context.packageName, 0).firstInstallTime
+            val lastUpdateTime =
+                context.packageManager.getPackageInfo(context.packageName, 0).lastUpdateTime
+            firstInstallTime == lastUpdateTime
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+            true
+        }
+    }
+
+
+    fun isInstallFromUpdate(context: Context): Boolean {
+        return try {
+            val firstInstallTime =
+                context.packageManager.getPackageInfo(context.packageName, 0).firstInstallTime
+            val lastUpdateTime =
+                context.packageManager.getPackageInfo(context.packageName, 0).lastUpdateTime
+            firstInstallTime != lastUpdateTime
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+            false
+        }
     }
 }

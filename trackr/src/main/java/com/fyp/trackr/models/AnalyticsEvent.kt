@@ -55,6 +55,8 @@ fun AnalyticsEvent?.push() {
     Trackr.a(this)
 }
 
+
+
 // Easy Kotlin DSL for init
 fun trackr(block: (AnalyticsEvent) -> Unit): AnalyticsEvent {
     val p = AnalyticsEvent()
@@ -69,6 +71,7 @@ enum class TrackrEvent(name: String) {
     LOGINSUCCESS("vp1kxg"),
     KYCCOMPLETD("m64ei2"),
     check_offer("check_offer"),
+    order_now("order_now"),
     mobile_entered("mobile_entered"),
     otp_verified("otp_verified"),
     pay_button("pay_button"),
@@ -76,6 +79,7 @@ enum class TrackrEvent(name: String) {
     order_success("order_success"),
     add_money_button("add_money_button"),
     scratch_card_continue("scratch_card_continue"),
+    card_order_details_continue("card_order_details_continue"),
     login_success_view("login_success_view"),
     home_screen("home_screen"),
     ordered_card("ordered_card"),
@@ -84,6 +88,9 @@ enum class TrackrEvent(name: String) {
     account_activation("account_activation"),
     bank_verification("bank_verification"),
     kyc_verification("kyc_verification"),
+    kyc_verification_teen("kyc_verification_teen"),
+    kyc_verification_adult("kyc_verification_adult"),
+    kyc_verification_other("kyc_verification_other"),
     offer_tab("offer_tab"),
     offer_copy("offer_copy"),
     app_launch("app_launch"),
@@ -118,18 +125,52 @@ enum class TrackrEvent(name: String) {
     scratch("scratch"),
     scratch_success("scratch_success"),
     insufficient_mynts("insufficient_mynts"),
-
-
-
-    //adjust events
+    open_jackpot("open_jackpot"),
+    ticket_win_success("ticket_win_success"),
+    ref_from_invite_link("ref_from_invite_link"),
+    card_activate_success("card_activate_success"),
+    pin_success ("pin_success"),
+    cust_type_select ("cust_type_select"),
+    onboard_doc_sel ("onboard_doc_sel"),
+    kyc_detail_fill_action ("kyc_detail_fill_action"),
+    onboard_invite_enter_mobile ("onboard_invite_enter_mobile"),
+    onboard_invite_choose_relation ("onboard_invite_choose_relation"),
+    onboard_invite_share ("onboard_invite_share"),
+    onboard_invite_skip ("onboard_invite_skip"),
+    onboard_invite_use_myself ("onboard_invite_use_myself"),
+    onboard_waitlist_have_number ("onboard_waitlist_have_number"),
+    onboard_pending_approval_skip ("onboard_pending_approval_skip"),
+    onboard_interest_selection ("onboard_interest_selection"),
+    onboard_personal_offer_continue ("onboard_personal_offer_continue"),
+    onboard_offer_screen_continue ("onboard_offer_screen_continue"),
+    onboard_usertimeline_icon_click ("onboard_usertimeline_icon_click"),
+    home_explore_click ("home_explore_click"),
+    home_action_click ("home_action_click"),
+    home_add_money_click ("home_add_money_click"),
+    home_pay_money_click ("home_pay_money_click"),
+    home_upi_click ("home_upi_click"),
+    tab_explore_click ("tab_explore_click"),
+    tab_reward_click ("tab_reward_click"),
+    tab_family_click ("tab_family_click"),
+    tab_home_click ("tab_home_click"),
 
 }
 
 enum class TrackrField(name: String) {
     user_id("user_id"),
+    cust_type("cust_type"),
+    document_type("document_type"),
+    status("status"),
+    post_kyc_flag("post_kyc_flag"),
+    relation_key("relation_key"),
+    interest_code("interest_code"),
+    form_which_screen("form_which_screen"),
+    referral_code("referral_code"),
     user_mobile_no("user_mobile_no"),
     spin_product_code("product_code"),
     transaction_amount("transaction_amount"),
     added_family_member_mobile_no("added_family_member_mobile_no"),
     added_family_member_reletionship("added_family_member_reletionship"),
+    explore_content_id("explore_content_id"),
+    action_content_id("action_content_id"),
 }

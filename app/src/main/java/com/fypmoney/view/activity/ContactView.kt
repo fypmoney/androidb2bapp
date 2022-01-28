@@ -136,10 +136,9 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
 
                 } else {
                     //set to never ask again
-                    SharedPrefUtils.putBoolean(
-                        applicationContext,
-                        SharedPrefUtils.SF_KEY_STORAGE_PERMANENTLY_DENY,
-                        true
+                    Utility.showToast(getString(R.string.please_allow_us_to_read_your_contacts))
+                    Utility.goToAppSettingsPermission(this@ContactView,
+                        AppConstants.PERMISSION_CODE
                     )
                 }
             }
@@ -189,10 +188,21 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
     }
 
     override fun onShareClickListener(referralCode: String) {
-        inviteUser()
+        SharedPrefUtils.getString(this,SharedPrefUtils.SF_KEY_REFERAL_GLOBAL_MSG)?.let {
+            shareInviteCodeFromReferal(it)
+        }
     }
 
     override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {
         mViewModel.callContactSyncApi()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode== AppConstants.PERMISSION_CODE){
+            if(resultCode== RESULT_OK){
+                checkAndAskPermission()
+            }
+        }
     }
 }

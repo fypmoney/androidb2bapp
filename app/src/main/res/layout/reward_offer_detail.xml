@@ -63,12 +63,13 @@
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
                     tools:src="@drawable/ic_total_referral_won" />
+
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/black"
-                    android:alpha=".1"/>
+                    android:alpha=".1"
+                    android:background="@color/black" />
 
 
             </RelativeLayout>

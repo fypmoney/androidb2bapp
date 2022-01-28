@@ -2,11 +2,11 @@ package com.fypmoney.viewmodel
 
 import android.app.Application
 import android.text.TextUtils
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.UserTrackr
 import com.fyp.trackr.models.push
+import com.fyp.trackr.models.setDateOfBirthDate
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -16,14 +16,14 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.database.InterestRepository
 import com.fypmoney.model.CustomerInfoResponse
-import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.InterestEntity
 import com.fypmoney.model.UpdateProfileRequest
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.moengage.core.internal.MoEConstants
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 /*
 * This is used to handle account creation related functionality
@@ -35,21 +35,20 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
     var isEnabled = MutableLiveData(false)
     var firstName = MutableLiveData<String>()
     var lastName = MutableLiveData<String>()
+    var emailId = MutableLiveData<String>()
     var dob = MutableLiveData<String>()
     var dobForServer = MutableLiveData<String>()
     var onDobClicked = MutableLiveData(false)
     var teenager = MutableLiveData(-1)
-    var majorMinorText = ObservableField<String>()
-    var isMajorMinorVisible = ObservableField(false)
-    var buttonColor = ObservableField(false)
     var selectedInterestList = ArrayList<InterestEntity>()
-    var interestRepository = InterestRepository(mDB = appDatabase)
-    /*
-    * This method is used to set data
-    * */
-    fun setData(customerInfoResponse: CustomerInfoResponseDetails) {
-        firstName.value = customerInfoResponse.firstName
-        lastName.value = customerInfoResponse.lastName
+
+    // this method check is email is valid or not
+     fun isEmailValid(email: String?): Boolean {
+        val EMAIL_PATTERN =
+            "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
+        val pattern: Pattern = Pattern.compile(EMAIL_PATTERN)
+        val matcher: Matcher = pattern.matcher(email)
+        return matcher.matches()
     }
 
     /*
@@ -63,7 +62,12 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
             TextUtils.isEmpty(lastName.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.last_name_empty_error))
             }
-
+            TextUtils.isEmpty(emailId.value) -> {
+                Utility.showToast(PockketApplication.instance.getString(R.string.email_empty_error))
+            }
+            !isEmailValid(emailId.value) -> {
+                Utility.showToast(PockketApplication.instance.getString(R.string.email_valid_error))
+            }
 
             else -> {
                 isEnabled.value = true
@@ -73,7 +77,6 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
                 } else if (teenager.value == 1) {
                     age_type = "CHILD"
                 }
-                Log.d("chack", age_type)
                 WebApiCaller.getInstance().request(
                     ApiRequest(
                         purpose = ApiConstant.API_UPDATE_PROFILE,
@@ -87,6 +90,7 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
 
                             firstName = firstName.value?.trim(),
                             lastName = lastName.value?.trim(),
+                            email = emailId.value?.trim(),
                             mobile = SharedPrefUtils.getString(
                                 getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE
                             ),
@@ -105,13 +109,6 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
  * */
     fun onDobClicked() {
         onDobClicked.value = true
-    }
-
-    /*
-    * This method is used to handle click of login
-    * */
-    fun onLoginClicked() {
-        onLoginClicked.value = true
     }
 
 
@@ -153,12 +150,18 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
                     // again update the saved data in preference
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
 
-                    val map = hashMapOf<String,Any>()
+                    val map = hashMapOf<String, Any>()
 
-                    map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = responseData.customerInfoResponseDetails!!.firstName.toString()
-                    map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = responseData.customerInfoResponseDetails!!.lastName.toString()
-                    map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = responseData.customerInfoResponseDetails!!.dob.toString()
+                    map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] =
+                        responseData.customerInfoResponseDetails?.firstName.toString()
+                    map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] =
+                        responseData.customerInfoResponseDetails?.lastName.toString()
                     UserTrackr.push(map)
+                    responseData.customerInfoResponseDetails?.userProfile?.dob?.let {
+                        UserTrackr.setDateOfBirthDate(
+                            it
+                        )
+                    }
 
                     val interestList = ArrayList<String>()
                     if (!selectedInterestList.isNullOrEmpty()) {
@@ -182,10 +185,6 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
 
 
         }
-    }
-
-    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
-        super.onError(purpose, errorResponseInfo)
     }
 
 

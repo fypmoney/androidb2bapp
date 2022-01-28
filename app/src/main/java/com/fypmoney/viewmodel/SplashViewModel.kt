@@ -3,11 +3,9 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.adjust.sdk.Adjust
 import com.fyp.trackr.base.Trackr
-import com.fyp.trackr.models.CUSTOM_USER_POST_KYC_CODE
-import com.fyp.trackr.models.UserTrackr
-import com.fyp.trackr.models.login
-import com.fyp.trackr.models.push
+import com.fyp.trackr.models.*
 import com.fypmoney.BuildConfig
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -17,6 +15,7 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
+import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.SettingsRequest
 import com.fypmoney.model.SettingsResponse
@@ -24,6 +23,8 @@ import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
 import com.fypmoney.util.AppConstants.ERROR_MESSAGE_HOME
 import com.fypmoney.util.AppConstants.IS_NEW_FEED_AVAILABLE
+import com.fypmoney.util.AppConstants.ONBOARD_SHARE_1
+import com.fypmoney.util.AppConstants.ONBOARD_SHARE_90
 import com.fypmoney.util.AppConstants.REFEREE_CASHBACK
 import com.fypmoney.util.AppConstants.REFER_LINE1
 import com.fypmoney.util.AppConstants.REFER_LINE2
@@ -32,7 +33,10 @@ import com.fypmoney.util.AppConstants.REFER_MSG_SHARED_2
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_APP_VERSION_CODE
 import com.fypmoney.util.Utility
+import com.fypmoney.view.referandearn.model.ReferMessageResponse
 import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.moengage.core.internal.MoEConstants
 import com.moengage.firebase.MoEFireBaseHelper
 
@@ -52,58 +56,59 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
     init {
         setUpApp()
     }
-
-     fun setUpApp() {
+    fun setUpApp() {
         callCheckAppUpdate()
-         SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let { it1 ->
-             if(it1==0){
-                 Trackr.appIsInstallFirst(isFirstTime = true)
-                 SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
-                     ?.let { it2 ->
-                         MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
-                             it2
-                         )
-                     }
-             }else{
-                 Trackr.appIsInstallFirst(isFirstTime = false)
-                 SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
-                     ?.let { it2 ->
-                         MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
-                             it2
-                         )
-                     }
-                 Utility.getCustomerDataFromPreference()?.let {
-                     val map = hashMapOf<String,Any>()
-                     map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = it.mobile.toString()
-                     map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
-                     map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
-                     map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
-                     map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = it.userProfile?.dob.toString()
-                     map[MoEConstants.USER_ATTRIBUTE_USER_GENDER] = it.userProfile?.gender.toString()
-                     map[CUSTOM_USER_POST_KYC_CODE] = it.postKycScreenCode.toString()
-                     UserTrackr.push(map)
-                     UserTrackr.login( it.mobile.toString())
-                 }
-             }
-         }
         if (SharedPrefUtils.getBoolean(
                 app,
                 SharedPrefUtils.SF_KEY_IS_LOGIN
             )!!
         ) {
             callSettingsApi()
+            callReferScreenMessages()
             SharedPrefUtils.getInt(app,SF_KEY_APP_VERSION_CODE)?.let {
                 if(Utility.getCustomerDataFromPreference()==null ||
                     (it < BuildConfig.VERSION_CODE)||(it > BuildConfig.VERSION_CODE)){
                     SharedPrefUtils.putInt(app,SF_KEY_APP_VERSION_CODE, BuildConfig.VERSION_CODE)
+                    SharedPrefUtils.putBoolean(
+                        PockketApplication.instance,
+                        SharedPrefUtils.SF_IS_INSTALLED_APPS_SYNCED,
+                        false
+                    )
                     callGetCustomerProfileApi()
-
-
                 }
                 if(it==0){
                     Trackr.appIsInstallFirst(isFirstTime = true)
+                    SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
+                        ?.let { it2 ->
+                            MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
+                                it2
+                            )
+                            Adjust.setPushToken(it2, PockketApplication.instance);
+                        }
                 }else{
                     Trackr.appIsInstallFirst(isFirstTime = false)
+                    SharedPrefUtils.getString(PockketApplication.instance,SharedPrefUtils.SF_KEY_FIREBASE_TOKEN)
+                        ?.let { it2 ->
+                            MoEFireBaseHelper.getInstance().passPushToken(PockketApplication.instance,
+                                it2
+                            )
+                            Adjust.setPushToken(it2, PockketApplication.instance);
+                        }
+                    Utility.getCustomerDataFromPreference()?.let {
+                        val map = hashMapOf<String,Any>()
+                        map[MoEConstants.USER_ATTRIBUTE_UNIQUE_ID] = it.mobile.toString()
+                        map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
+                        map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
+                        map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
+
+                        map[MoEConstants.USER_ATTRIBUTE_USER_GENDER] = it.userProfile?.gender.toString()
+                        map[CUSTOM_USER_POST_KYC_CODE] = it.postKycScreenCode.toString()
+                        it.userProfile?.dob?.let {dob->
+                            UserTrackr.setDateOfBirthDate(dob)
+                        }
+                        UserTrackr.push(map)
+                        UserTrackr.login( it.mobile.toString())
+                    }
                 }
             }
 
@@ -150,7 +155,9 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
             "REFERAL_PKYC0",
             "REFERAL_PKYC1",
             "ERROR_MESSAGE_HOME",
-            "IS_NEW_FEED_AVAILABLE"
+            "IS_NEW_FEED_AVAILABLE",
+            "ONBOARD_SHARE_90",
+            "ONBOARD_SHARE_1"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -159,6 +166,18 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = false,
                 param = request
+            )
+        )
+    }
+
+    private fun callReferScreenMessages() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.REFERRAL_SCREEN_MESSAGES_API,
+                NetworkUtil.endURL(ApiConstant.REFERRAL_SCREEN_MESSAGES_API),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
             )
         )
     }
@@ -207,9 +226,14 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                     map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = responseData.customerInfoResponseDetails!!.mobile.toString()
                     map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = responseData.customerInfoResponseDetails!!.firstName.toString()
                     map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = responseData.customerInfoResponseDetails!!.lastName.toString()
-                    map[MoEConstants.USER_ATTRIBUTE_USER_BDAY] = responseData.customerInfoResponseDetails!!.dob.toString()
                     UserTrackr.push(map)
                     UserTrackr.login( responseData.customerInfoResponseDetails!!.mobile.toString())
+                    responseData.customerInfoResponseDetails?.dob?.let {
+                        UserTrackr.setDateOfBirthDate(
+                            it
+                        )
+                    }
+
                     moveToNextScreen.value = true
                 }
             }
@@ -254,7 +278,20 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                     it.value
                                 )
                             }
-
+                            ONBOARD_SHARE_90 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_REGISTER_MSG_90,
+                                    it.value
+                                )
+                            }
+                            ONBOARD_SHARE_1 -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_REGISTER_MSG_1,
+                                    it.value
+                                )
+                            }
                             REFER_MSG_SHARED_2 -> {
                                 SharedPrefUtils.putString(
                                     getApplication(),
@@ -295,7 +332,26 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 }
 
         }
+            ApiConstant.REFERRAL_SCREEN_MESSAGES_API -> {
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
+                val data = Gson().fromJson(
+                    json.get("data").toString(),
+                    ReferMessageResponse::class.java
+                )
+                SharedPrefUtils.putString(
+                    getApplication(),
+                    SharedPrefUtils.SF_KEY_REFER_LINE2,
+                    data.referLine2
+                )
+                SharedPrefUtils.putString(
+                    getApplication(),
+                    SharedPrefUtils.SF_KEY_REFERAL_GLOBAL_MSG,
+                    data.referMessage
+                )
+
+
+            }
 
         }
 
@@ -303,6 +359,8 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        moveToNextScreen.value = true
+
     }
 
 

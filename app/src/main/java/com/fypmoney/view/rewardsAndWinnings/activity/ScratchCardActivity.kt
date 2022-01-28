@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +21,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.view.customview.scratchlayout.listener.ScratchListener
 
 import com.fypmoney.view.customview.scratchlayout.ui.ScratchCardLayout
-import kotlinx.android.synthetic.main.dialog_burn_mynts.*
+
 
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_spin_wheel_black.*
@@ -31,7 +32,6 @@ import androidx.lifecycle.Lifecycle
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.model.SectionListItem
 import com.fypmoney.util.Utility
 import kotlinx.android.synthetic.main.dialog_burn_mynts.clicked
@@ -46,6 +46,8 @@ import java.util.ArrayList
 
 class ScratchCardActivity :
     BaseActivity<ActivityScratchProductBinding, ScratchCardProductViewmodel>() {
+    private var mp: MediaPlayer? = null
+    private var noOfGoldenCard: Int? = null
     private var ProductCode: String? = null
     private var dialogError: Dialog? = null
     private var sectionId: Int? = null
@@ -83,18 +85,18 @@ class ScratchCardActivity :
         orderId = intent.getStringExtra(AppConstants.ORDER_NUM)
         sectionId = intent.getIntExtra(AppConstants.SECTION_ID, -1)
         ProductCode = intent.getStringExtra(AppConstants.PRODUCT_CODE)
+        noOfGoldenCard = intent.getIntExtra(AppConstants.NO_GOLDED_CARD, -1)
+
         var image_url = intent.getStringExtra(AppConstants.PRODUCT_HIDE_IMAGE)
 
         Glide.with(this).load(image_url).into(mBinding.gotTheOfferIv)
 //        mViewModel.callProductsDetailsApi(orderId)
-        setUpView()
+
+        setupScratchCardView()
         mBinding.scratchCardLayout.setScratchDrawable(imageScratch)
         setUpObserver()
     }
 
-    private fun setUpView() {
-        setupScratchCardView()
-    }
 
     private fun callErrorDialog(msg: String) {
         dialogError?.setCancelable(false)
@@ -118,7 +120,9 @@ class ScratchCardActivity :
 
 
         dialogError?.clicked?.setOnClickListener(View.OnClickListener {
-         finish()
+            mp?.stop()
+            setResult(23)
+            finish()
         })
 
 
@@ -154,9 +158,16 @@ class ScratchCardActivity :
                         it.add(TrackrField.spin_product_code, ProductCode)
 
                     }
-                    showwonDialog(it.cashbackWon)
+
+                    offer_found_tv?.visibility = View.VISIBLE
+                    showwonDialog(it.cashbackWon, it.noOfJackpotTicket)
+                    mp = MediaPlayer.create(
+                        this,
+                        R.raw.reward_won_sound
+                    )
+                    mp?.start()
                 }
-            }, 500)
+            }, 300)
 
 
         }
@@ -168,7 +179,7 @@ class ScratchCardActivity :
         setResult(52)
     }
 
-    private fun showwonDialog(cashbackWon: String?) {
+    private fun showwonDialog(cashbackWon: String?, noOfJackpotTicket: Int?) {
 
 
         dialogDialog?.setCancelable(false)
@@ -179,19 +190,28 @@ class ScratchCardActivity :
 
         wlp?.width = ViewGroup.LayoutParams.MATCH_PARENT
         if (cashbackWon == "0") {
+
             dialogDialog?.congrats_tv?.visibility = View.GONE
             dialogDialog?.textView?.visibility = View.GONE
-            dialogDialog?.clicked?.text = getString(R.string.continue_txt)
-            dialogDialog?.luckonside_tv?.visibility = View.GONE
             dialogDialog?.spin_green?.setImageDrawable(
                 ContextCompat.getDrawable(
                     this,
-                    R.drawable.better_luck_next_time
+                    R.drawable.golden_cards
                 )
             )
+            dialogDialog?.better_next_time?.visibility = View.INVISIBLE
+            if (noOfJackpotTicket != null) {
+                trackr {
+                    it.name = TrackrEvent.ticket_win_success
+                }
+                dialogDialog!!.golden_cards_won!!.text =
+                    "You won " + noOfJackpotTicket + getString(R.string.golden_card)
+            }
+            dialogDialog?.clicked?.text = getString(R.string.continue_txt)
+            dialogDialog?.luckonside_tv?.visibility = View.GONE
 
-            dialogDialog?.better_next_time?.visibility = View.VISIBLE
         }
+
         if (mViewModel.played.get() == true) {
             dialogDialog?.textView?.text =
                 "your wallet has been updated with ₹ " + Utility.convertToRs(cashbackWon)
@@ -209,13 +229,9 @@ class ScratchCardActivity :
 
         dialogDialog?.clicked?.setOnClickListener(View.OnClickListener {
             if (mViewModel.played.get() == true) {
-//                if (cashbackWon == "0") {
-//                    trackr {
-//                        it.name = TrackrEvent.SPINZERO
-//                        it.add(TrackrField.spin_product_code,ProductCode)
-//
-//                    }
-//                }
+
+                mp?.stop()
+                setResult(23)
                 finish()
             } else {
                 mViewModel.callScratchWheelApi(orderId, true)
@@ -224,6 +240,11 @@ class ScratchCardActivity :
 
 
         dialogDialog?.show()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mp?.stop()
     }
 
 
@@ -236,12 +257,16 @@ class ScratchCardActivity :
                     mBinding.offerAmountTv.text = "₹" + Utility.convertToRs(item.sectionValue)
                     mBinding.offerDescTv.visibility = View.VISIBLE
                 } else {
-                    mBinding.offerAmountTv.text = "₹" + Utility.convertToRs(item.sectionValue)
+                    if (noOfGoldenCard != null && noOfGoldenCard!! > 0) {
+                        mBinding.offerAmountTv.text = noOfGoldenCard.toString() + " Golden Tickets"
 
-                    mBinding.oppsTv.visibility = View.VISIBLE
-                    mBinding.betterLuck.visibility = View.VISIBLE
-                    mBinding.offerAmountTv.visibility = View.INVISIBLE
-                    mBinding.offerDescTv.visibility = View.INVISIBLE
+                    }
+                    mBinding.offerDescTv.setTextColor(ContextCompat.getColor(this, R.color.white))
+                    mBinding.offerAmountTv.setTextColor(ContextCompat.getColor(this, R.color.white))
+//                    mBinding.oppsTv.visibility = View.VISIBLE
+//                    mBinding.betterLuck.visibility = View.VISIBLE
+
+
                     mBinding.smileyOops.visibility = View.VISIBLE
                     Glide.with(this).load(R.color.white).into(mBinding.gotTheOfferIv)
 
@@ -272,7 +297,6 @@ class ScratchCardActivity :
 
 
                 mBinding.LoadProgressBar.visibility = View.VISIBLE
-
                 mViewModel.callScratchWheelApi(orderId, false)
 
 

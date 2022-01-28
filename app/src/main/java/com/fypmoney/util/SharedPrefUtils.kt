@@ -6,8 +6,6 @@ import androidx.preference.PreferenceManager
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.lang.ClassCastException
-import java.lang.Exception
 import java.lang.reflect.Type
 
 
@@ -42,6 +40,7 @@ class SharedPrefUtils {
         const val SF_KEY_CARD_FLAG = "card_screen_flag"
         const val SF_KEY_REFER_LINE1 = "refer_line_1"
         const val SF_KEY_REFER_LINE2 = "refer_line_2"
+        const val SF_KEY_REFERAL_GLOBAL_MSG = "refer_global_msg"
         const val SF_KEY_REFEREE_CASHBACK = "refer_cashback_amount"
         const val SF_KEY_ERROR_MESSAGE_HOME = "error_msg_home"
         const val SF_KEY_IS_NEW_FEED_AVAILABLE = "is_new_feed_available"
@@ -50,7 +49,12 @@ class SharedPrefUtils {
         const val SF_KEY_IS_ORDER_SCARTCH_CODE_DONE = "order_on_card_scratch_done"
         const val SF_KEY_APP_VERSION_CODE = "app_version_code"
         const val SF_REFFERAL_MSG = "refer_share_message_0"
+        const val SF_REGISTER_MSG_1 = "register_share_message_1"
+        const val SF_REGISTER_MSG_90 = "register_share_message_90"
         const val SF_REFFERAL_MSG_2 = "refer_share_message_1"
+        const val SF_IS_USER_LANDED_ON_HOME_SCREEN_TIME = "is_user_landed_on_home_screen_time"
+        const val SF_REFERRAL_CODE_FROM_INVITE_LINK = "referral_code_from_invite_link"
+        const val SF_IS_INSTALLED_APPS_SYNCED = "is_installed_apps_is_syncd"
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(context)

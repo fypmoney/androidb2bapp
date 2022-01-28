@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.register.viewModel.KycdetailViewModel" />
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/toolbar_layout"
+            layout="@layout/toolbar_animation" />
+
+        <ScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:paddingBottom="@dimen/_20sdp"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/screenMarginLeft"
+                android:layout_marginEnd="@dimen/screenMarginRight">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pan_number_title"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/aadhaar_no" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/aadhar_card_info_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:tint="@color/black"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="20dp"
+                    android:onClick="@{()->viewModel.onAadharCardInfoClicked()}"
+                    android:src="@drawable/ic_baseline_info_24"/>
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/pan_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/pan_number_title"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                    android:inputType="textCapCharacters"
+                    android:paddingStart="@dimen/edittextHintPaddingStart"
+                    android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                    android:text="@={viewModel.panNumber}"
+
+
+                    android:textSize="@dimen/_14sdp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:id="@+id/lin_name"
+                    android:orientation="vertical"
+                    android:layout_below="@+id/pan_number"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/verification_title"
+                            style="@style/TextviewRegular"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginTop="10dp" />
+
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/et_first_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/verification_title"
+                            android:layout_marginTop="@dimen/edittextMarginTop"
+
+                            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray_8"
+                            android:digits="qwertyuiopasdfghjklzxcvbnm ., QWERTYUIOPASDFGHJKLZXCVBNM"
+                            android:hint="Enter your full name"
+                            android:inputType="textCapWords"
+                            android:maxLength="50"
+                            android:paddingStart="@dimen/edittextHintPaddingStart"
+                            android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                            android:singleLine="true"
+                            android:text="@={viewModel.firstName}"
+                            android:textSize="@dimen/_14sdp" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lin_name"
+                    android:id="@+id/lin_age_gender"
+
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:weightSum="2">
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/dob_title"
+                            style="@style/TextviewRegular"
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginTop="10dp"
+                            android:text="Date of Birth*" />
+
+
+                        <androidx.appcompat.widget.AppCompatEditText
+                            android:id="@+id/dob"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/dob_title"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginEnd="@dimen/_12sdp"
+                            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray_8"
+                            android:digits="qwertyuiopasdfghjklzxcvbnm ., QWERTYUIOPASDFGHJKLZXCVBNM"
+                            android:drawableEnd="@drawable/calender"
+                            android:focusable="false"
+                            android:hint="DOB"
+
+                            android:maxLength="20"
+                            android:onClick="@{()->viewModel.onDobClicked()}"
+                            android:paddingStart="@dimen/edittextHintPaddingStart"
+                            android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                            android:text="@={viewModel.dob}"
+
+
+                            android:textSize="@dimen/_14sdp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/gender"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginTop="10dp"
+                            android:text="Gender*" />
+
+                        <Spinner
+                            android:id="@+id/spinner_gender"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_30sdp"
+                            android:layout_below="@+id/gender"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+
+
+                            android:textSize="@dimen/_14sdp" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/address_1_title"
+                    style="@style/TextviewRegular"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/lin_age_gender"
+
+                    android:layout_marginTop="20dp"
+                    android:text="Address line 1*" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+
+                    android:id="@+id/address_1_ed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/address_1_title"
+                    android:layout_marginTop="8dp"
+
+                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                    android:hint="Address line 1"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="75"
+                    android:paddingStart="@dimen/edittextHintPaddingStart"
+                    android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                    android:text="@={viewModel.address}"
+
+                    android:textSize="@dimen/_14sdp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/address_2_title"
+                    style="@style/TextviewRegular"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/address_1_ed"
+
+                    android:layout_marginTop="20dp"
+                    android:text="Address line 2*" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+
+                    android:id="@+id/address_2_ed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/address_2_title"
+                    android:layout_marginTop="8dp"
+
+                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                    android:hint="Address line 2"
+                    android:imeOptions="actionDone"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="75"
+                    android:paddingStart="@dimen/edittextHintPaddingStart"
+                    android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                    android:text="@={viewModel.address2}"
+                    android:textSize="@dimen/_14sdp" />
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/pincode_title"
+                    style="@style/TextviewRegular"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/address_2_ed"
+
+                    android:layout_marginTop="20dp"
+                    android:text="Pincode*" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+
+                    android:id="@+id/pincode_ed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/pincode_title"
+                    android:layout_marginTop="8dp"
+
+                    android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
+                    android:hint="@string/ex_for_delhi_110001"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:paddingStart="@dimen/edittextHintPaddingStart"
+                    android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                    android:text="@={viewModel.pincode}"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:id="@+id/hereby"
+                    style="@style/TextviewRegular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/pincode_ed"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:gravity="center"
+                    android:text="By clicking on continue, you agree to Terms of Service" />
+
+                <Button
+                    android:id="@+id/btnCreateAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/hereby"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="@dimen/_17sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_17sdp"
+                    android:layout_marginBottom="5dp"
+                    android:enabled="true"
+                    android:onClick="@{()->viewModel.onContinueClicked()}"
+                    android:text="@string/continue_btn_text"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/buttonUnselectedColor" />
+
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

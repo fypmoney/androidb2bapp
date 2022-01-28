@@ -1,7 +1,6 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.util.Log
 import android.widget.CompoundButton
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -188,6 +187,7 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
                         if (inviteList.size > 0) {
                             isFamilyFiperVisiblePending.set(true)
                         }
+                        isNoDataFoundVisible.set(false)
                         username.set(
                             responseData.GetMemberResponseDetails[0].familyName + "'s " + PockketApplication.instance.resources.getString(
                                 R.string.family_settings_family_fypers1
@@ -198,6 +198,10 @@ class FamilySettingsViewModel(application: Application) : BaseViewModel(applicat
 
                     } else {
                         isNoDataFoundVisible.set(true)
+                        isFamilyFiperVisiblePending.set(false)
+                        isFamilyFiperVisible.set(false)
+
+
                     }
                 }
             }

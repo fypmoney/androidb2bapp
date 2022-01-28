@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.fypmoney.view.home.main.home.view.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_card"
+            app:destination="@id/navigation_card" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_explore"
+        android:name="com.fypmoney.view.home.main.explore.view.ExploreFragment"
+        android:label="@string/explore"
+        tools:layout="@layout/fragment_explore" >
+        <action android:id="@+id/action_explore_section_explore"
+            app:destination="@+id/navigation_section_explore"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_rewards"
+        android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment"
+        android:label="@string/rewards"
+        tools:layout="@layout/fragment_rewards_overview" />
+
+    <fragment
+        android:id="@+id/navigation_fyper"
+        android:name="com.fypmoney.view.activity.FamilySettingsView"
+        android:label="@string/fyper_txt"
+        tools:layout="@layout/view_family_settings" />
+    <fragment
+        android:id="@+id/navigation_card"
+        android:name="com.fypmoney.view.card.view.CardFragment"
+        android:label="@string/card"
+        tools:layout="@layout/fragment_card" />
+    <fragment
+        android:id="@+id/navigation_section_explore"
+        android:name="com.fypmoney.view.home.main.explore.sectionexplore.SectionExploreFragment"
+        android:label="@string/section_explore"
+        tools:layout="@layout/fragment_section_explore" >
+        <argument
+            android:name="sectionExploreItem"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.home.main.explore.model.SectionContentItem"
+            app:nullable="true" />
+        <argument
+            android:name="sectionExploreName"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_rewards_history"
+        android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment"
+        android:label="@string/reward_history"
+        tools:layout="@layout/fragment_reward_history" />
+    <fragment
+        android:id="@+id/navigation_arcade"
+        android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment"
+        android:label="@string/arcade"
+        tools:layout="@layout/fragment_spinner_list" />
+    <fragment
+        android:id="@+id/navigation_jackpot"
+        android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsJackpotFragment"
+        android:label="@string/jackpot"
+        tools:layout="@layout/fragment_jackpot_overview" />
+</navigation>

@@ -3,14 +3,10 @@ package com.fypmoney.view.fragment
 
 import android.app.Dialog
 import android.content.DialogInterface
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import com.fypmoney.R
@@ -29,7 +25,6 @@ import com.fypmoney.model.UpdateCardSettingsResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.CardSettingClickListener
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

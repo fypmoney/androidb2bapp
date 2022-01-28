@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <data>
 
         <import type="android.view.View" />
@@ -13,61 +12,69 @@
             type="com.fypmoney.viewmodel.SelectInterestViewModel" />
 
     </data>
-
-
     <FrameLayout
         android:id="@+id/fl_outer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/curved_background3"
-        android:padding="2dp"
         android:layout_margin="@dimen/_5sdp"
-        android:elevation="@dimen/_5sdp">
+        android:background="@drawable/curved_background3"
+        android:elevation="@dimen/_5sdp"
+        android:padding="2dp">
 
-        <LinearLayout
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/serviceLayout"
-            android:paddingStart="@dimen/_4sdp"
-            android:paddingEnd="@dimen/_4sdp"
             android:layout_width="@dimen/_120sdp"
-            android:padding="@dimen/_5sdp"
+            android:layout_height="@dimen/_45sdp"
             android:background="@drawable/curved_background3"
-            android:layout_height="@dimen/_45sdp">
+            >
+            <LinearLayout
+                android:id="@+id/background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/_1sdp"
+                />
 
 
             <FrameLayout
                 android:id="@+id/intrest_icon_fl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/_2sdp"
+                android:padding="@dimen/_6sdp"
+                android:layout_margin="@dimen/_3sdp"
                 android:background="@drawable/curved_background4"
-                >
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivServiceLogo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/_18sdp"
+                    android:layout_height="@dimen/_21sdp"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/ic_sports" />
-
             </FrameLayout>
-
-
-
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/tvServiceName"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/_65sdp"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
-                android:textColor="@color/text_color_dark"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/poppins_regular"
+                android:textColor="@color/text_color_dark"
                 android:textSize="@dimen/edit_text_size"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/intrest_icon_fl"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
 
                 />
-        </LinearLayout>
-
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 </layout>

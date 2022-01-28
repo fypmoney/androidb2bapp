@@ -1,0 +1,530 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingBottom="92dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fillViewport="true"
+            tools:context=".view.home.main.home.view.HomeFragment">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    app:layout_constraintDimensionRatio="353:186"
+                    android:id="@+id/card_fl"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:onClick="@{()->viewModel.onViewDetailsClicked()}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_margin="20dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/card_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/ic_card_home" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/my_funds_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="21dp"
+                            android:layout_marginTop="24dp"
+                            android:text="@string/my_funds"
+                            android:textSize="14sp"
+                            android:lineSpacingExtra="17sp"
+                            android:fontFamily="@font/product_sans_regular"
+                            android:textColor="@color/tvColor" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/wallet_balance_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/my_funds_tv"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="21dp"
+                            tools:text="₹50"
+                            android:textSize="37sp"
+                            android:lineSpacingExtra="17sp"
+                            android:fontFamily="@font/product_sans_bold"
+                            android:textColor="@color/white" />
+
+                        <com.fypmoney.view.customview.HorizontalDottedProgress
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/loading_balance_hdp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginEnd="-10dp"
+                            tools:visibility="visible"
+                            app:layout_constraintTop_toBottomOf="@+id/my_funds_tv"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/low_balance_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/wallet_balance_tv"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="21dp"
+                            android:text="@string/low_balance"
+                            android:textSize="17sp"
+                            android:visibility="gone"
+                            tools:visibility="visible"
+                            android:lineSpacingExtra="17sp"
+                            android:paddingHorizontal="@dimen/dp8"
+                            android:paddingVertical="4dp"
+                            android:fontFamily="@font/product_sans_regular"
+                            android:textColor="@color/white"
+                            app:customBackgroundColor="@{@color/color4}"
+                            app:customIsRounded="@{false}"
+                            app:customCornerRadius="@{@dimen/fab_margin}" />
+
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/view_details_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="@string/view_card"
+                            android:drawablePadding="10dp"
+                            android:layout_marginBottom="24dp"
+                            android:layout_marginStart="24dp"
+                            android:drawableStart="@drawable/eye_selector"
+                            app:drawableTint="@color/white"
+                            android:textSize="14sp"
+                            android:gravity="center"
+                            android:lineSpacingExtra="14sp"
+                            android:fontFamily="@font/product_sans_bold"
+                            android:textColor="@color/white" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/notice_alert_fl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:customStrokeWidth="@{@dimen/dp1}"
+                    app:customBackgroundColor="@{@color/color_little_orange}"
+                    app:customIsRounded="@{false}"
+                    app:customCornerRadius="@{@dimen/dp16}"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginVertical="16dp"
+                    android:padding="10dp"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/card_fl">
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/notice_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:textColor="@color/color_orange"
+                        tools:text="Error Message on home screen"/>
+
+                </FrameLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/quick_action_cl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/notice_alert_fl">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/quick_action_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableEnd="@drawable/ic_quick_actions"
+                        android:drawablePadding="@dimen/dp10"
+                        android:fontFamily="@font/product_sans_bold"
+                        android:gravity="start"
+                        android:lineSpacingExtra="14sp"
+                        android:text="@string/quick_action"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <!--<androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/quick_action_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/quick_action_tv"
+                        app:spanCount="3"
+                        tools:itemCount="5"9123459123
+                        tools:listitem="@layout/item_quick_action" />-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/quick_action_tv">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:weightSum="2"
+                            android:layout_alignParentStart="true"
+                            android:id="@+id/lin"
+                            android:layout_toStartOf="@+id/scan_upi_btn"
+                            android:gravity="center_vertical"
+
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/add_money_btn"
+                                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                                android:layout_width="wrap_content"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:backgroundTint="#283039"
+                                android:onClick="@{()->viewModel.onAddMoneyClicked()}"
+                                android:paddingVertical="10dp"
+                                android:paddingStart="10dp"
+                                android:gravity="start|center_vertical"
+                                android:text="@string/add_btn_text"
+                                android:textColor="@color/white"
+                                app:cornerRadius="@dimen/dp16"
+                                app:icon="@drawable/ic_card_add"
+                                app:iconPadding="10dp"
+                                app:iconTint="@color/white" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/pay_money_btn"
+                                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:layout_marginStart="14dp"
+                                android:backgroundTint="#283039"
+                                android:onClick="@{()->viewModel.onPayMoneyClicked()}"
+                                android:paddingVertical="10dp"
+                                android:paddingStart="10dp"
+                                android:gravity="start|center_vertical"
+                                android:text="@string/pay_btn_text"
+                                android:textColor="@color/white"
+                                app:cornerRadius="@dimen/dp16"
+                                app:icon="@drawable/ic_pay__2_"
+                                app:iconPadding="10dp"
+
+                                app:iconTint="@color/white"
+                                app:layout_constraintBottom_toBottomOf="@+id/add_money_btn"
+                                app:layout_constraintStart_toEndOf="@+id/add_money_btn"
+                                app:layout_constraintTop_toTopOf="@+id/add_money_btn" />
+
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/scan_upi_btn"
+                            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                            android:layout_width="45dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/lin"
+
+                            android:layout_alignBottom="@+id/lin"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="12dp"
+                            android:layout_marginEnd="@dimen/_2sdp"
+                            android:backgroundTint="#283039"
+                            android:onClick="@{()->viewModel.onUpiScanClicked()}"
+
+                            android:paddingVertical="10dp"
+                            android:textColor="@color/white"
+                            app:cornerRadius="@dimen/dp16"
+                            app:icon="@drawable/ic_upi_scan"
+                            app:iconGravity="textStart"
+                            app:iconPadding="0dp"
+                            app:iconTint="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent" />
+
+
+                    </RelativeLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/call_to_action_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:visibility="visible"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/quick_action_cl">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/call_to_action_tv"
+                        android:layout_width="0dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/product_sans_bold"
+                        android:gravity="start"
+                        android:lineSpacingExtra="14sp"
+                        android:text="@string/for_you"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:drawablePadding="@dimen/dp10"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/call_to_action_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        tools:visibility="visible"
+                        android:layout_marginStart="15dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="10dp"
+                        app:layout_constraintTop_toBottomOf="@+id/call_to_action_tv"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_call_to_action_home" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmerLayout"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="10dp"
+                        app:shimmer_auto_start="true"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@+id/call_to_action_tv">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                            <include layout="@layout/shimmer_placeholder_layout_store" />
+
+
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/lightening_deals_section"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    app:layout_constraintTop_toBottomOf="@+id/call_to_action_cl">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/lightening_deals_title"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/product_sans_bold"
+                        android:gravity="start"
+                        android:lineSpacingExtra="14sp"
+                        android:layout_marginStart="20dp"
+
+                        android:text="@string/offers_for_you"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lightening_deals_title"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_constraintDimensionRatio="64:34"
+                            android:layout_marginStart="20dp"
+
+                            android:layout_marginEnd="20dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:cardCornerRadius="@dimen/dp16">
+
+                            <ImageView
+                                android:id="@+id/to_interest_screen"
+                                android:layout_width="match_parent"
+
+                                android:elevation="-2dp"
+                                android:src="@drawable/personalise_offers_banner"
+                                android:visibility="gone"
+
+                                app:layout_constraintTop_toBottomOf="@+id/lightening_deals_title"
+
+                                android:layout_height="wrap_content" />
+
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/lightening_deals_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="10dp"
+                        android:paddingEnd="10dp"
+                        app:layout_constraintTop_toBottomOf="@+id/lightening_deals_title"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:listitem="@layout/item_call_to_action_home" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        tools:visibility="visible"
+                        android:id="@+id/shimmerLayout_lightening"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="10dp"
+                        app:shimmer_auto_start="true"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@+id/lightening_deals_title">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                            <include layout="@layout/shimmer_placeholder_layout_store" />
+
+
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <FrameLayout
+                    android:id="@+id/explore_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+
+                    app:layout_constraintTop_toBottomOf="@+id/lightening_deals_section">
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/explore_shimmer_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        tools:visibility="gone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include layout="@layout/shimmer_placeholder_layout" />
+
+                            <include layout="@layout/shimmer_placeholder_layout" />
+
+                            <include layout="@layout/shimmer_placeholder_layout" />
+
+                            <include layout="@layout/shimmer_placeholder_layout" />
+
+                            <include layout="@layout/shimmer_placeholder_layout" />
+
+                            <include layout="@layout/shimmer_placeholder_layout" />
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/explore_home_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_2sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:layout_marginEnd="@dimen/_2sdp"
+                        android:orientation="vertical"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        tools:itemCount="5"
+                        tools:listitem="@layout/item_grid_type_offers" />
+
+                </FrameLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

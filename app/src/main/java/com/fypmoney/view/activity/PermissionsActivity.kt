@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat
 import com.fypmoney.databinding.ViewPermissionActivityBinding
 
 import com.fypmoney.util.Utility
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import kotlinx.android.synthetic.main.bottom_sheet_redeem_coins.view.*
 import kotlinx.android.synthetic.main.view_permission_activity.*
 
@@ -105,7 +106,7 @@ class PermissionsActivity : BaseActivity<ViewPermissionActivityBinding, Permissi
     ) {
 
         if (requestCode == PERMSSIONS2 && hasPermissions(this, *PERMISSIONS)) {
-            intentToActivity(HomeView::class.java)
+            intentToActivity(HomeActivity::class.java)
         } else {
             Utility.showToast("Permission is required")
         }

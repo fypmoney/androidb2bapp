@@ -1,42 +1,35 @@
 package com.fypmoney.view.activity
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.databinding.ObservableField
 import androidx.lifecycle.ViewModelProvider
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ViewUserFeedsBinding
-import com.fypmoney.listener.LocationListenerClass
-import com.fypmoney.listener.requestCodeGPSAddress
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
-import com.fypmoney.util.AppConstants.BASE_ACTIVITY_URL
 import com.fypmoney.util.AppConstants.FEED_RESPONSE
 import com.fypmoney.util.DialogUtils
-import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
+import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.viewmodel.FeedsViewModel
 import kotlinx.android.synthetic.main.view_user_feeds.*
 
 /*
 * This is used to show list of feeds
 * */
-class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
+class UserFeedsView(val tabchangeListner: HomeTabChangeClickListener) :
+    BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
     DialogUtils.OnAlertDialogClickListener {
     private lateinit var mViewModel: FeedsViewModel
     private lateinit var mViewBinding: ViewUserFeedsBinding
@@ -57,11 +50,7 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
-        /*setToolbarAndTitle(
-            context = requireContext(),
-            toolbar = toolbar,
-            isBackArrowVisible = false
-        )*/
+
 
         trackr {
             it.name = TrackrEvent.feed_launch
@@ -79,17 +68,20 @@ class UserFeedsView : BaseFragment<ViewUserFeedsBinding, FeedsViewModel>(),
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-       /* mViewModel.onFeedsSuccess.observe(viewLifecycleOwner)
-        {
-            mViewModel.fromWhichScreen.set(0)
-            callDiduKnowBottomSheet(it)
 
-        }*/
         mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
             when (it.displayCard) {
                         AppConstants.FEED_TYPE_DEEPLINK -> {
                             it.action?.url?.let {
-                                deeplinkRedirection(it.split(",")[0],requireContext())
+
+                                val screen = it.split(",")[0]
+                                if (screen == AppConstants.StoreScreen || screen == AppConstants.CardScreen || screen == AppConstants.FEEDSCREEN || screen == AppConstants.FyperScreen) {
+                                    tabchangeListner.tabchange(0, screen)
+                                } else {
+                                    Utility.deeplinkRedirection(screen, requireContext())
+
+                                }
+
 
                             }
 

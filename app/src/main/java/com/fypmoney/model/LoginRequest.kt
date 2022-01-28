@@ -58,6 +58,7 @@ data class UserDeviceInfo(
     @SerializedName("lat") val latitude: String? = null,
     @SerializedName("long") val longitude: String? = null,
     @SerializedName("userId") val userId: Long? = null,
+    @SerializedName("rfu1") val rfu1: String? = null,
     @SerializedName("isHomeViewed") val isHomeViewed: String? = "YES"
 
 

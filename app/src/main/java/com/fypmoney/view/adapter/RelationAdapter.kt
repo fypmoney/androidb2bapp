@@ -2,7 +2,9 @@ package com.fypmoney.view.adapter
 
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.database.entity.ContactEntity
@@ -20,6 +22,7 @@ import com.fypmoney.viewmodel.ContactViewModel
  */
 class RelationAdapter(var viewModel: AddMemberViewModel) :
     RecyclerView.Adapter<BaseViewHolder>() {
+    private var selectedPosition: Int = -1
     var relationList: ArrayList<RelationModel>? = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val mRowBinding = RelationRowItemBinding.inflate(
@@ -45,9 +48,17 @@ class RelationAdapter(var viewModel: AddMemberViewModel) :
         lateinit var mViewHelper: RelationViewHelper
 
         override fun onBind(position: Int) {
-            mViewHelper = RelationViewHelper(this@RelationAdapter,
-                position, relationList?.get(position),viewModel
+            mViewHelper = RelationViewHelper(
+                this@RelationAdapter,
+                position, relationList?.get(position), viewModel
             )
+            mRowItemBinding?.relationLayout?.setOnClickListener {
+
+                viewModel.selectedRelationPosition.set(position)
+                viewModel.selectedRelationList.set(relationList?.get(position))
+                notifyDataSetChanged()
+            }
+
             mRowItemBinding!!.viewHelper = mViewHelper
             mViewHelper.init()
             mRowItemBinding.executePendingBindings()

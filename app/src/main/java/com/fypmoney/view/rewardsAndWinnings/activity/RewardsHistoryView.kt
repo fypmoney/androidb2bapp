@@ -58,11 +58,10 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
     override fun getViewModel(): RewardsHistoryVM {
         mVM = ViewModelProvider(this).get(RewardsHistoryVM::class.java)
 
-        observeInput(mVM!!)
         return mVM
     }
 
-    private fun observeInput(sharedVM: RewardsHistoryVM) {
+    private fun observeInput(sharedVM: RewardsHistoryVM?) {
 
         page = 0
         mVM?.redeemproductDetails.observe(this) {
@@ -81,6 +80,7 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                         val intent =
                             Intent(this@RewardsHistoryView, ScratchCardActivity::class.java)
                         intent.putExtra(AppConstants.SECTION_ID, it.sectionId)
+                        intent.putExtra(AppConstants.NO_GOLDED_CARD, it.noOfJackpotTicket)
                         it.sectionList?.forEachIndexed { pos, item ->
                             if (item != null) {
                                 ScratchCardActivity.sectionArrayList.add(item)
@@ -101,16 +101,15 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                 })
 
         }
-        sharedVM.rewardHistoryList2.observe(
+        sharedVM?.rewardHistoryList?.observe(
             this,
-            androidx.lifecycle.Observer { list ->
+            { list ->
                 LoadProgressBar?.visibility = View.GONE
                 mViewBinding?.shimmerLayout?.stopShimmer()
 
                 mViewBinding?.shimmerLayout?.visibility = View.GONE
                 if (page == 0) {
                     itemsArrayList.clear()
-
                 }
                 if (itemsArrayList.size > 0 && list.isNotEmpty() && itemsArrayList[itemsArrayList.size - 1].date == list[0].date) {
                     list.forEachIndexed { pos, item ->
@@ -123,16 +122,12 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                             }
                         } else {
                             itemsArrayList.add(item)
-
                         }
-
                     }
 
                 } else {
                     list.forEach { it ->
                         itemsArrayList.add(it)
-
-
                     }
                 }
 
@@ -165,7 +160,7 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
             isBackArrowVisible = true, toolbarTitle = getString(R.string.rewards_history_view)
         )
         setRecyclerView(mViewBinding)
-
+        observeInput(mVM)
     }
 
     override fun onStart() {
@@ -200,15 +195,14 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                 if (historyItem.productType == AppConstants.PRODUCT_SPIN) {
                     val intent = Intent(this@RewardsHistoryView, SpinWheelViewDark::class.java)
                     SpinWheelViewDark.sectionArrayList.clear()
+                    intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
+
                     intent.putExtra(
                         AppConstants.ORDER_NUM,
                         historyItem.orderNumber.toString()
                     )
                     startActivity(intent)
 
-//                    val args = Bundle()
-//                    args.putSerializable("ARRAYLIST", itemsArrayList as Serializable)
-//                    intent.putExtra("BUNDLE", args)
 
 
                 } else {
@@ -228,18 +222,10 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
 
     private fun loadMore(root: ViewRewardHistoryBinding?) {
         mVM?.callRewardHistory(page)
-        //LoadProgressBar?.visibility = View.VISIBLE
+
         root?.LoadProgressBar?.visibility = View.VISIBLE
 
         isLoading = true
-
-    }
-
-    /**
-     * Create this method for observe the viewModel fields
-     */
-    private fun setObserver() {
-
 
     }
 

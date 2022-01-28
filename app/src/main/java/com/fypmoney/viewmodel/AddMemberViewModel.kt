@@ -51,11 +51,11 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
     var iconList = mutableListOf<Int>()
     var relationAdapter = RelationAdapter(this)
     var selectedCountryCode = ObservableField<String>()
-    var selectedRelationPosition = ObservableField(0)
+    var selectedRelationPosition = ObservableField(-1)
     var parentName = ObservableField<String>()
     var contactResult = ObservableField(ContactEntity())
     var isGuarantor = ObservableField<String>()
-    var selectedRelationList = ObservableArrayList<RelationModel>()
+    var selectedRelationList = ObservableField<RelationModel>()
 
 
     init {
@@ -89,7 +89,7 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
             TextUtils.isEmpty(mobile.value) -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.phone_email_empty_error))
             }
-            selectedRelationList.isNullOrEmpty() -> {
+            selectedRelationList.get() == null -> {
                 Utility.showToast(PockketApplication.instance.getString(R.string.relation_empty_error))
 
             }
@@ -126,47 +126,53 @@ class AddMemberViewModel(application: Application) : BaseViewModel(application) 
 * */
 
     fun callAddMemberApi() {
-        SharedPrefUtils.putString(
-            getApplication(),
-            SharedPrefUtils.SF_KEY_SELECTED_RELATION,
-            selectedRelationList.get(0).relationName
-        )
-        progressDialog.value = true
-        var relation = selectedRelationList.get(0).relationName?.toUpperCase(Locale.getDefault())!!
-        if (relation == "KIDS") {
-            relation = "CHILD"
-
-        } else if (relation == "GRAND CHILD") {
-            relation = "GRANDCHILD"
-
-        } else if (relation == "GRAND PARENTS") {
-            relation = "GRANDPARENT"
-
-        }
-
-        trackr {
-            it.services = arrayListOf(
-                TrackrServices.FIREBASE,
-                TrackrServices.MOENGAGE,
-                TrackrServices.FB,TrackrServices.ADJUST)
-            it.name = TrackrEvent.add_familymember
-            it.add(TrackrField.added_family_member_mobile_no,mobile.value!!.trim())
-            it.add(TrackrField.added_family_member_reletionship,relation)
-        }
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                API_ADD_FAMILY_MEMBER,
-                NetworkUtil.endURL(API_ADD_FAMILY_MEMBER),
-                ApiUrl.POST,
-                AddFamilyMemberRequest(
-                    mobileNo = mobile.value!!.trim(),
-                    name = parentName.get(),
-                    relation = relation
-                ),
-                this,
-                isProgressBar = false
+        if (selectedRelationList.get() != null) {
+            SharedPrefUtils.putString(
+                getApplication(),
+                SharedPrefUtils.SF_KEY_SELECTED_RELATION,
+                selectedRelationList.get()!!.relationName
             )
-        )
+        }
+
+        progressDialog.value = true
+        if (selectedRelationList.get() != null) {
+            var relation =
+                selectedRelationList.get()!!.relationName?.toUpperCase(Locale.getDefault())!!
+            if (relation == "KIDS") {
+                relation = "CHILD"
+
+            } else if (relation == "GRAND CHILD") {
+                relation = "GRANDCHILD"
+
+            } else if (relation == "GRAND PARENTS") {
+                relation = "GRANDPARENT"
+
+            }
+            trackr {
+                it.services = arrayListOf(
+                    TrackrServices.FIREBASE,
+                    TrackrServices.MOENGAGE,
+                    TrackrServices.FB, TrackrServices.ADJUST
+                )
+                it.name = TrackrEvent.add_familymember
+                it.add(TrackrField.added_family_member_mobile_no, mobile.value!!.trim())
+                it.add(TrackrField.added_family_member_reletionship, relation)
+            }
+            WebApiCaller.getInstance().request(
+                ApiRequest(
+                    API_ADD_FAMILY_MEMBER,
+                    NetworkUtil.endURL(API_ADD_FAMILY_MEMBER),
+                    ApiUrl.POST,
+                    AddFamilyMemberRequest(
+                        mobileNo = mobile.value!!.trim(),
+                        name = parentName.get(),
+                        relation = relation
+                    ),
+                    this,
+                    isProgressBar = false
+                )
+            )
+        }
 
 
     }

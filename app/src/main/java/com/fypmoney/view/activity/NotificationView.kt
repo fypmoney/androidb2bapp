@@ -18,6 +18,7 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.AddMoneySuccessBottomSheet
 import com.fypmoney.view.fragment.*
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.NotificationViewModel
@@ -51,8 +52,8 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     }
 
     private val tabIcons = intArrayOf(
-        com.fypmoney.R.drawable.ic_timeline_tab,
-        com.fypmoney.R.drawable.ic_request_tab_noti,
+        R.drawable.ic_timeline_tab,
+        R.drawable.ic_request_tab_noti,
 
         )
 
@@ -94,7 +95,6 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
 
 
         viewPager.adapter = adapter
-
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.tabRippleColor = null;
         setupTabIcons()
@@ -103,8 +103,8 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
     }
 
     private fun setupTabIcons() {
-        tabLayout.getTabAt(0)!!.setIcon(tabIcons[0])
-        tabLayout.getTabAt(1)!!.setIcon(tabIcons[1])
+        tabLayout.getTabAt(0)?.setIcon(tabIcons[0])
+        tabLayout.getTabAt(1)?.setIcon(tabIcons[1])
 
     }
 
@@ -200,7 +200,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
                         AddMoneySuccessBottomSheet(
                             it2,
                             it1,onViewDetailsClick=null,successTitle = "Payment Made Successfully to ${sendMoneyResponse.receiverName}",onHomeViewClick = {
-                                intentToActivity(HomeView::class.java)
+                                intentToActivity(HomeActivity::class.java)
                             }
                         )
                     }

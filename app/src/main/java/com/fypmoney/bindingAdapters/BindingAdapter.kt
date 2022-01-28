@@ -1,10 +1,8 @@
 package com.fypmoney.bindingAdapters
 
 
-import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -16,8 +14,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SizeReadyCallback
-import com.facebook.shimmer.Shimmer
-import com.facebook.shimmer.ShimmerDrawable
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.util.AppConstants
@@ -153,9 +149,14 @@ class BindingAdapter {
                         // add a rule to align to the left
                         textViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_END)
 
-                        setBackgroundDrawable(view = view,
+                        setBackgroundDrawable(
+                            view = view,
                             backgroundColor = ContextCompat.getColor(view.context,R.color.color_orange),
-                            cornerRadius = 56.0f,isRounded = false,alpha = 20,strokeColor = null,strokeWidth = null)
+                            cornerRadius = 56.0f,
+                            isRounded = false,
+                            alpha = 20,
+                            strokeColor = null,
+                            strokeWidth = null)
                         // make sure the rule was applied
                         //2131362978
                         (view.getChildAt(0) as AppCompatImageView).setImageResource(0)
@@ -172,9 +173,14 @@ class BindingAdapter {
 
                         textViewLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_START)
                         // make sure the rule was applied
-                        setBackgroundDrawable(view = view,
+                        setBackgroundDrawable(
+                            view = view,
                             backgroundColor = ContextCompat.getColor(view.context,R.color.color_task_card_green),
-                            cornerRadius = 56.0f,isRounded = false,alpha = 20,strokeColor = null,strokeWidth = null)
+                            cornerRadius = 56.0f,
+                            isRounded = false,
+                            alpha = 20,
+                            strokeColor = null,
+                            strokeWidth = null)
                         (view.getChildAt(0) as AppCompatImageView).setImageResource(0)
                         (view.getChildAt(0) as AppCompatImageView).setImageResource(R.drawable.ic_check_with_background)
 

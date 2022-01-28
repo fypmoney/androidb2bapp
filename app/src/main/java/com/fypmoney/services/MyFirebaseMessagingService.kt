@@ -1,6 +1,5 @@
 package com.fypmoney.services
 
-import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ContentResolver
@@ -8,22 +7,22 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
-import android.media.AudioAttributes
 import android.net.Uri
-import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.core.app.NotificationCompat
+import com.adjust.sdk.Adjust
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.freshchat.consumer.sdk.Freshchat
 import com.fypmoney.BuildConfig
 import com.fypmoney.R
 import com.fypmoney.notification.NotificationUtils
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.view.activity.HomeView
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.moengage.firebase.MoEFireBaseHelper
@@ -39,7 +38,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(s)
         Log.d("FCMToken", s)
         MoEFireBaseHelper.getInstance().passPushToken(applicationContext,s)
-
+        Adjust.setPushToken(s, applicationContext);
+        Freshchat.getInstance(this).setPushRegistrationToken(s)
         SharedPrefUtils.putString(applicationContext, SharedPrefUtils.SF_KEY_FIREBASE_TOKEN, s)
 
     }
@@ -53,6 +53,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         if (MoEPushHelper.getInstance().isFromMoEngagePlatform(remoteMessage.data)){
             MoEFireBaseHelper.getInstance().passPushPayload(applicationContext, remoteMessage.data)
+        }else if (Freshchat.isFreshchatNotification(remoteMessage)) {
+            Freshchat.handleFcmMessage(this, remoteMessage)
         }else{
             // your app's business logic to show notification
             val res = remoteMessage.data["notificationType"]
@@ -111,36 +113,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     }
 
-    private fun createNotificationChannel(): String {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "fypmoney_new"
-            val name: CharSequence = "FypMoney"
-            val description1 = "Fypmoney notification"
-            val importance = NotificationManager.IMPORTANCE_HIGH
-            val channel = NotificationChannel(channelId, name, importance).apply {
-                description = description1
-                setShowBadge(true)
-            }
-            val audioAttributes = AudioAttributes.Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .setUsage(AudioAttributes.USAGE_NOTIFICATION)
-                .build()
-            channel.setSound(Uri.parse(
-                ContentResolver.SCHEME_ANDROID_RESOURCE
-                        + "://" + BuildConfig.APPLICATION_ID + "/" + R.raw.notification_sound), audioAttributes)
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
-            val notificationManager = applicationContext.getSystemService(
-                NotificationManager::class.java
-            )!!
-            notificationManager.createNotificationChannel(channel)
-            channel.id
-        } else {
-            ""
-        }
-    }
 
     /**
      * Method to navigate to the different activity
@@ -163,7 +135,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
 
                     AppConstants.TYPE_APP_SLIDER_NOTIFICATION -> {
-                        val intent = Intent(applicationContext, HomeView::class.java)
+                        val intent = Intent(applicationContext, HomeActivity::class.java)
                         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.NOTIFICATION)
                         intent.putExtra(
                             AppConstants.NOTIFICATION_APRID,
@@ -188,7 +160,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
                         } catch (e: Exception) {
                             e.printStackTrace()
-                            intentToActivity(HomeView::class.java)
+                            intentToActivity(HomeActivity::class.java)
                         }
 
                     }
@@ -198,6 +170,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         }
         return Intent()
     }
+
 
 
 }

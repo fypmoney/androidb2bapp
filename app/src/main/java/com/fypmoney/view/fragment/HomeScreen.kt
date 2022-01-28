@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -22,20 +21,21 @@ import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.RedeemDetailsResponse
 import com.fypmoney.util.AppConstants
-import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_ERROR_MESSAGE_HOME
 import com.fypmoney.util.Utility
 import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.TopTenUsersAdapter
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
+import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
+import com.fypmoney.view.storeoffers.OffersScreen
 import com.fypmoney.viewmodel.HomeScreenViewModel
 import kotlinx.android.synthetic.main.screen_home.*
 
 
-class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
+class HomeScreen(val tabchangeListner: HomeTabChangeClickListener) :
+    BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
 
 
     private var bottomSheetMessage: RedeemMyntsBottomSheet? = null
@@ -79,7 +79,6 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         }
         mViewBinding.splitBillsCv.setOnClickListener {
             mViewModel.callSplitBillsStories()
-
         }
         checkForErrorNotice()
     }
@@ -194,63 +193,71 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         }
 
         mViewModel.onFeedButtonClick.observe(viewLifecycleOwner) {
-                    when (it.displayCard) {
-                        AppConstants.FEED_TYPE_DEEPLINK -> {
-                            it.action?.url?.let {
-                                Utility.deeplinkRedirection(it.split(",")[0], requireContext())
+            when (it.displayCard) {
+                AppConstants.FEED_TYPE_DEEPLINK -> {
+                    it.action?.url?.let {
 
-                            }
-                        }
-                        AppConstants.FEED_TYPE_INAPPWEB2 -> {
-                            intentToActivity(
-                                UserFeedsInAppWebview::class.java,
-                                it,
-                                AppConstants.FEED_TYPE_INAPPWEB
-                            )
-                        }
-                        AppConstants.FEED_TYPE_EXTWEBVIEW2 -> {
-                            startActivity(
-                                Intent.createChooser(
-                                    Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse(it.action?.url)
-                                    ), getString(R.string.browse_with)
-                                )
-                            )
+                        val screen = it.split(",")[0]
+                        if (screen == AppConstants.StoreScreen || screen == AppConstants.CardScreen || screen == AppConstants.FEEDSCREEN || screen == AppConstants.FyperScreen) {
+                            tabchangeListner.tabchange(0, screen)
+                        } else {
+                            Utility.deeplinkRedirection(screen, requireContext())
 
                         }
-                        AppConstants.FEED_TYPE_INAPPWEB -> {
-                            intentToActivity(
-                                UserFeedsInAppWebview::class.java,
-                                it,
-                                AppConstants.FEED_TYPE_INAPPWEB
-                            )
-                        }
-                        AppConstants.FEED_TYPE_BLOG -> {
-                            intentToActivity(
-                                UserFeedsDetailView::class.java,
-                                it,
-                                AppConstants.FEED_TYPE_BLOG
-                            )
-                        }
-                        AppConstants.FEED_TYPE_EXTWEBVIEW -> {
-                            startActivity(
-                                Intent.createChooser(
-                                    Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse(it.action?.url)
-                                    ), getString(R.string.browse_with)
-                                )
-                            )
 
-                        }
-                        AppConstants.FEED_TYPE_STORIES -> {
-                            if (!it.resourceArr.isNullOrEmpty()) {
-                                callDiduKnowBottomSheet(it.resourceArr)
-                            }
 
-                        }
                     }
+                }
+                AppConstants.FEED_TYPE_INAPPWEB2 -> {
+                    intentToActivity(
+                        UserFeedsInAppWebview::class.java,
+                        it,
+                        AppConstants.FEED_TYPE_INAPPWEB
+                    )
+                }
+                AppConstants.FEED_TYPE_EXTWEBVIEW2 -> {
+                    startActivity(
+                        Intent.createChooser(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(it.action?.url)
+                            ), getString(R.string.browse_with)
+                        )
+                    )
+
+                }
+                AppConstants.FEED_TYPE_INAPPWEB -> {
+                    intentToActivity(
+                        UserFeedsInAppWebview::class.java,
+                        it,
+                        AppConstants.FEED_TYPE_INAPPWEB
+                    )
+                }
+                AppConstants.FEED_TYPE_BLOG -> {
+                    intentToActivity(
+                        UserFeedsDetailView::class.java,
+                        it,
+                        AppConstants.FEED_TYPE_BLOG
+                    )
+                }
+                AppConstants.FEED_TYPE_EXTWEBVIEW -> {
+                    startActivity(
+                        Intent.createChooser(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(it.action?.url)
+                            ), getString(R.string.browse_with)
+                        )
+                    )
+
+                }
+                AppConstants.FEED_TYPE_STORIES -> {
+                    if (!it.resourceArr.isNullOrEmpty()) {
+                        callDiduKnowBottomSheet(it.resourceArr)
+                    }
+
+                }
+            }
         }
 
         if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
