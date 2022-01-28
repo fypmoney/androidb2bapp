@@ -17,90 +17,74 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="18dp"
             app:cardUseCompatPadding="true"
-            app:layout_constraintStart_toStartOf="parent"
+            app:contentPadding="3dp"
+            android:backgroundTint="#1C2129"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:contentPadding="3dp">
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/main_cl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:minWidth="168dp"
-                    android:layout_width="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:cardCornerRadius="18dp"
-                    android:layout_marginTop="@dimen/_4sdp"
+                <androidx.cardview.widget.CardView
                     android:id="@+id/card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="6dp"
+                    android:layout_margin="4dp"
+                    android:minWidth="168dp"
+                    android:backgroundTint="@color/cb_grey"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_height="wrap_content">
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/offer_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_margin="@dimen/_8sdp"
+                        android:layout_gravity="center"
                         android:scaleType="fitXY"
-
-                        android:src="@drawable/myntra_logo"
-
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-
-                    <TextView
-                        style="@style/TextviewBold"
-                        android:layout_marginStart="@dimen/_6sdp"
-                        android:text="Myntra"
-                        android:textSize="16sp"
-                        android:gravity="center_vertical"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp" />
-
-                </LinearLayout>
+                        android:src="@drawable/myntra_logo" />
 
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/title_tv"
-                    style="@style/TextviewRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card"
-                    tools:text="Myntra"
-                    android:layout_marginTop="@dimen/dp10"
-                    android:layout_marginStart="5dp"
-                    android:textColor="@color/text_color_dark"
-                    android:textSize="14sp" />
+                </androidx.cardview.widget.CardView>
+
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/desc_tv"
                     style="@style/TextviewRegular"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp5"
-                    android:textColor="@color/color_orange"
-                    android:textSize="14sp"
-                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
 
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/title_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/card"
                     tools:text="30% off jhadshashkda dsahkdhas " />
 
                 <Button
 
-                    style="@style/TextviewRegular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp5"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:text="Buy E Gift Card"
                     android:id="@+id/buygift"
-                    android:backgroundTint="@color/screenBackground"
-                    android:layout_marginBottom="2dp"
+                    style="@style/TextviewRegular"
+                    android:layout_width="0dp"
+                    android:layout_height="46dp"
                     android:layout_marginStart="5dp"
+                    android:layout_marginTop="@dimen/dp5"
+                    android:layout_marginBottom="2dp"
+                    android:backgroundTint="#48AB5B"
+                    android:text="Buy E Gift Card"
+                    android:padding="6dp"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

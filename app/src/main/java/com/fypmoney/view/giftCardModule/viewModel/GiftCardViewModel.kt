@@ -1,11 +1,7 @@
 package com.fypmoney.view.giftCardModule.viewModel
 
 import android.app.Application
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.fypmoney.R
-import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -13,15 +9,7 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.database.ContactRepository
-import com.fypmoney.database.entity.ContactEntity
-import com.fypmoney.model.*
-import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.Utility
-import com.fypmoney.view.giftCardModule.ContactsGiftCardAdapter
-import com.fypmoney.view.giftCardModule.model.GiftProductResponse
-import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardRequest
-import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardResponse
+import com.fypmoney.view.giftCardModule.model.*
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -31,9 +19,50 @@ import com.google.gson.JsonParser
 * */
 class GiftCardViewModel(application: Application) : BaseViewModel(application) {
 
+    init {
+        callAllGifts()
+    }
+
+    var allGiftList: MutableLiveData<List<GiftSearchResponse>> = MutableLiveData()
+
+    fun callAllGifts() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.GET_GIFTS_LIST,
+                endpoint = NetworkUtil.endURL(ApiConstant.GET_GIFTS_LIST),
+                request_type = ApiUrl.POST,
+                RequestGiftswithPage(
+                    request = RequestGiftRequest(),
+                    0,
+                    10,
+                    "id,asc"
+                ), onResponse = this,
+                isProgressBar = false
+            )
+
+        )
+    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
+            ApiConstant.GET_GIFTS_LIST -> {
+
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+                var giftList: ArrayList<GiftSearchResponse> = ArrayList()
+
+                var array =
+                    json["data"].asJsonArray
+                array.forEach {
+                    val obj = Gson().fromJson<GiftSearchResponse>(
+                        it,
+                        GiftSearchResponse::class.java
+                    )
+                    giftList.add(obj)
+                }
+
+                allGiftList.postValue(giftList)
+            }
 
         }
     }
@@ -44,6 +73,7 @@ class GiftCardViewModel(application: Application) : BaseViewModel(application) {
         progressDialog.value = false
 
         when (purpose) {
+
 
         }
     }

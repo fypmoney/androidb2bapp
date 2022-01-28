@@ -13,6 +13,8 @@ import com.fypmoney.connectivity.network.NetworkUtil.Companion.isNetworkAvailabl
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.view.giftCardModule.model.RequestGiftRequest
+import com.fypmoney.view.giftCardModule.model.RequestGiftswithPage
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -226,6 +228,25 @@ class WebApiCaller {
                                     page = params.page!!,
                                     size = params.size!!,
                                     sort = null,
+                                    request = params1
+                                )
+                            }
+                            ApiConstant.GET_GIFTS_LIST -> {
+
+                                val params = request.param as RequestGiftswithPage
+                                val params1 = params.request!!
+                                params1.searchCriteria = ""
+
+                                mObservable = apiInterface.getPaginationApiCalling(
+                                    endPoint = request.endpoint,
+                                    authorization = SharedPrefUtils.getString(
+                                        PockketApplication.instance,
+                                        SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                                    ),
+                                    client_id = ApiConstant.CLIENT_ID,
+                                    page = params.page!!,
+                                    size = params.size!!,
+                                    sort = params.sort,
                                     request = params1
                                 )
                             }

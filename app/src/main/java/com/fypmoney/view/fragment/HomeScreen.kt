@@ -29,6 +29,7 @@ import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.TopTenUsersAdapter
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
+import com.fypmoney.view.giftCardModule.GiftCardsListScreen
 import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
 import com.fypmoney.viewmodel.HomeScreenViewModel
@@ -69,7 +70,7 @@ class HomeScreen : BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
         setUpRecyclerView()
         mViewModel.callFetchFeedsApi(false, 0.0, 0.0)
         choreCard.setOnClickListener {
-            intentToPayActivity(ChoresActivity::class.java)
+            intentToPayActivity(GiftCardsListScreen::class.java)
         }
         mViewBinding.spinwheel.setOnClickListener {
             trackr {

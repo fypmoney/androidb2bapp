@@ -53,7 +53,7 @@ class GiftCardsListScreen : BaseActivity<ActivityAllGiftCardsBinding, GiftCardVi
     private fun setUpRecyclerView() {
         val giftCardAdapter = GiftCardAdapter(
             this, onRecentUserClick = {
-                val intent = Intent(this, PurchaseGiftCardScreen::class.java)
+                val intent = Intent(this, PurchaseGiftCardScreen2::class.java)
                 startActivity(intent)
             }
         )
@@ -66,30 +66,21 @@ class GiftCardsListScreen : BaseActivity<ActivityAllGiftCardsBinding, GiftCardVi
                 2
             )
         }
-        var itemsArrayList: ArrayList<FeedDetails> = ArrayList()
 
-        var item = FeedDetails()
-        itemsArrayList.add(item)
-        itemsArrayList.add(item)
-        itemsArrayList.add(item)
-        itemsArrayList.add(item)
-        itemsArrayList.add(item)
-        (mViewBinding?.giftcardRv?.adapter as GiftCardAdapter).run {
-            submitList(itemsArrayList)
-        }
     }
 
     /*
     * This method is used to observe the observers
     * */
     private fun setObservers() {
+        mviewModel?.allGiftList?.observe(this, {
 
-//        mviewModel?.offerBottomList?.observe(this, {
-//            (mViewBinding?.giftcardRv?.adapter as GiftCardAdapter).run {
-//                submitList(it)
-//            }
-//
-//        })
+            (mViewBinding?.giftcardRv?.adapter as GiftCardAdapter).run {
+                submitList(it[0].voucherBrand)
+            }
+
+        })
+
 
     }
 

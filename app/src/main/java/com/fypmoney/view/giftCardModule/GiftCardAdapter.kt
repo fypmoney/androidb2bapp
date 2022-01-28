@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.databinding.ItemGiftCardBinding
 import com.fypmoney.extension.executeAfter
 import com.fypmoney.model.FeedDetails
+import com.fypmoney.view.giftCardModule.model.RequestGiftRequest
+import com.fypmoney.view.giftCardModule.model.VoucherBrandItem
 
 
 class GiftCardAdapter(
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: FeedDetails) -> Unit
-) : ListAdapter<FeedDetails, GiftCardVH>(GiftCardDiffUtils) {
+    val onRecentUserClick: (model: VoucherBrandItem) -> Unit
+) : ListAdapter<VoucherBrandItem, GiftCardVH>(GiftCardDiffUtils) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GiftCardVH {
         val inflater = LayoutInflater.from(parent.context)
@@ -35,9 +37,9 @@ class GiftCardAdapter(
 class GiftCardVH(
     private val binding: ItemGiftCardBinding,
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: FeedDetails) -> Unit
+    val onRecentUserClick: (model: VoucherBrandItem) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(user: FeedDetails) {
+    fun bind(user: VoucherBrandItem) {
         binding.executeAfter {
             lifecycleOwner = this@GiftCardVH.lifecycleOwner
             var item = user
@@ -47,19 +49,19 @@ class GiftCardVH(
             binding.buygift.setOnClickListener {
                 onRecentUserClick(user)
             }
-//            userNameTv.text = Utility.getFirstName(user.name)
+
         }
     }
 
 }
 
-object GiftCardDiffUtils : DiffUtil.ItemCallback<FeedDetails>() {
+object GiftCardDiffUtils : DiffUtil.ItemCallback<VoucherBrandItem>() {
 
-    override fun areItemsTheSame(oldItem: FeedDetails, newItem: FeedDetails): Boolean {
+    override fun areItemsTheSame(oldItem: VoucherBrandItem, newItem: VoucherBrandItem): Boolean {
         return false
     }
 
-    override fun areContentsTheSame(oldItem: FeedDetails, newItem: FeedDetails): Boolean {
+    override fun areContentsTheSame(oldItem: VoucherBrandItem, newItem: VoucherBrandItem): Boolean {
         return oldItem == newItem
     }
 }
