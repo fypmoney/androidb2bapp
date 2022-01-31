@@ -25,6 +25,8 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.FyperScreen
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.deeplinkRedirection
+import com.fypmoney.util.videoplayer.VideoActivity2
+import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.AddMoneyView
 import com.fypmoney.view.activity.ChooseInterestHomeView
@@ -38,6 +40,7 @@ import com.fypmoney.view.home.main.explore.adapters.ExploreAdapter
 import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
+import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.home.main.homescreen.view.LoadMoneyBottomSheet
@@ -135,11 +138,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         }*/
         with(binding.callToActionRv) {
             adapter = CallToActionAdapter(viewLifecycleOwner, onCallToActionClicked = {
-                trackr {it1->
+                trackr { it1 ->
                     it1.name = TrackrEvent.home_action_click
-                    it1.add(TrackrField.action_content_id,it.id)
+                    it1.add(TrackrField.action_content_id, it.id)
                 }
-                openExploreFeatures(
+                openExploreFeaturesCallToAction(
                     it.redirectionType,
                     it.redirectionResource,
                 )
@@ -352,9 +355,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             override fun onItemClicked(position: Int, it1: SectionContentItem,exploreContentResponse: ExploreContentResponse?) {
                 trackr {
                     it.name = TrackrEvent.home_explore_click
-                    it.add(TrackrField.explore_content_id,it1.id)
+                    it.add(TrackrField.explore_content_id, it1.id)
                 }
-                openExploreFeatures(it1.redirectionType, it1.redirectionResource)
+                openExploreFeatures(
+                    it1.redirectionType,
+                    it1.redirectionResource,
+                    it1,
+                    exploreContentResponse
+                )
 
 
             }
@@ -372,9 +380,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
     private fun openExploreFeatures(
         redirectionType: String?,
-        redirectionResource: String?
+        redirectionResource: String?,
+        sectionContentItem: SectionContentItem,
+        exploreContentResponse: ExploreContentResponse?
     ) {
         when (redirectionType) {
+            AppConstants.TYPE_VIDEO -> {
+                val intent = Intent(requireActivity(), VideoActivity2::class.java)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, redirectionResource)
+                startActivity(intent)
+
+            }
+            AppConstants.TYPE_VIDEO_EXPLORE -> {
+                val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, redirectionResource)
+                intent.putExtra(AppConstants.ACTIONFLAG, sectionContentItem.actionFlagCode)
+                startActivity(intent)
+            }
+            AppConstants.EXPLORE_SECTION_EXPLORE -> {
+                val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
+                    ExploreFragmentDirections.actionExploreSectionExplore(
+                        sectionExploreItem = sectionContentItem,
+                        sectionExploreName = it1
+                    )
+                }
+                directions?.let { it1 -> findNavController().navigate(it1) }
+            }
             AppConstants.EXPLORE_IN_APP -> {
                 redirectionResource?.let { uri ->
 
@@ -455,7 +486,90 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         }
     }
 
+    private fun openExploreFeaturesCallToAction(
+        redirectionType: String?,
+        redirectionResource: String?
+    ) {
+        when (redirectionType) {
+            AppConstants.EXPLORE_IN_APP -> {
+                redirectionResource?.let { uri ->
 
+                    val redirectionResources = uri?.split(",")?.get(0)
+                    if (redirectionResources == FyperScreen) {
+                        findNavController().navigate(R.id.navigation_fyper)
+                    } else if (redirectionResources == AppConstants.JACKPOTTAB) {
+                        findNavController().navigate(R.id.navigation_jackpot)
+                    } else if (redirectionResources == AppConstants.CardScreen) {
+                        findNavController().navigate(R.id.navigation_card)
+                    } else if (redirectionResources == AppConstants.RewardHistory) {
+                        findNavController().navigate(R.id.navigation_rewards_history)
+                    } else if (redirectionResources == AppConstants.ARCADE) {
+                        findNavController().navigate(R.id.navigation_arcade)
+                    } else {
+                        redirectionResources?.let { it1 ->
+                            deeplinkRedirection(
+                                it1,
+                                requireContext()
+                            )
+                        }
+                    }
+
+
+                }
+
+            }
+            AppConstants.EXPLORE_IN_APP_WEBVIEW -> {
+
+                val intent = Intent(requireContext(), ExploreInAppWebview::class.java)
+//        intent.putExtra(AppConstants.EXPLORE_RESPONSE, feedDetails)
+                intent.putExtra(
+                    AppConstants.FROM_WHICH_SCREEN,
+                    AppConstants.EXPLORE_IN_APP_WEBVIEW
+                )
+                intent.putExtra(AppConstants.IN_APP_URL, redirectionResource)
+
+                startActivity(intent)
+            }
+            AppConstants.IN_APP_WITH_CARD -> {
+
+                val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, redirectionResource)
+                startActivity(intent)
+            }
+            AppConstants.OFFER_REDIRECTION -> {
+                homeFragmentVM.callFetchOfferApi(redirectionResource)
+
+            }
+
+
+            AppConstants.FEED_TYPE_BLOG -> {
+                homeFragmentVM.callFetchFeedsApi(redirectionResource)
+
+            }
+
+            AppConstants.EXT_WEBVIEW -> {
+                if (redirectionResource != null) {
+                    startActivity(
+                        Intent.createChooser(
+                            Intent(
+                                Intent.ACTION_VIEW,
+                                Uri.parse(redirectionResource)
+                            ), getString(R.string.browse_with)
+                        )
+                    )
+                }
+
+
+            }
+            AppConstants.EXPLORE_TYPE_STORIES -> {
+                if (!redirectionResource.isNullOrEmpty()) {
+                    homeFragmentVM.callFetchFeedsApi(redirectionResource)
+
+                }
+
+            }
+        }
+    }
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
 
         var bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
