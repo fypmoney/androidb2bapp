@@ -109,9 +109,10 @@
 
             <ScrollView
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/pay_and_purchase"
                 android:layout_below="@+id/lin"
-                android:layout_marginTop="@dimen/_18sdp"
-                android:layout_height="wrap_content">
+                android:layout_marginTop="@dimen/_18sdp">
 
 
                 <LinearLayout
@@ -139,6 +140,7 @@
                         android:textColor="@color/white" />
 
                     <RadioGroup
+                        android:id="@+id/radiogroup"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -149,7 +151,7 @@
                             android:layout_marginTop="@dimen/_3sdp"
 
                             android:layout_marginBottom="@dimen/_3sdp"
-                            android:buttonTint="@drawable/radio_selector"
+                            android:buttonTint="@drawable/radio_selector_gifts"
 
                             android:text="Myself"
 
@@ -160,10 +162,10 @@
                             android:id="@+id/someone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:buttonTint="@drawable/radio_selector_gifts"
 
                             android:layout_marginTop="@dimen/_3sdp"
                             android:layout_marginBottom="@dimen/_3sdp"
-                            android:buttonTint="@drawable/radio_selector"
                             android:text="Someone"
                             android:textColor="@color/white" />
                     </RadioGroup>
@@ -171,6 +173,7 @@
                     <LinearLayout
                         android:id="@+id/otheruser_layout"
                         android:layout_width="match_parent"
+                        android:visibility="gone"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
@@ -202,6 +205,7 @@
                             android:paddingStart="@dimen/edittextHintPaddingStart"
                             android:paddingEnd="@dimen/edittextHintPaddingEnd"
                             android:singleLine="true"
+                            android:textColor="@color/white"
 
                             android:textSize="@dimen/_14sdp" />
 
@@ -210,6 +214,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/etEmailId"
+                            android:textColor="@color/white"
 
                             android:layout_marginTop="@dimen/_14sdp"
                             android:background="@drawable/round_dark_grey_rewards_18"
@@ -234,6 +239,8 @@
                             android:hint="phone number"
                             android:imeOptions="actionDone"
                             android:inputType="phone"
+                            android:textColor="@color/white"
+
                             android:maxLength="40"
                             android:paddingStart="@dimen/edittextHintPaddingStart"
                             android:paddingEnd="@dimen/edittextHintPaddingEnd"
@@ -241,31 +248,33 @@
 
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/pay_and_purchase"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_46sdp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginStart="50dp"
-                        android:layout_marginEnd="50dp"
-                        android:layout_marginBottom="@dimen/_18sdp"
-                        android:onClick="@{()->viewModel.onAddClicked()}"
-                        android:text="@string/pay"
-                        android:layout_marginTop="@dimen/_16sdp"
-                        android:backgroundTint="@color/green_winnings"
-                        android:textAllCaps="false"
-
-                        android:textColor="@color/white"
-                        android:textSize="18sp"
-
-
-                        />
 
                 </LinearLayout>
 
 
             </ScrollView>
+
+            <Button
+                android:id="@+id/pay_and_purchase"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_46sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="50dp"
+                android:layout_marginBottom="@dimen/_18sdp"
+                android:backgroundTint="@color/green_winnings"
+
+                android:text="@string/pay"
+                android:textAllCaps="false"
+
+                android:textColor="@color/white"
+                android:textSize="18sp"
+
+
+                />
+
         </RelativeLayout>
 
 

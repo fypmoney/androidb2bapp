@@ -1,6 +1,7 @@
 package com.fypmoney.view.giftCardModule.viewModel
 
 import android.app.Application
+import android.text.TextUtils
 import androidx.databinding.ObservableArrayList
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
@@ -120,19 +121,19 @@ class PurchaseGiftViewModel(application: Application) : BaseViewModel(applicatio
 
 
     fun onAddClicked() {
-//        amountSelected.get()?.toIntOrNull()?.let {
-//            when {
-//                TextUtils.isEmpty(amountSelected.get()) -> {
-//                    Utility.showToast(PockketApplication.instance.getString(R.string.add_money_empty_error))
-//                }
-//                it < 10 -> {
-//                    Utility.showToast(PockketApplication.instance.getString(R.string.minimum_load_amount))
-//                }
-//                else -> {
-//                    onAddClicked.value = true
-//                }
-//            }
-//        }
+        amountSelected.get()?.toIntOrNull()?.let {
+            when {
+                TextUtils.isEmpty(amountSelected.get()) -> {
+                    Utility.showToast(PockketApplication.instance.getString(R.string.add_money_empty_error))
+                }
+                it < 10 -> {
+                    Utility.showToast(PockketApplication.instance.getString(R.string.minimum_load_amount))
+                }
+                else -> {
+                    onAddClicked.value = true
+                }
+            }
+        }
 
 
     }

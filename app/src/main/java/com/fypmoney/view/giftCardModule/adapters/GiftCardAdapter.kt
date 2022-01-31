@@ -42,10 +42,11 @@ class GiftCardVH(
     fun bind(user: VoucherBrandItem) {
         binding.executeAfter {
             lifecycleOwner = this@GiftCardVH.lifecycleOwner
-            var item = user
+
 //            loadImage(recentIv,user.profilePicResourceId,
 //                ContextCompat.getDrawable(this.recentIv.context, R.drawable.ic_profile_img),true)
 //
+            binding.descTv.text = user.description
             binding.buygift.setOnClickListener {
                 onRecentUserClick(user)
             }

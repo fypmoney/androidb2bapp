@@ -1,19 +1,26 @@
 package com.fypmoney.view.giftCardModule
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityAllGiftCardsBinding
-import com.fypmoney.model.FeedDetails
+import com.fypmoney.util.AppConstants
+import com.fypmoney.view.giftCardModule.adapters.GiftListBaseAdapter
+import com.fypmoney.view.giftCardModule.model.GiftSearchResponse
+import com.fypmoney.view.giftCardModule.model.VoucherBrandItem
 import com.fypmoney.view.giftCardModule.viewModel.GiftCardViewModel
+import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
+import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
+import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
+import com.fypmoney.view.home.main.explore.model.SectionContentItem
 
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.ArrayList
 
 
 class GiftCardsListScreen : BaseActivity<ActivityAllGiftCardsBinding, GiftCardViewModel>() {
@@ -42,31 +49,45 @@ class GiftCardsListScreen : BaseActivity<ActivityAllGiftCardsBinding, GiftCardVi
         setToolbarAndTitle(
             context = this,
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = "Gift Cards"
+            isBackArrowVisible = true, toolbarTitle = "Gift Cards",
+            titleColor = Color.WHITE,
+            backArrowTint = Color.WHITE
         )
 
         setObservers()
-        setUpRecyclerView()
+
     }
 
+    private fun setRecyclerView(
 
-    private fun setUpRecyclerView() {
-        val giftCardAdapter = GiftCardAdapter(
-            this, onRecentUserClick = {
-                val intent = Intent(this, PurchaseGiftCardScreen2::class.java)
-                startActivity(intent)
+        list: List<GiftSearchResponse>
+    ) {
+//        if (list.size > 0) {
+//            mViewBinding.shimmerLayout.visibility = View.GONE
+//        }
+        val layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        mViewBinding?.giftcardRv?.layoutManager = layoutManager
+
+
+        var arrayList: ArrayList<GiftSearchResponse> = ArrayList()
+        list.forEach {
+            if (it.voucherBrand?.size!! > 0) {
+                arrayList.add(it)
             }
-        )
-
-
-        with(mViewBinding!!.giftcardRv) {
-            adapter = giftCardAdapter
-            layoutManager = GridLayoutManager(
-                this@GiftCardsListScreen,
-                2
-            )
         }
 
+        val typeAdapter = GiftListBaseAdapter(
+            arrayList,
+            this,
+            onRecentUserClick = {
+                val intent = Intent(this, PurchaseGiftCardScreen2::class.java)
+
+                startActivity(intent)
+            },
+            this
+        )
+        mViewBinding?.giftcardRv?.adapter = typeAdapter
     }
 
     /*
@@ -75,13 +96,12 @@ class GiftCardsListScreen : BaseActivity<ActivityAllGiftCardsBinding, GiftCardVi
     private fun setObservers() {
         mviewModel?.allGiftList?.observe(this, {
 
-            (mViewBinding?.giftcardRv?.adapter as GiftCardAdapter).run {
-                submitList(it[0].voucherBrand)
+            it.forEach {
+
             }
+            setRecyclerView(it)
 
         })
-
-
     }
 
 

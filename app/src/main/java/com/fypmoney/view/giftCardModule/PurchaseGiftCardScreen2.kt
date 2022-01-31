@@ -29,6 +29,10 @@ import com.fypmoney.view.giftCardModule.viewModel.PurchaseGiftViewModel
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
 import java.util.*
 import kotlin.collections.ArrayList
+import android.widget.RadioButton
+
+import android.widget.RadioGroup
+import kotlinx.android.synthetic.main.view_purchase_gift_card2.view.*
 
 
 class PurchaseGiftCardScreen2 : BaseActivity<ViewPurchaseGiftCard2Binding, PurchaseGiftViewModel>(),
@@ -58,11 +62,13 @@ class PurchaseGiftCardScreen2 : BaseActivity<ViewPurchaseGiftCard2Binding, Purch
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
-        mViewBinding.viewModel = mViewModel
+        mViewBinding?.viewModel = mViewModel
         setToolbarAndTitle(
             context = this,
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = "Myntra E Gift Card"
+            isBackArrowVisible = true, toolbarTitle = "Myntra E Gift Card",
+            titleColor = Color.WHITE,
+            backArrowTint = Color.WHITE
         )
 
 
@@ -109,6 +115,20 @@ class PurchaseGiftCardScreen2 : BaseActivity<ViewPurchaseGiftCard2Binding, Purch
         }
 
         setObservers()
+        mViewBinding.radiogroup.setOnCheckedChangeListener { group, checkedId ->
+            // This will get the radiobutton that has changed in its check state
+            val checkedRadioButton = group.myself as RadioButton
+            // This puts the value (true/false) into the variable
+            val isChecked = checkedRadioButton.isChecked
+            // If the radiobutton that has changed in check state is now checked...
+            if (isChecked) {
+                // Changes the textview's text to "Checked: example radiobutton text"
+                mViewBinding.otheruserLayout.visibility = View.GONE
+            } else {
+                mViewBinding.otheruserLayout.visibility = View.VISIBLE
+
+            }
+        }
 
         mViewModel.callBrandGiftCards("OLA")
         checkAndAskPermission()
