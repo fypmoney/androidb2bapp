@@ -120,7 +120,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:paddingStart="26dp"
-
                     android:paddingEnd="26dp">
 
                     <View
