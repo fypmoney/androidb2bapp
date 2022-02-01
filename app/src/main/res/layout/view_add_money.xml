@@ -197,9 +197,9 @@
                     android:onClick="@{()->viewModel.onAddClicked()}"
                     android:text="@string/add_btn_text"
                     android:textAllCaps="false"
-                    android:textColor="@color/text_color_little_dark"
+                    android:textColor="@color/white"
                     android:textSize="18sp"
-                    app:backgroundTint="@color/cb_grey" />
+                    app:backgroundTint="@color/text_color_dark" />
 
 
             </RelativeLayout>
