@@ -72,16 +72,18 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
+        add_money_editext.setSelection(add_money_editext.text.length)
         add_money_editext.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable) {
-                try{
+                try {
                     if (s.toString().startsWith("0")) {
                         s.clear()
                     } else {
                         if (s.toString().isNotEmpty()) {
-                            btnSendOtp.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.text_color_dark))
+                            btnSendOtp.backgroundTintList =
+                                ColorStateList.valueOf(resources.getColor(R.color.text_color_dark))
                             btnSendOtp.setTextColor(
                                 ContextCompat.getColor(
                                     this@AddMoneyView,

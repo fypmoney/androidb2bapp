@@ -48,6 +48,12 @@
             android:padding="10dp"
             android:singleLine="true" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/savedRv"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_height="wrap_content" />
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/name"

@@ -40,6 +40,7 @@ import com.payu.india.Model.PayuConfig
 import com.payu.india.Payu.PayuConstants
 import com.payu.india.PostParams.PaymentPostParams
 import com.payu.paymentparamhelper.PaymentParams
+import kotlinx.android.synthetic.main.bottom_sheet_add_upi.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_gateway.*
@@ -365,6 +366,25 @@ open class AddMoneyUpiDebitView :
     override fun onAddUpiClickListener(upiId: String, isUpiSaved: Boolean) {
         mViewModel.upiEntered.set(upiId)
         mViewModel.modeOfPayment.set(1)
+
+        val upiList = ArrayList<String>()
+
+
+        val savedupiList =
+            SharedPrefUtils.getArrayList(application, SharedPrefUtils.SF_UPI_LIST)
+        savedupiList?.forEach {
+            upiList.add(it)
+        }
+        if (!upiList.contains(upiId)) {
+            upiList.add(upiId)
+            SharedPrefUtils.putArrayList(
+                applicationContext,
+                SharedPrefUtils.SF_UPI_LIST, upiList
+
+            )
+        }
+
+
         try {
             val paymentParams =
                 mViewModel.getPaymentParams(AppConstants.TYPE_UPI, upiId, isUpiSaved)
