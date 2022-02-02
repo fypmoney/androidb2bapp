@@ -3,8 +3,6 @@ package com.fypmoney.view.fragment
 
 import android.app.Dialog
 import android.content.DialogInterface
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -22,22 +19,21 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.databinding.BottomSheetManageChannelsBinding
-import com.fypmoney.model.CardInfoDetails
-import com.fypmoney.model.UpDateCardSettingsRequest
-import com.fypmoney.model.UpdateCardSettingsResponse
-import com.fypmoney.model.UpdateCardSettingsResponseDetails
+import com.fypmoney.extension.toGone
+import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.bottom_sheet_manage_channels.*
 
 /*
 * This is used to manage channels
 * */
-class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,var onBottomSheetDismissListener:OnBottomSheetDismissListener) : BottomSheetDialogFragment(),
+class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,
+                                var onBottomSheetDismissListener:OnBottomSheetDismissListener,
+                                var bankProfileResponseDetails: BankProfileResponseDetails? = null
+) : BottomSheetDialogFragment(),
     DialogUtils.OnAlertDialogClickListener, WebApiCaller.OnWebApiResponse{
     var cardType = ObservableField<Int>()
     var channelType = ObservableField<String>()
@@ -108,6 +104,13 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,var onBotto
                 }
             }
 
+        }
+
+        bankProfileResponseDetails?.kycType?.let {
+            if(it != "MINIMUM"){
+                atmTxt.toGone()
+                vAtmSwitch.toGone()
+            }
         }
 
         pPointSaleSwitch.setOnClickListener {
