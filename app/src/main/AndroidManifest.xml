@@ -281,12 +281,12 @@
         <activity
             android:name=".view.home.main.homescreen.view.HomeActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.moe.pushlibrary.activities.MoEActivity"
             android:label="HomeView"
-            android:parentActivityName=".view.activity.HomeView" />
+            android:parentActivityName=".view.home.main.homescreen.view.HomeActivity" />
         <activity android:name=".view.home.main.explore.ViewDetails.ExploreInAppWebview" />
 
         <activity

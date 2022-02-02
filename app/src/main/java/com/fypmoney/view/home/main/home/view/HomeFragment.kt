@@ -38,6 +38,7 @@ import com.fypmoney.view.home.main.explore.adapters.ExploreAdapter
 import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
+import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.home.main.homescreen.view.LoadMoneyBottomSheet
@@ -309,12 +310,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     }
 
     private fun setRecyclerView(root: FragmentHomeBinding) {
-        var itemClickListener2 = object : ListOfferClickListener {
+        val itemClickListener2 = object : ListOfferClickListener {
             override fun onItemClicked(pos: offerDetailResponse, position: String) {
                 if (position == "middle") {
                     callOfferDetailsSheeet(pos)
                 } else {
-                    var intent = Intent(requireContext(), OffersScreen::class.java)
+                    val intent = Intent(requireContext(), OffersScreen::class.java)
                     intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.OfferScreen)
                     startActivity(intent)
                 }
@@ -342,19 +343,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         root.exploreHomeRv.layoutManager = layoutManager
 
-        var arrayList: ArrayList<ExploreContentResponse> = ArrayList()
+        val arrayList: ArrayList<ExploreContentResponse> = ArrayList()
         list.forEach { item ->
             if (item.sectionContent?.size!! > 0) {
                 arrayList.add(item)
             }
         }
-        var exploreClickListener2 = object : ExploreItemClickListener {
-            override fun onItemClicked(position: Int, it1: SectionContentItem,exploreContentResponse: ExploreContentResponse?) {
+        val exploreClickListener2 = object : ExploreItemClickListener {
+            override fun onItemClicked(position: Int, sectionContentItem: SectionContentItem,exploreContentResponse: ExploreContentResponse?) {
                 trackr {
                     it.name = TrackrEvent.home_explore_click
-                    it.add(TrackrField.explore_content_id,it1.id)
+                    it.add(TrackrField.explore_content_id,sectionContentItem.id)
                 }
-                openExploreFeatures(it1.redirectionType, it1.redirectionResource)
+                openExploreFeatures(sectionContentItem.redirectionType, sectionContentItem.redirectionResource,exploreContentResponse,sectionContentItem)
 
 
             }
@@ -372,7 +373,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
     private fun openExploreFeatures(
         redirectionType: String?,
-        redirectionResource: String?
+        redirectionResource: String?,
+        exploreContentResponse: ExploreContentResponse?=null,
+        sectionContentItem: SectionContentItem?=null
     ) {
         when (redirectionType) {
             AppConstants.EXPLORE_IN_APP -> {
@@ -451,6 +454,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
                 }
 
+            }
+
+            AppConstants.EXPLORE_SECTION_EXPLORE->{
+                val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
+                    ExploreFragmentDirections.actionExploreSectionExplore(sectionExploreItem = sectionContentItem,
+                        sectionExploreName= it1
+                    )
+                }
+                directions?.let { it1 -> findNavController().navigate(it1) }
             }
         }
     }
