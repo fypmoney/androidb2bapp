@@ -125,7 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
                     android:layout_marginTop="@dimen/_11sdp"
-                    android:text="KYC Verified"
+                    android:text="@string/kyc_verified"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:alpha="60"
@@ -133,6 +133,18 @@
                     android:visibility="@{viewModel.verified?View.VISIBLE:View.GONE}"
                     app:layout_constraintStart_toEndOf="@+id/ivVerification"
                     app:layout_constraintTop_toBottomOf="@id/tvUserName" />
+                <TextView
+                    android:id="@+id/upgrade_your_kyc_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp16"
+                    android:text="@string/upgrade_your_kyc"
+                    android:textAlignment="center"
+                    android:textColor="@color/green6"
+                    android:textSize="@dimen/text_14sp"
+                    android:visibility="@{viewModel.verified?View.VISIBLE:View.GONE}"
+                    app:layout_constraintStart_toStartOf="@+id/ivVerification"
+                    app:layout_constraintTop_toBottomOf="@id/tvKycVerification" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/llUserDetail"

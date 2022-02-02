@@ -60,11 +60,11 @@ class AadhaarAccountActivationView :
             toolbar = toolbar,
             isBackArrowVisible = true
         )
-        helpValue.setOnClickListener {
+        /*helpValue.setOnClickListener {
             //callFreshChat(applicationContext)
             callLogOutBottomSheet()
         }
-        //Test Commit
+        //Test Commit*/
 
 
         val ss = SpannableString(getString(R.string.account_verification_sub_title))

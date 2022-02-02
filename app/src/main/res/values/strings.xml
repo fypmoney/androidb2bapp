@@ -1121,4 +1121,10 @@ Coming really soon!
     <string name="buffering">Buffering…</string>
     <string name="paused">Paused</string>
     <string name="ended">Ended</string>
+    <string name="increased_monthly_limit_1_lakh">Increased Monthly Limit: 1 Lakh</string>
+    <string name="atm_withdrawals_enabled">ATM Withdrawals Enabled</string>
+    <string name="send_money_to_fyp_users">Send Money to Fyp Users</string>
+    <string name="upgrade_your_kyc">Upgrade Your KYC</string>
+    <string name="upgrade_aadhar_kyc">Upgrade to Aadhar KYC</string>
+    <string name="kyc_verified">KYC Verified</string>
 </resources>

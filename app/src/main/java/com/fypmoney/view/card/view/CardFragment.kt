@@ -233,7 +233,7 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
                 openWebPageFor(cardEvent.title, cardEvent.url)
             }
             is CardFragmentVM.CardEvent.OnCardNumberCopyEvent -> {
-                cardEvent.cardNumber?.let { onCopyClicked(it, requireActivity()) }
+                cardEvent.cardNumber?.replace(" ","")?.let { onCopyClicked(it, requireActivity()) }
             }
         }
     }
@@ -266,7 +266,7 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
         super.onDestroy()
         activity?.window?.clearFlags(
             WindowManager.LayoutParams.FLAG_SECURE
-        );
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
