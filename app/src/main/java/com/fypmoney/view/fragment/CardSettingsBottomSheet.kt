@@ -56,7 +56,11 @@ class CardSettingsBottomSheet(
         bottomSheet.setContentView(bindingSheet.root)
         val textString = ArrayList<String>()
         textString.add(PockketApplication.instance.getString(R.string.card_settings_block))
-        textString.add(PockketApplication.instance.getString(R.string.card_settings_limit))
+        bankProfileResponse?.kycType.let {
+            if(it != "MINIMUM"){
+                textString.add(PockketApplication.instance.getString(R.string.card_settings_limit))
+            }
+        }
         textString.add(PockketApplication.instance.getString(R.string.card_settings_channels))
         bankProfileResponse?.cardInfos?.forEach {
             when(it.cardType){

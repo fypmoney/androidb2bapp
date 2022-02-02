@@ -98,7 +98,6 @@
             tools:visibility="visible" />
 
 
-
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/atm_channel_tv"
             style="@style/TextviewRegular"

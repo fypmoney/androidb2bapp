@@ -28,6 +28,7 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
     var lastName = ObservableField<String>()
     var dob = ObservableField<String>()
     var phone = ObservableField<String>()
+    var kycType = ObservableField<String>("MINIMUM")
     var verified = ObservableField(false)
 
     var buildVersion = ObservableField<String>()
@@ -164,6 +165,9 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
 
                     }
 
+                    responseData.customerInfoResponseDetails?.bankProfile?.kycType?.let {
+                        kycType.set(it)
+                    }
                     if (responseData.customerInfoResponseDetails?.bankProfile?.isAccountActive == "YES") {
                         verified.set(true)
                     } else {
@@ -234,6 +238,8 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
                 SharedPrefUtils.SF_KEY_USER_MOBILE
             )
         )
+
+
 
     }
 

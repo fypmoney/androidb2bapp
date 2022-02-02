@@ -112,7 +112,8 @@ data class UserProfile(
 data class BankProfile(
     @SerializedName("isAccountActive") var isAccountActive: String?,
     @SerializedName("isVirtualCardIssued") var isVirtualCardIssued: String?,
-    @SerializedName("isPhysicardIssued") var isPhysicardIssued: String?
+    @SerializedName("isPhysicardIssued") var isPhysicardIssued: String?,
+    @SerializedName("kycType") var kycType: String? = "MINIMUM"
 ) : Serializable
 @Keep
 data class UserInterestModel(
