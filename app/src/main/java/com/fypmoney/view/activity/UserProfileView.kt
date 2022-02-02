@@ -3,6 +3,7 @@ package com.fypmoney.view.activity
 import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_MULTIPLE_TASK
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -28,6 +29,7 @@ import com.fypmoney.view.adapter.GlobalListAdapter
 import com.fypmoney.view.adapter.ListUiModel
 import com.fypmoney.view.community.SocialCommunityActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
+import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
 import com.fypmoney.viewmodel.UserProfileViewModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -233,6 +235,14 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                         }
                     }).check()
                 mViewModel.onProfileClicked.value = false
+            }
+        }
+        mViewModel.onUpgradeKycClicked.observe(this) {
+            if (it) {
+                val intent  = Intent(this,UpgradeToKycInfoActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and FLAG_ACTIVITY_MULTIPLE_TASK
+                startActivity(intent)
+                mViewModel.onUpgradeKycClicked.value = false
             }
         }
 

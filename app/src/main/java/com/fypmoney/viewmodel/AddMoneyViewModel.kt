@@ -29,6 +29,8 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
     var isFetchBalanceVisible = ObservableField(true)
     var remainingLoadLimit = ObservableField<String>()
     var remainingLoadLimitAmount = ObservableField<String>()
+    var increseLimitClicked = MutableLiveData(false)
+
 
 
     init {
@@ -61,6 +63,9 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
 
     }
 
+    fun onIncreaseLimitClicked(){
+        increseLimitClicked.value = true
+    }
         fun onAmountSelected(amount: Int) {
             amountSelected.set(amount.toString())
             setEdittextLength.value=true

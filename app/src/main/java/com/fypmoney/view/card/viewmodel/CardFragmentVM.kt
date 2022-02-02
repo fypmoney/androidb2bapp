@@ -288,6 +288,8 @@ class CardFragmentVM(application: Application) :
             ApiConstant.API_GET_BANK_PROFILE -> {
                 if (responseData is BankProfileResponse) {
                     bankProfile = responseData.bankProfileResponseDetails
+                    SharedPrefUtils.putString(PockketApplication.instance,
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.bankProfileResponseDetails?.kycType)
                     _state.value =
                         CardState.BankProfilePopulate(responseData.bankProfileResponseDetails)
                     saveKitNumberInPref()

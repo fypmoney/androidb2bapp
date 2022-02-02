@@ -186,12 +186,24 @@
                     android:text="@{viewModel.remainingLoadLimit}"
                     android:textAlignment="center"
                     android:textColor="@color/text_color_dark" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/increse_limit_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_below="@+id/add_money_text"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="35dp"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:onClick="@{()->viewModel.onIncreaseLimitClicked()}"
+                    android:text="@string/increase_limit"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_color_dark" />
 
                 <Button
                     android:id="@+id/btnSendOtp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/add_money_text"
+                    android:layout_below="@+id/increse_limit_tv"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
                     android:onClick="@{()->viewModel.onAddClicked()}"

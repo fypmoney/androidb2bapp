@@ -9,12 +9,17 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAddMoneyBinding
+import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.roundOfAmountToCeli
 import com.fypmoney.view.fragment.MaxLoadAmountReachedWarningDialogFragment
+import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
 import com.fypmoney.viewmodel.AddMoneyViewModel
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.bottom_sheet_redeem_coins.view.*
@@ -54,6 +59,12 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
         setObserver()
         if (!amount.isNullOrEmpty()) {
             add_money_editext.setText(roundOfAmountToCeli(amount))
+        }
+        if(checkUpgradeKycStatus()){
+            increse_limit_tv.toGone()
+        }else{
+            increse_limit_tv.toVisible()
+
         }
     }
 
@@ -118,6 +129,14 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
                 mViewModel.setEdittextLength.value = false
                 }
             }
+        mViewModel.increseLimitClicked.observe(this) {
+            if (it) {
+                val intent  = Intent(this, UpgradeToKycInfoActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                startActivity(intent)
+                  mViewModel.increseLimitClicked.value = false
+                }
+            }
 
             mViewModel.onAddClicked.observe(this) {
                 if (it) {
@@ -140,6 +159,14 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
         }
 
 
+    private fun checkUpgradeKycStatus():Boolean{
+        SharedPrefUtils.getString(PockketApplication.instance, SharedPrefUtils.SF_KYC_TYPE)?.let {
+            return it != AppConstants.MINIMUM
+        }?:run {
+            return true
+        }
+
+    }
 
 
         /**

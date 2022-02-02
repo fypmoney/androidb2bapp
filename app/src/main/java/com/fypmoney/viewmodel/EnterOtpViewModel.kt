@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -231,8 +230,8 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     private fun callKycVerificationApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_KYC_VERIFICATION,
-                NetworkUtil.endURL(ApiConstant.API_KYC_VERIFICATION),
+                ApiConstant.API_KYC_UPGARDE_VERIFICATION,
+                NetworkUtil.endURL(ApiConstant.API_KYC_UPGARDE_VERIFICATION),
                 ApiUrl.PUT,
                 KycVerificationRequest(
                     action = AppConstants.KYC_ACTION_ADHAR_AUTH,
@@ -316,7 +315,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                 }
             }
 
-            ApiConstant.API_KYC_VERIFICATION -> {
+            ApiConstant.API_KYC_UPGARDE_VERIFICATION -> {
                 if (responseData is KycVerificationResponse) {
                     onVerificationSuccess.value = true
 

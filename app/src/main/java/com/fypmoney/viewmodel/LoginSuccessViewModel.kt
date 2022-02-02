@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.*
 import com.fyp.trackr.services.TrackrServices
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -89,6 +90,10 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                 if (responseData is CustomerInfoResponse) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
 //                    Utility.getCustomerDataFromPreference()?.postKycScreenCode = "0"
+
+                    SharedPrefUtils.putString(
+                        PockketApplication.instance,
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.kycType)
 
                     trackr {
                         it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)

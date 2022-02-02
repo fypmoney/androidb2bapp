@@ -1,14 +1,7 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
-import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.TrackrField
-import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
-import com.fypmoney.R
-import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -16,8 +9,9 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.*
-import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.KycActivateAccountResponse
+import com.fypmoney.model.KycActivateAccountResponseDetails
 import com.fypmoney.util.Utility
 
 /*
@@ -27,6 +21,7 @@ class AadhaarAccountActivationViewModel(application: Application) : BaseViewMode
     var onActivateAccountSuccess = MutableLiveData<KycActivateAccountResponseDetails>()
     var onLogoutSuccess = MutableLiveData<Boolean>()
     var postKycScreenCode = MutableLiveData<String>()
+    var onUpgradeAccountClick = MutableLiveData<Boolean>()
 
     fun callLogOutApi() {
         WebApiCaller.getInstance().request(
@@ -43,7 +38,7 @@ class AadhaarAccountActivationViewModel(application: Application) : BaseViewMode
     * This method is used to call auth login API
     * */
     fun callKycAccountActivationApi() {
-        trackr {
+        /*trackr {
             it.name = TrackrEvent.account_activation
             it.add(
                 TrackrField.user_id, SharedPrefUtils.getLong(
@@ -59,7 +54,8 @@ class AadhaarAccountActivationViewModel(application: Application) : BaseViewMode
                 BaseRequest(),
                 this, isProgressBar = true
             )
-        )
+        )*/
+        onUpgradeAccountClick.value = true
     }
 
     override fun onSuccess(purpose: String, responseData: Any) {

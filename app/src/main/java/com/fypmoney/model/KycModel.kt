@@ -63,6 +63,7 @@ data class KycInitResponseDetails(
     @SerializedName("message") val message: String,
     @SerializedName("documentIdentifier") val documentIdentifier: String,
     @SerializedName("documentType") val documentType: String,
+    @SerializedName("kycType") val kycType: String,
     @SerializedName("token") val token: String
 ):Serializable
 

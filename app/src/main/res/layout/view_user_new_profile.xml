@@ -133,16 +133,19 @@
                     android:visibility="@{viewModel.verified?View.VISIBLE:View.GONE}"
                     app:layout_constraintStart_toEndOf="@+id/ivVerification"
                     app:layout_constraintTop_toBottomOf="@id/tvUserName" />
+
                 <TextView
                     android:id="@+id/upgrade_your_kyc_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp16"
+                    android:layout_marginTop="@dimen/_11sdp"
                     android:text="@string/upgrade_your_kyc"
                     android:textAlignment="center"
                     android:textColor="@color/green6"
+                    android:alpha="60"
+                    android:onClick="@{()->viewModel.onUpgradeKycClicked()}"
                     android:textSize="@dimen/text_14sp"
-                    android:visibility="@{viewModel.verified?View.VISIBLE:View.GONE}"
+                    android:visibility="@{viewModel.upgradeKyc?View.VISIBLE:View.GONE}"
                     app:layout_constraintStart_toStartOf="@+id/ivVerification"
                     app:layout_constraintTop_toBottomOf="@id/tvKycVerification" />
 

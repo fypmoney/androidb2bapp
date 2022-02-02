@@ -152,7 +152,7 @@
                     android:layout_marginTop="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_30sdp"
                     android:onClick="@{()->viewModel.callKycAccountActivationApi()}"
-                    android:text="@string/activate_account_btn_text"
+                    android:text="@string/upgrade_aadhar_kyc"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/text_color_dark" />
 
