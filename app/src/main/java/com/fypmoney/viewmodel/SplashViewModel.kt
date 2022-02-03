@@ -101,6 +101,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                         map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
                         map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
                         map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
+                        map[MoEConstants.USER_ATTRIBUTE_USER_EMAIL] = it.email.toString()
 
                         map[MoEConstants.USER_ATTRIBUTE_USER_GENDER] = it.userProfile?.gender.toString()
                         map[CUSTOM_USER_POST_KYC_CODE] = it.postKycScreenCode.toString()
@@ -233,6 +234,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                     map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = responseData.customerInfoResponseDetails!!.mobile.toString()
                     map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = responseData.customerInfoResponseDetails!!.firstName.toString()
                     map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = responseData.customerInfoResponseDetails!!.lastName.toString()
+                    map[MoEConstants.USER_ATTRIBUTE_USER_EMAIL] = responseData.customerInfoResponseDetails!!.email.toString()
                     UserTrackr.push(map)
                     UserTrackr.login( responseData.customerInfoResponseDetails!!.mobile.toString())
                     responseData.customerInfoResponseDetails?.dob?.let {
