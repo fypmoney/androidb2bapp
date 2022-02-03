@@ -272,6 +272,7 @@ object AppConstants {
     const val PHYSICAL_CARD_CODE = "PHYCRD"
     const val ORDER_CARD_INFO = "order_card_info"
     const val REFER_CODE_CHECKING_VARIABLE = "$@%$"
+    const val ADD_MONEY_VIDEO = "ADD_MONEY_VIDEO"
 
     const val IN_APP_URL = "IN_APP_URL"
     const val ORDER_NUM = "ORDERID"

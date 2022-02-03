@@ -86,13 +86,14 @@
                     android:weightSum="4"
                     android:layout_marginStart="@dimen/dp8"
                     android:layout_marginEnd="@dimen/dp8"
-                    android:layout_below="@id/add_money"
+                    android:layout_below="@id/add_money_editext"
                     android:layout_marginTop="22dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextviewRegular"
                         android:background="@drawable/curved_background29"
                         android:gravity="center"
+                        android:backgroundTint="@color/moeny_suggestion_background"
                         android:layout_marginStart="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
@@ -110,12 +111,14 @@
                         android:layout_marginEnd="5dp"
                         android:layout_weight="1"
                         android:minEms="5"
+                        android:backgroundTint="@color/moeny_suggestion_background"
+
                         android:background="@drawable/curved_background28"
                         android:gravity="center"
                         android:onClick="@{()->viewModel.onAmountSelected(100)}"
                         android:paddingVertical="5dp"
                         android:text="@string/add_money_100"
-                         android:textColor="@color/text_color_dark" />
+                        android:textColor="@color/text_color_dark" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         style="@style/TextviewRegular"
@@ -124,6 +127,8 @@
                         android:layout_weight="1"
                         android:layout_width="0dp"
                         android:minEms="5"
+                        android:backgroundTint="@color/moeny_suggestion_background"
+
                         android:background="@drawable/curved_background27"
                         android:gravity="center"
                         android:onClick="@{()->viewModel.onAmountSelected(500)}"
@@ -137,6 +142,8 @@
                         android:layout_marginEnd="5dp"
                         android:layout_width="0dp"
                         android:minEms="5"
+                        android:backgroundTint="@color/moeny_suggestion_background"
+
                         android:layout_weight="1"
                         android:background="@drawable/curved_background25"
                         android:gravity="center"
@@ -154,7 +161,7 @@
                     style="@style/EditTextStyle"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/linear"
+                    android:layout_below="@+id/add_money"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="72dp"
                     android:background="@null"
@@ -207,7 +214,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="30dp"
                     android:onClick="@{()->viewModel.onAddClicked()}"
-                    android:text="@string/add_btn_text"
+                    android:text="@string/add_money"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="18sp"

@@ -9,6 +9,7 @@
         <item>@drawable/ic_spouse</item>
         <item>@drawable/ic_kid</item>
         <item>@drawable/ic_grand_parents</item>
+        <item>@drawable/ic_grand_parents</item>
         <item>@drawable/ic_grand_child</item>
         <item>@drawable/ic_other</item>
     </integer-array>
@@ -1121,6 +1122,7 @@ Coming really soon!
     <string name="buffering">Buffering…</string>
     <string name="paused">Paused</string>
     <string name="ended">Ended</string>
+
     <string name="increased_monthly_limit_1_lakh">Increased Monthly Limit: 1 Lakh</string>
     <string name="atm_withdrawals_enabled">ATM Withdrawals Enabled</string>
     <string name="send_money_to_fyp_users">Send Money to Fyp Users</string>
