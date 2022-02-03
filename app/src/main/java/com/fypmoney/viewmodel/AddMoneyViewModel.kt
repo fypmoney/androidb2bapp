@@ -96,6 +96,7 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
 
                 if (responseData is GetWalletBalanceResponse) {
                     enableButton.value = true
+                    apiFail.set(true)
                     isFetchBalanceVisible.set(false)
                     isFetchingBalanceTextVisible.set(false)
                     availableAmount.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)!!))
