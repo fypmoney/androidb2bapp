@@ -62,7 +62,7 @@ internal class HorizontalMenuItemView @JvmOverloads constructor(
             setTint(item.backgroundColor)
         }
         mask = GradientDrawable().apply {
-            cornerRadius = item.menuStyle.radius
+            cornerRadius = item.menuStyle.radiusRipple
             setTint(Color.BLACK)
         }
         container.setCustomRipple(containerBackground, mask)

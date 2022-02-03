@@ -281,8 +281,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         homeFragmentVM?.openBottomSheet.observe(
             viewLifecycleOwner,
             { list ->
-
-                callOfferDetailsSheeet(list[0])
+                if (list.size > 0) {
+                    callOfferDetailsSheeet(list[0])
+                }
             })
 
         homeFragmentVM?.feedDetail.observe(

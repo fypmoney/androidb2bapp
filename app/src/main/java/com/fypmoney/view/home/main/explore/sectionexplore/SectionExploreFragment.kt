@@ -108,8 +108,10 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
         sectionExploreFragmentVM.openBottomSheet.observe(
             viewLifecycleOwner,
             { list ->
+                if (list.size > 0) {
+                    callOfferDetailsSheeet(list[0])
+                }
 
-                callOfferDetailsSheeet(list[0])
             })
 
         sectionExploreFragmentVM.feedDetail.observe(

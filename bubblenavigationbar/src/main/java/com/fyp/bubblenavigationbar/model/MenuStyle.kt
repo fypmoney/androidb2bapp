@@ -13,6 +13,7 @@ class MenuStyle(context: Context, attr: TypedArray) {
     @ColorInt val unselectedColor: Int
     @IdRes val textAppearance: Int?
     val radius: Float
+    val radiusRipple: Float
     val iconSize: Int
 
     init {
@@ -20,7 +21,10 @@ class MenuStyle(context: Context, attr: TypedArray) {
             .takeIf { it > 0 }
 
         radius = attr.getDimension(R.styleable.ChipNavigationBar_cnb_radius, Float.MAX_VALUE)
-        badgeColor = attr.getColor(R.styleable.ChipNavigationBar_cnb_badgeColor,
+        val MAX_VALUE: Float = 2.4028235E38F
+        radiusRipple = MAX_VALUE
+        badgeColor = attr.getColor(
+            R.styleable.ChipNavigationBar_cnb_badgeColor,
             ContextCompat.getColor(context, R.color.cnb_default_badge_color)
         )
         unselectedColor = attr.getColor(

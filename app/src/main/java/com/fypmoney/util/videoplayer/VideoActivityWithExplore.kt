@@ -92,8 +92,10 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
         viewModel?.openBottomSheet.observe(
             this,
             { list ->
+                if (list.size > 0) {
+                    callOfferDetailsSheeet(list[0])
+                }
 
-                callOfferDetailsSheeet(list[0])
             })
 
         viewModel?.feedDetail.observe(
