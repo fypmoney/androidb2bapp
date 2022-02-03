@@ -157,7 +157,8 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
             "ERROR_MESSAGE_HOME",
             "IS_NEW_FEED_AVAILABLE",
             "ONBOARD_SHARE_90",
-            "ONBOARD_SHARE_1"
+            "ONBOARD_SHARE_1",
+            "ADD_MONEY_VIDEO"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -327,6 +328,10 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                             IS_NEW_FEED_AVAILABLE -> {
                                 PockketApplication.isNewFeedAvailableData = it
                             }
+                            IS_NEW_FEED_AVAILABLE -> {
+                                PockketApplication.isNewFeedAvailableData = it
+                            }
+
                         }
                     }
                 }

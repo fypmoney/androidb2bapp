@@ -102,6 +102,7 @@
     <color name="red1">#FF0000</color>
     <color name="grey2">#B0B7B9</color>
     <color name="textColor1">#221F1F</color>
+    <color name="moeny_suggestion_background">#F7F7F7</color>
 
 
 </resources>
