@@ -356,12 +356,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             override fun onItemClicked(position: Int, sectionContentItem: SectionContentItem,exploreContentResponse: ExploreContentResponse?) {
                 trackr {
                     it.name = TrackrEvent.home_explore_click
-                    it.add(TrackrField.explore_content_id, it1.id)
+                    it.add(TrackrField.explore_content_id, sectionContentItem.id)
                 }
                 openExploreFeatures(
-                    it1.redirectionType,
-                    it1.redirectionResource,
-                    it1,
+                    sectionContentItem.redirectionType,
+                    sectionContentItem.redirectionResource,
+                    sectionContentItem,
                     exploreContentResponse
                 )
 
@@ -570,14 +570,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
             }
 
-            AppConstants.EXPLORE_SECTION_EXPLORE->{
+            /*AppConstants.EXPLORE_SECTION_EXPLORE->{
                 val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
                     ExploreFragmentDirections.actionExploreSectionExplore(sectionExploreItem = sectionContentItem,
                         sectionExploreName= it1
                     )
                 }
                 directions?.let { it1 -> findNavController().navigate(it1) }
-            }
+            }*/
         }
     }
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
