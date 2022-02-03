@@ -89,7 +89,6 @@
             android:name=".view.activity.AddMoneyView"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"
-
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.ordercard.trackorder.TrackOrderView"

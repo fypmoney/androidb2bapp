@@ -100,12 +100,7 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
                         if (s.toString().isNotEmpty()) {
                             btnSendOtp.backgroundTintList =
                                 ColorStateList.valueOf(resources.getColor(R.color.text_color_dark))
-                            btnSendOtp.setTextColor(
-                                ContextCompat.getColor(
-                                    this@AddMoneyView,
-                                    R.color.white
-                                )
-                            )
+
                             if (!mViewModel.remainingLoadLimitAmount.get()
                                     .isNullOrEmpty() && s.toString()
                                     .toInt() > mViewModel.remainingLoadLimitAmount.get()!!.toInt() / 100
@@ -119,12 +114,7 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
 
                         } else {
                             btnSendOtp.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.cb_grey))
-                            btnSendOtp.setTextColor(
-                                ContextCompat.getColor(
-                                    this@AddMoneyView,
-                                    R.color.grey_heading
-                                )
-                            )
+
 
                         }
                     }
