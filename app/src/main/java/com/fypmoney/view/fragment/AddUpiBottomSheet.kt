@@ -77,6 +77,7 @@ class AddUpiBottomSheet(
                         it1.isSelected = it1.upiId==it.upiId
                     }
                     (binding.savedRv.adapter as SavedUpiAdapter).run {
+                        submitList(null)
                         submitList(savedUpiUiModelList)
                     }
                 }

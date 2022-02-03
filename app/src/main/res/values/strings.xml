@@ -360,7 +360,7 @@
 
     <!-- Referral code
     -->
-    <string name="referral_code_title">Do you have \n A referral code?</string>
+    <string name="referral_code_title">Do you have a referral/promo code?</string>
     <string name="code_text">Code</string>
     <string name="referral_code_empty_error">Please enter Referral Code</string>
     <string name="referral_code_hint">Your referral code</string>
@@ -1132,4 +1132,5 @@ Coming really soon!
     <string name="to_send_money_to_other_fyp_users_upgrade_to_aadhar_kyc">To send money to other Fyp users, upgrade to Aadhar KYC”</string>
     <string name="increase_limit">Increase Limit</string>
     <string name="preferred_upi_id">Preferred UPI ID</string>
+    <string name="fyp_card_details">Fyp Card Details</string>
 </resources>

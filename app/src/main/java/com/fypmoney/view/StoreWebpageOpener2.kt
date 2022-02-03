@@ -123,7 +123,8 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
         mViewModel.availableAmount.observe(
             this,
             { amount ->
-                amount_tv.text = " ₹" + amount
+                //amount_tv.text = " ₹" + amount
+                amount_tv.text = getString(R.string.fyp_card_details)
             })
         mViewModel.carddetails.observe(
             this,
