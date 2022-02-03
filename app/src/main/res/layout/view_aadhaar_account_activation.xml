@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar_for_aadhaar" />
+        <include layout="@layout/toolbar" />
 
         <ScrollView
             android:id="@+id/scroll_view"
@@ -152,7 +152,7 @@
                     android:layout_marginTop="@dimen/_30sdp"
                     android:layout_marginBottom="@dimen/_30sdp"
                     android:onClick="@{()->viewModel.callKycAccountActivationApi()}"
-                    android:text="@string/activate_account_btn_text"
+                    android:text="@string/upgrade_aadhar_kyc"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/text_color_dark" />
 

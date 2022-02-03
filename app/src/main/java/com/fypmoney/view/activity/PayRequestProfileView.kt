@@ -1,18 +1,22 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewPayRequestProfileBinding
-import com.fypmoney.databinding.ViewPayRequestProfileBindingImpl
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.adapter.CardListViewAdapter
+import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_KYC_TYPE
 import com.fypmoney.view.adapter.MyProfileListAdapter
+import com.fypmoney.view.bottomsheet.UpgradeYourKycBottomSheet
+import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
 import com.fypmoney.viewmodel.PayRequestProfileViewModel
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -72,16 +76,44 @@ class PayRequestProfileView :
         mViewModel.onPayOrRequestClicked.observe(this) {
             when (it.id) {
                 R.id.pay -> {
-                    intentToActivity(
-                        contactEntity = mViewModel.contactResult.get(),
-                        aClass = EnterAmountForPayRequestView::class.java, AppConstants.PAY
-                    )
+                    if(checkUpgradeKycStatus()){
+                        intentToActivity(
+                            contactEntity = mViewModel.contactResult.get(),
+                            aClass = EnterAmountForPayRequestView::class.java, AppConstants.PAY
+                        )
+                    }else{
+                        val upgradeYourKycBottomSheet = UpgradeYourKycBottomSheet(onUpgradeClick = {
+                            val intent  = Intent(this, UpgradeToKycInfoActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                            startActivity(intent)
+                        })
+                        upgradeYourKycBottomSheet.dialog?.window?.setBackgroundDrawable(
+                            ColorDrawable(
+                                Color.RED)
+                        )
+                        upgradeYourKycBottomSheet.show(supportFragmentManager, "UpgradeKyc")
+                    }
+
                 }
                 R.id.request -> {
-                    intentToActivity(
-                        contactEntity = mViewModel.contactResult.get(),
-                        aClass = EnterAmountForPayRequestView::class.java, AppConstants.REQUEST
-                    )
+                    if(checkUpgradeKycStatus()){
+                        intentToActivity(
+                            contactEntity = mViewModel.contactResult.get(),
+                            aClass = EnterAmountForPayRequestView::class.java, AppConstants.REQUEST
+                        )
+                    }else{
+                        val upgradeYourKycBottomSheet = UpgradeYourKycBottomSheet(onUpgradeClick = {
+                            val intent  = Intent(this, UpgradeToKycInfoActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                            startActivity(intent)
+                        })
+                        upgradeYourKycBottomSheet.dialog?.window?.setBackgroundDrawable(
+                            ColorDrawable(
+                                Color.RED)
+                        )
+                        upgradeYourKycBottomSheet.show(supportFragmentManager, "UpgradeKyc")
+                    }
+
                 }
 
             }
@@ -89,6 +121,14 @@ class PayRequestProfileView :
 
     }
 
+    private fun checkUpgradeKycStatus():Boolean{
+        SharedPrefUtils.getString(PockketApplication.instance,SF_KYC_TYPE)?.let {
+            return it != AppConstants.MINIMUM
+        }?:run {
+             return true
+        }
+
+    }
     /**
      * Method to navigate to the different activity
      */

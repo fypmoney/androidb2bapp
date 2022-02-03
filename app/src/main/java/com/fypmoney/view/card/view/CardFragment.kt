@@ -207,7 +207,8 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
                 val bottomSheet =
                     ManageChannelsBottomSheet(
                         cardEvent.bankProfile?.cardInfos,
-                        cardEvent.bottomSheetDismissListener
+                        cardEvent.bottomSheetDismissListener,
+                        cardFragmentVM.bankProfile
                     )
                 bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
                 bottomSheet.show(childFragmentManager, "ManageChannels")
@@ -233,7 +234,7 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
                 openWebPageFor(cardEvent.title, cardEvent.url)
             }
             is CardFragmentVM.CardEvent.OnCardNumberCopyEvent -> {
-                cardEvent.cardNumber?.let { onCopyClicked(it, requireActivity()) }
+                cardEvent.cardNumber?.replace(" ","")?.let { onCopyClicked(it, requireActivity()) }
             }
         }
     }
@@ -266,7 +267,7 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
         super.onDestroy()
         activity?.window?.clearFlags(
             WindowManager.LayoutParams.FLAG_SECURE
-        );
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

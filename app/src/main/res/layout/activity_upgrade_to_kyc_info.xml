@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivityVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.upgradetokyc.UpgradeToKycInfoActivity">
+
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/toolbar" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/kyc_upgrade_cv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="25dp"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/dp20"
+                    app:cardElevation="@dimen/dp8"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/aadhar_iv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:srcCompat="@drawable/aadhaar_logo"
+                            android:layout_marginTop="@dimen/dp_40"/>
+
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+                            android:id="@+id/info_one_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp"
+                            android:gravity="start"
+                            android:drawablePadding="@dimen/dp16"
+                            android:drawableStart="@drawable/ic_check_green_tick"
+                            android:textColor="@color/text_color_dark"
+                            android:text="@string/increased_monthly_limit_1_lakh"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/aadhar_iv"
+                            android:layout_marginTop="40dp"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/info_two_tv"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:drawableStart="@drawable/ic_check_green_tick"
+                            android:drawablePadding="@dimen/dp16"
+                            android:gravity="start"
+                            android:text="@string/atm_withdrawals_enabled"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/text_color_dark"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toStartOf="@+id/info_one_tv"
+                            app:layout_constraintTop_toBottomOf="@+id/info_one_tv" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/info_three_tv"
+                            style="@style/TextviewRegular"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="32dp"
+                            android:drawableStart="@drawable/ic_check_green_tick"
+                            android:drawablePadding="@dimen/dp16"
+                            android:gravity="start"
+                            android:text="@string/send_money_to_fyp_users"
+                            android:textAlignment="viewStart"
+                            android:textColor="@color/text_color_dark"
+                            android:textSize="14sp"
+                            app:layout_constraintStart_toStartOf="@+id/info_two_tv"
+                            app:layout_constraintTop_toBottomOf="@+id/info_two_tv" />
+
+                        <Button
+                            android:id="@+id/upgrade_kyc_ib"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="25dp"
+                            android:layout_marginTop="@dimen/dp30"
+                            android:backgroundTint="@color/green_selected"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:paddingVertical="16dp"
+                            android:onClick="@{()->viewModel.upgradeToKyc()}"
+                            android:paddingHorizontal="@dimen/dp_40"
+                            android:text="@string/upgrade_your_kyc"
+                            app:layout_constraintTop_toBottomOf="@+id/info_three_tv"/>
+
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/upgrade_kyc_info_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/kyc_upgrade_cv"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:srcCompat="@drawable/upgrade_kyc_graphics"
+                    android:layout_marginTop="@dimen/dp_40"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

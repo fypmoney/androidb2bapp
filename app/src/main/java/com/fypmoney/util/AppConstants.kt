@@ -291,4 +291,6 @@ object AppConstants {
     const val USER_TYPE = "UserType"
     const val KYC_type = "kyctype"
     const val POSTKYCKEY = "postkyc"
+    const val SEMI = "SEMI"
+    const val MINIMUM = "MINIMUM"
 }

@@ -70,4 +70,5 @@
         android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsJackpotFragment"
         android:label="@string/jackpot"
         tools:layout="@layout/fragment_jackpot_overview" />
+
 </navigation>

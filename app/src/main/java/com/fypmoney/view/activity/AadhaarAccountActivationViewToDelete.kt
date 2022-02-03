@@ -60,11 +60,11 @@ class AadhaarAccountActivationView :
             toolbar = toolbar,
             isBackArrowVisible = true
         )
-        helpValue.setOnClickListener {
+        /*helpValue.setOnClickListener {
             //callFreshChat(applicationContext)
             callLogOutBottomSheet()
         }
-        //Test Commit
+        //Test Commit*/
 
 
         val ss = SpannableString(getString(R.string.account_verification_sub_title))
@@ -148,6 +148,11 @@ class AadhaarAccountActivationView :
         mViewModel.onLogoutSuccess.observe(this) {
             intentToActivity(LoginView::class.java, isFinishAll = true)
         }
+        mViewModel.onUpgradeAccountClick.observe(this,{
+            if(it){
+                startActivity(Intent(this@AadhaarAccountActivationView,AadhaarVerificationView::class.java))
+            }
+        })
 
 
     }

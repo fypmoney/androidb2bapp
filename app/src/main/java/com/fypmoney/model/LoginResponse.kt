@@ -1,6 +1,7 @@
 package com.fypmoney.model
 
 import androidx.annotation.Keep
+import com.fypmoney.util.AppConstants
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
@@ -93,7 +94,8 @@ data class CustomerInfoResponseDetails(
     @SerializedName("inviteResponseMessage") val inviteResponseMessage: String? = null,
 
     @SerializedName("isOldUser") val isOldUser: String? = null,
-    @SerializedName("idAccessToken") val idAccessToken: Any? = null
+    @SerializedName("idAccessToken") val idAccessToken: Any? = null,
+    @SerializedName("kycType") val kycType: String? = AppConstants.MINIMUM
 ) : Serializable
 
 
@@ -112,7 +114,8 @@ data class UserProfile(
 data class BankProfile(
     @SerializedName("isAccountActive") var isAccountActive: String?,
     @SerializedName("isVirtualCardIssued") var isVirtualCardIssued: String?,
-    @SerializedName("isPhysicardIssued") var isPhysicardIssued: String?
+    @SerializedName("isPhysicardIssued") var isPhysicardIssued: String?,
+    @SerializedName("kycType") var kycType: String? = "MINIMUM"
 ) : Serializable
 @Keep
 data class UserInterestModel(

@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
@@ -19,12 +20,14 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.databinding.BottomSheetAddUpiBinding
+import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.SavedUpiAdapter
-import com.fypmoney.view.adapter.TopTenUsersAdapter
+import com.fypmoney.view.adapter.SavedUpiUiModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.payu.india.Payu.PayuConstants
@@ -40,6 +43,7 @@ class AddUpiBottomSheet(
     private var onBottomSheetClickListener: OnAddUpiClickListener
 ) : BottomSheetDialogFragment(), WebApiCaller.OnWebApiResponse {
     private lateinit var binding: BottomSheetAddUpiBinding
+    val savedUpiUiModelList = mutableListOf<SavedUpiUiModel>()
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
@@ -64,17 +68,22 @@ class AddUpiBottomSheet(
     }
 
     private fun setUpRecyclerView(binding: BottomSheetAddUpiBinding) {
-        val topTenUsersAdapter = SavedUpiAdapter(
-            viewLifecycleOwner, onRecentUserClick = {
-                binding.upiId.setText(it)
-            }
-        )
-
 
         with(binding.savedRv) {
-            adapter = topTenUsersAdapter
+            adapter = SavedUpiAdapter(
+                viewLifecycleOwner, onUpiClicked = {
+                    binding.upiId.setText(it.upiId)
+                    savedUpiUiModelList.forEach { it1->
+                        it1.isSelected = it1.upiId==it.upiId
+                    }
+                    (binding.savedRv.adapter as SavedUpiAdapter).run {
+                        submitList(savedUpiUiModelList)
+                    }
+                }
+            )
+            addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
             layoutManager =
-                LinearLayoutManager(binding.savedRv.context, RecyclerView.HORIZONTAL, false)
+                LinearLayoutManager(binding.savedRv.context, RecyclerView.VERTICAL, false)
         }
     }
 
@@ -132,10 +141,21 @@ class AddUpiBottomSheet(
         }
         val savedupiList =
             SharedPrefUtils.getArrayList(binding.savedRv.context, SharedPrefUtils.SF_UPI_LIST)
-
-        (binding.savedRv.adapter as SavedUpiAdapter).run {
-            submitList(savedupiList)
+        savedupiList?.forEach {
+            val upiMOdel = SavedUpiUiModel(it)
+            savedUpiUiModelList.add(upiMOdel)
         }
+        if(savedupiList.isNullOrEmpty()){
+            binding.prefferedUpiTv.toGone()
+            binding.upiListCl.toGone()
+        }else{
+            binding.prefferedUpiTv.toVisible()
+            binding.upiListCl.toVisible()
+            (binding.savedRv.adapter as SavedUpiAdapter).run {
+                submitList(savedUpiUiModelList)
+            }
+        }
+
     }
 
 
