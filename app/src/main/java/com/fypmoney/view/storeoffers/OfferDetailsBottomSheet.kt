@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
 import com.fypmoney.databinding.BottomSheetOfferDetailBinding
+import com.fypmoney.extension.toGone
 import com.fypmoney.util.Utility
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.adapter.offerpointsAdapter
@@ -69,6 +70,8 @@ class OfferDetailsBottomSheet(
                 intent.putExtra(ARG_WEB_URL_TO_OPEN, it)
                 startActivity(intent)
             }
+        }?:run{
+            view.shop_now_btn.toGone()
         }
 
 

@@ -1131,4 +1131,5 @@ Coming really soon!
     <string name="kyc_verified">KYC Verified</string>
     <string name="to_send_money_to_other_fyp_users_upgrade_to_aadhar_kyc">To send money to other Fyp users, upgrade to Aadhar KYC”</string>
     <string name="increase_limit">Increase Limit</string>
+    <string name="preferred_upi_id">Preferred UPI ID</string>
 </resources>
