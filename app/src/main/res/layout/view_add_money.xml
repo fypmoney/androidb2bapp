@@ -280,16 +280,20 @@
                     </LinearLayout>
 
 
-                    <Button
+                    <com.fypmoney.view.customview.PrimaryButton
                         android:id="@+id/btnSendOtp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/linear"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="40dp"
-                        android:enabled="@{viewModel.enableButton}"
+                        app:enabled="@{viewModel.enableButton}"
                         android:onClick="@{()->viewModel.onAddClicked()}"
-                        android:text="@string/add_money"
+                        app:text="@string/add_money"
+                        app:enabled_bg="@color/text_color_dark"
+                        app:disabled_bg="@color/cb_grey"
+                        app:disabled_text ="@color/grey_heading"
+                        app:enabled_text ="@color/white"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="18sp"
