@@ -27,10 +27,11 @@
             android:id="@+id/video"
             android:layout_marginStart="24dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="@dimen/_24sdp"
             android:src="@drawable/how_to_add_money"
             app:layout_constraintBottom_toBottomOf="parent"
 
-            android:layout_height="160dp" />
+            android:layout_height="100dp" />
 
         <ScrollView
             android:id="@+id/scroll_view"
@@ -49,6 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_marginStart="@dimen/screenMarginLeft"
                     android:layout_marginEnd="@dimen/screenMarginRight"
+                    app:cardElevation="8dp"
                     app:cardCornerRadius="18dp"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:id="@+id/card_balance"
@@ -96,7 +98,7 @@
                             app:layout_constraintBottom_toBottomOf="@+id/amount"
                             android:singleLine="true"
                             android:text="@{@string/fetching_balance}"
-                            android:visibility="@{viewModel.isFetchBalanceVisible?View.VISIBLE:View.GONE,default=visible}"
+                            android:visibility="@{viewModel.isFetchingBalanceTextVisible?View.VISIBLE:View.GONE,default=visible}"
                             app:layout_constraintStart_toStartOf="@+id/balance_text"
                             app:layout_constraintTop_toBottomOf="@+id/amount" />
 
@@ -135,14 +137,15 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/add_money_text"
                         style="@style/TextviewRegular"
+                        android:layout_width="match_parent"
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="72dp"
-
-
+                        android:layout_marginEnd="24dp"
                         android:layout_toLeftOf="@+id/increase_limit"
+                        android:gravity="start"
+
                         android:text="@{viewModel.remainingLoadLimit}"
-                        android:textAlignment="center"
                         android:textColor="@color/text_color_light" />
 
                     <TextView
@@ -154,23 +157,39 @@
                         android:layout_alignTop="@+id/add_money_text"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="24dp"
-                        android:paddingStart="40dp"
                         android:onClick="@{()->viewModel.onIncreaseLimitClicked()}"
+                        android:paddingStart="20dp"
                         android:text="Increase Limit"
                         android:textColor="@color/cb_blue_button"
                         android:textSize="14sp"
                         android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/addmoeneytitle"
+                        style="@style/TextviewRegular"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/add_money_text"
+
+                        android:layout_marginTop="@dimen/_41sdp"
+                        android:layout_marginEnd="24dp"
+                        android:paddingStart="24dp"
+                        android:text="Add money to your Account"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="14sp" />
 
                     <EditText
                         android:id="@+id/add_money_editext"
                         style="@style/EditTextStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/add_money_text"
+                        android:layout_below="@+id/addmoeneytitle"
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
 
-                        android:layout_marginTop="@dimen/_42sdp"
+
                         android:layout_marginEnd="24dp"
 
                         android:background="@drawable/strokebutton_gray_middle_12"
