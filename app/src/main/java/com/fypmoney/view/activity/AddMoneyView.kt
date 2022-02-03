@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -18,7 +19,9 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.roundOfAmountToCeli
+import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.view.fragment.MaxLoadAmountReachedWarningDialogFragment
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
 import com.fypmoney.viewmodel.AddMoneyViewModel
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -60,12 +63,25 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
         if (!amount.isNullOrEmpty()) {
             add_money_editext.setText(roundOfAmountToCeli(amount))
         }
-        if(checkUpgradeKycStatus()){
-            increse_limit_tv.toGone()
-        }else{
-            increse_limit_tv.toVisible()
+        if (checkUpgradeKycStatus()) {
+            increase_limit.toGone()
+        } else {
+            increase_limit.toVisible()
 
         }
+        val videoLink = SharedPrefUtils.getString(
+            this,
+            SharedPrefUtils.SF_ADD_MONEY_VIDEO
+        )
+        video.setOnClickListener(View.OnClickListener {
+            if (!videoLink.isNullOrEmpty()) {
+                val intent = Intent(this, VideoActivity2::class.java)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, videoLink)
+
+                startActivity(intent)
+            }
+
+        })
     }
 
     /**

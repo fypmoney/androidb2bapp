@@ -20,6 +20,7 @@ import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.SettingsRequest
 import com.fypmoney.model.SettingsResponse
 import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
+import com.fypmoney.util.AppConstants.ADD_MONEY_VIDEO
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
 import com.fypmoney.util.AppConstants.ERROR_MESSAGE_HOME
 import com.fypmoney.util.AppConstants.IS_NEW_FEED_AVAILABLE
@@ -206,6 +207,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                         value = responseData.customerInfoResponseDetails?.mobile
                     )
 
+
                     SharedPrefUtils.putString(
                         getApplication(),
                         SharedPrefUtils.SF_KEY_PROFILE_IMAGE,
@@ -328,15 +330,20 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                 )
 
                             }
+                            ADD_MONEY_VIDEO -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_ADD_MONEY_VIDEO,
+                                    it.value
+                                )
+                            }
                             ERROR_MESSAGE_HOME -> {
                                 PockketApplication.homeScreenErrorMsg = it.value
                             }
                             IS_NEW_FEED_AVAILABLE -> {
                                 PockketApplication.isNewFeedAvailableData = it
                             }
-                            IS_NEW_FEED_AVAILABLE -> {
-                                PockketApplication.isNewFeedAvailableData = it
-                            }
+
 
                         }
                     }

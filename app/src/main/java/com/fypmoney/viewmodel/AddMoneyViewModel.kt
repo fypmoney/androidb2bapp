@@ -27,9 +27,12 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
     var availableAmount = ObservableField(application.getString(R.string.dummy_amount))
     var amountSelected = ObservableField<String>("1000") //prefilled amount
     var isFetchBalanceVisible = ObservableField(true)
+    var isFetchingBalanceTextVisible = ObservableField(true)
+    var apiFail = ObservableField(true)
     var remainingLoadLimit = ObservableField<String>()
     var remainingLoadLimitAmount = ObservableField<String>()
     var increseLimitClicked = MutableLiveData(false)
+    var enableButton = MutableLiveData(false)
 
 
 
@@ -66,14 +69,16 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
     fun onIncreaseLimitClicked(){
         increseLimitClicked.value = true
     }
-        fun onAmountSelected(amount: Int) {
-            amountSelected.set(amount.toString())
-            setEdittextLength.value=true
-        }
+
+    fun onAmountSelected(amount: Int) {
+        amountSelected.set(amount.toString())
+        setEdittextLength.value = true
+    }
+
     /*
        * This method is used to get the balance of wallet
        * */
-    private fun callGetWalletBalanceApi() {
+    fun callGetWalletBalanceApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_WALLET_BALANCE,
@@ -88,8 +93,11 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_GET_WALLET_BALANCE -> {
+
                 if (responseData is GetWalletBalanceResponse) {
+                    enableButton.value = true
                     isFetchBalanceVisible.set(false)
+                    isFetchingBalanceTextVisible.set(false)
                     availableAmount.set(Utility.getFormatedAmount(Utility.convertToRs(responseData.getWalletBalanceResponseDetails.accountBalance)!!))
                     remainingLoadLimitAmount.set(responseData.getWalletBalanceResponseDetails.remainingLoadLimit)
                     remainingLoadLimit.set(
@@ -105,6 +113,14 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        when (purpose) {
+            ApiConstant.API_GET_WALLET_BALANCE -> {
+                isFetchBalanceVisible.set(true)
+                isFetchingBalanceTextVisible.set(false)
+                apiFail.set(false)
+            }
+        }
+
     }
 
     }
