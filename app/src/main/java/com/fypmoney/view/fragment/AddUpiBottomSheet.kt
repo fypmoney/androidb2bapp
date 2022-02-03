@@ -215,58 +215,63 @@ class AddUpiBottomSheet(
     }
 
     override fun onSuccess(purpose: String, responseData: Any) {
+        if(this@AddUpiBottomSheet.isAdded){
+            when (purpose) {
+                ApiConstant.API_GET_HASH -> {
+                    if (responseData is GetHashResponse) {
+                        callPayUApi(
+                            upiId.text.toString(),
+                            responseData.getHashResponseDetails.hashData?.get(0)?.hashValue!!
+                        )
 
-        when (purpose) {
-            ApiConstant.API_GET_HASH -> {
-                if (responseData is GetHashResponse) {
-                    callPayUApi(
-                        upiId.text.toString(),
-                        responseData.getHashResponseDetails.hashData?.get(0)?.hashValue!!
-                    )
+                    }
 
                 }
-
-            }
-            ApiConstant.PAYU_PRODUCTION_URL -> {
-                if (responseData is ValidateVpaResponse) {
-                    binding.progress.visibility = View.GONE
+                ApiConstant.PAYU_PRODUCTION_URL -> {
+                    if (responseData is ValidateVpaResponse) {
+                        binding.progress.visibility = View.GONE
 
 
-                    when (responseData.isVPAValid) {
-                        1 -> {
-                            name.text = responseData.payerAccountName
-                            dismiss()
-                            onBottomSheetClickListener.onAddUpiClickListener(
-                                upiId.text.toString(), saveCardCheckbox.isChecked
-                            )
+                        when (responseData.isVPAValid) {
+                            1 -> {
+                                name.text = responseData.payerAccountName
+                                dismiss()
+                                onBottomSheetClickListener.onAddUpiClickListener(
+                                    upiId.text.toString(), saveCardCheckbox.isChecked
+                                )
 
 
+                            }
+
+
+                            else -> {
+                                name.setTextColor(
+                                    ContextCompat.getColor(
+                                        requireContext(),
+                                        R.color.text_color_red
+                                    )
+                                )
+                                name.text =
+                                    PockketApplication.instance.getString(R.string.invalid_upi_error)
+                            }
                         }
 
 
-                    else -> {
-                        name.setTextColor(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                R.color.text_color_red
-                            )
-                        )
-                        name.text =
-                            PockketApplication.instance.getString(R.string.invalid_upi_error)
                     }
                 }
+            }
 
-
-                }
         }
-    }
 
 
 }
 
 override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
-    Utility.showToast(errorResponseInfo.msg)
-    binding.progress.visibility = View.GONE
+    if(this@AddUpiBottomSheet.isAdded) {
+        Utility.showToast(errorResponseInfo.msg)
+        binding.progress.visibility = View.GONE
+    }
+
 
 }
 

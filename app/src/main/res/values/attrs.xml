@@ -35,6 +35,8 @@
         <attr name="text" format="string" />
         <attr name="enabled_bg" format="color" />
         <attr name="disabled_bg" format="color" />
+        <attr name="enabled_text" format="color" />
+        <attr name="disabled_text" format="color" />
     </declare-styleable>
     <declare-styleable name="BlurLayout">
         <attr name="downscaleFactor" format="float" />

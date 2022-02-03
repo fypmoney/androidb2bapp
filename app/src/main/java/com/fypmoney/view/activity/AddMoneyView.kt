@@ -1,12 +1,10 @@
 package com.fypmoney.view.activity
 
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -21,8 +19,8 @@ import com.fypmoney.util.Utility
 import com.fypmoney.util.roundOfAmountToCeli
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.view.fragment.MaxLoadAmountReachedWarningDialogFragment
-import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
+import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.viewmodel.AddMoneyViewModel
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.bottom_sheet_redeem_coins.view.*
@@ -98,9 +96,15 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
                         s.clear()
                     } else {
                         if (s.toString().isNotEmpty()) {
-                            btnSendOtp.backgroundTintList =
+                            /*btnSendOtp.backgroundTintList =
                                 ColorStateList.valueOf(resources.getColor(R.color.text_color_dark))
-
+                            btnSendOtp.setTextColor(
+                                ContextCompat.getColor(
+                                    this@AddMoneyView,
+                                    R.color.white
+                                )
+                            )*/
+                            btnSendOtp.isEnabled = true
                             if (!mViewModel.remainingLoadLimitAmount.get()
                                     .isNullOrEmpty() && s.toString()
                                     .toInt() > mViewModel.remainingLoadLimitAmount.get()!!.toInt() / 100
@@ -113,7 +117,14 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
                             }
 
                         } else {
-                            btnSendOtp.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.cb_grey))
+                            /*btnSendOtp.backgroundTintList = ColorStateList.valueOf(resources.getColor(R.color.cb_grey))
+                            btnSendOtp.setTextColor(
+                                ContextCompat.getColor(
+                                    this@AddMoneyView,
+                                    R.color.grey_heading
+                                )
+                            )*/
+                            btnSendOtp.isEnabled = false
 
 
                         }
