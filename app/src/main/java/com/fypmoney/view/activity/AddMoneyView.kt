@@ -63,18 +63,24 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
         if (!amount.isNullOrEmpty()) {
             add_money_editext.setText(roundOfAmountToCeli(amount))
         }
-        if(checkUpgradeKycStatus()){
-            increse_limit_tv.toGone()
-        }else{
-            increse_limit_tv.toVisible()
+        if (checkUpgradeKycStatus()) {
+            increase_limit.toGone()
+        } else {
+            increase_limit.toVisible()
 
         }
-
+        val videoLink = SharedPrefUtils.getString(
+            this,
+            SharedPrefUtils.SF_ADD_MONEY_VIDEO
+        )
         video.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this, VideoActivity2::class.java)
-//            intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
+            if (!videoLink.isNullOrEmpty()) {
+                val intent = Intent(this, VideoActivity2::class.java)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, videoLink)
 
-            startActivity(intent)
+                startActivity(intent)
+            }
+
         })
     }
 

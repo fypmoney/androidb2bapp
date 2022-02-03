@@ -25,7 +25,9 @@
             android:layout_width="match_parent"
             android:elevation="2dp"
             android:id="@+id/video"
-            android:src="@drawable/add_mony_video"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:src="@drawable/how_to_add_money"
             app:layout_constraintBottom_toBottomOf="parent"
 
             android:layout_height="160dp" />
@@ -48,12 +50,29 @@
                     android:layout_marginStart="@dimen/screenMarginLeft"
                     android:layout_marginEnd="@dimen/screenMarginRight"
                     app:cardCornerRadius="18dp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:id="@+id/card_balance"
                     android:layout_height="wrap_content">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/reload_card_details_btn"
+                            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:onClick="@{()->viewModel.callGetWalletBalanceApi()}"
+                            android:text="@string/reload"
+                            android:visibility="@{viewModel.apiFail ?View.GONE:View.VISIBLE,default=gone}"
+
+                            android:textColor="@color/text_color_light"
+                            app:icon="@drawable/ic_baseline_refresh_24"
+                            app:iconTint="@color/text_color_light"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/balance_text" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/balance_text"
@@ -65,7 +84,7 @@
 
                             android:text="@string/balance_text"
                             android:textColor="@color/text_color_dark"
-                            android:textSize="15dp" />
+                            android:textSize="18sp" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/amountFetching"
@@ -74,6 +93,7 @@
                             android:layout_centerHorizontal="true"
                             android:ellipsize="end"
                             app:layout_constraintTop_toTopOf="@+id/amount"
+                            app:layout_constraintBottom_toBottomOf="@+id/amount"
                             android:singleLine="true"
                             android:text="@{@string/fetching_balance}"
                             android:visibility="@{viewModel.isFetchBalanceVisible?View.VISIBLE:View.GONE,default=visible}"
@@ -84,12 +104,13 @@
                             android:id="@+id/amount"
                             style="@style/TextviewBold"
                             android:layout_below="@+id/balance_text"
+                            android:layout_marginTop="@dimen/_4sdp"
                             android:layout_centerHorizontal="true"
                             android:ellipsize="end"
-
+                            android:visibility="@{viewModel.isFetchBalanceVisible?View.INVISIBLE:View.VISIBLE,default=invisible}"
                             android:singleLine="true"
                             android:text="@{@string/Rs+viewModel.availableAmount}"
-                            android:textSize="22dp"
+                            android:textSize="28sp"
                             app:layout_constraintStart_toStartOf="@+id/balance_text"
                             app:layout_constraintTop_toBottomOf="@+id/balance_text" />
 
@@ -108,34 +129,37 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/_36sdp"
+                    android:layout_marginTop="@dimen/_44sdp"
                     android:background="@color/white">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/add_money_text"
                         style="@style/TextviewRegular"
-
                         android:layout_alignParentStart="true"
-
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="72dp"
+
+
                         android:layout_toLeftOf="@+id/increase_limit"
-                        android:paddingEnd="20dp"
                         android:text="@{viewModel.remainingLoadLimit}"
                         android:textAlignment="center"
-                        android:textColor="@color/text_color_dark" />
+                        android:textColor="@color/text_color_light" />
 
                     <TextView
                         android:id="@+id/increase_limit"
                         style="@style/TextviewBold"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@+id/add_money_text"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="24dp"
+                        android:paddingStart="40dp"
+                        android:onClick="@{()->viewModel.onIncreaseLimitClicked()}"
                         android:text="Increase Limit"
                         android:textColor="@color/cb_blue_button"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:visibility="gone" />
 
                     <EditText
                         android:id="@+id/add_money_editext"
@@ -156,7 +180,7 @@
                         android:inputType="numberSigned"
                         android:longClickable="false"
                         android:text="@={viewModel.amountSelected}"
-                        android:textColor="@color/add_money_amount_color"
+                        android:textColor="@color/text_color_dark"
                         android:textSize="32sp" />
 
                     <LinearLayout
@@ -244,6 +268,7 @@
                         android:layout_below="@+id/linear"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="40dp"
+                        android:enabled="@{viewModel.enableButton}"
                         android:onClick="@{()->viewModel.onAddClicked()}"
                         android:text="@string/add_money"
                         android:textAllCaps="false"
