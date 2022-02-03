@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.*
 import com.fyp.trackr.services.TrackrServices
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -90,6 +91,10 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
 //                    Utility.getCustomerDataFromPreference()?.postKycScreenCode = "0"
 
+                    SharedPrefUtils.putString(
+                        PockketApplication.instance,
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.kycType)
+
                     trackr {
                         it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)
                         it.name = TrackrEvent.LOGINSUCCESS
@@ -142,6 +147,8 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                         map[USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
                         map[USER_ATTRIBUTE_USER_GENDER] = it.userProfile?.gender.toString()
                         map[CUSTOM_USER_POST_KYC_CODE] = it.postKycScreenCode.toString()
+                        map[USER_ATTRIBUTE_USER_EMAIL] = it.email.toString()
+
                         UserTrackr.push(map)
                         UserTrackr.login( it.mobile.toString())
                         it.userProfile?.dob?.let { it1 ->

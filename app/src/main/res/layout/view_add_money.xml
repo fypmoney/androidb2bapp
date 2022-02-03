@@ -16,9 +16,22 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:background="#F4F4F4"
         android:layout_height="match_parent">
 
         <include layout="@layout/toolbar" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:elevation="2dp"
+            android:id="@+id/video"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="@dimen/_24sdp"
+            android:src="@drawable/how_to_add_money"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            android:layout_height="100dp" />
 
         <ScrollView
             android:id="@+id/scroll_view"
@@ -29,178 +42,261 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_layout">
 
-
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/screenMarginLeft"
-                android:layout_marginEnd="@dimen/screenMarginRight">
+                android:layout_height="wrap_content">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/balance_text"
-                    style="@style/TextviewRegular"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="55dp"
-                    android:text="@string/balance_text"
-                    android:textColor="@color/text_color_dark"
-                    android:textSize="15dp" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/amount"
-                    style="@style/TextviewBold"
-                    android:layout_below="@+id/balance_text"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="12dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@{@string/Rs+viewModel.availableAmount}"
-                    android:textSize="42dp"
-                    android:visibility="@{viewModel.isFetchBalanceVisible?View.GONE:View.VISIBLE,default=gone}" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/amountFetching"
-                    style="@style/TextviewRegular"
-                    android:layout_below="@+id/balance_text"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="12dp"
-                    android:ellipsize="end"
-                    android:singleLine="true"
-                    android:text="@{@string/fetching_balance}"
-                    android:visibility="@{viewModel.isFetchBalanceVisible?View.VISIBLE:View.GONE,default=visible}" />
-
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/add_money"
-                    style="@style/TextviewRegular"
-                    android:layout_below="@id/amount"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="44dp"
-                    android:text="@string/add_money_to_account"
-                    android:textColor="@color/text_color_dark"
-                    android:textSize="17sp" />
-
-                <LinearLayout
-                    android:id="@id/linear"
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:weightSum="4"
-                    android:layout_marginStart="@dimen/dp8"
-                    android:layout_marginEnd="@dimen/dp8"
-                    android:layout_below="@id/add_money"
-                    android:layout_marginTop="22dp">
+                    android:layout_marginStart="@dimen/screenMarginLeft"
+                    android:layout_marginEnd="@dimen/screenMarginRight"
+                    app:cardElevation="8dp"
+                    app:cardCornerRadius="18dp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:id="@+id/card_balance"
+                    android:layout_height="wrap_content">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/reload_card_details_btn"
+                            style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:onClick="@{()->viewModel.callGetWalletBalanceApi()}"
+                            android:text="@string/reload"
+                            android:visibility="@{viewModel.apiFail ?View.GONE:View.VISIBLE,default=gone}"
+
+                            android:textColor="@color/text_color_light"
+                            app:icon="@drawable/ic_baseline_refresh_24"
+                            app:iconTint="@color/text_color_light"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/balance_text" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/balance_text"
+                            app:layout_constraintStart_toStartOf="parent"
+                            style="@style/TextviewRegular"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_margin="20dp"
+                            android:layout_centerHorizontal="true"
+
+                            android:text="@string/balance_text"
+                            android:textColor="@color/text_color_dark"
+                            android:textSize="18sp" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/amountFetching"
+                            style="@style/TextviewRegular"
+                            android:layout_below="@+id/balance_text"
+                            android:layout_centerHorizontal="true"
+                            android:ellipsize="end"
+                            app:layout_constraintTop_toTopOf="@+id/amount"
+                            app:layout_constraintBottom_toBottomOf="@+id/amount"
+                            android:singleLine="true"
+                            android:text="@{@string/fetching_balance}"
+                            android:visibility="@{viewModel.isFetchingBalanceTextVisible?View.VISIBLE:View.GONE,default=visible}"
+                            app:layout_constraintStart_toStartOf="@+id/balance_text"
+                            app:layout_constraintTop_toBottomOf="@+id/amount" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/amount"
+                            style="@style/TextviewBold"
+                            android:layout_below="@+id/balance_text"
+                            android:layout_marginTop="@dimen/_4sdp"
+                            android:layout_centerHorizontal="true"
+                            android:ellipsize="end"
+                            android:visibility="@{viewModel.isFetchBalanceVisible?View.INVISIBLE:View.VISIBLE,default=invisible}"
+                            android:singleLine="true"
+                            android:text="@{@string/Rs+viewModel.availableAmount}"
+                            android:textSize="28sp"
+                            app:layout_constraintStart_toStartOf="@+id/balance_text"
+                            app:layout_constraintTop_toBottomOf="@+id/balance_text" />
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_margin="20dp"
+                            android:src="@drawable/ic_card__new"
+                            android:layout_height="60dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_44sdp"
+                    android:background="@color/white">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/add_money_text"
                         style="@style/TextviewRegular"
-                        android:background="@drawable/curved_background29"
-                        android:gravity="center"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_weight="1"
-                        android:onClick="@{()->viewModel.onAmountSelected(50)}"
-                        android:paddingVertical="5dp"
-                        android:layout_width="0dp"
-                        android:minEms="5"
-                        android:text="@string/add_money_50"
-                        android:textColor="@color/text_color_dark" />
+                        android:layout_width="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="72dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_toLeftOf="@+id/increase_limit"
+                        android:gravity="start"
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                        android:text="@{viewModel.remainingLoadLimit}"
+                        android:textColor="@color/text_color_light" />
+
+                    <TextView
+                        android:id="@+id/increase_limit"
+                        style="@style/TextviewBold"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/add_money_text"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="24dp"
+                        android:onClick="@{()->viewModel.onIncreaseLimitClicked()}"
+                        android:paddingStart="20dp"
+                        android:text="Increase Limit"
+                        android:textColor="@color/cb_blue_button"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/addmoeneytitle"
                         style="@style/TextviewRegular"
-                        android:layout_width="0dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_weight="1"
-                        android:minEms="5"
-                        android:background="@drawable/curved_background28"
-                        android:gravity="center"
-                        android:onClick="@{()->viewModel.onAmountSelected(100)}"
-                        android:paddingVertical="5dp"
-                        android:text="@string/add_money_100"
-                         android:textColor="@color/text_color_dark" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextviewRegular"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"
-                        android:minEms="5"
-                        android:background="@drawable/curved_background27"
-                        android:gravity="center"
-                        android:onClick="@{()->viewModel.onAmountSelected(500)}"
-                        android:paddingVertical="5dp"
-                        android:text="@string/add_money_500"
-                        android:textColor="@color/text_color_dark" />
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/add_money_text"
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextviewRegular"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_width="0dp"
-                        android:minEms="5"
-                        android:layout_weight="1"
-                        android:background="@drawable/curved_background25"
-                        android:gravity="center"
-                        android:onClick="@{()->viewModel.onAmountSelected(1000)}"
-                        android:paddingVertical="5dp"
-                        android:text="@string/add_money_1000"
-                        android:textColor="@color/text_color_dark" />
+                        android:layout_marginTop="@dimen/_41sdp"
+                        android:layout_marginEnd="24dp"
+                        android:paddingStart="24dp"
+                        android:text="Add money to your Account"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="14sp" />
+
+                    <EditText
+                        android:id="@+id/add_money_editext"
+                        style="@style/EditTextStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/addmoeneytitle"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="16dp"
 
 
-                </LinearLayout>
+                        android:layout_marginEnd="24dp"
+
+                        android:background="@drawable/strokebutton_gray_middle_12"
+                        android:drawableStart="@drawable/rupee_symbol"
+                        android:drawablePadding="5dp"
+                        android:drawableTint="@color/black"
+                        android:inputType="numberSigned"
+                        android:longClickable="false"
+                        android:text="@={viewModel.amountSelected}"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="32sp" />
+
+                    <LinearLayout
+                        android:id="@id/linear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_below="@id/add_money_editext"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="22dp"
+                        android:layout_marginEnd="24dp"
+                        android:weightSum="4">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+                            android:layout_width="0dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/curved_background29"
+                            android:backgroundTint="@color/moeny_suggestion_background"
+                            android:gravity="center"
+                            android:minEms="5"
+                            android:onClick="@{()->viewModel.onAmountSelected(50)}"
+                            android:paddingVertical="5dp"
+                            android:text="@string/add_money_50"
+                            android:textColor="@color/text_color_dark" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+                            android:layout_width="0dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/curved_background28"
+                            android:backgroundTint="@color/moeny_suggestion_background"
+
+                            android:gravity="center"
+                            android:minEms="5"
+                            android:onClick="@{()->viewModel.onAmountSelected(100)}"
+                            android:paddingVertical="5dp"
+                            android:text="@string/add_money_100"
+                            android:textColor="@color/text_color_dark" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+                            android:layout_width="0dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/curved_background27"
+                            android:backgroundTint="@color/moeny_suggestion_background"
+
+                            android:gravity="center"
+                            android:minEms="5"
+                            android:onClick="@{()->viewModel.onAmountSelected(500)}"
+                            android:paddingVertical="5dp"
+                            android:text="@string/add_money_500"
+                            android:textColor="@color/text_color_dark" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            style="@style/TextviewRegular"
+                            android:layout_width="0dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/curved_background25"
+
+                            android:backgroundTint="@color/moeny_suggestion_background"
+                            android:gravity="center"
+                            android:minEms="5"
+                            android:onClick="@{()->viewModel.onAmountSelected(1000)}"
+                            android:paddingVertical="5dp"
+                            android:text="@string/add_money_1000"
+                            android:textColor="@color/text_color_dark" />
 
 
-                <EditText
-                    android:id="@+id/add_money_editext"
-                    style="@style/EditTextStyle"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/linear"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="72dp"
-                    android:background="@null"
-                    android:drawableStart="@drawable/rupee_symbol"
-                    android:drawablePadding="5dp"
-                    android:inputType="numberSigned"
-                    android:longClickable="false"
-                    android:text="@={viewModel.amountSelected}"
-                    android:textColor="@color/add_money_amount_color"
-                    android:textSize="32sp" />
-
-                <View
-                    android:id="@+id/view1"
-                    android:layout_width="150dp"
-                    android:layout_height="2dp"
-                    android:layout_below="@+id/add_money_editext"
-                    android:layout_centerHorizontal="true"
-                    android:background="@color/dividerColor" />
+                    </LinearLayout>
 
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/add_money_text"
-                    style="@style/TextviewRegular"
-                    android:layout_below="@+id/view1"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="35dp"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:text="@{viewModel.remainingLoadLimit}"
-                    android:textAlignment="center"
-                    android:textColor="@color/text_color_dark" />
+                    <com.fypmoney.view.customview.PrimaryButton
+                        android:id="@+id/btnSendOtp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/linear"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="40dp"
+                        android:enabled="@{viewModel.enableButton}"
+                        android:onClick="@{()->viewModel.onAddClicked()}"
+                        android:text="@string/add_money"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:backgroundTint="@color/text_color_dark" />
 
-                <Button
-                    android:id="@+id/btnSendOtp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/add_money_text"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
-                    android:onClick="@{()->viewModel.onAddClicked()}"
-                    android:text="@string/add_btn_text"
-                    android:textAllCaps="false"
-                    android:textColor="@color/text_color_little_dark"
-                    android:textSize="18sp"
-                    app:backgroundTint="@color/cb_grey" />
 
+                </RelativeLayout>
 
             </RelativeLayout>
         </ScrollView>

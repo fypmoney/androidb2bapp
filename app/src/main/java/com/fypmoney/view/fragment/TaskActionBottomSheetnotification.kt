@@ -9,10 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.databinding.DataBindingUtil
 import androidx.databinding.ObservableField
 import com.fypmoney.R
-import com.fypmoney.databinding.BottomSheetResponseTaskBinding
 import com.fypmoney.model.NotificationModel
 import com.fypmoney.model.NotificationTaskObjectModel
 import com.fypmoney.view.activity.HomeView

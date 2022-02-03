@@ -88,6 +88,7 @@
         <activity
             android:name=".view.activity.AddMoneyView"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.ordercard.trackorder.TrackOrderView"
@@ -156,6 +157,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.UserProfileView"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.NotificationView"
@@ -281,12 +283,12 @@
         <activity
             android:name=".view.home.main.homescreen.view.HomeActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.moe.pushlibrary.activities.MoEActivity"
             android:label="HomeView"
-            android:parentActivityName=".view.activity.HomeView" />
+            android:parentActivityName=".view.home.main.homescreen.view.HomeActivity" />
         <activity android:name=".view.home.main.explore.ViewDetails.ExploreInAppWebview" />
 
         <activity
@@ -377,6 +379,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

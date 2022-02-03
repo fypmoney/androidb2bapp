@@ -3,7 +3,6 @@ package com.fypmoney.view.activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -47,7 +46,7 @@ class AadhaarVerificationView :
             toolbar = toolbar,
             isBackArrowVisible = true
         )
-        helpValue.visibility = View.INVISIBLE
+        //helpValue.visibility = View.INVISIBLE
         setObserver()
 
         et_first_name.addTextChangedListener(object : SeparatorTextWatcher(' ', 4) {
@@ -98,6 +97,9 @@ class AadhaarVerificationView :
     private fun setObserver() {
         mViewModel.onKycInitSuccess.observe(this) {
             goToEnterOtpScreen(token = it.token)
+        }
+        mViewModel.kycUpgraded.observe(this) {
+            finishAffinity()
         }
         mViewModel.clickHere.observe(this) {
             if(it){

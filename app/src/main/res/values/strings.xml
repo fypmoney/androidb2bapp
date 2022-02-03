@@ -9,6 +9,7 @@
         <item>@drawable/ic_spouse</item>
         <item>@drawable/ic_kid</item>
         <item>@drawable/ic_grand_parents</item>
+        <item>@drawable/ic_grand_parents</item>
         <item>@drawable/ic_grand_child</item>
         <item>@drawable/ic_other</item>
     </integer-array>
@@ -359,7 +360,7 @@
 
     <!-- Referral code
     -->
-    <string name="referral_code_title">Do you have \n A referral code?</string>
+    <string name="referral_code_title">Do you have a referral/promo code?</string>
     <string name="code_text">Code</string>
     <string name="referral_code_empty_error">Please enter Referral Code</string>
     <string name="referral_code_hint">Your referral code</string>
@@ -1121,4 +1122,15 @@ Coming really soon!
     <string name="buffering">Buffering…</string>
     <string name="paused">Paused</string>
     <string name="ended">Ended</string>
+
+    <string name="increased_monthly_limit_1_lakh">Increased Monthly Limit: 1 Lakh</string>
+    <string name="atm_withdrawals_enabled">ATM Withdrawals Enabled</string>
+    <string name="send_money_to_fyp_users">Send Money to Fyp Users</string>
+    <string name="upgrade_your_kyc">Upgrade Your KYC</string>
+    <string name="upgrade_aadhar_kyc">Upgrade to Aadhar KYC</string>
+    <string name="kyc_verified">KYC Verified</string>
+    <string name="to_send_money_to_other_fyp_users_upgrade_to_aadhar_kyc">To send money to other Fyp users, upgrade to Aadhar KYC”</string>
+    <string name="increase_limit">Increase Limit</string>
+    <string name="preferred_upi_id">Preferred UPI ID</string>
+    <string name="fyp_card_details">Fyp Card Details</string>
 </resources>

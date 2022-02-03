@@ -25,6 +25,7 @@ class SharedPrefUtils {
         const val SF_KEY_USER_ID = "user_id"
         const val SF_KEY_USER_MOBILE = "user_mobile"
         const val SF_KEY_USER_INTEREST = "user_interest"
+        const val SF_UPI_LIST = "saved_upi_list"
         const val SF_KEY_USER_PROFILE_INFO = "user_profile_info"
         const val SF_KEY_USER_FIRST_NAME = "first name"
         const val SF_KEY_USER_LAST_NAME = "last name"
@@ -42,6 +43,7 @@ class SharedPrefUtils {
         const val SF_KEY_REFER_LINE2 = "refer_line_2"
         const val SF_KEY_REFERAL_GLOBAL_MSG = "refer_global_msg"
         const val SF_KEY_REFEREE_CASHBACK = "refer_cashback_amount"
+        const val SF_ADD_MONEY_VIDEO = "add_money_video"
         const val SF_KEY_ERROR_MESSAGE_HOME = "error_msg_home"
         const val SF_KEY_IS_NEW_FEED_AVAILABLE = "is_new_feed_available"
         const val SF_KEY_NAME_ON_CARD = "name_on_card"
@@ -55,6 +57,7 @@ class SharedPrefUtils {
         const val SF_IS_USER_LANDED_ON_HOME_SCREEN_TIME = "is_user_landed_on_home_screen_time"
         const val SF_REFERRAL_CODE_FROM_INVITE_LINK = "referral_code_from_invite_link"
         const val SF_IS_INSTALLED_APPS_SYNCED = "is_installed_apps_is_syncd"
+        const val SF_KYC_TYPE = "kyc_type"
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(context)

@@ -4,9 +4,7 @@ import android.app.Application
 import android.text.TextUtils
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -16,7 +14,9 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.*
+import com.fypmoney.model.KycInitRequest
+import com.fypmoney.model.KycInitResponse
+import com.fypmoney.model.KycInitResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
@@ -27,6 +27,7 @@ import com.fypmoney.util.Utility
 class AadhaarVerificationViewModel(application: Application) : BaseViewModel(application) {
     var aadhaarNumber = MutableLiveData<String>()
     var clickHere = MutableLiveData<Boolean>()
+    var kycUpgraded = MutableLiveData<Boolean>()
     var onKycInitSuccess = MutableLiveData<KycInitResponseDetails>()
     var onVerificationFailed = MutableLiveData<String>()
 
@@ -63,8 +64,8 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
     private fun callKycInitApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_KYC_INIT,
-                NetworkUtil.endURL(ApiConstant.API_KYC_INIT),
+                ApiConstant.API_UPGRADE_KYC_ACCOUNT,
+                NetworkUtil.endURL(ApiConstant.API_UPGRADE_KYC_ACCOUNT),
                 ApiUrl.PUT,
                 KycInitRequest(
                     kycMode = AppConstants.KYC_MODE,
@@ -80,17 +81,24 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.API_KYC_INIT -> {
+            ApiConstant.API_UPGRADE_KYC_ACCOUNT -> {
                 if (responseData is KycInitResponse) {
                     SharedPrefUtils.putString(
                         getApplication(),
                         SharedPrefUtils.SF_KEY_AADHAAR_NUMBER,
                         responseData.kycInitResponseDetails.documentIdentifier
                     )
-                    if(responseData.kycInitResponseDetails.showAdharOtpVerificationScreen==AppConstants.YES)
+                    SharedPrefUtils.putString(PockketApplication.instance,
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.kycInitResponseDetails.kycType)
+
+                    if(responseData.kycInitResponseDetails.showAdharOtpVerificationScreen==AppConstants.YES){
                         onKycInitSuccess.value=responseData.kycInitResponseDetails
 
-                    //onActivateAccountSuccess.value = responseData.kycActivateAccountResponseDetails
+                    }else if(responseData.kycInitResponseDetails.showAdharOtpVerificationScreen==AppConstants.NO
+                        && responseData.kycInitResponseDetails.kycType==AppConstants.SEMI){
+                        kycUpgraded.value  = true
+                    }
+
 
                 }
             }

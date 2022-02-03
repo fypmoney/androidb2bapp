@@ -5,6 +5,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -17,6 +18,7 @@ import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.ProfileImageUploadResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_KYC_TYPE
 import com.fypmoney.util.Utility
 import okhttp3.MultipartBody
 
@@ -28,7 +30,8 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
     var lastName = ObservableField<String>()
     var dob = ObservableField<String>()
     var phone = ObservableField<String>()
-    var kycType = ObservableField<String>("MINIMUM")
+    var kycType = ObservableField<String>("Minimum")
+    var upgradeKyc = ObservableField(true)
     var verified = ObservableField(false)
 
     var buildVersion = ObservableField<String>()
@@ -36,6 +39,7 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
     var onLogoutSuccess = MutableLiveData<Boolean>()
     var onProfileSuccess = MutableLiveData<Boolean>()
     var onProfileClicked = MutableLiveData<Boolean>()
+    var onUpgradeKycClicked = MutableLiveData<Boolean>()
 
     /*
    *This method is used to call log out Api
@@ -74,6 +78,9 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
     fun onProfileClicked() {
         onProfileClicked.value = true
     }
+    fun onUpgradeKycClicked() {
+        onUpgradeKycClicked.value = true
+    }
 
 
     override fun onSuccess(purpose: String, responseData: Any) {
@@ -102,6 +109,9 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
                     // Save the user id in shared preference
 
                     // save first name, last name, date of birth
+
+                    SharedPrefUtils.putString(PockketApplication.instance,
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.kycType)
 
                     SharedPrefUtils.putString(
                         getApplication(),
@@ -166,7 +176,13 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
                     }
 
                     responseData.customerInfoResponseDetails?.bankProfile?.kycType?.let {
-                        kycType.set(it)
+                        kycType.set(Utility.toTitleCase(it))
+                        SharedPrefUtils.putString(PockketApplication.instance,SF_KYC_TYPE,it)
+                        if(it=="MINIMUM"){
+                            upgradeKyc.set(true)
+                        }else{
+                            upgradeKyc.set(false)
+                        }
                     }
                     if (responseData.customerInfoResponseDetails?.bankProfile?.isAccountActive == "YES") {
                         verified.set(true)

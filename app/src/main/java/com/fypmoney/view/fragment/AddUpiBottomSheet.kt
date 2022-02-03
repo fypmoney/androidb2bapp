@@ -2,20 +2,15 @@ package com.fypmoney.view.fragment
 
 
 import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.ProgressBar
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ObservableField
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.connectivity.ApiConstant
@@ -25,9 +20,14 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.databinding.BottomSheetAddUpiBinding
+import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.adapter.SavedUpiAdapter
+import com.fypmoney.view.adapter.SavedUpiUiModel
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.payu.india.Payu.PayuConstants
@@ -43,6 +43,7 @@ class AddUpiBottomSheet(
     private var onBottomSheetClickListener: OnAddUpiClickListener
 ) : BottomSheetDialogFragment(), WebApiCaller.OnWebApiResponse {
     private lateinit var binding: BottomSheetAddUpiBinding
+    val savedUpiUiModelList = mutableListOf<SavedUpiUiModel>()
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
@@ -66,9 +67,31 @@ class AddUpiBottomSheet(
         setUp()
     }
 
-    private fun setUp() {
+    private fun setUpRecyclerView(binding: BottomSheetAddUpiBinding) {
 
-        binding.btnAdd.text = getString(R.string.add_btn_text) + " " + getString(R.string.Rs) + amount
+        with(binding.savedRv) {
+            adapter = SavedUpiAdapter(
+                viewLifecycleOwner, onUpiClicked = {
+                    binding.upiId.setText(it.upiId)
+                    savedUpiUiModelList.forEach { it1->
+                        it1.isSelected = it1.upiId==it.upiId
+                    }
+                    (binding.savedRv.adapter as SavedUpiAdapter).run {
+                        submitList(null)
+                        submitList(savedUpiUiModelList)
+                    }
+                }
+            )
+            addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
+            layoutManager =
+                LinearLayoutManager(binding.savedRv.context, RecyclerView.VERTICAL, false)
+        }
+    }
+
+    private fun setUp() {
+        setUpRecyclerView(binding)
+        binding.btnAdd.text =
+            getString(R.string.add_btn_text) + " " + getString(R.string.Rs) + amount
 
         binding.verifyButton.setOnClickListener {
             when {
@@ -117,6 +140,23 @@ class AddUpiBottomSheet(
 
 
         }
+        val savedupiList =
+            SharedPrefUtils.getArrayList(binding.savedRv.context, SharedPrefUtils.SF_UPI_LIST)
+        savedupiList?.forEach {
+            val upiMOdel = SavedUpiUiModel(it)
+            savedUpiUiModelList.add(upiMOdel)
+        }
+        if(savedupiList.isNullOrEmpty()){
+            binding.prefferedUpiTv.toGone()
+            binding.upiListCl.toGone()
+        }else{
+            binding.prefferedUpiTv.toVisible()
+            binding.upiListCl.toVisible()
+            (binding.savedRv.adapter as SavedUpiAdapter).run {
+                submitList(savedUpiUiModelList)
+            }
+        }
+
     }
 
 
@@ -190,6 +230,8 @@ class AddUpiBottomSheet(
             ApiConstant.PAYU_PRODUCTION_URL -> {
                 if (responseData is ValidateVpaResponse) {
                     binding.progress.visibility = View.GONE
+
+
                     when (responseData.isVPAValid) {
                         1 -> {
                             name.text = responseData.payerAccountName
@@ -214,7 +256,8 @@ class AddUpiBottomSheet(
                     }
                 }
 
-            }
+
+                }
         }
     }
 
