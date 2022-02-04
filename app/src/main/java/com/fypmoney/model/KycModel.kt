@@ -53,6 +53,7 @@ data class KycInitRequest(
 ) : BaseRequest()
 @Keep
 data class KycInitResponse(
+    @SerializedName("msg") val msg: String,
     @SerializedName("data") val kycInitResponseDetails: KycInitResponseDetails
 ) : Serializable
 @Keep
@@ -61,9 +62,14 @@ data class KycInitResponseDetails(
     @SerializedName("showAdharInitScreen") val showAdharInitScreen: String,
     @SerializedName("showAdharOtpVerificationScreen") val showAdharOtpVerificationScreen: String,
     @SerializedName("message") val message: String,
+    @SerializedName("kycMode") val kycMode: String,
     @SerializedName("documentIdentifier") val documentIdentifier: String,
     @SerializedName("documentType") val documentType: String,
     @SerializedName("kycType") val kycType: String,
+    @SerializedName("consentData") val consentData: String?,
+    @SerializedName("action") val action: String?,
+    @SerializedName("postKycScreenCode") val postKycScreenCode: String?,
+    @SerializedName("age") val age: String?,
     @SerializedName("token") val token: String
 ):Serializable
 

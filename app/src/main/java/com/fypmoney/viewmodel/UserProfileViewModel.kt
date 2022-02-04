@@ -111,7 +111,7 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
                     // save first name, last name, date of birth
 
                     SharedPrefUtils.putString(PockketApplication.instance,
-                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.kycType)
+                        SF_KYC_TYPE,responseData.customerInfoResponseDetails?.kycType)
 
                     SharedPrefUtils.putString(
                         getApplication(),

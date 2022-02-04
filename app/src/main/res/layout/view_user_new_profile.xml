@@ -145,7 +145,7 @@
                     android:alpha="60"
                     android:onClick="@{()->viewModel.onUpgradeKycClicked()}"
                     android:textSize="@dimen/text_14sp"
-                    android:visibility="@{viewModel.upgradeKyc?View.VISIBLE:View.GONE}"
+                    android:visibility="@{viewModel.upgradeKyc?View.VISIBLE:View.VISIBLE}"
                     app:layout_constraintStart_toStartOf="@+id/ivVerification"
                     app:layout_constraintTop_toBottomOf="@id/tvKycVerification" />
 

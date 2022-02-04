@@ -1,9 +1,7 @@
 package com.fypmoney.connectivity
 
-import android.util.Log
 import com.fypmoney.connectivity.ApiConstant.API_AUTH_LOGIN
 import com.fypmoney.connectivity.ApiConstant.API_CHECK_IS_APP_USER
-import com.fypmoney.connectivity.ApiConstant.API_FETCH_ALL_FEEDS
 import com.fypmoney.connectivity.ApiConstant.API_GET_CUSTOMER_INFO
 import com.fypmoney.connectivity.ApiConstant.API_GET_INTEREST
 import com.fypmoney.connectivity.ApiConstant.API_GET_NOTIFICATION_LIST
@@ -111,6 +109,9 @@ class ApiDataParsing {
                     getObject(response, KycActivateAccountResponse::class.java)
                 }
                 ApiConstant.API_KYC_INIT -> {
+                    getObject(response, KycInitResponse::class.java)
+                }
+                ApiConstant.API_UPGRADE_KYC_ACCOUNT -> {
                     getObject(response, KycInitResponse::class.java)
                 }
                 ApiConstant.API_KYC_MOBILE_VERIFICATION -> {

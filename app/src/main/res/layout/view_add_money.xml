@@ -159,7 +159,7 @@
                         android:layout_marginEnd="24dp"
                         android:onClick="@{()->viewModel.onIncreaseLimitClicked()}"
                         android:paddingStart="20dp"
-                        android:text="Increase Limit"
+                        android:text="@string/increase_limit"
                         android:textColor="@color/cb_blue_button"
                         android:textSize="14sp"
                         android:visibility="gone" />

@@ -245,7 +245,19 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                 when (mViewModel.fromWhichScreen.get()) {
 //
                     AppConstants.AADHAAR_VERIFICATION -> {
-                        finishAffinity()
+                        when(intent.getStringExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN)){
+                            AddMoneyView::class.java.simpleName->{
+                                startActivity(Intent(this@EnterOtpView,AddMoneyView::class.java))
+                            }
+                            PayRequestProfileView::class.java.simpleName->{
+                                startActivity(Intent(this@EnterOtpView,PayRequestProfileView::class.java))
+
+                            }
+                            UserProfileView::class.java.simpleName->{
+                                startActivity(Intent(this@EnterOtpView,UserProfileView::class.java))
+
+                            }
+                        }
                     }
                     AppConstants.KYC_MOBILE_VERIFICATION -> {
                         intentToActivity(AadhaarVerificationView::class.java)

@@ -76,15 +76,17 @@ class PayRequestProfileView :
         mViewModel.onPayOrRequestClicked.observe(this) {
             when (it.id) {
                 R.id.pay -> {
-                    if(checkUpgradeKycStatus()){
+                    if(!checkUpgradeKycStatus()){
                         intentToActivity(
                             contactEntity = mViewModel.contactResult.get(),
                             aClass = EnterAmountForPayRequestView::class.java, AppConstants.PAY
                         )
                     }else{
                         val upgradeYourKycBottomSheet = UpgradeYourKycBottomSheet(onUpgradeClick = {
-                            val intent  = Intent(this, UpgradeToKycInfoActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                            val intent  = Intent(this, UpgradeToKycInfoActivity::class.java).apply {
+                                putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,PayRequestProfileView::class.java.simpleName)
+
+                            }
                             startActivity(intent)
                         })
                         upgradeYourKycBottomSheet.dialog?.window?.setBackgroundDrawable(
@@ -96,15 +98,17 @@ class PayRequestProfileView :
 
                 }
                 R.id.request -> {
-                    if(checkUpgradeKycStatus()){
+                    if(!checkUpgradeKycStatus()){
                         intentToActivity(
                             contactEntity = mViewModel.contactResult.get(),
                             aClass = EnterAmountForPayRequestView::class.java, AppConstants.REQUEST
                         )
                     }else{
                         val upgradeYourKycBottomSheet = UpgradeYourKycBottomSheet(onUpgradeClick = {
-                            val intent  = Intent(this, UpgradeToKycInfoActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                            val intent  = Intent(this, UpgradeToKycInfoActivity::class.java).apply {
+                                putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,PayRequestProfileView::class.java.simpleName)
+
+                            }
                             startActivity(intent)
                         })
                         upgradeYourKycBottomSheet.dialog?.window?.setBackgroundDrawable(

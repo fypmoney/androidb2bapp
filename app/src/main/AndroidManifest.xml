@@ -89,6 +89,7 @@
             android:name=".view.activity.AddMoneyView"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.ordercard.trackorder.TrackOrderView"
@@ -138,6 +139,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.activity.PayRequestProfileView"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ReferralCodeView"
@@ -168,6 +170,7 @@
         <activity
             android:name=".view.activity.AddMemberView"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.activity.UserFeedsDetailView"

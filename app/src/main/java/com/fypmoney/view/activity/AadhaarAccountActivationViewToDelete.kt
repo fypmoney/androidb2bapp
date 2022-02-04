@@ -150,7 +150,10 @@ class AadhaarAccountActivationView :
         }
         mViewModel.onUpgradeAccountClick.observe(this,{
             if(it){
-                startActivity(Intent(this@AadhaarAccountActivationView,AadhaarVerificationView::class.java))
+                startActivity(Intent(this@AadhaarAccountActivationView,AadhaarVerificationView::class.java).apply {
+                    putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,intent.getStringExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN))
+
+                })
             }
         })
 

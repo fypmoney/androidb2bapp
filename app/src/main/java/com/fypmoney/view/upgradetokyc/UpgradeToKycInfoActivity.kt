@@ -8,6 +8,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityUpgradeToKycInfoBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.view.activity.AadhaarAccountActivationView
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -74,7 +75,9 @@ class UpgradeToKycInfoActivity : BaseActivity<ActivityUpgradeToKycInfoBinding,Up
     private fun handleEvent(it: UpgradeToKycInfoActivityVM.UpgradeToKYCEvent?) {
         when(it){
             UpgradeToKycInfoActivityVM.UpgradeToKYCEvent.UpgradeKycClick -> {
-                startActivity(Intent(this, AadhaarAccountActivationView::class.java))
+                startActivity(Intent(this, AadhaarAccountActivationView::class.java).apply {
+                    putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,intent.getStringExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN))
+                })
             }
 
         }

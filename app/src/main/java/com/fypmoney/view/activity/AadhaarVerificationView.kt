@@ -99,7 +99,19 @@ class AadhaarVerificationView :
             goToEnterOtpScreen(token = it.token)
         }
         mViewModel.kycUpgraded.observe(this) {
-            finishAffinity()
+            when(intent.getStringExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN)){
+                AddMoneyView::class.java.simpleName->{
+                    startActivity(Intent(this@AadhaarVerificationView,AddMoneyView::class.java))
+                }
+                PayRequestProfileView::class.java.simpleName->{
+                    startActivity(Intent(this@AadhaarVerificationView,PayRequestProfileView::class.java))
+
+                }
+                UserProfileView::class.java.simpleName->{
+                    startActivity(Intent(this@AadhaarVerificationView,UserProfileView::class.java))
+
+                }
+            }
         }
         mViewModel.clickHere.observe(this) {
             if(it){
@@ -147,6 +159,9 @@ class AadhaarVerificationView :
             AppConstants.KIT_FOUR_DIGIT, ""
 
         )
+        intent.putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,
+            intent.getStringExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN))
+
         startActivity(intent)
     }
 

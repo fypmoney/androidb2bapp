@@ -11,7 +11,6 @@ import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAddMoneyBinding
-import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
@@ -62,7 +61,7 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
             add_money_editext.setText(roundOfAmountToCeli(amount))
         }
         if (checkUpgradeKycStatus()) {
-            increase_limit.toGone()
+            increase_limit.toVisible()
         } else {
             increase_limit.toVisible()
 
@@ -150,8 +149,9 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
             }
         mViewModel.increseLimitClicked.observe(this) {
             if (it) {
-                val intent  = Intent(this, UpgradeToKycInfoActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                val intent  = Intent(this, UpgradeToKycInfoActivity::class.java).apply {
+                    putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,AddMoneyView::class.java.simpleName)
+                }
                 startActivity(intent)
                   mViewModel.increseLimitClicked.value = false
                 }
