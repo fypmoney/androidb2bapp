@@ -1,10 +1,11 @@
 package com.fyp.trackr.models
 
 import android.os.Bundle
+import androidx.annotation.Keep
 import com.fyp.trackr.base.Trackr
 import com.fyp.trackr.services.TrackrServices
 import org.json.JSONObject
-
+@Keep
 data class AnalyticsEvent(var name: TrackrEvent = TrackrEvent.None,
                           var map: HashMap<String, Any> = hashMapOf(),
                           var services: ArrayList<TrackrServices> = arrayListOf()) {

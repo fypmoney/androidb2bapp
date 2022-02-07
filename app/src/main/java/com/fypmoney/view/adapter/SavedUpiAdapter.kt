@@ -2,6 +2,7 @@ package com.fypmoney.view.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.Keep
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.databinding.CardSavedUpiBinding
 import com.fypmoney.extension.executeAfter
 
+@Keep
 data class SavedUpiUiModel(
     val upiId:String,
     var isSelected:Boolean = false
