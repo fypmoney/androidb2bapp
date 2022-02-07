@@ -31,7 +31,7 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
     var lastName = ObservableField<String>()
     var dob = ObservableField<String>()
     var phone = ObservableField<String>()
-    var kycType = ObservableField<String>("Minimum")
+    var kycType = ObservableField<String>(PockketApplication.instance.getString(R.string.minimum_kyc))
     var upgradeKyc = ObservableField(true)
     var verified = ObservableField(false)
 
@@ -112,7 +112,7 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
                     // save first name, last name, date of birth
 
                     SharedPrefUtils.putString(PockketApplication.instance,
-                        SF_KYC_TYPE,responseData.customerInfoResponseDetails?.kycType)
+                        SF_KYC_TYPE,responseData.customerInfoResponseDetails?.bankProfile?.kycType)
 
                     SharedPrefUtils.putString(
                         getApplication(),
@@ -189,6 +189,8 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
                             kycType.set(PockketApplication.instance.getString(R.string.kyc_verified))
 
                         }
+                    } ?: run {
+                        kycType.set(PockketApplication.instance.getString(R.string.minimum_kyc))
                     }
                     if (responseData.customerInfoResponseDetails?.bankProfile?.isAccountActive == "YES") {
                         verified.set(true)

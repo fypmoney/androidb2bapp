@@ -93,7 +93,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
 
                     SharedPrefUtils.putString(
                         PockketApplication.instance,
-                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.kycType)
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.bankProfile?.kycType)
 
                     trackr {
                         it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)

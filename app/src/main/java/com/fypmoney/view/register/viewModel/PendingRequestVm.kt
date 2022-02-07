@@ -51,7 +51,7 @@ class PendingRequestVm(application: Application) : BaseViewModel(application) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
                     SharedPrefUtils.putString(
                         PockketApplication.instance,
-                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.kycType)
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.bankProfile?.kycType)
                     user.postValue(responseData.customerInfoResponseDetails!!)
                 }
             }
