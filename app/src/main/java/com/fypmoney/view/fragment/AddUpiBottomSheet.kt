@@ -76,9 +76,11 @@ class AddUpiBottomSheet(
                     savedUpiUiModelList.forEach { it1->
                         it1.isSelected = it1.upiId==it.upiId
                     }
+                    val newList = mutableListOf<SavedUpiUiModel>()
+                    newList.addAll(savedUpiUiModelList)
                     (binding.savedRv.adapter as SavedUpiAdapter).run {
-                        submitList(null)
-                        submitList(savedUpiUiModelList)
+                        submitList(newList)
+                        notifyDataSetChanged()
                     }
                 }
             )

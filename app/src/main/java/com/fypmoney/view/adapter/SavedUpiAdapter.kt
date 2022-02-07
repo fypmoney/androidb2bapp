@@ -62,6 +62,6 @@ object SavedUpiDiffUtils : DiffUtil.ItemCallback<SavedUpiUiModel>() {
     }
 
     override fun areContentsTheSame(oldItem: SavedUpiUiModel, newItem: SavedUpiUiModel): Boolean {
-        return ((oldItem.upiId == newItem.upiId))
+        return ((oldItem.upiId == newItem.upiId) && (oldItem.isSelected == newItem.isSelected))
     }
 }

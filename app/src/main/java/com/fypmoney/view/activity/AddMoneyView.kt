@@ -11,6 +11,7 @@ import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewAddMoneyBinding
+import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
@@ -61,7 +62,7 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
             add_money_editext.setText(roundOfAmountToCeli(amount))
         }
         if (checkUpgradeKycStatus()) {
-            increase_limit.toVisible()
+            increase_limit.toGone()
         } else {
             increase_limit.toVisible()
 

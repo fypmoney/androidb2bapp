@@ -76,7 +76,7 @@ class PayRequestProfileView :
         mViewModel.onPayOrRequestClicked.observe(this) {
             when (it.id) {
                 R.id.pay -> {
-                    if(!checkUpgradeKycStatus()){
+                    if(checkUpgradeKycStatus()){
                         intentToActivity(
                             contactEntity = mViewModel.contactResult.get(),
                             aClass = EnterAmountForPayRequestView::class.java, AppConstants.PAY
@@ -98,7 +98,7 @@ class PayRequestProfileView :
 
                 }
                 R.id.request -> {
-                    if(!checkUpgradeKycStatus()){
+                    if(checkUpgradeKycStatus()){
                         intentToActivity(
                             contactEntity = mViewModel.contactResult.get(),
                             aClass = EnterAmountForPayRequestView::class.java, AppConstants.REQUEST

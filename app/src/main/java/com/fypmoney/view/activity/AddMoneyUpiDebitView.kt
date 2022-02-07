@@ -48,7 +48,7 @@ import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
 import kotlinx.android.synthetic.main.view_add_money_upi_debit.*
 
 
-open class AddMoneyUpiDebitView :
+class AddMoneyUpiDebitView :
     BaseActivity<ViewAddMoneyUpiDebitBinding, AddMoneyUpiDebitViewModel>(),
     AddNewCardBottomSheet.OnAddNewCardClickListener,
     TransactionFailBottomSheet.OnBottomSheetClickListener, AddUpiBottomSheet.OnAddUpiClickListener {

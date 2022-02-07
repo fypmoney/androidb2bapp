@@ -88,14 +88,15 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
                         SharedPrefUtils.SF_KEY_AADHAAR_NUMBER,
                         responseData.kycInitResponseDetails.documentIdentifier
                     )
-                    SharedPrefUtils.putString(PockketApplication.instance,
-                        SharedPrefUtils.SF_KYC_TYPE,responseData.kycInitResponseDetails.kycType)
+
 
                     if(responseData.kycInitResponseDetails.showAdharOtpVerificationScreen==AppConstants.YES){
                         onKycInitSuccess.value=responseData.kycInitResponseDetails
 
                     }else if(responseData.kycInitResponseDetails.showAdharOtpVerificationScreen==AppConstants.NO
                         && responseData.kycInitResponseDetails.kycType==AppConstants.SEMI){
+                        SharedPrefUtils.putString(PockketApplication.instance,
+                            SharedPrefUtils.SF_KYC_TYPE,responseData.kycInitResponseDetails.kycType)
                         kycUpgraded.value  = true
                     }
 

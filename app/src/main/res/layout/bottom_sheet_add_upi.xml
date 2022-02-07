@@ -71,6 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp8"
             android:paddingBottom="1dp"
+            android:paddingTop="1dp"
             app:customIsRounded="@{false}"
             app:customCornerRadius="@{@dimen/dp8}"
             app:customStrokeWidth="@{@dimen/dp1}"
@@ -83,7 +84,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="match_parent"
                 android:id="@+id/savedRv"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_height="wrap_content" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

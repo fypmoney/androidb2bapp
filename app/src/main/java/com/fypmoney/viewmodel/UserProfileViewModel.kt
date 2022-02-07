@@ -5,6 +5,7 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
+import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -176,12 +177,17 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
                     }
 
                     responseData.customerInfoResponseDetails?.bankProfile?.kycType?.let {
-                        kycType.set(Utility.toTitleCase(it))
                         SharedPrefUtils.putString(PockketApplication.instance,SF_KYC_TYPE,it)
                         if(it=="MINIMUM"){
+                            kycType.set(PockketApplication.instance.getString(R.string.minimum_kyc))
                             upgradeKyc.set(true)
-                        }else{
+                        }else if(it=="SEMI"){
+                            kycType.set(PockketApplication.instance.getString(R.string.kyc_verified))
                             upgradeKyc.set(false)
+                        }else if(it=="FULL"){
+                            upgradeKyc.set(false)
+                            kycType.set(PockketApplication.instance.getString(R.string.kyc_verified))
+
                         }
                     }
                     if (responseData.customerInfoResponseDetails?.bankProfile?.isAccountActive == "YES") {

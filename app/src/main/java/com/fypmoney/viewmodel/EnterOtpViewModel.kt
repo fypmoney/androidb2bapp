@@ -317,6 +317,8 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
 
             ApiConstant.API_KYC_UPGARDE_VERIFICATION -> {
                 if (responseData is KycVerificationResponse) {
+                    SharedPrefUtils.putString(PockketApplication.instance,
+                        SharedPrefUtils.SF_KYC_TYPE,AppConstants.SEMI)
                     onVerificationSuccess.value = true
 
 
