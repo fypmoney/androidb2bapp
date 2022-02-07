@@ -49,6 +49,9 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
     var isYesBankLogoVisible = ObservableField(false)
     var otpTitle =
         ObservableField(PockketApplication.instance.getString(R.string.otp_title))
+    var sendOtpBtnEnabled = ObservableField(false)
+    var upgradeKycFailed = MutableLiveData(false)
+
     /*
     * This method is used to handle click of mobile
     * */
@@ -228,6 +231,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
       * This method is used to call aadhaar verification
       * */
     private fun callKycVerificationApi() {
+        sendOtpBtnEnabled.set(false)
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_KYC_UPGARDE_VERIFICATION,
@@ -320,6 +324,8 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                     SharedPrefUtils.putString(PockketApplication.instance,
                         SharedPrefUtils.SF_KYC_TYPE,AppConstants.SEMI)
                     onVerificationSuccess.value = true
+                    sendOtpBtnEnabled.set(true)
+
 
 
                 }
@@ -360,6 +366,10 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
             }
             ApiConstant.API_LOGIN -> {
                 Utility.showToast(errorResponseInfo.msg)
+            }
+            ApiConstant.API_KYC_UPGARDE_VERIFICATION -> {
+                sendOtpBtnEnabled.set(true)
+                upgradeKycFailed.value = true
             }
         }
 

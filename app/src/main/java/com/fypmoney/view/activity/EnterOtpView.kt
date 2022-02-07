@@ -226,6 +226,12 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                 finish()
             }
         }
+        mViewModel.upgradeKycFailed.observe(this) {
+            if (it) {
+                mViewModel.upgradeKycFailed.value = false
+                finish()
+            }
+        }
         mViewModel.resendOtpSuccess.observe(this) {
             if (it) {
                 startTimer()

@@ -184,8 +184,7 @@
                             android:onClick="@{()->viewModel.onVerifyClicked()}"
                             android:text="@string/verify_btn_text"
                             android:textAllCaps="false"
-
-                            android:enabled="false"
+                            android:enabled="@{viewModel.sendOtpBtnEnabled}"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             android:layout_marginBottom="@dimen/_40sdp"
