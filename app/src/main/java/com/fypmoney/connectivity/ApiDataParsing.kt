@@ -114,6 +114,9 @@ class ApiDataParsing {
                 ApiConstant.API_UPGRADE_KYC_ACCOUNT -> {
                     getObject(response, KycInitResponse::class.java)
                 }
+                ApiConstant.API_KYC_UPGARDE_VERIFICATION -> {
+                    getObject(response, KycVerificationResponse::class.java)
+                }
                 ApiConstant.API_KYC_MOBILE_VERIFICATION -> {
                     getObject(response, KycMobileVerifyResponse::class.java)
                 }

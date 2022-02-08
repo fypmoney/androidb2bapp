@@ -32,9 +32,9 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
     var onVerificationFailed = MutableLiveData<String>()
 
     init {
-        trackr {
+        /*trackr {
             it.name = TrackrEvent.bank_verification
-        }
+        }*/
     }
     /*
     * This method is used to handle click of get otp
@@ -49,6 +49,9 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
             }
 
             else -> {
+                trackr {
+                    it.name = TrackrEvent.get_otp_on_aadhar_clicked
+                }
                 callKycInitApi()
             }
         }

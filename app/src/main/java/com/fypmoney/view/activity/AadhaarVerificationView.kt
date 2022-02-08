@@ -137,32 +137,32 @@ class AadhaarVerificationView :
      * Method to navigate to the Feeds screen after login
      */
     private fun goToEnterOtpScreen(token: String) {
-        val intent = Intent(this, EnterOtpView::class.java)
-        intent.putExtra(
+        val intent1 = Intent(this, EnterOtpView::class.java)
+        intent1.putExtra(
             AppConstants.MOBILE_TYPE,
             ""
         )
-        intent.putExtra(
+        intent1.putExtra(
             AppConstants.FROM_WHICH_SCREEN, AppConstants.AADHAAR_VERIFICATION
         )
 
-        intent.putExtra(
+        intent1.putExtra(
             AppConstants.MOBILE_WITHOUT_COUNTRY_CODE,
             ""
         )
 
-        intent.putExtra(
+        intent1.putExtra(
             AppConstants.KYC_ACTIVATION_TOKEN, token
 
         )
-        intent.putExtra(
+        intent1.putExtra(
             AppConstants.KIT_FOUR_DIGIT, ""
 
         )
-        intent.putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,
+        intent1.putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,
             intent.getStringExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN))
 
-        startActivity(intent)
+        startActivity(intent1)
     }
 
 }

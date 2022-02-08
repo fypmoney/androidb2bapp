@@ -80,6 +80,9 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
         onProfileClicked.value = true
     }
     fun onUpgradeKycClicked() {
+        trackr {
+            it.name = TrackrEvent.upgrade_kyc_from_profile_clicked
+        }
         onUpgradeKycClicked.value = true
     }
 

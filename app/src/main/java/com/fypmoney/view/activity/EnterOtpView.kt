@@ -251,6 +251,9 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                 when (mViewModel.fromWhichScreen.get()) {
 //
                     AppConstants.AADHAAR_VERIFICATION -> {
+                        trackr {
+                            it.name = TrackrEvent.upgrade_kyc_successfully
+                        }
                         when(intent.getStringExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN)){
                             AddMoneyView::class.java.simpleName->{
                                 startActivity(Intent(this@EnterOtpView,AddMoneyView::class.java))

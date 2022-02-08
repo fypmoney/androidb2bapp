@@ -8,6 +8,8 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -152,6 +154,9 @@ class TransactionHistoryView :
                         )
                     }else{
                         val upgradeYourKycBottomSheet = UpgradeYourKycBottomSheet(onUpgradeClick = {
+                            trackr {
+                                it.name = TrackrEvent.upgrade_kyc_from_pay_clicked
+                            }
                             val intent  = Intent(this, UpgradeToKycInfoActivity::class.java).apply {
                                 putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,PayRequestProfileView::class.java.simpleName)
 
@@ -174,6 +179,9 @@ class TransactionHistoryView :
                         )
                     }else{
                         val upgradeYourKycBottomSheet = UpgradeYourKycBottomSheet(onUpgradeClick = {
+                            trackr {
+                                it.name = TrackrEvent.upgrade_kyc_from_pay_clicked
+                            }
                             val intent  = Intent(this, UpgradeToKycInfoActivity::class.java).apply {
                                 putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,PayRequestProfileView::class.java.simpleName)
 

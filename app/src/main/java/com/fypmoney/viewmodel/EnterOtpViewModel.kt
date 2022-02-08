@@ -232,6 +232,9 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
       * */
     private fun callKycVerificationApi() {
         sendOtpBtnEnabled.set(false)
+        trackr {
+            it.name = TrackrEvent.verify_otp_aadhar_clicked
+        }
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_KYC_UPGARDE_VERIFICATION,
@@ -325,8 +328,6 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                         SharedPrefUtils.SF_KYC_TYPE,AppConstants.SEMI)
                     onVerificationSuccess.value = true
                     sendOtpBtnEnabled.set(true)
-
-
 
                 }
             }
