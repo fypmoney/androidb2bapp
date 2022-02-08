@@ -112,6 +112,26 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
         )
     }
 
+    private fun callUpgradeKycResendOtpApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_UPGRADE_KYC_ACCOUNT,
+                NetworkUtil.endURL(ApiConstant.API_UPGRADE_KYC_ACCOUNT),
+                ApiUrl.PUT,
+                KycInitRequest(
+                    kycMode = AppConstants.KYC_MODE,
+                    kycType = AppConstants.KYC_TYPE,
+                    documentIdentifier = SharedPrefUtils.getString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_AADHAAR_NUMBER
+                    )!!.replace(" ",""),
+                    documentType = AppConstants.KYC_DOCUMENT_TYPE,
+                    action = AppConstants.KYC_ACTION_ADHAR_AUTH
+                ), this, isProgressBar = true
+            )
+        )
+    }
+
     /*
       * This method is used to call login API
       * */
@@ -184,7 +204,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
 
             AppConstants.AADHAAR_VERIFICATION -> {
                 if (!resendOtpTimerVisibility.get()!!) {
-                    callKycInitApi()
+                    callUpgradeKycResendOtpApi()
                 }
             }
             AppConstants.ACTIVATE_CARD -> {
@@ -328,6 +348,16 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                         SharedPrefUtils.SF_KYC_TYPE,AppConstants.SEMI)
                     onVerificationSuccess.value = true
                     sendOtpBtnEnabled.set(true)
+
+                }
+            }
+            ApiConstant.API_UPGRADE_KYC_ACCOUNT -> {
+                if (responseData is KycInitResponse) {
+                    /*SharedPrefUtils.putString(PockketApplication.instance,
+                        SharedPrefUtils.SF_KYC_TYPE,AppConstants.SEMI)
+                    onVerificationSuccess.value = true
+                    sendOtpBtnEnabled.set(true)*/
+                    Utility.showToast(responseData.msg)
 
                 }
             }
