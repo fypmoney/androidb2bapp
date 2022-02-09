@@ -134,51 +134,6 @@
                     android:layout_marginTop="@dimen/_44sdp"
                     android:background="@color/white">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/add_money_text"
-                        style="@style/TextviewRegular"
-                        android:layout_width="match_parent"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginTop="72dp"
-                        android:layout_marginEnd="24dp"
-                        android:layout_toLeftOf="@+id/increase_limit"
-                        android:gravity="start"
-
-                        android:text="@{viewModel.remainingLoadLimit}"
-                        android:textColor="@color/text_color_light" />
-
-                    <TextView
-                        android:id="@+id/increase_limit"
-                        style="@style/TextviewBold"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@+id/add_money_text"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="24dp"
-                        android:onClick="@{()->viewModel.onIncreaseLimitClicked()}"
-                        android:paddingStart="20dp"
-                        android:text="@string/increase_limit"
-                        android:textColor="@color/cb_blue_button"
-                        android:textSize="14sp"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/addmoeneytitle"
-                        style="@style/TextviewRegular"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/add_money_text"
-
-                        android:layout_marginTop="@dimen/_41sdp"
-                        android:layout_marginEnd="24dp"
-                        android:paddingStart="24dp"
-                        android:text="Add money to your Account"
-                        android:textColor="@color/text_color_dark"
-                        android:textSize="14sp" />
-
                     <EditText
                         android:id="@+id/add_money_editext"
                         style="@style/EditTextStyle"
@@ -279,6 +234,51 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:id="@+id/increase_limit"
+                        style="@style/TextviewBold"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@+id/add_money_text"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="24dp"
+                        android:onClick="@{()->viewModel.onIncreaseLimitClicked()}"
+                        android:paddingStart="20dp"
+                        android:text="@string/increase_limit"
+                        android:textColor="@color/cb_blue_button"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/addmoeneytitle"
+                        style="@style/TextviewRegular"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/add_money_text"
+
+                        android:layout_marginTop="@dimen/_41sdp"
+                        android:layout_marginEnd="24dp"
+                        android:paddingStart="24dp"
+                        android:text="Add money to your Account"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/add_money_text"
+                        style="@style/TextviewRegular"
+                        android:layout_width="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="72dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_toLeftOf="@+id/increase_limit"
+                        android:gravity="start"
+
+                        android:text="@{viewModel.remainingLoadLimit}"
+                        android:textColor="@color/text_color_light" />
+
 
                     <com.fypmoney.view.customview.PrimaryButton
                         android:id="@+id/btnSendOtp"
@@ -287,17 +287,17 @@
                         android:layout_below="@+id/linear"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="40dp"
-                        app:enabled="@{viewModel.enableButton}"
                         android:onClick="@{()->viewModel.onAddClicked()}"
-                        app:text="@string/add_money"
-                        app:enabled_bg="@color/text_color_dark"
-                        app:disabled_bg="@color/cb_grey"
-                        app:disabled_text ="@color/grey_heading"
-                        app:enabled_text ="@color/white"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="18sp"
-                        app:backgroundTint="@color/text_color_dark" />
+                        app:backgroundTint="@color/text_color_dark"
+                        app:disabled_bg="@color/cb_grey"
+                        app:disabled_text="@color/grey_heading"
+                        app:enabled="@{viewModel.enableButton}"
+                        app:enabled_bg="@color/text_color_dark"
+                        app:enabled_text="@color/white"
+                        app:text="@string/add_money" />
 
 
                 </RelativeLayout>
