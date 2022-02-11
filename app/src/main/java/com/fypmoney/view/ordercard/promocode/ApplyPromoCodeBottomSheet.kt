@@ -6,9 +6,11 @@ import android.view.View
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseBottomSheetFragment
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.databinding.BottomsheetApplyPromoCodeBinding
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.ordercard.model.UserOfferCard
 
 class ApplyPromoCodeBottomSheet(var promoCodeAppliedSuccessfully:(userCard: UserOfferCard)->Unit): BaseBottomSheetFragment<BottomsheetApplyPromoCodeBinding>() {
@@ -57,6 +59,12 @@ class ApplyPromoCodeBottomSheet(var promoCodeAppliedSuccessfully:(userCard: User
                     binding.applyPromocodeBtn.setBusy(true)
                 }
                 is ApplyPromoCodeBottomSheetVM.ApplyPromoCodeState.PromoCodeAppliedSuccessfully -> {
+                    SharedPrefUtils.putBoolean(
+                            context = PockketApplication.instance,
+                            key = SharedPrefUtils.SF_CARD_PROMO_CODE_APPLIED,
+                            value = true
+                        )
+
                     promoCodeAppliedSuccessfully(it.offerCard)
                     dismiss()
                 }

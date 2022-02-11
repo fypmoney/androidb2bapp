@@ -23,6 +23,7 @@ class OrderCardViewModel(application: Application) : BaseViewModel(application) 
         get() = _event
     private val _event = LiveEvent<OrderCardEvent>()
 
+
     val state:LiveData<OrderCardState>
         get() = _state
     private val _state = MutableLiveData<OrderCardState>()

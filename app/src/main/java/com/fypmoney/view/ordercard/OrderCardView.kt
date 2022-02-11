@@ -14,6 +14,8 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewOrderCardBinding
+import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants.ORDER_CARD_INFO
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
@@ -79,7 +81,20 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
 
         }
         setObservers()
+    }
 
+    override fun onStart() {
+        super.onStart()
+        checkPromoCodeIsApplied()?.let {
+            if(it){
+                mViewBinding.havePromoCodeTv.toGone()
+            }else{
+                mViewBinding.havePromoCodeTv.toVisible()
+            }
+        }
+    }
+    private fun checkPromoCodeIsApplied():Boolean?{
+        return SharedPrefUtils.getBoolean(this,SharedPrefUtils.SF_CARD_PROMO_CODE_APPLIED)
     }
 
     private fun setObservers() {
@@ -102,7 +117,14 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
                 }
                 Utility.convertToRs("${it.userOfferCard.mrp}")?.let { it1 ->
                     mViewBinding.cardOfferPriceValueTv.text = getString(R.string.Rs)+it1
+
                 }
+                it.userOfferCard.mrp.toIntOrNull()?.let {
+                    if(it==0){
+                        mViewBinding.havePromoCodeTv.toGone()
+                    }
+                }
+
             }
         }
     }
