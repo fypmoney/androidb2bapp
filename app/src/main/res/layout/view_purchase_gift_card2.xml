@@ -20,10 +20,7 @@
         android:background="#0E141C"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar_gift_card"
-
-
-            />
+        <include layout="@layout/toolbar_gift_card" />
 
 
         <RelativeLayout
@@ -77,8 +74,6 @@
                 android:layout_marginTop="22dp"
                 android:layout_marginEnd="@dimen/dp8"
                 android:weightSum="4">
-
-
             </androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
@@ -94,10 +89,14 @@
                     android:id="@+id/comment"
                     android:layout_width="wrap_content"
                     style="@style/TextviewBold"
+                    android:paddingStart="@dimen/_8sdp"
+                    android:paddingEnd="@dimen/_8sdp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/round_dark_grey_rewards_18"
                     android:gravity="center"
-                    android:hint="500"
+                    android:hint="message"
+                    android:textColorHint="@color/text_color_light"
+                    android:textColor="@color/white"
 
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -18,7 +18,7 @@ import com.moengage.core.internal.model.BaseRequest
 /*
 * This class is used to handle add money functionality
 * */
-class GiftHistoryModel(application: Application) : BaseViewModel(application) {
+class GiftUnsedModel(application: Application) : BaseViewModel(application) {
 
     init {
         callAllGifts()
@@ -29,11 +29,11 @@ class GiftHistoryModel(application: Application) : BaseViewModel(application) {
     fun callAllGifts() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                purpose = ApiConstant.GET_HISTORY_LIST,
-                endpoint = NetworkUtil.endURL(ApiConstant.GET_HISTORY_LIST),
+                purpose = ApiConstant.GET_HISTORY_UNUSED_LIST,
+                endpoint = NetworkUtil.endURL(ApiConstant.GET_HISTORY_UNUSED_LIST),
                 request_type = ApiUrl.GET,
                 param = com.fypmoney.model.BaseRequest(), onResponse = this,
-                isProgressBar = true
+                isProgressBar = false
             )
 
         )
@@ -42,7 +42,7 @@ class GiftHistoryModel(application: Application) : BaseViewModel(application) {
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.GET_HISTORY_LIST -> {
+            ApiConstant.GET_HISTORY_UNUSED_LIST -> {
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
                 var giftList: ArrayList<GiftHistoryResponseModel> = ArrayList()

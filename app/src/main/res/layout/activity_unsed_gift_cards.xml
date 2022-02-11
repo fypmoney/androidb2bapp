@@ -15,18 +15,6 @@
             layout="@layout/toolbar"
             android:id="@+id/toolbar_id" />
 
-        <TextView
-            style="@style/TextviewBold"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:layout_width="wrap_content"
-            android:text="@string/history"
-            android:id="@+id/history"
-            android:textSize="18sp"
-            android:textColor="@color/text_color_light"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar_id"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar_id"
-            app:layout_constraintTop_toTopOf="@+id/toolbar_id" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"

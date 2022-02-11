@@ -100,24 +100,6 @@ class PurchaseGiftViewModel(application: Application) : BaseViewModel(applicatio
 
 
 
-    fun callContactSyncApi() {
-
-        val contactRequestDetailsList = mutableListOf<ContactRequestDetails>()
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.API_SNC_CONTACTS,
-                NetworkUtil.endURL(ApiConstant.API_SNC_CONTACTS),
-                ApiUrl.POST,
-                ContactRequest(
-                    contactRequestDetails = contactRequestDetailsList
-                ),
-                this,
-                isProgressBar = false
-            )
-        )
-
-
-    }
 
 
     fun onAddClicked() {

@@ -3,6 +3,7 @@ package com.fypmoney.view.giftCardModule
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
@@ -10,6 +11,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityAllGiftCardsBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.giftCardModule.adapters.GiftListBaseAdapter
 import com.fypmoney.view.giftCardModule.model.GiftSearchResponse
 import com.fypmoney.view.giftCardModule.model.VoucherBrandItem
@@ -53,8 +55,15 @@ class GiftCardsListScreen : BaseActivity<ActivityAllGiftCardsBinding, GiftCardVi
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
-
+        mViewBinding?.history?.setOnClickListener {
+            val intent = Intent(this, GiftHistoryActivity::class.java)
+            startActivity(intent)
+        }
         setObservers()
+//        SharedPrefUtils.putString(
+//            getApplication(), key = SharedPrefUtils.SF_KEY_ACCESS_TOKEN,
+//            value = "80e7e6f4-4988-4d11-8c01-7425815b1e7b-0f5fb58f238e3b6341b9e8349fb1a87d3a01d781fa6aa1e49bd387e93d0bd4c0"
+//        )
 
     }
 

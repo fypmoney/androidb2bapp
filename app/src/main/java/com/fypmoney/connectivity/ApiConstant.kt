@@ -153,6 +153,13 @@ object ApiConstant {
     const val Api_Your_Gifts = "services/loyaltyservice/api/onboarding-gifts"
 
     const val GET_GIFTS_LIST = "services/PockketService/api/search-voucher"
+
+    const val GET_HISTORY_LIST =
+        "services/PockketService/api/purchased-voucher?page=0&size=10&sort=id,desc&gifted=YES"
+    const val GET_HISTORY_UNUSED_LIST =
+        "services/PockketService/api/unused-voucher?page=0&size=10&sort=id,desc"
+
+
 }
 
 

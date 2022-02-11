@@ -384,7 +384,12 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.giftCardModule.PurchaseGiftCardScreen2" />
+        <activity
+            android:windowSoftInputMode="adjustPan"
+            android:name=".view.giftCardModule.PurchaseGiftCardScreen2" />
+        <activity android:name=".view.giftCardModule.GiftTermsAndConditions" />
+        <activity android:name=".view.giftCardModule.GiftHistoryActivity" />
+        <activity android:name=".view.giftCardModule.GiftHistoryUnusedActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

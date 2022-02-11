@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
+    <data>
+
+    </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -11,16 +13,13 @@
         android:background="#0E141C"
         android:layout_height="match_parent">
 
-        <include
-            layout="@layout/toolbar"
-            android:id="@+id/toolbar_id" />
-
         <TextView
             style="@style/TextviewBold"
-            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:layout_width="wrap_content"
-            android:text="@string/history"
+            android:text="Unsued Cards"
             android:id="@+id/history"
+            android:elevation="@dimen/_2sdp"
             android:textSize="18sp"
             android:textColor="@color/text_color_light"
             android:layout_height="wrap_content"
@@ -28,21 +27,17 @@
             app:layout_constraintEnd_toEndOf="@+id/toolbar_id"
             app:layout_constraintTop_toTopOf="@+id/toolbar_id" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <include
+            layout="@layout/toolbar"
+            android:id="@+id/toolbar_id" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/giftcard_rv"
             android:layout_width="match_parent"
-
-            app:layout_constraintTop_toBottomOf="@+id/toolbar_id"
-
-            android:layout_height="wrap_content">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:id="@+id/giftcard_rv"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_height="wrap_content" />
-
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_id" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

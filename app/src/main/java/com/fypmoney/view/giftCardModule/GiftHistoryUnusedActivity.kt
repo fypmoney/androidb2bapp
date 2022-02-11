@@ -1,6 +1,5 @@
 package com.fypmoney.view.giftCardModule
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
@@ -8,31 +7,31 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.databinding.ActivityHistoryGiftCardsBinding
+import com.fypmoney.databinding.ActivityUnsedGiftCardsBinding
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.giftCardModule.model.GiftHistoryResponseModel
-import com.fypmoney.view.giftCardModule.viewModel.GiftHistoryModel
+import com.fypmoney.view.giftCardModule.viewModel.GiftUnsedModel
 
 
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
 
 
-class GiftHistoryActivity : BaseActivity<ActivityHistoryGiftCardsBinding, GiftHistoryModel>() {
+class GiftHistoryUnusedActivity : BaseActivity<ActivityUnsedGiftCardsBinding, GiftUnsedModel>() {
 
 
-    private var mViewBinding: ActivityHistoryGiftCardsBinding? = null
-    private var mviewModel: GiftHistoryModel? = null
+    private var mViewBinding: ActivityUnsedGiftCardsBinding? = null
+    private var mviewModel: GiftUnsedModel? = null
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_history_gift_cards
+        return R.layout.activity_unsed_gift_cards
     }
 
-    override fun getViewModel(): GiftHistoryModel {
-        mviewModel = ViewModelProvider(this).get(GiftHistoryModel::class.java)
+    override fun getViewModel(): GiftUnsedModel {
+        mviewModel = ViewModelProvider(this).get(GiftUnsedModel::class.java)
         return mviewModel!!
     }
 
@@ -43,14 +42,11 @@ class GiftHistoryActivity : BaseActivity<ActivityHistoryGiftCardsBinding, GiftHi
         setToolbarAndTitle(
             context = this,
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = "Gift Cards",
+            isBackArrowVisible = true, toolbarTitle = "Unused Gift Cards",
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
-        mViewBinding?.history?.setOnClickListener {
-            val intent = Intent(this, GiftHistoryUnusedActivity::class.java)
-            startActivity(intent)
-        }
+
         setObservers()
 
     }
@@ -59,20 +55,17 @@ class GiftHistoryActivity : BaseActivity<ActivityHistoryGiftCardsBinding, GiftHi
 
         list: List<GiftHistoryResponseModel>
     ) {
-//        if (list.size > 0) {
-//            mViewBinding.shimmerLayout.visibility = View.GONE
-//        }
         val layoutManager =
             GridLayoutManager(this, 2)
         mViewBinding?.giftcardRv?.layoutManager = layoutManager
+
 
         var mobile = SharedPrefUtils.getString(
             application,
             SharedPrefUtils.SF_KEY_USER_MOBILE
         )
 
-
-        val typeAdapter = GiftCardHistoryAdapter(
+        val typeAdapter = GiftCardUnsedHistoryAdapter(
 
             this,
             onRecentUserClick = {
@@ -89,11 +82,11 @@ class GiftHistoryActivity : BaseActivity<ActivityHistoryGiftCardsBinding, GiftHi
     * This method is used to observe the observers
     * */
     private fun setObservers() {
-        mviewModel?.allGiftList?.observe(this, {
+        mviewModel?.allGiftList?.observe(this) {
 
             setRecyclerView(it)
 
-        })
+        }
     }
 
 
