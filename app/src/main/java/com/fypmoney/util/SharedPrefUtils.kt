@@ -58,6 +58,7 @@ class SharedPrefUtils {
         const val SF_REFERRAL_CODE_FROM_INVITE_LINK = "referral_code_from_invite_link"
         const val SF_IS_INSTALLED_APPS_SYNCED = "is_installed_apps_is_syncd"
         const val SF_KYC_TYPE = "kyc_type"
+        const val SF_CARD_PROMO_CODE_APPLIED = "card_promo_code_applied"
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(context)

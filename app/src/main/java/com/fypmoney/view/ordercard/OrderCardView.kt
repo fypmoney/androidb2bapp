@@ -2,6 +2,7 @@ package com.fypmoney.view.ordercard
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -13,11 +14,14 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewOrderCardBinding
+import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants.ORDER_CARD_INFO
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.ordercard.activateofflinecard.ScanCardKitNumberActivity
 import com.fypmoney.view.ordercard.cardofferdetails.CardOfferDetailsActivity
+import com.fypmoney.view.ordercard.promocode.ApplyPromoCodeBottomSheet
 import kotlinx.android.synthetic.main.activity_notify_me_order_card.*
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -77,7 +81,20 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
 
         }
         setObservers()
+    }
 
+    override fun onStart() {
+        super.onStart()
+        checkPromoCodeIsApplied()?.let {
+            if(it){
+                mViewBinding.havePromoCodeTv.toGone()
+            }else{
+                mViewBinding.havePromoCodeTv.toVisible()
+            }
+        }
+    }
+    private fun checkPromoCodeIsApplied():Boolean?{
+        return SharedPrefUtils.getBoolean(this,SharedPrefUtils.SF_CARD_PROMO_CODE_APPLIED)
     }
 
     private fun setObservers() {
@@ -100,7 +117,14 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
                 }
                 Utility.convertToRs("${it.userOfferCard.mrp}")?.let { it1 ->
                     mViewBinding.cardOfferPriceValueTv.text = getString(R.string.Rs)+it1
+
                 }
+                it.userOfferCard.mrp.toIntOrNull()?.let {
+                    if(it==0){
+                        mViewBinding.havePromoCodeTv.toGone()
+                    }
+                }
+
             }
         }
     }
@@ -125,6 +149,18 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
                 intent.putExtra(ORDER_CARD_INFO,mViewModel.userOfferCard)
                 startActivity(intent)
                 finish()
+            }
+            OrderCardViewModel.OrderCardEvent.HaveAPromoCode -> {
+                val applyPromoCodeBottomSheet = ApplyPromoCodeBottomSheet(promoCodeAppliedSuccessfully = {
+                    val intent = Intent(this@OrderCardView, CardOfferDetailsActivity::class.java)
+                    intent.putExtra(ORDER_CARD_INFO,it)
+                    startActivity(intent)
+                })
+                applyPromoCodeBottomSheet.dialog?.window?.setBackgroundDrawable(
+                    ColorDrawable(
+                        Color.RED)
+                )
+                applyPromoCodeBottomSheet.show(supportFragmentManager, "ApplyPromoCode")
             }
 
         }

@@ -1134,4 +1134,7 @@ Coming really soon!
     <string name="preferred_upi_id">Preferred UPI ID</string>
     <string name="fyp_card_details">Fyp Card Details</string>
     <string name="minimum_kyc">Minimum KYC</string>
+    <string name="have_a_promo_code_click_here">Have a promo code? Click here</string>
+    <string name="promo_code">Promo code</string>
+    <string name="please_enter_your_promo_code">Please enter your promo code</string>
 </resources>

@@ -777,6 +777,11 @@ object Utility {
             SharedPrefUtils.SF_IS_INSTALLED_APPS_SYNCED,
             false
         )
+        SharedPrefUtils.putBoolean(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_CARD_PROMO_CODE_APPLIED,
+            false
+        )
     }
 
     /*

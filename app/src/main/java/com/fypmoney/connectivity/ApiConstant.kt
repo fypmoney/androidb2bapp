@@ -150,6 +150,7 @@ object ApiConstant {
     const val API_FETCH_OFFER_DETAILS = "/services/PockketService/api/fyp-offer/"
     const val Api_Request_Siblin_parent = "services/authservice/api/family-member/userKycCode/"
     const val Api_Your_Gifts = "services/loyaltyservice/api/onboarding-gifts"
+    const val API_CHECK_PROMO_CODE = "/services/loyaltyservice/api/promocode"
 
 }
 
