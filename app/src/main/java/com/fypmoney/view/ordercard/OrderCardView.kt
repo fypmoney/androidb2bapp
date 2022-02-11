@@ -2,6 +2,7 @@ package com.fypmoney.view.ordercard
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
@@ -18,6 +19,7 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.ordercard.activateofflinecard.ScanCardKitNumberActivity
 import com.fypmoney.view.ordercard.cardofferdetails.CardOfferDetailsActivity
+import com.fypmoney.view.ordercard.promocode.ApplyPromoCodeBottomSheet
 import kotlinx.android.synthetic.main.activity_notify_me_order_card.*
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -125,6 +127,18 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
                 intent.putExtra(ORDER_CARD_INFO,mViewModel.userOfferCard)
                 startActivity(intent)
                 finish()
+            }
+            OrderCardViewModel.OrderCardEvent.HaveAPromoCode -> {
+                val applyPromoCodeBottomSheet = ApplyPromoCodeBottomSheet(promoCodeAppliedSuccessfully = {
+                    val intent = Intent(this@OrderCardView, CardOfferDetailsActivity::class.java)
+                    intent.putExtra(ORDER_CARD_INFO,it)
+                    startActivity(intent)
+                })
+                applyPromoCodeBottomSheet.dialog?.window?.setBackgroundDrawable(
+                    ColorDrawable(
+                        Color.RED)
+                )
+                applyPromoCodeBottomSheet.show(supportFragmentManager, "ApplyPromoCode")
             }
 
         }
