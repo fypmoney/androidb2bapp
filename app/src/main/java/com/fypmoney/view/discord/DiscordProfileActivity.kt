@@ -7,22 +7,29 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import android.graphics.Color
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ActivityDiscordProfileBinding
 
 import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.view.discord.viewmodel.DiscordActivityVM
+import com.fypmoney.view.activity.PayRequestProfileView
+import com.fypmoney.view.adapter.TopTenUsersAdapter
+import com.fypmoney.view.discord.viewmodel.DiscordProfileVM
 
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-class DiscordProfileActivity : BaseActivity<ActivityDiscordProfileBinding, DiscordActivityVM>() {
-    private lateinit var mViewModel: DiscordActivityVM
+class DiscordProfileActivity : BaseActivity<ActivityDiscordProfileBinding, DiscordProfileVM>() {
+    private lateinit var mViewModel: DiscordProfileVM
     private lateinit var mViewBinding: ActivityDiscordProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
-        mViewBinding.viewmodel = mViewModel
+        setUpRecyclerView()
         setUpToolbar()
         setUpObserver()
 
@@ -32,11 +39,35 @@ class DiscordProfileActivity : BaseActivity<ActivityDiscordProfileBinding, Disco
         mViewModel.event.observe(this) {
             handelEvents(it)
         }
+
+        mViewModel.profileResponse.observe(this) {
+
+            mViewBinding.textView9.text = it.discordUserInfoDTO?.username
+
+            Glide.with(this).load(it.discordUserInfoDTO?.avatar)
+                .into(mViewBinding.ivUserProfileImage)
+
+
+        }
     }
 
-    private fun handelEvents(it: DiscordActivityVM.DiscordEvent?) {
+    private fun setUpRecyclerView() {
+        val topTenUsersAdapter = TopTenUsersAdapter(
+            this, onRecentUserClick = {
+
+            }
+        )
+
+
+        with(mViewBinding.rvroles) {
+            adapter = topTenUsersAdapter
+            layoutManager = GridLayoutManager(this@DiscordProfileActivity, 3)
+        }
+    }
+
+    private fun handelEvents(it: DiscordProfileVM.DiscordEvent?) {
         when (it) {
-            DiscordActivityVM.DiscordEvent.contect -> {
+            DiscordProfileVM.DiscordEvent.contect -> {
 
             }
 
@@ -59,8 +90,8 @@ class DiscordProfileActivity : BaseActivity<ActivityDiscordProfileBinding, Disco
 
     override fun getLayoutId(): Int = R.layout.activity_discord_profile
 
-    override fun getViewModel(): DiscordActivityVM {
-        mViewModel = ViewModelProvider(this).get(DiscordActivityVM::class.java)
+    override fun getViewModel(): DiscordProfileVM {
+        mViewModel = ViewModelProvider(this).get(DiscordProfileVM::class.java)
         return mViewModel
     }
 

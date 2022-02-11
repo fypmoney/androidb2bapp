@@ -151,6 +151,8 @@ object ApiConstant {
     const val Api_Request_Siblin_parent = "services/authservice/api/family-member/userKycCode/"
     const val Api_Your_Gifts = "services/loyaltyservice/api/onboarding-gifts"
 
+    const val Api_GET_DISCORD_PROFILE = "internal/api/fetch-discord-data/585032639795429387"
+
 }
 
 
