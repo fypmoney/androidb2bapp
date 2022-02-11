@@ -198,14 +198,14 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
                     }
 
                     AppConstants.TYPE_VIDEO -> {
-                        val intent = Intent(requireActivity(), VideoActivity2::class.java)
+                        val intent = Intent(requireContext(), VideoActivity2::class.java)
                         intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
 
                         startActivity(intent)
 
                     }
                     AppConstants.TYPE_VIDEO_EXPLORE -> {
-                        val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
+                        val intent = Intent(requireContext(), VideoActivityWithExplore::class.java)
                         intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
                         intent.putExtra(AppConstants.ACTIONFLAG, it.actionFlagCode)
 
