@@ -90,6 +90,7 @@
                 android:selectAllOnFocus="true"
                 android:singleLine="true"
                 android:textAllCaps="true"
+                android:maxLength="50"
                 android:textColor="#9CA3A5"
                 tools:text="ADBSBS" />
 
