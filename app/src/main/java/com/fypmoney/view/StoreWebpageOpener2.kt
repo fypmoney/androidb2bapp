@@ -212,7 +212,14 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
     }
 
     override fun onExternalPageRequest(url: String?) {
-        TODO("Not yet implemented")
+        startActivity(
+            Intent.createChooser(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(url)
+                ), getString(R.string.browse_with)
+            )
+        )
     }
 
     fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {

@@ -384,6 +384,7 @@
             android:name="com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".view.discord.DiscordInviteActivity" />
+        <activity android:name=".view.discord.DiscordWebViewActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
