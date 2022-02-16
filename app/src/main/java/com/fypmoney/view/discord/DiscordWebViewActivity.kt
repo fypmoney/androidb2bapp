@@ -1,6 +1,8 @@
 package com.fypmoney.view.discord
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -11,6 +13,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.fypmoney.R
 import com.fypmoney.view.StoreWebpageOpener
+import com.fypmoney.view.fragment.TransactionFailBottomSheet
 import com.fypmoney.view.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_webview.*
 
@@ -67,7 +70,7 @@ class DiscordWebViewActivity : AppCompatActivity() {
         webView!!.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 if (url.contains("/discord/failed_redirect_url")) {
-                    onBackPressed()
+                    callDicordConnectionFailSheet()
                 } else if (url.contains("/discord/success_redirect_url")) {
                     val intent =
                         Intent(this@DiscordWebViewActivity, DiscordProfileActivity::class.java)
@@ -86,5 +89,14 @@ class DiscordWebViewActivity : AppCompatActivity() {
         }
     }
 
+    private fun callDicordConnectionFailSheet() {
+
+        val bottomSheet =
+            DiscordBottomSheet(
+
+            )
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "TransactionFail")
+    }
 
 }

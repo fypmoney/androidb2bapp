@@ -356,6 +356,8 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                     e.printStackTrace()
                 }
             }
+        } else if (requestCode == AppConstants.REQUEST_IMAGE) {
+
         }
     }
 
