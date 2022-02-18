@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="add_money">Add Money</string>
+    <string name="search_for_plan_or_enter_amount">Search for plan or enter amount</string>
 </resources>
