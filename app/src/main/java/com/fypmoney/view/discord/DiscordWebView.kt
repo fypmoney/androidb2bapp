@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
@@ -18,7 +19,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.databinding.ActivityWebviewBinding
+
+import com.fypmoney.databinding.ActivityWebviewDicordBinding
 import com.fypmoney.model.CardInfoDetailsBottomSheet
 import com.fypmoney.util.AdvancedWebView
 import com.fypmoney.util.AppConstants
@@ -31,18 +33,18 @@ import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import kotlinx.android.synthetic.main.activity_webview.*
 
 
-class DiscordWebView : BaseActivity<ActivityWebviewBinding, DiscordWebConnectVM>(),
+class DiscordWebView : BaseActivity<ActivityWebviewDicordBinding, DiscordWebConnectVM>(),
     AdvancedWebView.Listener {
 
     private var card: CardInfoDetailsBottomSheet? = null
     private lateinit var mViewModel: DiscordWebConnectVM
     private val TAG = DiscordWebView::class.java.simpleName
-    private lateinit var binding: ActivityWebviewBinding
+    private lateinit var binding: ActivityWebviewDicordBinding
 
 
     override fun getBindingVariable(): Int = BR.viewModel
 
-    override fun getLayoutId(): Int = R.layout.activity_webview
+    override fun getLayoutId(): Int = R.layout.activity_webview_dicord
 
     override fun getViewModel(): DiscordWebConnectVM {
         mViewModel = ViewModelProvider(this).get(DiscordWebConnectVM::class.java)
@@ -82,10 +84,13 @@ class DiscordWebView : BaseActivity<ActivityWebviewBinding, DiscordWebConnectVM>
                         getApplication(), key = SharedPrefUtils.SF_DICORD_CONNECTED,
                         value = "connected"
                     )
-                    val intent =
-                        Intent(this@DiscordWebView, DiscordProfileActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    Handler().postDelayed(Runnable { // your code to start second activity. Will wait for 3 seconds before calling this method
+                        val intent =
+                            Intent(this@DiscordWebView, DiscordProfileActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    }, 1500)
+
                 }
                 return false
             }
@@ -123,13 +128,6 @@ class DiscordWebView : BaseActivity<ActivityWebviewBinding, DiscordWebConnectVM>
         bottomSheet.show(supportFragmentManager, "TransactionFail")
     }
 
-    private fun callCardSettingsBottomSheet() {
-        val bottomSheet =
-            CardDetailsBottomSheet(card)
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        bottomSheet.show(supportFragmentManager, "CardSettings")
-    }
-
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
         if (keyCode == KeyEvent.KEYCODE_BACK && binding.webView1.canGoBack()) {
@@ -140,20 +138,7 @@ class DiscordWebView : BaseActivity<ActivityWebviewBinding, DiscordWebConnectVM>
     }
 
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
-                when (resultCode) {
-                    RESULT_OK -> {
-                        callCardSettingsBottomSheet()
 
-                    }
-
-                }
-            }
-        }
-    }
 
     override fun onPageStarted(url: String?, favicon: Bitmap?) {
 

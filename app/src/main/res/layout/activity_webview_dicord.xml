@@ -93,40 +93,6 @@
                 android:src="@drawable/ic_baseline_refresh_24"
                 app:tint="@color/white" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/card_details"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_24sdp"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="@dimen/_2sdp"
-
-                android:layout_toStartOf="@id/refresh"
-                android:layout_toLeftOf="@+id/refresh"
-                android:background="@drawable/round_dark_grey_backgroud_6"
-                android:paddingRight="@dimen/_18sdp">
-
-                <ImageView
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="match_parent"
-                    android:layout_marginRight="-6dp"
-                    android:layout_toLeftOf="@+id/amount_tv"
-                    android:src="@drawable/logo_white"
-                    app:layout_constraintRight_toLeftOf="@+id/amount_tv" />
-
-                <TextView
-                    android:id="@+id/amount_tv"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:elevation="1dp"
-
-                    android:gravity="center"
-                    android:text="Loading.."
-                    android:textColor="@color/cb_grey"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </RelativeLayout>
 
