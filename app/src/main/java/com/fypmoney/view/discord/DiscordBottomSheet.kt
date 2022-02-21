@@ -1,6 +1,7 @@
 package com.fypmoney.view.discord
 
 
+import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -29,8 +30,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 /*
 * This is used to show transaction fail in case of add money
 * */
-class DiscordBottomSheet(
-) : BottomSheetDialogFragment() {
+class DiscordBottomSheet(val discordWebView: Activity) : BottomSheetDialogFragment() {
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -62,6 +62,8 @@ class DiscordBottomSheet(
 
         changeMethod.setOnClickListener {
             dismiss()
+            discordWebView.finish()
+
         }
 
         return view

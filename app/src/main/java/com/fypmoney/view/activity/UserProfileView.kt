@@ -29,7 +29,9 @@ import com.fypmoney.view.adapter.GlobalListAdapter
 import com.fypmoney.view.adapter.ListUiModel
 import com.fypmoney.view.community.SocialCommunityActivity
 import com.fypmoney.view.discord.DiscordInviteActivity
+import com.fypmoney.view.discord.DiscordProfileActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
+import com.fypmoney.view.register.UserTypeOnLoginView
 import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
 import com.fypmoney.viewmodel.UserProfileViewModel
 import com.karumi.dexter.Dexter
@@ -131,6 +133,21 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                 }
 
                 2 -> {
+                    val dicordconnected =
+                        SharedPrefUtils.getString(
+                            getApplication(),
+                            SharedPrefUtils.SF_DICORD_CONNECTED
+                        )
+                    if (dicordconnected != null) {
+                        startActivity(Intent(this, DiscordProfileActivity::class.java))
+                        finishAffinity()
+
+                    } else {
+                        intentToActivityMain(
+                            this@UserProfileView,
+                            DiscordInviteActivity::class.java
+                        )
+                    }
                     intentToActivityMain(this@UserProfileView, DiscordInviteActivity::class.java)
                 }
 

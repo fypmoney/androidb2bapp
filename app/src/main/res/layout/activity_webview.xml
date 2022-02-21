@@ -131,7 +131,7 @@
         </RelativeLayout>
 
 
-        <WebView
+        <com.fypmoney.util.AdvancedWebView
             android:id="@+id/webView1"
             android:layout_width="fill_parent"
             android:visibility="visible"

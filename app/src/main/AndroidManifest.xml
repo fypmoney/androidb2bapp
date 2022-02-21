@@ -385,6 +385,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".view.discord.DiscordInviteActivity" />
         <activity android:name=".view.discord.DiscordWebViewActivity" />
+        <activity android:name=".view.discord.DiscordWebView" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

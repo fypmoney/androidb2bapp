@@ -12,9 +12,6 @@ import android.webkit.WebViewClient
 import android.widget.ImageView
 import android.widget.TextView
 import com.fypmoney.R
-import com.fypmoney.view.StoreWebpageOpener
-import com.fypmoney.view.fragment.TransactionFailBottomSheet
-import com.fypmoney.view.webview.WebViewActivity
 import kotlinx.android.synthetic.main.activity_webview.*
 
 const val ARG_WEB_URL_TO_OPEN = "web_url_to_open"
@@ -30,8 +27,9 @@ class DiscordWebViewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_webview)
 
-        val url = intent?.getStringExtra(ARG_WEB_URL_TO_OPEN)
+        var url = intent?.getStringExtra(ARG_WEB_URL_TO_OPEN)
         val pageTitle = intent?.getStringExtra(ARG_WEB_PAGE_TITLE)
+//        url="http://3.91.202.15/discord/success_redirect_url/"
 
         load_progress = findViewById(R.id.load_progress_bar)
         toolbarTitle = findViewById(R.id.titleToolbar)
@@ -45,8 +43,6 @@ class DiscordWebViewActivity : AppCompatActivity() {
 
         }
 
-        webView!!.webViewClient = StoreWebpageOpener.CustomWebViewClient()
-        webView!!.settings.javaScriptEnabled = true
 
         refresh.setOnClickListener {
             webView?.reload()
@@ -63,10 +59,9 @@ class DiscordWebViewActivity : AppCompatActivity() {
     private fun initWebView(url: String, title: String) {
         toolbarTitle?.text = title
         webView!!.clearHistory()
-        webView!!.settings.javaScriptEnabled = true
-        webView!!.settings.domStorageEnabled = true
-        webView!!.isHorizontalScrollBarEnabled = false
-        webView!!.loadUrl(url)
+
+
+
         webView!!.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 if (url.contains("/discord/failed_redirect_url")) {
@@ -87,14 +82,22 @@ class DiscordWebViewActivity : AppCompatActivity() {
             }
 
         }
+
+
+
+        webView1.setMixedContentAllowed(false)
+
+        webView1.setCookiesEnabled(true)
+        webView1.settings.setSupportMultipleWindows(true)
+        webView1.settings.javaScriptCanOpenWindowsAutomatically = true
+
+        webView!!.loadUrl(url)
     }
 
     private fun callDicordConnectionFailSheet() {
 
         val bottomSheet =
-            DiscordBottomSheet(
-
-            )
+            DiscordBottomSheet(this)
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheet.show(supportFragmentManager, "TransactionFail")
     }

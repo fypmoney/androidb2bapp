@@ -57,10 +57,10 @@ class DiscordInviteActivity : BaseActivity<ActivityDiscordBinding, DiscordActivi
             SharedPrefUtils.SF_KEY_ACCESS_TOKEN
         )
         var url =
-            "https://discord.com/oauth2/authorize?response_type=code&client_id=935784852316385310&scope=connections%20email%20gdm.join%20guilds%20guilds.join%20guilds.members.read%20identify%20messages.read&state=$authToken&prompt=consent"
+            "https://discord.com/oauth2/authorize?response_type=code&client_id=944106720404312074&scope=connections%20email%20gdm.join%20guilds%20guilds.join%20guilds.members.read%20identify%20messages.read&state=$authToken&prompt=consent"
 
 
-        val intent = Intent(this, DiscordWebViewActivity::class.java)
+        val intent = Intent(this, DiscordWebView::class.java)
         intent.putExtra(ARG_WEB_URL_TO_OPEN, url)
         intent.putExtra(ARG_WEB_PAGE_TITLE, "Connect to Discord")
         startActivity(intent)

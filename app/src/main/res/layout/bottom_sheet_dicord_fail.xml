@@ -19,7 +19,7 @@
             android:id="@+id/verification_title"
             style="@style/TextviewBold"
             android:layout_marginTop="55dp"
-            android:text="Failed"
+            android:text="Connection Failed"
             android:layout_gravity="center" />
 
 
@@ -35,23 +35,12 @@
             android:id="@+id/updated_balance"
             style="@style/TextviewRegular"
             android:layout_marginTop="43dp"
-            android:text="@string/add_money_trans_fail_text"
+            android:text="Discord connection failed."
             android:layout_gravity="center"
             android:paddingStart="40dp"
             android:textAlignment="center"
             android:paddingEnd="40dp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/add_amount"
-            style="@style/TextviewRegular"
-            android:layout_marginTop="33dp"
-            android:text="@string/add_btn_text"
-            android:layout_gravity="center"
-            android:textAlignment="center"
-            android:textSize="@dimen/textSize_18"
-            android:textColor="@color/text_color_dark"
-
-            />
 
         <LinearLayout
             android:id="@+id/linear_layout"

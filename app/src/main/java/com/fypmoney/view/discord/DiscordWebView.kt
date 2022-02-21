@@ -1,9 +1,7 @@
-package com.fypmoney.view
+package com.fypmoney.view.discord
 
 
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -16,41 +14,38 @@ import android.view.WindowManager
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.databinding.ActivityWebview2Binding
+import com.fypmoney.databinding.ActivityWebviewBinding
 import com.fypmoney.model.CardInfoDetailsBottomSheet
 import com.fypmoney.util.AdvancedWebView
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.discord.viewmodel.DiscordWebConnectVM
 import com.fypmoney.view.fragment.CardDetailsBottomSheet
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
-import com.fypmoney.viewmodel.CardDetailsViewModel
-import kotlinx.android.synthetic.main.activity_webview2.*
-import java.net.URISyntaxException
+import kotlinx.android.synthetic.main.activity_webview.*
 
 
-
-class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsViewModel>(),
+class DiscordWebView : BaseActivity<ActivityWebviewBinding, DiscordWebConnectVM>(),
     AdvancedWebView.Listener {
 
     private var card: CardInfoDetailsBottomSheet? = null
-    private lateinit var mViewModel: CardDetailsViewModel
-    private val TAG = StoreWebpageOpener2::class.java.simpleName
-    private lateinit var binding: ActivityWebview2Binding
-
+    private lateinit var mViewModel: DiscordWebConnectVM
+    private val TAG = DiscordWebView::class.java.simpleName
+    private lateinit var binding: ActivityWebviewBinding
 
 
     override fun getBindingVariable(): Int = BR.viewModel
 
-    override fun getLayoutId(): Int = R.layout.activity_webview2
+    override fun getLayoutId(): Int = R.layout.activity_webview
 
-    override fun getViewModel(): CardDetailsViewModel {
-        mViewModel = ViewModelProvider(this).get(CardDetailsViewModel::class.java)
+    override fun getViewModel(): DiscordWebConnectVM {
+        mViewModel = ViewModelProvider(this).get(DiscordWebConnectVM::class.java)
         return mViewModel
     }
 
@@ -78,29 +73,19 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
 
         binding.webView1.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                if (url.startsWith("intent://")) {
-                    try {
-                        val context: Context = view.context
-                        val intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME)
-                        if (intent != null) {
-                            view.stopLoading()
-                            val packageManager: PackageManager = context.packageManager
-                            val info = packageManager.resolveActivity(
-                                intent,
-                                PackageManager.MATCH_DEFAULT_ONLY
-                            )
-                            if (info != null) {
-                                context.startActivity(intent)
-                            } else {
-                                val fallbackUrl = intent.getStringExtra("browser_fallback_url")
-                                view.loadUrl(fallbackUrl!!)
-                            }
-                            return true
-                        }
-                    } catch (e: URISyntaxException) {
-                            Log.e(TAG, "Can't resolve intent://", e)
 
-                    }
+
+                if (url.contains("/discord/failed_redirect_url")) {
+                    callDicordConnectionFailSheet()
+                } else if (url.contains("/discord/success_redirect_url")) {
+                    SharedPrefUtils.putString(
+                        getApplication(), key = SharedPrefUtils.SF_DICORD_CONNECTED,
+                        value = "connected"
+                    )
+                    val intent =
+                        Intent(this@DiscordWebView, DiscordProfileActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
                 return false
             }
@@ -115,35 +100,10 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
         binding.webView1.settings.javaScriptCanOpenWindowsAutomatically = true
         if (url != null) {
             binding.webView1.loadUrl(url)
-        }else{
+        } else {
             Utility.showToast(getString(R.string.unable_to_open_page_please_try_again_later))
         }
 
-        mViewModel.availableAmount.observe(
-            this,
-            { amount ->
-                //amount_tv.text = " ₹" + amount
-                amount_tv.text = getString(R.string.fyp_card_details)
-            })
-        mViewModel.carddetails.observe(
-            this,
-            { carddetails ->
-                card = carddetails
-            })
-
-        binding.cardDetails.setOnClickListener {
-            if (mViewModel.carderror.get() == true) {
-                Utility.showToast(mViewModel.carderrormsg.get())
-            } else {
-                if (card != null) {
-                    askForDevicePassword()
-                } else {
-                    Toast.makeText(this, "Fetching card details", Toast.LENGTH_SHORT).show()
-                }
-
-            }
-
-        }
 
         binding.toolbarBackImage.setOnClickListener {
             onBackPressed()
@@ -152,6 +112,16 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
 
     }
 
+    private fun callDicordConnectionFailSheet() {
+
+        val bottomSheet =
+            DiscordBottomSheet(
+                this
+
+            )
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(supportFragmentManager, "TransactionFail")
+    }
 
     private fun callCardSettingsBottomSheet() {
         val bottomSheet =
@@ -159,8 +129,6 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         bottomSheet.show(supportFragmentManager, "CardSettings")
     }
-
-
 
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
