@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
-import android.text.Selection.setSelection
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -32,8 +31,6 @@ import com.fypmoney.util.Utility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.payu.india.Payu.PayuConstants
-import kotlinx.android.synthetic.main.bottom_sheet_add_new_card.*
-import kotlinx.android.synthetic.main.view_aadhaar_verification.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -143,7 +140,7 @@ class AddNewCardBottomSheet(
 
                 }
 
-                expiryList[1] < formattedDate -> {
+                expiryList.size==2 && expiryList[1] < formattedDate -> {
                     Utility.showToast(getString(R.string.card_expiry_year_valid_empty_error))
 
                 }

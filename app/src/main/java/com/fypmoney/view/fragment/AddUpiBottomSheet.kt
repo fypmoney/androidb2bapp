@@ -45,6 +45,11 @@ class AddUpiBottomSheet(
     private lateinit var binding: BottomSheetAddUpiBinding
     private val savedUpiUiModelList = mutableListOf<SavedUpiUiModel>()
 
+    companion object{
+        fun newInstance(){
+
+        }
+    }
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -237,11 +242,10 @@ class AddUpiBottomSheet(
                         when (responseData.isVPAValid) {
                             1 -> {
                                 name.text = responseData.payerAccountName
-                                dismiss()
                                 onBottomSheetClickListener.onAddUpiClickListener(
                                     upiId.text.toString(), saveCardCheckbox.isChecked
                                 )
-
+                                dismiss()
 
                             }
 
