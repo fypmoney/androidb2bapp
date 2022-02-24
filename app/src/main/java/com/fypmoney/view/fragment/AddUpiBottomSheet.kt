@@ -43,7 +43,7 @@ class AddUpiBottomSheet(
     private var onBottomSheetClickListener: OnAddUpiClickListener
 ) : BottomSheetDialogFragment(), WebApiCaller.OnWebApiResponse {
     private lateinit var binding: BottomSheetAddUpiBinding
-    val savedUpiUiModelList = mutableListOf<SavedUpiUiModel>()
+    private val savedUpiUiModelList = mutableListOf<SavedUpiUiModel>()
 
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 

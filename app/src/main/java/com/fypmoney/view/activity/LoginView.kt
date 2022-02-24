@@ -1,6 +1,5 @@
 package com.fypmoney.view.activity
 
-import android.app.Activity
 import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.content.res.ColorStateList
@@ -9,8 +8,6 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
-import com.fyp.trackr.models.UserTrackr
-import com.fyp.trackr.models.push
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -18,11 +15,8 @@ import com.fypmoney.databinding.ViewLoginBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.viewmodel.LoginViewModel
-import com.google.android.gms.auth.api.credentials.Credential
-import com.google.android.gms.auth.api.credentials.Credentials
-import com.google.android.gms.auth.api.credentials.CredentialsClient
-import com.google.android.gms.auth.api.credentials.HintRequest
-import com.moengage.core.internal.MoEConstants
+import com.google.android.gms.auth.api.credentials.*
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_add_money.*
 import kotlinx.android.synthetic.main.view_login.*
@@ -59,7 +53,7 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
             toolbar = toolbar,
             isBackArrowVisible = true
         )
-        requestPhoneNumberHint(this)
+        requestPhoneNumberHint()
         mViewBinding.activity = this
         mViewBinding.viewModel = mViewModel
         setObservers()
@@ -68,19 +62,23 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
     /*
     * This method is used for asking phone number
     * */
-    private fun requestPhoneNumberHint(currentActivity: Activity?) {
+    private fun requestPhoneNumberHint() {
+        val options = CredentialsOptions.Builder()
+            .build()
         val hintRequest = HintRequest.Builder()
             .setPhoneNumberIdentifierSupported(true)
             .build()
-        val credentialsClient: CredentialsClient = Credentials.getClient(currentActivity!!)
+        val credentialsClient: CredentialsClient = Credentials.getClient(applicationContext,options)
         val intent = credentialsClient.getHintPickerIntent(hintRequest)
         try {
             startIntentSenderForResult(
                 intent.intentSender,
-                1008, null, 0, 0, 0
+                1008, null, 0, 0, 0,null
             )
         } catch (e: SendIntentException) {
             e.printStackTrace()
+            FirebaseCrashlytics.getInstance().recordException(e)
+
         }
     }
     /**
@@ -178,7 +176,7 @@ class LoginView : BaseActivity<ViewLoginBinding, LoginViewModel>() {
             AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
                 when (resultCode) {
                     RESULT_OK -> {
-                        requestPhoneNumberHint(this)
+                        requestPhoneNumberHint()
                     }
 
                 }
