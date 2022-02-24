@@ -8,6 +8,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -34,6 +35,8 @@ import org.jetbrains.annotations.NotNull
 *  This class is used to handle the push notifications in the application
 * */
 class MyFirebaseMessagingService : FirebaseMessagingService() {
+
+
     override fun onNewToken(s: String) {
         super.onNewToken(s)
         Log.d("FCMToken", s)
@@ -61,25 +64,60 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             Log.d("FCMToken_data", result.toString())
 
 
-
             remoteMessage.let {
-                val notificationBuilder: NotificationCompat.Builder =
-                    NotificationCompat.Builder(this, NotificationUtils.getChannelId(
-                        NotificationUtils.Channels.General
-                    ))
-                        .setContentTitle(it.notification?.title.toString())
+                val notificationBuilder =
+                    NotificationCompat.Builder(
+                        this, NotificationUtils.getChannelId(
+                            NotificationUtils.Channels.General
+                        )
+                    )
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+                    notificationBuilder?.setContentTitle(it.notification?.title.toString())
                         .setContentText(it.notification?.body.toString())
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setStyle(NotificationCompat.BigTextStyle())
                         .setSmallIcon(R.drawable.ic_notification)
-                        .setSound(Uri.parse(
-                            ContentResolver.SCHEME_ANDROID_RESOURCE
-                                    + "://" + BuildConfig.APPLICATION_ID + "/" + R.raw.notification_sound))
-                        .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher_round))
+                        .setSound(
+                            Uri.parse(
+                                ContentResolver.SCHEME_ANDROID_RESOURCE
+                                        + "://" + BuildConfig.APPLICATION_ID + "/" + R.raw.notification_sound
+                            )
+                        )
+                        .setLargeIcon(
+                            BitmapFactory.decodeResource(
+                                resources,
+                                R.mipmap.ic_launcher_round
+                            )
+                        )
                         .setTicker(resources.getString(R.string.app_name))
                         .setAutoCancel(true)
+                } else {
 
-                val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+                    notificationBuilder?.setContentTitle(it.notification?.title.toString())
+                        .setContentText(it.notification?.body.toString())
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setStyle(NotificationCompat.BigTextStyle())
+                        .setSmallIcon(R.drawable.ic_notification_png)
+                        .setSound(
+                            Uri.parse(
+                                ContentResolver.SCHEME_ANDROID_RESOURCE
+                                        + "://" + BuildConfig.APPLICATION_ID + "/" + R.raw.notification_sound
+                            )
+                        )
+                        .setLargeIcon(
+                            BitmapFactory.decodeResource(
+                                resources,
+                                R.mipmap.ic_launcher_foreground
+                            )
+                        )
+                        .setTicker(resources.getString(R.string.app_name))
+                        .setAutoCancel(true)
+                }
+
+
+                val notificationManager =
+                    getSystemService(NOTIFICATION_SERVICE) as NotificationManager
 
 
                 val contentIntent = PendingIntent.getActivity(
@@ -90,8 +128,9 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 )
 
 
-                notificationBuilder.setContentIntent(contentIntent)
-                notificationManager.notify(4848, notificationBuilder.build())
+
+                notificationBuilder?.setContentIntent(contentIntent)
+                notificationManager.notify(4848, notificationBuilder?.build())
                 val uiHandler = Handler(Looper.getMainLooper())
                 uiHandler.post(Runnable {
                     Glide.with(this)
@@ -103,8 +142,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                                 resource: Bitmap,
                                 transition: Transition<in Bitmap?>?
                             ) {
-                                notificationBuilder.setLargeIcon(resource)
-                                notificationManager.notify(4848, notificationBuilder.build())
+                                notificationBuilder?.setLargeIcon(resource)
+                                notificationManager.notify(4848, notificationBuilder?.build())
                             }
                         })
                 })
