@@ -143,6 +143,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginStart="24dp"
                         android:layout_marginTop="16dp"
+                        android:digits="0987654321"
 
 
                         android:layout_marginEnd="24dp"
@@ -150,6 +151,7 @@
                         android:background="@drawable/strokebutton_gray_middle_12"
                         android:drawableStart="@drawable/rupee_symbol"
                         android:drawablePadding="5dp"
+
                         android:drawableTint="@color/black"
                         android:inputType="numberSigned"
                         android:longClickable="false"
