@@ -3,8 +3,10 @@ package com.fypmoney.view.home.main.homescreen.viewmodel
 import android.app.Application
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -16,6 +18,9 @@ import com.fypmoney.model.UserDeviceInfo
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 
@@ -70,52 +75,64 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
     }
 
     fun postLatlong(latitude: String, longitude: String, userId: Long) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_USER_DEVICE_INFO,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_USER_DEVICE_INFO),
-                request_type = ApiUrl.PUT,
-                param = UserDeviceInfo(
-                    latitude = latitude,
-                    longitude = longitude,
-                    userId = userId,
-                    make = Build.BRAND,
-                    model = Build.MODEL,
-                    modelVersion = Build.ID,
-                    timezone = TimeZone.getDefault().getDisplayName(
-                        Locale.ROOT
-                    ),
-                    locale = PockketApplication.instance.resources.configuration.locale.country,
-                    dtoken = SharedPrefUtils.getString(
-                        PockketApplication.instance,
-                        SharedPrefUtils.SF_KEY_FIREBASE_TOKEN
-                    ) ?: "",
-                    isHomeViewed = "YES",
-                    rfu1 = getAllInstalledApps()
+        Log.d(TAG,"viewmodelscope: ${Thread.currentThread().name}")
+        viewModelScope.launch {
+            WebApiCaller.getInstance().request(
+                ApiRequest(
+                    purpose = ApiConstant.API_USER_DEVICE_INFO,
+                    endpoint = NetworkUtil.endURL(ApiConstant.API_USER_DEVICE_INFO),
+                    request_type = ApiUrl.PUT,
+                    param = UserDeviceInfo(
+                        latitude = latitude,
+                        longitude = longitude,
+                        userId = userId,
+                        make = Build.BRAND,
+                        model = Build.MODEL,
+                        modelVersion = Build.ID,
+                        timezone = TimeZone.getDefault().getDisplayName(
+                            Locale.ROOT
+                        ),
+                        locale = PockketApplication.instance.resources.configuration.locale.country,
+                        dtoken = SharedPrefUtils.getString(
+                            PockketApplication.instance,
+                            SharedPrefUtils.SF_KEY_FIREBASE_TOKEN
+                        ) ?: "",
+                        isHomeViewed = "YES",
+                        rfu1 = getAllInstalledApps()
 
-                ), onResponse = this,
-                isProgressBar = false
+                    ), onResponse = this@HomeActivityVM,
+                    isProgressBar = false
+                )
             )
-        )
+        }
+        Log.d(TAG,"running thread name in out of viewmodelscope: ${Thread.currentThread().name}")
+
     }
 
 
-    private fun getAllInstalledApps():String?{
+    private suspend fun getAllInstalledApps():String?{
         return if(!checkListOfAppIsSynced()){
-            val pm: PackageManager = PockketApplication.instance.packageManager
-            val listOfApplication = pm.getInstalledPackages(0);
-            SharedPrefUtils.putBoolean(
-                PockketApplication.instance,
-                SharedPrefUtils.SF_IS_INSTALLED_APPS_SYNCED,
-                true
-            )
-            listOfApplication.map { it.applicationInfo.loadLabel(pm) }.toString()
+            getListOfApps()
         }else{
             null
         }
 
 
     }
+
+    private suspend fun getListOfApps(): String = withContext(Dispatchers.IO){
+        val pm: PackageManager = PockketApplication.instance.packageManager
+        val listOfApplication = pm.getInstalledPackages(0);
+        SharedPrefUtils.putBoolean(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_IS_INSTALLED_APPS_SYNCED,
+            true
+        )
+        Log.d(TAG,"running thread name in corutine: ${Thread.currentThread().name}")
+        Log.d(TAG,"List Of applications : ${listOfApplication.map { it.applicationInfo.loadLabel(pm) }}")
+        listOfApplication.map { it.applicationInfo.loadLabel(pm) }.toString()
+    }
+
     private fun checkListOfAppIsSynced():Boolean{
         return SharedPrefUtils.getBoolean(
             PockketApplication.instance,
