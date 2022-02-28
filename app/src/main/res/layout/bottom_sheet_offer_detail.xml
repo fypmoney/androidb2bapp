@@ -67,7 +67,72 @@
 
 
             </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/couponcodelayout"
+    android:layout_height="wrap_content">
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/referal_code_tv"
+        style="@style/TextviewRegular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:text="Coupon code"
+        android:textColor="@color/grey_heading"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/round_dark_grey_backgroud_6"
+        android:id="@+id/copy_layout"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="@dimen/_6sdp"
+        android:backgroundTint="#EEF9FD"
+        android:layout_marginStart="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/referal_code_tv"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/referal_code_value_tv"
+            style="@style/TextviewBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/text_color_dark"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintVertical_bias="0.01"
+            tools:text="FYP2D4" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/copy_code_tv"
+            style="@style/TextviewBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+
+
+            android:layout_marginEnd="@dimen/_12sdp"
+
+            android:text="@string/copy"
+            android:textColor="#5AAFC9"
+            android:textSize="17sp"
+
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/assigned"
