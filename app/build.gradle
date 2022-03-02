@@ -26,8 +26,8 @@ android {
         ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 56
-        versionName "2.0.8"
+        versionCode 57
+        versionName "2.0.9"
 
         multiDexEnabled = true
         vectorDrawables.useSupportLibrary = true
@@ -223,7 +223,7 @@ dependencies {
 
     //play core lib
     implementation 'com.google.android.play:core:1.10.1'
-            debugImplementation "com.github.chuckerteam.chucker:library:3.2.0"
+    debugImplementation "com.github.chuckerteam.chucker:library:3.2.0"
     releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.2.0"
 //"com.github.chuckerteam.chucker:library-no-op:3.2.0"
 

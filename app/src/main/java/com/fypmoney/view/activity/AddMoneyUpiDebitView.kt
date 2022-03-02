@@ -97,8 +97,8 @@ class AddMoneyUpiDebitView :
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.event.observe(this,{
-            when(it){
+        mViewModel.event.observe(this) {
+            when (it) {
                 AddMoneyUpiDebitViewModel.AddMoneyEvent.OnADDNewCardClickedEvent -> {
                     callAddNewCardBottomSheet()
                 }
@@ -106,7 +106,7 @@ class AddMoneyUpiDebitView :
                     callUpiIntent()
                 }
             }
-        })
+        }
 
 
 

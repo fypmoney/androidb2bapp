@@ -114,6 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:OtpItemWidth="60dp"
+                    android:inputType="textVisiblePassword|number"
                     app:OtpItemHeight="60dp"
                     android:layout_marginStart="@dimen/_5sdp"
                     android:layout_marginTop="@dimen/_20sdp"
@@ -121,7 +122,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/otp"
                     android:layout_marginEnd="@dimen/_5sdp"
-                    android:inputType="number"
+
                     android:focusableInTouchMode="true"
                     android:cursorVisible="false"
                     android:itemBackground="@drawable/otp_background"

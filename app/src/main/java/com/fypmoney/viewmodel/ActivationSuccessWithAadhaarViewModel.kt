@@ -111,8 +111,11 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                         )
                     }
                     if (postKycScreenCode.value.isNullOrEmpty()) {
-                        postKycScreenCode.value =
-                            responseData.customerInfoResponseDetails?.postKycScreenCode!!
+                        responseData.customerInfoResponseDetails?.postKycScreenCode?.let {
+                            postKycScreenCode.value = it
+                        }
+
+
                     }
 
                     responseData.customerInfoResponseDetails?.postKycScreenCode?.let {

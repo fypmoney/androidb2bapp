@@ -206,7 +206,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 loadMoneyBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
                 loadMoneyBottomSheet.show(childFragmentManager, "LoadMoneySheet")
             }
-            null -> TODO()
         }
     }
 

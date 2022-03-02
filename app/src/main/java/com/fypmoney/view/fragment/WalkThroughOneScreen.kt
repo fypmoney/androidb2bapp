@@ -3,14 +3,11 @@ package com.fypmoney.view.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ViewWalkThroughNewOneBinding
-import com.fypmoney.databinding.ViewWalkThroughOneBinding
 import com.fypmoney.viewmodel.WalkThroughOneViewModel
-import kotlinx.android.synthetic.main.view_walk_through_one.*
 
 
 /*
