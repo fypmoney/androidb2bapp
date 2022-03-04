@@ -20,6 +20,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
@@ -107,7 +108,10 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,
         }
 
         bankProfileResponseDetails?.kycType?.let {
-            if(it != "MINIMUM"){
+            if (it != "MINIMUM") {
+                atmTxt.toVisible()
+                vAtmSwitch.toVisible()
+            } else {
                 atmTxt.toGone()
                 vAtmSwitch.toGone()
             }

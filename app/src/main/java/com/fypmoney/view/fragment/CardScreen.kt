@@ -486,7 +486,7 @@ class CardScreen(val tabchangeListner: HomeTabChangeClickListener) :
     }
 
 
-    override fun onCardSettingsClick(position: Int) {
+    override fun onCardSettingsClick(position: Int, name: String?) {
         when (position) {
             0 -> {
                 callCardBlockUnblockBottomSheet()
