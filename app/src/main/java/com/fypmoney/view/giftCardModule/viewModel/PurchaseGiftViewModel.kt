@@ -20,10 +20,7 @@ import com.fypmoney.model.*
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.giftCardModule.ContactsGiftCardAdapter
-import com.fypmoney.view.giftCardModule.model.GiftProductResponse
-import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardRequest
-import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardResponse
-import com.fypmoney.view.giftCardModule.model.VoucherProductItem
+import com.fypmoney.view.giftCardModule.model.*
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -39,33 +36,46 @@ class PurchaseGiftViewModel(application: Application) : BaseViewModel(applicatio
     )
 
     var selectedPosition = ObservableField(-1)
-    var searchedContact = ObservableField<String>()
+    var minValue = ObservableField(-1)
+    var maxValue = ObservableField(-1)
+    var flexibleAmount = ObservableField(false)
+
+
     var selectedContactFromList = ObservableField<ContactEntity>()
     var selectedGiftCard = ObservableField<VoucherProductItem>()
 
-    var productList = MutableLiveData<GiftProductResponse>()
+
     var giftpurchased = MutableLiveData<PurchaseGiftCardResponse>()
-    var emptyContactListError = MutableLiveData<Boolean>()
-    var contactNotFound = MutableLiveData<Boolean>(false)
+
+
     var onItemClicked = MutableLiveData<ContactEntity>()
-    var contactRepository = ContactRepository(mDB = appDatabase)
+
     var availableAmount = ObservableField(application.getString(R.string.dummy_amount))
     var amountSelected = ObservableField<String>()
     var isFetchBalanceVisible = ObservableField(true)
-    var contactAdapter = ContactsGiftCardAdapter(this, userId)
+
     var onIsAppUserClicked = MutableLiveData<Boolean>()
-    var selectedContactList = ObservableArrayList<ContactEntity>()
-    var countCheckIsAppUserApiCall: Int? = 0
     var onSelectClicked = MutableLiveData<Boolean>()
+
+
     fun callBrandGiftCards(orderId: String?) {
+
+        val request = RequestGiftRequest()
+//        request.brands!!.add(orderId)
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.GET_BRAND_GIFT_CARD,
-                NetworkUtil.endURL(ApiConstant.GET_BRAND_GIFT_CARD + orderId),
-                ApiUrl.GET,
-                BaseRequest(),
-                this, isProgressBar = true
+                purpose = ApiConstant.GET_GIFTS_LIST,
+                endpoint = NetworkUtil.endURL(ApiConstant.GET_GIFTS_LIST),
+                request_type = ApiUrl.POST,
+                RequestGiftswithPage(
+                    request = request,
+                    0,
+                    10,
+                    "id,asc"
+                ), onResponse = this,
+                isProgressBar = false
             )
+
         )
 
 
@@ -85,22 +95,6 @@ class PurchaseGiftViewModel(application: Application) : BaseViewModel(applicatio
 
     }
 
-    fun onSelectClicked() {
-        when {
-            selectedContactList.isNullOrEmpty() -> {
-                Utility.showToast(PockketApplication.instance.getString(R.string.contact_error))
-            }
-            else -> {
-                onSelectClicked.value = true
-            }
-
-        }
-
-    }
-
-
-
-
 
     fun onAddClicked() {
         amountSelected.get()?.toIntOrNull()?.let {
@@ -108,36 +102,34 @@ class PurchaseGiftViewModel(application: Application) : BaseViewModel(applicatio
                 TextUtils.isEmpty(amountSelected.get()) -> {
                     Utility.showToast(PockketApplication.instance.getString(R.string.add_money_empty_error))
                 }
-                it < 10 -> {
-                    Utility.showToast(PockketApplication.instance.getString(R.string.minimum_load_amount))
+
+                flexibleAmount.get() == true && minValue.get() != null && it > minValue.get()!!
+                    .toInt() -> {
+//
+                    Utility.showToast("Amount should be more than ${minValue.get()}")
                 }
+                flexibleAmount.get() == true && maxValue.get() != null && it < maxValue.get()!!
+                    .toInt() -> {
+//                    maxLoadLimitReached.value = true
+                    Utility.showToast("Amount should be less than ${maxValue.get()}")
+                }
+
                 else -> {
                     onAddClicked.value = true
                 }
             }
         }
 
-
     }
-
 
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.API_SNC_CONTACTS -> {
 
-                if (responseData is ContactResponse) {
-                    // it update the sync status of the contacts which are synced to server and also update the is app user status based on server response
-                    contactRepository.updateIsSyncAndIsAppUserStatus(responseData.contactResponseDetails?.userPhoneContact)
-                    getAllContacts()
-                }
-            }
             ApiConstant.PURCHASE_GIFT_CARD -> {
 
-
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
-
                 val obj = Gson().fromJson(
                     json.get("data"),
                     PurchaseGiftCardResponse::class.java
@@ -146,102 +138,32 @@ class PurchaseGiftViewModel(application: Application) : BaseViewModel(applicatio
 
 
             }
-            ApiConstant.GET_BRAND_GIFT_CARD -> {
+            ApiConstant.GET_GIFTS_LIST -> {
 
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
-                val list = Gson().fromJson(
-                    json.get("data"),
-                    GiftProductResponse::class.java
-                )
-
-                productList.postValue(list)
-            }
-
-            ApiConstant.API_CHECK_IS_APP_USER -> {
-                if (responseData is IsAppUserResponse) {
-                    if (responseData.isAppUserResponseDetails.isAppUser!!) {
-                        contactAdapter.newSearchList?.clear()
-                        val contactEntity = ContactEntity()
-                        contactEntity.contactNumber = searchedContact.get()
-                        contactEntity.firstName = responseData.isAppUserResponseDetails.name
-                        contactEntity.isAppUser = true
-                        contactEntity.userId = responseData.isAppUserResponseDetails.userId
-                        emptyContactListError.value = false
-                        contactAdapter.newSearchList?.add(contactEntity)
-                        contactAdapter.setList(contactAdapter.newSearchList)
-
-
-                    } else {
-                        onIsAppUserClicked.value = true
-                    }
-                }
-            }
-        }
-    }
-
-    private fun getAllContacts() {
-
-        contactRepository.getContactsFromDatabase().let {
-
-
-            progressDialog.value = false
-            val sortedList =
-                contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>
-            if (!sortedList.isNullOrEmpty()) {
-
-                contactAdapter.setList(sortedList)
-                contactAdapter.newContactList?.addAll(sortedList)
-            } else {
-
-                contactNotFound.value = true
-            }
-//            } catch (e: Exception) {
+//                val list = Gson().fromJson(
+//                    json.get("data"),
+//                    GiftProductResponse::class.java
+//                )
 //
-//                e.printStackTrace()
-//            }
+//                productList.postValue(list)
+            }
 
 
         }
-
-
     }
 
-    fun callIsAppUserApi() {
-        countCheckIsAppUserApiCall = countCheckIsAppUserApiCall?.plus(1)
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_CHECK_IS_APP_USER,
-                endpoint = NetworkUtil.endURL(
-                    ApiConstant.API_CHECK_IS_APP_USER + searchedContact.get()?.trim()
-                ),
-                request_type = ApiUrl.GET,
-                onResponse = this,
-                isProgressBar = true,
-                param = BaseRequest()
-            )
-        )
 
 
-    }
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         progressDialog.value = false
 
         when (purpose) {
-            ApiConstant.API_CHECK_IS_APP_USER -> {
-                if (countCheckIsAppUserApiCall == 1) {
-                    callIsAppUserApi()
-                } else {
-                    Utility.showToast("Please try again")
-                }
-            }
-            ApiConstant.API_SNC_CONTACTS -> {
-                emptyContactListError.value = true
-                getAllContacts()
-            }
+
         }
     }
 

@@ -14,7 +14,10 @@ import com.fypmoney.R
 import com.fypmoney.view.giftCardModule.GiftCardAdapter
 import com.fypmoney.view.giftCardModule.model.GiftSearchResponse
 import com.fypmoney.view.giftCardModule.model.VoucherBrandItem
+import kotlinx.android.synthetic.main.gift_section_base.view.*
 import kotlinx.android.synthetic.main.reward_history_base.view.*
+import kotlinx.android.synthetic.main.reward_history_base.view.date_tv
+import kotlinx.android.synthetic.main.reward_history_base.view.rv_base
 import kotlinx.android.synthetic.main.reward_history_item_leaderboard.view.*
 
 import java.util.*
@@ -24,8 +27,9 @@ class GiftListBaseAdapter(
     val items: List<GiftSearchResponse>,
     val contextR: Context,
     val onRecentUserClick: (model: VoucherBrandItem) -> Unit,
-    private val lifecycleOwner: LifecycleOwner,
 
+    private val lifecycleOwner: LifecycleOwner,
+    val viewAllClicked: (model: GiftSearchResponse) -> Unit
     ) : RecyclerView.Adapter<GiftListBaseAdapter.ViewHolder>() {
 
 
@@ -65,7 +69,10 @@ class GiftListBaseAdapter(
                 onRecentUserClick(it)
             }
         )
+        holder.view_all.setOnClickListener {
+            viewAllClicked(items[position])
 
+        }
 
         with(holder.rv_list!!) {
             adapter = giftCardAdapter
@@ -89,6 +96,6 @@ class GiftListBaseAdapter(
 
         var date_tv = view.date_tv
 
-
+        var view_all = view.view_all
     }
 }

@@ -11,6 +11,7 @@ data class PurchaseGiftCardRequest(
 
 
 data class VoucherDetailsItem(
-    var voucherProductId: Int? = null
+    var voucherProductId: Int? = null,
+    var amount: Int? = null
 )
 

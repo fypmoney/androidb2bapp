@@ -29,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <androidx.cardview.widget.CardView
+                <RelativeLayout
                     android:id="@+id/card"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -42,16 +42,16 @@
                     app:layout_constraintTop_toTopOf="parent">
 
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/offer_iv"
+                    <ImageView
+                        android:id="@+id/brand_logo"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/myntra_logo" />
+
+                        />
 
 
-                </androidx.cardview.widget.CardView>
+                </RelativeLayout>
 
 
                 <androidx.appcompat.widget.AppCompatTextView

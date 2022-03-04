@@ -6,6 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.fypmoney.databinding.ItemGiftCardBinding
 import com.fypmoney.extension.executeAfter
 import com.fypmoney.model.FeedDetails
@@ -46,12 +47,16 @@ class GiftCardVH(
 //            loadImage(recentIv,user.profilePicResourceId,
 //                ContextCompat.getDrawable(this.recentIv.context, R.drawable.ic_profile_img),true)
 //
-            binding.descTv.text = user.description
+            binding.descTv.text = user.brandTagLine1
+            Glide.with(binding.brandLogo.context).load(user?.brandLogo).into(binding.brandLogo)
+
             binding.buygift.setOnClickListener {
                 onRecentUserClick(user)
             }
 
+
         }
+
     }
 
 }

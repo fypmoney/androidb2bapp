@@ -390,6 +390,8 @@
         <activity android:name=".view.giftCardModule.GiftTermsAndConditions" />
         <activity android:name=".view.giftCardModule.GiftHistoryActivity" />
         <activity android:name=".view.giftCardModule.GiftHistoryUnusedActivity" />
+        <activity android:name=".view.giftCardModule.GiftDetailsActivity" />
+        <activity android:name=".view.giftCardModule.GiftViewAllScreen" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

@@ -3,7 +3,6 @@ package com.fypmoney.view.giftCardModule
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
@@ -11,15 +10,10 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityAllGiftCardsBinding
 import com.fypmoney.util.AppConstants
-import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.giftCardModule.adapters.GiftListBaseAdapter
 import com.fypmoney.view.giftCardModule.model.GiftSearchResponse
 import com.fypmoney.view.giftCardModule.model.VoucherBrandItem
 import com.fypmoney.view.giftCardModule.viewModel.GiftCardViewModel
-import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
-import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
-import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
-import com.fypmoney.view.home.main.explore.model.SectionContentItem
 
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
 import java.util.ArrayList
@@ -90,27 +84,39 @@ class GiftCardsListScreen : BaseActivity<ActivityAllGiftCardsBinding, GiftCardVi
             arrayList,
             this,
             onRecentUserClick = {
-                val intent = Intent(this, PurchaseGiftCardScreen2::class.java)
 
-                startActivity(intent)
+
+                intentToActivity(it, PurchaseGiftCardScreen2::class.java)
+
             },
-            this
+            this, viewAllClicked = {
+                intentToActivity(it, GiftViewAllScreen::class.java)
+            }
         )
         mViewBinding?.giftcardRv?.adapter = typeAdapter
+    }
+
+    private fun intentToActivity(voucherBrandItem: VoucherBrandItem, aClass: Class<*>) {
+        val intent = Intent(this, aClass)
+        intent.putExtra(AppConstants.GIFT_BRAND_SELECTED, voucherBrandItem)
+        startActivity(intent)
+    }
+
+    private fun intentToActivity(voucherBrandItem: GiftSearchResponse, aClass: Class<*>) {
+        val intent = Intent(this, aClass)
+        intent.putExtra(AppConstants.GIFT_BRAND_SELECTED, voucherBrandItem)
+        startActivity(intent)
     }
 
     /*
     * This method is used to observe the observers
     * */
     private fun setObservers() {
-        mviewModel?.allGiftList?.observe(this, {
+        mviewModel?.allGiftList?.observe(this) {
 
-            it.forEach {
-
-            }
             setRecyclerView(it)
 
-        })
+        }
     }
 
 

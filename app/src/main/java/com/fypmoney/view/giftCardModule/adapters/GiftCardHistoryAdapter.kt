@@ -58,7 +58,7 @@ class GiftCardHistoryVH(
                 binding.buygift.text = "RECIEVED"
             }
             binding.giftTitle.text = user.productName
-            binding.buygift.setOnClickListener {
+            binding.gridOfferCv.setOnClickListener {
                 onRecentUserClick(user)
             }
             binding.price.text = "₹" + Utility.convertToRs(user.amount?.toString())

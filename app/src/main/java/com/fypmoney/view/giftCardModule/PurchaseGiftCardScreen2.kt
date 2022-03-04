@@ -8,12 +8,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.database.entity.ContactEntity
-import com.fypmoney.databinding.ViewPurchaseGiftCard2Binding
 
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
@@ -26,30 +24,36 @@ import kotlinx.android.synthetic.main.toolbar_gift_card.*
 import java.util.*
 import kotlin.collections.ArrayList
 import android.widget.RadioButton
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.fypmoney.databinding.ActivityPurchaseGiftCard2Binding
 
 import com.fypmoney.util.AppConstants
+import com.fypmoney.view.activity.ContactViewAddMember
 import com.fypmoney.view.giftCardModule.model.*
-import kotlinx.android.synthetic.main.view_purchase_gift_card2.view.*
+import kotlinx.android.synthetic.main.activity_purchase_gift_card2.view.*
 
 
-class PurchaseGiftCardScreen2 : BaseActivity<ViewPurchaseGiftCard2Binding, PurchaseGiftViewModel>(),
+class PurchaseGiftCardScreen2 :
+    BaseActivity<ActivityPurchaseGiftCard2Binding, PurchaseGiftViewModel>(),
     DialogUtils.OnAlertDialogClickListener,
     Utility.OnAllContactsAddedListener {
 
-    private var giftBrand: GiftProductResponse = GiftProductResponse()
+
     private var giftCardpurchaseBottomSheet: GiftCardNotFyperBottomSheet? = null
     private var giftCardAdapter: GiftProductListAdapter? = null
     private var giftList: List<VoucherProductItem?>? = ArrayList()
 
     private lateinit var mViewModel: PurchaseGiftViewModel
-    private lateinit var mViewBinding: ViewPurchaseGiftCard2Binding
-
+    private lateinit var mViewBinding: ActivityPurchaseGiftCard2Binding
+    private var gotBrandDetails: VoucherBrandItem? = null
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.view_purchase_gift_card2
+        return R.layout.activity_purchase_gift_card2
     }
 
     override fun getViewModel(): PurchaseGiftViewModel {
@@ -69,58 +73,23 @@ class PurchaseGiftCardScreen2 : BaseActivity<ViewPurchaseGiftCard2Binding, Purch
             backArrowTint = Color.WHITE
         )
         tnc.setOnClickListener {
-            if (giftBrand != null) {
+            if (gotBrandDetails != null) {
 
-                intentToActivity(giftBrand, GiftTermsAndConditions::class.java)
+                intentToActivity(gotBrandDetails, GiftTermsAndConditions::class.java)
 
             }
         }
 
+        mViewBinding.selectContact.setOnClickListener(View.OnClickListener {
+            intentToActivity(ContactViewAddMember::class.java)
+        })
 
-        mViewBinding.payAndPurchase.setOnClickListener {
-            if (mViewModel.selectedGiftCard.get() != null) {
-                var purchase = PurchaseGiftCardRequest()
-//                purchase.destinationName =
-//                    mViewModel.selectedContactFromList.get()?.firstName + " " + mViewModel.selectedContactFromList.get()?.lastName
+        gotBrandDetails = intent?.getParcelableExtra(AppConstants.GIFT_BRAND_SELECTED)
 
-                if (mViewBinding.myself.isChecked) {
-                    purchase.destinationMobileNo = SharedPrefUtils.getString(
-                        application,
-                        SharedPrefUtils.SF_KEY_USER_MOBILE
-                    )
-
-                    purchase.giftedPerson = "FYPUSER"
-                    var firstName = SharedPrefUtils.getString(
-                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_FIRST_NAME
-                    )
-                    var lastName = SharedPrefUtils.getString(
-                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_LAST_NAME
-                    )
-                    purchase.destinationEmail = SharedPrefUtils.getString(
-                        application,
-                        SharedPrefUtils.SF_KEY_USER_EMAIL
-                    )
-                    purchase.destinationName = "$firstName $lastName"
-                    var voucher = VoucherDetailsItem()
-                    voucher.voucherProductId = mViewModel.selectedGiftCard.get()?.id
-                    val supplierNames: List<VoucherDetailsItem> = listOf(voucher)
-                    purchase.voucherDetails = supplierNames
-                    mViewModel.purchaseGiftCardRequest(purchase)
-                } else if (mViewBinding.someone.isChecked) {
-                    purchase.destinationMobileNo = mViewBinding.phone.text.toString()
-                    purchase.giftedPerson = "FYPUSER"
-                    purchase.destinationName = mViewBinding.etFirstName.text.toString()
-                    purchase.destinationEmail = mViewBinding.etEmailIdData.text.toString()
-                    var voucher = VoucherDetailsItem()
-                    voucher.voucherProductId = mViewModel.selectedGiftCard.get()?.id
-                    val supplierNames: List<VoucherDetailsItem> = Arrays.asList(voucher)
-                    purchase.voucherDetails = supplierNames
-                    mViewModel.purchaseGiftCardRequest(purchase)
+        setUpRecyclerView()
+        setData(gotBrandDetails)
 
 
-                }
-            }
-        }
 
         setObservers()
         mViewBinding.radiogroup.setOnCheckedChangeListener { group, checkedId ->
@@ -138,48 +107,78 @@ class PurchaseGiftCardScreen2 : BaseActivity<ViewPurchaseGiftCard2Binding, Purch
             }
         }
 
-        mViewModel.callBrandGiftCards("OLA")
+        mViewModel.callBrandGiftCards("")
 
-        setUpRecyclerView()
+
     }
 
-    private fun intentToActivity(contactEntity: GiftProductResponse?, aClass: Class<*>) {
-        val intent = Intent(this, aClass)
-        intent.putExtra(AppConstants.GIFT_BRAND_SELECTED, contactEntity)
-        startActivity(intent)
-    }
+    private fun setData(gotBrandDetails: VoucherBrandItem?) {
+        Glide.with(this).load(gotBrandDetails?.detailImage).into(mViewBinding.banner)
 
-    private fun checkAndAskPermission() {
-        when (checkPermission(android.Manifest.permission.READ_CONTACTS)) {
-            true -> {
-                mViewModel.progressDialog.value = true
-                Utility.getAllContactsInList(
-                    contentResolver,
-                    this,
-                    contactRepository = mViewModel.contactRepository
-                )
-
-            }
-            else -> {
-                requestPermission(android.Manifest.permission.READ_CONTACTS)
-            }
+        mViewBinding.maxMinLen.text = gotBrandDetails?.brandTagLine2
+        mViewModel.minValue.set(gotBrandDetails?.minPrice)
+        mViewModel.maxValue.set(gotBrandDetails?.maxPrice)
+        if (gotBrandDetails?.fixedDenomiation.isNullOrEmpty()) {
+            mViewModel.flexibleAmount.set(false)
+        } else {
+            mViewModel.flexibleAmount.set(true)
         }
-    }
 
-    /*
-    * This method is used to observe the observers
-    * */
-    private fun setObservers() {
-        mViewModel?.productList?.observe(this) {
 
-            mViewBinding.messageText.text = it.giftMessage
 
-            giftBrand = it
+
+
+        gotBrandDetails?.let {
+            mViewBinding.giftMsg.text = it.giftMessage
+
+
             (mViewBinding?.rvProducts?.adapter as GiftProductListAdapter).run {
                 giftList = it.voucherProduct
                 submitList(giftList)
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        val returnValue: ContactEntity? =
+            data?.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE)
+        if (requestCode == 13 && resultCode != RESULT_CANCELED && returnValue != null) {
+
+            mViewBinding.phone.setText(Utility.removePlusOrNineOneFromNo(returnValue.contactNumber))
+            mViewBinding.etFirstName.setText(returnValue.firstName + " " + returnValue.lastName)
+
+        }
+
+
+    }
+
+    private fun intentToActivity(contactEntity: VoucherBrandItem?, aClass: Class<*>) {
+        val intent = Intent(this, aClass)
+        intent.putExtra(AppConstants.GIFT_BRAND_SELECTED, contactEntity)
+        startActivity(intent)
+    }
+
+    private fun intentToActivity(aClass: Class<*>) {
+        startActivityForResult(Intent(this, aClass), 13)
+    }
+
+
+    /*
+    * This method is used to observe the observers
+    * */
+    private fun setObservers() {
+//        mViewModel?.productList?.observe(this) {
+//
+//            mViewBinding.messageText.text = it.giftMessage
+//
+//
+//            (mViewBinding?.rvProducts?.adapter as GiftProductListAdapter).run {
+//                giftList = it.voucherProduct
+//                submitList(giftList)
+//            }
+//        }
         mViewModel?.giftpurchased?.observe(this) {
             GiftCardPurchased(it)
 
@@ -188,7 +187,54 @@ class PurchaseGiftCardScreen2 : BaseActivity<ViewPurchaseGiftCard2Binding, Purch
 
         mViewModel.onAddClicked.observe(this) {
             if (it) {
+                if (mViewModel.selectedGiftCard.get() != null) {
+                    var purchase = PurchaseGiftCardRequest()
+//                purchase.destinationName =
+//                    mViewModel.selectedContactFromList.get()?.firstName + " " + mViewModel.selectedContactFromList.get()?.lastName
 
+                    if (mViewBinding.myself.isChecked) {
+                        purchase.destinationMobileNo = SharedPrefUtils.getString(
+                            application,
+                            SharedPrefUtils.SF_KEY_USER_MOBILE
+                        )
+
+                        purchase.giftedPerson = "MYSELF"
+                        var firstName = SharedPrefUtils.getString(
+                            getApplication(), key = SharedPrefUtils.SF_KEY_USER_FIRST_NAME
+                        )
+                        var lastName = SharedPrefUtils.getString(
+                            getApplication(), key = SharedPrefUtils.SF_KEY_USER_LAST_NAME
+                        )
+                        purchase.destinationEmail = SharedPrefUtils.getString(
+                            application,
+                            SharedPrefUtils.SF_KEY_USER_EMAIL
+                        )
+                        purchase.destinationName = "$firstName $lastName"
+                        var voucher = VoucherDetailsItem()
+                        voucher.voucherProductId = mViewModel.selectedGiftCard.get()?.id
+                        mViewModel.amountSelected.get()?.toIntOrNull()?.let {
+                            voucher.amount = it * 100
+                        }
+                        val supplierNames: List<VoucherDetailsItem> = listOf(voucher)
+                        purchase.voucherDetails = supplierNames
+                        mViewModel.purchaseGiftCardRequest(purchase)
+                    } else if (mViewBinding.someone.isChecked) {
+                        purchase.destinationMobileNo = mViewBinding.phone.text.toString()
+                        purchase.giftedPerson = "FYPUSER"
+                        purchase.destinationName = mViewBinding.etFirstName.text.toString()
+                        purchase.destinationEmail = mViewBinding.etEmailIdData.text.toString()
+                        var voucher = VoucherDetailsItem()
+                        voucher.voucherProductId = mViewModel.selectedGiftCard.get()?.id
+                        mViewModel.amountSelected.get()?.toIntOrNull()?.let {
+                            voucher.amount = it * 100
+                        }
+                        val supplierNames: List<VoucherDetailsItem> = Arrays.asList(voucher)
+                        purchase.voucherDetails = supplierNames
+                        mViewModel.purchaseGiftCardRequest(purchase)
+
+
+                    }
+                }
                 mViewModel.onAddClicked.value = false
             }
         }
@@ -218,20 +264,7 @@ class PurchaseGiftCardScreen2 : BaseActivity<ViewPurchaseGiftCard2Binding, Purch
                 mViewModel.onIsAppUserClicked.value = false
             }
         }
-        mViewModel.emptyContactListError.observe(this) {
-            if (it) {
-                DialogUtils.showConfirmationDialog(
-                    context = this,
-                    title = "",
-                    message = getString(R.string.empty_contact_error),
-                    positiveButtonText = getString(R.string.cancel_btn_text),
-                    negativeButtonText = getString(R.string.cancel_btn_text),
-                    uniqueIdentifier = "",
-                    onAlertDialogClickListener = this, isNegativeButtonRequired = false
-                )
-                mViewModel.emptyContactListError.value = false
-            }
-        }
+
 
     }
 
@@ -265,6 +298,7 @@ class PurchaseGiftCardScreen2 : BaseActivity<ViewPurchaseGiftCard2Binding, Purch
                             mViewBinding.payAndPurchase.isEnabled = true
 
                         }
+                        mViewBinding.giftAmount.setText(Utility.convertToRs(item?.amount.toString()))
                     } else {
                         giftList?.get(pos)?.selected = false
                     }
@@ -280,49 +314,16 @@ class PurchaseGiftCardScreen2 : BaseActivity<ViewPurchaseGiftCard2Binding, Purch
             adapter = giftCardAdapter
             layoutManager = LinearLayoutManager(
                 this@PurchaseGiftCardScreen2,
-                androidx.recyclerview.widget.RecyclerView.HORIZONTAL,
+                RecyclerView.HORIZONTAL,
                 false
             )
         }
     }
 
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        for (permission in permissions) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
-                //denied
-                Utility.showToast(getString(R.string.permission_required))
-                requestPermission(android.Manifest.permission.READ_CONTACTS)
-            } else {
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        permission
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    //allow
-                    Utility.getAllContactsInList(
-                        contentResolver,
-                        this,
-                        contactRepository = mViewModel.contactRepository
-                    )
-                    mViewModel.progressDialog.value = true
-
-                } else {
-                    //set to never ask again
-                    SharedPrefUtils.putBoolean(
-                        applicationContext,
-                        SharedPrefUtils.SF_KEY_STORAGE_PERMANENTLY_DENY,
-                        true
-                    )
-                }
-            }
-        }
 
 
-    }
+
 
     override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {
 

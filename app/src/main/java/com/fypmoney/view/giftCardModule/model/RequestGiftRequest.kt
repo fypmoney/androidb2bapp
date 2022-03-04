@@ -4,7 +4,7 @@ import androidx.annotation.Keep
 
 @Keep
 data class RequestGiftRequest(
-    val brands: List<String?>? = emptyList(),
+    val brands: MutableList<String?>? = mutableListOf(),
     var searchCriteria: String = "",
     val categories: List<String?>? = emptyList()
 )

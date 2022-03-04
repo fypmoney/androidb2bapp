@@ -9,6 +9,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityHistoryGiftCardsBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.giftCardModule.model.GiftHistoryResponseModel
 import com.fypmoney.view.giftCardModule.viewModel.GiftHistoryModel
@@ -76,12 +77,22 @@ class GiftHistoryActivity : BaseActivity<ActivityHistoryGiftCardsBinding, GiftHi
 
             this,
             onRecentUserClick = {
+                intentToActivity(it, GiftDetailsActivity::class.java)
 
             },
             mobile
         )
         typeAdapter.submitList(list)
         mViewBinding?.giftcardRv?.adapter = typeAdapter
+
+    }
+
+    private fun intentToActivity(contactEntity: GiftHistoryResponseModel?, aClass: Class<*>) {
+        contactEntity.let {
+            val intent = Intent(this, aClass)
+            intent.putExtra(AppConstants.GIFT_HISTORY_SELECTED, it)
+            startActivity(intent)
+        }
 
     }
 

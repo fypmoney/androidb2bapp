@@ -1,12 +1,18 @@
 package com.fypmoney.view.giftCardModule.model
 
+import android.os.Parcelable
+import androidx.annotation.Keep
+import kotlinx.android.parcel.Parcelize
+
+@Keep
+@Parcelize
 data class GiftHistoryResponseModel(
     val amount: Int? = null,
     val sourceUserName: String? = null,
     val endDate: String? = null,
     val tnc: String? = null,
     val productGuid: String? = null,
-    val destinationEmail: Any? = null,
+    val destinationEmail: String? = null,
     val voucherGcCode: String? = null,
     val externalOrderId: String? = null,
     val message: String? = null,
@@ -19,7 +25,7 @@ data class GiftHistoryResponseModel(
     val id: Int? = null,
     val sourceUserId: Int? = null,
     val issueDate: String? = null,
-    val tncLink: Any? = null,
+    val tncLink: String? = null,
     val sourceMobileNo: String? = null,
     val isGifted: String? = null,
     val giftedPerson: String? = null,
@@ -27,5 +33,5 @@ data class GiftHistoryResponseModel(
     val detailImage: String? = null,
 
 
-    )
+    ) : Parcelable
 

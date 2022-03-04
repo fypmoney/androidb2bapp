@@ -30,51 +30,54 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar_layout"
             android:layout_height="0dp">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/message_text"
-                style="@style/TextviewRegular"
+            <ImageView
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
 
+                android:layout_height="128dp"
                 android:layout_alignParentTop="true"
+
                 android:layout_centerHorizontal="true"
+                android:layout_marginStart="26dp"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/text_color_light"
-                android:textSize="15dp"
+                android:layout_marginEnd="26dp"
+                android:scaleType="centerCrop"
+
+
                 tools:text="Earn 1 FypMynt for every ₹1 spent for a gift card" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/amount"
                 style="@style/TextviewBold"
-                android:layout_below="@+id/message_text"
+                android:layout_below="@+id/banner"
+
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="@{@string/Rs+viewModel.availableAmount}"
-                android:textSize="42dp"
-                android:visibility="@{viewModel.isFetchBalanceVisible?View.GONE:View.VISIBLE,default=gone}" />
+                android:textSize="42dp" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/add_money"
+                android:id="@+id/gift_msg"
                 style="@style/TextviewRegular"
                 android:layout_below="@id/amount"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
+                android:alpha=".7"
                 android:text="@string/add_money_gift_card"
                 android:textColor="@color/white"
-                android:alpha=".7"
                 android:textSize="17sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@id/rv_products"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/add_money"
+                android:layout_below="@id/gift_msg"
                 android:layout_marginStart="@dimen/dp8"
                 android:layout_marginTop="22dp"
                 android:layout_marginEnd="@dimen/dp8"
-                android:weightSum="4">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:weightSum="4"></androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
                 android:layout_marginStart="12dp"
@@ -82,26 +85,43 @@
                 android:id="@+id/lin"
                 android:layout_width="match_parent"
                 android:gravity="center"
+                android:orientation="vertical"
                 android:layout_marginTop="@dimen/_18sdp"
                 android:layout_height="wrap_content">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/comment"
+                    android:id="@+id/gift_amount"
                     android:layout_width="wrap_content"
                     style="@style/TextviewBold"
-                    android:paddingStart="@dimen/_8sdp"
-                    android:paddingEnd="@dimen/_8sdp"
+
+                    android:paddingStart="@dimen/_20sdp"
+                    android:paddingEnd="@dimen/_20sdp"
                     android:layout_height="wrap_content"
                     android:background="@drawable/round_dark_grey_rewards_18"
                     android:gravity="center"
-                    android:hint="message"
+                    android:backgroundTint="#1C2129"
+                    android:inputType="number"
+                    android:hint="Enter amount"
+                    android:drawableStart="@drawable/rupee_symbol"
                     android:textColorHint="@color/text_color_light"
                     android:textColor="@color/white"
-
+                    android:drawableTint="@color/white"
+                    android:text="@={viewModel.amountSelected}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/vDivider5"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/max_min_len"
+                    style="@style/TextviewRegular"
+
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="15dp"
+                    tools:text="Earn 1 FypMynt for every ₹1 spent for a gift card" />
 
             </LinearLayout>
 
@@ -190,22 +210,36 @@
                             android:text="Fill in the details below to whom you’re sending this gift card"
                             android:textColor="@color/white" />
 
-                        <androidx.appcompat.widget.AppCompatEditText
-                            android:id="@+id/et_first_name"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@+id/verification_title"
-                            android:layout_marginTop="@dimen/_14sdp"
-                            android:background="@drawable/round_dark_grey_rewards_18"
-                            android:hint="@string/first_name_hint"
-                            android:inputType="textCapWords"
+                            android:orientation="horizontal"
+                            android:layout_height="wrap_content">
 
-                            android:paddingStart="@dimen/edittextHintPaddingStart"
-                            android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                            android:singleLine="true"
-                            android:textColor="@color/white"
+                            <androidx.appcompat.widget.AppCompatEditText
+                                android:id="@+id/et_first_name"
+                                android:layout_width="wrap_content"
+                                android:layout_weight="5"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/verification_title"
+                                android:layout_marginTop="@dimen/_14sdp"
+                                android:background="@drawable/round_dark_grey_rewards_18"
+                                android:hint="@string/first_name_hint"
+                                android:inputType="textCapWords"
 
-                            android:textSize="@dimen/_14sdp" />
+                                android:paddingStart="@dimen/edittextHintPaddingStart"
+                                android:paddingEnd="@dimen/edittextHintPaddingEnd"
+                                android:singleLine="true"
+                                android:textColor="@color/white"
+
+                                android:textSize="@dimen/_14sdp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:src="@drawable/ic_user"
+                                android:id="@+id/select_contact"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
 
                         <androidx.appcompat.widget.AppCompatEditText
                             android:id="@+id/etEmailIdData"
@@ -246,32 +280,34 @@
 
                     </LinearLayout>
 
+                    <Button
+                        android:id="@+id/pay_and_purchase"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_46sdp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginEnd="50dp"
+                        android:layout_marginBottom="@dimen/_18sdp"
+                        android:backgroundTint="@color/green_winnings"
+                        android:onClick="@{()->viewModel.onAddClicked()}"
+
+                        android:text="@string/pay"
+                        android:textAllCaps="false"
+
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+
+
+                        />
+
 
                 </LinearLayout>
 
 
             </ScrollView>
 
-            <Button
-                android:id="@+id/pay_and_purchase"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_46sdp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="@dimen/_18sdp"
-                android:backgroundTint="@color/green_winnings"
-
-                android:text="@string/pay"
-                android:textAllCaps="false"
-
-                android:textColor="@color/white"
-                android:textSize="18sp"
-
-
-                />
 
         </RelativeLayout>
 

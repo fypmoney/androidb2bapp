@@ -42,7 +42,9 @@ class GiftCardPurchasedBottomSheet(
         Utility.setImageUsingGlide(requireContext(), giftCrad?.detailImage, binding.messageImage)
         binding.continuebtn.setOnClickListener(View.OnClickListener {
             try {
+
                 dismiss()
+                requireActivity().finish()
             } catch (e: Exception) {
 
             }

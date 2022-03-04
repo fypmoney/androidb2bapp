@@ -2,7 +2,6 @@ package com.fypmoney.view.giftCardModule
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,30 +10,29 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 
+
 import com.fypmoney.view.giftCardModule.viewModel.PurchaseGiftViewModel
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
-import com.fypmoney.databinding.GiftTAndCBinding
+import com.fypmoney.databinding.GiftDetailsActivityBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.adapter.offerpointsAdapter
-import com.fypmoney.view.giftCardModule.model.VoucherBrandItem
+import com.fypmoney.view.giftCardModule.model.GiftHistoryResponseModel
 import com.fypmoney.view.interfaces.ListContactClickListener
-import kotlinx.android.synthetic.main.bottom_sheet_offer_detail.view.*
 import org.json.JSONArray
 
 
-class GiftTermsAndConditions : BaseActivity<GiftTAndCBinding, PurchaseGiftViewModel>() {
+class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, PurchaseGiftViewModel>() {
 
-
-    private var giftBrand: VoucherBrandItem? = null
+    private var giftBrand: GiftHistoryResponseModel? = null
     private lateinit var mViewModel: PurchaseGiftViewModel
-    private lateinit var mViewBinding: GiftTAndCBinding
+    private lateinit var mViewBinding: GiftDetailsActivityBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.gift_t_and_c
+        return R.layout.gift_details_activity
     }
 
     override fun getViewModel(): PurchaseGiftViewModel {
@@ -49,18 +47,19 @@ class GiftTermsAndConditions : BaseActivity<GiftTAndCBinding, PurchaseGiftViewMo
         setToolbarAndTitle(
             context = this,
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = "Terms and conditions",
+            isBackArrowVisible = true, toolbarTitle = "Gift card",
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
-        giftBrand = intent?.getParcelableExtra(AppConstants.GIFT_BRAND_SELECTED)
+        giftBrand = intent?.getParcelableExtra(AppConstants.GIFT_HISTORY_SELECTED)
 
-        mViewBinding.brandName.text = giftBrand?.displayName
-        mViewBinding.offerTitle.text = giftBrand?.giftMessage
+        mViewBinding.brandName.text = giftBrand?.productName
+        mViewBinding.offerTitle.text = giftBrand?.message
 
-        Glide.with(this).load(giftBrand?.brandLogo).into(mViewBinding.logo)
+        Glide.with(this).load(giftBrand?.detailImage).into(mViewBinding.logo)
+
         try {
-            val jsonArr = JSONArray(giftBrand?.howToRedeem)
+            val jsonArr = JSONArray(giftBrand?.tnc)
             var itemsArrayList: ArrayList<String> = ArrayList()
             for (i in 0 until jsonArr.length()) {
 
@@ -71,6 +70,7 @@ class GiftTermsAndConditions : BaseActivity<GiftTAndCBinding, PurchaseGiftViewMo
         } catch (e: Exception) {
 
         }
+
     }
 
     private fun setRecyclerView(
@@ -101,6 +101,7 @@ class GiftTermsAndConditions : BaseActivity<GiftTAndCBinding, PurchaseGiftViewMo
             offerpointsAdapter(itemsArrayList, this, itemClickListener2)
         recyclerView.adapter = typeAdapter
     }
+
 
     /*
     * This method is used to observe the observers
