@@ -174,9 +174,11 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         iconList.add(ListUiModel(postion = 3,
             name = getString(R.string.privacy_policy),
             icon = AppCompatResources.getDrawable(this,R.drawable.ic_privacy) ))
-        iconList.add(ListUiModel(postion = 4,
+        iconList.add(ListUiModel(
+            postion = 4,
             name = getString(R.string.t_n_c),
-            icon = AppCompatResources.getDrawable(this,R.drawable.ic_privacy) ))
+            icon = AppCompatResources.getDrawable(this, R.drawable.ic_privacy)
+        ))
         iconList.add(ListUiModel(postion = 5,
             name = getString(R.string.help),
             icon = AppCompatResources.getDrawable(this,R.drawable.ic_help) ))

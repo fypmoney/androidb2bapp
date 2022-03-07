@@ -83,7 +83,15 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,
                 AppConstants.CARD_TYPE_PHYSICAL -> {
                     if(it.status == AppConstants.ENABLE){
                         showOfflineStore()
-
+                        bankProfileResponseDetails?.kycType?.let {
+                            if (it != "MINIMUM") {
+                                atmTxt.toVisible()
+                                vAtmSwitch.toVisible()
+                            } else {
+                                atmTxt.toGone()
+                                vAtmSwitch.toGone()
+                            }
+                        }
                     }else{
                         hideOfflineStore()
                     }
@@ -107,15 +115,7 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,
 
         }
 
-        bankProfileResponseDetails?.kycType?.let {
-            if (it != "MINIMUM") {
-                atmTxt.toVisible()
-                vAtmSwitch.toVisible()
-            } else {
-                atmTxt.toGone()
-                vAtmSwitch.toGone()
-            }
-        }
+
 
         pPointSaleSwitch.setOnClickListener {
             channelType.set(AppConstants.Channel_POS)
