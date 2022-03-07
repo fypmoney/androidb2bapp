@@ -77,8 +77,8 @@ class GiftHistoryActivity : BaseActivity<ActivityHistoryGiftCardsBinding, GiftHi
 
             this,
             onRecentUserClick = {
-                intentToActivity(it, GiftDetailsActivity::class.java)
 
+             mviewModel?.callVoucherStatus(it.externalOrderId)
             },
             mobile
         )
@@ -105,6 +105,12 @@ class GiftHistoryActivity : BaseActivity<ActivityHistoryGiftCardsBinding, GiftHi
             setRecyclerView(it)
 
         })
+        mviewModel?.clicked?.observe(this, {
+
+
+//            intentToActivity(it, GiftDetailsActivity::class.java)
+        })
+
     }
 
 

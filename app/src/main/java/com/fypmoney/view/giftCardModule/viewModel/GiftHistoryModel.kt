@@ -25,12 +25,26 @@ class GiftHistoryModel(application: Application) : BaseViewModel(application) {
     }
 
     var allGiftList: MutableLiveData<List<GiftHistoryResponseModel>> = MutableLiveData()
+    var clicked: MutableLiveData<Boolean> = MutableLiveData()
 
     fun callAllGifts() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.GET_HISTORY_LIST,
                 endpoint = NetworkUtil.endURL(ApiConstant.GET_HISTORY_LIST),
+                request_type = ApiUrl.GET,
+                param = com.fypmoney.model.BaseRequest(), onResponse = this,
+                isProgressBar = true
+            )
+
+        )
+    }
+
+    fun callVoucherStatus(id: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.GET_GIFT_VOUCHER_STATUS,
+                endpoint = NetworkUtil.endURL(ApiConstant.GET_GIFT_VOUCHER_STATUS + id),
                 request_type = ApiUrl.GET,
                 param = com.fypmoney.model.BaseRequest(), onResponse = this,
                 isProgressBar = true

@@ -158,6 +158,8 @@ object ApiConstant {
         "services/PockketService/api/purchased-voucher?page=0&size=10&sort=id,desc&gifted=YES"
     const val GET_HISTORY_UNUSED_LIST =
         "services/PockketService/api/unused-voucher?page=0&size=10&sort=id,desc"
+    const val GET_GIFT_VOUCHER_STATUS =
+        "/services/PockketService/api/voucher-status/"
 
 
 }
