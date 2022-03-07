@@ -11,20 +11,19 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 
 
-import com.fypmoney.view.giftCardModule.viewModel.PurchaseGiftViewModel
+import com.fypmoney.view.giftCardModule.viewModel.GiftDetailsModel
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
 import com.fypmoney.databinding.GiftDetailsActivityBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.adapter.offerpointsAdapter
-import com.fypmoney.view.giftCardModule.model.GiftHistoryResponseModel
 import com.fypmoney.view.interfaces.ListContactClickListener
 import org.json.JSONArray
 
 
-class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, PurchaseGiftViewModel>() {
+class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, GiftDetailsModel>() {
 
-    private var giftBrand: GiftHistoryResponseModel? = null
-    private lateinit var mViewModel: PurchaseGiftViewModel
+    private var giftBrand: Int? = null
+    private lateinit var mViewModel: GiftDetailsModel
     private lateinit var mViewBinding: GiftDetailsActivityBinding
 
     override fun getBindingVariable(): Int {
@@ -35,8 +34,8 @@ class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, PurchaseGif
         return R.layout.gift_details_activity
     }
 
-    override fun getViewModel(): PurchaseGiftViewModel {
-        mViewModel = ViewModelProvider(this).get(PurchaseGiftViewModel::class.java)
+    override fun getViewModel(): GiftDetailsModel {
+        mViewModel = ViewModelProvider(this).get(GiftDetailsModel::class.java)
         return mViewModel
     }
 
@@ -51,25 +50,29 @@ class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, PurchaseGif
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
-        giftBrand = intent?.getParcelableExtra(AppConstants.GIFT_HISTORY_SELECTED)
+        giftBrand = intent?.getIntExtra(AppConstants.GIFT_ID, -1)
 
-        mViewBinding.brandName.text = giftBrand?.productName
-        mViewBinding.offerTitle.text = giftBrand?.message
+        mViewModel.callVoucherStatus(giftBrand)
+        mViewModel.clicked.observe(this) {
+            mViewBinding.brandName.text = it?.productName
+            mViewBinding.offerTitle.text = it?.message
 
-        Glide.with(this).load(giftBrand?.detailImage).into(mViewBinding.logo)
+            Glide.with(this).load(it?.detailImage).into(mViewBinding.logo)
 
-        try {
-            val jsonArr = JSONArray(giftBrand?.tnc)
-            var itemsArrayList: ArrayList<String> = ArrayList()
-            for (i in 0 until jsonArr.length()) {
+            try {
+                val jsonArr = JSONArray(it?.tnc)
+                var itemsArrayList: ArrayList<String> = ArrayList()
+                for (i in 0 until jsonArr.length()) {
 
-                itemsArrayList.add(jsonArr[i] as String)
+                    itemsArrayList.add(jsonArr[i] as String)
 
+                }
+                setRecyclerView(itemsArrayList, mViewBinding.recyclerView)
+            } catch (e: Exception) {
+                e
             }
-            setRecyclerView(itemsArrayList, mViewBinding.recyclerView)
-        } catch (e: Exception) {
-
         }
+
 
     }
 

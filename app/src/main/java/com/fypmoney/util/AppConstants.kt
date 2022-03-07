@@ -109,8 +109,7 @@ object AppConstants {
     const val NOTIFICATION_TYPE_ADD_TASK = "ADD_TASK"
     const val NOTIFICATION_TYPE_ADD_FAMILY = "ADD_FAMILY_MEMBER"
     const val NOTIFICATION_TYPE_REQUEST_MONEY = "REQUEST_MONEY"
-    const val GIFT_BRAND_SELECTED = "gift_brand_selected"
-    const val GIFT_HISTORY_SELECTED = "gift_history_selected"
+
     const val NOTIFICATION_TYPE_IN_APP_DIRECT = "IN_APP_DIRECT"
     const val NOTIFICATION_TYPE_WEB_DIRECT = "WEB_DIRECT"
     const val NOTIFICATION_TYPE_EXT_APP_DIRECT = "EXT_APP_DIRECT"
@@ -290,4 +289,8 @@ object AppConstants {
     const val USER_TYPE = "UserType"
     const val KYC_type = "kyctype"
     const val POSTKYCKEY = "postkyc"
+
+    const val GIFT_BRAND_SELECTED = "gift_brand_selected"
+    const val GIFT_HISTORY_SELECTED = "gift_history_selected"
+    const val GIFT_ID = "gift_id"
 }

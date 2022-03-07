@@ -87,10 +87,10 @@ class GiftHistoryActivity : BaseActivity<ActivityHistoryGiftCardsBinding, GiftHi
 
     }
 
-    private fun intentToActivity(contactEntity: GiftHistoryResponseModel?, aClass: Class<*>) {
+    private fun intentToActivity(contactEntity: Int?, aClass: Class<*>) {
         contactEntity.let {
             val intent = Intent(this, aClass)
-            intent.putExtra(AppConstants.GIFT_HISTORY_SELECTED, it)
+            intent.putExtra(AppConstants.GIFT_ID, it)
             startActivity(intent)
         }
 
@@ -108,7 +108,7 @@ class GiftHistoryActivity : BaseActivity<ActivityHistoryGiftCardsBinding, GiftHi
         mviewModel?.clicked?.observe(this, {
 
 
-//            intentToActivity(it, GiftDetailsActivity::class.java)
+            intentToActivity(it.id, GiftDetailsActivity::class.java)
         })
 
     }

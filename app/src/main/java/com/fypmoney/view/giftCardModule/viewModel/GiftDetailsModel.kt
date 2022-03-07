@@ -18,33 +18,21 @@ import com.moengage.core.internal.model.BaseRequest
 /*
 * This class is used to handle add money functionality
 * */
-class GiftHistoryModel(application: Application) : BaseViewModel(application) {
+class GiftDetailsModel(application: Application) : BaseViewModel(application) {
 
     init {
-        callAllGifts()
+
     }
 
-    var allGiftList: MutableLiveData<List<GiftHistoryResponseModel>> = MutableLiveData()
-    var clicked: MutableLiveData<GiftDetailsResponse> = MutableLiveData()
 
-    fun callAllGifts() {
+    var clicked: MutableLiveData<GiftStatusResponse> = MutableLiveData()
+
+
+    fun callVoucherStatus(id: Int?) {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                purpose = ApiConstant.GET_HISTORY_LIST,
-                endpoint = NetworkUtil.endURL(ApiConstant.GET_HISTORY_LIST),
-                request_type = ApiUrl.GET,
-                param = com.fypmoney.model.BaseRequest(), onResponse = this,
-                isProgressBar = true
-            )
-
-        )
-    }
-
-    fun callVoucherStatus(id: String?) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.GET_GIFT_VOUCHER_STATUS,
-                endpoint = NetworkUtil.endURL(ApiConstant.GET_GIFT_VOUCHER_STATUS) + id,
+                purpose = ApiConstant.GET_GIFT_VOUCHER_DETAILS,
+                endpoint = NetworkUtil.endURL(ApiConstant.GET_GIFT_VOUCHER_DETAILS) + id,
                 request_type = ApiUrl.GET,
                 param = com.fypmoney.model.BaseRequest(), onResponse = this,
                 isProgressBar = true
@@ -56,31 +44,15 @@ class GiftHistoryModel(application: Application) : BaseViewModel(application) {
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.GET_HISTORY_LIST -> {
 
-                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-                var giftList: ArrayList<GiftHistoryResponseModel> = ArrayList()
-
-                var array =
-                    json["data"].asJsonArray
-                array.forEach {
-                    val obj = Gson().fromJson<GiftHistoryResponseModel>(
-                        it,
-                        GiftHistoryResponseModel::class.java
-                    )
-                    giftList.add(obj)
-                }
-
-                allGiftList.postValue(giftList)
-            }
-            ApiConstant.GET_GIFT_VOUCHER_STATUS -> {
+            ApiConstant.GET_GIFT_VOUCHER_DETAILS -> {
                 responseData.toString()
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
 
                 val obj = Gson().fromJson(
                     json.get("data"),
-                    GiftDetailsResponse::class.java
+                    GiftStatusResponse::class.java
                 )
 
 
