@@ -15,6 +15,7 @@ import com.fypmoney.view.giftCardModule.viewModel.GiftDetailsModel
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
 import com.fypmoney.databinding.GiftDetailsActivityBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.offerpointsAdapter
 import com.fypmoney.view.interfaces.ListContactClickListener
 import org.json.JSONArray
@@ -56,9 +57,9 @@ class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, GiftDetails
         mViewModel.clicked.observe(this) {
             mViewBinding.brandName.text = it?.productName
             mViewBinding.offerTitle.text = it?.message
-
+            mViewBinding.couponAmount.text = "₹" + Utility.convertToRs(it.amount.toString()) + "/-"
             Glide.with(this).load(it?.detailImage).into(mViewBinding.logo)
-
+            mViewBinding.giftDetails.text = it.message
             try {
                 val jsonArr = JSONArray(it?.tnc)
                 var itemsArrayList: ArrayList<String> = ArrayList()
@@ -101,7 +102,7 @@ class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, GiftDetails
 
         }
         var typeAdapter =
-            offerpointsAdapter(itemsArrayList, this, itemClickListener2)
+            offerpointsAdapter(itemsArrayList, this, itemClickListener2, Color.WHITE)
         recyclerView.adapter = typeAdapter
     }
 

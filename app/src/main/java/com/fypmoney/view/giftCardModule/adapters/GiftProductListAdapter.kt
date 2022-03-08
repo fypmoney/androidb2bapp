@@ -2,6 +2,7 @@ package com.fypmoney.view.giftCardModule
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,13 +11,13 @@ import com.fypmoney.R
 import com.fypmoney.databinding.ItemProductsAmountGiftBinding
 import com.fypmoney.extension.executeAfter
 import com.fypmoney.util.Utility
-import com.fypmoney.view.giftCardModule.model.VoucherProductItem
+import com.fypmoney.view.giftCardModule.model.VoucherProductAmountsItem
 
 
 class GiftProductListAdapter(
     private val lifecycleOwner: LifecycleOwner,
     val giftcardClicked: (model: Int) -> Unit
-) : ListAdapter<VoucherProductItem, GiftProducstVH>(GiftProductDiffUtils) {
+) : ListAdapter<VoucherProductAmountsItem, GiftProducstVH>(GiftProductDiffUtils) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GiftProducstVH {
         val inflater = LayoutInflater.from(parent.context)
@@ -31,11 +32,12 @@ class GiftProductListAdapter(
     }
 
     override fun onBindViewHolder(holder: GiftProducstVH, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 
 
 }
+
 
 class GiftProducstVH(
     private val binding: ItemProductsAmountGiftBinding,
@@ -44,7 +46,7 @@ class GiftProducstVH(
 ) : RecyclerView.ViewHolder(binding.root) {
     private var selected_position: Int? = null
 
-    fun bind(user: VoucherProductItem) {
+    fun bind(user: VoucherProductAmountsItem, position: Int) {
         binding.executeAfter {
             lifecycleOwner = this@GiftProducstVH.lifecycleOwner
 
@@ -53,33 +55,78 @@ class GiftProducstVH(
                 giftcardClicked(bindingAdapterPosition)
 
             }
+
+
             if (user.selected == true) {
                 binding.layoutAmount.setBackgroundResource(R.drawable.curved_background30_grey)
 
             } else {
-                binding.layoutAmount.setBackgroundResource(R.drawable.curved_background29)
+                if (position % 4 == 0) {
+
+                    binding.layoutAmount.background.setTint(
+                        ContextCompat.getColor(
+                            binding.layoutAmount.context,
+                            R.color.color_green
+                        )
+                    )
+
+
+                } else if (position % 4 == 1) {
+
+                    binding.layoutAmount.background.setTint(
+                        ContextCompat.getColor(
+                            binding.layoutAmount.context,
+                            R.color.chores_background
+                        )
+                    )
+
+                } else if (position % 4 == 2) {
+
+                    binding.layoutAmount.background.setTint(
+                        ContextCompat.getColor(
+                            binding.layoutAmount.context,
+                            R.color.color_pink
+                        )
+                    )
+
+
+                } else if (position % 4 == 3) {
+
+
+                    binding.layoutAmount.background.setTint(
+                        ContextCompat.getColor(
+                            binding.layoutAmount.context,
+                            R.color.card_gift
+                        )
+                    )
+
+                }
             }
 
 
-            amountTv.text = Utility.convertToRs(user.amount.toString())
+
+
+            amountTv.text = user.name.toString()
+
         }
+
     }
 
 }
 
 
-object GiftProductDiffUtils : DiffUtil.ItemCallback<VoucherProductItem>() {
+object GiftProductDiffUtils : DiffUtil.ItemCallback<VoucherProductAmountsItem>() {
 
     override fun areItemsTheSame(
-        oldItem: VoucherProductItem,
-        newItem: VoucherProductItem
+        oldItem: VoucherProductAmountsItem,
+        newItem: VoucherProductAmountsItem
     ): Boolean {
         return false
     }
 
     override fun areContentsTheSame(
-        oldItem: VoucherProductItem,
-        newItem: VoucherProductItem
+        oldItem: VoucherProductAmountsItem,
+        newItem: VoucherProductAmountsItem
     ): Boolean {
         return oldItem == newItem
     }

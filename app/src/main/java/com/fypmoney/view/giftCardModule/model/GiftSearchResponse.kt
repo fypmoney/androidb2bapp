@@ -62,3 +62,13 @@ data class VoucherProductItem(
     var selected: Boolean? = false,
 
     ) : Parcelable
+
+@Keep
+@Parcelize
+data class VoucherProductAmountsItem(
+
+    var name: String? = null,
+
+    var selected: Boolean? = false,
+
+    ) : Parcelable

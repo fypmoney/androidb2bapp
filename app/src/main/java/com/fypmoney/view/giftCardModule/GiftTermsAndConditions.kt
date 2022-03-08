@@ -2,7 +2,6 @@ package com.fypmoney.view.giftCardModule
 
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.bindingAdapters.shimmerDrawable
 
 import com.fypmoney.view.giftCardModule.viewModel.PurchaseGiftViewModel
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
@@ -18,7 +18,6 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.view.adapter.offerpointsAdapter
 import com.fypmoney.view.giftCardModule.model.VoucherBrandItem
 import com.fypmoney.view.interfaces.ListContactClickListener
-import kotlinx.android.synthetic.main.bottom_sheet_offer_detail.view.*
 import org.json.JSONArray
 
 
@@ -58,7 +57,8 @@ class GiftTermsAndConditions : BaseActivity<GiftTAndCBinding, PurchaseGiftViewMo
         mViewBinding.brandName.text = giftBrand?.displayName
         mViewBinding.offerTitle.text = giftBrand?.giftMessage
 
-        Glide.with(this).load(giftBrand?.brandLogo).into(mViewBinding.logo)
+        Glide.with(this).load(giftBrand?.brandLogo).placeholder(shimmerDrawable())
+            .into(mViewBinding.logo)
         try {
             val jsonArr = JSONArray(giftBrand?.howToRedeem)
             var itemsArrayList: ArrayList<String> = ArrayList()
@@ -98,7 +98,7 @@ class GiftTermsAndConditions : BaseActivity<GiftTAndCBinding, PurchaseGiftViewMo
 
         }
         var typeAdapter =
-            offerpointsAdapter(itemsArrayList, this, itemClickListener2)
+            offerpointsAdapter(itemsArrayList, this, itemClickListener2, Color.WHITE)
         recyclerView.adapter = typeAdapter
     }
 

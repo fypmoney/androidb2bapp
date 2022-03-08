@@ -46,22 +46,12 @@
 
                 tools:text="Earn 1 FypMynt for every ₹1 spent for a gift card" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/amount"
-                style="@style/TextviewBold"
-                android:layout_below="@+id/banner"
-
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="12dp"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:textSize="42dp" />
 
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/gift_msg"
                 style="@style/TextviewRegular"
-                android:layout_below="@id/amount"
+                android:layout_below="@id/banner"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="12dp"
                 android:alpha=".7"
@@ -77,7 +67,9 @@
                 android:layout_marginStart="@dimen/dp8"
                 android:layout_marginTop="22dp"
                 android:layout_marginEnd="@dimen/dp8"
-                android:weightSum="4"></androidx.recyclerview.widget.RecyclerView>
+                android:weightSum="4">
+
+            </androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
                 android:layout_marginStart="12dp"
@@ -192,6 +184,7 @@
                         android:id="@+id/otheruser_layout"
                         android:layout_width="match_parent"
                         android:visibility="gone"
+                        tools:visibility="visible"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
@@ -213,6 +206,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:orientation="horizontal"
+                            android:layout_marginTop="@dimen/_8sdp"
                             android:layout_height="wrap_content">
 
                             <androidx.appcompat.widget.AppCompatEditText
@@ -221,7 +215,7 @@
                                 android:layout_weight="5"
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/verification_title"
-                                android:layout_marginTop="@dimen/_14sdp"
+
                                 android:background="@drawable/round_dark_grey_rewards_18"
                                 android:hint="@string/first_name_hint"
                                 android:inputType="textCapWords"
@@ -234,10 +228,11 @@
                                 android:textSize="@dimen/_14sdp" />
 
                             <ImageView
-                                android:layout_width="wrap_content"
+                                android:layout_width="@dimen/_30sdp"
                                 android:src="@drawable/ic_user"
+                                android:layout_marginStart="@dimen/_12sdp"
                                 android:id="@+id/select_contact"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="@dimen/_30sdp" />
 
                         </LinearLayout>
 

@@ -44,6 +44,7 @@ import com.fypmoney.util.AppConstants.CardScreen
 import com.fypmoney.util.AppConstants.DATE_FORMAT_CHANGED
 import com.fypmoney.util.AppConstants.FEEDSCREEN
 import com.fypmoney.util.AppConstants.FyperScreen
+import com.fypmoney.util.AppConstants.GiftScreen
 import com.fypmoney.util.AppConstants.HOMEVIEW
 import com.fypmoney.util.AppConstants.JACKPOTTAB
 import com.fypmoney.util.AppConstants.OfferScreen
@@ -56,6 +57,7 @@ import com.fypmoney.view.activity.ChoresActivity
 import com.fypmoney.view.activity.OfferDetailActivity
 import com.fypmoney.view.fragment.OffersStoreActivity
 import com.fypmoney.view.fragment.StoresActivity
+import com.fypmoney.view.giftCardModule.GiftCardsListScreen
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
@@ -1053,6 +1055,10 @@ object Utility {
             }
             ReferralScreen -> {
                 intent = Intent(context, ReferAndEarnActivity::class.java)
+
+            }
+            GiftScreen -> {
+                intent = Intent(context, GiftCardsListScreen::class.java)
 
             }
             JACKPOTTAB -> {

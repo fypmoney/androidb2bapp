@@ -56,8 +56,8 @@ class GiftListBaseAdapter(
 
 
         var arrayList: ArrayList<VoucherBrandItem> = ArrayList()
-        items[position].voucherBrand?.forEach { item ->
-            if (item != null) {
+        items[position].voucherBrand?.forEachIndexed { pos, item ->
+            if (item != null && pos < 2) {
                 arrayList.add(item)
             }
         }

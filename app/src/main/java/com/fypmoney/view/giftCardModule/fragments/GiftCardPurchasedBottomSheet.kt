@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.fypmoney.R
+import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.databinding.GiftCardPurchasedBottomSheetBinding
 import com.fypmoney.model.UpdateTaskGetResponse
 import com.fypmoney.util.Utility
@@ -39,7 +41,9 @@ class GiftCardPurchasedBottomSheet(
         )
 
         binding.msgPurchase.text = giftCrad?.msg
-        Utility.setImageUsingGlide(requireContext(), giftCrad?.detailImage, binding.messageImage)
+        Glide.with(binding.messageImage.context).load(giftCrad?.detailImage)
+            .placeholder(shimmerDrawable()).into(binding.messageImage)
+
         binding.continuebtn.setOnClickListener(View.OnClickListener {
             try {
 

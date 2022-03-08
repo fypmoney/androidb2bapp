@@ -222,6 +222,7 @@ object AppConstants {
     //DeepLinks constants
     const val HOMEVIEW = "HomeView"
     const val ReferralScreen = "ReferralScrren"
+    const val GiftScreen = "GiftCardScreen"
     const val CardScreen = "CardScreen"
     const val OfferScreen = "offerscreen"
     const val StoreScreen = "StoreScreen"

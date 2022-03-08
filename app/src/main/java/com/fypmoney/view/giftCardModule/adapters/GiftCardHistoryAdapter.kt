@@ -2,12 +2,18 @@ package com.fypmoney.view.giftCardModule
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.fypmoney.R
+import com.fypmoney.bindingAdapters.loadImage
+import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.databinding.CardHistoryGiftBinding
 import com.fypmoney.extension.executeAfter
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.giftCardModule.model.GiftHistoryResponseModel
 
@@ -47,16 +53,35 @@ class GiftCardHistoryVH(
         binding.executeAfter {
             lifecycleOwner = this@GiftCardHistoryVH.lifecycleOwner
 
-//            loadImage(recentIv,user.profilePicResourceId,
-//                ContextCompat.getDrawable(this.recentIv.context, R.drawable.ic_profile_img),true)
-//
+
+            Glide.with(binding.offerIv.context).load(user.detailImage)
+                .placeholder(shimmerDrawable()).into(binding.offerIv)
+
             binding.descTv.text = user.message
 
             if (user.destinationMobileNo == mobile) {
                 binding.buygift.text = "Purchased"
             } else if (user.destinationMobileNo != mobile) {
-                binding.buygift.text = "RECIEVED"
+                if (user.isGifted == AppConstants.NO) {
+                    binding.buygift.text = "RECIEVED"
+                    binding.buygift.background.setTint(
+                        ContextCompat.getColor(
+                            binding.buygift.context,
+                            R.color.color_green
+                        )
+                    )
+                } else {
+                    binding.buygift.background.setTint(
+                        ContextCompat.getColor(
+                            binding.buygift.context,
+                            R.color.colorSelectedMenu
+                        )
+                    )
+                    binding.buygift.text = "Gifted"
+                }
+
             }
+
             binding.giftTitle.text = user.productName
             binding.gridOfferCv.setOnClickListener {
                 onRecentUserClick(user)

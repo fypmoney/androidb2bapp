@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:text="Unsued Cards"
             android:id="@+id/history"
+            android:visibility="invisible"
             android:elevation="@dimen/_2sdp"
             android:textSize="18sp"
             android:textColor="@color/text_color_light"

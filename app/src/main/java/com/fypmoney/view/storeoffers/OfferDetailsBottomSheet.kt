@@ -133,7 +133,8 @@ class OfferDetailsBottomSheet(
 
         }
         var typeAdapter =
-            offerpointsAdapter(itemsArrayList, requireContext(), itemClickListener2)
+            offerpointsAdapter(itemsArrayList, requireContext(), itemClickListener2, Color.BLACK)
+
         recyclerView.adapter = typeAdapter
     }
 

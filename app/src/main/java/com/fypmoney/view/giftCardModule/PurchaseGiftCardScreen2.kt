@@ -1,12 +1,10 @@
 package com.fypmoney.view.giftCardModule
 
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -27,6 +25,7 @@ import android.widget.RadioButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.databinding.ActivityPurchaseGiftCard2Binding
 
 import com.fypmoney.util.AppConstants
@@ -43,7 +42,7 @@ class PurchaseGiftCardScreen2 :
 
     private var giftCardpurchaseBottomSheet: GiftCardNotFyperBottomSheet? = null
     private var giftCardAdapter: GiftProductListAdapter? = null
-    private var giftList: List<VoucherProductItem?>? = ArrayList()
+    private var giftList: ArrayList<VoucherProductAmountsItem?>? = ArrayList()
 
     private lateinit var mViewModel: PurchaseGiftViewModel
     private lateinit var mViewBinding: ActivityPurchaseGiftCard2Binding
@@ -113,15 +112,20 @@ class PurchaseGiftCardScreen2 :
     }
 
     private fun setData(gotBrandDetails: VoucherBrandItem?) {
-        Glide.with(this).load(gotBrandDetails?.detailImage).into(mViewBinding.banner)
-
+        Glide.with(this).load(gotBrandDetails?.detailImage).placeholder(shimmerDrawable())
+            .into(mViewBinding.banner)
+        mViewModel.selectedGiftCard.set(gotBrandDetails?.voucherProduct?.get(0))
         mViewBinding.maxMinLen.text = gotBrandDetails?.brandTagLine2
         mViewModel.minValue.set(gotBrandDetails?.minPrice)
+
         mViewModel.maxValue.set(gotBrandDetails?.maxPrice)
-        if (gotBrandDetails?.fixedDenomiation.isNullOrEmpty()) {
+        if (gotBrandDetails?.voucherProduct?.get(0)?.isFlexiblePrice == AppConstants.NO) {
             mViewModel.flexibleAmount.set(false)
+            mViewBinding.giftAmount.isEnabled = false
+
         } else {
             mViewModel.flexibleAmount.set(true)
+            mViewBinding.giftAmount.isEnabled = true
         }
 
 
@@ -133,8 +137,16 @@ class PurchaseGiftCardScreen2 :
 
 
             (mViewBinding?.rvProducts?.adapter as GiftProductListAdapter).run {
-                giftList = it.voucherProduct
+
+                val strs = it.possibleDenominationList?.split(",")?.toTypedArray()
+
+                strs?.forEach {
+                    var voucherProductAmountsItem = VoucherProductAmountsItem()
+                    voucherProductAmountsItem.name = it
+                    giftList?.add(voucherProductAmountsItem)
+                }
                 submitList(giftList)
+
             }
         }
     }
@@ -147,7 +159,13 @@ class PurchaseGiftCardScreen2 :
         if (requestCode == 13 && resultCode != RESULT_CANCELED && returnValue != null) {
 
             mViewBinding.phone.setText(Utility.removePlusOrNineOneFromNo(returnValue.contactNumber))
-            mViewBinding.etFirstName.setText(returnValue.firstName + " " + returnValue.lastName)
+            if (!returnValue?.lastName.isNullOrEmpty()) {
+                mViewBinding.etFirstName.setText(returnValue?.firstName + " " + returnValue?.lastName)
+
+            } else {
+                mViewBinding.etFirstName.setText(returnValue?.firstName)
+
+            }
 
         }
 
@@ -220,7 +238,7 @@ class PurchaseGiftCardScreen2 :
                         mViewModel.purchaseGiftCardRequest(purchase)
                     } else if (mViewBinding.someone.isChecked) {
                         purchase.destinationMobileNo = mViewBinding.phone.text.toString()
-                        purchase.giftedPerson = "FYPUSER"
+                        purchase.giftedPerson = "NONE"
                         purchase.destinationName = mViewBinding.etFirstName.text.toString()
                         purchase.destinationEmail = mViewBinding.etEmailIdData.text.toString()
                         var voucher = VoucherDetailsItem()
@@ -293,12 +311,13 @@ class PurchaseGiftCardScreen2 :
                 giftList?.forEachIndexed { pos, item ->
                     if (it == pos) {
                         giftList?.get(pos)?.selected = true
-                        mViewModel.selectedGiftCard.set(giftList!![pos])
+
+
                         if (mViewModel.selectedContactFromList.get() != null) {
                             mViewBinding.payAndPurchase.isEnabled = true
 
                         }
-                        mViewBinding.giftAmount.setText(Utility.convertToRs(item?.amount.toString()))
+                        mViewBinding.giftAmount.setText(item?.name.toString())
                     } else {
                         giftList?.get(pos)?.selected = false
                     }

@@ -2,6 +2,7 @@ package com.fypmoney.view.adapter
 
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import android.os.SystemClock
 import android.view.LayoutInflater
@@ -23,7 +24,8 @@ import java.util.*
 class offerpointsAdapter(
     val items: ArrayList<String>,
     val context: Context,
-    val clickInterface: ListContactClickListener
+    val clickInterface: ListContactClickListener,
+    val white: Int? = Color.BLACK
 ) : RecyclerView.Adapter<offerpointsAdapter.ViewHolder>() {
 
     private var mLastClickTime: Long = 0
@@ -43,6 +45,10 @@ class offerpointsAdapter(
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        if (white != null) {
+            holder.dot.background.setTint(white)
+        }
 
 
         holder.card.setOnClickListener(View.OnClickListener {
@@ -66,6 +72,7 @@ class offerpointsAdapter(
 
 
         var card = view
+        var dot = view.dot
         var detail = view.detail
 
 //
