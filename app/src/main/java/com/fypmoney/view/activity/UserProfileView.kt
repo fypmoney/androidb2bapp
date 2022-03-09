@@ -145,11 +145,10 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                     } else {
                         intentToActivityMain(
                             this@UserProfileView,
-                            DiscordInviteActivity::class.java
+                            DiscordProfileActivity::class.java
                         )
                     }
-                    intentToActivityMain(this@UserProfileView, DiscordInviteActivity::class.java)
-                }
+                    }
 
                 3 -> {
                     intentToActivityMain(this@UserProfileView, SocialCommunityActivity::class.java)

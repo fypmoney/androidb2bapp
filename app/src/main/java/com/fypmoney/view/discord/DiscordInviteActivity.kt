@@ -12,6 +12,7 @@ import com.fypmoney.util.AppConstants
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import com.bumptech.glide.Glide
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.databinding.ActivityDiscordBinding
 import com.fypmoney.util.SharedPrefUtils
@@ -36,9 +37,16 @@ class DiscordInviteActivity : BaseActivity<ActivityDiscordBinding, DiscordActivi
     }
 
     private fun setUpObserver() {
-        mViewModel.event.observe(this, {
+        mViewModel.event.observe(this) {
             handelEvents(it)
-        })
+        }
+        mViewModel.profileResponse.observe(this) {
+            SharedPrefUtils.putString(
+                getApplication(), key = SharedPrefUtils.SF_DICORD_CONNECTED,
+                value = "connected"
+            )
+            finish()
+        }
     }
 
     private fun handelEvents(it: DiscordActivityVM.DiscordEvent?) {
@@ -56,9 +64,8 @@ class DiscordInviteActivity : BaseActivity<ActivityDiscordBinding, DiscordActivi
             PockketApplication.instance,
             SharedPrefUtils.SF_KEY_ACCESS_TOKEN
         )
-        var url =
+         var url =
             "https://discord.com/oauth2/authorize?response_type=code&client_id=945553921005457468&scope=connections%20email%20gdm.join%20guilds%20guilds.join%20guilds.members.read%20identify%20messages.read&state=$authToken&prompt=consent"
-
 
         val intent = Intent(this, DiscordWebView::class.java)
         intent.putExtra(ARG_WEB_URL_TO_OPEN, url)

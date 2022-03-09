@@ -26,7 +26,7 @@ android {
         ndk.abiFilters 'armeabi-v7a','arm64-v8a','x86','x86_64'
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
-        versionCode 55
+        versionCode 59
         versionName "2.0.5"
 
         multiDexEnabled = true
