@@ -130,16 +130,18 @@
                         android:layout_height="wrap_content" />
 
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        style="@style/TextviewBold"
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewBold"
 
-                        android:layout_marginStart="@dimen/_20sdp"
-                        android:layout_marginTop="56dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                        android:text="Details"
-                        android:textSize="@dimen/_10sdp"
-                        android:textColor="@color/text_color_light"
-                        android:textAlignment="center" />
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="62dp"
+                    android:text="Details"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="@dimen/_10sdp" />
 
 
                 <TextView
@@ -148,7 +150,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_18sdp"
                     android:id="@+id/gift_details"
+                    style="@style/TextviewRegular"
+                    android:textSize="18sp"
                     android:layout_marginTop="@dimen/_6sdp"
+                    android:textColor="@color/white"
                     android:layout_marginBottom="@dimen/_24sdp"
                     android:layout_marginEnd="@dimen/_18sdp"
 

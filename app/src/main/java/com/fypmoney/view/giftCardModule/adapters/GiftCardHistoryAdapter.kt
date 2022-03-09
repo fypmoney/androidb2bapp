@@ -57,7 +57,7 @@ class GiftCardHistoryVH(
             Glide.with(binding.offerIv.context).load(user.detailImage)
                 .placeholder(shimmerDrawable()).into(binding.offerIv)
 
-            binding.descTv.text = user.message
+            binding.descTv.text = user.description
 
             if (user.destinationMobileNo == mobile) {
                 binding.buygift.text = "Purchased"
@@ -82,7 +82,7 @@ class GiftCardHistoryVH(
 
             }
 
-            binding.giftTitle.text = user.productName
+            binding.giftTitle.text = user.brandName
             binding.gridOfferCv.setOnClickListener {
                 onRecentUserClick(user)
             }

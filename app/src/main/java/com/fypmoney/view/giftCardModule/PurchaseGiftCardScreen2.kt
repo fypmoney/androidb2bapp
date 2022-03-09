@@ -64,13 +64,7 @@ class PurchaseGiftCardScreen2 :
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
         mViewBinding?.viewModel = mViewModel
-        setToolbarAndTitle(
-            context = this,
-            toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = "Myntra E Gift Card",
-            titleColor = Color.WHITE,
-            backArrowTint = Color.WHITE
-        )
+
         tnc.setOnClickListener {
             if (gotBrandDetails != null) {
 
@@ -121,14 +115,20 @@ class PurchaseGiftCardScreen2 :
         mViewModel.maxValue.set(gotBrandDetails?.maxPrice)
         if (gotBrandDetails?.voucherProduct?.get(0)?.isFlexiblePrice == AppConstants.NO) {
             mViewModel.flexibleAmount.set(false)
-            mViewBinding.giftAmount.isEnabled = false
+//            mViewBinding.giftAmount.isEnabled  = false
 
         } else {
             mViewModel.flexibleAmount.set(true)
             mViewBinding.giftAmount.isEnabled = true
         }
 
-
+        setToolbarAndTitle(
+            context = this,
+            toolbar = toolbar,
+            isBackArrowVisible = true, toolbarTitle = "Google Play Gift Code",
+            titleColor = Color.WHITE,
+            backArrowTint = Color.WHITE
+        )
 
 
 

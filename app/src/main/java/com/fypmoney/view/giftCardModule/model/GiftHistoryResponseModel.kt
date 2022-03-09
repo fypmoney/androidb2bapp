@@ -33,5 +33,22 @@ data class GiftHistoryResponseModel(
     val detailImage: String? = null,
 
 
+    val description: String? = null,
+
+    val giftVoucherOrderNo: String? = null,
+
+    val brandLogo: String? = null,
+
+    val brandName: String? = null,
+
+    val rfu2: String? = null,
+    val rfu1: String? = null,
+    val rfu3: String? = null,
+
+    val isVoucherPurchased: String? = null,
+
+    val voucherStatus: String? = null,
+
+
     ) : Parcelable
 

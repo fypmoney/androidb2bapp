@@ -62,11 +62,14 @@ class GiftTermsAndConditions : BaseActivity<GiftTAndCBinding, PurchaseGiftViewMo
         try {
             val jsonArr = JSONArray(giftBrand?.howToRedeem)
             var itemsArrayList: ArrayList<String> = ArrayList()
-            for (i in 0 until jsonArr.length()) {
-
-                itemsArrayList.add(jsonArr[i] as String)
-
-            }
+            itemsArrayList.add("Google Play Gift Code purchases are non-refundable. Google Play Gift Codes can only be used on the Google Play Store to purchase apps, games, digital content and in-app items available on the Store.")
+            itemsArrayList.add("* Only use this gift card's code on Google Play. Any other request for the code may be a scam. Visit play.google.com/giftcardscam")
+            itemsArrayList.add("See play.google.com/in-card-terms for full terms. Issued by Google Payment Singapore Pte. Ltd. for purchases of eligible items on Google Play only. Users must be Indian residents aged 18+. Between the ages of 13 and 17, the consent of a parent or guardian is required prior to making a purchase. Requires a Google Payments account and Internet access to redeem. Not usable for hardware and certain subscriptions. Other limits may apply. No fees or expiration. Card not redeemable for cash or other cards, not reloadable or refundable and cannot be combined with non-Google Play balances, resold, exchanged or transferred for value. User is responsible for loss of card. For help, Visit support.google.com/googleplay/go/cardhelp")
+//            for (i in 0 until jsonArr.length()) {
+//
+//                itemsArrayList.add(jsonArr[i] as String)
+//
+//            }
             setRecyclerView(itemsArrayList, mViewBinding.recyclerView)
         } catch (e: Exception) {
 

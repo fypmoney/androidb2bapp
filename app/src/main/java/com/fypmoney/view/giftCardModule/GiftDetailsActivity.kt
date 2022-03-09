@@ -59,7 +59,24 @@ class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, GiftDetails
             mViewBinding.offerTitle.text = it?.message
             mViewBinding.couponAmount.text = "₹" + Utility.convertToRs(it.amount.toString()) + "/-"
             Glide.with(this).load(it?.detailImage).into(mViewBinding.logo)
-            mViewBinding.giftDetails.text = it.message
+            var issuedate = ""
+            it.issueDate.let { it1 ->
+                issuedate = Utility.parseDateTime(
+                    it1,
+                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT,
+                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT4
+                )
+            }
+            var validitydate = ""
+            it.endDate.let { it1 ->
+                validitydate = Utility.parseDateTime(
+                    it1,
+                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT,
+                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT4
+                )
+            }
+            mViewBinding.giftDetails.text =
+                "Voucher Number - ${it.voucherNo}\nVoucher PIN - ${it.voucherGcCode}\n Purchased on - $issuedate\nValidity -$validitydate\nFyp Order Number - ${it.giftVoucherOrderNo}"
             try {
                 val jsonArr = JSONArray(it?.tnc)
                 var itemsArrayList: ArrayList<String> = ArrayList()
