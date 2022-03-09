@@ -45,7 +45,13 @@ class DiscordInviteActivity : BaseActivity<ActivityDiscordBinding, DiscordActivi
                 getApplication(), key = SharedPrefUtils.SF_DICORD_CONNECTED,
                 value = "connected"
             )
-            finish()
+            val intent =
+                Intent(this, DiscordProfileActivity::class.java)
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+            startActivity(intent)
+
+
+
         }
     }
 

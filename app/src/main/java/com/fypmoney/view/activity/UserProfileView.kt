@@ -138,15 +138,16 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                             getApplication(),
                             SharedPrefUtils.SF_DICORD_CONNECTED
                         )
-                    if (dicordconnected != null) {
-                        startActivity(Intent(this, DiscordProfileActivity::class.java))
-                        finishAffinity()
+                    if (!dicordconnected.isNullOrEmpty()) {
 
-                    } else {
                         intentToActivityMain(
                             this@UserProfileView,
                             DiscordProfileActivity::class.java
                         )
+                    } else {
+                        startActivity(Intent(this, DiscordInviteActivity::class.java))
+
+
                     }
                     }
 

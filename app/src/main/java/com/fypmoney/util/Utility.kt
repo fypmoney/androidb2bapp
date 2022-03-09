@@ -712,7 +712,10 @@ object Utility {
             SharedPrefUtils.SF_KEY_ACCESS_TOKEN,
             ""
         )
-
+        SharedPrefUtils.putString(
+            PockketApplication.instance, key = SharedPrefUtils.SF_DICORD_CONNECTED,
+            value = ""
+        )
         SharedPrefUtils.putString(
             PockketApplication.instance,
             SharedPrefUtils.SF_KEY_USER_PROFILE_INFO,
