@@ -16,17 +16,17 @@
         <TextView
             android:id="@+id/view_all"
             style="@style/TextviewBold"
-            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
-            android:layout_marginEnd="@dimen/_12sdp"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_marginStart="@dimen/_12sdp"
-            android:text="view all"
-            android:padding="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:padding="@dimen/_4sdp"
+            android:text="view all"
             android:textColor="@color/color_skyblue"
 
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/date_tv"

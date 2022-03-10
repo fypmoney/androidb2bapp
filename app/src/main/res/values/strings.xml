@@ -1124,4 +1124,5 @@ Coming really soon!
     <string name="buffering">Buffering…</string>
     <string name="paused">Paused</string>
     <string name="ended">Ended</string>
+    <string name="buy_now">Buy now</string>
 </resources>

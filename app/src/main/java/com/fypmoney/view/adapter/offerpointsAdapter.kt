@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
 
@@ -25,7 +26,8 @@ class offerpointsAdapter(
     val items: ArrayList<String>,
     val context: Context,
     val clickInterface: ListContactClickListener,
-    val white: Int? = Color.BLACK
+    val white: Int? = Color.BLACK,
+    val textcolor: Int? = ContextCompat.getColor(context, R.color.text_color_faded)
 ) : RecyclerView.Adapter<offerpointsAdapter.ViewHolder>() {
 
     private var mLastClickTime: Long = 0
@@ -49,7 +51,7 @@ class offerpointsAdapter(
         if (white != null) {
             holder.dot.background.setTint(white)
         }
-
+        textcolor?.let { holder.detail.setTextColor(it) }
 
         holder.card.setOnClickListener(View.OnClickListener {
             if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {

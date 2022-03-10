@@ -81,9 +81,7 @@ class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, GiftDetails
                 val jsonArr = JSONArray(it?.tnc)
                 var itemsArrayList: ArrayList<String> = ArrayList()
                 for (i in 0 until jsonArr.length()) {
-
                     itemsArrayList.add(jsonArr[i] as String)
-
                 }
                 setRecyclerView(itemsArrayList, mViewBinding.recyclerView)
             } catch (e: Exception) {
@@ -119,7 +117,13 @@ class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, GiftDetails
 
         }
         var typeAdapter =
-            offerpointsAdapter(itemsArrayList, this, itemClickListener2, Color.WHITE)
+            offerpointsAdapter(
+                itemsArrayList,
+                this,
+                itemClickListener2,
+                Color.WHITE,
+                textcolor = Color.WHITE
+            )
         recyclerView.adapter = typeAdapter
     }
 

@@ -21,8 +21,8 @@
             android:layout_width="wrap_content"
             android:text="@string/history"
             android:id="@+id/history"
-            android:textSize="18sp"
-            android:textColor="@color/text_color_light"
+            android:textSize="14sp"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar_id"
             app:layout_constraintEnd_toEndOf="@+id/toolbar_id"
@@ -38,7 +38,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:id="@+id/giftcard_rv"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_6sdp"
                 android:layout_height="wrap_content" />
 
 

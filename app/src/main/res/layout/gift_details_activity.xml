@@ -85,32 +85,48 @@
 
                             tools:src="@drawable/ic_user" />
 
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/brandName"
+                            style="@style/TextviewBold"
+                            android:layout_weight="5"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="@dimen/_10sdp"
+
+                            android:textSize="16sp"
+
+                            android:textColor="@color/white"
+                            android:text="Myntra" />
+
                         <LinearLayout
-                            android:layout_width="match_parent"
-                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginEnd="@dimen/_8sdp"
                             android:layout_height="wrap_content">
 
-                            <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/brandName"
-                                style="@style/TextviewBold"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="@dimen/_14sdp"
-                                android:layout_weight="5"
-                                android:textSize="16sp"
-
-                                android:textColor="@color/white"
-                                android:text="Myntra" />
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/coupon_amount"
                                 style="@style/TextviewBold"
-                                android:layout_gravity="center_vertical"
-                                android:layout_marginStart="@dimen/_14sdp"
+                                android:layout_gravity="center"
+
                                 android:layout_weight=".5"
                                 android:textSize="18sp"
-                                android:layout_marginEnd="@dimen/_8sdp"
+
+
                                 android:textColor="@color/color_green"
                                 android:text="Myntra" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+
+                                style="@style/TextviewRegular"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginStart="@dimen/_14sdp"
+
+                                android:textSize="12sp"
+                                android:layout_marginEnd="@dimen/_8sdp"
+                                android:textColor="@color/white"
+                                android:alpha=".60"
+                                android:text="Voucher Value" />
 
                         </LinearLayout>
 
@@ -141,7 +157,7 @@
                     android:text="Details"
                     android:textAlignment="center"
                     android:textColor="@color/text_color_light"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="12sp" />
 
 
                 <TextView
@@ -151,7 +167,7 @@
                     android:layout_marginStart="@dimen/_18sdp"
                     android:id="@+id/gift_details"
                     style="@style/TextviewRegular"
-                    android:textSize="18sp"
+                    android:textSize="14sp"
                     android:layout_marginTop="@dimen/_6sdp"
                     android:textColor="@color/white"
                     android:layout_marginBottom="@dimen/_24sdp"

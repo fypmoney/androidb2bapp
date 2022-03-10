@@ -98,6 +98,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         homeFragmentVM.callToAction()
         checkForErrorNotice()
 
+
     }
 
     private fun checkForErrorNotice() {

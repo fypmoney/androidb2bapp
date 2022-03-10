@@ -58,8 +58,13 @@ class GiftProducstVH(
 
 
             if (user.selected == true) {
-                binding.layoutAmount.setBackgroundResource(R.drawable.curved_background30_grey)
 
+                binding.layoutAmount.background.setTint(
+                    ContextCompat.getColor(
+                        binding.layoutAmount.context,
+                        R.color.grey_heading
+                    )
+                )
             } else {
                 if (position % 4 == 0) {
 

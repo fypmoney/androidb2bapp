@@ -54,8 +54,8 @@ class GiftTermsAndConditions : BaseActivity<GiftTAndCBinding, PurchaseGiftViewMo
         )
         giftBrand = intent?.getParcelableExtra(AppConstants.GIFT_BRAND_SELECTED)
 
-        mViewBinding.brandName.text = giftBrand?.displayName
-        mViewBinding.offerTitle.text = giftBrand?.giftMessage
+        mViewBinding.brandName.text = giftBrand?.description
+        mViewBinding.offerTitle.text = giftBrand?.brandTagLine2
 
         Glide.with(this).load(giftBrand?.brandLogo).placeholder(shimmerDrawable())
             .into(mViewBinding.logo)
@@ -101,7 +101,13 @@ class GiftTermsAndConditions : BaseActivity<GiftTAndCBinding, PurchaseGiftViewMo
 
         }
         var typeAdapter =
-            offerpointsAdapter(itemsArrayList, this, itemClickListener2, Color.WHITE)
+            offerpointsAdapter(
+                itemsArrayList,
+                this,
+                itemClickListener2,
+                Color.WHITE,
+                textcolor = Color.WHITE
+            )
         recyclerView.adapter = typeAdapter
     }
 

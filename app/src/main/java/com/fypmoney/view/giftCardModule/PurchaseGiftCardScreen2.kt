@@ -133,7 +133,10 @@ class PurchaseGiftCardScreen2 :
 
 
         gotBrandDetails?.let {
-            mViewBinding.giftMsg.text = it.giftMessage
+
+//            it.giftMessage.let {it1->
+//                mViewBinding.giftMsg.text = it1
+//            }
 
 
             (mViewBinding?.rvProducts?.adapter as GiftProductListAdapter).run {
