@@ -30,6 +30,11 @@ data class GiftStatusResponse(
     val voucherName: String? = null,
     val voucherStatus: String? = null,
     val sourceUserId: Int? = null,
-    val isGifted: String? = null
-)
+    val isGifted: String? = null,
+    val brandLogo: String? = null,
+
+    val brandName: String? = null,
+
+
+    )
 

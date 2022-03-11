@@ -82,7 +82,7 @@
                             android:id="@+id/logo"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
-
+                            android:scaleType="centerCrop"
                             tools:src="@drawable/ic_user" />
 
                         <androidx.appcompat.widget.AppCompatTextView
@@ -94,8 +94,7 @@
 
                             android:textSize="16sp"
 
-                            android:textColor="@color/white"
-                            android:text="Myntra" />
+                            android:textColor="@color/white" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -113,8 +112,7 @@
                                 android:textSize="18sp"
 
 
-                                android:textColor="@color/color_green"
-                                android:text="Myntra" />
+                                android:textColor="@color/color_green" />
 
                             <androidx.appcompat.widget.AppCompatTextView
 
