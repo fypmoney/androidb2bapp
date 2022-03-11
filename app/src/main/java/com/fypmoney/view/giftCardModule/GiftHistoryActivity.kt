@@ -76,11 +76,15 @@ class GiftHistoryActivity : BaseActivity<ActivityHistoryGiftCardsBinding, GiftHi
         val typeAdapter = GiftCardHistoryAdapter(
 
             this,
-            onRecentUserClick = {
+            onItemClicked = {
 
-             mviewModel?.callVoucherStatus(it.externalOrderId)
+                intentToActivity(it.id, GiftDetailsActivity::class.java)
             },
-            mobile
+            mobile,
+            onReloadClicked = {
+
+                mviewModel?.callVoucherStatus(it.externalOrderId)
+            }
         )
         typeAdapter.submitList(list)
         mViewBinding?.giftcardRv?.adapter = typeAdapter
@@ -100,16 +104,18 @@ class GiftHistoryActivity : BaseActivity<ActivityHistoryGiftCardsBinding, GiftHi
     * This method is used to observe the observers
     * */
     private fun setObservers() {
-        mviewModel?.allGiftList?.observe(this, {
+        mviewModel?.allGiftList?.observe(this) {
 
             setRecyclerView(it)
 
-        })
-        mviewModel?.clicked?.observe(this, {
+        }
+        mviewModel?.clicked?.observe(this) {
 
+            if (it?.isVoucherPurchased == AppConstants.YES) {
+                intentToActivity(it.id, GiftDetailsActivity::class.java)
+            }
 
-            intentToActivity(it.id, GiftDetailsActivity::class.java)
-        })
+        }
 
     }
 

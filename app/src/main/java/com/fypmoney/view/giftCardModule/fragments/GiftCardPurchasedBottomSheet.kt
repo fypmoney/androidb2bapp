@@ -12,6 +12,7 @@ import com.fypmoney.R
 import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.databinding.GiftCardPurchasedBottomSheetBinding
 import com.fypmoney.model.UpdateTaskGetResponse
+import com.fypmoney.model.homemodel.Users
 import com.fypmoney.util.Utility
 import com.fypmoney.view.giftCardModule.model.PurchaseGiftCardResponse
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -20,7 +21,9 @@ import java.lang.Exception
 
 
 class GiftCardPurchasedBottomSheet(
-    var giftCrad: PurchaseGiftCardResponse?
+    var giftCrad: PurchaseGiftCardResponse?,
+    var clickedListner: () -> Unit
+
 
 ) : BottomSheetDialogFragment() {
     private lateinit var binding: GiftCardPurchasedBottomSheetBinding
@@ -43,12 +46,20 @@ class GiftCardPurchasedBottomSheet(
         binding.msgPurchase.text = giftCrad?.msg
         Glide.with(binding.messageImage.context).load(giftCrad?.detailImage)
             .placeholder(shimmerDrawable()).into(binding.messageImage)
+        if (giftCrad?.voucherOrderDetailId != null) {
+
+            binding.continuebtn.text = "View Details"
+        } else {
+            binding.continuebtn.text = "Go to history"
+        }
 
         binding.continuebtn.setOnClickListener(View.OnClickListener {
             try {
 
                 dismiss()
-                requireActivity().finish()
+
+                clickedListner()
+
             } catch (e: Exception) {
 
             }

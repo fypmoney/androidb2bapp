@@ -6,6 +6,7 @@ data class PurchaseGiftCardResponse(
     val voucherNo: String? = null,
     val endDate: String? = null,
     val voucherGcCode: String? = null,
-    val detailImage: String? = null
+    val detailImage: String? = null,
+    val voucherOrderDetailId: Int? = null
 )
 

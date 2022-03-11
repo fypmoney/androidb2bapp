@@ -63,7 +63,7 @@ class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, GiftDetails
             it.issueDate.let { it1 ->
                 issuedate = Utility.parseDateTime(
                     it1,
-                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT,
+                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
                     outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT4
                 )
             }
@@ -71,7 +71,7 @@ class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, GiftDetails
             it.endDate.let { it1 ->
                 validitydate = Utility.parseDateTime(
                     it1,
-                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT,
+                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
                     outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT4
                 )
             }

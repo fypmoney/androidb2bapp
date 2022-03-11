@@ -181,6 +181,17 @@ class PurchaseGiftCardScreen2 :
         startActivity(intent)
     }
 
+    private fun intentToActivityGift(contactEntity: Int?, aClass: Class<*>) {
+        contactEntity.let {
+            val intent = Intent(this, aClass)
+            intent.putExtra(AppConstants.GIFT_ID, it)
+            intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+            startActivity(intent)
+            finish()
+        }
+
+    }
+
     private fun intentToActivity(aClass: Class<*>) {
         startActivityForResult(Intent(this, aClass), 13)
     }
@@ -293,10 +304,34 @@ class PurchaseGiftCardScreen2 :
     private fun GiftCardPurchased(list: PurchaseGiftCardResponse?) {
         giftCardpurchaseBottomSheet?.dismiss()
         var bottomSheetMessage2 =
-            GiftCardPurchasedBottomSheet(list)
+            GiftCardPurchasedBottomSheet(list, clickedListner = {
+                if (list?.voucherOrderDetailId != null) {
+
+                    intentToActivityGift(
+                        list?.voucherOrderDetailId,
+                        GiftDetailsActivity::class.java
+                    )
+
+                } else {
+                    val intent = Intent(this, GiftHistoryActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                    startActivity(intent)
+                    finish()
+                }
+
+            })
         bottomSheetMessage2.isCancelable = false
         bottomSheetMessage2?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheetMessage2?.show(supportFragmentManager, "TASKMESSAGE")
+    }
+
+    private fun intentToActivity(contactEntity: Int?, aClass: Class<*>) {
+        contactEntity.let {
+            val intent = Intent(this, aClass)
+            intent.putExtra(AppConstants.GIFT_ID, it)
+            startActivity(intent)
+        }
+
     }
 
     private fun GiftCardNotFyperSheet() {

@@ -1,6 +1,7 @@
 package com.fypmoney.view.giftCardModule
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
@@ -9,7 +10,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fypmoney.R
-import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.databinding.CardHistoryGiftBinding
 import com.fypmoney.extension.executeAfter
@@ -20,8 +20,9 @@ import com.fypmoney.view.giftCardModule.model.GiftHistoryResponseModel
 
 class GiftCardHistoryAdapter(
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: GiftHistoryResponseModel) -> Unit,
-    val mobile: String?
+    val onItemClicked: (model: GiftHistoryResponseModel) -> Unit,
+    val mobile: String?,
+    val onReloadClicked: (model: GiftHistoryResponseModel) -> Unit
 ) : ListAdapter<GiftHistoryResponseModel, GiftCardHistoryVH>(GiftCardHistoryDiffUtils) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GiftCardHistoryVH {
@@ -30,8 +31,9 @@ class GiftCardHistoryAdapter(
         return GiftCardHistoryVH(
             binding,
             lifecycleOwner,
-            onRecentUserClick,
-            mobile
+            onItemClicked,
+            mobile,
+            onReloadClicked
         )
     }
 
@@ -45,14 +47,19 @@ class GiftCardHistoryVH(
     private val binding: CardHistoryGiftBinding,
     private val lifecycleOwner: LifecycleOwner,
     val onRecentUserClick: (model: GiftHistoryResponseModel) -> Unit,
-    val mobile: String?
+    val mobile: String?,
+    val onReloadClicked: (model: GiftHistoryResponseModel) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
 
 
     fun bind(user: GiftHistoryResponseModel) {
         binding.executeAfter {
             lifecycleOwner = this@GiftCardHistoryVH.lifecycleOwner
-
+            if (user?.voucherStatus == "PENDING" && user?.isVoucherPurchased == AppConstants.NO) {
+                binding.reload.visibility = View.VISIBLE
+            } else {
+                binding.reload.visibility = View.GONE
+            }
 
             Glide.with(binding.offerIv.context).load(user.detailImage)
                 .placeholder(shimmerDrawable()).into(binding.offerIv)
@@ -84,7 +91,14 @@ class GiftCardHistoryVH(
 
             binding.giftTitle.text = user.brandName
             binding.gridOfferCv.setOnClickListener {
-                onRecentUserClick(user)
+                if (user?.isVoucherPurchased == AppConstants.YES) {
+                    onRecentUserClick(user)
+                }
+
+            }
+            binding.reload.setOnClickListener {
+
+                onReloadClicked(user)
             }
             binding.price.text = "₹" + Utility.convertToRs(user.amount?.toString())
 
