@@ -106,7 +106,9 @@ class PurchaseGiftCardScreen2 :
     }
 
     private fun setData(gotBrandDetails: VoucherBrandItem?) {
-        Glide.with(this).load(gotBrandDetails?.detailImage).placeholder(shimmerDrawable())
+        Glide.with(this)
+            .load("https://d1o7uku192uawx.cloudfront.net/mobile/media/catalog/product/m/y/myntra_1.jpg")
+            .placeholder(shimmerDrawable())
             .into(mViewBinding.banner)
         mViewModel.selectedGiftCard.set(gotBrandDetails?.voucherProduct?.get(0))
         mViewBinding.maxMinLen.text = gotBrandDetails?.brandTagLine2
@@ -125,7 +127,7 @@ class PurchaseGiftCardScreen2 :
         setToolbarAndTitle(
             context = this,
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = "Google Play Gift Code",
+            isBackArrowVisible = true, toolbarTitle = "Myntra E-Gift Card",
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )

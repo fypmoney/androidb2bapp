@@ -82,7 +82,7 @@
                             android:id="@+id/logo"
                             android:layout_width="@dimen/_30sdp"
                             android:layout_height="@dimen/_30sdp"
-                            android:scaleType="centerCrop"
+
                             tools:src="@drawable/ic_user" />
 
                         <androidx.appcompat.widget.AppCompatTextView
