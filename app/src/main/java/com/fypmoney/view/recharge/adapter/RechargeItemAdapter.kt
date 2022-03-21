@@ -1,4 +1,4 @@
-package com.fypmoney.view.adapter
+package com.fypmoney.view.recharge.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,7 +7,6 @@ import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.*
 import com.fypmoney.model.StoreDataModel
 import com.fypmoney.viewhelper.RechargeViewHelper
-import com.fypmoney.viewhelper.StoreViewHelper
 
 
 class RechargeItemAdapter(var onStoreClickListener: OnRechargeItemClick) :

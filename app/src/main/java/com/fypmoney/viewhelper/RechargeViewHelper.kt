@@ -1,10 +1,7 @@
 package com.fypmoney.viewhelper
 
 import com.fypmoney.model.StoreDataModel
-import com.fypmoney.model.UpiModel
-import com.fypmoney.view.adapter.AddMoneyUpiAdapter
-import com.fypmoney.view.adapter.RechargeItemAdapter
-import com.fypmoney.view.adapter.StoreItemAdapter
+import com.fypmoney.view.recharge.adapter.RechargeItemAdapter
 
 class RechargeViewHelper(
     var position: Int,

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".AirtelPrepaid"
+        android:background="#0E141C">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#0E141C">
+
+            <include
+                android:id="@+id/layout"
+                layout="@layout/toolbar" />
+
+            <ImageView
+                android:id="@+id/ivUser"
+                android:layout_width="@dimen/_36sdp"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_below="@+id/layout"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="29dp"
+                android:background="@drawable/ic_user2"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tanvi"
+                android:layout_toRightOf="@id/ivUser"
+                android:layout_below="@+id/layout"
+                android:layout_marginTop="29dp"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                android:layout_marginLeft="24dp" />
+
+            <TextView
+                android:id="@+id/tvUserNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvUserName"
+                android:layout_toRightOf="@id/ivUser"
+                android:text="+91 86482 72819"
+                android:textColor="#9CA3A5"
+                android:textSize="14sp"
+                android:layout_marginLeft="24dp" />
+
+            <Spinner
+                android:id="@+id/optionsMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvUserNumber"
+                android:layout_marginLeft="20dp"
+                android:background="@color/text_color_light"
+                android:layout_marginTop="27.76dp"
+                android:layout_marginRight="20dp">
+
+            </Spinner>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/optionsMenu"
+                android:layout_marginLeft="87dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="86dp"
+                android:layout_marginBottom="104dp"
+
+                android:fontFamily="sans-serif"
+                android:text="Continue"
+                android:textAllCaps="false"
+                android:textColor="#231F20"
+                android:id="@+id/continue_btn"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                app:backgroundTint="#FFFFFF" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+</layout>

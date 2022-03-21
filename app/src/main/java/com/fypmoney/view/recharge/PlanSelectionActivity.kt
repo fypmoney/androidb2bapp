@@ -12,16 +12,16 @@ import com.fypmoney.base.BaseActivity
 
 import com.fypmoney.databinding.ViewPlanSelectionBinding
 import com.fypmoney.view.recharge.fragments.RechargeForYouFragment
+import com.fypmoney.view.recharge.viewmodel.PlansViewModel
 import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
-import com.fypmoney.viewmodel.UserProfileViewModel
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.toolbar.toolbar
 
 /*
 * This class is used as Home Screen
 * */
-class PlanSelectionActivity : BaseActivity<ViewPlanSelectionBinding, UserProfileViewModel>() {
-    private lateinit var mViewModel: UserProfileViewModel
+class PlanSelectionActivity : BaseActivity<ViewPlanSelectionBinding, PlansViewModel>() {
+    private lateinit var mViewModel: PlansViewModel
     private lateinit var mViewBinding: ViewPlanSelectionBinding
     lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
@@ -33,8 +33,8 @@ class PlanSelectionActivity : BaseActivity<ViewPlanSelectionBinding, UserProfile
         return R.layout.view_plan_selection
     }
 
-    override fun getViewModel(): UserProfileViewModel {
-        mViewModel = ViewModelProvider(this).get(UserProfileViewModel::class.java)
+    override fun getViewModel(): PlansViewModel {
+        mViewModel = ViewModelProvider(this).get(PlansViewModel::class.java)
         return mViewModel
     }
 
@@ -58,12 +58,12 @@ class PlanSelectionActivity : BaseActivity<ViewPlanSelectionBinding, UserProfile
         tabLayout = findViewById(R.id.tabLayout)
         viewPager = findViewById(R.id.viewPager)
 
-        initializeTabs(tabLayout, intent)
+        initializeTabs(tabLayout)
 
     }
 
 
-    private fun initializeTabs(tabLayout: TabLayout, intent: Intent) {
+    private fun initializeTabs(tabLayout: TabLayout) {
 
 
         val adapter = RewardsActivity.ViewPagerAdapter(supportFragmentManager)
@@ -72,6 +72,8 @@ class PlanSelectionActivity : BaseActivity<ViewPlanSelectionBinding, UserProfile
         adapter.addFragment(RechargeForYouFragment(), "For you")
         adapter.addFragment(RechargeForYouFragment(), "Recommended")
         adapter.addFragment(RechargeForYouFragment(), "Unlimited")
+        adapter.addFragment(RechargeForYouFragment(), "data")
+        adapter.addFragment(RechargeForYouFragment(), "sms")
 
         viewPager.adapter = adapter
         tabLayout.setupWithViewPager(viewPager)

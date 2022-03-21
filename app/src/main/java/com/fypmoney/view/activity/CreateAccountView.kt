@@ -92,35 +92,7 @@ class CreateAccountView :
             )// lottie animation view
         }
 
-        // hide switch button in signup page
-        /*
-         teenagerSelected()
-         lin_parent.setOnClickListener(View.OnClickListener {
 
-             parentSelected()
-
-         })
-
-         rad_teenger.setOnCheckedChangeListener { buttonView, isChecked ->
-             if (isChecked) {
-                 teenagerSelected()
-             } else {
-                 parentSelected()
-
-             }
-         }
-         rad_parent.setOnCheckedChangeListener { buttonView, isChecked ->
-             if (isChecked) {
-                 parentSelected()
-             } else {
-                 teenagerSelected()
-             }
-         }
-
-         lin_teenager.setOnClickListener {
-             teenagerSelected()
-         }
-         */
 
         btnCreateAccount.backgroundTintList =
             ContextCompat.getColorStateList(applicationContext, R.color.buttonUnselectedColor)

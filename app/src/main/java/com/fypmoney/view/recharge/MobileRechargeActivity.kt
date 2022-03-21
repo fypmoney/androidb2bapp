@@ -4,13 +4,19 @@ package com.fypmoney.view.recharge
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 
 import com.fypmoney.databinding.ActivityMobileRechargeBinding
+import com.fypmoney.util.AppConstants
+import com.fypmoney.view.interfaces.ListContactClickListener
+import com.fypmoney.view.recharge.adapter.recentRechargeAdapter
 import com.fypmoney.view.recharge.fragments.RechargeForYouFragment
 import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 import com.fypmoney.viewmodel.UserProfileViewModel
@@ -48,6 +54,44 @@ class MobileRechargeActivity : BaseActivity<ActivityMobileRechargeBinding, UserP
 
             isBackArrowVisible = true, toolbarTitle = "Mobile Recharge"
         )
+        setRecyclerView()
+        setListners()
+    }
+
+    private fun setListners() {
+        mViewBinding.continueBtn.setOnClickListener {
+
+            var intent = Intent(this, SelectCircleActivity::class.java)
+            intent.putExtra(AppConstants.NUMBER_SELECTED, mViewBinding.etNumber.text.toString())
+
+            startActivity(intent)
+
+
+        }
+        mViewBinding.etNumber.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                mViewBinding.continueBtn.isEnabled = !s.isNullOrEmpty() && s.length <= 10
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+
+            }
+
+        })
+    }
+
+    private fun setRecyclerView() {
+        val layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        mViewBinding?.rvRecents?.layoutManager = layoutManager
+
+
+        var recentrechargeAdapter = recentRechargeAdapter()
+        mViewBinding?.rvRecents?.adapter = recentrechargeAdapter
 
 
     }

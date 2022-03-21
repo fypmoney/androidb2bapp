@@ -44,6 +44,8 @@ import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.home.main.homescreen.view.LoadMoneyBottomSheet
+import com.fypmoney.view.recharge.MobileRechargeActivity
+import com.fypmoney.view.recharge.PlanSelectionActivity
 import com.fypmoney.view.register.adapters.OffersHomeAdapter
 import com.fypmoney.view.storeoffers.ListOfferClickListener
 import com.fypmoney.view.storeoffers.OffersScreen
@@ -448,7 +450,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             }
             AppConstants.IN_APP_WITH_CARD -> {
 
-                val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)
+                val intent = Intent(requireContext(), MobileRechargeActivity::class.java)
                 intent.putExtra(ARG_WEB_URL_TO_OPEN, redirectionResource)
                 startActivity(intent)
             }
