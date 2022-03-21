@@ -22,6 +22,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KYC_TYPE
 import com.fypmoney.util.Utility
+import com.fypmoney.view.recharge.model.CircleResponse
 import com.fypmoney.view.recharge.model.OperatorResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -36,7 +37,7 @@ class SelectCircleViewModel(application: Application) : BaseViewModel(applicatio
         callGetOperatorList()
     }
 
-    var opertaorList: MutableLiveData<ArrayList<OperatorResponse>> = MutableLiveData()
+    var opertaorList: MutableLiveData<ArrayList<CircleResponse>> = MutableLiveData()
 
     /*
 
@@ -45,8 +46,8 @@ class SelectCircleViewModel(application: Application) : BaseViewModel(applicatio
     fun callGetOperatorList() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                purpose = ApiConstant.API_GET_OPERATOR_LIST_MOBILE,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_OPERATOR_LIST_MOBILE),
+                purpose = ApiConstant.API_GET_CIRCLE_LIST,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_CIRCLE_LIST),
                 request_type = ApiUrl.GET,
                 onResponse = this, isProgressBar = true,
                 param = BaseRequest()
@@ -58,12 +59,12 @@ class SelectCircleViewModel(application: Application) : BaseViewModel(applicatio
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.API_GET_OPERATOR_LIST_MOBILE -> {
+            ApiConstant.API_GET_CIRCLE_LIST -> {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<Array<OperatorResponse>>(
+                val array = Gson().fromJson<Array<CircleResponse>>(
                     json.get("data").toString(),
-                    Array<OperatorResponse>::class.java
+                    Array<CircleResponse>::class.java
                 )
                 val arrayList = ArrayList(array.toMutableList())
                 opertaorList.postValue(arrayList)

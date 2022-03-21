@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.base.BaseFragment
 
 import com.fypmoney.databinding.ActivityMobileRechargeBinding
 import com.fypmoney.util.AppConstants
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.toolbar.toolbar
 /*
 * This class is used as Home Screen
 * */
-class MobileRechargeActivity : BaseActivity<ActivityMobileRechargeBinding, UserProfileViewModel>() {
+class MobileRechargeActivity : BaseFragment<ActivityMobileRechargeBinding, UserProfileViewModel>() {
     private lateinit var mViewModel: UserProfileViewModel
     private lateinit var mViewBinding: ActivityMobileRechargeBinding
     lateinit var tabLayout: TabLayout
@@ -48,7 +49,7 @@ class MobileRechargeActivity : BaseActivity<ActivityMobileRechargeBinding, UserP
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
-            context = this@MobileRechargeActivity,
+            context = requireContext(),
             toolbar = toolbar, backArrowTint = Color.WHITE,
             titleColor = Color.WHITE,
 
@@ -58,10 +59,14 @@ class MobileRechargeActivity : BaseActivity<ActivityMobileRechargeBinding, UserP
         setListners()
     }
 
+    override fun onTryAgainClicked() {
+
+    }
+
     private fun setListners() {
         mViewBinding.continueBtn.setOnClickListener {
 
-            var intent = Intent(this, SelectCircleActivity::class.java)
+            var intent = Intent(requireContext(), SelectCircleActivity::class.java)
             intent.putExtra(AppConstants.NUMBER_SELECTED, mViewBinding.etNumber.text.toString())
 
             startActivity(intent)
@@ -86,7 +91,7 @@ class MobileRechargeActivity : BaseActivity<ActivityMobileRechargeBinding, UserP
 
     private fun setRecyclerView() {
         val layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         mViewBinding?.rvRecents?.layoutManager = layoutManager
 
 

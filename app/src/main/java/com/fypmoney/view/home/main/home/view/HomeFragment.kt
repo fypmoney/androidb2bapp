@@ -449,10 +449,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 startActivity(intent)
             }
             AppConstants.IN_APP_WITH_CARD -> {
+                findNavController().navigate(R.id.navigation_arcade)
 
-                val intent = Intent(requireContext(), MobileRechargeActivity::class.java)
-                intent.putExtra(ARG_WEB_URL_TO_OPEN, redirectionResource)
-                startActivity(intent)
+                val directions =
+                    MobileRechargeActivityDirections.actionExploreSectionExplore(
+                        sectionExploreItem = sectionContentItem,
+                        sectionExploreName = redirectionResource
+                    )
+
+                directions?.let { it1 -> findNavController().navigate(it1) }
+
+
             }
             AppConstants.OFFER_REDIRECTION -> {
                 homeFragmentVM.callFetchOfferApi(redirectionResource)

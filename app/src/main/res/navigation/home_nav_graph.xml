@@ -65,10 +65,18 @@
         android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment"
         android:label="@string/arcade"
         tools:layout="@layout/fragment_spinner_list" />
+
+
     <fragment
         android:id="@+id/navigation_jackpot"
         android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsJackpotFragment"
         android:label="@string/jackpot"
         tools:layout="@layout/fragment_jackpot_overview" />
+
+    <fragment
+        android:id="@+id/navigation_recharge"
+        android:name="com.fypmoney.view.recharge.MobileRechargeActivity"
+        android:label="Recharge"
+        tools:layout="@layout/fragment_spinner_list" />
 
 </navigation>

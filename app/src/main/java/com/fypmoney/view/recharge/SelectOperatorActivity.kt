@@ -58,23 +58,7 @@ class SelectOperatorActivity :
 
     }
 
-    private fun setUpRecyclerView(arrayList: ArrayList<OperatorResponse>) {
-        val topTenUsersAdapter = OperatorSelectionAdapter(
-            this, onRecentUserClick = {
 
-                var intent = Intent(this, PlanSelectionActivity::class.java)
-
-                startActivity(intent)
-            }
-        )
-
-
-        with(mViewBinding.rvOperator) {
-            adapter = topTenUsersAdapter
-            layoutManager =
-                LinearLayoutManager(this@SelectOperatorActivity, RecyclerView.HORIZONTAL, false)
-        }
-    }
 
     private fun setObserver() {
         mViewModel.opertaorList.observe(this) {

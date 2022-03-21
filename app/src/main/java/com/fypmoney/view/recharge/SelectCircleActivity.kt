@@ -4,14 +4,17 @@ package com.fypmoney.view.recharge
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.ArrayAdapter
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivitySelectCircleBinding
-import com.fypmoney.util.AppConstants
-import com.fypmoney.view.recharge.model.OperatorResponse
+import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
+import com.fypmoney.view.recharge.adapter.CircleSelectionAdapter
+import com.fypmoney.view.recharge.adapter.OperatorSelectionAdapter
+import com.fypmoney.view.recharge.model.CircleResponse
 import com.fypmoney.view.recharge.viewmodel.SelectCircleViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.collections.ArrayList
@@ -48,39 +51,34 @@ class SelectCircleActivity : BaseActivity<ActivitySelectCircleBinding, SelectCir
             toolbarTitle = "Mobile Recharge"
         )
 
-        mViewBinding.continueBtn.setOnClickListener {
 
-            var intent = Intent(this, SelectOperatorActivity::class.java)
-
-            startActivity(intent)
-
-
-        }
         setObserver()
 
 
     }
 
-    private fun setSpinner(arrayList: ArrayList<OperatorResponse>) {
-        val plants: MutableList<String> = ArrayList()
+    private fun setUpRecyclerView(arrayList: ArrayList<CircleResponse>) {
+        val topTenUsersAdapter = CircleSelectionAdapter(
+            this, onRecentUserClick = {
 
+                var intent = Intent(this, PlanSelectionActivity::class.java)
 
-
-        arrayList.forEachIndexed { pos, item ->
-
-            item.name?.let { plants.add(it) }
-
-        }
-        val spinnerArrayAdapter = ArrayAdapter(
-            this, R.layout.spinner_item, plants
+                startActivity(intent)
+            }
         )
-        spinnerArrayAdapter.setDropDownViewResource(R.layout.spinner_item)
-        mViewBinding.optionsMenu.adapter = spinnerArrayAdapter
+
+
+        with(mViewBinding.rvCircles) {
+            adapter = topTenUsersAdapter
+            layoutManager =
+                LinearLayoutManager(this@SelectCircleActivity, RecyclerView.HORIZONTAL, false)
+        }
+        (mViewBinding.rvCircles.adapter as CircleSelectionAdapter).submitList(arrayList)
     }
 
     private fun setObserver() {
         mViewModel.opertaorList.observe(this) {
-            setSpinner(it)
+            setUpRecyclerView(it)
         }
     }
 
