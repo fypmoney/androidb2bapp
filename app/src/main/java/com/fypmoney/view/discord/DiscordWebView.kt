@@ -75,8 +75,7 @@ class DiscordWebView : BaseActivity<ActivityWebviewDiscordBinding, DiscordWebCon
                     // your code to start second activity. Will wait for 3 seconds before calling this method
                     lifecycleScope.launchWhenResumed {
                         delay(1200)
-                        val intent =
-                            Intent(this@DiscordWebView, DiscordProfileActivity::class.java)
+                        val intent = Intent(this@DiscordWebView, DiscordProfileActivity::class.java)
                         startActivity(intent)
                         finish()
                     }
@@ -130,8 +129,6 @@ class DiscordWebView : BaseActivity<ActivityWebviewDiscordBinding, DiscordWebCon
     }
 
 
-
-
     override fun onPageStarted(url: String?, favicon: Bitmap?) {
 
     }
@@ -165,7 +162,6 @@ class DiscordWebView : BaseActivity<ActivityWebviewDiscordBinding, DiscordWebCon
             )
         )
     }
-
 
 
 }
