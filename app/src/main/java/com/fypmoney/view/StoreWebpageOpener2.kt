@@ -93,7 +93,10 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
                                 context.startActivity(intent)
                             } else {
                                 val fallbackUrl = intent.getStringExtra("browser_fallback_url")
-                                view.loadUrl(fallbackUrl!!)
+                                if (!fallbackUrl.isNullOrEmpty()) {
+                                    view.loadUrl(fallbackUrl!!)
+                                }
+
                             }
                             return true
                         }

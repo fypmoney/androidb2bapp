@@ -4,10 +4,13 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityUpgradeToKycInfoBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.view.activity.AadhaarAccountActivationView
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -74,7 +77,12 @@ class UpgradeToKycInfoActivity : BaseActivity<ActivityUpgradeToKycInfoBinding,Up
     private fun handleEvent(it: UpgradeToKycInfoActivityVM.UpgradeToKYCEvent?) {
         when(it){
             UpgradeToKycInfoActivityVM.UpgradeToKYCEvent.UpgradeKycClick -> {
-                startActivity(Intent(this, AadhaarAccountActivationView::class.java))
+                trackr {
+                    it.name = TrackrEvent.upgrade_your_kyc_clicked
+                }
+                startActivity(Intent(this, AadhaarAccountActivationView::class.java).apply {
+                    putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,intent.getStringExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN))
+                })
             }
 
         }

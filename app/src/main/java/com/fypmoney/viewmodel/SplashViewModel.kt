@@ -193,7 +193,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
 
                     SharedPrefUtils.putString(PockketApplication.instance,
-                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.kycType)
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.bankProfile?.kycType)
                     // Save the user id in shared preference
                     responseData.customerInfoResponseDetails?.id?.let {
                         SharedPrefUtils.putLong(
@@ -214,7 +214,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                         responseData.customerInfoResponseDetails?.profilePicResourceId
                     )
                     SharedPrefUtils.putString(PockketApplication.instance,
-                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.kycType)
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.bankProfile?.kycType)
                     val interestList = ArrayList<String>()
                     if (responseData.customerInfoResponseDetails?.userInterests?.isNullOrEmpty() == false) {
                         responseData.customerInfoResponseDetails?.userInterests?.forEach {

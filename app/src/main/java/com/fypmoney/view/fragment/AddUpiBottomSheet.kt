@@ -43,8 +43,13 @@ class AddUpiBottomSheet(
     private var onBottomSheetClickListener: OnAddUpiClickListener
 ) : BottomSheetDialogFragment(), WebApiCaller.OnWebApiResponse {
     private lateinit var binding: BottomSheetAddUpiBinding
-    val savedUpiUiModelList = mutableListOf<SavedUpiUiModel>()
+    private val savedUpiUiModelList = mutableListOf<SavedUpiUiModel>()
 
+    companion object{
+        fun newInstance(){
+
+        }
+    }
     override fun getTheme(): Int = R.style.BottomSheetDialogTheme
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
@@ -76,9 +81,11 @@ class AddUpiBottomSheet(
                     savedUpiUiModelList.forEach { it1->
                         it1.isSelected = it1.upiId==it.upiId
                     }
+                    val newList = mutableListOf<SavedUpiUiModel>()
+                    newList.addAll(savedUpiUiModelList)
                     (binding.savedRv.adapter as SavedUpiAdapter).run {
-                        submitList(null)
-                        submitList(savedUpiUiModelList)
+                        submitList(newList)
+                        notifyDataSetChanged()
                     }
                 }
             )
@@ -235,11 +242,10 @@ class AddUpiBottomSheet(
                         when (responseData.isVPAValid) {
                             1 -> {
                                 name.text = responseData.payerAccountName
-                                dismiss()
                                 onBottomSheetClickListener.onAddUpiClickListener(
                                     upiId.text.toString(), saveCardCheckbox.isChecked
                                 )
-
+                                dismiss()
 
                             }
 

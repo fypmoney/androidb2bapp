@@ -11,8 +11,6 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
-import com.fypmoney.util.AppConstants.ORDER_CARD_PHYSICAL_CARD_CODE
-import com.fypmoney.util.AppConstants.PHYSICAL_CARD_CODE
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.ordercard.model.UserOfferCard
 import com.fypmoney.view.ordercard.model.UserOfferCardResponse
@@ -24,6 +22,7 @@ class OrderCardViewModel(application: Application) : BaseViewModel(application) 
     val event: LiveData<OrderCardEvent>
         get() = _event
     private val _event = LiveEvent<OrderCardEvent>()
+
 
     val state:LiveData<OrderCardState>
         get() = _state
@@ -38,6 +37,9 @@ class OrderCardViewModel(application: Application) : BaseViewModel(application) 
     }
     fun onAlreadyHaveACard() {
         _event.value = OrderCardEvent.AlreadyHaveACardEvent
+    }
+    fun onPromoCodeClicked() {
+        _event.value = OrderCardEvent.HaveAPromoCode
     }
 
 
@@ -80,6 +82,7 @@ class OrderCardViewModel(application: Application) : BaseViewModel(application) 
     sealed class OrderCardEvent {
         object GetOrderCardEvent : OrderCardEvent()
         object AlreadyHaveACardEvent : OrderCardEvent()
+        object HaveAPromoCode : OrderCardEvent()
     }
 
     sealed class OrderCardState{

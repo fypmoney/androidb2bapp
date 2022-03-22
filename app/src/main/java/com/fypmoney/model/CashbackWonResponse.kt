@@ -1,5 +1,8 @@
 package com.fypmoney.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class CashbackWonResponse(
 	val transactionType: String? = null,
 	val bankReferenceNumber: String? = null,

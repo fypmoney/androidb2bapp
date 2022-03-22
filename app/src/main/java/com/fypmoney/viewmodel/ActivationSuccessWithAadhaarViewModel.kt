@@ -84,7 +84,7 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
                     SharedPrefUtils.putString(
                         PockketApplication.instance,
-                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.kycType)
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.bankProfile?.kycType)
                     // Save the user id in shared preference
                     SharedPrefUtils.putLong(
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
@@ -111,8 +111,11 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                         )
                     }
                     if (postKycScreenCode.value.isNullOrEmpty()) {
-                        postKycScreenCode.value =
-                            responseData.customerInfoResponseDetails?.postKycScreenCode!!
+                        responseData.customerInfoResponseDetails?.postKycScreenCode?.let {
+                            postKycScreenCode.value = it
+                        }
+
+
                     }
 
                     responseData.customerInfoResponseDetails?.postKycScreenCode?.let {

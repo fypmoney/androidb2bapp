@@ -230,6 +230,7 @@ object AppConstants {
     const val FEEDSCREEN = "FeedScreen"
     const val TRACKORDER = "TrackOrderScreen"
     const val CHORES = "ChoresScreen"
+    const val OrderCard = "OrderCard"
     const val JACKPOTTAB = "Jackpot"
     const val ARCADE = "Arcade"
     const val RewardHistory = "RewardHistory"
@@ -293,4 +294,12 @@ object AppConstants {
     const val POSTKYCKEY = "postkyc"
     const val SEMI = "SEMI"
     const val MINIMUM = "MINIMUM"
+    const val KYC_UPGRADE_FROM_WHICH_SCREEN = "kyc_upgrade_from_which_screen"
+    const val OFFER_REDIRECTION_EXTERNAL_WEB_VIEW = "EXTERNAL_WEB_VIEW"
+    const val OFFER_REDIRECTION_EXTERNAL_WEB_VIEW_SUB = "EXTERNAL_WEB_VIEW_SUB"
+    const val OFFER_REDIRECTION_IN_APP_VIEW_WITH_CARD_OPTION_SUBs =
+        "IN_APP_VIEW_WITH_CARD_OPTION_SUBs"
+    const val OFFER_REDIRECTION_IN_APP_VIEW_WITH_CARD_OPTIONS = "IN_APP_VIEW_WITH_CARD_OPTIONS"
+
+
 }

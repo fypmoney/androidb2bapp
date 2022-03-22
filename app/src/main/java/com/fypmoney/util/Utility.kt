@@ -47,6 +47,7 @@ import com.fypmoney.util.AppConstants.FyperScreen
 import com.fypmoney.util.AppConstants.HOMEVIEW
 import com.fypmoney.util.AppConstants.JACKPOTTAB
 import com.fypmoney.util.AppConstants.OfferScreen
+import com.fypmoney.util.AppConstants.OrderCard
 import com.fypmoney.util.AppConstants.ReferralScreen
 import com.fypmoney.util.AppConstants.StoreScreen
 import com.fypmoney.util.AppConstants.StoreofferScreen
@@ -57,6 +58,7 @@ import com.fypmoney.view.activity.OfferDetailActivity
 import com.fypmoney.view.fragment.OffersStoreActivity
 import com.fypmoney.view.fragment.StoresActivity
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.ordercard.OrderCardView
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
@@ -778,6 +780,11 @@ object Utility {
             SharedPrefUtils.SF_IS_INSTALLED_APPS_SYNCED,
             false
         )
+        SharedPrefUtils.putBoolean(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_CARD_PROMO_CODE_APPLIED,
+            false
+        )
     }
 
     /*
@@ -1106,6 +1113,10 @@ object Utility {
             }
             CHORES -> {
                 intent = Intent(context, ChoresActivity::class.java)
+
+            }
+            OrderCard -> {
+                intent = Intent(context, OrderCardView::class.java)
 
             }
             else -> {

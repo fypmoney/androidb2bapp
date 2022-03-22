@@ -226,6 +226,12 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                 finish()
             }
         }
+        mViewModel.upgradeKycFailed.observe(this) {
+            if (it) {
+                mViewModel.upgradeKycFailed.value = false
+                finish()
+            }
+        }
         mViewModel.resendOtpSuccess.observe(this) {
             if (it) {
                 startTimer()
@@ -245,7 +251,22 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                 when (mViewModel.fromWhichScreen.get()) {
 //
                     AppConstants.AADHAAR_VERIFICATION -> {
-                        finishAffinity()
+                        trackr {
+                            it.name = TrackrEvent.upgrade_kyc_successfully
+                        }
+                        when(intent.getStringExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN)){
+                            AddMoneyView::class.java.simpleName->{
+                                startActivity(Intent(this@EnterOtpView,AddMoneyView::class.java))
+                            }
+                            PayRequestProfileView::class.java.simpleName->{
+                                startActivity(Intent(this@EnterOtpView,PayRequestProfileView::class.java))
+
+                            }
+                            UserProfileView::class.java.simpleName->{
+                                startActivity(Intent(this@EnterOtpView,UserProfileView::class.java))
+
+                            }
+                        }
                     }
                     AppConstants.KYC_MOBILE_VERIFICATION -> {
                         intentToActivity(AadhaarVerificationView::class.java)

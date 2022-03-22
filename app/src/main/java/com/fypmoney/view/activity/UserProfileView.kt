@@ -3,7 +3,6 @@ package com.fypmoney.view.activity
 import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.Intent.FLAG_ACTIVITY_MULTIPLE_TASK
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -23,6 +22,7 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.ViewUserNewProfileBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.GlobalListAdapter
@@ -300,8 +300,9 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         }
         mViewModel.onUpgradeKycClicked.observe(this) {
             if (it) {
-                val intent  = Intent(this,UpgradeToKycInfoActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and FLAG_ACTIVITY_MULTIPLE_TASK
+                val intent  = Intent(this,UpgradeToKycInfoActivity::class.java).apply {
+                    putExtra(KYC_UPGRADE_FROM_WHICH_SCREEN,UserProfileView::class.java.simpleName)
+                }
                 startActivity(intent)
                 mViewModel.onUpgradeKycClicked.value = false
             }

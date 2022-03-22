@@ -6,6 +6,8 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -61,12 +63,6 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
         if (!amount.isNullOrEmpty()) {
             add_money_editext.setText(roundOfAmountToCeli(amount))
         }
-        if (checkUpgradeKycStatus()) {
-            increase_limit.toGone()
-        } else {
-            increase_limit.toVisible()
-
-        }
         val videoLink = SharedPrefUtils.getString(
             this,
             SharedPrefUtils.SF_ADD_MONEY_VIDEO
@@ -80,6 +76,16 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
             }
 
         })
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (checkUpgradeKycStatus()) {
+            increase_limit.toGone()
+        } else {
+            increase_limit.toVisible()
+
+        }
     }
 
     /**
@@ -150,8 +156,12 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
             }
         mViewModel.increseLimitClicked.observe(this) {
             if (it) {
-                val intent  = Intent(this, UpgradeToKycInfoActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                trackr {
+                    it.name = TrackrEvent.increase_limit_clicked
+                }
+                val intent  = Intent(this, UpgradeToKycInfoActivity::class.java).apply {
+                    putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,AddMoneyView::class.java.simpleName)
+                }
                 startActivity(intent)
                   mViewModel.increseLimitClicked.value = false
                 }
@@ -179,7 +189,7 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
 
 
     private fun checkUpgradeKycStatus():Boolean{
-        SharedPrefUtils.getString(PockketApplication.instance, SharedPrefUtils.SF_KYC_TYPE)?.let {
+         SharedPrefUtils.getString(PockketApplication.instance, SharedPrefUtils.SF_KYC_TYPE)?.let {
             return it != AppConstants.MINIMUM
         }?:run {
             return true

@@ -19,6 +19,8 @@ import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.util.videoplayer.VideoActivity2
+import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
@@ -128,6 +130,7 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
                             AppConstants.FEED_TYPE_BLOG
                         )
                     }
+
                     AppConstants.FEED_TYPE_STORIES -> {
 
                         callDiduKnowBottomSheet(list.resourceArr)
@@ -192,6 +195,21 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
 
                         }
 
+                    }
+
+                    AppConstants.TYPE_VIDEO -> {
+                        val intent = Intent(requireContext(), VideoActivity2::class.java)
+                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
+
+                        startActivity(intent)
+
+                    }
+                    AppConstants.TYPE_VIDEO_EXPLORE -> {
+                        val intent = Intent(requireContext(), VideoActivityWithExplore::class.java)
+                        intent.putExtra(ARG_WEB_URL_TO_OPEN, it.redirectionResource)
+                        intent.putExtra(AppConstants.ACTIONFLAG, it.actionFlagCode)
+
+                        startActivity(intent)
                     }
                     AppConstants.EXPLORE_IN_APP_WEBVIEW -> {
 

@@ -1,10 +1,11 @@
 package com.fyp.trackr.models
 
 import android.os.Bundle
+import androidx.annotation.Keep
 import com.fyp.trackr.base.Trackr
 import com.fyp.trackr.services.TrackrServices
 import org.json.JSONObject
-
+@Keep
 data class AnalyticsEvent(var name: TrackrEvent = TrackrEvent.None,
                           var map: HashMap<String, Any> = hashMapOf(),
                           var services: ArrayList<TrackrServices> = arrayListOf()) {
@@ -153,6 +154,15 @@ enum class TrackrEvent(name: String) {
     tab_reward_click ("tab_reward_click"),
     tab_family_click ("tab_family_click"),
     tab_home_click ("tab_home_click"),
+    increase_limit_clicked("increase_limit_clicked"),
+    upgrade_your_kyc_clicked("upgrade_your_kyc_clicked"),
+    upgrade_to_aadhar_kyc_clicked("upgrade_to_aadhar_kyc_clicked"),
+    get_otp_on_aadhar_clicked("get_otp_on_aadhar_clicked"),
+    verify_otp_aadhar_clicked("verify_otp_aadhar_clicked"),
+    upgrade_kyc_successfully("upgrade_kyc_successfully"),
+    upgrade_kyc_from_pay_clicked("upgrade_kyc_from_pay_clicked"),
+    upgrade_kyc_from_profile_clicked("upgrade_kyc_from_profile_clicked"),
+
 
 }
 

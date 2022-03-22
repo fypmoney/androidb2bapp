@@ -111,7 +111,7 @@ class ReferralCodeViewModel(application: Application) : BaseViewModel(applicatio
                     data?.isReferralAllowed = "NO"
                     Utility.saveCustomerDataInPreference(data)
                     SharedPrefUtils.putString(PockketApplication.instance,
-                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.kycType)
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.bankProfile?.kycType)
                     SharedPrefUtils.putString(
                         getApplication(),
                         SharedPrefUtils.SF_KEY_USER_FIRST_NAME,

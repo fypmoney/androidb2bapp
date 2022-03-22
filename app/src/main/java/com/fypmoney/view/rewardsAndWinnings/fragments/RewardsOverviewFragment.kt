@@ -375,7 +375,9 @@ class RewardsOverviewFragment() :
             viewLifecycleOwner,
             { list ->
 
-                callOfferDetailsSheeet(list[0])
+                if(list.isNotEmpty()){
+                    callOfferDetailsSheeet(list[0])
+                }
             })
 
         viewModel.feedDetail.observe(

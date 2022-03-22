@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
-import android.os.SystemClock
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -36,7 +35,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
 
     private lateinit var binding: ActivityHomeBinding
     private val homeActivityVM by viewModels<HomeActivityVM> { defaultViewModelProviderFactory }
-    private var mLastClickTime: Long = 0
     private val doubleBackPressed = AtomicBoolean(false)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -175,10 +173,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
     private fun handelEvents(it: HomeActivityVM.HomeActivityEvent?) {
         when(it){
             HomeActivityVM.HomeActivityEvent.NotificationClicked -> {
-                if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
-                    return;
-                }
-                mLastClickTime = SystemClock.elapsedRealtime();
                 startActivity(Intent(this, NotificationView::class.java))
 
             }

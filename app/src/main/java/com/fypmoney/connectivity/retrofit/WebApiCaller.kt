@@ -58,7 +58,11 @@ class WebApiCaller {
             AppConstants.PAYU_SERVER -> {
                 ApiClient.getClient(ApiConstant.PAYU_BASE_URL).create(ApiInterface::class.java)
 
-            }
+            }/*
+            "https://run.mocky.io" -> {
+                ApiClient.getClient("https://run.mocky.io").create(ApiInterface::class.java)
+
+            }*/
             else -> {
                 ApiClient.getClient(BuildConfig.BASE_ENDPOINT).create(ApiInterface::class.java)
 

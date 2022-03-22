@@ -5,6 +5,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
@@ -83,8 +85,13 @@ class PayRequestProfileView :
                         )
                     }else{
                         val upgradeYourKycBottomSheet = UpgradeYourKycBottomSheet(onUpgradeClick = {
-                            val intent  = Intent(this, UpgradeToKycInfoActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                            trackr {
+                                it.name = TrackrEvent.upgrade_kyc_from_pay_clicked
+                            }
+                            val intent  = Intent(this, UpgradeToKycInfoActivity::class.java).apply {
+                                putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,PayRequestProfileView::class.java.simpleName)
+
+                            }
                             startActivity(intent)
                         })
                         upgradeYourKycBottomSheet.dialog?.window?.setBackgroundDrawable(
@@ -103,8 +110,13 @@ class PayRequestProfileView :
                         )
                     }else{
                         val upgradeYourKycBottomSheet = UpgradeYourKycBottomSheet(onUpgradeClick = {
-                            val intent  = Intent(this, UpgradeToKycInfoActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK and Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                            trackr {
+                                it.name = TrackrEvent.upgrade_kyc_from_pay_clicked
+                            }
+                            val intent  = Intent(this, UpgradeToKycInfoActivity::class.java).apply {
+                                putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,PayRequestProfileView::class.java.simpleName)
+
+                            }
                             startActivity(intent)
                         })
                         upgradeYourKycBottomSheet.dialog?.window?.setBackgroundDrawable(

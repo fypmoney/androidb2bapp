@@ -288,8 +288,6 @@ class CardFragmentVM(application: Application) :
             ApiConstant.API_GET_BANK_PROFILE -> {
                 if (responseData is BankProfileResponse) {
                     bankProfile = responseData.bankProfileResponseDetails
-                    SharedPrefUtils.putString(PockketApplication.instance,
-                        SharedPrefUtils.SF_KYC_TYPE,responseData.bankProfileResponseDetails?.kycType)
                     _state.value =
                         CardState.BankProfilePopulate(responseData.bankProfileResponseDetails)
                     saveKitNumberInPref()
@@ -417,25 +415,25 @@ class CardFragmentVM(application: Application) :
     }
 
 
-    override fun onCardSettingsClick(position: Int) {
-        when (position) {
-            0 -> {
+    override fun onCardSettingsClick(position: Int, name: String?) {
+        when (name) {
+            PockketApplication.instance.getString(R.string.card_settings_block) -> {
                 _event.value = CardEvent.BlockUnblockEvent(
                     bankProfile, this
                 )
             }
-            1 -> {
+            PockketApplication.instance.getString(R.string.card_settings_limit) -> {
                 _event.value = CardEvent.SetCardLimitEvent(
                     bankProfile,
                     this, this
                 )
             }
-            2 -> {
+            PockketApplication.instance.getString(R.string.card_settings_channels) -> {
                 _event.value = CardEvent.ManageChannelEvent(
                     bankProfile, this
                 )
             }
-            3 -> {
+            PockketApplication.instance.getString(R.string.card_settings_pin) -> {
                 _event.value = CardEvent.SetPinEvent(
                     this
                 )

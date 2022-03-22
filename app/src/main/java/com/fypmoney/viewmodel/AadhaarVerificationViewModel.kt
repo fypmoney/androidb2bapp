@@ -32,9 +32,9 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
     var onVerificationFailed = MutableLiveData<String>()
 
     init {
-        trackr {
+        /*trackr {
             it.name = TrackrEvent.bank_verification
-        }
+        }*/
     }
     /*
     * This method is used to handle click of get otp
@@ -49,6 +49,9 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
             }
 
             else -> {
+                trackr {
+                    it.name = TrackrEvent.get_otp_on_aadhar_clicked
+                }
                 callKycInitApi()
             }
         }
@@ -88,14 +91,15 @@ class AadhaarVerificationViewModel(application: Application) : BaseViewModel(app
                         SharedPrefUtils.SF_KEY_AADHAAR_NUMBER,
                         responseData.kycInitResponseDetails.documentIdentifier
                     )
-                    SharedPrefUtils.putString(PockketApplication.instance,
-                        SharedPrefUtils.SF_KYC_TYPE,responseData.kycInitResponseDetails.kycType)
+
 
                     if(responseData.kycInitResponseDetails.showAdharOtpVerificationScreen==AppConstants.YES){
                         onKycInitSuccess.value=responseData.kycInitResponseDetails
 
                     }else if(responseData.kycInitResponseDetails.showAdharOtpVerificationScreen==AppConstants.NO
                         && responseData.kycInitResponseDetails.kycType==AppConstants.SEMI){
+                        SharedPrefUtils.putString(PockketApplication.instance,
+                            SharedPrefUtils.SF_KYC_TYPE,responseData.kycInitResponseDetails.kycType)
                         kycUpgraded.value  = true
                     }
 
