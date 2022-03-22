@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.base.BaseFragment
 
 import com.fypmoney.databinding.ViewPlanSelectionBinding
 import com.fypmoney.view.recharge.fragments.RechargeForYouFragment
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.toolbar.toolbar
 /*
 * This class is used as Home Screen
 * */
-class PlanSelectionActivity : BaseActivity<ViewPlanSelectionBinding, PlansViewModel>() {
+class PlanSelectionActivity : BaseFragment<ViewPlanSelectionBinding, PlansViewModel>() {
     private lateinit var mViewModel: PlansViewModel
     private lateinit var mViewBinding: ViewPlanSelectionBinding
     lateinit var tabLayout: TabLayout
@@ -42,7 +43,7 @@ class PlanSelectionActivity : BaseActivity<ViewPlanSelectionBinding, PlansViewMo
         super.onCreate(savedInstanceState)
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
-            context = this@PlanSelectionActivity,
+            context = requireContext(),
             toolbar = toolbar, backArrowTint = Color.WHITE,
             titleColor = Color.WHITE,
 
@@ -55,10 +56,14 @@ class PlanSelectionActivity : BaseActivity<ViewPlanSelectionBinding, PlansViewMo
 //                SharedPrefUtils.SF_KEY_PROFILE_IMAGE
 //            )
 //        )
-        tabLayout = findViewById(R.id.tabLayout)
-        viewPager = findViewById(R.id.viewPager)
+        tabLayout = mViewBinding.tabLayout
+        viewPager = mViewBinding.viewPager
 
         initializeTabs(tabLayout)
+
+    }
+
+    override fun onTryAgainClicked() {
 
     }
 
@@ -66,7 +71,7 @@ class PlanSelectionActivity : BaseActivity<ViewPlanSelectionBinding, PlansViewMo
     private fun initializeTabs(tabLayout: TabLayout) {
 
 
-        val adapter = RewardsActivity.ViewPagerAdapter(supportFragmentManager)
+        val adapter = RewardsActivity.ViewPagerAdapter(childFragmentManager)
 
 
         adapter.addFragment(RechargeForYouFragment(), "For you")

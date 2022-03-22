@@ -449,15 +449,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 startActivity(intent)
             }
             AppConstants.IN_APP_WITH_CARD -> {
-                findNavController().navigate(R.id.navigation_arcade)
+                findNavController().navigate(R.id.navigation_recharge)
 
-                val directions =
-                    MobileRechargeActivityDirections.actionExploreSectionExplore(
-                        sectionExploreItem = sectionContentItem,
-                        sectionExploreName = redirectionResource
-                    )
-
-                directions?.let { it1 -> findNavController().navigate(it1) }
 
 
             }

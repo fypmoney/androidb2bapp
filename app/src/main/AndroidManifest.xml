@@ -387,12 +387,8 @@
             android:name="com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".view.recharge.PlanSelectionActivity" />
-        <activity
-            android:windowSoftInputMode="adjustPan"
-            android:name=".view.recharge.MobileRechargeActivity">
 
-        </activity>
-        <activity android:name=".view.recharge.SelectCircleActivity" />
+
         <activity android:name=".view.recharge.SelectOperatorActivity" />
 
         <meta-data

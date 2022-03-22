@@ -24,7 +24,7 @@
             app:customStrokeWidth="@{@dimen/dp5}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_profile" />
+            app:srcCompat="@drawable/airtel_logo" />
 
         <TextView
             android:id="@+id/user_name_tv"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_18sdp"
             android:maxLength="20"
-            android:textColor="@color/text_color_dark"
+            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/recent_iv"
             app:layout_constraintStart_toEndOf="@+id/recent_iv"
             app:layout_constraintTop_toTopOf="@+id/recent_iv"

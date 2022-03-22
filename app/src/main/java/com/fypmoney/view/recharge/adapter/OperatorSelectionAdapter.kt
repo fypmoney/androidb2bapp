@@ -46,8 +46,10 @@ class TopTenUsersVH(
         binding.executeAfter {
             lifecycleOwner = this@TopTenUsersVH.lifecycleOwner
 
-//            loadImage(recentIv,user.profilePicResourceId,
-//                ContextCompat.getDrawable(this.recentIv.context, R.drawable.ic_profile_img),true)
+            loadImage(
+                recentIv, user.icon,
+                ContextCompat.getDrawable(this.recentIv.context, R.drawable.ic_profile_img), false
+            )
 
             recentUserCl.setOnClickListener {
                 onRecentUserClick(user)

@@ -6,7 +6,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.fypmoney.BR
@@ -45,8 +47,8 @@ class MobileRechargeActivity : BaseFragment<ActivityMobileRechargeBinding, UserP
         return mViewModel
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = requireContext(),
@@ -66,10 +68,8 @@ class MobileRechargeActivity : BaseFragment<ActivityMobileRechargeBinding, UserP
     private fun setListners() {
         mViewBinding.continueBtn.setOnClickListener {
 
-            var intent = Intent(requireContext(), SelectCircleActivity::class.java)
-            intent.putExtra(AppConstants.NUMBER_SELECTED, mViewBinding.etNumber.text.toString())
 
-            startActivity(intent)
+            findNavController().navigate(R.id.navigation_select_operator)
 
 
         }

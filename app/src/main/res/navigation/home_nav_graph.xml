@@ -9,7 +9,11 @@
         android:id="@+id/navigation_home"
         android:name="com.fypmoney.view.home.main.home.view.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" >
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_recharge_screen"
+            app:destination="@+id/navigation_recharge" />
         <action
             android:id="@+id/action_navigation_home_to_navigation_card"
             app:destination="@id/navigation_card" />
@@ -77,6 +81,47 @@
         android:id="@+id/navigation_recharge"
         android:name="com.fypmoney.view.recharge.MobileRechargeActivity"
         android:label="Recharge"
-        tools:layout="@layout/fragment_spinner_list" />
+        tools:layout="@layout/fragment_spinner_list">
+        <action
+            android:id="@+id/action_select_circle"
+            app:destination="@+id/navigation_select_circle" />
+    </fragment>
 
+
+    <fragment
+        android:id="@+id/navigation_select_circle"
+        android:name="com.fypmoney.view.recharge.SelectCircleActivity"
+        android:label="Select_Circle"
+        tools:layout="@layout/fragment_spinner_list">
+        <action
+            android:id="@+id/action_select_recharge_plans"
+            app:destination="@+id/navigation_select_plans" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_select_operator"
+        android:name="com.fypmoney.view.recharge.SelectOperatorActivity"
+        android:label="Select_Circle"
+        tools:layout="@layout/fragment_spinner_list">
+        <action
+            android:id="@+id/action_select_operator"
+            app:destination="@+id/navigation_select_circle" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_select_operator_from_list"
+        android:name="com.fypmoney.view.recharge.SelectOperatorFromListActivity"
+        android:label="select_operator_from_list"
+        tools:layout="@layout/fragment_spinner_list">
+        <action
+            android:id="@+id/action_select_operator"
+            app:destination="@+id/navigation_select_circle" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_select_plans"
+        android:name="com.fypmoney.view.recharge.PlanSelectionActivity"
+        android:label="Plan_selection"
+        tools:layout="@layout/fragment_spinner_list">
+
+    </fragment>
 </navigation>
