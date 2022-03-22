@@ -386,6 +386,16 @@
         <activity
             android:name="com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".view.discord.DiscordInviteActivity" />
+        <activity android:name=".view.discord.DiscordWebViewActivity" />
+        <activity android:name=".view.discord.DiscordWebView" />
+        <activity android:name=".view.discord.DiscordProfileActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

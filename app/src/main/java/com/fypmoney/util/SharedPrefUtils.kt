@@ -15,6 +15,7 @@ import java.lang.reflect.Type
 class SharedPrefUtils {
 
     companion object {
+        const val SF_DICORD_CONNECTED = "dicord_connectivity"
         const val SF_KEY_FIREBASE_TOKEN = "firebase_token"
         const val SF_KEY_NEW_MESSAGE = "new_message"
         const val SF_KEY_ACCESS_TOKEN = "access_token"

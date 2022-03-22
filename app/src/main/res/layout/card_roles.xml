@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+
+        android:backgroundTint="#1C2129"
+        android:background="@drawable/curved_background22"
+        android:id="@+id/layout_role"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/dot"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/ic_circle_orange"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/amount_tv"
+            style="@style/TextviewRegular"
+            android:layout_width="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:layout_marginStart="@dimen/_6sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:minEms="2"
+            android:text="@string/add_money_50"
+            android:textColor="@color/white"
+            android:alpha=".80"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/dot"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

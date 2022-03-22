@@ -152,6 +152,8 @@ object ApiConstant {
     const val Api_Your_Gifts = "services/loyaltyservice/api/onboarding-gifts"
     const val API_CHECK_PROMO_CODE = "/services/loyaltyservice/api/promocode"
 
+    const val Api_GET_DISCORD_PROFILE = "/services/loyaltyservice/api/fetch-discord-data"
+
 }
 
 
