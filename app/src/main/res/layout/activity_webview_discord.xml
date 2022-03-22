@@ -45,14 +45,15 @@
                 android:id="@+id/titleToolbar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:text=""
+                android:layout_marginTop="13dp"
                 android:layout_toEndOf="@+id/toolbar_backImage"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="16sp"
+                android:layout_centerVertical="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Discord Community" />
 
             <ImageView
                 android:id="@+id/toolbar_backImage"

@@ -7,44 +7,38 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.view.WindowManager
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-
-import com.fypmoney.databinding.ActivityWebviewDicordBinding
-import com.fypmoney.model.CardInfoDetailsBottomSheet
+import com.fypmoney.databinding.ActivityWebviewDiscordBinding
 import com.fypmoney.util.AdvancedWebView
-import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.discord.viewmodel.DiscordWebConnectVM
-import com.fypmoney.view.fragment.CardDetailsBottomSheet
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import kotlinx.android.synthetic.main.activity_webview.*
+import kotlinx.coroutines.delay
 
 
-class DiscordWebView : BaseActivity<ActivityWebviewDicordBinding, DiscordWebConnectVM>(),
+class DiscordWebView : BaseActivity<ActivityWebviewDiscordBinding, DiscordWebConnectVM>(),
     AdvancedWebView.Listener {
 
-    private var card: CardInfoDetailsBottomSheet? = null
     private lateinit var mViewModel: DiscordWebConnectVM
     private val TAG = DiscordWebView::class.java.simpleName
-    private lateinit var binding: ActivityWebviewDicordBinding
+    private lateinit var binding: ActivityWebviewDiscordBinding
 
 
     override fun getBindingVariable(): Int = BR.viewModel
 
-    override fun getLayoutId(): Int = R.layout.activity_webview_dicord
+    override fun getLayoutId(): Int = R.layout.activity_webview_discord
 
     override fun getViewModel(): DiscordWebConnectVM {
         mViewModel = ViewModelProvider(this).get(DiscordWebConnectVM::class.java)
@@ -52,17 +46,12 @@ class DiscordWebView : BaseActivity<ActivityWebviewDicordBinding, DiscordWebConn
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window?.setFlags(
-            WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE
-        )
-
         super.onCreate(savedInstanceState)
         binding = getViewDataBinding()
         val url = intent?.getStringExtra(ARG_WEB_URL_TO_OPEN)
         val pageTitle = intent?.getStringExtra(ARG_WEB_PAGE_TITLE)
         if (title != null) {
-            title_tv.text = pageTitle
+            binding.titleToolbar.text = pageTitle
         }
 
 
@@ -78,18 +67,20 @@ class DiscordWebView : BaseActivity<ActivityWebviewDicordBinding, DiscordWebConn
 
 
                 if (url.contains("/discord/failed_redirect_url")) {
-                    callDicordConnectionFailSheet()
+                    callDiscordConnectionFailSheet()
                 } else if (url.contains("/discord/success_redirect_url")) {
                     SharedPrefUtils.putString(
-                        getApplication(), key = SharedPrefUtils.SF_DICORD_CONNECTED,
+                        application, key = SharedPrefUtils.SF_DICORD_CONNECTED,
                         value = "connected"
                     )
-                    Handler().postDelayed(Runnable { // your code to start second activity. Will wait for 3 seconds before calling this method
+                    // your code to start second activity. Will wait for 3 seconds before calling this method
+                    lifecycleScope.launchWhenResumed {
+                        delay(1200)
                         val intent =
                             Intent(this@DiscordWebView, DiscordProfileActivity::class.java)
                         startActivity(intent)
                         finish()
-                    }, 1200)
+                    }
 
                 }
                 return false
@@ -117,7 +108,7 @@ class DiscordWebView : BaseActivity<ActivityWebviewDicordBinding, DiscordWebConn
 
     }
 
-    private fun callDicordConnectionFailSheet() {
+    private fun callDiscordConnectionFailSheet() {
 
         val bottomSheet =
             DiscordBottomSheet(
@@ -125,7 +116,7 @@ class DiscordWebView : BaseActivity<ActivityWebviewDicordBinding, DiscordWebConn
 
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(supportFragmentManager, "TransactionFail")
+        bottomSheet.show(supportFragmentManager, "DiscordBottomSheet")
     }
 
 
@@ -174,15 +165,6 @@ class DiscordWebView : BaseActivity<ActivityWebviewDicordBinding, DiscordWebConn
         )
     }
 
-    fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
-        return if (url == null || url.startsWith("http://") || url.startsWith("https://")) false else try {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-            view.context.startActivity(intent)
-            true
-        } catch (e: Exception) {
-            Log.i(TAG, "shouldOverrideUrlLoading Exception:$e")
-            true
-        }
-    }
+
 
 }

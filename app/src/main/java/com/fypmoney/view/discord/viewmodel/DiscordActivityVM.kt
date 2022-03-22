@@ -21,10 +21,18 @@ class DiscordActivityVM(application: Application) : BaseViewModel(application) {
     val event: LiveData<DiscordEvent>
         get() = _event
     private val _event = LiveEvent<DiscordEvent>()
+    var profileResponse = MutableLiveData<DiscordProfileResponse>()
+
     init {
         callGetDiscordProfileApi()
     }
-    var profileResponse = MutableLiveData<DiscordProfileResponse>()
+
+
+
+    fun connectToDiscord() {
+        _event.value = DiscordEvent.ConnectNow
+    }
+
     private fun callGetDiscordProfileApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -36,9 +44,7 @@ class DiscordActivityVM(application: Application) : BaseViewModel(application) {
             )
         )
     }
-    fun connectToDiscord() {
-        _event.value = DiscordEvent.contect
-    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
@@ -65,6 +71,6 @@ class DiscordActivityVM(application: Application) : BaseViewModel(application) {
     }
 
     sealed class DiscordEvent {
-        object contect : DiscordEvent()
+        object ConnectNow : DiscordEvent()
     }
 }

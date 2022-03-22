@@ -301,5 +301,6 @@ object AppConstants {
         "IN_APP_VIEW_WITH_CARD_OPTION_SUBs"
     const val OFFER_REDIRECTION_IN_APP_VIEW_WITH_CARD_OPTIONS = "IN_APP_VIEW_WITH_CARD_OPTIONS"
 
+    const val DISCORD_URL = "https://discord.com/oauth2/authorize?response_type=code&client_id=945553921005457468&scope=connections%20email%20gdm.join%20guilds%20guilds.join%20guilds.members.read%20identify%20messages.read&state={authtoken}&prompt=consent"
 
 }
