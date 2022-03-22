@@ -89,7 +89,7 @@ class DiscordWebView : BaseActivity<ActivityWebviewDicordBinding, DiscordWebConn
                             Intent(this@DiscordWebView, DiscordProfileActivity::class.java)
                         startActivity(intent)
                         finish()
-                    }, 1500)
+                    }, 1200)
 
                 }
                 return false

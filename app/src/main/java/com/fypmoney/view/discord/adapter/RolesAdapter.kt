@@ -1,28 +1,27 @@
 package com.fypmoney.view.discord.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.fypmoney.R
-import com.fypmoney.bindingAdapters.loadImage
-import com.fypmoney.databinding.ItemTopTenUserBinding
+import com.fypmoney.databinding.CardRolesBinding
 import com.fypmoney.extension.executeAfter
-import com.fypmoney.model.homemodel.Users
+
 import com.fypmoney.util.Utility
+import com.fypmoney.view.discord.model.RolesItem
 
-class TopTenUsersAdapter(
+class RolesAdapter(
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: Users) -> Unit
-) : ListAdapter<Users, RolesAdapter>(TopTenUsersDiffUtils) {
+    val onRecentUserClick: (model: RolesItem) -> Unit
+) : ListAdapter<RolesItem, RolesVH>(TopTenUsersDiffUtils) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RolesAdapter {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RolesVH {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemTopTenUserBinding.inflate(inflater, parent, false)
-        return RolesAdapter(
+        val binding = CardRolesBinding.inflate(inflater, parent, false)
+        return RolesVH(
             binding,
             lifecycleOwner,
             onRecentUserClick
@@ -30,42 +29,44 @@ class TopTenUsersAdapter(
 
     }
 
-    override fun onBindViewHolder(holder: RolesAdapter, position: Int) {
+    override fun onBindViewHolder(holder: RolesVH, position: Int) {
         holder.bind(getItem(position))
     }
 
 }
 
-class RolesAdapter(
-    private val binding: ItemTopTenUserBinding,
+class RolesVH(
+    private val binding: CardRolesBinding,
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: Users) -> Unit
+    val onRecentUserClick: (model: RolesItem) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(user: Users) {
+    fun bind(user: RolesItem) {
         binding.executeAfter {
-            lifecycleOwner = this@RolesAdapter.lifecycleOwner
-
-            loadImage(
-                recentIv, user.profilePicResourceId,
-                ContextCompat.getDrawable(this.recentIv.context, R.drawable.ic_profile_img), true
+            lifecycleOwner = this@RolesVH.lifecycleOwner
+        try {
+            dot.background.setTint(
+                Color.parseColor(user.color)
             )
+        }catch (e:Exception){
 
-            recentUserCl.setOnClickListener {
+        }
+
+            layoutRole.setOnClickListener {
                 onRecentUserClick(user)
             }
-            userNameTv.text = Utility.getFirstName(user.name)
+            amountTv.text = Utility.getFirstName(user.name)
         }
     }
 
 }
 
-object TopTenUsersDiffUtils : DiffUtil.ItemCallback<Users>() {
+object TopTenUsersDiffUtils : DiffUtil.ItemCallback<RolesItem>() {
 
-    override fun areItemsTheSame(oldItem: Users, newItem: Users): Boolean {
-        return ((oldItem.userId == newItem.userId) && (oldItem.profilePicResourceId === oldItem.profilePicResourceId))
+    override fun areItemsTheSame(oldItem: RolesItem, newItem: RolesItem): Boolean {
+        return (oldItem == newItem)
     }
 
-    override fun areContentsTheSame(oldItem: Users, newItem: Users): Boolean {
+    override fun areContentsTheSame(oldItem: RolesItem, newItem: RolesItem): Boolean {
         return oldItem == newItem
     }
 }
