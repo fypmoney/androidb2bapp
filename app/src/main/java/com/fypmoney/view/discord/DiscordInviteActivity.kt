@@ -50,6 +50,7 @@ class DiscordInviteActivity : BaseActivity<ActivityDiscordBinding, DiscordActivi
             intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
             startActivity(intent)
 
+      finish()
 
 
         }
@@ -75,8 +76,11 @@ class DiscordInviteActivity : BaseActivity<ActivityDiscordBinding, DiscordActivi
 
         val intent = Intent(this, DiscordWebView::class.java)
         intent.putExtra(ARG_WEB_URL_TO_OPEN, url)
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
         intent.putExtra(ARG_WEB_PAGE_TITLE, "Connect to Discord")
         startActivity(intent)
+        finish()
+
 
     }
 

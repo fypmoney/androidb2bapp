@@ -17,7 +17,9 @@ import com.fypmoney.databinding.ActivityDiscordProfileBinding
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.activity.PayRequestProfileView
 import com.fypmoney.view.adapter.TopTenUsersAdapter
+import com.fypmoney.view.discord.adapter.RolesAdapter
 import com.fypmoney.view.discord.viewmodel.DiscordProfileVM
+import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -44,15 +46,17 @@ class DiscordProfileActivity : BaseActivity<ActivityDiscordProfileBinding, Disco
 
             mViewBinding.textView9.text = it.discordUserInfoDTO?.username
 
+            mViewBinding.textView10.text = it.discordUserInfoDTO?.discriminator.toString()
+
             Glide.with(this).load(it.discordUserInfoDTO?.avatar)
                 .into(mViewBinding.ivUserProfileImage)
 
-
+            (mViewBinding.rvroles.adapter as RolesAdapter).submitList(it.discordGuildsInfoDTO?.get(0)?.roles)
         }
     }
 
     private fun setUpRecyclerView() {
-        val topTenUsersAdapter = TopTenUsersAdapter(
+        val topTenUsersAdapter = RolesAdapter(
             this, onRecentUserClick = {
 
             }
