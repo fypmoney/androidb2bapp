@@ -205,7 +205,7 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         iconList.add(
             ListUiModel(
                 postion = 2,
-                name = "Connect your discord",
+                name = getString(R.string.connect_discord),
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_discord_profile)
             )
         )

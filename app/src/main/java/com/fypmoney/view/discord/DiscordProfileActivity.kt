@@ -38,9 +38,6 @@ class DiscordProfileActivity : BaseActivity<ActivityDiscordProfileBinding, Disco
     }
 
     private fun setUpObserver() {
-        mViewModel.event.observe(this) {
-            handelEvents(it)
-        }
 
         mViewModel.profileResponse.observe(this) {
 
@@ -69,15 +66,7 @@ class DiscordProfileActivity : BaseActivity<ActivityDiscordProfileBinding, Disco
         }
     }
 
-    private fun handelEvents(it: DiscordProfileVM.DiscordEvent?) {
-        when (it) {
-            DiscordProfileVM.DiscordEvent.contect -> {
 
-            }
-
-
-        }
-    }
 
 
     private fun setUpToolbar() {
@@ -86,7 +75,7 @@ class DiscordProfileActivity : BaseActivity<ActivityDiscordProfileBinding, Disco
             toolbar = toolbar,
             isBackArrowVisible = true, toolbarTitle = getString(R.string.fypxdiscord),
             titleColor = Color.WHITE,
-            backArrowTint = Color.WHITE
+            backArrowTint = Color.WHITE,
         )
     }
 

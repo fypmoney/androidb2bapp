@@ -23,7 +23,8 @@
 
             <include
                 android:id="@+id/layout_toolbar"
-                layout="@layout/toolbar" />
+
+                layout="@layout/toolbar_discordprofile" />
 
             <ImageView
                 android:id="@+id/imageView7"

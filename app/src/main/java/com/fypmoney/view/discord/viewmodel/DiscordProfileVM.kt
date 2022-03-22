@@ -28,9 +28,7 @@ import com.moengage.core.internal.MoEConstants
 
 class DiscordProfileVM(application: Application) : BaseViewModel(application) {
 
-    val event: LiveData<DiscordEvent>
-        get() = _event
-    private val _event = LiveEvent<DiscordEvent>()
+
     var profileResponse = MutableLiveData<DiscordProfileResponse>()
 
     init {
@@ -49,9 +47,7 @@ class DiscordProfileVM(application: Application) : BaseViewModel(application) {
         )
     }
 
-    fun connectToDiscord() {
-        _event.value = DiscordEvent.contect
-    }
+
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
@@ -73,11 +69,5 @@ class DiscordProfileVM(application: Application) : BaseViewModel(application) {
 
     }
 
-    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
-        super.onError(purpose, errorResponseInfo)
-    }
 
-    sealed class DiscordEvent {
-        object contect : DiscordEvent()
-    }
 }
