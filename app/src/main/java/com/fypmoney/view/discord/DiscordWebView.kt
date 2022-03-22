@@ -32,7 +32,7 @@ class DiscordWebView : BaseActivity<ActivityWebviewDiscordBinding, DiscordWebCon
     AdvancedWebView.Listener {
 
     private lateinit var mViewModel: DiscordWebConnectVM
-    private val TAG = DiscordWebView::class.java.simpleName
+
     private lateinit var binding: ActivityWebviewDiscordBinding
 
 
@@ -53,7 +53,6 @@ class DiscordWebView : BaseActivity<ActivityWebviewDiscordBinding, DiscordWebCon
         if (title != null) {
             binding.titleToolbar.text = pageTitle
         }
-
 
         binding.webView1.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, progress: Int) {
@@ -112,7 +111,9 @@ class DiscordWebView : BaseActivity<ActivityWebviewDiscordBinding, DiscordWebCon
 
         val bottomSheet =
             DiscordBottomSheet(
-                this
+                finishDiscord = {
+                    finish()
+                }
 
             )
         bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
@@ -151,7 +152,7 @@ class DiscordWebView : BaseActivity<ActivityWebviewDiscordBinding, DiscordWebCon
         contentDisposition: String?,
         userAgent: String?
     ) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onExternalPageRequest(url: String?) {

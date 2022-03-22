@@ -16,7 +16,7 @@ import com.fypmoney.view.discord.model.RolesItem
 class RolesAdapter(
     private val lifecycleOwner: LifecycleOwner,
     val onRecentUserClick: (model: RolesItem) -> Unit
-) : ListAdapter<RolesItem, RolesVH>(TopTenUsersDiffUtils) {
+) : ListAdapter<RolesItem, RolesVH>(RolesDiffUtils) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RolesVH {
         val inflater = LayoutInflater.from(parent.context)
@@ -60,7 +60,7 @@ class RolesVH(
 
 }
 
-object TopTenUsersDiffUtils : DiffUtil.ItemCallback<RolesItem>() {
+object RolesDiffUtils : DiffUtil.ItemCallback<RolesItem>() {
 
     override fun areItemsTheSame(oldItem: RolesItem, newItem: RolesItem): Boolean {
         return (oldItem == newItem)
