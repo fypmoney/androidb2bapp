@@ -215,7 +215,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
             }
             HomeFragmentVM.HomeFragmentEvent.AddAction -> {
-                val intent = Intent(requireActivity(), AddMoneyView::class.java)
+                val intent = Intent(requireActivity(), AddMoneyView::class.java).apply {  }
                 startActivity(intent)
             }
             HomeFragmentVM.HomeFragmentEvent.PayAction -> {

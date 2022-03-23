@@ -49,7 +49,7 @@
                 android:layout_marginEnd="@dimen/_8sdp"
                 android:backgroundTint="@color/green_selected"
                 android:onClick="@{()->viewmodel.connectToDiscord()}"
-                android:text="Connect now"
+                android:text="@string/connect_now"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@+id/title_tv"
                 app:layout_constraintStart_toStartOf="@+id/title_tv"

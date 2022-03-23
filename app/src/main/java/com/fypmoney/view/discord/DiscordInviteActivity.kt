@@ -73,7 +73,6 @@ class DiscordInviteActivity : BaseActivity<ActivityDiscordBinding, DiscordActivi
         val url = authToken?.let { DISCORD_URL.replace("{authtoken}", it) }
         val intent = Intent(this, DiscordWebView::class.java)
         intent.putExtra(ARG_WEB_URL_TO_OPEN, url)
-        intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
         intent.putExtra(ARG_WEB_PAGE_TITLE, getString(R.string.connect_to_discord))
         startActivity(intent)
         finish()

@@ -1140,5 +1140,7 @@ Coming really soon!
     <string name="fypxdiscord">Fyp x Discord</string>
     <string name="fyper_op">Fyper OP ✌🏻</string>
     <string name="connect_discord">Connect your discord</string>
+    <string name="discord_profile">Discord Profile</string>
     <string name="connect_to_discord">Connect to Discord</string>
+    <string name="connect_now">Connect now</string>
 </resources>

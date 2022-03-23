@@ -31,7 +31,6 @@ import com.fypmoney.view.community.SocialCommunityActivity
 import com.fypmoney.view.discord.DiscordInviteActivity
 import com.fypmoney.view.discord.DiscordProfileActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
-import com.fypmoney.view.register.UserTypeOnLoginView
 import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
 import com.fypmoney.viewmodel.UserProfileViewModel
 import com.karumi.dexter.Dexter
@@ -40,9 +39,7 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.yalantis.ucrop.util.FileUtils.getPath
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
-import kotlinx.android.synthetic.main.view_home.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -135,10 +132,10 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                 2 -> {
                     val dicordconnected =
                         SharedPrefUtils.getString(
-                            getApplication(),
+                            application,
                             SharedPrefUtils.SF_DICORD_CONNECTED
                         )
-                    if (!dicordconnected.isNullOrEmpty()) {
+                    if (!dicordconnected.isNullOrEmpty() && dicordconnected == "connected") {
 
                         intentToActivityMain(
                             this@UserProfileView,
@@ -178,13 +175,17 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
             }
 
         })
-        (mViewBinding.profileList.adapter as GlobalListAdapter).submitList(prepareOptions())
 
         mViewModel.callGetCustomerProfileApi()
 
         setObserver()
     }
 
+    override fun onStart() {
+        super.onStart()
+        (mViewBinding.profileList.adapter as GlobalListAdapter).submitList(prepareOptions())
+
+    }
     private fun prepareOptions(): ArrayList<ListUiModel> {
 
         val iconList = ArrayList<ListUiModel>()
@@ -202,13 +203,28 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                 icon = AppCompatResources.getDrawable(this, R.drawable.ic_privacy)
             )
         )
-        iconList.add(
-            ListUiModel(
-                postion = 2,
-                name = getString(R.string.connect_discord),
-                icon = AppCompatResources.getDrawable(this, R.drawable.ic_discord_profile)
-            )
+       val discoredConnected=  SharedPrefUtils.getString(
+            application,
+            SharedPrefUtils.SF_DICORD_CONNECTED
         )
+        if(!discoredConnected.isNullOrEmpty() && (discoredConnected == "connected")){
+            iconList.add(
+                ListUiModel(
+                    postion = 2,
+                    name = getString(R.string.discord_profile),
+                    icon = AppCompatResources.getDrawable(this, R.drawable.ic_discord_profile)
+                )
+            )
+        }else{
+            iconList.add(
+                ListUiModel(
+                    postion = 2,
+                    name = getString(R.string.connect_to_discord),
+                    icon = AppCompatResources.getDrawable(this, R.drawable.ic_discord_profile)
+                )
+            )
+        }
+
         iconList.add(
             ListUiModel(
                 postion = 3,

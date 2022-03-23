@@ -2,12 +2,14 @@ package com.fypmoney.view.discord
 
 import android.graphics.Color
 import android.os.Bundle
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
+import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.ActivityDiscordProfileBinding
 import com.fypmoney.view.discord.adapter.RolesAdapter
 import com.fypmoney.view.discord.viewmodel.DiscordProfileVM
@@ -47,12 +49,21 @@ class DiscordProfileActivity : BaseActivity<ActivityDiscordProfileBinding, Disco
             Glide.with(this).load(it.discordUserInfoDTO?.avatar)
                 .into(mViewBinding.ivUserProfileImage)
 
+            loadImage(
+                mViewBinding.ivUserProfileImage,
+                it.discordUserInfoDTO?.avatar,
+                ContextCompat.getDrawable(this, R.drawable.ic_profile_img),
+                true
+            )
+
+
+
             (mViewBinding.rvroles.adapter as RolesAdapter).submitList(it.discordGuildsInfoDTO?.get(0)?.roles)
         }
     }
 
     private fun setUpRecyclerView() {
-        val topTenUsersAdapter = RolesAdapter(
+        val rolesAdapter = RolesAdapter(
             this, onRecentUserClick = {
 
             }
@@ -60,7 +71,7 @@ class DiscordProfileActivity : BaseActivity<ActivityDiscordProfileBinding, Disco
 
 
         with(mViewBinding.rvroles) {
-            adapter = topTenUsersAdapter
+            adapter = rolesAdapter
             layoutManager = GridLayoutManager(this@DiscordProfileActivity, 3)
         }
     }
