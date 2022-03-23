@@ -200,7 +200,7 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
             ListUiModel(
                 postion = 1,
                 name = getString(R.string.privacy_settings),
-                icon = AppCompatResources.getDrawable(this, R.drawable.ic_privacy)
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_profile_privacy_settings)
             )
         )
        val discoredConnected=  SharedPrefUtils.getString(
@@ -243,7 +243,7 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
             ListUiModel(
                 postion = 5,
                 name = getString(R.string.t_n_c),
-                icon = AppCompatResources.getDrawable(this, R.drawable.ic_privacy)
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_term_and_condition)
             )
         )
         iconList.add(
