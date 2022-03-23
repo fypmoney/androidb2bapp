@@ -23,8 +23,9 @@
             android:layout_height="24dp"
             android:layout_marginStart="@dimen/_6sdp"
             android:layout_marginTop="6dp"
+            android:backgroundTint="#EC585B"
             android:layout_marginBottom="6dp"
-            android:background="@drawable/ic_circle_orange"
+            android:background="@drawable/circular_red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

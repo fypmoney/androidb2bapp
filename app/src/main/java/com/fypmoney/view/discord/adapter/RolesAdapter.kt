@@ -54,7 +54,7 @@ class RolesVH(
             layoutRole.setOnClickListener {
                 onRecentUserClick(user)
             }
-            amountTv.text = Utility.getFirstName(user.name)
+            amountTv.text = user.name
         }
     }
 
