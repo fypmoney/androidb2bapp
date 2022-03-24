@@ -151,12 +151,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     }
 
     private fun setUpObserver() {
-        homeFragmentVM.event.observe(viewLifecycleOwner,{
+        homeFragmentVM.event.observe(viewLifecycleOwner) {
             handelEvents(it)
-        })
-        homeFragmentVM.state.observe(viewLifecycleOwner,{
+        }
+        homeFragmentVM.state.observe(viewLifecycleOwner) {
             handelState(it)
-        })
+        }
     }
 
     private fun handelState(it: HomeFragmentVM.HomeFragmentState?) {

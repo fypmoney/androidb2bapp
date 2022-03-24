@@ -127,9 +127,9 @@
                     android:hint="xyz@gmail.com"
                     android:imeOptions="actionDone"
                     android:inputType="textEmailAddress"
+                    android:maxLength="40"
                     android:paddingStart="@dimen/edittextHintPaddingStart"
                     android:paddingEnd="@dimen/edittextHintPaddingEnd"
-                    android:maxLength="40"
                     android:text="@={viewModel.emailId}"
                     android:textSize="@dimen/_14sdp" />
 
