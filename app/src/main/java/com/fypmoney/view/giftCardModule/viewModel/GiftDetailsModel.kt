@@ -13,7 +13,6 @@ import com.fypmoney.view.giftCardModule.model.*
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.moengage.core.internal.model.BaseRequest
 
 /*
 * This class is used to handle add money functionality
@@ -25,7 +24,7 @@ class GiftDetailsModel(application: Application) : BaseViewModel(application) {
     }
 
 
-    var clicked: MutableLiveData<GiftStatusResponse> = MutableLiveData()
+    var giftDetailsResponse: MutableLiveData<GiftStatusResponse> = MutableLiveData()
 
 
     fun callVoucherStatus(id: Int?) {
@@ -56,7 +55,7 @@ class GiftDetailsModel(application: Application) : BaseViewModel(application) {
                 )
 
 
-                clicked.postValue(obj)
+                giftDetailsResponse.postValue(obj)
             }
 
 

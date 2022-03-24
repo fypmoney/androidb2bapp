@@ -44,7 +44,7 @@ class GiftHistoryActivity : BaseActivity<ActivityHistoryGiftCardsBinding, GiftHi
         setToolbarAndTitle(
             context = this,
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = "Gift Cards",
+            isBackArrowVisible = true, toolbarTitle = "Gift Cards History",
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
