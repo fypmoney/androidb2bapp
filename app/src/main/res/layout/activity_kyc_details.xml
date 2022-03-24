@@ -210,7 +210,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/address_1_title"
                     android:layout_marginTop="8dp"
-
+                    android:digits="qwertyuiopasdfghjklzxcvbnm  QWERTYUIOPASDFGHJKLZXCVBNM1234567890+-*=(),.:!_@"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:hint="Address line 1"
                     android:imeOptions="actionDone"
@@ -240,7 +240,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/address_2_title"
                     android:layout_marginTop="8dp"
-
+                    android:digits="qwertyuiopasdfghjklzxcvbnm  QWERTYUIOPASDFGHJKLZXCVBNM1234567890+-*=(),.:!_@"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:hint="Address line 2"
                     android:imeOptions="actionDone"
