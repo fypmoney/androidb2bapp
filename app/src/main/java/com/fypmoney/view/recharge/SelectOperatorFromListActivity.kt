@@ -69,8 +69,11 @@ class SelectOperatorFromListActivity :
     private fun setUpRecyclerView(arrayList: ArrayList<OperatorResponse>) {
         val topTenUsersAdapter = OperatorSelectionAdapter(
             this, onRecentUserClick = {
-
-                findNavController().navigate(R.id.navigation_select_operator)
+                findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                    "operator_selected",
+                    it
+                )
+                findNavController().popBackStack()
             }
         )
 

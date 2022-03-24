@@ -1,18 +1,19 @@
 package com.fypmoney.view.recharge
 
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.ViewPager
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
 
 import com.fypmoney.databinding.ViewPlanSelectionBinding
 import com.fypmoney.view.recharge.fragments.RechargeForYouFragment
+import com.fypmoney.view.recharge.model.RechargePlansResponse
 import com.fypmoney.view.recharge.viewmodel.PlansViewModel
 import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 import com.google.android.material.tabs.TabLayout
@@ -26,6 +27,8 @@ class PlanSelectionActivity : BaseFragment<ViewPlanSelectionBinding, PlansViewMo
     private lateinit var mViewBinding: ViewPlanSelectionBinding
     lateinit var tabLayout: TabLayout
     lateinit var viewPager: ViewPager
+
+    private val args: PlanSelectionActivityArgs by navArgs()
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -39,8 +42,8 @@ class PlanSelectionActivity : BaseFragment<ViewPlanSelectionBinding, PlansViewMo
         return mViewModel
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = requireContext(),
@@ -50,6 +53,8 @@ class PlanSelectionActivity : BaseFragment<ViewPlanSelectionBinding, PlansViewMo
             isBackArrowVisible = true, toolbarTitle = "Airtel"
         )
 
+        mViewModel.selectedOperator.value = args.selectedOperator
+        mViewModel.selectedCircle.value = args.selectedCircle
 //        loadProfile(
 //            SharedPrefUtils.getString(
 //                applicationContext,
@@ -58,9 +63,16 @@ class PlanSelectionActivity : BaseFragment<ViewPlanSelectionBinding, PlansViewMo
 //        )
         tabLayout = mViewBinding.tabLayout
         viewPager = mViewBinding.viewPager
+        setObserver()
 
-        initializeTabs(tabLayout)
+        mViewModel.callGetOperatorList()
 
+    }
+
+    private fun setObserver() {
+        mViewModel.opertaorList.observe(viewLifecycleOwner) {
+            initializeTabs(tabLayout, it)
+        }
     }
 
     override fun onTryAgainClicked() {
@@ -68,17 +80,19 @@ class PlanSelectionActivity : BaseFragment<ViewPlanSelectionBinding, PlansViewMo
     }
 
 
-    private fun initializeTabs(tabLayout: TabLayout) {
+    private fun initializeTabs(
+        tabLayout: TabLayout,
+        rechargePlansResponse: ArrayList<RechargePlansResponse>
+    ) {
 
 
         val adapter = RewardsActivity.ViewPagerAdapter(childFragmentManager)
 
+        rechargePlansResponse.forEach {
+            it.name?.let { it1 -> adapter.addFragment(RechargeForYouFragment(it.value), it1) }
+        }
 
-        adapter.addFragment(RechargeForYouFragment(), "For you")
-        adapter.addFragment(RechargeForYouFragment(), "Recommended")
-        adapter.addFragment(RechargeForYouFragment(), "Unlimited")
-        adapter.addFragment(RechargeForYouFragment(), "data")
-        adapter.addFragment(RechargeForYouFragment(), "sms")
+
 
         viewPager.adapter = adapter
         tabLayout.setupWithViewPager(viewPager)

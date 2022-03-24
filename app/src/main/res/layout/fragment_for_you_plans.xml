@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/reward_background">
+       >
 
 
         <androidx.core.widget.NestedScrollView
@@ -30,7 +30,7 @@
                     android:layout_marginStart="@dimen/_6sdp"
                     android:layout_marginEnd="@dimen/_6sdp"
                     android:layout_marginTop="@dimen/_12sdp"
-                    android:id="@+id/shimmerscratch"
+                    android:id="@+id/shimmerPlans"
                     android:layout_height="wrap_content"
 
                     android:layout_width="match_parent"

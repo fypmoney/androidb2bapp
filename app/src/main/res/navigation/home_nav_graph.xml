@@ -85,6 +85,14 @@
         <action
             android:id="@+id/action_select_circle"
             app:destination="@+id/navigation_select_circle" />
+        <action
+            android:id="@+id/action_go_operator_screen"
+            app:destination="@+id/navigation_select_operator" />
+        <argument
+            android:name="sectionExploreItem"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.home.main.explore.model.SectionContentItem"
+            app:nullable="true" />
     </fragment>
 
 
@@ -96,14 +104,34 @@
         <action
             android:id="@+id/action_select_recharge_plans"
             app:destination="@+id/navigation_select_plans" />
+        <argument
+            android:name="circlegot"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="selectedOperator"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.recharge.model.OperatorResponse"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/navigation_select_operator"
         android:name="com.fypmoney.view.recharge.SelectOperatorActivity"
         android:label="Select_Circle"
         tools:layout="@layout/fragment_spinner_list">
+        <argument
+            android:name="operator"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="circle"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="true" />
         <action
-            android:id="@+id/action_select_operator"
+            android:id="@+id/action_select_circle"
             app:destination="@+id/navigation_select_circle" />
     </fragment>
 
@@ -122,6 +150,13 @@
         android:name="com.fypmoney.view.recharge.PlanSelectionActivity"
         android:label="Plan_selection"
         tools:layout="@layout/fragment_spinner_list">
-
+        <argument
+            android:name="selectedOperator"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.recharge.model.OperatorResponse"
+            app:nullable="true" />
+        <argument
+            android:name="selectedCircle"
+            app:argType="string" />
     </fragment>
 </navigation>

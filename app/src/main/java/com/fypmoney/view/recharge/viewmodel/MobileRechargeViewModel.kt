@@ -14,7 +14,6 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.BankTransactionHistoryResponseDetails
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.ProfileImageUploadResponse
@@ -22,9 +21,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KYC_TYPE
 import com.fypmoney.util.Utility
-import com.fypmoney.view.recharge.model.CircleResponse
-import com.fypmoney.view.recharge.model.OperatorResponse
-import com.fypmoney.view.recharge.model.RechargePlansRequest
+import com.fypmoney.view.recharge.model.*
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -33,43 +30,39 @@ import okhttp3.MultipartBody
 /*
 * This is used to handle user profile
 * */
-class SelectCircleViewModel(application: Application) : BaseViewModel(application) {
+class MobileRechargeViewModel(application: Application) : BaseViewModel(application) {
+    var opertaorList = MutableLiveData<MobileValidationResponse>()
 
 
-    var opertaorList: MutableLiveData<ArrayList<CircleResponse>> = MutableLiveData()
-    var selectedOperator = MutableLiveData<OperatorResponse>()
-    /*
+    fun callGetMobileHrl(mobile: String) {
 
- *This method is used to call profile pic upload api
- * */
 
-    fun callGetOperatorList() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                purpose = ApiConstant.API_GET_CIRCLE_LIST,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_CIRCLE_LIST + selectedOperator.value?.operatorId),
-                request_type = ApiUrl.GET,
+                purpose = ApiConstant.API_GET_HLR_CHECK,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_HLR_CHECK),
+                request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = true,
-                param = RechargePlansRequest()
+                param = MobileHRLRequest(mobile = mobile, type = "mobile")
             )
         )
     }
 
-
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.API_GET_CIRCLE_LIST -> {
+            ApiConstant.API_GET_HLR_CHECK -> {
+
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<Array<CircleResponse>>(
+                val array = Gson().fromJson<MobileValidationResponse>(
                     json.get("data").toString(),
-                    Array<CircleResponse>::class.java
+                    MobileValidationResponse::class.java
                 )
-                val arrayList = ArrayList(array.toMutableList())
-                opertaorList.postValue(arrayList)
-            }
 
+                opertaorList.postValue(array)
+
+            }
 
         }
 
@@ -79,22 +72,13 @@ class SelectCircleViewModel(application: Application) : BaseViewModel(applicatio
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
+            ApiConstant.API_LOGOUT -> {
+
+            }
 
 
         }
 
-    }
-
-    fun callGetCustomerProfileApi() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_GET_CUSTOMER_INFO,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_CUSTOMER_INFO),
-                request_type = ApiUrl.GET,
-                onResponse = this, isProgressBar = true,
-                param = ""
-            )
-        )
     }
 
 

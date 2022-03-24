@@ -10,21 +10,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
 import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.CardCircleBinding
+import com.fypmoney.databinding.CardRechargePlanBinding
 
 import com.fypmoney.extension.executeAfter
 
 import com.fypmoney.util.Utility
-import com.fypmoney.view.recharge.model.CircleResponse
+import com.fypmoney.view.recharge.model.ValueItem
 
-class CircleSelectionAdapter(
+class RechargePlansAdapter(
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: CircleResponse) -> Unit
-) : ListAdapter<CircleResponse, CircleSelectionVH>(CircleDiffUtils) {
+    val onRecentUserClick: (model: ValueItem) -> Unit
+) : ListAdapter<ValueItem, RechargePlansVH>(PlansDiffUtils) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CircleSelectionVH {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RechargePlansVH {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = CardCircleBinding.inflate(inflater, parent, false)
-        return CircleSelectionVH(
+        val binding = CardRechargePlanBinding.inflate(inflater, parent, false)
+        return RechargePlansVH(
             binding,
             lifecycleOwner,
             onRecentUserClick
@@ -32,40 +33,42 @@ class CircleSelectionAdapter(
 
     }
 
-    override fun onBindViewHolder(holder: CircleSelectionVH, position: Int) {
+    override fun onBindViewHolder(holder: RechargePlansVH, position: Int) {
         holder.bind(getItem(position))
     }
 
 }
 
-class CircleSelectionVH(
-    private val binding: CardCircleBinding,
+class RechargePlansVH(
+    private val binding: CardRechargePlanBinding,
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: CircleResponse) -> Unit
+    val onRecentUserClick: (model: ValueItem) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(user: CircleResponse) {
+    fun bind(user: ValueItem) {
         binding.executeAfter {
-            lifecycleOwner = this@CircleSelectionVH.lifecycleOwner
+            lifecycleOwner = this@RechargePlansVH.lifecycleOwner
 
 //            loadImage(recentIv,user.profilePicResourceId,
 //                ContextCompat.getDrawable(this.recentIv.context, R.drawable.ic_profile_img),true)
 
-            recentUserCl.setOnClickListener {
+            card.setOnClickListener {
                 onRecentUserClick(user)
             }
-            userNameTv.text = Utility.getFirstName(user.name)
+            tvRs.text = user.rs
+            tvDetails.text = user.desc
+            tvValidity.text = user.validity
         }
     }
 
 }
 
-object CircleDiffUtils : DiffUtil.ItemCallback<CircleResponse>() {
+object PlansDiffUtils : DiffUtil.ItemCallback<ValueItem>() {
 
-    override fun areItemsTheSame(oldItem: CircleResponse, newItem: CircleResponse): Boolean {
-        return (oldItem.id == newItem.id)
+    override fun areItemsTheSame(oldItem: ValueItem, newItem: ValueItem): Boolean {
+        return (oldItem.rs == newItem.rs)
     }
 
-    override fun areContentsTheSame(oldItem: CircleResponse, newItem: CircleResponse): Boolean {
+    override fun areContentsTheSame(oldItem: ValueItem, newItem: ValueItem): Boolean {
         return oldItem == newItem
     }
 }

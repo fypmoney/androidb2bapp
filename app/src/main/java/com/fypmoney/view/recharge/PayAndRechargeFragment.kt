@@ -29,7 +29,7 @@ import kotlin.collections.ArrayList
 /*
 * This class is used as Home Screen
 * */
-class SelectOperatorActivity :
+class PayAndRechargeFragment :
     BaseFragment<ActivitySelectOperatorBinding, SelectOperatorViewModel>() {
     private var operator: OperatorResponse? = null
     private lateinit var mViewModel: SelectOperatorViewModel
@@ -40,7 +40,7 @@ class SelectOperatorActivity :
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_select_operator
+        return R.layout.activity_pay_recharge
     }
 
     override fun getViewModel(): SelectOperatorViewModel {

@@ -14,10 +14,7 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.BankTransactionHistoryResponseDetails
-import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.CustomerInfoResponse
-import com.fypmoney.model.ProfileImageUploadResponse
+import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KYC_TYPE
@@ -37,6 +34,10 @@ class SelectOperatorViewModel(application: Application) : BaseViewModel(applicat
     }
 
     var opertaorList: MutableLiveData<ArrayList<OperatorResponse>> = MutableLiveData()
+    var operatorResponse = ObservableField<OperatorResponse>()
+
+    var circleGot = MutableLiveData<String>()
+    var OperatorGot = MutableLiveData<String>()
 
     /*
 

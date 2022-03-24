@@ -1,6 +1,5 @@
 package com.fypmoney.view.recharge.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -9,13 +8,14 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentForYouPlansBinding
-import com.fypmoney.util.AppConstants
-import com.fypmoney.view.interfaces.ListContactClickListener
+import com.fypmoney.view.recharge.adapter.CircleSelectionAdapter
+import com.fypmoney.view.recharge.adapter.RechargePlansAdapter
+import com.fypmoney.view.recharge.model.ValueItem
 import com.fypmoney.view.rewardsAndWinnings.viewModel.SpinnerFragmentVM
-import kotlinx.android.synthetic.main.toolbar.*
 
 
-class RechargeForYouFragment : BaseFragment<FragmentForYouPlansBinding, SpinnerFragmentVM>() {
+class RechargeForYouFragment(val list: List<ValueItem?>?) :
+    BaseFragment<FragmentForYouPlansBinding, SpinnerFragmentVM>() {
     companion object {
 
     }
@@ -45,7 +45,7 @@ class RechargeForYouFragment : BaseFragment<FragmentForYouPlansBinding, SpinnerF
         mViewBinding = getViewDataBinding()
 
 
-        setRecyclerView()
+        setUpRecyclerView(list)
 
 
     }
@@ -56,29 +56,31 @@ class RechargeForYouFragment : BaseFragment<FragmentForYouPlansBinding, SpinnerF
     }
 
 
-    private fun setRecyclerView() {
-        val layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        mViewBinding?.rvPlans?.layoutManager = layoutManager
-
-
-        val itemClickListener2 = object : ListContactClickListener {
-
-
-            override fun onItemClicked(pos: Int) {
+    private fun setUpRecyclerView(arrayList: List<ValueItem?>?) {
+        val topTenUsersAdapter = RechargePlansAdapter(
+            this, onRecentUserClick = {
 
 
             }
+        )
+
+
+        with(mViewBinding.rvPlans) {
+            adapter = topTenUsersAdapter
+            layoutManager =
+                LinearLayoutManager(
+                    requireContext(),
+                    androidx.recyclerview.widget.RecyclerView.VERTICAL,
+                    false
+                )
         }
+        (mViewBinding.rvPlans.adapter as RechargePlansAdapter).submitList(list)
 
-//        spinnerAdapter = SpinnerAdapter(itemsArrayList, requireContext(), itemClickListener2!!)
-//        mViewBinding?.rvSpinner?.adapter = spinnerAdapter
-//        if (itemsArrayList.size > 0) {
+        if (arrayList?.isNotEmpty() == true) {
 //
-//            mViewBinding?.shimmerLayout?.visibility = View.GONE
-//            mViewBinding?.shimmerLayout?.stopShimmer()
-//        }
-
+            mViewBinding?.shimmerPlans?.visibility = View.GONE
+            mViewBinding?.shimmerPlans?.stopShimmer()
+        }
     }
 
 

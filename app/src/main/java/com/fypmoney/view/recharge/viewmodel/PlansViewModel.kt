@@ -23,6 +23,8 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KYC_TYPE
 import com.fypmoney.util.Utility
 import com.fypmoney.view.recharge.model.OperatorResponse
+import com.fypmoney.view.recharge.model.RechargePlansRequest
+import com.fypmoney.view.recharge.model.RechargePlansResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -33,23 +35,30 @@ import okhttp3.MultipartBody
 * */
 class PlansViewModel(application: Application) : BaseViewModel(application) {
     init {
-        callGetOperatorList()
+
     }
 
-    var opertaorList: MutableLiveData<ArrayList<OperatorResponse>> = MutableLiveData()
+    var selectedOperator = MutableLiveData<OperatorResponse>()
+    var selectedCircle = MutableLiveData<String>()
+    var opertaorList: MutableLiveData<ArrayList<RechargePlansResponse>> = MutableLiveData()
 
     /*
 
  *This method is used to call profile pic upload api
  * */
     fun callGetOperatorList() {
+
+
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_RECHARGE_PLANS,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_RECHARGE_PLANS),
-                request_type = ApiUrl.GET,
+                request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = true,
-                param = BaseRequest()
+                param = RechargePlansRequest(
+                    operator = selectedOperator.value?.name,
+                    circle = selectedCircle.value
+                )
             )
         )
     }
@@ -58,15 +67,15 @@ class PlansViewModel(application: Application) : BaseViewModel(application) {
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.API_GET_OPERATOR_LIST_MOBILE -> {
-//                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-//
-//                val array = Gson().fromJson<Array<OperatorResponse>>(
-//                    json.get("data").toString(),
-//                    Array<OperatorResponse>::class.java
-//                )
-//                val arrayList = ArrayList(array.toMutableList())
-//                opertaorList.postValue(arrayList)
+            ApiConstant.API_RECHARGE_PLANS -> {
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson<Array<RechargePlansResponse>>(
+                    json.get("data").toString(),
+                    Array<RechargePlansResponse>::class.java
+                )
+                val arrayList = ArrayList(array.toMutableList())
+                opertaorList.postValue(arrayList)
             }
 
 

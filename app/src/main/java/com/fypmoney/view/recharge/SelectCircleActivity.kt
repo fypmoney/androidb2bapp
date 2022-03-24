@@ -1,12 +1,15 @@
 package com.fypmoney.view.recharge
 
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.BR
@@ -14,6 +17,8 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ActivitySelectCircleBinding
+import com.fypmoney.view.home.main.explore.sectionexplore.SectionExploreFragmentArgs
+import com.fypmoney.view.home.main.explore.sectionexplore.SectionExploreFragmentVM
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 import com.fypmoney.view.recharge.adapter.CircleSelectionAdapter
 import com.fypmoney.view.recharge.adapter.OperatorSelectionAdapter
@@ -29,7 +34,7 @@ import kotlin.collections.ArrayList
 class SelectCircleActivity : BaseFragment<ActivitySelectCircleBinding, SelectCircleViewModel>() {
     private lateinit var mViewModel: SelectCircleViewModel
     private lateinit var mViewBinding: ActivitySelectCircleBinding
-
+    private val args: SelectCircleActivityArgs by navArgs()
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -45,6 +50,8 @@ class SelectCircleActivity : BaseFragment<ActivitySelectCircleBinding, SelectCir
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        mViewModel.selectedOperator.value = args.selectedOperator
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = requireContext(),
@@ -54,7 +61,7 @@ class SelectCircleActivity : BaseFragment<ActivitySelectCircleBinding, SelectCir
             toolbarTitle = "Mobile Recharge"
         )
 
-
+        mViewModel.callGetOperatorList()
         setObserver()
 
 
@@ -67,8 +74,16 @@ class SelectCircleActivity : BaseFragment<ActivitySelectCircleBinding, SelectCir
     private fun setUpRecyclerView(arrayList: ArrayList<CircleResponse>) {
         val topTenUsersAdapter = CircleSelectionAdapter(
             this, onRecentUserClick = {
+                val directions =
+                    it.name?.let { it1 ->
+                        SelectCircleActivityDirections.actionSelectRechargePlans(
+                            mViewModel.selectedOperator.value,
+                            it1
+                        )
+                    }
 
-                findNavController().navigate(R.id.navigation_select_operator)
+                directions?.let { it1 -> findNavController().navigate(it1) }
+
             }
         )
 

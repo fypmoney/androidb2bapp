@@ -114,6 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="24dp"
                     android:layout_marginTop="14dp"
+                    android:id="@+id/select_contact"
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginEnd="24dp"
                     android:background="@drawable/ic_circle_orange"
