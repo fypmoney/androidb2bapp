@@ -169,7 +169,7 @@ class InviteParentSiblingActivity :
 
     private fun observeEvents() {
 
-        inviteParentSiblingVM.user.observe(this, {
+        inviteParentSiblingVM.user.observe(this) {
 
             if (it.isAppUserResponseDetails.isAppUser == true) {
                 val intent = Intent(this, SelectRelationActivity::class.java)
@@ -190,7 +190,7 @@ class InviteParentSiblingActivity :
                 Utility.showToast("Not a fyp user")
             }
 
-        })
+        }
     }
 
 

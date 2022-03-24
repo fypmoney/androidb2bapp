@@ -17,6 +17,7 @@ import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.ActivityKycTypeBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.view.activity.PermissionsActivity
 import com.fypmoney.view.register.fragments.kycDetailsBottomSheet
 import com.fypmoney.view.register.viewModel.KycTypeVM
 import kotlinx.android.synthetic.main.toolbar_animation.*
@@ -107,13 +108,19 @@ class PanAdhaarSelectionActivity :
 
             }
         }
+        mVM.isSkipToHomeClick.observe(this) {
+                trackr {
+                    it.name = TrackrEvent.skip_to_home_click
+                }
+                intentToActivity(PermissionsActivity::class.java)
+        }
     }
 
     private fun callKycDetailsSheeet() {
 
-        var bottomSheetMessage = kycDetailsBottomSheet()
+        val bottomSheetMessage = kycDetailsBottomSheet()
         bottomSheetMessage.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheetMessage.show(supportFragmentManager, "TASKMESSAGE")
+        bottomSheetMessage.show(supportFragmentManager, "KycDetailsSheet")
     }
 
     private fun setSelectedUserType(type: String) {
@@ -158,6 +165,14 @@ class PanAdhaarSelectionActivity :
 
         }
 
+    }
+
+    private fun intentToActivity(aClass: Class<*>, isFinishAll: Boolean? = false) {
+        val intent = Intent(this, aClass)
+        startActivity(intent)
+        if (isFinishAll == true) {
+            finishAffinity()
+        }
     }
 
 }

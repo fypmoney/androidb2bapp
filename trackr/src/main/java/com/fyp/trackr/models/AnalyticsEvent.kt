@@ -162,6 +162,7 @@ enum class TrackrEvent(name: String) {
     upgrade_kyc_successfully("upgrade_kyc_successfully"),
     upgrade_kyc_from_pay_clicked("upgrade_kyc_from_pay_clicked"),
     upgrade_kyc_from_profile_clicked("upgrade_kyc_from_profile_clicked"),
+    skip_to_home_click("skip_to_home_click"),
 
 
 }

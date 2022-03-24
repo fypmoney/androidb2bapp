@@ -1143,4 +1143,7 @@ Coming really soon!
     <string name="discord_profile">Discord Profile</string>
     <string name="connect_to_discord">Connect to Discord</string>
     <string name="connect_now">Connect now</string>
+    <string name="select_a_document_to_complete_your_kyc">Select a document to complete your KYC</string>
+    <string name="aadhaar_card">Aadhaar card</string>
+    <string name="skip_to_home">Skip to Home</string>
 </resources>
