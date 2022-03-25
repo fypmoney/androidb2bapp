@@ -43,7 +43,9 @@ import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.view.register.adapters.OffersHomeAdapter
+import com.fypmoney.view.register.fragments.CompleteKYCBottomSheet
 import com.fypmoney.view.storeoffers.ListOfferClickListener
 import com.fypmoney.view.storeoffers.OffersScreen
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
@@ -215,13 +217,44 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
             }
             HomeFragmentVM.HomeFragmentEvent.AddAction -> {
-                val intent = Intent(requireActivity(), AddMoneyView::class.java).apply {  }
-                startActivity(intent)
+                Utility.getCustomerDataFromPreference()?.let {
+                    if(it.postKycScreenCode.isNullOrEmpty()){
+                        val completeKYCBottomSheet = CompleteKYCBottomSheet(completeKycClicked = {
+                            val intent = Intent(requireActivity(), PanAdhaarSelectionActivity::class.java)
+                            startActivity(intent)
+                        })
+                        completeKYCBottomSheet.dialog?.window?.setBackgroundDrawable(
+                            ColorDrawable(
+                                Color.RED)
+                        )
+                        completeKYCBottomSheet.show(childFragmentManager, "Completekyc")
+                    }else{
+                        val intent = Intent(requireActivity(), AddMoneyView::class.java).apply {  }
+                        startActivity(intent)
+                    }
+                }
+
             }
             HomeFragmentVM.HomeFragmentEvent.PayAction -> {
-                val intent = Intent(requireActivity(), ContactListView::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.PAY)
-                startActivity(intent)
+                Utility.getCustomerDataFromPreference()?.let {
+                    if(it.postKycScreenCode.isNullOrEmpty()){
+                        val completeKYCBottomSheet = CompleteKYCBottomSheet(completeKycClicked = {
+                            val intent = Intent(requireActivity(), PanAdhaarSelectionActivity::class.java)
+                            startActivity(intent)
+                        })
+                        completeKYCBottomSheet.dialog?.window?.setBackgroundDrawable(
+                            ColorDrawable(
+                                Color.RED)
+                        )
+                        completeKYCBottomSheet.show(childFragmentManager, "Completekyc")
+                    }else{
+                        val intent = Intent(requireActivity(), ContactListView::class.java)
+                        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.PAY)
+                        startActivity(intent)
+                    }
+                }
+
+
             }
             HomeFragmentVM.HomeFragmentEvent.UpiScanAction -> {
                 val upiComingSoonBottomSheet = UpiComingSoonBottomSheet()
@@ -234,17 +267,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
     private fun setObserver() {
         homeFragmentVM?.rewardHistoryList.observe(
-            viewLifecycleOwner,
-            { list ->
+            viewLifecycleOwner
+        ) { list ->
 
-                setRecyclerView(_binding, list)
-            })
+            setRecyclerView(_binding, list)
+        }
         _binding.toInterestScreen.setOnClickListener {
             var intent = Intent(requireContext(), ChooseInterestHomeView::class.java)
 
             startActivity(intent)
         }
-        homeFragmentVM.offerList.observe(viewLifecycleOwner, {
+        homeFragmentVM.offerList.observe(viewLifecycleOwner) {
             if (it != null) {
                 itemsArrayList.clear()
                 itemsArrayList.addAll(it)
@@ -254,7 +287,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                     itemsArrayList.add(offerDetailResponse())
                     //set Offers  for you title dynamic
                     _binding.shimmerLayoutLightening.visibility = View.GONE
-                    if(!itemsArrayList[0].rfu2.isNullOrEmpty()){
+                    if (!itemsArrayList[0].rfu2.isNullOrEmpty()) {
                         _binding.lighteningDealsTitle.text = itemsArrayList[0].rfu2
                     }
                     _binding.lighteningDealsTitle.visibility = View.VISIBLE
@@ -274,39 +307,39 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 //                _binding.lighteningDealsTitle.visibility = View.VISIBLE
                 _binding.lighteningDealsRv.visibility = View.GONE
             }
-        })
+        }
 
         homeFragmentVM?.openBottomSheet.observe(
-            viewLifecycleOwner,
-            { list ->
-                if (list.size > 0) {
-                    callOfferDetailsSheeet(list[0])
-                }
-            })
+            viewLifecycleOwner
+        ) { list ->
+            if (list.size > 0) {
+                callOfferDetailsSheeet(list[0])
+            }
+        }
 
         homeFragmentVM?.feedDetail.observe(
-            viewLifecycleOwner,
-            { list ->
+            viewLifecycleOwner
+        ) { list ->
 
-                when (list.displayCard) {
+            when (list.displayCard) {
 
-                    AppConstants.FEED_TYPE_BLOG -> {
+                AppConstants.FEED_TYPE_BLOG -> {
 
-                        intentToActivitytoBlog(
-                            UserFeedsDetailView::class.java,
-                            list,
-                            AppConstants.FEED_TYPE_BLOG
-                        )
-                    }
-                    AppConstants.FEED_TYPE_STORIES -> {
+                    intentToActivitytoBlog(
+                        UserFeedsDetailView::class.java,
+                        list,
+                        AppConstants.FEED_TYPE_BLOG
+                    )
+                }
+                AppConstants.FEED_TYPE_STORIES -> {
 
-                        callDiduKnowBottomSheet(list.resourceArr)
-                    }
-
+                    callDiduKnowBottomSheet(list.resourceArr)
                 }
 
+            }
 
-            })
+
+        }
 
     }
 

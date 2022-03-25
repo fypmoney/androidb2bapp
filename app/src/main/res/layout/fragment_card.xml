@@ -47,7 +47,7 @@
                         android:paddingHorizontal="@dimen/dp12"
                         android:paddingVertical="@dimen/dp12"
                         android:visibility="gone"
-                        tools:visibility="visible">
+                        tools:visibility="gone">
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/card_no_value_tv"
@@ -138,10 +138,10 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/loading_card_details_hdp"
                         android:layout_gravity="center"
+                        android:visibility="gone"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="30dp"
                         android:layout_marginEnd="-30dp"
-                        tools:visibility="visible"
                         app:layout_constraintTop_toBottomOf="@+id/my_funds_tv"
                         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -178,6 +178,46 @@
                             app:icon="@drawable/ic_baseline_refresh_24"
                             app:iconTint="@color/white"
                             style="@style/Widget.MaterialComponents.Button.TextButton.Icon" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/activate_card_cl"
+                        android:visibility="visible"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/activate_card_btn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/activate_card_btn_text"
+                            style="@style/TextviewBold"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:visibility="gone"
+                            android:onClick="@{()->viewModel.onActivateCard()}"
+                            android:backgroundTint="@color/color_task_card_green"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginBottom="@dimen/dp10"/>
+
+                        <ProgressBar
+                            android:id="@+id/activate_card_progress_bar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:indeterminate="true"
+                            android:scaleX="0.8"
+                            android:scaleY="0.8"
+                            android:visibility="gone"
+                            android:indeterminateTint="@color/color_task_card_green"
+                            android:layout_marginBottom="@dimen/dp10"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

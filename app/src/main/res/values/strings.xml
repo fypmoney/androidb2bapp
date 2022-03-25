@@ -1146,4 +1146,7 @@ Coming really soon!
     <string name="select_a_document_to_complete_your_kyc">Select a document to complete your KYC</string>
     <string name="aadhaar_card">Aadhaar card</string>
     <string name="skip_to_home">Skip to Home</string>
+    <string name="please_complete_your_kyc">Please complete your KYC</string>
+    <string name="complete_kyc">Complete KYC</string>
+    <string name="complete_your_kyc_to_unlock_all_the_exclusive_features">Complete your KYC to unlock all the exclusive features</string>
 </resources>

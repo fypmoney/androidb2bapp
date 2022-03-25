@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.register.viewModel.CompleteKycBottomSheetVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:translationZ="1dp"
+            android:background="@drawable/curved_background1"/>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/complete_kyc_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp24"
+            android:background="@drawable/ic_account_activation_grapphic__1_"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sub_title_tv"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            style="@style/TextviewRegular"
+            android:textColor="@color/gery11"
+            android:layout_marginHorizontal="60dp"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:lineHeight="19dp"
+            android:text="@string/complete_your_kyc_to_unlock_all_the_exclusive_features"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/complete_kyc_iv"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sub_title_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            style="@style/TextviewBold"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="@string/please_complete_your_kyc"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"/>
+
+        <Button
+            android:id="@+id/complete_kyc_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:onClick="@{()->viewModel.onCompleteKycClicked()}"
+            android:text="@string/complete_kyc"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            style="@style/TextviewBold"
+            android:backgroundTint="@color/bgcolor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_tv"
+            android:textSize="16sp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

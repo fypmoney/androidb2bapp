@@ -1,6 +1,7 @@
 package com.fypmoney.view.register
 
 
+import android.Manifest
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -18,6 +19,7 @@ import com.fypmoney.databinding.ActivityKycTypeBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.PermissionsActivity
+import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.register.fragments.kycDetailsBottomSheet
 import com.fypmoney.view.register.viewModel.KycTypeVM
 import kotlinx.android.synthetic.main.toolbar_animation.*
@@ -112,7 +114,11 @@ class PanAdhaarSelectionActivity :
                 trackr {
                     it.name = TrackrEvent.skip_to_home_click
                 }
+            if (hasPermissions(this, Manifest.permission.READ_CONTACTS)) {
+                intentToActivity(HomeActivity::class.java)
+            } else {
                 intentToActivity(PermissionsActivity::class.java)
+            }
         }
     }
 

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -24,6 +25,8 @@ import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.card.model.CardOptionEvent
 import com.fypmoney.view.card.model.CardOptionUiModel
 import com.fypmoney.view.fragment.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class CardFragmentVM(application: Application) :
@@ -49,11 +52,21 @@ class CardFragmentVM(application: Application) :
     private val _event = LiveEvent<CardEvent>()
 
     init {
-        callGetVirtualRequestApi()
+        //checkVirtualCardIsIssued()
+    }
+
+     fun checkVirtualCardIsIssued() {
+        Utility.getCustomerDataFromPreference()?.let {
+            if (it.bankProfile?.isVirtualCardIssued == AppConstants.NO) {
+                _event.value = CardEvent.ShowActivateBtnCardEvent
+            } else {
+                callGetVirtualRequestApi()
+
+            }
+        }
     }
 
     private fun callGetVirtualRequestApi() {
-        _state.value = CardState.LoadingCardDetails
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_VIRTUAL_CARD_REQUEST,
@@ -211,6 +224,20 @@ class CardFragmentVM(application: Application) :
     fun onFetchCardDetails() {
         callGetVirtualRequestApi()
     }
+    fun onActivateCard() {
+        viewModelScope.launch {
+            Utility.getCustomerDataFromPreference()?.let {
+                if(it.postKycScreenCode.isNullOrEmpty()){
+                    _event.value = CardEvent.CompleteKycCardEvent
+                }else if(it.bankProfile?.isAccountActive== AppConstants.NO){
+                    _event.value = CardEvent.OnActivateCardEvent
+                    delay(30000)
+                    callGetVirtualRequestApi()
+                }
+            }
+
+        }
+    }
 
     fun onCopyCardNumber() {
         _event.value = CardEvent.OnCardNumberCopyEvent(virtualCardDetails?.card_number)
@@ -230,7 +257,14 @@ class CardFragmentVM(application: Application) :
                 _event.value = CardEvent.ActivateCardEvent(this)
             }
             CardOptionEvent.CardSettings -> {
-                _event.value = CardEvent.CardSettingsEvent
+                Utility.getCustomerDataFromPreference()?.let {
+                    if(it.postKycScreenCode.isNullOrEmpty()){
+                        _event.value = CardEvent.CompleteKycCardEvent
+                    }else{
+                        _event.value = CardEvent.CardSettingsEvent
+
+                    }
+                }
             }
             CardOptionEvent.OrderCard -> {
                 trackr {
@@ -364,6 +398,7 @@ class CardFragmentVM(application: Application) :
     }
 
     private fun callGetVirtualCardDetailsApi(fetchVirtualCardRequest: FetchVirtualCardRequest) {
+        _state.value = CardState.LoadingCardDetails
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS,
@@ -545,6 +580,10 @@ class CardFragmentVM(application: Application) :
         data class OnCardNumberCopyEvent(
             var cardNumber: String?
         ) : CardEvent()
+
+        object OnActivateCardEvent:CardEvent()
+        object ShowActivateBtnCardEvent:CardEvent()
+        object CompleteKycCardEvent:CardEvent()
 
     }
 

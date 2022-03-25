@@ -24,6 +24,8 @@ import com.fypmoney.view.card.viewmodel.CardFragmentVM
 import com.fypmoney.view.fragment.*
 import com.fypmoney.view.ordercard.OrderCardView
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
+import com.fypmoney.view.register.fragments.CompleteKYCBottomSheet
 import com.fypmoney.view.setpindialog.SetPinDialogFragment
 import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
@@ -92,6 +94,7 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
 
     override fun onStart() {
         super.onStart()
+        cardFragmentVM.checkVirtualCardIsIssued()
         cardFragmentVM.callGetBankProfileApi()
     }
 
@@ -235,6 +238,24 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
             }
             is CardFragmentVM.CardEvent.OnCardNumberCopyEvent -> {
                 cardEvent.cardNumber?.replace(" ","")?.let { onCopyClicked(it, requireActivity()) }
+            }
+            CardFragmentVM.CardEvent.OnActivateCardEvent -> {
+                binding.activateCardBtn.toGone()
+                binding.activateCardProgressBar.toVisible()
+            }
+            CardFragmentVM.CardEvent.CompleteKycCardEvent -> {
+                val completeKYCBottomSheet = CompleteKYCBottomSheet(completeKycClicked = {
+                    val intent = Intent(requireActivity(), PanAdhaarSelectionActivity::class.java)
+                    startActivity(intent)
+                })
+                completeKYCBottomSheet.dialog?.window?.setBackgroundDrawable(
+                    ColorDrawable(
+                        Color.RED)
+                )
+                completeKYCBottomSheet.show(childFragmentManager, "Completekyc")
+            }
+            CardFragmentVM.CardEvent.ShowActivateBtnCardEvent -> {
+                binding.activateCardBtn.toVisible()
             }
         }
     }

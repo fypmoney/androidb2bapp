@@ -22,6 +22,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityWebview2Binding
+import com.fypmoney.extension.toGone
 import com.fypmoney.model.CardInfoDetailsBottomSheet
 import com.fypmoney.util.AdvancedWebView
 import com.fypmoney.util.AppConstants
@@ -76,6 +77,15 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
             }
         }
 
+        Utility.getCustomerDataFromPreference()?.let {
+            if(it.postKycScreenCode.isNullOrEmpty()){
+                binding.refresh.toGone()
+                binding.cardDetails.toGone()
+            }else{
+                mViewModel.callGetWalletBalanceApi()
+                mViewModel.callGetVirtualRequestApi()
+            }
+        }
         binding.webView1.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 if (url.startsWith("intent://")) {
@@ -123,16 +133,16 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
         }
 
         mViewModel.availableAmount.observe(
-            this,
-            { amount ->
-                //amount_tv.text = " ₹" + amount
-                amount_tv.text = getString(R.string.fyp_card_details)
-            })
+            this
+        ) { amount ->
+            //amount_tv.text = " ₹" + amount
+            amount_tv.text = getString(R.string.fyp_card_details)
+        }
         mViewModel.carddetails.observe(
-            this,
-            { carddetails ->
-                card = carddetails
-            })
+            this
+        ) { carddetails ->
+            card = carddetails
+        }
 
         binding.cardDetails.setOnClickListener {
             if (mViewModel.carderror.get() == true) {
