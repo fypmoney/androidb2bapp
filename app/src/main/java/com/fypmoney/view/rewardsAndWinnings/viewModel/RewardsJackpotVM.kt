@@ -10,13 +10,15 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.*
+import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.FeedDetails
+import com.fypmoney.model.FeedRequestModel
+import com.fypmoney.model.FeedResponseModel
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
-import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -105,14 +107,15 @@ class RewardsJackpotVM(application: Application) : BaseViewModel(application) {
         var gender = 1
         var feedtype = ""
 
-        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MALE") {
-            gender = 0
+        gender = if ( Utility.getCustomerDataFromPreference()?.userProfile?.gender.isNullOrEmpty() || Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MALE") {
+            0
         } else {
-            gender = 1
+            1
         }
-        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
-            feedtype =
-                gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
+        feedtype = if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
+            gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
+        }else{
+            gender.toString() + "_" + "0"
         }
 
         if (userInterest.isNullOrEmpty()) {
