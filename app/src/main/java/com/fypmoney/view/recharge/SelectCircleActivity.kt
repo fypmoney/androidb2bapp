@@ -59,7 +59,7 @@ class SelectCircleActivity : BaseFragment<ActivitySelectCircleBinding, SelectCir
             toolbar = toolbar, backArrowTint = Color.WHITE,
             titleColor = Color.WHITE,
             isBackArrowVisible = true,
-            toolbarTitle = "Mobile Recharge"
+            toolbarTitle = "Select Circle"
         )
 
         mViewModel.callGetOperatorList()

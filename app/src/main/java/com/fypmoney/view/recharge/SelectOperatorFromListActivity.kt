@@ -53,7 +53,7 @@ class SelectOperatorFromListActivity :
             toolbar = toolbar, backArrowTint = Color.WHITE,
             titleColor = Color.WHITE,
             isBackArrowVisible = true,
-            toolbarTitle = "Mobile Recharge"
+            toolbarTitle = "Select your operator"
         )
 
 
