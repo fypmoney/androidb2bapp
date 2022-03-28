@@ -10,17 +10,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
         android:id="@+id/recent_user_cl"
         android:paddingHorizontal="2dp">
 
 
         <TextView
             android:id="@+id/user_name_tv"
-            style="@style/TextviewRegular"
+            style="@style/TextviewBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_18sdp"
             android:maxLength="20"
+            android:textSize="20sp"
             android:textColor="@color/white"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"

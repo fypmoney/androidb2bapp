@@ -38,6 +38,7 @@ class SelectCircleViewModel(application: Application) : BaseViewModel(applicatio
 
     var opertaorList: MutableLiveData<ArrayList<CircleResponse>> = MutableLiveData()
     var selectedOperator = MutableLiveData<OperatorResponse>()
+    var mobile = MutableLiveData<String>()
     /*
 
  *This method is used to call profile pic upload api

@@ -14,17 +14,12 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.BankTransactionHistoryResponseDetails
-import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.CustomerInfoResponse
-import com.fypmoney.model.ProfileImageUploadResponse
+import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KYC_TYPE
 import com.fypmoney.util.Utility
-import com.fypmoney.view.recharge.model.OperatorResponse
-import com.fypmoney.view.recharge.model.RechargePlansRequest
-import com.fypmoney.view.recharge.model.RechargePlansResponse
+import com.fypmoney.view.recharge.model.*
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -33,32 +28,43 @@ import okhttp3.MultipartBody
 /*
 * This is used to handle user profile
 * */
-class PlansViewModel(application: Application) : BaseViewModel(application) {
+class PayAndRechargeViewModel(application: Application) : BaseViewModel(application) {
     init {
 
     }
 
-    var selectedOperator = MutableLiveData<OperatorResponse>()
-    var selectedCircle = MutableLiveData<String>()
-    var mobile = MutableLiveData<String>()
-    var opertaorList: MutableLiveData<ArrayList<RechargePlansResponse>> = MutableLiveData()
+    var opertaorList: MutableLiveData<ValueItem> = MutableLiveData()
+    var mobile: MutableLiveData<String> = MutableLiveData()
+    var planType: MutableLiveData<String> = MutableLiveData()
+    var operatorResponse = MutableLiveData<OperatorResponse>()
+
+    var success = MutableLiveData<PayAndRechargeResponse>()
+
 
     /*
 
  *This method is used to call profile pic upload api
  * */
-    fun callGetOperatorList() {
-
-
+    fun callMobileRecharge(
+        value: ValueItem?,
+        value1: String?,
+        value2: OperatorResponse?,
+        value3: String?
+    ) {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                purpose = ApiConstant.API_RECHARGE_PLANS,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_RECHARGE_PLANS),
+                purpose = ApiConstant.API_MOBILE_RECHARGE,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_MOBILE_RECHARGE),
                 request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = true,
-                param = RechargePlansRequest(
-                    operator = selectedOperator.value?.name,
-                    circle = selectedCircle.value
+                param = PayAndRechargeRequest(
+                    cardNo = value1,
+                    operator = "11",
+                    planPrice = Utility.convertToPaise(value?.rs)?.toLong(),
+                    planType = value3,
+                    amount = Utility.convertToPaise(value?.rs)?.toLong()
+
+
                 )
             )
         )
@@ -68,18 +74,20 @@ class PlansViewModel(application: Application) : BaseViewModel(application) {
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.API_RECHARGE_PLANS -> {
+            ApiConstant.API_MOBILE_RECHARGE -> {
+
+                Utility.showToast("Success")
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<Array<RechargePlansResponse>>(
+                val array = Gson().fromJson<PayAndRechargeResponse>(
                     json.get("data").toString(),
-                    Array<RechargePlansResponse>::class.java
+                    PayAndRechargeResponse::class.java
                 )
-                val arrayList = ArrayList(array.toMutableList())
-                opertaorList.postValue(arrayList)
+
+                success.postValue(array)
+
+
             }
-
-
         }
 
     }
@@ -92,18 +100,6 @@ class PlansViewModel(application: Application) : BaseViewModel(application) {
 
         }
 
-    }
-
-    fun callGetCustomerProfileApi() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_GET_CUSTOMER_INFO,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_CUSTOMER_INFO),
-                request_type = ApiUrl.GET,
-                onResponse = this, isProgressBar = true,
-                param = ""
-            )
-        )
     }
 
 

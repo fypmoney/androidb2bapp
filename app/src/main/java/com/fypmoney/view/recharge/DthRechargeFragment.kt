@@ -29,7 +29,7 @@ import kotlin.collections.ArrayList
 /*
 * This class is used as Home Screen
 * */
-class SelectOperatorActivity :
+class DthRechargeFragment :
     BaseFragment<ActivitySelectOperatorBinding, SelectOperatorViewModel>() {
     private var operator: OperatorResponse? = null
     private lateinit var mViewModel: SelectOperatorViewModel
@@ -40,7 +40,7 @@ class SelectOperatorActivity :
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_select_operator
+        return R.layout.activity_pay_recharge
     }
 
     override fun getViewModel(): SelectOperatorViewModel {
@@ -59,15 +59,10 @@ class SelectOperatorActivity :
         args.circle.let {
             mViewModel.circleGot.value = it
         }
-        args.mobile.let {
-            mViewModel.mobileNumber.value = it
-
-            mViewBinding.tvUserNumber.text = it
-        }
         args.operator.let {
             mViewModel.OperatorGot.value = it
 
-//            mViewBinding.optionsMenu.text = it
+            mViewBinding.optionsMenu.text = it
         }
 
         setToolbarAndTitle(
@@ -88,8 +83,7 @@ class SelectOperatorActivity :
         mViewBinding.continueBtn.setOnClickListener {
             val directions =
                 SelectOperatorActivityDirections.actionSelectCircle(
-                    selectedOperator = mViewModel.operatorResponse.get(),
-                    mobile = mViewModel.mobileNumber.value
+                    selectedOperator = mViewModel.operatorResponse.get()
                 )
 
             directions?.let { it1 -> findNavController().navigate(it1) }

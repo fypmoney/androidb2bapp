@@ -1,40 +1,30 @@
 package com.fypmoney.view.recharge
 
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
-import com.fypmoney.databinding.ActivitySelectOperatorBinding
-import com.fypmoney.util.AppConstants
-import com.fypmoney.view.adapter.TopTenUsersAdapter
-import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
-import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
-import com.fypmoney.view.recharge.adapter.OperatorSelectionAdapter
+import com.fypmoney.databinding.ActivityPayRechargeBinding
 import com.fypmoney.view.recharge.model.OperatorResponse
-import com.fypmoney.view.recharge.viewmodel.SelectOperatorViewModel
+import com.fypmoney.view.recharge.viewmodel.PayAndRechargeViewModel
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlin.collections.ArrayList
 
 
 /*
 * This class is used as Home Screen
 * */
 class PayAndRechargeFragment :
-    BaseFragment<ActivitySelectOperatorBinding, SelectOperatorViewModel>() {
+    BaseFragment<ActivityPayRechargeBinding, PayAndRechargeViewModel>() {
     private var operator: OperatorResponse? = null
-    private lateinit var mViewModel: SelectOperatorViewModel
-    private lateinit var mViewBinding: ActivitySelectOperatorBinding
-    private val args: SelectOperatorActivityArgs by navArgs()
+    private lateinit var mViewModel: PayAndRechargeViewModel
+    private lateinit var mViewBinding: ActivityPayRechargeBinding
+    private val args: PayAndRechargeFragmentArgs by navArgs()
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -43,8 +33,8 @@ class PayAndRechargeFragment :
         return R.layout.activity_pay_recharge
     }
 
-    override fun getViewModel(): SelectOperatorViewModel {
-        mViewModel = ViewModelProvider(this).get(SelectOperatorViewModel::class.java)
+    override fun getViewModel(): PayAndRechargeViewModel {
+        mViewModel = ViewModelProvider(this).get(PayAndRechargeViewModel::class.java)
         return mViewModel
     }
 
@@ -55,15 +45,21 @@ class PayAndRechargeFragment :
         mViewBinding = getViewDataBinding()
 
 
+        mViewModel.opertaorList.value = args.selectedPlan
 
-        args.circle.let {
-            mViewModel.circleGot.value = it
-        }
-        args.operator.let {
-            mViewModel.OperatorGot.value = it
+        mViewModel.operatorResponse.value = args.selectedOperator
+        mViewModel.mobile.value = args.mobile
+        mViewModel.planType.value = args.planType
 
-            mViewBinding.optionsMenu.text = it
-        }
+
+
+
+        mViewBinding.amountTv.text = "Rs " + args.selectedPlan?.rs
+        mViewBinding.details.text = args.selectedPlan?.desc
+
+        mViewBinding.planType.text = args.planType
+
+        mViewBinding.tvUserNumber.text = args.mobile
 
         setToolbarAndTitle(
             context = requireContext(),
@@ -81,12 +77,12 @@ class PayAndRechargeFragment :
 
     private fun setBindings() {
         mViewBinding.continueBtn.setOnClickListener {
-            val directions =
-                SelectOperatorActivityDirections.actionSelectCircle(
-                    selectedOperator = mViewModel.operatorResponse.get()
-                )
-
-            directions?.let { it1 -> findNavController().navigate(it1) }
+            mViewModel.callMobileRecharge(
+                mViewModel.opertaorList.value,
+                mViewModel.mobile.value,
+                mViewModel.operatorResponse.value,
+                mViewModel.planType.value
+            )
         }
     }
 
@@ -96,25 +92,23 @@ class PayAndRechargeFragment :
 
 
     private fun setObserver() {
-        val navController = findNavController();
-        // We use a String here, but any type that can be put in a Bundle is supported
-        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<OperatorResponse>("operator_selected")
-            ?.observe(
-                viewLifecycleOwner
-            ) { result ->
-                // Do something with the result.
-                var operator = result as OperatorResponse
-                mViewModel.operatorResponse.set(operator)
-                mViewBinding.optionsMenu.text = operator?.name
 
-            }
-        mViewBinding.optionsMenu.setOnClickListener {
-            findNavController().navigate(R.id.navigation_select_operator_from_list)
-        }
+
         mViewModel.opertaorList.observe(viewLifecycleOwner) {
 //            (mViewBinding.rvOperator.adapter as OperatorSelectionAdapter).submitList(it)
 
         }
+        mViewModel.success.observe(viewLifecycleOwner) {
+//            (mViewBinding.rvOperator.adapter as OperatorSelectionAdapter).submitList(it)
+
+            var directions = PayAndRechargeFragmentDirections.actionRechargeSuccess(
+                successResponse = it,
+                selectedOperator = mViewModel.operatorResponse.value
+            )
+            findNavController().navigate(directions)
+        }
+
+
     }
 
 

@@ -3,18 +3,20 @@ package com.fypmoney.view.recharge.fragments
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentForYouPlansBinding
+import com.fypmoney.view.recharge.PlanSelectionActivityDirections
 import com.fypmoney.view.recharge.adapter.CircleSelectionAdapter
 import com.fypmoney.view.recharge.adapter.RechargePlansAdapter
 import com.fypmoney.view.recharge.model.ValueItem
 import com.fypmoney.view.rewardsAndWinnings.viewModel.SpinnerFragmentVM
 
 
-class RechargeForYouFragment(val list: List<ValueItem?>?) :
+class RechargeForYouFragment(val list: List<ValueItem?>?, val click: (ValueItem) -> Unit) :
     BaseFragment<FragmentForYouPlansBinding, SpinnerFragmentVM>() {
     companion object {
 
@@ -59,6 +61,9 @@ class RechargeForYouFragment(val list: List<ValueItem?>?) :
     private fun setUpRecyclerView(arrayList: List<ValueItem?>?) {
         val topTenUsersAdapter = RechargePlansAdapter(
             this, onRecentUserClick = {
+
+
+                click(it)
 
 
             }

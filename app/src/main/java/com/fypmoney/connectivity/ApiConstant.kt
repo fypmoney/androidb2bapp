@@ -158,6 +158,7 @@ object ApiConstant {
     const val API_GET_CIRCLE_LIST = "services/loyaltyservice/api/circle-list/"
     const val API_GET_HLR_CHECK = "services/loyaltyservice/api/hlrcheck"
 
+    const val API_MOBILE_RECHARGE = "services/PockketService/api/mobileRecharge"
 }
 
 

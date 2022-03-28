@@ -40,7 +40,7 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="29dp"
                 android:layout_toRightOf="@id/ivUser"
-                android:text="Tanvi"
+                android:text="User"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="normal" />
@@ -56,7 +56,7 @@
                 android:textColor="#9CA3A5"
                 android:textSize="14sp" />
 
-            <TextView
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/optionsMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,14 +66,79 @@
                 android:layout_marginRight="20dp"
                 android:background="@drawable/round_backgorund_white_20"
                 android:backgroundTint="#1C2129"
-                android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
-                android:drawablePadding="@dimen/_10sdp"
-                android:gravity="start"
-                android:padding="@dimen/_6sdp"
-                android:text="Select Operator"
-                android:textColor="@color/white">
+                android:padding="24dp">
 
-            </TextView>
+
+                <TextView
+                    android:id="@+id/amount_tv"
+                    style="@style/TextviewBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="₹ 839"
+                    android:textColor="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:alpha=".20"
+
+                    android:background="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/amount_tv"
+                    tools:layout_editor_absoluteX="24dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/view5"
+                    tools:layout_editor_absoluteX="24dp">
+
+                    <TextView
+                        style="@style/TextviewRegular"
+                        android:id="@+id/details"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Data : 1.5GB/day" />
+
+                    <TextView
+                        style="@style/TextviewRegular"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Calls : Unlimited Local, STD &amp; Roaming calls" />
+
+                    <TextView
+                        style="@style/TextviewRegular"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Validity : 84 Days" />
+
+                    <TextView
+                        android:layout_marginTop="@dimen/_8sdp"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="SMS : 100/Days" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    tools:text="Truly Unlimited"
+                    android:id="@+id/planType"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@+id/amount_tv"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/amount_tv" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
                 android:id="@+id/continue_btn"

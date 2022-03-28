@@ -37,6 +37,7 @@ class SelectOperatorViewModel(application: Application) : BaseViewModel(applicat
     var operatorResponse = ObservableField<OperatorResponse>()
 
     var circleGot = MutableLiveData<String>()
+    var mobileNumber = MutableLiveData<String>()
     var OperatorGot = MutableLiveData<String>()
 
     /*

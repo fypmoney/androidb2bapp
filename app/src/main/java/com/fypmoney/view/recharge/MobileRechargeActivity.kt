@@ -74,7 +74,8 @@ class MobileRechargeActivity :
             val directions =
                 MobileRechargeActivityDirections.actionGoOperatorScreen(
                     circle = it.info?.circle,
-                    operator = it.info?.operator
+                    operator = it.info?.operator,
+                    mobile = mViewBinding.etNumber.text.toString()
                 )
 
             directions?.let { it1 -> findNavController().navigate(it1) }
@@ -86,9 +87,7 @@ class MobileRechargeActivity :
             if (!mViewBinding.etNumber.text.isNullOrEmpty() && mViewBinding.etNumber.text.length == 10) {
                 mViewModel.callGetMobileHrl(mViewBinding.etNumber.text.toString())
             } else {
-
                 Utility.showToast("Enter correct number")
-
             }
 
 

@@ -48,7 +48,7 @@ class TopTenUsersVH(
 
             loadImage(
                 recentIv, user.icon,
-                ContextCompat.getDrawable(this.recentIv.context, R.drawable.ic_profile_img), false
+                ContextCompat.getDrawable(this.recentIv.context, R.drawable.airtel_logo), false
             )
 
             recentUserCl.setOnClickListener {

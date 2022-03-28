@@ -52,6 +52,7 @@ class SelectCircleActivity : BaseFragment<ActivitySelectCircleBinding, SelectCir
         super.onViewCreated(view, savedInstanceState)
 
         mViewModel.selectedOperator.value = args.selectedOperator
+        mViewModel.mobile.value = args.mobile
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = requireContext(),
@@ -76,10 +77,14 @@ class SelectCircleActivity : BaseFragment<ActivitySelectCircleBinding, SelectCir
             this, onRecentUserClick = {
                 val directions =
                     it.name?.let { it1 ->
-                        SelectCircleActivityDirections.actionSelectRechargePlans(
-                            mViewModel.selectedOperator.value,
-                            it1
-                        )
+                        mViewModel.mobile.value?.let { it2 ->
+                            SelectCircleActivityDirections.actionSelectRechargePlans(
+
+                                mViewModel.selectedOperator.value,
+                                selectedCircle = it1,
+                                mobile = it2
+                            )
+                        }
                     }
 
                 directions?.let { it1 -> findNavController().navigate(it1) }

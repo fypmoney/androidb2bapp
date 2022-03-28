@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.ViewPager
 import com.fypmoney.BR
@@ -55,6 +56,9 @@ class PlanSelectionActivity : BaseFragment<ViewPlanSelectionBinding, PlansViewMo
 
         mViewModel.selectedOperator.value = args.selectedOperator
         mViewModel.selectedCircle.value = args.selectedCircle
+        mViewModel.mobile.value = args.mobile
+
+        mViewBinding.mobile.text = args.mobile
 //        loadProfile(
 //            SharedPrefUtils.getString(
 //                applicationContext,
@@ -89,7 +93,20 @@ class PlanSelectionActivity : BaseFragment<ViewPlanSelectionBinding, PlansViewMo
         val adapter = RewardsActivity.ViewPagerAdapter(childFragmentManager)
 
         rechargePlansResponse.forEach {
-            it.name?.let { it1 -> adapter.addFragment(RechargeForYouFragment(it.value), it1) }
+            it.name?.let { it1 ->
+                adapter.addFragment(RechargeForYouFragment(it.value,
+                    click = {
+                        val directions = PlanSelectionActivityDirections.actionRechargeAndPay(
+                            it,
+                            mViewModel.selectedOperator.value,
+                            mobile = mViewModel.mobile.value,
+                            planType = it1
+                        )
+
+                        findNavController().navigate(directions)
+                    }), it1
+                )
+            }
         }
 
 

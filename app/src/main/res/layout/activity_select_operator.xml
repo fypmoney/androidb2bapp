@@ -40,7 +40,7 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginTop="29dp"
                 android:layout_toRightOf="@id/ivUser"
-                android:text="Tanvi"
+                android:text="User"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 android:textStyle="normal" />
