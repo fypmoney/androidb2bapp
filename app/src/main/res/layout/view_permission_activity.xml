@@ -11,11 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+<ScrollView
+    android:layout_width="match_parent"
+
+    android:layout_marginBottom="@dimen/_6sdp"
+    android:layout_height="0dp"
+
+    app:layout_constraintBottom_toTopOf="@+id/tvTerms"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+   >
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <RelativeLayout
             android:id="@+id/relativeLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="-30dp"
+            android:layout_marginTop="-50dp"
             android:background="@drawable/ic_welcome_fyp_permissions"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,46 +45,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/_48sdp"
+                android:layout_marginTop="80dp"
                 android:text="@string/welcome_to_fyp"
                 android:textColor="@color/white" />
 
         </RelativeLayout>
-<ScrollView
-    android:layout_width="match_parent"
-    android:paddingLeft="@dimen/_16sdp"
-    android:layout_marginBottom="@dimen/_6sdp"
-    android:layout_height="0dp"
-    android:paddingRight="@dimen/_16sdp"
-    app:layout_constraintBottom_toTopOf="@+id/tvTerms"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/relativeLayout4"
-   >
 
-
-        <LinearLayout
-            android:id="@+id/linearLayout4"
+        <RelativeLayout
+            android:id="@+id/read_contacts"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-          >
+            android:layout_marginTop="@dimen/_40sdp">
 
-            <RelativeLayout
-                android:id="@+id/read_contacts"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_50sdp">
+            <CheckBox
+                android:id="@+id/permission2_cb"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:buttonTint="@color/black" />
 
-                <CheckBox
-                    android:id="@+id/permission2_cb"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:buttonTint="@color/black" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/permission2_tv"
-                    style="@style/TextviewRegular"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/permission2_tv"
+                style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_6sdp"
@@ -88,19 +90,21 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/location_permissions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_24sdp">
+        <RelativeLayout
+            android:id="@+id/location_permissions"
+            android:layout_width="match_parent"
+            android:paddingLeft="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp">
 
-                <CheckBox
-                    android:id="@+id/permission1_cb"
-                    android:layout_width="@dimen/_24sdp"
-                    android:layout_height="@dimen/_24sdp"
-                    android:buttonTint="@color/black" />
+            <CheckBox
+                android:id="@+id/permission1_cb"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:buttonTint="@color/black" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+            <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/permission1_tv"
                     style="@style/TextviewRegular"
                     android:layout_width="wrap_content"
