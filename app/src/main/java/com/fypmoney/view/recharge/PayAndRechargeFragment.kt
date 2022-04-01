@@ -94,10 +94,7 @@ class PayAndRechargeFragment :
     private fun setObserver() {
 
 
-        mViewModel.opertaorList.observe(viewLifecycleOwner) {
-//            (mViewBinding.rvOperator.adapter as OperatorSelectionAdapter).submitList(it)
 
-        }
         mViewModel.success.observe(viewLifecycleOwner) {
 //            (mViewBinding.rvOperator.adapter as OperatorSelectionAdapter).submitList(it)
 

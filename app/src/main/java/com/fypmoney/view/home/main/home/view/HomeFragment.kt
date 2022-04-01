@@ -449,7 +449,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 startActivity(intent)
             }
             AppConstants.IN_APP_WITH_CARD -> {
-                findNavController().navigate(R.id.navigation_recharge)
+                findNavController().navigate(R.id.navigation_recharge_home)
 
 
 

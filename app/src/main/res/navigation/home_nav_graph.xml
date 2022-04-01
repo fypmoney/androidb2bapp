@@ -12,8 +12,8 @@
         tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/action_recharge_screen"
-            app:destination="@+id/navigation_recharge" />
+            android:id="@+id/action_recharge_home"
+            app:destination="@+id/navigation_recharge_home" />
         <action
             android:id="@+id/action_navigation_home_to_navigation_card"
             app:destination="@id/navigation_card" />
@@ -94,7 +94,30 @@
             app:argType="com.fypmoney.view.home.main.explore.model.SectionContentItem"
             app:nullable="true" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_dth"
+        android:name="com.fypmoney.view.recharge.DthRechargeFragment"
+        android:label="Dth"
+        tools:layout="@layout/fragment_spinner_list">
+        <argument
+            android:name="operator"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_go_to_dth_success"
+            app:destination="@+id/navigation_dth_success" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/navigation_dth_operator"
+        android:name="com.fypmoney.view.recharge.DthOperatorListActivity"
+        android:label="DthOperators"
+        tools:layout="@layout/fragment_spinner_list">
+        <action
+            android:id="@+id/action_go_to_dth_recharge"
+            app:destination="@+id/navigation_dth" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_select_circle"
@@ -155,6 +178,20 @@
             app:destination="@+id/navigation_select_circle" />
     </fragment>
     <fragment
+        android:id="@+id/navigation_recharge_home"
+        android:name="com.fypmoney.view.recharge.RechargeStoresFragment"
+        android:label="select_recharge_home"
+        tools:layout="@layout/fragment_spinner_list">
+        <action
+            android:id="@+id/action_recharge_screen"
+            app:destination="@+id/navigation_recharge" />
+        <action
+            android:id="@+id/action_dth_recharge_screen"
+            app:destination="@+id/navigation_dth" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_recharge_success"
         android:name="com.fypmoney.view.recharge.RechargeSuccessFragment"
         android:label="recharge_success"
@@ -163,6 +200,23 @@
             android:name="successResponse"
             android:defaultValue="@null"
             app:argType="com.fypmoney.view.recharge.model.PayAndRechargeResponse"
+            app:nullable="true" />
+        <argument
+            android:name="selectedOperator"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.recharge.model.OperatorResponse"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_dth_success"
+        android:name="com.fypmoney.view.recharge.DthSuccessFragment"
+        android:label="dth_recharge_success"
+        tools:layout="@layout/fragment_spinner_list">
+        <argument
+            android:name="successDth"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.recharge.model.BillPaymentResponse"
             app:nullable="true" />
         <argument
             android:name="selectedOperator"
@@ -223,4 +277,6 @@
             android:name="selectedCircle"
             app:argType="string" />
     </fragment>
+
+
 </navigation>

@@ -13,7 +13,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
-import com.fypmoney.databinding.ActivitySelectCircleBinding
+import com.fypmoney.databinding.ActivityOperatorListBinding
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 import com.fypmoney.view.recharge.adapter.CircleSelectionAdapter
 import com.fypmoney.view.recharge.adapter.OperatorSelectionAdapter
@@ -28,16 +28,16 @@ import kotlin.collections.ArrayList
 * This class is used as Home Screen
 * */
 class SelectOperatorFromListActivity :
-    BaseFragment<ActivitySelectCircleBinding, SelectOperatorFromListViewModel>() {
+    BaseFragment<ActivityOperatorListBinding, SelectOperatorFromListViewModel>() {
     private lateinit var mViewModel: SelectOperatorFromListViewModel
-    private lateinit var mViewBinding: ActivitySelectCircleBinding
+    private lateinit var mViewBinding: ActivityOperatorListBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_select_circle
+        return R.layout.activity_operator_list
     }
 
     override fun getViewModel(): SelectOperatorFromListViewModel {

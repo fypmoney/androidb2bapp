@@ -16,6 +16,7 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ActivitySelectOperatorBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.TopTenUsersAdapter
 import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
@@ -50,8 +51,6 @@ class SelectOperatorActivity :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         mViewBinding = getViewDataBinding()
 
 
@@ -86,13 +85,18 @@ class SelectOperatorActivity :
 
     private fun setBindings() {
         mViewBinding.continueBtn.setOnClickListener {
-            val directions =
-                SelectOperatorActivityDirections.actionSelectCircle(
-                    selectedOperator = mViewModel.operatorResponse.get(),
-                    mobile = mViewModel.mobileNumber.value
-                )
+            if (mViewModel.operatorResponse.get() != null) {
+                val directions =
+                    SelectOperatorActivityDirections.actionSelectCircle(
+                        selectedOperator = mViewModel.operatorResponse.get(),
+                        mobile = mViewModel.mobileNumber.value
+                    )
 
-            directions?.let { it1 -> findNavController().navigate(it1) }
+                directions?.let { it1 -> findNavController().navigate(it1) }
+            } else {
+                Utility.showToast("fetch details")
+            }
+
         }
     }
 

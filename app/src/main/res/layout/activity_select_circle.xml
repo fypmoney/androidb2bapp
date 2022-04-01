@@ -22,12 +22,43 @@
                 android:id="@+id/layout"
                 layout="@layout/toolbar" />
 
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/search"
+                style="@style/AppTheme.Widget.TextView"
+                android:layout_width="match_parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/_4sdp"
+                android:paddingBottom="@dimen/_6sdp"
+
+                android:layout_marginStart="@dimen/_18sdp"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_18sdp"
+                android:layout_marginBottom="@dimen/margin"
+                android:background="@drawable/curved_background15"
+                android:drawableEnd="@drawable/ic_icon_feather_search"
+                android:drawablePadding="10dp"
+                android:layout_below="@+id/layout"
+                android:drawableTint="@color/white"
+                android:backgroundTint="#0E141C"
+                android:fontFamily="@font/product_sans_regular"
+                android:hint="Search Circles"
+
+                android:padding="10dp"
+                android:textColor="@color/text_color_dark"
+                android:textColorHint="@color/text_color_light"
+                android:textSize="14sp" />
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_circles"
-                android:layout_marginTop="@dimen/_10sdp"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/layout" />
+                android:layout_below="@+id/search"
+                android:layout_marginTop="@dimen/_10sdp" />
 
         </RelativeLayout>
 
