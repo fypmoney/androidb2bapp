@@ -125,6 +125,7 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/edit_text_rounded_rectangle_shape_solid_gray"
                     android:hint="xyz@gmail.com"
+                    android:digits="qwertyuiopasdfghjklzxcvbnm  QWERTYUIOPASDFGHJKLZXCVBNM1234567890+-*=(),.:!_@"
                     android:imeOptions="actionDone"
                     android:inputType="textEmailAddress"
                     android:maxLength="40"
