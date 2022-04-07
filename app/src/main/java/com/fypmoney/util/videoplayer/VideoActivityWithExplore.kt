@@ -14,7 +14,8 @@ import android.widget.SeekBar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.amazonaws.ivs.player.*
+import com.amazonaws.ivs.player.Player
+import com.amazonaws.ivs.player.ViewUtil
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -35,20 +36,8 @@ import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
-import kotlinx.android.synthetic.main.activity_video2.*
-
 import kotlinx.android.synthetic.main.activity_video_xplore.*
-import kotlinx.android.synthetic.main.activity_video_xplore.mute
-import kotlinx.android.synthetic.main.activity_video_xplore.play_button_view
-import kotlinx.android.synthetic.main.activity_video_xplore.player_controls
-import kotlinx.android.synthetic.main.activity_video_xplore.player_root
-import kotlinx.android.synthetic.main.activity_video_xplore.seek_bar
-import kotlinx.android.synthetic.main.activity_video_xplore.status_text
-import kotlinx.android.synthetic.main.activity_video_xplore.surface_view
 import kotlinx.android.synthetic.main.toolbar.*
-
-import java.util.ArrayList
-import java.util.*
 
 class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoExploreViewModel>(),
     SurfaceHolder.Callback {
@@ -84,19 +73,19 @@ class VideoActivityWithExplore : BaseActivity<ActivityVideoXploreBinding, VideoE
         viewModel.callExplporeContent(ACTIONFLAG)
 
         viewModel?.rewardHistoryList.observe(
-            this,
-            { list ->
+            this
+        ) { list ->
 
-                setRecyclerView(mViewBinding!!, list)
-            })
+            setRecyclerView(mViewBinding!!, list)
+        }
         viewModel?.openBottomSheet.observe(
-            this,
-            { list ->
-                if (list.size > 0) {
-                    callOfferDetailsSheeet(list[0])
-                }
+            this
+        ) { list ->
+            if (list.size > 0) {
+                callOfferDetailsSheeet(list[0])
+            }
 
-            })
+        }
 
         viewModel?.feedDetail.observe(
             this,

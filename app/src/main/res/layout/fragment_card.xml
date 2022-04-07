@@ -196,6 +196,7 @@
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             android:visibility="gone"
+                            tools:visibility="visible"
                             android:onClick="@{()->viewModel.onActivateCard()}"
                             android:backgroundTint="@color/color_task_card_green"
                             app:layout_constraintTop_toTopOf="parent"

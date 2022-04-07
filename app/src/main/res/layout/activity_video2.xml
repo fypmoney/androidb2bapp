@@ -192,7 +192,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_18sdp"
-                        android:src="@{data.isMute ? @drawable/ic_volume_on: @drawable/ic_volume_off_24}"
+                        android:src="@{data.isMute ? @drawable/ic_volume_off_24: @drawable/ic_volume_on}"
 
 
                         app:layout_constraintBottom_toTopOf="@+id/status_text" />
