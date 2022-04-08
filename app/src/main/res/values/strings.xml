@@ -1149,4 +1149,6 @@ Coming really soon!
     <string name="please_complete_your_kyc">Please complete your KYC</string>
     <string name="complete_kyc">Complete KYC</string>
     <string name="complete_your_kyc_to_unlock_all_the_exclusive_features">Complete your KYC to unlock all the exclusive features</string>
+    <string name="like">Like</string>
+    <string name="share">Share</string>
 </resources>
