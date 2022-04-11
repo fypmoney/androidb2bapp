@@ -34,6 +34,8 @@ data class GiftStatusResponse(
     val brandLogo: String? = null,
 
     val brandName: String? = null,
+    val voucherPin:String?=null,
+    val activationCode:String?=null
 
 
     )

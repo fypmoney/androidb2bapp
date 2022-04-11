@@ -90,9 +90,13 @@ class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, GiftDetails
                     outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT4
                 )
             }
-
+               if(!it.activationCode.isNullOrEmpty()){
             mViewBinding.giftDetails.text =
-                "Voucher Number - ${it.voucherNo}\nVoucher PIN - ${it.voucherGcCode}\n Purchased on - $issuedate\nValidity -$validitydate\nFyp Order Number - ${it.giftVoucherOrderNo}"
+                "Voucher Number - ${it.voucherNo}\nVoucher PIN - ${it.voucherPin}\n Purchased on - $issuedate\nValidity -$validitydate\nFyp Order Number - ${it.giftVoucherOrderNo}\n" +
+                        "Activation Code -${it.activationCode}"}
+            else{
+                   mViewBinding.giftDetails.text =      "Voucher Number - ${it.voucherNo}\nVoucher PIN - ${it.voucherPin}\n Purchased on - $issuedate\nValidity -$validitydate\nFyp Order Number - ${it.giftVoucherOrderNo}"
+               }
             try {
                 val jsonArr = JSONArray(it?.tnc)
                 var itemsArrayList: ArrayList<String> = ArrayList()
