@@ -90,10 +90,10 @@ class GiftDetailsActivity : BaseActivity<GiftDetailsActivityBinding, GiftDetails
                     outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT4
                 )
             }
-               if(!it.activationCode.isNullOrEmpty()){
+               if(!it.activationUrl.isNullOrEmpty()){
             mViewBinding.giftDetails.text =
                 "Voucher Number - ${it.voucherNo}\nVoucher PIN - ${it.voucherPin}\n Purchased on - $issuedate\nValidity -$validitydate\nFyp Order Number - ${it.giftVoucherOrderNo}\n" +
-                        "Activation Code -${it.activationCode}"}
+                        "Activation Code -${it.activationUrl}"}
             else{
                    mViewBinding.giftDetails.text =      "Voucher Number - ${it.voucherNo}\nVoucher PIN - ${it.voucherPin}\n Purchased on - $issuedate\nValidity -$validitydate\nFyp Order Number - ${it.giftVoucherOrderNo}"
                }
