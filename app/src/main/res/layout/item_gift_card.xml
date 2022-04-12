@@ -16,9 +16,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="18dp"
-            app:cardUseCompatPadding="true"
+
             app:contentPadding="3dp"
+            app:cardUseCompatPadding="true"
+
             android:backgroundTint="#1C2129"
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +66,7 @@
                     android:layout_marginStart="10dp"
                     android:gravity="start"
                     android:textColor="@color/white"
-                    android:textSize="16sp"
+                    android:textSize="14sp"
                     android:layout_marginEnd="10dp"
 
                     app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +82,7 @@
                     android:layout_height="46dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginEnd="12dp"
-                    android:layout_marginTop="@dimen/_12sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
                     android:layout_marginBottom="2dp"
                     android:backgroundTint="#48AB5B"
                     android:text="@string/buy_now"

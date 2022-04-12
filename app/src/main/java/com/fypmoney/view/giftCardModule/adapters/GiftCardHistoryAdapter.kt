@@ -66,8 +66,27 @@ class GiftCardHistoryVH(
 
             binding.descTv.text = user.description
 
+
             if (user.destinationMobileNo == mobile) {
-                binding.buygift.text = "Purchased"
+
+                if(user.voucherStatus=="COMPLETE"){
+                    binding.buygift.text = "Purchased"
+                    binding.buygift.background.setTint(
+                        ContextCompat.getColor(
+                            binding.buygift.context,
+                            R.color.reward_continue_button
+                        )
+                    )
+                }else if(user.voucherStatus=="PENDING"){
+                    binding.buygift.text = "Pending"
+                    binding.buygift.background.setTint(
+                        ContextCompat.getColor(
+                            binding.buygift.context,
+                            R.color.colorSelectedMenu
+                        )
+                    )
+                }
+
             } else if (user.destinationMobileNo != mobile) {
                 if (user.isGifted == AppConstants.NO) {
                     binding.buygift.text = "RECIEVED"

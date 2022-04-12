@@ -15,11 +15,11 @@
 
         <TextView
             android:id="@+id/view_all"
-            style="@style/TextviewBold"
+            style="@style/TextviewRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_16sdp"
             android:layout_marginEnd="@dimen/_12sdp"
             android:padding="@dimen/_4sdp"
@@ -33,16 +33,18 @@
             style="@style/TextviewBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_16sdp"
             android:textColor="@color/white"
 
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_base"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:layout_below="@+id/date_tv"
             android:layout_centerVertical="true"
             android:layout_marginTop="@dimen/_2sdp" />

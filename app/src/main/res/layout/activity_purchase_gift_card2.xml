@@ -67,9 +67,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/gift_msg"
-            android:layout_marginStart="@dimen/dp8"
+            android:paddingStart="@dimen/_6sdp"
             android:layout_marginTop="22dp"
-            android:layout_marginEnd="@dimen/dp8"
+            android:paddingEnd="@dimen/_6sdp"
             android:weightSum="4">
 
         </androidx.recyclerview.widget.RecyclerView>
@@ -84,29 +84,51 @@
             android:layout_marginTop="@dimen/_18sdp"
             android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatEditText
-                android:id="@+id/gift_amount"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                style="@style/TextviewBold"
-
-                android:paddingStart="@dimen/_20sdp"
-                android:paddingEnd="@dimen/_20sdp"
-                android:textSize="26sp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_dark_grey_rewards_18"
+                android:minWidth="220dp"
                 android:gravity="center"
                 android:backgroundTint="#1C2129"
-                android:inputType="number"
-                android:hint="Enter amount"
-                android:drawableStart="@drawable/rupee_symbol"
-                android:textColorHint="@color/text_color_light"
-                android:textColor="@color/white"
-                android:drawableTint="@color/white"
-                android:text="@={viewModel.amountSelected}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/vDivider5"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/round_dark_grey_rewards_18"
+                android:paddingStart="@dimen/_20sdp"
+                android:paddingEnd="@dimen/_20sdp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="20dp"
+                    android:src="@drawable/rupee_symbol"
+                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rupee_symbol"
+                    style="@style/TextviewBold"
+                    android:textSize="26sp"
+
+                    android:textColor="@color/text_color_light" />
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/gift_amount"
+                    android:layout_width="wrap_content"
+                    style="@style/TextviewBold"
+
+
+                    android:textSize="26sp"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:backgroundTint="@color/transparent"
+                    android:inputType="number"
+
+                    android:hint="Enter amount"
+
+                    android:textColorHint="@color/text_color_light"
+                    android:textColor="@color/white"
+                    android:drawableTint="@color/white"
+                    android:text="@={viewModel.amountSelected}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/vDivider5"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
+
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/max_min_len"
