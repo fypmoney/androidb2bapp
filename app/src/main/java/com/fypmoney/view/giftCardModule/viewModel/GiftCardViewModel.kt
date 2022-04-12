@@ -37,7 +37,7 @@ class GiftCardViewModel(application: Application) : BaseViewModel(application) {
                     10,
                     "id,asc"
                 ), onResponse = this,
-                isProgressBar = false
+                isProgressBar = true
             )
 
         )
