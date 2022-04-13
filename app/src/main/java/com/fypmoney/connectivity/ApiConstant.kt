@@ -153,7 +153,7 @@ object ApiConstant {
     const val API_CHECK_PROMO_CODE = "/services/loyaltyservice/api/promocode"
     const val API_RECHARGE_PLANS = "services/loyaltyservice/api/mobile-recharge-plans"
     const val API_GET_OPERATOR_LIST_MOBILE =
-        "services/loyaltyservice/api/operator-list/MOBILE?type=PREPAID"
+        "services/loyaltyservice/api/operator-list/MOBILE"
     const val API_GET_DTH_OPERATORS =
         "services/loyaltyservice/api/operator-list/DTH"
 

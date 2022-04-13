@@ -40,6 +40,8 @@ data class BillPaymentResponse(
     val acceptPartPay: String? = null,
     val currencyCode: String? = null,
     val status: String? = null,
-    val isReversed: String? = null
-) : Parcelable
+    val isReversed: String? = null,
+
+
+    ) : Parcelable
 

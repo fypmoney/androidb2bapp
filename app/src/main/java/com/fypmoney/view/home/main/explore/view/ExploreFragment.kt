@@ -172,6 +172,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
 
                         startActivity(intent)
                     }
+
                     AppConstants.EXPLORE_IN_APP -> {
                         it.redirectionResource?.let { uri ->
 

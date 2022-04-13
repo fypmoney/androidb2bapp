@@ -295,5 +295,7 @@ object AppConstants {
     const val POSTKYCKEY = "postkyc"
     const val SEMI = "SEMI"
     const val MINIMUM = "MINIMUM"
+    const val POSTPAID = "POSTPAID"
+    const val PREPAID = "PREPAID"
     const val KYC_UPGRADE_FROM_WHICH_SCREEN = "kyc_upgrade_from_which_screen"
 }

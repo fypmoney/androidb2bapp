@@ -17,6 +17,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ActivitySelectCircleBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.view.home.main.explore.sectionexplore.SectionExploreFragmentArgs
 import com.fypmoney.view.home.main.explore.sectionexplore.SectionExploreFragmentVM
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
@@ -53,6 +54,8 @@ class SelectCircleActivity : BaseFragment<ActivitySelectCircleBinding, SelectCir
 
         mViewModel.selectedOperator.value = args.selectedOperator
         mViewModel.mobile.value = args.mobile
+
+
         mViewBinding = getViewDataBinding()
         setToolbarAndTitle(
             context = requireContext(),
@@ -61,7 +64,10 @@ class SelectCircleActivity : BaseFragment<ActivitySelectCircleBinding, SelectCir
             isBackArrowVisible = true,
             toolbarTitle = "Select Circle"
         )
+        args.rechargeType.let {
+            mViewModel.rechargeType.value = it
 
+        }
         mViewModel.callGetOperatorList()
         setObserver()
 
@@ -75,20 +81,40 @@ class SelectCircleActivity : BaseFragment<ActivitySelectCircleBinding, SelectCir
     private fun setUpRecyclerView(arrayList: ArrayList<CircleResponse>) {
         val topTenUsersAdapter = CircleSelectionAdapter(
             this, onRecentUserClick = {
-                val directions =
-                    it.name?.let { it1 ->
-                        mViewModel.mobile.value?.let { it2 ->
-                            SelectCircleActivityDirections.actionSelectRechargePlans(
 
-                                mViewModel.selectedOperator.value,
-                                selectedCircle = it1,
-                                mobile = it2
-                            )
-                        }
+                mViewModel.rechargeType.value.let { itstr ->
+                    if (itstr == AppConstants.POSTPAID) {
+                        val directions =
+                            it.name?.let { it1 ->
+                                mViewModel.mobile.value?.let { it2 ->
+                                    SelectCircleActivityDirections.actionPostpaidBill(
+                                        mViewModel.selectedOperator.value,
+                                        selectedCircle = it1,
+                                        mobile = it2
+                                    )
+                                }
+                            }
+
+
+                        directions?.let { it1 -> findNavController().navigate(it1) }
+                    } else {
+
+                        val directions =
+                            it.name?.let { it1 ->
+                                mViewModel.mobile.value?.let { it2 ->
+                                    SelectCircleActivityDirections.actionSelectRechargePlans(
+                                        mViewModel.selectedOperator.value,
+                                        selectedCircle = it1,
+                                        mobile = it2
+                                    )
+                                }
+                            }
+
+
+                        directions?.let { it1 -> findNavController().navigate(it1) }
                     }
+                }
 
-
-                directions?.let { it1 -> findNavController().navigate(it1) }
 
             }
         )

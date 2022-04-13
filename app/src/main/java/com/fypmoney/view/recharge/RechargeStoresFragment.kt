@@ -1,50 +1,17 @@
 package com.fypmoney.view.recharge
 
-import android.content.Context
-import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.net.Uri
+
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.application.PockketApplication
-import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
-import com.fypmoney.base.PaginationListener
-import com.fypmoney.databinding.FragmentStoreBinding
-import com.fypmoney.databinding.ScreenStoreBinding
-import com.fypmoney.model.AssignedTaskResponse
-import com.fypmoney.model.CustomerInfoResponseDetails
-import com.fypmoney.model.FeedDetails
+import com.fypmoney.databinding.FragmentRechargeHomeBinding
 import com.fypmoney.model.StoreDataModel
-import com.fypmoney.util.AppConstants
-import com.fypmoney.util.Utility
-import com.fypmoney.view.StoreWebpageOpener2
-import com.fypmoney.view.activity.ChoresActivity
-import com.fypmoney.view.activity.UserFeedsDetailView
-import com.fypmoney.view.adapter.FeedsAdapter
-import com.fypmoney.view.adapter.FeedsStoreAdapter
-
-import com.fypmoney.view.adapter.YourTasksAdapter
-import com.fypmoney.view.fypstories.view.StoriesBottomSheet
-import com.fypmoney.view.interfaces.ListItemClickListener
-import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
-import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
-import com.fypmoney.viewmodel.NotificationViewModel
-import com.fypmoney.viewmodel.StoreScreenViewModel
-
-import kotlinx.android.synthetic.main.fragment_your_task.view.*
+import com.fypmoney.util.AppConstants.POSTPAID
+import com.fypmoney.view.recharge.viewmodel.RechargeViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import org.json.JSONException
 import org.json.JSONObject
@@ -52,18 +19,10 @@ import java.io.IOException
 import java.io.InputStream
 
 
-import kotlin.collections.ArrayList
+class RechargeStoresFragment : BaseFragment<FragmentRechargeHomeBinding, RechargeViewModel>() {
 
-
-class RechargeStoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenViewModel>(),
-    FeedsAdapter.OnFeedItemClickListener {
-
-    private lateinit var sharedViewModel: StoreScreenViewModel
-    private lateinit var mViewBinding: FragmentStoreBinding
-
-
-    private var typeAdapter: FeedsStoreAdapter? = null
-
+    private lateinit var sharedViewModel: RechargeViewModel
+    private lateinit var mViewBinding: FragmentRechargeHomeBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -75,7 +34,7 @@ class RechargeStoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenVie
             isBackArrowVisible = true, toolbarTitle = "Store"
         )
         mViewBinding.viewModel = sharedViewModel
-        setRecyclerView()
+
         sharedViewModel.rechargeItemAdapter.setList(
             getListOfApps(
                 R.raw.recharges_json,
@@ -86,42 +45,40 @@ class RechargeStoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenVie
                 )
             )
         )
-        mViewBinding.shimmerLayout.startShimmer()
+
+
+        sharedViewModel.RechargePostpaidAdapter.setList(
+            getListOfApps(
+                R.raw.recharges_json,
+                arrayListOf(
+                    R.drawable.airtel_logo,
+                    R.drawable.vi_logo,
+                    R.drawable.jio_logo
+                )
+            )
+        )
+
         sharedViewModel.storeAdapter.setList(
             getListOfApps(
-                R.raw.shopping_json,
+                R.raw.recharges_json,
                 arrayListOf(
-                    R.drawable.flipcart_logo,
-                    R.drawable.amazon_logo,
-                    R.drawable.myntra_logo,
-                    R.drawable.zara_logo,
-                    R.drawable.nykaa_logo,
-                    R.drawable.bewakoof_logo,
-                    R.drawable.maybeonline_logo,
-                    R.drawable.handm
+                    R.drawable.airtel_logo,
+                    R.drawable.vi_logo,
+                    R.drawable.jio_logo
                 )
             )
         )
 
 
-        sharedViewModel.foodDeliveryItemAdapter.setList(
-            getListOfApps(
-                R.raw.food_delivery_json,
-                arrayListOf(
-                    R.drawable.zomato,
-                    R.drawable.swiggy
-                )
-            )
-        )
-        sharedViewModel.cabsItemAdapter.setList(
-            getListOfApps(
-                R.raw.cabs_json,
-                arrayListOf(
-                    R.drawable.ola,
-                    R.drawable.ic_uber
-                )
-            )
-        )
+//        sharedViewModel.cabsItemAdapter.setList(
+//            getListOfApps(
+//                R.raw.cabs_json,
+//                arrayListOf(
+//                    R.drawable.ola,
+//                    R.drawable.ic_uber
+//                )
+//            )
+//        )
 
 
     }
@@ -170,23 +127,10 @@ class RechargeStoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenVie
     }
 
     override fun onTryAgainClicked() {
-        TODO("Not yet implemented")
+
     }
 
-    private fun observeInput(sharedViewModel: StoreScreenViewModel) {
-        sharedViewModel.storefeedList.observe(this, { list ->
-            if (list.isNullOrEmpty()) {
-                mViewBinding.rvStoreFeeds.visibility = View.GONE
-            } else {
-                mViewBinding.shimmerLayout.stopShimmer()
-                typeAdapter?.setList(list)
-
-                typeAdapter?.notifyDataSetChanged()
-                sharedViewModel.isRecyclerviewVisible.set(true)
-            }
-
-
-        })
+    private fun observeInput(sharedViewModel: RechargeViewModel) {
 
         sharedViewModel.onUpiClicked.observe(requireActivity()) {
 
@@ -204,128 +148,34 @@ class RechargeStoresFragment : BaseFragment<FragmentStoreBinding, StoreScreenVie
 
             directions?.let { it1 -> findNavController().navigate(it1) }
         }
-
-    }
-
-
-    private fun setRecyclerView() {
-        val layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        mViewBinding.rvStoreFeeds.layoutManager = layoutManager
+        sharedViewModel.onPostpaidClicked.observe(requireActivity()) {
+            val directions =
+                RechargeStoresFragmentDirections.actionRechargeScreen(rechargeType = POSTPAID)
 
 
-        var itemClickListener2 = object : ListItemClickListener {
-
-
-            override fun onItemClicked(pos: Int) {
-
-
-            }
-
-            override fun onCallClicked(pos: Int) {
-
-            }
-
-
-        }
-
-
-        typeAdapter = sharedViewModel?.let { FeedsStoreAdapter(requireActivity(), it, this) }
-        typeAdapter.let {
-            mViewBinding.rvStoreFeeds.adapter = it
-        }
-
-
-    }
-
-    override fun onFeedClick(position: Int, it: FeedDetails) {
-        when (it.displayCard) {
-            AppConstants.FEED_TYPE_DEEPLINK -> {
-                it.action?.url?.let {
-                    Utility.deeplinkRedirection(it.split(",")[0], requireContext())
-
-                }
-            }
-            AppConstants.FEED_TYPE_INAPPWEB2 -> {
-                intentToActivity(
-                    UserFeedsDetailView::class.java,
-                    it,
-                    AppConstants.FEED_TYPE_INAPPWEB
-                )
-            }
-            AppConstants.FEED_TYPE_EXTWEBVIEW2 -> {
-                startActivity(
-                    Intent.createChooser(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse(it.action?.url)
-                        ), getString(R.string.browse_with)
-                    )
-                )
-
-            }
-            AppConstants.FEED_TYPE_INAPPWEB -> {
-                intentToActivity(
-                    UserFeedsDetailView::class.java,
-                    it,
-                    AppConstants.FEED_TYPE_INAPPWEB
-                )
-            }
-            AppConstants.FEED_TYPE_BLOG -> {
-                intentToActivity(
-                    UserFeedsDetailView::class.java,
-                    it,
-                    AppConstants.FEED_TYPE_BLOG
-                )
-            }
-            AppConstants.FEED_TYPE_EXTWEBVIEW -> {
-                startActivity(
-                    Intent.createChooser(
-                        Intent(
-                            Intent.ACTION_VIEW,
-                            Uri.parse(it.action?.url)
-                        ), getString(R.string.browse_with)
-                    )
-                )
-
-            }
-            AppConstants.FEED_TYPE_STORIES -> {
-                if (!it.resourceArr.isNullOrEmpty()) {
-                    callDiduKnowBottomSheet(it.resourceArr)
-                }
-
-            }
+            directions?.let { it1 -> findNavController().navigate(it1) }
         }
 
     }
 
-    private fun callDiduKnowBottomSheet(list: List<String>) {
-        val bottomSheet =
-            StoriesBottomSheet(list)
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(childFragmentManager, "DidUKnowSheet")
-    }
 
-    private fun intentToActivity(aClass: Class<*>, feedDetails: FeedDetails, type: String? = null) {
-        val intent = Intent(requireContext(), aClass)
-        intent.putExtra(AppConstants.FEED_RESPONSE, feedDetails)
-        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
-        intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
-        startActivity(intent)
-    }
+
+
+
+
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.fragment_store
+        return R.layout.fragment_recharge_home
     }
 
-    override fun getViewModel(): StoreScreenViewModel {
+    override fun getViewModel(): RechargeViewModel {
 
 
-        sharedViewModel = ViewModelProvider(this).get(StoreScreenViewModel::class.java)
+        sharedViewModel = ViewModelProvider(this).get(RechargeViewModel::class.java)
 
         observeInput(sharedViewModel!!)
 

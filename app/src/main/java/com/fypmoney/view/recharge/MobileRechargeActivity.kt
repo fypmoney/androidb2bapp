@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.fypmoney.BR
@@ -35,6 +36,7 @@ class MobileRechargeActivity :
     private lateinit var mViewModel: MobileRechargeViewModel
     private lateinit var mViewBinding: ActivityMobileRechargeBinding
     lateinit var tabLayout: TabLayout
+    private val args: MobileRechargeActivityArgs by navArgs()
     lateinit var viewPager: ViewPager
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -59,8 +61,14 @@ class MobileRechargeActivity :
 
             isBackArrowVisible = true, toolbarTitle = "Mobile Recharge"
         )
+
+        args.rechargeType.let {
+            mViewModel.rechargeType.value = it
+        }
         setRecyclerView()
         setListners()
+
+
     }
 
     override fun onTryAgainClicked() {
@@ -75,7 +83,8 @@ class MobileRechargeActivity :
                 MobileRechargeActivityDirections.actionGoOperatorScreen(
                     circle = it.info?.circle,
                     operator = it.info?.operator,
-                    mobile = mViewBinding.etNumber.text.toString()
+                    mobile = mViewBinding.etNumber.text.toString(),
+                    rechargeType = mViewModel.rechargeType.value
                 )
 
             directions?.let { it1 -> findNavController().navigate(it1) }

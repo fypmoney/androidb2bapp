@@ -1,30 +1,23 @@
 package com.fypmoney.view.recharge
 
 
-import android.content.Intent
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ActivitySelectOperatorBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.view.adapter.TopTenUsersAdapter
-import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
-import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
-import com.fypmoney.view.recharge.adapter.OperatorSelectionAdapter
 import com.fypmoney.view.recharge.model.OperatorResponse
 import com.fypmoney.view.recharge.viewmodel.SelectOperatorViewModel
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlin.collections.ArrayList
 
 
 /*
@@ -32,8 +25,8 @@ import kotlin.collections.ArrayList
 * */
 class SelectOperatorActivity :
     BaseFragment<ActivitySelectOperatorBinding, SelectOperatorViewModel>() {
-    private var operator: OperatorResponse? = null
-    private lateinit var mViewModel: SelectOperatorViewModel
+
+    private val mViewModel by viewModels<SelectOperatorViewModel> { defaultViewModelProviderFactory }
     private lateinit var mViewBinding: ActivitySelectOperatorBinding
     private val args: SelectOperatorActivityArgs by navArgs()
     override fun getBindingVariable(): Int {
@@ -45,8 +38,12 @@ class SelectOperatorActivity :
     }
 
     override fun getViewModel(): SelectOperatorViewModel {
-        mViewModel = ViewModelProvider(this).get(SelectOperatorViewModel::class.java)
         return mViewModel
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,6 +51,18 @@ class SelectOperatorActivity :
         mViewBinding = getViewDataBinding()
 
 
+
+
+
+        setToolbarAndTitle(
+            context = requireContext(),
+            toolbar = toolbar, backArrowTint = Color.WHITE,
+            titleColor = Color.WHITE,
+            isBackArrowVisible = true,
+            toolbarTitle = "Mobile Recharge"
+        )
+        setBindings()
+        setObserver()
 
         args.circle.let {
             mViewModel.circleGot.value = it
@@ -69,17 +78,17 @@ class SelectOperatorActivity :
 //            mViewBinding.optionsMenu.text = it
         }
 
-        setToolbarAndTitle(
-            context = requireContext(),
-            toolbar = toolbar, backArrowTint = Color.WHITE,
-            titleColor = Color.WHITE,
-            isBackArrowVisible = true,
-            toolbarTitle = "Mobile Recharge"
-        )
 
-        setObserver()
-        setBindings()
+        args.rechargeType.let {
+            mViewModel.rechargeType.value = it
 
+            if (it == AppConstants.POSTPAID) {
+                mViewModel.callGetOperatorList(AppConstants.POSTPAID)
+            } else {
+
+                mViewModel.callGetOperatorList(AppConstants.PREPAID)
+            }
+        }
 
     }
 
@@ -89,10 +98,11 @@ class SelectOperatorActivity :
                 val directions =
                     SelectOperatorActivityDirections.actionSelectCircle(
                         selectedOperator = mViewModel.operatorResponse.get(),
-                        mobile = mViewModel.mobileNumber.value
+                        mobile = mViewModel.mobileNumber.value,
+                        rechargeType = mViewModel.rechargeType.value
                     )
 
-                directions?.let { it1 -> findNavController().navigate(it1) }
+                directions.let { it1 -> findNavController().navigate(it1) }
             } else {
                 Utility.showToast("fetch details")
             }
@@ -119,7 +129,14 @@ class SelectOperatorActivity :
 
             }
         mViewBinding.optionsMenu.setOnClickListener {
-            findNavController().navigate(R.id.navigation_select_operator_from_list)
+
+            val directions =
+                SelectOperatorActivityDirections.actionToOperatorList(
+                    rechargeType = mViewModel.rechargeType.value
+                )
+
+            directions.let { it1 -> findNavController().navigate(it1) }
+
         }
         mViewModel.opertaorList.observe(viewLifecycleOwner) {
 //            (mViewBinding.rvOperator.adapter as OperatorSelectionAdapter).submitList(it)

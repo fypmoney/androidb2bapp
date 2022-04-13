@@ -33,6 +33,7 @@ import okhttp3.MultipartBody
 class MobileRechargeViewModel(application: Application) : BaseViewModel(application) {
     var opertaorList = MutableLiveData<MobileValidationResponse>()
 
+    var rechargeType = MutableLiveData<String>()
 
     fun callGetMobileHrl(mobile: String) {
 

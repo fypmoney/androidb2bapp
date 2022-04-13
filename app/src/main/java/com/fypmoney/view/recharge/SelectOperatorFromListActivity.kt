@@ -1,23 +1,21 @@
 package com.fypmoney.view.recharge
 
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ActivityOperatorListBinding
-import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
-import com.fypmoney.view.recharge.adapter.CircleSelectionAdapter
+import com.fypmoney.util.AppConstants
 import com.fypmoney.view.recharge.adapter.OperatorSelectionAdapter
-import com.fypmoney.view.recharge.model.CircleResponse
 import com.fypmoney.view.recharge.model.OperatorResponse
 import com.fypmoney.view.recharge.viewmodel.SelectOperatorFromListViewModel
 import kotlinx.android.synthetic.main.toolbar.*
@@ -32,6 +30,8 @@ class SelectOperatorFromListActivity :
     private lateinit var mViewModel: SelectOperatorFromListViewModel
     private lateinit var mViewBinding: ActivityOperatorListBinding
 
+
+    private val args: SelectOperatorFromListActivityArgs by navArgs()
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -55,7 +55,19 @@ class SelectOperatorFromListActivity :
             isBackArrowVisible = true,
             toolbarTitle = "Select your operator"
         )
+        args.rechargeType.let {
+            mViewModel.rechargeType.value = it
 
+            if (it == AppConstants.POSTPAID) {
+                mViewModel.callGetOperatorList(AppConstants.POSTPAID)
+            } else {
+
+                mViewModel.callGetOperatorList(AppConstants.PREPAID)
+            }
+
+
+//            mViewBinding.optionsMenu.text = it
+        }
 
         setObserver()
 
@@ -81,7 +93,7 @@ class SelectOperatorFromListActivity :
         with(mViewBinding.rvCircles) {
             adapter = topTenUsersAdapter
             layoutManager =
-                LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
+                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         }
         (mViewBinding.rvCircles.adapter as OperatorSelectionAdapter).submitList(arrayList)
     }

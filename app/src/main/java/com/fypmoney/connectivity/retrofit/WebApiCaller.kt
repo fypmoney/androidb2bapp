@@ -11,6 +11,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.view.recharge.model.RechargeTypeModel
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -121,6 +122,22 @@ class WebApiCaller {
                             size = params.size,
                             sort = null
                         )
+                    }
+                    ApiConstant.API_GET_OPERATOR_LIST_MOBILE -> {
+
+                        val params = request.param as RechargeTypeModel
+
+
+                        mObservable = apiInterface.getRequestWithQueryType(
+                            endPoint = request.endpoint,
+                            authorization = SharedPrefUtils.getString(
+                                PockketApplication.instance,
+                                SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                            ),
+                            client_id = ApiConstant.CLIENT_ID,
+                            type = params.type,
+
+                            )
                     }
                     ApiConstant.CashbackHistory -> {
 
