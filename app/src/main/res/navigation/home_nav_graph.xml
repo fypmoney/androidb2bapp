@@ -23,9 +23,14 @@
         android:id="@+id/navigation_explore"
         android:name="com.fypmoney.view.home.main.explore.view.ExploreFragment"
         android:label="@string/explore"
-        tools:layout="@layout/fragment_explore" >
-        <action android:id="@+id/action_explore_section_explore"
-            app:destination="@+id/navigation_section_explore"/>
+        tools:layout="@layout/fragment_explore">
+
+        <action
+            android:id="@+id/action_recharge_home"
+            app:destination="@+id/navigation_recharge_home" />
+        <action
+            android:id="@+id/action_explore_section_explore"
+            app:destination="@+id/navigation_section_explore" />
     </fragment>
 
     <fragment
@@ -79,7 +84,7 @@
 
     <fragment
         android:id="@+id/navigation_recharge"
-        android:name="com.fypmoney.view.recharge.MobileRechargeActivity"
+        android:name="com.fypmoney.view.recharge.EnterNumberMobileFragment"
         android:label="Recharge"
         tools:layout="@layout/fragment_spinner_list">
         <action
@@ -333,6 +338,9 @@
         <argument
             android:name="selectedCircle"
             app:argType="string" />
+        <action
+            android:id="@+id/action_to_operator_list"
+            app:destination="@+id/navigation_select_operator_from_list" />
 
         <action
             android:id="@+id/action_recharge_success"

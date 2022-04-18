@@ -187,7 +187,9 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                                 findNavController().navigate(R.id.navigation_rewards_history)
                             }else if (redirectionResources == AppConstants.ARCADE) {
                                 findNavController().navigate(R.id.navigation_arcade)
-                            }else {
+                            } else if (redirectionResources == AppConstants.RechargeHomeScreen) {
+                                findNavController().navigate(R.id.navigation_recharge_home)
+                            } else {
                                 Utility.deeplinkRedirection(redirectionResources, requireContext())
                             }
 

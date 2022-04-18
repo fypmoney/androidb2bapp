@@ -104,18 +104,18 @@ class PayPostPaidBillFragment :
 
 
     private fun setObserver() {
-//        val navController = findNavController();
-//        // We use a String here, but any type that can be put in a Bundle is supported
-//        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<OperatorResponse>("operator_selected")
-//            ?.observe(
-//                viewLifecycleOwner
-//            ) { result ->
-//                // Do something with the result.
-//                var operator = result as OperatorResponse
-//                mViewModel.operatorResponse.set(operator)
-//                mViewBinding.optionsMenu.text = operator.name
-//
-//            }
+        val navController = findNavController();
+        // We use a String here, but any type that can be put in a Bundle is supported
+        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<OperatorResponse>("operator_selected")
+            ?.observe(
+                viewLifecycleOwner
+            ) { result ->
+                // Do something with the result.
+                var operator = result as OperatorResponse
+                mViewModel.operatorResponse.set(operator)
+                mViewBinding.optionsMenu.text = operator.name
+
+            }
         mViewBinding.optionsMenu.setOnClickListener {
             findNavController().navigate(R.id.navigation_select_operator_from_list)
         }
@@ -130,11 +130,16 @@ class PayPostPaidBillFragment :
 
         }
         mViewModel.paymentResponse.observe(viewLifecycleOwner) {
-            val directions = PayPostPaidBillFragmentDirections.actionRechargeSuccess(
-                successDth = it,
-                selectedOperator = mViewModel.operatorResponse.get()
-            )
-            findNavController().navigate(directions)
+
+            it.let {
+                val directions = PayPostPaidBillFragmentDirections.actionRechargeSuccess(
+                    successDth = it,
+                    selectedOperator = mViewModel.operatorResponse.get()
+                )
+                findNavController().navigate(directions)
+            }
+            mViewModel.paymentResponse.value = null
+
         }
 
         mViewModel.opertaorList.observe(viewLifecycleOwner) {

@@ -234,6 +234,8 @@ object AppConstants {
     const val OrderCard = "OrderCard"
     const val JACKPOTTAB = "Jackpot"
     const val ARCADE = "Arcade"
+
+    const val RechargeHomeScreen = "RechargeHomeScreen"
     const val RewardHistory = "RewardHistory"
     const val StoreofferScreen = "Storeofferscreen"
     const val StoreshopsScreen = "Storeshopsscreen"

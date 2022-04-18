@@ -44,8 +44,6 @@ import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.home.main.homescreen.view.LoadMoneyBottomSheet
-import com.fypmoney.view.recharge.MobileRechargeActivity
-import com.fypmoney.view.recharge.PlanSelectionActivity
 import com.fypmoney.view.register.adapters.OffersHomeAdapter
 import com.fypmoney.view.storeoffers.ListOfferClickListener
 import com.fypmoney.view.storeoffers.OffersScreen
@@ -449,9 +447,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 startActivity(intent)
             }
             AppConstants.IN_APP_WITH_CARD -> {
-                findNavController().navigate(R.id.navigation_recharge_home)
-
-
+                val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, redirectionResource)
+                startActivity(intent)
 
             }
             AppConstants.OFFER_REDIRECTION -> {
@@ -508,6 +506,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                         findNavController().navigate(R.id.navigation_rewards_history)
                     } else if (redirectionResources == AppConstants.ARCADE) {
                         findNavController().navigate(R.id.navigation_arcade)
+                    } else if (redirectionResources == AppConstants.RechargeHomeScreen) {
+                        findNavController().navigate(R.id.navigation_recharge_home)
                     } else {
                         redirectionResources?.let { it1 ->
                             deeplinkRedirection(

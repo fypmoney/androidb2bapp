@@ -1,6 +1,7 @@
 package com.fypmoney.view.recharge
 
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -31,7 +32,10 @@ class RechargeStoresFragment : BaseFragment<FragmentRechargeHomeBinding, Recharg
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = "Store"
+
+            isBackArrowVisible = true, toolbarTitle = "Mobile Recharge",
+            titleColor = Color.BLACK,
+            backArrowTint = Color.BLACK
         )
         mViewBinding.viewModel = sharedViewModel
 

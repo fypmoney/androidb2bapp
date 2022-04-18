@@ -31,12 +31,12 @@ import kotlinx.android.synthetic.main.toolbar.toolbar
 /*
 * This class is used as Home Screen
 * */
-class MobileRechargeActivity :
+class EnterNumberMobileFragment :
     BaseFragment<ActivityMobileRechargeBinding, MobileRechargeViewModel>() {
     private lateinit var mViewModel: MobileRechargeViewModel
     private lateinit var mViewBinding: ActivityMobileRechargeBinding
     lateinit var tabLayout: TabLayout
-    private val args: MobileRechargeActivityArgs by navArgs()
+    private val args: EnterNumberMobileFragmentArgs by navArgs()
     lateinit var viewPager: ViewPager
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -50,6 +50,7 @@ class MobileRechargeActivity :
         mViewModel = ViewModelProvider(this).get(MobileRechargeViewModel::class.java)
         return mViewModel
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,16 +79,18 @@ class MobileRechargeActivity :
     private fun setListners() {
         mViewModel.opertaorList.observe(viewLifecycleOwner) {
 
+            it.let {
+                val directions =
+                    EnterNumberMobileFragmentDirections.actionGoOperatorScreen(
+                        circle = it.info?.circle,
+                        operator = it.info?.operator,
+                        mobile = mViewBinding.etNumber.text.toString(),
+                        rechargeType = mViewModel.rechargeType.value
+                    )
 
-            val directions =
-                MobileRechargeActivityDirections.actionGoOperatorScreen(
-                    circle = it.info?.circle,
-                    operator = it.info?.operator,
-                    mobile = mViewBinding.etNumber.text.toString(),
-                    rechargeType = mViewModel.rechargeType.value
-                )
-
-            directions?.let { it1 -> findNavController().navigate(it1) }
+                directions?.let { it1 -> findNavController().navigate(it1) }
+            }
+            mViewModel.opertaorList.value = null
 
         }
 
