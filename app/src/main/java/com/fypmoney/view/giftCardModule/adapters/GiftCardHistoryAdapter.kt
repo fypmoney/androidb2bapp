@@ -77,12 +77,20 @@ class GiftCardHistoryVH(
                             R.color.reward_continue_button
                         )
                     )
-                }else if(user.voucherStatus=="PENDING"){
+                }else if (user.voucherStatus == "PENDING") {
                     binding.buygift.text = "Pending"
                     binding.buygift.background.setTint(
                         ContextCompat.getColor(
                             binding.buygift.context,
                             R.color.colorSelectedMenu
+                        )
+                    )
+                } else if (user.voucherStatus == "CANCELED") {
+                    binding.buygift.text = "Failed"
+                    binding.buygift.background.setTint(
+                        ContextCompat.getColor(
+                            binding.buygift.context,
+                            R.color.color_dark_red
                         )
                     )
                 }

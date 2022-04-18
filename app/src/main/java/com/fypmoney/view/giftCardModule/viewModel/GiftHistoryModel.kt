@@ -74,7 +74,7 @@ class GiftHistoryModel(application: Application) : BaseViewModel(application) {
                 allGiftList.postValue(giftList)
             }
             ApiConstant.GET_GIFT_VOUCHER_STATUS -> {
-                responseData.toString()
+
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
 

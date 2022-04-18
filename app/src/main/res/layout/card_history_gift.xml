@@ -118,7 +118,7 @@
                     android:layout_marginBottom="8dp"
                     android:backgroundTint="@color/reward_continue_button"
                     android:padding="6dp"
-                    android:text="Received"
+                    android:text=""
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
