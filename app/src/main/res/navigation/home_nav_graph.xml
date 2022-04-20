@@ -17,6 +17,10 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_card"
             app:destination="@id/navigation_card" />
+
+        <action
+            android:id="@+id/action_recharge_screen"
+            app:destination="@+id/navigation_recharge" />
     </fragment>
 
     <fragment
@@ -25,10 +29,8 @@
         android:label="@string/explore"
         tools:layout="@layout/fragment_explore">
 
-        <action
-            android:id="@+id/action_recharge_home"
-            app:destination="@+id/navigation_recharge_home" />
-        <action
+
+    <action
             android:id="@+id/action_explore_section_explore"
             app:destination="@+id/navigation_section_explore" />
     </fragment>
@@ -217,12 +219,9 @@
         android:name="com.fypmoney.view.recharge.RechargeStoresFragment"
         android:label="select_recharge_home"
         tools:layout="@layout/fragment_spinner_list">
-        <action
-            android:id="@+id/action_recharge_screen"
-            app:destination="@+id/navigation_recharge" />
 
 
-        <action
+    <action
             android:id="@+id/action_dth_recharge_screen"
             app:destination="@+id/navigation_dth" />
 

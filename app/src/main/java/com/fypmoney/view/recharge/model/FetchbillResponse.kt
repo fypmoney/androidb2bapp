@@ -1,5 +1,8 @@
 package com.fypmoney.view.recharge.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class FetchbillResponse(
     val amount: String? = null,
     val response_code: Int? = null,
@@ -10,6 +13,7 @@ data class FetchbillResponse(
     val status: Boolean? = null
 )
 
+@Keep
 data class BillFetch(
     val billAmount: String? = null,
     val billnetamount: String? = null,

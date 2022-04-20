@@ -294,6 +294,145 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:background="@drawable/round_rectangle_10_light_grey_stroke"
+                    app:layout_constraintTop_toBottomOf="@+id/quick_action_cl"
+                    android:id="@+id/recharge_section"
+                    android:padding="@dimen/_10sdp"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/textView11"
+
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="Mobile Recharge / Bill Payments"
+                        android:textSize="16sp"
+
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout10"
+
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@+id/textView11"
+                        tools:layout_editor_absoluteX="13dp">
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_weight="1"
+                            android:id="@+id/go_to_prepaid"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_recharge_prepaid" />
+
+                            <TextView
+                                style="@style/TextviewRegular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_4sdp"
+                                android:text="Prepaid"
+                                android:textColor="@color/black_background" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:id="@+id/got_to_postpaid"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_postpaid" />
+
+                            <TextView
+                                style="@style/TextviewRegular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_4sdp"
+                                android:text="Postpaid"
+                                android:textColor="@color/black_background" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_weight="1"
+                            android:id="@+id/go_to_dth"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_dth_home" />
+
+                            <TextView
+                                style="@style/TextviewRegular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_4sdp"
+                                android:text="DTH"
+                                android:textColor="@color/black_background" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:id="@+id/go_to_broadband"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_recharge_prepaid" />
+
+                            <TextView
+                                style="@style/TextviewRegular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/_4sdp"
+                                android:text="Broadband"
+                                android:textColor="@color/black_background" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/call_to_action_cl"
                     android:layout_width="match_parent"
@@ -303,7 +442,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
-                    app:layout_constraintTop_toBottomOf="@+id/quick_action_cl">
+                    app:layout_constraintTop_toBottomOf="@+id/recharge_section">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/call_to_action_tv"

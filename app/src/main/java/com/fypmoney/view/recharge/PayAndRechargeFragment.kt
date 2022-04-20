@@ -98,11 +98,15 @@ class PayAndRechargeFragment :
         mViewModel.success.observe(viewLifecycleOwner) {
 //            (mViewBinding.rvOperator.adapter as OperatorSelectionAdapter).submitList(it)
 
-            var directions = PayAndRechargeFragmentDirections.actionRechargeSuccess(
-                successResponse = it,
-                selectedOperator = mViewModel.operatorResponse.value
-            )
-            findNavController().navigate(directions)
+            it?.let {
+                var directions = PayAndRechargeFragmentDirections.actionRechargeSuccess(
+                    successResponse = it,
+                    selectedOperator = mViewModel.operatorResponse.value
+                )
+                findNavController().navigate(directions)
+
+                mViewModel.operatorResponse.postValue(null)
+            }
         }
 
 

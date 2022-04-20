@@ -44,6 +44,7 @@ import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.home.main.homescreen.view.LoadMoneyBottomSheet
+import com.fypmoney.view.recharge.RechargeStoresFragmentDirections
 import com.fypmoney.view.register.adapters.OffersHomeAdapter
 import com.fypmoney.view.storeoffers.ListOfferClickListener
 import com.fypmoney.view.storeoffers.OffersScreen
@@ -96,6 +97,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         _binding = getViewDataBinding()
         setupRecyclerView()
         setRecyclerView(_binding)
+        setbindings()
         setObserver()
         setUpObserver()
         homeFragmentVM.callToAction()
@@ -103,12 +105,39 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
     }
 
+    private fun setbindings() {
+        binding.goToPrepaid.setOnClickListener {
+            val directions =
+                HomeFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.PREPAID)
+
+
+            directions?.let { it1 -> findNavController().navigate(it1) }
+        }
+
+        binding.goToDth.setOnClickListener {
+            val directions =
+                HomeFragmentDirections.actionRechargeHome()
+
+
+            directions?.let { it1 -> findNavController().navigate(it1) }
+
+        }
+
+        binding.gotToPostpaid.setOnClickListener {
+            val directions =
+                HomeFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.POSTPAID)
+
+
+            directions?.let { it1 -> findNavController().navigate(it1) }
+        }
+    }
+
     private fun checkForErrorNotice() {
-        PockketApplication.homeScreenErrorMsg?.let{
-            if(it.isNotEmpty()){
+        PockketApplication.homeScreenErrorMsg?.let {
+            if (it.isNotEmpty()) {
                 binding.noticeAlertFl.toVisible()
                 binding.noticeTv.text = it
-            }else{
+            } else {
                 binding.noticeAlertFl.toGone()
             }
 
@@ -236,17 +265,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
     private fun setObserver() {
         homeFragmentVM?.rewardHistoryList.observe(
-            viewLifecycleOwner,
-            { list ->
+            viewLifecycleOwner
+        ) { list ->
 
-                setRecyclerView(_binding, list)
-            })
+            setRecyclerView(_binding, list)
+        }
+
+
         _binding.toInterestScreen.setOnClickListener {
             var intent = Intent(requireContext(), ChooseInterestHomeView::class.java)
 
             startActivity(intent)
         }
-        homeFragmentVM.offerList.observe(viewLifecycleOwner, {
+        homeFragmentVM.offerList.observe(viewLifecycleOwner) {
             if (it != null) {
                 itemsArrayList.clear()
                 itemsArrayList.addAll(it)
@@ -256,7 +287,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                     itemsArrayList.add(offerDetailResponse())
                     //set Offers  for you title dynamic
                     _binding.shimmerLayoutLightening.visibility = View.GONE
-                    if(!itemsArrayList[0].rfu2.isNullOrEmpty()){
+                    if (!itemsArrayList[0].rfu2.isNullOrEmpty()) {
                         _binding.lighteningDealsTitle.text = itemsArrayList[0].rfu2
                     }
                     _binding.lighteningDealsTitle.visibility = View.VISIBLE
@@ -276,15 +307,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 //                _binding.lighteningDealsTitle.visibility = View.VISIBLE
                 _binding.lighteningDealsRv.visibility = View.GONE
             }
-        })
+        }
 
         homeFragmentVM?.openBottomSheet.observe(
-            viewLifecycleOwner,
-            { list ->
-                if (list.size > 0) {
-                    callOfferDetailsSheeet(list[0])
-                }
-            })
+            viewLifecycleOwner
+        ) { list ->
+            if (list.size > 0) {
+                callOfferDetailsSheeet(list[0])
+            }
+        }
 
         homeFragmentVM?.feedDetail.observe(
             viewLifecycleOwner,

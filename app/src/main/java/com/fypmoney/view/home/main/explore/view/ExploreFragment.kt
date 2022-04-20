@@ -142,7 +142,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
         list: ArrayList<ExploreContentResponse>
     ) {
         if (list.size > 0) {
-            root.shimmerLayout.visibility = View.GONE
+            root.shimmerLayout.visibility = View.VISIBLE
         }
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

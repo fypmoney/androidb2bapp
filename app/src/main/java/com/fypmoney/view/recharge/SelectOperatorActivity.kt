@@ -41,11 +41,6 @@ class SelectOperatorActivity :
         return mViewModel
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
@@ -75,7 +70,7 @@ class SelectOperatorActivity :
         args.operator.let {
             mViewModel.OperatorGot.value = it
 
-//            mViewBinding.optionsMenu.text = it
+            mViewBinding.optionsMenu.text = it
         }
 
 
@@ -85,10 +80,10 @@ class SelectOperatorActivity :
             if (it == AppConstants.POSTPAID) {
                 mViewModel.callGetOperatorList(AppConstants.POSTPAID)
             } else {
-
                 mViewModel.callGetOperatorList(AppConstants.PREPAID)
             }
         }
+
 
     }
 

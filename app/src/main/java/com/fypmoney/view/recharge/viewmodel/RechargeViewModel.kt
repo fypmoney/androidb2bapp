@@ -13,14 +13,16 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.adapter.*
+import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.recharge.adapter.RechargeItemAdapter
 import com.fypmoney.view.recharge.adapter.RechargePostpaidAdapter
+import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.google.gson.Gson
 
 class RechargeViewModel(application: Application) : BaseViewModel(application),
-    StoreItemAdapter.OnStoreItemClick, RechargeItemAdapter.OnRechargeItemClick,
-    RechargePostpaidAdapter.OnRechargeItemClick {
+    StoreItemAdapter.OnStoreItemClick {
     var latitude = ObservableField<Double>()
     var totalCount = ObservableField(0)
     val longitude = ObservableField<Double>()
@@ -31,19 +33,56 @@ class RechargeViewModel(application: Application) : BaseViewModel(application),
 
     val page = ObservableField(0)
     var onUpiClicked = MutableLiveData<StoreDataModel>()
-    var onPostpaidClicked = MutableLiveData<StoreDataModel>()
-    var onRechargeClicked = MutableLiveData<StoreDataModel>()
-    var isRecyclerviewVisible = ObservableField(false)
+
     var onFeedButtonClick = MutableLiveData<FeedDetails>()
     var storeAdapter = StoreItemAdapter(this, application.applicationContext)
-    var rechargeItemAdapter = RechargeItemAdapter(this)
-    var RechargePostpaidAdapter = RechargePostpaidAdapter(this)
 
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+
+    var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
     init {
         callFetchFeedsApi()
     }
 
+    fun callFetchFeedsApi(id: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_FETCH_FEED_DETAILS,
+                NetworkUtil.endURL(ApiConstant.API_FETCH_FEED_DETAILS) + id,
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+
+    }
+
+    var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
+    fun callFetchOfferApi(id: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_FETCH_OFFER_DETAILS,
+                NetworkUtil.endURL(ApiConstant.API_FETCH_OFFER_DETAILS) + id,
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+
+    }
+
+    fun callExplporeContent() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_Explore,
+                NetworkUtil.endURL(ApiConstant.API_Explore) + "HOME_SCREEN",
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
 
     /*
      * This method is used to get the balance of wallet
@@ -159,14 +198,6 @@ class RechargeViewModel(application: Application) : BaseViewModel(application),
     }
 
 
-    override fun onRechargeItemClicked(position: Int, upiModel: StoreDataModel?) {
-        onRechargeClicked.value = upiModel!!
-    }
-
-
-    override fun onRechargePostpaid(position: Int, upiModel: StoreDataModel?) {
-        onPostpaidClicked.value = upiModel!!
-    }
 
 
 }

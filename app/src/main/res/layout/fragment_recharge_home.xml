@@ -35,94 +35,17 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginStart="18dp"
-                    android:layout_marginEnd="18dp"
-                    android:visibility="gone">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        app:srcCompat="@drawable/ic_scan" />
-
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivNotificationBell"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="18dp"
-                        android:layout_toStartOf="@+id/myProfile"
-                        app:srcCompat="@drawable/notification_bell_icon" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/myProfile"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:backgroundTint="@color/black"
-                        app:srcCompat="@drawable/ic_profile" />
-
-                </RelativeLayout>
-
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/recharge_text"
-                    style="@style/TextviewRegular"
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:layout_marginRight="@dimen/_16sdp"
-                    android:layout_below="@+id/balance_text"
-                    android:layout_marginTop="@dimen/_12sdp"
-                    android:ellipsize="end"
-                    android:textStyle="bold"
-                    android:text="Recharge (Prepaid)"
-                    android:textColor="@color/text_color_dark"
-                    android:textSize="17sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recharge_rv"
-                    app:adapter="@{viewModel.rechargeItemAdapter}"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:layout_marginRight="@dimen/_16sdp"
-                    android:layout_below="@+id/upi_text"
-                    android:layout_marginTop="@dimen/margin"
-                    app:spanCount="4"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
+                    android:id="@+id/rv_banners"
+                    android:visibility="gone"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_height="wrap_content">
 
+                </androidx.recyclerview.widget.RecyclerView>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/upi_text"
-                    style="@style/TextviewRegular"
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:layout_marginRight="@dimen/_16sdp"
-                    android:layout_below="@+id/balance_text"
-                    android:layout_marginTop="20dp"
-                    android:textStyle="bold"
-                    android:ellipsize="end"
-                    android:text="Recharge (Postpaid)"
-                    android:textColor="@color/text_color_dark"
-                    android:textSize="17sp" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/my_recycler_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_16sdp"
-                    android:layout_marginRight="@dimen/_16sdp"
-                    android:layout_below="@+id/upi_text"
-                    app:adapter="@{viewModel.RechargePostpaidAdapter}"
-                    android:layout_marginTop="@dimen/margin"
-                    app:spanCount="4"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/food_delivery_tv"
@@ -132,7 +55,7 @@
                     android:layout_marginTop="20dp"
                     android:textStyle="bold"
                     android:ellipsize="end"
-                    android:text="@string/food_delivery"
+                    android:text="Dth recharge"
                     android:textColor="@color/text_color_dark"
                     android:textSize="17sp" />
 

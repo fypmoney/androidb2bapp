@@ -26,20 +26,21 @@
                 android:id="@+id/layout"
                 layout="@layout/toolbar" />
 
-            <ImageView
-                android:id="@+id/ivStudent"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_banners"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="35dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="16dp"
+                android:visibility="gone"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
                 android:src="@drawable/ic_offer_banner" />
 
             <TextView
                 android:id="@+id/tvmb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/ivStudent"
+                android:layout_below="@+id/rv_banners"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="40dp"
                 android:fontFamily="sans-serif"
@@ -97,8 +98,8 @@
                         android:layout_toRightOf="@id/view_line"
                         android:background="@null"
                         android:hint="00000 00000"
-                        android:maxLength="10"
                         android:inputType="number"
+                        android:maxLength="10"
                         android:textColor="@color/text_color_light"
                         android:textColorHint="@color/text_color_little_dark" />
 
@@ -130,6 +131,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="40dp"
                 android:fontFamily="sans-serif"
+                android:visibility="gone"
                 android:text="Recent"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp"
@@ -137,6 +139,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_recents"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

@@ -22,11 +22,13 @@
                 android:id="@+id/layout"
                 layout="@layout/toolbar" />
 
-            <ImageView
+            <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/layout"
-                android:id="@+id/banner"
+                android:id="@+id/rv_banners"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginTop="@dimen/_4sdp"
                 android:src="@drawable/ic_offer_banner" />
 
@@ -45,7 +47,7 @@
                 android:backgroundTint="@color/text_color_more_dark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/banner" />
+                app:layout_constraintTop_toBottomOf="@+id/rv_banners" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -85,6 +87,43 @@
                 app:layout_constraintStart_toStartOf="@+id/dth_number"
                 app:layout_constraintTop_toBottomOf="@+id/amount" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_constraintTop_toBottomOf="@+id/textView9"
+                android:layout_width="match_parent"
+
+                android:layout_marginStart="@dimen/_16sdp"
+                android:id="@+id/setupbox"
+                android:backgroundTint="@color/cb_dark_grey"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/strokebutton_gray_middle_12"
+                android:layout_marginEnd="@dimen/_16sdp"
+
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="@dimen/_6sdp"
+                    android:text="Keep set-top box on while recharging"
+                    android:textColor="@color/color_dark_green" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:src="@drawable/ic_dth_box"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_margin="@dimen/_6sdp"
+
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <TextView
                 android:layout_width="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/dth_number"
@@ -101,10 +140,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:id="@+id/rv_amounts"
-                android:layout_marginTop="36dp"
+                android:layout_marginTop="16dp"
 
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                app:layout_constraintTop_toBottomOf="@+id/setupbox" />
 
             <Button
                 android:id="@+id/continue_btn"

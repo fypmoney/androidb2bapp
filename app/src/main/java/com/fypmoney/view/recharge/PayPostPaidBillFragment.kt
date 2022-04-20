@@ -131,14 +131,16 @@ class PayPostPaidBillFragment :
         }
         mViewModel.paymentResponse.observe(viewLifecycleOwner) {
 
-            it.let {
+            it?.let {
                 val directions = PayPostPaidBillFragmentDirections.actionRechargeSuccess(
                     successDth = it,
                     selectedOperator = mViewModel.operatorResponse.get()
                 )
                 findNavController().navigate(directions)
+
+                mViewModel.paymentResponse.value = null
             }
-            mViewModel.paymentResponse.value = null
+
 
         }
 
