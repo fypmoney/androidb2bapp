@@ -28,10 +28,10 @@ import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
-import com.fypmoney.view.activity.AddMoneyView
 import com.fypmoney.view.activity.ChooseInterestHomeView
 import com.fypmoney.view.activity.ContactListView
 import com.fypmoney.view.activity.UserFeedsDetailView
+import com.fypmoney.view.addmoney.NewAddMoneyActivity
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
@@ -232,7 +232,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                         )
                         completeKYCBottomSheet.show(childFragmentManager, "Completekyc")
                     }else{
-                        val intent = Intent(requireActivity(), AddMoneyView::class.java).apply {  }
+                        val intent = Intent(requireActivity(), NewAddMoneyActivity::class.java).apply {  }
                         startActivity(intent)
                     }
                 }

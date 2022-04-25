@@ -30,6 +30,7 @@ class PanAdhaarSelectionActivity :
     BaseActivity<ActivityKycTypeBinding, KycTypeVM>() {
     private lateinit var mVM: KycTypeVM
     private lateinit var mViewBinding: ActivityKycTypeBinding
+    var userTypeSelected: String = "NOTSELECTED"
 
 
     override fun getBindingVariable(): Int {
@@ -61,6 +62,8 @@ class PanAdhaarSelectionActivity :
         )
         setObserver()
         setBackgrounds()
+        setSelectedUserType(getString(R.string.aadhaar))
+        userTypeSelected = getString(R.string.aadhaar)
     }
 
     private fun setBackgrounds() {
@@ -83,7 +86,6 @@ class PanAdhaarSelectionActivity :
     }
 
     private fun setObserver() {
-        var userTypeSelected: String = "NOTSELECTED"
         mVM.isPanClick.observe(this) {
             setSelectedUserType(getString(R.string.pan))
             userTypeSelected = getString(R.string.pan)

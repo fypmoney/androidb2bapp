@@ -128,6 +128,8 @@ class CardFragment : BaseFragment<FragmentCardBinding, CardFragmentVM>() {
                         binding.loadingCardDetailsHdp.toGone()
                         binding.errorCardDetailsCl.toVisible()
                         binding.cardCl.toGone()
+                        binding.activateCardBtn.toGone()
+                        binding.activateCardProgressBar.toGone()
                     }
                 }
             }

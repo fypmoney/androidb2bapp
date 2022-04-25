@@ -25,17 +25,14 @@ import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.viewmodel.AddMoneyViewModel
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import kotlinx.android.synthetic.main.bottom_sheet_redeem_coins.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_add_money.*
-import kotlinx.android.synthetic.main.view_add_money.add_money_editext
-import kotlinx.android.synthetic.main.view_add_money.btnSendOtp
-import kotlinx.android.synthetic.main.view_enter_amount_for_pay_request.*
 
 /*
 * This class is used to add money
 * */
 class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
+
     private lateinit var mViewModel: AddMoneyViewModel
 
     override fun getBindingVariable(): Int {

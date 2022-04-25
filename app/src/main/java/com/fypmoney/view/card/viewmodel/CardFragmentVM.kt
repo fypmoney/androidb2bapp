@@ -20,6 +20,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_CARD_IS_ACTIVATED
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.card.model.CardOptionEvent
@@ -229,7 +230,7 @@ class CardFragmentVM(application: Application) :
             Utility.getCustomerDataFromPreference()?.let {
                 if(it.postKycScreenCode.isNullOrEmpty()){
                     _event.value = CardEvent.CompleteKycCardEvent
-                }else if(it.bankProfile?.isAccountActive== AppConstants.NO){
+                }else if(!SharedPrefUtils.getBoolean(PockketApplication.instance,SF_CARD_IS_ACTIVATED)!!){
                     _event.value = CardEvent.OnActivateCardEvent
                     delay(30000)
                     callGetVirtualRequestApi()
@@ -365,6 +366,7 @@ class CardFragmentVM(application: Application) :
             }
             ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
                 if (responseData is FetchVirtualCardResponse) {
+                    SharedPrefUtils.putBoolean(PockketApplication.instance,SF_CARD_IS_ACTIVATED,true)
                     virtualCardDetails = responseData.fetchVirtualCardResponseDetails
                     _state.value =
                         CardState.VirtualCardDetails(responseData.fetchVirtualCardResponseDetails)
@@ -377,6 +379,9 @@ class CardFragmentVM(application: Application) :
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
             ApiConstant.API_ACTIVATE_CARD -> {
+                Utility.showToast(errorResponseInfo.msg)
+            }
+            ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
                 Utility.showToast(errorResponseInfo.msg)
             }
         }

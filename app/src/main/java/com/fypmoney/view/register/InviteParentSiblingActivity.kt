@@ -44,7 +44,7 @@ class InviteParentSiblingActivity :
         if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
             binding.skip.text = getString(R.string.skip_title)
             binding.questionRelation.text =
-                "Is your child already on Fyp? Enter their registered mobile no."
+                getString(R.string.is_your_child_already_on_fyp_enter_their_registed_mobile_no)
             binding.textView2.text = "Don’t have your child on Fyp? Invite your child on this app"
             binding.shareInvite.setImageDrawable(
                 ContextCompat.getDrawable(

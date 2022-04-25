@@ -172,8 +172,6 @@
                             android:text="@string/aadhaar_card"
                             android:textColor="@color/text_color_dark"
                             android:textSize="12sp"
-
-
                             />
 
 
