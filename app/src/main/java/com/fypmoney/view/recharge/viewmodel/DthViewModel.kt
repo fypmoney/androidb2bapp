@@ -12,6 +12,8 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.FeedDetails
+import com.fypmoney.model.StoreDataModel
+import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.recharge.model.*
@@ -28,15 +30,18 @@ class DthViewModel(application: Application) : BaseViewModel(application) {
         callExplporeContent()
     }
 
-    var opertaorList: MutableLiveData<FetchbillResponse> = MutableLiveData()
-    var paymentResponse: MutableLiveData<BillPaymentResponse> = MutableLiveData()
+    var dthinfoList: MutableLiveData<FetchbillResponse> = MutableLiveData()
+    var paymentResponse: MutableLiveData<PayAndRechargeResponse> = MutableLiveData()
+
+    var failedresponse: MutableLiveData<PayAndRechargeResponse> = MutableLiveData()
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
 
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
-    var operatorResponse = ObservableField<OperatorResponse>()
-    var Selectedoperator = MutableLiveData<String>()
+//    var operatorResponse = ObservableField<OperatorResponse>()
+
+    var selectedOfflineOperator = MutableLiveData<StoreDataModel>()
     fun callExplporeContent() {
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -88,50 +93,72 @@ class DthViewModel(application: Application) : BaseViewModel(application) {
                 onResponse = this, isProgressBar = true,
                 param = FetchbillRequest(
                     canumber = toString.toLong(),
-                    operator = Selectedoperator.value,
+                    operator = selectedOfflineOperator.value?.operator_id,
                     mode = "online"
                 )
             )
         )
     }
 
+//    fun callMobileRecharge(
+//        operator: String?,
+//        value1: FetchbillResponse?,
+//        dth: String,
+//        amount: String
+//    ) {
+//        value1?.bill_fetch?.billAmount?.let {
+//            WebApiCaller.getInstance().request(
+//                ApiRequest(
+//                    purpose = ApiConstant.API_PAY_BILL,
+//                    endpoint = NetworkUtil.endURL(ApiConstant.API_PAY_BILL),
+//                    request_type = ApiUrl.POST,
+//                    onResponse = this, isProgressBar = true,
+//                    param =
+//                    BillPaymentRequest(
+//                        cardNo = dth,
+//                        operator = operator?.toInt(),
+//                        amount = amount.toDouble(),
+//                        planPrice = it.toDouble(),
+//                        planType = "",
+//                        billAmount = it.toDouble(),
+//                        billnetamount = value1.bill_fetch.billnetamount?.toDoubleOrNull(),
+//                        mode = "online",
+//                        dueDate = value1.bill_fetch.dueDate,
+//                        acceptPartPay = false,
+//                        acceptPayment = true,
+//                        cellNumber = dth,
+//                        userName = "Raghu",
+//                        latitude = "27.2232",
+//                        longitude = "27.2232"
+//
+//
+//                    )
+//
+//                )
+//            )
+//        }
+//    }
+
     fun callMobileRecharge(
-        operator: String?,
-        value1: FetchbillResponse?,
-        dth: String,
-        amount: String
+        selectedpaln: String?,
+        number: String?,
+        value3: String?
     ) {
-        value1?.bill_fetch?.billAmount?.let {
-            WebApiCaller.getInstance().request(
-                ApiRequest(
-                    purpose = ApiConstant.API_PAY_BILL,
-                    endpoint = NetworkUtil.endURL(ApiConstant.API_PAY_BILL),
-                    request_type = ApiUrl.POST,
-                    onResponse = this, isProgressBar = true,
-                    param =
-                    BillPaymentRequest(
-                        cardNo = dth,
-                        operator = operator?.toInt(),
-                        amount = amount.toDouble(),
-                        planPrice = it.toDouble(),
-                        planType = "",
-                        billAmount = it.toDouble(),
-                        billnetamount = value1.bill_fetch.billnetamount?.toDoubleOrNull(),
-                        mode = "online",
-                        dueDate = value1.bill_fetch.dueDate,
-                        acceptPartPay = false,
-                        acceptPayment = true,
-                        cellNumber = dth,
-                        userName = "Raghu",
-                        latitude = "27.2232",
-                        longitude = "27.2232"
-
-
-                    )
-
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_MOBILE_RECHARGE,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_MOBILE_RECHARGE),
+                request_type = ApiUrl.POST,
+                onResponse = this, isProgressBar = true,
+                param = PayAndRechargeRequest(
+                    cardNo = number,
+                    operator = selectedOfflineOperator.value?.operator_id,
+                    planPrice = Utility.convertToPaise(selectedpaln)?.toLong(),
+                    planType = "",
+                    amount = Utility.convertToPaise(selectedpaln)?.toLong()
                 )
             )
-        }
+        )
     }
 
 
@@ -186,19 +213,24 @@ class DthViewModel(application: Application) : BaseViewModel(application) {
                     FetchbillResponse::class.java
                 )
 
-                opertaorList.postValue(array)
+                dthinfoList.postValue(array)
             }
+            ApiConstant.API_MOBILE_RECHARGE -> {
 
-            ApiConstant.API_PAY_BILL -> {
+                Utility.showToast("Success")
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<BillPaymentResponse>(
+                val array = Gson().fromJson<PayAndRechargeResponse>(
                     json.get("data").toString(),
-                    BillPaymentResponse::class.java
+                    PayAndRechargeResponse::class.java
                 )
 
                 paymentResponse.postValue(array)
+
+
             }
+
+
         }
 
     }
@@ -207,8 +239,9 @@ class DthViewModel(application: Application) : BaseViewModel(application) {
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
-
-
+            ApiConstant.API_MOBILE_RECHARGE -> {
+                failedresponse.postValue(null)
+            }
         }
 
     }

@@ -34,6 +34,7 @@ class PayBillViewModel(application: Application) : BaseViewModel(application) {
     }
 
     var paymentResponse: MutableLiveData<BillPaymentResponse> = MutableLiveData()
+    var failedRecharge: MutableLiveData<String> = MutableLiveData()
 
     fun callGetDthInfo(toString: String) {
         WebApiCaller.getInstance().request(
@@ -57,7 +58,7 @@ class PayBillViewModel(application: Application) : BaseViewModel(application) {
         dth: String,
         amount: String
     ) {
-        fetchedBill?.value?.bill_fetch?.billAmount?.let {
+
             WebApiCaller.getInstance().request(
                 ApiRequest(
                     purpose = ApiConstant.API_PAY_BILL,
@@ -69,9 +70,9 @@ class PayBillViewModel(application: Application) : BaseViewModel(application) {
                         cardNo = dth,
                         operator = operatorResponse.get()?.operatorId?.toInt(),
                         amount = amount.toDouble(),
-                        planPrice = it.toDouble(),
+                        planPrice = amount.toDouble(),
                         planType = "",
-                        billAmount = it.toDouble(),
+                        billAmount = amount.toDouble(),
                         billnetamount = fetchedBill.value!!.bill_fetch?.billnetamount?.toDoubleOrNull(),
                         mode = "online",
                         dueDate = fetchedBill.value!!.bill_fetch?.dueDate,
@@ -87,7 +88,7 @@ class PayBillViewModel(application: Application) : BaseViewModel(application) {
 
                 )
             )
-        }
+
     }
 
     var opertaorList: MutableLiveData<ArrayList<OperatorResponse>> = MutableLiveData()
@@ -98,7 +99,6 @@ class PayBillViewModel(application: Application) : BaseViewModel(application) {
 
     var circleGot = MutableLiveData<String>()
     var mobileNumber = MutableLiveData<String>()
-    var OperatorGot = MutableLiveData<String>()
 
     /*
 
@@ -150,6 +150,9 @@ class PayBillViewModel(application: Application) : BaseViewModel(application) {
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
+            ApiConstant.API_PAY_BILL -> {
+                failedRecharge.postValue(null)
+            }
 
 
         }

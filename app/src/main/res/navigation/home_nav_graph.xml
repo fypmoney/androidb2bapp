@@ -116,9 +116,14 @@
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="offlineoperator"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.model.StoreDataModel"
+            app:nullable="true" />
         <action
             android:id="@+id/action_go_to_dth_success"
-            app:destination="@+id/navigation_dth_success" />
+            app:destination="@+id/navigation_recharge_success" />
     </fragment>
 
     <fragment
@@ -191,7 +196,13 @@
             android:defaultValue=""
             app:argType="string"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_select_recharge_plans"
+            app:destination="@+id/navigation_select_plans" />
 
+        <action
+            android:id="@+id/action_postpaid_bill"
+            app:destination="@+id/navigation_postpaid_bill" />
 
         <action
             android:id="@+id/action_to_operator_list"
@@ -216,7 +227,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_recharge_home"
-        android:name="com.fypmoney.view.recharge.RechargeStoresFragment"
+        android:name="com.fypmoney.view.recharge.DthStoresFragment"
         android:label="select_recharge_home"
         tools:layout="@layout/fragment_spinner_list">
 
@@ -242,6 +253,18 @@
             android:defaultValue="@null"
             app:argType="com.fypmoney.view.recharge.model.OperatorResponse"
             app:nullable="true" />
+
+        <argument
+            android:name="mobile"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+
+        <argument
+            android:name="amount"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 
     <fragment
@@ -250,9 +273,24 @@
         android:label="dth_recharge_success"
         tools:layout="@layout/fragment_spinner_list">
         <argument
+            android:name="offlineoperator"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.model.StoreDataModel"
+            app:nullable="true" />
+        <argument
             android:name="successDth"
             android:defaultValue="@null"
             app:argType="com.fypmoney.view.recharge.model.BillPaymentResponse"
+            app:nullable="true" />
+        <argument
+            android:name="amount"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="mobile"
+            android:defaultValue="@null"
+            app:argType="string"
             app:nullable="true" />
         <argument
             android:name="selectedOperator"

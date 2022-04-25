@@ -35,6 +35,7 @@ import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
+import com.fypmoney.view.recharge.model.OperatorResponse
 import com.fypmoney.view.recharge.viewmodel.DthViewModel
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
@@ -46,6 +47,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 * */
 class DthRechargeFragment :
     BaseFragment<ActivityDthRechargeBinding, DthViewModel>() {
+    private var oper: OperatorResponse? = null
     private val args: DthRechargeFragmentArgs by navArgs()
     private lateinit var mViewModel: DthViewModel
     private lateinit var mViewBinding: ActivityDthRechargeBinding
@@ -68,7 +70,17 @@ class DthRechargeFragment :
         mViewBinding = getViewDataBinding()
 
 
-        mViewModel.Selectedoperator.value = args.operator
+
+        mViewModel.selectedOfflineOperator.value = args.offlineoperator
+
+        oper = OperatorResponse()
+        oper?.Icon = mViewModel.selectedOfflineOperator.value?.Icon
+        oper?.operatorId = mViewModel.selectedOfflineOperator.value?.operator_id
+        oper?.name = mViewModel.selectedOfflineOperator.value?.title
+        oper?.displayName = mViewModel.selectedOfflineOperator.value?.title
+
+
+
 
         setToolbarAndTitle(
             context = requireContext(),
@@ -112,12 +124,22 @@ class DthRechargeFragment :
         })
         mViewBinding.continueBtn.setOnClickListener {
             if (!mViewBinding.amount.text.isNullOrEmpty()) {
+
+//                mViewModel.callMobileRecharge(
+//                    mViewModel.selectedOfflineOperator.value?.operator_id,
+//                    mViewModel.dthinfoList.value,
+//                    mViewBinding.dthNumber.text.toString(),
+//                    mViewBinding.amount.text.toString()
+//                )
+
                 mViewModel.callMobileRecharge(
-                    mViewModel.Selectedoperator.value,
-                    mViewModel.opertaorList.value,
+                    mViewBinding.amount.text.toString(),
+
                     mViewBinding.dthNumber.text.toString(),
-                    mViewBinding.amount.text.toString()
-                )
+                    mViewModel.selectedOfflineOperator.value?.operator_id,
+
+
+                    )
             } else {
                 Utility.showToast("Enter bill amount")
 
@@ -134,19 +156,43 @@ class DthRechargeFragment :
 
     private fun setObserver() {
         mViewModel.paymentResponse.observe(viewLifecycleOwner) {
-            var directions = DthRechargeFragmentDirections.actionGoToDthSuccess(
-                successDth = it,
-                selectedOperator = mViewModel.operatorResponse.get()
-            )
-            findNavController().navigate(directions)
-        }
 
-        mViewModel.opertaorList.observe(viewLifecycleOwner) {
+
+            it?.let {
+                var directions = DthRechargeFragmentDirections.actionGoToDthSuccess(
+                    successResponse = it,
+                    selectedOperator = oper,
+                    amount = mViewBinding.amount.text.toString(),
+                    mobile = mViewBinding.dthNumber.text.toString()
+                )
+                findNavController().navigate(directions)
+                mViewModel.paymentResponse.value = null
+            }
+        }
+        mViewModel.paymentResponse.observe(viewLifecycleOwner) {
+
+
+            it?.let {
+                var directions = DthRechargeFragmentDirections.actionGoToDthSuccess(
+                    successResponse = null,
+                    selectedOperator = oper,
+                    amount = mViewBinding.amount.text.toString(),
+                    mobile = mViewBinding.dthNumber.text.toString()
+                )
+                findNavController().navigate(directions)
+                mViewModel.paymentResponse.value = null
+            }
+        }
+        mViewModel.dthinfoList.observe(viewLifecycleOwner) {
 //            (mViewBinding.rvOperator.adapter as OperatorSelectionAdapter).submitList(it)
-            mViewBinding.amount.setText(it.amount?.toDoubleOrNull()?.toInt().toString())
 
+            if (it.amount != null) {
+                mViewBinding.amount.setText(it.amount?.toDoubleOrNull()?.toInt().toString())
+            } else {
 
+            }
         }
+
     }
 
     private fun callDiduKnowBottomSheet(list: List<String>) {

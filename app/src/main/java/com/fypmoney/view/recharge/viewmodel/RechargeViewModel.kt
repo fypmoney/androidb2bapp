@@ -42,7 +42,7 @@ class RechargeViewModel(application: Application) : BaseViewModel(application),
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
     init {
-        callFetchFeedsApi()
+        callExplporeContent()
     }
 
     fun callFetchFeedsApi(id: String?) {
@@ -76,7 +76,7 @@ class RechargeViewModel(application: Application) : BaseViewModel(application),
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_Explore,
-                NetworkUtil.endURL(ApiConstant.API_Explore) + "HOME_SCREEN",
+                NetworkUtil.endURL(ApiConstant.API_Explore) + "DTH",
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false

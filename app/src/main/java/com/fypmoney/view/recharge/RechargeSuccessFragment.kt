@@ -12,6 +12,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ActivityRechargeSuccessBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.view.recharge.model.OperatorResponse
 import com.fypmoney.view.recharge.viewmodel.PayAndRechargeViewModel
 import kotlinx.android.synthetic.main.toolbar.*
@@ -22,7 +23,9 @@ import kotlinx.android.synthetic.main.toolbar.*
 * */
 class RechargeSuccessFragment :
     BaseFragment<ActivityRechargeSuccessBinding, PayAndRechargeViewModel>() {
-    private var operator: OperatorResponse? = null
+
+    private var mobile: String? = null
+    private var amount: String? = null
     private lateinit var mViewModel: PayAndRechargeViewModel
     private lateinit var mViewBinding: ActivityRechargeSuccessBinding
     private val args: RechargeSuccessFragmentArgs by navArgs()
@@ -42,13 +45,12 @@ class RechargeSuccessFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
+        amount = args.amount
+        mobile = args.mobile
 
 
 
-        mViewBinding.tvUserName.text = args.successResponse?.merchantResponseMsg.toString()
-
-        Glide.with(requireContext()).load(args?.selectedOperator?.icon).into(mViewBinding.logo)
-
+        Glide.with(requireContext()).load(args?.selectedOperator?.Icon).into(mViewBinding.logo)
 
 
 
@@ -62,6 +64,30 @@ class RechargeSuccessFragment :
         )
 
         setObserver()
+
+
+        if (args.successResponse != null) {
+            if (args.successResponse?.isPurchased == AppConstants.YES) {
+
+                mViewBinding.tvUserName.text = "Your recharge of ₹$amount to\n" +
+                        " $mobile is successful."
+                mViewBinding.comment.visibility = View.GONE
+                mViewBinding.logo.setAnimation(R.raw.success);
+
+            } else if (args.successResponse?.isPurchased == AppConstants.NO) {
+                mViewBinding.tvUserName.text = "Processing recharge for  ₹$amount to\n" +
+                        " $mobile"
+                mViewBinding.logo.setAnimation(R.raw.success);
+                mViewBinding.comment.text = "Please, do not press back or close the app"
+            }
+        } else {
+            mViewBinding.tvUserName.text = "Your recharge of ₹$amount to\n" +
+                    " $mobile is failed."
+            mViewBinding.comment.text = "Any amount deducted will be\n" +
+                    "refunded within 24 hours"
+
+            mViewBinding.logo.setAnimation(R.raw.success);
+        }
 
 
     }

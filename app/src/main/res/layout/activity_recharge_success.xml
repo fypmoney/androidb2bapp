@@ -16,20 +16,20 @@
         <include
             android:id="@+id/layout"
             layout="@layout/toolbar" />
-
-        <ImageView
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/logo"
-            android:layout_width="@dimen/_60sdp"
-            android:layout_height="@dimen/_60sdp"
-            android:layout_below="@+id/layout"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="@dimen/_24sdp"
-            android:background="@drawable/airtel_logo"
-            android:padding="5dp"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:layout_centerHorizontal="true"
+            android:elevation="@dimen/_6sdp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/failed"
             app:layout_constraintBottom_toTopOf="@+id/continue_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/tvUserName"
@@ -41,6 +41,8 @@
             android:layout_marginEnd="@dimen/_24sdp"
             android:gravity="center"
             android:text="User"
+            style="@style/TextviewBold"
+
 
             app:layout_constraintTop_toBottomOf="@+id/logo"
             android:textColor="#FFFFFF"
@@ -49,10 +51,30 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <TextView
+            android:id="@+id/comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:gravity="center"
+            android:text="User"
+            style="@style/TextviewRegular"
+
+
+            app:layout_constraintTop_toBottomOf="@+id/tvUserName"
+            android:textColor="#9CA3A5"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
 
         <Button
             android:id="@+id/continue_btn"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:fontFamily="sans-serif"

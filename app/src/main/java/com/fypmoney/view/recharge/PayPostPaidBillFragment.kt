@@ -81,7 +81,7 @@ class PayPostPaidBillFragment :
         mViewBinding.continueBtn.setOnClickListener {
 
             if (!mViewBinding.enterBillAmount.text.isNullOrEmpty()) {
-                if (!mViewModel.mobileNumber.value.isNullOrEmpty() && mViewModel.mobileNumber.value!!.length >= 8) {
+                if (!mViewModel.mobileNumber.value.isNullOrEmpty() && mViewModel.mobileNumber.value!!.length == 10) {
                     mViewModel.callMobileRecharge(
                         mViewModel.operatorResponse.get()?.operatorId,
                         mViewModel.mobileNumber.value!!,
@@ -122,10 +122,23 @@ class PayPostPaidBillFragment :
 
         mViewModel.fetchedBill.observe(viewLifecycleOwner) {
 //            (mViewBinding.rvOperator.adapter as OperatorSelectionAdapter).submitList(it)
-            mViewBinding.enterBillAmount.setText(it.amount?.toDoubleOrNull()?.toInt().toString())
-            mViewBinding.billDate.setText("Billing date " + it.bill_fetch?.billdate)
+            if (it.amount != null) {
+                mViewBinding.enterBillAmount.setText(
+                    it.amount?.toDoubleOrNull()?.toInt().toString()
+                )
+            }
 
-            mViewBinding.textView10.setText("Due date is " + it.bill_fetch?.dueDate)
+            if (it.bill_fetch?.billdate != null) {
+                mViewBinding.billDate.setText("Billing date " + it.bill_fetch?.billdate)
+            } else {
+                mViewBinding.billDate.setText("Billing fetch failed")
+            }
+
+            if (it.bill_fetch?.dueDate != null) {
+                mViewBinding.textView10.setText("Due date is " + it.bill_fetch?.dueDate)
+            } else {
+                mViewBinding.textView10.setText("Enter amount manually")
+            }
 
 
         }
@@ -134,8 +147,9 @@ class PayPostPaidBillFragment :
             it?.let {
                 val directions = PayPostPaidBillFragmentDirections.actionRechargeSuccess(
                     successDth = it,
-                    selectedOperator = mViewModel.operatorResponse.get()
-                )
+                    selectedOperator = mViewModel.operatorResponse.get(),
+
+                    )
                 findNavController().navigate(directions)
 
                 mViewModel.paymentResponse.value = null
@@ -143,6 +157,27 @@ class PayPostPaidBillFragment :
 
 
         }
+
+        mViewModel.failedRecharge.observe(viewLifecycleOwner) {
+
+            it?.let {
+
+                mViewModel.failedRecharge.value = null
+                val directions = PayPostPaidBillFragmentDirections.actionRechargeSuccess(
+                    successDth = null,
+                    selectedOperator = mViewModel.operatorResponse.get(),
+                    amount = mViewBinding.enterBillAmount.text.toString(),
+                    mobile = mViewModel.mobileNumber.value
+
+                )
+                findNavController().navigate(directions)
+
+
+            }
+
+
+        }
+
 
         mViewModel.opertaorList.observe(viewLifecycleOwner) {
 //            (mViewBinding.rvOperator.adapter as OperatorSelectionAdapter).submitList(it)

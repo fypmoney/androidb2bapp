@@ -43,7 +43,7 @@ import java.io.IOException
 import java.io.InputStream
 
 
-class RechargeStoresFragment : BaseFragment<FragmentRechargeHomeBinding, RechargeViewModel>() {
+class DthStoresFragment : BaseFragment<FragmentRechargeHomeBinding, RechargeViewModel>() {
 
     private lateinit var sharedViewModel: RechargeViewModel
     private lateinit var mViewBinding: FragmentRechargeHomeBinding
@@ -66,11 +66,12 @@ class RechargeStoresFragment : BaseFragment<FragmentRechargeHomeBinding, Recharg
 
         sharedViewModel.storeAdapter.setList(
             getListOfApps(
-                R.raw.recharges_json,
+                R.raw.dth_json,
                 arrayListOf(
-                    R.drawable.airtel_logo,
-                    R.drawable.vi_logo,
-                    R.drawable.jio_logo
+                    R.drawable.ic_dth_airtel,
+                    R.drawable.ic_dth_tata,
+                    R.drawable.ic_dth_dishtv,
+                    R.drawable.ic_dth_d2h
                 )
             )
         )
@@ -92,9 +93,12 @@ class RechargeStoresFragment : BaseFragment<FragmentRechargeHomeBinding, Recharg
 
                 val formula_value = jo_inside.getString("title")
                 val url_value = jo_inside.getString("url")
+
+                val operator_id = jo_inside.getString("operator_id")
                 var model = StoreDataModel()
                 model.title = formula_value
                 model.url = url_value
+                model.operator_id = operator_id
                 model.Icon = iconList[i]
 
                 upiList.add(model)
@@ -133,8 +137,7 @@ class RechargeStoresFragment : BaseFragment<FragmentRechargeHomeBinding, Recharg
         sharedViewModel.onUpiClicked.observe(requireActivity()) {
 
             val directions =
-                RechargeStoresFragmentDirections.actionDthRechargeScreen()
-
+                DthStoresFragmentDirections.actionDthRechargeScreen(offlineoperator = it)
 
             directions?.let { it1 -> findNavController().navigate(it1) }
 

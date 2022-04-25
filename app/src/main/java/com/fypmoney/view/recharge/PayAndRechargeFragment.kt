@@ -45,7 +45,7 @@ class PayAndRechargeFragment :
         mViewBinding = getViewDataBinding()
 
 
-        mViewModel.opertaorList.value = args.selectedPlan
+        mViewModel.selectedPlan.value = args.selectedPlan
 
         mViewModel.operatorResponse.value = args.selectedOperator
         mViewModel.mobile.value = args.mobile
@@ -78,7 +78,7 @@ class PayAndRechargeFragment :
     private fun setBindings() {
         mViewBinding.continueBtn.setOnClickListener {
             mViewModel.callMobileRecharge(
-                mViewModel.opertaorList.value,
+                mViewModel.selectedPlan.value,
                 mViewModel.mobile.value,
                 mViewModel.operatorResponse.value,
                 mViewModel.planType.value
@@ -99,16 +99,42 @@ class PayAndRechargeFragment :
 //            (mViewBinding.rvOperator.adapter as OperatorSelectionAdapter).submitList(it)
 
             it?.let {
+
+                mViewModel.success.postValue(null)
+
+
                 var directions = PayAndRechargeFragmentDirections.actionRechargeSuccess(
                     successResponse = it,
-                    selectedOperator = mViewModel.operatorResponse.value
+                    selectedOperator = mViewModel.operatorResponse.value,
+                    amount = args.selectedPlan?.rs,
+                    mobile = mViewModel.mobile.value
+
                 )
                 findNavController().navigate(directions)
 
-                mViewModel.operatorResponse.postValue(null)
+
             }
         }
 
+
+        mViewModel.failedresponse.observe(viewLifecycleOwner) {
+            it?.let {
+
+                mViewModel.failedresponse.postValue(null)
+
+                if (it == "failed") {
+                    var directions = PayAndRechargeFragmentDirections.actionRechargeSuccess(
+                        successResponse = null,
+                        selectedOperator = mViewModel.operatorResponse.value,
+
+                        )
+                    findNavController().navigate(directions)
+
+                }
+
+
+            }
+        }
 
     }
 

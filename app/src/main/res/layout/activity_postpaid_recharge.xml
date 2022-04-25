@@ -197,7 +197,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/payamount_title"
                             android:layout_marginStart="@dimen/_10sdp"
-
+                            android:inputType="number"
                             android:layout_marginEnd="@dimen/_10sdp"
 
                             android:background="@android:color/transparent"
@@ -235,6 +235,7 @@
             android:layout_marginBottom="54dp"
             android:fontFamily="sans-serif"
             android:text="Continue"
+
             android:textAllCaps="false"
             android:textColor="#231F20"
             android:textSize="18sp"
