@@ -206,8 +206,8 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                 } else {
                                     intentToActivity(InviteParentSiblingActivity::class.java)
                                 }
-                            } else {
-
+                            }
+                            else {
                                 val intent =
                                     Intent(this@SplashView, InviteParentSiblingActivity::class.java)
                                 intent.putExtra(AppConstants.USER_TYPE, "1")
@@ -215,15 +215,12 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                 finish()
                             }
 
-                        }
-                            else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "0") {
+                        } else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "0") {
                                 when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
                                     AppConstants.YES -> {
                                         intentToActivity(ReferralCodeView::class.java)
                                     }
-
                                     else -> {
-
                                         val userInterest =
                                             SharedPrefUtils.getArrayList(
                                                 getApplication(),
@@ -269,8 +266,6 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                     } else {
                                         intentToActivity(ChooseInterestRegisterView::class.java)
                                     }
-
-
                                 } else {
                                     intentToActivity(InviteParentSiblingActivity::class.java)
                                 }
