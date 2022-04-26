@@ -60,6 +60,7 @@ class SharedPrefUtils {
         const val SF_IS_INSTALLED_APPS_SYNCED = "is_installed_apps_is_syncd"
         const val SF_KYC_TYPE = "kyc_type"
         const val SF_CARD_PROMO_CODE_APPLIED = "card_promo_code_applied"
+        const val SF_CARD_IS_ACTIVATED = "card_is_activated"
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(context)

@@ -18,10 +18,11 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getReferralCodeFromDynamicLink
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
-import com.fypmoney.view.register.*
+import com.fypmoney.view.register.InviteParentSiblingActivity
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
+import com.fypmoney.view.register.PendingRequestActivity
 import com.fypmoney.viewmodel.SplashViewModel
 import kotlinx.android.synthetic.main.view_splash.*
-import java.util.*
 
 
 /*
@@ -155,7 +156,11 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                 ) {
                 when {
                     Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
-                        intentToActivity(UserTypeOnLoginView::class.java)
+                        //intentToActivity(UserTypeOnLoginView::class.java)
+                        val intent = Intent(this, CreateAccountView::class.java)
+                        intent.putExtra(AppConstants.USER_TYPE_NEW, true)
+                        intent.putExtra(AppConstants.USER_TYPE, "Teenager")
+                        startActivity(intent)
                     }
                     Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {
                         intentToActivity(PanAdhaarSelectionActivity::class.java)
@@ -201,8 +206,8 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                 } else {
                                     intentToActivity(InviteParentSiblingActivity::class.java)
                                 }
-                            } else {
-
+                            }
+                            else {
                                 val intent =
                                     Intent(this@SplashView, InviteParentSiblingActivity::class.java)
                                 intent.putExtra(AppConstants.USER_TYPE, "1")
@@ -210,15 +215,12 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                 finish()
                             }
 
-                        }
-                            else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "0") {
+                        } else if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "0") {
                                 when (Utility.getCustomerDataFromPreference()?.isReferralAllowed) {
                                     AppConstants.YES -> {
                                         intentToActivity(ReferralCodeView::class.java)
                                     }
-
                                     else -> {
-
                                         val userInterest =
                                             SharedPrefUtils.getArrayList(
                                                 getApplication(),
@@ -264,8 +266,6 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
                                     } else {
                                         intentToActivity(ChooseInterestRegisterView::class.java)
                                     }
-
-
                                 } else {
                                     intentToActivity(InviteParentSiblingActivity::class.java)
                                 }

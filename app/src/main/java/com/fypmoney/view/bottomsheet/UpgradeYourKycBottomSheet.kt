@@ -7,7 +7,6 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseBottomSheetFragment
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.databinding.BottomsheetUpgradeYourKycBinding
-import com.fypmoney.view.home.main.home.view.UpiComingSoonBottomSheet
 
 class UpgradeYourKycBottomSheet(var onUpgradeClick:()->Unit): BaseBottomSheetFragment<BottomsheetUpgradeYourKycBinding>() {
     private val upgradeYourKycBottomSheetVM by viewModels<UpgradeYourKycBottomSheetVM> {
@@ -16,7 +15,7 @@ class UpgradeYourKycBottomSheet(var onUpgradeClick:()->Unit): BaseBottomSheetFra
     override val baseFragmentVM: BaseViewModel
         get() = upgradeYourKycBottomSheetVM
     override val customTag: String
-        get() = UpiComingSoonBottomSheet::class.java.simpleName
+        get() = UpgradeYourKycBottomSheet::class.java.simpleName
     override val layoutId: Int
         get() = R.layout.bottomsheet_upgrade_your_kyc
 

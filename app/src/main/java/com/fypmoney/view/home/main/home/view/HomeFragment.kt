@@ -28,10 +28,10 @@ import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
-import com.fypmoney.view.activity.AddMoneyView
 import com.fypmoney.view.activity.ChooseInterestHomeView
 import com.fypmoney.view.activity.ContactListView
 import com.fypmoney.view.activity.UserFeedsDetailView
+import com.fypmoney.view.addmoney.NewAddMoneyActivity
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
@@ -40,14 +40,19 @@ import com.fypmoney.view.home.main.explore.adapters.ExploreAdapter
 import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
-import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.view.register.adapters.OffersHomeAdapter
+import com.fypmoney.view.register.fragments.CompleteKYCBottomSheet
 import com.fypmoney.view.storeoffers.ListOfferClickListener
 import com.fypmoney.view.storeoffers.OffersScreen
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     ExploreAdapter.OnFeedItemClickListener {
@@ -151,12 +156,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     }
 
     private fun setUpObserver() {
-        homeFragmentVM.event.observe(viewLifecycleOwner,{
+        homeFragmentVM.event.observe(viewLifecycleOwner) {
             handelEvents(it)
-        })
-        homeFragmentVM.state.observe(viewLifecycleOwner,{
+        }
+        homeFragmentVM.state.observe(viewLifecycleOwner) {
             handelState(it)
-        })
+        }
     }
 
     private fun handelState(it: HomeFragmentVM.HomeFragmentState?) {
@@ -215,13 +220,44 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
             }
             HomeFragmentVM.HomeFragmentEvent.AddAction -> {
-                val intent = Intent(requireActivity(), AddMoneyView::class.java).apply {  }
-                startActivity(intent)
+                Utility.getCustomerDataFromPreference()?.let {
+                    if(it.postKycScreenCode.isNullOrEmpty()){
+                        val completeKYCBottomSheet = CompleteKYCBottomSheet(completeKycClicked = {
+                            val intent = Intent(requireActivity(), PanAdhaarSelectionActivity::class.java)
+                            startActivity(intent)
+                        })
+                        completeKYCBottomSheet.dialog?.window?.setBackgroundDrawable(
+                            ColorDrawable(
+                                Color.RED)
+                        )
+                        completeKYCBottomSheet.show(childFragmentManager, "Completekyc")
+                    }else{
+                        val intent = Intent(requireActivity(), NewAddMoneyActivity::class.java).apply {  }
+                        startActivity(intent)
+                    }
+                }
+
             }
             HomeFragmentVM.HomeFragmentEvent.PayAction -> {
-                val intent = Intent(requireActivity(), ContactListView::class.java)
-                intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.PAY)
-                startActivity(intent)
+                Utility.getCustomerDataFromPreference()?.let {
+                    if(it.postKycScreenCode.isNullOrEmpty()){
+                        val completeKYCBottomSheet = CompleteKYCBottomSheet(completeKycClicked = {
+                            val intent = Intent(requireActivity(), PanAdhaarSelectionActivity::class.java)
+                            startActivity(intent)
+                        })
+                        completeKYCBottomSheet.dialog?.window?.setBackgroundDrawable(
+                            ColorDrawable(
+                                Color.RED)
+                        )
+                        completeKYCBottomSheet.show(childFragmentManager, "Completekyc")
+                    }else{
+                        val intent = Intent(requireActivity(), ContactListView::class.java)
+                        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.PAY)
+                        startActivity(intent)
+                    }
+                }
+
+
             }
             HomeFragmentVM.HomeFragmentEvent.UpiScanAction -> {
                 val upiComingSoonBottomSheet = UpiComingSoonBottomSheet()
@@ -234,17 +270,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
     private fun setObserver() {
         homeFragmentVM?.rewardHistoryList.observe(
-            viewLifecycleOwner,
-            { list ->
+            viewLifecycleOwner
+        ) { list ->
 
-                setRecyclerView(_binding, list)
-            })
+            setRecyclerView(_binding, list)
+        }
         _binding.toInterestScreen.setOnClickListener {
             var intent = Intent(requireContext(), ChooseInterestHomeView::class.java)
 
             startActivity(intent)
         }
-        homeFragmentVM.offerList.observe(viewLifecycleOwner, {
+        homeFragmentVM.offerList.observe(viewLifecycleOwner) {
             if (it != null) {
                 itemsArrayList.clear()
                 itemsArrayList.addAll(it)
@@ -254,7 +290,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                     itemsArrayList.add(offerDetailResponse())
                     //set Offers  for you title dynamic
                     _binding.shimmerLayoutLightening.visibility = View.GONE
-                    if(!itemsArrayList[0].rfu2.isNullOrEmpty()){
+                    if (!itemsArrayList[0].rfu2.isNullOrEmpty()) {
                         _binding.lighteningDealsTitle.text = itemsArrayList[0].rfu2
                     }
                     _binding.lighteningDealsTitle.visibility = View.VISIBLE
@@ -274,39 +310,39 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 //                _binding.lighteningDealsTitle.visibility = View.VISIBLE
                 _binding.lighteningDealsRv.visibility = View.GONE
             }
-        })
+        }
 
         homeFragmentVM?.openBottomSheet.observe(
-            viewLifecycleOwner,
-            { list ->
-                if (list.size > 0) {
-                    callOfferDetailsSheeet(list[0])
-                }
-            })
+            viewLifecycleOwner
+        ) { list ->
+            if (list.size > 0) {
+                callOfferDetailsSheeet(list[0])
+            }
+        }
 
         homeFragmentVM?.feedDetail.observe(
-            viewLifecycleOwner,
-            { list ->
+            viewLifecycleOwner
+        ) { list ->
 
-                when (list.displayCard) {
+            when (list.displayCard) {
 
-                    AppConstants.FEED_TYPE_BLOG -> {
+                AppConstants.FEED_TYPE_BLOG -> {
 
-                        intentToActivitytoBlog(
-                            UserFeedsDetailView::class.java,
-                            list,
-                            AppConstants.FEED_TYPE_BLOG
-                        )
-                    }
-                    AppConstants.FEED_TYPE_STORIES -> {
+                    intentToActivitytoBlog(
+                        UserFeedsDetailView::class.java,
+                        list,
+                        AppConstants.FEED_TYPE_BLOG
+                    )
+                }
+                AppConstants.FEED_TYPE_STORIES -> {
 
-                        callDiduKnowBottomSheet(list.resourceArr)
-                    }
-
+                    callDiduKnowBottomSheet(list.resourceArr)
                 }
 
+            }
 
-            })
+
+        }
 
     }
 
@@ -397,10 +433,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 startActivity(intent)
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
+                Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+                    sectionContentItem.redirectionResource?.let {
+                        param(FirebaseAnalytics.Param.SCREEN_NAME,
+                            it
+                        )
+                    }
+                    param(FirebaseAnalytics.Param.SCREEN_CLASS, HomeFragment::class.java.simpleName)
+                }
                 val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                    ExploreFragmentDirections.actionExploreSectionExplore(
-                        sectionExploreItem = sectionContentItem,
-                        sectionExploreName = it1
+                    HomeFragmentDirections.actionHomeToSectionExplore(sectionExploreItem = sectionContentItem,
+                        sectionExploreName= it1
                     )
                 }
                 directions?.let { it1 -> findNavController().navigate(it1) }
@@ -408,23 +451,29 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             AppConstants.EXPLORE_IN_APP -> {
                 redirectionResource?.let { uri ->
 
-                    val redirectionResources = uri?.split(",")?.get(0)
-                    if (redirectionResources == FyperScreen) {
-                        findNavController().navigate(R.id.navigation_fyper)
-                    } else if (redirectionResources == AppConstants.JACKPOTTAB) {
-                        findNavController().navigate(R.id.navigation_jackpot)
-                    } else if (redirectionResources == AppConstants.CardScreen) {
-                        findNavController().navigate(R.id.navigation_card)
-                    }else if (redirectionResources == AppConstants.RewardHistory) {
-                        findNavController().navigate(R.id.navigation_rewards_history)
-                    }else if (redirectionResources == AppConstants.ARCADE) {
-                        findNavController().navigate(R.id.navigation_arcade)
-                    } else {
-                        redirectionResources?.let { it1 ->
-                            deeplinkRedirection(
-                                it1,
-                                requireContext()
-                            )
+                    when (val redirectionResources = uri.split(",")[0]) {
+                        FyperScreen -> {
+                            findNavController().navigate(R.id.navigation_fyper)
+                        }
+                        AppConstants.JACKPOTTAB -> {
+                            findNavController().navigate(R.id.navigation_jackpot)
+                        }
+                        AppConstants.CardScreen -> {
+                            findNavController().navigate(R.id.navigation_card)
+                        }
+                        AppConstants.RewardHistory -> {
+                            findNavController().navigate(R.id.navigation_rewards_history)
+                        }
+                        AppConstants.ARCADE -> {
+                            findNavController().navigate(R.id.navigation_arcade)
+                        }
+                        else -> {
+                            redirectionResources.let { it1 ->
+                                deeplinkRedirection(
+                                    it1,
+                                    requireContext()
+                                )
+                            }
                         }
                     }
 

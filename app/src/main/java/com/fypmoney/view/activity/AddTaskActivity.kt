@@ -6,7 +6,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -20,33 +21,22 @@ import com.fypmoney.databinding.ActivityAddTaskBinding
 import com.fypmoney.model.UpdateTaskGetResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
+import com.fypmoney.util.Utility
+import com.fypmoney.util.Utility.removePlusOrNineOneFromNo
+import com.fypmoney.view.adapter.addmemberAdapter
 import com.fypmoney.view.fragment.taskAddedMessageBottomSheet
 import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
+import com.fypmoney.view.register.fragments.CompleteKYCBottomSheet
 import com.fypmoney.viewmodel.AddTaskViewModel
-import kotlinx.android.synthetic.main.activity_add_task.*
-import kotlinx.android.synthetic.main.fragment_assigned_task.view.*
-import kotlinx.android.synthetic.main.toolbar.*
-import com.fypmoney.view.adapter.addmemberAdapter
-import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
-
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.*
-import kotlinx.android.synthetic.main.bottom_sheet_task_added_message.*
-import android.text.Editable
-
-import android.text.TextWatcher
-import com.fypmoney.util.Utility.removePlusOrNineOneFromNo
 import com.vanniktech.emoji.EmojiImageView
 import com.vanniktech.emoji.EmojiPopup
 import com.vanniktech.emoji.emoji.Emoji
-import com.vanniktech.emoji.listeners.*
-import kotlinx.android.synthetic.main.activity_add_task.add_money_editext
-import kotlinx.android.synthetic.main.view_add_money.*
-import android.app.Activity
-import android.os.SystemClock
-import android.view.inputmethod.InputMethodManager
+import kotlinx.android.synthetic.main.activity_add_task.*
+import kotlinx.android.synthetic.main.toolbar.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>(),
@@ -150,42 +140,51 @@ class AddTaskActivity : BaseActivity<ActivityAddTaskBinding, AddTaskViewModel>()
 
 
         btnContinue.setOnClickListener {
-            if (SystemClock.elapsedRealtime() - mLastClickTime < 1200) {
-                return@setOnClickListener
-            }
-            mLastClickTime = SystemClock.elapsedRealtime();
-            if (validate()) {
-
-
-                val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
-                if (et_start.text?.trim().toString() == endTime.text?.trim().toString()) {
-                    myCalendar?.set(Calendar.HOUR_OF_DAY, 0);
-
-                }
-                myCalendar2?.set(Calendar.HOUR_OF_DAY, 23);
-                myCalendar2?.set(Calendar.MINUTE, 59);
-                myCalendar2?.set(Calendar.SECOND, 59);
-
-                val startdate = outputFormat.format(myCalendar?.time)
-                val enddate = outputFormat.format(myCalendar2?.time)
-                if (selectedmember != null) {
-
-
-                    mViewModel.callAddTask(
-                        add_money_editext.text.toString(),
-                        et_title.text.toString(),
-                        selectedmember?.userId?.toInt().toString(),
-                        et_desc.text.toString(),
-                        startdate,
-                        enddate,
-
-                        emojiEditText.getText().toString().trim()
-
+            Utility.getCustomerDataFromPreference()?.let {
+                if(it.postKycScreenCode.isNullOrEmpty()){
+                    val completeKYCBottomSheet = CompleteKYCBottomSheet(completeKycClicked = {
+                        val intent = Intent(this@AddTaskActivity, PanAdhaarSelectionActivity::class.java)
+                        startActivity(intent)
+                    })
+                    completeKYCBottomSheet.dialog?.window?.setBackgroundDrawable(
+                        ColorDrawable(
+                            Color.RED)
                     )
-                } else {
-                    Toast.makeText(this, "Select any contact", Toast.LENGTH_SHORT).show()
-                }
+                    completeKYCBottomSheet.show(supportFragmentManager, "Completekyc")
+                }else{
+                    if (validate()) {
+                        val outputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'")
+                        if (et_start.text?.trim().toString() == endTime.text?.trim().toString()) {
+                            myCalendar?.set(Calendar.HOUR_OF_DAY, 0);
 
+                        }
+                        myCalendar2?.set(Calendar.HOUR_OF_DAY, 23);
+                        myCalendar2?.set(Calendar.MINUTE, 59);
+                        myCalendar2?.set(Calendar.SECOND, 59);
+
+                        val startdate = outputFormat.format(myCalendar?.time)
+                        val enddate = outputFormat.format(myCalendar2?.time)
+                        if (selectedmember != null) {
+
+
+                            mViewModel.callAddTask(
+                                add_money_editext.text.toString(),
+                                et_title.text.toString(),
+                                selectedmember?.userId?.toInt().toString(),
+                                et_desc.text.toString(),
+                                startdate,
+                                enddate,
+
+                                emojiEditText.getText().toString().trim()
+
+                            )
+                        } else {
+                            Toast.makeText(this, "Select any contact", Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+
+                }
             }
         }
         setObserver()

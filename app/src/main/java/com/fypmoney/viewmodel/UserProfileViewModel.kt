@@ -32,6 +32,7 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
     var dob = ObservableField<String>()
     var phone = ObservableField<String>()
     var kycType = ObservableField<String>(PockketApplication.instance.getString(R.string.minimum_kyc))
+    var completeKycOrUpgradeKyc = ObservableField<String>(PockketApplication.instance.getString(R.string.complete_your_kyc))
     var upgradeKyc = ObservableField(true)
     var verified = ObservableField(false)
 
@@ -179,21 +180,31 @@ class UserProfileViewModel(application: Application) : BaseViewModel(application
 
                     }
 
-                    responseData.customerInfoResponseDetails?.bankProfile?.kycType?.let {
-                        SharedPrefUtils.putString(PockketApplication.instance,SF_KYC_TYPE,it)
-                        if(it=="MINIMUM"){
-                            kycType.set(PockketApplication.instance.getString(R.string.minimum_kyc))
-                            upgradeKyc.set(true)
-                        }else if(it=="SEMI"){
-                            kycType.set(PockketApplication.instance.getString(R.string.kyc_verified))
-                            upgradeKyc.set(false)
-                        }else if(it=="FULL"){
-                            upgradeKyc.set(false)
-                            kycType.set(PockketApplication.instance.getString(R.string.kyc_verified))
+                    responseData.customerInfoResponseDetails?.postKycScreenCode?.let {
+                        completeKycOrUpgradeKyc.set(PockketApplication.instance.getString(R.string.upgrade_your_kyc))
 
+                        responseData.customerInfoResponseDetails?.bankProfile?.kycType?.let {
+                            SharedPrefUtils.putString(PockketApplication.instance,SF_KYC_TYPE,it)
+                            when (it) {
+                                "MINIMUM" -> {
+                                    kycType.set(PockketApplication.instance.getString(R.string.minimum_kyc))
+                                    upgradeKyc.set(true)
+                                }
+                                "SEMI" -> {
+                                    kycType.set(PockketApplication.instance.getString(R.string.kyc_verified))
+                                    upgradeKyc.set(false)
+                                }
+                                "FULL" -> {
+                                    upgradeKyc.set(false)
+                                    kycType.set(PockketApplication.instance.getString(R.string.kyc_verified))
+
+                                }
+                            }
+                        } ?: run {
+                            kycType.set(PockketApplication.instance.getString(R.string.minimum_kyc))
                         }
-                    } ?: run {
-                        kycType.set(PockketApplication.instance.getString(R.string.minimum_kyc))
+                    }?: run {
+                        completeKycOrUpgradeKyc.set(PockketApplication.instance.getString(R.string.complete_your_kyc))
                     }
                     if (responseData.customerInfoResponseDetails?.bankProfile?.isAccountActive == "YES") {
                         verified.set(true)

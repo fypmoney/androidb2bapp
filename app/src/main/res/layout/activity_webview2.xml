@@ -99,7 +99,6 @@
                 android:layout_toLeftOf="@+id/refresh"
                 android:layout_height="@dimen/_24sdp"
                 android:layout_toStartOf="@id/refresh"
-
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/_2sdp"
                 android:background="@drawable/round_dark_grey_backgroud_6"

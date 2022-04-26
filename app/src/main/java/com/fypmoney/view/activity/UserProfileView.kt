@@ -31,6 +31,7 @@ import com.fypmoney.view.community.SocialCommunityActivity
 import com.fypmoney.view.discord.DiscordInviteActivity
 import com.fypmoney.view.discord.DiscordProfileActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
 import com.fypmoney.viewmodel.UserProfileViewModel
 import com.karumi.dexter.Dexter
@@ -39,7 +40,7 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.yalantis.ucrop.util.FileUtils.getPath
-import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.toolbar.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -177,6 +178,7 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         })
 
         mViewModel.callGetCustomerProfileApi()
+
 
         setObserver()
     }
@@ -316,10 +318,18 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
         }
         mViewModel.onUpgradeKycClicked.observe(this) {
             if (it) {
-                val intent  = Intent(this,UpgradeToKycInfoActivity::class.java).apply {
-                    putExtra(KYC_UPGRADE_FROM_WHICH_SCREEN,UserProfileView::class.java.simpleName)
+                Utility.getCustomerDataFromPreference()?.let {
+                    if(it.postKycScreenCode.isNullOrEmpty()){
+                        val intent = Intent(this, PanAdhaarSelectionActivity::class.java)
+                        startActivity(intent)
+                    }else{
+                        val intent  = Intent(this,UpgradeToKycInfoActivity::class.java).apply {
+                            putExtra(KYC_UPGRADE_FROM_WHICH_SCREEN,UserProfileView::class.java.simpleName)
+                        }
+                        startActivity(intent)
+                    }
                 }
-                startActivity(intent)
+
                 mViewModel.onUpgradeKycClicked.value = false
             }
         }

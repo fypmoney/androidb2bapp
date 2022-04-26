@@ -118,7 +118,8 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
                     startActivity(intent)
                     finish()
 
-                } else if (kycDetailsVM.postKycScreenCode.value != null && kycDetailsVM.postKycScreenCode.value == "0") {
+                }
+                else if (kycDetailsVM.postKycScreenCode.value != null && kycDetailsVM.postKycScreenCode.value == "0") {
                     trackr {
                         it.services = arrayListOf(
                             TrackrServices.FIREBASE,

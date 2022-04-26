@@ -16,13 +16,15 @@ import com.fypmoney.databinding.ViewPayRequestProfileBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KYC_TYPE
+import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.MyProfileListAdapter
 import com.fypmoney.view.bottomsheet.UpgradeYourKycBottomSheet
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
+import com.fypmoney.view.register.fragments.CompleteKYCBottomSheet
 import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
 import com.fypmoney.viewmodel.PayRequestProfileViewModel
 import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_pay_request_profile.view.*
 
 /*
 * This class is used to display pay, request for a particular contact
@@ -78,52 +80,83 @@ class PayRequestProfileView :
         mViewModel.onPayOrRequestClicked.observe(this) {
             when (it.id) {
                 R.id.pay -> {
-                    if(checkUpgradeKycStatus()){
-                        intentToActivity(
-                            contactEntity = mViewModel.contactResult.get(),
-                            aClass = EnterAmountForPayRequestView::class.java, AppConstants.PAY
-                        )
-                    }else{
-                        val upgradeYourKycBottomSheet = UpgradeYourKycBottomSheet(onUpgradeClick = {
-                            trackr {
-                                it.name = TrackrEvent.upgrade_kyc_from_pay_clicked
-                            }
-                            val intent  = Intent(this, UpgradeToKycInfoActivity::class.java).apply {
-                                putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,PayRequestProfileView::class.java.simpleName)
+                    Utility.getCustomerDataFromPreference()?.let {it1->
+                        if(it1.postKycScreenCode.isNullOrEmpty()){
+                            val completeKYCBottomSheet = CompleteKYCBottomSheet(completeKycClicked = {
+                                val intent = Intent(this@PayRequestProfileView, PanAdhaarSelectionActivity::class.java)
+                                startActivity(intent)
+                            })
+                            completeKYCBottomSheet.dialog?.window?.setBackgroundDrawable(
+                                ColorDrawable(
+                                    Color.RED)
+                            )
+                            completeKYCBottomSheet.show(supportFragmentManager, "Completekyc")
+                        }else{
+                            if(checkUpgradeKycStatus()){
+                                intentToActivity(
+                                    contactEntity = mViewModel.contactResult.get(),
+                                    aClass = EnterAmountForPayRequestView::class.java, AppConstants.PAY
+                                )
+                            }else{
+                                val upgradeYourKycBottomSheet = UpgradeYourKycBottomSheet(onUpgradeClick = {
+                                    trackr { it1->
+                                        it1.name = TrackrEvent.upgrade_kyc_from_pay_clicked
+                                    }
+                                    val intent  = Intent(this, UpgradeToKycInfoActivity::class.java).apply {
+                                        putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,PayRequestProfileView::class.java.simpleName)
 
+                                    }
+                                    startActivity(intent)
+                                })
+                                upgradeYourKycBottomSheet.dialog?.window?.setBackgroundDrawable(
+                                    ColorDrawable(
+                                        Color.RED)
+                                )
+                                upgradeYourKycBottomSheet.show(supportFragmentManager, "UpgradeKyc")
                             }
-                            startActivity(intent)
-                        })
-                        upgradeYourKycBottomSheet.dialog?.window?.setBackgroundDrawable(
-                            ColorDrawable(
-                                Color.RED)
-                        )
-                        upgradeYourKycBottomSheet.show(supportFragmentManager, "UpgradeKyc")
+
+                        }
                     }
 
                 }
                 R.id.request -> {
-                    if(checkUpgradeKycStatus()){
-                        intentToActivity(
-                            contactEntity = mViewModel.contactResult.get(),
-                            aClass = EnterAmountForPayRequestView::class.java, AppConstants.REQUEST
-                        )
-                    }else{
-                        val upgradeYourKycBottomSheet = UpgradeYourKycBottomSheet(onUpgradeClick = {
-                            trackr {
-                                it.name = TrackrEvent.upgrade_kyc_from_pay_clicked
-                            }
-                            val intent  = Intent(this, UpgradeToKycInfoActivity::class.java).apply {
-                                putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,PayRequestProfileView::class.java.simpleName)
+                    Utility.getCustomerDataFromPreference()?.let { it1->
+                        if(it1.postKycScreenCode.isNullOrEmpty()){
+                            val completeKYCBottomSheet = CompleteKYCBottomSheet(completeKycClicked = {
+                                val intent = Intent(this@PayRequestProfileView, PanAdhaarSelectionActivity::class.java)
+                                startActivity(intent)
+                            })
+                            completeKYCBottomSheet.dialog?.window?.setBackgroundDrawable(
+                                ColorDrawable(
+                                    Color.RED)
+                            )
+                            completeKYCBottomSheet.show(supportFragmentManager, "Completekyc")
+                        }else{
 
+                            if(checkUpgradeKycStatus()){
+                                intentToActivity(
+                                    contactEntity = mViewModel.contactResult.get(),
+                                    aClass = EnterAmountForPayRequestView::class.java, AppConstants.REQUEST
+                                )
+                            }else{
+                                val upgradeYourKycBottomSheet = UpgradeYourKycBottomSheet(onUpgradeClick = {
+                                    trackr {it1->
+                                        it1.name = TrackrEvent.upgrade_kyc_from_pay_clicked
+                                    }
+                                    val intent  = Intent(this, UpgradeToKycInfoActivity::class.java).apply {
+                                        putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,PayRequestProfileView::class.java.simpleName)
+
+                                    }
+                                    startActivity(intent)
+                                })
+                                upgradeYourKycBottomSheet.dialog?.window?.setBackgroundDrawable(
+                                    ColorDrawable(
+                                        Color.RED)
+                                )
+                                upgradeYourKycBottomSheet.show(supportFragmentManager, "UpgradeKyc")
                             }
-                            startActivity(intent)
-                        })
-                        upgradeYourKycBottomSheet.dialog?.window?.setBackgroundDrawable(
-                            ColorDrawable(
-                                Color.RED)
-                        )
-                        upgradeYourKycBottomSheet.show(supportFragmentManager, "UpgradeKyc")
+
+                        }
                     }
 
                 }

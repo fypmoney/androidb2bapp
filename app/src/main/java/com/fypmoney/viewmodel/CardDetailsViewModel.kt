@@ -1,7 +1,6 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.widget.Toast
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -45,8 +44,7 @@ class CardDetailsViewModel(application: Application) : BaseViewModel(application
     var carddetails =
         MutableLiveData<CardInfoDetailsBottomSheet>()
     init {
-        callGetWalletBalanceApi()
-        callGetVirtualRequestApi()
+
 
     }
 
@@ -93,7 +91,7 @@ class CardDetailsViewModel(application: Application) : BaseViewModel(application
             }
         }
     }
-    private fun callGetWalletBalanceApi() {
+    fun callGetWalletBalanceApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_WALLET_BALANCE,
@@ -133,7 +131,7 @@ class CardDetailsViewModel(application: Application) : BaseViewModel(application
             )
         )
     }
-    private fun callGetVirtualRequestApi() {
+    fun callGetVirtualRequestApi() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_VIRTUAL_CARD_REQUEST,

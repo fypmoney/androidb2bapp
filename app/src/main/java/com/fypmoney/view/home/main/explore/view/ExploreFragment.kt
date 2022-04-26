@@ -37,6 +37,10 @@ import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.explore.viewmodel.ExploreFragmentVM
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 
 class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(),
     ExploreAdapter.OnFeedItemClickListener {
@@ -238,6 +242,15 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
 
                     }
                     AppConstants.EXPLORE_SECTION_EXPLORE->{
+                        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+                            it.redirectionResource?.let {
+                                param(
+                                    FirebaseAnalytics.Param.SCREEN_NAME,
+                                    it
+                                )
+                            }
+                            param(FirebaseAnalytics.Param.SCREEN_CLASS, ExploreFragment::class.java.simpleName)
+                        }
                         val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
                             ExploreFragmentDirections.actionExploreSectionExplore(sectionExploreItem = it,
                                 sectionExploreName= it1
