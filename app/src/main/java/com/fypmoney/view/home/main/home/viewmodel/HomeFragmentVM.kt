@@ -17,6 +17,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.GetWalletBalanceResponse
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
@@ -82,6 +83,21 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
             it.name = TrackrEvent.home_upi_click
         }
         _event.value = HomeFragmentEvent.UpiScanAction
+    }
+    fun onPrepaidRechargeClicked(){
+        _event.value = HomeFragmentEvent.PrepaidRechargeEvent(AppConstants.PREPAID)
+    }
+    fun onPostpaidRechargeClicked(){
+        _event.value = HomeFragmentEvent.PostpaidRechargeEvent(AppConstants.POSTPAID)
+
+    }
+    fun onDTHRechargeClicked(){
+        _event.value = HomeFragmentEvent.DthRechargeEvent
+
+    }
+    fun onBroadbandRechargeClicked(){
+        _event.value = HomeFragmentEvent.BroadbandRechargeEvent
+
     }
 
     fun fetchBalance() {
@@ -332,6 +348,10 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
         object AddAction:HomeFragmentEvent()
         object PayAction:HomeFragmentEvent()
         object UpiScanAction:HomeFragmentEvent()
+        data class PrepaidRechargeEvent(val rechargeType:String):HomeFragmentEvent()
+        data class PostpaidRechargeEvent(val rechargeType:String):HomeFragmentEvent()
+        object DthRechargeEvent:HomeFragmentEvent()
+        object BroadbandRechargeEvent:HomeFragmentEvent()
     }
    /* sealed class QuickActionEvent{
         object AddAction:QuickActionEvent()

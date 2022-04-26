@@ -22,17 +22,22 @@ import com.google.gson.JsonParser
 /*
 * This is used to handle user profile
 * */
-class MobileRechargeViewModel(application: Application) : BaseViewModel(application) {
+class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewModel(application) {
+
     var opertaorList = MutableLiveData<MobileValidationResponse>()
 
     var hrlError = MutableLiveData<String>()
+
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
-    var rechargeType = MutableLiveData<String>()
+
+    lateinit var rechargeType:String
+
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
-    init {
+    /*init {
+        callExplporeContent(rechargeType)
+    }*/
 
-    }
 
     fun callGetMobileHrl(mobile: String) {
 

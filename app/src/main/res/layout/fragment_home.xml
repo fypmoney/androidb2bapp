@@ -300,7 +300,12 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginTop="@dimen/dp30"
-                    android:background="@drawable/round_home_recharge"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="15dp"
+                    app:customStrokeColor="@{@color/strokeColor}"
+                    app:customCornerRadius="@{@dimen/dp15}"
+                    app:customIsRounded="@{false}"
+                    app:customStrokeWidth="@{@dimen/dp1}"
                     app:layout_constraintTop_toBottomOf="@+id/quick_action_cl"
                     android:id="@+id/recharge_section_cl"
                     android:layout_height="wrap_content">
@@ -311,8 +316,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
-                        android:text="Mobile Recharge / Bill Payments"
-                        android:textSize="16sp"
+                        android:text="@string/mobile_recharge_bill_payments"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
                         android:layout_marginStart="@dimen/_4sdp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -322,6 +328,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
+                        android:baselineAligned="true"
                         app:layout_constraintTop_toBottomOf="@+id/textView11"
                         tools:layout_editor_absoluteX="13dp">
 
@@ -334,20 +341,26 @@
                             android:layout_weight="1"
                             android:id="@+id/go_to_prepaid"
                             android:gravity="center"
+                            android:onClick="@{()->viewModel.onPrepaidRechargeClicked()}"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_recharge_prepaid" />
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_recharge_prepaid"
+                                app:lottie_autoPlay="true"
+                                app:lottie_loop="true"
+                                app:lottie_rawRes="@raw/recharge"/>
 
                             <TextView
                                 style="@style/TextviewRegular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_4sdp"
-                                android:text="Prepaid"
-                                android:textColor="@color/black_background" />
+                                android:text="@string/prepaid"
+                                android:textColor="@color/black_background"
+                                android:textSize="@dimen/text_14sp"
+                                />
                         </LinearLayout>
 
                         <LinearLayout
@@ -357,20 +370,28 @@
                             android:layout_marginBottom="@dimen/_2sdp"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:onClick="@{()->viewModel.onPostpaidRechargeClicked()}"
                             android:id="@+id/got_to_postpaid"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_postpaid" />
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_postpaid"
+                                app:lottie_autoPlay="true"
+                                app:lottie_loop="true"
+                                android:layout_gravity="center"
+                                app:lottie_rawRes="@raw/postpaid" />
 
                             <TextView
                                 style="@style/TextviewRegular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_4sdp"
-                                android:text="Postpaid"
+                                android:text="@string/postpaid"
+                                android:textSize="@dimen/text_14sp"
+                                android:layout_gravity="center"
+                                android:gravity="center"
                                 android:textColor="@color/black_background" />
                         </LinearLayout>
 
@@ -382,19 +403,27 @@
                             android:layout_weight="1"
                             android:id="@+id/go_to_dth"
                             android:gravity="center"
+                            android:onClick="@{()->viewModel.onDTHRechargeClicked()}"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_dth_home" />
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_dth_home"
+                                app:lottie_autoPlay="true"
+                                app:lottie_loop="true"
+                                android:layout_gravity="center"
+                                app:lottie_rawRes="@raw/dth" />
 
                             <TextView
                                 style="@style/TextviewRegular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_4sdp"
-                                android:text="DTH"
+                                android:text="@string/dth"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="@dimen/text_14sp"
                                 android:textColor="@color/black_background" />
                         </LinearLayout>
 
@@ -405,20 +434,28 @@
                             android:layout_marginBottom="@dimen/_2sdp"
                             android:layout_weight="1"
                             android:gravity="center"
+                            android:onClick="@{()->viewModel.onBroadbandRechargeClicked()}"
                             android:id="@+id/go_to_broadband"
                             android:orientation="vertical">
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_recharge_prepaid" />
+                            <com.airbnb.lottie.LottieAnimationView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:src="@drawable/ic_recharge_prepaid"
+                                app:lottie_autoPlay="true"
+                                app:lottie_loop="true"
+                                android:layout_gravity="center"
+                                app:lottie_rawRes="@raw/broadband" />
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 style="@style/TextviewRegular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/_4sdp"
-                                android:text="Broadband"
+                                android:text="@string/broadband"
+                                android:layout_gravity="center"
+                                android:gravity="center"
+                                android:textSize="@dimen/text_14sp"
                                 android:textColor="@color/black_background" />
                         </LinearLayout>
 

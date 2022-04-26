@@ -13,14 +13,20 @@
 
         <action
             android:id="@+id/action_recharge_home"
-            app:destination="@+id/navigation_recharge_home" />
+            app:destination="@+id/navigation_recharge_home"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
         <action
             android:id="@+id/action_navigation_home_to_navigation_card"
-            app:destination="@id/navigation_card" />
+            app:destination="@id/navigation_card"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
 
         <action
             android:id="@+id/action_recharge_screen"
-            app:destination="@+id/navigation_recharge" />
+            app:destination="@+id/navigation_recharge"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"/>
     </fragment>
 
     <fragment
@@ -86,20 +92,16 @@
 
     <fragment
         android:id="@+id/navigation_recharge"
-        android:name="com.fypmoney.view.recharge.EnterNumberMobileFragment"
-        android:label="Recharge"
-        tools:layout="@layout/fragment_spinner_list">
+        android:name="com.fypmoney.view.recharge.EnterMobileNumberRechargeFragment"
+        android:label="EnterNumberMobile"
+        tools:layout="@layout/enter_mobile_number_recharge_fragment">
         <action
             android:id="@+id/action_select_circle"
             app:destination="@+id/navigation_select_circle" />
         <action
             android:id="@+id/action_go_operator_screen"
             app:destination="@+id/navigation_select_operator" />
-        <argument
-            android:name="sectionExploreItem"
-            android:defaultValue="@null"
-            app:argType="com.fypmoney.view.home.main.explore.model.SectionContentItem"
-            app:nullable="true" />
+
         <argument
             android:name="rechargeType"
             android:defaultValue="@null"

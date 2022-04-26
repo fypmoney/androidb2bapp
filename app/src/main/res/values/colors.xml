@@ -105,7 +105,8 @@
     <color name="green6">#47BC5C</color>
     <color name="moeny_suggestion_background">#F7F7F7</color>
     <color name="gery10">#F4F4F4</color>
+    <color name="strokeColor">#B1B3B6</color>
     <color name="black_background">#0E141C</color>
-
+    <color name="edit_text_bg">#1C2129</color>
 
 </resources>

@@ -16,7 +16,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -24,10 +23,10 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.database.entity.ContactEntity
-
-import com.fypmoney.databinding.ActivityMobileRechargeBinding
+import com.fypmoney.databinding.EnterMobileNumberRechargeFragmentBinding
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.PREPAID
 import com.fypmoney.util.Utility
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.util.videoplayer.VideoActivityWithExplore
@@ -43,60 +42,50 @@ import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
 import com.fypmoney.view.recharge.adapter.recentRechargeAdapter
-import com.fypmoney.view.recharge.viewmodel.MobileRechargeViewModel
+import com.fypmoney.view.recharge.viewmodel.EnterMobileNumberRechargeFragmentVM
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
-import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.toolbar.*
 
-/*
-* This class is used as Home Screen
-* */
-class EnterNumberMobileFragment :
-    BaseFragment<ActivityMobileRechargeBinding, MobileRechargeViewModel>() {
-    private lateinit var mViewModel: MobileRechargeViewModel
-    private lateinit var mViewBinding: ActivityMobileRechargeBinding
-    lateinit var tabLayout: TabLayout
-    private val args: EnterNumberMobileFragmentArgs by navArgs()
-    lateinit var viewPager: ViewPager
+
+class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRechargeFragmentBinding, EnterMobileNumberRechargeFragmentVM>() {
+
+    lateinit var  enterMobileNumberRechargeFragmentVM:EnterMobileNumberRechargeFragmentVM
+
+    private lateinit var binding: EnterMobileNumberRechargeFragmentBinding
+
+    private val args: EnterMobileNumberRechargeFragmentArgs by navArgs()
+
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_mobile_recharge
+        return R.layout.enter_mobile_number_recharge_fragment
     }
 
-    override fun getViewModel(): MobileRechargeViewModel {
-        mViewModel = ViewModelProvider(this).get(MobileRechargeViewModel::class.java)
-        return mViewModel
+    override fun getViewModel(): EnterMobileNumberRechargeFragmentVM {
+        enterMobileNumberRechargeFragmentVM = ViewModelProvider(this).get(EnterMobileNumberRechargeFragmentVM::class.java)
+        return enterMobileNumberRechargeFragmentVM
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mViewBinding = getViewDataBinding()
+        binding = getViewDataBinding()
+
+        enterMobileNumberRechargeFragmentVM.rechargeType = args.rechargeType!!
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar, backArrowTint = Color.WHITE,
             titleColor = Color.WHITE,
-
-            isBackArrowVisible = true, toolbarTitle = "Dth Recharge"
+            isBackArrowVisible = true, toolbarTitle = if(enterMobileNumberRechargeFragmentVM.rechargeType == PREPAID) getString(R.string.prepaid_recharge) else getString(R.string.postpaid_recharge)
         )
-
-        args.rechargeType.let {
-            mViewModel.rechargeType.value = it
-            mViewModel.callExplporeContent(it)
-            mViewModel.rechargeType.value
-        }
-
-//        Recents recharges list
-//        setRecyclerView()
-
         setExploreListners()
-        setListners()
-
-
+        setListeners()
     }
 
 
@@ -105,66 +94,63 @@ class EnterNumberMobileFragment :
     }
 
 
-    private fun setListners() {
+    private fun setListeners() {
 
-        mViewModel.opertaorList.observe(viewLifecycleOwner) {
+        enterMobileNumberRechargeFragmentVM.opertaorList.observe(viewLifecycleOwner) {
 
             it?.let {
                 val directions =
-                    EnterNumberMobileFragmentDirections.actionGoOperatorScreen(
+                    EnterMobileNumberRechargeFragmentDirections.actionGoOperatorScreen(
                         circle = it.info?.circle,
                         operator = it.info?.operator,
-                        mobile = mViewBinding.etNumber.text.toString(),
-                        rechargeType = mViewModel.rechargeType.value
+                        mobile = binding.etNumber.text.toString(),
+                        rechargeType = enterMobileNumberRechargeFragmentVM.rechargeType
                     )
 
-                directions?.let { it1 -> findNavController().navigate(it1) }
-                mViewModel.opertaorList.value = null
+                directions.let { it1 -> findNavController().navigate(it1) }
+                enterMobileNumberRechargeFragmentVM.opertaorList.value = null
             }
 
 
         }
 
-        mViewModel.hrlError.observe(viewLifecycleOwner) {
+        enterMobileNumberRechargeFragmentVM.hrlError.observe(viewLifecycleOwner) {
 
             it?.let {
                 val directions =
-                    EnterNumberMobileFragmentDirections.actionGoOperatorScreen(
+                    EnterMobileNumberRechargeFragmentDirections.actionGoOperatorScreen(
                         circle = null,
                         operator = null,
-                        mobile = mViewBinding.etNumber.text.toString(),
-                        rechargeType = mViewModel.rechargeType.value
+                        mobile = binding.etNumber.text.toString(),
+                        rechargeType = enterMobileNumberRechargeFragmentVM.rechargeType
                     )
 
-                directions?.let { it1 -> findNavController().navigate(it1) }
-                mViewModel.hrlError.value = null
+                directions.let { it1 -> findNavController().navigate(it1) }
+                enterMobileNumberRechargeFragmentVM.hrlError.value = null
             }
 
 
         }
 
-        mViewBinding.continueBtn.setOnClickListener {
-
-            if (!mViewBinding.etNumber.text.isNullOrEmpty() && mViewBinding.etNumber.text.length == 10) {
-                mViewModel.callGetMobileHrl(mViewBinding.etNumber.text.toString())
+        binding.continueBtn.setOnClickListener {
+            if (!binding.etNumber.text.isNullOrEmpty() && binding.etNumber.text.length == 10) {
+                enterMobileNumberRechargeFragmentVM.callGetMobileHrl(binding.etNumber.text.toString())
             } else {
-                Utility.showToast("Enter correct number")
+                Utility.showToast(getString(R.string.please_enter_valid_phone_number))
             }
-
-
         }
 
-        mViewBinding.selectContact.setOnClickListener(View.OnClickListener {
+        binding.selectContactIv.setOnClickListener {
 
             startActivityForResult(Intent(requireContext(), ContactViewAddMember::class.java), 13)
-        })
-        mViewBinding.etNumber.addTextChangedListener(object : TextWatcher {
+        }
+        binding.etNumber.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                mViewBinding.continueBtn.isEnabled = !s.isNullOrEmpty() && s.length <= 10
+                binding.continueBtn.isEnabled = !s.isNullOrEmpty() && s.length <= 10
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -181,7 +167,7 @@ class EnterNumberMobileFragment :
             data?.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE)
         if (requestCode == 13 && resultCode != AppCompatActivity.RESULT_CANCELED && returnValue != null) {
             hideKeyboard()
-            mViewBinding.etNumber.setText(Utility.removePlusOrNineOneFromNo(returnValue.contactNumber))
+            binding.etNumber.setText(Utility.removePlusOrNineOneFromNo(returnValue.contactNumber))
 
         }
 
@@ -197,11 +183,11 @@ class EnterNumberMobileFragment :
     private fun setRecyclerViewRecents() {
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        mViewBinding?.rvRecents?.layoutManager = layoutManager
+        binding.rvRecents.layoutManager = layoutManager
 
 
-        var recentrechargeAdapter = recentRechargeAdapter()
-        mViewBinding?.rvRecents?.adapter = recentrechargeAdapter
+        val recentrechargeAdapter = recentRechargeAdapter()
+        binding.rvRecents.adapter = recentrechargeAdapter
 
 
     }
@@ -215,56 +201,56 @@ class EnterNumberMobileFragment :
 
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
 
-        var bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
+        val bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
         bottomSheetMessage.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheetMessage.show(childFragmentManager, "TASKMESSAGE")
     }
 
     private fun setExploreListners() {
-        mViewModel?.openBottomSheet.observe(
-            viewLifecycleOwner,
-            { list ->
-                if (list.size > 0) {
-                    callOfferDetailsSheeet(list[0])
-                }
-            })
+        enterMobileNumberRechargeFragmentVM?.openBottomSheet.observe(
+            viewLifecycleOwner
+        ) { list ->
+            if (list.size > 0) {
+                callOfferDetailsSheeet(list[0])
+            }
+        }
 
-        mViewModel?.feedDetail.observe(
-            viewLifecycleOwner,
-            { list ->
+        enterMobileNumberRechargeFragmentVM?.feedDetail.observe(
+            viewLifecycleOwner
+        ) { list ->
 
-                when (list.displayCard) {
+            when (list.displayCard) {
 
-                    AppConstants.FEED_TYPE_BLOG -> {
-                        val intent = Intent(context, UserFeedsDetailView::class.java)
-                        intent.putExtra(AppConstants.FEED_RESPONSE, list)
-                        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.FEED_TYPE_BLOG)
-                        intent.putExtra(
-                            AppConstants.CUSTOMER_INFO_RESPONSE,
-                            CustomerInfoResponseDetails()
-                        )
-                        startActivity(intent)
-
-                    }
-                    AppConstants.FEED_TYPE_STORIES -> {
-
-                        callDiduKnowBottomSheet(list.resourceArr)
-                    }
+                AppConstants.FEED_TYPE_BLOG -> {
+                    val intent = Intent(context, UserFeedsDetailView::class.java)
+                    intent.putExtra(AppConstants.FEED_RESPONSE, list)
+                    intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.FEED_TYPE_BLOG)
+                    intent.putExtra(
+                        AppConstants.CUSTOMER_INFO_RESPONSE,
+                        CustomerInfoResponseDetails()
+                    )
+                    startActivity(intent)
 
                 }
+                AppConstants.FEED_TYPE_STORIES -> {
+
+                    callDiduKnowBottomSheet(list.resourceArr)
+                }
+
+            }
 
 
-            })
-        mViewModel?.rewardHistoryList.observe(
-            viewLifecycleOwner,
-            { list ->
+        }
+        enterMobileNumberRechargeFragmentVM.rewardHistoryList.observe(
+            viewLifecycleOwner
+        ) { list ->
 
-                setRecyclerView(mViewBinding, list)
-            })
+            setRecyclerView(binding, list)
+        }
     }
 
     private fun setRecyclerView(
-        root: ActivityMobileRechargeBinding,
+        root: EnterMobileNumberRechargeFragmentBinding,
         list: ArrayList<ExploreContentResponse>
     ) {
         if (list.size > 0) {
@@ -342,7 +328,7 @@ class EnterNumberMobileFragment :
             AppConstants.EXPLORE_IN_APP -> {
                 redirectionResource?.let { uri ->
 
-                    val redirectionResources = uri?.split(",")?.get(0)
+                    val redirectionResources = uri.split(",").get(0)
                     if (redirectionResources == AppConstants.FyperScreen) {
                         findNavController().navigate(R.id.navigation_fyper)
                     } else if (redirectionResources == AppConstants.JACKPOTTAB) {
@@ -354,7 +340,7 @@ class EnterNumberMobileFragment :
                     } else if (redirectionResources == AppConstants.ARCADE) {
                         findNavController().navigate(R.id.navigation_arcade)
                     } else {
-                        redirectionResources?.let { it1 ->
+                        redirectionResources.let { it1 ->
                             Utility.deeplinkRedirection(
                                 it1,
                                 requireContext()
@@ -385,13 +371,13 @@ class EnterNumberMobileFragment :
 
             }
             AppConstants.OFFER_REDIRECTION -> {
-                mViewModel.callFetchOfferApi(redirectionResource)
+                enterMobileNumberRechargeFragmentVM.callFetchOfferApi(redirectionResource)
 
             }
 
 
             AppConstants.FEED_TYPE_BLOG -> {
-                mViewModel.callFetchFeedsApi(redirectionResource)
+                enterMobileNumberRechargeFragmentVM.callFetchFeedsApi(redirectionResource)
 
             }
 
@@ -411,7 +397,7 @@ class EnterNumberMobileFragment :
             }
             AppConstants.EXPLORE_TYPE_STORIES -> {
                 if (!redirectionResource.isNullOrEmpty()) {
-                    mViewModel.callFetchFeedsApi(redirectionResource)
+                    enterMobileNumberRechargeFragmentVM.callFetchFeedsApi(redirectionResource)
 
                 }
 

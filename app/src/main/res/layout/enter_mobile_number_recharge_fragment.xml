@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.recharge.viewmodel.EnterMobileNumberRechargeFragmentVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,19 +14,23 @@
         android:layout_height="match_parent"
         android:background="#0E141C">
 
-        <LinearLayout
-            android:id="@+id/linearLayout9"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_layout_cl"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/continue_btn"
-
             app:layout_constraintTop_toTopOf="parent">
 
 
             <include
                 android:id="@+id/layout"
-                layout="@layout/toolbar" />
+                layout="@layout/toolbar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_banners"
@@ -32,73 +38,90 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:visibility="gone"
+                tools:visibility= "visible"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
-                android:src="@drawable/ic_offer_banner" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout"
+                tools:itemCount="1"
+                tools:listitem="@layout/item_call_to_action_home"/>
 
             <TextView
-                android:id="@+id/tvmb"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rv_banners"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:fontFamily="sans-serif"
-                android:text="Enter mobile number"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:textStyle="normal" />
-
-            <LinearLayout
+                android:id="@+id/enter_mobile_number_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_below="@+id/rv_banners"
+                android:layout_marginStart="@dimen/dp20"
+                android:layout_marginTop="40dp"
+                style="@style/TextviewRegular"
+                android:text="@string/enter_mobile_number"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                android:gravity="start"
+                app:layout_constraintTop_toBottomOf="@+id/rv_banners"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <LinearLayout
+                android:id="@+id/enter_mobile_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/enter_mobile_number_tv">
 
                 <RelativeLayout
-                    android:id="@+id/rlet"
+                    android:id="@+id/mobile_number_rl"
                     android:layout_weight="5"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="14dp"
-                    android:background="@drawable/curved_background16"
-                    android:backgroundTint="#1C2129">
+                    app:customIsRounded="@{false}"
+                    app:customBackgroundColor="@{@color/edit_text_bg}"
+                    app:customCornerRadius="@{@dimen/dp16}">
 
-                    <TextView
-                        android:id="@+id/tvCC"
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/country_code_tv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif"
-                        android:paddingLeft="16dp"
+                        style="@style/TextviewRegular"
+                        android:paddingStart="16dp"
                         android:paddingTop="16dp"
                         android:paddingBottom="16dp"
-                        android:text="+91"
-                        android:textColor="#9CA3A5"
-                        android:textSize="18sp"
+                        android:text="@string/_91"
+                        android:textColor="@color/text_color_light"
+                        android:textSize="@dimen/sp18"
                         android:textStyle="normal" />
 
                     <View
                         android:id="@+id/view_line"
                         android:layout_width="1dp"
-
                         android:layout_height="0dp"
-                        android:layout_alignTop="@+id/tvCC"
-                        android:layout_alignBottom="@+id/tvCC"
+                        android:layout_alignTop="@+id/country_code_tv"
+                        android:layout_alignBottom="@+id/country_code_tv"
                         android:layout_alignParentTop="true"
-                        android:layout_marginLeft="16dp"
-                        android:layout_toRightOf="@+id/tvCC"
-                        android:background="#FFFFFF" />
+                        android:layout_marginStart="16dp"
+                        android:layout_marginVertical="@dimen/dp10"
+                        android:layout_toEndOf="@+id/country_code_tv"
+                        android:background="@color/white" />
 
                     <EditText
                         android:id="@+id/etNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="20dp"
-                        android:layout_toRightOf="@id/view_line"
+                        android:layout_toEndOf="@id/view_line"
                         android:background="@null"
                         android:hint="00000 00000"
                         android:inputType="number"
+                        android:textSize="@dimen/sp18"
+                        android:gravity="start"
+                        style="@style/EditTextStyle"
+                        android:fontFamily="@font/product_sans_regular"
                         android:maxLength="10"
                         android:textColor="@color/text_color_light"
                         android:textColorHint="@color/text_color_little_dark" />
@@ -111,29 +134,35 @@
 
                 </RelativeLayout>
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="24dp"
                     android:layout_marginTop="14dp"
-                    android:id="@+id/select_contact"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginEnd="24dp"
-                    android:background="@drawable/ic_circle_orange"
-                    android:backgroundTint="@color/cb_input_gray"
+                    android:id="@+id/select_contact_iv"
+                    android:layout_marginStart="@dimen/dp24"
+                    android:layout_marginEnd="20dp"
+                    app:customBackgroundColor="@{@color/edit_text_bg}"
+                    app:customIsRounded="@{true}"
+                    app:customCornerRadius="@{@dimen/dp27}"
                     android:padding="15dp"
                     android:src="@drawable/ic_my_contact" />
             </LinearLayout>
 
-            <TextView
+
+
+
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:fontFamily="sans-serif"
-                android:visibility="gone"
-                android:text="Recent"
-                android:textColor="#FFFFFF"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                style="@style/TextviewRegular"
+                android:visibility="visible"
+                android:text="@string/recent"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/enter_mobile_ll"
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
@@ -143,26 +172,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
+        <com.fypmoney.view.customview.PrimaryButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:enabled="false"
             android:fontFamily="sans-serif"
             android:paddingLeft="74dp"
             android:paddingTop="14dp"
             android:paddingRight="74dp"
-
             android:paddingBottom="14dp"
-            android:text="Continue"
+            app:text="@string/continue_btn_text"
             android:layout_marginBottom="@dimen/_12sdp"
             android:textAllCaps="false"
+            app:enabled="false"
             android:id="@+id/continue_btn"
             android:textColor="@color/text_color_light"
             android:textSize="18sp"
             android:textStyle="normal"
+            app:disabled_bg="@color/cb_grey"
+            app:disabled_text="@color/grey_heading"
+            app:enabled_text="@color/text_color_dark"
+            app:enabled_bg="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

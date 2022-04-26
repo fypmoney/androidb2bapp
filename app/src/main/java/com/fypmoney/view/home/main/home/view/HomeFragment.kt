@@ -22,6 +22,7 @@ import com.fypmoney.extension.toVisible
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.BROADBAND_RECHARGE_URL
 import com.fypmoney.util.AppConstants.FyperScreen
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.deeplinkRedirection
@@ -96,39 +97,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         _binding = getViewDataBinding()
         setupRecyclerView()
         setRecyclerView(_binding)
-        setbindings()
         setObserver()
         setUpObserver()
         homeFragmentVM.callToAction()
         checkForErrorNotice()
 
-    }
-
-    private fun setbindings() {
-        binding.goToPrepaid.setOnClickListener {
-            val directions =
-                HomeFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.PREPAID)
-
-
-            directions?.let { it1 -> findNavController().navigate(it1) }
-        }
-
-        binding.goToDth.setOnClickListener {
-            val directions =
-                HomeFragmentDirections.actionRechargeHome()
-
-
-            directions?.let { it1 -> findNavController().navigate(it1) }
-
-        }
-
-        binding.gotToPostpaid.setOnClickListener {
-            val directions =
-                HomeFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.POSTPAID)
-
-
-            directions?.let { it1 -> findNavController().navigate(it1) }
-        }
     }
 
     private fun checkForErrorNotice() {
@@ -145,25 +118,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
 
     private fun setupRecyclerView() {
-        /*with(binding.quickActionRv) {
-            adapter = QuickActionAdapter(viewLifecycleOwner, onQuickActionClicked = {
-                when(it.id){
-                    HomeFragmentVM.QuickActionEvent.AddAction -> {
-                        val intent = Intent(requireActivity(), AddMoneyView::class.java)
-                        startActivity(intent)
-                    }
-                    HomeFragmentVM.QuickActionEvent.OfferAction -> {
-                        val intent = Intent(requireActivity(), OffersScreen::class.java)
-                        startActivity(intent)
-                    }
-                    HomeFragmentVM.QuickActionEvent.PayAction -> {
-                        val intent = Intent(requireActivity(), ContactListView::class.java)
-                        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.PAY)
-                        startActivity(intent)
-                    }
-                }
-            })
-        }*/
         with(binding.callToActionRv) {
             adapter = CallToActionAdapter(viewLifecycleOwner, onCallToActionClicked = {
                 trackr { it1 ->
@@ -180,12 +134,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     }
 
     private fun setUpObserver() {
-        homeFragmentVM.event.observe(viewLifecycleOwner,{
+        homeFragmentVM.event.observe(viewLifecycleOwner) {
             handelEvents(it)
-        })
-        homeFragmentVM.state.observe(viewLifecycleOwner,{
+        }
+        homeFragmentVM.state.observe(viewLifecycleOwner) {
             handelState(it)
-        })
+        }
     }
 
     private fun handelState(it: HomeFragmentVM.HomeFragmentState?) {
@@ -258,7 +212,27 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 upiComingSoonBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
                 upiComingSoonBottomSheet.show(childFragmentManager, "UpiComingSoonBottomSheet")
             }
-
+            HomeFragmentVM.HomeFragmentEvent.BroadbandRechargeEvent -> {
+                val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, BROADBAND_RECHARGE_URL)
+                startActivity(intent)
+            }
+            HomeFragmentVM.HomeFragmentEvent.DthRechargeEvent ->{
+                val directions =
+                    HomeFragmentDirections.actionRechargeHome()
+                directions.let { it1 -> findNavController().navigate(it1) }
+            }
+            is HomeFragmentVM.HomeFragmentEvent.PostpaidRechargeEvent -> {
+                val directions =
+                    HomeFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.POSTPAID)
+                directions.let { it1 -> findNavController().navigate(it1) }
+            }
+            is HomeFragmentVM.HomeFragmentEvent.PrepaidRechargeEvent -> {
+                val directions =
+                    HomeFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.PREPAID)
+                directions.let { it1 -> findNavController().navigate(it1) }
+            }
+            null -> TODO()
         }
     }
 
