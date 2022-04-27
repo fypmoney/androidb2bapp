@@ -76,8 +76,8 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewDataBinding()
-
         enterMobileNumberRechargeFragmentVM.rechargeType = args.rechargeType!!
+        enterMobileNumberRechargeFragmentVM.callExplporeContent(enterMobileNumberRechargeFragmentVM.rechargeType)
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar, backArrowTint = Color.WHITE,

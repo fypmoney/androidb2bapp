@@ -32,26 +32,59 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_banners"
-                android:layout_width="match_parent"
+            <FrameLayout
+                android:id="@+id/explore_fl"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:visibility="gone"
-                tools:visibility= "visible"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout"
-                tools:itemCount="1"
-                tools:listitem="@layout/item_call_to_action_home"/>
+                app:layout_constraintTop_toBottomOf="@+id/layout">
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:shimmer_auto_start="true"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                        <include layout="@layout/shimmer_placeholder_layout_store" />
+
+
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_banners"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:visibility="gone"
+                    tools:visibility= "visible"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_call_to_action_home"/>
+            </FrameLayout>
+
+
 
             <TextView
                 android:id="@+id/enter_mobile_number_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/rv_banners"
                 android:layout_marginStart="@dimen/dp20"
                 android:layout_marginTop="40dp"
                 style="@style/TextviewRegular"
@@ -60,7 +93,7 @@
                 android:textSize="14sp"
                 android:textStyle="normal"
                 android:gravity="start"
-                app:layout_constraintTop_toBottomOf="@+id/rv_banners"
+                app:layout_constraintTop_toBottomOf="@+id/explore_fl"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -111,7 +144,7 @@
 
                     <EditText
                         android:id="@+id/etNumber"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@id/view_line"
@@ -120,17 +153,14 @@
                         android:inputType="number"
                         android:textSize="@dimen/sp18"
                         android:gravity="start"
-                        style="@style/EditTextStyle"
+                        android:layout_marginStart="@dimen/dp8"
                         android:fontFamily="@font/product_sans_regular"
                         android:maxLength="10"
-                        android:textColor="@color/text_color_light"
+                        android:textCursorDrawable="@drawable/cursor_edittext"
+                        android:textColor="@color/white"
                         android:textColorHint="@color/text_color_little_dark" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="77dp"
-                        android:layout_toRightOf="@id/etNumber" />
+
 
                 </RelativeLayout>
 

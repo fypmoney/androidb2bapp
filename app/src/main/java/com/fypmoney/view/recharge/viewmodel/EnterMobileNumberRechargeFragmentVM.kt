@@ -34,14 +34,11 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
 
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
-    /*init {
-        callExplporeContent(rechargeType)
-    }*/
+    init {
+    }
 
 
     fun callGetMobileHrl(mobile: String) {
-
-
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_GET_HLR_CHECK,
