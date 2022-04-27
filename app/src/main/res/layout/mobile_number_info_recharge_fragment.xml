@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.fypmoney.view.recharge.viewmodel.SelectOperatorViewModel" />
+            type="com.fypmoney.view.recharge.viewmodel.MobileNumberInfoRechargeFragmentVM" />
     </data>
 
     <ScrollView

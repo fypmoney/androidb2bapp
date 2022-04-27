@@ -1,6 +1,7 @@
 package com.fypmoney.view.recharge.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -24,11 +25,17 @@ import com.google.gson.JsonParser
 * */
 class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewModel(application) {
 
-    var opertaorList = MutableLiveData<MobileValidationResponse>()
 
-    var hrlError = MutableLiveData<String>()
 
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+
+    val state:LiveData<EnterMobileNumberRechargeState>
+        get() = _state
+    private val _state = MutableLiveData<EnterMobileNumberRechargeState>()
+
+    val event:LiveData<EnterMobileNumberRechargeEvent>
+        get() = _event
+    private val _event = LiveEvent<EnterMobileNumberRechargeEvent>()
 
     lateinit var rechargeType:String
 
@@ -38,13 +45,16 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
     }
 
 
+    fun onContinueClick(){
+        _event.value = EnterMobileNumberRechargeEvent.OnContinueEvent
+    }
     fun callGetMobileHrl(mobile: String) {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_GET_HLR_CHECK,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_GET_HLR_CHECK),
                 request_type = ApiUrl.POST,
-                onResponse = this, isProgressBar = true,
+                onResponse = this, isProgressBar = false,
                 param = MobileHRLRequest(mobile = mobile, type = "mobile")
             )
         )
@@ -63,7 +73,6 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
 
     }
 
-    var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
     fun callFetchOfferApi(id: String?) {
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -78,6 +87,7 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
     }
 
     fun callExplporeContent(s: String?) {
+        _state.value = EnterMobileNumberRechargeState.Loading
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_Explore,
@@ -93,15 +103,13 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_GET_HLR_CHECK -> {
-
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
-
-                val array = Gson().fromJson<MobileValidationResponse>(
+                val hlrResponse = Gson().fromJson<HLRResponse>(
                     json.get("data").toString(),
-                    MobileValidationResponse::class.java
+                    HLRResponse::class.java
                 )
-
-                opertaorList.postValue(array)
+                _state.value = EnterMobileNumberRechargeState.HLRSuccess(hlrResponse.info)
+                _event.value = EnterMobileNumberRechargeEvent.ShowNextScreenWithHlrInfo(hlrResponse.info)
 
             }
 
@@ -113,7 +121,8 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
                     Array<ExploreContentResponse>::class.java
                 )
                 val arrayList = ArrayList(array.toMutableList())
-                rewardHistoryList.postValue(arrayList)
+                _state.value = EnterMobileNumberRechargeState.ExploreSuccess(arrayList)
+
             }
 
             ApiConstant.API_FETCH_FEED_DETAILS -> {
@@ -154,16 +163,28 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
             ApiConstant.API_GET_HLR_CHECK -> {
-
-
-                hrlError.postValue("")
+                _state.value = EnterMobileNumberRechargeState.Error(errorResponseInfo,ApiConstant.API_GET_HLR_CHECK)
 
             }
+            ApiConstant.API_Explore -> {
+                _state.value = EnterMobileNumberRechargeState.Error(errorResponseInfo,ApiConstant.API_Explore)
+                _event.value = EnterMobileNumberRechargeEvent.ShowNextScreenWithHlrInfo(HLRInfo())
 
-
+            }
         }
 
     }
 
+    sealed class EnterMobileNumberRechargeState{
+        object Loading:EnterMobileNumberRechargeState()
+        data class Error(val errorResponseInfo: ErrorResponseInfo,val errorFromApi:String):EnterMobileNumberRechargeState()
+        data class ExploreSuccess(val explore:ArrayList<ExploreContentResponse>):EnterMobileNumberRechargeState()
+        data class HLRSuccess(val hlrInfo:HLRInfo?):EnterMobileNumberRechargeState()
+    }
+    sealed class EnterMobileNumberRechargeEvent{
+        object OnContinueEvent:EnterMobileNumberRechargeEvent()
+        object PickContactFromContactBookEvent:EnterMobileNumberRechargeEvent()
+        data class ShowNextScreenWithHlrInfo(val hlrInfo:HLRInfo?):EnterMobileNumberRechargeEvent()
+    }
 
 }

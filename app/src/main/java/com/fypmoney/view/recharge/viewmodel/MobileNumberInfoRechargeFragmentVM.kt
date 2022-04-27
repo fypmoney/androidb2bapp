@@ -11,7 +11,6 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
-import com.fypmoney.util.AppConstants
 import com.fypmoney.view.recharge.model.OperatorResponse
 import com.fypmoney.view.recharge.model.RechargeTypeModel
 import com.google.gson.Gson
@@ -21,7 +20,7 @@ import com.google.gson.JsonParser
 /*
 * This is used to handle user profile
 * */
-class SelectOperatorViewModel(application: Application) : BaseViewModel(application) {
+class MobileNumberInfoRechargeFragmentVM(application: Application) : BaseViewModel(application) {
     init {
 //        callGetOperatorList(AppConstants.POSTPAID)
     }

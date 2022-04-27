@@ -10,12 +10,12 @@ import androidx.navigation.fragment.navArgs
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
-import com.fypmoney.databinding.ActivitySelectOperatorBinding
+import com.fypmoney.databinding.MobileNumberInfoRechargeFragmentBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.recharge.model.OfflineOperatorResponse
 import com.fypmoney.view.recharge.model.OperatorResponse
-import com.fypmoney.view.recharge.viewmodel.SelectOperatorViewModel
+import com.fypmoney.view.recharge.viewmodel.MobileNumberInfoRechargeFragmentVM
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.toolbar.*
@@ -25,21 +25,20 @@ import java.lang.reflect.Type
 /*
 * This class is used as Home Screen
 * */
-class SelectOperatorActivity :
-    BaseFragment<ActivitySelectOperatorBinding, SelectOperatorViewModel>() {
+class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFragmentBinding, MobileNumberInfoRechargeFragmentVM>() {
 
-    private val mViewModel by viewModels<SelectOperatorViewModel> { defaultViewModelProviderFactory }
-    private lateinit var mViewBinding: ActivitySelectOperatorBinding
-    private val args: SelectOperatorActivityArgs by navArgs()
+    private val mViewModel by viewModels<MobileNumberInfoRechargeFragmentVM> { defaultViewModelProviderFactory }
+    private lateinit var mViewBinding: MobileNumberInfoRechargeFragmentBinding
+    private val args: MobileNumberInfoRechargeFragmentArgs by navArgs()
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_select_operator
+        return R.layout.mobile_number_info_recharge_fragment
     }
 
-    override fun getViewModel(): SelectOperatorViewModel {
+    override fun getViewModel(): MobileNumberInfoRechargeFragmentVM {
         return mViewModel
     }
 
@@ -49,10 +48,6 @@ class SelectOperatorActivity :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
-
-
-
-
 
         setToolbarAndTitle(
             context = requireContext(),
@@ -173,7 +168,7 @@ class SelectOperatorActivity :
 
 
                 val directions =
-                    SelectOperatorActivityDirections.actionSelectCircle(
+                    MobileNumberInfoRechargeFragmentDirections.actionSelectCircle(
                         selectedOperator = mViewModel.operatorResponse.get(),
                         mobile = mViewModel.mobileNumber.value,
                         rechargeType = mViewModel.rechargeType.value
@@ -371,7 +366,7 @@ class SelectOperatorActivity :
         mViewBinding.optionsMenu.setOnClickListener {
 
             val directions =
-                SelectOperatorActivityDirections.actionToOperatorList(
+                MobileNumberInfoRechargeFragmentDirections.actionToOperatorList(
                     rechargeType = mViewModel.rechargeType.value
                 )
 

@@ -387,10 +387,8 @@
         <activity
             android:name="com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.recharge.PlanSelectionActivity" />
 
 
-        <activity android:name=".view.recharge.SelectOperatorActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

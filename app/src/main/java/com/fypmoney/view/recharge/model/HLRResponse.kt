@@ -3,15 +3,15 @@ package com.fypmoney.view.recharge.model
 import androidx.annotation.Keep
 
 @Keep
-data class MobileValidationResponse(
+data class HLRResponse(
     val responseCode: Int? = null,
     val message: String? = null,
     val status: String? = null,
-    val info: Info? = null
+    val info: HLRInfo? = null
 )
 
 @Keep
-data class Info(
+data class HLRInfo(
     val circle: String? = null,
     val operator: String? = null
 )

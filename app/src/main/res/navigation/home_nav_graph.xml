@@ -99,8 +99,8 @@
             android:id="@+id/action_select_circle"
             app:destination="@+id/navigation_select_circle" />
         <action
-            android:id="@+id/action_go_operator_screen"
-            app:destination="@+id/navigation_select_operator" />
+            android:id="@+id/action_enter_mobile_to_mobile_no_info"
+            app:destination="@+id/navigation_mobile_number_info_recharge" />
 
         <argument
             android:name="rechargeType"
@@ -174,10 +174,10 @@
             app:nullable="true" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_select_operator"
-        android:name="com.fypmoney.view.recharge.SelectOperatorActivity"
+        android:id="@+id/navigation_mobile_number_info_recharge"
+        android:name="com.fypmoney.view.recharge.MobileNumberInfoRechargeFragment"
         android:label="Select_Operator"
-        tools:layout="@layout/fragment_spinner_list">
+        tools:layout="@layout/mobile_number_info_recharge_fragment">
         <argument
             android:name="operator"
             android:defaultValue=""
