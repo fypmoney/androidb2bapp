@@ -13,7 +13,7 @@ plugins {
 android {
     signingConfigs {
         config {
-            storeFile file('C:\\Users\\Pawankumar\\Desktop\\FypKeystore.jks')
+            storeFile file('C:\\Users\\pawan\\Desktop\\FypKeystore.jks')
             storePassword 'WjfUzYjN8bem6bX6'
             keyAlias 'Fyp'
             keyPassword 'WjfUzYjN8bem6bX6'

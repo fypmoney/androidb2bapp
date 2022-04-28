@@ -1,14 +1,15 @@
 package com.fypmoney.view.recharge
 
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -21,7 +22,6 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.connectivity.ApiConstant
-import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.EnterMobileNumberRechargeFragmentBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
@@ -29,10 +29,10 @@ import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.PREPAID
 import com.fypmoney.util.Utility
+import com.fypmoney.util.Utility.getPhoneNumberFromContact
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
-import com.fypmoney.view.activity.ContactViewAddMember
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
@@ -41,16 +41,17 @@ import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
-import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
+import com.fypmoney.view.recharge.model.MobileNumberInfoUiModel
 import com.fypmoney.view.recharge.viewmodel.EnterMobileNumberRechargeFragmentVM
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import kotlinx.android.synthetic.main.toolbar.*
 
 
+private const val PICK_CONTACT = 1
 class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRechargeFragmentBinding, EnterMobileNumberRechargeFragmentVM>() {
 
-    lateinit var  enterMobileNumberRechargeFragmentVM:EnterMobileNumberRechargeFragmentVM
+    private lateinit var  enterMobileNumberRechargeFragmentVM:EnterMobileNumberRechargeFragmentVM
 
     private lateinit var binding: EnterMobileNumberRechargeFragmentBinding
 
@@ -121,19 +122,20 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
             }
             null -> TODO()
             is EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeState.HLRSuccess -> {
-                showOperatorListScreen(it.hlrInfo?.circle,it.hlrInfo?.operator)
+//                showOperatorListScreen(it.hlrInfo?.circle,it.hlrInfo?.operator)
+                binding.continueBtn.setBusy(false)
             }
         }
     }
 
     private fun showOperatorListScreen(circle:String?,operator:String?) {
-        val directions =
-            EnterMobileNumberRechargeFragmentDirections.actionEnterMobileToMobileNoInfo(
-                circle = circle,
-                operator = operator,
+        val directions = EnterMobileNumberRechargeFragmentDirections.actionEnterMobileToMobileNoInfoRecharge(
+            MobileNumberInfoUiModel(
                 mobile = binding.etNumber.text.toString(),
-                rechargeType = enterMobileNumberRechargeFragmentVM.rechargeType
-            )
+                operator = operator,
+                circle= circle,
+                rechargeType= enterMobileNumberRechargeFragmentVM.rechargeType,
+            ))
 
         directions.let { it1 -> findNavController().navigate(it1) }
     }
@@ -146,7 +148,7 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
                 binding.continueBtn.setBusy(true)
             }
             EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeEvent.PickContactFromContactBookEvent -> {
-
+                selectContactFromPhoneContactList(PICK_CONTACT)
             }
             null -> TODO()
             is EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeEvent.ShowNextScreenWithHlrInfo -> {
@@ -161,10 +163,6 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
 
 
     private fun setListeners() {
-        binding.selectContactIv.setOnClickListener {
-
-            startActivityForResult(Intent(requireContext(), ContactViewAddMember::class.java), 13)
-        }
         binding.etNumber.doOnTextChanged { text, start, before, count ->
             if(text.isNullOrEmpty() && text!!.length < 10){
                 binding.continueBtn.isEnabled = false
@@ -176,14 +174,22 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        val returnValue: ContactEntity? =
-            data?.getParcelableExtra(AppConstants.CONTACT_SELECTED_RESPONSE)
-        if (requestCode == 13 && resultCode != AppCompatActivity.RESULT_CANCELED && returnValue != null) {
-            binding.etNumber.setText(Utility.removePlusOrNineOneFromNo(returnValue.contactNumber))
-
+        when(requestCode){
+            PICK_CONTACT->{
+                if(resultCode==Activity.RESULT_OK){
+                    when(val result = getPhoneNumberFromContact(requireActivity(),data)){
+                        is Utility.MobileNumberFromPhoneBook.MobileNumberFound -> {
+                            binding.etNumber.setText(result.phoneNumber)
+                        }
+                        is Utility.MobileNumberFromPhoneBook.UnableToFindMobileNumber -> {
+                            Utility.showToast(result.errorMsg)
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -206,7 +212,7 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
     }
 
     private fun setExploreListners() {
-        enterMobileNumberRechargeFragmentVM?.openBottomSheet.observe(
+        enterMobileNumberRechargeFragmentVM.openBottomSheet.observe(
             viewLifecycleOwner
         ) { list ->
             if (list.size > 0) {
@@ -214,7 +220,7 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
             }
         }
 
-        enterMobileNumberRechargeFragmentVM?.feedDetail.observe(
+        enterMobileNumberRechargeFragmentVM.feedDetail.observe(
             viewLifecycleOwner
         ) { list ->
 
@@ -312,7 +318,7 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
                 val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                    ExploreFragmentDirections.actionExploreSectionExplore(
+                    EnterMobileNumberRechargeFragmentDirections.actionEnterMobileNumberRechargeToSectionExplore(
                         sectionExploreItem = sectionContentItem,
                         sectionExploreName = it1
                     )
@@ -399,5 +405,8 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
         }
     }
 
-
+    private fun selectContactFromPhoneContactList(requestCode:Int){
+        val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+        startActivityForResult(intent, requestCode)
+    }
 }

@@ -34,7 +34,7 @@
 
             <FrameLayout
                 android:id="@+id/explore_fl"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +94,7 @@
                 android:textStyle="normal"
                 android:gravity="start"
                 app:layout_constraintTop_toBottomOf="@+id/explore_fl"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/explore_fl"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             <LinearLayout
@@ -102,7 +102,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/dp20"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintStart_toStartOf="@+id/explore_fl"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/enter_mobile_number_tv">
 
@@ -153,6 +155,7 @@
                         android:fontFamily="@font/product_sans_regular"
                         android:gravity="start"
                         android:hint="00000 00000"
+                        android:imeOptions="actionDone"
                         android:inputType="number"
                         android:maxLength="10"
                         android:textColor="@color/white"
@@ -175,6 +178,7 @@
                     app:customIsRounded="@{true}"
                     app:customCornerRadius="@{@dimen/dp27}"
                     android:padding="15dp"
+                    android:onClick="@{()->viewModel.onSelectContactFromPhonebook()}"
                     android:src="@drawable/ic_my_contact" />
             </LinearLayout>
 
@@ -187,6 +191,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp8"
+                tools:visibility="visible"
+                android:layout_marginStart="@dimen/dp20"
                 android:layout_marginHorizontal="@dimen/dp20"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -227,7 +233,7 @@
             android:paddingRight="74dp"
             android:paddingBottom="14dp"
             app:text="@string/continue_btn_text"
-            android:layout_marginBottom="@dimen/_12sdp"
+            android:layout_marginBottom="@dimen/dp20"
             android:textAllCaps="false"
             app:enabled="false"
             android:id="@+id/continue_btn"

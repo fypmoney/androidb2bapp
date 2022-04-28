@@ -11,56 +11,71 @@ import com.fypmoney.R
 import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.CardOperatorBinding
 import com.fypmoney.extension.executeAfter
+import com.fypmoney.extension.toGone
 
 import com.fypmoney.util.Utility
 import com.fypmoney.view.recharge.model.OperatorResponse
 
 class OperatorSelectionAdapter(
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: OperatorResponse) -> Unit
-) : ListAdapter<OperatorResponse, TopTenUsersVH>(TopTenUsersDiffUtils) {
+    private val onOperatorClick: (model: OperatorResponse) -> Unit
+) : ListAdapter<OperatorResponse, OperatorVH>(OperatorDiffUtils) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopTenUsersVH {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OperatorVH {
         val inflater = LayoutInflater.from(parent.context)
         val binding = CardOperatorBinding.inflate(inflater, parent, false)
-        return TopTenUsersVH(
+        return OperatorVH(
             binding,
             lifecycleOwner,
-            onRecentUserClick
+            onOperatorClick
         )
 
     }
 
-    override fun onBindViewHolder(holder: TopTenUsersVH, position: Int) {
+    override fun onBindViewHolder(holder: OperatorVH, position: Int) {
         holder.bind(getItem(position))
     }
 
 }
 
-class TopTenUsersVH(
+class OperatorVH(
     private val binding: CardOperatorBinding,
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: OperatorResponse) -> Unit
+    val onOperatorClick: (model: OperatorResponse) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(user: OperatorResponse) {
+    fun bind(operator: OperatorResponse) {
         binding.executeAfter {
-            lifecycleOwner = this@TopTenUsersVH.lifecycleOwner
+            lifecycleOwner = this@OperatorVH.lifecycleOwner
 
-            loadImage(
-                recentIv, user.icon,
-                ContextCompat.getDrawable(this.recentIv.context, R.drawable.airtel_logo), false
-            )
-
-            recentUserCl.setOnClickListener {
-                onRecentUserClick(user)
+            if(operator.name=="Airtel"){
+                loadImage(
+                    operatorIv, operator.icon,
+                    ContextCompat.getDrawable(this.operatorIv.context, R.drawable.ic_airtel), false
+                )
+            }else if(operator.name=="Vodafone"){
+                loadImage(
+                    operatorIv, operator.icon,
+                    ContextCompat.getDrawable(this.operatorIv.context, R.drawable.ic_vodafone), false
+                )
+            }else if(operator.name=="JIO"){
+                loadImage(
+                    operatorIv, operator.icon,
+                    ContextCompat.getDrawable(this.operatorIv.context, R.drawable.ic_jio), false
+                )
+            }else{
+                operatorIv.toGone()
             }
-            userNameTv.text = Utility.getFirstName(user.name)
+
+            operatorCl.setOnClickListener {
+                onOperatorClick(operator)
+            }
+            operatorName.text = operator.name
         }
     }
 
 }
 
-object TopTenUsersDiffUtils : DiffUtil.ItemCallback<OperatorResponse>() {
+object OperatorDiffUtils : DiffUtil.ItemCallback<OperatorResponse>() {
 
     override fun areItemsTheSame(oldItem: OperatorResponse, newItem: OperatorResponse): Boolean {
         return (oldItem.id == newItem.id)

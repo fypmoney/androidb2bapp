@@ -1,6 +1,7 @@
 package com.fypmoney.view.recharge.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -20,26 +21,22 @@ import com.google.gson.JsonParser
 /*
 * This is used to handle user profile
 * */
-class SelectOperatorFromListViewModel(application: Application) : BaseViewModel(application) {
-    init {
-//        callGetOperatorList(AppConstants.POSTPAID)
+class SelectOperatorFragmentVM(application: Application) : BaseViewModel(application) {
+    var rechargeType:String? = null
+    var mobileNo:String? = null
 
-    }
+    val state:LiveData<SelectOperatorState>
+        get() = _state
+    private val _state = MutableLiveData<SelectOperatorState>()
 
-    var opertaorList: MutableLiveData<ArrayList<OperatorResponse>> = MutableLiveData()
-    var rechargeType = MutableLiveData<String>()
-
-    /*
-
- *This method is used to call profile pic upload api
- * */
     fun callGetOperatorList(postpaid: String) {
+        _state.value = SelectOperatorState.Loading
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_GET_OPERATOR_LIST_MOBILE,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_GET_OPERATOR_LIST_MOBILE),
                 request_type = ApiUrl.GET,
-                onResponse = this, isProgressBar = true,
+                onResponse = this, isProgressBar = false,
                 param = RechargeTypeModel(type = postpaid)
             )
         )
@@ -56,8 +53,7 @@ class SelectOperatorFromListViewModel(application: Application) : BaseViewModel(
                     json.get("data").toString(),
                     Array<OperatorResponse>::class.java
                 )
-                val arrayList = ArrayList(array.toMutableList())
-                opertaorList.postValue(arrayList)
+                _state.value = SelectOperatorState.Success(array.toList())
             }
 
 
@@ -69,23 +65,21 @@ class SelectOperatorFromListViewModel(application: Application) : BaseViewModel(
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
-
+            ApiConstant.API_GET_OPERATOR_LIST_MOBILE -> {
+                _state.value = SelectOperatorState.Error(errorResponseInfo)
+            }
 
         }
 
     }
 
-    fun callGetCustomerProfileApi() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_GET_CUSTOMER_INFO,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_CUSTOMER_INFO),
-                request_type = ApiUrl.GET,
-                onResponse = this, isProgressBar = true,
-                param = ""
-            )
-        )
+    sealed class SelectOperatorState{
+        object Loading:SelectOperatorState()
+        data class Success(val operatorList:List<OperatorResponse>):SelectOperatorState()
+        data class Error(val errorResponseInfo: ErrorResponseInfo):SelectOperatorState()
     }
+    sealed class SelectOperatorEvent{
 
+    }
 
 }

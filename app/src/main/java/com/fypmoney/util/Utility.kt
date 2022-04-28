@@ -858,15 +858,15 @@ object Utility {
         phone.let {
             when {
                 phone?.startsWith("+91") == true -> {
-                    return phone.replace("+91", "")
+                    return phone.replace("+91", "").replace(" ","")
                 }
                 phone?.startsWith("+") == true -> {
-                    return phone.replace("+", "")
+                    return phone.replace("+", "").replace(" ","")
                 }
                 phone?.startsWith("0") == true -> {
-                    return phone.replace("0", "")
+                    return phone.replace("0", "").replace(" ","")
                 }
-                else -> return phone!!
+                else -> return phone!!.replace(" ","")
             }
         }
     }
@@ -1208,5 +1208,49 @@ object Utility {
             e.printStackTrace()
             false
         }
+    }
+
+
+
+    sealed class MobileNumberFromPhoneBook{
+        data class MobileNumberFound(val phoneNumber:String):MobileNumberFromPhoneBook()
+        data class UnableToFindMobileNumber(val errorMsg:String):MobileNumberFromPhoneBook()
+    }
+    fun getPhoneNumberFromContact(activity: Activity,data: Intent?):MobileNumberFromPhoneBook{
+
+
+        val contactData = data!!.data
+        val c: Cursor? =
+            contactData?.let { activity.contentResolver.query(it, null, null, null, null) }
+        if (c != null) {
+            if (c.moveToFirst()) {
+                val id = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID))
+                val hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))
+                if (hasPhone.equals("1", ignoreCase = true)) {
+                    val phones: Cursor? = activity.contentResolver.query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
+                        null, null
+                    )
+                    phones?.moveToFirst()
+                    return if (phones != null) {
+                        val cNumber = phones.getString(phones.getColumnIndex("data1"))
+                        System.out.println("number is:$cNumber")
+                        MobileNumberFromPhoneBook.MobileNumberFound(cNumber.takeLast(10))
+
+                    }else{
+                        MobileNumberFromPhoneBook.UnableToFindMobileNumber(activity.getString(R.string.unable_to_pick_phone_number))
+
+                    }
+                }else{
+                    return MobileNumberFromPhoneBook.UnableToFindMobileNumber(activity.getString(R.string.unable_to_pick_phone_number))
+
+                }
+            }else{
+                return MobileNumberFromPhoneBook.UnableToFindMobileNumber(activity.getString(R.string.unable_to_pick_phone_number))
+            }
+        }
+        return MobileNumberFromPhoneBook.UnableToFindMobileNumber(activity.getString(R.string.unable_to_pick_phone_number))
+
     }
 }

@@ -25,8 +25,6 @@ import com.google.gson.JsonParser
 * */
 class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewModel(application) {
 
-
-
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
 
     val state:LiveData<EnterMobileNumberRechargeState>
@@ -44,7 +42,9 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
     init {
     }
 
-
+    fun onSelectContactFromPhonebook(){
+        _event.value = EnterMobileNumberRechargeEvent.PickContactFromContactBookEvent
+    }
     fun onContinueClick(){
         _event.value = EnterMobileNumberRechargeEvent.OnContinueEvent
     }
@@ -164,12 +164,10 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
         when (purpose) {
             ApiConstant.API_GET_HLR_CHECK -> {
                 _state.value = EnterMobileNumberRechargeState.Error(errorResponseInfo,ApiConstant.API_GET_HLR_CHECK)
-
+                _event.value = EnterMobileNumberRechargeEvent.ShowNextScreenWithHlrInfo(HLRInfo())
             }
             ApiConstant.API_Explore -> {
                 _state.value = EnterMobileNumberRechargeState.Error(errorResponseInfo,ApiConstant.API_Explore)
-                _event.value = EnterMobileNumberRechargeEvent.ShowNextScreenWithHlrInfo(HLRInfo())
-
             }
         }
 

@@ -10,34 +10,32 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:id="@+id/recent_user_cl"
-        android:paddingHorizontal="2dp">
+        android:id="@+id/circle_cl"
+        android:padding="20dp"
+        android:background="@color/bgcolor">
 
 
         <TextView
-            android:id="@+id/user_name_tv"
-            style="@style/TextviewBold"
+            android:id="@+id/circle_tv"
+            style="@style/TextviewRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_18sdp"
             android:maxLength="20"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="@color/white"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-
             tools:text="User Name" />
 
         <View
             android:layout_width="0dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/user_name_tv"
+            app:layout_constraintTop_toBottomOf="@+id/circle_tv"
             android:layout_marginEnd="@dimen/_18sdp"
             android:layout_marginTop="@dimen/_8sdp"
             android:background="@color/white"
             android:alpha=".50"
-            app:layout_constraintStart_toStartOf="@+id/user_name_tv"
+            app:layout_constraintStart_toStartOf="@+id/circle_tv"
             android:layout_height="1dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

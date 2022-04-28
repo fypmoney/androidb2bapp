@@ -1148,4 +1148,12 @@ Coming really soon!
     <string name="please_enter_valid_phone_number">Please Enter valid phone number</string>
     <string name="enter_mobile_number">Enter mobile number</string>
     <string name="_91">+91</string>
+    <string name="unable_to_pick_phone_number">Unable to Pick Mobile Number,Please type Manually.</string>
+    <string name="select_operator">Select Operator</string>
+    <string name="unable_to_fetch_operator_please_try_again_later">Unable to fetch operator, Please try again later</string>
+    <string name="select_your_prepaid_operator">Select your %1$s Operator</string>
+    <string name="select_your_circle">Select your Circle</string>
+    <string name="do_not_know_your_circle">Do not know your circle?</string>
+    <string name="select_state_area_from_where_you_purchased_the_sim_card">Select state/Area from where you purchased the SIM Card</string>
+    <string name="search_circles">Search Circles</string>
 </resources>

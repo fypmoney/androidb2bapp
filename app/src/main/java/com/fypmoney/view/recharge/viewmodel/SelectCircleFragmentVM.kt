@@ -2,6 +2,7 @@ package com.fypmoney.view.recharge.viewmodel
 
 import android.app.Application
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
@@ -22,6 +23,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KYC_TYPE
 import com.fypmoney.util.Utility
+import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.recharge.model.CircleResponse
 import com.fypmoney.view.recharge.model.OperatorResponse
 import com.fypmoney.view.recharge.model.RechargePlansRequest
@@ -30,30 +32,33 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import okhttp3.MultipartBody
 
-/*
-* This is used to handle user profile
-* */
-class SelectCircleViewModel(application: Application) : BaseViewModel(application) {
+
+class SelectCircleFragmentVM(application: Application) : BaseViewModel(application) {
 
 
     var opertaorList: MutableLiveData<ArrayList<CircleResponse>> = MutableLiveData()
     var selectedOperator = MutableLiveData<OperatorResponse>()
+
     var mobile = MutableLiveData<String>()
 
     var rechargeType = MutableLiveData<String>()
 
-    /*
+    val state:LiveData<SelectCircleState>
+        get() = _state
+    private val _state = MutableLiveData<SelectCircleState>()
 
- *This method is used to call profile pic upload api
- * */
+    val event:LiveData<SelectCircleEvent>
+        get() = _event
+    private val _event = LiveEvent<SelectCircleEvent>()
 
-    fun callGetOperatorList() {
+    fun callGetCircleList() {
+        _state.value = SelectCircleState.Loading
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_GET_CIRCLE_LIST,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_GET_CIRCLE_LIST + selectedOperator.value?.operatorId),
                 request_type = ApiUrl.GET,
-                onResponse = this, isProgressBar = true,
+                onResponse = this, isProgressBar = false,
                 param = RechargePlansRequest()
             )
         )
@@ -70,11 +75,8 @@ class SelectCircleViewModel(application: Application) : BaseViewModel(applicatio
                     json.get("data").toString(),
                     Array<CircleResponse>::class.java
                 )
-                val arrayList = ArrayList(array.toMutableList())
-                opertaorList.postValue(arrayList)
+                _state.value = SelectCircleState.Success(array.toList())
             }
-
-
         }
 
     }
@@ -83,23 +85,21 @@ class SelectCircleViewModel(application: Application) : BaseViewModel(applicatio
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
-
-
+            ApiConstant.API_GET_CIRCLE_LIST -> {
+                _state.value = SelectCircleState.Error(errorResponseInfo)
+            }
         }
 
     }
 
-    fun callGetCustomerProfileApi() {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_GET_CUSTOMER_INFO,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_CUSTOMER_INFO),
-                request_type = ApiUrl.GET,
-                onResponse = this, isProgressBar = true,
-                param = ""
-            )
-        )
+    sealed class SelectCircleState{
+        object Loading:SelectCircleState()
+        data class Success(val circles:List<CircleResponse>):SelectCircleState()
+        data class Error(val errorResponseInfo: ErrorResponseInfo):SelectCircleState()
     }
+    sealed class SelectCircleEvent{
 
-
+    }
 }
+
+

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView android:id="@+id/layoutServicePrice"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/_50sdp"
     app:cardCornerRadius="@dimen/card_corner_radius"
     app:cardElevation="@dimen/card_elevation"
     android:layout_marginTop="@dimen/_6sdp"
@@ -13,27 +13,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivServiceLogo"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@color/cb_grey" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <View
             android:id="@+id/heading"
             style="@style/AppTheme.Widget.TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:gravity="start"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:maxLines="2"
-            android:textStyle="bold"
-            android:background="@color/cb_grey"
-            android:textSize="@dimen/sub_title_size"
-            app:fontFamily="@font/poppins_medium" />
+            android:layout_margin="@dimen/dp1"
+            android:background="@color/cb_grey"/>
 
     </LinearLayout>
 

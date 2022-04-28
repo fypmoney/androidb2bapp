@@ -18,7 +18,7 @@ import com.fypmoney.view.recharge.model.CircleResponse
 
 class CircleSelectionAdapter(
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: CircleResponse) -> Unit
+    val onCircleClick: (model: CircleResponse) -> Unit
 ) : ListAdapter<CircleResponse, CircleSelectionVH>(CircleDiffUtils) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CircleSelectionVH {
@@ -27,7 +27,7 @@ class CircleSelectionAdapter(
         return CircleSelectionVH(
             binding,
             lifecycleOwner,
-            onRecentUserClick
+            onCircleClick
         )
 
     }
@@ -41,19 +41,15 @@ class CircleSelectionAdapter(
 class CircleSelectionVH(
     private val binding: CardCircleBinding,
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: CircleResponse) -> Unit
+    val onCircleClick: (model: CircleResponse) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(user: CircleResponse) {
+    fun bind(circle: CircleResponse) {
         binding.executeAfter {
             lifecycleOwner = this@CircleSelectionVH.lifecycleOwner
-
-//            loadImage(recentIv,user.profilePicResourceId,
-//                ContextCompat.getDrawable(this.recentIv.context, R.drawable.ic_profile_img),true)
-
-            recentUserCl.setOnClickListener {
-                onRecentUserClick(user)
+            circleCl.setOnClickListener {
+                onCircleClick(circle)
             }
-            userNameTv.text = Utility.getFirstName(user.name)
+            circleTv.text = circle.name
         }
     }
 

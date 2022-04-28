@@ -10,26 +10,25 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-
-        android:id="@+id/recent_user_cl"
-        android:paddingHorizontal="2dp">
+        android:id="@+id/operator_cl"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp"
+        android:background="@color/bgcolor">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/recent_iv"
+            android:id="@+id/operator_iv"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginStart="5dp"
-            android:padding="2dp"
             app:customIsRounded="@{true}"
             app:customStrokeColor="@{@color/grey}"
             app:customStrokeWidth="@{@dimen/dp5}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/airtel_logo" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:srcCompat="@drawable/ic_airtel" />
 
         <TextView
-            android:id="@+id/user_name_tv"
+            android:id="@+id/operator_name"
             style="@style/TextviewRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,10 +36,12 @@
             android:maxLength="20"
             android:textSize="18sp"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@+id/recent_iv"
-            app:layout_constraintStart_toEndOf="@+id/recent_iv"
-            app:layout_constraintTop_toTopOf="@+id/recent_iv"
+            app:layout_constraintBottom_toBottomOf="@+id/operator_iv"
+            app:layout_constraintStart_toEndOf="@+id/operator_iv"
+            app:layout_constraintTop_toTopOf="@+id/operator_iv"
             tools:text="User Name" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

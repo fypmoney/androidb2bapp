@@ -1,25 +1,18 @@
 package com.fypmoney.view.recharge
 
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.BR
 import com.fypmoney.R
-import com.fypmoney.base.BaseActivity
 import com.fypmoney.base.BaseFragment
-import com.fypmoney.databinding.ActivityOperatorListBinding
-import com.fypmoney.databinding.ActivitySelectCircleBinding
-import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
-import com.fypmoney.view.recharge.adapter.CircleSelectionAdapter
+import com.fypmoney.databinding.SelectOperatorFragmentBinding
 import com.fypmoney.view.recharge.adapter.OperatorSelectionAdapter
-import com.fypmoney.view.recharge.model.CircleResponse
 import com.fypmoney.view.recharge.model.OperatorResponse
 import com.fypmoney.view.recharge.viewmodel.DthOperatorListViewModel
 import kotlinx.android.synthetic.main.toolbar.*
@@ -30,16 +23,16 @@ import kotlin.collections.ArrayList
 * This class is used as Home Screen
 * */
 class DthOperatorListActivity :
-    BaseFragment<ActivityOperatorListBinding, DthOperatorListViewModel>() {
+    BaseFragment<SelectOperatorFragmentBinding, DthOperatorListViewModel>() {
     private lateinit var mViewModel: DthOperatorListViewModel
-    private lateinit var mViewBinding: ActivityOperatorListBinding
+    private lateinit var mViewBinding: SelectOperatorFragmentBinding
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
 
     override fun getLayoutId(): Int {
-        return R.layout.activity_operator_list
+        return R.layout.select_operator_fragment
     }
 
     override fun getViewModel(): DthOperatorListViewModel {
@@ -72,23 +65,23 @@ class DthOperatorListActivity :
 
     private fun setUpRecyclerView(arrayList: ArrayList<OperatorResponse>) {
         val topTenUsersAdapter = OperatorSelectionAdapter(
-            this, onRecentUserClick = {
+            this, onOperatorClick = {
                 val directions =
                     DthOperatorListActivityDirections.actionGoToDthRecharge(
                         it.operatorId
                     )
 
-                directions?.let { it1 -> findNavController().navigate(it1) }
+                directions.let { it1 -> findNavController().navigate(it1) }
             }
         )
 
 
-        with(mViewBinding.rvCircles) {
+        with(mViewBinding.rvOperators) {
             adapter = topTenUsersAdapter
             layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false)
         }
-        (mViewBinding.rvCircles.adapter as OperatorSelectionAdapter).submitList(arrayList)
+        (mViewBinding.rvOperators.adapter as OperatorSelectionAdapter).submitList(arrayList)
     }
 
     private fun setObserver() {
