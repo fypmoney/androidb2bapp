@@ -1,7 +1,6 @@
 package com.fypmoney.view.recharge.viewmodel
 
 import android.app.Application
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -16,10 +15,8 @@ import com.fypmoney.util.AppConstants.POSTPAID
 import com.fypmoney.util.AppConstants.PREPAID
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
-import com.fypmoney.view.recharge.model.HLRInfo
 import com.fypmoney.view.recharge.model.MobileNumberInfoUiModel
 import com.fypmoney.view.recharge.model.OperatorResponse
-import com.fypmoney.view.recharge.model.RechargeTypeModel
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -53,7 +50,7 @@ class MobileNumberInfoRechargeFragmentVM(application: Application) : BaseViewMod
         _event.value = EnterMobileNumberInfoRechargeEvent.ShowOperatorListScreen(mobileNumberInfoModel?.rechargeType,mobileNumberInfoModel?.mobile)
     }
     fun onContinueClick(){
-        if(mobileNumberInfoModel?.circle.isNullOrEmpty() && operatorResponse!=null){
+        if(!mobileNumberInfoModel?.circle.isNullOrEmpty() && operatorResponse!=null){
             if(mobileNumberInfoModel?.rechargeType==PREPAID){
                 _event.value = EnterMobileNumberInfoRechargeEvent.ShowPlanScreen(
                     operatorResponse,mobileNumberInfoModel?.mobile,mobileNumberInfoModel?.circle

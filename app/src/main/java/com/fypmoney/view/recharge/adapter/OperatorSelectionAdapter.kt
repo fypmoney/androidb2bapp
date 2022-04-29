@@ -11,9 +11,7 @@ import com.fypmoney.R
 import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.CardOperatorBinding
 import com.fypmoney.extension.executeAfter
-import com.fypmoney.extension.toGone
-
-import com.fypmoney.util.Utility
+import com.fypmoney.extension.toInvisible
 import com.fypmoney.view.recharge.model.OperatorResponse
 
 class OperatorSelectionAdapter(
@@ -46,30 +44,36 @@ class OperatorVH(
     fun bind(operator: OperatorResponse) {
         binding.executeAfter {
             lifecycleOwner = this@OperatorVH.lifecycleOwner
+            operatorName.text = operator.name
+            when (operator.name) {
+                "Airtel" -> {
+                    loadImage(
+                        operatorIv, operator.icon,
+                        ContextCompat.getDrawable(this.operatorIv.context, R.drawable.ic_airtel), false
+                    )
+                }
+                "Vodafone" -> {
+                    loadImage(
+                        operatorIv, operator.icon,
+                        ContextCompat.getDrawable(this.operatorIv.context, R.drawable.ic_vodafone), false
+                    )
+                }
+                "JIO" -> {
+                    loadImage(
+                        operatorIv, operator.icon,
+                        ContextCompat.getDrawable(this.operatorIv.context, R.drawable.ic_jio), false
+                    )
+                }
 
-            if(operator.name=="Airtel"){
-                loadImage(
-                    operatorIv, operator.icon,
-                    ContextCompat.getDrawable(this.operatorIv.context, R.drawable.ic_airtel), false
-                )
-            }else if(operator.name=="Vodafone"){
-                loadImage(
-                    operatorIv, operator.icon,
-                    ContextCompat.getDrawable(this.operatorIv.context, R.drawable.ic_vodafone), false
-                )
-            }else if(operator.name=="JIO"){
-                loadImage(
-                    operatorIv, operator.icon,
-                    ContextCompat.getDrawable(this.operatorIv.context, R.drawable.ic_jio), false
-                )
-            }else{
-                operatorIv.toGone()
+                else -> {
+                    operatorIv.toInvisible()
+                    operatorName.setTextColor(operatorName.resources.getColor(R.color.reward_continue_button))
+                }
             }
 
             operatorCl.setOnClickListener {
                 onOperatorClick(operator)
             }
-            operatorName.text = operator.name
         }
     }
 

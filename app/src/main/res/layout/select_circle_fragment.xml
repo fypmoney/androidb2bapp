@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.recharge.viewmodel.SelectCircleFragmentVM" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -69,17 +70,20 @@
             android:layout_marginStart="@dimen/dp20"
             android:layout_marginTop="@dimen/dp26"
             android:layout_marginEnd="@dimen/dp20"
+            android:textCursorDrawable="@drawable/cursor_edittext"
             app:customCornerRadius="@{@dimen/dp16}"
             app:customBackgroundColor="@{@color/edit_text_bg}"
             android:drawableEnd="@drawable/ic_icon_feather_search"
+            android:text="@={viewModel.searchQuery}"
             android:drawablePadding="10dp"
             android:drawableTint="@color/white"
             android:fontFamily="@font/product_sans_regular"
             android:hint="@string/search_circles"
             android:padding="16dp"
-            android:textColor="@color/text_color_dark"
+            android:textColor="@color/white"
             android:textColorHint="@color/text_color_light"
             android:textSize="14sp"
+            android:imeOptions="actionSearch"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/info_cl" />

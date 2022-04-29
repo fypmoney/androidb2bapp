@@ -1156,4 +1156,6 @@ Coming really soon!
     <string name="do_not_know_your_circle">Do not know your circle?</string>
     <string name="select_state_area_from_where_you_purchased_the_sim_card">Select state/Area from where you purchased the SIM Card</string>
     <string name="search_circles">Search Circles</string>
+    <string name="no_circle_found_according_to_your_search">No circle found according to your search</string>
+    <string name="no_plans_available">No plans available</string>
 </resources>

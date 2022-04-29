@@ -10,8 +10,6 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.BaseRequest
-import com.fypmoney.util.AppConstants
 import com.fypmoney.view.recharge.model.OperatorResponse
 import com.fypmoney.view.recharge.model.RechargeTypeModel
 import com.google.gson.Gson
@@ -53,7 +51,10 @@ class SelectOperatorFragmentVM(application: Application) : BaseViewModel(applica
                     json.get("data").toString(),
                     Array<OperatorResponse>::class.java
                 )
-                _state.value = SelectOperatorState.Success(array.toList())
+                //add Postpaid user item in list
+                val newData = array.toMutableList()
+                newData.add(OperatorResponse(name = "I am Postpaid User",id = "postpaid"))
+                _state.value = SelectOperatorState.Success(newData)
             }
 
 

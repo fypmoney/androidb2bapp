@@ -2,19 +2,13 @@ package com.fypmoney.view.recharge.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
-import com.fypmoney.bindingAdapters.loadImage
-import com.fypmoney.databinding.CardCircleBinding
 import com.fypmoney.databinding.CardRechargePlanBinding
-
 import com.fypmoney.extension.executeAfter
-
-import com.fypmoney.util.Utility
 import com.fypmoney.view.recharge.model.ValueItem
 
 class RechargePlansAdapter(
@@ -47,16 +41,12 @@ class RechargePlansVH(
     fun bind(user: ValueItem) {
         binding.executeAfter {
             lifecycleOwner = this@RechargePlansVH.lifecycleOwner
-
-//            loadImage(recentIv,user.profilePicResourceId,
-//                ContextCompat.getDrawable(this.recentIv.context, R.drawable.ic_profile_img),true)
-
             card.setOnClickListener {
                 onRecentUserClick(user)
             }
-            tvRs.text = user.rs
+            tvRs.text = tvRs.context.resources.getString(R.string.Rs)+" "+user.rs
             tvDetails.text = user.desc
-            tvValidity.text = user.validity
+            tvValidity.text = if (user.validity=="N/A") "Not Applicable" else  user.validity
         }
     }
 

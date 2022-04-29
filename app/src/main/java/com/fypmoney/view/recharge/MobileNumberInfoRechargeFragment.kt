@@ -81,23 +81,28 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
                 toolbarTitle = it.operator?.let{it1->it1+" "+Utility.toTitleCase(it.rechargeType)} ?: kotlin.run { Utility.toTitleCase(it.rechargeType) }
             )
             mViewBinding.tvUserNumber.text = it.mobile
-            if(it.operator=="Airtel"){
-                mViewBinding.continueBtn.isEnabled = true
-                mViewBinding.ivUser.setBackgroundResource(R.drawable.ic_airtel)
-                mViewBinding.opertorLisTv.text = it.circle?.let { it1->it.operator+"-"+it.circle } ?: kotlin.run { it.operator }
-            }else if(it.operator=="Vodafone"){
-                mViewBinding.continueBtn.isEnabled = true
-                mViewBinding.ivUser.setBackgroundResource(R.drawable.ic_vodafone)
-                mViewBinding.opertorLisTv.text = it.circle?.let { it1->it.operator+"-"+it.circle } ?: kotlin.run { it.operator }
-            }else if(it.operator=="JIO"){
-                mViewBinding.continueBtn.isEnabled = true
-                mViewBinding.ivUser.setBackgroundResource(R.drawable.ic_jio)
-                mViewBinding.opertorLisTv.text = it.circle?.let { it1->it.operator+"-"+it.circle } ?: kotlin.run { it.operator }
-            }else{
-                mViewBinding.ivUser.setBackgroundResource(R.drawable.ic_user2)
-                mViewBinding.opertorLisTv.text = getString(R.string.select_operator)
-                mViewBinding.continueBtn.isEnabled = false
+            when (it.operator) {
+                "Airtel" -> {
+                    mViewBinding.continueBtn.isEnabled = true
+                    mViewBinding.ivUser.setBackgroundResource(R.drawable.ic_airtel)
+                    mViewBinding.opertorLisTv.text = it.circle?.let { it1->it.operator+"-"+it.circle } ?: kotlin.run { it.operator }
+                }
+                "Vodafone" -> {
+                    mViewBinding.continueBtn.isEnabled = true
+                    mViewBinding.ivUser.setBackgroundResource(R.drawable.ic_vodafone)
+                    mViewBinding.opertorLisTv.text = it.circle?.let { it1->it.operator+"-"+it.circle } ?: kotlin.run { it.operator }
+                }
+                "JIO" -> {
+                    mViewBinding.continueBtn.isEnabled = true
+                    mViewBinding.ivUser.setBackgroundResource(R.drawable.ic_jio)
+                    mViewBinding.opertorLisTv.text = it.circle?.let { it1->it.operator+"-"+it.circle } ?: kotlin.run { it.operator }
+                }
+                else -> {
+                    mViewBinding.ivUser.setBackgroundResource(R.drawable.ic_user2)
+                    mViewBinding.opertorLisTv.text = getString(R.string.select_operator)
+                    mViewBinding.continueBtn.isEnabled = false
 
+                }
             }
         }
 
@@ -111,6 +116,7 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
 
 
     private fun setObserver() {
+        mViewModel.operatorResponse = OperatorResponse(name = mViewModel.mobileNumberInfoModel?.operator)
         val navController = findNavController();
         // We use a String here, but any type that can be put in a Bundle is supported
         navController.currentBackStackEntry?.savedStateHandle?.getLiveData<OperatorResponse>("operator_selected")

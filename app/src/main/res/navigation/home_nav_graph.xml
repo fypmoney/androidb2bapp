@@ -132,7 +132,7 @@
             android:defaultValue="@null"
             app:argType="com.fypmoney.view.recharge.model.MobileNumberInfoUiModel"
             app:nullable="true" />
-        \<action
+        <action
             android:id="@+id/action_select_recharge_plans"
             app:destination="@+id/navigation_select_plans" />
 
@@ -237,7 +237,18 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ"/>
 
+        <action
+            android:id="@+id/action_recharge_screen"
+            app:destination="@+id/navigation_enter_mobile_number_recharge"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/navigation_enter_mobile_number_recharge"/>
+
     </fragment>
+
     <fragment
         android:id="@+id/navigation_recharge_home"
         android:name="com.fypmoney.view.recharge.DthStoresFragment"
@@ -344,7 +355,7 @@
 
     <fragment
         android:id="@+id/navigation_select_plans"
-        android:name="com.fypmoney.view.recharge.PlanSelectionActivity"
+        android:name="com.fypmoney.view.recharge.RechargePlansFragment"
         android:label="Plan_selection"
         tools:layout="@layout/fragment_spinner_list">
         <action

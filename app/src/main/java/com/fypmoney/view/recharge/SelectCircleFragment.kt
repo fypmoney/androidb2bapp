@@ -19,15 +19,18 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.view.recharge.adapter.CircleSelectionAdapter
 import com.fypmoney.view.recharge.viewmodel.SelectCircleFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 
 
 /*
 * This class is used as Home Screen
 * */
+@ObsoleteCoroutinesApi
 class SelectCircleFragment : BaseFragment<SelectCircleFragmentBinding, SelectCircleFragmentVM>() {
     private lateinit var selectCircleFragmentVM: SelectCircleFragmentVM
     private lateinit var mViewBinding: SelectCircleFragmentBinding
     private val args: SelectCircleFragmentArgs by navArgs()
+
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -87,7 +90,6 @@ class SelectCircleFragment : BaseFragment<SelectCircleFragmentBinding, SelectCir
 
                         directions?.let { it1 -> findNavController().navigate(it1) }
                     } else {
-
                         val directions =
                             it.name?.let { it1 ->
                                 selectCircleFragmentVM.mobile.value?.let { it2 ->
@@ -98,8 +100,6 @@ class SelectCircleFragment : BaseFragment<SelectCircleFragmentBinding, SelectCir
                                     )
                                 }
                             }
-
-
                         directions?.let { it1 -> findNavController().navigate(it1) }
                     }
                 }
@@ -141,6 +141,12 @@ class SelectCircleFragment : BaseFragment<SelectCircleFragmentBinding, SelectCir
                 (mViewBinding.rvCircles.adapter as CircleSelectionAdapter).submitList(it.circles)
             }
             null -> TODO()
+            SelectCircleFragmentVM.SelectCircleState.Empty -> {
+                mViewBinding.noCircleFoundTv.toVisible()
+                mViewBinding.noCircleFoundTv.text = getString(R.string.no_circle_found_according_to_your_search)
+                mViewBinding.shimmerLayout.toGone()
+                mViewBinding.rvCircles.toGone()
+            }
         }
     }
 

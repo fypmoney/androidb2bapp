@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -25,6 +24,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 
 class SelectOperatorFragment : BaseFragment<SelectOperatorFragmentBinding, SelectOperatorFragmentVM>() {
+
     private val mViewModel by viewModels<SelectOperatorFragmentVM> { defaultViewModelProviderFactory }
 
     private lateinit var mViewBinding: SelectOperatorFragmentBinding
@@ -82,14 +82,20 @@ class SelectOperatorFragment : BaseFragment<SelectOperatorFragmentBinding, Selec
                     it
                 )
                 findNavController().popBackStack()*/
-                val directions =
-                    SelectOperatorFragmentDirections.actionOperatorToSelectCircle(
-                        selectedOperator = it,
-                        mobile = mViewModel.mobileNo,
-                        rechargeType = mViewModel.rechargeType
-                    )
+                if(it.id =="postpaid"){
+                    val directions =
+                        SelectOperatorFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.POSTPAID)
+                    directions.let { it1 -> findNavController().navigate(it1) }
+                }else{
+                    val directions =
+                        SelectOperatorFragmentDirections.actionOperatorToSelectCircle(
+                            selectedOperator = it,
+                            mobile = mViewModel.mobileNo,
+                            rechargeType = mViewModel.rechargeType
+                        )
 
-                directions.let { it1 -> findNavController().navigate(it1) }
+                    directions.let { it1 -> findNavController().navigate(it1) }
+                }
 
             }
         )

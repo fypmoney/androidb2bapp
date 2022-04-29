@@ -1,13 +1,10 @@
 package com.fypmoney.view.recharge.viewmodel
 
 import android.app.Application
-import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.trackr
-import com.fypmoney.R
-import com.fypmoney.application.PockketApplication
+import androidx.lifecycle.viewModelScope
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -15,14 +12,6 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.BankTransactionHistoryResponseDetails
-import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.CustomerInfoResponse
-import com.fypmoney.model.ProfileImageUploadResponse
-import com.fypmoney.util.AppConstants
-import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.SharedPrefUtils.Companion.SF_KYC_TYPE
-import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.recharge.model.CircleResponse
 import com.fypmoney.view.recharge.model.OperatorResponse
@@ -30,13 +19,19 @@ import com.fypmoney.view.recharge.model.RechargePlansRequest
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import okhttp3.MultipartBody
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.launch
 
 
+@ObsoleteCoroutinesApi
 class SelectCircleFragmentVM(application: Application) : BaseViewModel(application) {
 
 
-    var opertaorList: MutableLiveData<ArrayList<CircleResponse>> = MutableLiveData()
     var selectedOperator = MutableLiveData<OperatorResponse>()
 
     var mobile = MutableLiveData<String>()
@@ -45,12 +40,46 @@ class SelectCircleFragmentVM(application: Application) : BaseViewModel(applicati
 
     val state:LiveData<SelectCircleState>
         get() = _state
-    private val _state = MutableLiveData<SelectCircleState>()
+    private val _state = MediatorLiveData<SelectCircleState>()
 
     val event:LiveData<SelectCircleEvent>
         get() = _event
     private val _event = LiveEvent<SelectCircleEvent>()
 
+    val searchQuery = MutableLiveData<String>()
+
+    private var circles = listOf<CircleResponse>()
+
+    @ObsoleteCoroutinesApi
+    private val circleSearchQueryBroadcastChannel = ConflatedBroadcastChannel<String>()
+
+    init {
+        emitSearchQuery()
+        observeSearchQuery()
+    }
+
+    @ObsoleteCoroutinesApi
+    private fun emitSearchQuery() {
+        _state.addSource(searchQuery) {
+            it?.let { circleSearchQueryBroadcastChannel.trySend(it) }
+        }
+    }
+
+    @FlowPreview
+    private fun observeSearchQuery(){
+        viewModelScope.launch {
+            circleSearchQueryBroadcastChannel.asFlow().debounce(800).collect {
+                if(circles.isNotEmpty()){
+                    val filteredList = circles.filterIndexed { index, circleResponse ->
+                        circleResponse.name?.contains(it,true)!!
+                    }
+                    _state.value = SelectCircleState.Success(filteredList)
+                }else{
+                    _state.value = SelectCircleState.Empty
+                }
+            }
+        }
+    }
     fun callGetCircleList() {
         _state.value = SelectCircleState.Loading
         WebApiCaller.getInstance().request(
@@ -70,11 +99,11 @@ class SelectCircleFragmentVM(application: Application) : BaseViewModel(applicati
         when (purpose) {
             ApiConstant.API_GET_CIRCLE_LIST -> {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
-
                 val array = Gson().fromJson<Array<CircleResponse>>(
                     json.get("data").toString(),
                     Array<CircleResponse>::class.java
                 )
+                circles = array.toList()
                 _state.value = SelectCircleState.Success(array.toList())
             }
         }
@@ -95,6 +124,7 @@ class SelectCircleFragmentVM(application: Application) : BaseViewModel(applicati
     sealed class SelectCircleState{
         object Loading:SelectCircleState()
         data class Success(val circles:List<CircleResponse>):SelectCircleState()
+        object Empty:SelectCircleState()
         data class Error(val errorResponseInfo: ErrorResponseInfo):SelectCircleState()
     }
     sealed class SelectCircleEvent{

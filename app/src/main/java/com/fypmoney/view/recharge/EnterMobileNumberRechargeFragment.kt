@@ -128,7 +128,7 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
         }
     }
 
-    private fun showOperatorListScreen(circle:String?,operator:String?) {
+    private fun showEnterMobileNumberInfoRechargeScreen(circle:String?, operator:String?) {
         val directions = EnterMobileNumberRechargeFragmentDirections.actionEnterMobileToMobileNoInfoRecharge(
             MobileNumberInfoUiModel(
                 mobile = binding.etNumber.text.toString(),
@@ -152,7 +152,7 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
             }
             null -> TODO()
             is EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeEvent.ShowNextScreenWithHlrInfo -> {
-                showOperatorListScreen(it.hlrInfo?.circle,it.hlrInfo?.operator)
+                showEnterMobileNumberInfoRechargeScreen(it.hlrInfo?.circle,it.hlrInfo?.operator)
             }
         }
     }
