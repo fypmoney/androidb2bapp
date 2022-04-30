@@ -13,8 +13,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ActivityRechargeSuccessBinding
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.recharge.model.OperatorResponse
-import com.fypmoney.view.recharge.viewmodel.PayAndRechargeViewModel
+import com.fypmoney.view.recharge.viewmodel.SelectedPlanDetailsRechargeFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
 
 
@@ -22,11 +21,11 @@ import kotlinx.android.synthetic.main.toolbar.*
 * This class is used as Home Screen
 * */
 class RechargeSuccessFragment :
-    BaseFragment<ActivityRechargeSuccessBinding, PayAndRechargeViewModel>() {
+    BaseFragment<ActivityRechargeSuccessBinding, SelectedPlanDetailsRechargeFragmentVM>() {
 
     private var mobile: String? = null
     private var amount: String? = null
-    private lateinit var mViewModel: PayAndRechargeViewModel
+    private lateinit var mViewModel: SelectedPlanDetailsRechargeFragmentVM
     private lateinit var mViewBinding: ActivityRechargeSuccessBinding
     private val args: RechargeSuccessFragmentArgs by navArgs()
     override fun getBindingVariable(): Int {
@@ -37,8 +36,8 @@ class RechargeSuccessFragment :
         return R.layout.activity_recharge_success
     }
 
-    override fun getViewModel(): PayAndRechargeViewModel {
-        mViewModel = ViewModelProvider(this).get(PayAndRechargeViewModel::class.java)
+    override fun getViewModel(): SelectedPlanDetailsRechargeFragmentVM {
+        mViewModel = ViewModelProvider(this).get(SelectedPlanDetailsRechargeFragmentVM::class.java)
         return mViewModel
     }
 

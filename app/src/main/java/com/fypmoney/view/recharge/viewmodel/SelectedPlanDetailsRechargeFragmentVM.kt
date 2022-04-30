@@ -1,42 +1,50 @@
 package com.fypmoney.view.recharge.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
-import com.fypmoney.connectivity.ApiUrl
 import com.fypmoney.connectivity.ErrorResponseInfo
-import com.fypmoney.connectivity.network.NetworkUtil
-import com.fypmoney.connectivity.retrofit.ApiRequest
-import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.util.Utility
-import com.fypmoney.view.recharge.model.*
+import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.recharge.model.OperatorResponse
+import com.fypmoney.view.recharge.model.PayAndRechargeRequest
+import com.fypmoney.view.recharge.model.PayAndRechargeResponse
+import com.fypmoney.view.recharge.model.ValueItem
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
-/*
-* This is used to handle user profile
-* */
-class PayAndRechargeViewModel(application: Application) : BaseViewModel(application) {
-    init {
 
-    }
-
+class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseViewModel(application) {
     var failedresponse: MutableLiveData<String> = MutableLiveData()
-    var selectedPlan: MutableLiveData<ValueItem> = MutableLiveData()
-    var mobile: MutableLiveData<String> = MutableLiveData()
-    var planType: MutableLiveData<String> = MutableLiveData()
-    var operatorResponse = MutableLiveData<OperatorResponse>()
+    var selectedPlan: ValueItem? = null
+    var mobile: String? = null
+    var planType: String? = null
+    var operatorResponse:OperatorResponse? = null
 
     var success = MutableLiveData<PayAndRechargeResponse>()
 
+    val event:LiveData<SelectedPlanDetailsRechargeEvent>
+        get() = _event
+    private val _event = LiveEvent<SelectedPlanDetailsRechargeEvent>()
 
-    /*
+    fun onContinueClick(){
+        _event.value = SelectedPlanDetailsRechargeEvent.Pay(PayAndRechargeRequest(
+            cardNo = mobile,
+            operator = operatorResponse?.operatorId,
+            planPrice = Utility.convertToPaise(selectedPlan?.rs)?.toLong(),
+            planType =  planType,
+            amount = Utility.convertToPaise(selectedPlan?.rs)?.toLong()
+        ))
+    }
 
- *This method is used to call profile pic upload api
- * */
-    fun callMobileRecharge(
+    fun onChangePlanClick(){
+        _event.value = SelectedPlanDetailsRechargeEvent.ChangePlan
+    }
+
+    /*fun callMobileRecharge(
         selectedpaln: ValueItem?,
         number: String?,
         value2: OperatorResponse?,
@@ -57,7 +65,7 @@ class PayAndRechargeViewModel(application: Application) : BaseViewModel(applicat
                 )
             )
         )
-    }
+    }*/
 
 
     override fun onSuccess(purpose: String, responseData: Any) {
@@ -95,5 +103,9 @@ class PayAndRechargeViewModel(application: Application) : BaseViewModel(applicat
 
     }
 
+    sealed class SelectedPlanDetailsRechargeEvent{
+        data class Pay(val payRequest:PayAndRechargeRequest):SelectedPlanDetailsRechargeEvent()
+        object ChangePlan:SelectedPlanDetailsRechargeEvent()
+    }
 
 }

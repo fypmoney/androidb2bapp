@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.recharge.viewmodel.SelectedPlanDetailsRechargeFragmentVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor">
+
+        <include
+            android:id="@+id/layout"
+            layout="@layout/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/bgcolor">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/mobile_info_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/operator_iv"
+                        android:layout_width="@dimen/dp_40"
+                        android:layout_height="@dimen/dp_40"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="10dp"
+                        tools:src="@drawable/ic_user2"
+                        android:padding="5dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvUserNumber"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="29dp"
+                        app:layout_constraintTop_toTopOf="@+id/operator_iv"
+                        app:layout_constraintBottom_toBottomOf="@+id/operator_iv"
+                        app:layout_constraintStart_toEndOf="@+id/operator_iv"
+                        tools:text="+91 86482 72819"
+                        android:textColor="@color/text_color_light"
+                        android:textSize="14sp" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/plan_details_cl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mobile_info_cl"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="27.76dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/round_backgorund_white_20"
+                    android:backgroundTint="#1C2129"
+                    android:padding="24dp">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/amount_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="₹ 839"
+                        android:textSize="36sp"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/view5"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:alpha=".20"
+                        android:background="@color/white"
+                        app:layout_constraintTop_toBottomOf="@+id/amount_tv" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/_12sdp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/view5">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/TextviewRegular"
+                            android:id="@+id/details"
+                            android:textSize="@dimen/text_14sp"
+                            android:textColor="@color/white"
+                            android:alpha="0.7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="Data : 1.5GB/day" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            style="@style/TextviewRegular"
+                            android:id="@+id/change_plan_tv"
+                            android:textSize="@dimen/text_18sp"
+                            android:textColor="@color/reward_continue_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{()->viewModel.onChangePlanClick()}"
+                            android:layout_gravity="end"
+                            android:layout_marginTop="14dp"
+                            android:text="@string/change_plan" />
+
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        tools:text="Truly Unlimited"
+                        android:id="@+id/planType"
+                        android:textColor="@color/white"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="@+id/amount_tv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/amount_tv" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.fypmoney.view.customview.PrimaryButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="sans-serif"
+                    android:paddingLeft="74dp"
+                    android:paddingTop="14dp"
+                    android:paddingRight="74dp"
+                    android:paddingBottom="14dp"
+                    app:text="@string/continue_btn_text"
+                    android:layout_marginBottom="@dimen/dp20"
+                    android:textAllCaps="false"
+                    app:enabled="true"
+                    android:onClick="@{()->viewModel.onContinueClick()}"
+                    android:id="@+id/continue_btn"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    app:disabled_bg="@color/cb_grey"
+                    app:disabled_text="@color/grey_heading"
+                    app:enabled_text="@color/text_color_dark"
+                    android:layout_marginTop="50dp"
+                    app:enabled_bg="@color/white"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/plan_details_cl"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

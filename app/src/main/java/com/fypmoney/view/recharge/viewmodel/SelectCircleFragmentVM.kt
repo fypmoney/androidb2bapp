@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 
 
+@FlowPreview
 @ObsoleteCoroutinesApi
 class SelectCircleFragmentVM(application: Application) : BaseViewModel(application) {
 

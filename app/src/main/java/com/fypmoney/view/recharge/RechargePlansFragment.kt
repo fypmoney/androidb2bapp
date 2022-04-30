@@ -14,14 +14,19 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.RechargePlansFragmentBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
+import com.fypmoney.util.Utility
 import com.fypmoney.view.recharge.fragments.RechargeForYouFragment
 import com.fypmoney.view.recharge.model.RechargePlansResponse
 import com.fypmoney.view.recharge.viewmodel.RechargePlansFragmentVM
 import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 
 
+@ObsoleteCoroutinesApi
+@FlowPreview
 class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, RechargePlansFragmentVM>() {
     private lateinit var mViewModel: RechargePlansFragmentVM
     private lateinit var mViewBinding: RechargePlansFragmentBinding
@@ -115,18 +120,20 @@ class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, Recharg
         val adapter = RewardsActivity.ViewPagerAdapter(childFragmentManager)
         rechargePlansResponse.forEach {
             it.name?.let { it1 ->
-                adapter.addFragment(RechargeForYouFragment(it.value,
-                    click = {
-                        val directions = RechargePlansFragmentDirections.actionRechargeAndPay(
-                            it,
-                            mViewModel.selectedOperator.value,
-                            mobile = mViewModel.mobile.value,
-                            planType = it1
-                        )
+                Utility.toTitleCase(it1)?.let { it2 ->
+                    adapter.addFragment(RechargeForYouFragment(it.value,
+                        click = {
+                            val directions = RechargePlansFragmentDirections.actionRechargeAndPay(
+                                it,
+                                mViewModel.selectedOperator.value,
+                                mobile = mViewModel.mobile.value,
+                                planType = it1
+                            )
 
-                        findNavController().navigate(directions)
-                    }), it1
-                )
+                            findNavController().navigate(directions)
+                        }), it2
+                    )
+                }
             }
         }
         viewPager.adapter = adapter

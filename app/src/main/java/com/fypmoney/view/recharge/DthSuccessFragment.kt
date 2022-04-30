@@ -7,14 +7,13 @@ import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.ActivityRechargeSuccessBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.recharge.model.OperatorResponse
-import com.fypmoney.view.recharge.viewmodel.PayAndRechargeViewModel
+import com.fypmoney.view.recharge.viewmodel.SelectedPlanDetailsRechargeFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
 
 
@@ -22,9 +21,9 @@ import kotlinx.android.synthetic.main.toolbar.*
 * This class is used as Home Screen
 * */
 class DthSuccessFragment :
-    BaseFragment<ActivityRechargeSuccessBinding, PayAndRechargeViewModel>() {
+    BaseFragment<ActivityRechargeSuccessBinding, SelectedPlanDetailsRechargeFragmentVM>() {
     private var operator: OperatorResponse? = null
-    private lateinit var mViewModel: PayAndRechargeViewModel
+    private lateinit var mViewModel: SelectedPlanDetailsRechargeFragmentVM
     private lateinit var mViewBinding: ActivityRechargeSuccessBinding
     private val args: DthSuccessFragmentArgs by navArgs()
     override fun getBindingVariable(): Int {
@@ -37,8 +36,8 @@ class DthSuccessFragment :
         return R.layout.activity_recharge_success
     }
 
-    override fun getViewModel(): PayAndRechargeViewModel {
-        mViewModel = ViewModelProvider(this).get(PayAndRechargeViewModel::class.java)
+    override fun getViewModel(): SelectedPlanDetailsRechargeFragmentVM {
+        mViewModel = ViewModelProvider(this).get(SelectedPlanDetailsRechargeFragmentVM::class.java)
         return mViewModel
     }
 

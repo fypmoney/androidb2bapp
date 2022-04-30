@@ -6,6 +6,9 @@
     <data>
 
         <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.recharge.viewmodel.RechargePlansFragmentVM" />
 
     </data>
 
@@ -92,6 +95,8 @@
                         android:layout_marginStart="@dimen/dp24"
                         android:layout_marginTop="@dimen/dp24"
                         android:layout_marginEnd="@dimen/dp24"
+                        android:textCursorDrawable="@drawable/cursor_edittext"
+                        android:text="@={viewModel.searchQuery}"
                         app:customCornerRadius="@{@dimen/dp16}"
                         app:customBackgroundColor="@{@color/black_background}"
                         android:drawableEnd="@drawable/ic_icon_feather_search"

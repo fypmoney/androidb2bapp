@@ -1158,4 +1158,5 @@ Coming really soon!
     <string name="search_circles">Search Circles</string>
     <string name="no_circle_found_according_to_your_search">No circle found according to your search</string>
     <string name="no_plans_available">No plans available</string>
+    <string name="change_plan">Change Plan</string>
 </resources>

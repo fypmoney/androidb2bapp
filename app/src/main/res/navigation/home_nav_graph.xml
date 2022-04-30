@@ -324,7 +324,7 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_recharge_and_pay"
-        android:name="com.fypmoney.view.recharge.PayAndRechargeFragment"
+        android:name="com.fypmoney.view.recharge.SelectedPlanDetailsRechargeFragment"
         android:label="PayAndRecharge"
         tools:layout="@layout/fragment_spinner_list">
         <argument
