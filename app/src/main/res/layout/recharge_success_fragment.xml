@@ -19,20 +19,22 @@
             android:id="@+id/layout"
             layout="@layout/toolbar" />
 
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/logo"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_100sdp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:elevation="@dimen/_6sdp"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/failed"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
+            app:layout_constraintVertical_bias="0.327"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/failed" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/status_title_tv"
@@ -87,7 +89,6 @@
             app:enabled="true"
             android:id="@+id/continue_btn"
             android:onClick="@{()->viewModel.onContinueClick()}"
-            android:textColor="@color/text_color_light"
             android:textSize="18sp"
             android:textStyle="normal"
             app:disabled_bg="@color/cb_grey"

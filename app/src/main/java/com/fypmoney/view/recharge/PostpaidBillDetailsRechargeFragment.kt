@@ -1,17 +1,27 @@
 package com.fypmoney.view.recharge
 
 
+import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
+import com.fypmoney.connectivity.ApiConstant.API_FETCH_BILL
+import com.fypmoney.connectivity.ApiConstant.API_GET_WALLET_BALANCE
 import com.fypmoney.databinding.PostpaidBillDetailsRechargeFragmentBinding
+import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.util.Utility
+import com.fypmoney.view.activity.AddMoneyView
+import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
+import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.recharge.viewmodel.PostpaidBillDetailsFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -40,17 +50,44 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
         binding = getViewDataBinding()
 
         args.selectedCircle.let {
-            postpaidBillDetailsFragmentVM.circleGot.value = it
+            postpaidBillDetailsFragmentVM.circleGot = it
+        }
+        args.rechargeType?.let {
+            postpaidBillDetailsFragmentVM.rechargeType = it
         }
         args.mobile.let {
-            postpaidBillDetailsFragmentVM.mobileNumber.value = it
-            if (it != null) {
-                postpaidBillDetailsFragmentVM.callGetDthInfo(
-                    it
-                )
+            postpaidBillDetailsFragmentVM.mobileNumber = it
+            binding.mobileNumberTv.text = it
+        }
+        args.selectedOperator?.let {
+            postpaidBillDetailsFragmentVM.operatorResponse = it
+            val circle = postpaidBillDetailsFragmentVM.circleGot ?: kotlin.run {
+                ""
+            }
+            when (it.name) {
+                "Airtel" -> {
+                    binding.operatorCircleIv.setBackgroundResource(R.drawable.ic_airtel)
+                    binding.operatorAndCircleTv.text = it.name?.let { it1->Utility.toTitleCase(postpaidBillDetailsFragmentVM.rechargeType)+","+it1+" "+circle } ?:
+                    kotlin.run { Utility.toTitleCase(postpaidBillDetailsFragmentVM.rechargeType)+","+it.name }
+                }
+                "Vodafone" -> {
+                    binding.operatorCircleIv.setBackgroundResource(R.drawable.ic_vodafone)
+                    binding.operatorAndCircleTv.text = it.name?.let { it1->Utility.toTitleCase(postpaidBillDetailsFragmentVM.rechargeType)+","+it1+" "+circle } ?:
+                    kotlin.run { Utility.toTitleCase(postpaidBillDetailsFragmentVM.rechargeType)+","+it.name }
+                }
+                "JIO" -> {
+                    binding.operatorCircleIv.setBackgroundResource(R.drawable.ic_jio)
+                    binding.operatorAndCircleTv.text = it.name?.let { it1->Utility.toTitleCase(postpaidBillDetailsFragmentVM.rechargeType)+","+it1+" "+circle } ?:
+                    kotlin.run { Utility.toTitleCase(postpaidBillDetailsFragmentVM.rechargeType)+","+it.name }
+                }
+                else -> {
+                    binding.operatorCircleIv.setBackgroundResource(R.drawable.ic_user2)
+                    binding.operatorAndCircleTv.text = it.name?.let { it1->Utility.toTitleCase(postpaidBillDetailsFragmentVM.rechargeType)+","+it1+"-"+circle } ?: kotlin.run { Utility.toTitleCase(postpaidBillDetailsFragmentVM.rechargeType)+","+it.name }
+
+
+                }
             }
 
-            binding.mobileNumberTv.text = it
         }
         setToolbarAndTitle(
             context = requireContext(),
@@ -62,28 +99,20 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
 
         setObserver()
         setBindings()
+        postpaidBillDetailsFragmentVM.callFetchBillsInformation(postpaidBillDetailsFragmentVM.mobileNumber!!,
+            postpaidBillDetailsFragmentVM.operatorResponse!!.operatorId!!)
 
 
     }
 
     private fun setBindings() {
-        binding.continueBtn.setOnClickListener {
-
-            if (!binding.amountEt.text.isNullOrEmpty()) {
-                if (!postpaidBillDetailsFragmentVM.mobileNumber.value.isNullOrEmpty() && postpaidBillDetailsFragmentVM.mobileNumber.value!!.length == 10) {
-                    postpaidBillDetailsFragmentVM.callMobileRecharge(
-                        postpaidBillDetailsFragmentVM.operatorResponse.get()?.operatorId,
-                        postpaidBillDetailsFragmentVM.mobileNumber.value!!,
-                        binding.amountEt.text.toString()
-                    )
-                } else {
-                    Utility.showToast("Enter correct number")
-                }
-            } else {
-                Utility.showToast("Enter bill amount")
+        binding.amountEt.doOnTextChanged { text, start, before, count ->
+            if(!text.isNullOrEmpty()){
+                binding.continueBtn.isEnabled = true
+                postpaidBillDetailsFragmentVM.amount = text.toString()
+            }else{
+                binding.continueBtn.isEnabled = false
             }
-
-
         }
     }
 
@@ -93,49 +122,18 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
 
 
     private fun setObserver() {
-        /*val navController = findNavController();
-        // We use a String here, but any type that can be put in a Bundle is supported
-        navController.currentBackStackEntry?.savedStateHandle?.getLiveData<OperatorResponse>("operator_selected")
-            ?.observe(
-                viewLifecycleOwner
-            ) { result ->
-                // Do something with the result.
-                var operator = result as OperatorResponse
-                mViewModel.operatorResponse.set(operator)
-                mViewBinding.optionsMenu.text = operator.name
-
-            }*/
-
-        postpaidBillDetailsFragmentVM.fetchedBill.observe(viewLifecycleOwner) {
-//            (mViewBinding.rvOperator.adapter as OperatorSelectionAdapter).submitList(it)
-            if (it.amount != null) {
-                binding.amountEt.setText(
-                    it.amount?.toDoubleOrNull()?.toInt().toString()
-                )
-            }
-
-            if (it.bill_fetch?.billdate != null) {
-                binding.billDueDateTv.setText("Billing date " + it.bill_fetch?.billdate)
-            } else {
-                binding.billDueDateTv.setText("Billing fetch failed")
-            }
-
-           /* if (it.bill_fetch?.dueDate != null) {
-                mViewBinding.textView10.setText("Due date is " + it.bill_fetch?.dueDate)
-            } else {
-                mViewBinding.textView10.setText("Enter amount manually")
-            }*/
-
-
+        postpaidBillDetailsFragmentVM.state.observe(viewLifecycleOwner){
+            handelState(it)
         }
-        postpaidBillDetailsFragmentVM.paymentResponse.observe(viewLifecycleOwner) {
+        postpaidBillDetailsFragmentVM.event.observe(viewLifecycleOwner){
+            handelEvent(it)
+        }
+        /*postpaidBillDetailsFragmentVM.paymentResponse.observe(viewLifecycleOwner) {
 
             it?.let {
                 val directions = PostpaidBillDetailsRechargeFragmentDirections.actionRechargeSuccess(
                     successDth = it,
-                    selectedOperator = postpaidBillDetailsFragmentVM.operatorResponse.get(),
-
-                    )
+                    selectedOperator = postpaidBillDetailsFragmentVM.operatorResponse,)
                 findNavController().navigate(directions)
 
                 postpaidBillDetailsFragmentVM.paymentResponse.value = null
@@ -151,9 +149,9 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
                 postpaidBillDetailsFragmentVM.failedRecharge.value = null
                 val directions = PostpaidBillDetailsRechargeFragmentDirections.actionRechargeSuccess(
                     successDth = null,
-                    selectedOperator = postpaidBillDetailsFragmentVM.operatorResponse.get(),
+                    selectedOperator = postpaidBillDetailsFragmentVM.operatorResponse,
                     amount = binding.amountEt.text.toString(),
-                    mobile = postpaidBillDetailsFragmentVM.mobileNumber.value
+                    mobile = postpaidBillDetailsFragmentVM.mobileNumber
 
                 )
                 findNavController().navigate(directions)
@@ -162,15 +160,84 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
             }
 
 
+        }*/
+
+
+    }
+
+    private fun handelEvent(it: PostpaidBillDetailsFragmentVM.PostpaidBilDetailsEvent?) {
+        when(it){
+            is PostpaidBillDetailsFragmentVM.PostpaidBilDetailsEvent.ShowLowBalanceAlert -> {
+                callInsufficientFundMessageSheet(it.amount)
+
+            }
+            is PostpaidBillDetailsFragmentVM.PostpaidBilDetailsEvent.ShowPaymentProcessingScreen -> {
+                val directions = PostpaidBillDetailsRechargeFragmentDirections.actionPostpaidBillToPaymentProcessing(it.billPaymentRequest)
+                findNavController().navigate(directions)
+            }
+            null -> TODO()
         }
+    }
 
-
-        postpaidBillDetailsFragmentVM.opertaorList.observe(viewLifecycleOwner) {
-//            (mViewBinding.rvOperator.adapter as OperatorSelectionAdapter).submitList(it)
-
+    private fun handelState(it: PostpaidBillDetailsFragmentVM.PostpaidBillDetailsState?) {
+        when(it){
+            is PostpaidBillDetailsFragmentVM.PostpaidBillDetailsState.Error -> {
+                when(it.api){
+                    API_FETCH_BILL->{
+                        binding.billErrorTv.toVisible()
+                    }
+                    API_GET_WALLET_BALANCE->{
+                        binding.continueBtn.setBusy(false)
+                    }
+                }
+            }
+            is PostpaidBillDetailsFragmentVM.PostpaidBillDetailsState.FetchBillSuccess -> {
+                binding.billErrorTv.toGone()
+                binding.billDueDateTv.text = String.format(getString(R.string.bill_due_date),it.bill.duedate)
+                binding.billDueAmountTv.text = getString(R.string.Rs)+ it.bill.amount
+                binding.amountEt.setText(it.bill.amount)
+            }
+            PostpaidBillDetailsFragmentVM.PostpaidBillDetailsState.Loading -> {
+                binding.billErrorTv.toGone()
+                binding.continueBtn.setBusy(true)
+            }
+            null -> TODO()
+            is PostpaidBillDetailsFragmentVM.PostpaidBillDetailsState.BalanceSuccess -> {
+                binding.continueBtn.setBusy(false)
+            }
         }
+    }
 
+    private fun callInsufficientFundMessageSheet(amount: String?) {
+        var bottomSheetInsufficient: TaskMessageInsuficientFuntBottomSheet? = null
+        val itemClickListener2 = object : AcceptRejectClickListener {
+            override fun onAcceptClicked(pos: Int, str: String) {
+                bottomSheetInsufficient?.dismiss()
+            }
 
+            override fun onRejectClicked(pos: Int) {
+                bottomSheetInsufficient?.dismiss()
+                val intent = Intent(requireActivity(), AddMoneyView::class.java)
+                intent.putExtra("amountshouldbeadded", Utility.convertToRs(amount))
+                startActivity(intent)
+            }
+
+            override fun ondimiss() {
+                bottomSheetInsufficient?.dismiss()
+            }
+        }
+        bottomSheetInsufficient = TaskMessageInsuficientFuntBottomSheet(itemClickListener2,
+            title = resources.getString(R.string.insufficient_bank_balance),
+            subTitle =  resources.getString(R.string.insufficient_bank_body),
+            amount = resources.getString(R.string.add_money_title1)+resources.getString(R.string.Rs)+Utility.convertToRs(amount),
+            background = "#2d3039",
+            titleColor  = "#ffffff",
+            moneyTextColor  = "#ffffff",
+            buttonColor  = "#8ECC9A",
+        )
+
+        bottomSheetInsufficient.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetInsufficient.show(requireActivity().supportFragmentManager, "Insufficient Fund")
     }
 
 

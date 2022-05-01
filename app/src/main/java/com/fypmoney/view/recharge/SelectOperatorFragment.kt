@@ -17,6 +17,7 @@ import com.fypmoney.databinding.SelectOperatorFragmentBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.POSTPAID
 import com.fypmoney.util.Utility
 import com.fypmoney.view.recharge.adapter.OperatorSelectionAdapter
 import com.fypmoney.view.recharge.viewmodel.SelectOperatorFragmentVM
@@ -86,15 +87,27 @@ class SelectOperatorFragment : BaseFragment<SelectOperatorFragmentBinding, Selec
                     val directions =
                         SelectOperatorFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.POSTPAID)
                     directions.let { it1 -> findNavController().navigate(it1) }
-                }else{
+                }else if(it.id=="prepaid"){
                     val directions =
-                        SelectOperatorFragmentDirections.actionOperatorToSelectCircle(
-                            selectedOperator = it,
-                            mobile = mViewModel.mobileNo,
-                            rechargeType = mViewModel.rechargeType
-                        )
-
+                        SelectOperatorFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.PREPAID)
                     directions.let { it1 -> findNavController().navigate(it1) }
+                }else{
+                    if(mViewModel.rechargeType== POSTPAID){
+                        findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                            "operator_selected",
+                            it
+                        )
+                        findNavController().popBackStack()
+                    }else{
+                        val directions =
+                            SelectOperatorFragmentDirections.actionOperatorToSelectCircle(
+                                selectedOperator = it,
+                                mobile = mViewModel.mobileNo,
+                                rechargeType = mViewModel.rechargeType
+                            )
+
+                        directions.let { it1 -> findNavController().navigate(it1) }
+                    }
                 }
 
             }

@@ -55,7 +55,7 @@ class MobileNumberInfoRechargeFragmentVM(application: Application) : BaseViewMod
     }
 
     fun onContinueClick() {
-        if (!mobileNumberInfoModel?.circle.isNullOrEmpty() && operatorResponse != null) {
+        if (operatorResponse != null) {
             if (mobileNumberInfoModel?.rechargeType == PREPAID) {
                 _event.value = EnterMobileNumberInfoRechargeEvent.ShowPlanScreen(
                     operatorResponse, mobileNumberInfoModel?.mobile, mobileNumberInfoModel?.circle

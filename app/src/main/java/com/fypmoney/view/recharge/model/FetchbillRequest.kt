@@ -6,6 +6,6 @@ import androidx.annotation.Keep
 data class FetchbillRequest(
     val mode: String? = null,
     val operator: String? = null,
-    val canumber: Long? = null
+    val canumber: String? = null
 )
 

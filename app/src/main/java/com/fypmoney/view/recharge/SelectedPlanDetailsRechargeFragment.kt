@@ -147,6 +147,7 @@ class SelectedPlanDetailsRechargeFragment: BaseFragment<SelectedPlanDetailsRecha
     private fun handelState(it: SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeState?) {
         when(it){
             is SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeState.Error -> {
+                binding.continueBtn.setBusy(false)
 
             }
             SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeState.Loading -> {
@@ -170,7 +171,7 @@ class SelectedPlanDetailsRechargeFragment: BaseFragment<SelectedPlanDetailsRecha
             }
             is SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeEvent.ShowPaymentProcessingScreen -> {
                 val direction = SelectedPlanDetailsRechargeFragmentDirections.actionSelectedPlanDetailsToPaymentProcessing(
-                    it.payRequest
+                    payAndRechargeRequest = it.payRequest
                 )
                 findNavController().navigate(direction)
             }

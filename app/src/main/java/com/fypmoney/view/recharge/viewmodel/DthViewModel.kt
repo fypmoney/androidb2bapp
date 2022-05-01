@@ -1,7 +1,6 @@
 package com.fypmoney.view.recharge.viewmodel
 
 import android.app.Application
-import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -87,12 +86,12 @@ class DthViewModel(application: Application) : BaseViewModel(application) {
     fun callGetDthInfo(toString: String) {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                purpose = ApiConstant.API_DTH_INFO,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_DTH_INFO),
+                purpose = ApiConstant.API_FETCH_BILL,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_FETCH_BILL),
                 request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = true,
                 param = FetchbillRequest(
-                    canumber = toString.toLong(),
+                    canumber = toString,
                     operator = selectedOfflineOperator.value?.operator_id,
                     mode = "online"
                 )
@@ -205,7 +204,7 @@ class DthViewModel(application: Application) : BaseViewModel(application) {
 
             }
 
-            ApiConstant.API_DTH_INFO -> {
+            ApiConstant.API_FETCH_BILL -> {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
                 val array = Gson().fromJson<FetchbillResponse>(

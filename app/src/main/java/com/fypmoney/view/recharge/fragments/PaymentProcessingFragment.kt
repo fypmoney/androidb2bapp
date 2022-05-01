@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fypmoney.BR
@@ -12,8 +11,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.PaymentProcessingFragmentBinding
 import com.fypmoney.extension.toVisible
-import com.fypmoney.util.Utility
-import kotlinx.coroutines.delay
+import com.fypmoney.view.recharge.model.PayAndRechargeResponse
 
 
 class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,PaymentProcessingFragmentVM>() {
@@ -51,17 +49,23 @@ class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,
     override fun onAttach(context: Context) {
         super.onAttach(context)
         paymentProcessingFragmentVM.rechargeRequest = args.payAndRechargeRequest
+        paymentProcessingFragmentVM.billPaymentRequest = args.billPaymentRequest
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewDataBinding()
         setUpBinding()
+        paymentProcessingFragmentVM.updateText()
         paymentProcessingFragmentVM.rechargeRequest?.let {
             paymentProcessingFragmentVM.callMobileRecharge(
                 it
             )
         }
+        paymentProcessingFragmentVM.billPaymentRequest?.let {
+            paymentProcessingFragmentVM.payPostpaidBill()
+        }
+        paymentProcessingFragmentVM.updateText()
     }
 
     private fun setUpBinding() {
@@ -75,36 +79,7 @@ class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,
 
     private fun handelEvent(it: PaymentProcessingFragmentVM.PaymentProcessingEvent?) {
         when(it){
-            is PaymentProcessingFragmentVM.PaymentProcessingEvent.ShowFailedScreen -> {
-
-            }
-            is PaymentProcessingFragmentVM.PaymentProcessingEvent.ShowPendingScreen -> {
-
-            }
-            is PaymentProcessingFragmentVM.PaymentProcessingEvent.ShowSuccessScreen -> {
-                val directions  = PaymentProcessingFragmentDirections.navigateFromPaymentProcessingToPaymentSuccess(
-                    successResponse = it.payAndRechargeResponse,
-                    selectedOperator = null,
-                    mobile = paymentProcessingFragmentVM.rechargeRequest?.cardNo,
-                    amount = paymentProcessingFragmentVM.rechargeRequest?.amount.toString()
-
-                )
-                findNavController().navigate(directions)
-
-            }
-            null -> TODO()
-        }
-    }
-
-    private fun handelState(it: PaymentProcessingFragmentVM.PaymentProcessingState?) {
-        when(it){
-            is PaymentProcessingFragmentVM.PaymentProcessingState.Error -> {
-                binding.progressCpi.toVisible()
-                binding.titleTv.text = it.errorResponseInfo.msg
-                /*lifecycleScope.launchWhenResumed {
-                    delay(5000)
-                    findNavController().navigateUp()
-                }*/
+            is PaymentProcessingFragmentVM.PaymentProcessingEvent.ShowPrepaidFailedScreen -> {
                 val directions  = PaymentProcessingFragmentDirections.navigateFromPaymentProcessingToPaymentSuccess(
                     successResponse = null,
                     selectedOperator = null,
@@ -114,19 +89,53 @@ class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,
                 )
                 findNavController().navigate(directions)
             }
-            PaymentProcessingFragmentVM.PaymentProcessingState.Loading -> {
-                binding.progressCpi.toVisible()
+            is PaymentProcessingFragmentVM.PaymentProcessingEvent.ShowPostPaidFailedScreen -> {
+                val directions  = PaymentProcessingFragmentDirections.navigateFromPaymentProcessingToPaymentSuccess(
+                    successResponse = null,
+                    selectedOperator = null,
+                    mobile = paymentProcessingFragmentVM.billPaymentRequest?.cardNo,
+                    amount = paymentProcessingFragmentVM.billPaymentRequest?.billAmount.toString()
 
-                    lifecycleScope.launchWhenResumed {
-                        binding.titleTv.text = paymentProcessingFragmentVM.rechargeRequest?.let { it1 ->
-                            String.format(getString(R.string.processing_payment_of),
-                                Utility.convertToRs(it1.amount.toString()))
-                        }
-                        delay(1000)
-                        binding.titleTv.text = paymentProcessingFragmentVM.rechargeRequest?.let { it1 ->
-                            String.format(getString(R.string.processing_recharge_of), it1.cardNo.toString())
-                        }
-                    }
+                )
+                findNavController().navigate(directions)
+            }
+
+            is PaymentProcessingFragmentVM.PaymentProcessingEvent.ShowPendingScreen -> {
+
+            }
+            is PaymentProcessingFragmentVM.PaymentProcessingEvent.ShowSuccessScreen -> {
+                val directions  = PaymentProcessingFragmentDirections.navigateFromPaymentProcessingToPaymentSuccess(
+                    successResponse = it.payAndRechargeResponse,
+                    selectedOperator = null,
+                    mobile = paymentProcessingFragmentVM.rechargeRequest?.cardNo,
+                    amount = paymentProcessingFragmentVM.rechargeRequest?.amount.toString())
+                findNavController().navigate(directions)
+
+            }
+            null -> TODO()
+            is PaymentProcessingFragmentVM.PaymentProcessingEvent.ShowPostPaidSuccessScreen -> {
+                val directions  = PaymentProcessingFragmentDirections.navigateFromPaymentProcessingToPaymentSuccess(
+                    successResponse = PayAndRechargeResponse(isPurchased = it.billPaymentResponse.isPurchased),
+                    selectedOperator = null,
+                    mobile = paymentProcessingFragmentVM.billPaymentRequest?.cardNo,
+                    amount = paymentProcessingFragmentVM.billPaymentRequest?.billAmount.toString()
+
+                )
+                findNavController().navigate(directions)
+            }
+        }
+    }
+
+    private fun handelState(it: PaymentProcessingFragmentVM.PaymentProcessingState?) {
+        when(it){
+            is PaymentProcessingFragmentVM.PaymentProcessingState.Error -> {
+                binding.progressCpi.toVisible()
+                binding.titleTv.text = it.errorResponseInfo.msg
+
+            }
+            PaymentProcessingFragmentVM.PaymentProcessingState.Loading -> {
+                    binding.progressCpi.toVisible()
+
 
 
             }
@@ -134,6 +143,12 @@ class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,
 
             }
             null -> TODO()
+            is PaymentProcessingFragmentVM.PaymentProcessingState.BillSuccess -> {
+
+            }
+            is PaymentProcessingFragmentVM.PaymentProcessingState.UpdateTitle -> {
+                binding.titleTv.text = it.title
+            }
         }
     }
 }

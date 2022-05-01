@@ -492,8 +492,15 @@
             app:argType="string"
             app:nullable="true" />
         <argument
+            android:name="rechargeType"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="true" />
+        <argument
             android:name="selectedCircle"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true"  />
         <action
             android:id="@+id/action_to_operator_list"
             app:destination="@+id/navigation_select_operator_from_list"
@@ -503,8 +510,13 @@
             app:popExitAnim="@anim/slide_out_righ" />
 
         <action
-            android:id="@+id/action_recharge_success"
-            app:destination="@+id/navigation_dth_success" />
+            android:id="@+id/action_postpaid_bill_to_payment_processing"
+            app:destination="@+id/navigation_payment_processing"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
+
     </fragment>
 
     <fragment
@@ -512,6 +524,12 @@
         android:name="com.fypmoney.view.recharge.fragments.PaymentProcessingFragment"
         android:label="Payment Processing Screen"
         tools:layout="@layout/payment_processing_fragment">
+
+        <argument
+            android:name="billPaymentRequest"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.recharge.model.BillPaymentRequest"
+            app:nullable="true" />
 
         <argument
             android:name="payAndRechargeRequest"
@@ -524,7 +542,9 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="false"/>
 
     </fragment>
 

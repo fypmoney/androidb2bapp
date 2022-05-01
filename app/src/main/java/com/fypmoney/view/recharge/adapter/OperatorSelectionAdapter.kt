@@ -58,7 +58,7 @@ class OperatorVH(
                         ContextCompat.getDrawable(this.operatorIv.context, R.drawable.ic_vodafone), false
                     )
                 }
-                "JIO" -> {
+                "JIO","Jio" -> {
                     loadImage(
                         operatorIv, operator.icon,
                         ContextCompat.getDrawable(this.operatorIv.context, R.drawable.ic_jio), false

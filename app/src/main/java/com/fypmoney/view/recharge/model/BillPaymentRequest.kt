@@ -1,24 +1,27 @@
 package com.fypmoney.view.recharge.model
 
+import android.os.Parcelable
 import androidx.annotation.Keep
+import kotlinx.android.parcel.Parcelize
 
 @Keep
+@Parcelize
 data class BillPaymentRequest(
-    val amount: Double? = null,
+    var amount: String? = null,
     val planType: String? = null,
-    val billnetamount: Double? = null,
+    var billnetamount: String? = null,
     val latitude: String? = null,
     val dueDate: String? = null,
     val userName: String? = null,
     val cardNo: String? = null,
-    val operator: Int? = null,
+    val operator: String? = null,
     val acceptPayment: Boolean? = null,
     val cellNumber: String? = null,
     val mode: String? = null,
-    val billAmount: Double? = null,
+    var billAmount: String? = null,
     val billdate: String? = null,
     val acceptPartPay: Boolean? = null,
-    val planPrice: Double? = null,
+    var planPrice: String? = null,
     val longitude: String? = null
-)
+) : Parcelable
 

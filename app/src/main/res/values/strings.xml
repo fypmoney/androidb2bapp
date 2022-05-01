@@ -1171,4 +1171,5 @@ Coming really soon!
     <string name="recharge_failed">Recharge Failed</string>
     <string name="unable_to_fetch_bill_enter_amount_manually">Unable to fetch bill.Enter amount manually</string>
     <string name="payable_amount">Payable Amount</string>
+    <string name="bill_due_date">Bill Due Date: %1$s</string>
 </resources>

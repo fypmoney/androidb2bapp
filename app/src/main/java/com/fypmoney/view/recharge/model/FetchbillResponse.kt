@@ -16,7 +16,7 @@ data class FetchbillResponse(
 @Keep
 data class BillFetch(
     val billAmount: String? = null,
-    val billnetamount: String? = null,
+    var billnetamount: String? = null,
     val dueDate: String? = null,
     val billdate: String? = null,
     val acceptPartPay: Boolean? = null,

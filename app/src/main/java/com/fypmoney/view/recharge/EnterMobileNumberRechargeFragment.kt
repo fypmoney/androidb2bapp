@@ -163,7 +163,7 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
 
     private fun setListeners() {
         binding.etNumber.doOnTextChanged { text, start, before, count ->
-            if(text.isNullOrEmpty() && text!!.length < 10){
+            if(!text.isNullOrEmpty() && text.length < 10){
                 binding.continueBtn.isEnabled = false
                 binding.errorTv.toVisible()
             }else{

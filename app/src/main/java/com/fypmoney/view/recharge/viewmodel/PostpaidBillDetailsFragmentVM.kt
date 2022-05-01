@@ -1,7 +1,7 @@
 package com.fypmoney.view.recharge.viewmodel
 
 import android.app.Application
-import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -10,7 +10,10 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.*
+import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.GetWalletBalanceResponse
+import com.fypmoney.util.Utility
+import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.recharge.model.*
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -23,105 +26,109 @@ class PostpaidBillDetailsFragmentVM(application: Application) : BaseViewModel(ap
    var paymentResponse: MutableLiveData<BillPaymentResponse> = MutableLiveData()
     var failedRecharge: MutableLiveData<String> = MutableLiveData()
 
-    fun callGetDthInfo(toString: String) {
+
+    var billDetails: FetchbillResponse? = null
+
+
+    var operatorResponse:OperatorResponse? = null
+
+    var circleGot:String? = null
+    var rechargeType:String? = null
+    var mobileNumber:String? = null
+    var amount:String? = null
+
+    val state:LiveData<PostpaidBillDetailsState>
+        get() = _state
+    private val _state = MutableLiveData<PostpaidBillDetailsState>()
+
+    val event:LiveData<PostpaidBilDetailsEvent>
+        get() = _event
+    private val _event = LiveEvent<PostpaidBilDetailsEvent>()
+
+    fun onPayClick(){
+        fetchBalance()
+    }
+    fun callFetchBillsInformation(mobileNumber: String,operatorId:String) {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                purpose = ApiConstant.API_DTH_INFO,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_DTH_INFO),
+                purpose = ApiConstant.API_FETCH_BILL,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_FETCH_BILL),
                 request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = true,
                 param = FetchbillRequest(
-                    canumber = toString.toLong(),
-                    operator = operatorResponse.get()?.operatorId,
+                    canumber = mobileNumber,
+                    operator = operatorId,
                     mode = "online"
                 )
             )
         )
     }
 
-    fun callMobileRecharge(
-        operator: String?,
-        dth: String,
-        amount: String
-    ) {
-
-            WebApiCaller.getInstance().request(
-                ApiRequest(
-                    purpose = ApiConstant.API_PAY_BILL,
-                    endpoint = NetworkUtil.endURL(ApiConstant.API_PAY_BILL),
-                    request_type = ApiUrl.POST,
-                    onResponse = this, isProgressBar = true,
-                    param =
-                    BillPaymentRequest(
-                        cardNo = dth,
-                        operator = operatorResponse.get()?.operatorId?.toInt(),
-                        amount = amount.toDouble(),
-                        planPrice = amount.toDouble(),
-                        planType = "",
-                        billAmount = amount.toDouble(),
-                        billnetamount = fetchedBill.value!!.bill_fetch?.billnetamount?.toDoubleOrNull(),
-                        mode = "online",
-                        dueDate = fetchedBill.value!!.bill_fetch?.dueDate,
-                        acceptPartPay = false,
-                        acceptPayment = true,
-                        cellNumber = dth,
-                        userName = "Raghu",
-                        latitude = "27.2232",
-                        longitude = "27.2232"
-
-
-                    )
-
-                )
+    private fun fetchBalance() {
+        _state.value = PostpaidBillDetailsState.Loading
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_WALLET_BALANCE,
+                NetworkUtil.endURL(ApiConstant.API_GET_WALLET_BALANCE),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
             )
-
+        )
     }
 
-    var opertaorList: MutableLiveData<ArrayList<OperatorResponse>> = MutableLiveData()
-    var fetchedBill: MutableLiveData<FetchbillResponse> = MutableLiveData()
-
-
-    var operatorResponse = ObservableField<OperatorResponse>()
-
-    var circleGot = MutableLiveData<String>()
-    var mobileNumber = MutableLiveData<String>()
 
 
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.API_GET_OPERATOR_LIST_MOBILE -> {
-                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-
-                val array = Gson().fromJson<Array<OperatorResponse>>(
-                    json.get("data").toString(),
-                    Array<OperatorResponse>::class.java
-                )
-                val arrayList = ArrayList(array.toMutableList())
-                opertaorList.postValue(arrayList)
-            }
-
-            ApiConstant.API_PAY_BILL -> {
-                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-
-                val array = Gson().fromJson<BillPaymentResponse>(
-                    json.get("data").toString(),
-                    BillPaymentResponse::class.java
-                )
-
-                paymentResponse.postValue(array)
-            }
-            ApiConstant.API_DTH_INFO -> {
+            ApiConstant.API_FETCH_BILL -> {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
                 val array = Gson().fromJson<FetchbillResponse>(
                     json.get("data").toString(),
                     FetchbillResponse::class.java
                 )
-
-                fetchedBill.postValue(array)
+                billDetails = array
+                _state.value = PostpaidBillDetailsState.FetchBillSuccess(array)
             }
+            ApiConstant.API_GET_WALLET_BALANCE -> {
+                if (responseData is GetWalletBalanceResponse) {
+                    responseData.getWalletBalanceResponseDetails.accountBalance.toIntOrNull()
+                        ?.let { accountBalance ->
+                            _state.value = PostpaidBillDetailsState.BalanceSuccess(accountBalance)
+                            if(accountBalance< Utility.convertToPaise(amount?.toDouble().toString())?.toLong()!!){
+                                _event.value = PostpaidBilDetailsEvent.ShowLowBalanceAlert(
+                                    ((Utility.convertToPaise(amount?.toDouble().toString())
+                                        ?.toLong()!!) - (accountBalance)).toString()
+                                )
+                            }else{
+                                _event.value = PostpaidBilDetailsEvent.ShowPaymentProcessingScreen(
+                                    BillPaymentRequest(
+                                        cardNo = mobileNumber,
+                                        operator = operatorResponse?.operatorId,
+                                        amount = amount?.toDouble().toString(),
+                                        planPrice = amount?.toDouble().toString(),
+                                        planType = "",
+                                        billAmount = amount?.toDouble().toString(),
+                                        billnetamount = billDetails!!.bill_fetch?.billnetamount?.toDoubleOrNull().toString(),
+                                        mode = "online",
+                                        dueDate = billDetails!!.bill_fetch?.dueDate,
+                                        acceptPartPay = false,
+                                        acceptPayment = true,
+                                        cellNumber = mobileNumber,
+                                        userName = "",
+                                        latitude = "",
+                                        longitude = ""
 
+
+                                    )
+                                )
+                            }
+                        }
+
+                }
+            }
 
         }
 
@@ -129,10 +136,11 @@ class PostpaidBillDetailsFragmentVM(application: Application) : BaseViewModel(ap
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
-            ApiConstant.API_PAY_BILL -> {
-                failedRecharge.postValue(null)
+            ApiConstant.API_FETCH_BILL -> {
+                _state.value = PostpaidBillDetailsState.Error(errorResponseInfo,purpose)
             }
-            ApiConstant.API_DTH_INFO -> {
+            ApiConstant.API_GET_WALLET_BALANCE->{
+                _state.value = PostpaidBillDetailsState.Error(errorResponseInfo,purpose)
             }
         }
     }
@@ -141,9 +149,11 @@ class PostpaidBillDetailsFragmentVM(application: Application) : BaseViewModel(ap
         object Loading:PostpaidBillDetailsState()
         data class Error(val errorResponseInfo: ErrorResponseInfo,val api:String):PostpaidBillDetailsState()
         data class FetchBillSuccess(val bill:FetchbillResponse):PostpaidBillDetailsState()
+        data class BalanceSuccess(var balance:Int):PostpaidBillDetailsState()
     }
     sealed class PostpaidBilDetailsEvent{
-        object ShowPaymentProcessingScreen:PostpaidBilDetailsEvent()
+        data class ShowPaymentProcessingScreen(val billPaymentRequest: BillPaymentRequest):PostpaidBilDetailsEvent()
+        data class ShowLowBalanceAlert(val amount:String?): PostpaidBilDetailsEvent()
     }
 
 }

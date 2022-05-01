@@ -127,6 +127,8 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
                 // Do something with the result.
                 val operator = result as OperatorResponse
                 mViewModel.operatorResponse = operator
+                mViewModel.mobileNumberInfoModel?.operator =operator.name
+                setUpDataInUi()
                 mViewBinding.opertorLisTv.text = operator.name
                 mViewBinding.continueBtn.isEnabled = true
 
@@ -166,15 +168,13 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
                 directions?.let { it1 -> findNavController().navigate(it1) }
             }
             is MobileNumberInfoRechargeFragmentVM.EnterMobileNumberInfoRechargeEvent.ShowPostpaidBilScreen -> {
-                val directions = mViewModel.mobileNumberInfoModel?.circle?.let { it1 ->
-                    MobileNumberInfoRechargeFragmentDirections.actionPostpaidBill(
+                val directions = MobileNumberInfoRechargeFragmentDirections.actionPostpaidBill(
                         selectedOperator = mViewModel.operatorResponse,
-                        selectedCircle = it1,
+                        selectedCircle = null,
                         operator =  mViewModel.mobileNumberInfoModel?.operator,
-                        mobile = mViewModel.mobileNumberInfoModel?.mobile
-                    )
-                }
-                directions?.let { it1 -> findNavController().navigate(it1) }
+                        mobile = mViewModel.mobileNumberInfoModel?.mobile,
+                        rechargeType = mViewModel.mobileNumberInfoModel?.rechargeType)
+                directions.let { it1 -> findNavController().navigate(it1) }
             }
         }
     }

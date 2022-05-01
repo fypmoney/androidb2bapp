@@ -18,13 +18,9 @@ import com.fypmoney.view.recharge.model.OperatorResponse
 import com.fypmoney.view.recharge.model.PayAndRechargeRequest
 import com.fypmoney.view.recharge.model.PayAndRechargeResponse
 import com.fypmoney.view.recharge.model.ValueItem
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 
 
 class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseViewModel(application) {
-    var failedresponse: MutableLiveData<String> = MutableLiveData()
     var selectedPlan: ValueItem? = null
     var mobile: String? = null
     var planType: String? = null
@@ -56,7 +52,7 @@ class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseView
         _event.value = SelectedPlanDetailsRechargeEvent.ChangePlan
     }
 
-    fun fetchBalance() {
+    private fun fetchBalance() {
         _state.value = SelectedPlanDetailsRechargeState.Loading
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -68,41 +64,11 @@ class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseView
             )
         )
     }
-    /*fun callMobileRecharge(
-        selectedpaln: ValueItem?,
-        number: String?,
-        value2: OperatorResponse?,
-        value3: String?
-    ) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_MOBILE_RECHARGE,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_MOBILE_RECHARGE),
-                request_type = ApiUrl.POST,
-                onResponse = this, isProgressBar = true,
-                param = PayAndRechargeRequest(
-                    cardNo = number,
-                    operator = operatorResponse.value?.operatorId,
-                    planPrice = Utility.convertToPaise(selectedpaln?.rs)?.toLong(),
-                    planType = value3,
-                    amount = Utility.convertToPaise(selectedpaln?.rs)?.toLong()
-                )
-            )
-        )
-    }*/
 
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.API_MOBILE_RECHARGE -> {
-                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-                val array = Gson().fromJson<PayAndRechargeResponse>(
-                    json.get("data").toString(),
-                    PayAndRechargeResponse::class.java
-                )
-                success.postValue(array)
-            }
             ApiConstant.API_GET_WALLET_BALANCE -> {
             if (responseData is GetWalletBalanceResponse) {
                 responseData.getWalletBalanceResponseDetails.accountBalance.toIntOrNull()
@@ -133,11 +99,6 @@ class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseView
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
-            ApiConstant.API_MOBILE_RECHARGE -> {
-                failedresponse.postValue(
-                    "failed"
-                )
-            }
             ApiConstant.API_GET_WALLET_BALANCE->{
                 _state.value = SelectedPlanDetailsRechargeState.Error(errorResponseInfo)
             }

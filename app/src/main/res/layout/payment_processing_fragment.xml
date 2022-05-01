@@ -37,6 +37,7 @@
             android:textSize="18sp"
             android:layout_marginHorizontal="@dimen/dp20"
             android:layout_marginTop="9dp"
+            android:gravity="center"
             tools:text="Processing payment of ₹ 20"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
