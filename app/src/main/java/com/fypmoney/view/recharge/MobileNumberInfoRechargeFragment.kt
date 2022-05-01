@@ -67,6 +67,7 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
         setUpDataInUi()
         setUpObserver()
         mViewModel.callExplporeContent(mViewModel.mobileNumberInfoModel?.rechargeType)
+        mViewModel.mobileNumberInfoModel?.rechargeType?.let { mViewModel.callGetOperatorList(it) }
     }
 
 
@@ -158,7 +159,8 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
                     MobileNumberInfoRechargeFragmentDirections.actionSelectRechargePlans(
                         mViewModel.operatorResponse,
                         selectedCircle = it1,
-                        mobile = mViewModel.mobileNumberInfoModel?.mobile
+                        mobile = mViewModel.mobileNumberInfoModel?.mobile,
+                        rechargeTye = mViewModel.mobileNumberInfoModel?.rechargeType
                     )
                 }
                 directions?.let { it1 -> findNavController().navigate(it1) }
@@ -166,7 +168,7 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
             is MobileNumberInfoRechargeFragmentVM.EnterMobileNumberInfoRechargeEvent.ShowPostpaidBilScreen -> {
                 val directions = mViewModel.mobileNumberInfoModel?.circle?.let { it1 ->
                     MobileNumberInfoRechargeFragmentDirections.actionPostpaidBill(
-                        mViewModel.operatorResponse,
+                        selectedOperator = mViewModel.operatorResponse,
                         selectedCircle = it1,
                         operator =  mViewModel.mobileNumberInfoModel?.operator,
                         mobile = mViewModel.mobileNumberInfoModel?.mobile

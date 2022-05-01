@@ -59,6 +59,7 @@ class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, Recharg
 
         mViewModel.selectedOperator.value = args.selectedOperator
         mViewModel.selectedCircle.value = args.selectedCircle
+        mViewModel.rechargeType = args.rechargeTye
         mViewModel.mobile.value = args.mobile
         mViewBinding.tvUserNumber.text = args.mobile
 
@@ -123,11 +124,12 @@ class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, Recharg
                 Utility.toTitleCase(it1)?.let { it2 ->
                     adapter.addFragment(RechargeForYouFragment(it.value,
                         click = {
-                            val directions = RechargePlansFragmentDirections.actionRechargeAndPay(
+                            val directions = RechargePlansFragmentDirections.actionRechargePlanToSelectedPlan(
                                 it,
                                 mViewModel.selectedOperator.value,
                                 mobile = mViewModel.mobile.value,
-                                planType = it1
+                                planType = it1,
+                                rechargeType = mViewModel.rechargeType
                             )
 
                             findNavController().navigate(directions)

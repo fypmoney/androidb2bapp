@@ -122,7 +122,6 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
             }
             null -> TODO()
             is EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeState.HLRSuccess -> {
-//                showOperatorListScreen(it.hlrInfo?.circle,it.hlrInfo?.operator)
                 binding.continueBtn.setBusy(false)
             }
         }

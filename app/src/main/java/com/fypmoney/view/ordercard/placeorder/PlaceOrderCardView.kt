@@ -26,11 +26,8 @@ import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.ordercard.model.PinCodeData
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.placeordersuccess.PlaceOrderSuccessActivity
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
-import kotlinx.android.synthetic.main.view_order_card.*
-import java.util.*
 
 
 /*
@@ -324,6 +321,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         bottomsheetInsufficient.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomsheetInsufficient.show(supportFragmentManager, "PLACEORDER")
     }
+
     private fun callNotServicebleSheet() {
         val bottomSheet = NotServiceableBottomSheet(onNotifyClick = {
             intentToActivity(HomeActivity::class.java)

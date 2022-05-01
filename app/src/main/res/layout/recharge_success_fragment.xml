@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.recharge.viewmodel.RechargeSuccessfulFragmentVM" />
     </data>
 
 
@@ -16,6 +18,7 @@
         <include
             android:id="@+id/layout"
             layout="@layout/toolbar" />
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/logo"
             android:layout_width="@dimen/_100sdp"
@@ -25,14 +28,14 @@
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/failed"
-            app:layout_constraintBottom_toTopOf="@+id/continue_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 
-        <TextView
-            android:id="@+id/tvUserName"
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/status_title_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/layout"
@@ -40,18 +43,16 @@
             android:layout_marginStart="@dimen/_24sdp"
             android:layout_marginEnd="@dimen/_24sdp"
             android:gravity="center"
-            android:text="User"
+            tools:text="User"
             style="@style/TextviewBold"
-
-
             app:layout_constraintTop_toBottomOf="@+id/logo"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/comment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -60,33 +61,39 @@
             android:layout_marginStart="@dimen/_24sdp"
             android:layout_marginEnd="@dimen/_24sdp"
             android:gravity="center"
-            android:text="User"
+            tools:text="User"
             style="@style/TextviewRegular"
-
-
-            app:layout_constraintTop_toBottomOf="@+id/tvUserName"
-            android:textColor="#9CA3A5"
+            app:layout_constraintTop_toBottomOf="@+id/status_title_tv"
+            android:textColor="@color/text_color_light"
             android:textSize="14sp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
 
-        <Button
-            android:id="@+id/continue_btn"
+
+        <com.fypmoney.view.customview.PrimaryButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_gravity="center_horizontal"
             android:fontFamily="sans-serif"
-            android:text="Continue"
+            android:paddingLeft="74dp"
+            android:paddingTop="14dp"
+            android:paddingRight="74dp"
+            android:paddingBottom="14dp"
+            app:text="@string/continue_btn_text"
+            android:layout_marginBottom="@dimen/dp20"
             android:textAllCaps="false"
-            android:textColor="#231F20"
-            android:layout_marginBottom="@dimen/_24sdp"
-            android:layout_marginStart="@dimen/_42sdp"
-            android:layout_marginEnd="@dimen/_42sdp"
+            app:enabled="true"
+            android:id="@+id/continue_btn"
+            android:onClick="@{()->viewModel.onContinueClick()}"
+            android:textColor="@color/text_color_light"
             android:textSize="18sp"
             android:textStyle="normal"
-            app:backgroundTint="#FFFFFF"
+            app:disabled_bg="@color/cb_grey"
+            app:disabled_text="@color/grey_heading"
+            app:enabled_text="@color/text_color_dark"
+            app:enabled_bg="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

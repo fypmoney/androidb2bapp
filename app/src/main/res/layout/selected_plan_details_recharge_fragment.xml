@@ -162,7 +162,7 @@
                     android:paddingTop="14dp"
                     android:paddingRight="74dp"
                     android:paddingBottom="14dp"
-                    app:text="@string/continue_btn_text"
+                    app:text="@string/pay"
                     android:layout_marginBottom="@dimen/dp20"
                     android:textAllCaps="false"
                     app:enabled="true"

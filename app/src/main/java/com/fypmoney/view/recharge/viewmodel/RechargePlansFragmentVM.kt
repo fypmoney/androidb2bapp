@@ -34,7 +34,7 @@ class RechargePlansFragmentVM(application: Application) : BaseViewModel(applicat
     var selectedOperator = MutableLiveData<OperatorResponse>()
     var selectedCircle = MutableLiveData<String>()
     var mobile = MutableLiveData<String>()
-
+    var rechargeType:String? = null
     val searchQuery = MutableLiveData<String>()
     @ObsoleteCoroutinesApi
     private val planSearchQueryBroadcastChannel = ConflatedBroadcastChannel<String>()

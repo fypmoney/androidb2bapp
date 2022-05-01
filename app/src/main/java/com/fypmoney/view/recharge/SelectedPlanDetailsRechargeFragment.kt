@@ -1,7 +1,9 @@
 package com.fypmoney.view.recharge
 
 
+import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -11,12 +13,16 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.SelectedPlanDetailsRechargeFragmentBinding
+import com.fypmoney.util.Utility
+import com.fypmoney.view.activity.AddMoneyView
+import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
+import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.recharge.viewmodel.SelectedPlanDetailsRechargeFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-class SelectedPlanDetailsRechargeFragment :
-    BaseFragment<SelectedPlanDetailsRechargeFragmentBinding, SelectedPlanDetailsRechargeFragmentVM>() {
+class SelectedPlanDetailsRechargeFragment: BaseFragment<SelectedPlanDetailsRechargeFragmentBinding, SelectedPlanDetailsRechargeFragmentVM>() {
+
     private  val selectedPlanDetailsRechargeFragmentVM by viewModels<SelectedPlanDetailsRechargeFragmentVM> { defaultViewModelProviderFactory }
 
     private lateinit var binding: SelectedPlanDetailsRechargeFragmentBinding
@@ -47,9 +53,7 @@ class SelectedPlanDetailsRechargeFragment :
         selectedPlanDetailsRechargeFragmentVM.operatorResponse = args.selectedOperator
         selectedPlanDetailsRechargeFragmentVM.mobile = args.mobile
         selectedPlanDetailsRechargeFragmentVM.planType = args.planType
-
-
-
+        selectedPlanDetailsRechargeFragmentVM.rechargeType = args.rechargeType
 
         binding.amountTv.text = getString(R.string.Rs) + args.selectedPlan?.rs
         binding.details.text = args.selectedPlan?.desc
@@ -69,32 +73,19 @@ class SelectedPlanDetailsRechargeFragment :
                 binding.operatorIv.setBackgroundResource(R.drawable.ic_jio)
             }
         }
-
-
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar, backArrowTint = Color.WHITE,
             titleColor = Color.WHITE,
             isBackArrowVisible = true,
-            toolbarTitle = "Mobile Recharge"
+            toolbarTitle = selectedPlanDetailsRechargeFragmentVM.operatorResponse?.name+" "+ Utility.toTitleCase(selectedPlanDetailsRechargeFragmentVM.rechargeType)
         )
 
         setObserver()
-        setBindings()
 
 
     }
 
-    private fun setBindings() {
-       /* mViewBinding.continueBtn.setOnClickListener {
-            mViewModel.callMobileRecharge(
-                mViewModel.selectedPlan.value,
-                mViewModel.mobile.value,
-                mViewModel.operatorResponse.value,
-                mViewModel.planType.value
-            )
-        }*/
-    }
 
     override fun onTryAgainClicked() {
 
@@ -106,6 +97,9 @@ class SelectedPlanDetailsRechargeFragment :
 
         selectedPlanDetailsRechargeFragmentVM.event.observe(viewLifecycleOwner){
             handelEvent(it)
+        }
+        selectedPlanDetailsRechargeFragmentVM.state.observe(viewLifecycleOwner){
+            handelState(it)
         }
       /*  mViewModel.success.observe(viewLifecycleOwner) {
 
@@ -150,16 +144,71 @@ class SelectedPlanDetailsRechargeFragment :
 
     }
 
+    private fun handelState(it: SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeState?) {
+        when(it){
+            is SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeState.Error -> {
+
+            }
+            SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeState.Loading -> {
+                binding.continueBtn.setBusy(true)
+            }
+            is SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeState.Success -> {
+                binding.continueBtn.setBusy(false)
+
+            }
+            null -> TODO()
+        }
+    }
+
     private fun handelEvent(it: SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeEvent?) {
         when(it){
             SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeEvent.ChangePlan -> {
                 findNavController().navigateUp()
             }
-            is SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeEvent.Pay ->{
-
+            is SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeEvent.ShowLowBalanceAlert -> {
+                callInsufficientFundMessageSheet(it.amount)
+            }
+            is SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeEvent.ShowPaymentProcessingScreen -> {
+                val direction = SelectedPlanDetailsRechargeFragmentDirections.actionSelectedPlanDetailsToPaymentProcessing(
+                    it.payRequest
+                )
+                findNavController().navigate(direction)
             }
             null -> TODO()
+
         }
+    }
+
+    private fun callInsufficientFundMessageSheet(amount: String?) {
+        var bottomSheetInsufficient: TaskMessageInsuficientFuntBottomSheet? = null
+        val itemClickListener2 = object : AcceptRejectClickListener {
+            override fun onAcceptClicked(pos: Int, str: String) {
+                bottomSheetInsufficient?.dismiss()
+            }
+
+            override fun onRejectClicked(pos: Int) {
+                bottomSheetInsufficient?.dismiss()
+                val intent = Intent(requireActivity(), AddMoneyView::class.java)
+                intent.putExtra("amountshouldbeadded", Utility.convertToRs(amount))
+                startActivity(intent)
+            }
+
+            override fun ondimiss() {
+                bottomSheetInsufficient?.dismiss()
+            }
+        }
+        bottomSheetInsufficient = TaskMessageInsuficientFuntBottomSheet(itemClickListener2,
+            title = resources.getString(R.string.insufficient_bank_balance),
+            subTitle =  resources.getString(R.string.insufficient_bank_body),
+            amount = resources.getString(R.string.add_money_title1)+resources.getString(R.string.Rs)+Utility.convertToRs(amount),
+            background = "#2d3039",
+            titleColor  = "#ffffff",
+            moneyTextColor  = "#ffffff",
+            buttonColor  = "#8ECC9A",
+        )
+
+        bottomSheetInsufficient.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetInsufficient.show(requireActivity().supportFragmentManager, "Insufficient Fund")
     }
 
 

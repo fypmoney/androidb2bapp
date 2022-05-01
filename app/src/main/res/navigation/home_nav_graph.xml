@@ -15,18 +15,24 @@
             android:id="@+id/action_recharge_home"
             app:destination="@+id/navigation_recharge_home"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
         <action
             android:id="@+id/action_navigation_home_to_navigation_card"
             app:destination="@id/navigation_card"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
 
         <action
             android:id="@+id/action_recharge_screen"
             app:destination="@+id/navigation_enter_mobile_number_recharge"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
     </fragment>
 
     <fragment
@@ -38,7 +44,11 @@
 
     <action
             android:id="@+id/action_explore_section_explore"
-            app:destination="@+id/navigation_section_explore" />
+            app:destination="@+id/navigation_section_explore"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_righ"/>
     </fragment>
 
     <fragment
@@ -108,18 +118,26 @@
             android:id="@+id/action_enter_mobile_to_mobile_no_info_recharge"
             app:destination="@+id/navigation_mobile_number_info_recharge"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_righ" />
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
 
 
         <action
             android:id="@+id/action_select_circle"
             app:destination="@+id/navigation_select_circle"
             app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"/>
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
 
         <action
             android:id="@+id/action_enter_mobile_number_recharge_to_section_explore"
-            app:destination="@+id/navigation_section_explore" />
+            app:destination="@+id/navigation_section_explore"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
     </fragment>
 
     <fragment
@@ -134,15 +152,27 @@
             app:nullable="true" />
         <action
             android:id="@+id/action_select_recharge_plans"
-            app:destination="@+id/navigation_select_plans" />
+            app:destination="@+id/navigation_select_plans"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
 
         <action
             android:id="@+id/action_postpaid_bill"
-            app:destination="@+id/navigation_postpaid_bill" />
+            app:destination="@+id/navigation_postpaid_bill"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
 
         <action
             android:id="@+id/action_to_operator_list"
-            app:destination="@+id/navigation_select_operator_from_list" />
+            app:destination="@+id/navigation_select_operator_from_list"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
 
     </fragment>
 
@@ -163,7 +193,11 @@
             app:nullable="true" />
         <action
             android:id="@+id/action_go_to_dth_success"
-            app:destination="@+id/navigation_recharge_success" />
+            app:destination="@+id/navigation_recharge_success"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
     </fragment>
 
     <fragment
@@ -173,7 +207,11 @@
         tools:layout="@layout/fragment_spinner_list">
         <action
             android:id="@+id/action_go_to_dth_recharge"
-            app:destination="@+id/navigation_dth" />
+            app:destination="@+id/navigation_dth"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
     </fragment>
 
     <fragment
@@ -183,11 +221,19 @@
         tools:layout="@layout/select_circle_fragment">
         <action
             android:id="@+id/action_select_recharge_plans"
-            app:destination="@+id/navigation_select_plans" />
+            app:destination="@+id/navigation_select_plans"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
 
         <action
             android:id="@+id/action_postpaid_bill"
-            app:destination="@+id/navigation_postpaid_bill" />
+            app:destination="@+id/navigation_postpaid_bill"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
 
 
         <argument
@@ -256,9 +302,13 @@
         tools:layout="@layout/fragment_spinner_list">
 
 
-    <action
+        <action
             android:id="@+id/action_dth_recharge_screen"
-            app:destination="@+id/navigation_dth" />
+            app:destination="@+id/navigation_dth"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
 
     </fragment>
 
@@ -289,6 +339,15 @@
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
+
+        <action android:id="@+id/navigate_from_payment_success_to_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/navigation_home"/>
     </fragment>
 
     <fragment
@@ -321,12 +380,22 @@
             android:defaultValue="@null"
             app:argType="com.fypmoney.view.recharge.model.OperatorResponse"
             app:nullable="true" />
+
+        <action android:id="@+id/navigate_from_payment_success_to_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/navigation_home"/>
     </fragment>
+
     <fragment
-        android:id="@+id/navigation_recharge_and_pay"
+        android:id="@+id/navigation_recharge_plan_to_selected_plan"
         android:name="com.fypmoney.view.recharge.SelectedPlanDetailsRechargeFragment"
         android:label="PayAndRecharge"
-        tools:layout="@layout/fragment_spinner_list">
+        tools:layout="@layout/selected_plan_details_recharge_fragment">
         <argument
             android:name="selectedPlan"
             android:defaultValue="@null"
@@ -347,20 +416,41 @@
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="rechargeType"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
 
         <action
             android:id="@+id/action_recharge_success"
-            app:destination="@+id/navigation_recharge_success" />
+            app:destination="@+id/navigation_recharge_success"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
+
+        <action
+            android:id="@+id/action_selected_plan_details_to_payment_processing"
+            app:destination="@+id/navigation_payment_processing"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
     </fragment>
 
     <fragment
         android:id="@+id/navigation_select_plans"
         android:name="com.fypmoney.view.recharge.RechargePlansFragment"
         android:label="Plan_selection"
-        tools:layout="@layout/fragment_spinner_list">
+        tools:layout="@layout/recharge_plans_fragment">
         <action
-            android:id="@+id/action_recharge_and_pay"
-            app:destination="@+id/navigation_recharge_and_pay" />
+            android:id="@+id/action_recharge_plan_to_selected_plan"
+            app:destination="@+id/navigation_recharge_plan_to_selected_plan"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
         <argument
             android:name="selectedOperator"
             android:defaultValue="@null"
@@ -372,15 +462,20 @@
             app:argType="string"
             app:nullable="true" />
         <argument
+            android:name="rechargeTye"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
             android:name="selectedCircle"
             app:argType="string" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_postpaid_bill"
-        android:name="com.fypmoney.view.recharge.PayPostPaidBillFragment"
+        android:name="com.fypmoney.view.recharge.PostpaidBillDetailsRechargeFragment"
         android:label="PayPostPaidBill"
-        tools:layout="@layout/fragment_rewards_overview">
+        tools:layout="@layout/postpaid_bill_details_recharge_fragment">
         <argument
             android:name="selectedOperator"
             android:defaultValue="@null"
@@ -401,11 +496,36 @@
             app:argType="string" />
         <action
             android:id="@+id/action_to_operator_list"
-            app:destination="@+id/navigation_select_operator_from_list" />
+            app:destination="@+id/navigation_select_operator_from_list"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
 
         <action
             android:id="@+id/action_recharge_success"
             app:destination="@+id/navigation_dth_success" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_payment_processing"
+        android:name="com.fypmoney.view.recharge.fragments.PaymentProcessingFragment"
+        android:label="Payment Processing Screen"
+        tools:layout="@layout/payment_processing_fragment">
+
+        <argument
+            android:name="payAndRechargeRequest"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.recharge.model.PayAndRechargeRequest"
+            app:nullable="true" />
+
+        <action android:id="@+id/navigate_from_payment_processing_to_payment_success"
+            app:destination="@id/navigation_recharge_success"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
+
     </fragment>
 
 </navigation>

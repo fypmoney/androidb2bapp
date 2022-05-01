@@ -19,12 +19,14 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.view.recharge.adapter.CircleSelectionAdapter
 import com.fypmoney.view.recharge.viewmodel.SelectCircleFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 
 
 /*
 * This class is used as Home Screen
 * */
+@FlowPreview
 @ObsoleteCoroutinesApi
 class SelectCircleFragment : BaseFragment<SelectCircleFragmentBinding, SelectCircleFragmentVM>() {
     private lateinit var selectCircleFragmentVM: SelectCircleFragmentVM
@@ -96,7 +98,8 @@ class SelectCircleFragment : BaseFragment<SelectCircleFragmentBinding, SelectCir
                                     SelectCircleFragmentDirections.actionSelectRechargePlans(
                                         selectCircleFragmentVM.selectedOperator.value,
                                         selectedCircle = it1,
-                                        mobile = it2
+                                        mobile = it2,
+                                        rechargeTye = selectCircleFragmentVM.rechargeType.value
                                     )
                                 }
                             }

@@ -5,7 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
+import com.fypmoney.connectivity.ApiUrl
 import com.fypmoney.connectivity.ErrorResponseInfo
+import com.fypmoney.connectivity.network.NetworkUtil
+import com.fypmoney.connectivity.retrofit.ApiRequest
+import com.fypmoney.connectivity.retrofit.WebApiCaller
+import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.GetWalletBalanceResponse
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.recharge.model.OperatorResponse
@@ -22,6 +28,7 @@ class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseView
     var selectedPlan: ValueItem? = null
     var mobile: String? = null
     var planType: String? = null
+    var rechargeType: String? = null
     var operatorResponse:OperatorResponse? = null
 
     var success = MutableLiveData<PayAndRechargeResponse>()
@@ -30,20 +37,37 @@ class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseView
         get() = _event
     private val _event = LiveEvent<SelectedPlanDetailsRechargeEvent>()
 
+    val state:LiveData<SelectedPlanDetailsRechargeState>
+        get() = _state
+    private val _state = LiveEvent<SelectedPlanDetailsRechargeState>()
+
     fun onContinueClick(){
-        _event.value = SelectedPlanDetailsRechargeEvent.Pay(PayAndRechargeRequest(
+        fetchBalance()
+       /* _event.value = SelectedPlanDetailsRechargeEvent.Pay(PayAndRechargeRequest(
             cardNo = mobile,
             operator = operatorResponse?.operatorId,
             planPrice = Utility.convertToPaise(selectedPlan?.rs)?.toLong(),
             planType =  planType,
             amount = Utility.convertToPaise(selectedPlan?.rs)?.toLong()
-        ))
+        ))*/
     }
 
     fun onChangePlanClick(){
         _event.value = SelectedPlanDetailsRechargeEvent.ChangePlan
     }
 
+    fun fetchBalance() {
+        _state.value = SelectedPlanDetailsRechargeState.Loading
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_WALLET_BALANCE,
+                NetworkUtil.endURL(ApiConstant.API_GET_WALLET_BALANCE),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
     /*fun callMobileRecharge(
         selectedpaln: ValueItem?,
         number: String?,
@@ -72,19 +96,35 @@ class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseView
         super.onSuccess(purpose, responseData)
         when (purpose) {
             ApiConstant.API_MOBILE_RECHARGE -> {
-
-                Utility.showToast("Success")
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
-
                 val array = Gson().fromJson<PayAndRechargeResponse>(
                     json.get("data").toString(),
                     PayAndRechargeResponse::class.java
                 )
-
                 success.postValue(array)
-
+            }
+            ApiConstant.API_GET_WALLET_BALANCE -> {
+            if (responseData is GetWalletBalanceResponse) {
+                responseData.getWalletBalanceResponseDetails.accountBalance.toIntOrNull()
+                    ?.let { accountBalance ->
+                        _state.value = SelectedPlanDetailsRechargeState.Success(accountBalance)
+                        if(accountBalance< Utility.convertToPaise(selectedPlan?.rs)?.toLong()!!){
+                            _event.value = SelectedPlanDetailsRechargeEvent.ShowLowBalanceAlert(((Utility.convertToPaise(selectedPlan?.rs)?.toLong()!!)-(accountBalance)).toString())
+                        }else{
+                            _event.value =
+                                SelectedPlanDetailsRechargeEvent.ShowPaymentProcessingScreen(PayAndRechargeRequest(
+                                    cardNo = mobile,
+                                    operator = operatorResponse?.operatorId,
+                                    planPrice = Utility.convertToPaise(selectedPlan?.rs)?.toLong(),
+                                    planType =  planType,
+                                    amount = Utility.convertToPaise(selectedPlan?.rs)?.toLong()
+                                ))
+                        }
+                    }
 
             }
+        }
+
         }
 
     }
@@ -98,14 +138,23 @@ class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseView
                     "failed"
                 )
             }
+            ApiConstant.API_GET_WALLET_BALANCE->{
+                _state.value = SelectedPlanDetailsRechargeState.Error(errorResponseInfo)
+            }
 
         }
 
     }
 
     sealed class SelectedPlanDetailsRechargeEvent{
-        data class Pay(val payRequest:PayAndRechargeRequest):SelectedPlanDetailsRechargeEvent()
+        data class ShowPaymentProcessingScreen(val payRequest:PayAndRechargeRequest):SelectedPlanDetailsRechargeEvent()
+        data class ShowLowBalanceAlert(val amount:String?):SelectedPlanDetailsRechargeEvent()
         object ChangePlan:SelectedPlanDetailsRechargeEvent()
+    }
+    sealed class SelectedPlanDetailsRechargeState{
+        object Loading:SelectedPlanDetailsRechargeState()
+        data class Error(val errorResponseInfo: ErrorResponseInfo):SelectedPlanDetailsRechargeState()
+        data class Success(var balance:Int):SelectedPlanDetailsRechargeState()
     }
 
 }

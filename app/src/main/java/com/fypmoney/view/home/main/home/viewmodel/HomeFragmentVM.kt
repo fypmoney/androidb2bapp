@@ -229,6 +229,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                     }
                 }
             }
+
             ApiConstant.API_CALLTO_ACTION->{
                 if (responseData is CallToActionNetworkResponse) {
                     //Map network model to ui model

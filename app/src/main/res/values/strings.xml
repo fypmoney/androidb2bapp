@@ -1159,4 +1159,16 @@ Coming really soon!
     <string name="no_circle_found_according_to_your_search">No circle found according to your search</string>
     <string name="no_plans_available">No plans available</string>
     <string name="change_plan">Change Plan</string>
+    <string name="processing_payment_of">Processing payment of ₹ %1$s</string>
+    <string name="processing_recharge_of">Processing recharge for %1$s</string>
+    <string name="your_recharge_is_successful">Your Recharge of ₹%1$s to %2$s is Successful</string>
+    <string name="processing_recharge_for">Processing recharge for ₹%1$s to %2$s</string>
+    <string name="your_recharge_is_failed">Your Recharge of ₹%1$s to %2$s is failed</string>
+    <string name="please_do_not_press_back_or_close_the_app">Please, do not press back or close the app</string>
+    <string name="any_amount_detucetd">"Any amount deducted will be \n refunded within 24 hours"</string>
+    <string name="recharge_successful">Recharge Successful</string>
+    <string name="recharge_processing">Recharge Processing</string>
+    <string name="recharge_failed">Recharge Failed</string>
+    <string name="unable_to_fetch_bill_enter_amount_manually">Unable to fetch bill.Enter amount manually</string>
+    <string name="payable_amount">Payable Amount</string>
 </resources>
