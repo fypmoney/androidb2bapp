@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
+import com.fypmoney.connectivity.ApiConstant.API_GET_WALLET_BALANCE
 import com.fypmoney.connectivity.ApiUrl
 import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
@@ -13,6 +14,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.FeedDetails
+import com.fypmoney.model.GetWalletBalanceResponse
 import com.fypmoney.model.StoreDataModel
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
@@ -37,7 +39,7 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
 
 
-    var selectedOfflineOperator = MutableLiveData<StoreDataModel>()
+    var selectedDthOperator:StoreDataModel? = null
 
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
 
@@ -45,9 +47,17 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
 
     var amountSelected = ObservableField<String>("0") //prefilled amount
 
+    var subscriberId = ObservableField<String>()
+
+    var oper: OperatorResponse? = null
+
     val state: LiveData<DthDetailsState>
         get() = _state
     private val _state = MutableLiveData<DthDetailsState>()
+
+    val event: LiveData<DthDetailsEvent>
+        get() = _event
+    private val _event = LiveEvent<DthDetailsEvent>()
 
     init {
         callExplporeContent()
@@ -58,9 +68,11 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
         amountSelected.set(amount.toString())
     }
 
-
+    fun onPayClick(){
+        fetchBalance()
+    }
     fun callExplporeContent() {
-        _state.value = DthDetailsState.Loading
+        _state.value = DthDetailsState.Loading(ApiConstant.API_Explore)
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_Explore,
@@ -99,23 +111,18 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
 
     }
 
-    fun callGetDthInfo(toString: String) {
+    private fun fetchBalance() {
+        _state.value = DthDetailsState.Loading(API_GET_WALLET_BALANCE)
         WebApiCaller.getInstance().request(
             ApiRequest(
-                purpose = ApiConstant.API_FETCH_BILL,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_FETCH_BILL),
-                request_type = ApiUrl.POST,
-                onResponse = this, isProgressBar = true,
-                param = FetchbillRequest(
-                    canumber = toString,
-                    operator = selectedOfflineOperator.value?.operator_id,
-                    mode = "online"
-                )
+                API_GET_WALLET_BALANCE,
+                NetworkUtil.endURL(API_GET_WALLET_BALANCE),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
             )
         )
     }
-
-
     fun callMobileRecharge(
         selectedpaln: String?,
         number: String?,
@@ -129,7 +136,7 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
                 onResponse = this, isProgressBar = true,
                 param = PayAndRechargeRequest(
                     cardNo = number,
-                    operator = selectedOfflineOperator.value?.operator_id,
+                    operator = selectedDthOperator?.operator_id,
                     planPrice = Utility.convertToPaise(selectedpaln)?.toLong(),
                     planType = "",
                     amount = Utility.convertToPaise(selectedpaln)?.toLong()
@@ -206,6 +213,33 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
 
 
             }
+            API_GET_WALLET_BALANCE -> {
+                if (responseData is GetWalletBalanceResponse) {
+                    responseData.getWalletBalanceResponseDetails.accountBalance.toIntOrNull()
+                        ?.let { accountBalance ->
+                            _state.value = DthDetailsState.BalanceSuccess(accountBalance)
+                            if(accountBalance< Utility.convertToPaise(amountSelected.get()?.toDouble().toString())?.toLong()!!){
+                                _event.value = DthDetailsEvent.ShowLowBalanceAlert(
+                                    ((Utility.convertToPaise(
+                                        amountSelected.get()?.toDouble().toString()
+                                    )?.toLong()!!) - (accountBalance)).toString()
+                                )
+                            }else{
+                                _event.value = DthDetailsEvent.ShowPaymentProcessingScreen(
+                                    PayAndRechargeRequest(
+                                        cardNo = subscriberId.get(),
+                                        operator = oper?.operatorId,
+                                        planPrice = Utility.convertToPaise(amountSelected.get())?.toLong(),
+                                        planType =  "",
+                                        amount = Utility.convertToPaise(amountSelected.get())?.toLong()
+                                    )
+                                )
+                            }
+                        }
+
+                }
+            }
+
 
 
         }
@@ -223,17 +257,27 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
             ApiConstant.API_Explore -> {
                 _state.value = DthDetailsState.Error(errorResponseInfo,ApiConstant.API_Explore)
             }
+            ApiConstant.API_GET_WALLET_BALANCE -> {
+                _state.value = DthDetailsState.Error(errorResponseInfo,ApiConstant.API_Explore)
+            }
         }
 
     }
 
     sealed class DthDetailsState {
-        object Loading : DthDetailsState()
+        data class Loading(val api:String) : DthDetailsState()
         data class Error(val errorResponseInfo: ErrorResponseInfo, val errorFromApi: String) :
             DthDetailsState()
 
         data class ExploreSuccess(val explore: ArrayList<ExploreContentResponse>) :
             DthDetailsState()
+        data class BalanceSuccess(val balance: Int) :
+            DthDetailsState()
+    }
+    sealed class DthDetailsEvent{
+        data class ShowLowBalanceAlert(val amount:String?): DthDetailsEvent()
+        data class ShowPaymentProcessingScreen(val payAndRechargeRequest: PayAndRechargeRequest): DthDetailsEvent()
+
     }
 
 }

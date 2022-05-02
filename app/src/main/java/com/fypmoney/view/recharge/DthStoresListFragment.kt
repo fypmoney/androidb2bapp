@@ -162,7 +162,7 @@ class DthStoresListFragment : BaseFragment<DthStoresListFragmentBinding, DthStor
         when(it){
             is DthStoresListFragmentVM.DthStoreListEvent.ShowDTHDetailsScreen -> {
                 val directions =
-                    DthStoresListFragmentDirections.actionDthRechargeScreen(offlineoperator = it.model)
+                    DthStoresListFragmentDirections.actionDthRechargeScreen( storeDataModel = it.model)
 
                 directions.let { it1 -> findNavController().navigate(it1) }
             }

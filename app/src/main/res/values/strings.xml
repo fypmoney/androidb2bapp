@@ -1184,4 +1184,12 @@ Coming really soon!
     <string name="add_money_2000">\u20B9 2000</string>
     <string name="know_more">Know More</string>
     <string name="please_enter_correct_details_for_successful_dth_recharge_otherwise_your_recharge_will_fail">Please enter correct details for successful DTH Recharge otherwise your recharge will fail.</string>
+    <string name="whats_my_customer_id">What\'s my Customer ID (DTH number)?</string>
+    <string name="airtel_know_more_body">To know your customer ID, please press the MENU button on your remote and select My Account . Alternatively, SMS BAL to 54325 from Registered Mobile Number (RMN) or place a missed call on 81300-81300 from your RMN.</string>
+    <string name="dish_tv_title">What\'s my Viewing Card (VC) Number?</string>
+    <string name="dish_tv_body">To know your Viewing Card Number, go to the help menu on your TV and select My Account.</string>
+    <string name="tata_sky_title">What\'s my Subscriber ID?</string>
+    <string name="tata_sky_body">To know your Subscriber ID, press the HOME button on your remote. Alternatively, give a missed call on 080-61-9999-11 from your Registered Mobile Number.</string>
+    <string name="d2h_title">What\'s my Subscriber ID?</string>
+    <string name="d2h_body">To know your Subscriber ID, press the green color button on your D2H remote. Alternatively, SMS \'ID\' from your registered mobile number to 566777 or call 97818-97818 (Toll-Free).</string>
 </resources>

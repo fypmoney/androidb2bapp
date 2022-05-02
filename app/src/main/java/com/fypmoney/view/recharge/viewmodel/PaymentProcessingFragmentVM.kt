@@ -1,4 +1,4 @@
-package com.fypmoney.view.recharge.fragments
+package com.fypmoney.view.recharge.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -45,16 +45,34 @@ class PaymentProcessingFragmentVM(application: Application) : BaseViewModel(appl
     fun updateText(){
         viewModelScope.launch {
              rechargeRequest?.let { it1 ->
-                 _state.value =  PaymentProcessingState.UpdateTitle(String.format(PockketApplication.instance.resources.getString(R.string.processing_payment_of),
-                     Utility.convertToRs(it1.amount.toString())))
+                 _state.value = PaymentProcessingState.UpdateTitle(
+                     String.format(
+                         PockketApplication.instance.resources.getString(R.string.processing_payment_of),
+                         Utility.convertToRs(it1.amount.toString())
+                     )
+                 )
                 delay(1000)
-                 _state.value = PaymentProcessingState.UpdateTitle(String.format(PockketApplication.instance.resources.getString(R.string.processing_recharge_of), it1.cardNo.toString()))
+                 _state.value = PaymentProcessingState.UpdateTitle(
+                     String.format(
+                         PockketApplication.instance.resources.getString(R.string.processing_recharge_of),
+                         it1.cardNo.toString()
+                     )
+                 )
             }
              billPaymentRequest?.let { it1 ->
-                 _state.value =  PaymentProcessingState.UpdateTitle(String.format(PockketApplication.instance.resources.getString(R.string.processing_payment_of),
-                     Utility.convertToRs(it1.amount.toString())))
+                 _state.value = PaymentProcessingState.UpdateTitle(
+                     String.format(
+                         PockketApplication.instance.resources.getString(R.string.processing_payment_of),
+                         Utility.convertToRs(it1.amount.toString())
+                     )
+                 )
                  delay(1000)
-                 _state.value = PaymentProcessingState.UpdateTitle(String.format(PockketApplication.instance.resources.getString(R.string.processing_recharge_of), it1.cardNo.toString()))
+                 _state.value = PaymentProcessingState.UpdateTitle(
+                     String.format(
+                         PockketApplication.instance.resources.getString(R.string.processing_recharge_of),
+                         it1.cardNo.toString()
+                     )
+                 )
              }
         }
     }
@@ -124,33 +142,48 @@ class PaymentProcessingFragmentVM(application: Application) : BaseViewModel(appl
         super.onError(purpose, errorResponseInfo)
         when(purpose){
             ApiConstant.API_MOBILE_RECHARGE ->{
-                _state.value = PaymentProcessingState.Error(errorResponseInfo,ApiConstant.API_GET_WALLET_BALANCE)
+                _state.value = PaymentProcessingState.Error(
+                    errorResponseInfo,
+                    ApiConstant.API_GET_WALLET_BALANCE
+                )
                 _event.value = PaymentProcessingEvent.ShowPrepaidFailedScreen(null)
 
             }
             ApiConstant.API_PAY_BILL -> {
-                _state.value = PaymentProcessingState.Error(errorResponseInfo,ApiConstant.API_PAY_BILL)
+                _state.value =
+                    PaymentProcessingState.Error(errorResponseInfo, ApiConstant.API_PAY_BILL)
                 _event.value = PaymentProcessingEvent.ShowPostPaidFailedScreen(null)
             }
 
             ApiConstant.API_GET_WALLET_BALANCE->{
-                _state.value = PaymentProcessingState.Error(errorResponseInfo,ApiConstant.API_GET_WALLET_BALANCE)
+                _state.value = PaymentProcessingState.Error(
+                    errorResponseInfo,
+                    ApiConstant.API_GET_WALLET_BALANCE
+                )
             }
         }
     }
 
     sealed class PaymentProcessingState{
-        object Loading:PaymentProcessingState()
-        data class Error(val errorResponseInfo: ErrorResponseInfo,val api:String):PaymentProcessingState()
-        data class Success(val payAndRechargeResponse: PayAndRechargeResponse):PaymentProcessingState()
-        data class BillSuccess(val billPaymentResponse: BillPaymentResponse):PaymentProcessingState()
-        data class UpdateTitle(val title: String):PaymentProcessingState()
+        object Loading: PaymentProcessingState()
+        data class Error(val errorResponseInfo: ErrorResponseInfo,val api:String):
+            PaymentProcessingState()
+        data class Success(val payAndRechargeResponse: PayAndRechargeResponse):
+            PaymentProcessingState()
+        data class BillSuccess(val billPaymentResponse: BillPaymentResponse):
+            PaymentProcessingState()
+        data class UpdateTitle(val title: String): PaymentProcessingState()
     }
     sealed class PaymentProcessingEvent{
-        data class ShowSuccessScreen(val payAndRechargeResponse: PayAndRechargeResponse):PaymentProcessingEvent()
-        data class ShowPostPaidSuccessScreen(val billPaymentResponse: BillPaymentResponse):PaymentProcessingEvent()
-        data class ShowPostPaidFailedScreen(val billPaymentResponse: BillPaymentResponse?):PaymentProcessingEvent()
-        data class ShowPrepaidFailedScreen(val payAndRechargeResponse: PayAndRechargeResponse?):PaymentProcessingEvent()
-        data class ShowPendingScreen(val payAndRechargeResponse: PayAndRechargeResponse):PaymentProcessingEvent()
+        data class ShowSuccessScreen(val payAndRechargeResponse: PayAndRechargeResponse):
+            PaymentProcessingEvent()
+        data class ShowPostPaidSuccessScreen(val billPaymentResponse: BillPaymentResponse):
+            PaymentProcessingEvent()
+        data class ShowPostPaidFailedScreen(val billPaymentResponse: BillPaymentResponse?):
+            PaymentProcessingEvent()
+        data class ShowPrepaidFailedScreen(val payAndRechargeResponse: PayAndRechargeResponse?):
+            PaymentProcessingEvent()
+        data class ShowPendingScreen(val payAndRechargeResponse: PayAndRechargeResponse):
+            PaymentProcessingEvent()
     }
 }

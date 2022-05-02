@@ -12,9 +12,10 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.PaymentProcessingFragmentBinding
 import com.fypmoney.extension.toVisible
 import com.fypmoney.view.recharge.model.PayAndRechargeResponse
+import com.fypmoney.view.recharge.viewmodel.PaymentProcessingFragmentVM
 
 
-class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,PaymentProcessingFragmentVM>() {
+class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding, PaymentProcessingFragmentVM>() {
 
     private  val paymentProcessingFragmentVM by viewModels<PaymentProcessingFragmentVM> { defaultViewModelProviderFactory }
     private lateinit var binding: PaymentProcessingFragmentBinding
@@ -44,7 +45,7 @@ class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,
      *
      * @return view model instance
      */
-    override fun getViewModel(): PaymentProcessingFragmentVM  = paymentProcessingFragmentVM
+    override fun getViewModel(): PaymentProcessingFragmentVM = paymentProcessingFragmentVM
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

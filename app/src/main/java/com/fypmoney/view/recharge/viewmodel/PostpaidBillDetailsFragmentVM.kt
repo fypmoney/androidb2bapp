@@ -14,7 +14,10 @@ import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.GetWalletBalanceResponse
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
-import com.fypmoney.view.recharge.model.*
+import com.fypmoney.view.recharge.model.BillPaymentRequest
+import com.fypmoney.view.recharge.model.FetchbillRequest
+import com.fypmoney.view.recharge.model.FetchbillResponse
+import com.fypmoney.view.recharge.model.OperatorResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -23,9 +26,6 @@ import com.google.gson.JsonParser
 * This is used to handle user profile
 * */
 class PostpaidBillDetailsFragmentVM(application: Application) : BaseViewModel(application) {
-   var paymentResponse: MutableLiveData<BillPaymentResponse> = MutableLiveData()
-    var failedRecharge: MutableLiveData<String> = MutableLiveData()
-
 
     var billDetails: FetchbillResponse? = null
 
@@ -114,7 +114,7 @@ class PostpaidBillDetailsFragmentVM(application: Application) : BaseViewModel(ap
                                         billnetamount = billDetails!!.bill_fetch?.billnetamount?.toDoubleOrNull().toString(),
                                         mode = "online",
                                         dueDate = billDetails!!.bill_fetch?.dueDate,
-                                        acceptPartPay = false,
+                                        acceptPartPay = true,
                                         acceptPayment = true,
                                         cellNumber = mobileNumber,
                                         userName = "",

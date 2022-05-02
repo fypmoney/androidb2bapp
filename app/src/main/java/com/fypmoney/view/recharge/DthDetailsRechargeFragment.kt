@@ -6,12 +6,11 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.view.View
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -23,6 +22,8 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.connectivity.ApiConstant
+import com.fypmoney.connectivity.ApiConstant.API_Explore
+import com.fypmoney.connectivity.ApiConstant.API_GET_WALLET_BALANCE
 import com.fypmoney.databinding.DthDetailsRechargeFragmentBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
@@ -34,14 +35,18 @@ import com.fypmoney.util.textview.MyStoreClickableSpan
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
+import com.fypmoney.view.activity.AddMoneyView
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
+import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
+import com.fypmoney.view.interfaces.AcceptRejectClickListener
+import com.fypmoney.view.recharge.fragments.DthKnowMoreBottomSheet
 import com.fypmoney.view.recharge.model.OperatorResponse
 import com.fypmoney.view.recharge.viewmodel.DthDetailsRechargeFragmentVM
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
@@ -51,9 +56,8 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBinding, DthDetailsRechargeFragmentVM>() {
 
-    private  val dthDetailsRechargeFragmentVM by viewModels<DthDetailsRechargeFragmentVM> { defaultViewModelProviderFactory }
+    private val dthDetailsRechargeFragmentVM by viewModels<DthDetailsRechargeFragmentVM> { defaultViewModelProviderFactory }
 
-    private var oper: OperatorResponse? = null
     private val args: DthDetailsRechargeFragmentArgs by navArgs()
 
     private lateinit var binding: DthDetailsRechargeFragmentBinding
@@ -74,20 +78,21 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
         super.onViewCreated(view, savedInstanceState)
         binding = getViewDataBinding()
 
-        dthDetailsRechargeFragmentVM.selectedOfflineOperator.value = args.offlineoperator
+        dthDetailsRechargeFragmentVM.selectedDthOperator = args.storeDataModel
 
-        oper = OperatorResponse()
-        oper?.Icon = dthDetailsRechargeFragmentVM.selectedOfflineOperator.value?.Icon
-        oper?.operatorId = dthDetailsRechargeFragmentVM.selectedOfflineOperator.value?.operator_id
-        oper?.name = dthDetailsRechargeFragmentVM.selectedOfflineOperator.value?.title
-        oper?.displayName = dthDetailsRechargeFragmentVM.selectedOfflineOperator.value?.title
+        dthDetailsRechargeFragmentVM.oper = OperatorResponse().apply {
+            Icon = dthDetailsRechargeFragmentVM.selectedDthOperator?.Icon
+            operatorId = dthDetailsRechargeFragmentVM.selectedDthOperator?.operator_id
+            name = dthDetailsRechargeFragmentVM.selectedDthOperator?.title
+            displayName = dthDetailsRechargeFragmentVM.selectedDthOperator?.title
+        }
 
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar, backArrowTint = Color.WHITE,
             titleColor = Color.WHITE,
             isBackArrowVisible = true,
-            toolbarTitle = "Dth Recharge"
+            toolbarTitle = "${dthDetailsRechargeFragmentVM.selectedDthOperator?.title} Dth Recharge"
         )
         showPrivacyPolicyAndTermsAndConditions()
         setBindings()
@@ -98,30 +103,21 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
     }
 
     private fun setBindings() {
+        binding.dthNumberEt.doOnTextChanged { text, start, before, count ->
+            binding.continueBtn.isEnabled = !text.isNullOrEmpty()
+        }
+        binding.amount.doOnTextChanged { text, start, before, count ->
+            binding.continueBtn.isEnabled = !text.isNullOrEmpty() && text.toString().toInt()>0
 
-
-        binding.dthNumberEt.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.continueBtn.isEnabled = !s.isNullOrEmpty() && s.length <= 10
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-
-            }
-
-        })
+        }
+/*
         binding.continueBtn.setOnClickListener {
             if (!binding.amount.text.isNullOrEmpty()) {
-
                 dthDetailsRechargeFragmentVM.callMobileRecharge(
                     binding.amount.text.toString(),
 
                     binding.dthNumberEt.text.toString(),
-                    dthDetailsRechargeFragmentVM.selectedOfflineOperator.value?.operator_id,
+                    dthDetailsRechargeFragmentVM.selectedDthOperator?.operator_id,
 
 
                     )
@@ -132,6 +128,7 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
 
 
         }
+*/
     }
 
     override fun onTryAgainClicked() {
@@ -140,7 +137,7 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
 
 
     private fun setObserver() {
-        dthDetailsRechargeFragmentVM.paymentResponse.observe(viewLifecycleOwner) {
+        /*dthDetailsRechargeFragmentVM.paymentResponse.observe(viewLifecycleOwner) {
             it?.let {
                 val directions = DthDetailsRechargeFragmentDirections.actionGoToDthSuccess(
                     successResponse = it,
@@ -154,7 +151,7 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
         }
         dthDetailsRechargeFragmentVM.paymentResponse.observe(viewLifecycleOwner) {
             it?.let {
-                var directions = DthDetailsRechargeFragmentDirections.actionGoToDthSuccess(
+                val directions = DthDetailsRechargeFragmentDirections.actionGoToDthSuccess(
                     successResponse = null,
                     selectedOperator = oper,
                     amount = binding.amount.text.toString(),
@@ -166,11 +163,11 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
         }
         dthDetailsRechargeFragmentVM.dthinfoList.observe(viewLifecycleOwner) {
             if (it.amount != null) {
-                binding.amount.setText(it.amount?.toDoubleOrNull()?.toInt().toString())
+                binding.amount.setText(it.amount.toDoubleOrNull()?.toInt().toString())
             } else {
 
             }
-        }
+        }*/
 
     }
 
@@ -183,25 +180,46 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
 
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
 
-        var bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
+        val bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
         bottomSheetMessage.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomSheetMessage.show(childFragmentManager, "TASKMESSAGE")
     }
 
-    fun setUpObserver(){
-        dthDetailsRechargeFragmentVM.state.observe(viewLifecycleOwner){
+    fun setUpObserver() {
+        dthDetailsRechargeFragmentVM.state.observe(viewLifecycleOwner) {
             handelState(it)
+        }
+        dthDetailsRechargeFragmentVM.event.observe(viewLifecycleOwner) {
+            handelEvent(it)
+        }
+    }
+
+    private fun handelEvent(it: DthDetailsRechargeFragmentVM.DthDetailsEvent?) {
+        when(it){
+            is DthDetailsRechargeFragmentVM.DthDetailsEvent.ShowLowBalanceAlert -> {
+                callInsufficientFundMessageSheet(it.amount)
+            }
+            is DthDetailsRechargeFragmentVM.DthDetailsEvent.ShowPaymentProcessingScreen ->{
+                val directions = DthDetailsRechargeFragmentDirections.actionGoToDthSuccess(
+                    payAndRechargeRequest = it.payAndRechargeRequest)
+                findNavController().navigate(directions)
+            }
+            null -> TODO()
         }
     }
 
     private fun handelState(it: DthDetailsRechargeFragmentVM.DthDetailsState?) {
-        when(it){
+        when (it) {
             is DthDetailsRechargeFragmentVM.DthDetailsState.Error -> {
-                when(it.errorFromApi){
-                    ApiConstant.API_Explore->{
+                when (it.errorFromApi) {
+                    API_Explore -> {
                         binding.rvBanners.toGone()
                         binding.shimmerLayout.toGone()
                     }
+                    API_GET_WALLET_BALANCE->{
+                        binding.continueBtn.setBusy(false)
+                    }
+
                 }
             }
             is DthDetailsRechargeFragmentVM.DthDetailsState.ExploreSuccess -> {
@@ -209,10 +227,20 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
                 binding.shimmerLayout.toGone()
                 setRecyclerView(binding, it.explore)
             }
-            DthDetailsRechargeFragmentVM.DthDetailsState.Loading -> {
-                binding.shimmerLayout.toVisible()
-            }
             null -> TODO()
+            is DthDetailsRechargeFragmentVM.DthDetailsState.BalanceSuccess -> {
+                binding.continueBtn.setBusy(false)
+            }
+            is DthDetailsRechargeFragmentVM.DthDetailsState.Loading -> {
+                when(it.api){
+                    API_Explore->{
+                        binding.shimmerLayout.toVisible()
+                    }
+                    ApiConstant.API_GET_WALLET_BALANCE ->{
+                        binding.continueBtn.setBusy(true)
+                    }
+                }
+            }
         }
     }
 
@@ -417,19 +445,92 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
         val privacyPolicyText = resources.getString(R.string.know_more)
         val privacyPolicyStarIndex = text.indexOf(privacyPolicyText)
         val privacyPolicyEndIndex = privacyPolicyStarIndex + privacyPolicyText.length
-        val ss = SpannableString(text);
+        val ss = SpannableString(text)
         ss.setSpan(
-            MyStoreClickableSpan(color = resources.getColor(R.color.add_money_amount_color),pos = 1, clickableSpanListener = object : ClickableSpanListener {
-                override fun onPositionClicked(pos: Int) {
-
-                }
-            }),
+            MyStoreClickableSpan(
+                color = resources.getColor(R.color.add_money_amount_color),
+                pos = 1,
+                clickableSpanListener = object : ClickableSpanListener {
+                    override fun onPositionClicked(pos: Int) {
+                        var title:String? = null
+                        var subTitle:String? = null
+                        var res:Int? = null
+                        when(dthDetailsRechargeFragmentVM.selectedDthOperator?.title){
+                            "Airtel"->{
+                                title = getString(R.string.whats_my_customer_id)
+                                subTitle = getString(R.string.airtel_know_more_body)
+                                res = R.drawable.ic_dth_airtel
+                            }
+                            "Dish TV"->{
+                                title = getString(R.string.dish_tv_title)
+                                subTitle = getString(R.string.dish_tv_body)
+                                res = R.drawable.ic_dth_dishtv
+                            }
+                            "Tata Sky"->{
+                                title = getString(R.string.tata_sky_title)
+                                subTitle = "\n" +
+                                        getString(R.string.tata_sky_body)
+                                res = R.drawable.ic_dth_tata
+                            }
+                            "Videocon D2H"->{
+                                title = getString(R.string.d2h_title)
+                                subTitle = getString(R.string.d2h_body)
+                                res = R.drawable.ic_dth_d2h
+                            }
+                        }
+                        title?.let { subTitle?.let { it1 ->
+                            res?.let { it2 ->
+                                showKnowMoreAccordingOpeartor(it,
+                                    it1, it2
+                                )
+                            }
+                        } }
+                    }
+                }),
             privacyPolicyStarIndex,
             privacyPolicyEndIndex,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         binding.customerIdDetailsDescTv.text = ss
         binding.customerIdDetailsDescTv.movementMethod = LinkMovementMethod.getInstance()
+    }
+
+    private fun showKnowMoreAccordingOpeartor(title:String,subTitle:String,res:Int) {
+        val dthKnowMoreBottomSheet = DthKnowMoreBottomSheet(title,subTitle,res)
+        dthKnowMoreBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        dthKnowMoreBottomSheet.show(childFragmentManager, "DthKnowMoreBottomSheet")
+    }
+
+    private fun callInsufficientFundMessageSheet(amount: String?) {
+        var bottomSheetInsufficient: TaskMessageInsuficientFuntBottomSheet? = null
+        val itemClickListener2 = object : AcceptRejectClickListener {
+            override fun onAcceptClicked(pos: Int, str: String) {
+                bottomSheetInsufficient?.dismiss()
+            }
+
+            override fun onRejectClicked(pos: Int) {
+                bottomSheetInsufficient?.dismiss()
+                val intent = Intent(requireActivity(), AddMoneyView::class.java)
+                intent.putExtra("amountshouldbeadded", Utility.convertToRs(amount))
+                startActivity(intent)
+            }
+
+            override fun ondimiss() {
+                bottomSheetInsufficient?.dismiss()
+            }
+        }
+        bottomSheetInsufficient = TaskMessageInsuficientFuntBottomSheet(itemClickListener2,
+            title = resources.getString(R.string.insufficient_bank_balance),
+            subTitle =  resources.getString(R.string.insufficient_bank_body),
+            amount = resources.getString(R.string.add_money_title1)+resources.getString(R.string.Rs)+Utility.convertToRs(amount),
+            background = "#2d3039",
+            titleColor  = "#ffffff",
+            moneyTextColor  = "#ffffff",
+            buttonColor  = "#8ECC9A",
+        )
+
+        bottomSheetInsufficient.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetInsufficient.show(requireActivity().supportFragmentManager, "Insufficient Fund")
     }
 
 

@@ -187,13 +187,13 @@
             app:argType="string"
             app:nullable="true" />
         <argument
-            android:name="offlineoperator"
+            android:name="storeDataModel"
             android:defaultValue="@null"
             app:argType="com.fypmoney.model.StoreDataModel"
             app:nullable="true" />
         <action
             android:id="@+id/action_go_to_dth_success"
-            app:destination="@+id/navigation_recharge_success"
+            app:destination="@+id/navigation_payment_processing"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"

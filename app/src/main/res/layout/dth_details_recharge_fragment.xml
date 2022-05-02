@@ -79,8 +79,6 @@
             </FrameLayout>
 
 
-
-
             <androidx.appcompat.widget.AppCompatEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -92,6 +90,8 @@
                 android:textColor="@color/cb_input_gray"
                 android:layout_marginEnd="24dp"
                 android:hint="@string/customer_id"
+                android:text="@={viewModel.subscriberId}"
+                android:textCursorDrawable="@drawable/cursor_edittext"
                 style="@style/Widget.AppCompat.EditText"
                 android:backgroundTint="@color/text_color_more_dark"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -122,7 +122,9 @@
                 android:textColor="@color/white"
                 android:hint="@string/enter_amount"
                 android:inputType="number"
+                android:textCursorDrawable="@drawable/cursor_edittext"
                 android:text="@={viewModel.amountSelected}"
+                android:maxLength="5"
                 android:imeOptions="actionDone"
                 style="@style/Widget.AppCompat.EditText"
                 android:backgroundTint="@color/text_color_more_dark"
@@ -270,6 +272,7 @@
                 android:paddingRight="74dp"
                 android:paddingBottom="14dp"
                 app:text="@string/pay"
+                android:onClick="@{()->viewModel.onPayClick()}"
                 android:layout_marginBottom="@dimen/dp20"
                 android:textAllCaps="false"
                 app:enabled="false"
