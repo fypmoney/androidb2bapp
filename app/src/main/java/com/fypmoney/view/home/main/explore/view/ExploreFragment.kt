@@ -175,27 +175,30 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
 
                     AppConstants.EXPLORE_IN_APP -> {
                         it.redirectionResource?.let { uri ->
-
-                            val redirectionResources = uri.split(",")[0]
-                            if (redirectionResources == AppConstants.FyperScreen) {
-                                findNavController().navigate(R.id.navigation_fyper)
-                            } else if (redirectionResources == AppConstants.JACKPOTTAB) {
-                                findNavController().navigate(R.id.navigation_jackpot)
-                            } else if (redirectionResources == AppConstants.CardScreen) {
-                                findNavController().navigate(R.id.navigation_card)
-                            } else if (redirectionResources == AppConstants.RewardHistory) {
-                                findNavController().navigate(R.id.navigation_rewards_history)
-                            }else if (redirectionResources == AppConstants.ARCADE) {
-                                findNavController().navigate(R.id.navigation_arcade)
-                            } else if (redirectionResources == AppConstants.RechargeHomeScreen) {
-                                findNavController().navigate(R.id.navigation_recharge_home)
-                            } else {
-                                Utility.deeplinkRedirection(redirectionResources, requireContext())
+                            when (val redirectionResources = uri.split(",")[0]) {
+                                AppConstants.FyperScreen -> {
+                                    findNavController().navigate(R.id.navigation_fyper)
+                                }
+                                AppConstants.JACKPOTTAB -> {
+                                    findNavController().navigate(R.id.navigation_jackpot)
+                                }
+                                AppConstants.CardScreen -> {
+                                    findNavController().navigate(R.id.navigation_card)
+                                }
+                                AppConstants.RewardHistory -> {
+                                    findNavController().navigate(R.id.navigation_rewards_history)
+                                }
+                                AppConstants.ARCADE -> {
+                                    findNavController().navigate(R.id.navigation_arcade)
+                                }
+                                AppConstants.RechargeHomeScreen -> {
+                                    findNavController().navigate(R.id.navigation_enter_mobile_number_recharge)
+                                }
+                                else -> {
+                                    Utility.deeplinkRedirection(redirectionResources, requireContext())
+                                }
                             }
-
-
                         }
-
                     }
                     EXPLORE_IN_APP_WEBVIEW -> {
 

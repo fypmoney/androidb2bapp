@@ -13,7 +13,7 @@
 
         <action
             android:id="@+id/action_recharge_home"
-            app:destination="@+id/navigation_recharge_home"
+            app:destination="@+id/navigation_dth_store_list"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -178,9 +178,9 @@
 
     <fragment
         android:id="@+id/navigation_dth"
-        android:name="com.fypmoney.view.recharge.DthRechargeFragment"
+        android:name="com.fypmoney.view.recharge.DthDetailsRechargeFragment"
         android:label="Dth"
-        tools:layout="@layout/fragment_spinner_list">
+        tools:layout="@layout/dth_details_recharge_fragment">
         <argument
             android:name="operator"
             android:defaultValue="@null"
@@ -200,19 +200,6 @@
             app:popExitAnim="@anim/slide_out_righ" />
     </fragment>
 
-    <fragment
-        android:id="@+id/navigation_dth_operator"
-        android:name="com.fypmoney.view.recharge.DthOperatorListActivity"
-        android:label="DthOperators"
-        tools:layout="@layout/fragment_spinner_list">
-        <action
-            android:id="@+id/action_go_to_dth_recharge"
-            app:destination="@+id/navigation_dth"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ" />
-    </fragment>
 
     <fragment
         android:id="@+id/navigation_select_circle"
@@ -296,10 +283,10 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_recharge_home"
-        android:name="com.fypmoney.view.recharge.DthStoresFragment"
+        android:id="@+id/navigation_dth_store_list"
+        android:name="com.fypmoney.view.recharge.DthStoresListFragment"
         android:label="select_recharge_home"
-        tools:layout="@layout/fragment_spinner_list">
+        tools:layout="@layout/dth_stores_list_fragment">
 
 
         <action

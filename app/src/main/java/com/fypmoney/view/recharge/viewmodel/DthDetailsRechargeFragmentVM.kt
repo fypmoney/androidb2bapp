@@ -1,6 +1,8 @@
 package com.fypmoney.view.recharge.viewmodel
 
 import android.app.Application
+import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
@@ -24,24 +26,41 @@ import com.google.gson.JsonParser
 /*
 * This is used to handle user profile
 * */
-class DthViewModel(application: Application) : BaseViewModel(application) {
-    init {
-        callExplporeContent()
-    }
+class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(application) {
+
 
     var dthinfoList: MutableLiveData<FetchbillResponse> = MutableLiveData()
     var paymentResponse: MutableLiveData<PayAndRechargeResponse> = MutableLiveData()
 
     var failedresponse: MutableLiveData<PayAndRechargeResponse> = MutableLiveData()
+
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
 
-    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
-    var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
-
-//    var operatorResponse = ObservableField<OperatorResponse>()
 
     var selectedOfflineOperator = MutableLiveData<StoreDataModel>()
+
+    var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+
+    var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
+
+    var amountSelected = ObservableField<String>("0") //prefilled amount
+
+    val state: LiveData<DthDetailsState>
+        get() = _state
+    private val _state = MutableLiveData<DthDetailsState>()
+
+    init {
+        callExplporeContent()
+    }
+
+
+    fun onAmountSelected(amount: Int) {
+        amountSelected.set(amount.toString())
+    }
+
+
     fun callExplporeContent() {
+        _state.value = DthDetailsState.Loading
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_Explore,
@@ -52,6 +71,7 @@ class DthViewModel(application: Application) : BaseViewModel(application) {
             )
         )
     }
+
 
     fun callFetchFeedsApi(id: String?) {
         WebApiCaller.getInstance().request(
@@ -79,10 +99,6 @@ class DthViewModel(application: Application) : BaseViewModel(application) {
 
     }
 
-    /*
-
- *This method is used to call profile pic upload api
- * */
     fun callGetDthInfo(toString: String) {
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -99,44 +115,6 @@ class DthViewModel(application: Application) : BaseViewModel(application) {
         )
     }
 
-//    fun callMobileRecharge(
-//        operator: String?,
-//        value1: FetchbillResponse?,
-//        dth: String,
-//        amount: String
-//    ) {
-//        value1?.bill_fetch?.billAmount?.let {
-//            WebApiCaller.getInstance().request(
-//                ApiRequest(
-//                    purpose = ApiConstant.API_PAY_BILL,
-//                    endpoint = NetworkUtil.endURL(ApiConstant.API_PAY_BILL),
-//                    request_type = ApiUrl.POST,
-//                    onResponse = this, isProgressBar = true,
-//                    param =
-//                    BillPaymentRequest(
-//                        cardNo = dth,
-//                        operator = operator?.toInt(),
-//                        amount = amount.toDouble(),
-//                        planPrice = it.toDouble(),
-//                        planType = "",
-//                        billAmount = it.toDouble(),
-//                        billnetamount = value1.bill_fetch.billnetamount?.toDoubleOrNull(),
-//                        mode = "online",
-//                        dueDate = value1.bill_fetch.dueDate,
-//                        acceptPartPay = false,
-//                        acceptPayment = true,
-//                        cellNumber = dth,
-//                        userName = "Raghu",
-//                        latitude = "27.2232",
-//                        longitude = "27.2232"
-//
-//
-//                    )
-//
-//                )
-//            )
-//        }
-//    }
 
     fun callMobileRecharge(
         selectedpaln: String?,
@@ -164,7 +142,6 @@ class DthViewModel(application: Application) : BaseViewModel(application) {
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-
             ApiConstant.API_Explore -> {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
@@ -173,7 +150,8 @@ class DthViewModel(application: Application) : BaseViewModel(application) {
                     Array<ExploreContentResponse>::class.java
                 )
                 val arrayList = ArrayList(array.toMutableList())
-                rewardHistoryList.postValue(arrayList)
+                _state.value = DthDetailsState.ExploreSuccess(arrayList)
+
             }
 
             ApiConstant.API_FETCH_FEED_DETAILS -> {
@@ -241,9 +219,21 @@ class DthViewModel(application: Application) : BaseViewModel(application) {
             ApiConstant.API_MOBILE_RECHARGE -> {
                 failedresponse.postValue(null)
             }
+
+            ApiConstant.API_Explore -> {
+                _state.value = DthDetailsState.Error(errorResponseInfo,ApiConstant.API_Explore)
+            }
         }
 
     }
 
+    sealed class DthDetailsState {
+        object Loading : DthDetailsState()
+        data class Error(val errorResponseInfo: ErrorResponseInfo, val errorFromApi: String) :
+            DthDetailsState()
+
+        data class ExploreSuccess(val explore: ArrayList<ExploreContentResponse>) :
+            DthDetailsState()
+    }
 
 }

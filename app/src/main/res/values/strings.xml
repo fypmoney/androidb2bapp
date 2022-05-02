@@ -916,7 +916,7 @@ Coming really soon!
     <string name="unfortunately_we_are_not_serviceable_in_your_neighborhood_but_we_are_moving_super_fast_to_bring_the_awesome_fyp_card_to_your_pockets">Unfortunately we are not serviceable in your neighborhood but we are moving super fast to bring the awesome Fyp card to your pockets.</string>
     <string name="your_order_has_been_placed_n_successfully">Your order has been placed \n successfully!</string>
     <string name="net_paid">Net Paid</string>
-    <string name="by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy">"By tapping Activate Now, you agree to the %1$s &amp; %2$s"</string>
+    <string name="by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy">"By tapping Activate Now, you agree to the %1$s &amp; "</string>
     <string name="by_tapping_continue_you_agree_to_the_terms_of_service_privacy_policy">"By tapping Continue, you agree to the %1$s &amp; %2$s"</string>
     <string name="set">Set</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -1172,4 +1172,16 @@ Coming really soon!
     <string name="unable_to_fetch_bill_enter_amount_manually">Unable to fetch bill.Enter amount manually</string>
     <string name="payable_amount">Payable Amount</string>
     <string name="bill_due_date">Bill Due Date: %1$s</string>
+    <string name="dth_recharge">Dth recharge/Cable TV</string>
+    <string name="customer_id">Customer ID</string>
+    <string name="enter_10_digit_customer_id_starting_with_3_to_locate_the_customer_id_press_the_menu_button_on_your_remote">Enter 10 digit Customer ID starting with 3.To locate the customer ID,press the MENU button on your remote. %1$s</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="your_regular_recharge">Your regular recharge</string>
+    <string name="keep_set_top_box_on_while_recharging">Keep set-top box on while recharging</string>
+
+
+    <string name="add_money_1500">\u20B9 1500</string>
+    <string name="add_money_2000">\u20B9 2000</string>
+    <string name="know_more">Know More</string>
+    <string name="please_enter_correct_details_for_successful_dth_recharge_otherwise_your_recharge_will_fail">Please enter correct details for successful DTH Recharge otherwise your recharge will fail.</string>
 </resources>

@@ -6,6 +6,13 @@
       "image": "Jackson",
       "operator_id": "12"
     },
+
+    {
+      "url": "https://www.jio.com/selfcare/recharge/mobility/",
+      "title": "Dish TV",
+      "image": "Jackson",
+      "operator_id": "14"
+    },
     {
       "url": "https://www.jio.com/selfcare/recharge/mobility/",
       "title": "Tata Sky",
@@ -17,12 +24,6 @@
       "title": "Videocon D2H",
       "image": "Jackson",
       "operator_id": "10"
-    },
-    {
-      "url": "https://www.jio.com/selfcare/recharge/mobility/",
-      "title": "Dish TV",
-      "image": "Jackson",
-      "operator_id": "14"
     }
   ]
 }

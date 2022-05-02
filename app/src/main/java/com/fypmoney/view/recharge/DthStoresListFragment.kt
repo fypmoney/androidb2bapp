@@ -7,7 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fyp.trackr.models.TrackrEvent
@@ -16,7 +16,10 @@ import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
-import com.fypmoney.databinding.FragmentRechargeHomeBinding
+import com.fypmoney.connectivity.ApiConstant
+import com.fypmoney.databinding.DthStoresListFragmentBinding
+import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.StoreDataModel
 import com.fypmoney.util.AppConstants
@@ -32,8 +35,7 @@ import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
-import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
-import com.fypmoney.view.recharge.viewmodel.RechargeViewModel
+import com.fypmoney.view.recharge.viewmodel.DthStoresListFragmentVM
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import kotlinx.android.synthetic.main.toolbar.*
@@ -43,44 +45,63 @@ import java.io.IOException
 import java.io.InputStream
 
 
-class DthStoresFragment : BaseFragment<FragmentRechargeHomeBinding, RechargeViewModel>() {
+class DthStoresListFragment : BaseFragment<DthStoresListFragmentBinding, DthStoresListFragmentVM>() {
 
-    private lateinit var sharedViewModel: RechargeViewModel
-    private lateinit var mViewBinding: FragmentRechargeHomeBinding
+    private  val dthStoresListFragmentVM by viewModels<DthStoresListFragmentVM> { defaultViewModelProviderFactory }
+
+    private lateinit var binding: DthStoresListFragmentBinding
+
+
+
+    override fun onTryAgainClicked() {
+
+    }
+
+
+    override fun getBindingVariable(): Int {
+        return BR.viewModel
+    }
+
+    override fun getLayoutId(): Int {
+        return R.layout.dth_stores_list_fragment
+    }
+
+    override fun getViewModel(): DthStoresListFragmentVM {
+        return dthStoresListFragmentVM
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        mViewBinding = getViewDataBinding()
+        binding = getViewDataBinding()
+        binding.viewModel = dthStoresListFragmentVM
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar,
-
-            isBackArrowVisible = true, toolbarTitle = "Mobile Recharge",
-            titleColor = Color.BLACK,
-            backArrowTint = Color.BLACK
+            isBackArrowVisible = true, toolbarTitle = "DTH Recharge",
+            titleColor = Color.WHITE,
+            backArrowTint = Color.WHITE
         )
-        mViewBinding.viewModel = sharedViewModel
 
-
-
-        sharedViewModel.storeAdapter.setList(
+        dthStoresListFragmentVM.storeAdapter.setList(
             getListOfApps(
                 R.raw.dth_json,
                 arrayListOf(
                     R.drawable.ic_dth_airtel,
-                    R.drawable.ic_dth_tata,
                     R.drawable.ic_dth_dishtv,
+                    R.drawable.ic_dth_tata,
                     R.drawable.ic_dth_d2h
                 )
             )
         )
 
-
-
-
-
+        setExploreListners()
+        setUpObserver()
+        dthStoresListFragmentVM.callExplporeContent("DTH")
     }
+
+
+
+
 
     private fun getListOfApps(stores: Int, iconList: List<Int>): ArrayList<StoreDataModel> {
         val upiList = ArrayList<StoreDataModel>()
@@ -95,7 +116,7 @@ class DthStoresFragment : BaseFragment<FragmentRechargeHomeBinding, RechargeView
                 val url_value = jo_inside.getString("url")
 
                 val operator_id = jo_inside.getString("operator_id")
-                var model = StoreDataModel()
+                val model = StoreDataModel()
                 model.title = formula_value
                 model.url = url_value
                 model.operator_id = operator_id
@@ -128,109 +149,51 @@ class DthStoresFragment : BaseFragment<FragmentRechargeHomeBinding, RechargeView
         return json
     }
 
-    override fun onTryAgainClicked() {
-
-    }
-
-    private fun observeInput(sharedViewModel: RechargeViewModel) {
-
-        sharedViewModel.onUpiClicked.observe(requireActivity()) {
-
-            val directions =
-                DthStoresFragmentDirections.actionDthRechargeScreen(offlineoperator = it)
-
-            directions?.let { it1 -> findNavController().navigate(it1) }
-
+    fun setUpObserver(){
+        dthStoresListFragmentVM.state.observe(viewLifecycleOwner){
+            handelState(it)
         }
-
-
+        dthStoresListFragmentVM.event.observe(viewLifecycleOwner){
+            handelEvent(it)
+        }
     }
 
+    private fun handelEvent(it: DthStoresListFragmentVM.DthStoreListEvent?) {
+        when(it){
+            is DthStoresListFragmentVM.DthStoreListEvent.ShowDTHDetailsScreen -> {
+                val directions =
+                    DthStoresListFragmentDirections.actionDthRechargeScreen(offlineoperator = it.model)
 
-
-
-
-
-
-    override fun getBindingVariable(): Int {
-        return BR.viewModel
+                directions.let { it1 -> findNavController().navigate(it1) }
+            }
+            null -> TODO()
+        }
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.fragment_recharge_home
-    }
-
-    override fun getViewModel(): RechargeViewModel {
-
-
-        sharedViewModel = ViewModelProvider(this).get(RechargeViewModel::class.java)
-
-        observeInput(sharedViewModel!!)
-
-
-        return sharedViewModel
-    }
-
-
-    private fun callDiduKnowBottomSheet(list: List<String>) {
-        val bottomSheet =
-            StoriesBottomSheet(list)
-        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheet.show(childFragmentManager, "DidUKnowSheet")
-    }
-
-    private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
-
-        var bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
-        bottomSheetMessage.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheetMessage.show(childFragmentManager, "TASKMESSAGE")
-    }
-
-    private fun setExploreListners() {
-        sharedViewModel?.openBottomSheet.observe(
-            viewLifecycleOwner,
-            { list ->
-                if (list.size > 0) {
-                    callOfferDetailsSheeet(list[0])
-                }
-            })
-
-        sharedViewModel?.feedDetail.observe(
-            viewLifecycleOwner,
-            { list ->
-
-                when (list.displayCard) {
-
-                    AppConstants.FEED_TYPE_BLOG -> {
-                        val intent = Intent(context, UserFeedsDetailView::class.java)
-                        intent.putExtra(AppConstants.FEED_RESPONSE, list)
-                        intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.FEED_TYPE_BLOG)
-                        intent.putExtra(
-                            AppConstants.CUSTOMER_INFO_RESPONSE,
-                            CustomerInfoResponseDetails()
-                        )
-                        startActivity(intent)
-
+    private fun handelState(it: DthStoresListFragmentVM.DthStoresListState?) {
+        when(it){
+            is DthStoresListFragmentVM.DthStoresListState.Error -> {
+                when(it.errorFromApi){
+                    ApiConstant.API_Explore->{
+                        binding.rvBanners.toGone()
+                        binding.shimmerLayout.toGone()
                     }
-                    AppConstants.FEED_TYPE_STORIES -> {
-
-                        callDiduKnowBottomSheet(list.resourceArr)
-                    }
-
                 }
-
-
-            })
-        sharedViewModel?.rewardHistoryList.observe(
-            viewLifecycleOwner,
-            { list ->
-
-                setRecyclerView(mViewBinding, list)
-            })
+            }
+            is DthStoresListFragmentVM.DthStoresListState.ExploreSuccess -> {
+                binding.rvBanners.toVisible()
+                binding.shimmerLayout.toGone()
+                setRecyclerView(binding, it.explore)
+            }
+            DthStoresListFragmentVM.DthStoresListState.Loading -> {
+                binding.shimmerLayout.toVisible()
+            }
+            null -> TODO()
+        }
     }
 
     private fun setRecyclerView(
-        root: FragmentRechargeHomeBinding,
+        root: DthStoresListFragmentBinding,
         list: ArrayList<ExploreContentResponse>
     ) {
         if (list.size > 0) {
@@ -298,7 +261,7 @@ class DthStoresFragment : BaseFragment<FragmentRechargeHomeBinding, RechargeView
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
                 val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                    ExploreFragmentDirections.actionExploreSectionExplore(
+                    EnterMobileNumberRechargeFragmentDirections.actionEnterMobileNumberRechargeToSectionExplore(
                         sectionExploreItem = sectionContentItem,
                         sectionExploreName = it1
                     )
@@ -308,7 +271,7 @@ class DthStoresFragment : BaseFragment<FragmentRechargeHomeBinding, RechargeView
             AppConstants.EXPLORE_IN_APP -> {
                 redirectionResource?.let { uri ->
 
-                    val redirectionResources = uri?.split(",")?.get(0)
+                    val redirectionResources = uri.split(",").get(0)
                     if (redirectionResources == AppConstants.FyperScreen) {
                         findNavController().navigate(R.id.navigation_fyper)
                     } else if (redirectionResources == AppConstants.JACKPOTTAB) {
@@ -320,7 +283,7 @@ class DthStoresFragment : BaseFragment<FragmentRechargeHomeBinding, RechargeView
                     } else if (redirectionResources == AppConstants.ARCADE) {
                         findNavController().navigate(R.id.navigation_arcade)
                     } else {
-                        redirectionResources?.let { it1 ->
+                        redirectionResources.let { it1 ->
                             Utility.deeplinkRedirection(
                                 it1,
                                 requireContext()
@@ -335,7 +298,6 @@ class DthStoresFragment : BaseFragment<FragmentRechargeHomeBinding, RechargeView
             AppConstants.EXPLORE_IN_APP_WEBVIEW -> {
 
                 val intent = Intent(requireContext(), ExploreInAppWebview::class.java)
-//        intent.putExtra(AppConstants.EXPLORE_RESPONSE, feedDetails)
                 intent.putExtra(
                     AppConstants.FROM_WHICH_SCREEN,
                     AppConstants.EXPLORE_IN_APP_WEBVIEW
@@ -351,13 +313,13 @@ class DthStoresFragment : BaseFragment<FragmentRechargeHomeBinding, RechargeView
 
             }
             AppConstants.OFFER_REDIRECTION -> {
-                sharedViewModel.callFetchOfferApi(redirectionResource)
+                dthStoresListFragmentVM.callFetchOfferApi(redirectionResource)
 
             }
 
 
             AppConstants.FEED_TYPE_BLOG -> {
-                sharedViewModel.callFetchFeedsApi(redirectionResource)
+                dthStoresListFragmentVM.callFetchFeedsApi(redirectionResource)
 
             }
 
@@ -377,13 +339,66 @@ class DthStoresFragment : BaseFragment<FragmentRechargeHomeBinding, RechargeView
             }
             AppConstants.EXPLORE_TYPE_STORIES -> {
                 if (!redirectionResource.isNullOrEmpty()) {
-                    sharedViewModel.callFetchFeedsApi(redirectionResource)
+                    dthStoresListFragmentVM.callFetchFeedsApi(redirectionResource)
 
                 }
 
             }
         }
     }
+
+    private fun setExploreListners() {
+        dthStoresListFragmentVM.openBottomSheet.observe(
+            viewLifecycleOwner
+        ) { list ->
+            if (list.size > 0) {
+                callOfferDetailsSheeet(list[0])
+            }
+        }
+
+        dthStoresListFragmentVM.feedDetail.observe(
+            viewLifecycleOwner
+        ) { list ->
+
+            when (list.displayCard) {
+
+                AppConstants.FEED_TYPE_BLOG -> {
+                    val intent = Intent(context, UserFeedsDetailView::class.java)
+                    intent.putExtra(AppConstants.FEED_RESPONSE, list)
+                    intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.FEED_TYPE_BLOG)
+                    intent.putExtra(
+                        AppConstants.CUSTOMER_INFO_RESPONSE,
+                        CustomerInfoResponseDetails()
+                    )
+                    startActivity(intent)
+
+                }
+                AppConstants.FEED_TYPE_STORIES -> {
+
+                    callDiduKnowBottomSheet(list.resourceArr)
+                }
+
+            }
+
+
+        }
+    }
+
+    private fun callDiduKnowBottomSheet(list: List<String>) {
+        val bottomSheet =
+            StoriesBottomSheet(list)
+        bottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheet.show(childFragmentManager, "DidUKnowSheet")
+    }
+
+    private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
+
+        val bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
+        bottomSheetMessage.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+        bottomSheetMessage.show(childFragmentManager, "TASKMESSAGE")
+    }
+
+
 
 
 }

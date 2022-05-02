@@ -511,9 +511,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                     } else if (redirectionResources == AppConstants.ARCADE) {
                         findNavController().navigate(R.id.navigation_arcade)
                     } else if (redirectionResources == AppConstants.RechargeHomeScreen) {
-                        findNavController().navigate(R.id.navigation_recharge_home)
+                        findNavController().navigate(R.id.navigation_enter_mobile_number_recharge)
                     } else {
-                        redirectionResources?.let { it1 ->
+                        redirectionResources.let { it1 ->
                             deeplinkRedirection(
                                 it1,
                                 requireContext()

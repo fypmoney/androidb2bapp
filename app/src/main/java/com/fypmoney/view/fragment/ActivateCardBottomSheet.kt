@@ -110,7 +110,7 @@ class ActivateCardBottomSheet(
         val ss = SpannableString(text);
         ss.setSpan(
 
-            MyStoreClickableSpan(1, object : ClickableSpanListener {
+            MyStoreClickableSpan(pos = 1, clickableSpanListener = object : ClickableSpanListener {
                 override fun onPositionClicked(pos: Int) {
                     onActivateCardClickListener.onPrivacyPolicyTermsClicked(getString(R.string.privacy_policy),"https://www.fypmoney.in/fyp/privacy-policy/")
 
@@ -121,7 +121,7 @@ class ActivateCardBottomSheet(
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         ss.setSpan(
-            MyStoreClickableSpan(2, object : ClickableSpanListener {
+            MyStoreClickableSpan(pos = 2, clickableSpanListener = object : ClickableSpanListener {
                 override fun onPositionClicked(pos: Int) {
                     onActivateCardClickListener.onPrivacyPolicyTermsClicked(getString(R.string.terms_and_conditions),"https://www.fypmoney.in/fyp/terms-of-use/")
                 }
