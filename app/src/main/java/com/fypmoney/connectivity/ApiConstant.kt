@@ -163,6 +163,7 @@ object ApiConstant {
     const val API_MOBILE_RECHARGE = "services/PockketService/api/mobileRecharge"
 
     const val API_PAY_BILL = "services/PockketService/api/billPayment"
+    const val API_RECENT_RECHARGE = "services/PockketService/api/recharge-orders"
 }
 
 

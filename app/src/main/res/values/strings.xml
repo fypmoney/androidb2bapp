@@ -1195,4 +1195,6 @@ Coming really soon!
     <string name="pending">Pending</string>
     <string name="check_status"><u>Check Status</u></string>
     <string name="no_recent_recharges">No Recent Recharges</string>
+    <string name="last_recharge_on">Last Recharge: \u20B9 %1$s on %2$s</string>
+    <string name="repeat">Repeat</string>
 </resources>

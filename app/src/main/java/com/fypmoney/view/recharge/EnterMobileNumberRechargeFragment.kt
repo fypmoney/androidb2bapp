@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -41,6 +42,8 @@ import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
+import com.fypmoney.view.recharge.adapter.RecentRechargeAdapter
+import com.fypmoney.view.recharge.adapter.RecentRechargeUiModel
 import com.fypmoney.view.recharge.model.MobileNumberInfoUiModel
 import com.fypmoney.view.recharge.viewmodel.EnterMobileNumberRechargeFragmentVM
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
@@ -86,8 +89,26 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
             isBackArrowVisible = true, toolbarTitle = if(enterMobileNumberRechargeFragmentVM.rechargeType == PREPAID) getString(R.string.prepaid_recharge) else getString(R.string.postpaid_recharge)
         )
         setUpObserver()
+        setUpRecentRecylerview()
         setExploreListners()
         setListeners()
+    }
+
+    private fun setUpRecentRecylerview() {
+        val recentAdapter = RecentRechargeAdapter(
+            this,
+            onCheckStatusClick = {
+
+            },
+            onRepeatRechargeClick = {
+
+            }
+        )
+        with(binding.rvRecentsRecharges) {
+            adapter = recentAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        }
     }
 
     private fun setUpObserver(){
@@ -110,6 +131,11 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
                     ApiConstant.API_GET_HLR_CHECK->{
                         binding.continueBtn.setBusy(false)
                     }
+                    ApiConstant.API_RECENT_RECHARGE->{
+                        binding.shimmerLayoutRecent.toGone()
+                        binding.noRecentRechargesTv.toVisible()
+                        binding.rvRecentsRecharges.toGone()
+                    }
                 }
             }
             is EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeState.ExploreSuccess -> {
@@ -123,6 +149,26 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
             null -> TODO()
             is EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeState.HLRSuccess -> {
                 binding.continueBtn.setBusy(false)
+            }
+            EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeState.RecentRechargeLoading -> {
+                binding.shimmerLayoutRecent.toVisible()
+                binding.noRecentRechargesTv.toGone()
+                binding.rvRecentsRecharges.toGone()
+            }
+            is EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeState.RecentRechargeSuccess -> {
+                binding.shimmerLayoutRecent.toGone()
+                if(it.recentItem.isNullOrEmpty()){
+                    binding.noRecentRechargesTv.toVisible()
+                    binding.rvRecentsRecharges.toGone()
+                }else{
+                    binding.noRecentRechargesTv.toGone()
+                    binding.rvRecentsRecharges.toVisible()
+                    (binding.rvRecentsRecharges.adapter as RecentRechargeAdapter).submitList(it.recentItem.map {
+                        RecentRechargeUiModel.fromRechargeItem(requireContext(),it)
+                    })
+
+
+                }
             }
         }
     }

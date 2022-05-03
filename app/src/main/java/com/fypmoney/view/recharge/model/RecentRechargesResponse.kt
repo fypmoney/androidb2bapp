@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class RecentRechargesResponse(
 
 	@field:SerializedName("data")
-	val data: List<RecentRechargeItem?>? = null
+	val data: List<RecentRechargeItem>
 )
 
 data class RecentRechargeItem(
@@ -77,7 +77,7 @@ data class RecentRechargeItem(
 	val id: Int? = null,
 
 	@field:SerializedName("planPrice")
-	val planPrice: Int? = null,
+	val planPrice: String? = null,
 
 	@field:SerializedName("operatorId")
 	val operatorId: Any? = null,
@@ -101,7 +101,7 @@ data class RecentRechargeItem(
 	val cardType: String? = null,
 
 	@field:SerializedName("mobileNo")
-	val mobileNo: String? = null,
+	val mobileNo: String,
 
 	@field:SerializedName("userName")
 	val userName: Any? = null,

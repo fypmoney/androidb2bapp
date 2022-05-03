@@ -15,6 +15,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.model.*
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
 import com.fypmoney.view.ordercard.model.UserOfferCardResponse
+import com.fypmoney.view.recharge.model.RecentRechargesResponse
 import com.google.gson.Gson
 import com.payu.india.Payu.PayuConstants
 import okhttp3.ResponseBody
@@ -218,6 +219,9 @@ class ApiDataParsing {
                 }
                 ApiConstant.API_CALLTO_ACTION -> {
                     getObject(response, CallToActionNetworkResponse::class.java)
+                }
+                ApiConstant.API_RECENT_RECHARGE -> {
+                    getObject(response, RecentRechargesResponse::class.java)
                 }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {

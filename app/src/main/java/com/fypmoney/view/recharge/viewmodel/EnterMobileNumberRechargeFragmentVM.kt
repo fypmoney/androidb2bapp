@@ -12,6 +12,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.FeedDetails
+import com.fypmoney.util.AppConstants.PREPAID
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.recharge.model.*
@@ -20,9 +21,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 
-/*
-* This is used to handle user profile
-* */
+
 class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewModel(application) {
 
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
@@ -40,6 +39,7 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
     init {
+        callRecentRecharge()
     }
 
     fun onSelectContactFromPhonebook(){
@@ -98,6 +98,19 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
             )
         )
     }
+    //TODO will integarate Paging in next phase.
+    fun callRecentRecharge() {
+        _state.value = EnterMobileNumberRechargeState.RecentRechargeLoading
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_RECENT_RECHARGE,
+                NetworkUtil.endURL(ApiConstant.API_RECENT_RECHARGE) +"?page=0&size=50&sort=createdDate,desc",
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
@@ -110,6 +123,18 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
                 )
                 _state.value = EnterMobileNumberRechargeState.HLRSuccess(hlrResponse.info)
                 _event.value = EnterMobileNumberRechargeEvent.ShowNextScreenWithHlrInfo(hlrResponse.info)
+
+            }
+            ApiConstant.API_RECENT_RECHARGE -> {
+                /*val json = JsonParser.parseString(responseData.toString()) as JsonObject
+                val response = Gson().fromJson<RecentRechargesResponse>(
+                    json.get("data").toString(),
+                    RecentRechargesResponse::class.java
+                )*/
+                if(responseData is RecentRechargesResponse){
+                    val prepaidRecentRecharge = responseData.data.filter { it.cardType==PREPAID }
+                    _state.value = EnterMobileNumberRechargeState.RecentRechargeSuccess(prepaidRecentRecharge)
+                }
 
             }
 
@@ -169,14 +194,19 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
             ApiConstant.API_Explore -> {
                 _state.value = EnterMobileNumberRechargeState.Error(errorResponseInfo,ApiConstant.API_Explore)
             }
+            ApiConstant.API_RECENT_RECHARGE -> {
+                _state.value = EnterMobileNumberRechargeState.Error(errorResponseInfo,ApiConstant.API_RECENT_RECHARGE)
+            }
         }
 
     }
 
     sealed class EnterMobileNumberRechargeState{
         object Loading:EnterMobileNumberRechargeState()
+        object RecentRechargeLoading:EnterMobileNumberRechargeState()
         data class Error(val errorResponseInfo: ErrorResponseInfo,val errorFromApi:String):EnterMobileNumberRechargeState()
         data class ExploreSuccess(val explore:ArrayList<ExploreContentResponse>):EnterMobileNumberRechargeState()
+        data class RecentRechargeSuccess(val recentItem:List<RecentRechargeItem>):EnterMobileNumberRechargeState()
         data class HLRSuccess(val hlrInfo:HLRInfo?):EnterMobileNumberRechargeState()
     }
     sealed class EnterMobileNumberRechargeEvent{
