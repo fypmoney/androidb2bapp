@@ -102,6 +102,7 @@
                         android:drawableEnd="@drawable/ic_icon_feather_search"
                         android:drawablePadding="10dp"
                         android:drawableTint="@color/white"
+                        android:imeOptions="actionDone"
                         android:fontFamily="@font/product_sans_regular"
                         android:hint="@string/search_for_plan_or_enter_amount"
                         android:padding="16dp"

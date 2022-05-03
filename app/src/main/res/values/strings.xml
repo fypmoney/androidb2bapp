@@ -1192,4 +1192,7 @@ Coming really soon!
     <string name="tata_sky_body">To know your Subscriber ID, press the HOME button on your remote. Alternatively, give a missed call on 080-61-9999-11 from your Registered Mobile Number.</string>
     <string name="d2h_title">What\'s my Subscriber ID?</string>
     <string name="d2h_body">To know your Subscriber ID, press the green color button on your D2H remote. Alternatively, SMS \'ID\' from your registered mobile number to 566777 or call 97818-97818 (Toll-Free).</string>
+    <string name="pending">Pending</string>
+    <string name="check_status"><u>Check Status</u></string>
+    <string name="no_recent_recharges">No Recent Recharges</string>
 </resources>

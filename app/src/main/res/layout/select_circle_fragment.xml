@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -83,7 +84,7 @@
             android:textColor="@color/white"
             android:textColorHint="@color/text_color_light"
             android:textSize="14sp"
-            android:imeOptions="actionSearch"
+            android:imeOptions="actionDone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/info_cl" />
@@ -95,7 +96,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="@dimen/dp10"
-            android:layout_marginHorizontal="@dimen/dp20"
+            android:layout_marginHorizontal="@dimen/dp10"
             app:layout_constraintTop_toBottomOf="@+id/search_circles_tv"
             app:layout_constraintBottom_toBottomOf="parent">
 
@@ -145,6 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_10sdp"
+                tools:listitem="@layout/card_circle"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 

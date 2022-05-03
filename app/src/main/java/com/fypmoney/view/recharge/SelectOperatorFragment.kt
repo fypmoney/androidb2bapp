@@ -78,11 +78,6 @@ class SelectOperatorFragment : BaseFragment<SelectOperatorFragmentBinding, Selec
     private fun setUpRecyclerView() {
         val operatorAdapter = OperatorSelectionAdapter(
             this, onOperatorClick = {
-                /*findNavController().previousBackStackEntry?.savedStateHandle?.set(
-                    "operator_selected",
-                    it
-                )
-                findNavController().popBackStack()*/
                 if(it.id =="postpaid"){
                     val directions =
                         SelectOperatorFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.POSTPAID)

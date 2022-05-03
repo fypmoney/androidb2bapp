@@ -239,6 +239,9 @@ dependencies {
     implementation("com.moengage:rich-notification:2.3.00")
     implementation('com.github.simonpercic:oklog3:2.3.0')
     implementation 'com.amazonaws:ivs-player:1.6.0'
+
+    implementation "androidx.paging:paging-runtime-ktx:3.1.1"
+
 }
 apollo {
     generateKotlinModels.set(true)
