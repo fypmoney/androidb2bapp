@@ -111,7 +111,7 @@ class PostpaidBillDetailsFragmentVM(application: Application) : BaseViewModel(ap
                                         amount = Utility.convertToPaise(amount?.toDouble().toString()),
                                         planPrice = Utility.convertToPaise(amount?.toDouble().toString()),
                                         planType = null,
-                                        billAmount = Utility.convertToPaise(billDetails!!.bill_fetch?.billnetamount)?.toLongOrNull(),
+                                        billAmount = Utility.convertToPaise(amount?.toDouble().toString())?.toLongOrNull(),
                                         billnetamount = billDetails!!.bill_fetch?.billnetamount?.toDoubleOrNull().toString(),
                                         mode = "online",
                                         dueDate = billDetails!!.bill_fetch?.dueDate,

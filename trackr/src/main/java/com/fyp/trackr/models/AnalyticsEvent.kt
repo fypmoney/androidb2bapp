@@ -162,6 +162,20 @@ enum class TrackrEvent(name: String) {
     upgrade_kyc_successfully("upgrade_kyc_successfully"),
     upgrade_kyc_from_pay_clicked("upgrade_kyc_from_pay_clicked"),
     upgrade_kyc_from_profile_clicked("upgrade_kyc_from_profile_clicked"),
+    recharge_click("recharge_click"),
+    postpaid_click("postpaid_click"),
+    dth_click("dth_click"),
+    broadband_click("broadband_click"),
+    prepaid_enter_number("prepaid_enter_number"),
+    postpaid_enter_number("postpaid_enter_number"),
+    prepaid_choose_plan("prepaid_choose_plan"),
+    dth_choose_operator("dth_choose_operator"),
+    recharge_success("recharge_success"),
+    recharge_fail("recharge_fail"),
+    postpaid_success("postpaid_success"),
+    postpaid_fail("postpaid_fail"),
+    dth_success("dth_success"),
+    dth_fail("dth_fail"),
 
 
 }

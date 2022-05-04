@@ -189,8 +189,9 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
                         binding.amountEt.setText(it)
                     }
                 }else{
-                    Utility.showToast(it.bill.message)
-                    findNavController().navigateUp()
+                    //Utility.showToast(it.bill.message)
+                    //findNavController().navigateUp()
+                    binding.billErrorTv.toVisible()
                 }
 
 

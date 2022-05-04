@@ -8,6 +8,7 @@ import com.fypmoney.util.livedata.LiveEvent
 class RechargeSuccessfulFragmentVM(application: Application):BaseViewModel(application) {
     var mobile: String? = null
     var amount: String? = null
+    var rechargeType: String? = null
 
     val event:LiveData<RechargeSuccessfulEvent>
         get() = _event

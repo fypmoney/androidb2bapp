@@ -42,6 +42,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.moengage.core.internal.MoEConstants
 import com.moengage.firebase.MoEFireBaseHelper
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -59,6 +60,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
     init {
         viewModelScope.launch {
+            delay(2000)
             setUpApp()
         }
 

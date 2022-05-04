@@ -85,17 +85,29 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
         _event.value = HomeFragmentEvent.UpiScanAction
     }
     fun onPrepaidRechargeClicked(){
+        trackr {
+            it.name = TrackrEvent.recharge_click
+        }
         _event.value = HomeFragmentEvent.PrepaidRechargeEvent(AppConstants.PREPAID)
     }
     fun onPostpaidRechargeClicked(){
+        trackr {
+            it.name = TrackrEvent.postpaid_click
+        }
         _event.value = HomeFragmentEvent.PostpaidRechargeEvent(AppConstants.POSTPAID)
 
     }
     fun onDTHRechargeClicked(){
+        trackr {
+            it.name = TrackrEvent.dth_click
+        }
         _event.value = HomeFragmentEvent.DthRechargeEvent
 
     }
     fun onBroadbandRechargeClicked(){
+        trackr {
+            it.name = TrackrEvent.broadband_click
+        }
         _event.value = HomeFragmentEvent.BroadbandRechargeEvent
 
     }

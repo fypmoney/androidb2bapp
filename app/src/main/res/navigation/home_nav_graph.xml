@@ -342,6 +342,11 @@
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />
+        <argument
+            android:name="rechargeType"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
 
         <action android:id="@+id/navigate_from_payment_success_to_home"
             app:destination="@id/navigation_home"

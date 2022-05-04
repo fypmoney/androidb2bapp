@@ -3,6 +3,8 @@ package com.fypmoney.view.recharge.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -95,6 +97,9 @@ class DthStoresListFragmentVM(application: Application) : BaseViewModel(applicat
 
 
     override fun onStoreItemClicked(position: Int, upiModel: StoreDataModel?) {
+        trackr {
+            it.name = TrackrEvent.dth_choose_operator
+        }
         _event.value = DthStoreListEvent.ShowDTHDetailsScreen(upiModel!!)
     }
 

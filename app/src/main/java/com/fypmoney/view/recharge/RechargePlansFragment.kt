@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.ViewPager
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -124,6 +126,9 @@ class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, Recharg
                 Utility.toTitleCase(it1)?.let { it2 ->
                     adapter.addFragment(RechargeForYouFragment(it.value,
                         click = {
+                            trackr {it1->
+                                it1.name = TrackrEvent.prepaid_choose_plan
+                            }
                             val directions = RechargePlansFragmentDirections.actionRechargePlanToSelectedPlan(
                                 it,
                                 mViewModel.selectedOperator.value,

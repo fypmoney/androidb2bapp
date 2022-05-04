@@ -7,11 +7,16 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.RechargeSuccessFragmentBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.DTH
+import com.fypmoney.util.AppConstants.POSTPAID
+import com.fypmoney.util.AppConstants.PREPAID
 import com.fypmoney.util.Utility
 import com.fypmoney.view.recharge.viewmodel.RechargeSuccessfulFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
@@ -41,6 +46,7 @@ class RechargeSuccessFragment :
         binding = getViewDataBinding()
         rechargeSuccessfulFragmentVM.amount = args.amount
         rechargeSuccessfulFragmentVM.mobile = args.mobile
+        rechargeSuccessfulFragmentVM.rechargeType = args.rechargeType
         setObserver()
         if (args.successResponse != null) {
             if (args.successResponse?.isPurchased == AppConstants.YES) {
@@ -51,6 +57,7 @@ class RechargeSuccessFragment :
                     isBackArrowVisible = true,
                     toolbarTitle = getString(R.string.recharge_successful)
                 )
+                successEvents()
                 binding.statusTitleTv.text = String.format(getString(R.string.your_recharge_is_successful),Utility.convertToRs(rechargeSuccessfulFragmentVM.amount),rechargeSuccessfulFragmentVM.mobile)
                 binding.comment.visibility = View.GONE
                 binding.logo.setAnimation(R.raw.success);
@@ -77,6 +84,8 @@ class RechargeSuccessFragment :
                 isBackArrowVisible = true,
                 toolbarTitle = getString(R.string.recharge_failed)
             )
+
+            failedEvents()
             binding.statusTitleTv.text = String.format(getString(R.string.your_recharge_is_failed),Utility.convertToRs(rechargeSuccessfulFragmentVM.amount),rechargeSuccessfulFragmentVM.mobile)
             binding.comment.text = getString(R.string.any_amount_detucetd)
             binding.logo.setAnimation(R.raw.failed);
@@ -84,6 +93,46 @@ class RechargeSuccessFragment :
         }
 
 
+    }
+
+    private fun failedEvents() {
+        when (rechargeSuccessfulFragmentVM.rechargeType) {
+            PREPAID -> {
+                trackr {
+                    it.name = TrackrEvent.recharge_fail
+                }
+            }
+            POSTPAID -> {
+                trackr {
+                    it.name = TrackrEvent.postpaid_fail
+                }
+            }
+            DTH -> {
+                trackr {
+                    it.name = TrackrEvent.dth_fail
+                }
+            }
+        }
+    }
+
+    private fun successEvents() {
+        when (rechargeSuccessfulFragmentVM.rechargeType) {
+            PREPAID -> {
+                trackr {
+                    it.name = TrackrEvent.recharge_success
+                }
+            }
+            POSTPAID -> {
+                trackr {
+                    it.name = TrackrEvent.postpaid_success
+                }
+            }
+            DTH -> {
+                trackr {
+                    it.name = TrackrEvent.dth_success
+                }
+            }
+        }
     }
 
     override fun onTryAgainClicked() {

@@ -3,6 +3,8 @@ package com.fypmoney.view.recharge.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -12,6 +14,8 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.FeedDetails
+import com.fypmoney.util.AppConstants.POSTPAID
+import com.fypmoney.util.AppConstants.PREPAID
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.recharge.model.*
@@ -45,6 +49,15 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
         _event.value = EnterMobileNumberRechargeEvent.PickContactFromContactBookEvent
     }
     fun onContinueClick(){
+        if(rechargeType==PREPAID){
+            trackr {
+                it.name = TrackrEvent.prepaid_enter_number
+            }
+        }else if(rechargeType== POSTPAID){
+            trackr {
+                it.name = TrackrEvent.postpaid_enter_number
+            }
+        }
         _event.value = EnterMobileNumberRechargeEvent.OnContinueEvent
     }
     fun callGetMobileHrl(mobile: String) {
