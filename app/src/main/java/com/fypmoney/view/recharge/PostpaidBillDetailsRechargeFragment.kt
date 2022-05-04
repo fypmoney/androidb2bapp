@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,7 @@ import com.fypmoney.connectivity.ApiConstant.API_GET_WALLET_BALANCE
 import com.fypmoney.databinding.PostpaidBillDetailsRechargeFragmentBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.AddMoneyView
 import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
@@ -128,39 +130,6 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
         postpaidBillDetailsFragmentVM.event.observe(viewLifecycleOwner){
             handelEvent(it)
         }
-        /*postpaidBillDetailsFragmentVM.paymentResponse.observe(viewLifecycleOwner) {
-
-            it?.let {
-                val directions = PostpaidBillDetailsRechargeFragmentDirections.actionRechargeSuccess(
-                    successDth = it,
-                    selectedOperator = postpaidBillDetailsFragmentVM.operatorResponse,)
-                findNavController().navigate(directions)
-
-                postpaidBillDetailsFragmentVM.paymentResponse.value = null
-            }
-
-
-        }
-
-        postpaidBillDetailsFragmentVM.failedRecharge.observe(viewLifecycleOwner) {
-
-            it?.let {
-
-                postpaidBillDetailsFragmentVM.failedRecharge.value = null
-                val directions = PostpaidBillDetailsRechargeFragmentDirections.actionRechargeSuccess(
-                    successDth = null,
-                    selectedOperator = postpaidBillDetailsFragmentVM.operatorResponse,
-                    amount = binding.amountEt.text.toString(),
-                    mobile = postpaidBillDetailsFragmentVM.mobileNumber
-
-                )
-                findNavController().navigate(directions)
-
-
-            }
-
-
-        }*/
 
 
     }
@@ -176,9 +145,26 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
                 findNavController().navigate(directions)
             }
             null -> TODO()
+            PostpaidBillDetailsFragmentVM.PostpaidBilDetailsEvent.OnPayClickEvent -> {
+                askForDevicePassword()
+            }
         }
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
+                when (resultCode) {
+                    AppCompatActivity.RESULT_OK -> {
+                        postpaidBillDetailsFragmentVM.fetchBalance()
+                    }
+
+                }
+            }
+        }
+    }
     private fun handelState(it: PostpaidBillDetailsFragmentVM.PostpaidBillDetailsState?) {
         when(it){
             is PostpaidBillDetailsFragmentVM.PostpaidBillDetailsState.Error -> {
@@ -193,9 +179,21 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
             }
             is PostpaidBillDetailsFragmentVM.PostpaidBillDetailsState.FetchBillSuccess -> {
                 binding.billErrorTv.toGone()
-                binding.billDueDateTv.text = String.format(getString(R.string.bill_due_date),it.bill.duedate)
-                binding.billDueAmountTv.text = getString(R.string.Rs)+ it.bill.amount
-                binding.amountEt.setText(it.bill.amount)
+                if(it.bill.status!!){
+                    it.bill.duedate?.let {
+                        binding.billDueDateTv.text = String.format(getString(R.string.bill_due_date),it)
+
+                    }
+                    it.bill.amount?.let{
+                        binding.billDueAmountTv.text = getString(R.string.Rs)+ it
+                        binding.amountEt.setText(it)
+                    }
+                }else{
+                    Utility.showToast(it.bill.message)
+                    findNavController().navigateUp()
+                }
+
+
             }
             PostpaidBillDetailsFragmentVM.PostpaidBillDetailsState.Loading -> {
                 binding.billErrorTv.toGone()

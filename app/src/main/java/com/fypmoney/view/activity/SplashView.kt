@@ -2,7 +2,6 @@ package com.fypmoney.view.activity
 
 import android.Manifest
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import com.fyp.trackr.models.TrackrEvent
@@ -18,10 +17,11 @@ import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.dynamiclinks.DynamicLinksUtil.getReferralCodeFromDynamicLink
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
-import com.fypmoney.view.register.*
+import com.fypmoney.view.register.InviteParentSiblingActivity
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
+import com.fypmoney.view.register.PendingRequestActivity
+import com.fypmoney.view.register.UserTypeOnLoginView
 import com.fypmoney.viewmodel.SplashViewModel
-import kotlinx.android.synthetic.main.view_splash.*
-import java.util.*
 
 
 /*
@@ -50,11 +50,6 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
             SharedPrefUtils.putString(applicationContext,
             SharedPrefUtils.SF_REFERRAL_CODE_FROM_INVITE_LINK,it)
         })
-        val uri: Uri =
-            Uri.parse("android.resource://" + packageName + "/" + R.raw.splash)
-        video.setMediaController(null)
-        video.setVideoURI(uri)
-        video.setOnPreparedListener { video.start() }
         trackr {
             it.name = TrackrEvent.app_launch
         }
@@ -74,15 +69,15 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
         }
 
         //Todo change in single activity acrhitrcture
-        checkUpdate.observe(this, {
-            if(!it &&  mViewModel.moveToNextScreen.value!!){
+        checkUpdate.observe(this) {
+            if (!it && mViewModel.moveToNextScreen.value!!) {
                 moveToNextScreen()
                 mViewModel.moveToNextScreen.value = false
             }
-        })
+        }
 
-        mViewModel.appUpdateState.observe(this, {
-            when(it){
+        mViewModel.appUpdateState.observe(this) {
+            when (it) {
                 SplashViewModel.AppUpdateState.FLEXIBLE -> {
                     PockketApplication.instance.appUpdateRequired = true
                     SharedPrefUtils.putInt(
@@ -118,7 +113,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
 
             mViewModel.moveToNextScreen.value = true
 
-        })
+        }
 
 
     }
@@ -148,6 +143,7 @@ class SplashView : BaseActivity<ViewSplashBinding, SplashViewModel>() {
     * This method is used to move to the next screen
     * */
     private fun moveToNextScreen() {
+
             if (SharedPrefUtils.getBoolean(
                         applicationContext,
                         SharedPrefUtils.SF_KEY_IS_LOGIN

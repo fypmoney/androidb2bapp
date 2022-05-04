@@ -18,10 +18,11 @@ data class BillPaymentRequest(
     val acceptPayment: Boolean? = null,
     val cellNumber: String? = null,
     val mode: String? = null,
-    var billAmount: String? = null,
+    var billAmount: Long? = null,
     val billdate: String? = null,
     val acceptPartPay: Boolean? = null,
     var planPrice: String? = null,
-    val longitude: String? = null
+    val longitude: String? = null,
+    var operatorName:String?=null
 ) : Parcelable
 

@@ -115,6 +115,13 @@
 
 
         <action
+            android:id="@+id/action_enter_mobile_no_to_postpaid_bill_details"
+            app:destination="@+id/navigation_postpaid_bill"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
+        <action
             android:id="@+id/action_enter_mobile_to_mobile_no_info_recharge"
             app:destination="@+id/navigation_mobile_number_info_recharge"
             app:enterAnim="@anim/slide_in_right"
@@ -138,6 +145,15 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ" />
+
+        <action
+            android:id="@+id/action_from_recent_to_plans"
+            app:destination="@+id/navigation_select_plans"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
+
     </fragment>
 
     <fragment
@@ -405,6 +421,11 @@
             app:nullable="true" />
         <argument
             android:name="rechargeType"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="circle"
             android:defaultValue="@null"
             app:argType="string"
             app:nullable="true" />

@@ -10,6 +10,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -35,6 +36,8 @@ import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
+import com.fypmoney.view.recharge.adapter.RecentRechargeAdapter
+import com.fypmoney.view.recharge.adapter.RecentRechargeUiModel
 import com.fypmoney.view.recharge.viewmodel.DthStoresListFragmentVM
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
@@ -70,6 +73,11 @@ class DthStoresListFragment : BaseFragment<DthStoresListFragmentBinding, DthStor
         return dthStoresListFragmentVM
     }
 
+    override fun onStart() {
+        super.onStart()
+        dthStoresListFragmentVM.callRecentRecharge()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewDataBinding()
@@ -81,7 +89,7 @@ class DthStoresListFragment : BaseFragment<DthStoresListFragmentBinding, DthStor
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
-
+        setUpRecentRecylerview()
         dthStoresListFragmentVM.storeAdapter.setList(
             getListOfApps(
                 R.raw.dth_json,
@@ -149,6 +157,31 @@ class DthStoresListFragment : BaseFragment<DthStoresListFragmentBinding, DthStor
         return json
     }
 
+    private fun setUpRecentRecylerview() {
+        val recentAdapter = RecentRechargeAdapter(
+            this,
+            onCheckStatusClick = {
+
+            },
+            onRepeatRechargeClick = {
+                val storeDataModel = StoreDataModel().apply {
+                    Icon = it.operatorLogo
+                    title = it.operatorName
+                    operator_id = it.requestOperatorId
+                    subscriberId = it.mobileNumber
+                    amount = Utility.convertToRs(it.amount)
+                }
+                val directions =
+                    DthStoresListFragmentDirections.actionDthRechargeScreen( storeDataModel = storeDataModel)
+                directions.let { it1 -> findNavController().navigate(it1) }
+            }
+        )
+        with(binding.rvRecentsRecharges) {
+            adapter = recentAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+        }
+    }
     fun setUpObserver(){
         dthStoresListFragmentVM.state.observe(viewLifecycleOwner){
             handelState(it)
@@ -163,7 +196,6 @@ class DthStoresListFragment : BaseFragment<DthStoresListFragmentBinding, DthStor
             is DthStoresListFragmentVM.DthStoreListEvent.ShowDTHDetailsScreen -> {
                 val directions =
                     DthStoresListFragmentDirections.actionDthRechargeScreen( storeDataModel = it.model)
-
                 directions.let { it1 -> findNavController().navigate(it1) }
             }
             null -> TODO()
@@ -189,6 +221,26 @@ class DthStoresListFragment : BaseFragment<DthStoresListFragmentBinding, DthStor
                 binding.shimmerLayout.toVisible()
             }
             null -> TODO()
+            DthStoresListFragmentVM.DthStoresListState.RecentRechargeLoading -> {
+                binding.shimmerLayoutRecent.toVisible()
+                binding.noRecentRechargesTv.toGone()
+                binding.rvRecentsRecharges.toGone()
+            }
+            is DthStoresListFragmentVM.DthStoresListState.RecentRechargeSuccess -> {
+                binding.shimmerLayoutRecent.toGone()
+                if(it.recentItem.isNullOrEmpty()){
+                    binding.noRecentRechargesTv.toVisible()
+                    binding.rvRecentsRecharges.toGone()
+                }else{
+                    binding.noRecentRechargesTv.toGone()
+                    binding.rvRecentsRecharges.toVisible()
+                    (binding.rvRecentsRecharges.adapter as RecentRechargeAdapter).submitList(it.recentItem.map {
+                        RecentRechargeUiModel.fromRechargeItem(requireContext(),it)
+                    })
+
+
+                }
+            }
         }
     }
 

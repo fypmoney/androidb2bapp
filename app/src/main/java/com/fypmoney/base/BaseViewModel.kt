@@ -6,7 +6,15 @@ import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.connectivity.ApiConstant
+import com.fypmoney.connectivity.ApiConstant.API_FETCH_BILL
+import com.fypmoney.connectivity.ApiConstant.API_GET_CIRCLE_LIST
+import com.fypmoney.connectivity.ApiConstant.API_GET_HLR_CHECK
+import com.fypmoney.connectivity.ApiConstant.API_GET_OPERATOR_LIST_MOBILE
 import com.fypmoney.connectivity.ApiConstant.API_GET_WALLET_BALANCE
+import com.fypmoney.connectivity.ApiConstant.API_MOBILE_RECHARGE
+import com.fypmoney.connectivity.ApiConstant.API_PAY_BILL
+import com.fypmoney.connectivity.ApiConstant.API_RECENT_RECHARGE
+import com.fypmoney.connectivity.ApiConstant.API_RECHARGE_PLANS
 import com.fypmoney.connectivity.ApiConstant.PLAY_ORDER_API
 import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.retrofit.WebApiCaller
@@ -48,7 +56,24 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
             else -> {
                 try {
                     when {
-                        purpose != ApiConstant.API_SNC_CONTACTS || purpose != ApiConstant.API_FETCH_ALL_FEEDS || purpose != ApiConstant.API_GET_CUSTOMER_INFO || purpose != ApiConstant.API_ADD_FAMILY_MEMBER || purpose != ApiConstant.API_GET_VIRTUAL_CARD_REQUEST || purpose != ApiConstant.API_ADD_MONEY_STEP2 || purpose != ApiConstant.API_LOGOUT || purpose != ApiConstant.API_REDEEM_REWARD || purpose != PLAY_ORDER_API || purpose != API_GET_WALLET_BALANCE -> {
+                        purpose != ApiConstant.API_SNC_CONTACTS ||
+                                purpose != ApiConstant.API_FETCH_ALL_FEEDS ||
+                                purpose != ApiConstant.API_GET_CUSTOMER_INFO ||
+                                purpose != ApiConstant.API_ADD_FAMILY_MEMBER ||
+                                purpose != ApiConstant.API_GET_VIRTUAL_CARD_REQUEST ||
+                                purpose != ApiConstant.API_ADD_MONEY_STEP2 ||
+                                purpose != ApiConstant.API_LOGOUT ||
+                                purpose != ApiConstant.API_REDEEM_REWARD ||
+                                purpose != PLAY_ORDER_API ||
+                                purpose != API_GET_WALLET_BALANCE ||
+                                purpose!=API_RECHARGE_PLANS||
+                                purpose!=API_GET_OPERATOR_LIST_MOBILE||
+                                purpose!=API_GET_CIRCLE_LIST||
+                                purpose!=API_GET_HLR_CHECK||
+                                purpose!=API_FETCH_BILL||
+                                purpose!=API_MOBILE_RECHARGE||
+                                purpose!=API_PAY_BILL||
+                                purpose!=API_RECENT_RECHARGE-> {
                             Utility.showToast(errorResponseInfo.msg)
 
                         }

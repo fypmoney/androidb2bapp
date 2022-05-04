@@ -301,4 +301,5 @@ object AppConstants {
     const val PREPAID = "PREPAID"
     const val KYC_UPGRADE_FROM_WHICH_SCREEN = "kyc_upgrade_from_which_screen"
     const val BROADBAND_RECHARGE_URL = "https://www.amazon.in/hfc/bill/landline"
+    const val SHOW_RECHARGE_SCREEN = "SHOW_RECHARGE_SCREEN"
 }

@@ -1,7 +1,6 @@
 package com.fypmoney.view.recharge.adapter
 
 import android.content.Context
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.Keep
@@ -16,8 +15,6 @@ import com.fypmoney.extension.executeAfter
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
-import com.fypmoney.util.AppConstants.NO
-import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.util.Utility
 import com.fypmoney.view.recharge.model.RecentRechargeItem
 
@@ -63,7 +60,8 @@ class RecentRechargeAdapter(
             binding.operatorRechargeTypeTv.text = item.operatorNameAndRechargeType
             binding.mobileNoTv.text = item.mobileNumber
             binding.lastRechargeTv.text = item.lastRechargeDateAndTime
-            binding.rechargeStatusTv.setCompoundDrawables(item.statusDrawable,null,null,null)
+            binding.rechargeStatusTv.setCompoundDrawablesWithIntrinsicBounds(item.statusDrawable,0,0,0)
+            binding.rechargeStatusTv.setTextColor(item.statusTextColor)
             binding.rechargeStatusTv.text = item.rechargeStatus
             if(item.isRepeatRechargeIsVisible) binding.repeatRechargeTv.toVisible() else binding.repeatRechargeTv.toGone()
             if(item.isCheckStatusIsVisible) binding.checkRechargeStatusTv.toVisible() else binding.checkRechargeStatusTv.toGone()
@@ -97,7 +95,13 @@ data class RecentRechargeUiModel(
     var rechargeStatus:String,
     var isCheckStatusIsVisible:Boolean,
     var isRepeatRechargeIsVisible:Boolean,
-    var statusDrawable:Drawable,
+    var statusDrawable:Int,
+    var statusTextColor:Int,
+    var operatorName:String?= null,
+    var circle:String?=null,
+    var cardType:String?=null,
+    var requestOperatorId:String? = null,
+    var amount:String? = null
 ){
     companion object{
         fun fromRechargeItem(context: Context, recentRechargeItem: RecentRechargeItem):RecentRechargeUiModel{
@@ -107,41 +111,70 @@ data class RecentRechargeUiModel(
                 R.drawable.ic_jio
             }else if(recentRechargeItem.operatorName.equals("Vodafone",true)){
                 R.drawable.ic_vodafone
-
+            }else if(recentRechargeItem.operatorName.equals("Airtel Digital Tv",true)){
+                R.drawable.ic_dth_airtel_digital
+            }else if(recentRechargeItem.operatorName.equals("Dish TV",true)) {
+                R.drawable.ic_dth_dish_tv
+            }else if(recentRechargeItem.operatorName.equals("Tata Sky",true)){
+                R.drawable.ic_dth_tata_play
+            }else if(recentRechargeItem.operatorName.equals("Videocon D2H",true)){
+                R.drawable.ic_dth_videocon
             }else{
                 R.drawable.ic_user
             }
-            val operatorNameAndRechargeType = recentRechargeItem.operatorName+"-"+recentRechargeItem.cardType
+            val operatorNameAndRechargeType = if(recentRechargeItem.operatorName.isNullOrEmpty())  Utility.toTitleCase(recentRechargeItem.cardType) else recentRechargeItem.operatorName+"-"+Utility.toTitleCase(recentRechargeItem.cardType)
+
             val lastRechargeDateAndTime = String.format(context.resources.getString(R.string.last_recharge_on),
                 Utility.convertToRs(recentRechargeItem.planPrice!!),Utility.parseDateTime(
                     recentRechargeItem.txnTime,
                     inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
                     outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT8
                 ))
-            val isCheckStatusIsVisible = recentRechargeItem.isPurchased == NO && recentRechargeItem.paymentStatus == "PENDING"
-            val isRepeatRechargeIsVisible = recentRechargeItem.paymentStatus == "SUCCESS" && recentRechargeItem.isPurchased == YES
+            val isCheckStatusIsVisible =  (recentRechargeItem.paymentStatus == "PENDING")
+            val isRepeatRechargeIsVisible =  (recentRechargeItem.paymentStatus == "SUCCESS")
             val rechargeStatus = Utility.toTitleCase(recentRechargeItem.paymentStatus)
-            val statusDrawable = when (recentRechargeItem.paymentStatus) {
+            val statusTextColor = when (recentRechargeItem.paymentStatus) {
                 "SUCCESS" -> {
-                    ContextCompat.getDrawable(context,R.drawable.ic_success_status)
+                    ContextCompat.getColor(context,R.color.reward_continue_button)
                 }
                 "FAILED" -> {
-                    ContextCompat.getDrawable(context,R.drawable.ic_failed_status)
+                    ContextCompat.getColor(context,R.color.text_color_red)
                 }
                 else -> {
-                    ContextCompat.getDrawable(context,R.drawable.ic_pending_status)
-
+                    ContextCompat.getColor(context,R.color.color_orange)
                 }
             }
+            val statusDrawable = when (recentRechargeItem.paymentStatus) {
+                "SUCCESS" -> {
+                    R.drawable.ic_success_status
+                }
+                "FAILED" -> {
+                    R.drawable.ic_failed_status
+                }
+                else -> {
+                    R.drawable.ic_pending_status
+                }
+            }
+            val operatorName = recentRechargeItem.operatorName
+            val circle = recentRechargeItem.circle
+            val cardType = recentRechargeItem.cardType
+            val requestOperatorId = recentRechargeItem.requestOperatorId
+            val amount = recentRechargeItem.planPrice
             return RecentRechargeUiModel(
                 operatorLogo = operatorLogo,
-                mobileNumber = recentRechargeItem.mobileNo,
-                operatorNameAndRechargeType = operatorNameAndRechargeType,
+                mobileNumber = recentRechargeItem.cardNo!!,
+                operatorNameAndRechargeType = operatorNameAndRechargeType!!,
                 lastRechargeDateAndTime = lastRechargeDateAndTime,
                 rechargeStatus = rechargeStatus!!,
                 isCheckStatusIsVisible = isCheckStatusIsVisible,
                 isRepeatRechargeIsVisible = isRepeatRechargeIsVisible,
-                statusDrawable = statusDrawable!!
+                statusDrawable = statusDrawable,
+                statusTextColor = statusTextColor,
+                operatorName = operatorName,
+                circle = circle,
+                cardType = cardType!!,
+                requestOperatorId = requestOperatorId,
+                amount = amount
             )
         }
 

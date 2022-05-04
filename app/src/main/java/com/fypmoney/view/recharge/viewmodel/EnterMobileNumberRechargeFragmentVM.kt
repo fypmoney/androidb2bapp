@@ -12,7 +12,6 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.FeedDetails
-import com.fypmoney.util.AppConstants.PREPAID
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.recharge.model.*
@@ -38,9 +37,9 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
 
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
-    init {
+   /* init {
         callRecentRecharge()
-    }
+    }*/
 
     fun onSelectContactFromPhonebook(){
         _event.value = EnterMobileNumberRechargeEvent.PickContactFromContactBookEvent
@@ -126,13 +125,8 @@ class EnterMobileNumberRechargeFragmentVM(application: Application) : BaseViewMo
 
             }
             ApiConstant.API_RECENT_RECHARGE -> {
-                /*val json = JsonParser.parseString(responseData.toString()) as JsonObject
-                val response = Gson().fromJson<RecentRechargesResponse>(
-                    json.get("data").toString(),
-                    RecentRechargesResponse::class.java
-                )*/
                 if(responseData is RecentRechargesResponse){
-                    val prepaidRecentRecharge = responseData.data.filter { it.cardType==PREPAID }
+                    val prepaidRecentRecharge = responseData.data.filter { it.cardType==rechargeType }
                     _state.value = EnterMobileNumberRechargeState.RecentRechargeSuccess(prepaidRecentRecharge)
                 }
 

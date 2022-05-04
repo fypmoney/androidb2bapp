@@ -56,7 +56,7 @@ data class RecentRechargeItem(
 	val billNetAmount: Any? = null,
 
 	@field:SerializedName("billAmount")
-	val billAmount: Any? = null,
+	val billAmount: String? = null,
 
 	@field:SerializedName("requestOperatorId")
 	val requestOperatorId: String? = null,
@@ -125,7 +125,7 @@ data class RecentRechargeItem(
 	val acceptPartPay: Any? = null,
 
 	@field:SerializedName("circle")
-	val circle: Any? = null,
+	val circle: String? = null,
 
 	@field:SerializedName("currencyCode")
 	val currencyCode: Any? = null,

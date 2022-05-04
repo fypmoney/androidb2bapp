@@ -14,6 +14,8 @@ import com.fypmoney.model.*
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.adapter.StoreItemAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
+import com.fypmoney.view.recharge.model.RecentRechargeItem
+import com.fypmoney.view.recharge.model.RecentRechargesResponse
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -40,6 +42,19 @@ class DthStoresListFragmentVM(application: Application) : BaseViewModel(applicat
     private val _event = LiveEvent<DthStoreListEvent>()
 
 
+    //TODO will integarate Paging in next phase.
+    fun callRecentRecharge() {
+        _state.value = DthStoresListState.RecentRechargeLoading
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_RECENT_RECHARGE,
+                NetworkUtil.endURL(ApiConstant.API_RECENT_RECHARGE) +"?page=0&size=50&sort=createdDate,desc",
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
     fun callExplporeContent(s: String?) {
         _state.value = DthStoresListState.Loading
         WebApiCaller.getInstance().request(
@@ -127,6 +142,14 @@ class DthStoresListFragmentVM(application: Application) : BaseViewModel(applicat
 
             }
 
+            ApiConstant.API_RECENT_RECHARGE -> {
+                if(responseData is RecentRechargesResponse){
+                    val prepaidRecentRecharge = responseData.data.filter { it.cardType=="DTH" }
+                    _state.value = DthStoresListState.RecentRechargeSuccess(prepaidRecentRecharge)
+                }
+
+            }
+
 
         }
 
@@ -139,13 +162,21 @@ class DthStoresListFragmentVM(application: Application) : BaseViewModel(applicat
             ApiConstant.API_Explore -> {
                 _state.value = DthStoresListState.Error(errorResponseInfo,ApiConstant.API_Explore)
             }
+
+            ApiConstant.API_RECENT_RECHARGE -> {
+                _state.value = DthStoresListState.Error(errorResponseInfo,ApiConstant.API_RECENT_RECHARGE)
+            }
         }
 
     }
     sealed class DthStoresListState{
         object Loading:DthStoresListState()
+        object RecentRechargeLoading:
+            DthStoresListState()
         data class Error(val errorResponseInfo: ErrorResponseInfo,val errorFromApi:String):DthStoresListState()
         data class ExploreSuccess(val explore:ArrayList<ExploreContentResponse>):DthStoresListState()
+        data class RecentRechargeSuccess(val recentItem:List<RecentRechargeItem>):DthStoresListState()
+
     }
     sealed class DthStoreListEvent{
         data class ShowDTHDetailsScreen(val model:StoreDataModel):DthStoreListEvent()

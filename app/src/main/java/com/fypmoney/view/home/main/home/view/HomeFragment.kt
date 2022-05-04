@@ -24,6 +24,9 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.BROADBAND_RECHARGE_URL
 import com.fypmoney.util.AppConstants.FyperScreen
+import com.fypmoney.util.AppConstants.NO
+import com.fypmoney.util.AppConstants.YES
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.util.videoplayer.VideoActivity2
@@ -101,7 +104,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         setUpObserver()
         homeFragmentVM.callToAction()
         checkForErrorNotice()
+        rechargeVisbility()
 
+    }
+
+    private fun rechargeVisbility() {
+        SharedPrefUtils.getString(requireContext(),SharedPrefUtils.SF_SHOW_RECHARGE_IN_HOME_SCREEN)?.let {
+            if(it==YES){
+                binding.rechargeSectionCl.toVisible()
+            }else if(it==NO){
+                binding.rechargeSectionCl.toGone()
+            }
+        }
     }
 
     private fun checkForErrorNotice() {

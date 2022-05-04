@@ -52,7 +52,7 @@
             android:textSize="14sp"
             android:layout_marginHorizontal="@dimen/dp20"
             android:layout_marginTop="20dp"
-            tools:text="Please, do not press back or close the app"
+            android:text="@string/please_do_not_press_back_or_close_the_app"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_tv" />

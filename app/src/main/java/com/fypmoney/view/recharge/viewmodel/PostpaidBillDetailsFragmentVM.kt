@@ -46,7 +46,7 @@ class PostpaidBillDetailsFragmentVM(application: Application) : BaseViewModel(ap
     private val _event = LiveEvent<PostpaidBilDetailsEvent>()
 
     fun onPayClick(){
-        fetchBalance()
+        _event.value = PostpaidBilDetailsEvent.OnPayClickEvent
     }
     fun callFetchBillsInformation(mobileNumber: String,operatorId:String) {
         WebApiCaller.getInstance().request(
@@ -64,7 +64,7 @@ class PostpaidBillDetailsFragmentVM(application: Application) : BaseViewModel(ap
         )
     }
 
-    private fun fetchBalance() {
+    fun fetchBalance() {
         _state.value = PostpaidBillDetailsState.Loading
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -107,19 +107,22 @@ class PostpaidBillDetailsFragmentVM(application: Application) : BaseViewModel(ap
                                     BillPaymentRequest(
                                         cardNo = mobileNumber,
                                         operator = operatorResponse?.operatorId,
-                                        amount = amount?.toDouble().toString(),
-                                        planPrice = amount?.toDouble().toString(),
-                                        planType = "",
-                                        billAmount = amount?.toDouble().toString(),
+                                        operatorName = operatorResponse?.name,
+                                        amount = Utility.convertToPaise(amount?.toDouble().toString()),
+                                        planPrice = Utility.convertToPaise(amount?.toDouble().toString()),
+                                        planType = null,
+                                        billAmount = Utility.convertToPaise(billDetails!!.bill_fetch?.billnetamount)?.toLongOrNull(),
                                         billnetamount = billDetails!!.bill_fetch?.billnetamount?.toDoubleOrNull().toString(),
                                         mode = "online",
                                         dueDate = billDetails!!.bill_fetch?.dueDate,
-                                        acceptPartPay = true,
-                                        acceptPayment = true,
+                                        acceptPartPay = billDetails!!.bill_fetch?.acceptPartPay,
+                                        acceptPayment = billDetails!!.bill_fetch?.acceptPayment,
                                         cellNumber = mobileNumber,
-                                        userName = "",
-                                        latitude = "",
-                                        longitude = ""
+                                        userName = billDetails!!.bill_fetch?.userName,
+                                        latitude = "23.923828392",
+                                        longitude = "75.82389283",
+                                        billdate = billDetails!!.bill_fetch?.billdate
+
 
 
                                     )
@@ -154,6 +157,9 @@ class PostpaidBillDetailsFragmentVM(application: Application) : BaseViewModel(ap
     sealed class PostpaidBilDetailsEvent{
         data class ShowPaymentProcessingScreen(val billPaymentRequest: BillPaymentRequest):PostpaidBilDetailsEvent()
         data class ShowLowBalanceAlert(val amount:String?): PostpaidBilDetailsEvent()
+        object OnPayClickEvent:PostpaidBilDetailsEvent()
+
+
     }
 
 }

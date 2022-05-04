@@ -28,6 +28,7 @@ import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.POSTPAID
 import com.fypmoney.util.AppConstants.PREPAID
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.getPhoneNumberFromContact
@@ -45,6 +46,7 @@ import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.recharge.adapter.RecentRechargeAdapter
 import com.fypmoney.view.recharge.adapter.RecentRechargeUiModel
 import com.fypmoney.view.recharge.model.MobileNumberInfoUiModel
+import com.fypmoney.view.recharge.model.OperatorResponse
 import com.fypmoney.view.recharge.viewmodel.EnterMobileNumberRechargeFragmentVM
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
@@ -94,6 +96,11 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
         setListeners()
     }
 
+    override fun onStart() {
+        super.onStart()
+        enterMobileNumberRechargeFragmentVM.callRecentRecharge()
+    }
+
     private fun setUpRecentRecylerview() {
         val recentAdapter = RecentRechargeAdapter(
             this,
@@ -101,6 +108,25 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
 
             },
             onRepeatRechargeClick = {
+                if(it.cardType.equals(PREPAID)){
+                    val direction  = EnterMobileNumberRechargeFragmentDirections.actionFromRecentToPlans(
+                        selectedOperator = OperatorResponse(name = it.operatorName,operatorId = it.requestOperatorId),
+                        selectedCircle = it.circle!!,
+                        mobile = it.mobileNumber,
+                        rechargeTye = it.cardType
+                    )
+                    findNavController().navigate(direction)
+                }else if(it.cardType.equals(POSTPAID)){
+                    val directions  = EnterMobileNumberRechargeFragmentDirections.actionEnterMobileNoToPostpaidBillDetails(
+                        selectedOperator = OperatorResponse(name = it.operatorName, operatorId = it.requestOperatorId),
+                        selectedCircle = it.circle,
+                        operator =  it.operatorName,
+                        mobile = it.mobileNumber,
+                        rechargeType = it.cardType
+                    )
+                    findNavController().navigate(directions)
+
+                }
 
             }
         )

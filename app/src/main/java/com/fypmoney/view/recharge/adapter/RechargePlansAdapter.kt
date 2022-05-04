@@ -46,7 +46,7 @@ class RechargePlansVH(
             }
             tvRs.text = tvRs.context.resources.getString(R.string.Rs)+" "+user.rs
             tvDetails.text = user.desc
-            tvValidity.text = if (user.validity=="N/A") "Not Applicable" else  user.validity
+            tvValidity.text = if (user.validity=="N/A") "Validity: Not Applicable" else  "Validity: ${user.validity}"
         }
     }
 

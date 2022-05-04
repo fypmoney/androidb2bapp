@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -13,6 +14,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.SelectedPlanDetailsRechargeFragmentBinding
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.AddMoneyView
 import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
@@ -54,6 +56,7 @@ class SelectedPlanDetailsRechargeFragment: BaseFragment<SelectedPlanDetailsRecha
         selectedPlanDetailsRechargeFragmentVM.mobile = args.mobile
         selectedPlanDetailsRechargeFragmentVM.planType = args.planType
         selectedPlanDetailsRechargeFragmentVM.rechargeType = args.rechargeType
+        selectedPlanDetailsRechargeFragmentVM.circle = args.circle
 
         binding.amountTv.text = getString(R.string.Rs) + args.selectedPlan?.rs
         binding.details.text = args.selectedPlan?.desc
@@ -101,46 +104,7 @@ class SelectedPlanDetailsRechargeFragment: BaseFragment<SelectedPlanDetailsRecha
         selectedPlanDetailsRechargeFragmentVM.state.observe(viewLifecycleOwner){
             handelState(it)
         }
-      /*  mViewModel.success.observe(viewLifecycleOwner) {
 
-            it?.let {
-
-                mViewModel.success.postValue(null)
-
-
-                val directions = SelectedPlanDetailsRechargeFragmentDirections.actionRechargeSuccess(
-                    successResponse = it,
-                    selectedOperator = mViewModel.operatorResponse.value,
-                    amount = args.selectedPlan?.rs,
-                    mobile = mViewModel.mobile.value
-
-                )
-                findNavController().navigate(directions)
-
-
-            }
-        }
-
-
-        mViewModel.failedresponse.observe(viewLifecycleOwner) {
-            it?.let {
-
-                mViewModel.failedresponse.postValue(null)
-
-                if (it == "failed") {
-                    val directions = SelectedPlanDetailsRechargeFragmentDirections.actionRechargeSuccess(
-                        successResponse = null,
-                        selectedOperator = mViewModel.operatorResponse.value,
-
-                        )
-                    findNavController().navigate(directions)
-
-                }
-
-
-            }
-        }
-*/
 
     }
 
@@ -176,10 +140,26 @@ class SelectedPlanDetailsRechargeFragment: BaseFragment<SelectedPlanDetailsRecha
                 findNavController().navigate(direction)
             }
             null -> TODO()
-
+            SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeEvent.OnPayClickEvent -> {
+                askForDevicePassword()
+            }
         }
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
+                when (resultCode) {
+                    AppCompatActivity.RESULT_OK -> {
+                        selectedPlanDetailsRechargeFragmentVM.fetchBalance()
+                    }
+
+                }
+            }
+        }
+    }
     private fun callInsufficientFundMessageSheet(amount: String?) {
         var bottomSheetInsufficient: TaskMessageInsuficientFuntBottomSheet? = null
         val itemClickListener2 = object : AcceptRejectClickListener {

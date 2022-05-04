@@ -25,6 +25,7 @@ class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseView
     var mobile: String? = null
     var planType: String? = null
     var rechargeType: String? = null
+    var circle: String? = null
     var operatorResponse:OperatorResponse? = null
 
     var success = MutableLiveData<PayAndRechargeResponse>()
@@ -38,21 +39,14 @@ class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseView
     private val _state = LiveEvent<SelectedPlanDetailsRechargeState>()
 
     fun onContinueClick(){
-        fetchBalance()
-       /* _event.value = SelectedPlanDetailsRechargeEvent.Pay(PayAndRechargeRequest(
-            cardNo = mobile,
-            operator = operatorResponse?.operatorId,
-            planPrice = Utility.convertToPaise(selectedPlan?.rs)?.toLong(),
-            planType =  planType,
-            amount = Utility.convertToPaise(selectedPlan?.rs)?.toLong()
-        ))*/
+        _event.value = SelectedPlanDetailsRechargeEvent.OnPayClickEvent
     }
 
     fun onChangePlanClick(){
         _event.value = SelectedPlanDetailsRechargeEvent.ChangePlan
     }
 
-    private fun fetchBalance() {
+    fun fetchBalance() {
         _state.value = SelectedPlanDetailsRechargeState.Loading
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -83,7 +77,9 @@ class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseView
                                     operator = operatorResponse?.operatorId,
                                     planPrice = Utility.convertToPaise(selectedPlan?.rs)?.toLong(),
                                     planType =  planType,
-                                    amount = Utility.convertToPaise(selectedPlan?.rs)?.toLong()
+                                    amount = Utility.convertToPaise(selectedPlan?.rs)?.toLong(),
+                                    circle = circle,
+                                    operatorName = operatorResponse?.name
                                 ))
                         }
                     }
@@ -111,6 +107,7 @@ class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseView
         data class ShowPaymentProcessingScreen(val payRequest:PayAndRechargeRequest):SelectedPlanDetailsRechargeEvent()
         data class ShowLowBalanceAlert(val amount:String?):SelectedPlanDetailsRechargeEvent()
         object ChangePlan:SelectedPlanDetailsRechargeEvent()
+        object OnPayClickEvent:SelectedPlanDetailsRechargeEvent()
     }
     sealed class SelectedPlanDetailsRechargeState{
         object Loading:SelectedPlanDetailsRechargeState()

@@ -91,19 +91,13 @@ class PaymentProcessingFragmentVM(application: Application) : BaseViewModel(appl
 
     fun payPostpaidBill() {
         _state.value = PaymentProcessingState.Loading
-        val request = billPaymentRequest?.apply {
-            amount = Utility.convertToPaise(amount.toString())
-            planPrice = Utility.convertToPaise(amount.toString())
-            billAmount = Utility.convertToPaise(amount.toString())
-            billnetamount = Utility.convertToPaise(amount.toString())
-        }
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_PAY_BILL,
                 endpoint = NetworkUtil.endURL(ApiConstant.API_PAY_BILL),
                 request_type = ApiUrl.POST,
                 onResponse = this, isProgressBar = false,
-                param = request!!
+                param = billPaymentRequest!!
 
             )
         )

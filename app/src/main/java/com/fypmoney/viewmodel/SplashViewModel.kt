@@ -3,6 +3,7 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.adjust.sdk.Adjust
 import com.fyp.trackr.base.Trackr
 import com.fyp.trackr.models.*
@@ -31,6 +32,7 @@ import com.fypmoney.util.AppConstants.REFER_LINE1
 import com.fypmoney.util.AppConstants.REFER_LINE2
 import com.fypmoney.util.AppConstants.REFER_MSG_SHARED_1
 import com.fypmoney.util.AppConstants.REFER_MSG_SHARED_2
+import com.fypmoney.util.AppConstants.SHOW_RECHARGE_SCREEN
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_APP_VERSION_CODE
 import com.fypmoney.util.Utility
@@ -40,6 +42,7 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.moengage.core.internal.MoEConstants
 import com.moengage.firebase.MoEFireBaseHelper
+import kotlinx.coroutines.launch
 
 
 /*
@@ -55,7 +58,10 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
     private val _appUpdateState = MutableLiveData<AppUpdateState>()
 
     init {
-        setUpApp()
+        viewModelScope.launch {
+            setUpApp()
+        }
+
     }
     fun setUpApp() {
         callCheckAppUpdate()
@@ -160,7 +166,8 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
             "IS_NEW_FEED_AVAILABLE",
             "ONBOARD_SHARE_90",
             "ONBOARD_SHARE_1",
-            "ADD_MONEY_VIDEO"
+            "ADD_MONEY_VIDEO",
+            "SHOW_RECHARGE_SCREEN"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -342,6 +349,16 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                             }
                             IS_NEW_FEED_AVAILABLE -> {
                                 PockketApplication.isNewFeedAvailableData = it
+                            }
+                            IS_NEW_FEED_AVAILABLE -> {
+                                PockketApplication.isNewFeedAvailableData = it
+                            }
+                            SHOW_RECHARGE_SCREEN->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SHOW_RECHARGE_IN_HOME_SCREEN,
+                                    it.value
+                                )
                             }
 
 

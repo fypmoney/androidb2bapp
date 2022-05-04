@@ -11,6 +11,8 @@ data class PayAndRechargeRequest(
     val planType: String? = null,
     val cardNo: String? = null,
     val planPrice: Long? = null,
-    val operator: String? = null
+    val operator: String? = null,
+    val circle:String? = null,
+    val operatorName:String?= null
 ): Parcelable
 

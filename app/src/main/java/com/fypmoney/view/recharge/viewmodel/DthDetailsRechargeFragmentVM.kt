@@ -69,7 +69,7 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
     }
 
     fun onPayClick(){
-        fetchBalance()
+        _event.value = DthDetailsEvent.OnPayClickEvent
     }
     fun callExplporeContent() {
         _state.value = DthDetailsState.Loading(ApiConstant.API_Explore)
@@ -111,7 +111,7 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
 
     }
 
-    private fun fetchBalance() {
+    fun fetchBalance() {
         _state.value = DthDetailsState.Loading(API_GET_WALLET_BALANCE)
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -123,29 +123,6 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
             )
         )
     }
-    fun callMobileRecharge(
-        selectedpaln: String?,
-        number: String?,
-        value3: String?
-    ) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                purpose = ApiConstant.API_MOBILE_RECHARGE,
-                endpoint = NetworkUtil.endURL(ApiConstant.API_MOBILE_RECHARGE),
-                request_type = ApiUrl.POST,
-                onResponse = this, isProgressBar = true,
-                param = PayAndRechargeRequest(
-                    cardNo = number,
-                    operator = selectedDthOperator?.operator_id,
-                    planPrice = Utility.convertToPaise(selectedpaln)?.toLong(),
-                    planType = "",
-                    amount = Utility.convertToPaise(selectedpaln)?.toLong()
-                )
-            )
-        )
-    }
-
-
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
@@ -231,7 +208,9 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
                                         operator = oper?.operatorId,
                                         planPrice = Utility.convertToPaise(amountSelected.get())?.toLong(),
                                         planType =  "",
-                                        amount = Utility.convertToPaise(amountSelected.get())?.toLong()
+                                        amount = Utility.convertToPaise(amountSelected.get())?.toLong(),
+                                        operatorName = oper?.name
+
                                     )
                                 )
                             }
@@ -277,6 +256,7 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
     sealed class DthDetailsEvent{
         data class ShowLowBalanceAlert(val amount:String?): DthDetailsEvent()
         data class ShowPaymentProcessingScreen(val payAndRechargeRequest: PayAndRechargeRequest): DthDetailsEvent()
+        object OnPayClickEvent:DthDetailsEvent()
 
     }
 

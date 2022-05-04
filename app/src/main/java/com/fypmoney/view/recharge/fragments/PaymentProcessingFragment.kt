@@ -119,7 +119,7 @@ class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,
                     successResponse = PayAndRechargeResponse(isPurchased = it.billPaymentResponse.isPurchased),
                     selectedOperator = null,
                     mobile = paymentProcessingFragmentVM.billPaymentRequest?.cardNo,
-                    amount = paymentProcessingFragmentVM.billPaymentRequest?.billAmount.toString()
+                    amount = paymentProcessingFragmentVM.billPaymentRequest?.amount.toString()
 
                 )
                 findNavController().navigate(directions)

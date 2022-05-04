@@ -10,6 +10,7 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -79,6 +80,13 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
         binding = getViewDataBinding()
 
         dthDetailsRechargeFragmentVM.selectedDthOperator = args.storeDataModel
+        args.storeDataModel?.subscriberId?.let {
+            binding.dthNumberEt.setText(it)
+
+        }
+        args.storeDataModel?.amount?.let {
+            binding.amount.setText(it)
+        }
 
         dthDetailsRechargeFragmentVM.oper = OperatorResponse().apply {
             Icon = dthDetailsRechargeFragmentVM.selectedDthOperator?.Icon
@@ -96,7 +104,6 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
         )
         showPrivacyPolicyAndTermsAndConditions()
         setBindings()
-        setObserver()
         setExploreListners()
         setUpObserver()
 
@@ -110,66 +117,13 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
             binding.continueBtn.isEnabled = !text.isNullOrEmpty() && text.toString().toInt()>0
 
         }
-/*
-        binding.continueBtn.setOnClickListener {
-            if (!binding.amount.text.isNullOrEmpty()) {
-                dthDetailsRechargeFragmentVM.callMobileRecharge(
-                    binding.amount.text.toString(),
 
-                    binding.dthNumberEt.text.toString(),
-                    dthDetailsRechargeFragmentVM.selectedDthOperator?.operator_id,
-
-
-                    )
-            } else {
-                Utility.showToast("Enter bill amount")
-
-            }
-
-
-        }
-*/
     }
 
     override fun onTryAgainClicked() {
 
     }
 
-
-    private fun setObserver() {
-        /*dthDetailsRechargeFragmentVM.paymentResponse.observe(viewLifecycleOwner) {
-            it?.let {
-                val directions = DthDetailsRechargeFragmentDirections.actionGoToDthSuccess(
-                    successResponse = it,
-                    selectedOperator = oper,
-                    amount = binding.amount.text.toString(),
-                    mobile = binding.dthNumberEt.text.toString()
-                )
-                findNavController().navigate(directions)
-                dthDetailsRechargeFragmentVM.paymentResponse.value = null
-            }
-        }
-        dthDetailsRechargeFragmentVM.paymentResponse.observe(viewLifecycleOwner) {
-            it?.let {
-                val directions = DthDetailsRechargeFragmentDirections.actionGoToDthSuccess(
-                    successResponse = null,
-                    selectedOperator = oper,
-                    amount = binding.amount.text.toString(),
-                    mobile = binding.dthNumberEt.text.toString()
-                )
-                findNavController().navigate(directions)
-                dthDetailsRechargeFragmentVM.paymentResponse.value = null
-            }
-        }
-        dthDetailsRechargeFragmentVM.dthinfoList.observe(viewLifecycleOwner) {
-            if (it.amount != null) {
-                binding.amount.setText(it.amount.toDoubleOrNull()?.toInt().toString())
-            } else {
-
-            }
-        }*/
-
-    }
 
     private fun callDiduKnowBottomSheet(list: List<String>) {
         val bottomSheet =
@@ -205,6 +159,23 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
                 findNavController().navigate(directions)
             }
             null -> TODO()
+            DthDetailsRechargeFragmentVM.DthDetailsEvent.OnPayClickEvent -> {
+                askForDevicePassword()
+            }
+        }
+    }
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
+                when (resultCode) {
+                    AppCompatActivity.RESULT_OK -> {
+                        dthDetailsRechargeFragmentVM.fetchBalance()
+                    }
+
+                }
+            }
         }
     }
 

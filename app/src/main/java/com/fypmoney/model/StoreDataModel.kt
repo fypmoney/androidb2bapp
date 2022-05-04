@@ -11,6 +11,8 @@ data class StoreDataModel(
     var title: String? = null,
     var url: String? = null,
     var operator_id: String? = null,
-    var Icon: Int? = null
+    var Icon: Int? = null,
+    var subscriberId:String? = null,
+    var amount:String? = null
 ) : Parcelable
 

@@ -129,7 +129,8 @@ class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, Recharg
                                 mViewModel.selectedOperator.value,
                                 mobile = mViewModel.mobile.value,
                                 planType = it1,
-                                rechargeType = mViewModel.rechargeType
+                                rechargeType = mViewModel.rechargeType,
+                                circle = mViewModel.selectedCircle.value
                             )
 
                             findNavController().navigate(directions)

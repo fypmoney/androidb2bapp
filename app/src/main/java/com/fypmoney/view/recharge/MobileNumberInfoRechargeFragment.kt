@@ -36,10 +36,6 @@ import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import kotlinx.android.synthetic.main.toolbar.*
 
 
-/*
-* This class is used as Home Screen
-* */
-
 class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFragmentBinding, MobileNumberInfoRechargeFragmentVM>() {
 
     private val mViewModel by viewModels<MobileNumberInfoRechargeFragmentVM> { defaultViewModelProviderFactory }
