@@ -1159,25 +1159,7 @@ Coming really soon!
     <string name="add_via_debit_card_upi">Add Via Debit Card/UPI</string>
     <string name="share_bank_details">Here are my Fyp bank account details. Please send money directly to my account - Bank Account No.: %1$s  and IFSC Code: %2$s</string>
     <string name="is_your_child_already_on_fyp_enter_their_registed_mobile_no">Is your child already on Fyp? Enter their registered mobile no.</string>
-    <string name="close_button">Close</string>
-    <string name="buffering">Buffering…</string>
-    <string name="paused">Paused</string>
-    <string name="ended">Ended</string>
 
-    <string name="increased_monthly_limit_1_lakh">Increased Monthly Limit: 1 Lakh</string>
-    <string name="atm_withdrawals_enabled">ATM Withdrawals Enabled</string>
-    <string name="send_money_to_fyp_users">Send Money to Fyp Users</string>
-    <string name="upgrade_your_kyc">Upgrade Your KYC</string>
-    <string name="upgrade_aadhar_kyc">Upgrade to Aadhar KYC</string>
-    <string name="kyc_verified">KYC Verified</string>
-    <string name="to_send_money_to_other_fyp_users_upgrade_to_aadhar_kyc">To send money to other Fyp users, upgrade to Aadhar KYC</string>
-    <string name="increase_limit">Increase Limit</string>
-    <string name="preferred_upi_id">Preferred UPI ID</string>
-    <string name="fyp_card_details">Fyp Card Details</string>
-    <string name="minimum_kyc">Minimum KYC</string>
-    <string name="have_a_promo_code_click_here">Have a promo code? Click here</string>
-    <string name="promo_code">Promo code</string>
-    <string name="please_enter_your_promo_code">Please enter your promo code</string>
     <string name="search_for_plan_or_enter_amount">Search for plan or enter amount</string>
     <string name="dth">DTH</string>
     <string name="broadband">Broadband</string>
@@ -1218,6 +1200,8 @@ Coming really soon!
     <string name="enter_amount">Enter Amount</string>
     <string name="your_regular_recharge">Your regular recharge</string>
     <string name="keep_set_top_box_on_while_recharging">Keep set-top box on while recharging</string>
+
+
 
 
     <string name="add_money_1500">\u20B9 1500</string>

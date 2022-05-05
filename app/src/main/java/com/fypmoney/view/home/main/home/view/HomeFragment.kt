@@ -288,7 +288,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         homeFragmentVM?.rewardHistoryList.observe(
             viewLifecycleOwner
         ) { list ->
-
             setRecyclerView(_binding, list)
         }
 

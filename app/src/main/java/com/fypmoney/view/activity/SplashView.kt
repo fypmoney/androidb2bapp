@@ -20,12 +20,7 @@ import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.register.InviteParentSiblingActivity
 import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.view.register.PendingRequestActivity
-import com.fypmoney.view.register.UserTypeOnLoginView
-import com.fypmoney.view.register.InviteParentSiblingActivity
-import com.fypmoney.view.register.PanAdhaarSelectionActivity
-import com.fypmoney.view.register.PendingRequestActivity
 import com.fypmoney.viewmodel.SplashViewModel
-import kotlinx.android.synthetic.main.view_splash.*
 
 
 /*
