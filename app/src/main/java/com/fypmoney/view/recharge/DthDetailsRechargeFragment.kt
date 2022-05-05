@@ -11,6 +11,7 @@ import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -25,6 +26,8 @@ import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiConstant.API_Explore
 import com.fypmoney.connectivity.ApiConstant.API_GET_WALLET_BALANCE
 import com.fypmoney.databinding.DthDetailsRechargeFragmentBinding
+import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
