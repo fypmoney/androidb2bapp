@@ -37,7 +37,7 @@ class LoadMoneyBottomSheet:BaseBottomSheetFragment<BottomsheetLoadMoneyBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpBinding()
-        binding.lottieLayerName.gifResource = R.raw.load_money_gif
+        //binding.lottieLayerName.gifResource = R.raw.load_money_gif
         setObserver()
     }
 

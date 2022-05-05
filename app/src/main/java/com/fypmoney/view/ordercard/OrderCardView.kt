@@ -22,12 +22,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.ordercard.activateofflinecard.ScanCardKitNumberActivity
 import com.fypmoney.view.ordercard.cardofferdetails.CardOfferDetailsActivity
 import com.fypmoney.view.ordercard.promocode.ApplyPromoCodeBottomSheet
-import kotlinx.android.synthetic.main.activity_notify_me_order_card.*
-import kotlinx.android.synthetic.main.screen_card.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.toolbar.toolbar
-import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
-import kotlinx.android.synthetic.main.view_order_card.*
 
 /*
 * This class is used to order card
@@ -61,13 +56,7 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
             titleColor = Color.BLACK
         )
 
-        if(SharedPrefUtils.getString(
-                applicationContext,
-                SharedPrefUtils.SF_KEY_CARD_FLAG
-            )=="1"){
-            showNotifyCardLayout()
-        }else{
-            mViewBinding.notifyOrderCardNsv.visibility = View.GONE
+        mViewBinding.notifyOrderCardNsv.visibility = View.GONE
             mViewBinding.orderCardNsv.visibility = View.VISIBLE
 
             val uri: Uri =
@@ -79,7 +68,7 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
                 mViewBinding.cardFrontAiv.start()
             }
 
-        }
+
         setObservers()
     }
 
@@ -166,21 +155,6 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
         }
     }
 
-    private fun showNotifyCardLayout() {
-        val uri: Uri =
-            Uri.parse("android.resource://" + packageName + "/" + R.raw.notify_order_card)
-        mViewBinding.video.setMediaController(null)
-        mViewBinding.video.setVideoURI(uri)
-        mViewBinding.video.setOnPreparedListener {
-            it.isLooping = true
-            mViewBinding.video.start()
-        }
-        mViewBinding.notifyBtn.setOnClickListener {
-            Utility.showToast(resources.getString(R.string.thanks_we_will_keep_you_notify))
-            finish()
-        }
-        mViewBinding.notifyOrderCardNsv.visibility = View.VISIBLE
-    }
 
 
 }
