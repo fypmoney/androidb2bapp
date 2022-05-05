@@ -56,21 +56,18 @@ class CardSettingsBottomSheet(
         bottomSheet.setContentView(bindingSheet.root)
         val textString = ArrayList<String>()
         textString.add(PockketApplication.instance.getString(R.string.card_settings_block))
-        bankProfileResponse?.kycType.let {
-            if(it != "MINIMUM"){
-                textString.add(PockketApplication.instance.getString(R.string.card_settings_limit))
-            }
-        }
+
+        textString.add(PockketApplication.instance.getString(R.string.card_settings_limit))
         textString.add(PockketApplication.instance.getString(R.string.card_settings_channels))
         bankProfileResponse?.cardInfos?.forEach {
-            when(it.cardType){
-                AppConstants.CARD_TYPE_PHYSICAL ->{
-                    if(it.status == AppConstants.ENABLE){
+            when (it.cardType) {
+                AppConstants.CARD_TYPE_PHYSICAL -> {
+                    if (it.status == AppConstants.ENABLE) {
 /*
                         if(it.isPinSet.isNullOrEmpty() || it.isPinSet.equals("NO")){
 */
-                            textString.add(PockketApplication.instance.getString(R.string.card_settings_pin))
-                      /*  }*/
+                        textString.add(PockketApplication.instance.getString(R.string.card_settings_pin))
+                        /*  }*/
                     }
                 }
             }
@@ -97,11 +94,11 @@ class CardSettingsBottomSheet(
     }
 
     interface OnCardSettingsClickListener {
-        fun onCardSettingsClick(position: Int)
+        fun onCardSettingsClick(position: Int, name: String?)
     }
 
     override fun onItemClick(position: Int, name: String?) {
-        onCardSettingsClickListener.onCardSettingsClick(position)
+        onCardSettingsClickListener.onCardSettingsClick(position, name)
         dismiss()
     }
 }

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
@@ -19,11 +20,14 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_CARD_IS_ACTIVATED
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.card.model.CardOptionEvent
 import com.fypmoney.view.card.model.CardOptionUiModel
 import com.fypmoney.view.fragment.*
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 
 class CardFragmentVM(application: Application) :
@@ -49,11 +53,21 @@ class CardFragmentVM(application: Application) :
     private val _event = LiveEvent<CardEvent>()
 
     init {
-        callGetVirtualRequestApi()
+        //checkVirtualCardIsIssued()
+    }
+
+     fun checkVirtualCardIsIssued() {
+        Utility.getCustomerDataFromPreference()?.let {
+            if (it.bankProfile?.isVirtualCardIssued == AppConstants.NO) {
+                _event.value = CardEvent.ShowActivateBtnCardEvent
+            } else {
+                callGetVirtualRequestApi()
+
+            }
+        }
     }
 
     private fun callGetVirtualRequestApi() {
-        _state.value = CardState.LoadingCardDetails
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_VIRTUAL_CARD_REQUEST,
@@ -211,6 +225,20 @@ class CardFragmentVM(application: Application) :
     fun onFetchCardDetails() {
         callGetVirtualRequestApi()
     }
+    fun onActivateCard() {
+        viewModelScope.launch {
+            Utility.getCustomerDataFromPreference()?.let {
+                if(it.postKycScreenCode.isNullOrEmpty()){
+                    _event.value = CardEvent.CompleteKycCardEvent
+                }else if(!SharedPrefUtils.getBoolean(PockketApplication.instance,SF_CARD_IS_ACTIVATED)!!){
+                    _event.value = CardEvent.OnActivateCardEvent
+                    delay(30000)
+                    callGetVirtualRequestApi()
+                }
+            }
+
+        }
+    }
 
     fun onCopyCardNumber() {
         _event.value = CardEvent.OnCardNumberCopyEvent(virtualCardDetails?.card_number)
@@ -230,7 +258,14 @@ class CardFragmentVM(application: Application) :
                 _event.value = CardEvent.ActivateCardEvent(this)
             }
             CardOptionEvent.CardSettings -> {
-                _event.value = CardEvent.CardSettingsEvent
+                Utility.getCustomerDataFromPreference()?.let {
+                    if(it.postKycScreenCode.isNullOrEmpty()){
+                        _event.value = CardEvent.CompleteKycCardEvent
+                    }else{
+                        _event.value = CardEvent.CardSettingsEvent
+
+                    }
+                }
             }
             CardOptionEvent.OrderCard -> {
                 trackr {
@@ -288,8 +323,6 @@ class CardFragmentVM(application: Application) :
             ApiConstant.API_GET_BANK_PROFILE -> {
                 if (responseData is BankProfileResponse) {
                     bankProfile = responseData.bankProfileResponseDetails
-                    SharedPrefUtils.putString(PockketApplication.instance,
-                        SharedPrefUtils.SF_KYC_TYPE,responseData.bankProfileResponseDetails?.kycType)
                     _state.value =
                         CardState.BankProfilePopulate(responseData.bankProfileResponseDetails)
                     saveKitNumberInPref()
@@ -333,6 +366,7 @@ class CardFragmentVM(application: Application) :
             }
             ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
                 if (responseData is FetchVirtualCardResponse) {
+                    SharedPrefUtils.putBoolean(PockketApplication.instance,SF_CARD_IS_ACTIVATED,true)
                     virtualCardDetails = responseData.fetchVirtualCardResponseDetails
                     _state.value =
                         CardState.VirtualCardDetails(responseData.fetchVirtualCardResponseDetails)
@@ -345,6 +379,9 @@ class CardFragmentVM(application: Application) :
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
             ApiConstant.API_ACTIVATE_CARD -> {
+                Utility.showToast(errorResponseInfo.msg)
+            }
+            ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS -> {
                 Utility.showToast(errorResponseInfo.msg)
             }
         }
@@ -366,6 +403,7 @@ class CardFragmentVM(application: Application) :
     }
 
     private fun callGetVirtualCardDetailsApi(fetchVirtualCardRequest: FetchVirtualCardRequest) {
+        _state.value = CardState.LoadingCardDetails
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_FETCH_VIRTUAL_CARD_DETAILS,
@@ -417,25 +455,25 @@ class CardFragmentVM(application: Application) :
     }
 
 
-    override fun onCardSettingsClick(position: Int) {
-        when (position) {
-            0 -> {
+    override fun onCardSettingsClick(position: Int, name: String?) {
+        when (name) {
+            PockketApplication.instance.getString(R.string.card_settings_block) -> {
                 _event.value = CardEvent.BlockUnblockEvent(
                     bankProfile, this
                 )
             }
-            1 -> {
+            PockketApplication.instance.getString(R.string.card_settings_limit) -> {
                 _event.value = CardEvent.SetCardLimitEvent(
                     bankProfile,
                     this, this
                 )
             }
-            2 -> {
+            PockketApplication.instance.getString(R.string.card_settings_channels) -> {
                 _event.value = CardEvent.ManageChannelEvent(
                     bankProfile, this
                 )
             }
-            3 -> {
+            PockketApplication.instance.getString(R.string.card_settings_pin) -> {
                 _event.value = CardEvent.SetPinEvent(
                     this
                 )
@@ -547,6 +585,10 @@ class CardFragmentVM(application: Application) :
         data class OnCardNumberCopyEvent(
             var cardNumber: String?
         ) : CardEvent()
+
+        object OnActivateCardEvent:CardEvent()
+        object ShowActivateBtnCardEvent:CardEvent()
+        object CompleteKycCardEvent:CardEvent()
 
     }
 

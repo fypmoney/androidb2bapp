@@ -15,6 +15,7 @@ import java.lang.reflect.Type
 class SharedPrefUtils {
 
     companion object {
+        const val SF_DICORD_CONNECTED = "dicord_connectivity"
         const val SF_KEY_FIREBASE_TOKEN = "firebase_token"
         const val SF_KEY_NEW_MESSAGE = "new_message"
         const val SF_KEY_ACCESS_TOKEN = "access_token"
@@ -59,6 +60,7 @@ class SharedPrefUtils {
         const val SF_IS_INSTALLED_APPS_SYNCED = "is_installed_apps_is_syncd"
         const val SF_KYC_TYPE = "kyc_type"
         const val SF_CARD_PROMO_CODE_APPLIED = "card_promo_code_applied"
+        const val SF_CARD_IS_ACTIVATED = "card_is_activated"
         const val SF_SHOW_RECHARGE_IN_HOME_SCREEN = "show_recharge_in_home_screen"
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {

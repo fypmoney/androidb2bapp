@@ -13,6 +13,7 @@ class KycTypeVM(application: Application) : BaseViewModel(application) {
     var isAadhaarClicked = MutableLiveData<Boolean>()
     var isPanClick = MutableLiveData<Boolean>()
     var isContinueClick = MutableLiveData<Boolean>()
+    var isSkipToHomeClick = MutableLiveData<Boolean>()
 
 
     fun onTeenagerClick() {
@@ -26,5 +27,9 @@ class KycTypeVM(application: Application) : BaseViewModel(application) {
 
     fun onContinue() {
         isContinueClick.value = true
+    }
+
+    fun onSkipToHome() {
+        isSkipToHomeClick.value = true
     }
 }

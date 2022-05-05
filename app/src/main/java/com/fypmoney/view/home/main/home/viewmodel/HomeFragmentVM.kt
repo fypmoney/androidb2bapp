@@ -233,10 +233,10 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                                 _state.value = HomeFragmentState.LowBalanceAlertState(false)
 
                             }
-                            if((accountBalance<10000) and !PockketApplication.isLoadMoneyPopupIsShown){
+                            /*if((accountBalance<10000) and !PockketApplication.isLoadMoneyPopupIsShown){
                                 _state.value = HomeFragmentState.ShowLoadMoneySheetState
                                 PockketApplication.isLoadMoneyPopupIsShown = true
-                            }
+                            }*/
                         }
                     }
                 }

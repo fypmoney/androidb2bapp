@@ -176,6 +176,7 @@ enum class TrackrEvent(name: String) {
     postpaid_fail("postpaid_fail"),
     dth_success("dth_success"),
     dth_fail("dth_fail"),
+    skip_to_home_click("skip_to_home_click"),
 
 
 }

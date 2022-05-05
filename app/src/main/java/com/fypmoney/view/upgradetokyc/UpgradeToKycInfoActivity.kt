@@ -69,9 +69,9 @@ class UpgradeToKycInfoActivity : BaseActivity<ActivityUpgradeToKycInfoBinding,Up
         )
     }
     private fun setUpObserver() {
-        viewModel.event.observe(this,{
+        viewModel.event.observe(this) {
             handleEvent(it)
-        })
+        }
     }
 
     private fun handleEvent(it: UpgradeToKycInfoActivityVM.UpgradeToKYCEvent?) {

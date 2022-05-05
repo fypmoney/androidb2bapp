@@ -303,4 +303,13 @@ object AppConstants {
     const val KYC_UPGRADE_FROM_WHICH_SCREEN = "kyc_upgrade_from_which_screen"
     const val BROADBAND_RECHARGE_URL = "https://www.amazon.in/hfc/bill/landline"
     const val SHOW_RECHARGE_SCREEN = "SHOW_RECHARGE_SCREEN"
+    const val OFFER_REDIRECTION_EXTERNAL_WEB_VIEW = "EXTERNAL_WEB_VIEW"
+    const val OFFER_REDIRECTION_EXTERNAL_WEB_VIEW_SUB = "EXTERNAL_WEB_VIEW_SUB"
+    const val OFFER_REDIRECTION_IN_APP_VIEW_WITH_CARD_OPTION_SUBs =
+        "IN_APP_VIEW_WITH_CARD_OPTION_SUBs"
+    const val OFFER_REDIRECTION_IN_APP_VIEW_WITH_CARD_OPTIONS = "IN_APP_VIEW_WITH_CARD_OPTIONS"
+
+    //const val DISCORD_URL = "https://discord.com/oauth2/authorize?response_type=code&client_id=945553921005457468&scope=connections%20email%20gdm.join%20guilds%20guilds.join%20guilds.members.read%20identify%20messages.read&state={authtoken}&prompt=consent"
+    const val DISCORD_URL = "https://discord.com/oauth2/authorize?response_type=code&client_id=945553921005457468&scope=connections%20email%20gdm.join%20guilds%20guilds.join%20guilds.members.read%20identify&state={authtoken}&prompt=consent"
+
 }

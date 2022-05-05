@@ -6,6 +6,8 @@ import androidx.annotation.Keep
 data class offerDetailResponse(
     val brandName: String? = null,
     val code: String? = null,
+    val shopRedirectionType: String? = null,
+    val shopUrl: String? = null,
     val tnc: String? = null,
     val offerImage: String? = null,
     val sortOrder: Int? = null,
@@ -18,7 +20,7 @@ data class offerDetailResponse(
     val brandLogo: String? = null,
     val offerTitle: String? = null,
     val status: String? = null,
-
+    val couponCode: String? = null,
     val offerContent: String? = null,
     val rfu2: String? = null,
     val rfu1: Any? = null,

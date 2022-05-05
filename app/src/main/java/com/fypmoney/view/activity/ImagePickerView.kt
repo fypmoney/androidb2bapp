@@ -104,7 +104,9 @@ class ImagePickerView : AppCompatActivity() {
                             Intent.ACTION_PICK,
                             MediaStore.Images.Media.EXTERNAL_CONTENT_URI
                         )
-                        startActivityForResult(pickPhoto, REQUEST_GALLERY_IMAGE)
+                        if(pickPhoto.resolveActivity(this@ImagePickerView.packageManager)!=null){
+                            startActivityForResult(pickPhoto, REQUEST_GALLERY_IMAGE)
+                        }
                     }
                 }
 

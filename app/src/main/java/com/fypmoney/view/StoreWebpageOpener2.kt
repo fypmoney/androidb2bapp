@@ -22,6 +22,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ActivityWebview2Binding
+import com.fypmoney.extension.toGone
 import com.fypmoney.model.CardInfoDetailsBottomSheet
 import com.fypmoney.util.AdvancedWebView
 import com.fypmoney.util.AppConstants
@@ -68,7 +69,6 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
             title_tv.text = pageTitle
         }
 
-        binding.webView1
 
         binding.webView1.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, progress: Int) {
@@ -77,6 +77,15 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
             }
         }
 
+        Utility.getCustomerDataFromPreference()?.let {
+            if(it.postKycScreenCode.isNullOrEmpty()){
+                binding.refresh.toGone()
+                binding.cardDetails.toGone()
+            }else{
+                mViewModel.callGetWalletBalanceApi()
+                mViewModel.callGetVirtualRequestApi()
+            }
+        }
         binding.webView1.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 if (url.startsWith("intent://")) {
@@ -94,7 +103,10 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
                                 context.startActivity(intent)
                             } else {
                                 val fallbackUrl = intent.getStringExtra("browser_fallback_url")
-                                view.loadUrl(fallbackUrl!!)
+                                if (!fallbackUrl.isNullOrEmpty()) {
+                                    view.loadUrl(fallbackUrl!!)
+                                }
+
                             }
                             return true
                         }
@@ -121,16 +133,16 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
         }
 
         mViewModel.availableAmount.observe(
-            this,
-            { amount ->
-                //amount_tv.text = " ₹" + amount
-                amount_tv.text = getString(R.string.fyp_card_details)
-            })
+            this
+        ) { amount ->
+            //amount_tv.text = " ₹" + amount
+            amount_tv.text = getString(R.string.fyp_card_details)
+        }
         mViewModel.carddetails.observe(
-            this,
-            { carddetails ->
-                card = carddetails
-            })
+            this
+        ) { carddetails ->
+            card = carddetails
+        }
 
         binding.cardDetails.setOnClickListener {
             if (mViewModel.carderror.get() == true) {
@@ -212,7 +224,14 @@ class StoreWebpageOpener2 : BaseActivity<ActivityWebview2Binding, CardDetailsVie
     }
 
     override fun onExternalPageRequest(url: String?) {
-        TODO("Not yet implemented")
+        startActivity(
+            Intent.createChooser(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(url)
+                ), getString(R.string.browse_with)
+            )
+        )
     }
 
     fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {

@@ -108,5 +108,7 @@
     <color name="strokeColor">#B1B3B6</color>
     <color name="black_background">#0E141C</color>
     <color name="edit_text_bg">#1C2129</color>
+    <color name="gery11">#B1B3B6</color>
+
 
 </resources>

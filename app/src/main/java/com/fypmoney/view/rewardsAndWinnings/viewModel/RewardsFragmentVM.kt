@@ -89,57 +89,7 @@ class RewardsFragmentVM(application: Application) : BaseViewModel(application) {
 
     }
 
-    private fun makeFetchFeedJackpotRequest(
-        size: Int? = 5,
-        pageValue: Int? = 0,
-        latitude: String? = "0.0",
-        longitude: String? = "0.0"
-    ): FeedRequestModel {
-        val userInterest =
-            SharedPrefUtils.getArrayList(getApplication(), SharedPrefUtils.SF_KEY_USER_INTEREST)
-        var userInterestValue = StringBuilder()
-        if (!userInterest.isNullOrEmpty()) {
-            for (i in 0 until userInterest.size) {
-                userInterestValue = userInterestValue.append(userInterest.get(i))
-                if (i != userInterest.size - 1) {
-                    userInterestValue = userInterestValue.append("\",\"")
-                } else {
-                    userInterestValue.append("\"")
-                }
 
-            }
-        }
-        val feedRequestModel = FeedRequestModel()
-
-        var gender = 1
-        var feedtype = ""
-
-        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MALE") {
-            gender = 0
-        } else {
-            gender = 1
-        }
-        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
-            feedtype =
-                gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
-        }
-
-        if (userInterest.isNullOrEmpty()) {
-            feedRequestModel.query =
-                "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME_HOME + "\",screenSection:null,tags :[\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
-
-        } else {
-            feedRequestModel.query =
-                "{getAllFeed(page:" + pageValue + ", size:" + size + ", id : null, screenName:\"" + AppConstants.FEED_SCREEN_NAME_HOME + "\",screenSection:null,tags :[\"" + userInterestValue.toString() + ",\"" + feedtype + "\"],displayCard: []) { total feedData { id name description screenName screenSection sortOrder displayCard readTime author createdDate scope responsiveContent category{name code description } location {latitude longitude } tags resourceId resourceArr title subTitle content backgroundColor action{ type url buttonText }}}}"
-
-        }
-
-
-
-
-        return feedRequestModel
-
-    }
 
     private fun makeFetchFeedRequest(
         size: Int? = 5,
@@ -166,14 +116,15 @@ class RewardsFragmentVM(application: Application) : BaseViewModel(application) {
         var gender = 1
         var feedtype = ""
 
-        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MALE") {
-            gender = 0
+        gender = if ( Utility.getCustomerDataFromPreference()?.userProfile?.gender.isNullOrEmpty() || Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MALE") {
+            0
         } else {
-            gender = 1
+            1
         }
-        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
-            feedtype =
-                gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
+        feedtype = if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
+            gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
+        }else{
+            gender.toString() + "_" + "0"
         }
 
         if (userInterest.isNullOrEmpty()) {

@@ -11,6 +11,13 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
 
+        <action android:id="@+id/action_home_to_section_explore"
+            app:destination="@+id/navigation_section_explore"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
+
         <action
             android:id="@+id/action_recharge_home"
             app:destination="@+id/navigation_dth_store_list"

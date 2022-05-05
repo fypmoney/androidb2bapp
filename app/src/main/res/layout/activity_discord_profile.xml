@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.fypmoney.view.discord.viewmodel.DiscordActivityVM" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bgcolor"
+            tools:context=".view.community.SocialCommunityActivity">
+
+            <include
+                android:id="@+id/layout_toolbar"
+
+                layout="@layout/toolbar_discordprofile" />
+
+            <ImageView
+                android:id="@+id/imageView7"
+                android:layout_marginTop="-16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_banner_discord"
+                app:layout_constraintTop_toBottomOf="@+id/layout_toolbar" />
+
+            <FrameLayout
+                android:id="@+id/flProfile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="-60dp"
+                android:elevation="2dp"
+
+
+                app:customBackgroundColor="@{@color/text_color_little_dark}"
+                app:customIsRounded="@{true}"
+                app:customStrokeColor="@{@color/text_color_more_dark}"
+                app:customStrokeWidth="@{@dimen/dp1}"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView7">
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivUserProfileImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="4dp"
+                    android:scaleType="center"
+                     />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/edit"
+                    android:layout_width="@dimen/_22sdp"
+
+                    android:layout_height="@dimen/_22sdp"
+                    android:layout_gravity="end|bottom"
+                    android:tint="@color/green_selected"
+
+                    app:srcCompat="@drawable/selected_dot" />
+
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/textView9"
+
+                style="@style/TextviewBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/flProfile" />
+
+            <TextView
+                android:id="@+id/textView10"
+                style="@style/TextviewRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+            android:textSize="16sp"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/white"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:alpha=".10"
+                android:layout_height="1dp"
+                android:id="@+id/divider"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" />
+
+            <TextView
+
+                android:id="@+id/textView11"
+                style="@style/TextviewRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="@dimen/_12sdp"
+                android:text="Roles"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:id="@+id/rvroles"
+                android:layout_marginTop="@dimen/_20sdp"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

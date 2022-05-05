@@ -106,12 +106,12 @@
 
 
             <RelativeLayout
-                android:layout_below="@id/amount_ecom"
                 android:id="@+id/rl_atm"
                 android:layout_width="match_parent"
-                tools:visibility="visible"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/amount_ecom"
                 android:visibility="gone"
-                android:layout_height="wrap_content">
+                tools:visibility="visible">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/atm_tv"

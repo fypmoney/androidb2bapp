@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="fill_parent"
+
+        android:layout_height="fill_parent"
+        android:fitsSystemWindows="true">
+
+        <com.airbnb.lottie.LottieAnimationView
+
+            android:id="@+id/load_progress_bar"
+            android:layout_width="wrap_content"
+
+            android:layout_height="@dimen/_40sdp"
+
+            android:layout_centerInParent="true"
+            android:elevation="@dimen/_4sdp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/dots_animation" />
+
+        <RelativeLayout
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#202020"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/titleToolbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
+                android:layout_toEndOf="@+id/toolbar_backImage"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:layout_centerVertical="true"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Discord Community" />
+
+            <ImageView
+                android:id="@+id/toolbar_backImage"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackgroundBorderless"
+                android:paddingStart="8dp"
+                android:paddingTop="@dimen/_12sdp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="@dimen/_12sdp"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_back_arrow"
+                app:tint="@color/cb_grey" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/title_tv"
+                style="@style/TextviewBold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/toolbar_backImage"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_18sdp"
+
+                tools:text="" />
+
+            <ImageView
+                android:id="@+id/refresh"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:padding="@dimen/_9sdp"
+                android:src="@drawable/ic_baseline_refresh_24"
+                app:tint="@color/white" />
+
+
+        </RelativeLayout>
+
+
+        <com.fypmoney.util.AdvancedWebView
+            android:id="@+id/webView1"
+            android:layout_width="fill_parent"
+            android:visibility="visible"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

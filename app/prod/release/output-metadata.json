@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 49,
-      "versionName": "2.0.2",
-      "outputFile": "Fyp-prodRelease-v2.0.2.apk"
+      "versionCode": 60,
+      "versionName": "2.2.0",
+      "outputFile": "Fyp-prodRelease-v2.2.0.apk"
     }
   ],
   "elementType": "File"

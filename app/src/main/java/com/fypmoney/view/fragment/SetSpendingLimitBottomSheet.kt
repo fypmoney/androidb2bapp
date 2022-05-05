@@ -85,7 +85,15 @@ class SetSpendingLimitBottomSheet(
                             offLineStores.visibility = View.VISIBLE
                         }
                         if (it.atmEnabled == AppConstants.YES) {
-                            rlAtm.visibility = View.VISIBLE
+
+                            bankProfileResponseDetails?.kycType.let {
+                                if (it != "MINIMUM") {
+                                    rlAtm.visibility = View.VISIBLE
+                                } else {
+                                    rlAtm.visibility = View.GONE
+                                }
+                            }
+
                         }
                     }
                 }

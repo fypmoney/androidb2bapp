@@ -47,7 +47,7 @@ abstract class BaseViewModel(application: Application) : AndroidViewModel(applic
 
             }
             "102" -> {
-                Utility.showToast(PockketApplication.instance.getString(R.string.internet_not_connected))
+                Utility.showToast(PockketApplication.instance.getString(R.string.please_try_again_after_some_time))
 
             }
             "401" -> {

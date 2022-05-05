@@ -1,7 +1,6 @@
 package com.fypmoney.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -11,8 +10,9 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.database.entity.ContactEntity
-import com.fypmoney.model.*
+import com.fypmoney.model.BankTransactionHistoryRequestwithpage
+import com.fypmoney.model.BankTransactionHistoryResponse
+import com.fypmoney.model.BankTransactionHistoryResponseDetails
 import com.fypmoney.view.adapter.BankTransactionHistoryAdapter
 
 class BankTransactionHistoryViewModel(application: Application) : BaseViewModel(application) {
@@ -20,7 +20,7 @@ class BankTransactionHistoryViewModel(application: Application) : BaseViewModel(
     var bankTransactionHistoryAdapter = BankTransactionHistoryAdapter(this)
     var onItemClicked = MutableLiveData<BankTransactionHistoryResponseDetails>()
     var LoadedList: MutableLiveData<List<BankTransactionHistoryResponseDetails>> = MutableLiveData()
-
+    var invalidRequest = MutableLiveData<Boolean>()
     /*
       * This method is used to call get transaction history
       * */
@@ -73,6 +73,13 @@ class BankTransactionHistoryViewModel(application: Application) : BaseViewModel(
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        when (purpose) {
+            ApiConstant.API_BANK_TRANSACTION_HISTORY -> {
+                if(errorResponseInfo.errorCode == "PKT_1039"){
+                    invalidRequest.value = true
+                }
+            }
+        }
     }
 
 

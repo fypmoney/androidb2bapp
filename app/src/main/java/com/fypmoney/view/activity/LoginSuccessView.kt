@@ -5,7 +5,8 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.fyp.trackr.models.*
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -14,10 +15,11 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
-import com.fypmoney.view.register.*
+import com.fypmoney.view.register.InviteParentSiblingActivity
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
+import com.fypmoney.view.register.PendingRequestActivity
 import com.fypmoney.viewmodel.LoginSuccessViewModel
 import kotlinx.android.synthetic.main.view_login_success.*
-import kotlinx.android.synthetic.main.view_walk_through_one.*
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -68,7 +70,11 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
         mViewModel.onApiSuccess.observe(this) {
             when {
                 Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
-                    intentToActivity(UserTypeOnLoginView::class.java)
+                    //intentToActivity(UserTypeOnLoginView::class.java)
+                    val intent = Intent(this, CreateAccountView::class.java)
+                    intent.putExtra(AppConstants.USER_TYPE_NEW, true)
+                    intent.putExtra(AppConstants.USER_TYPE, "Teenager")
+                    startActivity(intent)
 
                 }
                 Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {

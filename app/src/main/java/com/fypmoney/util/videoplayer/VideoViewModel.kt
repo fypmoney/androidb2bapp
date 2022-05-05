@@ -156,11 +156,14 @@ class VideoViewModel(
 
 //        var urlConst =
 //            "https://cdn.videvo.net/videvo_files/video/free/2019-03/large_watermarked/181004_10_LABORATORIES-SCIENCE_08_preview.mp4"
-        initPlayer()
-        updateSurface(surface)
-        setPlayerListener()
-        playerLoadStream(Uri.parse(url))
-        play()
+        if (!url.isNullOrEmpty()) {
+            initPlayer()
+            updateSurface(surface)
+            setPlayerListener()
+            playerLoadStream(Uri.parse(url))
+            play()
+        }
+
     }
 
     fun playerLoadStream(uri: Uri) {

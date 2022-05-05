@@ -26,6 +26,8 @@ import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.ordercard.model.PinCodeData
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.placeordersuccess.PlaceOrderSuccessActivity
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
+import com.fypmoney.view.register.fragments.CompleteKYCBottomSheet
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
 
@@ -154,12 +156,12 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
     }
 
     fun setObservers() {
-        mViewModel.event.observe(this,{
+        mViewModel.event.observe(this) {
             handelEvent(it)
-        })
-        mViewModel.state.observe(this,{
+        }
+        mViewModel.state.observe(this) {
             handelState(it)
-        })
+        }
     }
     private fun handelEvent(it: PlaceOrderCardViewModel.PlaceOrderCardEvent?) {
         when(it){
@@ -177,7 +179,23 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
                     SharedPrefUtils.SF_KEY_USER_ID
                 ).toString())
                 }
-                askForDevicePassword()
+
+                Utility.getCustomerDataFromPreference()?.let {
+                    if(it.postKycScreenCode.isNullOrEmpty()){
+                        val completeKYCBottomSheet = CompleteKYCBottomSheet(completeKycClicked = {
+                            val intent = Intent(this, PanAdhaarSelectionActivity::class.java)
+                            startActivity(intent)
+                        })
+                        completeKYCBottomSheet.dialog?.window?.setBackgroundDrawable(
+                            ColorDrawable(
+                                Color.RED)
+                        )
+                        completeKYCBottomSheet.show(supportFragmentManager, "Completekyc")
+                    }else{
+                        askForDevicePassword()
+
+                    }
+                }
             }
             is PlaceOrderCardViewModel.PlaceOrderCardEvent.InSufficientBalance ->{
                 callInsuficientFundMessageSheet(it.amount)

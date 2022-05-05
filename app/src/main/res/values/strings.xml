@@ -1088,6 +1088,42 @@ Coming really soon!
     <string name="no_savings_yet_start_transaction_to_save_now">No savings yet. Start transaction to save now!</string>
     <string name="you_can_not_add_more_funds_since_you_have_already_exceeded_your_monthly_limit">You can not add more funds since you have already exceeded your monthly limit</string>
 
+    <string name="close_button">Close</string>
+    <string name="buffering">Buffering…</string>
+
+    <string name="paused">Paused</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="ended">Ended</string>
+
+    <string name="increased_monthly_limit_1_lakh">Increased Monthly Limit: 1 Lakh</string>
+    <string name="atm_withdrawals_enabled">ATM Withdrawals Enabled</string>
+    <string name="send_money_to_fyp_users">Send Money to Fyp Users</string>
+    <string name="upgrade_your_kyc">Upgrade Your KYC</string>
+
+    <string name="upgrade_aadhar_kyc">Upgrade to Aadhar KYC</string>
+    <string name="kyc_verified">KYC Verified</string>
+    <string name="to_send_money_to_other_fyp_users_upgrade_to_aadhar_kyc">To send money to other Fyp users, upgrade to Aadhar KYC</string>
+    <string name="increase_limit">Increase Limit</string>
+    <string name="preferred_upi_id">Preferred UPI ID</string>
+    <string name="fyp_card_details">Fyp Card Details</string>
+    <string name="minimum_kyc">Minimum KYC</string>
+    <string name="have_a_promo_code_click_here">Have a promo code? Click here</string>
+    <string name="promo_code">Promo code</string>
+    <string name="please_enter_your_promo_code">Please enter your promo code</string>
+    <string name="fypxdiscord">Fyp x Discord</string>
+    <string name="fyper_op">Fyper OP ✌🏻</string>
+    <string name="connect_discord">Connect your discord</string>
+    <string name="discord_profile">Discord Profile</string>
+    <string name="connect_to_discord">Connect to Discord</string>
+    <string name="connect_now">Connect now</string>
+    <string name="select_a_document_to_complete_your_kyc">Select a document to complete your KYC</string>
+    <string name="aadhaar_card">Aadhaar card</string>
+    <string name="skip_to_home">Skip to Home</string>
+    <string name="please_complete_your_kyc">Please complete your KYC</string>
+    <string name="complete_kyc">Complete KYC</string>
+    <string name="complete_your_kyc_to_unlock_all_the_exclusive_features">Complete your KYC to unlock all the exclusive features</string>
+    <string name="like">Like</string>
+    <string name="share">Share</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
@@ -1100,7 +1136,6 @@ Coming really soon!
         <item>Help?</item>
         <item>Log out</item>
     </string-array>
-
     <string-array name="relationNameList">
         <item>Parent</item>
         <item>Sibling</item>
@@ -1110,7 +1145,6 @@ Coming really soon!
         <item>Grand Child</item>
         <item>Other</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="order_card_list">
         <item>Set your limit</item>
         <item>Sensitive details kept safe</item>
@@ -1118,6 +1152,13 @@ Coming really soon!
         <item>Easy card locking</item>
     </string-array>
 
+    <string name="ifsc_code">IFSC Code</string>
+    <string name="bank_a_c">Bank A/C</string>
+    <string name="transfer_money_to_this_bank">Transfer money to this Bank</string>
+    <string name="bank_transfer">Bank Transfer</string>
+    <string name="add_via_debit_card_upi">Add Via Debit Card/UPI</string>
+    <string name="share_bank_details">Here are my Fyp bank account details. Please send money directly to my account - Bank Account No.: %1$s  and IFSC Code: %2$s</string>
+    <string name="is_your_child_already_on_fyp_enter_their_registed_mobile_no">Is your child already on Fyp? Enter their registered mobile no.</string>
     <string name="close_button">Close</string>
     <string name="buffering">Buffering…</string>
     <string name="paused">Paused</string>

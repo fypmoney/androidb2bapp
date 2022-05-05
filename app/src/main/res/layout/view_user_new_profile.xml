@@ -139,14 +139,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_11sdp"
-                    android:text="@string/upgrade_your_kyc"
+                    android:text="@{viewModel.completeKycOrUpgradeKyc}"
                     android:textAlignment="center"
                     android:textColor="@color/green6"
+                    android:layout_marginStart="@dimen/_15sdp"
                     android:alpha="60"
                     android:onClick="@{()->viewModel.onUpgradeKycClicked()}"
                     android:textSize="@dimen/text_14sp"
                     android:visibility="@{viewModel.upgradeKyc?View.VISIBLE:View.GONE}"
-                    app:layout_constraintStart_toStartOf="@+id/ivVerification"
+                    app:layout_constraintStart_toEndOf="@+id/flProfile"
                     app:layout_constraintTop_toBottomOf="@id/tvKycVerification" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout

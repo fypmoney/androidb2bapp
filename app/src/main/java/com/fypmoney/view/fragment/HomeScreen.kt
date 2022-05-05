@@ -22,14 +22,14 @@ import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.RedeemDetailsResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.TopTenUsersAdapter
+import com.fypmoney.view.addmoney.NewAddMoneyActivity
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
-import com.fypmoney.view.storeoffers.OffersScreen
+import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 import com.fypmoney.viewmodel.HomeScreenViewModel
 import kotlinx.android.synthetic.main.screen_home.*
 
@@ -132,7 +132,7 @@ class HomeScreen(val tabchangeListner: HomeTabChangeClickListener) :
     * This method is used to observe the observers
     * */
     private fun setObservers() {
-        mViewModel.topTenUsersResponse.observe(viewLifecycleOwner, {
+        mViewModel.topTenUsersResponse.observe(viewLifecycleOwner) {
             if (it.data.isNullOrEmpty()) {
                 mViewBinding.recentTv.visibility = View.GONE
                 mViewBinding.recentRv.visibility = View.GONE
@@ -143,8 +143,8 @@ class HomeScreen(val tabchangeListner: HomeTabChangeClickListener) :
                     submitList(it.data)
                 }
             }
-        })
-        mViewModel.redeemDetailsResponse.observe(viewLifecycleOwner, {
+        }
+        mViewModel.redeemDetailsResponse.observe(viewLifecycleOwner) {
 
 
             if (it.pointsToRedeem != null && it.pointsToRedeem > 0) {
@@ -161,21 +161,21 @@ class HomeScreen(val tabchangeListner: HomeTabChangeClickListener) :
                 callTaskMessageSheet(it)
             }
 
-        })
+        }
 
-        mViewBinding.reedemMyntsRlt.setOnClickListener(View.OnClickListener {
+        mViewBinding.reedemMyntsRlt.setOnClickListener {
             mViewModel.clicked.set(true)
             mViewModel.callGetCoinsToRedeem()
 
-        })
-        mViewModel.splitBillsResponse.observe(viewLifecycleOwner, {
+        }
+        mViewModel.splitBillsResponse.observe(viewLifecycleOwner) {
             if (!it.listOfArrays.isNullOrEmpty()) {
                 callStory(it.listOfArrays)
             }
-        })
+        }
         mViewModel.onAddMoneyClicked.observe(viewLifecycleOwner) {
             if (it) {
-                callActivity(AddMoneyView::class.java)
+                callActivity(NewAddMoneyActivity::class.java)
                 mViewModel.onAddMoneyClicked.value = false
             }
         }

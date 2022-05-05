@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.NotificationManager
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import androidx.core.app.NotificationManagerCompat
 import com.freshchat.consumer.sdk.Freshchat
 import com.freshchat.consumer.sdk.FreshchatConfig
@@ -29,6 +30,7 @@ import com.vanniktech.emoji.google.GoogleEmojiProvider
  */
 
 class PockketApplication : Application() {
+
     var appUpdateRequired: Boolean = false
      var freshchat: Freshchat? = null
 
@@ -36,7 +38,7 @@ class PockketApplication : Application() {
         lateinit var instance: PockketApplication
         var homeScreenErrorMsg: String? = null
         var isNewFeedAvailableData: KeysFound? = null
-        var isLoadMoneyPopupIsShown = false
+        //var isLoadMoneyPopupIsShown = false
 
     }
 
@@ -69,7 +71,8 @@ class PockketApplication : Application() {
             channelDescription = "Promotional Notification",
             notificationImportance = NotificationManager.IMPORTANCE_DEFAULT
         )
-        NotificationUtils.createNotificationChannel(applicationContext=this,
+        NotificationUtils.createNotificationChannel(
+            applicationContext = this,
             channelId = FESTIVAL_PROMOTIONAL_CHANNEL_ID,
             channelName = "Festival  Promotional",
             channelDescription = "Festival Notification",
@@ -79,14 +82,27 @@ class PockketApplication : Application() {
 
         // init analytics
         Trackr.setLogLevel(if (BuildConfig.DEBUG) Trackr.LogLevel.ANALYTICS else Trackr.LogLevel.PROD)
-        Trackr.initialize(
-            this,
-            BuildConfig.ADJUST_PROD_KEY,
-            BuildConfig.MOENAGE_KEY,
-            R.drawable.ic_notification,
-            R.mipmap.ic_launcher_round,
-            R.color.colorPrimary
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Trackr.initialize(
+                this,
+                BuildConfig.ADJUST_PROD_KEY,
+                BuildConfig.MOENAGE_KEY,
+                R.drawable.ic_notification,
+                R.mipmap.ic_launcher_round,
+                R.color.colorPrimary
+            )
+        } else {
+            Trackr.initialize(
+                this,
+                BuildConfig.ADJUST_PROD_KEY,
+                BuildConfig.MOENAGE_KEY,
+                R.drawable.ic_notification_png,
+                R.mipmap.ic_launcher_foreground,
+                R.color.colorPrimary
+            )
+
+        }
+
 
         val contextList = arrayListOf("C1", "C2", "C3", "C4")
         MoEHelper.getInstance(this).appContext = contextList
@@ -143,22 +159,35 @@ class PockketApplication : Application() {
 
         }
         user.setPhone(
-            "+91",SharedPrefUtils.getString(
+            "+91", SharedPrefUtils.getString(
                 this@PockketApplication,
-                SharedPrefUtils.SF_KEY_USER_MOBILE)
+                SharedPrefUtils.SF_KEY_USER_MOBILE
+            )
 
         )
         freshChat.user = user
         freshChat.init(config)
         val soundUri =
             Uri.parse("android.resource://" + applicationContext.packageName + "/" + R.raw.notification_sound)
-        val notificationConfig = FreshchatNotificationConfig().apply {
-            smallIcon = R.drawable.ic_notification
-            largeIcon = R.mipmap.ic_launcher_round
-            isNotificationSoundEnabled = true
-            notificationSound = soundUri
-            importance = NotificationManagerCompat.IMPORTANCE_MAX
+        var notificationConfig: FreshchatNotificationConfig? = null
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            notificationConfig = FreshchatNotificationConfig().apply {
+                smallIcon = R.drawable.ic_notification
+                largeIcon = R.mipmap.ic_launcher_round
+                isNotificationSoundEnabled = true
+                notificationSound = soundUri
+                importance = NotificationManagerCompat.IMPORTANCE_MAX
+            }
+        } else {
+            notificationConfig = FreshchatNotificationConfig().apply {
+                smallIcon = R.drawable.ic_notification_png
+                largeIcon = R.mipmap.ic_launcher_foreground
+                isNotificationSoundEnabled = true
+                notificationSound = soundUri
+                importance = NotificationManagerCompat.IMPORTANCE_MAX
+            }
         }
+
         freshChat.setNotificationConfig(notificationConfig)
     }
 

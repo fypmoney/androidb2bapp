@@ -164,6 +164,8 @@ object ApiConstant {
 
     const val API_PAY_BILL = "services/PockketService/api/billPayment"
     const val API_RECENT_RECHARGE = "services/PockketService/api/recharge-orders"
+    const val Api_GET_DISCORD_PROFILE = "/services/loyaltyservice/api/fetch-discord-data"
+
 }
 
 

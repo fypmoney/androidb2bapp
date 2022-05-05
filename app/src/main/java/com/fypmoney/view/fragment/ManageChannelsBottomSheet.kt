@@ -20,6 +20,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
@@ -82,7 +83,15 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,
                 AppConstants.CARD_TYPE_PHYSICAL -> {
                     if(it.status == AppConstants.ENABLE){
                         showOfflineStore()
-
+                        bankProfileResponseDetails?.kycType?.let {
+                            if (it != "MINIMUM") {
+                                atmTxt.toVisible()
+                                vAtmSwitch.toVisible()
+                            } else {
+                                atmTxt.toGone()
+                                vAtmSwitch.toGone()
+                            }
+                        }
                     }else{
                         hideOfflineStore()
                     }
@@ -106,12 +115,7 @@ class ManageChannelsBottomSheet(var cardInfo: List<CardInfoDetails>?,
 
         }
 
-        bankProfileResponseDetails?.kycType?.let {
-            if(it != "MINIMUM"){
-                atmTxt.toGone()
-                vAtmSwitch.toGone()
-            }
-        }
+
 
         pPointSaleSwitch.setOnClickListener {
             channelType.set(AppConstants.Channel_POS)
