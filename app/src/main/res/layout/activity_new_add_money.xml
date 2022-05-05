@@ -127,7 +127,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:paddingBottom="@dimen/dp20"
-                    app:layout_constraintBottom_toTopOf="@+id/video"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/card_balance">
@@ -221,19 +220,8 @@
                                 android:src="@drawable/ic_icon_feather_copy"
                                 android:tint="@color/gery11"
                                 app:layout_constraintBottom_toBottomOf="@+id/account_number_tv"
-                                app:layout_constraintStart_toEndOf="@+id/account_number_tv"
-                                app:layout_constraintTop_toTopOf="@+id/account_number_tv" />
-
-                            <androidx.appcompat.widget.AppCompatImageView
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp"
-                                android:layout_alignParentEnd="true"
-                                android:padding="4dp"
-                                android:src="@drawable/ic_icon_feather_copy"
-                                android:tint="@color/gery11"
-                                android:visibility="gone"
                                 app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="@+id/materialTextView" />
+                                app:layout_constraintTop_toTopOf="@+id/account_number_tv" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/copy_ifsc_iv"
@@ -261,31 +249,58 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/recommanded_method_add_money_tv"
+                                style="@style/TextviewRegular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/recommended"
+                                android:textColor="@color/green6"
+                                android:textSize="11sp"
+                                android:paddingHorizontal="@dimen/dp6"
+                                android:paddingVertical="3dp"
+                                app:customStrokeWidth="@{@dimen/dp0_5}"
+                                app:customStrokeColor="@{@color/green6}"
+                                app:customCornerRadius="@{@dimen/dp25}"
+                                app:customBackgroundColor="@{@color/recommanded_bg}"
+                                app:layout_constraintBottom_toBottomOf="@+id/card_no_value_tv"
+                                app:layout_constraintStart_toEndOf="@+id/card_no_value_tv"
+                                app:layout_constraintTop_toTopOf="@+id/card_no_value_tv"/>
+
+                            <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/instruction"
                                 style="@style/TextviewRegular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:alpha=".6"
-                                android:text="@string/transfer_money_to_this_bank"
-                                android:textColor="@color/black"
+                                android:textColor="@color/strokeColor"
                                 android:textSize="12sp"
+                                android:text="@{viewModel.instructionOnBankTransfer}"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/card_no_value_tv" />
 
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/no_txn_fees_tv"
+                                style="@style/TextviewRegular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:text="@string/no_transaction_fee"
+                                android:textColor="@color/yellow10"
+                                android:textSize="12sp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/instruction" />
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/card_vaild_thr_tv"
                                 style="@style/TextviewRegular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
-                                android:alpha=".6"
-                                android:text="@string/bank_a_c"
-                                android:textColor="@color/black"
+                                android:layout_marginTop="6dp"
+                                android:text="@string/your_bank_account"
+                                android:textColor="@color/strokeColor"
                                 android:textSize="12sp"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/instruction" />
+                                app:layout_constraintTop_toBottomOf="@+id/no_txn_fees_tv" />
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/account_number_tv"
@@ -299,51 +314,21 @@
                                 app:layout_constraintTop_toBottomOf="@+id/card_vaild_thr_tv"
                                 tools:text="774549459981111111111" />
 
-                            <com.google.android.material.textview.MaterialTextView
 
-                                android:id="@+id/upi_id"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/_10sdp"
-                                android:alpha=".6"
-                                android:fontFamily="@font/product_sans_regular"
-                                android:text="@string/upi_id"
-                                android:textColor="@color/black"
-                                android:textSize="14sp"
-                                android:visibility="gone"
-                                app:layout_constraintStart_toStartOf="parent"
-
-                                app:layout_constraintTop_toBottomOf="@+id/account_number_tv"
-                                tools:visibility="gone" />
-
-                            <com.google.android.material.textview.MaterialTextView
-
-                                android:id="@+id/materialTextView"
-                                style="@style/TextviewBold"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:drawableEnd="@drawable/ic_copy"
-                                android:fontFamily="@font/product_sans_bold"
-                                android:textColor="@color/black"
-                                android:textSize="14sp"
-                                android:visibility="gone"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/upi_id"
-                                tools:text="8076416059@yesbank" />
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/card_cvv_tv"
                                 style="@style/TextviewRegular"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
+                                android:layout_marginTop="22dp"
                                 android:alpha=".6"
                                 android:fontFamily="@font/product_sans_regular"
                                 android:text="@string/ifsc_code"
-                                android:textColor="@color/black"
+                                android:textColor="@color/strokeColor"
                                 android:textSize="12sp"
-                                app:layout_constraintStart_toStartOf="@+id/ifsc_code_tv"
-                                app:layout_constraintTop_toBottomOf="@+id/instruction" />
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/account_number_tv" />
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/ifsc_code_tv"
@@ -355,10 +340,36 @@
                                 android:gravity="center"
                                 android:textColor="@color/black"
                                 android:textSize="14sp"
-                                app:layout_constraintEnd_toStartOf="@+id/copy_ifsc_iv"
+                                app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/card_cvv_tv"
                                 tools:text="YESBNK1178" />
 
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/upi_apps_iv"
+                                android:layout_width="118dp"
+                                android:layout_height="20dp"
+                                android:layout_marginTop="@dimen/dp20"
+                                app:srcCompat="@drawable/ic_upi_apps"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@+id/ifsc_code_tv"/>
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/how_it_works_tv"
+                                style="@style/TextviewRegular"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="6dp"
+                                android:layout_marginEnd="@dimen/dp8"
+                                android:gravity="center"
+                                android:text="@string/how_it_works"
+                                android:onClick="@{()->viewModel.isFetchBalanceVisible()}"
+                                android:textColor="@color/add_money_amount_color"
+                                android:textSize="14sp"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="@+id/upi_apps_iv"
+                                app:layout_constraintBottom_toBottomOf="@+id/upi_apps_iv"
+                                 />
 
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -379,19 +390,21 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="match_parent"
+                        android:elevation="2dp"
+                        android:id="@+id/video"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginBottom="@dimen/_24sdp"
+                        android:src="@drawable/how_to_add_money"
+                        app:layout_constraintTop_toBottomOf="@+id/virtual_account_info_cv"
+                        android:layout_height="100dp" />
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="match_parent"
-                    android:elevation="2dp"
-                    android:id="@+id/video"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="@dimen/_24sdp"
-                    android:src="@drawable/how_to_add_money"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_height="100dp" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

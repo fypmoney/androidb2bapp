@@ -31,7 +31,7 @@ class NewAddMoneyActivityVM(application: Application):BaseViewModel(application)
     var increseLimitClicked = MutableLiveData(false)
     var enableButton = MutableLiveData(false)
 
-
+    var instructionOnBankTransfer = ObservableField<String>()
 
     init {
         callGetWalletBalanceApi()
@@ -41,6 +41,10 @@ class NewAddMoneyActivityVM(application: Application):BaseViewModel(application)
 
     fun onIncreaseLimitClicked(){
         increseLimitClicked.value = true
+    }
+
+    fun onHowItWorksClick(){
+
     }
 
 
@@ -75,6 +79,10 @@ class NewAddMoneyActivityVM(application: Application):BaseViewModel(application)
                         PockketApplication.instance.getString(R.string.add_money_screen_text) + Utility.convertToRs(
                             responseData.getWalletBalanceResponseDetails.remainingLoadLimit
                         ) + PockketApplication.instance.getString(R.string.add_money_screen_text1)
+                    )
+                    instructionOnBankTransfer.set(
+                        "Receive money using UPI apps or net banking \n" +
+                                "Minimum: ₹10 | Maximum: ₹${Utility.convertToRs(responseData.getWalletBalanceResponseDetails.remainingLoadLimit)}"
                     )
                 }
             }

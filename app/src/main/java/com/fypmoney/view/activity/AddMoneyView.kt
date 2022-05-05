@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
@@ -62,9 +61,9 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
         }
         val videoLink = SharedPrefUtils.getString(
             this,
-            SharedPrefUtils.SF_ADD_MONEY_VIDEO
+            SharedPrefUtils.SF_ADD_MONEY_VIDEO_NEW
         )
-        video.setOnClickListener(View.OnClickListener {
+        video.setOnClickListener {
             if (!videoLink.isNullOrEmpty()) {
                 val intent = Intent(this, VideoActivity2::class.java)
                 intent.putExtra(ARG_WEB_URL_TO_OPEN, videoLink)
@@ -72,7 +71,7 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
                 startActivity(intent)
             }
 
-        })
+        }
     }
 
     override fun onStart() {

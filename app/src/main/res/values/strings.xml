@@ -1157,7 +1157,14 @@ Coming really soon!
     <string name="transfer_money_to_this_bank">Transfer money to this Bank</string>
     <string name="bank_transfer">Bank Transfer</string>
     <string name="add_via_debit_card_upi">Add Via Debit Card/UPI</string>
-    <string name="share_bank_details">Here are my Fyp bank account details. Please send money directly to my account - Bank Account No.: %1$s  and IFSC Code: %2$s</string>
+    <string name="share_bank_details">
+    </string>
+
+
+
+
+
+    Download Fyp, India's leading payments app, trusted by 1 Mn+ teens and families: https://fypmoney.in/app
     <string name="is_your_child_already_on_fyp_enter_their_registed_mobile_no">Is your child already on Fyp? Enter their registered mobile no.</string>
 
     <string name="search_for_plan_or_enter_amount">Search for plan or enter amount</string>
@@ -1224,4 +1231,8 @@ Coming really soon!
     <string name="recharge">Recharge</string>
     <string name="please_do_not_press_back_or_close_the_app">Please, do not press back or close the app</string>
     <string name="_5_cashback">5% Cashback</string>
+    <string name="recommended">Recommended</string>
+    <string name="no_transaction_fee">* No transaction fee</string>
+    <string name="your_bank_account">Your Bank Account</string>
+    <string name="how_it_works">How it works?</string>
 </resources>

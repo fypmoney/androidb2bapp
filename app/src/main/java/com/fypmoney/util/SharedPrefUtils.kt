@@ -45,6 +45,7 @@ class SharedPrefUtils {
         const val SF_KEY_REFERAL_GLOBAL_MSG = "refer_global_msg"
         const val SF_KEY_REFEREE_CASHBACK = "refer_cashback_amount"
         const val SF_ADD_MONEY_VIDEO = "add_money_video"
+        const val SF_ADD_MONEY_VIDEO_NEW = "add_money_video_new"
         const val SF_KEY_ERROR_MESSAGE_HOME = "error_msg_home"
         const val SF_KEY_IS_NEW_FEED_AVAILABLE = "is_new_feed_available"
         const val SF_KEY_NAME_ON_CARD = "name_on_card"

@@ -277,6 +277,7 @@ object AppConstants {
     const val ORDER_CARD_INFO = "order_card_info"
     const val REFER_CODE_CHECKING_VARIABLE = "$@%$"
     const val ADD_MONEY_VIDEO = "ADD_MONEY_VIDEO"
+    const val ADD_MONEY_VIDEO_NEW = "ADD_MONEY_VIDEO_NEW"
 
     const val IN_APP_URL = "IN_APP_URL"
     const val ORDER_NUM = "ORDERID"

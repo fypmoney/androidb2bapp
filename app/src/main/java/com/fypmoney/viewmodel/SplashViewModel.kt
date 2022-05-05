@@ -22,6 +22,7 @@ import com.fypmoney.model.SettingsRequest
 import com.fypmoney.model.SettingsResponse
 import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
 import com.fypmoney.util.AppConstants.ADD_MONEY_VIDEO
+import com.fypmoney.util.AppConstants.ADD_MONEY_VIDEO_NEW
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
 import com.fypmoney.util.AppConstants.ERROR_MESSAGE_HOME
 import com.fypmoney.util.AppConstants.IS_NEW_FEED_AVAILABLE
@@ -60,7 +61,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
     init {
         viewModelScope.launch {
-            delay(2000)
+            delay(1000)
             setUpApp()
         }
 
@@ -169,7 +170,8 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
             "ONBOARD_SHARE_90",
             "ONBOARD_SHARE_1",
             "ADD_MONEY_VIDEO",
-            "SHOW_RECHARGE_SCREEN"
+            "SHOW_RECHARGE_SCREEN",
+            "ADD_MONEY_VIDEO_NEW"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -343,6 +345,13 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_ADD_MONEY_VIDEO,
+                                    it.value
+                                )
+                            }
+                            ADD_MONEY_VIDEO_NEW -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_ADD_MONEY_VIDEO_NEW,
                                     it.value
                                 )
                             }
