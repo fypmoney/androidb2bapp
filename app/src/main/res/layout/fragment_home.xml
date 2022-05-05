@@ -546,112 +546,6 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/lightening_deals_section"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
-                    app:layout_constraintTop_toBottomOf="@+id/call_to_action_cl">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/lightening_deals_title"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/product_sans_bold"
-                        android:gravity="start"
-                        android:lineSpacingExtra="14sp"
-                        android:layout_marginStart="20dp"
-
-                        android:text="@string/offers_for_you"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:visibility="gone"
-                        tools:visibility="visible"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent" />
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/lightening_deals_title"
-                        android:layout_height="wrap_content">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            app:layout_constraintDimensionRatio="64:34"
-                            android:layout_marginStart="20dp"
-
-                            android:layout_marginEnd="20dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:cardCornerRadius="@dimen/dp16">
-
-                            <ImageView
-                                android:id="@+id/to_interest_screen"
-                                android:layout_width="match_parent"
-
-                                android:elevation="-2dp"
-                                android:src="@drawable/personalise_offers_banner"
-                                android:visibility="gone"
-
-                                app:layout_constraintTop_toBottomOf="@+id/lightening_deals_title"
-
-                                android:layout_height="wrap_content" />
-
-                        </com.google.android.material.card.MaterialCardView>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/lightening_deals_rv"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-
-                        android:visibility="gone"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginTop="10dp"
-                        android:paddingEnd="10dp"
-                        app:layout_constraintTop_toBottomOf="@+id/lightening_deals_title"
-                        tools:itemCount="5"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_call_to_action_home" />
-
-                    <com.facebook.shimmer.ShimmerFrameLayout
-                        tools:visibility="visible"
-                        android:id="@+id/shimmerLayout_lightening"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginTop="10dp"
-                        app:shimmer_auto_start="true"
-                        android:orientation="horizontal"
-                        app:layout_constraintTop_toBottomOf="@+id/lightening_deals_title">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <include layout="@layout/shimmer_placeholder_layout_store" />
-
-                            <include layout="@layout/shimmer_placeholder_layout_store" />
-
-
-                        </LinearLayout>
-                    </com.facebook.shimmer.ShimmerFrameLayout>
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <FrameLayout
                     android:id="@+id/explore_cl"
@@ -661,8 +555,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="10dp"
-
-                    app:layout_constraintTop_toBottomOf="@+id/lightening_deals_section">
+                    app:layout_constraintTop_toBottomOf="@+id/call_to_action_cl">
 
                     <com.facebook.shimmer.ShimmerFrameLayout
                         android:id="@+id/explore_shimmer_layout"

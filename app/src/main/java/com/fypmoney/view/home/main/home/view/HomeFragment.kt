@@ -32,7 +32,6 @@ import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
-import com.fypmoney.view.activity.ChooseInterestHomeView
 import com.fypmoney.view.activity.ContactListView
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.addmoney.NewAddMoneyActivity
@@ -49,8 +48,6 @@ import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.view.register.adapters.OffersHomeAdapter
 import com.fypmoney.view.register.fragments.CompleteKYCBottomSheet
-import com.fypmoney.view.storeoffers.ListOfferClickListener
-import com.fypmoney.view.storeoffers.OffersScreen
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -95,7 +92,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
     override fun onStart() {
         super.onStart()
-        homeFragmentVM.callgetOffer()
         homeFragmentVM.fetchBalance()
     }
 
@@ -103,7 +99,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         super.onViewCreated(view, savedInstanceState)
         _binding = getViewDataBinding()
         setupRecyclerView()
-        setRecyclerView(_binding)
+        //setRecyclerView(_binding)
         setObserver()
         setUpObserver()
         homeFragmentVM.callToAction()
@@ -285,18 +281,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     }
 
     private fun setObserver() {
-        homeFragmentVM?.rewardHistoryList.observe(
+        homeFragmentVM.rewardHistoryList.observe(
             viewLifecycleOwner
         ) { list ->
             setRecyclerView(_binding, list)
         }
 
 
-        _binding.toInterestScreen.setOnClickListener {
+       /* _binding.toInterestScreen.setOnClickListener {
             var intent = Intent(requireContext(), ChooseInterestHomeView::class.java)
 
             startActivity(intent)
-        }
+        }*/
+/*
         homeFragmentVM.offerList.observe(viewLifecycleOwner) {
             if (it != null) {
                 itemsArrayList.clear()
@@ -328,8 +325,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 _binding.lighteningDealsRv.visibility = View.GONE
             }
         }
+*/
 
-        homeFragmentVM?.openBottomSheet.observe(
+        homeFragmentVM.openBottomSheet.observe(
             viewLifecycleOwner
         ) { list ->
             if (list.size > 0) {
@@ -337,7 +335,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             }
         }
 
-        homeFragmentVM?.feedDetail.observe(
+        homeFragmentVM.feedDetail.observe(
             viewLifecycleOwner
         ) { list ->
 
@@ -363,7 +361,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
     }
 
-    private fun setRecyclerView(root: FragmentHomeBinding) {
+    /*private fun setRecyclerView(root: FragmentHomeBinding) {
         val itemClickListener2 = object : ListOfferClickListener {
             override fun onItemClicked(pos: offerDetailResponse, position: String) {
                 if (position == "middle") {
@@ -383,7 +381,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         typeAdapter = OffersHomeAdapter(itemsArrayList, requireContext(), itemClickListener2)
         root.lighteningDealsRv.adapter = typeAdapter
 
-    }
+    }*/
 
 
     private fun setRecyclerView(

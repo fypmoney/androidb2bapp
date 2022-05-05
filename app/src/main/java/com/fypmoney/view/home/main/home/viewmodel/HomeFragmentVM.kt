@@ -36,7 +36,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
     val state: LiveData<HomeFragmentState>
         get() = _state
     private val _state = MutableLiveData<HomeFragmentState>()
-    var offerList: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    //var offerList: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
     private val isUserComesFirstTime = checkUserIsLandedFirstTime()
 
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
@@ -45,11 +45,11 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
     init {
-        callgetOffer()
+        //callgetOffer()
         callExplporeContent()
     }
 
-    fun callgetOffer() {
+    /*fun callgetOffer() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.Api_LIGHTENING_DEALS,
@@ -59,7 +59,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                 this, isProgressBar = false
             )
         )
-    }
+    }*/
 
     fun onViewDetailsClicked() {
         _event.value = HomeFragmentEvent.ViewCardDetails
@@ -267,7 +267,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                 }
 
             }
-            ApiConstant.Api_LIGHTENING_DEALS -> {
+            /*ApiConstant.Api_LIGHTENING_DEALS -> {
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 //                var feeds = getObject(responseData.toString(),Array<offerDetailResponse>::class.java)
@@ -281,7 +281,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                 } else {
                     offerList.postValue(null)
                 }
-            }
+            }*/
             ApiConstant.API_Explore -> {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
