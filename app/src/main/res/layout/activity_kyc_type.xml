@@ -258,6 +258,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
                 android:id="@+id/tv_skip_to_home"
                 android:onClick="@{()->viewModel.onSkipToHome()}"
                 android:text="@string/skip_to_home"
