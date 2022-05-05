@@ -24,6 +24,7 @@ import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.parseDateStringIntoDate
 import com.fyp.trackr.services.TrackrServices
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.moe.pushlibrary.MoEHelper
 import com.moengage.core.DataCenter
 import com.moengage.core.LogLevel.VERBOSE
@@ -260,7 +261,12 @@ object Trackr {
 
                 }
                 TrackrServices.FB -> {
-                    app?.applicationContext?.let { AppEventsLogger.newLogger(it).logEvent(event.name.name) }
+                    try{
+                        app?.applicationContext?.let { AppEventsLogger.newLogger(it).logEvent(event.name.name) }
+                    }catch (e:Exception){
+                        FirebaseCrashlytics.getInstance().recordException(e)
+                        FirebaseCrashlytics.getInstance().setCustomKey("event_name",event.name.name)
+                    }
 
                 }
             }
