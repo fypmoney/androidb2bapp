@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.recharge.viewmodel.SelectCircleFragmentVM" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor">
+
+        <include
+            android:id="@+id/layout"
+            layout="@layout/toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/info_cl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout"
+            android:paddingHorizontal="@dimen/dp20"
+            android:paddingVertical="18dp"
+            android:background="@color/edit_text_bg">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/info_title_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/TextviewRegular"
+                android:text="@string/do_not_know_your_circle"
+                android:textColor="@color/color_orange"
+                android:textSize="@dimen/sp14"
+                android:textAlignment="viewStart"
+                android:gravity="start"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/info_body_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/TextviewRegular"
+                android:text="@string/select_state_area_from_where_you_purchased_the_sim_card"
+                android:textColor="@color/text_color_light"
+                android:layout_marginTop="3dp"
+                android:textSize="@dimen/sp14"
+                android:textAlignment="viewStart"
+                android:gravity="start"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/info_title_tv"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/search_circles_tv"
+            style="@style/AppTheme.Widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout"
+            android:layout_marginStart="@dimen/dp20"
+            android:layout_marginTop="@dimen/dp26"
+            android:layout_marginEnd="@dimen/dp20"
+            android:textCursorDrawable="@drawable/cursor_edittext"
+            app:customCornerRadius="@{@dimen/dp16}"
+            app:customBackgroundColor="@{@color/edit_text_bg}"
+            android:drawableEnd="@drawable/ic_icon_feather_search"
+            android:text="@={viewModel.searchQuery}"
+            android:drawablePadding="10dp"
+            android:drawableTint="@color/white"
+            android:fontFamily="@font/product_sans_regular"
+            android:hint="@string/search_circles"
+            android:padding="16dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/text_color_light"
+            android:textSize="14sp"
+            android:imeOptions="actionDone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/info_cl" />
+
+        <FrameLayout
+            android:id="@+id/circle_fl"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/dp10"
+            android:layout_marginHorizontal="@dimen/dp10"
+            app:layout_constraintTop_toBottomOf="@+id/search_circles_tv"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerLayout"
+                android:layout_width="match_parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:shimmer_auto_start="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_list_view_placeholder" />
+
+                    <include layout="@layout/shimmer_list_view_placeholder" />
+                    <include layout="@layout/shimmer_list_view_placeholder" />
+                    <include layout="@layout/shimmer_list_view_placeholder" />
+                    <include layout="@layout/shimmer_list_view_placeholder" />
+                    <include layout="@layout/shimmer_list_view_placeholder" />
+                    <include layout="@layout/shimmer_list_view_placeholder" />
+                    <include layout="@layout/shimmer_list_view_placeholder" />
+                    <include layout="@layout/shimmer_list_view_placeholder" />
+
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/no_circle_found_tv"
+                style="@style/TextviewRegular"
+                android:textColor="@color/text_color_light"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:text="@string/unable_to_fetch_operator_please_try_again_later"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_circles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                tools:listitem="@layout/card_circle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </FrameLayout>
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

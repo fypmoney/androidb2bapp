@@ -13,12 +13,7 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewFirstScreenBinding
 import com.fypmoney.util.textview.ClickableSpanListener
 import com.fypmoney.util.textview.MyStoreClickableSpan
-import com.fypmoney.view.webview.ARG_WEB_PAGE_TITLE
-import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
-import com.fypmoney.view.webview.WebViewActivity
 import com.fypmoney.viewmodel.FirstScreenViewModel
-import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_first_screen.*
 
 
 /*
@@ -139,7 +134,7 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
         val ss = SpannableString(text);
         ss.setSpan(
 
-            MyStoreClickableSpan(1, object : ClickableSpanListener {
+            MyStoreClickableSpan(pos = 1, clickableSpanListener = object : ClickableSpanListener {
                 override fun onPositionClicked(pos: Int) {
                     openWebPageFor(getString(R.string.privacy_policy),"https://www.fypmoney.in/fyp/privacy-policy/")
 
@@ -150,7 +145,7 @@ class FirstScreenView : BaseActivity<ViewFirstScreenBinding, FirstScreenViewMode
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         ss.setSpan(
-            MyStoreClickableSpan(2, object : ClickableSpanListener {
+            MyStoreClickableSpan(pos = 2, clickableSpanListener = object : ClickableSpanListener {
                 override fun onPositionClicked(pos: Int) {
                     openWebPageFor(getString(R.string.terms_and_conditions),"https://www.fypmoney.in/fyp/terms-of-use/")
                 }

@@ -211,6 +211,20 @@ interface ApiInterface {
 
     @Headers("Accept: application/json")
     @GET
+    fun getRequestWithQueryType(
+        @Url endPoint: String,
+        @Header("client_id") client_id: String?,
+        @Header("Authorization") authorization: String?,
+        @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
+        @Header(APP_VERSION) app_version: Int = BuildConfig.VERSION_CODE,
+
+        @Query("type") type: String? = null,
+
+        @Header("Content-Type") content_type: String = "application/json"
+    ): Observable<ResponseBody>
+
+    @Headers("Accept: application/json")
+    @GET
     fun getTopTenUsers(
         @Header(CLIENT_TYPE) client_type: String = CLIENT_TYPE_VALUE,
         @Header("Content-Type") content_type: String = "application/json",

@@ -62,12 +62,24 @@ class NewAddMoneyActivity : BaseActivity<ActivityNewAddMoneyBinding,NewAddMoneyA
         )
         videoLink = SharedPrefUtils.getString(
             this,
-            SharedPrefUtils.SF_ADD_MONEY_VIDEO
+            SharedPrefUtils.SF_ADD_MONEY_VIDEO_NEW
         )
 
         setBindings()
         setObserver()
         setUpVirtualAccountInfo()
+        binding.howItWorksTv.setOnClickListener {
+            SharedPrefUtils.getString(
+                this,
+                SharedPrefUtils.SF_ADD_MONEY_VIDEO_NEW
+            )?.let {
+                val intent = Intent(this, VideoActivity2::class.java)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, it)
+                startActivity(intent)
+            }
+
+
+        }
     }
 
     private fun setUpVirtualAccountInfo() {
@@ -113,7 +125,13 @@ class NewAddMoneyActivity : BaseActivity<ActivityNewAddMoneyBinding,NewAddMoneyA
             }
         }
         binding.shareVirtualAccountDetailsIv.setOnClickListener {
-            val content = String.format(getString(R.string.share_bank_details),binding.accountNumberTv.text.toString(),binding.ifscCodeTv.text.toString())
+            val content = "Here are my Fyp bank account details. Please send money directly to my account using any UPI apps or NEFT/IMPS-\n" +
+                    "\n"+
+                    "Bank Account No.:  ${binding.accountNumberTv.text} \n" +
+                    "\n"+
+                    "IFSC Code: ${binding.ifscCodeTv.text} \n" +
+                    "\n"+
+                    "Download Fyp, India's leading payments app, trusted by 1 Mn+ teens and families: https://fypmoney.in/app"
             onInviteUser(content)
         }
         binding.addViaDebitOrCardCv.setOnClickListener {

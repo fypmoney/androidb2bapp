@@ -16,8 +16,8 @@ import com.fypmoney.model.FeedResponseModel
 import com.fypmoney.model.StoreDataModel
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.adapter.RechargeItemAdapter
 import com.fypmoney.view.adapter.StoreItemAdapter
+import com.fypmoney.view.recharge.adapter.RechargeItemAdapter
 import com.google.gson.Gson
 
 class  StoreScreenViewModel(application: Application) : BaseViewModel(application),
@@ -39,9 +39,7 @@ class  StoreScreenViewModel(application: Application) : BaseViewModel(applicatio
     var rechargeItemAdapter = RechargeItemAdapter(this)
     var foodDeliveryItemAdapter = RechargeItemAdapter(this)
     var cabsItemAdapter = RechargeItemAdapter(this)
-    var groceriesAndUtilitesAdapter = RechargeItemAdapter(this)
-    var travelAndBookingAdapter = RechargeItemAdapter(this)
-    var educationAdapter = RechargeItemAdapter(this)
+
 
     init {
         callFetchFeedsApi()

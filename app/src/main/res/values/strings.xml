@@ -916,7 +916,7 @@ Coming really soon!
     <string name="unfortunately_we_are_not_serviceable_in_your_neighborhood_but_we_are_moving_super_fast_to_bring_the_awesome_fyp_card_to_your_pockets">Unfortunately we are not serviceable in your neighborhood but we are moving super fast to bring the awesome Fyp card to your pockets.</string>
     <string name="your_order_has_been_placed_n_successfully">Your order has been placed \n successfully!</string>
     <string name="net_paid">Net Paid</string>
-    <string name="by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy">"By tapping Activate Now, you agree to the %1$s &amp; %2$s"</string>
+    <string name="by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy">"By tapping Activate Now, you agree to the %1$s &amp; "</string>
     <string name="by_tapping_continue_you_agree_to_the_terms_of_service_privacy_policy">"By tapping Continue, you agree to the %1$s &amp; %2$s"</string>
     <string name="set">Set</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -1157,6 +1157,82 @@ Coming really soon!
     <string name="transfer_money_to_this_bank">Transfer money to this Bank</string>
     <string name="bank_transfer">Bank Transfer</string>
     <string name="add_via_debit_card_upi">Add Via Debit Card/UPI</string>
-    <string name="share_bank_details">Here are my Fyp bank account details. Please send money directly to my account - Bank Account No.: %1$s  and IFSC Code: %2$s</string>
+    <string name="share_bank_details">
+    </string>
+
+
+
+
+
+    Download Fyp, India's leading payments app, trusted by 1 Mn+ teens and families: https://fypmoney.in/app
     <string name="is_your_child_already_on_fyp_enter_their_registed_mobile_no">Is your child already on Fyp? Enter their registered mobile no.</string>
+
+    <string name="search_for_plan_or_enter_amount">Search for plan or enter amount</string>
+    <string name="dth">DTH</string>
+    <string name="broadband">Broadband</string>
+    <string name="postpaid">Postpaid</string>
+    <string name="postpaid_recharge">Postpaid Recharge</string>
+    <string name="prepaid">Prepaid</string>
+    <string name="prepaid_recharge">Prepaid Recharge</string>
+    <string name="mobile_recharge_bill_payments">Mobile Recharge / Bill Payments</string>
+    <string name="please_enter_valid_phone_number">Please Enter valid phone number</string>
+    <string name="enter_mobile_number">Enter mobile number</string>
+    <string name="_91">+91</string>
+    <string name="unable_to_pick_phone_number">Unable to Pick Mobile Number,Please type Manually.</string>
+    <string name="select_operator">Select Operator</string>
+    <string name="unable_to_fetch_operator_please_try_again_later">Unable to fetch operator, Please try again later</string>
+    <string name="select_your_prepaid_operator">Select your %1$s Operator</string>
+    <string name="select_your_circle">Select your Circle</string>
+    <string name="do_not_know_your_circle">Do not know your circle?</string>
+    <string name="select_state_area_from_where_you_purchased_the_sim_card">Select state/Area from where you purchased the SIM Card</string>
+    <string name="search_circles">Search Circles</string>
+    <string name="no_circle_found_according_to_your_search">No circle found according to your search</string>
+    <string name="no_plans_available">No plans available</string>
+    <string name="change_plan">Change Plan</string>
+    <string name="processing_payment_of">Processing payment of ₹ %1$s</string>
+    <string name="processing_recharge_of">Processing recharge for %1$s</string>
+    <string name="your_recharge_is_successful">Your Recharge of ₹%1$s to %2$s is Successful</string>
+    <string name="processing_recharge_for">Processing recharge for ₹%1$s to %2$s</string>
+    <string name="your_recharge_is_failed">Your Recharge of ₹%1$s to %2$s is failed</string>
+    <string name="any_amount_detucetd">"Any amount deducted will be \n refunded within 24 hours"</string>
+    <string name="recharge_successful">Recharge Successful</string>
+    <string name="recharge_processing">Recharge Processing</string>
+    <string name="recharge_failed">Recharge Failed</string>
+    <string name="unable_to_fetch_bill_enter_amount_manually">Unable to fetch bill.Enter amount manually</string>
+    <string name="payable_amount">Payable Amount</string>
+    <string name="bill_due_date">Bill Due Date: %1$s</string>
+    <string name="dth_recharge">Dth recharge/Cable TV</string>
+    <string name="customer_id">Customer ID</string>
+    <string name="enter_10_digit_customer_id_starting_with_3_to_locate_the_customer_id_press_the_menu_button_on_your_remote">Enter 10 digit Customer ID starting with 3.To locate the customer ID,press the MENU button on your remote. %1$s</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="your_regular_recharge">Your regular recharge</string>
+    <string name="keep_set_top_box_on_while_recharging">Keep set-top box on while recharging</string>
+
+
+
+
+    <string name="add_money_1500">\u20B9 1500</string>
+    <string name="add_money_2000">\u20B9 2000</string>
+    <string name="know_more">Know More</string>
+    <string name="please_enter_correct_details_for_successful_dth_recharge_otherwise_your_recharge_will_fail">Please enter correct details for successful DTH Recharge otherwise your recharge will fail.</string>
+    <string name="whats_my_customer_id">What\'s my Customer ID (DTH number)?</string>
+    <string name="airtel_know_more_body">To know your customer ID, please press the MENU button on your remote and select My Account . Alternatively, SMS BAL to 54325 from Registered Mobile Number (RMN) or place a missed call on 81300-81300 from your RMN.</string>
+    <string name="dish_tv_title">What\'s my Viewing Card (VC) Number?</string>
+    <string name="dish_tv_body">To know your Viewing Card Number, go to the help menu on your TV and select My Account.</string>
+    <string name="tata_sky_title">What\'s my Subscriber ID?</string>
+    <string name="tata_sky_body">To know your Subscriber ID, press the HOME button on your remote. Alternatively, give a missed call on 080-61-9999-11 from your Registered Mobile Number.</string>
+    <string name="d2h_title">What\'s my Subscriber ID?</string>
+    <string name="d2h_body">To know your Subscriber ID, press the green color button on your D2H remote. Alternatively, SMS \'ID\' from your registered mobile number to 566777 or call 97818-97818 (Toll-Free).</string>
+    <string name="pending">Pending</string>
+    <string name="check_status"><u>Check Status</u></string>
+    <string name="no_recent_recharges">No Recent Recharges</string>
+    <string name="last_recharge_on">Last Recharge: \u20B9 %1$s on %2$s</string>
+    <string name="repeat">Repeat</string>
+    <string name="recharge">Recharge</string>
+    <string name="please_do_not_press_back_or_close_the_app">Please, do not press back or close the app</string>
+    <string name="_5_cashback">5% Cashback</string>
+    <string name="recommended">Recommended</string>
+    <string name="no_transaction_fee">* No transaction fee</string>
+    <string name="your_bank_account">Your Bank Account</string>
+    <string name="how_it_works">How it works?</string>
 </resources>

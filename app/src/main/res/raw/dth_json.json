@@ -1,0 +1,29 @@
+{
+  "stores": [
+    {
+      "url": "https://www.airtel.in/prepaid-recharge/?icid=header",
+      "title": "Airtel Digital Tv",
+      "image": "Jackson",
+      "operator_id": "12"
+    },
+
+    {
+      "url": "https://www.jio.com/selfcare/recharge/mobility/",
+      "title": "Dish TV",
+      "image": "Jackson",
+      "operator_id": "14"
+    },
+    {
+      "url": "https://www.jio.com/selfcare/recharge/mobility/",
+      "title": "Tata Sky",
+      "image": "Jackson",
+      "operator_id": "8"
+    },
+    {
+      "url": "https://www.myvi.in/",
+      "title": "Videocon D2H",
+      "image": "Jackson",
+      "operator_id": "10"
+    }
+  ]
+}

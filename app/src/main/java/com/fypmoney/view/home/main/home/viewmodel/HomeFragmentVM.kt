@@ -17,6 +17,7 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.model.GetWalletBalanceResponse
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
@@ -35,7 +36,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
     val state: LiveData<HomeFragmentState>
         get() = _state
     private val _state = MutableLiveData<HomeFragmentState>()
-    var offerList: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
+    //var offerList: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()
     private val isUserComesFirstTime = checkUserIsLandedFirstTime()
 
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
@@ -44,11 +45,11 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
     var feedDetail: MutableLiveData<FeedDetails> = LiveEvent()
 
     init {
-        callgetOffer()
+        //callgetOffer()
         callExplporeContent()
     }
 
-    fun callgetOffer() {
+    /*fun callgetOffer() {
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.Api_LIGHTENING_DEALS,
@@ -58,7 +59,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                 this, isProgressBar = false
             )
         )
-    }
+    }*/
 
     fun onViewDetailsClicked() {
         _event.value = HomeFragmentEvent.ViewCardDetails
@@ -82,6 +83,33 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
             it.name = TrackrEvent.home_upi_click
         }
         _event.value = HomeFragmentEvent.UpiScanAction
+    }
+    fun onPrepaidRechargeClicked(){
+        trackr {
+            it.name = TrackrEvent.recharge_click
+        }
+        _event.value = HomeFragmentEvent.PrepaidRechargeEvent(AppConstants.PREPAID)
+    }
+    fun onPostpaidRechargeClicked(){
+        trackr {
+            it.name = TrackrEvent.postpaid_click
+        }
+        _event.value = HomeFragmentEvent.PostpaidRechargeEvent(AppConstants.POSTPAID)
+
+    }
+    fun onDTHRechargeClicked(){
+        trackr {
+            it.name = TrackrEvent.dth_click
+        }
+        _event.value = HomeFragmentEvent.DthRechargeEvent
+
+    }
+    fun onBroadbandRechargeClicked(){
+        trackr {
+            it.name = TrackrEvent.broadband_click
+        }
+        _event.value = HomeFragmentEvent.BroadbandRechargeEvent
+
     }
 
     fun fetchBalance() {
@@ -213,6 +241,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                     }
                 }
             }
+
             ApiConstant.API_CALLTO_ACTION->{
                 if (responseData is CallToActionNetworkResponse) {
                     //Map network model to ui model
@@ -238,7 +267,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                 }
 
             }
-            ApiConstant.Api_LIGHTENING_DEALS -> {
+            /*ApiConstant.Api_LIGHTENING_DEALS -> {
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 //                var feeds = getObject(responseData.toString(),Array<offerDetailResponse>::class.java)
@@ -252,7 +281,7 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
                 } else {
                     offerList.postValue(null)
                 }
-            }
+            }*/
             ApiConstant.API_Explore -> {
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
@@ -332,6 +361,10 @@ class HomeFragmentVM(application: Application): BaseViewModel(application) {
         object AddAction:HomeFragmentEvent()
         object PayAction:HomeFragmentEvent()
         object UpiScanAction:HomeFragmentEvent()
+        data class PrepaidRechargeEvent(val rechargeType:String):HomeFragmentEvent()
+        data class PostpaidRechargeEvent(val rechargeType:String):HomeFragmentEvent()
+        object DthRechargeEvent:HomeFragmentEvent()
+        object BroadbandRechargeEvent:HomeFragmentEvent()
     }
    /* sealed class QuickActionEvent{
         object AddAction:QuickActionEvent()

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bgcolor">
+
+            <include
+                android:id="@+id/layout"
+                layout="@layout/toolbar"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/main_cl"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout">
+
+                <FrameLayout
+                    android:id="@+id/select_operator_fl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmerLayout"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:shimmer_auto_start="true"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include layout="@layout/shimmer_list_view_placeholder" />
+
+                            <include layout="@layout/shimmer_list_view_placeholder" />
+                            <include layout="@layout/shimmer_list_view_placeholder" />
+                            <include layout="@layout/shimmer_list_view_placeholder" />
+                            <include layout="@layout/shimmer_list_view_placeholder" />
+                            <include layout="@layout/shimmer_list_view_placeholder" />
+                            <include layout="@layout/shimmer_list_view_placeholder" />
+                            <include layout="@layout/shimmer_list_view_placeholder" />
+                            <include layout="@layout/shimmer_list_view_placeholder" />
+
+
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_operators"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        tools:listitem="@layout/card_operator"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/no_operator_found_tv"
+                        style="@style/TextviewRegular"
+                        android:textColor="@color/text_color_light"
+                        android:layout_gravity="center_horizontal"
+                        android:visibility="gone"
+                        android:text="@string/unable_to_fetch_operator_please_try_again_later"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+                </FrameLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

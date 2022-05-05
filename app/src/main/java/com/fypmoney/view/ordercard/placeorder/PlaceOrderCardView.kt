@@ -339,6 +339,7 @@ class PlaceOrderCardView : BaseActivity<ViewPlaceCardBinding, PlaceOrderCardView
         bottomsheetInsufficient.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
         bottomsheetInsufficient.show(supportFragmentManager, "PLACEORDER")
     }
+
     private fun callNotServicebleSheet() {
         val bottomSheet = NotServiceableBottomSheet(onNotifyClick = {
             intentToActivity(HomeActivity::class.java)

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.recharge.viewmodel.RechargeSuccessfulFragmentVM" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#0E141C">
+
+        <include
+            android:id="@+id/layout"
+            layout="@layout/toolbar" />
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/logo"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:elevation="@dimen/_6sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.327"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/failed" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/status_title_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:gravity="center"
+            tools:text="User"
+            style="@style/TextviewBold"
+            app:layout_constraintTop_toBottomOf="@+id/logo"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/layout"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_24sdp"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:gravity="center"
+            tools:text="User"
+            style="@style/TextviewRegular"
+            app:layout_constraintTop_toBottomOf="@+id/status_title_tv"
+            android:textColor="@color/text_color_light"
+            android:textSize="14sp"
+            android:textStyle="normal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+
+        <com.fypmoney.view.customview.PrimaryButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="74dp"
+            android:paddingTop="14dp"
+            android:paddingRight="74dp"
+            android:paddingBottom="14dp"
+            app:text="@string/continue_btn_text"
+            android:layout_marginBottom="@dimen/dp20"
+            android:textAllCaps="false"
+            app:enabled="true"
+            android:id="@+id/continue_btn"
+            android:onClick="@{()->viewModel.onContinueClick()}"
+            android:textSize="18sp"
+            android:textStyle="normal"
+            app:disabled_bg="@color/cb_grey"
+            app:disabled_text="@color/grey_heading"
+            app:enabled_text="@color/text_color_dark"
+            app:enabled_bg="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

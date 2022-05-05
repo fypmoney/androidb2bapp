@@ -40,9 +40,9 @@ android {
 
     buildTypes {
         release {
-            debuggable false
-            minifyEnabled true
-            shrinkResources true
+            debuggable true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
         }
@@ -224,7 +224,7 @@ dependencies {
     //play core lib
     implementation 'com.google.android.play:core:1.10.1'
     debugImplementation "com.github.chuckerteam.chucker:library:3.2.0"
-    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.2.0"
+    releaseImplementation "com.github.chuckerteam.chucker:library:3.2.0"
 //"com.github.chuckerteam.chucker:library-no-op:3.2.0"
 
     implementation 'com.google.android.gms:play-services-ads-identifier:17.0.1'
@@ -239,6 +239,10 @@ dependencies {
     implementation("com.moengage:rich-notification:2.3.00")
     implementation('com.github.simonpercic:oklog3:2.3.0')
     implementation 'com.amazonaws:ivs-player:1.6.0'
+
+    implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.0")
+
+
 }
 apollo {
     generateKotlinModels.set(true)

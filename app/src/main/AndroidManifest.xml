@@ -291,6 +291,7 @@
         <activity
             android:name=".view.home.main.homescreen.view.HomeActivity"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.moe.pushlibrary.activities.MoEActivity"
@@ -395,6 +396,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

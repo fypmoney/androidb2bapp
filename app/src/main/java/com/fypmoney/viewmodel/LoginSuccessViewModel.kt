@@ -8,7 +8,6 @@ import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
-import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
@@ -34,6 +33,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
     init {
 
     }
+
     /*
     * This method is used to handle click of continue
     * */
@@ -45,7 +45,21 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
 
     private fun callSettingsApi() {
         val request = SettingsRequest()
-        request.keyList = listOf("CARD_ORDER_FLAG","REFER_LINE1", "REFER_LINE2", "REFEREE_CASHBACK")
+        request.keyList = listOf(
+            "CARD_ORDER_FLAG",
+            "REFER_LINE1",
+            "REFER_LINE2",
+            "REFEREE_CASHBACK",
+            "REFERAL_PKYC0",
+            "REFERAL_PKYC1",
+            "ERROR_MESSAGE_HOME",
+            "IS_NEW_FEED_AVAILABLE",
+            "ONBOARD_SHARE_90",
+            "ONBOARD_SHARE_1",
+            "ADD_MONEY_VIDEO",
+            "SHOW_RECHARGE_SCREEN",
+            "ADD_MONEY_VIDEO_NEW"
+        )
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = ApiConstant.API_SETTINGS,
@@ -56,6 +70,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
             )
         )
     }
+
     private fun callReferScreenMessages() {
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -93,7 +108,9 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
 
                     SharedPrefUtils.putString(
                         PockketApplication.instance,
-                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.bankProfile?.kycType)
+                        SharedPrefUtils.SF_KYC_TYPE,
+                        responseData.customerInfoResponseDetails?.bankProfile?.kycType
+                    )
 
                     trackr {
                         it.services = arrayListOf(TrackrServices.ADJUST, TrackrServices.FIREBASE)
@@ -117,12 +134,14 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                     )
                     SharedPrefUtils.putString(
                         getApplication(),
-                        SharedPrefUtils.SF_KEY_USER_DOB, responseData.customerInfoResponseDetails?.userProfile?.dob
+                        SharedPrefUtils.SF_KEY_USER_DOB,
+                        responseData.customerInfoResponseDetails?.userProfile?.dob
                     )
 
                     SharedPrefUtils.putString(
                         getApplication(),
-                        SharedPrefUtils.SF_KEY_USER_EMAIL, responseData.customerInfoResponseDetails?.email
+                        SharedPrefUtils.SF_KEY_USER_EMAIL,
+                        responseData.customerInfoResponseDetails?.email
                     )
 
                     // again update the saved data in preference
@@ -140,7 +159,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                     )
 
                     Utility.getCustomerDataFromPreference()?.let {
-                        val map = hashMapOf<String,Any>()
+                        val map = hashMapOf<String, Any>()
                         map[USER_ATTRIBUTE_UNIQUE_ID] = it.mobile.toString()
                         map[USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
                         map[USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
@@ -150,7 +169,7 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                         map[USER_ATTRIBUTE_USER_EMAIL] = it.email.toString()
 
                         UserTrackr.push(map)
-                        UserTrackr.login( it.mobile.toString())
+                        UserTrackr.login(it.mobile.toString())
                         it.userProfile?.dob?.let { it1 ->
                             UserTrackr.setDateOfBirthDate(
                                 it1
@@ -224,14 +243,42 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                     it.value
                                 )
                             }
-
                             AppConstants.REFEREE_CASHBACK -> {
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_KEY_REFEREE_CASHBACK,
                                     it.value
                                 )
+
                             }
+                            AppConstants.ADD_MONEY_VIDEO -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_ADD_MONEY_VIDEO,
+                                    it.value
+                                )
+                            }
+                            AppConstants.ADD_MONEY_VIDEO_NEW -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_ADD_MONEY_VIDEO_NEW,
+                                    it.value
+                                )
+                            }
+                            AppConstants.ERROR_MESSAGE_HOME -> {
+                                PockketApplication.homeScreenErrorMsg = it.value
+                            }
+                            AppConstants.IS_NEW_FEED_AVAILABLE -> {
+                                PockketApplication.isNewFeedAvailableData = it
+                            }
+                            AppConstants.SHOW_RECHARGE_SCREEN -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SHOW_RECHARGE_IN_HOME_SCREEN,
+                                    it.value
+                                )
+                            }
+
 
                         }
                     }
@@ -261,10 +308,6 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
             }
         }
 
-    }
-
-    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
-        super.onError(purpose, errorResponseInfo)
     }
 
 }

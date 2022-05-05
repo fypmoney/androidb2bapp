@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="androidx.core.content.ContextCompat" />
+
+        <variable
+            name="viewHelper"
+            type="com.fypmoney.view.recharge.adapter.RechargepostpaidViewHelper" />
+
+    </data>
+
+
+    <LinearLayout
+        android:id="@+id/serviceLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:onClick="@{()->viewHelper.onItemClicked()}"
+        android:orientation="vertical">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivServiceLogo"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            tools:srcCompat="@drawable/airtel_logo" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvServiceName"
+            style="@style/TextviewRegular"
+            android:layout_gravity="center"
+            android:visibility="visible"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</layout>

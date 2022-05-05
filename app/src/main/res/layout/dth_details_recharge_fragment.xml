@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.recharge.viewmodel.DthDetailsRechargeFragmentVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor">
+
+        <include
+            android:id="@+id/layout"
+            layout="@layout/toolbar" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <FrameLayout
+                android:id="@+id/explore_fl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:shimmer_auto_start="true"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                        <include layout="@layout/shimmer_placeholder_layout_store" />
+
+
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_banners"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:visibility="gone"
+                    tools:visibility= "visible"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginRight="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/layout"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_call_to_action_home"/>
+            </FrameLayout>
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_24sdp"
+                android:layout_marginStart="24dp"
+                android:id="@+id/dth_number_et"
+                android:inputType="number"
+                android:imeOptions="actionNext"
+                android:textColor="@color/cb_input_gray"
+                android:layout_marginEnd="24dp"
+                android:hint="@string/customer_id"
+                android:text="@={viewModel.subscriberId}"
+                android:textCursorDrawable="@drawable/cursor_edittext"
+                style="@style/Widget.AppCompat.EditText"
+                android:backgroundTint="@color/text_color_more_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/explore_fl" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/dth_number_et"
+                style="@style/TextviewRegular"
+                android:id="@+id/customer_id_details_desc_tv"
+                android:layout_marginEnd="24dp"
+                android:layout_marginStart="7dp"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="@+id/dth_number_et"
+                android:layout_height="wrap_content" />
+
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginStart="24dp"
+                android:id="@+id/amount"
+                android:layout_marginEnd="24dp"
+                android:textColor="@color/white"
+                android:hint="@string/enter_amount"
+                android:inputType="number"
+                android:textCursorDrawable="@drawable/cursor_edittext"
+                android:text="@={viewModel.amountSelected}"
+                android:maxLength="5"
+                android:imeOptions="actionDone"
+                style="@style/Widget.AppCompat.EditText"
+                android:backgroundTint="@color/text_color_more_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dth_number_et" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/regular_recharge_tv"
+                style="@style/TextviewRegular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/your_regular_recharge"
+                android:layout_marginStart="7dp"
+                app:layout_constraintStart_toStartOf="@+id/dth_number_et"
+                app:layout_constraintTop_toBottomOf="@+id/amount" />
+
+            <LinearLayout
+                android:id="@id/linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="4"
+                android:layout_marginHorizontal="24dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/regular_recharge_tv"
+                android:layout_marginTop="32dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:background="@drawable/curved_background29"
+                    android:gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:onClick="@{()->viewModel.onAmountSelected(500)}"
+                    android:paddingVertical="5dp"
+                    android:layout_width="0dp"
+                    android:minEms="5"
+                    android:text="@string/add_money_500"
+                    android:textColor="@color/text_color_dark" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_width="0dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:minEms="5"
+                    android:background="@drawable/curved_background28"
+                    android:gravity="center"
+                    android:onClick="@{()->viewModel.onAmountSelected(1000)}"
+                    android:paddingVertical="5dp"
+                    android:text="@string/add_money_1000"
+                    android:textColor="@color/text_color_dark" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:minEms="5"
+                    android:background="@drawable/curved_background27"
+                    android:gravity="center"
+                    android:onClick="@{()->viewModel.onAmountSelected(1500)}"
+                    android:paddingVertical="5dp"
+                    android:text="@string/add_money_1500"
+                    android:textColor="@color/text_color_dark" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/TextviewRegular"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_width="0dp"
+                    android:minEms="5"
+                    android:layout_weight="1"
+                    android:background="@drawable/curved_background25"
+                    android:gravity="center"
+                    android:onClick="@{()->viewModel.onAmountSelected(2000)}"
+                    android:paddingVertical="5dp"
+                    android:text="@string/add_money_2000"
+                    android:textColor="@color/text_color_dark" />
+
+            </LinearLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/recharge_suggestion_note_tv"
+                style="@style/TextviewRegular"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/please_enter_correct_details_for_successful_dth_recharge_otherwise_your_recharge_will_fail"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/dth_number_et"
+                app:layout_constraintTop_toBottomOf="@+id/linear" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                app:layout_constraintTop_toBottomOf="@+id/recharge_suggestion_note_tv"
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="24dp"
+                android:id="@+id/setupbox"
+                android:layout_marginTop="@dimen/dp30"
+                app:customBackgroundColor="@{@color/white}"
+                app:customCornerRadius="@{@dimen/dp18}"
+                app:customBackgroundAlpha="@{10}"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="@dimen/_6sdp"
+                    android:text="@string/keep_set_top_box_on_while_recharging"
+                    android:textColor="@color/color_dark_green" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_dth_box"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_margin="@dimen/_6sdp"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+            <com.fypmoney.view.customview.PrimaryButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="sans-serif"
+                android:paddingLeft="74dp"
+                android:paddingTop="14dp"
+                android:paddingRight="74dp"
+                android:paddingBottom="14dp"
+                app:text="@string/pay"
+                android:onClick="@{()->viewModel.onPayClick()}"
+                android:layout_marginBottom="@dimen/dp20"
+                android:textAllCaps="false"
+                app:enabled="false"
+                android:id="@+id/continue_btn"
+                android:textColor="@color/text_color_light"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                app:disabled_bg="@color/cb_grey"
+                app:disabled_text="@color/grey_heading"
+                app:enabled_text="@color/text_color_dark"
+                app:enabled_bg="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

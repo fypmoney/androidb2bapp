@@ -45,6 +45,7 @@ class SharedPrefUtils {
         const val SF_KEY_REFERAL_GLOBAL_MSG = "refer_global_msg"
         const val SF_KEY_REFEREE_CASHBACK = "refer_cashback_amount"
         const val SF_ADD_MONEY_VIDEO = "add_money_video"
+        const val SF_ADD_MONEY_VIDEO_NEW = "add_money_video_new"
         const val SF_KEY_ERROR_MESSAGE_HOME = "error_msg_home"
         const val SF_KEY_IS_NEW_FEED_AVAILABLE = "is_new_feed_available"
         const val SF_KEY_NAME_ON_CARD = "name_on_card"
@@ -61,6 +62,7 @@ class SharedPrefUtils {
         const val SF_KYC_TYPE = "kyc_type"
         const val SF_CARD_PROMO_CODE_APPLIED = "card_promo_code_applied"
         const val SF_CARD_IS_ACTIVATED = "card_is_activated"
+        const val SF_SHOW_RECHARGE_IN_HOME_SCREEN = "show_recharge_in_home_screen"
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(context)
