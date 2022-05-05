@@ -47,7 +47,7 @@ class SelectedPlanDetailsRechargeFragmentVM(application: Application) : BaseView
     }
 
     fun fetchBalance() {
-        _state.value = SelectedPlanDetailsRechargeState.Loading
+        _state.postValue(SelectedPlanDetailsRechargeState.Loading)
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_WALLET_BALANCE,

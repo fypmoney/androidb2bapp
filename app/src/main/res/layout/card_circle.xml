@@ -21,7 +21,6 @@
             style="@style/TextviewRegular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLength="20"
             android:textSize="18sp"
             android:layout_marginStart="@dimen/dp6"
             android:layout_marginTop="10dp"

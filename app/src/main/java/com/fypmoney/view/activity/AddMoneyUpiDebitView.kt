@@ -40,12 +40,7 @@ import com.payu.india.Model.PayuConfig
 import com.payu.india.Payu.PayuConstants
 import com.payu.india.PostParams.PaymentPostParams
 import com.payu.paymentparamhelper.PaymentParams
-import kotlinx.android.synthetic.main.bottom_sheet_add_upi.*
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
-import kotlinx.android.synthetic.main.toolbar_for_gateway.*
-import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
-import kotlinx.android.synthetic.main.view_add_money_upi_debit.*
 
 
 class AddMoneyUpiDebitView :
@@ -260,7 +255,6 @@ class AddMoneyUpiDebitView :
              * @param merchantResponse response received from Furl
              */
             override fun onPaymentFailure(payuResponse: String, merchantResponse: String) {
-                //mViewModel.isPaymentFail.set(true)
                 mViewModel.payUResponse.set(payuResponse)
                 mViewModel.callAddMoneyStep2Api()
             }

@@ -240,6 +240,8 @@ dependencies {
     implementation('com.github.simonpercic:oklog3:2.3.0')
     implementation 'com.amazonaws:ivs-player:1.6.0'
 
+    implementation("com.squareup.okhttp3:okhttp-dnsoverhttps:4.9.0")
+
 
 }
 apollo {

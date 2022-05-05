@@ -427,7 +427,7 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
                         var subTitle:String? = null
                         var res:Int? = null
                         when(dthDetailsRechargeFragmentVM.selectedDthOperator?.title){
-                            "Airtel"->{
+                            "Airtel Digital Tv"->{
                                 title = getString(R.string.whats_my_customer_id)
                                 subTitle = getString(R.string.airtel_know_more_body)
                                 res = R.drawable.ic_dth_airtel

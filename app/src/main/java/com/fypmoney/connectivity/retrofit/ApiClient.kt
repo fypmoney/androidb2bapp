@@ -5,7 +5,9 @@ import com.fypmoney.BuildConfig
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.util.AppConstants.API_TIMEOUT_SECONDS
 import com.github.simonpercic.oklog3.OkLogInterceptor
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
+import okhttp3.dnsoverhttps.DnsOverHttps
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -34,10 +36,15 @@ class ApiClient {
                     builder.addInterceptor(okLogInterceptor)
                 }
             }
-
+            val client = builder.build()
+            val dns = DnsOverHttps.Builder().client(client)
+                .url("https://1.1.1.1/dns-query".toHttpUrl())
+                .url("https://dns.google/dns-query".toHttpUrl())
+                .build()
+            client.newBuilder().dns(dns).build()
             return Retrofit.Builder()
                 .baseUrl(baseUrl)
-                .client(builder.build())
+                .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()

@@ -61,7 +61,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
 
     init {
         viewModelScope.launch {
-            delay(1000)
+            delay(3000)
             setUpApp()
         }
 

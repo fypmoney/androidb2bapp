@@ -112,7 +112,7 @@ class DthDetailsRechargeFragmentVM(application: Application) : BaseViewModel(app
     }
 
     fun fetchBalance() {
-        _state.value = DthDetailsState.Loading(API_GET_WALLET_BALANCE)
+        _state.postValue(DthDetailsState.Loading(API_GET_WALLET_BALANCE))
         WebApiCaller.getInstance().request(
             ApiRequest(
                 API_GET_WALLET_BALANCE,

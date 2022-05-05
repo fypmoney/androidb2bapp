@@ -65,7 +65,7 @@ class PostpaidBillDetailsFragmentVM(application: Application) : BaseViewModel(ap
     }
 
     fun fetchBalance() {
-        _state.value = PostpaidBillDetailsState.Loading
+        _state.postValue(PostpaidBillDetailsState.Loading)
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_GET_WALLET_BALANCE,

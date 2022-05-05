@@ -126,11 +126,12 @@ class NewAddMoneyActivity : BaseActivity<ActivityNewAddMoneyBinding,NewAddMoneyA
         }
         binding.shareVirtualAccountDetailsIv.setOnClickListener {
             val content = "Here are my Fyp bank account details. Please send money directly to my account using any UPI apps or NEFT/IMPS-\n" +
-                    " Bank Account No.:  ${binding.accountNumberTv.text} \n" +
                     "\n"+
-                    " IFSC Code: ${binding.ifscCodeTv.text} \n" +
+                    "Bank Account No.:  ${binding.accountNumberTv.text} \n" +
                     "\n"+
-                    " Download Fyp, India's leading payments app, trusted by 1 Mn+ teens and families: https://fypmoney.in/app"
+                    "IFSC Code: ${binding.ifscCodeTv.text} \n" +
+                    "\n"+
+                    "Download Fyp, India's leading payments app, trusted by 1 Mn+ teens and families: https://fypmoney.in/app"
             onInviteUser(content)
         }
         binding.addViaDebitOrCardCv.setOnClickListener {
