@@ -41,15 +41,15 @@ class ApplyPromoCodeBottomSheet(var promoCodeAppliedSuccessfully:(userCard: User
         }
     }
     private fun setupObserver() {
-        applyPromoCodeBottomSheetVM.event.observe(viewLifecycleOwner,{
-            when(it){
-                ApplyPromoCodeBottomSheetVM.ApplyPromoCodeEvent.OnApplyClickedEvent ->{
+        applyPromoCodeBottomSheetVM.event.observe(viewLifecycleOwner) {
+            when (it) {
+                ApplyPromoCodeBottomSheetVM.ApplyPromoCodeEvent.OnApplyClickedEvent -> {
                     applyPromoCodeBottomSheetVM.callCheckPromoCodeApi(binding.applyPromoCodeTet.text.toString())
                 }
             }
-        })
-        applyPromoCodeBottomSheetVM.state.observe(viewLifecycleOwner,{
-            when(it){
+        }
+        applyPromoCodeBottomSheetVM.state.observe(viewLifecycleOwner) {
+            when (it) {
                 is ApplyPromoCodeBottomSheetVM.ApplyPromoCodeState.InvalidPromoCode -> {
                     binding.applyPromocodeEt.error = it.errorResponseInfo.msg
                     binding.applyPromocodeBtn.setBusy(false)
@@ -60,15 +60,15 @@ class ApplyPromoCodeBottomSheet(var promoCodeAppliedSuccessfully:(userCard: User
                 }
                 is ApplyPromoCodeBottomSheetVM.ApplyPromoCodeState.PromoCodeAppliedSuccessfully -> {
                     SharedPrefUtils.putBoolean(
-                            context = PockketApplication.instance,
-                            key = SharedPrefUtils.SF_CARD_PROMO_CODE_APPLIED,
-                            value = true
-                        )
+                        context = PockketApplication.instance,
+                        key = SharedPrefUtils.SF_CARD_PROMO_CODE_APPLIED,
+                        value = true
+                    )
 
                     promoCodeAppliedSuccessfully(it.offerCard)
                     dismiss()
                 }
             }
-        })
+        }
     }
 }

@@ -916,7 +916,7 @@ Coming really soon!
     <string name="unfortunately_we_are_not_serviceable_in_your_neighborhood_but_we_are_moving_super_fast_to_bring_the_awesome_fyp_card_to_your_pockets">Unfortunately we are not serviceable in your neighborhood but we are moving super fast to bring the awesome Fyp card to your pockets.</string>
     <string name="your_order_has_been_placed_n_successfully">Your order has been placed \n successfully!</string>
     <string name="net_paid">Net Paid</string>
-    <string name="by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy">"By tapping Activate Now, you agree to the %1$s &amp; "</string>
+    <string name="by_tapping_activate_now_you_agree_to_the_terms_of_service_privacy_policy">"By tapping Activate Now, you agree to the %1$s &amp; %2$s"</string>
     <string name="by_tapping_continue_you_agree_to_the_terms_of_service_privacy_policy">"By tapping Continue, you agree to the %1$s &amp; %2$s"</string>
     <string name="set">Set</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
