@@ -32,6 +32,7 @@ import com.fypmoney.view.activity.ContactListView
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
+import com.fypmoney.view.giftCardModule.GiftCardsListScreen
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.adapters.ExploreAdapter
@@ -224,9 +225,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 startActivity(intent)
             }
             HomeFragmentVM.HomeFragmentEvent.UpiScanAction -> {
-                val upiComingSoonBottomSheet = UpiComingSoonBottomSheet()
+                val intent = Intent(context, GiftCardsListScreen::class.java)
+                startActivity(intent)
+
+                /*val upiComingSoonBottomSheet = UpiComingSoonBottomSheet()
                 upiComingSoonBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-                upiComingSoonBottomSheet.show(childFragmentManager, "UpiComingSoonBottomSheet")
+                upiComingSoonBottomSheet.show(childFragmentManager, "UpiComingSoonBottomSheet")*/
             }
 
         }
