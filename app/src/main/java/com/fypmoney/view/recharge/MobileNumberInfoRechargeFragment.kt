@@ -266,7 +266,7 @@ class MobileNumberInfoRechargeFragment:BaseFragment<MobileNumberInfoRechargeFrag
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
                 val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                    EnterMobileNumberRechargeFragmentDirections.actionEnterMobileNumberRechargeToSectionExplore(
+                    MobileNumberInfoRechargeFragmentDirections.actionExploreSectionExplore(
                         sectionExploreItem = sectionContentItem,
                         sectionExploreName = it1
                     )

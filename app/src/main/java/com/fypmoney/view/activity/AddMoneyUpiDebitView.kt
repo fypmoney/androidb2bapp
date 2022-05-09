@@ -40,7 +40,7 @@ import com.payu.india.Model.PayuConfig
 import com.payu.india.Payu.PayuConstants
 import com.payu.india.PostParams.PaymentPostParams
 import com.payu.paymentparamhelper.PaymentParams
-import kotlinx.android.synthetic.main.toolbar.toolbar
+import kotlinx.android.synthetic.main.toolbar.*
 
 
 class AddMoneyUpiDebitView :
@@ -527,9 +527,9 @@ class AddMoneyUpiDebitView :
     * */
     fun callUpiIntent() {
         when (mViewModel.clickedPositionForUpi.get()) {
-            0 -> {
+            /*0 -> {
                 callAddUpiBottomSheet()
-            }/*
+            }*//*
             1 -> {
                 callGooglePayIntent()
             }*/

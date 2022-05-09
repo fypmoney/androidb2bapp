@@ -284,7 +284,7 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
                 val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                    EnterMobileNumberRechargeFragmentDirections.actionEnterMobileNumberRechargeToSectionExplore(
+                    DthDetailsRechargeFragmentDirections.actionExploreSectionExplore(
                         sectionExploreItem = sectionContentItem,
                         sectionExploreName = it1
                     )

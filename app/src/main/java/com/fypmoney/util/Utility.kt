@@ -63,6 +63,7 @@ import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
 import com.fypmoney.view.storeoffers.OffersScreen
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import kotlinx.coroutines.Dispatchers
@@ -100,52 +101,57 @@ object Utility {
         if (tv.tag == null) {
             tv.tag = tv.text
         }
-        val vto = tv.viewTreeObserver
-        vto.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                val text: String
-                val lineEndIndex: Int
-                val obs = tv.viewTreeObserver
-                obs.removeOnGlobalLayoutListener(this)
-                if (maxLine == 0) {
-                    lineEndIndex = tv.layout.getLineEnd(0)
-                    text = tv.text.subSequence(0, lineEndIndex - expandText.length + 1)
-                        .toString() + " " + expandText
-                    tv.text = text
+        try{
+            val vto = tv.viewTreeObserver
+            vto.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    val text: String
+                    val lineEndIndex: Int
+                    val obs = tv.viewTreeObserver
+                    obs.removeOnGlobalLayoutListener(this)
+                    if (maxLine == 0) {
+                        lineEndIndex = tv.layout.getLineEnd(0)
+                        text = tv.text.subSequence(0, lineEndIndex - expandText.length + 1)
+                            .toString() + " " + expandText
+                        tv.text = text
 
-                    tv.movementMethod = LinkMovementMethod.getInstance()
+                        tv.movementMethod = LinkMovementMethod.getInstance()
 
-                    tv.setText(
-                        addClickablePartTextViewResizable(
-                            SpannableString(tv.text.toString()), tv, lineEndIndex, expandText,
-                            viewMore
-                        ), BufferType.SPANNABLE
-                    )
-                } else if (maxLine > 0 && tv.lineCount >= maxLine) {
-                    lineEndIndex = tv.layout.getLineEnd(maxLine - 1)
-                    text = tv.text.subSequence(0, lineEndIndex - expandText.length + 1)
-                        .toString() + " " + expandText
-                    tv.text = text
+                        tv.setText(
+                            addClickablePartTextViewResizable(
+                                SpannableString(tv.text.toString()), tv, lineEndIndex, expandText,
+                                viewMore
+                            ), BufferType.SPANNABLE
+                        )
+                    } else if (maxLine > 0 && tv.lineCount >= maxLine) {
+                        lineEndIndex = tv.layout.getLineEnd(maxLine - 1)
+                        text = tv.text.subSequence(0, lineEndIndex - expandText.length + 1)
+                            .toString() + " " + expandText
+                        tv.text = text
 
-                    tv.movementMethod = LinkMovementMethod.getInstance()
+                        tv.movementMethod = LinkMovementMethod.getInstance()
 
-                    tv.setText(
-                        addClickablePartTextViewResizable(
-                            SpannableString(tv.text.toString()), tv, lineEndIndex, expandText,
-                            viewMore
-                        ), BufferType.SPANNABLE
-                    )
-                } else {
-                    lineEndIndex = tv.layout.getLineEnd(tv.layout.lineCount - 1)
-                    text = tv.text.subSequence(0, lineEndIndex).toString()
-                    tv.text = text
+                        tv.setText(
+                            addClickablePartTextViewResizable(
+                                SpannableString(tv.text.toString()), tv, lineEndIndex, expandText,
+                                viewMore
+                            ), BufferType.SPANNABLE
+                        )
+                    } else {
+                        lineEndIndex = tv.layout.getLineEnd(tv.layout.lineCount - 1)
+                        text = tv.text.subSequence(0, lineEndIndex).toString()
+                        tv.text = text
 
-                    tv.movementMethod = LinkMovementMethod.getInstance()
+                        tv.movementMethod = LinkMovementMethod.getInstance()
+
+                    }
 
                 }
+            })
+        }catch (e:StringIndexOutOfBoundsException){
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
 
-            }
-        })
     }
 
     private fun addClickablePartTextViewResizable(
@@ -1220,8 +1226,6 @@ object Utility {
         data class UnableToFindMobileNumber(val errorMsg:String):MobileNumberFromPhoneBook()
     }
     fun getPhoneNumberFromContact(activity: Activity,data: Intent?):MobileNumberFromPhoneBook{
-
-
         val contactData = data!!.data
         val c: Cursor? =
             contactData?.let { activity.contentResolver.query(it, null, null, null, null) }
@@ -1239,7 +1243,9 @@ object Utility {
                     return if (phones != null) {
                         val cNumber = phones.getString(phones.getColumnIndex("data1"))
                         System.out.println("number is:$cNumber")
-                        MobileNumberFromPhoneBook.MobileNumberFound(cNumber.takeLast(10))
+                        val phoneNuber = cNumber.replace("\\s".toRegex(), "")
+                        phones.close()
+                        MobileNumberFromPhoneBook.MobileNumberFound(phoneNuber.takeLast(10))
 
                     }else{
                         MobileNumberFromPhoneBook.UnableToFindMobileNumber(activity.getString(R.string.unable_to_pick_phone_number))

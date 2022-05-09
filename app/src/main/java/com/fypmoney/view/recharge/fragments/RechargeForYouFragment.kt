@@ -2,7 +2,7 @@ package com.fypmoney.view.recharge.fragments
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -18,8 +18,9 @@ import com.fypmoney.view.recharge.viewmodel.RechargeForYouFragmentVM
 class RechargeForYouFragment(val list: List<ValueItem?>?, val click: (ValueItem) -> Unit) :
     BaseFragment<FragmentForYouPlansBinding, RechargeForYouFragmentVM>() {
 
+    private val rechargeForYouFragmentVM by viewModels<RechargeForYouFragmentVM> { defaultViewModelProviderFactory }
+
     private lateinit var mViewBinding: FragmentForYouPlansBinding
-    private var mViewmodel: RechargeForYouFragmentVM? = null
 
     override fun getBindingVariable(): Int {
         return BR.viewModel
@@ -29,15 +30,14 @@ class RechargeForYouFragment(val list: List<ValueItem?>?, val click: (ValueItem)
         return R.layout.fragment_for_you_plans
     }
 
-    override fun getViewModel(): RechargeForYouFragmentVM {
-        mViewmodel = ViewModelProvider(this).get(RechargeForYouFragmentVM::class.java)
-        return mViewmodel!!
-    }
+    override fun getViewModel(): RechargeForYouFragmentVM  = rechargeForYouFragmentVM
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
-        setUpRecyclerView(list)
+        setUpRecyclerView()
+        updatePlanList(list)
+
     }
 
 
@@ -46,9 +46,9 @@ class RechargeForYouFragment(val list: List<ValueItem?>?, val click: (ValueItem)
     }
 
 
-    private fun setUpRecyclerView(arrayList: List<ValueItem?>?) {
+    private fun setUpRecyclerView() {
         val planAdapter = RechargePlansAdapter(
-            this, onRecentUserClick = {
+            this, onPlanClicked = {
                 click(it)
             })
         with(mViewBinding.rvPlans) {
@@ -60,10 +60,16 @@ class RechargeForYouFragment(val list: List<ValueItem?>?, val click: (ValueItem)
                     false
                 )
         }
-        if (arrayList?.isNotEmpty() == true) {
+
+
+
+    }
+
+    fun updatePlanList(plansList: List<ValueItem?>?){
+        if (plansList?.isNotEmpty() == true) {
             mViewBinding.shimmerPlans.visibility = View.GONE
             mViewBinding.shimmerPlans.stopShimmer()
-            (mViewBinding.rvPlans.adapter as RechargePlansAdapter).submitList(arrayList)
+            (mViewBinding.rvPlans.adapter as RechargePlansAdapter).submitList(plansList)
 
         }else{
             mViewBinding.shimmerPlans.visibility = View.GONE
@@ -71,8 +77,6 @@ class RechargeForYouFragment(val list: List<ValueItem?>?, val click: (ValueItem)
             mViewBinding.rvPlans.toGone()
             mViewBinding.noRecharageFoundTv.toVisible()
         }
-
-
     }
 
 

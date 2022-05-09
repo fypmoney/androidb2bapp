@@ -18,6 +18,7 @@ import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.POSTPAID
+import com.fypmoney.util.AppConstants.PREPAID
 import com.fypmoney.util.Utility
 import com.fypmoney.view.recharge.adapter.OperatorSelectionAdapter
 import com.fypmoney.view.recharge.viewmodel.SelectOperatorFragmentVM
@@ -60,8 +61,8 @@ class SelectOperatorFragment : BaseFragment<SelectOperatorFragmentBinding, Selec
                 isBackArrowVisible = true,
                 toolbarTitle = String.format(getString(R.string.select_your_prepaid_operator),Utility.toTitleCase(it))
             )
-            if (it == AppConstants.POSTPAID) {
-                mViewModel.callGetOperatorList(AppConstants.POSTPAID)
+            if (it == POSTPAID) {
+                mViewModel.callGetOperatorList(POSTPAID)
             } else {
                 mViewModel.callGetOperatorList(AppConstants.PREPAID)
             }
@@ -80,11 +81,11 @@ class SelectOperatorFragment : BaseFragment<SelectOperatorFragmentBinding, Selec
             this, onOperatorClick = {
                 if(it.id =="postpaid"){
                     val directions =
-                        SelectOperatorFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.POSTPAID)
+                        SelectOperatorFragmentDirections.actionRechargeScreen(rechargeType = POSTPAID)
                     directions.let { it1 -> findNavController().navigate(it1) }
                 }else if(it.id=="prepaid"){
                     val directions =
-                        SelectOperatorFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.PREPAID)
+                        SelectOperatorFragmentDirections.actionRechargeScreen(rechargeType = PREPAID)
                     directions.let { it1 -> findNavController().navigate(it1) }
                 }else{
                     if(mViewModel.rechargeType== POSTPAID){

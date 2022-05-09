@@ -63,10 +63,7 @@ class RechargePlansFragmentVM(application: Application) : BaseViewModel(applicat
         viewModelScope.launch {
             planSearchQueryBroadcastChannel.asFlow().debounce(800).collect {
                 if(plansList.isNotEmpty()){
-                    val filteredList = plansList.filter { plan ->
-                        plan.value?.any{it1->(it1?.rs?.contains(it))!!}!!
-                    }
-                    _state.value = RechargePlanState.Success(filteredList)
+                    _state.value = RechargePlanState.Success(plansList)
 
                 }
             }

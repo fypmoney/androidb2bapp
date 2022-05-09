@@ -50,8 +50,8 @@
 
 
     <action
-            android:id="@+id/action_explore_section_explore"
-            app:destination="@+id/navigation_section_explore"
+        android:id="@+id/action_explore_section_explore"
+        app:destination="@+id/navigation_section_explore"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_left"
@@ -62,7 +62,18 @@
         android:id="@+id/navigation_rewards"
         android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsOverviewFragment"
         android:label="@string/rewards"
-        tools:layout="@layout/fragment_rewards_overview" />
+        tools:layout="@layout/fragment_rewards_overview">
+
+        <action
+            android:id="@+id/action_explore_section_explore"
+            app:destination="@+id/navigation_section_explore"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
+
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_fyper"
@@ -86,7 +97,9 @@
             app:nullable="true" />
         <argument
             android:name="sectionExploreName"
-            app:argType="string" />
+            app:argType="string"
+            android:defaultValue=""
+            />
     </fragment>
 
     <fragment
@@ -197,6 +210,14 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ" />
 
+        <action
+            android:id="@+id/action_explore_section_explore"
+            app:destination="@+id/navigation_section_explore"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
+
     </fragment>
 
     <fragment
@@ -221,6 +242,14 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ" />
+
+        <action
+            android:id="@+id/action_explore_section_explore"
+            app:destination="@+id/navigation_section_explore"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
     </fragment>
 
 
@@ -319,6 +348,15 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ" />
+
+
+        <action
+            android:id="@+id/action_explore_section_explore"
+            app:destination="@+id/navigation_section_explore"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
 
     </fragment>
 

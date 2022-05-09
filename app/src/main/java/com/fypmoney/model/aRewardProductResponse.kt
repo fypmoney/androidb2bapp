@@ -20,9 +20,7 @@ data class aRewardProductResponse(
     val appDisplayTextColor: String? = null,
     val backgroundColor: String? = null,
     val noOfJackpotTicket: Int? = null
-
-
-    )
+)
 
 @Keep
 data class SectionListItem(

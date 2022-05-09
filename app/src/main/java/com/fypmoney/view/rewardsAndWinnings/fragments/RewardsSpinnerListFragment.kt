@@ -156,15 +156,14 @@ class RewardsSpinnerListFragment : BaseFragment<FragmentSpinnerListBinding, Spin
     private fun observeInput(mviewModel: SpinnerFragmentVM) {
 
         mViewmodel?.error?.observe(
-            viewLifecycleOwner,
-            { list ->
-                if (list.errorCode == "PKT_2051") {
+            viewLifecycleOwner
+        ) { list ->
+            if (list.errorCode == "PKT_2051") {
 
-                    callInsuficientFundDialog(list.msg)
-                }
-
+                callInsuficientFundDialog(list.msg)
             }
-        )
+
+        }
         mViewmodel?.redeemproductDetails?.observe(this) {
             if (it != null) {
                 mViewmodel?.redeemproductDetails?.postValue(null)
