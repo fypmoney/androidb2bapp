@@ -13,7 +13,7 @@ import com.fypmoney.view.recharge.model.ValueItem
 
 class RechargePlansAdapter(
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: ValueItem) -> Unit
+    val onPlanClicked: (model: ValueItem) -> Unit
 ) : ListAdapter<ValueItem, RechargePlansVH>(PlansDiffUtils) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RechargePlansVH {
@@ -22,7 +22,7 @@ class RechargePlansAdapter(
         return RechargePlansVH(
             binding,
             lifecycleOwner,
-            onRecentUserClick
+            onPlanClicked
         )
 
     }
@@ -36,13 +36,13 @@ class RechargePlansAdapter(
 class RechargePlansVH(
     private val binding: CardRechargePlanBinding,
     private val lifecycleOwner: LifecycleOwner,
-    val onRecentUserClick: (model: ValueItem) -> Unit
+    val onPlanClicked: (model: ValueItem) -> Unit
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(user: ValueItem) {
         binding.executeAfter {
             lifecycleOwner = this@RechargePlansVH.lifecycleOwner
             card.setOnClickListener {
-                onRecentUserClick(user)
+                onPlanClicked(user)
             }
             tvRs.text = tvRs.context.resources.getString(R.string.Rs)+" "+user.rs
             tvDetails.text = user.desc
