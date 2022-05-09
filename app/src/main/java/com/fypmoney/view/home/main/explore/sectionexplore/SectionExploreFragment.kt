@@ -38,6 +38,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 
 class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,SectionExploreFragmentVM>(),
     ExploreAdapter.OnFeedItemClickListener {
+
     private val args: SectionExploreFragmentArgs by navArgs()
 
     private val sectionExploreFragmentVM by viewModels<SectionExploreFragmentVM> { defaultViewModelProviderFactory }

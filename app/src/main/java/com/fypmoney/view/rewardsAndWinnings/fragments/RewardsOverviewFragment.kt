@@ -34,7 +34,6 @@ import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.adapters.ExploreBaseAdapter
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
-import com.fypmoney.view.home.main.explore.view.ExploreFragmentDirections
 import com.fypmoney.view.rewardsAndWinnings.CashBackWonHistoryActivity
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
@@ -216,7 +215,7 @@ class RewardsOverviewFragment() :
             requireContext(),
             exploreClickListener2,
             scale,
-            Color.BLACK
+            Color.WHITE
         )
         root.exploreHomeRv.adapter = typeAdapter
     }
@@ -244,7 +243,7 @@ class RewardsOverviewFragment() :
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
                 val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                    ExploreFragmentDirections.actionExploreSectionExplore(
+                    RewardsOverviewFragmentDirections.actionExploreSectionExplore(
                         sectionExploreItem = sectionContentItem,
                         sectionExploreName = it1
                     )
@@ -365,11 +364,11 @@ class RewardsOverviewFragment() :
 */
 
         viewModel.rewardHistoryList.observe(
-            viewLifecycleOwner,
-            { list ->
+            viewLifecycleOwner
+        ) { list ->
 
-                mViewBinding?.let { setRecyclerView(it, list) }
-            })
+            mViewBinding?.let { setRecyclerView(it, list) }
+        }
 
         viewModel.openBottomSheet.observe(
             viewLifecycleOwner,

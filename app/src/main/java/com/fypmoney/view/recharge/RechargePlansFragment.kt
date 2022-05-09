@@ -4,10 +4,12 @@ package com.fypmoney.view.recharge
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.viewpager.widget.ViewPager
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
@@ -20,7 +22,6 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.recharge.fragments.RechargeForYouFragment
 import com.fypmoney.view.recharge.model.RechargePlansResponse
 import com.fypmoney.view.recharge.viewmodel.RechargePlansFragmentVM
-import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.FlowPreview
@@ -30,10 +31,9 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 @ObsoleteCoroutinesApi
 @FlowPreview
 class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, RechargePlansFragmentVM>() {
-    private lateinit var mViewModel: RechargePlansFragmentVM
+    private  val rechargePlansFragmentVM by viewModels<RechargePlansFragmentVM> { defaultViewModelProviderFactory }
+
     private lateinit var mViewBinding: RechargePlansFragmentBinding
-    lateinit var tabLayout: TabLayout
-    lateinit var viewPager: ViewPager
 
     private val args: RechargePlansFragmentArgs by navArgs()
     override fun getBindingVariable(): Int {
@@ -44,10 +44,7 @@ class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, Recharg
         return R.layout.recharge_plans_fragment
     }
 
-    override fun getViewModel(): RechargePlansFragmentVM {
-        mViewModel = ViewModelProvider(this).get(RechargePlansFragmentVM::class.java)
-        return mViewModel
-    }
+    override fun getViewModel(): RechargePlansFragmentVM = rechargePlansFragmentVM
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,10 +56,10 @@ class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, Recharg
             isBackArrowVisible = true, toolbarTitle = "${args.selectedOperator?.name} ${args.selectedCircle}"
         )
 
-        mViewModel.selectedOperator.value = args.selectedOperator
-        mViewModel.selectedCircle.value = args.selectedCircle
-        mViewModel.rechargeType = args.rechargeTye
-        mViewModel.mobile.value = args.mobile
+        rechargePlansFragmentVM.selectedOperator.value = args.selectedOperator
+        rechargePlansFragmentVM.selectedCircle.value = args.selectedCircle
+        rechargePlansFragmentVM.rechargeType = args.rechargeTye
+        rechargePlansFragmentVM.mobile.value = args.mobile
         mViewBinding.tvUserNumber.text = args.mobile
 
         when (args.selectedOperator?.name) {
@@ -76,16 +73,14 @@ class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, Recharg
                 mViewBinding.operatorIv.setBackgroundResource(R.drawable.ic_jio)
             }
         }
-        tabLayout = mViewBinding.tabLayout
-        viewPager = mViewBinding.viewPager
         setObserver()
 
-        mViewModel.callRechargePlan()
+        rechargePlansFragmentVM.callRechargePlan()
 
     }
 
     private fun setObserver() {
-        mViewModel.state.observe(viewLifecycleOwner){
+        rechargePlansFragmentVM.state.observe(viewLifecycleOwner){
             handelState(it)
         }
     }
@@ -104,8 +99,7 @@ class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, Recharg
             is RechargePlansFragmentVM.RechargePlanState.Success -> {
                 mViewBinding.planDataCl.toVisible()
                 mViewBinding.shimmerPlans.toGone()
-                initializeTabs(tabLayout, it.plans)
-
+                initializeTabs(mViewBinding.tabLayout, it.plans)
             }
             null -> TODO()
         }
@@ -115,27 +109,30 @@ class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, Recharg
 
     }
 
+    fun setupViews(){
 
+    }
     private fun initializeTabs(
         tabLayout: TabLayout,
-        rechargePlansResponse: List<RechargePlansResponse>
+        rechargePlansResponse: List<RechargePlansResponse>,
     ) {
-        val adapter = RewardsActivity.ViewPagerAdapter(childFragmentManager)
+        val adapter = ViewPagerAdapter(childFragmentManager)
+        adapter.clearFragment()
         rechargePlansResponse.forEach {
             it.name?.let { it1 ->
                 Utility.toTitleCase(it1)?.let { it2 ->
-                    adapter.addFragment(RechargeForYouFragment(it.value,
-                        click = {
+                    adapter.addFragment(RechargeForYouFragment(list = it.value,
+                        click = { valueItem->
                             trackr {it1->
                                 it1.name = TrackrEvent.prepaid_choose_plan
                             }
                             val directions = RechargePlansFragmentDirections.actionRechargePlanToSelectedPlan(
-                                it,
-                                mViewModel.selectedOperator.value,
-                                mobile = mViewModel.mobile.value,
+                                valueItem,
+                                rechargePlansFragmentVM.selectedOperator.value,
+                                mobile = rechargePlansFragmentVM.mobile.value,
                                 planType = it1,
-                                rechargeType = mViewModel.rechargeType,
-                                circle = mViewModel.selectedCircle.value
+                                rechargeType = rechargePlansFragmentVM.rechargeType,
+                                circle = rechargePlansFragmentVM.selectedCircle.value
                             )
 
                             findNavController().navigate(directions)
@@ -144,8 +141,35 @@ class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, Recharg
                 }
             }
         }
-        viewPager.adapter = adapter
-        tabLayout.setupWithViewPager(viewPager)
+        mViewBinding.viewPager.adapter = adapter
+        tabLayout.setupWithViewPager(mViewBinding.viewPager)
+
+    }
+
+    internal class ViewPagerAdapter(manager: FragmentManager?) :
+        FragmentPagerAdapter(manager!!) {
+        private val mFragmentList: MutableList<Fragment> = ArrayList()
+        private val mFragmentTitleList: MutableList<String> = ArrayList()
+        override fun getItem(position: Int): Fragment {
+            return mFragmentList[position]
+        }
+
+        override fun getCount(): Int {
+            return mFragmentList.size
+        }
+
+        fun addFragment(fragment: Fragment, title: String) {
+            mFragmentList.add(fragment)
+            mFragmentTitleList.add(title)
+        }
+        fun clearFragment(){
+            mFragmentList.clear()
+            mFragmentTitleList.clear()
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            return mFragmentTitleList[position]
+        }
     }
 
 
