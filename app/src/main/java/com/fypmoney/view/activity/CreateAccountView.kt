@@ -19,11 +19,8 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.viewmodel.CreateAccountViewModel
-import kotlinx.android.synthetic.main.screen_home.*
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar_animation.*
 import kotlinx.android.synthetic.main.view_create_account.*
-import kotlinx.android.synthetic.main.view_enter_otp.*
 
 /*
 * This is used to handle create account functionality
@@ -92,7 +89,10 @@ class CreateAccountView :
             )// lottie animation view
         }
 
-
+        trackr {
+            it.services = arrayListOf(TrackrServices.MOENGAGE, TrackrServices.FIREBASE)
+            it.name = TrackrEvent.cust_type_select
+        }
 
         btnCreateAccount.backgroundTintList =
             ContextCompat.getColorStateList(applicationContext, R.color.buttonUnselectedColor)

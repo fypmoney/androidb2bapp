@@ -100,9 +100,9 @@ class KycDetailsActivity : BaseActivity<ActivityKycDetailsBinding, KycdetailView
     }
 
     private fun setObserver() {
-        kycDetailsVM.onActivateAccountSuccess.observe(this) {
-            if (it.showMobileOtpVerificationScreen == AppConstants.YES)
-                intentToActivity(it.token)
+        kycDetailsVM.customerProfileSuccess.observe(this) { kycActivateAccountResponseDetails->
+            if (kycDetailsVM.onActivateAccountSuccess.value?.showMobileOtpVerificationScreen == AppConstants.YES)
+                intentToActivity(kycDetailsVM.onActivateAccountSuccess.value!!.token)
             else {
                 if (kycDetailsVM.postKycScreenCode.value != null && kycDetailsVM.postKycScreenCode.value == "1") {
                     trackr {
