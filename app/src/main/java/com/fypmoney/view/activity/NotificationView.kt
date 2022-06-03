@@ -17,16 +17,15 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.AddMoneySuccessBottomSheet
+import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.fragment.*
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.NotificationViewModel
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.bottom_sheet_response_task.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_notification.*
-import kotlinx.android.synthetic.main.view_user_feeds.*
 
 
 /*
@@ -255,7 +254,7 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         var itemClickListener2 = object : AcceptRejectClickListener {
             override fun onAcceptClicked(pos: Int, str: String) {
                 bottomsheetInsufficient?.dismiss()
-                intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
+                intentToPayActivity(PayToContactsActivity::class.java, AppConstants.PAY)
             }
 
             override fun onRejectClicked(pos: Int) {

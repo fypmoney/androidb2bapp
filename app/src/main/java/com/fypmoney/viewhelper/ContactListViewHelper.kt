@@ -3,7 +3,8 @@ package com.fypmoney.viewhelper
 import androidx.databinding.ObservableField
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.util.Utility
-import com.fypmoney.viewmodel.ContactListViewModel
+import com.fypmoney.view.contacts.viewmodel.CopyPayToContactsActivityCM
+import com.fypmoney.view.contacts.viewmodel.PayToContactsActivityVM
 
 
 /*
@@ -12,7 +13,7 @@ import com.fypmoney.viewmodel.ContactListViewModel
 class ContactListViewHelper(
     var position: Int? = -1,
     var contactEntity: ContactEntity?,
-    var viewModel: ContactListViewModel,
+    var viewModel: CopyPayToContactsActivityCM,
     var userId: Long
 ) {
 

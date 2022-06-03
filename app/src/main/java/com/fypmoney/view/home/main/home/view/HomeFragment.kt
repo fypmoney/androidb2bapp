@@ -32,7 +32,7 @@ import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
-import com.fypmoney.view.activity.ContactListView
+import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.addmoney.NewAddMoneyActivity
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
@@ -243,7 +243,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                         )
                         completeKYCBottomSheet.show(childFragmentManager, "Completekyc")
                     }else{
-                        val intent = Intent(requireActivity(), ContactListView::class.java)
+                        val intent = Intent(requireActivity(), PayToContactsActivity::class.java)
                         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, AppConstants.PAY)
                         startActivity(intent)
                     }

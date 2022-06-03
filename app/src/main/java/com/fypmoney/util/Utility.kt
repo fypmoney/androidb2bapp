@@ -521,7 +521,6 @@ object Utility {
 
 
                 val contacts: Cursor?
-
                 val lastDate: String? = SharedPrefUtils.getString(
                     PockketApplication.instance,
                     SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
@@ -583,7 +582,6 @@ object Utility {
                         contactEntity.phoneBookIdentifier = contacts.getString(
                             contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
                         )
-
                         setLastContactSinkDate()
                         val newList =
                             contactList.filter { it.contactNumber == contactEntity.contactNumber }
@@ -595,12 +593,8 @@ object Utility {
                 } catch (
                     e: Exception
                 ) {
-
                     e.printStackTrace()
                 }
-
-
-
                 if (SharedPrefUtils.getString(
                         PockketApplication.instance,
                         SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
@@ -618,8 +612,6 @@ object Utility {
                         else -> {
                         }
                     }
-
-
                 }
             }
             onAllContactsAddedListener.onAllContactsSynced(contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>)

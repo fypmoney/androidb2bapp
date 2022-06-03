@@ -31,8 +31,8 @@ import java.util.ArrayList
 import android.app.ActivityOptions
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.util.Utility
+import com.fypmoney.view.contacts.view.PayToContactsActivity
 import kotlinx.android.synthetic.main.toolbar.*
 
 
@@ -285,7 +285,7 @@ companion object{
         val itemClickListener2 = object : AcceptRejectClickListener {
             override fun onAcceptClicked(pos: Int, str: String) {
                 bottomsheetInsufficient?.dismiss()
-                intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
+                intentToPayActivity(PayToContactsActivity::class.java, AppConstants.PAY)
             }
 
             override fun onRejectClicked(pos: Int) {

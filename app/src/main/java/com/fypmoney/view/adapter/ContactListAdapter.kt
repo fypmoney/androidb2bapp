@@ -9,14 +9,15 @@ import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ContactListRowItemBinding
 import com.fypmoney.util.Utility
+import com.fypmoney.view.contacts.viewmodel.CopyPayToContactsActivityCM
 import com.fypmoney.viewhelper.ContactListViewHelper
-import com.fypmoney.viewmodel.ContactListViewModel
+import com.fypmoney.view.contacts.viewmodel.PayToContactsActivityVM
 
 
 /**
  * This adapter class is used to handle contacts
  */
-class ContactListAdapter(var viewModel: ContactListViewModel, var userId: Long) :
+class ContactListAdapter(var viewModel: CopyPayToContactsActivityCM, var userId: Long) :
     RecyclerView.Adapter<BaseViewHolder>() {
     var contactList: ArrayList<ContactEntity>? = ArrayList()
     var newSearchList: ArrayList<ContactEntity>? = ArrayList()

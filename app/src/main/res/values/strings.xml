@@ -1235,4 +1235,6 @@ Coming really soon!
     <string name="no_transaction_fee">* No transaction fee</string>
     <string name="your_bank_account">Your Bank Account</string>
     <string name="how_it_works">How it works?</string>
+    <string name="amount_with_currency"> \u20B9 %1$s</string>
+
 </resources>

@@ -132,7 +132,7 @@
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.ContactListView"
+            android:name=".view.contacts.view.PayToContactsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.EnterAmountForPayRequestView"
