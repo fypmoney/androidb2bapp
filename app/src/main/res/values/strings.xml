@@ -1236,5 +1236,7 @@ Coming really soon!
     <string name="your_bank_account">Your Bank Account</string>
     <string name="how_it_works">How it works?</string>
     <string name="amount_with_currency"> \u20B9 %1$s</string>
+    <string name="search_contact">Search Contact</string>
+    <string name="sending_money_to_other_fyp_users_is_temporarily_unavailable_we_re_working_hard_to_bring_it_back">Sending money to other Fyp users is temporarily unavailable.We\'re working hard to bring it back!</string>
 
 </resources>

@@ -3,54 +3,62 @@ package com.fypmoney.view.contacts.view
 import android.Manifest
 import android.content.ClipboardManager
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.view.View
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
-import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ActivityPayToContactsBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
-import com.fypmoney.util.AppConstants.PERMISSION_CODE
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.AddMemberView
 import com.fypmoney.view.activity.PayRequestProfileView
 import com.fypmoney.view.contacts.adapter.ContactsAdapter
+import com.fypmoney.view.contacts.model.CONTACT_ACTIVITY_UI_MODEL
+import com.fypmoney.view.contacts.model.ContactActivityActionEvent
+import com.fypmoney.view.contacts.model.ContactsActivityUiModel
+import com.fypmoney.view.contacts.viewmodel.PayToContactsActivityVM
 import com.fypmoney.view.fragment.InviteBottomSheet
 import com.fypmoney.view.fragment.InviteMemberBottomSheet
-import com.fypmoney.view.contacts.viewmodel.PayToContactsActivityVM
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
+import com.karumi.dexter.listener.PermissionDeniedResponse
+import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.karumi.dexter.listener.single.PermissionListener
 import kotlinx.android.synthetic.main.activity_pay_to_contacts.*
 import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 
 /*
 * This is used to handle contacts
 * */
 
+@ObsoleteCoroutinesApi
+@FlowPreview
 class PayToContactsActivity : BaseActivity<ActivityPayToContactsBinding, PayToContactsActivityVM>(),
     DialogUtils.OnAlertDialogClickListener, InviteBottomSheet.OnShareClickListener,
-    InviteMemberBottomSheet.OnInviteButtonClickListener, Utility.OnAllContactsAddedListener {
+    InviteMemberBottomSheet.OnInviteButtonClickListener {
 
     private lateinit var mViewModel: PayToContactsActivityVM
     private lateinit var payToContactsBinding: ActivityPayToContactsBinding
+    private val TAG = PayToContactsActivity::class.java.simpleName
+
     override fun getBindingVariable(): Int {
         return BR.viewModel
     }
@@ -67,10 +75,13 @@ class PayToContactsActivity : BaseActivity<ActivityPayToContactsBinding, PayToCo
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         payToContactsBinding = getViewDataBinding()
+        mViewModel.contactsActivityUiModel = intent.getParcelableExtra(CONTACT_ACTIVITY_UI_MODEL)!!
+        mViewModel.checkNeedToShowBalanceOnScreen()
         setToolbarAndTitle(
             context = this@PayToContactsActivity,
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = getString(R.string.pay_title),
+            isBackArrowVisible = true,
+            toolbarTitle = mViewModel.contactsActivityUiModel.toolBarTitle,
             backArrowTint = Color.WHITE,
             titleColor = Color.WHITE
         )
@@ -86,8 +97,10 @@ class PayToContactsActivity : BaseActivity<ActivityPayToContactsBinding, PayToCo
     }
 
     private fun setupRecyclerView() {
-        payToContactsBinding.contactListRv.adapter = ContactsAdapter(lifecycleOwner = this,onContactClick={
-
+        payToContactsBinding.contactListRv.adapter = ContactsAdapter(lifecycleOwner = this,
+            onContactClick={
+                mViewModel.selectedContacts = it
+                mViewModel.callIsAppUserApi(it.mobileNumber)
         })
     }
 
@@ -99,7 +112,12 @@ class PayToContactsActivity : BaseActivity<ActivityPayToContactsBinding, PayToCo
         mViewModel.state.observe(this){
             handelState(it)
         }
+        mViewModel.event.observe(this){
+            handelEvent(it)
+        }
     }
+
+
 
     private fun handelState(it: PayToContactsActivityVM.PayToContactsState?) {
         when(it){
@@ -122,7 +140,6 @@ class PayToContactsActivity : BaseActivity<ActivityPayToContactsBinding, PayToCo
                 amountFetching.toGone()
                 amount.text = String.format(getString(R.string.amount_with_currency),it.balance)
             }
-            null -> TODO()
             PayToContactsActivityVM.PayToContactsState.ContactsIsEmpty -> {
                 payToContactsBinding.contactListRv.toGone()
                 payToContactsBinding.contactIsLoadingSfl.toGone()
@@ -134,6 +151,39 @@ class PayToContactsActivity : BaseActivity<ActivityPayToContactsBinding, PayToCo
                 payToContactsBinding.contactIsLoadingSfl.toGone()
                 (payToContactsBinding.contactListRv.adapter as ContactsAdapter).submitList(it.contacts)
             }
+            PayToContactsActivityVM.PayToContactsState.HideBalanceView -> {
+                payToContactsBinding.avilableBalanceCl.toGone()
+            }
+            null -> TODO()
+            PayToContactsActivityVM.PayToContactsState.ShowBalanceView -> {
+                payToContactsBinding.avilableBalanceCl.toVisible()
+            }
+        }
+    }
+
+    private fun handelEvent(it: PayToContactsActivityVM.PayToContactsEvent?) {
+        when(it){
+            is PayToContactsActivityVM.PayToContactsEvent.SelectedContactUserIsFyper -> {
+                when(mViewModel.contactsActivityUiModel.contactClickAction){
+                    ContactActivityActionEvent.AddMember -> {
+                        intentToActivity(
+                            contactEntity = it.contactEntity,
+                            aClass = AddMemberView::class.java
+                        )
+                    }
+                    ContactActivityActionEvent.PayToContact -> {
+                        intentToActivity(it.contactEntity, PayRequestProfileView::class.java)
+                    }
+                }
+            }
+            is PayToContactsActivityVM.PayToContactsEvent.SelectedContactUserIsNotFyper -> {
+                if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null && Utility.getCustomerDataFromPreference()?.postKycScreenCode == "1") {
+                    inviteUser()
+                } else {
+                    callInviteBottomSheet()
+                }
+            }
+            null -> TODO()
         }
     }
 
@@ -146,79 +196,33 @@ class PayToContactsActivity : BaseActivity<ActivityPayToContactsBinding, PayToCo
         startActivity(intent)
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        for (permission in permissions) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
-                //denied
-                Utility.showToast(getString(R.string.permission_required))
-                requestPermission(Manifest.permission.READ_CONTACTS)
-            } else {
-                if (ActivityCompat.checkSelfPermission(
-                        this,
-                        permission
-                    ) == PackageManager.PERMISSION_GRANTED
-                ) {
-                    //allow
-                    mViewModel.progressDialog.value = true
-                    Utility.getAllContactsInList(
-                        contentResolver,
-                        this,
-                        contactRepository = mViewModel.contactRepository
-                    )
-                } else {
-                    //set to never ask again
-                    Utility.showToast(getString(R.string.please_allow_us_to_read_your_contacts))
-                    Utility.goToAppSettingsPermission(this@PayToContactsActivity,PERMISSION_CODE)
-                }
-            }
-        }
-
-
-    }
 
     /*
     * This method is used to check for permissions
     * */
-    private fun checkAndAskPermission() {/*
-        when (checkPermission(Manifest.permission.READ_CONTACTS)) {
-            true -> {
-                Utility.getAllContactsInList(
-                    contentResolver,
-                    this,
-                    contactRepository = mViewModel.contactRepository
-                )
-            }
-            else -> {
-                requestPermission(Manifest.permission.READ_CONTACTS)
-            }
-        }*/
-
-        Dexter.withActivity(this)
-            .withPermissions(
+    private fun checkAndAskPermission() {
+        Dexter.withContext(this)
+            .withPermission(
                 Manifest.permission.READ_CONTACTS
             )
-            .withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport) {
-                    if (report.areAllPermissionsGranted()) {
-                        Utility.getAllContactsInList(
-                            contentResolver,
-                            this@PayToContactsActivity,
-                            contactRepository = mViewModel.contactRepository
-                        )
-                    }
-                    if (report.isAnyPermissionPermanentlyDenied) {
-                        showSettingsDialog()
+            .withListener(object : PermissionListener {
+                override fun onPermissionGranted(p0: PermissionGrantedResponse?) {
+                    payToContactsBinding.permissionRequiredTv.toGone()
+                    mViewModel.fetchContactShow(this@PayToContactsActivity.contentResolver)
+                }
+                override fun onPermissionDenied(p0: PermissionDeniedResponse?) {
+                    if(p0?.isPermanentlyDenied!!){
+                        payToContactsBinding.permissionRequiredTv.toVisible()
+                    }else{
+                        p0.requestedPermission
                     }
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
-                    permissions: List<PermissionRequest>,
-                    token: PermissionToken
+                    p0: PermissionRequest?,
+                    p1: PermissionToken?
                 ) {
-                    token.continuePermissionRequest()
+                    p1?.continuePermissionRequest()
                 }
             }).check()
     }
@@ -264,19 +268,6 @@ class PayToContactsActivity : BaseActivity<ActivityPayToContactsBinding, PayToCo
             callInviteBottomSheet()
         }
 
-    }
-
-    override fun onAllContactsSynced(contactEntity: MutableList<ContactEntity>?) {
-        mViewModel.callContactSyncApi()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode== PERMISSION_CODE){
-            if(resultCode== RESULT_OK){
-                checkAndAskPermission()
-            }
-        }
     }
 
     private fun showSettingsDialog() {

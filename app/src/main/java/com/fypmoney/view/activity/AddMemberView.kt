@@ -16,6 +16,10 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.contacts.model.CONTACT_ACTIVITY_UI_MODEL
+import com.fypmoney.view.contacts.model.ContactActivityActionEvent
+import com.fypmoney.view.contacts.model.ContactsActivityUiModel
+import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.fragment.InviteBottomSheet
 import com.fypmoney.view.fragment.InviteMemberBottomSheet
 import com.fypmoney.view.fragment.StayTunedBottomSheet
@@ -99,7 +103,13 @@ class AddMemberView : BaseActivity<ViewAddMemberBinding, AddMemberViewModel>(),
     private fun setObserver() {
         mViewModel.onFromContactClicked.observe(this) {
             if (it) {
-                intentToActivity(ContactView::class.java)
+                //intentToActivity(ContactView::class.java)
+                val intent = Intent(this@AddMemberView, PayToContactsActivity::class.java)
+                intent.putExtra(
+                    CONTACT_ACTIVITY_UI_MODEL, ContactsActivityUiModel(toolBarTitle = getString(R.string.select_member),
+                    showLoadingBalance = false,contactClickAction = ContactActivityActionEvent.PayToContact)
+                )
+                startActivity(intent)
                 mViewModel.onFromContactClicked.value = false
             }
         }

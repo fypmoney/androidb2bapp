@@ -17,6 +17,9 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.AddMoneySuccessBottomSheet
+import com.fypmoney.view.contacts.model.CONTACT_ACTIVITY_UI_MODEL
+import com.fypmoney.view.contacts.model.ContactActivityActionEvent
+import com.fypmoney.view.contacts.model.ContactsActivityUiModel
 import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.fragment.*
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
@@ -251,10 +254,15 @@ class NotificationView : BaseActivity<ViewNotificationBinding, NotificationViewM
         taskMessageBottomSheet3?.show(supportFragmentManager, "TASKMESSAGE")
     }
     private fun callInsuficientFundMessageSheet(amount: String?) {
-        var itemClickListener2 = object : AcceptRejectClickListener {
+        val itemClickListener2 = object : AcceptRejectClickListener {
             override fun onAcceptClicked(pos: Int, str: String) {
                 bottomsheetInsufficient?.dismiss()
-                intentToPayActivity(PayToContactsActivity::class.java, AppConstants.PAY)
+                val intent = Intent(this@NotificationView, PayToContactsActivity::class.java)
+                intent.putExtra(
+                    CONTACT_ACTIVITY_UI_MODEL, ContactsActivityUiModel(toolBarTitle = getString(R.string.pay),
+                        showLoadingBalance = true,contactClickAction = ContactActivityActionEvent.PayToContact)
+                )
+                startActivity(intent)
             }
 
             override fun onRejectClicked(pos: Int) {

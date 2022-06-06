@@ -519,14 +519,12 @@ object Utility {
             // Switch to a background (IO) thread
             withContext(Dispatchers.IO) {
 
-
                 val contacts: Cursor?
                 val lastDate: String? = SharedPrefUtils.getString(
                     PockketApplication.instance,
                     SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
                 )
-                try {
-                    if (lastDate != null) {
+                if (lastDate != null) {
                         contacts = contentResolver.query(
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
@@ -590,11 +588,7 @@ object Utility {
                     }
                     contacts.close()
 
-                } catch (
-                    e: Exception
-                ) {
-                    e.printStackTrace()
-                }
+
                 if (SharedPrefUtils.getString(
                         PockketApplication.instance,
                         SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
@@ -618,6 +612,7 @@ object Utility {
 
         }
     }
+
 
     /*
     * set the last sink date

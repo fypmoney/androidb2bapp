@@ -32,6 +32,9 @@ import android.app.ActivityOptions
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
 import com.fypmoney.util.Utility
+import com.fypmoney.view.contacts.model.CONTACT_ACTIVITY_UI_MODEL
+import com.fypmoney.view.contacts.model.ContactActivityActionEvent
+import com.fypmoney.view.contacts.model.ContactsActivityUiModel
 import com.fypmoney.view.contacts.view.PayToContactsActivity
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -281,11 +284,17 @@ companion object{
         bottomSheetMessage?.show(supportFragmentManager, "TASKMESSAGE")
     }
 
+    @kotlinx.coroutines.ObsoleteCoroutinesApi
     private fun callInsuficientFundMessageSheet(amount: String?) {
         val itemClickListener2 = object : AcceptRejectClickListener {
             override fun onAcceptClicked(pos: Int, str: String) {
                 bottomsheetInsufficient?.dismiss()
-                intentToPayActivity(PayToContactsActivity::class.java, AppConstants.PAY)
+                val intent = Intent(this@ChoresActivity, PayToContactsActivity::class.java)
+                intent.putExtra(
+                    CONTACT_ACTIVITY_UI_MODEL, ContactsActivityUiModel(toolBarTitle = getString(R.string.pay),
+                    showLoadingBalance = true,contactClickAction = ContactActivityActionEvent.PayToContact)
+                )
+                startActivity(intent)
             }
 
             override fun onRejectClicked(pos: Int) {

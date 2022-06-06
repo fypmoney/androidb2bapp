@@ -32,14 +32,14 @@ class UpgradeYourKycBottomSheet(var onUpgradeClick:()->Unit): BaseBottomSheetFra
         }
     }
     private fun setupObserver() {
-        upgradeYourKycBottomSheetVM.event.observe(viewLifecycleOwner,{
-            when(it){
+        upgradeYourKycBottomSheetVM.event.observe(viewLifecycleOwner) {
+            when (it) {
                 UpgradeYourKycBottomSheetVM.UpgradeYourKycEvent.UpgradeYourKYC -> {
                     onUpgradeClick()
                     dismiss()
 
                 }
             }
-        })
+        }
     }
 }

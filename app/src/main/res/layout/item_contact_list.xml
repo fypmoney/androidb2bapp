@@ -28,15 +28,17 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:padding="@dimen/dp2"
+                android:paddingHorizontal="@dimen/dp20"
+                android:paddingVertical="@dimen/dp18"
                 android:background="@drawable/curved_background14"
-                app:srcCompat="@drawable/ic_profile_img" />
+                tools:srcCompat="@drawable/ic_contact_user_1" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/fyp_user_flag_iv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_fyper_cap" />
 
         </FrameLayout>
@@ -74,6 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">

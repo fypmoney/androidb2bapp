@@ -119,7 +119,7 @@ class ContactRepository(mDB: AppDatabase?) {
                 contactList.forEachIndexed { index, userPhoneContact ->
                     appDB?.contactDao()
                         ?.updateIsAppUserStatus(
-                            isAppUser = true,
+                            isAppUser = userPhoneContact.isAppUser,
                             contactNum = userPhoneContact.contactNumber,
                             profilePicUrl = userPhoneContact.profilePicResourceId,
                             userId = userPhoneContact.userId,

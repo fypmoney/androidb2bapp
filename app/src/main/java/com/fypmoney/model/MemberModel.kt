@@ -36,7 +36,8 @@ data class IsAppUserResponse(
 data class IsAppUserResponseDetails(
     @SerializedName("userId") var userId: String?,
     @SerializedName("name") var name: String?,
-    @SerializedName("isAppUser") var isAppUser: Boolean?
+    @SerializedName("isAppUser") var isAppUser: Boolean?,
+    @SerializedName("profilePicResourceId") var profilePicResourceId: String?
 ) : Serializable
 @Keep
 data class GetMemberResponse(

@@ -1,5 +1,6 @@
 package com.fypmoney.view.contacts.adapter
 
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.Keep
@@ -43,25 +44,20 @@ class ContactsAdapter(
         fun bind(contact:ContactsUiModel){
             binding.executeAfter {
                 lifecycleOwner = this@ContactsItemVH.lifecycleOwner
-                contact.imageUrl?.let {
-                    loadImage(
-                        contactIv,
-                        it,
-                        ContextCompat.getDrawable(contactIv.context, R.drawable.ic_profile_img),
-                        true
-                    )
+                contact.imageDrawable?.let {
+                    contactIv.setImageResource(it)
                 }
                 contactNameTv.text = contact.firstAndLastName
                 contactNumberTv.text = contact.mobileNumber
-                if(contact.isAppUser == true){
-                    fypUserFlagIv.toVisible()
-                    fyperTv.toVisible()
+                /*if(contact.isAppUser == true){
+                    fypUserFlagIv.toGone()
+                    fyperTv.toGone()
                     inviteTv.toGone()
                 }else{
                     fypUserFlagIv.toGone()
                     fyperTv.toGone()
-                    inviteTv.toVisible()
-                }
+                    inviteTv.toGone()
+                }*/
                 contactCl.setOnClickListener {
                     onContactClick(contact)
                 }
@@ -77,30 +73,20 @@ object ContactsDiffUtils : DiffUtil.ItemCallback<ContactsUiModel>() {
     }
 
     override fun areContentsTheSame(oldItem: ContactsUiModel, newItem: ContactsUiModel): Boolean {
-        return ((oldItem.imageUrl == newItem.imageUrl) && (oldItem.mobileNumber == newItem.mobileNumber)
-                && (oldItem.firstAndLastName == newItem.firstAndLastName) &&
-                (oldItem.isAppUser == newItem.isAppUser))
+        return ((oldItem.imageUrl == newItem.imageUrl) &&
+                (oldItem.mobileNumber == newItem.mobileNumber) &&
+                (oldItem.imageDrawable == newItem.imageDrawable) &&
+                (oldItem.firstAndLastName == newItem.firstAndLastName))
     }
 }
 
 
 @Keep
 data class ContactsUiModel(
-    var contactId:String?,
-    var imageUrl:String?,
-    var firstAndLastName:String?,
-    var mobileNumber:String?,
-    var isAppUser:Boolean? = false,
-){
-    companion object{
-        fun contactEntityToContactUiModel(contactEntity: ContactEntity):ContactsUiModel{
-            return ContactsUiModel(
-                contactId = contactEntity.userId,
-                imageUrl = contactEntity.profilePicResourceId,
-                firstAndLastName = contactEntity.firstName+" "+contactEntity.lastName,
-                mobileNumber = contactEntity.contactNumber,
-                isAppUser = contactEntity.isAppUser
-            )
-        }
-    }
-}
+    var contactId:String? = null,
+    var imageUrl:String?= null,
+    var imageDrawable:Int?= null,
+    var firstAndLastName:String,
+    var mobileNumber:String,
+
+)
