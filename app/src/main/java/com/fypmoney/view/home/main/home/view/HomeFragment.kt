@@ -267,14 +267,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 directions.let { it1 -> findNavController().navigate(it1) }
             }
             is HomeFragmentVM.HomeFragmentEvent.PostpaidRechargeEvent -> {
-                val directions =
-                    HomeFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.POSTPAID)
-                directions.let { it1 -> findNavController().navigate(it1) }
+                if(findNavController().currentDestination?.id == R.id.navigation_home){
+                    val directions =
+                        HomeFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.POSTPAID)
+                    directions.let { it1 -> findNavController().navigate(it1) }
+                }
+
             }
             is HomeFragmentVM.HomeFragmentEvent.PrepaidRechargeEvent -> {
-                val directions =
-                    HomeFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.PREPAID)
-                directions.let { it1 -> findNavController().navigate(it1) }
+                if(findNavController().currentDestination?.id == R.id.navigation_home){
+                    val directions =
+                        HomeFragmentDirections.actionRechargeScreen(rechargeType = AppConstants.PREPAID)
+                    directions.let { it1 -> findNavController().navigate(it1) }
+                }
+
             }
             null -> TODO()
         }

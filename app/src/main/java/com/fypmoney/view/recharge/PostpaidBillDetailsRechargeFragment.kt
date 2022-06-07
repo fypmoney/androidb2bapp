@@ -51,13 +51,19 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
         super.onViewCreated(view, savedInstanceState)
         binding = getViewDataBinding()
 
-        args.selectedCircle.let {
+        args.selectedCircle?.let {
             postpaidBillDetailsFragmentVM.circleGot = it
+        }?: kotlin.run {
+            Utility.showToast(getString(R.string.please_try_again_after_some_time))
+            findNavController().navigateUp()
         }
         args.rechargeType?.let {
             postpaidBillDetailsFragmentVM.rechargeType = it
+        }?: kotlin.run {
+            Utility.showToast(getString(R.string.please_try_again_after_some_time))
+            findNavController().navigateUp()
         }
-        args.mobile.let {
+        args.mobile?.let {
             postpaidBillDetailsFragmentVM.mobileNumber = it
             binding.mobileNumberTv.text = it
         }
@@ -90,6 +96,9 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
                 }
             }
 
+        }?: kotlin.run {
+            Utility.showToast(getString(R.string.please_try_again_after_some_time))
+            findNavController().navigateUp()
         }
         setToolbarAndTitle(
             context = requireContext(),
@@ -101,8 +110,7 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
 
         setObserver()
         setBindings()
-        postpaidBillDetailsFragmentVM.callFetchBillsInformation(postpaidBillDetailsFragmentVM.mobileNumber!!,
-            postpaidBillDetailsFragmentVM.operatorResponse!!.operatorId!!)
+        postpaidBillDetailsFragmentVM.callFetchBillsInformation(postpaidBillDetailsFragmentVM.mobileNumber!!, postpaidBillDetailsFragmentVM.operatorResponse!!.operatorId!!)
 
 
     }

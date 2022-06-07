@@ -850,7 +850,8 @@ Coming really soon!
     <string name="amount_limit">9999</string>
     <string name="logout">Logout</string>
     <string name="facebook_app_id">393472762006028</string>
-    <string name="facebook_client_token">Facebook Client ID</string>
+    <string name="fb_login_protocol_scheme">fb393472762006028</string>
+    <string name="facebook_client_token">691862f85bb36e2492c7de56a661b326</string>
     <string name="_1_we_read_contacts_to_verify_your_mobile_number_and_inviting_friends_from_phonebook">We read your contacts for hassle free money transfer to fellow Fyp user.</string>
     <string name="we_use_your_location_to_check_if_your_current_city_is_serviceable_by_us">We use your location to check if your current city is serviceable by us.</string>
     <string name="location_permission1">Location Permission</string>

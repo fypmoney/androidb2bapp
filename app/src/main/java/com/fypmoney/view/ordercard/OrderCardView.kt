@@ -22,12 +22,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.ordercard.activateofflinecard.ScanCardKitNumberActivity
 import com.fypmoney.view.ordercard.cardofferdetails.CardOfferDetailsActivity
 import com.fypmoney.view.ordercard.promocode.ApplyPromoCodeBottomSheet
-import kotlinx.android.synthetic.main.activity_notify_me_order_card.*
-import kotlinx.android.synthetic.main.screen_card.*
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
-import kotlinx.android.synthetic.main.toolbar_for_aadhaar.*
-import kotlinx.android.synthetic.main.view_order_card.*
 
 /*
 * This class is used to order card
@@ -98,18 +93,20 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
     }
 
     private fun setObservers() {
-        mViewModel.event.observe(this, {
+        mViewModel.event.observe(this) {
             handelEvent(it)
-        })
-        mViewModel.state.observe(this, {
+        }
+        mViewModel.state.observe(this) {
             handelState(it)
-        })
+        }
     }
 
     private fun handelState(it: OrderCardViewModel.OrderCardState?) {
         when(it){
             is OrderCardViewModel.OrderCardState.Error -> {
-                onBackPressed()
+                if(!this.supportFragmentManager.executePendingTransactions()){
+                    onBackPressed()
+                }
             }
             is OrderCardViewModel.OrderCardState.Success -> {
                 Utility.convertToRs("${it.userOfferCard.basePrice}")?.let { it1 ->
