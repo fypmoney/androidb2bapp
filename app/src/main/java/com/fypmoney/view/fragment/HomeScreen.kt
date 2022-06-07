@@ -24,6 +24,7 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.TopTenUsersAdapter
 import com.fypmoney.view.addmoney.NewAddMoneyActivity
+import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
@@ -185,7 +186,7 @@ class HomeScreen(val tabchangeListner: HomeTabChangeClickListener) :
         }
         mViewModel.onPayClicked.observe(viewLifecycleOwner) {
             if (it) {
-                intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
+                intentToPayActivity(PayToContactsActivity::class.java, AppConstants.PAY)
                 mViewModel.onPayClicked.value = false
             }
         }

@@ -58,6 +58,9 @@
     <dimen name="dp50">50dp</dimen>
     <dimen name="dp0_5">0.5dp</dimen>
     <dimen name="dp25">25dp</dimen>
+    <dimen name="dp54">54dp</dimen>
+    <dimen name="dp14">14dp</dimen>
+    <dimen name="dp2">2dp</dimen>
 
 
 </resources>

@@ -40,6 +40,7 @@ class RecentRechargeAdapter(
     override fun onBindViewHolder(holder: RechargeItemVH, position: Int) {
         holder.bind(getItem(position))
     }
+
     class RechargeItemVH(
         private val binding: RecentRechargeCardBinding,
         private val lifecycleOwner: LifecycleOwner,

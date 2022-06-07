@@ -16,6 +16,10 @@ import com.fypmoney.databinding.ViewFamilySettingsBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
+import com.fypmoney.view.contacts.model.CONTACT_ACTIVITY_UI_MODEL
+import com.fypmoney.view.contacts.model.ContactActivityActionEvent
+import com.fypmoney.view.contacts.model.ContactsActivityUiModel
+import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.fragment.LeaveFamilyBottomSheet
 import com.fypmoney.view.fragment.UpdateFamilyNameBottomSheet
 import com.fypmoney.view.interfaces.HomeTabChangeClickListener
@@ -82,7 +86,13 @@ class FamilySettingsView(val tabchangeListner: HomeTabChangeClickListener? = nul
 
         mViewModel.onAddMemberClicked.observe(viewLifecycleOwner) {
             if (it) {
-                intentToAddMemberActivity(ContactView::class.java)
+                //intentToAddMemberActivity(ContactView::class.java)
+                val intent = Intent(requireActivity(), PayToContactsActivity::class.java)
+                intent.putExtra(
+                    CONTACT_ACTIVITY_UI_MODEL, ContactsActivityUiModel(toolBarTitle = getString(R.string.select_member),
+                        showLoadingBalance = false,contactClickAction = ContactActivityActionEvent.AddMember)
+                )
+                startActivity(intent)
                 mViewModel.onAddMemberClicked.value = false
             }
         }

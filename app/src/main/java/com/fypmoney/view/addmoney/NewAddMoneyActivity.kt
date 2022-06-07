@@ -97,12 +97,12 @@ class NewAddMoneyActivity : BaseActivity<ActivityNewAddMoneyBinding,NewAddMoneyA
 
     override fun onStart() {
         super.onStart()
-        if (checkUpgradeKycStatus()) {
+       /* if (checkUpgradeKycStatus()) {
             binding.increaseLimitTv.toGone()
         } else {
-            binding.increaseLimitTv.toVisible()
+            binding.increaseLimitTv.toGone()
 
-        }
+        }*/
     }
     private fun setBindings() {
 

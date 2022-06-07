@@ -76,12 +76,11 @@ class AddMoneyView : BaseActivity<ViewAddMoneyBinding, AddMoneyViewModel>(){
 
     override fun onStart() {
         super.onStart()
-        if (checkUpgradeKycStatus()) {
+       /* if (checkUpgradeKycStatus()) {
             increase_limit.toGone()
         } else {
-            increase_limit.toVisible()
-
-        }
+            increase_limit.toGone()
+        }*/
     }
 
     /**
