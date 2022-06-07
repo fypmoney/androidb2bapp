@@ -56,13 +56,7 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
             titleColor = Color.BLACK
         )
 
-        if(SharedPrefUtils.getString(
-                applicationContext,
-                SharedPrefUtils.SF_KEY_CARD_FLAG
-            )=="1"){
-            showNotifyCardLayout()
-        }else{
-            mViewBinding.notifyOrderCardNsv.visibility = View.GONE
+        mViewBinding.notifyOrderCardNsv.visibility = View.GONE
             mViewBinding.orderCardNsv.visibility = View.VISIBLE
 
             val uri: Uri =
@@ -74,7 +68,7 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
                 mViewBinding.cardFrontAiv.start()
             }
 
-        }
+
         setObservers()
     }
 
@@ -163,21 +157,6 @@ class OrderCardView : BaseActivity<ViewOrderCardBinding, OrderCardViewModel>() {
         }
     }
 
-    private fun showNotifyCardLayout() {
-        val uri: Uri =
-            Uri.parse("android.resource://" + packageName + "/" + R.raw.notify_order_card)
-        mViewBinding.video.setMediaController(null)
-        mViewBinding.video.setVideoURI(uri)
-        mViewBinding.video.setOnPreparedListener {
-            it.isLooping = true
-            mViewBinding.video.start()
-        }
-        mViewBinding.notifyBtn.setOnClickListener {
-            Utility.showToast(resources.getString(R.string.thanks_we_will_keep_you_notify))
-            finish()
-        }
-        mViewBinding.notifyOrderCardNsv.visibility = View.VISIBLE
-    }
 
 
 }

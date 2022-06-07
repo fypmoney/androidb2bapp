@@ -1,12 +1,11 @@
 package com.fypmoney.view.rewardsAndWinnings.activity
 
+
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -15,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
 import com.fyp.trackr.models.trackr
-import com.fyp.trackr.services.TrackrServices
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -25,20 +23,14 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.fragment.ErrorBottomSpinProductSheet
 import com.fypmoney.view.rewardsAndWinnings.viewModel.SpinWheelProductViewModel
-import kotlinx.android.synthetic.main.dialog_burn_mynts.*
 import kotlinx.android.synthetic.main.dialog_cash_won.*
 import kotlinx.android.synthetic.main.dialog_cash_won.better_next_time
 import kotlinx.android.synthetic.main.dialog_cash_won.clicked
 import kotlinx.android.synthetic.main.dialog_cash_won.luckonside_tv
 import kotlinx.android.synthetic.main.dialog_cash_won.spin_green
-import kotlinx.android.synthetic.main.dialog_cash_won.textView
 import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
-
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_spin_wheel_black.*
-
-
-import java.util.*
 
 /*
 * This class is used for spin the wheel
@@ -48,7 +40,6 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
 
     private var mp: MediaPlayer? = null
-    private var mp_spinning: MediaPlayer? = null
     private var noOfGoldenCard: Int? = null
     private var ProductCode: String? = null
     private var dialogError: Dialog? = null
@@ -133,7 +124,6 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
                                     it.add(TrackrField.spin_product_code, ProductCode)
 
                                 }
-                                mp_spinning?.stop()
                                 offer_found_tv?.visibility = View.VISIBLE
                                 showwonDialog(item.sectionValue)
                                 mp = MediaPlayer.create(
@@ -163,7 +153,6 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
     override fun onPause() {
         super.onPause()
-        mp_spinning?.stop()
     }
 
     private fun showwonDialog(sectionValue: String?) {
@@ -236,7 +225,6 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
                     }
                 }
-                mp_spinning?.stop()
                 setResult(23)
                 finish()
             } else {
@@ -263,23 +251,7 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
      */
     private fun setObserver() {
         mViewModel.spinWheelResponseList.observe(this) {
-//            try {
-//                when (it.sectionId) {
-//                    1 -> {
-//                        luckyWheelView.startLuckyWheelWithTargetIndex(it.sectionId!! - 1)
-//
-//                    }
-//                    else -> {
-//
-//                        luckyWheelView.startLuckyWheelWithTargetIndex(it.sectionId!! - 1)
-//                    }
-//
-//                }
-//            } catch (e: Exception) {
-//                e.printStackTrace()
-//            }
             mp?.stop()
-            mp_spinning?.stop()
             setResult(23)
             finish()
 
@@ -312,11 +284,6 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
         mViewModel.onPlayClicked.observe(this)
         {
             try {
-                mp_spinning = MediaPlayer.create(
-                    this,
-                    R.raw.spinwheel_rotating_sound
-                )
-                mp_spinning?.start()
                 when (sectionId) {
                     1 -> {
                         luckyWheelView.startLuckyWheelWithTargetIndex(sectionId!! - 1)
