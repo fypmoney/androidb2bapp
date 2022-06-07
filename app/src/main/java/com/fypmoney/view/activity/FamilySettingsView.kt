@@ -6,8 +6,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.bumptech.glide.Glide
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -54,11 +52,6 @@ class FamilySettingsView(val tabchangeListner: HomeTabChangeClickListener? = nul
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mViewBinding = getViewDataBinding()
-
-        Glide.with(requireActivity()).asGif().load(R.raw.family).into(mViewBinding.image)
-        val lbm = LocalBroadcastManager.getInstance(requireContext())
-        //lbm.registerReceiver(receiver, IntentFilter(AppConstants.AFTER_ADD_MEMBER_BROADCAST_NAME))
-
         setObserver()
     }
 
