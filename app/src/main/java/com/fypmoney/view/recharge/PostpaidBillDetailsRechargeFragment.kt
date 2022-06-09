@@ -53,15 +53,9 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
 
         args.selectedCircle?.let {
             postpaidBillDetailsFragmentVM.circleGot = it
-        }?: kotlin.run {
-            Utility.showToast(getString(R.string.please_try_again_after_some_time))
-            findNavController().navigateUp()
         }
         args.rechargeType?.let {
             postpaidBillDetailsFragmentVM.rechargeType = it
-        }?: kotlin.run {
-            Utility.showToast(getString(R.string.please_try_again_after_some_time))
-            findNavController().navigateUp()
         }
         args.mobile?.let {
             postpaidBillDetailsFragmentVM.mobileNumber = it
@@ -96,9 +90,6 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
                 }
             }
 
-        }?: kotlin.run {
-            Utility.showToast(getString(R.string.please_try_again_after_some_time))
-            findNavController().navigateUp()
         }
         setToolbarAndTitle(
             context = requireContext(),
@@ -193,7 +184,7 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
 
                     }
                     it.bill.amount?.let{
-                        binding.billDueAmountTv.text = getString(R.string.Rs)+ it
+                        binding.billDueAmountTv.text = """${getString(R.string.Rs)}$it"""
                         binding.amountEt.setText(it)
                     }
                 }else{
