@@ -1,21 +1,14 @@
 package com.fypmoney.view.contacts.adapter
 
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.Keep
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.fypmoney.R
-import com.fypmoney.bindingAdapters.loadImage
-import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ItemContactListBinding
 import com.fypmoney.extension.executeAfter
-import com.fypmoney.extension.toGone
-import com.fypmoney.extension.toVisible
 
 class ContactsAdapter(
     private val lifecycleOwner: LifecycleOwner,
@@ -47,7 +40,9 @@ class ContactsAdapter(
                 contact.imageDrawable?.let {
                     contactIv.setImageResource(it)
                 }
-                contactNameTv.text = contact.firstAndLastName
+                contact.firstAndLastName?.let {
+                    contactNameTv.text = it
+                }
                 contactNumberTv.text = contact.mobileNumber
                 /*if(contact.isAppUser == true){
                     fypUserFlagIv.toGone()
@@ -86,7 +81,7 @@ data class ContactsUiModel(
     var contactId:String? = null,
     var imageUrl:String?= null,
     var imageDrawable:Int?= null,
-    var firstAndLastName:String,
+    var firstAndLastName:String? = null,
     var mobileNumber:String,
 
 )

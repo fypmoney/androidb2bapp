@@ -87,7 +87,6 @@ class OfferDetailsBottomSheet(
         view.offer_title.text = offerDetails.offerShortTitle
         view.shop_now_btn.setOnClickListener { it1 ->
             offerDetails.shopUrl?.let { it ->
-
                 when (offerDetails.shopRedirectionType) {
                     AppConstants.OFFER_REDIRECTION_EXTERNAL_WEB_VIEW -> {
                         if (it.isNotEmpty()) {
@@ -99,6 +98,7 @@ class OfferDetailsBottomSheet(
                                     ), getString(R.string.browse_with)
                                 )
                             )
+                            dismiss()
                         }
 
                     }
@@ -113,6 +113,7 @@ class OfferDetailsBottomSheet(
                                     ), getString(R.string.browse_with)
                                 )
                             )
+                            dismiss()
                         }
                     }
                     AppConstants.OFFER_REDIRECTION_IN_APP_VIEW_WITH_CARD_OPTION_SUBs -> {
@@ -121,6 +122,7 @@ class OfferDetailsBottomSheet(
                             val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)
                             intent.putExtra(ARG_WEB_URL_TO_OPEN, url)
                             startActivity(intent)
+                            dismiss()
                         }
 
                     }
@@ -129,6 +131,7 @@ class OfferDetailsBottomSheet(
                             val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)
                             intent.putExtra(ARG_WEB_URL_TO_OPEN, it)
                             startActivity(intent)
+                            dismiss()
                         }
 
                     }

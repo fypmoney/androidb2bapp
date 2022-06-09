@@ -75,7 +75,11 @@ class PayToContactsActivityVM(application: Application) : BaseViewModel(applicat
             searchContactBroadcastChannel.asFlow().debounce(800).collect {
                 if(contactList.isNotEmpty()){
                     val filteredList = contactList.filterIndexed { index, contact ->
-                        contact.firstAndLastName.contains(it,true) || contact.mobileNumber.contains(it,true)
+                        contact.firstAndLastName?.let { name->
+                            name.contains(it,true) || contact.mobileNumber.contains(it,true)
+                        }?: kotlin.run {
+                            contact.mobileNumber.contains(it,true)
+                        }
                     }
                     if(filteredList.isEmpty()){
                         val contactList = mutableListOf<ContactsUiModel>()
