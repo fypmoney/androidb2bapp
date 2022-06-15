@@ -52,10 +52,10 @@ class AddMoneyViewModel(application: Application) : BaseViewModel(application) {
                 it > 5000 -> {
                     Utility.showToast(PockketApplication.instance.getString(R.string.maximum_load_amount))
                 }
-                //TODO remove comment at the time of release
-                /*it < 50 -> {
+                
+                it < 50 -> {
                     Utility.showToast(PockketApplication.instance.getString(R.string.minimum_load_amount))
-                }*/
+                }
                 remainingLoadLimitAmount.get() != null && it>remainingLoadLimitAmount.get()!!.toInt()->{
                     maxLoadLimitReached.value = true
                 }
