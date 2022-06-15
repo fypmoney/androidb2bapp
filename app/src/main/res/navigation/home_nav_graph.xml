@@ -595,6 +595,12 @@
             app:argType="com.fypmoney.view.recharge.model.PayAndRechargeRequest"
             app:nullable="true" />
 
+        <argument
+            android:name="rechargeType"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+
         <action android:id="@+id/navigate_from_payment_processing_to_payment_success"
             app:destination="@id/navigation_recharge_success"
             app:enterAnim="@anim/slide_in_right"

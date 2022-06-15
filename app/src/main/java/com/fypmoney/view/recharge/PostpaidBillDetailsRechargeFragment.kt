@@ -20,6 +20,7 @@ import com.fypmoney.databinding.PostpaidBillDetailsRechargeFragmentBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.POSTPAID
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.AddMoneyView
 import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
@@ -140,7 +141,8 @@ class PostpaidBillDetailsRechargeFragment : BaseFragment<PostpaidBillDetailsRech
 
             }
             is PostpaidBillDetailsFragmentVM.PostpaidBilDetailsEvent.ShowPaymentProcessingScreen -> {
-                val directions = PostpaidBillDetailsRechargeFragmentDirections.actionPostpaidBillToPaymentProcessing(it.billPaymentRequest)
+                val directions = PostpaidBillDetailsRechargeFragmentDirections.actionPostpaidBillToPaymentProcessing( billPaymentRequest = it.billPaymentRequest,
+                    rechargeType = POSTPAID)
                 findNavController().navigate(directions)
             }
             null -> TODO()

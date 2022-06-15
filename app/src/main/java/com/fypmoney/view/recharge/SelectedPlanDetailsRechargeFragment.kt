@@ -15,6 +15,7 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.SelectedPlanDetailsRechargeFragmentBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.PREPAID
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.AddMoneyView
 import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
@@ -135,7 +136,8 @@ class SelectedPlanDetailsRechargeFragment: BaseFragment<SelectedPlanDetailsRecha
             }
             is SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeEvent.ShowPaymentProcessingScreen -> {
                 val direction = SelectedPlanDetailsRechargeFragmentDirections.actionSelectedPlanDetailsToPaymentProcessing(
-                    payAndRechargeRequest = it.payRequest
+                    payAndRechargeRequest = it.payRequest,
+                    rechargeType = PREPAID
                 )
                 findNavController().navigate(direction)
             }

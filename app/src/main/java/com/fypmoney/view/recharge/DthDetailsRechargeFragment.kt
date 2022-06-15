@@ -30,6 +30,7 @@ import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.DTH
 import com.fypmoney.util.Utility
 import com.fypmoney.util.textview.ClickableSpanListener
 import com.fypmoney.util.textview.MyStoreClickableSpan
@@ -155,7 +156,7 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
             }
             is DthDetailsRechargeFragmentVM.DthDetailsEvent.ShowPaymentProcessingScreen ->{
                 val directions = DthDetailsRechargeFragmentDirections.actionGoToDthSuccess(
-                    payAndRechargeRequest = it.payAndRechargeRequest)
+                    payAndRechargeRequest = it.payAndRechargeRequest, rechargeType = DTH)
                 findNavController().navigate(directions)
             }
             null -> TODO()
