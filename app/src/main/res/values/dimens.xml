@@ -61,6 +61,7 @@
     <dimen name="dp54">54dp</dimen>
     <dimen name="dp14">14dp</dimen>
     <dimen name="dp2">2dp</dimen>
+    <dimen name="dp150">150dp</dimen>
 
 
 </resources>

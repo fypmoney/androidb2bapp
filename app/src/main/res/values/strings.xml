@@ -1242,4 +1242,8 @@ Coming really soon!
     <string name="paused">Paused</string>
     <string name="ended">Ended</string>
     <string name="buy_now">Buy now</string>
+    <string name="whom_are_you_gifting_this_to">Whom are you gifting this to?</string>
+    <string name="myself">Myself</string>
+    <string name="someone">Someone</string>
+    <string name="fill_in_the_details_below_to_whom_you_re_sending_this_gift_card">Fill in the details below to whom you’re sending this gift card</string>
 </resources>

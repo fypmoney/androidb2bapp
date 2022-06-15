@@ -11,9 +11,8 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.view.giftcard.model.RequestGiftswithPage
 import com.fypmoney.view.recharge.model.RechargeTypeModel
-import com.fypmoney.view.giftCardModule.model.RequestGiftRequest
-import com.fypmoney.view.giftCardModule.model.RequestGiftswithPage
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers

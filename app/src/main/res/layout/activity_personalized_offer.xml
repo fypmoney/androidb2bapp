@@ -73,17 +73,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-
-
             android:layout_marginTop="@dimen/_12sdp"
-
-
             android:layout_marginBottom="32dp"
             android:text="@string/woohoo_that_s_great"
-            android:layout_centerHorizontal="true"
-
             android:textAllCaps="false"
-
             app:backgroundTint="@color/text_color_dark"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

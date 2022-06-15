@@ -396,7 +396,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.giftCardModule.GiftCardsListScreen">
+        <activity android:name=".view.giftcard.GiftCardsListScreen">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -405,12 +405,12 @@
         </activity>
         <activity
             android:windowSoftInputMode="adjustPan"
-            android:name=".view.giftCardModule.PurchaseGiftCardScreen2" />
-        <activity android:name=".view.giftCardModule.GiftTermsAndConditions" />
-        <activity android:name=".view.giftCardModule.GiftHistoryActivity" />
-        <activity android:name=".view.giftCardModule.GiftHistoryUnusedActivity" />
-        <activity android:name=".view.giftCardModule.GiftDetailsActivity" />
-        <activity android:name=".view.giftCardModule.GiftViewAllScreen" />
+            android:name=".view.giftcard.CreateEGiftCardFragment" />
+        <activity android:name=".view.giftcard.GiftTermsAndConditions" />
+        <activity android:name=".view.giftcard.GiftHistoryActivity" />
+        <activity android:name=".view.giftcard.GiftHistoryUnusedActivity" />
+        <activity android:name=".view.giftcard.GiftDetailsActivity" />
+        <activity android:name=".view.giftcard.GiftViewAllScreen" />
 
         <meta-data android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled"
             android:value="true"/>
