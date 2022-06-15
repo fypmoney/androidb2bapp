@@ -177,6 +177,7 @@ enum class TrackrEvent(name: String) {
     dth_success("dth_success"),
     dth_fail("dth_fail"),
     skip_to_home_click("skip_to_home_click"),
+    yes_bank_otp("yes_bank_otp"),
 
 
 }
