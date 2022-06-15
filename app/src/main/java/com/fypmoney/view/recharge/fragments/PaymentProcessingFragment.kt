@@ -51,6 +51,7 @@ class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,
         super.onAttach(context)
         paymentProcessingFragmentVM.rechargeRequest = args.payAndRechargeRequest
         paymentProcessingFragmentVM.billPaymentRequest = args.billPaymentRequest
+        paymentProcessingFragmentVM.rechargeType = args.rechargeType
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,7 +86,8 @@ class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,
                     successResponse = null,
                     selectedOperator = null,
                     mobile = paymentProcessingFragmentVM.rechargeRequest?.cardNo,
-                    amount = paymentProcessingFragmentVM.rechargeRequest?.amount.toString()
+                    amount = paymentProcessingFragmentVM.rechargeRequest?.amount.toString(),
+                    rechargeType = paymentProcessingFragmentVM.rechargeType
 
                 )
                 findNavController().navigate(directions)
@@ -95,7 +97,8 @@ class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,
                     successResponse = null,
                     selectedOperator = null,
                     mobile = paymentProcessingFragmentVM.billPaymentRequest?.cardNo,
-                    amount = paymentProcessingFragmentVM.billPaymentRequest?.billAmount.toString()
+                    amount = paymentProcessingFragmentVM.billPaymentRequest?.billAmount.toString(),
+                    rechargeType = paymentProcessingFragmentVM.rechargeType
 
                 )
                 findNavController().navigate(directions)
@@ -109,7 +112,9 @@ class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,
                     successResponse = it.payAndRechargeResponse,
                     selectedOperator = null,
                     mobile = paymentProcessingFragmentVM.rechargeRequest?.cardNo,
-                    amount = paymentProcessingFragmentVM.rechargeRequest?.amount.toString())
+                    amount = paymentProcessingFragmentVM.rechargeRequest?.amount.toString(),
+                    rechargeType = paymentProcessingFragmentVM.rechargeType
+                )
                 findNavController().navigate(directions)
 
             }
@@ -119,8 +124,8 @@ class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,
                     successResponse = PayAndRechargeResponse(isPurchased = it.billPaymentResponse.isPurchased),
                     selectedOperator = null,
                     mobile = paymentProcessingFragmentVM.billPaymentRequest?.cardNo,
-                    amount = paymentProcessingFragmentVM.billPaymentRequest?.amount.toString()
-
+                    amount = paymentProcessingFragmentVM.billPaymentRequest?.amount.toString(),
+                    rechargeType = paymentProcessingFragmentVM.rechargeType
                 )
                 findNavController().navigate(directions)
             }

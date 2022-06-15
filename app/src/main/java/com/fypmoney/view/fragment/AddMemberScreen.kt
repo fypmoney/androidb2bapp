@@ -1,28 +1,27 @@
 package com.fypmoney.view.fragment
 
 import android.app.Activity.RESULT_OK
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
-import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ViewAddMemberBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.DialogUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.activity.ContactView
 import com.fypmoney.view.activity.InviteMemberView
 import com.fypmoney.view.activity.StayTunedView
 import com.fypmoney.view.adapter.CountryCodeArrayAdapter
+import com.fypmoney.view.contacts.model.CONTACT_ACTIVITY_UI_MODEL
+import com.fypmoney.view.contacts.model.ContactActivityActionEvent
+import com.fypmoney.view.contacts.model.ContactsActivityUiModel
+import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.viewmodel.AddMemberViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_login.*
@@ -120,7 +119,13 @@ class AddMemberScreen : BaseFragment<ViewAddMemberBinding, AddMemberViewModel>()
     private fun setObserver() {
         mViewModel.onFromContactClicked.observe(viewLifecycleOwner) {
             if (it) {
-                intentToActivity(ContactView::class.java)
+                //intentToActivity(ContactView::class.java)
+                val intent = Intent(requireContext(), PayToContactsActivity::class.java)
+                intent.putExtra(
+                    CONTACT_ACTIVITY_UI_MODEL, ContactsActivityUiModel(toolBarTitle = getString(R.string.select_member),
+                        showLoadingBalance = false,contactClickAction = ContactActivityActionEvent.AddMember)
+                )
+                startActivity(intent)
                 mViewModel.onFromContactClicked.value = false
             }
         }

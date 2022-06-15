@@ -76,7 +76,6 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
                     inviteUser()
                 } else {
                     callInviteBottomSheet()
-
                 }
 
                 mViewModel.onIsAppUserClicked.value = false

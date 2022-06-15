@@ -84,7 +84,6 @@ class RechargeSuccessFragment :
                 isBackArrowVisible = true,
                 toolbarTitle = getString(R.string.recharge_failed)
             )
-
             failedEvents()
             binding.statusTitleTv.text = String.format(getString(R.string.your_recharge_is_failed),Utility.convertToRs(rechargeSuccessfulFragmentVM.amount),rechargeSuccessfulFragmentVM.mobile)
             binding.comment.text = getString(R.string.any_amount_detucetd)

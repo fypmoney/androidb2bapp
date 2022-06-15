@@ -254,7 +254,7 @@ class AddMoneyUpiDebitView :
              * @param payuResponse     response sent by PayU in App
              * @param merchantResponse response received from Furl
              */
-            override fun onPaymentFailure(payuResponse: String, merchantResponse: String) {
+            override fun onPaymentFailure(payuResponse: String?, merchantResponse: String?) {
                 mViewModel.payUResponse.set(payuResponse)
                 mViewModel.callAddMoneyStep2Api()
             }
@@ -276,7 +276,7 @@ class AddMoneyUpiDebitView :
              * @param payuResponse     response sent by PayU in App
              * @param merchantResponse response received from Furl
              */
-            override fun onPaymentSuccess(payuResponse: String, merchantResponse: String) {
+            override fun onPaymentSuccess(payuResponse: String?, merchantResponse: String?) {
                 mViewModel.payUResponse.set(payuResponse)
                 mViewModel.callAddMoneyStep2Api()
             }

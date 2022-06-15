@@ -112,16 +112,16 @@ class PostpaidBillDetailsFragmentVM(application: Application) : BaseViewModel(ap
                                         planPrice = Utility.convertToPaise(amount?.toDoubleOrNull()?.toString()),
                                         planType = null,
                                         billAmount = Utility.convertToPaise(amount?.toDouble()?.toString())?.toLongOrNull(),
-                                        billnetamount = billDetails!!.bill_fetch?.billnetamount?.toDoubleOrNull()?.toString(),
+                                        billnetamount = billDetails?.bill_fetch?.billnetamount?.toDoubleOrNull()?.toString(),
                                         mode = "online",
-                                        dueDate = billDetails!!.bill_fetch?.dueDate,
-                                        acceptPartPay = billDetails!!.bill_fetch?.acceptPartPay,
-                                        acceptPayment = billDetails!!.bill_fetch?.acceptPayment,
+                                        dueDate = billDetails?.bill_fetch?.dueDate,
+                                        acceptPartPay = billDetails?.bill_fetch?.acceptPartPay,
+                                        acceptPayment = billDetails?.bill_fetch?.acceptPayment,
                                         cellNumber = mobileNumber,
-                                        userName = billDetails!!.bill_fetch?.userName,
+                                        userName = billDetails?.bill_fetch?.userName,
                                         latitude = "23.923828392",
                                         longitude = "75.82389283",
-                                        billdate = billDetails!!.bill_fetch?.billdate
+                                        billdate = billDetails?.bill_fetch?.billdate
 
 
 

@@ -32,13 +32,13 @@ import com.fypmoney.util.AppConstants.StoreshopsScreen
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.AddMoneySuccessBottomSheet
+import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.fragment.*
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import com.fypmoney.view.interfaces.HomeTabChangeClickListener
 import com.fypmoney.view.interfaces.MessageSubmitClickListener
 import com.fypmoney.viewmodel.HomeViewModel
-import kotlinx.android.synthetic.main.view_home.*
 import java.util.concurrent.atomic.AtomicBoolean
 
 
@@ -400,7 +400,7 @@ class HomeView : BaseActivity<ViewHomeBinding, HomeViewModel>(),
         var itemClickListener2 = object : AcceptRejectClickListener {
             override fun onAcceptClicked(pos: Int, str: String) {
                 bottomsheetInsufficient?.dismiss()
-                intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
+                intentToPayActivity(PayToContactsActivity::class.java, AppConstants.PAY)
             }
 
             override fun onRejectClicked(pos: Int) {

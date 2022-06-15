@@ -850,7 +850,8 @@ Coming really soon!
     <string name="amount_limit">9999</string>
     <string name="logout">Logout</string>
     <string name="facebook_app_id">393472762006028</string>
-    <string name="facebook_client_token">Facebook Client ID</string>
+    <string name="fb_login_protocol_scheme">fb393472762006028</string>
+    <string name="facebook_client_token">691862f85bb36e2492c7de56a661b326</string>
     <string name="_1_we_read_contacts_to_verify_your_mobile_number_and_inviting_friends_from_phonebook">We read your contacts for hassle free money transfer to fellow Fyp user.</string>
     <string name="we_use_your_location_to_check_if_your_current_city_is_serviceable_by_us">We use your location to check if your current city is serviceable by us.</string>
     <string name="location_permission1">Location Permission</string>
@@ -1055,8 +1056,8 @@ Coming really soon!
     <string name="earn">Earn</string>
     <string name="earn_5x_mynts_on_both_online_and_offline_transactions"> on both online and offline transactions</string>
     <string name="mynts_5_x"> 5X mynts</string>
-    <string name="on_offline_transactions">on offline transactions</string>
-    <string name="_7_instant_cashback">3% instant cashback</string>
+    <string name="on_offline_transactions">on Top Brands on offline transactions</string>
+    <string name="_7_instant_cashback">10% instant cashback</string>
     <string name="get_one_airport_lounge_access_worth_1500">Get one airport lounge access worth</string>
     <string name="_1500"> ₹1500</string>
     <string name="we_are_striving_hard_to_give_you_the_ultimate_upi_experience">We are striving hard to give you the \nultimate UPI experience.</string>
@@ -1235,4 +1236,8 @@ Coming really soon!
     <string name="no_transaction_fee">* No transaction fee</string>
     <string name="your_bank_account">Your Bank Account</string>
     <string name="how_it_works">How it works?</string>
+    <string name="amount_with_currency"> \u20B9 %1$s</string>
+    <string name="search_contact">Search Contact</string>
+    <string name="sending_money_to_other_fyp_users_is_temporarily_unavailable_we_re_working_hard_to_bring_it_back">Sending money to other Fyp users is temporarily unavailable.\n \n We\'re working hard to bring it back!</string>
+
 </resources>

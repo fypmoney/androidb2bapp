@@ -36,6 +36,6 @@ data class UserPhoneContact(
     @SerializedName("userId") var userId: String?,
     @SerializedName("contactNumber") var contactNumber: String?,
     @SerializedName("phoneBookIdentifier") var phoneBookIdentifier: String?,
-    @SerializedName("isAppUser") var isAppUser: Boolean?,
+    @SerializedName("isAppUser") var isAppUser: Boolean,
     @SerializedName("profilePicResourceId") var profilePicResourceId: String?
     ) : Serializable

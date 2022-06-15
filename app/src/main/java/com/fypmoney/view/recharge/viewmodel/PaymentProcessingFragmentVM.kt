@@ -29,7 +29,7 @@ class PaymentProcessingFragmentVM(application: Application) : BaseViewModel(appl
     var rechargeRequest:PayAndRechargeRequest? = null
     //in case of post paid
     var billPaymentRequest:BillPaymentRequest? = null
-
+    var rechargeType:String? = null
     val state:LiveData<PaymentProcessingState>
         get() = _state
     private val _state = MutableLiveData<PaymentProcessingState>()

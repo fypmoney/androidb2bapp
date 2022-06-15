@@ -19,15 +19,14 @@ import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ScreenHomeBinding
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
-import com.fypmoney.model.RedeemDetailsResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.*
 import com.fypmoney.view.adapter.TopTenUsersAdapter
 import com.fypmoney.view.addmoney.NewAddMoneyActivity
+import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.interfaces.HomeTabChangeClickListener
-import com.fypmoney.view.interfaces.ListItemClickListener
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
 import com.fypmoney.view.rewardsAndWinnings.RewardsActivity
 import com.fypmoney.viewmodel.HomeScreenViewModel
@@ -38,7 +37,7 @@ class HomeScreen(val tabchangeListner: HomeTabChangeClickListener) :
     BaseFragment<ScreenHomeBinding, HomeScreenViewModel>() {
 
 
-    private var bottomSheetMessage: RedeemMyntsBottomSheet? = null
+//    private var bottomSheetMessage: RedeemMyntsBottomSheet? = null
     private lateinit var mViewModel: HomeScreenViewModel
     private lateinit var mViewBinding: ScreenHomeBinding
 
@@ -155,10 +154,10 @@ class HomeScreen(val tabchangeListner: HomeTabChangeClickListener) :
             }
             if (mViewModel.clicked.get() == true) {
                 mViewModel.clicked.set(false)
-                callTaskMessageSheet(it)
+                //callTaskMessageSheet(it)
 
             } else if (it.pointsToRedeem == null) {
-                callTaskMessageSheet(it)
+                //callTaskMessageSheet(it)
             }
 
         }
@@ -187,7 +186,7 @@ class HomeScreen(val tabchangeListner: HomeTabChangeClickListener) :
         }
         mViewModel.onPayClicked.observe(viewLifecycleOwner) {
             if (it) {
-                intentToPayActivity(ContactListView::class.java, AppConstants.PAY)
+                intentToPayActivity(PayToContactsActivity::class.java, AppConstants.PAY)
                 mViewModel.onPayClicked.value = false
             }
         }
@@ -286,25 +285,6 @@ class HomeScreen(val tabchangeListner: HomeTabChangeClickListener) :
 
     }
 
-    private fun callTaskMessageSheet(redeemDetails: RedeemDetailsResponse) {
-        var itemClickListener2 = object : ListItemClickListener {
-
-
-            override fun onItemClicked(pos: Int) {
-                bottomSheetMessage?.dismiss()
-            }
-
-            override fun onCallClicked(pos: Int) {
-                mViewModel.callRedeemCoins()
-                bottomSheetMessage?.dismiss()
-
-            }
-        }
-        bottomSheetMessage =
-            RedeemMyntsBottomSheet(itemClickListener2, redeemDetails)
-        bottomSheetMessage?.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        bottomSheetMessage?.show(childFragmentManager, "TASKMESSAGE")
-    }
 
 
 

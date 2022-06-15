@@ -81,6 +81,8 @@ class SelectCircleFragmentVM(application: Application) : BaseViewModel(applicati
             }
         }
     }
+
+
     fun callGetCircleList() {
         _state.value = SelectCircleState.Loading
         WebApiCaller.getInstance().request(

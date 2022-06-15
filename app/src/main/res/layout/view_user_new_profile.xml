@@ -146,10 +146,10 @@
                     android:alpha="60"
                     android:onClick="@{()->viewModel.onUpgradeKycClicked()}"
                     android:textSize="@dimen/text_14sp"
-                    android:visibility="@{viewModel.upgradeKyc?View.VISIBLE:View.GONE}"
+                    android:visibility="gone"
                     app:layout_constraintStart_toEndOf="@+id/flProfile"
                     app:layout_constraintTop_toBottomOf="@id/tvKycVerification" />
-
+<!--@{viewModel.upgradeKyc?View.VISIBLE:View.GONE}-->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/llUserDetail"
                     android:layout_width="match_parent"
