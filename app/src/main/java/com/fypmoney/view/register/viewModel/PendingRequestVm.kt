@@ -2,6 +2,7 @@ package com.fypmoney.view.register.viewModel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -11,6 +12,7 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.CustomerInfoResponseDetails
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 
 
@@ -47,7 +49,9 @@ class PendingRequestVm(application: Application) : BaseViewModel(application) {
             ApiConstant.API_GET_CUSTOMER_INFO -> {
                 if (responseData is CustomerInfoResponse) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
-
+                    SharedPrefUtils.putString(
+                        PockketApplication.instance,
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.bankProfile?.kycType)
                     user.postValue(responseData.customerInfoResponseDetails!!)
                 }
             }

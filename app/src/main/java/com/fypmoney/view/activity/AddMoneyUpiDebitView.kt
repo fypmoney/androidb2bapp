@@ -41,13 +41,9 @@ import com.payu.india.Payu.PayuConstants
 import com.payu.india.PostParams.PaymentPostParams
 import com.payu.paymentparamhelper.PaymentParams
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.toolbar.toolbar
-import kotlinx.android.synthetic.main.toolbar_for_gateway.*
-import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
-import kotlinx.android.synthetic.main.view_add_money_upi_debit.*
 
 
-open class AddMoneyUpiDebitView :
+class AddMoneyUpiDebitView :
     BaseActivity<ViewAddMoneyUpiDebitBinding, AddMoneyUpiDebitViewModel>(),
     AddNewCardBottomSheet.OnAddNewCardClickListener,
     TransactionFailBottomSheet.OnBottomSheetClickListener, AddUpiBottomSheet.OnAddUpiClickListener {
@@ -96,8 +92,8 @@ open class AddMoneyUpiDebitView :
      * Create this method for observe the viewModel fields
      */
     private fun setObserver() {
-        mViewModel.event.observe(this,{
-            when(it){
+        mViewModel.event.observe(this) {
+            when (it) {
                 AddMoneyUpiDebitViewModel.AddMoneyEvent.OnADDNewCardClickedEvent -> {
                     callAddNewCardBottomSheet()
                 }
@@ -105,7 +101,7 @@ open class AddMoneyUpiDebitView :
                     callUpiIntent()
                 }
             }
-        })
+        }
 
 
 
@@ -258,8 +254,7 @@ open class AddMoneyUpiDebitView :
              * @param payuResponse     response sent by PayU in App
              * @param merchantResponse response received from Furl
              */
-            override fun onPaymentFailure(payuResponse: String, merchantResponse: String) {
-                //mViewModel.isPaymentFail.set(true)
+            override fun onPaymentFailure(payuResponse: String?, merchantResponse: String?) {
                 mViewModel.payUResponse.set(payuResponse)
                 mViewModel.callAddMoneyStep2Api()
             }
@@ -281,7 +276,7 @@ open class AddMoneyUpiDebitView :
              * @param payuResponse     response sent by PayU in App
              * @param merchantResponse response received from Furl
              */
-            override fun onPaymentSuccess(payuResponse: String, merchantResponse: String) {
+            override fun onPaymentSuccess(payuResponse: String?, merchantResponse: String?) {
                 mViewModel.payUResponse.set(payuResponse)
                 mViewModel.callAddMoneyStep2Api()
             }
@@ -365,6 +360,25 @@ open class AddMoneyUpiDebitView :
     override fun onAddUpiClickListener(upiId: String, isUpiSaved: Boolean) {
         mViewModel.upiEntered.set(upiId)
         mViewModel.modeOfPayment.set(1)
+
+        val upiList = ArrayList<String>()
+
+
+        val savedupiList =
+            SharedPrefUtils.getArrayList(application, SharedPrefUtils.SF_UPI_LIST)
+        savedupiList?.forEach {
+            upiList.add(it)
+        }
+        if (!upiList.contains(upiId)) {
+            upiList.add(upiId)
+            SharedPrefUtils.putArrayList(
+                applicationContext,
+                SharedPrefUtils.SF_UPI_LIST, upiList
+
+            )
+        }
+
+
         try {
             val paymentParams =
                 mViewModel.getPaymentParams(AppConstants.TYPE_UPI, upiId, isUpiSaved)
@@ -513,9 +527,9 @@ open class AddMoneyUpiDebitView :
     * */
     fun callUpiIntent() {
         when (mViewModel.clickedPositionForUpi.get()) {
-            0 -> {
+            /*0 -> {
                 callAddUpiBottomSheet()
-            }/*
+            }*//*
             1 -> {
                 callGooglePayIntent()
             }*/

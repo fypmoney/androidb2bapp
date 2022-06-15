@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contact_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp10">
+        
+        <FrameLayout
+            android:id="@+id/contact_image_fl"
+            android:layout_width="@dimen/dp54"
+            android:layout_height="@dimen/dp54"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/contact_iv"
+                android:layout_width="@dimen/dp54"
+                android:layout_height="@dimen/dp54"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingHorizontal="@dimen/dp20"
+                android:paddingVertical="@dimen/dp18"
+                android:background="@drawable/curved_background14"
+                tools:srcCompat="@drawable/ic_contact_user_1" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/fyp_user_flag_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                app:srcCompat="@drawable/ic_fyper_cap" />
+
+        </FrameLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/contact_name_tv"
+            style="@style/TextviewRegular"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:singleLine="true"
+            android:lineHeight="21dp"
+            android:layout_marginTop="@dimen/dp5"
+            android:layout_marginStart="@dimen/dp14"
+            app:layout_constraintStart_toEndOf="@id/contact_image_fl"
+            app:layout_constraintTop_toTopOf="@+id/contact_image_fl"
+            android:textColor="@color/text_color_dark"
+            android:textSize="18sp"
+            tools:text="Pawan Sharma" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/contact_number_tv"
+            style="@style/TextviewRegular"
+            android:layout_marginTop="@dimen/dp2"
+            android:layout_marginStart="@dimen/dp14"
+            android:textSize="@dimen/text_14sp"
+            android:lineHeight="16dp"
+            app:layout_constraintStart_toEndOf="@id/contact_image_fl"
+            app:layout_constraintTop_toBottomOf="@+id/contact_name_tv"
+            android:textColor="@color/text_color_light"
+            tools:text="0000000000"
+            android:ellipsize="end" />
+
+        <FrameLayout
+            android:id="@+id/action_fl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/fyper_tv"
+                style="@style/TextviewRegular"
+                android:text="@string/fyper_txt"
+                android:visibility="gone"
+                android:textSize="14sp"
+                android:lineHeight="@dimen/dp16"
+                android:textColor="@color/text_color_dark" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/invite_tv"
+                style="@style/TextviewRegular"
+                android:text="@string/invite_link"
+                android:textSize="14sp"
+                android:lineHeight="@dimen/dp16"
+                android:textColor="@color/color_skyblue" />
+        </FrameLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

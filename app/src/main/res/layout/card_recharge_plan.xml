@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:customBackgroundColor="@{@color/black_background}"
+        app:customCornerRadius="@{@dimen/dp16}"
+        android:id="@+id/card"
+        android:layout_marginTop="@dimen/_8sdp"
+        tools:background="@color/black_background"
+        android:orientation="vertical">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/dp20">
+
+            <TextView
+                android:id="@+id/tv_rs"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                tools:text="Sahil"
+                android:textColor="@color/white"
+                style="@style/TextviewRegular"
+                android:textSize="18sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_validity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp24"
+                android:layout_marginEnd="@dimen/dp6"
+                android:fontFamily="sans-serif"
+                style="@style/TextviewRegular"
+                tools:text="85749 82934"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_rs"
+                app:layout_constraintEnd_toStartOf="@+id/tvLastRecharge"
+                app:layout_constraintStart_toEndOf="@+id/tv_rs"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/tvLastRecharge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:rotation="180"
+                android:src="@drawable/ic_back_new"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_details"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp12"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:alpha=".60"
+                android:fontFamily="sans-serif"
+                android:paddingBottom="8dp"
+                tools:text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor."
+                style="@style/TextviewRegular"
+                android:textAllCaps="false"
+                android:textColor="@color/text_color_light"
+                android:textSize="12sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/tv_validity"
+                app:layout_constraintStart_toStartOf="@+id/tv_validity"
+                app:layout_constraintTop_toBottomOf="@+id/tv_rs" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

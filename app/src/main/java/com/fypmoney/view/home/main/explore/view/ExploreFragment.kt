@@ -13,6 +13,8 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentExploreBinding
+import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
@@ -37,6 +39,10 @@ import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.explore.viewmodel.ExploreFragmentVM
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 
 class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(),
     ExploreAdapter.OnFeedItemClickListener {
@@ -83,42 +89,41 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
     }
 
     private fun setObserver() {
-        exploreFragmentVM?.rewardHistoryList.observe(
-            viewLifecycleOwner,
-            { list ->
+        exploreFragmentVM?.rewardHistoryList.observe(viewLifecycleOwner) { list ->
 
-                setRecyclerView(_binding, list)
-            })
+            setRecyclerView(_binding, list)
+        }
         exploreFragmentVM?.openBottomSheet.observe(
-            viewLifecycleOwner,
-            { list ->
-
+            viewLifecycleOwner
+        ) { list ->
+            if (list.size > 0) {
                 callOfferDetailsSheeet(list[0])
-            })
+            }
+        }
 
         exploreFragmentVM?.feedDetail.observe(
-            viewLifecycleOwner,
-            { list ->
+            viewLifecycleOwner
+        ) { list ->
 
-                when (list.displayCard) {
+            when (list.displayCard) {
 
-                    AppConstants.FEED_TYPE_BLOG -> {
+                AppConstants.FEED_TYPE_BLOG -> {
 
-                        intentToActivitytoBlog(
-                            UserFeedsDetailView::class.java,
-                            list,
-                            AppConstants.FEED_TYPE_BLOG
-                        )
-                    }
-                    AppConstants.FEED_TYPE_STORIES -> {
+                    intentToActivitytoBlog(
+                        UserFeedsDetailView::class.java,
+                        list,
+                        AppConstants.FEED_TYPE_BLOG
+                    )
+                }
+                AppConstants.FEED_TYPE_STORIES -> {
 
-                        callDiduKnowBottomSheet(list.resourceArr)
-                    }
-
+                    callDiduKnowBottomSheet(list.resourceArr)
                 }
 
+            }
 
-            })
+
+        }
 
     }
 
@@ -140,20 +145,23 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
         root: FragmentExploreBinding,
         list: ArrayList<ExploreContentResponse>
     ) {
-        if (list.size > 0) {
-            root.shimmerLayout.visibility = View.GONE
+        if (list.size == 0) {
+            root.shimmerLayout.toVisible()
+        }else{
+            root.shimmerLayout.toGone()
+
         }
         val layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         root.rvExplore.layoutManager = layoutManager
 
-        var arrayList: ArrayList<ExploreContentResponse> = ArrayList()
+        val arrayList: ArrayList<ExploreContentResponse> = ArrayList()
         list.forEach { item ->
             if (item.sectionContent?.size!! > 0) {
                 arrayList.add(item)
             }
         }
-        var exploreClickListener2 = object : ExploreItemClickListener {
+        val exploreClickListener2 = object : ExploreItemClickListener {
             override fun onItemClicked(position: Int, it: SectionContentItem,exploreContentResponse:ExploreContentResponse?) {
 
                 when (it.redirectionType) {
@@ -171,27 +179,33 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
 
                         startActivity(intent)
                     }
+
                     AppConstants.EXPLORE_IN_APP -> {
                         it.redirectionResource?.let { uri ->
-
-                            val redirectionResources = uri.split(",")[0]
-                            if (redirectionResources == AppConstants.FyperScreen) {
-                                findNavController().navigate(R.id.navigation_fyper)
-                            } else if (redirectionResources == AppConstants.JACKPOTTAB) {
-                                findNavController().navigate(R.id.navigation_jackpot)
-                            } else if (redirectionResources == AppConstants.CardScreen) {
-                                findNavController().navigate(R.id.navigation_card)
-                            } else if (redirectionResources == AppConstants.RewardHistory) {
-                                findNavController().navigate(R.id.navigation_rewards_history)
-                            }else if (redirectionResources == AppConstants.ARCADE) {
-                                findNavController().navigate(R.id.navigation_arcade)
-                            }else {
-                                Utility.deeplinkRedirection(redirectionResources, requireContext())
+                            when (val redirectionResources = uri.split(",")[0]) {
+                                AppConstants.FyperScreen -> {
+                                    findNavController().navigate(R.id.navigation_fyper)
+                                }
+                                AppConstants.JACKPOTTAB -> {
+                                    findNavController().navigate(R.id.navigation_jackpot)
+                                }
+                                AppConstants.CardScreen -> {
+                                    findNavController().navigate(R.id.navigation_card)
+                                }
+                                AppConstants.RewardHistory -> {
+                                    findNavController().navigate(R.id.navigation_rewards_history)
+                                }
+                                AppConstants.ARCADE -> {
+                                    findNavController().navigate(R.id.navigation_arcade)
+                                }
+                                AppConstants.RechargeHomeScreen -> {
+                                    findNavController().navigate(R.id.navigation_enter_mobile_number_recharge)
+                                }
+                                else -> {
+                                    Utility.deeplinkRedirection(redirectionResources, requireContext())
+                                }
                             }
-
-
                         }
-
                     }
                     EXPLORE_IN_APP_WEBVIEW -> {
 
@@ -237,6 +251,15 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
 
                     }
                     AppConstants.EXPLORE_SECTION_EXPLORE->{
+                        Firebase.analytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
+                            it.redirectionResource?.let {
+                                param(
+                                    FirebaseAnalytics.Param.SCREEN_NAME,
+                                    it
+                                )
+                            }
+                            param(FirebaseAnalytics.Param.SCREEN_CLASS, ExploreFragment::class.java.simpleName)
+                        }
                         val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
                             ExploreFragmentDirections.actionExploreSectionExplore(sectionExploreItem = it,
                                 sectionExploreName= it1

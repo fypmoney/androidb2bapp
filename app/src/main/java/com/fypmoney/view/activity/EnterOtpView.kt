@@ -23,8 +23,6 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewEnterOtpBinding
 import com.fypmoney.receivers.AutoReadOtpUtils
 import com.fypmoney.util.AppConstants
-
-import com.fypmoney.view.register.PanAdhaarSelectionActivity
 import com.fypmoney.viewmodel.EnterOtpViewModel
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_aadhaar_account_activation.*
@@ -228,6 +226,12 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                 finish()
             }
         }
+        mViewModel.upgradeKycFailed.observe(this) {
+            if (it) {
+                mViewModel.upgradeKycFailed.value = false
+                finish()
+            }
+        }
         mViewModel.resendOtpSuccess.observe(this) {
             if (it) {
                 startTimer()
@@ -247,17 +251,26 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                 when (mViewModel.fromWhichScreen.get()) {
 //
                     AppConstants.AADHAAR_VERIFICATION -> {
-                        intentToActivity(
-                            ActivationSuccessWithAadhaarView::class.java,
-                            isFinish = true
-                        )
+                        trackr {
+                            it.name = TrackrEvent.upgrade_kyc_successfully
+                        }
+                        when(intent.getStringExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN)){
+                            AddMoneyView::class.java.simpleName->{
+                                startActivity(Intent(this@EnterOtpView,AddMoneyView::class.java))
+                            }
+                            PayRequestProfileView::class.java.simpleName->{
+                                startActivity(Intent(this@EnterOtpView,PayRequestProfileView::class.java))
 
+                            }
+                            UserProfileView::class.java.simpleName->{
+                                startActivity(Intent(this@EnterOtpView,UserProfileView::class.java))
 
+                            }
+                        }
                     }
                     AppConstants.KYC_MOBILE_VERIFICATION -> {
                         intentToActivity(AadhaarVerificationView::class.java)
                         finish()
-
                     }
                 }
                 mViewModel.onVerificationSuccess.value = false
@@ -281,8 +294,8 @@ class EnterOtpView : BaseActivity<ViewEnterOtpBinding, EnterOtpViewModel>() {
                 intent.putExtra(AppConstants.POSTKYCKEY, it.postKycScreenCode)
                 val bndlAnimation = ActivityOptions.makeCustomAnimation(
                     applicationContext,
-                    com.fypmoney.R.anim.slideinleft,
-                    com.fypmoney.R.anim.slideinright
+                    R.anim.slideinleft,
+                    R.anim.slideinright
                 ).toBundle()
                 startActivity(intent, bndlAnimation)
                 finishAffinity()

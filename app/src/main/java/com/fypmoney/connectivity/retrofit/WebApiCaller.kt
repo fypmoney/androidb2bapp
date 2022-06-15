@@ -11,6 +11,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.model.*
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.view.recharge.model.RechargeTypeModel
 import com.fypmoney.view.giftCardModule.model.RequestGiftRequest
 import com.fypmoney.view.giftCardModule.model.RequestGiftswithPage
 import io.reactivex.Observable
@@ -60,7 +61,11 @@ class WebApiCaller {
             AppConstants.PAYU_SERVER -> {
                 ApiClient.getClient(ApiConstant.PAYU_BASE_URL).create(ApiInterface::class.java)
 
-            }
+            }/*
+            "https://run.mocky.io" -> {
+                ApiClient.getClient("https://run.mocky.io").create(ApiInterface::class.java)
+
+            }*/
             else -> {
                 ApiClient.getClient(BuildConfig.BASE_ENDPOINT).create(ApiInterface::class.java)
 
@@ -119,6 +124,22 @@ class WebApiCaller {
                             size = params.size,
                             sort = null
                         )
+                    }
+                    ApiConstant.API_GET_OPERATOR_LIST_MOBILE -> {
+
+                        val params = request.param as RechargeTypeModel
+
+
+                        mObservable = apiInterface.getRequestWithQueryType(
+                            endPoint = request.endpoint,
+                            authorization = SharedPrefUtils.getString(
+                                PockketApplication.instance,
+                                SharedPrefUtils.SF_KEY_ACCESS_TOKEN
+                            ),
+                            client_id = ApiConstant.CLIENT_ID,
+                            type = params.type,
+
+                            )
                     }
                     ApiConstant.CashbackHistory -> {
 

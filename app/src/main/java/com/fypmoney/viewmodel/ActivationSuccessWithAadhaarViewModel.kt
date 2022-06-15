@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.fyp.trackr.models.*
 import com.fyp.trackr.services.TrackrServices
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -17,10 +18,6 @@ import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
-import com.fypmoney.view.register.model.UserGiftResponse
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import com.moengage.core.internal.MoEConstants
 
 /*
@@ -85,6 +82,9 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
             ApiConstant.API_GET_CUSTOMER_INFO -> {
                 if (responseData is CustomerInfoResponse) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
+                    SharedPrefUtils.putString(
+                        PockketApplication.instance,
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.bankProfile?.kycType)
                     // Save the user id in shared preference
                     SharedPrefUtils.putLong(
                         getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
@@ -111,8 +111,11 @@ class ActivationSuccessWithAadhaarViewModel(application: Application) : BaseView
                         )
                     }
                     if (postKycScreenCode.value.isNullOrEmpty()) {
-                        postKycScreenCode.value =
-                            responseData.customerInfoResponseDetails?.postKycScreenCode!!
+                        responseData.customerInfoResponseDetails?.postKycScreenCode?.let {
+                            postKycScreenCode.value = it
+                        }
+
+
                     }
 
                     responseData.customerInfoResponseDetails?.postKycScreenCode?.let {

@@ -40,10 +40,12 @@ object ApiConstant {
 
     const val API_UPDATE_FAMILY_NAME = "/services/authservice/api/family-detail?name="
     const val API_KYC_ACTIVATE_ACCOUNT = "/services/PockketService/api/activate/account/init/v1"
+    const val API_UPGRADE_KYC_ACCOUNT = "services/PockketService/api/kyc/init/v2"
     const val API_KYC_MOBILE_VERIFICATION = "/services/PockketService/api/mobile/verification/v1"
 
     const val API_KYC_INIT = "/services/PockketService/api/kyc/init"
     const val API_KYC_VERIFICATION = "/services/PockketService/api/kyc/verification"
+    const val API_KYC_UPGARDE_VERIFICATION = "services/PockketService/api/kyc/verification/v2"
     const val API_GET_WALLET_BALANCE = "/services/PockketService/api/get/walletBalance"
     const val API_GET_VIRTUAL_CARD_REQUEST = "/services/PockketService/api/get/virtualCardRequest"
     const val API_FETCH_VIRTUAL_CARD_DETAILS = "/services/PockketService/api/fetch/virtualCard"
@@ -151,6 +153,21 @@ object ApiConstant {
     const val API_FETCH_OFFER_DETAILS = "/services/PockketService/api/fyp-offer/"
     const val Api_Request_Siblin_parent = "services/authservice/api/family-member/userKycCode/"
     const val Api_Your_Gifts = "services/loyaltyservice/api/onboarding-gifts"
+    const val API_CHECK_PROMO_CODE = "/services/loyaltyservice/api/promocode"
+    const val API_RECHARGE_PLANS = "services/loyaltyservice/api/mobile-recharge-plans"
+    const val API_GET_OPERATOR_LIST_MOBILE =
+        "services/loyaltyservice/api/operator-list/MOBILE"
+    const val API_GET_DTH_OPERATORS =
+        "services/loyaltyservice/api/operator-list/DTH"
+
+    const val API_GET_CIRCLE_LIST = "services/loyaltyservice/api/circle-list/"
+    const val API_GET_HLR_CHECK = "services/loyaltyservice/api/hlrcheck"
+    const val API_FETCH_BILL = "services/loyaltyservice/api/fetch-bill"
+    const val API_MOBILE_RECHARGE = "services/PockketService/api/mobileRecharge"
+
+    const val API_PAY_BILL = "services/PockketService/api/billPayment"
+    const val API_RECENT_RECHARGE = "services/PockketService/api/recharge-orders"
+    const val Api_GET_DISCORD_PROFILE = "/services/loyaltyservice/api/fetch-discord-data"
 
     const val GET_GIFTS_LIST = "services/PockketService/api/search-voucher"
 

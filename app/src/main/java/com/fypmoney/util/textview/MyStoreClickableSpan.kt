@@ -5,6 +5,7 @@ import android.text.style.ClickableSpan
 import android.view.View
 
 open class MyStoreClickableSpan(
+    var color:Int?=null,
     var pos: Int,
     var clickableSpanListener: ClickableSpanListener
 ) : ClickableSpan() {
@@ -12,6 +13,9 @@ open class MyStoreClickableSpan(
     override fun updateDrawState(ds: TextPaint) {
         super.updateDrawState(ds)
         ds.isUnderlineText = true;
+        color?.let {
+            ds.color = it
+        }
     }
 
     override fun onClick(widget: View) {

@@ -14,11 +14,13 @@ import com.fypmoney.extension.executeAfter
 @Keep
 data class ListUiModel(
     var postion: Int,
-    var name:String,
+    var name: String,
     var icon: Drawable?
 )
-class GlobalListAdapter (private val lifecycleOwner: LifecycleOwner,
-val onListItemClicked: (model: ListUiModel) -> Unit
+
+class GlobalListAdapter(
+    private val lifecycleOwner: LifecycleOwner,
+    val onListItemClicked: (model: ListUiModel) -> Unit
 ) : ListAdapter<ListUiModel, GlobalListVH>(GlobalListDiffUtils) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GlobalListVH {
@@ -32,9 +34,12 @@ val onListItemClicked: (model: ListUiModel) -> Unit
     }
 
     override fun onBindViewHolder(holder: GlobalListVH, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(currentList[position])
     }
 
+    override fun getItemCount(): Int {
+        return currentList.size
+    }
 }
 
 class GlobalListVH(
@@ -58,13 +63,13 @@ class GlobalListVH(
 object GlobalListDiffUtils : DiffUtil.ItemCallback<ListUiModel>() {
 
     override fun areItemsTheSame(oldItem: ListUiModel, newItem: ListUiModel): Boolean {
-        return ((oldItem.icon == newItem.icon) && (oldItem.name === oldItem.name))
+        return oldItem.postion == newItem.postion
     }
 
     override fun areContentsTheSame(
         oldItem: ListUiModel,
         newItem: ListUiModel
     ): Boolean {
-        return oldItem == newItem
+        return ((oldItem.icon?.equals(newItem.icon) == true) && (oldItem.name == oldItem.name))
     }
 }

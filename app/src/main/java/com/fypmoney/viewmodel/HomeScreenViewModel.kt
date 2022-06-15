@@ -300,14 +300,15 @@ class HomeScreenViewModel(application: Application) : BaseViewModel(application)
         var gender = 1
         var feedtype = ""
 
-        if (Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MALE") {
-            gender = 0
+        gender = if ( Utility.getCustomerDataFromPreference()?.userProfile?.gender.isNullOrEmpty() || Utility.getCustomerDataFromPreference()?.userProfile?.gender == "MALE") {
+            0
         } else {
-            gender = 1
+            1
         }
-        if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
-            feedtype =
-                gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
+        feedtype = if (Utility.getCustomerDataFromPreference()?.postKycScreenCode != null) {
+            gender.toString() + "_" + Utility.getCustomerDataFromPreference()?.postKycScreenCode
+        }else{
+            gender.toString() + "_" + "0"
         }
 
         val feedRequestModel = FeedRequestModel()

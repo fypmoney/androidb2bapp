@@ -5,10 +5,8 @@ import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
-import com.adjust.sdk.Adjust
-import com.adjust.sdk.AdjustEvent
-import com.fyp.trackr.models.*
-import com.fyp.trackr.services.TrackrServices
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
@@ -17,14 +15,13 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
-import com.fypmoney.view.register.*
-
+import com.fypmoney.view.register.InviteParentSiblingActivity
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
+import com.fypmoney.view.register.PendingRequestActivity
 import com.fypmoney.viewmodel.LoginSuccessViewModel
-import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.view_login_success.*
 import java.util.*
 import kotlin.concurrent.schedule
-import kotlinx.android.synthetic.main.view_walk_through_one.*
 
 /*
 * This class is used for show login success message
@@ -51,17 +48,7 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
 
         trackr {
             it.name = TrackrEvent.phone_verification
-            it.add(
-                TrackrField.user_id,SharedPrefUtils.getLong(
-                    applicationContext,
-                    SharedPrefUtils.SF_KEY_USER_ID
-                ).toString())
         }
-
-        UserTrackr.login(SharedPrefUtils.getLong(
-            applicationContext,
-            SharedPrefUtils.SF_KEY_USER_ID
-        ).toString())
         image.gifResource = R.raw.phone_verified
         Timer().schedule(1000) {
             runOnUiThread {
@@ -83,7 +70,11 @@ class LoginSuccessView : BaseActivity<ViewLoginSuccessBinding, LoginSuccessViewM
         mViewModel.onApiSuccess.observe(this) {
             when {
                 Utility.getCustomerDataFromPreference()?.isProfileCompleted == AppConstants.NO -> {
-                    intentToActivity(UserTypeOnLoginView::class.java)
+                    //intentToActivity(UserTypeOnLoginView::class.java)
+                    val intent = Intent(this, CreateAccountView::class.java)
+                    intent.putExtra(AppConstants.USER_TYPE_NEW, true)
+                    intent.putExtra(AppConstants.USER_TYPE, "Teenager")
+                    startActivity(intent)
 
                 }
                 Utility.getCustomerDataFromPreference()?.bankProfile?.isAccountActive == AppConstants.NO -> {

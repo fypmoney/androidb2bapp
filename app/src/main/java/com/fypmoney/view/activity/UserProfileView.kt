@@ -22,12 +22,17 @@ import com.fypmoney.base.BaseActivity
 import com.fypmoney.bindingAdapters.loadImage
 import com.fypmoney.databinding.ViewUserNewProfileBinding
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.GlobalListAdapter
 import com.fypmoney.view.adapter.ListUiModel
 import com.fypmoney.view.community.SocialCommunityActivity
+import com.fypmoney.view.discord.DiscordInviteActivity
+import com.fypmoney.view.discord.DiscordProfileActivity
 import com.fypmoney.view.fragment.LogoutBottomSheet
+import com.fypmoney.view.register.PanAdhaarSelectionActivity
+import com.fypmoney.view.upgradetokyc.UpgradeToKycInfoActivity
 import com.fypmoney.viewmodel.UserProfileViewModel
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
@@ -36,8 +41,6 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.yalantis.ucrop.util.FileUtils.getPath
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.toolbar.toolbar
-import kotlinx.android.synthetic.main.view_home.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -72,7 +75,6 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
             context = this@UserProfileView,
             toolbar = toolbar, backArrowTint = Color.WHITE,
             titleColor = Color.WHITE,
-
             isBackArrowVisible = true, toolbarTitle = getString(R.string.my_profile_title)
         )
 
@@ -120,67 +122,146 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
 
 
                 0 -> {
-                    startActivity(Intent(this@UserProfileView, BankTransactionHistoryView::class.java))
+                    startActivity(
+                        Intent(
+                            this@UserProfileView,
+                            BankTransactionHistoryView::class.java
+                        )
+                    )
                 }
 
                 2 -> {
+                    val dicordconnected =
+                        SharedPrefUtils.getString(
+                            application,
+                            SharedPrefUtils.SF_DICORD_CONNECTED
+                        )
+                    if (!dicordconnected.isNullOrEmpty() && dicordconnected == "connected") {
+
+                        intentToActivityMain(
+                            this@UserProfileView,
+                            DiscordProfileActivity::class.java
+                        )
+                    } else {
+                        startActivity(Intent(this, DiscordInviteActivity::class.java))
+
+
+                    }
+                    }
+
+                3 -> {
                     intentToActivityMain(this@UserProfileView, SocialCommunityActivity::class.java)
                 }
-                3 -> {
+                4 -> {
                     openWebPageFor(
                         getString(R.string.privacy_policy),
                         "https://www.fypmoney.in/fyp/privacy-policy/"
                     )
                 }
-                4 -> {
+                5 -> {
                     openWebPageFor(
                         getString(R.string.terms_and_conditions),
                         "https://www.fypmoney.in/fyp/terms-of-use/"
                     )
                 }
 
-                5 -> {
+                6 -> {
                     callFreshChat(applicationContext)
                 }
 
-                6 -> {
+                7 -> {
                     callLogOutBottomSheet()
                 }
 
             }
 
         })
-        (mViewBinding.profileList.adapter as GlobalListAdapter).submitList(prepareOptions())
 
         mViewModel.callGetCustomerProfileApi()
+
 
         setObserver()
     }
 
+    override fun onStart() {
+        super.onStart()
+        (mViewBinding.profileList.adapter as GlobalListAdapter).submitList(prepareOptions())
+
+    }
     private fun prepareOptions(): ArrayList<ListUiModel> {
 
         val iconList = ArrayList<ListUiModel>()
-        iconList.add(ListUiModel(postion = 0,
-            name = getString(R.string.trans_history_heading),
-            icon = AppCompatResources.getDrawable(this,R.drawable.ic_account_statement) ))
-        iconList.add(ListUiModel(postion = 1,
-            name = getString(R.string.privacy_settings),
-            icon = AppCompatResources.getDrawable(this,R.drawable.ic_privacy) ))
-        iconList.add(ListUiModel(postion = 2,
-            name = getString(R.string.community_settings),
-            icon = AppCompatResources.getDrawable(this,R.drawable.ic_community) ))
-        iconList.add(ListUiModel(postion = 3,
-            name = getString(R.string.privacy_policy),
-            icon = AppCompatResources.getDrawable(this,R.drawable.ic_privacy) ))
-        iconList.add(ListUiModel(postion = 4,
-            name = getString(R.string.t_n_c),
-            icon = AppCompatResources.getDrawable(this,R.drawable.ic_privacy) ))
-        iconList.add(ListUiModel(postion = 5,
-            name = getString(R.string.help),
-            icon = AppCompatResources.getDrawable(this,R.drawable.ic_help) ))
-        iconList.add(ListUiModel(postion = 6,
-            name = getString(R.string.log_out),
-            icon = AppCompatResources.getDrawable(this,R.drawable.ic_log_out) ))
+        iconList.add(
+            ListUiModel(
+                postion = 0,
+                name = getString(R.string.trans_history_heading),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_account_statement)
+            )
+        )
+        iconList.add(
+            ListUiModel(
+                postion = 1,
+                name = getString(R.string.privacy_settings),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_profile_privacy_settings)
+            )
+        )
+       val discoredConnected=  SharedPrefUtils.getString(
+            application,
+            SharedPrefUtils.SF_DICORD_CONNECTED
+        )
+        if(!discoredConnected.isNullOrEmpty() && (discoredConnected == "connected")){
+            iconList.add(
+                ListUiModel(
+                    postion = 2,
+                    name = getString(R.string.discord_profile),
+                    icon = AppCompatResources.getDrawable(this, R.drawable.ic_discord_profile)
+                )
+            )
+        }else{
+            iconList.add(
+                ListUiModel(
+                    postion = 2,
+                    name = getString(R.string.connect_to_discord),
+                    icon = AppCompatResources.getDrawable(this, R.drawable.ic_discord_profile)
+                )
+            )
+        }
+
+        iconList.add(
+            ListUiModel(
+                postion = 3,
+                name = getString(R.string.community_settings),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_community)
+            )
+        )
+        iconList.add(
+            ListUiModel(
+                postion = 4,
+                name = getString(R.string.privacy_policy),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_privacy)
+            )
+        )
+        iconList.add(
+            ListUiModel(
+                postion = 5,
+                name = getString(R.string.t_n_c),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_term_and_condition)
+            )
+        )
+        iconList.add(
+            ListUiModel(
+                postion = 6,
+                name = getString(R.string.help),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_help)
+            )
+        )
+        iconList.add(
+            ListUiModel(
+                postion = 7,
+                name = getString(R.string.log_out),
+                icon = AppCompatResources.getDrawable(this, R.drawable.ic_log_out)
+            )
+        )
 
 
         return iconList
@@ -233,6 +314,23 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                         }
                     }).check()
                 mViewModel.onProfileClicked.value = false
+            }
+        }
+        mViewModel.onUpgradeKycClicked.observe(this) {
+            if (it) {
+                Utility.getCustomerDataFromPreference()?.let {
+                    if(it.postKycScreenCode.isNullOrEmpty()){
+                        val intent = Intent(this, PanAdhaarSelectionActivity::class.java)
+                        startActivity(intent)
+                    }else{
+                        val intent  = Intent(this,UpgradeToKycInfoActivity::class.java).apply {
+                            putExtra(KYC_UPGRADE_FROM_WHICH_SCREEN,UserProfileView::class.java.simpleName)
+                        }
+                        startActivity(intent)
+                    }
+                }
+
+                mViewModel.onUpgradeKycClicked.value = false
             }
         }
 
@@ -302,6 +400,8 @@ class UserProfileView : BaseActivity<ViewUserNewProfileBinding, UserProfileViewM
                     e.printStackTrace()
                 }
             }
+        } else if (requestCode == AppConstants.REQUEST_IMAGE) {
+
         }
     }
 

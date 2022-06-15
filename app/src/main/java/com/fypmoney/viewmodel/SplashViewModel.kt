@@ -3,6 +3,7 @@ package com.fypmoney.viewmodel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.adjust.sdk.Adjust
 import com.fyp.trackr.base.Trackr
 import com.fyp.trackr.models.*
@@ -20,6 +21,8 @@ import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.SettingsRequest
 import com.fypmoney.model.SettingsResponse
 import com.fypmoney.model.checkappupdate.CheckAppUpdateResponse
+import com.fypmoney.util.AppConstants.ADD_MONEY_VIDEO
+import com.fypmoney.util.AppConstants.ADD_MONEY_VIDEO_NEW
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
 import com.fypmoney.util.AppConstants.ERROR_MESSAGE_HOME
 import com.fypmoney.util.AppConstants.IS_NEW_FEED_AVAILABLE
@@ -30,6 +33,7 @@ import com.fypmoney.util.AppConstants.REFER_LINE1
 import com.fypmoney.util.AppConstants.REFER_LINE2
 import com.fypmoney.util.AppConstants.REFER_MSG_SHARED_1
 import com.fypmoney.util.AppConstants.REFER_MSG_SHARED_2
+import com.fypmoney.util.AppConstants.SHOW_RECHARGE_SCREEN
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_APP_VERSION_CODE
 import com.fypmoney.util.Utility
@@ -39,6 +43,8 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.moengage.core.internal.MoEConstants
 import com.moengage.firebase.MoEFireBaseHelper
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 /*
@@ -54,7 +60,11 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
     private val _appUpdateState = MutableLiveData<AppUpdateState>()
 
     init {
-        setUpApp()
+        viewModelScope.launch {
+            delay(3000)
+            setUpApp()
+        }
+
     }
     fun setUpApp() {
         callCheckAppUpdate()
@@ -100,6 +110,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                         map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = it.mobile.toString()
                         map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = it.firstName.toString()
                         map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = it.lastName.toString()
+                        map[MoEConstants.USER_ATTRIBUTE_USER_EMAIL] = it.email.toString()
 
                         map[MoEConstants.USER_ATTRIBUTE_USER_GENDER] = it.userProfile?.gender.toString()
                         map[CUSTOM_USER_POST_KYC_CODE] = it.postKycScreenCode.toString()
@@ -157,7 +168,10 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
             "ERROR_MESSAGE_HOME",
             "IS_NEW_FEED_AVAILABLE",
             "ONBOARD_SHARE_90",
-            "ONBOARD_SHARE_1"
+            "ONBOARD_SHARE_1",
+            "ADD_MONEY_VIDEO",
+            "SHOW_RECHARGE_SCREEN",
+            "ADD_MONEY_VIDEO_NEW"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -189,6 +203,8 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                 if (responseData is CustomerInfoResponse) {
                     Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
 
+                    SharedPrefUtils.putString(PockketApplication.instance,
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.bankProfile?.kycType)
                     // Save the user id in shared preference
                     responseData.customerInfoResponseDetails?.id?.let {
                         SharedPrefUtils.putLong(
@@ -202,11 +218,14 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                         value = responseData.customerInfoResponseDetails?.mobile
                     )
 
+
                     SharedPrefUtils.putString(
                         getApplication(),
                         SharedPrefUtils.SF_KEY_PROFILE_IMAGE,
                         responseData.customerInfoResponseDetails?.profilePicResourceId
                     )
+                    SharedPrefUtils.putString(PockketApplication.instance,
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.bankProfile?.kycType)
                     val interestList = ArrayList<String>()
                     if (responseData.customerInfoResponseDetails?.userInterests?.isNullOrEmpty() == false) {
                         responseData.customerInfoResponseDetails?.userInterests?.forEach {
@@ -226,6 +245,7 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                     map[MoEConstants.USER_ATTRIBUTE_USER_MOBILE] = responseData.customerInfoResponseDetails!!.mobile.toString()
                     map[MoEConstants.USER_ATTRIBUTE_USER_FIRST_NAME] = responseData.customerInfoResponseDetails!!.firstName.toString()
                     map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] = responseData.customerInfoResponseDetails!!.lastName.toString()
+                    map[MoEConstants.USER_ATTRIBUTE_USER_EMAIL] = responseData.customerInfoResponseDetails!!.email.toString()
                     UserTrackr.push(map)
                     UserTrackr.login( responseData.customerInfoResponseDetails!!.mobile.toString())
                     responseData.customerInfoResponseDetails?.dob?.let {
@@ -321,12 +341,38 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                 )
 
                             }
+                            ADD_MONEY_VIDEO -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_ADD_MONEY_VIDEO,
+                                    it.value
+                                )
+                            }
+                            ADD_MONEY_VIDEO_NEW -> {
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_ADD_MONEY_VIDEO_NEW,
+                                    it.value
+                                )
+                            }
                             ERROR_MESSAGE_HOME -> {
                                 PockketApplication.homeScreenErrorMsg = it.value
                             }
                             IS_NEW_FEED_AVAILABLE -> {
                                 PockketApplication.isNewFeedAvailableData = it
                             }
+                            IS_NEW_FEED_AVAILABLE -> {
+                                PockketApplication.isNewFeedAvailableData = it
+                            }
+                            SHOW_RECHARGE_SCREEN->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SHOW_RECHARGE_IN_HOME_SCREEN,
+                                    it.value
+                                )
+                            }
+
+
                         }
                     }
                 }

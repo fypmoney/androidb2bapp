@@ -1,8 +1,14 @@
 package com.fypmoney.database
 
+import android.content.ContentResolver
+import android.database.Cursor
+import android.provider.ContactsContract
+import android.util.Log
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.model.ContactRequestDetails
 import com.fypmoney.model.UserPhoneContact
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import kotlinx.coroutines.runBlocking
 
@@ -13,7 +19,7 @@ import kotlinx.coroutines.runBlocking
 
 class ContactRepository(mDB: AppDatabase?) {
     private var appDB: AppDatabase? = mDB
-
+    private val TAG = ContactRepository::class.java.simpleName
     /*  */
     /**
      * Method to fetch the contacts from local database.
@@ -113,7 +119,7 @@ class ContactRepository(mDB: AppDatabase?) {
                 contactList.forEachIndexed { index, userPhoneContact ->
                     appDB?.contactDao()
                         ?.updateIsAppUserStatus(
-                            isAppUser = true,
+                            isAppUser = userPhoneContact.isAppUser,
                             contactNum = userPhoneContact.contactNumber,
                             profilePicUrl = userPhoneContact.profilePicResourceId,
                             userId = userPhoneContact.userId,
@@ -126,5 +132,47 @@ class ContactRepository(mDB: AppDatabase?) {
         }
 
     }
+
+    fun getContactsFromPhoneBookAndStoreInRoom(contentResolver: ContentResolver){
+        //Get last sync time
+        val lastSyncTimeInMilis: String? = SharedPrefUtils.getString(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
+        )
+        Log.d(TAG,"last date and time for sync:$lastSyncTimeInMilis")
+        var contactsCursor:Cursor? = null
+        lastSyncTimeInMilis?.let {
+            contactsCursor = contentResolver.query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null,
+                ContactsContract.CommonDataKinds.Phone.CONTACT_LAST_UPDATED_TIMESTAMP + " >= ?",
+                arrayOf(it),
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC"
+            )
+        }?: kotlin.run {
+            Log.d(TAG,"lastSyncTimeInMilis null :$lastSyncTimeInMilis")
+            contactsCursor = contentResolver.query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                null,
+                null,
+                null,
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC"
+            )
+        }
+        contactsCursor?.let {
+            while (it.moveToNext()){
+                val contactEntity = ContactEntity()
+                val name = it.getString(it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME))
+                Log.d(TAG,"contact name: $name")
+
+            }
+
+        }?: kotlin.run {
+            Log.d(TAG,"contactsCursor:$contactsCursor")
+        }
+
+
+    }
+
 
 }

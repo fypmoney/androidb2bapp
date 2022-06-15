@@ -93,7 +93,7 @@ data class CustomerInfoResponseDetails(
     @SerializedName("inviteResponseMessage") val inviteResponseMessage: String? = null,
 
     @SerializedName("isOldUser") val isOldUser: String? = null,
-    @SerializedName("idAccessToken") val idAccessToken: Any? = null
+    @SerializedName("idAccessToken") val idAccessToken: Any? = null,
 ) : Serializable
 
 
@@ -112,7 +112,12 @@ data class UserProfile(
 data class BankProfile(
     @SerializedName("isAccountActive") var isAccountActive: String?,
     @SerializedName("isVirtualCardIssued") var isVirtualCardIssued: String?,
-    @SerializedName("isPhysicardIssued") var isPhysicardIssued: String?
+    @SerializedName("isPhysicardIssued") var isPhysicardIssued: String?,
+    @SerializedName("kycType") var kycType: String? = "MINIMUM",
+    @SerializedName("vpa") var vpa: String?,
+    @SerializedName("virtualAccountNo") var virtualAccountNo: String?,
+    @SerializedName("virtualAccountUpi") var virtualAccountUpi: String?,
+    @SerializedName("virtualAccountIfscCode") var virtualAccountIfscCode: String?,
 ) : Serializable
 @Keep
 data class UserInterestModel(

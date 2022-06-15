@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.recharge.viewmodel.DthKnowMoreBottomSheetVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:translationZ="1dp"
+            android:background="@drawable/curved_background1"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            style="@style/TextviewBold"
+            android:textColor="@color/textColor1"
+            android:layout_marginHorizontal="@dimen/dp16"
+            android:gravity="start"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/operator_iv"
+            android:text="@string/coming_super_soon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/sub_title_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            style="@style/TextviewRegular"
+            android:textColor="@color/textColor1"
+            android:layout_marginHorizontal="@dimen/dp16"
+            android:gravity="start"
+            app:layout_constraintEnd_toStartOf="@+id/operator_iv"
+            android:text="@string/we_are_striving_hard_to_give_you_the_ultimate_upi_experience"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_tv"/>
+
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/operator_iv"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            tools:src="@drawable/ic_airtel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            android:layout_marginTop="@dimen/dp16"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

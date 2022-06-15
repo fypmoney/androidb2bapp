@@ -33,12 +33,12 @@ class UpiComingSoonBottomSheet: BaseBottomSheetFragment<BottomsheetUpiComingSoon
         }
     }
     private fun setupObserver() {
-        upiScanComingSoonViewModel.event.observe(viewLifecycleOwner,{
-            when(it){
+        upiScanComingSoonViewModel.event.observe(viewLifecycleOwner) {
+            when (it) {
                 UpiComingSoonVM.UpiComingSoonEvent.GotItEvent -> {
                     dismiss()
                 }
             }
-        })
+        }
     }
 }

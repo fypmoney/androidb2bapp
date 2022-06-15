@@ -103,6 +103,15 @@
     <color name="red1">#FF0000</color>
     <color name="grey2">#B0B7B9</color>
     <color name="textColor1">#221F1F</color>
+    <color name="green6">#47BC5C</color>
+    <color name="moeny_suggestion_background">#F7F7F7</color>
+    <color name="gery10">#F4F4F4</color>
+    <color name="strokeColor">#B1B3B6</color>
+    <color name="black_background">#0E141C</color>
+    <color name="edit_text_bg">#1C2129</color>
+    <color name="gery11">#B1B3B6</color>
+    <color name="recommanded_bg">#EFFFF2</color>
+    <color name="yellow10">#FAC660</color>
 
 
 </resources>

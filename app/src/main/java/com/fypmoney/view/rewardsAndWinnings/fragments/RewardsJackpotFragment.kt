@@ -143,10 +143,6 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
 
     override fun onStart() {
         super.onStart()
-//        if (!mViewBinding?.totalRefralWonValueTv?.text.isNullOrEmpty()) {
-//            mViewBinding?.loadingAmountHdp?.clearAnimation()
-//            mViewBinding?.loadingAmountHdp?.visibility = View.GONE
-//        }
     }
 
     private fun setRecyclerView() {
@@ -188,7 +184,7 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
 
         mViewModel.totalJackpotAmount.observe(
             viewLifecycleOwner,
-            androidx.lifecycle.Observer { list ->
+            { list ->
                 mViewBinding?.loadingAmountHdp?.clearAnimation()
                 mViewBinding?.loadingAmountHdp?.visibility = View.GONE
                 if (list.count != null) {

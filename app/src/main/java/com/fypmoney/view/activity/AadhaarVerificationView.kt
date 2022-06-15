@@ -3,7 +3,6 @@ package com.fypmoney.view.activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.fypmoney.BR
@@ -47,7 +46,7 @@ class AadhaarVerificationView :
             toolbar = toolbar,
             isBackArrowVisible = true
         )
-        helpValue.visibility = View.INVISIBLE
+        //helpValue.visibility = View.INVISIBLE
         setObserver()
 
         et_first_name.addTextChangedListener(object : SeparatorTextWatcher(' ', 4) {
@@ -99,6 +98,21 @@ class AadhaarVerificationView :
         mViewModel.onKycInitSuccess.observe(this) {
             goToEnterOtpScreen(token = it.token)
         }
+        mViewModel.kycUpgraded.observe(this) {
+            when(intent.getStringExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN)){
+                AddMoneyView::class.java.simpleName->{
+                    startActivity(Intent(this@AadhaarVerificationView,AddMoneyView::class.java))
+                }
+                PayRequestProfileView::class.java.simpleName->{
+                    startActivity(Intent(this@AadhaarVerificationView,PayRequestProfileView::class.java))
+
+                }
+                UserProfileView::class.java.simpleName->{
+                    startActivity(Intent(this@AadhaarVerificationView,UserProfileView::class.java))
+
+                }
+            }
+        }
         mViewModel.clickHere.observe(this) {
             if(it){
                 callFreshChat(applicationContext)
@@ -123,29 +137,32 @@ class AadhaarVerificationView :
      * Method to navigate to the Feeds screen after login
      */
     private fun goToEnterOtpScreen(token: String) {
-        val intent = Intent(this, EnterOtpView::class.java)
-        intent.putExtra(
+        val intent1 = Intent(this, EnterOtpView::class.java)
+        intent1.putExtra(
             AppConstants.MOBILE_TYPE,
             ""
         )
-        intent.putExtra(
+        intent1.putExtra(
             AppConstants.FROM_WHICH_SCREEN, AppConstants.AADHAAR_VERIFICATION
         )
 
-        intent.putExtra(
+        intent1.putExtra(
             AppConstants.MOBILE_WITHOUT_COUNTRY_CODE,
             ""
         )
 
-        intent.putExtra(
+        intent1.putExtra(
             AppConstants.KYC_ACTIVATION_TOKEN, token
 
         )
-        intent.putExtra(
+        intent1.putExtra(
             AppConstants.KIT_FOUR_DIGIT, ""
 
         )
-        startActivity(intent)
+        intent1.putExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN,
+            intent.getStringExtra(AppConstants.KYC_UPGRADE_FROM_WHICH_SCREEN))
+
+        startActivity(intent1)
     }
 
 }

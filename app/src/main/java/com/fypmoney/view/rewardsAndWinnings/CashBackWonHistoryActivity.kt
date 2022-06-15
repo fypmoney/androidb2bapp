@@ -94,22 +94,19 @@ class CashBackWonHistoryActivity :
 
     }
     private fun setObserver(mViewModel: RewardsCashbackwonVM) {
-        mViewModel?.rewardHistoryList.observe(this, { list ->
+        mViewModel.rewardHistoryList.observe(this) { list ->
             if (list != null) {
-
-
                 LoadProgressBar?.visibility = View.GONE
 
 
                 if (list.isNotEmpty()) {
-                    var arraylist = list
-                    page = page + 1
+                    val arraylist = list
+                    page += 1
 
                     mViewModel.noDataFoundVisibility.set(false)
                     mViewModel.cashbackHistoryAdapter.setList(arraylist)
                 } else {
-
-                    if (page == 1) {
+                    if (page == 0) {
                         mViewModel.noDataFoundVisibility.set(true)
                     }
                 }
@@ -118,13 +115,13 @@ class CashBackWonHistoryActivity :
 
             } else {
 
-                if (page == 1) {
+                if (page == 0) {
 
                     mViewModel.noDataFoundVisibility.set(true)
                 }
             }
 
-        })
+        }
         mViewModel.onItemClicked.observe(this) {
             intentToActivity(PayUSuccessViewCashbackWon::class.java, it)
         }

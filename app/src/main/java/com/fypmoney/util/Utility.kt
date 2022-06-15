@@ -48,6 +48,7 @@ import com.fypmoney.util.AppConstants.GiftScreen
 import com.fypmoney.util.AppConstants.HOMEVIEW
 import com.fypmoney.util.AppConstants.JACKPOTTAB
 import com.fypmoney.util.AppConstants.OfferScreen
+import com.fypmoney.util.AppConstants.OrderCard
 import com.fypmoney.util.AppConstants.ReferralScreen
 import com.fypmoney.util.AppConstants.StoreScreen
 import com.fypmoney.util.AppConstants.StoreofferScreen
@@ -59,10 +60,12 @@ import com.fypmoney.view.fragment.OffersStoreActivity
 import com.fypmoney.view.fragment.StoresActivity
 import com.fypmoney.view.giftCardModule.GiftCardsListScreen
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
+import com.fypmoney.view.ordercard.OrderCardView
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
 import com.fypmoney.view.ordercard.trackorder.TrackOrderView
 import com.fypmoney.view.referandearn.view.ReferAndEarnActivity
 import com.fypmoney.view.storeoffers.OffersScreen
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import kotlinx.coroutines.Dispatchers
@@ -100,52 +103,57 @@ object Utility {
         if (tv.tag == null) {
             tv.tag = tv.text
         }
-        val vto = tv.viewTreeObserver
-        vto.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                val text: String
-                val lineEndIndex: Int
-                val obs = tv.viewTreeObserver
-                obs.removeOnGlobalLayoutListener(this)
-                if (maxLine == 0) {
-                    lineEndIndex = tv.layout.getLineEnd(0)
-                    text = tv.text.subSequence(0, lineEndIndex - expandText.length + 1)
-                        .toString() + " " + expandText
-                    tv.text = text
+        try{
+            val vto = tv.viewTreeObserver
+            vto.addOnGlobalLayoutListener(object : OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    val text: String
+                    val lineEndIndex: Int
+                    val obs = tv.viewTreeObserver
+                    obs.removeOnGlobalLayoutListener(this)
+                    if (maxLine == 0) {
+                        lineEndIndex = tv.layout.getLineEnd(0)
+                        text = tv.text.subSequence(0, lineEndIndex - expandText.length + 1)
+                            .toString() + " " + expandText
+                        tv.text = text
 
-                    tv.movementMethod = LinkMovementMethod.getInstance()
+                        tv.movementMethod = LinkMovementMethod.getInstance()
 
-                    tv.setText(
-                        addClickablePartTextViewResizable(
-                            SpannableString(tv.text.toString()), tv, lineEndIndex, expandText,
-                            viewMore
-                        ), BufferType.SPANNABLE
-                    )
-                } else if (maxLine > 0 && tv.lineCount >= maxLine) {
-                    lineEndIndex = tv.layout.getLineEnd(maxLine - 1)
-                    text = tv.text.subSequence(0, lineEndIndex - expandText.length + 1)
-                        .toString() + " " + expandText
-                    tv.text = text
+                        tv.setText(
+                            addClickablePartTextViewResizable(
+                                SpannableString(tv.text.toString()), tv, lineEndIndex, expandText,
+                                viewMore
+                            ), BufferType.SPANNABLE
+                        )
+                    } else if (maxLine > 0 && tv.lineCount >= maxLine) {
+                        lineEndIndex = tv.layout.getLineEnd(maxLine - 1)
+                        text = tv.text.subSequence(0, lineEndIndex - expandText.length + 1)
+                            .toString() + " " + expandText
+                        tv.text = text
 
-                    tv.movementMethod = LinkMovementMethod.getInstance()
+                        tv.movementMethod = LinkMovementMethod.getInstance()
 
-                    tv.setText(
-                        addClickablePartTextViewResizable(
-                            SpannableString(tv.text.toString()), tv, lineEndIndex, expandText,
-                            viewMore
-                        ), BufferType.SPANNABLE
-                    )
-                } else {
-                    lineEndIndex = tv.layout.getLineEnd(tv.layout.lineCount - 1)
-                    text = tv.text.subSequence(0, lineEndIndex).toString()
-                    tv.text = text
+                        tv.setText(
+                            addClickablePartTextViewResizable(
+                                SpannableString(tv.text.toString()), tv, lineEndIndex, expandText,
+                                viewMore
+                            ), BufferType.SPANNABLE
+                        )
+                    } else {
+                        lineEndIndex = tv.layout.getLineEnd(tv.layout.lineCount - 1)
+                        text = tv.text.subSequence(0, lineEndIndex).toString()
+                        tv.text = text
 
-                    tv.movementMethod = LinkMovementMethod.getInstance()
+                        tv.movementMethod = LinkMovementMethod.getInstance()
+
+                    }
 
                 }
+            })
+        }catch (e:StringIndexOutOfBoundsException){
+            FirebaseCrashlytics.getInstance().recordException(e)
+        }
 
-            }
-        })
     }
 
     private fun addClickablePartTextViewResizable(
@@ -513,15 +521,12 @@ object Utility {
             // Switch to a background (IO) thread
             withContext(Dispatchers.IO) {
 
-
                 val contacts: Cursor?
-
                 val lastDate: String? = SharedPrefUtils.getString(
                     PockketApplication.instance,
                     SharedPrefUtils.SF_KEY_LAST_CONTACTS_SINK_TIMESTAMP
                 )
-                try {
-                    if (lastDate != null) {
+                if (lastDate != null) {
                         contacts = contentResolver.query(
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
@@ -577,7 +582,6 @@ object Utility {
                         contactEntity.phoneBookIdentifier = contacts.getString(
                             contacts.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID)
                         )
-
                         setLastContactSinkDate()
                         val newList =
                             contactList.filter { it.contactNumber == contactEntity.contactNumber }
@@ -585,14 +589,6 @@ object Utility {
                             contactList.add(contactEntity)
                     }
                     contacts.close()
-
-                } catch (
-                    e: Exception
-                ) {
-
-                    e.printStackTrace()
-                }
-
 
 
                 if (SharedPrefUtils.getString(
@@ -612,14 +608,13 @@ object Utility {
                         else -> {
                         }
                     }
-
-
                 }
             }
             onAllContactsAddedListener.onAllContactsSynced(contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>)
 
         }
     }
+
 
     /*
     * set the last sink date
@@ -714,7 +709,10 @@ object Utility {
             SharedPrefUtils.SF_KEY_ACCESS_TOKEN,
             ""
         )
-
+        SharedPrefUtils.putString(
+            PockketApplication.instance, key = SharedPrefUtils.SF_DICORD_CONNECTED,
+            value = ""
+        )
         SharedPrefUtils.putString(
             PockketApplication.instance,
             SharedPrefUtils.SF_KEY_USER_PROFILE_INFO,
@@ -775,6 +773,11 @@ object Utility {
         SharedPrefUtils.putBoolean(
             PockketApplication.instance,
             SharedPrefUtils.SF_IS_INSTALLED_APPS_SYNCED,
+            false
+        )
+        SharedPrefUtils.putBoolean(
+            PockketApplication.instance,
+            SharedPrefUtils.SF_CARD_PROMO_CODE_APPLIED,
             false
         )
     }
@@ -853,15 +856,15 @@ object Utility {
         phone.let {
             when {
                 phone?.startsWith("+91") == true -> {
-                    return phone.replace("+91", "")
+                    return phone.replace("+91", "").replace(" ","")
                 }
                 phone?.startsWith("+") == true -> {
-                    return phone.replace("+", "")
+                    return phone.replace("+", "").replace(" ","")
                 }
                 phone?.startsWith("0") == true -> {
-                    return phone.replace("0", "")
+                    return phone.replace("0", "").replace(" ","")
                 }
-                else -> return phone!!
+                else -> return phone!!.replace(" ","")
             }
         }
     }
@@ -1111,6 +1114,10 @@ object Utility {
                 intent = Intent(context, ChoresActivity::class.java)
 
             }
+            OrderCard -> {
+                intent = Intent(context, OrderCardView::class.java)
+
+            }
             else -> {
                 if (screenName.startsWith("offerdetails_")) {
                     intent = Intent(context, OfferDetailActivity::class.java)
@@ -1203,5 +1210,49 @@ object Utility {
             e.printStackTrace()
             false
         }
+    }
+
+
+
+    sealed class MobileNumberFromPhoneBook{
+        data class MobileNumberFound(val phoneNumber:String):MobileNumberFromPhoneBook()
+        data class UnableToFindMobileNumber(val errorMsg:String):MobileNumberFromPhoneBook()
+    }
+    fun getPhoneNumberFromContact(activity: Activity,data: Intent?):MobileNumberFromPhoneBook{
+        val contactData = data!!.data
+        val c: Cursor? =
+            contactData?.let { activity.contentResolver.query(it, null, null, null, null) }
+        if (c != null) {
+            if (c.moveToFirst()) {
+                val id = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID))
+                val hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))
+                if (hasPhone.equals("1", ignoreCase = true)) {
+                    val phones: Cursor? = activity.contentResolver.query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                        ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
+                        null, null
+                    )
+                    phones?.moveToFirst()
+                    return if (phones != null) {
+                        val cNumber = phones.getString(phones.getColumnIndex("data1"))
+                        System.out.println("number is:$cNumber")
+                        val phoneNuber = cNumber.replace("\\s".toRegex(), "")
+                        phones.close()
+                        MobileNumberFromPhoneBook.MobileNumberFound(phoneNuber.takeLast(10))
+
+                    }else{
+                        MobileNumberFromPhoneBook.UnableToFindMobileNumber(activity.getString(R.string.unable_to_pick_phone_number))
+
+                    }
+                }else{
+                    return MobileNumberFromPhoneBook.UnableToFindMobileNumber(activity.getString(R.string.unable_to_pick_phone_number))
+
+                }
+            }else{
+                return MobileNumberFromPhoneBook.UnableToFindMobileNumber(activity.getString(R.string.unable_to_pick_phone_number))
+            }
+        }
+        return MobileNumberFromPhoneBook.UnableToFindMobileNumber(activity.getString(R.string.unable_to_pick_phone_number))
+
     }
 }

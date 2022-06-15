@@ -1,20 +1,18 @@
 package com.fypmoney.view.customview
 
 import android.content.Context
-import android.widget.FrameLayout
-import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.content.res.TypedArray
-import com.fypmoney.R
-import android.text.TextUtils
-import androidx.core.content.ContextCompat
-import com.google.android.material.button.MaterialButton
-import android.graphics.drawable.Drawable
-import android.graphics.PorterDuffColorFilter
 import android.graphics.PorterDuff
-import android.view.MotionEvent
+import android.graphics.PorterDuffColorFilter
+import android.text.TextUtils
+import android.util.AttributeSet
 import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
+import com.fypmoney.R
 import com.fypmoney.databinding.BtnPrimaryBinding
+import com.google.android.material.button.MaterialButton
 
 class PrimaryButton : FrameLayout {
     private var listener: OnClickListener? = null
@@ -56,6 +54,12 @@ class PrimaryButton : FrameLayout {
         ))
         disabledBackgroundColor = a.getColor(R.styleable.PrimaryButton_disabled_bg,
             ContextCompat.getColor(context, R.color.colorPrimary
+        ))
+        disabledTextColor = a.getColor(R.styleable.PrimaryButton_disabled_text,
+            ContextCompat.getColor(context, R.color.cb_grey
+        ))
+        enabledTextColor = a.getColor(R.styleable.PrimaryButton_enabled_text,
+            ContextCompat.getColor(context, R.color.white
         ))
         // make button enable / disable
         binding!!.primaryButton.isEnabled = enabled

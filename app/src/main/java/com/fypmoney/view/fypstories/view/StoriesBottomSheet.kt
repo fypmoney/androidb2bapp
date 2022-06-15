@@ -16,6 +16,7 @@ import com.fypmoney.databinding.BottomsheetStoriesBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.android.synthetic.main.bottomsheet_stories.*
 
 
@@ -89,10 +90,18 @@ class StoriesBottomSheet(var resourceList: List<String?>):
     }
 
     override fun onNext() {
-        loadImage(view = binding!!.storiesIv,imageUrl = resourceList[++counter],
-            ContextCompat.getDrawable(binding!!.storiesIv.context,R.drawable.progress_bar_drawable),
-            rounded = false
-        )
+        try{
+
+            loadImage(view = binding!!.storiesIv,imageUrl = resourceList[++counter],
+                ContextCompat.getDrawable(binding!!.storiesIv.context,R.drawable.progress_bar_drawable),
+                rounded = false
+            )
+        }catch (exception:IndexOutOfBoundsException){
+            FirebaseCrashlytics.getInstance().recordException(exception)
+            FirebaseCrashlytics.getInstance().setCustomKey("resource_list",resourceList.size)
+            FirebaseCrashlytics.getInstance().setCustomKey("counter",counter)
+
+        }
     }
 
     override fun onPrev() {

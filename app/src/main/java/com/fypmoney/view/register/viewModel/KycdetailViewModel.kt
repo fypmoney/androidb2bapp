@@ -4,9 +4,7 @@ import android.app.Application
 import android.text.TextUtils
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.fyp.trackr.models.TrackrEvent
-import com.fyp.trackr.models.TrackrField
-import com.fyp.trackr.models.trackr
+import com.fyp.trackr.models.*
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -16,10 +14,13 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
+import com.fypmoney.model.CustomerInfoResponse
 import com.fypmoney.model.KycActivateAccountResponse
 import com.fypmoney.model.KycActivateAccountResponseDetails
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.register.model.SendKycDetails
+import com.moengage.core.internal.MoEConstants
 
 /*
 * This is used to handle account creation related functionality
@@ -39,6 +40,7 @@ class KycdetailViewModel(application: Application) : BaseViewModel(application) 
     var dobDate = MutableLiveData<String>()
     var gender = MutableLiveData<String>()
     var onActivateAccountSuccess = MutableLiveData<KycActivateAccountResponseDetails>()
+    var customerProfileSuccess = MutableLiveData<Boolean>()
     var onDobClicked = MutableLiveData(false)
     var onAadharCardInfoClicked = MutableLiveData(false)
 
@@ -126,6 +128,20 @@ class KycdetailViewModel(application: Application) : BaseViewModel(application) 
             )
         )
     }
+    /*
+   *This method is used to call get customer profile API
+   * */
+    private fun callGetCustomerProfileApi() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                purpose = ApiConstant.API_GET_CUSTOMER_INFO,
+                endpoint = NetworkUtil.endURL(ApiConstant.API_GET_CUSTOMER_INFO),
+                request_type = ApiUrl.GET,
+                onResponse = this, isProgressBar = true,
+                param = ""
+            )
+        )
+    }
 
     /*
  * This method is used to handle click of date of birth
@@ -147,9 +163,72 @@ class KycdetailViewModel(application: Application) : BaseViewModel(application) 
                     }
                     postKycScreenCode.value =
                         responseData.kycActivateAccountResponseDetails.postKycScreenCode
-                    onActivateAccountSuccess.value = responseData.kycActivateAccountResponseDetails
+                        onActivateAccountSuccess.value = responseData.kycActivateAccountResponseDetails
+                        callGetCustomerProfileApi()
                 }
             }
+            ApiConstant.API_GET_CUSTOMER_INFO -> {
+                if (responseData is CustomerInfoResponse) {
+                    Utility.saveCustomerDataInPreference(responseData.customerInfoResponseDetails)
+                    SharedPrefUtils.putString(
+                        PockketApplication.instance,
+                        SharedPrefUtils.SF_KYC_TYPE,responseData.customerInfoResponseDetails?.bankProfile?.kycType)
+                    // Save the user id in shared preference
+                    SharedPrefUtils.putLong(
+                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_ID,
+                        value = responseData.customerInfoResponseDetails?.id!!
+                    )
+                    // Save the user phone in shared preference
+                    SharedPrefUtils.putString(
+                        getApplication(), key = SharedPrefUtils.SF_KEY_USER_MOBILE,
+                        value = responseData.customerInfoResponseDetails?.mobile
+                    )
+                    SharedPrefUtils.putString(
+                        getApplication(),
+                        SharedPrefUtils.SF_KEY_PROFILE_IMAGE,
+                        responseData.customerInfoResponseDetails?.profilePicResourceId
+                    )
+                    val interestList = ArrayList<String>()
+                    if (responseData.customerInfoResponseDetails?.userInterests?.isNullOrEmpty() == false) {
+                        responseData.customerInfoResponseDetails?.userInterests!!.forEach {
+                            interestList.add(it.name!!)
+                        }
+                        SharedPrefUtils.putArrayList(
+                            getApplication(),
+                            SharedPrefUtils.SF_KEY_USER_INTEREST, interestList
+                        )
+                    }
+                    if (postKycScreenCode.value.isNullOrEmpty()) {
+                        responseData.customerInfoResponseDetails?.postKycScreenCode?.let {
+                            postKycScreenCode.value = it
+                        }
+
+
+                    }
+
+                    responseData.customerInfoResponseDetails?.postKycScreenCode?.let {
+                        val map = hashMapOf<String, Any>()
+                        map[CUSTOM_USER_POST_KYC_CODE] = it
+                        UserTrackr.push(map)
+                    }
+                    responseData.customerInfoResponseDetails?.userProfile?.let { userProfile ->
+                        val map1 = hashMapOf<String, Any>()
+                        map1[MoEConstants.USER_ATTRIBUTE_USER_GENDER] =
+                            userProfile.gender.toString()
+                        UserTrackr.push(map1)
+                        userProfile.dob?.let { it1 -> UserTrackr.setDateOfBirthDate(it1) }
+
+                    }
+                    customerProfileSuccess.value = true
+//                    Utility.getCustomerDataFromPreference()?.postKycScreenCode="90"
+//                    postKycScreenCode.value = "90"
+
+
+                }
+
+
+            }
+
 
         }
     }

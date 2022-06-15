@@ -1,51 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="96dp"
-    android:background="@color/reward_background"
-    android:layout_height="match_parent">
 
-
-    <androidx.recyclerview.widget.RecyclerView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        android:layout_marginTop="@dimen/_6sdp"
-        android:id="@+id/rv_explore"
-
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:layout_height="wrap_content" />
-
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmerLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:layout_marginTop="@dimen/_16sdp"
-
-        tools:visibility="visible">
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="96dp"
+            android:background="@color/reward_background"
+            android:layout_height="match_parent">
 
-            <include layout="@layout/shimmer_placeholder_layout" />
 
-            <include layout="@layout/shimmer_placeholder_big_explore_card" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:id="@+id/rv_explore"
+                android:layout_marginStart="@dimen/_2sdp"
+                android:layout_marginEnd="@dimen/_2sdp"
+                android:layout_height="wrap_content" />
 
-            <include layout="@layout/shimmer_placeholder_layout_explore_card" />
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
-        </LinearLayout>
-    </com.facebook.shimmer.ShimmerFrameLayout>
+                android:layout_marginTop="@dimen/_16sdp"
 
-</RelativeLayout>
+                tools:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/shimmer_placeholder_layout" />
+
+                    <include layout="@layout/shimmer_placeholder_big_explore_card" />
+
+                    <include layout="@layout/shimmer_placeholder_layout_explore_card" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

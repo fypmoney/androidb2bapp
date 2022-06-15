@@ -1,9 +1,7 @@
 package com.fypmoney.view.home.main.explore.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -12,9 +10,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
-import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
-
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -70,31 +66,7 @@ class ExploreFragmentVM(application: Application) : BaseViewModel(application) {
 
     }
 
-    private fun makeFetchFeedRequesttop(
 
-        id: String? = ""
-    ): FeedRequestModel {
-        val userInterest =
-            SharedPrefUtils.getArrayList(getApplication(), SharedPrefUtils.SF_KEY_USER_INTEREST)
-        var userInterestValue = StringBuilder()
-        if (!userInterest.isNullOrEmpty()) {
-            for (i in 0 until userInterest.size) {
-                userInterestValue = userInterestValue.append(userInterest.get(i))
-                if (i != userInterest.size - 1) {
-                    userInterestValue = userInterestValue.append(",")
-                }
-
-            }
-        }
-
-        val feedRequestModel = FeedRequestModel()
-        feedRequestModel.query =
-            "{getAllFeed(page:0, size:null, id : \"$id\", screenName:null,screenSection:null,tags :[],latitude:null,longitude:null,withinRadius:null,displayCard: []) { total feedData  { action { url } offers { innerBannerImg logoImg title code date details tnc }}}}"
-
-
-        return feedRequestModel
-
-    }
 
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)

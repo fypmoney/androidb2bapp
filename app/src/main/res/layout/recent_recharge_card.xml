@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recharge_item_cl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bgcolor">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/operator_iv"
+                android:layout_width="@dimen/dp_40"
+                android:layout_height="@dimen/dp_40"
+                android:src="@drawable/ic_user2"
+                app:customBackgroundColor="@{@color/bgcolor}"
+                app:customIsRounded="@{true}"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/details_cl"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/operator_iv"
+                app:layout_constraintTop_toTopOf="@+id/operator_iv">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/operator_recharge_type_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="JIO Prepaid"
+                    android:textColor="@color/white"
+                    style="@style/TextviewRegular"
+                    android:textSize="14sp"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="normal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/mobile_no_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="85749 82934"
+                    android:textSize="14sp"
+                    android:textColor="@color/white"
+                    style="@style/TextviewRegular"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="normal"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/operator_recharge_type_tv"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/last_recharge_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="Last recharge: 300 on 16 sep 2021"
+                    android:textColor="@color/reward_continue_button"
+                    android:textSize="12sp"
+                    style="@style/TextviewRegular"
+                    android:fontFamily="sans-serif"
+                    android:textStyle="normal"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/mobile_no_tv"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/recharge_status_tv"
+                    style="@style/TextviewRegular"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:textColor="@color/reward_continue_button"
+                    tools:text="Success"
+                    android:drawablePadding="6dp"
+                    tools:drawableStart="@drawable/ic_success_status"
+                    android:textSize="@dimen/text_14sp"
+                    android:layout_marginEnd="@dimen/dp16"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/repeat_recharge_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextviewRegular"
+                    android:textSize="12sp"
+                    android:text="@string/recharge"
+                    android:paddingVertical="@dimen/dp6"
+                    android:paddingHorizontal="@dimen/dp15"
+                    app:customStrokeColor="@{@color/add_money_amount_color}"
+                    app:customIsRounded="@{false}"
+                    app:customCornerRadius="@{@dimen/dp25}"
+                    app:customStrokeWidth="@{@dimen/dp0_5}"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:layout_marginTop="14dp"
+                    android:visibility="visible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recharge_status_tv"
+                    android:textColor="@color/add_money_amount_color"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/check_recharge_status_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextviewRegular"
+                    android:textSize="12sp"
+                    android:text="@string/check_status"
+                    android:layout_marginEnd="@dimen/dp16"
+                    android:layout_marginTop="14dp"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/recharge_status_tv"
+                    android:textColor="@color/add_money_amount_color"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/text_color_light"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="14dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

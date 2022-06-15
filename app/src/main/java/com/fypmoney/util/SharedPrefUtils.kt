@@ -15,6 +15,7 @@ import java.lang.reflect.Type
 class SharedPrefUtils {
 
     companion object {
+        const val SF_DICORD_CONNECTED = "dicord_connectivity"
         const val SF_KEY_FIREBASE_TOKEN = "firebase_token"
         const val SF_KEY_NEW_MESSAGE = "new_message"
         const val SF_KEY_ACCESS_TOKEN = "access_token"
@@ -25,6 +26,7 @@ class SharedPrefUtils {
         const val SF_KEY_USER_ID = "user_id"
         const val SF_KEY_USER_MOBILE = "user_mobile"
         const val SF_KEY_USER_INTEREST = "user_interest"
+        const val SF_UPI_LIST = "saved_upi_list"
         const val SF_KEY_USER_PROFILE_INFO = "user_profile_info"
         const val SF_KEY_USER_FIRST_NAME = "first name"
         const val SF_KEY_USER_LAST_NAME = "last name"
@@ -42,6 +44,8 @@ class SharedPrefUtils {
         const val SF_KEY_REFER_LINE2 = "refer_line_2"
         const val SF_KEY_REFERAL_GLOBAL_MSG = "refer_global_msg"
         const val SF_KEY_REFEREE_CASHBACK = "refer_cashback_amount"
+        const val SF_ADD_MONEY_VIDEO = "add_money_video"
+        const val SF_ADD_MONEY_VIDEO_NEW = "add_money_video_new"
         const val SF_KEY_ERROR_MESSAGE_HOME = "error_msg_home"
         const val SF_KEY_IS_NEW_FEED_AVAILABLE = "is_new_feed_available"
         const val SF_KEY_NAME_ON_CARD = "name_on_card"
@@ -55,6 +59,10 @@ class SharedPrefUtils {
         const val SF_IS_USER_LANDED_ON_HOME_SCREEN_TIME = "is_user_landed_on_home_screen_time"
         const val SF_REFERRAL_CODE_FROM_INVITE_LINK = "referral_code_from_invite_link"
         const val SF_IS_INSTALLED_APPS_SYNCED = "is_installed_apps_is_syncd"
+        const val SF_KYC_TYPE = "kyc_type"
+        const val SF_CARD_PROMO_CODE_APPLIED = "card_promo_code_applied"
+        const val SF_CARD_IS_ACTIVATED = "card_is_activated"
+        const val SF_SHOW_RECHARGE_IN_HOME_SCREEN = "show_recharge_in_home_screen"
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(context)

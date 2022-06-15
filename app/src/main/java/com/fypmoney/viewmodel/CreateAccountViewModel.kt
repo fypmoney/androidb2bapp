@@ -12,7 +12,6 @@ import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
-import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
@@ -156,6 +155,8 @@ class CreateAccountViewModel(application: Application) : BaseViewModel(applicati
                         responseData.customerInfoResponseDetails?.firstName.toString()
                     map[MoEConstants.USER_ATTRIBUTE_USER_LAST_NAME] =
                         responseData.customerInfoResponseDetails?.lastName.toString()
+                    map[MoEConstants.USER_ATTRIBUTE_USER_EMAIL] = responseData.customerInfoResponseDetails!!.email.toString()
+
                     UserTrackr.push(map)
                     responseData.customerInfoResponseDetails?.userProfile?.dob?.let {
                         UserTrackr.setDateOfBirthDate(

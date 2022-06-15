@@ -1,10 +1,11 @@
 package com.fyp.trackr.models
 
 import android.os.Bundle
+import androidx.annotation.Keep
 import com.fyp.trackr.base.Trackr
 import com.fyp.trackr.services.TrackrServices
 import org.json.JSONObject
-
+@Keep
 data class AnalyticsEvent(var name: TrackrEvent = TrackrEvent.None,
                           var map: HashMap<String, Any> = hashMapOf(),
                           var services: ArrayList<TrackrServices> = arrayListOf()) {
@@ -153,6 +154,30 @@ enum class TrackrEvent(name: String) {
     tab_reward_click ("tab_reward_click"),
     tab_family_click ("tab_family_click"),
     tab_home_click ("tab_home_click"),
+    increase_limit_clicked("increase_limit_clicked"),
+    upgrade_your_kyc_clicked("upgrade_your_kyc_clicked"),
+    upgrade_to_aadhar_kyc_clicked("upgrade_to_aadhar_kyc_clicked"),
+    get_otp_on_aadhar_clicked("get_otp_on_aadhar_clicked"),
+    verify_otp_aadhar_clicked("verify_otp_aadhar_clicked"),
+    upgrade_kyc_successfully("upgrade_kyc_successfully"),
+    upgrade_kyc_from_pay_clicked("upgrade_kyc_from_pay_clicked"),
+    upgrade_kyc_from_profile_clicked("upgrade_kyc_from_profile_clicked"),
+    recharge_click("recharge_click"),
+    postpaid_click("postpaid_click"),
+    dth_click("dth_click"),
+    broadband_click("broadband_click"),
+    prepaid_enter_number("prepaid_enter_number"),
+    postpaid_enter_number("postpaid_enter_number"),
+    prepaid_choose_plan("prepaid_choose_plan"),
+    dth_choose_operator("dth_choose_operator"),
+    recharge_success("recharge_success"),
+    recharge_fail("recharge_fail"),
+    postpaid_success("postpaid_success"),
+    postpaid_fail("postpaid_fail"),
+    dth_success("dth_success"),
+    dth_fail("dth_fail"),
+    skip_to_home_click("skip_to_home_click"),
+
 
 }
 

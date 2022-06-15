@@ -39,6 +39,7 @@ data class KycMobileVerifyResponseDetails(
     @SerializedName("showAdharInitScreen") val showAdharInitScreen: String,
     @SerializedName("showAdharOtpVerificationScreen") val showAdharOtpVerificationScreen: String,
     @SerializedName("message") val message: String,
+    @SerializedName("kycType") val kycType: String,
     @SerializedName("postKycScreenCode") val postKycScreenCode: String,
 
     ) : Serializable
@@ -53,6 +54,7 @@ data class KycInitRequest(
 ) : BaseRequest()
 @Keep
 data class KycInitResponse(
+    @SerializedName("msg") val msg: String,
     @SerializedName("data") val kycInitResponseDetails: KycInitResponseDetails
 ) : Serializable
 @Keep
@@ -61,8 +63,14 @@ data class KycInitResponseDetails(
     @SerializedName("showAdharInitScreen") val showAdharInitScreen: String,
     @SerializedName("showAdharOtpVerificationScreen") val showAdharOtpVerificationScreen: String,
     @SerializedName("message") val message: String,
+    @SerializedName("kycMode") val kycMode: String,
     @SerializedName("documentIdentifier") val documentIdentifier: String,
     @SerializedName("documentType") val documentType: String,
+    @SerializedName("kycType") val kycType: String,
+    @SerializedName("consentData") val consentData: String?,
+    @SerializedName("action") val action: String?,
+    @SerializedName("postKycScreenCode") val postKycScreenCode: String?,
+    @SerializedName("age") val age: String?,
     @SerializedName("token") val token: String
 ):Serializable
 
@@ -75,12 +83,31 @@ data class KycVerificationRequest(
 
 @Keep
 data class KycVerificationResponse(
-    @SerializedName("data") val kycVerificationResponseDetails: KycVerificationResponseDetails
+    @SerializedName("msg") val msg: String?,
+    @SerializedName("data") val kycVerificationResponseDetails: KycVerificationResponseDetails?
 ) : Serializable
 @Keep
 data class KycVerificationResponseDetails(
-   @SerializedName("message") val message: String
+   @SerializedName("message") val message: String?,
+   @SerializedName("action") val action: String?,
+   @SerializedName("token") val token: String?,
+   @SerializedName("expiryTime") val expiryTime: String?,
+   @SerializedName("postKycScreenCode") val postKycScreenCode: Int?,
+   @SerializedName("age") val age: Int?,
 ):Serializable
+
+/*{
+  "msg": "Adhar Registered Successfully.",
+  "data": {
+    "message": "Adhar Registered Successfully.",
+    "action": "ADHAR_AUTH",
+    "token": null,
+    "expiryTime": null,
+    "postKycScreenCode": 90,
+    "age": 24
+  }
+}
+* */
 
 
 

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.recharge.viewmodel.MobileNumberInfoRechargeFragmentVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor">
+
+        <include
+            android:id="@+id/layout"
+            layout="@layout/toolbar" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/mobile_number_info_nsv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:id="@+id/explore_fl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/shimmerLayout"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginEnd="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        app:shimmer_auto_start="true"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/shimmer_placeholder_layout_store" />
+
+                            <include layout="@layout/shimmer_placeholder_layout_store" />
+
+
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_banners"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:visibility="gone"
+                        tools:visibility= "visible"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="16dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout"
+                        tools:itemCount="1"
+                        tools:listitem="@layout/item_call_to_action_home"/>
+                </FrameLayout>
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivUser"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="@dimen/dp_40"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="20dp"
+                    tools:src="@drawable/ic_user2"
+                    android:padding="5dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/explore_fl"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvUserNumber"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="29dp"
+                    app:layout_constraintTop_toTopOf="@+id/ivUser"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivUser"
+                    app:layout_constraintStart_toEndOf="@+id/ivUser"
+                    tools:text="+91 86482 72819"
+                    android:textColor="@color/text_color_light"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/opertor_lis_tv"
+                    style="@style/TextviewRegular"
+                    android:textSize="@dimen/sp14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvUserNumber"
+                    android:layout_marginLeft="@dimen/dp20"
+                    android:layout_marginTop="@dimen/dp27"
+                    android:layout_marginRight="@dimen/dp20"
+                    android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:gravity="start|center"
+                    android:padding="@dimen/dp16"
+                    android:onClick="@{()->viewModel.showOperatorListClicked()}"
+                    app:customBackgroundColor="@{@color/edit_text_bg}"
+                    app:customCornerRadius="@{@dimen/dp16}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivUser"
+                    android:text="@string/select_operator"
+                    android:textColor="@color/white">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <com.fypmoney.view.customview.PrimaryButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="74dp"
+            android:paddingTop="14dp"
+            android:paddingRight="74dp"
+            android:paddingBottom="14dp"
+            app:text="@string/continue_btn_text"
+            android:layout_marginBottom="@dimen/dp20"
+            android:textAllCaps="false"
+            app:enabled="false"
+            android:id="@+id/continue_btn"
+            android:textColor="@color/text_color_light"
+            android:textSize="18sp"
+            android:onClick="@{()->viewModel.onContinueClick()}"
+            android:textStyle="normal"
+            app:disabled_bg="@color/cb_grey"
+            app:disabled_text="@color/grey_heading"
+            app:enabled_text="@color/text_color_dark"
+            app:enabled_bg="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

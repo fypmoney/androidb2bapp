@@ -60,7 +60,7 @@ class RewardsCashbackwonVM(application: Application) : BaseViewModel(application
 
                 val json = JsonParser.parseString(responseData.toString()) as JsonObject
 
-                val array = Gson().fromJson<Array<BankTransactionHistoryResponseDetails>>(
+                val array = Gson().fromJson(
                     json.get("data").toString(),
                     Array<BankTransactionHistoryResponseDetails>::class.java
                 )
@@ -77,7 +77,11 @@ class RewardsCashbackwonVM(application: Application) : BaseViewModel(application
 
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
+        when (purpose) {
+            ApiConstant.CashbackHistory -> {
 
+            }
+        }
 
     }
 

@@ -96,12 +96,12 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/card_details"
                 android:layout_width="wrap_content"
-                android:layout_toLeftOf="@+id/refresh"
                 android:layout_height="@dimen/_24sdp"
-                android:layout_toStartOf="@id/refresh"
-
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/_2sdp"
+
+                android:layout_toStartOf="@id/refresh"
+                android:layout_toLeftOf="@+id/refresh"
                 android:background="@drawable/round_dark_grey_backgroud_6"
                 android:paddingRight="@dimen/_18sdp">
 
@@ -131,7 +131,7 @@
         </RelativeLayout>
 
 
-        <WebView
+        <com.fypmoney.util.AdvancedWebView
             android:id="@+id/webView1"
             android:layout_width="fill_parent"
             android:visibility="visible"

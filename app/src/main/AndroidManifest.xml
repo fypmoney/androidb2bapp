@@ -11,12 +11,15 @@
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_security_config"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.DreamfolksApp"
         android:usesCleartextTraffic="true"
         tools:ignore="UnusedAttribute"
         tools:replace="android:usesCleartextTraffic">
+        <activity
+            android:name=".view.addmoney.NewAddMoneyActivity"
+            android:exported="false" />
         <activity
             android:name=".view.ordercard.cardofferdetails.CardOfferDetailsActivity"
             android:exported="false" />
@@ -63,7 +66,6 @@
             android:noHistory="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -79,16 +81,17 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.OrderCardView"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".view.activity.SetPinView"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
         <activity
             android:name=".view.activity.AddMoneyView"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.DreamfolksApp.NoActionBar" />
+            android:theme="@style/Theme.DreamfolksApp.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
         <activity
             android:name=".view.ordercard.trackorder.TrackOrderView"
             android:hardwareAccelerated="false"
@@ -129,7 +132,7 @@
             android:noHistory="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.ContactListView"
+            android:name=".view.contacts.view.PayToContactsActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.EnterAmountForPayRequestView"
@@ -137,10 +140,15 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".view.activity.PayRequestProfileView"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ReferralCodeView"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".view.activity.CreateAccountSuccessView"
             android:screenOrientation="portrait" />
@@ -156,6 +164,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.UserProfileView"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.NotificationView"
@@ -165,6 +174,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.AddMemberView"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -281,28 +291,25 @@
         <activity
             android:name=".view.home.main.homescreen.view.HomeActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"></activity>
-
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.moe.pushlibrary.activities.MoEActivity"
             android:label="HomeView"
-            android:parentActivityName=".view.activity.HomeView" />
+            android:parentActivityName=".view.home.main.homescreen.view.HomeActivity" />
         <activity android:name=".view.home.main.explore.ViewDetails.ExploreInAppWebview" />
-
         <activity
             android:name=".view.fragment.OffersStoreActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.fragment.StoresActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.register.SelectRelationActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.register.InviteParentSiblingActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <!--
 <service android:name="com.moengage.firebase.MoEFireBaseMessagingService">
             <intent-filter>
@@ -321,7 +328,7 @@
         </activity>
         <activity
             android:name=".view.register.PersonalisedOffersActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ChooseInterestRegisterView"
             android:screenOrientation="portrait">
@@ -342,7 +349,7 @@
         </activity>
         <activity
             android:name=".view.register.KycDetailsActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.register.OpenGiftActivity"
             android:screenOrientation="portrait" />
@@ -351,7 +358,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.register.WaitlistAprovalActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.register.TimeLineActivity"
             android:screenOrientation="portrait" />
@@ -369,8 +376,20 @@
         </activity>
         <activity
             android:name=".util.videoplayer.VideoActivityWithExplore"
-            android:theme="@style/video.FullScreen"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/video.FullScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.upgradetokyc.UpgradeToKycInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.discord.DiscordInviteActivity" />
+        <activity android:name=".view.discord.DiscordWebView" />
+        <activity android:name=".view.discord.DiscordProfileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -393,9 +412,28 @@
         <activity android:name=".view.giftCardModule.GiftDetailsActivity" />
         <activity android:name=".view.giftCardModule.GiftViewAllScreen" />
 
+        <meta-data android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled"
+            android:value="true"/>
+
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+        <meta-data android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token"/>
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
+
         <meta-data
             android:name="payu_debug_mode_enabled"
             android:value="false" />
@@ -418,6 +456,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
         <receiver
             android:name="com.adjust.sdk.AdjustReferrerReceiver"
             android:exported="true"
@@ -426,11 +465,12 @@
                 <action android:name="com.android.vending.INSTALL_REFERRER" />
             </intent-filter>
         </receiver>
+
         <service
             android:name=".services.MyFirebaseMessagingService"
             android:directBootAware="true"
             android:enabled="true"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -450,8 +490,6 @@
         </intent>
     </queries>
 
-
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -462,7 +500,6 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 
     <uses-permission
         android:name="android.permission.USE_BIOMETRIC"

@@ -1,9 +1,7 @@
 package com.fypmoney.connectivity
 
-import android.util.Log
 import com.fypmoney.connectivity.ApiConstant.API_AUTH_LOGIN
 import com.fypmoney.connectivity.ApiConstant.API_CHECK_IS_APP_USER
-import com.fypmoney.connectivity.ApiConstant.API_FETCH_ALL_FEEDS
 import com.fypmoney.connectivity.ApiConstant.API_GET_CUSTOMER_INFO
 import com.fypmoney.connectivity.ApiConstant.API_GET_INTEREST
 import com.fypmoney.connectivity.ApiConstant.API_GET_NOTIFICATION_LIST
@@ -16,6 +14,8 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.model.*
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
+import com.fypmoney.view.ordercard.model.UserOfferCardResponse
+import com.fypmoney.view.recharge.model.RecentRechargesResponse
 import com.google.gson.Gson
 import com.payu.india.Payu.PayuConstants
 import okhttp3.ResponseBody
@@ -112,6 +112,15 @@ class ApiDataParsing {
                 }
                 ApiConstant.API_KYC_INIT -> {
                     getObject(response, KycInitResponse::class.java)
+                }
+                ApiConstant.API_UPGRADE_KYC_ACCOUNT -> {
+                    getObject(response, KycInitResponse::class.java)
+                }
+                ApiConstant.API_KYC_UPGARDE_VERIFICATION -> {
+                    getObject(response, KycVerificationResponse::class.java)
+                }
+                ApiConstant.API_CHECK_PROMO_CODE -> {
+                    getObject(response, UserOfferCardResponse::class.java)
                 }
                 ApiConstant.API_KYC_MOBILE_VERIFICATION -> {
                     getObject(response, KycMobileVerifyResponse::class.java)
@@ -210,6 +219,9 @@ class ApiDataParsing {
                 }
                 ApiConstant.API_CALLTO_ACTION -> {
                     getObject(response, CallToActionNetworkResponse::class.java)
+                }
+                ApiConstant.API_RECENT_RECHARGE -> {
+                    getObject(response, RecentRechargesResponse::class.java)
                 }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {

@@ -190,6 +190,7 @@ object AppConstants {
     const val Channel_POS = "POS"
     const val GPAY_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user"
     const val FAMPAY_PACKAGE_NAME = "com.fampay.in"
+    const val NUMBER_SELECTED = "number_selected"
     const val UPI_APPS_FETCH = "upi://pay"
     const val REQUEST_IMAGE = 200
     const val CARD_PRICE = "200"
@@ -230,8 +231,11 @@ object AppConstants {
     const val FEEDSCREEN = "FeedScreen"
     const val TRACKORDER = "TrackOrderScreen"
     const val CHORES = "ChoresScreen"
+    const val OrderCard = "OrderCard"
     const val JACKPOTTAB = "Jackpot"
     const val ARCADE = "Arcade"
+
+    const val RechargeHomeScreen = "RechargeHomeScreen"
     const val RewardHistory = "RewardHistory"
     const val StoreofferScreen = "Storeofferscreen"
     const val StoreshopsScreen = "Storeshopsscreen"
@@ -272,6 +276,8 @@ object AppConstants {
     const val PHYSICAL_CARD_CODE = "PHYCRD"
     const val ORDER_CARD_INFO = "order_card_info"
     const val REFER_CODE_CHECKING_VARIABLE = "$@%$"
+    const val ADD_MONEY_VIDEO = "ADD_MONEY_VIDEO"
+    const val ADD_MONEY_VIDEO_NEW = "ADD_MONEY_VIDEO_NEW"
 
     const val IN_APP_URL = "IN_APP_URL"
     const val ORDER_NUM = "ORDERID"
@@ -294,4 +300,21 @@ object AppConstants {
     const val GIFT_BRAND_SELECTED = "gift_brand_selected"
     const val GIFT_HISTORY_SELECTED = "gift_history_selected"
     const val GIFT_ID = "gift_id"
+    const val SEMI = "SEMI"
+    const val MINIMUM = "MINIMUM"
+    const val POSTPAID = "POSTPAID"
+    const val PREPAID = "PREPAID"
+    const val DTH = "DTH"
+    const val KYC_UPGRADE_FROM_WHICH_SCREEN = "kyc_upgrade_from_which_screen"
+    const val BROADBAND_RECHARGE_URL = "https://www.amazon.in/hfc/bill/landline"
+    const val SHOW_RECHARGE_SCREEN = "SHOW_RECHARGE_SCREEN"
+    const val OFFER_REDIRECTION_EXTERNAL_WEB_VIEW = "EXTERNAL_WEB_VIEW"
+    const val OFFER_REDIRECTION_EXTERNAL_WEB_VIEW_SUB = "EXTERNAL_WEB_VIEW_SUB"
+    const val OFFER_REDIRECTION_IN_APP_VIEW_WITH_CARD_OPTION_SUBs =
+        "IN_APP_VIEW_WITH_CARD_OPTION_SUBs"
+    const val OFFER_REDIRECTION_IN_APP_VIEW_WITH_CARD_OPTIONS = "IN_APP_VIEW_WITH_CARD_OPTIONS"
+
+    //const val DISCORD_URL = "https://discord.com/oauth2/authorize?response_type=code&client_id=945553921005457468&scope=connections%20email%20gdm.join%20guilds%20guilds.join%20guilds.members.read%20identify%20messages.read&state={authtoken}&prompt=consent"
+    const val DISCORD_URL = "https://discord.com/oauth2/authorize?response_type=code&client_id=945553921005457468&scope=connections%20email%20gdm.join%20guilds%20guilds.join%20guilds.members.read%20identify&state={authtoken}&prompt=consent"
+
 }

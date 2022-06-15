@@ -92,10 +92,11 @@ class VideoExploreViewModel(
 
     }
 
-    val PlaybackRate = listOf("2.0", "1.5", "1.0", "0.5")
+
     val PLAYBACK_RATE_DEFAULT = "1.0"
     private fun initDefault() {
         buttonState.value = PlayingState.PLAYING
+
         url.value =
             "https://fcc3ddae59ed.us-west-2.playback.live-video.net/api/video/v1/us-west-2.893648527354.channel.xhP3ExfcX8ON.m3u8"
 
@@ -181,12 +182,14 @@ class VideoExploreViewModel(
 
     fun playerStart(surface: Surface, url: String?) {
         Log.d(TAG, "Starting player")
+        if (!url.isNullOrEmpty()) {
+            initPlayer()
+            updateSurface(surface)
+            setPlayerListener()
+            playerLoadStream(Uri.parse(url))
+            play()
+        }
 
-        initPlayer()
-        updateSurface(surface)
-        setPlayerListener()
-        playerLoadStream(Uri.parse(url))
-        play()
     }
 
     fun playerLoadStream(uri: Uri) {

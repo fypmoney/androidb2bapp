@@ -9,6 +9,7 @@
         <item>@drawable/ic_spouse</item>
         <item>@drawable/ic_kid</item>
         <item>@drawable/ic_grand_parents</item>
+        <item>@drawable/ic_grand_parents</item>
         <item>@drawable/ic_grand_child</item>
         <item>@drawable/ic_other</item>
     </integer-array>
@@ -359,7 +360,7 @@
 
     <!-- Referral code
     -->
-    <string name="referral_code_title">Do you have \n A referral code?</string>
+    <string name="referral_code_title">Do you have a referral/promo code?</string>
     <string name="code_text">Code</string>
     <string name="referral_code_empty_error">Please enter Referral Code</string>
     <string name="referral_code_hint">Your referral code</string>
@@ -849,7 +850,8 @@ Coming really soon!
     <string name="amount_limit">9999</string>
     <string name="logout">Logout</string>
     <string name="facebook_app_id">393472762006028</string>
-    <string name="facebook_client_token">Facebook Client ID</string>
+    <string name="fb_login_protocol_scheme">fb393472762006028</string>
+    <string name="facebook_client_token">691862f85bb36e2492c7de56a661b326</string>
     <string name="_1_we_read_contacts_to_verify_your_mobile_number_and_inviting_friends_from_phonebook">We read your contacts for hassle free money transfer to fellow Fyp user.</string>
     <string name="we_use_your_location_to_check_if_your_current_city_is_serviceable_by_us">We use your location to check if your current city is serviceable by us.</string>
     <string name="location_permission1">Location Permission</string>
@@ -1057,8 +1059,8 @@ Coming really soon!
     <string name="earn">Earn</string>
     <string name="earn_5x_mynts_on_both_online_and_offline_transactions"> on both online and offline transactions</string>
     <string name="mynts_5_x"> 5X mynts</string>
-    <string name="on_offline_transactions">on offline transactions</string>
-    <string name="_7_instant_cashback">3% instant cashback</string>
+    <string name="on_offline_transactions">on Top Brands on offline transactions</string>
+    <string name="_7_instant_cashback">10% instant cashback</string>
     <string name="get_one_airport_lounge_access_worth_1500">Get one airport lounge access worth</string>
     <string name="_1500"> ₹1500</string>
     <string name="we_are_striving_hard_to_give_you_the_ultimate_upi_experience">We are striving hard to give you the \nultimate UPI experience.</string>
@@ -1090,6 +1092,36 @@ Coming really soon!
     <string name="no_savings_yet_start_transaction_to_save_now">No savings yet. Start transaction to save now!</string>
     <string name="you_can_not_add_more_funds_since_you_have_already_exceeded_your_monthly_limit">You can not add more funds since you have already exceeded your monthly limit</string>
 
+
+    <string name="increased_monthly_limit_1_lakh">Increased Monthly Limit: 1 Lakh</string>
+    <string name="atm_withdrawals_enabled">ATM Withdrawals Enabled</string>
+    <string name="send_money_to_fyp_users">Send Money to Fyp Users</string>
+    <string name="upgrade_your_kyc">Upgrade Your KYC</string>
+
+    <string name="upgrade_aadhar_kyc">Upgrade to Aadhar KYC</string>
+    <string name="kyc_verified">KYC Verified</string>
+    <string name="to_send_money_to_other_fyp_users_upgrade_to_aadhar_kyc">To send money to other Fyp users, upgrade to Aadhar KYC</string>
+    <string name="increase_limit">Increase Limit</string>
+    <string name="preferred_upi_id">Preferred UPI ID</string>
+    <string name="fyp_card_details">Fyp Card Details</string>
+    <string name="minimum_kyc">Minimum KYC</string>
+    <string name="have_a_promo_code_click_here">Have a promo code? Click here</string>
+    <string name="promo_code">Promo code</string>
+    <string name="please_enter_your_promo_code">Please enter your promo code</string>
+    <string name="fypxdiscord">Fyp x Discord</string>
+    <string name="fyper_op">Fyper OP ✌🏻</string>
+    <string name="connect_discord">Connect your discord</string>
+    <string name="discord_profile">Discord Profile</string>
+    <string name="connect_to_discord">Connect to Discord</string>
+    <string name="connect_now">Connect now</string>
+    <string name="select_a_document_to_complete_your_kyc">Select a document to complete your KYC</string>
+    <string name="aadhaar_card">Aadhaar card</string>
+    <string name="skip_to_home">Skip to Home</string>
+    <string name="please_complete_your_kyc">Please complete your KYC</string>
+    <string name="complete_kyc">Complete KYC</string>
+    <string name="complete_your_kyc_to_unlock_all_the_exclusive_features">Complete your KYC to unlock all the exclusive features</string>
+    <string name="like">Like</string>
+    <string name="share">Share</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>
@@ -1102,7 +1134,6 @@ Coming really soon!
         <item>Help?</item>
         <item>Log out</item>
     </string-array>
-
     <string-array name="relationNameList">
         <item>Parent</item>
         <item>Sibling</item>
@@ -1112,13 +1143,99 @@ Coming really soon!
         <item>Grand Child</item>
         <item>Other</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="order_card_list">
         <item>Set your limit</item>
         <item>Sensitive details kept safe</item>
         <item>Real time activity notification</item>
         <item>Easy card locking</item>
     </string-array>
+
+    <string name="ifsc_code">IFSC Code</string>
+    <string name="bank_a_c">Bank A/C</string>
+    <string name="transfer_money_to_this_bank">Transfer money to this Bank</string>
+    <string name="bank_transfer">Bank Transfer</string>
+    <string name="add_via_debit_card_upi">Add Via Debit Card/UPI</string>
+    <string name="share_bank_details">
+    </string>
+
+
+
+
+
+    Download Fyp, India's leading payments app, trusted by 1 Mn+ teens and families: https://fypmoney.in/app
+    <string name="is_your_child_already_on_fyp_enter_their_registed_mobile_no">Is your child already on Fyp? Enter their registered mobile no.</string>
+
+    <string name="search_for_plan_or_enter_amount">Search for plan or enter amount</string>
+    <string name="dth">DTH</string>
+    <string name="broadband">Broadband</string>
+    <string name="postpaid">Postpaid</string>
+    <string name="postpaid_recharge">Postpaid Recharge</string>
+    <string name="prepaid">Prepaid</string>
+    <string name="prepaid_recharge">Prepaid Recharge</string>
+    <string name="mobile_recharge_bill_payments">Mobile Recharge / Bill Payments</string>
+    <string name="please_enter_valid_phone_number">Please Enter valid phone number</string>
+    <string name="enter_mobile_number">Enter mobile number</string>
+    <string name="_91">+91</string>
+    <string name="unable_to_pick_phone_number">Unable to Pick Mobile Number,Please type Manually.</string>
+    <string name="select_operator">Select Operator</string>
+    <string name="unable_to_fetch_operator_please_try_again_later">Unable to fetch operator, Please try again later</string>
+    <string name="select_your_prepaid_operator">Select your %1$s Operator</string>
+    <string name="select_your_circle">Select your Circle</string>
+    <string name="do_not_know_your_circle">Do not know your circle?</string>
+    <string name="select_state_area_from_where_you_purchased_the_sim_card">Select state/Area from where you purchased the SIM Card</string>
+    <string name="search_circles">Search Circles</string>
+    <string name="no_circle_found_according_to_your_search">No circle found according to your search</string>
+    <string name="no_plans_available">No plans available</string>
+    <string name="change_plan">Change Plan</string>
+    <string name="processing_payment_of">Processing payment of ₹ %1$s</string>
+    <string name="processing_recharge_of">Processing recharge for %1$s</string>
+    <string name="your_recharge_is_successful">Your Recharge of ₹%1$s to %2$s is Successful</string>
+    <string name="processing_recharge_for">Processing recharge for ₹%1$s to %2$s</string>
+    <string name="your_recharge_is_failed">Your Recharge of ₹%1$s to %2$s is failed</string>
+    <string name="any_amount_detucetd">"Any amount deducted will be \n refunded within 24 hours"</string>
+    <string name="recharge_successful">Recharge Successful</string>
+    <string name="recharge_processing">Recharge Processing</string>
+    <string name="recharge_failed">Recharge Failed</string>
+    <string name="unable_to_fetch_bill_enter_amount_manually">Unable to fetch bill.Enter amount manually</string>
+    <string name="payable_amount">Payable Amount</string>
+    <string name="bill_due_date">Bill Due Date: %1$s</string>
+    <string name="dth_recharge">Dth recharge/Cable TV</string>
+    <string name="customer_id">Customer ID</string>
+    <string name="enter_10_digit_customer_id_starting_with_3_to_locate_the_customer_id_press_the_menu_button_on_your_remote">Enter 10 digit Customer ID starting with 3.To locate the customer ID,press the MENU button on your remote. %1$s</string>
+    <string name="enter_amount">Enter Amount</string>
+    <string name="your_regular_recharge">Your regular recharge</string>
+    <string name="keep_set_top_box_on_while_recharging">Keep set-top box on while recharging</string>
+
+
+
+
+    <string name="add_money_1500">\u20B9 1500</string>
+    <string name="add_money_2000">\u20B9 2000</string>
+    <string name="know_more">Know More</string>
+    <string name="please_enter_correct_details_for_successful_dth_recharge_otherwise_your_recharge_will_fail">Please enter correct details for successful DTH Recharge otherwise your recharge will fail.</string>
+    <string name="whats_my_customer_id">What\'s my Customer ID (DTH number)?</string>
+    <string name="airtel_know_more_body">To know your customer ID, please press the MENU button on your remote and select My Account . Alternatively, SMS BAL to 54325 from Registered Mobile Number (RMN) or place a missed call on 81300-81300 from your RMN.</string>
+    <string name="dish_tv_title">What\'s my Viewing Card (VC) Number?</string>
+    <string name="dish_tv_body">To know your Viewing Card Number, go to the help menu on your TV and select My Account.</string>
+    <string name="tata_sky_title">What\'s my Subscriber ID?</string>
+    <string name="tata_sky_body">To know your Subscriber ID, press the HOME button on your remote. Alternatively, give a missed call on 080-61-9999-11 from your Registered Mobile Number.</string>
+    <string name="d2h_title">What\'s my Subscriber ID?</string>
+    <string name="d2h_body">To know your Subscriber ID, press the green color button on your D2H remote. Alternatively, SMS \'ID\' from your registered mobile number to 566777 or call 97818-97818 (Toll-Free).</string>
+    <string name="pending">Pending</string>
+    <string name="check_status"><u>Check Status</u></string>
+    <string name="no_recent_recharges">No Recent Recharges</string>
+    <string name="last_recharge_on">Last Recharge: \u20B9 %1$s on %2$s</string>
+    <string name="repeat">Repeat</string>
+    <string name="recharge">Recharge</string>
+    <string name="please_do_not_press_back_or_close_the_app">Please, do not press back or close the app</string>
+    <string name="_5_cashback">5% Cashback</string>
+    <string name="recommended">Recommended</string>
+    <string name="no_transaction_fee">* No transaction fee</string>
+    <string name="your_bank_account">Your Bank Account</string>
+    <string name="how_it_works">How it works?</string>
+    <string name="amount_with_currency"> \u20B9 %1$s</string>
+    <string name="search_contact">Search Contact</string>
+    <string name="sending_money_to_other_fyp_users_is_temporarily_unavailable_we_re_working_hard_to_bring_it_back">Sending money to other Fyp users is temporarily unavailable.\n \n We\'re working hard to bring it back!</string>
 
     <string name="close_button">Close</string>
     <string name="buffering">Buffering…</string>

@@ -21,6 +21,8 @@ import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
+import com.fypmoney.util.videoplayer.VideoActivity2
+import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.activity.UserFeedsInAppWebview
@@ -195,9 +197,14 @@ class RewardsOverviewFragment() :
             override fun onItemClicked(position: Int, it1: SectionContentItem, exploreContentResponse: ExploreContentResponse?) {
                 trackr {
                     it.name = TrackrEvent.home_explore_click
-                    it.add(TrackrField.explore_content_id,it1.id)
+                    it.add(TrackrField.explore_content_id, it1.id)
                 }
-                openExploreFeatures(it1.redirectionType, it1.redirectionResource)
+                openExploreFeatures(
+                    it1.redirectionType,
+                    it1.redirectionResource,
+                    it1,
+                    exploreContentResponse
+                )
 
 
             }
@@ -208,17 +215,43 @@ class RewardsOverviewFragment() :
             requireContext(),
             exploreClickListener2,
             scale,
-            Color.BLACK
+            Color.WHITE
         )
         root.exploreHomeRv.adapter = typeAdapter
     }
 
     private fun openExploreFeatures(
         redirectionType: String?,
-        redirectionResource: String?
+        redirectionResource: String?,
+        sectionContentItem: SectionContentItem,
+        exploreContentResponse: ExploreContentResponse?
     ) {
         when (redirectionType) {
+            AppConstants.TYPE_VIDEO -> {
+                val intent = Intent(requireActivity(), VideoActivity2::class.java)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, redirectionResource)
+
+                startActivity(intent)
+
+            }
+            AppConstants.TYPE_VIDEO_EXPLORE -> {
+                val intent = Intent(requireActivity(), VideoActivityWithExplore::class.java)
+                intent.putExtra(ARG_WEB_URL_TO_OPEN, sectionContentItem.redirectionResource)
+                intent.putExtra(AppConstants.ACTIONFLAG, sectionContentItem.actionFlagCode)
+
+                startActivity(intent)
+            }
+            AppConstants.EXPLORE_SECTION_EXPLORE -> {
+                val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
+                    RewardsOverviewFragmentDirections.actionExploreSectionExplore(
+                        sectionExploreItem = sectionContentItem,
+                        sectionExploreName = it1
+                    )
+                }
+                directions?.let { it1 -> findNavController().navigate(it1) }
+            }
             AppConstants.EXPLORE_IN_APP -> {
+
                 redirectionResource?.let { uri ->
 
                     val redirectionResources = uri?.split(",")?.get(0)
@@ -331,17 +364,19 @@ class RewardsOverviewFragment() :
 */
 
         viewModel.rewardHistoryList.observe(
-            viewLifecycleOwner,
-            { list ->
+            viewLifecycleOwner
+        ) { list ->
 
-                mViewBinding?.let { setRecyclerView(it, list) }
-            })
+            mViewBinding?.let { setRecyclerView(it, list) }
+        }
 
         viewModel.openBottomSheet.observe(
             viewLifecycleOwner,
             { list ->
 
-                callOfferDetailsSheeet(list[0])
+                if(list.isNotEmpty()){
+                    callOfferDetailsSheeet(list[0])
+                }
             })
 
         viewModel.feedDetail.observe(

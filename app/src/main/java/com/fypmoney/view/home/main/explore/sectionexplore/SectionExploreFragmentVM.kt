@@ -11,8 +11,6 @@ import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.FeedDetails
-import com.fypmoney.model.FeedRequestModel
-import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
@@ -64,32 +62,6 @@ class SectionExploreFragmentVM(application: Application) : BaseViewModel(applica
                 this, isProgressBar = true
             )
         )
-
-    }
-
-    private fun makeFetchFeedRequesttop(
-
-        id: String? = ""
-    ): FeedRequestModel {
-        val userInterest =
-            SharedPrefUtils.getArrayList(getApplication(), SharedPrefUtils.SF_KEY_USER_INTEREST)
-        var userInterestValue = StringBuilder()
-        if (!userInterest.isNullOrEmpty()) {
-            for (i in 0 until userInterest.size) {
-                userInterestValue = userInterestValue.append(userInterest.get(i))
-                if (i != userInterest.size - 1) {
-                    userInterestValue = userInterestValue.append(",")
-                }
-
-            }
-        }
-
-        val feedRequestModel = FeedRequestModel()
-        feedRequestModel.query =
-            "{getAllFeed(page:0, size:null, id : \"$id\", screenName:null,screenSection:null,tags :[],latitude:null,longitude:null,withinRadius:null,displayCard: []) { total feedData  { action { url } offers { innerBannerImg logoImg title code date details tnc }}}}"
-
-
-        return feedRequestModel
 
     }
 

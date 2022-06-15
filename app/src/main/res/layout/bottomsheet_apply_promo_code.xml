@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.ordercard.promocode.ApplyPromoCodeBottomSheetVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:translationZ="1dp"
+            android:background="@drawable/curved_background1"/>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/promo_code_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dp20"
+            app:srcCompat="@drawable/ic_promo_code_graphics"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/header_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            style="@style/TextviewBold"
+            android:textSize="18sp"
+            android:textColor="@color/textColor1"
+            android:layout_marginHorizontal="50dp"
+            android:gravity="center"
+            android:text="@string/please_enter_your_promo_code"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/promo_code_iv"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/TextviewRegular"
+            android:layout_marginTop="@dimen/dp20"
+            android:textColor="@color/text_color_light"
+            android:gravity="center"
+            android:text="@string/promo_code"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/header_tv"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/apply_promocode_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxBackgroundColor="@color/gery10"
+            android:layout_marginTop="@dimen/dp8"
+            app:boxBackgroundMode="filled"
+            app:boxCornerRadiusTopStart="@dimen/dp8"
+            app:boxCornerRadiusBottomEnd="@dimen/dp8"
+            app:boxCornerRadiusTopEnd="@dimen/dp8"
+            app:boxCornerRadiusBottomStart="@dimen/dp8"
+            app:boxCollapsedPaddingTop="@dimen/dp1"
+            app:boxStrokeColor="@color/gery10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_tv"
+            app:hintEnabled="false"
+            android:hint="@string/promo_code">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/apply_promo_code_tet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:selectAllOnFocus="true"
+                android:singleLine="true"
+                android:textAllCaps="true"
+                android:maxLength="50"
+                android:textColor="#9CA3A5"
+                tools:text="ADBSBS" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.fypmoney.view.customview.PrimaryButton
+            android:id="@+id/apply_promocode_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:paddingHorizontal="50dp"
+            android:onClick="@{()->viewModel.onApplyPromoCodeClicked()}"
+            app:text="@string/apply_btn_text"
+            app:enabled="false"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:disabled_bg="@color/cb_grey"
+            app:disabled_text="@color/grey_heading"
+            app:enabled_bg="@color/text_color_dark"
+            app:enabled_text="@color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/apply_promocode_et"
+            android:textSize="18sp" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

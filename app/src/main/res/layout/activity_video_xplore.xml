@@ -106,7 +106,7 @@
 
                                 <TextView
                                     android:layout_width="wrap_content"
-                                    android:text="Like"
+                                    android:text="@string/like"
                                     style="@style/TextviewBold"
                                     android:layout_weight="1"
                                     android:textSize="18sp"
@@ -118,7 +118,7 @@
 
                                 <TextView
                                     android:layout_width="wrap_content"
-                                    android:text="Share"
+                                    android:text="@string/share"
                                     style="@style/TextviewBold"
                                     android:layout_weight="1"
                                     android:textSize="18sp"
@@ -168,7 +168,7 @@
                                 app:layout_constraintEnd_toEndOf="parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="@dimen/_18sdp"
-                                android:src="@{data.isMute ? @drawable/ic_volume_on: @drawable/ic_volume_off_24}"
+                                android:src="@{data.isMute ? @drawable/ic_volume_off_24: @drawable/ic_volume_on}"
 
 
                                 app:layout_constraintBottom_toTopOf="@+id/seek_bar" />
@@ -180,7 +180,6 @@
                                 android:layout_margin="8dp"
                                 android:gravity="start"
                                 app:layout_constraintTop_toBottomOf="@+id/seek_bar"
-
                                 android:text="@{data.progress}"
                                 android:textColor="@color/white"
                                 android:textSize="12sp"
@@ -225,7 +224,7 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal"
                                 app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintGuide_end="100dp" />
+                                app:layout_constraintGuide_end="60dp" />
                         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

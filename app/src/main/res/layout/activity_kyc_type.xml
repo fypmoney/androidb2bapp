@@ -15,7 +15,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="@dimen/_20sdp">
+            android:layout_marginBottom="@dimen/dp10">
 
             <include
                 android:id="@+id/toolbarAnimation"
@@ -85,10 +85,10 @@
             <TextView
                 android:id="@+id/select_doc"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="@dimen/_38sdp"
+                android:layout_marginTop="@dimen/_18sdp"
                 android:textSize="14sp"
                 android:layout_height="wrap_content"
-                android:text="Select a document to complete your KYC"
+                android:text="@string/select_a_document_to_complete_your_kyc"
                 app:layout_constraintEnd_toEndOf="parent"
                 style="@style/TextviewBold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -98,13 +98,12 @@
                 android:id="@+id/more_kyc_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/dp16"
                 android:background="@drawable/round_dark_grey_rewards_18"
                 android:backgroundTint="#FFEEDD"
                 android:gravity="center"
 
                 android:paddingVertical="@dimen/_10sdp"
-                app:layout_constraintBottom_toTopOf="@+id/btnContinue"
                 app:layout_constraintEnd_toEndOf="parent"
 
                 app:layout_constraintStart_toStartOf="parent"
@@ -132,10 +131,8 @@
                 android:id="@+id/lin"
                 android:orientation="horizontal"
                 app:layout_constraintTop_toBottomOf="@+id/select_doc"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-
                 android:layout_height="0dp">
 
                 <androidx.cardview.widget.CardView
@@ -145,9 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_12sdp"
                     android:layout_marginEnd="@dimen/_12sdp"
-
-
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/dp10"
                     app:cardCornerRadius="@dimen/_15sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -163,7 +158,6 @@
                             android:id="@+id/ivUserTypeIcon"
                             android:layout_width="@dimen/_75sdp"
                             android:layout_height="@dimen/_75sdp"
-
                             android:layout_marginTop="@dimen/_15sdp"
                             android:layout_marginBottom="@dimen/_14sdp"
                             android:contentDescription="userTypeIcon"
@@ -174,14 +168,10 @@
                             android:id="@+id/tvUserType"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
                             android:layout_marginBottom="@dimen/_12sdp"
-
-                            android:text="Aadhaar card"
+                            android:text="@string/aadhaar_card"
                             android:textColor="@color/text_color_dark"
                             android:textSize="12sp"
-
-
                             />
 
 
@@ -255,10 +245,28 @@
                 android:layout_height="wrap_content"
                 android:onClick="@{()->viewModel.onContinue()}"
                 android:text="@string/continue_txt"
+                android:layout_marginBottom="@dimen/dp16"
                 android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tv_skip_to_home"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextviewRegular"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:visibility="gone"
+                android:id="@+id/tv_skip_to_home"
+                android:onClick="@{()->viewModel.onSkipToHome()}"
+                android:text="@string/skip_to_home"
+                android:layout_marginBottom="@dimen/dp16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
