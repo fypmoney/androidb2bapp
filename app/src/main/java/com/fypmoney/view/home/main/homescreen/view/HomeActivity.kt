@@ -165,9 +165,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
     }
 
     private fun observeEvents() {
-        homeActivityVM.event.observe(this,{
+        homeActivityVM.event.observe(this) {
             handelEvents(it)
-        })
+        }
     }
 
     private fun handelEvents(it: HomeActivityVM.HomeActivityEvent?) {

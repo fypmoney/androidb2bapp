@@ -1,17 +1,21 @@
 package com.fypmoney.view.giftcard.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.Keep
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.fypmoney.R
+import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.ItemProductsAmountGiftBinding
 import com.fypmoney.extension.executeAfter
 
 
-class GiftCardPossibleDenominationAmountList(
+class GiftCardPossibleDenominationAmountListAdapter(
     private val lifecycleOwner: LifecycleOwner,
     val onAmountClicked: (model: Int) -> Unit
 ) : ListAdapter<GiftCardPossibleDenominationAmountUiModel,
@@ -51,7 +55,15 @@ class GiftCardPossibleDenominationAmountVH(
                 onAmountClicked(model.amount)
             }
             giftCardAmountTv.text = model.amountText
-
+            giftCardAmountTv.setBackgroundColor(model.amountColorCode)
+            binding.giftCardAmountTv.invalidate()
+            setBackgroundDrawable(view = binding.giftCardAmountTv,
+                backgroundColor = model.amountColorCode,
+                cornerRadius = 16.0f,
+                strokeColor = null,
+                strokeWidth = null,
+                isRounded = false
+            )
         }
 
     }
@@ -81,4 +93,22 @@ data class GiftCardPossibleDenominationAmountUiModel(
     var amount:Int,
     var amountText:String,
     var amountColorCode:Int
-)
+){
+    companion object{
+        fun possibleDenominationListToGiftCardPossibleDenominationAmountUiModel(context: Context, amount:String):GiftCardPossibleDenominationAmountUiModel{
+            return GiftCardPossibleDenominationAmountUiModel(
+                amount = amount.toInt(),
+                amountText = String.format(context.getString(R.string.amount_with_currency),amount),
+                amountColorCode = getRandomColorCode(context)
+            )
+        }
+
+        fun getRandomColorCode(context: Context):Int{
+            val listOfColor = arrayOf(ContextCompat.getColor(context,R.color.amount_bg1),
+                ContextCompat.getColor(context,R.color.amount_bg2),
+                ContextCompat.getColor(context,R.color.amount_bg3),
+                ContextCompat.getColor(context,R.color.amount_bg4))
+            return listOfColor[(0..3).random()]
+        }
+    }
+}

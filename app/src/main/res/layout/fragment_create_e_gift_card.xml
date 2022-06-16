@@ -40,7 +40,8 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/gift_card_iv"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="150dp"
+                    android:minWidth="100dp"
                     android:layout_marginTop="@dimen/dp16"
                     android:adjustViewBounds="true"
                     tools:src="@drawable/personalise_offers_banner"
@@ -51,7 +52,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/gift_card_msg"
                     style="@style/TextviewRegular"
-                    tools:text="@string/add_money_gift_card"
+                    android:text="@string/add_money_gift_card"
                     android:textColor="@color/white"
                     android:lineSpacingExtra="17sp"
                     android:layout_marginTop="@dimen/dp_40"
@@ -77,7 +78,7 @@
                     android:id="@+id/gift_amount"
                     android:layout_width="wrap_content"
                     style="@style/TextviewBold"
-                    android:textSize="26sp"
+                    android:textSize="20sp"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     tools:text="₹ 20"
@@ -91,7 +92,6 @@
                     android:textColorHint="@color/text_color_light"
                     android:textColor="@color/white"
                     android:layout_marginTop="@dimen/dp30"
-                    android:text="@={viewModel.amountSelected}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/gift_card_amount_rv" />
@@ -183,6 +183,7 @@
                     android:id="@+id/someone_cl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/whom_you_are_gifting_cl">
@@ -212,10 +213,127 @@
                         android:textColor="@color/white" />
 
 
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/name_til"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/select_contact_iv"
+                        app:layout_constraintTop_toBottomOf="@+id/someone_title_tv"
+                        app:boxBackgroundMode="filled"
+                        android:layout_marginEnd="@dimen/dp16"
+                        android:layout_marginTop="@dimen/dp16"
+                        app:boxBackgroundColor="@color/edit_text_bg"
+                        app:boxStrokeErrorColor="@color/red1"
+                        app:boxCornerRadiusTopStart="@dimen/dp16"
+                        app:boxCornerRadiusTopEnd="@dimen/dp16"
+                        app:hintTextColor="@color/white"
+                        android:hint="@string/name">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/name_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            android:textColorHint="@color/text_color_light"
+                            android:fontFamily="@font/product_sans_regular"
+                            android:textColor="@color/white"
+                            android:inputType="text"
+                            android:imeOptions="actionNext" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:id="@+id/select_contact_iv"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/someone_title_tv"
+                        app:customBackgroundColor="@{@color/edit_text_bg}"
+                        app:customIsRounded="@{true}"
+                        app:customCornerRadius="@{@dimen/dp29}"
+                        android:padding="15dp"
+                        android:src="@drawable/ic_my_contact" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/email_til"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/name_til"
+                        app:boxBackgroundMode="filled"
+                        android:layout_marginTop="@dimen/dp16"
+                        app:hintTextColor="@color/white"
+                        app:boxBackgroundColor="@color/edit_text_bg"
+                        app:boxStrokeErrorColor="@color/red1"
+                        app:boxCornerRadiusTopStart="@dimen/dp16"
+                        app:boxCornerRadiusTopEnd="@dimen/dp16"
+                        android:hint="@string/email">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/email_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            android:textColorHint="@color/text_color_light"
+                            android:fontFamily="@font/product_sans_regular"
+                            android:textColor="@color/white"
+                            android:inputType="textEmailAddress"
+                            android:imeOptions="actionNext" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/phone_til"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/email_til"
+                        app:boxBackgroundMode="filled"
+                        android:layout_marginTop="@dimen/dp16"
+                        app:hintTextColor="@color/white"
+                        app:boxBackgroundColor="@color/edit_text_bg"
+                        app:boxStrokeErrorColor="@color/red1"
+                        app:boxCornerRadiusTopStart="@dimen/dp16"
+                        app:boxCornerRadiusTopEnd="@dimen/dp16"
+                        android:hint="@string/phone_number">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/phone_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="17sp"
+                            android:textColorHint="@color/text_color_light"
+                            android:fontFamily="@font/product_sans_regular"
+                            android:textColor="@color/white"
+                            android:inputType="numberSigned"
+                            android:imeOptions="actionNext" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <com.fypmoney.view.customview.PrimaryButton
+                    android:id="@+id/pay_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_marginTop="@dimen/dp_40"
+                    app:text="@string/pay"
+                    app:enabled="false"
+                    app:enabled_bg="@color/color_task_card_green"
+                    app:disabled_bg="@color/buttonUnselectedColor"
+                    app:layout_constraintTop_toBottomOf="@+id/someone_cl"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="@dimen/dp10"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
         </androidx.core.widget.NestedScrollView>
 
 

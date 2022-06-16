@@ -113,5 +113,9 @@
     <color name="recommanded_bg">#EFFFF2</color>
     <color name="yellow10">#FAC660</color>
 
+    <color name="amount_bg1">#BAE6C2</color>
+    <color name="amount_bg2">#8ECFE3</color>
+    <color name="amount_bg3">#FFD3D7</color>
+    <color name="amount_bg4">#FFD98D</color>
 
 </resources>

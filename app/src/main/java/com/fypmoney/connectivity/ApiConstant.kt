@@ -177,8 +177,11 @@ object ApiConstant {
         "services/PockketService/api/unused-voucher?page=0&size=10&sort=id,desc"
     const val GET_GIFT_VOUCHER_STATUS =
         "/services/PockketService/api/voucher-status/"
+
     const val GET_GIFT_VOUCHER_DETAILS =
         "services/PockketService/api/voucher-order-detail/"
+
+    const val API_BRAND_DETAILS = "services/PockketService/api/product/"
 
 
 }

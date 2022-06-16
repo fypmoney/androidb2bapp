@@ -261,9 +261,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
             }
             HomeFragmentVM.HomeFragmentEvent.UpiScanAction -> {
-                val upiComingSoonBottomSheet = UpiComingSoonBottomSheet()
+                /*val upiComingSoonBottomSheet = UpiComingSoonBottomSheet()
                 upiComingSoonBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-                upiComingSoonBottomSheet.show(childFragmentManager, "UpiComingSoonBottomSheet")
+                upiComingSoonBottomSheet.show(childFragmentManager, "UpiComingSoonBottomSheet")*/
+                /*NavDeepLinkBuilder(findNavController()).setArguments(bundleOf(
+                    Pair("productCode", "1")
+                )).*/
+                findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${1}"))
             }
             HomeFragmentVM.HomeFragmentEvent.BroadbandRechargeEvent -> {
                 val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)

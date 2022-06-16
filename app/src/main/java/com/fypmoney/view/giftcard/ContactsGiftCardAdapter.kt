@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.fypmoney.R
 import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.database.entity.ContactEntity
 import com.fypmoney.databinding.ContactRowGiftCardItemBinding
@@ -68,7 +67,7 @@ class ContactsGiftCardAdapter(var viewModel: CreateEGiftCardFragmentVM, var user
                 imageView = mRowItemBinding.ivServiceLogo
             )
 
-            mRowItemBinding.bgCard.setBackgroundResource(if (viewModel.selectedPosition.get() === position) R.drawable.background_grey_contact_selected else R.drawable.background_grey)
+           /* mRowItemBinding.bgCard.setBackgroundResource(if (viewModel.selectedPosition.get() === position) R.drawable.background_grey_contact_selected else R.drawable.background_grey)
             mRowItemBinding.bgCard.setOnClickListener {
                 viewModel.selectedPosition.set(position)
                 viewModel.onItemClicked.value = contactList?.get(position)
@@ -77,7 +76,7 @@ class ContactsGiftCardAdapter(var viewModel: CreateEGiftCardFragmentVM, var user
 
             mViewHelper.init()
             mRowItemBinding.executePendingBindings()
-
+*/
         }
 
     }

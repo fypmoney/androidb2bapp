@@ -51,7 +51,7 @@ class GiftCardNotFyperBottomSheet(val mViewModel: CreateEGiftCardFragmentVM) :
             purchase.destinationEmail = binding.etEmail.text.toString()
 
             var voucher = VoucherDetailsItem()
-            voucher.voucherProductId = mViewModel.selectedGiftCard.get()?.id
+            //voucher.voucherProductId = mViewModel.selectedGiftCard.get()?.id
             val supplierNames: List<VoucherDetailsItem> = Arrays.asList(voucher)
             purchase.voucherDetails = supplierNames
             mViewModel.purchaseGiftCardRequest(purchase)

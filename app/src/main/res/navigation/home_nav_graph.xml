@@ -612,4 +612,22 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_create_gift_card"
+        android:name="com.fypmoney.view.giftcard.CreateEGiftCardFragment"
+        android:label="@string/create_gift_card"
+        tools:layout="@layout/fragment_create_e_gift_card">
+
+        <argument
+            android:name="productCode"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+        <deepLink
+            android:id="@+id/create_gift_card_deeplink"
+            android:autoVerify="true"
+            app:uri="fypmoney://creategiftcard/{productCode}" />
+
+    </fragment>
+
 </navigation>

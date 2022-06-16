@@ -39,7 +39,7 @@ class ContactGiftViewHelper(
         if (userId.toString() != contactEntity?.userId) {
             isBackgroundHighlight.set(true)
             if (isAppUser.get() == true) {
-                viewModel.onItemClicked.value = contactEntity
+                //viewModel.onItemClicked.value = contactEntity
 
             } else {
                 onIsAppUserClicked()
@@ -55,7 +55,7 @@ class ContactGiftViewHelper(
     * This method will handle the click of invite option
     * */
     fun onIsAppUserClicked() {
-        viewModel.onIsAppUserClicked.value = true
+        //viewModel.onIsAppUserClicked.value = true
 
     }
 

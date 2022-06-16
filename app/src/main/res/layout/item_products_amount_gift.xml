@@ -8,7 +8,6 @@
         style="@style/TextviewRegular"
         android:layout_width="wrap_content"
         android:gravity="center"
-        android:minEms="5"
         android:textSize="14sp"
         tools:background="@color/color_skyblue"
         android:layout_margin="@dimen/dp5"
