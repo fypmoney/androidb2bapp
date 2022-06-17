@@ -1,12 +1,16 @@
 package com.fypmoney.view.giftcard
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.View
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -14,6 +18,7 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentCreateEGiftCardBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
+import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.AddMoneyView
 import com.fypmoney.view.fragment.TaskMessageInsuficientFuntBottomSheet
@@ -25,7 +30,7 @@ import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
 import kotlinx.android.synthetic.main.toolbar_gift_card.view.*
 
-
+private const val PICK_CONTACT = 1
 class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, CreateEGiftCardFragmentVM>() {
     private val createEGiftCardFragmentVM by viewModels<CreateEGiftCardFragmentVM> { defaultViewModelProviderFactory }
     private lateinit var binding: FragmentCreateEGiftCardBinding
@@ -66,16 +71,29 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
 
         binding.giftAmount.doOnTextChanged { text, start, before, count ->
             if(text!!.isNotEmpty()){
-               /* binding.giftAmount.setText(String.format(getString(R.string.amount_with_currency),text.toString()))
-                createEGiftCardFragmentVM.amountSelected.value = text.toString().replace("₹ ","").toInt()
-                */
+                binding.giftAmount.error = null
                 binding.payBtn.isEnabled = true
+                createEGiftCardFragmentVM.createEGiftCardModel.amount = text.toString().toLong()
             }else{
                 binding.payBtn.isEnabled = false
-              /*  binding.giftAmount.setText("")
-                createEGiftCardFragmentVM.amountSelected.value = 0
-                createEGiftCardFragmentVM.amountSelected.value = text.toString().replace("₹ ","").toInt()
-            */}
+              }
+        }
+        binding.phoneEt.doOnTextChanged{text, start, before, count ->
+            if(text!!.isNotEmpty()){
+                binding.phoneTil.error = null
+                createEGiftCardFragmentVM.createEGiftCardModel.destinationMobileNo = text.toString()
+            }
+        }
+        binding.nameEt.doOnTextChanged{text, start, before, count ->
+            if(text!!.isNotEmpty()){
+                binding.nameTil.error = null
+                createEGiftCardFragmentVM.createEGiftCardModel.destinationName = text.toString()
+            }
+        }
+        binding.emailEt.doOnTextChanged{text, start, before, count ->
+            if(text!!.isNotEmpty()){
+                createEGiftCardFragmentVM.createEGiftCardModel.destinationEmail = text.toString()
+            }
         }
 
     }
@@ -84,7 +102,7 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
         binding.giftCardAmountRv.adapter = GiftCardPossibleDenominationAmountListAdapter(
             lifecycleOwner = viewLifecycleOwner,
             onAmountClicked = {
-                createEGiftCardFragmentVM.amountSelected.value = it
+                binding.giftAmount.setText(it.toString())
             }
         )
     }
@@ -113,7 +131,9 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
                 binding.payBtn.setBusy(true)
             }
             is CreateEGiftCardFragmentVM.CreateEGiftCardState.Success ->{}
-            is CreateEGiftCardFragmentVM.CreateEGiftCardState.ValidationError ->{}
+            is CreateEGiftCardFragmentVM.CreateEGiftCardState.ValidationError ->{
+                handelValidationError(it.validationError)
+            }
             is CreateEGiftCardFragmentVM.CreateEGiftCardState.PossibleDenominationList -> {
                 if(it.list!!.isNotEmpty()){
                     binding.giftCardAmountRv.toVisible()
@@ -126,8 +146,41 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
                     binding.giftCardAmountRv.toGone()
                 }
             }
-            null ->{}
+            CreateEGiftCardFragmentVM.CreateEGiftCardState.MySelfClickedState -> {
+                if(binding.myselfRb.isChecked){
+                    createEGiftCardFragmentVM.giftCardForWhom = CreateEGiftCardFragmentVM.GiftCardForWhom.MySelf
+                    binding.someoneCl.toGone()
+                }else{
+                    createEGiftCardFragmentVM.giftCardForWhom = CreateEGiftCardFragmentVM.GiftCardForWhom.Someone
+                    binding.someoneCl.toVisible()
+                }
+            }
+            CreateEGiftCardFragmentVM.CreateEGiftCardState.SomeOneClickedState -> {
+                if(binding.someoneRb.isChecked){
+                    createEGiftCardFragmentVM.giftCardForWhom = CreateEGiftCardFragmentVM.GiftCardForWhom.Someone
+                    binding.someoneCl.toVisible()
+                }else{
+                    createEGiftCardFragmentVM.giftCardForWhom = CreateEGiftCardFragmentVM.GiftCardForWhom.MySelf
+                    binding.someoneCl.toGone()
+                }
+            }
+            null ->{
 
+            }
+        }
+    }
+
+    private fun handelValidationError(validationError: CreateEGiftCardFragmentVM.ValidationErrorData) {
+        when(validationError.field){
+            CreateEGiftCardFragmentVM.Field.Amount -> {
+                binding.giftAmount.error = validationError.validationMsg
+            }
+            CreateEGiftCardFragmentVM.Field.MobileNumber -> {
+                binding.phoneTil.error = validationError.validationMsg
+            }
+            CreateEGiftCardFragmentVM.Field.Name -> {
+                binding.nameTil.error = validationError.validationMsg
+            }
         }
     }
 
@@ -138,6 +191,10 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
         }
         binding.maxMinAmountTv.text = String.format(getString(R.string.min__max_gift_price),
             Utility.convertToRs(details?.minPrice.toString()),Utility.convertToRs(details?.maxPrice.toString()))
+        details?.fixedDenomiation?.let {
+            binding.giftAmount.isEnabled = it != YES
+
+        }
     }
 
 
@@ -146,16 +203,16 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
             CreateEGiftCardFragmentVM.CreateEGiftCardEvent.OnPayClickedEvent -> {
 
             }
-            CreateEGiftCardFragmentVM.CreateEGiftCardEvent.OnSomeOneClickedEvent ->{
-
-            }
             is CreateEGiftCardFragmentVM.CreateEGiftCardEvent.ShowLowBalanceAlert ->{
                 callInsufficientFundMessageSheet(it.amount)
             }
-            CreateEGiftCardFragmentVM.CreateEGiftCardEvent.ShowPaymentProcessingScreen ->{
-
-            }
             null ->{}
+            CreateEGiftCardFragmentVM.CreateEGiftCardEvent.OnSelectFromContactEvent -> {
+                selectContactFromPhoneContactList(PICK_CONTACT)
+            }
+            is CreateEGiftCardFragmentVM.CreateEGiftCardEvent.ShowPaymentProcessingScreen -> {
+                findNavController().navigate(CreateEGiftCardFragmentDirections.actionCreateGiftCardToPaymentProcessing(it.createEGiftCardModel))
+            }
         }
     }
 
@@ -191,5 +248,35 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
         bottomSheetInsufficient.show(requireActivity().supportFragmentManager, "Insufficient Fund")
     }
 
+    private fun selectContactFromPhoneContactList(requestCode:Int){
+        val intent = Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
+        startActivityForResult(intent, requestCode)
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            PICK_CONTACT ->{
+                if(resultCode== Activity.RESULT_OK){
+                    when(val result = Utility.getPhoneNumberFromContact(requireActivity(), data)){
+                        is Utility.MobileNumberFromPhoneBook.MobileNumberFound -> {
+                            lifecycleScope.launchWhenResumed {
+                                binding.phoneEt.setText(result.phoneNumber)
+                                result.name?.let {
+                                    binding.nameEt.setText(it)
+                                }
+                            }
+                        }
+                        is Utility.MobileNumberFromPhoneBook.UnableToFindMobileNumber -> {
+                            Utility.showToast(result.errorMsg)
+                        }
+                    }
+                }
+            }
+        }
+
+
+    }
 
 }

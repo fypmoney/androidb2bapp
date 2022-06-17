@@ -5,13 +5,13 @@ data class PurchaseGiftCardRequest(
     var destinationName: String? = null,
     var destinationEmail: String? = null,
     val message: String? = "",
-    var voucherDetails: List<VoucherDetailsItem?>? = null,
+    var voucherDetails: List<VoucherDetailsItem>,
     var giftedPerson: String? = null
 )
 
 
 data class VoucherDetailsItem(
-    var voucherProductId: Int? = null,
-    var amount: Int? = null
+    var voucherProductId: String,
+    var amount: String
 )
 

@@ -179,7 +179,6 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
 
                         startActivity(intent)
                     }
-
                     AppConstants.EXPLORE_IN_APP -> {
                         it.redirectionResource?.let { uri ->
                             when (val redirectionResources = uri.split(",")[0]) {
@@ -198,9 +197,6 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                                 AppConstants.ARCADE -> {
                                     findNavController().navigate(R.id.navigation_arcade)
                                 }
-                                AppConstants.RechargeHomeScreen -> {
-                                    findNavController().navigate(R.id.navigation_enter_mobile_number_recharge)
-                                }
                                 else -> {
                                     Utility.deeplinkRedirection(redirectionResources, requireContext())
                                 }
@@ -208,7 +204,6 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                         }
                     }
                     EXPLORE_IN_APP_WEBVIEW -> {
-
                         val intent = Intent(requireContext(), ExploreInAppWebview::class.java)
                         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, EXPLORE_IN_APP_WEBVIEW)
                         intent.putExtra(AppConstants.IN_APP_URL, it.redirectionResource)
@@ -266,6 +261,9 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                             )
                         }
                         directions?.let { it1 -> findNavController().navigate(it1) }
+                    }
+                    AppConstants.GIFT_VOUCHER -> {
+                        findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))
                     }
                 }
 

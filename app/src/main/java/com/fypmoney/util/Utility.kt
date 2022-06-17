@@ -1215,9 +1215,11 @@ object Utility {
 
 
     sealed class MobileNumberFromPhoneBook{
-        data class MobileNumberFound(val phoneNumber:String):MobileNumberFromPhoneBook()
+        data class MobileNumberFound(val phoneNumber:String,val name:String? = null):MobileNumberFromPhoneBook()
         data class UnableToFindMobileNumber(val errorMsg:String):MobileNumberFromPhoneBook()
     }
+
+
     fun getPhoneNumberFromContact(activity: Activity,data: Intent?):MobileNumberFromPhoneBook{
         val contactData = data!!.data
         val c: Cursor? =
@@ -1232,13 +1234,17 @@ object Utility {
                         ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
                         null, null
                     )
+
                     phones?.moveToFirst()
                     return if (phones != null) {
                         val cNumber = phones.getString(phones.getColumnIndex("data1"))
+                        val name = phones.getString(
+                            phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY)
+                        )
                         System.out.println("number is:$cNumber")
                         val phoneNuber = cNumber.replace("\\s".toRegex(), "")
                         phones.close()
-                        MobileNumberFromPhoneBook.MobileNumberFound(phoneNuber.takeLast(10))
+                        MobileNumberFromPhoneBook.MobileNumberFound(phoneNuber.takeLast(10),name)
 
                     }else{
                         MobileNumberFromPhoneBook.UnableToFindMobileNumber(activity.getString(R.string.unable_to_pick_phone_number))

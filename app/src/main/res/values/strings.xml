@@ -135,7 +135,7 @@
     <string name="otp_length_error">OTP length must be 6</string>
     <string name="phone_email_validity_error">Please enter valid Mobile No. or Email Id</string>
     <string name="continue_txt">Continue</string>
-    <string name="phone_number">Phone number</string>
+    <string name="phone_number">Phone number <font color='#ff434a'>*</font></string>
     <string name="no_internet_try_again">Not connected with internet, please try again</string>
     <string name="google_sign_in_failure">Google sign in failed.</string>
 
@@ -1246,10 +1246,14 @@ Coming really soon!
     <string name="myself">Myself</string>
     <string name="someone">Someone</string>
     <string name="fill_in_the_details_below_to_whom_you_re_sending_this_gift_card">Fill in the details below to whom you’re sending this gift card</string>
-    <string name="name">Name</string>
+    <string name="name">Name <font color='#ff434a'>*</font></string>
     <string name="email">Email</string>
     <string name="gift_card_amount_should_be_grater_with_min_amount">Gift card amount should be grater %1$s</string>
     <string name="gift_card_amount_should_be_less_with_max_amount">Gift card amount should be less then %1$s</string>
     <string name="min__max_gift_price">Min \u20B9 %1$s - Max \u20B9 %2$s</string>
     <string name="create_gift_card">Create Gift card</string>
+    <string name="name_is_required">Name is required</string>
+    <string name="mobile_no_is_required">Mobile no is required</string>
+    <string name="create_gift_card_payment_processing_label">Create gift card payment processing</string>
+    <string name="processing_creating_gift_card">Processing payment of ₹ %1$s for %2$s</string>
 </resources>

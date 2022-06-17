@@ -14,6 +14,7 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.model.*
 import com.fypmoney.view.giftcard.model.CreateGiftCardBrandNetworkResponse
+import com.fypmoney.view.giftcard.model.PurchaseGiftCardResponse
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
 import com.fypmoney.view.ordercard.model.UserOfferCardResponse
 import com.fypmoney.view.recharge.model.RecentRechargesResponse
@@ -226,6 +227,9 @@ class ApiDataParsing {
                 }
                 ApiConstant.API_BRAND_DETAILS -> {
                     getObject(response, CreateGiftCardBrandNetworkResponse::class.java)
+                }
+                ApiConstant.PURCHASE_GIFT_CARD -> {
+                    getObject(response, PurchaseGiftCardResponse::class.java)
                 }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {

@@ -628,6 +628,29 @@
             android:autoVerify="true"
             app:uri="fypmoney://creategiftcard/{productCode}" />
 
+        <action
+            android:id="@+id/action_create_gift_card_to_payment_processing"
+            app:destination="@+id/navigation_create_gift_card_payment_processing"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_create_gift_card_payment_processing"
+        android:name="com.fypmoney.view.giftcard.CreateGiftCardPaymentProcessingFragment"
+        android:label="@string/create_gift_card_payment_processing_label"
+        tools:layout="@layout/fragment_create_gift_card_payment_processing">
+
+
+        <argument
+            android:name="createEGiftCardModel"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.giftcard.model.CreateEGiftCardModel"
+            app:nullable="true" />
+
     </fragment>
 
 </navigation>

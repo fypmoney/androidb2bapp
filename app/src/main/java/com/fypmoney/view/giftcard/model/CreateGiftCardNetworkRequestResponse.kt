@@ -76,7 +76,7 @@ data class GiftCardBrandDetails(
 	val successImage: String? = null,
 
 	@field:SerializedName("minPrice")
-	val minPrice: Int,
+	val minPrice: Long,
 
 	@field:SerializedName("name")
 	val name: String? = null,
@@ -85,7 +85,7 @@ data class GiftCardBrandDetails(
 	val tagline: String? = null,
 
 	@field:SerializedName("maxPrice")
-	val maxPrice: Int,
+	val maxPrice: Long,
 
 	@field:SerializedName("possibleDenominationList")
 	val possibleDenominationList: String? = null

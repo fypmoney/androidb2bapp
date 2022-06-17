@@ -18,13 +18,9 @@ import com.fypmoney.model.BaseRequest
 import com.fypmoney.model.GetWalletBalanceResponse
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.giftcard.model.CreateEGiftCardModel
 import com.fypmoney.view.giftcard.model.CreateGiftCardBrandNetworkResponse
 import com.fypmoney.view.giftcard.model.GiftCardBrandDetails
-import com.fypmoney.view.giftcard.model.PurchaseGiftCardRequest
-import com.fypmoney.view.giftcard.model.PurchaseGiftCardResponse
-import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 
 /*
 * This class is used to handle add money functionality
@@ -39,28 +35,37 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
         get() = _event
     private var _event = LiveEvent<CreateEGiftCardEvent>()
 
-    var amountSelected = MutableLiveData<Int>()
     lateinit var brandDetails:GiftCardBrandDetails
+
     lateinit var brandCode:String
+    val createEGiftCardModel:CreateEGiftCardModel = CreateEGiftCardModel(
+        voucherProductId = "",
+        amount = -1,
+        giftedPerson = "",
+        message = null,
+        destinationMobileNo = "",
+        destinationEmail = null,
+        destinationName = "",
+        brandName = ""
+    )
+    var giftCardForWhom:GiftCardForWhom = GiftCardForWhom.MySelf
 
     fun onMySelfClicked(){
-
+        _state.value = CreateEGiftCardState.MySelfClickedState
     }
     fun onSomeOneClicked(){
-
+        _state.value = CreateEGiftCardState.SomeOneClickedState
     }
 
-    fun purchaseGiftCardRequest(orderId: PurchaseGiftCardRequest) {
-        WebApiCaller.getInstance().request(
-            ApiRequest(
-                ApiConstant.PURCHASE_GIFT_CARD,
-                NetworkUtil.endURL(ApiConstant.PURCHASE_GIFT_CARD),
-                ApiUrl.POST,
-                orderId,
-                this, isProgressBar = true
-            )
-        )
+    fun onPayClicked(){
+        validation()
     }
+
+    fun onSelectFromContactClicked(){
+        _event.value = CreateEGiftCardEvent.OnSelectFromContactEvent
+    }
+
+
 
     fun getGiftCardBrandDetails(){
         WebApiCaller.getInstance().request(
@@ -75,42 +80,80 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
         )
     }
 
-    fun onAddClicked() {
-        amountSelected.value?.let { amount->
-            if(TextUtils.isEmpty(amount.toString())) {
+    fun validation() {
+        createEGiftCardModel.amount.let { amount->
+            if(TextUtils.isEmpty(amount.toString()) || amount==-1L) {
                 _state.value = CreateEGiftCardState.ValidationError(
                     ValidationErrorData(
                         field = Field.Amount,
                         validationMsg = PockketApplication.instance.getString(R.string.add_money_empty_error)
                     )
                 )
-            }else if(amount<Utility.convertToRs(brandDetails.minPrice.toString())!!.toInt()){
+            }
+            else if(amount<Utility.convertToRs(brandDetails.minPrice.toString())!!.toLong()){
                 _state.value = CreateEGiftCardState.ValidationError(
                     ValidationErrorData(
                         field = Field.Amount,
                         validationMsg = String.format(PockketApplication.instance.getString(
                             R.string.gift_card_amount_should_be_grater_with_min_amount),
                             String.format(PockketApplication.instance.getString(
-                                R.string.amount_with_currency),brandDetails.minPrice)
+                                R.string.amount_with_currency),Utility.convertToRs(brandDetails.minPrice.toString()))
                         )
                     )
                 )
-            }else if(amount>Utility.convertToRs(brandDetails.maxPrice.toString())!!.toInt()){
+            }
+            else if(amount>Utility.convertToRs(brandDetails.maxPrice.toString())!!.toLong()){
                 _state.value = CreateEGiftCardState.ValidationError(
                     ValidationErrorData(
                         field = Field.Amount,
                         validationMsg = String.format(PockketApplication.instance.getString(
                             R.string.gift_card_amount_should_be_less_with_max_amount),
                             String.format(PockketApplication.instance.getString(
-                                R.string.amount_with_currency),brandDetails.maxPrice)
+                                R.string.amount_with_currency),Utility.convertToRs(brandDetails.maxPrice.toString()))
                         )
                     )
                 )
+            }
+            else if(giftCardForWhom==GiftCardForWhom.Someone){
+                if(TextUtils.isEmpty(createEGiftCardModel.destinationName)){
+                    _state.value = CreateEGiftCardState.ValidationError(
+                        ValidationErrorData(
+                            field = Field.Name,
+                            validationMsg = PockketApplication.instance.getString(R.string.name_is_required)
+                        )
+                    )
+                }else if(TextUtils.isEmpty(createEGiftCardModel.destinationMobileNo)){
+                    _state.value = CreateEGiftCardState.ValidationError(
+                        ValidationErrorData(
+                            field = Field.MobileNumber,
+                            validationMsg =  PockketApplication.instance.getString(R.string.mobile_no_is_required))
+                    )
+                }else{
+                    checkForBalance()
+                }
             }else{
-                fetchBalance()
+                checkForBalance()
             }
         }
+    }
 
+    private fun checkForBalance() {
+        when (giftCardForWhom) {
+            GiftCardForWhom.MySelf -> {
+                Utility.getCustomerDataFromPreference()?.mobile?.let {
+                    createEGiftCardModel.destinationMobileNo = it
+                }
+                createEGiftCardModel.giftedPerson = "MYSELF"
+            }
+            GiftCardForWhom.Someone -> {
+                createEGiftCardModel.giftedPerson = "NONE"
+            }
+        }
+        brandDetails.displayName?.let {
+            createEGiftCardModel.brandName = it
+
+        }
+        fetchBalance()
     }
 
     fun fetchBalance() {
@@ -130,13 +173,6 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
         when (purpose) {
-            ApiConstant.PURCHASE_GIFT_CARD -> {
-                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-                val obj = Gson().fromJson(
-                    json.get("data"),
-                    PurchaseGiftCardResponse::class.java
-                )
-            }
             ApiConstant.API_BRAND_DETAILS -> {
                 if(responseData is CreateGiftCardBrandNetworkResponse){
                     brandDetails = responseData.data
@@ -150,11 +186,11 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
                     responseData.getWalletBalanceResponseDetails.accountBalance.toIntOrNull()
                         ?.let { accountBalance ->
                             _state.value = CreateEGiftCardState.Success(accountBalance)
-                            if(accountBalance < amountSelected.value?.toInt()!!){
+                            if(accountBalance < createEGiftCardModel.amount){
                                 _event.value = CreateEGiftCardEvent.ShowLowBalanceAlert(
-                                    ((amountSelected.value?.toInt()!!) - (accountBalance)).toString())
+                                    ((createEGiftCardModel.amount) - (accountBalance)).toString())
                             }else{
-                                _event.value = CreateEGiftCardEvent.ShowPaymentProcessingScreen
+                                _event.value = CreateEGiftCardEvent.ShowPaymentProcessingScreen(createEGiftCardModel)
                             }
                         }
                 }
@@ -183,22 +219,31 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
         data class BrandDetailsSuccess(val details:GiftCardBrandDetails?):CreateEGiftCardState()
         data class PossibleDenominationList(val list:MutableList<String>?):CreateEGiftCardState()
         data class Success(var balance:Int):CreateEGiftCardState()
+        object MySelfClickedState:CreateEGiftCardState()
+        object SomeOneClickedState:CreateEGiftCardState()
     }
 
     sealed class CreateEGiftCardEvent{
-        object OnSomeOneClickedEvent:CreateEGiftCardEvent()
         object OnPayClickedEvent:CreateEGiftCardEvent()
         data class ShowLowBalanceAlert(val amount:String?):CreateEGiftCardEvent()
-        object ShowPaymentProcessingScreen:CreateEGiftCardEvent()
+        data class ShowPaymentProcessingScreen(val createEGiftCardModel: CreateEGiftCardModel):CreateEGiftCardEvent()
+        object OnSelectFromContactEvent:CreateEGiftCardEvent()
     }
 
+
     @Keep
-    data class ValidationErrorData(var field:Field,var validationMsg:String)
+    data class ValidationErrorData(var field: Field, var validationMsg:String)
 
     sealed class Field{
         object Amount:Field()
+        object Name:Field()
         object MobileNumber:Field()
     }
+    sealed class GiftCardForWhom{
+        object MySelf:GiftCardForWhom()
+        object Someone:GiftCardForWhom()
+    }
 }
+
 
 
