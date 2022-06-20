@@ -9,12 +9,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.fypmoney.R
 import com.fypmoney.databinding.BottomSheetPurschaseNotFyperBinding
-import com.fypmoney.view.giftcard.model.PurchaseGiftCardRequest
-import com.fypmoney.view.giftcard.model.VoucherDetailsItem
 import com.fypmoney.view.giftcard.viewModel.CreateEGiftCardFragmentVM
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import java.util.*
 
 
 class GiftCardNotFyperBottomSheet(val mViewModel: CreateEGiftCardFragmentVM) :
@@ -38,15 +35,15 @@ class GiftCardNotFyperBottomSheet(val mViewModel: CreateEGiftCardFragmentVM) :
 
         binding.purchaseGift.setOnClickListener(View.OnClickListener {
 
-            var purchase = PurchaseGiftCardRequest()
-            purchase.destinationMobileNo = binding.etMobile.text.toString()
+ //           var purchase = PurchaseGiftCardRequest()
+  //          purchase.destinationMobileNo = binding.etMobile.text.toString()
 //                      purchase.destinationName =
 //                          mViewModel.selectedContactFromList.get()?.firstName + " " +  mViewModel.selectedContactFromList.get()?.lastName
 //                      if ( mViewModel.selectedContactFromList.get()?.isAppUser == true)
 //                          purchase.giftedPerson = "FYPUSER"
 //                      else
 
-            purchase.giftedPerson = "NOTFYPUSER"
+       /*     purchase.giftedPerson = "NOTFYPUSER"
 
             purchase.destinationEmail = binding.etEmail.text.toString()
 
@@ -54,7 +51,7 @@ class GiftCardNotFyperBottomSheet(val mViewModel: CreateEGiftCardFragmentVM) :
             //voucher.voucherProductId = mViewModel.selectedGiftCard.get()?.id
             val supplierNames: List<VoucherDetailsItem> = Arrays.asList(voucher)
             purchase.voucherDetails = supplierNames
-            mViewModel.purchaseGiftCardRequest(purchase)
+            mViewModel.purchaseGiftCardRequest(purchase)*/
 
         })
         return binding.root

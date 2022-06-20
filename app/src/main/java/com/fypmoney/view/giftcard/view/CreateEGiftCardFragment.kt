@@ -1,4 +1,4 @@
-package com.fypmoney.view.giftcard
+package com.fypmoney.view.giftcard.view
 
 import android.app.Activity
 import android.content.Intent
@@ -18,6 +18,7 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentCreateEGiftCardBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.AddMoneyView
@@ -26,6 +27,7 @@ import com.fypmoney.view.giftcard.adapters.GiftCardPossibleDenominationAmountLis
 import com.fypmoney.view.giftcard.adapters.GiftCardPossibleDenominationAmountUiModel.Companion.possibleDenominationListToGiftCardPossibleDenominationAmountUiModel
 import com.fypmoney.view.giftcard.model.GiftCardBrandDetails
 import com.fypmoney.view.giftcard.viewModel.CreateEGiftCardFragmentVM
+import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
 import com.fypmoney.view.interfaces.AcceptRejectClickListener
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
 import kotlinx.android.synthetic.main.toolbar_gift_card.view.*
@@ -65,9 +67,6 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
-        tnc.setOnClickListener {
-
-        }
 
         binding.giftAmount.doOnTextChanged { text, start, before, count ->
             if(text!!.isNotEmpty()){
@@ -194,6 +193,11 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
         details?.fixedDenomiation?.let {
             binding.giftAmount.isEnabled = it != YES
 
+        }
+        tnc.setOnClickListener {
+            val intent = Intent(requireContext(), ExploreInAppWebview::class.java)
+            intent.putExtra(AppConstants.IN_APP_URL, details?.tncLink)
+            startActivity(intent)
         }
     }
 

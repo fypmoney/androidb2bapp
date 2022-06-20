@@ -21,17 +21,33 @@ data class CreateEGiftCardModel(
 @Parcelize
 @Keep
 data class PurchasedGiftCardStatusUiModel(
+    var purchaseGiftCardDetailId:String,
     var amount:String,
-    var message:String,
+    var title:String,
+    var subTitle:String,
     var myntsEarned:String,
-    var status:OrderStatus,
+    var myntsVisibility:Boolean,
+    var statusAnimRes:Int,
+    var status:CreateEGiftCardOrderStatus,
     var actionButtonVisibility:Boolean,
-    var actionBtnText:String
-)
+    var actionBtnText:String,
+    var actionBtnCTA:GiftCardStatusScreenCTA
+):Parcelable
 
-sealed class OrderStatus{
-    object Success:OrderStatus()
-    object Failed:OrderStatus()
-    object Pending:OrderStatus()
+sealed class GiftCardStatusScreenCTA:Parcelable{
+    @Parcelize
+    object NavigateToHome:GiftCardStatusScreenCTA()
+    @Parcelize
+    data class NavigateToGiftCardDetails(var voucherDetailsId:String):GiftCardStatusScreenCTA()
+}
+
+
+sealed class CreateEGiftCardOrderStatus :Parcelable{
+    @Parcelize
+    object Success:CreateEGiftCardOrderStatus()
+    @Parcelize
+    object Failed:CreateEGiftCardOrderStatus()
+    @Parcelize
+    object Pending:CreateEGiftCardOrderStatus()
 }
 

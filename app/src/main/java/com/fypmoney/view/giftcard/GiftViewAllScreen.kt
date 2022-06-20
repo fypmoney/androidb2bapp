@@ -12,6 +12,7 @@ import com.fypmoney.databinding.ActivityViewAllGiftCardsBinding
 import com.fypmoney.util.AppConstants
 import com.fypmoney.view.giftcard.model.GiftSearchResponse
 import com.fypmoney.view.giftcard.model.VoucherBrandItem
+import com.fypmoney.view.giftcard.view.CreateEGiftCardFragment
 import com.fypmoney.view.giftcard.viewModel.GiftViewAllViewModel
 
 import kotlinx.android.synthetic.main.toolbar_gift_card.*

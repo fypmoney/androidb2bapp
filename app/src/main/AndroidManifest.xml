@@ -405,7 +405,7 @@
         </activity>
         <activity
             android:windowSoftInputMode="adjustPan"
-            android:name=".view.giftcard.CreateEGiftCardFragment" />
+            android:name=".view.giftcard.view.CreateEGiftCardFragment" />
         <activity android:name=".view.giftcard.GiftTermsAndConditions" />
         <activity android:name=".view.giftcard.GiftHistoryActivity" />
         <activity android:name=".view.giftcard.GiftHistoryUnusedActivity" />

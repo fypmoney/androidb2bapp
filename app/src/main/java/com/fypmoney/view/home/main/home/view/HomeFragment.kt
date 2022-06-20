@@ -515,7 +515,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             AppConstants.EXPLORE_IN_APP_WEBVIEW -> {
 
                 val intent = Intent(requireContext(), ExploreInAppWebview::class.java)
-//        intent.putExtra(AppConstants.EXPLORE_RESPONSE, feedDetails)
                 intent.putExtra(
                     AppConstants.FROM_WHICH_SCREEN,
                     AppConstants.EXPLORE_IN_APP_WEBVIEW
