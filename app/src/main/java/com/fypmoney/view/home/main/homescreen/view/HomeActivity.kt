@@ -89,6 +89,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.help.toVisible()
                     binding.framne.toVisible()
                     binding.transactionHistoryAiv.toGone()
+                    binding.giftVoucherHistoryTv.toGone()
                     binding.myProfileIv.toVisible()
                     binding.toolbarTitleTv.toVisible()
                     showToolbar()
@@ -105,6 +106,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     homeActivityVM.toolbarTitle.value = getString(R.string.fyper_txt)
                     binding.help.toVisible()
                     binding.framne.toVisible()
+                    binding.giftVoucherHistoryTv.toGone()
                     binding.transactionHistoryAiv.toGone()
                     binding.myProfileIv.toGone()
                     showToolbar()
@@ -121,6 +123,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     homeActivityVM.toolbarTitle.value = getString(R.string.rewards)
                     binding.help.toGone()
                     binding.framne.toGone()
+                    binding.giftVoucherHistoryTv.toGone()
                     binding.transactionHistoryAiv.toVisible()
                     binding.myProfileIv.toGone()
                     showToolbar()
@@ -137,6 +140,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.help.toVisible()
                     binding.framne.toVisible()
                     binding.myProfileIv.toGone()
+                    binding.giftVoucherHistoryTv.toVisible()
                     binding.transactionHistoryAiv.toGone()
                     showToolbar()
                     showBottomNavigation()
@@ -183,7 +187,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                 //startActivity(Intent(this, BankTransactionHistoryView::class.java))
                 findNavController(R.id.nav_host_fragment_activity_home).navigate(R.id.navigation_rewards_history)
             }
-            else -> {}
+            HomeActivityVM.HomeActivityEvent.GiftVoucherHistoryClicked -> {
+                findNavController(R.id.nav_host_fragment_activity_home).navigate(R.id.navigation_gift_card_history)
+            }
+            null -> TODO()
         }
     }
 

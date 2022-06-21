@@ -49,7 +49,6 @@ import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.register.PanAdhaarSelectionActivity
-import com.fypmoney.view.register.adapters.OffersHomeAdapter
 import com.fypmoney.view.register.fragments.CompleteKYCBottomSheet
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
@@ -65,12 +64,10 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     ExploreAdapter.OnFeedItemClickListener {
 
-    private var typeAdapter: OffersHomeAdapter? = null
     private val homeFragmentVM by viewModels<HomeFragmentVM> {
         defaultViewModelProviderFactory
     }
     private lateinit var _binding: FragmentHomeBinding
-    private var itemsArrayList: ArrayList<offerDetailResponse> = ArrayList()
 
     private val binding get() = _binding
 

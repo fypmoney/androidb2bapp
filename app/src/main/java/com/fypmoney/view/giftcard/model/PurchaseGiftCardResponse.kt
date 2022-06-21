@@ -1,5 +1,8 @@
 package com.fypmoney.view.giftcard.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class PurchaseGiftCardResponse(
     val msg: String? = null,
     val voucherGuid: String? = null,
@@ -7,4 +10,5 @@ data class PurchaseGiftCardResponse(
     val endDate: String? = null,
     val voucherGcCode: String? = null,
     val detailImage: String? = null,
-    val voucherOrderDetailId: String)
+    val voucherOrderDetailId: String,
+)

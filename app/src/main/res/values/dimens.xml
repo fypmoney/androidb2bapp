@@ -65,6 +65,9 @@
     <dimen name="dp29">29dp</dimen>
     <dimen name="dp176">176dp</dimen>
     <dimen name="dp33">33dp</dimen>
+    <dimen name="dp32">32dp</dimen>
+    <dimen name="dp4">4dp</dimen>
+    <dimen name="dp43">43dp</dimen>
 
 
 </resources>

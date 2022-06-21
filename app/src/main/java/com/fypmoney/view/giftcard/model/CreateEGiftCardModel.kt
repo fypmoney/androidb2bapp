@@ -15,6 +15,7 @@ data class CreateEGiftCardModel(
     var destinationMobileNo:String,
     var destinationEmail:String? = null,
     var destinationName:String,
+    var myntsMultiPlier:String? = null
 ):Parcelable
 
 

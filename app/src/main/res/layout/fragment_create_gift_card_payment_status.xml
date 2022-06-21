@@ -132,10 +132,10 @@
             android:textSize="18sp"
             android:textStyle="normal"
             android:onClick="@{()->viewModel.onContinueClick()}"
-            app:disabled_bg="@color/cb_grey"
             app:disabled_text="@color/grey_heading"
-            app:enabled_text="@color/text_color_dark"
-            app:enabled_bg="@color/white"
+            app:enabled_text="@color/white"
+            app:enabled_bg="@color/color_task_card_green"
+            app:disabled_bg="@color/buttonUnselectedColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

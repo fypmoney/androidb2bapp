@@ -71,7 +71,7 @@ class CreateGiftCardPaymentStatusFragmentVM(application: Application) : BaseView
     }
     sealed class CreateGiftCardPaymentSuccessEvent{
         object NavigateToHome: CreateGiftCardPaymentSuccessEvent()
-        data class NavigateToGiftCardDetails(var purchasedVoucherDetailsUiModel: String) :
+        data class NavigateToGiftCardDetails(var giftCardId: String) :
             CreateGiftCardPaymentSuccessEvent()
     }
 }

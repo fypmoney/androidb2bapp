@@ -49,7 +49,7 @@ data class GiftCardBrandDetails(
 	val discountPer: Int? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+	val id: String? = null,
 
 	@field:SerializedName("tncLink")
 	val tncLink: String? = null,
@@ -88,7 +88,11 @@ data class GiftCardBrandDetails(
 	val maxPrice: Long,
 
 	@field:SerializedName("possibleDenominationList")
-	val possibleDenominationList: String? = null
+	val possibleDenominationList: String? = null,
+
+	@field:SerializedName("myntsMultiPlier")
+	var myntsMultiPlier:String? = null
+
 )
 
 @Keep
@@ -110,7 +114,7 @@ data class VoucherProduct(
 	val maxAllowedQuantity: Int? = null,
 
 	@field:SerializedName("id")
-	val id: Int? = null,
+	val id: String? = null,
 
 	@field:SerializedName("isFlexiblePrice")
 	val isFlexiblePrice: String? = null,

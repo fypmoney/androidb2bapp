@@ -52,6 +52,10 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
         _event.value = HomeActivityEvent.TransactionHistoryClicked
     }
 
+    fun onGiftVoucherHistoryClicked() {
+        _event.value = HomeActivityEvent.GiftVoucherHistoryClicked
+    }
+
     override fun onCleared() {
         super.onCleared()
         storeFirstTimeUserLandedOnHomeScreen()
@@ -113,5 +117,6 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
         object ProfileClicked : HomeActivityEvent()
         object NotificationClicked : HomeActivityEvent()
         object TransactionHistoryClicked : HomeActivityEvent()
+        object GiftVoucherHistoryClicked : HomeActivityEvent()
     }
 }

@@ -142,14 +142,6 @@ class OfferDetailsBottomSheet(
 
         }
 
-
-
-
-
-
-
-
-
         try {
             val jsonArr = JSONArray(offerDetails?.tnc)
             var itemsArrayList: ArrayList<String> = ArrayList()
@@ -192,10 +184,10 @@ class OfferDetailsBottomSheet(
             requireContext(), key = SharedPrefUtils.SF_KEY_USER_ID
         ).toString()
         val contentWithCode =
-            userId?.let { userid -> it?.replace(const, userid) }
+            userId.let { userid -> it.replace(const, userid) }
 
         val url =
-            offerId?.let { userid -> contentWithCode?.replace(const2, userid) }
+            offerId.let { userid -> contentWithCode.replace(const2, userid) }
         return url
     }
 

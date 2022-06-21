@@ -7,13 +7,12 @@ import android.content.ClipboardManager
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.database.Cursor
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
-import android.graphics.PorterDuff
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract
+import android.provider.MediaStore
 import android.provider.Settings
 import android.text.*
 import android.text.InputFilter.LengthFilter
@@ -1260,5 +1259,25 @@ object Utility {
         }
         return MobileNumberFromPhoneBook.UnableToFindMobileNumber(activity.getString(R.string.unable_to_pick_phone_number))
 
+    }
+
+    fun takeScreenShot(view: View): Bitmap? {
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+        return bitmap
+    }
+
+    fun shareScreenShotContent(bitmap: Bitmap,context: Context,text:String) {
+        val bitmapPath = MediaStore.Images.Media.insertImage(
+            context.contentResolver, bitmap, "title", ""
+        )
+        val uri: Uri = Uri.parse(bitmapPath)
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "image/*"
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "App")
+        shareIntent.putExtra(Intent.EXTRA_TEXT, text)
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        context.startActivity(Intent.createChooser(shareIntent, "Share"))
     }
 }

@@ -172,7 +172,7 @@ object ApiConstant {
     const val GET_GIFTS_LIST = "services/PockketService/api/search-voucher"
 
     const val GET_HISTORY_LIST =
-        "services/PockketService/api/purchased-voucher?page=0&size=10&sort=id,desc&gifted=NO"
+        "services/PockketService/api/purchased-voucher?page=0&size=100&sort=id,desc&gifted=NO"
     const val GET_HISTORY_UNUSED_LIST =
         "services/PockketService/api/unused-voucher?page=0&size=10&sort=id,desc"
     const val GET_GIFT_VOUCHER_STATUS =
@@ -182,7 +182,7 @@ object ApiConstant {
         "services/PockketService/api/voucher-order-detail/"
 
     const val API_BRAND_DETAILS = "services/PockketService/api/product/"
-
+    const val API_GIFT_CARD_DETAILS = "/services/PockketService/api/voucher-order-detail/"
 
 }
 

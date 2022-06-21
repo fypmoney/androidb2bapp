@@ -41,7 +41,7 @@ class CreateGiftCardPaymentProcessingFragmentVM(application: Application) : Base
     fun purchaseGiftCardRequest() {
         _state.postValue(CreateGiftCardPaymentProcessingState.Loading)
         val voucherItem = VoucherDetailsItem(voucherProductId = createEGiftCardModel.voucherProductId,
-            amount = Utility.convertToRs(createEGiftCardModel.amount.toString())!!)
+            amount = Utility.convertToPaise(createEGiftCardModel.amount.toString())!!)
         val voucherItemList = arrayListOf<VoucherDetailsItem>()
         voucherItemList.add(voucherItem)
 
@@ -78,7 +78,7 @@ class CreateGiftCardPaymentProcessingFragmentVM(application: Application) : Base
                             amount = createEGiftCardModel.amount.toString(),
                             title = "",
                             subTitle = if(responseData.voucherNo.isNullOrEmpty()) PockketApplication.instance.getString(R.string.any_amount_detucetd) else "",
-                            myntsEarned = "24",
+                            myntsEarned = if(createEGiftCardModel.myntsMultiPlier.isNullOrEmpty()) "" else String.format(PockketApplication.instance.getString(R.string.you_have_won_mynts),createEGiftCardModel.myntsMultiPlier+"X"),
                             myntsVisibility = !responseData.voucherNo.isNullOrEmpty(),
                             statusAnimRes = if(responseData.voucherNo.isNullOrEmpty()) R.raw.pending else R.raw.success,
                             status = if(responseData.voucherNo.isNullOrEmpty())  CreateEGiftCardOrderStatus.Pending else CreateEGiftCardOrderStatus.Success,
@@ -96,7 +96,6 @@ class CreateGiftCardPaymentProcessingFragmentVM(application: Application) : Base
         super.onError(purpose, errorResponseInfo)
         when(purpose){
             ApiConstant.PURCHASE_GIFT_CARD -> {
-                //_state.value = CreateGiftCardPaymentProcessingState.Error
                 _event.value = CreateGiftCardPaymentProcessingEvent.NavigateToStatusScreen(
                     PurchasedGiftCardStatusUiModel(
                         purchaseGiftCardDetailId = "",

@@ -118,7 +118,7 @@ class CreateGiftCardPaymentStatusFragment : BaseFragment<FragmentCreateGiftCardP
     private fun handelEvent(it: CreateGiftCardPaymentStatusFragmentVM.CreateGiftCardPaymentSuccessEvent?) {
         when(it){
             is CreateGiftCardPaymentStatusFragmentVM.CreateGiftCardPaymentSuccessEvent.NavigateToGiftCardDetails -> {
-
+                findNavController().navigate(CreateGiftCardPaymentStatusFragmentDirections.actionPurchasedGiftCardPaymentSuccessToGiftCardDetails(it.giftCardId))
             }
             CreateGiftCardPaymentStatusFragmentVM.CreateGiftCardPaymentSuccessEvent.NavigateToHome -> {
                 findNavController().navigate(CreateGiftCardPaymentStatusFragmentDirections.navigationPurchasedGiftCardPaymentSuccessToHome())

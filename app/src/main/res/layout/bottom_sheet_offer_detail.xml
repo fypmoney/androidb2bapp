@@ -189,7 +189,6 @@
                 android:layout_marginTop="@dimen/_6sdp"
                 android:layout_marginBottom="@dimen/_24sdp"
                 android:layout_marginEnd="@dimen/_18sdp"
-
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <com.fypmoney.view.customview.PrimaryButton

@@ -46,7 +46,8 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
         destinationMobileNo = "",
         destinationEmail = null,
         destinationName = "",
-        brandName = ""
+        brandName = "",
+        myntsMultiPlier = ""
     )
     var giftCardForWhom:GiftCardForWhom = GiftCardForWhom.MySelf
 
@@ -153,6 +154,13 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
             createEGiftCardModel.brandName = it
 
         }
+        brandDetails.voucherProduct?.let {
+            if(it.isNotEmpty()){
+                createEGiftCardModel.voucherProductId = it[0]?.id.toString()
+            }
+
+        }
+        createEGiftCardModel.myntsMultiPlier = brandDetails.myntsMultiPlier
         fetchBalance()
     }
 
