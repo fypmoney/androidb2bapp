@@ -106,6 +106,8 @@
                 android:text="@string/refresh"
                 android:layout_marginEnd="@dimen/dp16"
                 android:visibility="visible"
+                android:clickable="true"
+                android:duplicateParentState="false"
                 app:layout_constraintTop_toTopOf="@+id/gift_card_status_tv"
                 app:layout_constraintBottom_toBottomOf="@+id/gift_card_status_tv"
                 app:layout_constraintEnd_toStartOf="@+id/gift_card_status_tv"

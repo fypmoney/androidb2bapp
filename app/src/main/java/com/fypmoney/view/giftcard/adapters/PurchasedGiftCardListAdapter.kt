@@ -106,7 +106,7 @@ class PurchasedGiftCardListAdapter(
                 }
             }
             binding.refreshTv.setOnClickListener {
-                onRefreshClick(item.giftCardId)
+                onRefreshClick(item.giftCardExternalId)
             }
             binding.voucherItemMcv.setOnClickListener {
                 onGiftCardClick(item.giftCardId)
@@ -141,6 +141,7 @@ object PurchasedGiftCardListDiffUtils : DiffUtil.ItemCallback<PurchasedGiftCardI
 data class PurchasedGiftCardItemUiModel(
     var brandLogo: String? = null,
     var giftCardId: String,
+    var giftCardExternalId: String,
     var giftCardReceivedPurchasedType: GiftVoucherReceivedStatus,
     var validityDate: String,
     var amount: String,
@@ -151,16 +152,17 @@ data class PurchasedGiftCardItemUiModel(
         fun convertGiftCardHistoryItemToPurchasedGiftCardItemUiModel(context: Context, giftCardHistoryItem: GiftCardHistoryItem):PurchasedGiftCardItemUiModel{
             return PurchasedGiftCardItemUiModel(
                 brandLogo = giftCardHistoryItem.brandLogo,
-                giftCardId = giftCardHistoryItem.id!!,
+                giftCardId = giftCardHistoryItem.id,
                 giftCardReceivedPurchasedType = getGiftCardReceivedPurchaseType(context,giftCardHistoryItem),
                 validityDate = Utility.parseDateTime(
                     giftCardHistoryItem.endDate,
                     inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
                     outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT9
                 ),
-                amount = Utility.convertToRs(giftCardHistoryItem.amount)!!,
+                amount = String.format(context.getString(R.string.amount_with_currency),Utility.convertToRs(giftCardHistoryItem.amount)!!),
                 status = getGiftCardStatus(context,giftCardHistoryItem.voucherStatus)!!,
-                refreshIsVisible = giftCardHistoryItem.voucherStatus.equals("PENDING",true)
+                refreshIsVisible = giftCardHistoryItem.voucherStatus.equals("PENDING",true),
+                giftCardExternalId = giftCardHistoryItem.externalOrderId!!
             )
         }
 

@@ -46,7 +46,7 @@ class SimpleTextVH(
     fun bind(model: SimpleTextUiModel) {
         binding.executeAfter {
             lifecycleOwner = this@SimpleTextVH.lifecycleOwner
-            textTv.text = model.txt
+            textTv.text = "•" + model.txt
             textTv.setTextColor(model.txtColor)
         }
     }

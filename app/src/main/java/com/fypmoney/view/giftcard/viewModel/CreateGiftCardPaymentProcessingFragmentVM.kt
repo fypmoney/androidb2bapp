@@ -71,20 +71,20 @@ class CreateGiftCardPaymentProcessingFragmentVM(application: Application) : Base
         super.onSuccess(purpose, responseData)
         when(purpose){
             ApiConstant.PURCHASE_GIFT_CARD -> {
-                if(responseData is PurchaseGiftCardResponse){
+                if(responseData is PurchaseGiftCardNetworkResponse){
                     _event.value = CreateGiftCardPaymentProcessingEvent.NavigateToStatusScreen(
                         PurchasedGiftCardStatusUiModel(
-                            purchaseGiftCardDetailId = responseData.voucherOrderDetailId,
+                            purchaseGiftCardDetailId = responseData.data.voucherOrderDetailId,
                             amount = createEGiftCardModel.amount.toString(),
                             title = "",
-                            subTitle = if(responseData.voucherNo.isNullOrEmpty()) PockketApplication.instance.getString(R.string.any_amount_detucetd) else "",
+                            subTitle = if(responseData.data.voucherNo.isNullOrEmpty()) PockketApplication.instance.getString(R.string.any_amount_detucetd) else "",
                             myntsEarned = if(createEGiftCardModel.myntsMultiPlier.isNullOrEmpty()) "" else String.format(PockketApplication.instance.getString(R.string.you_have_won_mynts),createEGiftCardModel.myntsMultiPlier+"X"),
-                            myntsVisibility = !responseData.voucherNo.isNullOrEmpty(),
-                            statusAnimRes = if(responseData.voucherNo.isNullOrEmpty()) R.raw.pending else R.raw.success,
-                            status = if(responseData.voucherNo.isNullOrEmpty())  CreateEGiftCardOrderStatus.Pending else CreateEGiftCardOrderStatus.Success,
-                            actionButtonVisibility = responseData.voucherNo.isNullOrEmpty(),
-                            actionBtnText = if(responseData.voucherNo.isNullOrEmpty())  PockketApplication.instance.getString(R.string.continue_btn_text) else PockketApplication.instance.getString(R.string.continue_btn_text),
-                            actionBtnCTA = if(responseData.voucherNo.isNullOrEmpty())   GiftCardStatusScreenCTA.NavigateToHome else GiftCardStatusScreenCTA.NavigateToGiftCardDetails(responseData.voucherOrderDetailId)
+                            myntsVisibility = !responseData.data.voucherNo.isNullOrEmpty(),
+                            statusAnimRes = if(responseData.data.voucherNo.isNullOrEmpty()) R.raw.pending else R.raw.success,
+                            status = if(responseData.data.voucherNo.isNullOrEmpty())  CreateEGiftCardOrderStatus.Pending else CreateEGiftCardOrderStatus.Success,
+                            actionButtonVisibility = responseData.data.voucherNo.isNullOrEmpty(),
+                            actionBtnText = if(responseData.data.voucherNo.isNullOrEmpty())  PockketApplication.instance.getString(R.string.continue_btn_text) else PockketApplication.instance.getString(R.string.continue_btn_text),
+                            actionBtnCTA = if(responseData.data.voucherNo.isNullOrEmpty())   GiftCardStatusScreenCTA.NavigateToHome else GiftCardStatusScreenCTA.NavigateToGiftCardDetails(responseData.data.voucherOrderDetailId)
                         )
                     )
                 }

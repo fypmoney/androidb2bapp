@@ -47,7 +47,7 @@ class HowToRedeemGiftCardBottomSheet(var redeemTxt:String,var redeemLink:String,
         howToRedeemGiftCardBottomSheetVM.event.observe(viewLifecycleOwner) {
             when (it) {
                 is HowToRedeemGiftCardBottomSheetVM.HowToRedeemGiftCardEvent.NavigateToBrandShoppingScreen -> {
-
+                    onRedeemNowClick(it.howToRedeemLink)
                 }
             }
         }

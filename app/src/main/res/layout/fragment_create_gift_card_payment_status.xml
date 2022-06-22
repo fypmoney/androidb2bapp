@@ -97,7 +97,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                tools:src="@drawable/ic_two_mynts"/>
+                app:srcCompat="@drawable/ic_two_mynts"/>
 
             <com.google.android.material.textview.MaterialTextView
                 style="@style/TextviewRegular"

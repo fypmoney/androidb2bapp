@@ -705,8 +705,8 @@
             app:argType="string"
             app:nullable="true" />
 
-        <action android:id="@+id/action_gift_card_details_to_arcade"
-            app:destination="@id/navigation_arcade"
+        <action android:id="@+id/action_gift_card_details_to_rewards"
+            app:destination="@id/navigation_rewards"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"

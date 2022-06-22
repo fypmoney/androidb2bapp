@@ -1,11 +1,13 @@
 package com.fypmoney.view.giftcard.view
 
+import android.content.ClipboardManager
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -15,8 +17,10 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentGiftCardDetailsBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.GIFT_CARD_ID_NOT_FOUND
 import com.fypmoney.util.Utility
+import com.fypmoney.util.Utility.copyTextToClipBoard
 import com.fypmoney.util.Utility.shareScreenShotContent
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.giftcard.model.GiftCardDetail
@@ -61,7 +65,7 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
         super.onViewCreated(view, savedInstanceState)
         binding = getViewDataBinding()
         navArgs.giftCardId?.let {
-            giftCardDetailsFragmentVM.giftCardId
+            giftCardDetailsFragmentVM.giftCardId = it
         }?: kotlin.run {
             FirebaseCrashlytics.getInstance().recordException(Throwable(GIFT_CARD_ID_NOT_FOUND))
             Utility.showToast(getString(R.string.please_try_again_after_some_time))
@@ -72,9 +76,7 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    //do what you want here
-                    val action = GiftCardDetailsFragmentDirections.actionGiftCardDetailsToHome()
-                    findNavController().navigate(action)
+                    findNavController().navigateUp()
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
@@ -140,7 +142,11 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
                 binding.voucherPinCl.toGone()
             }
             endDate?.let {
-                binding.voucherValidityValueTv.text = it
+                binding.voucherValidityValueTv.text = Utility.parseDateTime(
+                    it,
+                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
+                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT9
+                )
             }?: kotlin.run {
                 binding.voucherValidtyCl.toGone()
             }
@@ -161,7 +167,7 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
     private fun handelEvent(it: GiftCardDetailsFragmentVM.GiftCardDetailsEvent?) {
         when(it){
             GiftCardDetailsFragmentVM.GiftCardDetailsEvent.NavigateToArcade -> {
-                findNavController().navigate(GiftCardDetailsFragmentDirections.actionGiftCardDetailsToArcade())
+                findNavController().navigate(GiftCardDetailsFragmentDirections.actionGiftCardDetailsToRewards())
             }
             GiftCardDetailsFragmentVM.GiftCardDetailsEvent.NavigateToHomeScreen -> {
                 findNavController().navigate(GiftCardDetailsFragmentDirections.actionGiftCardDetailsToHome())
@@ -209,6 +215,16 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
                 binding.reccivedMyntsTv.toVisible()
                 binding.reedemBtn.toVisible()
             }
+            GiftCardDetailsFragmentVM.GiftCardDetailsEvent.VoucherValueCopyEvent -> {
+                copyTextToClipBoard(requireContext().getSystemService(AppCompatActivity.CLIPBOARD_SERVICE) as ClipboardManager,
+                    binding.giftCardVoucherNumberValueTv.text.toString()
+                    )
+            }
+            GiftCardDetailsFragmentVM.GiftCardDetailsEvent.VoucherValuePinEvent -> {
+                copyTextToClipBoard(requireContext().getSystemService(AppCompatActivity.CLIPBOARD_SERVICE) as ClipboardManager,
+                    binding.giftCardVoucherPinValueTv.text.toString()
+                )
+            }
         }
     }
 
@@ -220,7 +236,7 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
                 openWebViewWithFypCard(it)
             })
         howToRedeemGiftCardBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-        howToRedeemGiftCardBottomSheet.show(childFragmentManager, "UpiComingSoonBottomSheet")
+        howToRedeemGiftCardBottomSheet.show(childFragmentManager, "HowToRedeemSheet")
     }
 
     fun openWebViewWithFypCard(redeemNowLink:String){

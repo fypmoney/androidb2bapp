@@ -2,6 +2,11 @@ package com.fypmoney.view.giftcard.model
 
 import androidx.annotation.Keep
 
+
+@Keep
+data class PurchaseGiftCardNetworkResponse(
+    val data:PurchaseGiftCardResponse
+)
 @Keep
 data class PurchaseGiftCardResponse(
     val msg: String? = null,

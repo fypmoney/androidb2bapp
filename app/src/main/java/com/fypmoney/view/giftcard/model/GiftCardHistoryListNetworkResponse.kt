@@ -1,136 +1,194 @@
 package com.fypmoney.view.giftcard.model
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
+@Keep
 @Parcelize
 data class GiftCardHistoryListNetworkResponse(
 	@field:SerializedName("data")
-	val data: List<GiftCardHistoryItem?>? = null
+	var data: List<GiftCardHistoryItem>? = null
 
 ) : Parcelable
 
+@Keep
+@Parcelize
+data class GiftCardStatusNetworkResponse(
+	@field:SerializedName("data")
+	var data: GiftCardHistoryItem? = null
+
+) : Parcelable
+
+@Keep
 @Parcelize
 data class GiftCardHistoryItem(
 
 	@field:SerializedName("endDate")
-	val endDate: String? = null,
+	var endDate: String? = null,
 
 	@field:SerializedName("productGuid")
-	val productGuid: String? = null,
+	var productGuid: String? = null,
 
 	@field:SerializedName("destinationEmail")
-	val destinationEmail: String? = null,
+	var destinationEmail: String? = null,
 
 	@field:SerializedName("description")
-	val description: String? = null,
+	var description: String? = null,
 
 	@field:SerializedName("voucherGcCode")
-	val voucherGcCode: String? = null,
+	var voucherGcCode: String? = null,
 
 	@field:SerializedName("redeemLink")
-	val redeemLink: String? = null,
+	var redeemLink: String? = null,
 
 	@field:SerializedName("giftVoucherOrderNo")
-	val giftVoucherOrderNo: String? = null,
+	var giftVoucherOrderNo: String? = null,
 
 	@field:SerializedName("productName")
-	val productName: String? = null,
+	var productName: String? = null,
 
 	@field:SerializedName("destinationUserName")
-	val destinationUserName: String? = null,
+	var destinationUserName: String? = null,
 
 	@field:SerializedName("howToRedeem")
-	val howToRedeem: String? = null,
+	var howToRedeem: String? = null,
 
 	@field:SerializedName("fypOrderNo")
-	val fypOrderNo: String? = null,
+	var fypOrderNo: String? = null,
 
 	@field:SerializedName("id")
-	val id: String? = null,
+	var id: String,
 
 	@field:SerializedName("issueDate")
-	val issueDate: String? = null,
+	var issueDate: String? = null,
 
 	@field:SerializedName("tncLink")
-	val tncLink: String? = null,
+	var tncLink: String? = null,
 
 	@field:SerializedName("sourceMobileNo")
-	val sourceMobileNo: String? = null,
+	var sourceMobileNo: String? = null,
 
 	@field:SerializedName("brandLogo")
-	val brandLogo: String? = null,
+	var brandLogo: String? = null,
 
 	@field:SerializedName("giftedPerson")
-	val giftedPerson: String? = null,
+	var giftedPerson: String? = null,
 
 	@field:SerializedName("destinationUserId")
-	val destinationUserId: String? = null,
+	var destinationUserId: String? = null,
 
 	@field:SerializedName("detailImage")
-	val detailImage: String? = null,
+	var detailImage: String? = null,
 
 	@field:SerializedName("amount")
-	val amount: String? = null,
+	var amount: String? = null,
 
 	@field:SerializedName("brandName")
-	val brandName: String? = null,
+	var brandName: String? = null,
 
 	@field:SerializedName("sourceUserName")
-	val sourceUserName: String? = null,
+	var sourceUserName: String? = null,
 
 	@field:SerializedName("rfu2")
-	val rfu2: String? = null,
+	var rfu2: String? = null,
 
 	@field:SerializedName("rfu1")
-	val rfu1: String? = null,
+	var rfu1: String? = null,
 
 	@field:SerializedName("rfu3")
-	val rfu3: String? = null,
+	var rfu3: String? = null,
 
 	@field:SerializedName("tnc")
-	val tnc: String? = null,
+	var tnc: String? = null,
 
 	@field:SerializedName("externalOrderId")
-	val externalOrderId: String? = null,
+	var externalOrderId: String? = null,
 
 	@field:SerializedName("isVoucherPurchased")
-	val isVoucherPurchased: String? = null,
+	var isVoucherPurchased: String? = null,
 
 	@field:SerializedName("message")
-	val message: String? = null,
+	var message: String? = null,
 
 	@field:SerializedName("voucherGuid")
-	val voucherGuid: String? = null,
+	var voucherGuid: String? = null,
 
 	@field:SerializedName("voucherNo")
-	val voucherNo: String? = null,
+	var voucherNo: String? = null,
 
 	@field:SerializedName("destinationMobileNo")
-	val destinationMobileNo: String? = null,
+	var destinationMobileNo: String? = null,
 
 	@field:SerializedName("voucherPin")
-	val voucherPin: String? = null,
+	var voucherPin: String? = null,
 
 	@field:SerializedName("myntsRewarded")
-	val myntsRewarded: String? = null,
+	var myntsRewarded: String? = null,
 
 	@field:SerializedName("voucherName")
-	val voucherName: String? = null,
+	var voucherName: String? = null,
 
 	@field:SerializedName("voucherStatus")
-	val voucherStatus: String? = null,
+	var voucherStatus: String? = null,
 
 	@field:SerializedName("sourceUserId")
-	val sourceUserId: String? = null,
+	var sourceUserId: String? = null,
 
 	@field:SerializedName("activationCode")
-	val activationCode: String? = null,
+	var activationCode: String? = null,
 
 	@field:SerializedName("activationUrl")
-	val activationUrl: String? = null,
+	var activationUrl: String? = null,
 
 	@field:SerializedName("isGifted")
-	val isGifted: String? = null
-) : Parcelable
+	var isGifted: String? = null
+) : Parcelable{
+	companion object{
+		fun updateObject(giftCardHistoryItem: GiftCardHistoryItem):GiftCardHistoryItem{
+			return GiftCardHistoryItem(
+				endDate = giftCardHistoryItem.endDate,
+				productGuid = giftCardHistoryItem.productGuid,
+				destinationEmail = giftCardHistoryItem.destinationEmail,
+				description = giftCardHistoryItem.description,
+				voucherGcCode = giftCardHistoryItem.voucherGcCode,
+				redeemLink = giftCardHistoryItem.redeemLink,
+				giftVoucherOrderNo = giftCardHistoryItem.giftVoucherOrderNo,
+				productName = giftCardHistoryItem.productName,
+				destinationUserName = giftCardHistoryItem.destinationUserName,
+				howToRedeem = giftCardHistoryItem.howToRedeem,
+				fypOrderNo = giftCardHistoryItem.fypOrderNo,
+				id = giftCardHistoryItem.id,
+				issueDate = giftCardHistoryItem.issueDate,
+				tncLink = giftCardHistoryItem.tncLink,
+				sourceMobileNo = giftCardHistoryItem.sourceMobileNo,
+				brandLogo = giftCardHistoryItem.brandLogo,
+				giftedPerson = giftCardHistoryItem.giftedPerson,
+				destinationUserId = giftCardHistoryItem.destinationUserId,
+				detailImage = giftCardHistoryItem.detailImage,
+				amount = giftCardHistoryItem.amount,
+				brandName = giftCardHistoryItem.brandName,
+				sourceUserName = giftCardHistoryItem.sourceUserName,
+				rfu2 = giftCardHistoryItem.rfu2,
+				rfu1 = giftCardHistoryItem.rfu1,
+				rfu3 = giftCardHistoryItem.rfu3,
+				tnc = giftCardHistoryItem.tnc,
+				externalOrderId = giftCardHistoryItem.externalOrderId,
+				isVoucherPurchased = giftCardHistoryItem.isVoucherPurchased,
+				message = giftCardHistoryItem.message,
+				voucherGuid = giftCardHistoryItem.voucherGuid,
+				voucherNo = giftCardHistoryItem.voucherNo,
+				destinationMobileNo = giftCardHistoryItem.destinationMobileNo,
+				voucherPin = giftCardHistoryItem.voucherPin,
+				myntsRewarded = giftCardHistoryItem.myntsRewarded,
+				voucherName = giftCardHistoryItem.voucherName,
+				voucherStatus = giftCardHistoryItem.voucherStatus,
+				sourceUserId = giftCardHistoryItem.sourceUserId,
+				activationCode = giftCardHistoryItem.activationCode,
+				activationUrl = giftCardHistoryItem.activationUrl,
+				isGifted = giftCardHistoryItem.isGifted
+			)
+		}
+	}
+}

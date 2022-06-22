@@ -13,10 +13,7 @@ import com.fypmoney.connectivity.ApiConstant.API_UPDATE_PROFILE
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.model.*
-import com.fypmoney.view.giftcard.model.CreateGiftCardBrandNetworkResponse
-import com.fypmoney.view.giftcard.model.GiftCardDetailsNetworkResponse
-import com.fypmoney.view.giftcard.model.GiftCardHistoryListNetworkResponse
-import com.fypmoney.view.giftcard.model.PurchaseGiftCardResponse
+import com.fypmoney.view.giftcard.model.*
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
 import com.fypmoney.view.ordercard.model.UserOfferCardResponse
 import com.fypmoney.view.recharge.model.RecentRechargesResponse
@@ -231,13 +228,16 @@ class ApiDataParsing {
                     getObject(response, CreateGiftCardBrandNetworkResponse::class.java)
                 }
                 ApiConstant.PURCHASE_GIFT_CARD -> {
-                    getObject(response, PurchaseGiftCardResponse::class.java)
+                    getObject(response, PurchaseGiftCardNetworkResponse::class.java)
                 }
                 ApiConstant.API_GIFT_CARD_DETAILS -> {
                     getObject(response, GiftCardDetailsNetworkResponse::class.java)
                 }
                 ApiConstant.GET_HISTORY_LIST -> {
                     getObject(response, GiftCardHistoryListNetworkResponse::class.java)
+                }
+                ApiConstant.GET_GIFT_VOUCHER_STATUS -> {
+                    getObject(response, GiftCardStatusNetworkResponse::class.java)
                 }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {

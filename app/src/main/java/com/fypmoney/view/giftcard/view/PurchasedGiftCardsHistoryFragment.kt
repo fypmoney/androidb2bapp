@@ -4,10 +4,14 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentPurchasedGiftCardsHistoryBinding
+import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
+import com.fypmoney.view.giftcard.adapters.PurchasedGiftCardItemUiModel
 import com.fypmoney.view.giftcard.adapters.PurchasedGiftCardListAdapter
 import com.fypmoney.view.giftcard.viewModel.PurchasedGiftCardsHistoryFragmentVM
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
@@ -69,16 +73,69 @@ class PurchasedGiftCardsHistoryFragment : BaseFragment<FragmentPurchasedGiftCard
         binding.ordersListRv.adapter = PurchasedGiftCardListAdapter(
             lifecycleOwner =viewLifecycleOwner,
             onGiftCardClick = {
-
+                purchasedGiftCardsHistoryFragmentVM.onGiftCardClick(it)
             },
             onRefreshClick = {
-
+                purchasedGiftCardsHistoryFragmentVM.callVoucherStatus(it)
             })
     }
 
 
     private fun setUpObserver() {
+        purchasedGiftCardsHistoryFragmentVM.state.observe(viewLifecycleOwner){
+            handelState(it)
+        }
+        purchasedGiftCardsHistoryFragmentVM.event.observe(viewLifecycleOwner){
+            handelEvent(it)
+        }
+    }
 
+    private fun handelState(it: PurchasedGiftCardsHistoryFragmentVM.PurchasedGiftCardsHistoryState?) {
+        when(it){
+            PurchasedGiftCardsHistoryFragmentVM.PurchasedGiftCardsHistoryState.Empty -> {
+                binding.ordersListRv.toGone()
+                binding.loading.toGone()
+                binding.noPurchasedGiftFoundTv.toVisible()
+            }
+            PurchasedGiftCardsHistoryFragmentVM.PurchasedGiftCardsHistoryState.Error -> {
+                binding.ordersListRv.toGone()
+                binding.loading.toGone()
+                binding.noPurchasedGiftFoundTv.toVisible()
+            }
+            PurchasedGiftCardsHistoryFragmentVM.PurchasedGiftCardsHistoryState.Loading -> {
+                binding.ordersListRv.toGone()
+                binding.loading.toVisible()
+                binding.noPurchasedGiftFoundTv.toGone()
+            }
+            is PurchasedGiftCardsHistoryFragmentVM.PurchasedGiftCardsHistoryState.Success -> {
+                binding.ordersListRv.toVisible()
+                binding.loading.toGone()
+                binding.noPurchasedGiftFoundTv.toGone()
+                (binding.ordersListRv.adapter as PurchasedGiftCardListAdapter).submitList(
+                    it.list.map {
+                        it.let { it1 ->
+                            PurchasedGiftCardItemUiModel.convertGiftCardHistoryItemToPurchasedGiftCardItemUiModel(
+                                context =requireContext(), giftCardHistoryItem = it1
+                            )
+                        }
+                    }
+                )
+            }
+            null -> {
+
+            }
+        }
+    }
+
+    private fun handelEvent(it: PurchasedGiftCardsHistoryFragmentVM.PurchasedGiftCardsHistoryEvent?) {
+        when(it){
+            is PurchasedGiftCardsHistoryFragmentVM.PurchasedGiftCardsHistoryEvent.NavigateToGiftCardDetail -> {
+                findNavController().navigate(PurchasedGiftCardsHistoryFragmentDirections.actionGiftCardHistoryToGiftCardDetails(it.giftDetailsId))
+            }
+            null -> {
+
+            }
+        }
     }
 
 

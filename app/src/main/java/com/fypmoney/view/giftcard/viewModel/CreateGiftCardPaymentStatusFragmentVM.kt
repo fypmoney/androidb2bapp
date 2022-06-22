@@ -41,7 +41,7 @@ class CreateGiftCardPaymentStatusFragmentVM(application: Application) : BaseView
                 _state.value =
                     CreateGiftCardPaymentSuccessState.Success(purchasedGiftCardStatusUiModel)
                 viewModelScope.launch {
-                    delay(2000)
+                    delay(5000)
                     checkForNavigation()
                 }
             }

@@ -33,6 +33,13 @@ class GiftCardDetailsFragmentVM(application: Application) : BaseViewModel(applic
         _event.value = GiftCardDetailsEvent.NavigateToArcade
     }
 
+    fun onVoucherValueCopyClicked(){
+        _event.value = GiftCardDetailsEvent.VoucherValueCopyEvent
+    }
+    fun onVoucherPinCopyClicked(){
+        _event.value = GiftCardDetailsEvent.VoucherValuePinEvent
+
+    }
     fun redeemNowClick(){
         giftCardDetails.howToRedeem?.let { howToRedeem->
                 giftCardDetails.redeemLink?.let { redeemLink->
@@ -71,7 +78,8 @@ class GiftCardDetailsFragmentVM(application: Application) : BaseViewModel(applic
         when(purpose){
             ApiConstant.API_GIFT_CARD_DETAILS->{
                 if(responseData is GiftCardDetailsNetworkResponse){
-                    _state.value = GiftCardDetailsState.Success(responseData.giftCardDetail)
+                    giftCardDetails = responseData.giftCardDetail
+                    _state.value = GiftCardDetailsState.Success(giftCardDetails)
                 }
             }
         }
@@ -94,6 +102,8 @@ class GiftCardDetailsFragmentVM(application: Application) : BaseViewModel(applic
     sealed class GiftCardDetailsEvent{
         object NavigateToArcade:GiftCardDetailsEvent()
         object NavigateToHomeScreen:GiftCardDetailsEvent()
+        object VoucherValueCopyEvent:GiftCardDetailsEvent()
+        object VoucherValuePinEvent:GiftCardDetailsEvent()
         data class ShareGiftCardDetails(var giftCardDetails:GiftCardDetail):GiftCardDetailsEvent()
         data class RedeemNow(var redeemNowTxt:String,var redeemLink:String):GiftCardDetailsEvent()
         data class RedeemNowWithoutSteps(var redeemLink:String):GiftCardDetailsEvent()
