@@ -45,14 +45,11 @@
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/LoadProgressBar"
-
             android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_30sdp"
-
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="@dimen/_4sdp"
-
             android:visibility="gone"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
@@ -60,12 +57,10 @@
 
         <RelativeLayout
             android:layout_width="wrap_content"
-
             android:visibility="@{viewModel.noDataFoundVisibility?View.VISIBLE:View.GONE,default=gone}"
             android:id="@+id/empty_screen"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-
             android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageView

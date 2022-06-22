@@ -1277,5 +1277,6 @@ Coming really soon!
     <string name="received">Received</string>
     <string name="success">Success</string>
     <string name="failed">Failed</string>
+    <string name="gift_card_history">Gift Card History</string>
 
 </resources>

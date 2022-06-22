@@ -29,17 +29,20 @@ class PurchasedGiftCardsHistoryFragmentVM(application: Application) : BaseViewMo
 
     private var purchasedGiftCardsList = listOf<GiftCardHistoryItem>()
 
+    var isLoading: Boolean = false
+    var page = 0
     fun onGiftCardClick(giftCardDetailId:String){
         _event.value = PurchasedGiftCardsHistoryEvent.NavigateToGiftCardDetail(giftCardDetailId)
     }
 
-    fun callGiftCardHistory(){
-        _state.postValue(PurchasedGiftCardsHistoryState.Loading)
-        //TODO Implement pagination later
+    fun callGiftCardHistory(page:Int){
+        if(page==1){
+            _state.postValue(PurchasedGiftCardsHistoryState.Loading)
+        }
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.GET_HISTORY_LIST,
-                NetworkUtil.endURL(ApiConstant.GET_HISTORY_LIST),
+                NetworkUtil.endURL(ApiConstant.GET_HISTORY_LIST+page),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -65,11 +68,12 @@ class PurchasedGiftCardsHistoryFragmentVM(application: Application) : BaseViewMo
         when(purpose){
             ApiConstant.GET_HISTORY_LIST->{
                 if(responseData is GiftCardHistoryListNetworkResponse){
-                    if(responseData.data.isNullOrEmpty()){
+                    isLoading = false
+                    if(responseData.data.isNullOrEmpty() && page==0){
                         _state.value = PurchasedGiftCardsHistoryState.Empty
                     }else{
                         responseData.data?.let {
-                            purchasedGiftCardsList = it
+                            purchasedGiftCardsList =  purchasedGiftCardsList.plus(it)
                         }
                         _state.value = PurchasedGiftCardsHistoryState.Success(purchasedGiftCardsList)
                     }

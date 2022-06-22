@@ -14,6 +14,7 @@
         android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dp4" />
+        android:layout_marginVertical="@dimen/dp8"
+        android:layout_marginHorizontal="@dimen/dp4" />
 </layout>
 

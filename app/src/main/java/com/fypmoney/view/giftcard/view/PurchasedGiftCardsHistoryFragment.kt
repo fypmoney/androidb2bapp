@@ -5,9 +5,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
+import com.fypmoney.base.PaginationListener
 import com.fypmoney.databinding.FragmentPurchasedGiftCardsHistoryBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
@@ -15,6 +17,7 @@ import com.fypmoney.view.giftcard.adapters.PurchasedGiftCardItemUiModel
 import com.fypmoney.view.giftcard.adapters.PurchasedGiftCardListAdapter
 import com.fypmoney.view.giftcard.viewModel.PurchasedGiftCardsHistoryFragmentVM
 import kotlinx.android.synthetic.main.toolbar_gift_card.*
+import kotlinx.android.synthetic.main.view_bank_transaction_history.*
 
 class PurchasedGiftCardsHistoryFragment : BaseFragment<FragmentPurchasedGiftCardsHistoryBinding,PurchasedGiftCardsHistoryFragmentVM>() {
 
@@ -25,6 +28,8 @@ class PurchasedGiftCardsHistoryFragment : BaseFragment<FragmentPurchasedGiftCard
     private  val purchasedGiftCardsHistoryFragmentVM by viewModels<PurchasedGiftCardsHistoryFragmentVM> { defaultViewModelProviderFactory }
 
     private lateinit var binding: FragmentPurchasedGiftCardsHistoryBinding
+
+
 
     override fun onTryAgainClicked() {
     }
@@ -55,7 +60,7 @@ class PurchasedGiftCardsHistoryFragment : BaseFragment<FragmentPurchasedGiftCard
         setupView()
         setupRecyclerView()
         setUpObserver()
-        purchasedGiftCardsHistoryFragmentVM.callGiftCardHistory()
+        purchasedGiftCardsHistoryFragmentVM.callGiftCardHistory(0)
     }
 
 
@@ -63,13 +68,15 @@ class PurchasedGiftCardsHistoryFragment : BaseFragment<FragmentPurchasedGiftCard
         setToolbarAndTitle(
             context = requireContext(),
             toolbar = toolbar,
-            isBackArrowVisible = true, toolbarTitle = "Gift Card History",
+            isBackArrowVisible = true, toolbarTitle = getString(R.string.gift_card_history),
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
     }
 
     private fun setupRecyclerView() {
+        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.ordersListRv.layoutManager = layoutManager
         binding.ordersListRv.adapter = PurchasedGiftCardListAdapter(
             lifecycleOwner =viewLifecycleOwner,
             onGiftCardClick = {
@@ -78,9 +85,29 @@ class PurchasedGiftCardsHistoryFragment : BaseFragment<FragmentPurchasedGiftCard
             onRefreshClick = {
                 purchasedGiftCardsHistoryFragmentVM.callVoucherStatus(it)
             })
+
+        binding.ordersListRv.addOnScrollListener(object : PaginationListener(layoutManager) {
+            override fun loadMoreItems() {
+                loadMore()
+            }
+
+            override fun loadMoreTopItems() {
+
+
+            }
+
+            override fun isLoading(): Boolean {
+                return purchasedGiftCardsHistoryFragmentVM.isLoading
+            }
+        })
     }
 
 
+    private fun loadMore() {
+        binding.LoadProgressBar.toVisible()
+        purchasedGiftCardsHistoryFragmentVM.isLoading = true
+        purchasedGiftCardsHistoryFragmentVM.callGiftCardHistory(purchasedGiftCardsHistoryFragmentVM.page)
+    }
     private fun setUpObserver() {
         purchasedGiftCardsHistoryFragmentVM.state.observe(viewLifecycleOwner){
             handelState(it)
@@ -96,21 +123,26 @@ class PurchasedGiftCardsHistoryFragment : BaseFragment<FragmentPurchasedGiftCard
                 binding.ordersListRv.toGone()
                 binding.loading.toGone()
                 binding.noPurchasedGiftFoundTv.toVisible()
+                LoadProgressBar?.visibility = View.GONE
             }
             PurchasedGiftCardsHistoryFragmentVM.PurchasedGiftCardsHistoryState.Error -> {
                 binding.ordersListRv.toGone()
                 binding.loading.toGone()
                 binding.noPurchasedGiftFoundTv.toVisible()
+                LoadProgressBar?.visibility = View.GONE
             }
             PurchasedGiftCardsHistoryFragmentVM.PurchasedGiftCardsHistoryState.Loading -> {
                 binding.ordersListRv.toGone()
                 binding.loading.toVisible()
                 binding.noPurchasedGiftFoundTv.toGone()
+                LoadProgressBar?.visibility = View.GONE
             }
             is PurchasedGiftCardsHistoryFragmentVM.PurchasedGiftCardsHistoryState.Success -> {
                 binding.ordersListRv.toVisible()
                 binding.loading.toGone()
                 binding.noPurchasedGiftFoundTv.toGone()
+                LoadProgressBar?.visibility = View.GONE
+                purchasedGiftCardsHistoryFragmentVM.page = purchasedGiftCardsHistoryFragmentVM.page+1
                 (binding.ordersListRv.adapter as PurchasedGiftCardListAdapter).submitList(
                     it.list.map {
                         it.let { it1 ->
