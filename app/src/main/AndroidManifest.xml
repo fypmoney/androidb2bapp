@@ -19,10 +19,12 @@
         tools:replace="android:usesCleartextTraffic">
         <activity
             android:name=".view.addmoney.NewAddMoneyActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.cardofferdetails.CardOfferDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.ordercard.activateofflinecard.ScanCardKitNumberActivity"
             android:screenOrientation="portrait" />
@@ -34,9 +36,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.cardorderoffer.CardOrderOfferActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.notifymeordercard.NotifyMeOrderCardActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.webview.WebViewActivity"
@@ -81,7 +80,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.OrderCardView"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.SetPinView"
             android:screenOrientation="portrait"

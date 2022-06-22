@@ -495,6 +495,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                         AppConstants.ARCADE -> {
                             findNavController().navigate(R.id.navigation_arcade)
                         }
+                        AppConstants.GIFT_VOUCHER -> {
+                            findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResources}"))
+                        }
                         else -> {
                             redirectionResources.let { it1 ->
                                 deeplinkRedirection(
@@ -557,6 +560,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
                 }
 
+            }
+            AppConstants.GIFT_VOUCHER -> {
+                findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
             }
         }
     }

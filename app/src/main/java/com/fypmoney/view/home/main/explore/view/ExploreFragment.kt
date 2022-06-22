@@ -89,11 +89,10 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
     }
 
     private fun setObserver() {
-        exploreFragmentVM?.rewardHistoryList.observe(viewLifecycleOwner) { list ->
-
+        exploreFragmentVM.rewardHistoryList.observe(viewLifecycleOwner) { list ->
             setRecyclerView(_binding, list)
         }
-        exploreFragmentVM?.openBottomSheet.observe(
+        exploreFragmentVM.openBottomSheet.observe(
             viewLifecycleOwner
         ) { list ->
             if (list.size > 0) {
@@ -101,7 +100,7 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
             }
         }
 
-        exploreFragmentVM?.feedDetail.observe(
+        exploreFragmentVM.feedDetail.observe(
             viewLifecycleOwner
         ) { list ->
 
@@ -196,6 +195,9 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                                 }
                                 AppConstants.ARCADE -> {
                                     findNavController().navigate(R.id.navigation_arcade)
+                                }
+                                AppConstants.GIFT_VOUCHER -> {
+                                    findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))
                                 }
                                 else -> {
                                     Utility.deeplinkRedirection(redirectionResources, requireContext())

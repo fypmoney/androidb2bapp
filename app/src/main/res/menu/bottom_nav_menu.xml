@@ -11,6 +11,14 @@
         app:cnb_iconColor="@color/colorSelectedMenu"/>
 
     <item
+        android:id="@+id/navigation_rewards"
+        android:icon="@drawable/ic_rewards_nav_menu"
+        android:title="@string/rewards"
+        app:cnb_backgroundColor="@color/bgcolor"
+        app:cnb_textColor="#FFFFFF"
+        app:cnb_iconColor="@color/colorSelectedMenu"/>
+
+    <item
         android:id="@+id/navigation_explore"
         android:icon="@drawable/ic_explore_nav_menu"
         android:title="@string/explore"
@@ -18,13 +26,7 @@
         app:cnb_textColor="#FFFFFF"
         app:cnb_iconColor="@color/colorSelectedMenu" />
 
-    <item
-        android:id="@+id/navigation_rewards"
-        android:icon="@drawable/ic_rewards_nav_menu"
-        android:title="@string/rewards"
-        app:cnb_backgroundColor="@color/bgcolor"
-        app:cnb_textColor="#FFFFFF"
-        app:cnb_iconColor="@color/colorSelectedMenu"/>
+
     <item
         android:id="@+id/navigation_fyper"
         android:icon="@drawable/ic_fyper_nav_menu"
