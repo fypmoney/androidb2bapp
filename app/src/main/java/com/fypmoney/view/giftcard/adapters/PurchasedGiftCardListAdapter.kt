@@ -109,7 +109,9 @@ class PurchasedGiftCardListAdapter(
                 onRefreshClick(item.giftCardExternalId)
             }
             binding.voucherItemMcv.setOnClickListener {
-                onGiftCardClick(item.giftCardId)
+                if(item.canNavigateToDetailPage){
+                    onGiftCardClick(item.giftCardId)
+                }
             }
         }
 
@@ -146,7 +148,8 @@ data class PurchasedGiftCardItemUiModel(
     var validityDate: String,
     var amount: String,
     var status: Status,
-    var refreshIsVisible: Boolean
+    var refreshIsVisible: Boolean,
+    var canNavigateToDetailPage:Boolean = true
 ){
     companion object{
         fun convertGiftCardHistoryItemToPurchasedGiftCardItemUiModel(context: Context, giftCardHistoryItem: GiftCardHistoryItem):PurchasedGiftCardItemUiModel{
@@ -155,14 +158,15 @@ data class PurchasedGiftCardItemUiModel(
                 giftCardId = giftCardHistoryItem.id,
                 giftCardReceivedPurchasedType = getGiftCardReceivedPurchaseType(context,giftCardHistoryItem),
                 validityDate = Utility.parseDateTime(
-                    giftCardHistoryItem.endDate,
+                    giftCardHistoryItem.issueDate,
                     inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
                     outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT9
                 ),
                 amount = String.format(context.getString(R.string.amount_with_currency),Utility.convertToRs(giftCardHistoryItem.amount)!!),
                 status = getGiftCardStatus(context,giftCardHistoryItem.voucherStatus)!!,
                 refreshIsVisible = giftCardHistoryItem.voucherStatus.equals("PENDING",true),
-                giftCardExternalId = giftCardHistoryItem.externalOrderId!!
+                giftCardExternalId = giftCardHistoryItem.externalOrderId!!,
+                canNavigateToDetailPage = !giftCardHistoryItem.voucherStatus.equals("PENDING",true)
             )
         }
 
@@ -193,7 +197,16 @@ data class PurchasedGiftCardItemUiModel(
 
         private fun getGiftCardReceivedPurchaseType(context: Context,giftCardHistoryItem: GiftCardHistoryItem): GiftVoucherReceivedStatus {
             val loggedInUserMobileNo = Utility.getCustomerDataFromPreference()?.mobile
-            return if(loggedInUserMobileNo.equals(giftCardHistoryItem.destinationMobileNo)){
+            return if(giftCardHistoryItem.isGifted.equals(YES,true)){
+                    if(loggedInUserMobileNo.equals(giftCardHistoryItem.destinationMobileNo)){
+                        GiftVoucherReceivedStatus.Received(text = context.getString(R.string.received), backgroundRes = R.drawable.ic_reccived)
+                    }else{
+                        GiftVoucherReceivedStatus.Gifted(text = context.getString(R.string.gifted), backgroundRes = R.drawable.ic_gifted)
+                    }
+            }else{
+                GiftVoucherReceivedStatus.Purchased(text = context.getString(R.string.purchased), backgroundRes = R.drawable.ic_purchased)
+            }
+            /*return if(loggedInUserMobileNo.equals(giftCardHistoryItem.destinationMobileNo)){
                 GiftVoucherReceivedStatus.Purchased(text = context.getString(R.string.purchased), backgroundRes = R.drawable.ic_purchased)
             }else{
                 if(giftCardHistoryItem.isGifted.equals(YES)){
@@ -202,7 +215,7 @@ data class PurchasedGiftCardItemUiModel(
                     GiftVoucherReceivedStatus.Received(text = context.getString(R.string.received), backgroundRes = R.drawable.ic_reccived)
 
                 }
-            }
+            }*/
         }
     }
 }

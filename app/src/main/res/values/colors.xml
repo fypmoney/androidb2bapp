@@ -117,5 +117,6 @@
     <color name="amount_bg2">#8ECFE3</color>
     <color name="amount_bg3">#FFD3D7</color>
     <color name="amount_bg4">#FFD98D</color>
+    <color name="black_grey_txt_color">#333333</color>
 
 </resources>

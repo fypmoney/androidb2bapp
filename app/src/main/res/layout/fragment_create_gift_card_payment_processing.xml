@@ -28,7 +28,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/title_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/TextviewBold"
             android:textColor="@color/white"
@@ -36,7 +36,7 @@
             android:layout_marginHorizontal="@dimen/dp20"
             android:layout_marginTop="9dp"
             android:gravity="center"
-            tools:text="Processing payment of ₹ 20"
+            tools:text="Processing payment of ₹ 20 asdasdsasdaasdsa"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/progress_cpi" />

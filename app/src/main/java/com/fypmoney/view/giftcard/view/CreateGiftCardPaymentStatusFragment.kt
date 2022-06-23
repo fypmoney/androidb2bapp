@@ -106,10 +106,11 @@ class CreateGiftCardPaymentStatusFragment : BaseFragment<FragmentCreateGiftCardP
                     binding.logo.setAnimation(statusAnimRes)
                     if(myntsVisibility){
                         binding.reccivedMyntsFl.toVisible()
-                        binding.reccivedMyntsTv.text = String.format(getString(R.string.you_have_won_mynts),myntsEarned)
+                        binding.reccivedMyntsTv.text = String.format(getString(R.string.you_have_won_mynts),myntsEarned,amount)
                     }else{
                         binding.reccivedMyntsFl.toGone()
                     }
+                    binding.continueBtn.toGone()
                 }
              }
             null -> TODO()

@@ -3,6 +3,8 @@ package com.fypmoney.view.giftcard.viewModel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiConstant.GET_GIFT_VOUCHER_STATUS
@@ -31,12 +33,19 @@ class PurchasedGiftCardsHistoryFragmentVM(application: Application) : BaseViewMo
 
     var isLoading: Boolean = false
     var page = 0
+
     fun onGiftCardClick(giftCardDetailId:String){
         _event.value = PurchasedGiftCardsHistoryEvent.NavigateToGiftCardDetail(giftCardDetailId)
     }
 
+    init {
+        trackr {
+            it.name = TrackrEvent.gift_card_history
+        }
+    }
+
     fun callGiftCardHistory(page:Int){
-        if(page==1){
+        if(page==0){
             _state.postValue(PurchasedGiftCardsHistoryState.Loading)
         }
         WebApiCaller.getInstance().request(
@@ -50,6 +59,9 @@ class PurchasedGiftCardsHistoryFragmentVM(application: Application) : BaseViewMo
         )
     }
     fun callVoucherStatus(id: String?) {
+        trackr {
+            it.name = TrackrEvent.gift_card_refresh
+        }
         WebApiCaller.getInstance().request(
             ApiRequest(
                 purpose = GET_GIFT_VOUCHER_STATUS,

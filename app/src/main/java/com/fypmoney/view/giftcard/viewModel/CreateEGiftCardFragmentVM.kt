@@ -5,6 +5,8 @@ import android.text.TextUtils
 import androidx.annotation.Keep
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseViewModel
@@ -59,6 +61,9 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
     }
 
     fun onPayClicked(){
+        trackr {
+            it.name = TrackrEvent.gift_card_pay
+        }
         validation()
     }
 
@@ -67,6 +72,11 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
     }
 
 
+    init {
+        trackr {
+            it.name = TrackrEvent.gift_card_select
+        }
+    }
 
     fun getGiftCardBrandDetails(){
         WebApiCaller.getInstance().request(
@@ -81,7 +91,7 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
         )
     }
 
-    fun validation() {
+    private fun validation() {
         createEGiftCardModel.amount.let { amount->
             if(TextUtils.isEmpty(amount.toString()) || amount==-1L) {
                 _state.value = CreateEGiftCardState.ValidationError(
@@ -194,9 +204,9 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
                     responseData.getWalletBalanceResponseDetails.accountBalance.toIntOrNull()
                         ?.let { accountBalance ->
                             _state.value = CreateEGiftCardState.Success(accountBalance)
-                            if(accountBalance < createEGiftCardModel.amount){
+                            if(accountBalance < Utility.convertToPaise(createEGiftCardModel.amount.toString())?.toLong()!!){
                                 _event.value = CreateEGiftCardEvent.ShowLowBalanceAlert(
-                                    ((createEGiftCardModel.amount) - (accountBalance)).toString())
+                                    ((Utility.convertToPaise(createEGiftCardModel.amount.toString())?.toLong()!!) - (accountBalance)).toString())
                             }else{
                                 _event.value = CreateEGiftCardEvent.ShowPaymentProcessingScreen(createEGiftCardModel)
                             }

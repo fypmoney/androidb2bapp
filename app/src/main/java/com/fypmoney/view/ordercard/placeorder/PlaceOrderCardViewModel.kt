@@ -2,6 +2,8 @@ package com.fypmoney.view.ordercard.placeorder
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -136,6 +138,9 @@ class PlaceOrderCardViewModel(application: Application) : BaseViewModel(applicat
             }
             ApiConstant.API_ORDER_CARD -> {
                 if(errorResponseInfo.errorCode== AppConstants.INSUFFICIENT_ERROR_CODE){
+                    trackr {
+                        it.name = TrackrEvent.insufficient_balance
+                    }
                     _event.value = PlaceOrderCardEvent.InSufficientBalance(errorResponseInfo.data)
                 }else{
                     _state.value= PlaceOrderCardState.PlaceOrderError

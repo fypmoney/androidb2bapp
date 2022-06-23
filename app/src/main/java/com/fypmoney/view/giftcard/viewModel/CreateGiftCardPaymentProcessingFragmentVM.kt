@@ -78,7 +78,7 @@ class CreateGiftCardPaymentProcessingFragmentVM(application: Application) : Base
                             amount = createEGiftCardModel.amount.toString(),
                             title = "",
                             subTitle = if(responseData.data.voucherNo.isNullOrEmpty()) PockketApplication.instance.getString(R.string.any_amount_detucetd) else "",
-                            myntsEarned = if(createEGiftCardModel.myntsMultiPlier.isNullOrEmpty()) "" else String.format(PockketApplication.instance.getString(R.string.you_have_won_mynts),createEGiftCardModel.myntsMultiPlier+"X"),
+                            myntsEarned = if(createEGiftCardModel.myntsMultiPlier.isNullOrEmpty()) "" else createEGiftCardModel.myntsMultiPlier!!,
                             myntsVisibility = !responseData.data.voucherNo.isNullOrEmpty(),
                             statusAnimRes = if(responseData.data.voucherNo.isNullOrEmpty()) R.raw.pending else R.raw.success,
                             status = if(responseData.data.voucherNo.isNullOrEmpty())  CreateEGiftCardOrderStatus.Pending else CreateEGiftCardOrderStatus.Success,

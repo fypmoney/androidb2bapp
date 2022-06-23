@@ -3,6 +3,8 @@ package com.fypmoney.view.giftcard.viewModel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.giftcard.model.CreateEGiftCardOrderStatus
@@ -29,15 +31,24 @@ class CreateGiftCardPaymentStatusFragmentVM(application: Application) : BaseView
     fun checkForStatus(){
         when(purchasedGiftCardStatusUiModel.status){
             CreateEGiftCardOrderStatus.Failed -> {
+                trackr {
+                    it.name = TrackrEvent.gift_card_fail
+                }
                 _state.value =
                     CreateGiftCardPaymentSuccessState.Failed(purchasedGiftCardStatusUiModel)
             }
             CreateEGiftCardOrderStatus.Pending -> {
+                trackr {
+                    it.name = TrackrEvent.gift_card_pending
+                }
                 _state.value =
                     CreateGiftCardPaymentSuccessState.Pending(purchasedGiftCardStatusUiModel)
 
             }
             CreateEGiftCardOrderStatus.Success -> {
+                trackr {
+                    it.name = TrackrEvent.gift_card_success
+                }
                 _state.value =
                     CreateGiftCardPaymentSuccessState.Success(purchasedGiftCardStatusUiModel)
                 viewModelScope.launch {

@@ -124,13 +124,16 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
                 setupBrandDetails(it.details)
             }
             CreateEGiftCardFragmentVM.CreateEGiftCardState.Error -> {
-
+                binding.payBtn.setBusy(false)
             }
             CreateEGiftCardFragmentVM.CreateEGiftCardState.Loading ->{
                 binding.payBtn.setBusy(true)
             }
-            is CreateEGiftCardFragmentVM.CreateEGiftCardState.Success ->{}
+            is CreateEGiftCardFragmentVM.CreateEGiftCardState.Success ->{
+                binding.payBtn.setBusy(false)
+            }
             is CreateEGiftCardFragmentVM.CreateEGiftCardState.ValidationError ->{
+                binding.payBtn.setBusy(false)
                 handelValidationError(it.validationError)
             }
             is CreateEGiftCardFragmentVM.CreateEGiftCardState.PossibleDenominationList -> {

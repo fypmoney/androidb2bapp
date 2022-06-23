@@ -994,8 +994,6 @@ object Utility {
         url: String?,
         imageView: ImageView
     ) {
-
-
         url.let {
             if (!url.isNullOrEmpty()) {
                 Glide.with(context!!).load(url).placeholder(shimmerDrawable())

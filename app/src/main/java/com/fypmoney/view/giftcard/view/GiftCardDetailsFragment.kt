@@ -18,6 +18,7 @@ import com.fypmoney.databinding.FragmentGiftCardDetailsBinding
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.util.GIFT_CARD_ID_NOT_FOUND
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.copyTextToClipBoard
@@ -156,7 +157,21 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
                 binding.fypOrderNoCl.toGone()
             }
             myntsRewarded?.let {
-                binding.reccivedMyntsTv.text = String.format(getString(R.string.you_have_won_mynts),it)
+                if(isGifted.equals(YES)){
+                    val loggedInUserMobileNo = Utility.getCustomerDataFromPreference()?.mobile!!
+                    if(loggedInUserMobileNo.equals(destinationMobileNo)){
+                        binding.reccivedMyntsTv.toGone()
+                        binding.playNowBtn.toGone()
+                    }else{
+                        binding.reccivedMyntsTv.toVisible()
+                        binding.playNowBtn.toVisible()
+                        binding.reccivedMyntsTv.text = String.format(getString(R.string.you_have_won_mynts1),it)
+                    }
+                }else{
+                    binding.reccivedMyntsTv.toVisible()
+                    binding.playNowBtn.toVisible()
+                    binding.reccivedMyntsTv.text = String.format(getString(R.string.you_have_won_mynts1),it)
+                }
             }?: kotlin.run {
                 binding.reccivedMyntsTv.toGone()
                 binding.playNowBtn.toGone()

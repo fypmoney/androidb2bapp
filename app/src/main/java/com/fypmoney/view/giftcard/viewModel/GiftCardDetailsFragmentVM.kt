@@ -3,6 +3,8 @@ package com.fypmoney.view.giftcard.viewModel
 import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.fyp.trackr.models.TrackrEvent
+import com.fyp.trackr.models.trackr
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -33,6 +35,11 @@ class GiftCardDetailsFragmentVM(application: Application) : BaseViewModel(applic
         _event.value = GiftCardDetailsEvent.NavigateToArcade
     }
 
+    init {
+        trackr {
+            it.name = TrackrEvent.gift_card_details
+        }
+    }
     fun onVoucherValueCopyClicked(){
         _event.value = GiftCardDetailsEvent.VoucherValueCopyEvent
     }

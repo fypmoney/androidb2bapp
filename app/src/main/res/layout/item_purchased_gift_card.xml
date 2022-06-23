@@ -29,7 +29,7 @@
                 android:adjustViewBounds="true"
                 android:layout_marginStart="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp20"
-                app:srcCompat="@drawable/axis_logo"
+                tools:srcCompat="@drawable/axis_logo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 

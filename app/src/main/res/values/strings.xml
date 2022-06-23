@@ -1257,12 +1257,13 @@ Coming really soon!
     <string name="create_gift_card_payment_processing_label">Create gift card payment processing</string>
     <string name="processing_creating_gift_card">Processing payment of ₹ %1$s for %2$s</string>
     <string name="create_gift_card_payment_success">Create gift card payment success</string>
-    <string name="you_have_won_mynts"><u>You have won %1$s Mynts</u></string>
+    <string name="you_have_won_mynts"><u>You have won %1$s X \u20B9 %2$s Mynts</u></string>
+    <string name="you_have_won_mynts1"><u>You have won %1$s Mynts</u></string>
     <string name="your_gift_card_prurchase_of_amount_successful">Your Gift Card Purchase of \n \u20B9 %1$s is successful</string>
     <string name="your_gift_card_prurchase_of_amount_pending">Your Gift Card Purchase of \n \u20B9 %1$s is pending</string>
     <string name="your_gift_card_prurchase_of_amount_failed">Your Gift Card Purchase of \n \u20B9 %1$s is failed</string>
     <string name="gift_card_details">Gift Card Details</string>
-    <string name="voucher_value">Voucher value</string>
+    <string name="voucher_value">Voucher Number</string>
     <string name="voucher_pin">Voucher Pin</string>
     <string name="validity">Validity</string>
     <string name="fy_order_no">Fyp Order No.</string>
