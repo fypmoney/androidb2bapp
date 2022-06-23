@@ -186,6 +186,7 @@ enum class TrackrEvent(name: String) {
     gift_card_refresh("gift_card_refresh"),
     gift_card_details("gift_card_details"),
     insufficient_balance("insufficient_balance"),
+    yes_bank_otp("yes_bank_otp"),
 
 
 }
