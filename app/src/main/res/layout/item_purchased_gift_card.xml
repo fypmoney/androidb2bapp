@@ -24,11 +24,12 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/brand_logo_iv"
-                android:layout_width="50dp"
+                android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/dp16"
-                android:layout_marginTop="@dimen/dp20"
-                tools:srcCompat="@drawable/axis_logo"
+                android:layout_marginEnd="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp16"
+                tools:srcCompat="@drawable/gift_test_logo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 

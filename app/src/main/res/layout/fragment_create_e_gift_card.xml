@@ -40,11 +40,10 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/gift_card_iv"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:minWidth="100dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp16"
                     android:adjustViewBounds="true"
-                    tools:src="@drawable/personalise_offers_banner"
+                    tools:src="@drawable/gift_card_img"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"/>
