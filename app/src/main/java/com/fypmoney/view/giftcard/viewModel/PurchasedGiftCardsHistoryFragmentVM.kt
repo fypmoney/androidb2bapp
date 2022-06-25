@@ -42,10 +42,12 @@ class PurchasedGiftCardsHistoryFragmentVM(application: Application) : BaseViewMo
         trackr {
             it.name = TrackrEvent.gift_card_history
         }
+
     }
 
     fun callGiftCardHistory(page:Int){
         if(page==0){
+            purchasedGiftCardsList =  listOf()
             _state.postValue(PurchasedGiftCardsHistoryState.Loading)
         }
         WebApiCaller.getInstance().request(
