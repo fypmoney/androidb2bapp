@@ -177,6 +177,15 @@ enum class TrackrEvent(name: String) {
     dth_success("dth_success"),
     dth_fail("dth_fail"),
     skip_to_home_click("skip_to_home_click"),
+    gift_card_select("gift_card_select"),
+    gift_card_pay("gift_card_pay"),
+    gift_card_success("gift_card_success"),
+    gift_card_fail("gift_card_fail"),
+    gift_card_pending("gift_card_pending"),
+    gift_card_history("gift_card_history"),
+    gift_card_refresh("gift_card_refresh"),
+    gift_card_details("gift_card_details"),
+    insufficient_balance("insufficient_balance"),
     yes_bank_otp("yes_bank_otp"),
 
 

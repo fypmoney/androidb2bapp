@@ -32,12 +32,12 @@ import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.util.videoplayer.VideoActivity2
 import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
-import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.addmoney.NewAddMoneyActivity
 import com.fypmoney.view.contacts.model.CONTACT_ACTIVITY_UI_MODEL
 import com.fypmoney.view.contacts.model.ContactActivityActionEvent
 import com.fypmoney.view.contacts.model.ContactsActivityUiModel
+import com.fypmoney.view.contacts.view.PayToContactsActivity
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
@@ -49,7 +49,6 @@ import com.fypmoney.view.home.main.explore.model.SectionContentItem
 import com.fypmoney.view.home.main.home.adapter.CallToActionAdapter
 import com.fypmoney.view.home.main.home.viewmodel.HomeFragmentVM
 import com.fypmoney.view.register.PanAdhaarSelectionActivity
-import com.fypmoney.view.register.adapters.OffersHomeAdapter
 import com.fypmoney.view.register.fragments.CompleteKYCBottomSheet
 import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
@@ -65,12 +64,10 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     ExploreAdapter.OnFeedItemClickListener {
 
-    private var typeAdapter: OffersHomeAdapter? = null
     private val homeFragmentVM by viewModels<HomeFragmentVM> {
         defaultViewModelProviderFactory
     }
     private lateinit var _binding: FragmentHomeBinding
-    private var itemsArrayList: ArrayList<offerDetailResponse> = ArrayList()
 
     private val binding get() = _binding
 
@@ -112,6 +109,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
         homeFragmentVM.callToAction()
         checkForErrorNotice()
         rechargeVisbility()
+
 
     }
 
@@ -263,6 +261,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 val upiComingSoonBottomSheet = UpiComingSoonBottomSheet()
                 upiComingSoonBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
                 upiComingSoonBottomSheet.show(childFragmentManager, "UpiComingSoonBottomSheet")
+
             }
             HomeFragmentVM.HomeFragmentEvent.BroadbandRechargeEvent -> {
                 val intent = Intent(requireContext(), StoreWebpageOpener2::class.java)
@@ -496,6 +495,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                         AppConstants.ARCADE -> {
                             findNavController().navigate(R.id.navigation_arcade)
                         }
+                        AppConstants.GIFT_VOUCHER -> {
+                            findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResources}"))
+                        }
                         else -> {
                             redirectionResources.let { it1 ->
                                 deeplinkRedirection(
@@ -513,7 +515,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             AppConstants.EXPLORE_IN_APP_WEBVIEW -> {
 
                 val intent = Intent(requireContext(), ExploreInAppWebview::class.java)
-//        intent.putExtra(AppConstants.EXPLORE_RESPONSE, feedDetails)
                 intent.putExtra(
                     AppConstants.FROM_WHICH_SCREEN,
                     AppConstants.EXPLORE_IN_APP_WEBVIEW
@@ -559,6 +560,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
                 }
 
+            }
+            AppConstants.GIFT_VOUCHER -> {
+                findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
             }
         }
     }

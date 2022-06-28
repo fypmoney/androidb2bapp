@@ -19,8 +19,6 @@
         android:id="@+id/main_cv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/background_light_dark"
-
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="@dimen/_8sdp"
@@ -40,7 +38,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-
             app:IMAGE_URL="@{viewHelper.oneSection.contentResourceUri}"
             android:layout_height="wrap_content"
             app:TYPE="@{1}"

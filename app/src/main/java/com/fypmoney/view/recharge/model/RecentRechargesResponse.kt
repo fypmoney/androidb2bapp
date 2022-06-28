@@ -1,13 +1,16 @@
 package com.fypmoney.view.recharge.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class RecentRechargesResponse(
 
 	@field:SerializedName("data")
 	val data: List<RecentRechargeItem>
 )
 
+@Keep
 data class RecentRechargeItem(
 
 	@field:SerializedName("orderType")

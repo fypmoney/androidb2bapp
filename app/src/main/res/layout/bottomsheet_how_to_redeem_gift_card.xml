@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.giftcard.viewModel.HowToRedeemGiftCardBottomSheetVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bgcolor"
+        android:padding="16dp">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:translationZ="1dp"
+            android:backgroundTint="@color/white"
+            android:background="@drawable/curved_background1"/>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/title_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/how_to_redeem_steps"
+            style="@style/TextviewRegular"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/text_color_light"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/how_to_redeem_steps_rv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp16"
+            app:layout_constraintTop_toBottomOf="@+id/title_tv"
+            tools:listitem="@layout/item_only_text"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <com.fypmoney.view.customview.PrimaryButton
+            android:id="@+id/reedem_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_marginTop="@dimen/dp24"
+            android:paddingHorizontal="@dimen/dp30"
+            android:paddingVertical="@dimen/dp15"
+            app:text="@string/reedem_now"
+            app:enabled="true"
+            android:onClick="@{()->viewModel.onRedeemNowClick()}"
+            app:enabled_bg="@color/color_task_card_green"
+            app:disabled_bg="@color/buttonUnselectedColor"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/how_to_redeem_steps_rv"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="@dimen/dp10"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

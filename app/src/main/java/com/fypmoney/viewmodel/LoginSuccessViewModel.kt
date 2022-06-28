@@ -58,7 +58,8 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
             "ONBOARD_SHARE_1",
             "ADD_MONEY_VIDEO",
             "SHOW_RECHARGE_SCREEN",
-            "ADD_MONEY_VIDEO_NEW"
+            "ADD_MONEY_VIDEO_NEW",
+            "IS_GIFT_CARD_IS_AVAILABLE"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -275,6 +276,14 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_SHOW_RECHARGE_IN_HOME_SCREEN,
+                                    it.value
+                                )
+                            }
+
+                            AppConstants.IS_GIFT_CARD_IS_AVAILABLE ->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SHOW_MY_ORDERS,
                                     it.value
                                 )
                             }

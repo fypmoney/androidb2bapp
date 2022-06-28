@@ -53,7 +53,7 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
         )
         setObserver()
         checkAndAskPermission()
-        Log.d("contactlist", "1ee0")
+
     }
 
 
@@ -167,18 +167,6 @@ class ContactView : BaseActivity<ViewContactsBinding, ContactViewModel>(),
     }
 
 
-    /*
-    * This method is used to call the Broadcast receiver
-    * */
-    private fun callBroadCast(contactEntity: ContactEntity) {
-        val intent = Intent(AppConstants.CONTACT_BROADCAST_NAME)
-        intent.putExtra(
-            AppConstants.CONTACT_BROADCAST_KEY,
-            contactEntity
-        )
-        LocalBroadcastManager.getInstance(applicationContext).sendBroadcast(intent)
-        finish()
-    }
 
     override fun onPositiveButtonClick(uniqueIdentifier: String) {
         finish()

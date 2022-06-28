@@ -32,7 +32,7 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
 
     var contactAdapter = ContactAdapter(this, userId)
 
-    var isClickable = ObservableField(false)
+
     var contactRepository = ContactRepository(mDB = appDatabase)
     var onItemClicked = MutableLiveData<ContactEntity>()
     var onIsAppUserClicked = MutableLiveData<Boolean>()
@@ -47,23 +47,23 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
 * This method is used to get all the contacts
 * */
     private fun getAllContacts() {
-        Log.d("contactlist", "-1")
+
         contactRepository.getContactsFromDatabase().let {
-            Log.d("contactlist", "0")
+
             try {
                 progressDialog.value = false
                 val sortedList =
                     contactRepository.getContactsFromDatabase() as MutableList<ContactEntity>
                 if (!sortedList.isNullOrEmpty()) {
-                    Log.d("contactlist", "1")
+
                     contactAdapter.setList(sortedList)
                     contactAdapter.newContactList?.addAll(sortedList)
                 } else {
-                    Log.d("contactlist", "2")
+
                     contactNotFound.value = true
                 }
             } catch (e: Exception) {
-                Log.d("contactlist", e.message.toString())
+
                 e.printStackTrace()
             }
 
@@ -109,10 +109,7 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
                 callIsAppUserApi()
             }
         }
-//        val list = contactAdapter.newContactList?.filter {
-//            it.firstName!!.contains(s, ignoreCase = true) || it.contactNumber?.contains(s)!!
-//        }
-//        contactAdapter.setList(list!!)
+
     }
 
 
@@ -120,7 +117,6 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
 * This method is used to call contact sync API
 * */ fun callContactSyncApi() {
 
-        Log.d("contactlist", "1ee")
         val contactRequestDetailsList = mutableListOf<ContactRequestDetails>()
         contactRepository.getAllNotSyncedContacts().forEachIndexed { index, s ->
             if (s.contactNumber?.length!! > 9) {
@@ -200,8 +196,6 @@ class ContactViewModel(application: Application) : BaseViewModel(application) {
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         progressDialog.value = false
-        Log.d("contactlist", "addc")
-        Log.d("contactlist", errorResponseInfo.toString())
 
         when (purpose) {
             ApiConstant.API_CHECK_IS_APP_USER -> {

@@ -22,7 +22,9 @@ import com.fypmoney.extension.onNavDestinationSelected
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.listener.LocationListenerClass
+import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_SHOW_MY_ORDERS
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserProfileView
@@ -89,6 +91,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.help.toVisible()
                     binding.framne.toVisible()
                     binding.transactionHistoryAiv.toGone()
+                    binding.giftVoucherHistoryTv.toGone()
                     binding.myProfileIv.toVisible()
                     binding.toolbarTitleTv.toVisible()
                     showToolbar()
@@ -105,6 +108,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     homeActivityVM.toolbarTitle.value = getString(R.string.fyper_txt)
                     binding.help.toVisible()
                     binding.framne.toVisible()
+                    binding.giftVoucherHistoryTv.toGone()
                     binding.transactionHistoryAiv.toGone()
                     binding.myProfileIv.toGone()
                     showToolbar()
@@ -121,6 +125,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     homeActivityVM.toolbarTitle.value = getString(R.string.rewards)
                     binding.help.toGone()
                     binding.framne.toGone()
+                    binding.giftVoucherHistoryTv.toGone()
                     binding.transactionHistoryAiv.toVisible()
                     binding.myProfileIv.toGone()
                     showToolbar()
@@ -134,9 +139,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.toolbar.setBackgroundColor(resources.getColor(R.color.reward_background))
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
                     homeActivityVM.toolbarTitle.value = getString(R.string.explore)
-                    binding.help.toVisible()
-                    binding.framne.toVisible()
+                    binding.help.toGone()
+                    binding.framne.toGone()
                     binding.myProfileIv.toGone()
+                    SharedPrefUtils.getString(this,SF_SHOW_MY_ORDERS)?.let {
+                        if(it==YES){
+                            binding.giftVoucherHistoryTv.toVisible()
+                        }else{
+                            binding.giftVoucherHistoryTv.toGone()
+                        }
+                    }
+
                     binding.transactionHistoryAiv.toGone()
                     showToolbar()
                     showBottomNavigation()
@@ -165,9 +178,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
     }
 
     private fun observeEvents() {
-        homeActivityVM.event.observe(this,{
+        homeActivityVM.event.observe(this) {
             handelEvents(it)
-        })
+        }
     }
 
     private fun handelEvents(it: HomeActivityVM.HomeActivityEvent?) {
@@ -183,7 +196,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                 //startActivity(Intent(this, BankTransactionHistoryView::class.java))
                 findNavController(R.id.nav_host_fragment_activity_home).navigate(R.id.navigation_rewards_history)
             }
-            else -> {}
+            HomeActivityVM.HomeActivityEvent.GiftVoucherHistoryClicked -> {
+                findNavController(R.id.nav_host_fragment_activity_home).navigate(R.id.navigation_gift_card_history)
+            }
+            null -> TODO()
         }
     }
 

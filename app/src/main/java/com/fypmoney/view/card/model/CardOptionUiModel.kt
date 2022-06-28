@@ -1,7 +1,9 @@
 package com.fypmoney.view.card.model
 
 import android.graphics.drawable.Drawable
+import androidx.annotation.Keep
 
+@Keep
 data class CardOptionUiModel(
     var optionEvent:CardOptionEvent,
     var name:String,

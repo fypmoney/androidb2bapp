@@ -118,7 +118,16 @@
         android:id="@+id/navigation_jackpot"
         android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsJackpotFragment"
         android:label="@string/jackpot"
-        tools:layout="@layout/fragment_jackpot_overview" />
+        tools:layout="@layout/fragment_jackpot_overview">
+
+        <action
+            android:id="@+id/action_jackpot_to_section_explore"
+            app:destination="@+id/navigation_section_explore"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_enter_mobile_number_recharge"
@@ -609,6 +618,135 @@
             app:popExitAnim="@anim/slide_out_righ"
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="false"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_create_gift_card"
+        android:name="com.fypmoney.view.giftcard.view.CreateEGiftCardFragment"
+        android:label="@string/create_gift_card"
+        tools:layout="@layout/fragment_create_e_gift_card">
+
+        <argument
+            android:name="productCode"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+        <deepLink
+            android:id="@+id/create_gift_card_deeplink"
+            android:autoVerify="true"
+            app:uri="fypmoney://creategiftcard/{productCode}" />
+
+        <action
+            android:id="@+id/action_create_gift_card_to_payment_processing"
+            app:destination="@+id/navigation_create_gift_card_payment_processing"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_create_gift_card_payment_processing"
+        android:name="com.fypmoney.view.giftcard.view.CreateGiftCardPaymentProcessingFragment"
+        android:label="@string/create_gift_card_payment_processing_label"
+        tools:layout="@layout/fragment_create_gift_card_payment_processing">
+        <argument
+            android:name="createEGiftCardModel"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.giftcard.model.CreateEGiftCardModel"
+            app:nullable="true" />
+
+        <action
+            android:id="@+id/action_create_gift_card_payment_processing_to_purchased_gift_card_payment_success"
+            app:destination="@+id/navigation_purchased_gift_card_payment_success"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="false"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_purchased_gift_card_payment_success"
+        android:name="com.fypmoney.view.giftcard.view.CreateGiftCardPaymentStatusFragment"
+        android:label="@string/create_gift_card_payment_success"
+        tools:layout="@layout/fragment_create_gift_card_payment_status">
+
+        <argument
+            android:name="purchasedGiftCardStatusUiModel"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.giftcard.model.PurchasedGiftCardStatusUiModel"
+            app:nullable="true" />
+
+        <action android:id="@+id/navigation_purchased_gift_card_payment_success_to_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/navigation_home"/>
+
+        <action android:id="@+id/action_purchased_gift_card_payment_success_to_gift_card_details"
+            app:destination="@id/navigation_gift_card_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/navigation_home"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_gift_card_details"
+        android:name="com.fypmoney.view.giftcard.view.GiftCardDetailsFragment"
+        android:label="@string/gift_card_details"
+        tools:layout="@layout/fragment_gift_card_details">
+
+        <argument
+            android:name="giftCardId"
+            android:defaultValue="@null"
+            app:argType="string"
+            app:nullable="true" />
+
+        <action android:id="@+id/action_gift_card_details_to_rewards"
+            app:destination="@id/navigation_rewards"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/navigation_home"/>
+
+        <action android:id="@+id/action_gift_card_details_to_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/navigation_home"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_gift_card_history"
+        android:name="com.fypmoney.view.giftcard.view.PurchasedGiftCardsHistoryFragment"
+        android:label="@string/history"
+        tools:layout="@layout/fragment_purchased_gift_cards_history">
+
+
+        <action android:id="@+id/action_gift_card_history_to_gift_card_details"
+            app:destination="@id/navigation_gift_card_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
 
     </fragment>
 

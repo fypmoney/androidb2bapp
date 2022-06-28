@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -23,7 +24,6 @@ import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 import com.fypmoney.viewmodel.OffersDetailsViewModel
 import kotlinx.android.synthetic.main.reward_offer_detail.*
-import kotlinx.android.synthetic.main.toolbar.*
 
 /*
 * This class is used to handle school name city
@@ -139,7 +139,7 @@ class OfferDetailActivity :
 
         }
 
-        typeAdapter = offerpointsAdapter(itemsArrayList, this, itemClickListener2!!)
+        typeAdapter = offerpointsAdapter(itemsArrayList, this, itemClickListener2!!, Color.BLACK)
         recycler_view.adapter = typeAdapter
     }
 }

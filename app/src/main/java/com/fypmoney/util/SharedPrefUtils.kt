@@ -63,6 +63,7 @@ class SharedPrefUtils {
         const val SF_CARD_PROMO_CODE_APPLIED = "card_promo_code_applied"
         const val SF_CARD_IS_ACTIVATED = "card_is_activated"
         const val SF_SHOW_RECHARGE_IN_HOME_SCREEN = "show_recharge_in_home_screen"
+        const val SF_SHOW_MY_ORDERS = "show_my_orders"
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(context)

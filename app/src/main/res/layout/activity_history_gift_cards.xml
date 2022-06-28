@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="#0E141C"
+        android:layout_height="match_parent">
+
+        <TextView
+            style="@style/TextviewBold"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:layout_width="wrap_content"
+            android:text="Unsued Cards"
+            android:id="@+id/history"
+            android:visibility="invisible"
+            android:elevation="@dimen/_2sdp"
+            android:textSize="18sp"
+            android:textColor="@color/text_color_light"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_id"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar_id"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_id" />
+
+        <include
+            layout="@layout/toolbar"
+            android:id="@+id/toolbar_id" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/giftcard_rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="@dimen/_6sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar_id"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
