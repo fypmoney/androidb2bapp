@@ -24,12 +24,13 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/brand_logo_iv"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/dp16"
                 android:layout_marginEnd="@dimen/dp16"
                 android:layout_marginTop="@dimen/dp10"
                 tools:srcCompat="@drawable/gift_test_logo"
+                android:adjustViewBounds="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -39,15 +40,14 @@
                 android:id="@+id/gift_received_purchased_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/ic_gifted"
+                android:background="@drawable/ic_purchased"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="Gifted"
+                tools:text="Purchased"
                 android:textColor="@color/white"
                 android:textSize="14sp"
-                android:lineHeight="16sp"
-                android:gravity="end"
+                android:gravity="end|center"
                 android:layout_marginTop="@dimen/dp10"
-                android:paddingHorizontal="@dimen/dp8"
+                android:paddingHorizontal="@dimen/dp10"
                 app:layout_constraintBottom_toBottomOf="@+id/brand_logo_iv"
                 app:layout_constraintTop_toTopOf="parent"/>
 
