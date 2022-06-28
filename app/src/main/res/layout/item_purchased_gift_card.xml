@@ -28,7 +28,7 @@
                 android:layout_height="50dp"
                 android:layout_marginStart="@dimen/dp16"
                 android:layout_marginEnd="@dimen/dp16"
-                android:layout_marginTop="@dimen/dp16"
+                android:layout_marginTop="@dimen/dp10"
                 tools:srcCompat="@drawable/gift_test_logo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -46,9 +46,10 @@
                 android:textSize="14sp"
                 android:lineHeight="16sp"
                 android:gravity="end"
-                android:paddingEnd="@dimen/dp8"
+                android:layout_marginTop="@dimen/dp10"
+                android:paddingHorizontal="@dimen/dp8"
                 app:layout_constraintBottom_toBottomOf="@+id/brand_logo_iv"
-                app:layout_constraintTop_toTopOf="@+id/brand_logo_iv"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
 
             <com.google.android.material.textview.MaterialTextView

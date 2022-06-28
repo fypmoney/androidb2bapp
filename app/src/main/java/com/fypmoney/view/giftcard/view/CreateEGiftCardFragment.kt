@@ -121,6 +121,7 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
                 binding.payBtn.isEnabled = true
             }
             is CreateEGiftCardFragmentVM.CreateEGiftCardState.BrandDetailsSuccess -> {
+                binding.giftCardBannerShimmerLayout.toGone()
                 setupBrandDetails(it.details)
             }
             CreateEGiftCardFragmentVM.CreateEGiftCardState.Error -> {
@@ -139,6 +140,7 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
             is CreateEGiftCardFragmentVM.CreateEGiftCardState.PossibleDenominationList -> {
                 if(it.list!!.isNotEmpty()){
                     binding.giftCardAmountRv.toVisible()
+                    binding.possibleDenominationGiftCardAmountShimmer.toGone()
                     (binding.giftCardAmountRv.adapter as GiftCardPossibleDenominationAmountListAdapter).
                     submitList(it.list.map {
                         possibleDenominationListToGiftCardPossibleDenominationAmountUiModel(context = requireContext(),
@@ -167,6 +169,11 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
                 }
             }
             null ->{
+
+            }
+            CreateEGiftCardFragmentVM.CreateEGiftCardState.LoadingGiftCardDetails -> {
+                binding.giftCardBannerShimmerLayout.toVisible()
+                binding.possibleDenominationGiftCardAmountShimmer.toVisible()
 
             }
         }

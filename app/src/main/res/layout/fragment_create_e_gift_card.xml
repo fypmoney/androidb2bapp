@@ -37,16 +37,44 @@
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="@dimen/dp16">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/gift_card_iv"
+                <FrameLayout
+                    android:id="@+id/banner_fl"
+                    android:layout_marginTop="@dimen/dp16"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp16"
-                    android:adjustViewBounds="true"
-                    tools:src="@drawable/gift_card_img"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/gift_card_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/dp50"
+                        android:adjustViewBounds="true"
+                        android:elevation="@dimen/dp1"
+                        tools:src="@drawable/gift_card_img"/>
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/gift_card_banner_shimmer_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:minHeight="@dimen/dp50"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+                            <include layout="@layout/shimmer_placeholder_layout_store" />
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                </FrameLayout>
+
+
+
+
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/gift_card_msg"
@@ -57,36 +85,52 @@
                     android:layout_marginTop="@dimen/dp_40"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/gift_card_iv"
+                    app:layout_constraintTop_toBottomOf="@+id/banner_fl"
                     android:textSize="17sp" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/gift_card_amount_rv"
+                <FrameLayout
+                    android:id="@+id/possible_denomination_fl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp30"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:orientation="horizontal"
-                    tools:background="@color/white"
-                    tools:listitem="@layout/item_products_amount_gift"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/gift_card_msg"/>
+                    app:layout_constraintTop_toBottomOf="@+id/gift_card_msg">
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/possible_denomination_gift_card_amount_shimmer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:visibility="visible">
+
+                        <include layout="@layout/shimmer_list_view_placeholder" />
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/gift_card_amount_rv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/item_only_text"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@+id/gift_card_msg"/>
+                </FrameLayout>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/gift_amount"
                     android:layout_width="wrap_content"
                     style="@style/TextviewBold"
-                    android:textSize="24sp"
+                    android:textSize="18sp"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="start"
                     android:maxLength="8"
                     android:drawableTint="@color/white"
-                    android:drawablePadding="@dimen/dp5"
+                    android:drawablePadding="@dimen/dp16"
                     android:drawableStart="@drawable/ic_rupess"
                     android:textCursorDrawable="@drawable/cursor_edittext"
                     android:paddingHorizontal="@dimen/dp16"
-                    android:paddingVertical="@dimen/dp5"
+                    android:paddingVertical="@dimen/dp16"
                     android:inputType="number"
                     app:customBackgroundColor="@{@color/edit_text_bg}"
                     app:customCornerRadius="@{@dimen/dp16}"
@@ -96,7 +140,7 @@
                     android:layout_marginTop="@dimen/dp30"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/gift_card_amount_rv" />
+                    app:layout_constraintTop_toBottomOf="@+id/possible_denomination_fl" />
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -113,10 +157,10 @@
                 <View
                     android:id="@+id/view"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="0.5dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:background="@color/white"
+                    android:background="@color/text_color_light"
                     android:layout_marginTop="@dimen/dp30"
                     app:layout_constraintTop_toBottomOf="@+id/max_min_amount_tv"/>
 
@@ -195,10 +239,10 @@
                     <View
                         android:id="@+id/view1"
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
+                        android:layout_height="0.5dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:background="@color/white"
+                        android:background="@color/text_color_light"
                         android:layout_marginTop="@dimen/dp30"
                         app:layout_constraintTop_toTopOf="parent"/>
 

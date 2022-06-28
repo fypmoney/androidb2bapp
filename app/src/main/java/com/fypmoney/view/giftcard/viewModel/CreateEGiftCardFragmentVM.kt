@@ -79,6 +79,7 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
     }
 
     fun getGiftCardBrandDetails(){
+        _state.postValue(CreateEGiftCardState.LoadingGiftCardDetails)
         WebApiCaller.getInstance().request(
             ApiRequest(
                 ApiConstant.API_BRAND_DETAILS,
@@ -231,6 +232,7 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
 
     sealed class CreateEGiftCardState{
         object Loading:CreateEGiftCardState()
+        object LoadingGiftCardDetails:CreateEGiftCardState()
         object Error:CreateEGiftCardState()
         object BalanceError:CreateEGiftCardState()
         data class ValidationError(val validationError: ValidationErrorData):CreateEGiftCardState()

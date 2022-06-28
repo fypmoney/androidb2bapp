@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.ItemProductsAmountGiftBinding
+import com.fypmoney.extension.dp
 import com.fypmoney.extension.executeAfter
 
 
@@ -59,7 +60,7 @@ class GiftCardPossibleDenominationAmountVH(
             binding.giftCardAmountTv.invalidate()
             setBackgroundDrawable(view = binding.giftCardAmountTv,
                 backgroundColor = model.amountColorCode,
-                cornerRadius = 16.0f,
+                cornerRadius = (30.0f.dp).toFloat(),
                 strokeColor = null,
                 strokeWidth = null,
                 isRounded = false

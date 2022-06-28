@@ -4,6 +4,7 @@ import android.content.res.Resources
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
+import kotlin.math.roundToInt
 
 /**
  * Make the view visible
@@ -57,3 +58,6 @@ val Number.toPx get() = TypedValue.applyDimension(
     TypedValue.COMPLEX_UNIT_DIP,
     this.toFloat(),
     Resources.getSystem().displayMetrics)
+
+val Float.dp: Int
+    get() = (this * Resources.getSystem().displayMetrics.density).roundToInt()

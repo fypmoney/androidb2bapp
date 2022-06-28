@@ -164,12 +164,12 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
                         binding.playNowBtn.toGone()
                     }else{
                         binding.reccivedMyntsTv.toVisible()
-                        binding.playNowBtn.toVisible()
+                        binding.playNowBtn.toGone()
                         binding.reccivedMyntsTv.text = String.format(getString(R.string.you_have_won_mynts1),it)
                     }
                 }else{
                     binding.reccivedMyntsTv.toVisible()
-                    binding.playNowBtn.toVisible()
+                    binding.playNowBtn.toGone()
                     binding.reccivedMyntsTv.text = String.format(getString(R.string.you_have_won_mynts1),it)
                 }
             }?: kotlin.run {
@@ -226,7 +226,7 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
                     )
                 } }
                 binding.layout.toVisible()
-                binding.playNowBtn.toVisible()
+                binding.playNowBtn.toGone()
                 binding.reccivedMyntsTv.toVisible()
                 binding.reedemBtn.toVisible()
             }

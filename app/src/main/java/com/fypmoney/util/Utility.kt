@@ -1000,7 +1000,6 @@ object Utility {
                     .into(imageView)
             } else {
                 imageView.setImageResource(R.drawable.ic_user)
-
             }
         }
     }
