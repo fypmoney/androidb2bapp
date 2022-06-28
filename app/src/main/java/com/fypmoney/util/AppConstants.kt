@@ -309,6 +309,7 @@ object AppConstants {
     const val KYC_UPGRADE_FROM_WHICH_SCREEN = "kyc_upgrade_from_which_screen"
     const val BROADBAND_RECHARGE_URL = "https://www.amazon.in/hfc/bill/landline"
     const val SHOW_RECHARGE_SCREEN = "SHOW_RECHARGE_SCREEN"
+    const val IS_GIFT_CARD_IS_AVAILABLE = "IS_GIFT_CARD_AVAILABLE"
     const val OFFER_REDIRECTION_EXTERNAL_WEB_VIEW = "EXTERNAL_WEB_VIEW"
     const val OFFER_REDIRECTION_EXTERNAL_WEB_VIEW_SUB = "EXTERNAL_WEB_VIEW_SUB"
     const val OFFER_REDIRECTION_IN_APP_VIEW_WITH_CARD_OPTION_SUBs =

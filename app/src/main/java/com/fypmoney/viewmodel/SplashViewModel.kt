@@ -25,6 +25,7 @@ import com.fypmoney.util.AppConstants.ADD_MONEY_VIDEO
 import com.fypmoney.util.AppConstants.ADD_MONEY_VIDEO_NEW
 import com.fypmoney.util.AppConstants.CARD_ORDER_FLAG
 import com.fypmoney.util.AppConstants.ERROR_MESSAGE_HOME
+import com.fypmoney.util.AppConstants.IS_GIFT_CARD_IS_AVAILABLE
 import com.fypmoney.util.AppConstants.IS_NEW_FEED_AVAILABLE
 import com.fypmoney.util.AppConstants.ONBOARD_SHARE_1
 import com.fypmoney.util.AppConstants.ONBOARD_SHARE_90
@@ -171,7 +172,8 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
             "ONBOARD_SHARE_1",
             "ADD_MONEY_VIDEO",
             "SHOW_RECHARGE_SCREEN",
-            "ADD_MONEY_VIDEO_NEW"
+            "ADD_MONEY_VIDEO_NEW",
+            "IS_GIFT_CARD_AVAILABLE"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -361,13 +363,17 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                             IS_NEW_FEED_AVAILABLE -> {
                                 PockketApplication.isNewFeedAvailableData = it
                             }
-                            IS_NEW_FEED_AVAILABLE -> {
-                                PockketApplication.isNewFeedAvailableData = it
-                            }
                             SHOW_RECHARGE_SCREEN->{
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_SHOW_RECHARGE_IN_HOME_SCREEN,
+                                    it.value
+                                )
+                            }
+                            IS_GIFT_CARD_IS_AVAILABLE->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SHOW_MY_ORDERS,
                                     it.value
                                 )
                             }

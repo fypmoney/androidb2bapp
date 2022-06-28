@@ -22,7 +22,9 @@ import com.fypmoney.extension.onNavDestinationSelected
 import com.fypmoney.extension.toGone
 import com.fypmoney.extension.toVisible
 import com.fypmoney.listener.LocationListenerClass
+import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_SHOW_MY_ORDERS
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.NotificationView
 import com.fypmoney.view.activity.UserProfileView
@@ -140,7 +142,14 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.help.toGone()
                     binding.framne.toGone()
                     binding.myProfileIv.toGone()
-                    binding.giftVoucherHistoryTv.toVisible()
+                    SharedPrefUtils.getString(this,SF_SHOW_MY_ORDERS)?.let {
+                        if(it==YES){
+                            binding.giftVoucherHistoryTv.toVisible()
+                        }else{
+                            binding.giftVoucherHistoryTv.toGone()
+                        }
+                    }
+
                     binding.transactionHistoryAiv.toGone()
                     showToolbar()
                     showBottomNavigation()
