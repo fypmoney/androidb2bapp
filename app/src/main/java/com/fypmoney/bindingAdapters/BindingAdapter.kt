@@ -39,13 +39,15 @@ class BindingAdapter {
             imageView: AppCompatImageView,
             position: Int,
             imageUrl: String?,
-            type: Int? = 0
+                type: Int? = 0
         ) {
 
             imageUrl?.let {
                 when (type) {
                     1 -> {
-                        Glide.with(PockketApplication.instance).load(imageUrl).placeholder(shimmerDrawable())
+                        Glide.with(PockketApplication.instance).load(imageUrl).placeholder(
+                            shimmerColorDrawable()
+                        )
                             .into(imageView).getSize(
                                 SizeReadyCallback { width, height ->
                                     //before you load image LOG height and width that u actually got?
@@ -53,7 +55,7 @@ class BindingAdapter {
                                 })
                     }
                     else -> {
-                                Glide.with(PockketApplication.instance).load(imageUrl)
+                                Glide.with(PockketApplication.instance).load(imageUrl).placeholder(shimmerColorDrawable())
                                     .into(imageView).getSize(
                                         SizeReadyCallback { width, height ->
                                             //before you load image LOG height and width that u actually got?

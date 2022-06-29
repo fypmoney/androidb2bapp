@@ -82,6 +82,7 @@
     <color name="colorEdittext">#121517</color>
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#fff</color>
     <color name="transparent">#0000</color>
+    <color name="transparentColor">#00000000</color>
     <color name="link_color">#007AFF</color>
     <color name="black_overlay">#10000000</color>
     <color name="reward_background">#090B12</color>

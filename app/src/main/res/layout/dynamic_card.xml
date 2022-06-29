@@ -25,6 +25,7 @@
         android:layout_marginTop="@dimen/_8sdp"
         app:cardElevation="0dp"
         app:cardCornerRadius="@dimen/dp16"
+        app:cardBackgroundColor="@android:color/transparent"
         android:onClick="@{()->viewHelper.onFeedButtonClick()}">
 
 

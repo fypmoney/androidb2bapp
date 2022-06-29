@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.fypmoney.R
-import com.fypmoney.bindingAdapters.shimmerDrawable
+import com.fypmoney.bindingAdapters.shimmerColorDrawable
 import com.fypmoney.view.home.main.explore.`interface`.ExploreItemClickListener
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.home.main.explore.model.SectionContentItem
@@ -92,7 +92,7 @@ class ExploreBaseAdapter(
             set.applyTo(holder.contraint)
             Glide.with(context).load(items[position].sectionContent?.get(0)?.contentResourceUri)
                 .placeholder(
-                    shimmerDrawable()
+                    shimmerColorDrawable()
                 )
                 .into(holder.baseImage)
 

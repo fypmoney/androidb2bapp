@@ -208,7 +208,7 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
                                 "\n" +
                                 "\n" +
                                 "\n" +
-                                "Woohoo! Here's your ${it.giftCardDetails.brandName} Gift Voucher worth INR ${Utility.convertToRs(it.giftCardDetails.amount)} purchased via Fyp, India's leading neobank for teens and families. Here are the details-" +
+                                "Woohoo! Here's your ${it.giftCardDetails.brandName} worth INR ${Utility.convertToRs(it.giftCardDetails.amount)} purchased via Fyp, India's leading neobank for teens and families. Here are the details-" +
                                 "\n" +
                                 "\n" +
                                 "\n" +
@@ -216,7 +216,11 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
                                 "\n" +
                                 "Voucher PIN: ${it.giftCardDetails.voucherPin}" +
                                 "\n" +
-                                "Validity: ${it.giftCardDetails.endDate}" +
+                                "Validity: ${Utility.parseDateTime(
+                                    it.giftCardDetails.endDate,
+                                    inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
+                                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT9
+                                )}" +
                                 "\n" +
                                 "Terms and Conditions: ${it.giftCardDetails.tncLink}" +
                                 "\n" +
@@ -227,7 +231,17 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
                 } }
                 binding.layout.toVisible()
                 binding.playNowBtn.toGone()
-                binding.reccivedMyntsTv.toVisible()
+                if(giftCardDetailsFragmentVM.giftCardDetails.isGifted.equals(YES)){
+                    val loggedInUserMobileNo = Utility.getCustomerDataFromPreference()?.mobile!!
+                    if(loggedInUserMobileNo.equals(giftCardDetailsFragmentVM.giftCardDetails.destinationMobileNo)){
+                        binding.reccivedMyntsTv.toGone()
+                    }else{
+                        binding.reccivedMyntsTv.toVisible()
+                    }
+                }else{
+                    binding.reccivedMyntsTv.toVisible()
+                }
+
                 binding.reedemBtn.toVisible()
             }
             GiftCardDetailsFragmentVM.GiftCardDetailsEvent.VoucherValueCopyEvent -> {
