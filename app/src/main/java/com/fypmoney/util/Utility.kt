@@ -331,7 +331,7 @@ object Utility {
         )
         if (isDateOfBirth) {
             datePickerDialog.datePicker.maxDate =
-                (System.currentTimeMillis() - 347039786000)//11 years //Todo
+                (System.currentTimeMillis() - 347039786000)//11 years
             datePickerDialog.datePicker.minDate = (System.currentTimeMillis() - 2208984820000)//70
 
         } else {
@@ -377,7 +377,7 @@ object Utility {
         )
         if (isDateOfBirth) {
             datePickerDialog.datePicker.maxDate =
-                (System.currentTimeMillis() - 347039786000)//11 years //Todo
+                (System.currentTimeMillis() - 347039786000)//11 years
             datePickerDialog.datePicker.minDate = (System.currentTimeMillis() - 2208984820000)//70
 
         } else {
@@ -439,13 +439,7 @@ object Utility {
             datePickerDialog.datePicker.minDate = cal.time.time
         }
 
-//        if(isDateOfBirth){
-//            datePickerDialog?.datePicker!!.maxDate = (System.currentTimeMillis() - 347039786000)//11 years //Todo
-//            datePickerDialog?.datePicker.minDate = (System.currentTimeMillis() - 2208984820000)//70
-//
-//        }else{
-//            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
-//        }
+
         datePickerDialog.show()
 
     }
@@ -936,6 +930,27 @@ object Utility {
             val input = SimpleDateFormat(inputFormat, Locale.getDefault())
             val output = SimpleDateFormat(outputFormat, Locale.getDefault())
 
+            var d: Date? = null
+            try {
+                d = input.parse(dateTime)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            output.format(d)
+        } else {
+            ""
+        }
+    }
+    fun parseDateTimeWithPlusFiveThirty(
+        dateTime: String? = null,
+        inputFormat: String? = AppConstants.SERVER_DATE_TIME_FORMAT1,
+        outputFormat: String? = AppConstants.CHANGED_DATE_TIME_FORMAT1
+    ): String {
+        return if (dateTime != null) {
+            val input = SimpleDateFormat(inputFormat, Locale.getDefault())
+            input.timeZone = TimeZone.getTimeZone("UTC");
+            val output = SimpleDateFormat(outputFormat, Locale.getDefault())
+            output.timeZone = TimeZone.getTimeZone("Asia/Kolkata")
             var d: Date? = null
             try {
                 d = input.parse(dateTime)

@@ -33,7 +33,6 @@
                     android:layout_width="wrap_content"
                     android:visibility="gone"
                     android:id="@+id/empty_screen"
-
                     android:orientation="vertical"
                     android:layout_gravity="center_horizontal"
                     android:layout_height="wrap_content">
@@ -47,7 +46,6 @@
                         android:layout_marginEnd="@dimen/_4sdp"
                         android:layout_marginTop="@dimen/_16sdp"
                         android:background="@drawable/round_dark_grey_rewards_18"
-
                         android:paddingTop="5dp"
                         android:paddingBottom="5dp">
 

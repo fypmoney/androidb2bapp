@@ -143,10 +143,10 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
                 binding.voucherPinCl.toGone()
             }
             endDate?.let {
-                binding.voucherValidityValueTv.text = Utility.parseDateTime(
+                binding.voucherValidityValueTv.text = Utility.parseDateTimeWithPlusFiveThirty(
                     it,
                     inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
-                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT9
+                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT8
                 )
             }?: kotlin.run {
                 binding.voucherValidtyCl.toGone()
@@ -216,10 +216,10 @@ class GiftCardDetailsFragment : BaseFragment<FragmentGiftCardDetailsBinding, Gif
                                 "\n" +
                                 "Voucher PIN: ${it.giftCardDetails.voucherPin}" +
                                 "\n" +
-                                "Validity: ${Utility.parseDateTime(
+                                "Validity: ${Utility.parseDateTimeWithPlusFiveThirty(
                                     it.giftCardDetails.endDate,
                                     inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
-                                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT9
+                                    outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT8
                                 )}" +
                                 "\n" +
                                 "Terms and Conditions: ${it.giftCardDetails.tncLink}" +

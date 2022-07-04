@@ -72,7 +72,7 @@ class CreateGiftCardPaymentProcessingFragment : BaseFragment<FragmentCreateGiftC
             is CreateGiftCardPaymentProcessingFragmentVM.CreateGiftCardPaymentProcessingState.UpdateText -> {
                 binding.titleTv.text = it.title
             }
-            null -> TODO()
+            null -> {}
         }
     }
 
@@ -81,7 +81,7 @@ class CreateGiftCardPaymentProcessingFragment : BaseFragment<FragmentCreateGiftC
             is CreateGiftCardPaymentProcessingFragmentVM.CreateGiftCardPaymentProcessingEvent.NavigateToStatusScreen -> {
                 findNavController().navigate(CreateGiftCardPaymentProcessingFragmentDirections.actionCreateGiftCardPaymentProcessingToPurchasedGiftCardPaymentSuccess(it.purchasedGiftCardStatusUiModel))
             }
-            null -> TODO()
+            null -> {}
         }
     }
 

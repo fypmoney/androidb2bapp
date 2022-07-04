@@ -154,7 +154,9 @@ class PayToContactsActivity : BaseActivity<ActivityPayToContactsBinding, PayToCo
             PayToContactsActivityVM.PayToContactsState.HideBalanceView -> {
                 payToContactsBinding.avilableBalanceCl.toGone()
             }
-            null -> TODO()
+            null -> {
+
+            }
             PayToContactsActivityVM.PayToContactsState.ShowBalanceView -> {
                 payToContactsBinding.avilableBalanceCl.toVisible()
             }

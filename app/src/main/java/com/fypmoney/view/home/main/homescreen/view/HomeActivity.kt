@@ -199,7 +199,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
             HomeActivityVM.HomeActivityEvent.GiftVoucherHistoryClicked -> {
                 findNavController(R.id.nav_host_fragment_activity_home).navigate(R.id.navigation_gift_card_history)
             }
-            null -> TODO()
+            null -> {
+
+            }
         }
     }
 

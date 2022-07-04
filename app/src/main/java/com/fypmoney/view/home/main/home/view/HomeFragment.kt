@@ -289,7 +289,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 }
 
             }
-            null -> TODO()
+            null -> {
+
+            }
         }
     }
 
@@ -689,7 +691,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     }
 
     override fun onFeedClick(position: Int, feedDetails: SectionContentItem) {
-        TODO("Not yet implemented")
+
     }
 
 

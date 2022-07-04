@@ -157,7 +157,7 @@ data class PurchasedGiftCardItemUiModel(
                 brandLogo = giftCardHistoryItem.brandLogo,
                 giftCardId = giftCardHistoryItem.id,
                 giftCardReceivedPurchasedType = getGiftCardReceivedPurchaseType(context,giftCardHistoryItem),
-                validityDate = Utility.parseDateTime(
+                validityDate = Utility.parseDateTimeWithPlusFiveThirty(
                     giftCardHistoryItem.issueDate,
                     inputFormat = AppConstants.SERVER_DATE_TIME_FORMAT1,
                     outputFormat = AppConstants.CHANGED_DATE_TIME_FORMAT9

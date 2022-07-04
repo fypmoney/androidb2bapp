@@ -113,7 +113,7 @@ class CreateGiftCardPaymentStatusFragment : BaseFragment<FragmentCreateGiftCardP
                     binding.continueBtn.toGone()
                 }
              }
-            null -> TODO()
+            null -> {}
         }
     }
     private fun handelEvent(it: CreateGiftCardPaymentStatusFragmentVM.CreateGiftCardPaymentSuccessEvent?) {
@@ -124,7 +124,7 @@ class CreateGiftCardPaymentStatusFragment : BaseFragment<FragmentCreateGiftCardP
             CreateGiftCardPaymentStatusFragmentVM.CreateGiftCardPaymentSuccessEvent.NavigateToHome -> {
                 findNavController().navigate(CreateGiftCardPaymentStatusFragmentDirections.navigationPurchasedGiftCardPaymentSuccessToHome())
             }
-            null -> TODO()
+            null -> {}
         }
     }
 
