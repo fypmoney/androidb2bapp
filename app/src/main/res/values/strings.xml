@@ -1162,10 +1162,8 @@ Coming really soon!
     </string>
 
 
-
-
-
-    Download Fyp, India's leading payments app, trusted by 1 Mn+ teens and families: https://fypmoney.in/app
+    Download Fyp, India's leading payments app, trusted by 1 Mn+ teens and families:
+    https://fypmoney.in/app
     <string name="is_your_child_already_on_fyp_enter_their_registed_mobile_no">Is your child already on Fyp? Enter their registered mobile no.</string>
 
     <string name="search_for_plan_or_enter_amount">Search for plan or enter amount</string>
@@ -1210,8 +1208,6 @@ Coming really soon!
     <string name="keep_set_top_box_on_while_recharging">Keep set-top box on while recharging</string>
 
 
-
-
     <string name="add_money_1500">\u20B9 1500</string>
     <string name="add_money_2000">\u20B9 2000</string>
     <string name="know_more">Know More</string>
@@ -1239,5 +1235,10 @@ Coming really soon!
     <string name="amount_with_currency"> \u20B9 %1$s</string>
     <string name="search_contact">Search Contact</string>
     <string name="sending_money_to_other_fyp_users_is_temporarily_unavailable_we_re_working_hard_to_bring_it_back">Sending money to other Fyp users is temporarily unavailable.\n \n We\'re working hard to bring it back!</string>
+
+
+    //Arcade Games
+    <string name="daily_limit_over">Daily Limit Over</string>
+    <string name="more_rewards">More Rewards</string>
 
 </resources>

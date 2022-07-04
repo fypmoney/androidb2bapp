@@ -112,5 +112,7 @@
     <color name="recommanded_bg">#EFFFF2</color>
     <color name="yellow10">#FAC660</color>
 
+    <color name="back_surface_color">#262B32</color>
+
 
 </resources>

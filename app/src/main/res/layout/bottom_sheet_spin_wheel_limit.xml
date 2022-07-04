@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_mat_black"
+        android:paddingStart="@dimen/screenMarginLeft"
+        android:paddingEnd="@dimen/screenMarginRight"
+        android:paddingBottom="24dp">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="48dp"
+            android:layout_height="6dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/curved_background10"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/hard_text_daily_limit_over"
+            style="@style/TextviewBold"
+            android:layout_width="wrap_content"
+            android:layout_below="@+id/view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="28dp"
+            android:text="@string/daily_limit_over"
+            android:textAlignment="center"
+            android:textColor="@color/text_grey"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/bottom_sheet_fix_image_disappointed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hard_text_daily_limit_over"
+            app:srcCompat="@drawable/disappointed_emoji_face" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/spin_wheel_limit_continue"
+            style="@style/TextviewBold"
+            android:layout_width="wrap_content"
+            android:padding="6dp"
+            android:text="@string/continue_string"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnMoreRewards"
+            app:layout_constraintEnd_toEndOf="@id/guideline_bottom_spin_separation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnMoreRewards" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_bottom_spin_separation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMoreRewards"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/button_bottom_spin_wheel_back"
+            android:fontFamily="@font/product_sans_bold"
+            android:padding="4dp"
+            android:text="@string/more_rewards"
+            android:textAllCaps="false"
+            android:textColor="@color/text_color_dark"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/guideline_bottom_spin_separation"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_fix_image_disappointed" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
