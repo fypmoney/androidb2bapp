@@ -1,4 +1,4 @@
-package com.fypmoney.view.arcadegames
+package com.fypmoney.view.arcadegames.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

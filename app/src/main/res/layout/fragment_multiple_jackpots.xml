@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.arcadegames.MultipleJackpotsFragment">
+    tools:context=".view.arcadegames.ui.MultipleJackpotsFragment">
 
     <data>
 
@@ -16,7 +16,6 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,97 +25,130 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    app:layout_constraintStart_toStartOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent">-->
-
-
-<!--                    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:backgroundTint="@color/grey">-->
-
-<!--                        <androidx.appcompat.widget.AppCompatImageView-->
-<!--                            android:id="@+id/fix_multiple_mynt"-->
-<!--                            android:layout_width="24dp"-->
-<!--                            android:layout_height="24dp"-->
-<!--                            app:srcCompat="@drawable/mynt"-->
-<!--                            app:layout_constraintStart_toStartOf="parent"-->
-<!--                            app:layout_constraintTop_toTopOf="parent"-->
-<!--                            app:layout_constraintBottom_toBottomOf="parent"/>-->
-
-<!--                        <androidx.appcompat.widget.AppCompatTextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:text="@string/dummy_amount"-->
-<!--                            android:textColor="@color/color_dark_yellow"-->
-<!--                            android:textSize="18sp"-->
-<!--                            android:textStyle="bold"-->
-<!--                            android:layout_marginStart="12dp"-->
-<!--                            app:layout_constraintTop_toTopOf="@id/fix_multiple_mynt"-->
-<!--                            app:layout_constraintBottom_toBottomOf="@id/fix_multiple_mynt"-->
-<!--                            app:layout_constraintStart_toEndOf="@+id/fix_multiple_mynt"/>-->
-
-<!--                    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-<!--                </LinearLayout>-->
-
-                <com.google.android.material.chip.ChipGroup
-                    android:id="@+id/chip_group_multiple_jackpots"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:id="@+id/multiple_jackpot_linear_chip_container"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.google.android.material.chip.Chip
-                        style="@style/Widget.MaterialComponents.Chip.Action"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/product_sans_bold"
-                        android:text="@string/dummy_amount"
-                        android:textColor="@color/color_dark_yellow"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:chipMinHeight="@dimen/_28sdp"
-                        app:chipStartPadding="12dp"
-                        android:paddingTop="12dp"
-                        app:chipEndPadding="12dp"
-                        app:chipIconSize="16dp"
-                        app:chipBackgroundColor="@color/back_surface_color"
-                        app:chipIcon="@drawable/mynt" />
+                        android:background="@drawable/curved_background_chip_back"
+                        android:paddingStart="12dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="10dp">
 
-                    <com.google.android.material.chip.Chip
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/multiple_mynt_logo"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/mynt" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/multiple_jackpots_mynts_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/dummy_amount"
+                            android:textColor="@color/color_dark_yellow"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/multiple_mynt_logo"
+                            app:layout_constraintStart_toEndOf="@+id/multiple_mynt_logo"
+                            app:layout_constraintTop_toTopOf="@id/multiple_mynt_logo" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/product_sans_bold"
-                        android:text="@string/dummy_amount"
-                        android:textColor="@color/color_dark_yellow"
-                        android:textSize="18sp"
-                        app:chipMinHeight="@dimen/_28sdp"
-                        app:chipIconSize="28dp"
-                        android:textStyle="bold"
-                        app:chipBackgroundColor="@color/back_surface_color"
-                        app:chipIcon="@drawable/ticket" />
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/curved_background_chip_back"
+                        android:paddingStart="12dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="10dp">
 
-                    <com.google.android.material.chip.Chip
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/multiple_ticket_logo"
+                            android:layout_width="28dp"
+                            android:layout_height="24dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ticket" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/multiple_jackpots_tickets_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/dummy_amount"
+                            android:textColor="@color/yellow10"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/multiple_ticket_logo"
+                            app:layout_constraintStart_toEndOf="@+id/multiple_ticket_logo"
+                            app:layout_constraintTop_toTopOf="@id/multiple_ticket_logo" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/product_sans_bold"
-                        android:text="@string/dummy_amount1"
-                        android:textColor="@color/color_dark_yellow"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        app:chipMinHeight="@dimen/_28sdp"
-                        app:chipIconSize="@dimen/dp16"
-                        app:chipBackgroundColor="@color/back_surface_color"
-                        app:chipIcon="@drawable/cash" />
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/curved_background_chip_back"
+                        android:paddingStart="12dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="12dp"
+                        android:paddingBottom="10dp">
 
-                </com.google.android.material.chip.ChipGroup>
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/multiple_cash_logo"
+                            android:layout_width="28dp"
+                            android:layout_height="24dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/cash" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/multiple_jackpots_cash_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/dummy_amount1"
+                            android:textColor="@color/green_winnings"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="@id/multiple_cash_logo"
+                            app:layout_constraintStart_toEndOf="@+id/multiple_cash_logo"
+                            app:layout_constraintTop_toTopOf="@id/multiple_cash_logo" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_multiple_jackpots"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="18dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/multiple_jackpot_linear_chip_container" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

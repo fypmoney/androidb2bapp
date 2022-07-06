@@ -611,5 +611,20 @@
             app:popUpToInclusive="false"/>
 
     </fragment>
+    <fragment
+        android:id="@+id/spinWheelFragment"
+        android:name="com.fypmoney.view.arcadegames.ui.SpinWheelFragment"
+        android:label="fragment_spin_wheel"
+        tools:layout="@layout/fragment_spin_wheel" />
+    <fragment
+        android:id="@+id/multipleJackpotsFragment"
+        android:name="com.fypmoney.view.arcadegames.ui.MultipleJackpotsFragment"
+        android:label="fragment_multiple_jackpots"
+        tools:layout="@layout/fragment_multiple_jackpots" />
+    <fragment
+        android:id="@+id/rotatingTreasureFragment"
+        android:name="com.fypmoney.view.arcadegames.ui.RotatingTreasureFragment"
+        android:label="fragment_rotating_treasure"
+        tools:layout="@layout/fragment_rotating_treasure" />
 
 </navigation>

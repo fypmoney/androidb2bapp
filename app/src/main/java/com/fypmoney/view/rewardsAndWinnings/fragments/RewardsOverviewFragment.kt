@@ -164,7 +164,8 @@ class RewardsOverviewFragment() :
         mViewBinding?.goldenCardLayout?.setOnClickListener {
 
             //tabchangeListner.tabchange(0, getString(R.string.jackpot))
-            findNavController().navigate(R.id.navigation_jackpot)
+//            findNavController().navigate(R.id.navigation_jackpot)
+            findNavController().navigate(R.id.spinWheelFragment)
 
         }
 

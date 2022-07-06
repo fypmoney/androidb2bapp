@@ -49,7 +49,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/hard_text_daily_limit_over"
-            app:srcCompat="@drawable/disappointed_emoji_face" />
+            app:srcCompat="@drawable/ic_disappointed_emoji_face_new" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/bottom_sheet_fix_image_disappointed_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_fix_image_disappointed"
+            app:srcCompat="@drawable/ellipse" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/spin_wheel_limit_continue"
@@ -59,10 +69,10 @@
             android:text="@string/continue_string"
             android:textColor="@color/white"
             android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/btnMoreRewards"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_more_rewards"
             app:layout_constraintEnd_toEndOf="@id/guideline_bottom_spin_separation"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/btnMoreRewards" />
+            app:layout_constraintTop_toTopOf="@+id/btn_more_rewards" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_bottom_spin_separation"
@@ -72,21 +82,21 @@
             app:layout_constraintGuide_percent="0.5" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnMoreRewards"
+            android:id="@+id/btn_more_rewards"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="36dp"
             android:background="@drawable/button_bottom_spin_wheel_back"
             android:fontFamily="@font/product_sans_bold"
-            android:padding="4dp"
+            android:padding="8dp"
             android:text="@string/more_rewards"
             android:textAllCaps="false"
-            android:textColor="@color/text_color_dark"
+            android:textColor="#333333"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline_bottom_spin_separation"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_fix_image_disappointed" />
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_fix_image_disappointed_bottom" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

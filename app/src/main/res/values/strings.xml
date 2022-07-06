@@ -1240,5 +1240,13 @@ Coming really soon!
     //Arcade Games
     <string name="daily_limit_over">Daily Limit Over</string>
     <string name="more_rewards">More Rewards</string>
+    <string name="win">Win</string>
+    <string name="super_jackpot">Super Jackpot</string>
+    <string name="zerbonics_projector">ZERBONICS Projector</string>
+    <string name="_10_10_attempts_left">10/10 Attempts Left</string>
+    <string name="play_now">Play Now</string>
+    <string name="_100_mynts">100 Mynts</string>
+    <string name="product_name">Portonics - Muffs-A wireless Headphones.</string>
+    <string name="ticket_duration">From : June 02 - July 01</string>
 
 </resources>
