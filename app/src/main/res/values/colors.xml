@@ -111,6 +111,9 @@
     <color name="gery11">#B1B3B6</color>
     <color name="recommanded_bg">#EFFFF2</color>
     <color name="yellow10">#FAC660</color>
-
+    <color name="orange11">#FFDA9C</color>
+    <color name="black10">#333333</color>
+    <color name="black11">#0E141C</color>
+    <color name="sky1">#A7E5FF</color>
 
 </resources>

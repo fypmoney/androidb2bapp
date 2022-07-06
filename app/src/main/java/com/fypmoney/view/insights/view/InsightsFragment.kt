@@ -7,7 +7,7 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentInsightsBinding
-import com.fypmoney.view.insights.viewholder.InsightsFragmentVM
+import com.fypmoney.view.insights.viewmodel.InsightsFragmentVM
 
 class InsightsFragment : BaseFragment<FragmentInsightsBinding,InsightsFragmentVM>() {
 

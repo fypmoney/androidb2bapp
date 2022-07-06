@@ -1239,5 +1239,12 @@ Coming really soon!
     <string name="amount_with_currency"> \u20B9 %1$s</string>
     <string name="search_contact">Search Contact</string>
     <string name="sending_money_to_other_fyp_users_is_temporarily_unavailable_we_re_working_hard_to_bring_it_back">Sending money to other Fyp users is temporarily unavailable.\n \n We\'re working hard to bring it back!</string>
+    <string name="insights">Insights</string>
+    <string name="total_spends">Total Spends</string>
+    <string name="total_income">Total Income</string>
+    <string name="show_transaction_history">Show transaction history</string>
+    <string name="spends">Spends</string>
+    <string name="income">Income</string>
+    <string name="do_your_first_transaction">Do your first transaction!</string>
 
 </resources>

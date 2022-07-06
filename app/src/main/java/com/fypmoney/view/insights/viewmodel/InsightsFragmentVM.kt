@@ -1,4 +1,4 @@
-package com.fypmoney.view.insights.viewholder
+package com.fypmoney.view.insights.viewmodel
 
 import android.app.Application
 import com.fypmoney.base.BaseViewModel

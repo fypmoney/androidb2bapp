@@ -91,22 +91,24 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.transactionHistoryAiv.toGone()
                     binding.myProfileIv.toVisible()
                     binding.toolbarTitleTv.toVisible()
+                    binding.insightsFilterIv.toGone()
                     showToolbar()
                     showBottomNavigation()
                 }
-                R.id.navigation_fyper -> {
+                R.id.navigation_insights -> {
                     trackr {
-                        it.name = TrackrEvent.tab_family_click
+                        it.name = TrackrEvent.tab_insights_click
                     }
-                    binding.bottomMenu.setItemSelected(R.id.navigation_fyper, true)
+                    binding.bottomMenu.setItemSelected(R.id.navigation_insights, true)
 
-                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.white))
-                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.black))
-                    homeActivityVM.toolbarTitle.value = getString(R.string.fyper_txt)
-                    binding.help.toVisible()
-                    binding.framne.toVisible()
+                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.bgcolor))
+                    binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
+                    homeActivityVM.toolbarTitle.value = getString(R.string.insights)
+                    binding.help.toGone()
+                    binding.framne.toGone()
                     binding.transactionHistoryAiv.toGone()
                     binding.myProfileIv.toGone()
+                    binding.insightsFilterIv.toVisible()
                     showToolbar()
                     showBottomNavigation()
                 }
@@ -121,6 +123,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     homeActivityVM.toolbarTitle.value = getString(R.string.rewards)
                     binding.help.toGone()
                     binding.framne.toGone()
+                    binding.insightsFilterIv.toGone()
                     binding.transactionHistoryAiv.toVisible()
                     binding.myProfileIv.toGone()
                     showToolbar()
@@ -137,6 +140,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.help.toVisible()
                     binding.framne.toVisible()
                     binding.myProfileIv.toGone()
+                    binding.insightsFilterIv.toGone()
                     binding.transactionHistoryAiv.toGone()
                     showToolbar()
                     showBottomNavigation()

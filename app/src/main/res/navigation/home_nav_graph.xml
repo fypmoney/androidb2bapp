@@ -76,10 +76,20 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_insights"
+        android:name="com.fypmoney.view.insights.view.InsightsFragment"
+        android:label="@string/insights"
+        tools:layout="@layout/fragment_insights">
+
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_fyper"
         android:name="com.fypmoney.view.activity.FamilySettingsView"
         android:label="@string/fyper_txt"
         tools:layout="@layout/view_family_settings" />
+
+
     <fragment
         android:id="@+id/navigation_card"
         android:name="com.fypmoney.view.card.view.CardFragment"
