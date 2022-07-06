@@ -165,7 +165,7 @@ class RewardsOverviewFragment() :
 
             //tabchangeListner.tabchange(0, getString(R.string.jackpot))
 //            findNavController().navigate(R.id.navigation_jackpot)
-            findNavController().navigate(R.id.spinWheelFragment)
+            findNavController().navigate(R.id.navigation_spin_wheel)
 
         }
 

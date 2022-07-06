@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,8 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
-            app:cardBackgroundColor="@color/edit_text_bg"
-            app:cardCornerRadius="16dp"
+            app:cardBackgroundColor="@color/cardBackColor"
+            app:cardCornerRadius="14dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -35,12 +36,37 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/multiple_jackpot_product_image"
+                        android:id="@+id/ivMultipleJackpotProduct"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="8dp"
                         android:scaleType="centerInside"
                         app:srcCompat="@drawable/demo_product_image" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMultipleJackpotExpiredPath"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_minus2sdp"
+                        android:layout_marginBottom="@dimen/_minus1sdp"
+                        app:srcCompat="@drawable/ic_path_expired" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvExpiredProduct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:textColor="@color/textColorRed1"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:text="@string/expired"
+                        android:rotation="314"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </RelativeLayout>
 
@@ -51,7 +77,7 @@
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent="0.22" />
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_marginStart="8dp"
@@ -61,35 +87,39 @@
                     app:layout_constraintStart_toStartOf="@id/guideline"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/multiple_product_name"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvMultipleProductName"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
                         android:layout_marginTop="18dp"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:text="@string/product_name"
                         android:textColor="@color/white"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        app:fontFamily="@font/product_sans_bold" />
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/product_name" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/multiple_ticket_duration"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvMultipleTicketDuration"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
                         android:layout_marginTop="18dp"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="@string/ticket_duration"
                         android:textColor="@color/text_grey"
                         android:textSize="14sp"
                         android:textStyle="bold"
-                        app:fontFamily="@font/product_sans_regular" />
+                        app:fontFamily="@font/product_sans_regular"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvMultipleProductName"
+                        tools:text="@string/ticket_duration" />
 
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/guideline1"
@@ -98,7 +128,7 @@
                     android:orientation="vertical"
                     app:layout_constraintGuide_percent="0.8" />
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
@@ -107,23 +137,29 @@
                     app:layout_constraintStart_toStartOf="@id/guideline1"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/multiple_ticket_value"
-                        android:layout_width="wrap_content"
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvMultipleTicketValue"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:text="@string/dummy_amount"
+                        android:gravity="center_horizontal"
                         android:textColor="@color/yellow"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/dummy_amount" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/multiple_ticket_logo"
+                        android:id="@+id/ivMultipleTicket"
                         android:layout_width="28dp"
                         android:layout_height="24dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvMultipleTicketValue"
                         app:srcCompat="@drawable/ticket" />
 
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

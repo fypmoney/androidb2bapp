@@ -11,12 +11,13 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
 
-        <action android:id="@+id/action_home_to_section_explore"
+        <action
+            android:id="@+id/action_home_to_section_explore"
             app:destination="@+id/navigation_section_explore"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
 
         <action
             android:id="@+id/action_recharge_home"
@@ -24,7 +25,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
         <action
             android:id="@+id/action_navigation_home_to_navigation_card"
             app:destination="@id/navigation_card"
@@ -39,7 +40,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
     </fragment>
 
     <fragment
@@ -49,13 +50,13 @@
         tools:layout="@layout/fragment_explore">
 
 
-    <action
-        android:id="@+id/action_explore_section_explore"
-        app:destination="@+id/navigation_section_explore"
-        app:enterAnim="@anim/slide_in_right"
-        app:exitAnim="@anim/slide_out_left"
-        app:popEnterAnim="@anim/slide_in_left"
-        app:popExitAnim="@anim/slide_out_righ"/>
+        <action
+            android:id="@+id/action_explore_section_explore"
+            app:destination="@+id/navigation_section_explore"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
     </fragment>
 
     <fragment
@@ -70,7 +71,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
 
 
     </fragment>
@@ -89,7 +90,7 @@
         android:id="@+id/navigation_section_explore"
         android:name="com.fypmoney.view.home.main.explore.sectionexplore.SectionExploreFragment"
         android:label="@string/section_explore"
-        tools:layout="@layout/fragment_section_explore" >
+        tools:layout="@layout/fragment_section_explore">
         <argument
             android:name="sectionExploreItem"
             android:defaultValue="@null"
@@ -97,9 +98,8 @@
             app:nullable="true" />
         <argument
             android:name="sectionExploreName"
-            app:argType="string"
             android:defaultValue=""
-            />
+            app:argType="string" />
     </fragment>
 
     <fragment
@@ -140,7 +140,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
         <action
             android:id="@+id/action_enter_mobile_to_mobile_no_info_recharge"
             app:destination="@+id/navigation_mobile_number_info_recharge"
@@ -156,7 +156,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
 
         <action
             android:id="@+id/action_enter_mobile_number_recharge_to_section_explore"
@@ -216,7 +216,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
 
     </fragment>
 
@@ -249,7 +249,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
     </fragment>
 
 
@@ -272,7 +272,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
 
 
         <argument
@@ -320,7 +320,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
 
         <action
             android:id="@+id/action_recharge_screen"
@@ -329,8 +329,8 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/navigation_enter_mobile_number_recharge"/>
+            app:popUpTo="@id/navigation_enter_mobile_number_recharge"
+            app:popUpToInclusive="true" />
 
     </fragment>
 
@@ -356,7 +356,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
 
     </fragment>
 
@@ -393,14 +393,15 @@
             app:argType="string"
             app:nullable="true" />
 
-        <action android:id="@+id/navigate_from_payment_success_to_home"
+        <action
+            android:id="@+id/navigate_from_payment_success_to_home"
             app:destination="@id/navigation_home"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/navigation_home"/>
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -434,14 +435,15 @@
             app:argType="com.fypmoney.view.recharge.model.OperatorResponse"
             app:nullable="true" />
 
-        <action android:id="@+id/navigate_from_payment_success_to_home"
+        <action
+            android:id="@+id/navigate_from_payment_success_to_home"
             app:destination="@id/navigation_home"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/navigation_home"/>
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -494,7 +496,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
     </fragment>
 
     <fragment
@@ -508,7 +510,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
         <argument
             android:name="selectedOperator"
             android:defaultValue="@null"
@@ -556,9 +558,9 @@
             app:nullable="true" />
         <argument
             android:name="selectedCircle"
-            app:argType="string"
             android:defaultValue="@null"
-            app:nullable="true"  />
+            app:argType="string"
+            app:nullable="true" />
         <action
             android:id="@+id/action_to_operator_list"
             app:destination="@+id/navigation_select_operator_from_list"
@@ -601,30 +603,31 @@
             app:argType="string"
             app:nullable="false" />
 
-        <action android:id="@+id/navigate_from_payment_processing_to_payment_success"
+        <action
+            android:id="@+id/navigate_from_payment_processing_to_payment_success"
             app:destination="@id/navigation_recharge_success"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ"
             app:popUpTo="@id/navigation_home"
-            app:popUpToInclusive="false"/>
+            app:popUpToInclusive="false" />
 
     </fragment>
     <fragment
-        android:id="@+id/spinWheelFragment"
+        android:id="@+id/navigation_spin_wheel"
         android:name="com.fypmoney.view.arcadegames.ui.SpinWheelFragment"
-        android:label="fragment_spin_wheel"
+        android:label="Spin Wheel Screen"
         tools:layout="@layout/fragment_spin_wheel" />
     <fragment
-        android:id="@+id/multipleJackpotsFragment"
+        android:id="@+id/navigation_multiple_jackpots"
         android:name="com.fypmoney.view.arcadegames.ui.MultipleJackpotsFragment"
-        android:label="fragment_multiple_jackpots"
+        android:label="Multiple Jackpots Screen"
         tools:layout="@layout/fragment_multiple_jackpots" />
     <fragment
-        android:id="@+id/rotatingTreasureFragment"
+        android:id="@+id/navigation_rotating_treasure"
         android:name="com.fypmoney.view.arcadegames.ui.RotatingTreasureFragment"
-        android:label="fragment_rotating_treasure"
+        android:label="Rotating Treasure Screen"
         tools:layout="@layout/fragment_rotating_treasure" />
 
 </navigation>

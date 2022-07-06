@@ -51,15 +51,15 @@
             app:layout_constraintTop_toBottomOf="@+id/hard_text_daily_limit_over"
             app:srcCompat="@drawable/ic_disappointed_emoji_face_new" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/bottom_sheet_fix_image_disappointed_bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_fix_image_disappointed"
-            app:srcCompat="@drawable/ellipse" />
+<!--        <androidx.appcompat.widget.AppCompatImageView-->
+<!--            android:id="@+id/bottom_sheet_fix_image_disappointed_bottom"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_gravity="center"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_fix_image_disappointed"-->
+<!--            app:srcCompat="@drawable/ellipse" />-->
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/spin_wheel_limit_continue"
@@ -86,7 +86,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="26dp"
             android:background="@drawable/button_bottom_spin_wheel_back"
             android:fontFamily="@font/product_sans_bold"
             android:padding="8dp"
@@ -96,7 +96,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline_bottom_spin_separation"
-            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_fix_image_disappointed_bottom" />
+            app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_fix_image_disappointed" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

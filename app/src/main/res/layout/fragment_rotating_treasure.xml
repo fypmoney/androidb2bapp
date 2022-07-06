@@ -25,9 +25,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:id="@+id/rotating_linear_chip_container"
-                    android:layout_width="match_parent"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/containerRotatingChips"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:gravity="center_horizontal"
@@ -37,39 +37,47 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipMyntsView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/curved_background_chip_back"
                         android:paddingStart="12dp"
                         android:paddingTop="10dp"
                         android:paddingEnd="12dp"
-                        android:paddingBottom="10dp">
+                        android:paddingBottom="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/rotating_mynt_logo"
+                            android:id="@+id/ivRotatingMynts"
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:layout_marginStart="6dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/mynt" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/rotating_mynts_count"
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvRotatingMyntsCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:text="@string/dummy_amount"
+                            android:layout_marginEnd="6dp"
                             android:textColor="@color/color_dark_yellow"
                             android:textSize="18sp"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@id/rotating_mynt_logo"
-                            app:layout_constraintStart_toEndOf="@+id/rotating_mynt_logo"
-                            app:layout_constraintTop_toTopOf="@id/rotating_mynt_logo" />
+                            app:layout_constraintBottom_toBottomOf="@id/ivRotatingMynts"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/ivRotatingMynts"
+                            app:layout_constraintTop_toTopOf="@id/ivRotatingMynts"
+                            tools:text="@string/dummy_amount" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/chipTicketView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
@@ -77,29 +85,35 @@
                         android:paddingStart="12dp"
                         android:paddingTop="10dp"
                         android:paddingEnd="12dp"
-                        android:paddingBottom="10dp">
+                        android:paddingBottom="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/multiple_ticket_logo"
+                            android:id="@+id/ivRotatingTicket"
                             android:layout_width="28dp"
                             android:layout_height="24dp"
+                            android:layout_marginStart="6dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/ticket" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/rotating_tickets_count"
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvRotatingTicketsCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:text="@string/dummy_amount"
+                            android:layout_marginEnd="6dp"
                             android:textColor="@color/yellow10"
                             android:textSize="18sp"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@id/multiple_ticket_logo"
-                            app:layout_constraintStart_toEndOf="@+id/multiple_ticket_logo"
-                            app:layout_constraintTop_toTopOf="@id/multiple_ticket_logo" />
+                            app:layout_constraintBottom_toBottomOf="@id/ivRotatingTicket"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/ivRotatingTicket"
+                            app:layout_constraintTop_toTopOf="@id/ivRotatingTicket"
+                            tools:text="@string/dummy_amount" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -111,36 +125,42 @@
                         android:paddingStart="12dp"
                         android:paddingTop="10dp"
                         android:paddingEnd="12dp"
-                        android:paddingBottom="10dp">
+                        android:paddingBottom="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/chipTicketView"
+                        app:layout_constraintTop_toTopOf="parent">
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/multiple_cash_logo"
+                            android:id="@+id/ivRotatingCash"
                             android:layout_width="28dp"
                             android:layout_height="24dp"
+                            android:layout_marginStart="6dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/cash" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/rotating_cash_count"
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvRotatingCashCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
-                            android:text="@string/dummy_amount1"
+                            android:layout_marginEnd="6dp"
                             android:textColor="@color/green_winnings"
                             android:textSize="18sp"
                             android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@id/multiple_cash_logo"
-                            app:layout_constraintStart_toEndOf="@+id/multiple_cash_logo"
-                            app:layout_constraintTop_toTopOf="@id/multiple_cash_logo" />
+                            app:layout_constraintBottom_toBottomOf="@id/ivRotatingCash"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/ivRotatingCash"
+                            app:layout_constraintTop_toTopOf="@id/ivRotatingCash"
+                            tools:text="@string/dummy_amount1" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card_super_jackpot"
+                    android:id="@+id/cvJackpot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
@@ -150,17 +170,17 @@
                     app:cardCornerRadius="18dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rotating_linear_chip_container">
+                    app:layout_constraintTop_toBottomOf="@+id/containerRotatingChips">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/view_cons_rotating_treasure_banner"
+                        android:id="@+id/containerRotatingDefaultBanner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/ic_ellipse_back"
                         android:visibility="visible">
 
                         <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/image_banner_rotating_treasures"
+                            android:id="@+id/ivBannerRotatingTreasures"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="center"
@@ -175,7 +195,7 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/view_pager_treasury_box"
+                    android:id="@+id/vpTreasuryBox"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="24dp"
@@ -185,22 +205,22 @@
                     android:paddingBottom="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/card_super_jackpot" />
+                    app:layout_constraintTop_toBottomOf="@+id/cvJackpot" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/text_rotating_attempts_left"
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvRotatingAttemptsLeft"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
                     android:fontFamily="@font/product_sans_regular"
-                    android:text="@string/_10_10_attempts_left"
+                    tools:text="@string/attempts_left"
                     android:textColor="@color/text_body_grey"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view_pager_treasury_box" />
+                    app:layout_constraintTop_toBottomOf="@+id/vpTreasuryBox" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_play_now"
+                    android:id="@+id/btnPlayNow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -217,7 +237,8 @@
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_rotating_attempts_left" />
+                    app:layout_constraintTop_toBottomOf="@+id/tvRotatingAttemptsLeft" />
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
@@ -232,29 +253,32 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btn_play_now">
+                    app:layout_constraintTop_toBottomOf="@+id/btnPlayNow">
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/mynt_required_logo"
+                        android:id="@+id/ivMyntsRequired"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:layout_marginStart="6dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/mynt" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/rotating_burn_mynts_count"
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvRotatingBurnMyntsCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="@string/dummy_amount"
+                        android:layout_marginEnd="6dp"
                         android:textColor="@color/color_dark_yellow"
                         android:textSize="16sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/mynt_required_logo"
-                        app:layout_constraintStart_toEndOf="@+id/mynt_required_logo"
-                        app:layout_constraintTop_toTopOf="@id/mynt_required_logo" />
+                        app:layout_constraintBottom_toBottomOf="@id/ivMyntsRequired"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ivMyntsRequired"
+                        app:layout_constraintTop_toTopOf="@id/ivMyntsRequired"
+                        tools:text="@string/dummy_amount" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
