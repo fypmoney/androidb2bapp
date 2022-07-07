@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cvSpendsAndIncome"
+        android:layout_width="170dp"
+        android:layout_height="150dp"
+        app:cardCornerRadius="18dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true"
+        tools:cardBackgroundColor="#EFCD85"
+        android:layout_marginHorizontal="@dimen/dp16"
+        app:contentPadding="10dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCategorey"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@drawable/ic_birthdate" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvCategoryName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextviewBold"
+                android:textSize="18sp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/black10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivCategorey"
+                tools:text="General" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/TextviewRegular"
+                android:textSize="14sp"
+                android:maxLength="15"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:gravity="start"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/black10"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/cpiIncomeSpendsPercentage"
+                app:layout_constraintTop_toTopOf="@+id/cpiIncomeSpendsPercentage"
+                app:layout_constraintBottom_toBottomOf="@+id/cpiIncomeSpendsPercentage"
+                tools:text="-₹ 1,00,00000" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/cpiIncomeSpendsPercentage"
+                android:layout_width="@dimen/dp30"
+                android:layout_height="@dimen/dp30"
+                android:indeterminate="false"
+                app:indicatorColor="#FFAD00"
+                app:indicatorSize="@dimen/dp30"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:indicatorDirectionCircular="clockwise"
+                app:trackCornerRadius="@dimen/dp18"
+                android:progress="70"
+                app:trackColor="@color/white"
+                app:trackThickness="2dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvPercentage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/TextviewRegular"
+                android:textSize="8sp"
+                android:textColor="@color/black10"
+                app:layout_constraintStart_toStartOf="@+id/cpiIncomeSpendsPercentage"
+                app:layout_constraintEnd_toEndOf="@+id/cpiIncomeSpendsPercentage"
+                app:layout_constraintTop_toTopOf="@+id/cpiIncomeSpendsPercentage"
+                app:layout_constraintBottom_toBottomOf="@+id/cpiIncomeSpendsPercentage"
+                tools:text="100%" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
