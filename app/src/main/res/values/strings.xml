@@ -1280,5 +1280,9 @@ Coming really soon!
     <string name="success">Success</string>
     <string name="failed">Failed</string>
     <string name="gift_card_history">Gift Card History</string>
-
+    <string name="add_via_upi_id">Add via UPI ID</string>
+    <string name="your_upi_id">Your UPI ID</string>
+    <string name="no_payment_mode_is_available_right_now_n_please_try_again_later">No payment mode is available right now. \n Please try again later</string>
+    <string name="global_alert">Global Alert</string>
+    <string name="instruction_on_static_qr">"Receive money using any UPI Apps.\nThis ID can only be used for adding money!\n \nMinimum: ₹10 | Maximum: ₹%1$s</string>
 </resources>

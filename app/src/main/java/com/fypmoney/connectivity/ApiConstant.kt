@@ -183,7 +183,7 @@ object ApiConstant {
 
     const val API_BRAND_DETAILS = "services/PockketService/api/product/"
     const val API_GIFT_CARD_DETAILS = "/services/PockketService/api/voucher-order-detail/"
-
+    const val API_BANK_DETAILS = "/services/PockketService/api/bank-details"
 }
 
 

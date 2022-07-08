@@ -202,6 +202,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
             null -> {
 
             }
+            is HomeActivityVM.HomeActivityEvent.ShowServerIsUnderMaintenance -> {
+                findNavController(R.id.nav_host_fragment_activity_home).navigate(R.id.navigation_global_alert)
+            }
         }
     }
 
@@ -263,7 +266,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
     }
 
     override fun onBackPressed() {
-        if (getCurrentBottomFragment() !is HomeFragment) {
+        if(navController!!.currentDestination!!.id==R.id.navigation_global_alert){
+            finish()
+            return
+        }
+        else if (getCurrentBottomFragment() !is HomeFragment) {
             super.onBackPressed()
             return
         }
@@ -307,4 +314,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
             homeActivityVM.postLatlong("$latitude", "$Longitude", it)
         }
     }
+
+
 }

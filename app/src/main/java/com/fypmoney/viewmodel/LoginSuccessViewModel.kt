@@ -59,7 +59,9 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
             "ADD_MONEY_VIDEO",
             "SHOW_RECHARGE_SCREEN",
             "ADD_MONEY_VIDEO_NEW",
-            "IS_GIFT_CARD_IS_AVAILABLE"
+            "IS_GIFT_CARD_IS_AVAILABLE",
+            "SERVER_IS_UNDER_MAINTENANCE",
+            "SERVER_MAINTENANCE_DESCRIPTION"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -284,6 +286,20 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_SHOW_MY_ORDERS,
+                                    it.value
+                                )
+                            }
+                            AppConstants.SERVER_IS_UNDER_MAINTENANCE ->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SERVER_IS_UNDER_MAINTENANCE,
+                                    it.value
+                                )
+                            }
+                            AppConstants.SERVER_MAINTENANCE_DESCRIPTION ->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SERVER_MAINTENANCE_DESCRIPTION,
                                     it.value
                                 )
                             }
