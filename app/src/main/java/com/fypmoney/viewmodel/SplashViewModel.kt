@@ -34,6 +34,8 @@ import com.fypmoney.util.AppConstants.REFER_LINE1
 import com.fypmoney.util.AppConstants.REFER_LINE2
 import com.fypmoney.util.AppConstants.REFER_MSG_SHARED_1
 import com.fypmoney.util.AppConstants.REFER_MSG_SHARED_2
+import com.fypmoney.util.AppConstants.SERVER_IS_UNDER_MAINTENANCE
+import com.fypmoney.util.AppConstants.SERVER_MAINTENANCE_DESCRIPTION
 import com.fypmoney.util.AppConstants.SHOW_RECHARGE_SCREEN
 import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.SharedPrefUtils.Companion.SF_KEY_APP_VERSION_CODE
@@ -173,7 +175,9 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
             "ADD_MONEY_VIDEO",
             "SHOW_RECHARGE_SCREEN",
             "ADD_MONEY_VIDEO_NEW",
-            "IS_GIFT_CARD_AVAILABLE"
+            "IS_GIFT_CARD_AVAILABLE",
+            "SERVER_IS_UNDER_MAINTENANCE",
+            "SERVER_MAINTENANCE_DESCRIPTION"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -374,6 +378,20 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_SHOW_MY_ORDERS,
+                                    it.value
+                                )
+                            }
+                            SERVER_IS_UNDER_MAINTENANCE->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SERVER_IS_UNDER_MAINTENANCE,
+                                    it.value
+                                )
+                            }
+                            SERVER_MAINTENANCE_DESCRIPTION->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_SERVER_MAINTENANCE_DESCRIPTION,
                                     it.value
                                 )
                             }

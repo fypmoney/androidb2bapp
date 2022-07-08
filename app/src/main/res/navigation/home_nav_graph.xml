@@ -40,6 +40,15 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ"/>
+
+        <action
+            android:id="@+id/action_home_to_global_alert"
+            app:destination="@+id/navigation_global_alert"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:launchSingleTop="true"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ" />
     </fragment>
 
     <fragment
@@ -747,6 +756,14 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_global_alert"
+        android:name="com.fypmoney.view.home.main.homescreen.view.GlobalAlertFragment"
+        android:label="@string/global_alert"
+        tools:layout="@layout/fragment_global_alert">
 
     </fragment>
 
