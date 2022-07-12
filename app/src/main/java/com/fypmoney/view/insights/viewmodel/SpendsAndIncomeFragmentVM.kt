@@ -1,4 +1,4 @@
-package com.fypmoney.view.insights.view
+package com.fypmoney.view.insights.viewmodel
 
 import androidx.lifecycle.ViewModel
 
