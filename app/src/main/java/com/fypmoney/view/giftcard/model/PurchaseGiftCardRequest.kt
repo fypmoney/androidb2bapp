@@ -1,5 +1,8 @@
 package com.fypmoney.view.giftcard.model
 
+import androidx.annotation.Keep
+
+@Keep
 data class PurchaseGiftCardRequest(
     var destinationMobileNo: String? = null,
     var destinationName: String? = null,
@@ -9,7 +12,7 @@ data class PurchaseGiftCardRequest(
     var giftedPerson: String? = null
 )
 
-
+@Keep
 data class VoucherDetailsItem(
     var voucherProductId: String,
     var amount: String
