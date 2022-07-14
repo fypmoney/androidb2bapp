@@ -61,7 +61,8 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
             "ADD_MONEY_VIDEO_NEW",
             "IS_GIFT_CARD_IS_AVAILABLE",
             "SERVER_IS_UNDER_MAINTENANCE",
-            "SERVER_MAINTENANCE_DESCRIPTION"
+            "SERVER_MAINTENANCE_DESCRIPTION",
+            "CASHBACK_RECHARGE_ALLOWED"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -300,6 +301,13 @@ class LoginSuccessViewModel(application: Application) : BaseViewModel(applicatio
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_SERVER_MAINTENANCE_DESCRIPTION,
+                                    it.value
+                                )
+                            }
+                            "CASHBACK_RECHARGE_ALLOWED"->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_CASHBACK_RECHARGE_ALLOWED,
                                     it.value
                                 )
                             }

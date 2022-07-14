@@ -18,6 +18,7 @@ import com.fypmoney.application.PockketApplication
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentHomeBinding
 import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.model.CustomerInfoResponseDetails
 import com.fypmoney.model.FeedDetails
@@ -27,6 +28,7 @@ import com.fypmoney.util.AppConstants.FyperScreen
 import com.fypmoney.util.AppConstants.NO
 import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.util.SharedPrefUtils
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_CASHBACK_RECHARGE_ALLOWED
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.util.videoplayer.VideoActivity2
@@ -97,6 +99,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     override fun onStart() {
         super.onStart()
         homeFragmentVM.fetchBalance()
+        checkForRechargeCashback()
+    }
+
+    private fun checkForRechargeCashback() {
+        SharedPrefUtils.getString(requireContext(),SF_CASHBACK_RECHARGE_ALLOWED)?.let {
+            if(it == "0"){
+                binding.cashbackAmountTv.toInvisible()
+            }else{
+                binding.cashbackAmountTv.text = it+"% Cashback"
+                binding.cashbackAmountTv.toVisible()
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -66,6 +66,7 @@ class SharedPrefUtils {
         const val SF_SHOW_MY_ORDERS = "show_my_orders"
         const val SF_SERVER_IS_UNDER_MAINTENANCE  = "server_is_under_maintenance"
         const val SF_SERVER_MAINTENANCE_DESCRIPTION  = "server_maintenance_description"
+        const val SF_CASHBACK_RECHARGE_ALLOWED = "recharge_cashback_allowed"
 
         private fun getSharedPreferences(context: Context): SharedPreferences? {
             return PreferenceManager.getDefaultSharedPreferences(context)

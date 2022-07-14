@@ -1284,12 +1284,17 @@ object Utility {
         val bitmapPath = MediaStore.Images.Media.insertImage(
             context.contentResolver, bitmap, "title", ""
         )
-        val uri: Uri = Uri.parse(bitmapPath)
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "image/*"
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "App")
-        shareIntent.putExtra(Intent.EXTRA_TEXT, text)
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-        context.startActivity(Intent.createChooser(shareIntent, "Share"))
+        if(bitmapPath!=null){
+            val uri: Uri = Uri.parse(bitmapPath)
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "image/*"
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "App")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, text)
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            context.startActivity(Intent.createChooser(shareIntent, "Share"))
+        }else{
+            FirebaseCrashlytics.getInstance().recordException(throw Exception("Bitmap path is ${bitmapPath}"))
+        }
+
     }
 }

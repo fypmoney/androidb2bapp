@@ -141,15 +141,15 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
                             validationMsg =  PockketApplication.instance.getString(R.string.mobile_no_is_required))
                     )
                 }else{
-                    checkForBalance()
+                    _state.value = CreateEGiftCardState.AskForDeviceSecurity
                 }
             }else{
-                checkForBalance()
+                _state.value = CreateEGiftCardState.AskForDeviceSecurity
             }
         }
     }
 
-    private fun checkForBalance() {
+    fun checkForBalance() {
         when (giftCardForWhom) {
             GiftCardForWhom.MySelf -> {
                 Utility.getCustomerDataFromPreference()?.mobile?.let {
@@ -241,6 +241,7 @@ class CreateEGiftCardFragmentVM(application: Application) : BaseViewModel(applic
         data class Success(var balance:Int):CreateEGiftCardState()
         object MySelfClickedState:CreateEGiftCardState()
         object SomeOneClickedState:CreateEGiftCardState()
+        object AskForDeviceSecurity:CreateEGiftCardState()
     }
 
     sealed class CreateEGiftCardEvent{

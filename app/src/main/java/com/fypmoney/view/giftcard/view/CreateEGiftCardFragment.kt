@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -176,6 +177,9 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
                 binding.possibleDenominationGiftCardAmountShimmer.toVisible()
 
             }
+            CreateEGiftCardFragmentVM.CreateEGiftCardState.AskForDeviceSecurity -> {
+                askForDevicePassword()
+            }
         }
     }
 
@@ -286,6 +290,16 @@ class CreateEGiftCardFragment : BaseFragment<FragmentCreateEGiftCardBinding, Cre
                             Utility.showToast(result.errorMsg)
                         }
                     }
+                }
+            }
+            AppConstants.DEVICE_SECURITY_REQUEST_CODE -> {
+                when (resultCode) {
+                    AppCompatActivity.RESULT_OK -> {
+                        requireActivity().runOnUiThread {
+                            createEGiftCardFragmentVM.checkForBalance()
+                        }
+                    }
+
                 }
             }
         }

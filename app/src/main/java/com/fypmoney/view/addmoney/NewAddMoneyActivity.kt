@@ -183,11 +183,17 @@ class NewAddMoneyActivity : BaseActivity<ActivityNewAddMoneyBinding, NewAddMoney
                         this,
                         "Here's my Fyp QR Code and UPI ID. Please send money directly to my Fyp account using any UPI apps-\n" +
                                 "\n" +
-                                "UPI ID : ${binding.tvYourUpiIdValue.text}\n" +
+                                "\n" +
+                                "Link: https://fypmoney.in/add/${binding.tvYourUpiIdValue.text}" +
+                                "\n" +
+                                "\n" +
+                                "UPI ID : ${binding.tvYourUpiIdValue.text}" +
+                                "\n" +
                                 "\n" +
                                 "You can also get your own QR on Fyp, India's leading payments app, trusted by 1 Mn+ teens and families: https://fypmoney.in/app"
                     )
                 }
+
             }
             NewAddMoneyActivityVM.BankDetailsEvent.ShareVirtualAccountInfo -> {
                 val content =

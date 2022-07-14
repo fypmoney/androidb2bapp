@@ -1228,7 +1228,7 @@ Coming really soon!
     <string name="repeat">Repeat</string>
     <string name="recharge">Recharge</string>
     <string name="please_do_not_press_back_or_close_the_app">Please, do not press back or close the app</string>
-    <string name="_5_cashback">5% Cashback</string>
+    <string name="_5_cashback">%1$s Cashback</string>
     <string name="recommended">Recommended</string>
     <string name="no_transaction_fee">* No transaction fee</string>
     <string name="your_bank_account">Your Bank Account</string>
