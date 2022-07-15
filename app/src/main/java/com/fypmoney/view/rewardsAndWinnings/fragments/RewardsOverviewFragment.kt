@@ -296,7 +296,7 @@ class RewardsOverviewFragment :
                     } else if (redirectionResources == AppConstants.RewardHistory) {
                         findNavController().navigate(R.id.navigation_rewards_history)
                     }else if (redirectionResources == AppConstants.ARCADE) {
-                        findNavController().navigate(R.id.navigation_arcade)
+                        findNavController().navigate(R.id.navigation_spin_wheel)
                     }
                     else if (redirectionResources == AppConstants.GIFT_VOUCHER)  {
                         findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
