@@ -103,44 +103,44 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
 
     private fun setObserver() {
         sectionExploreFragmentVM.rewardHistoryList.observe(
-            viewLifecycleOwner,
-            { list ->
+            viewLifecycleOwner
+        ) { list ->
 
-                setRecyclerView(binding, list)
-            })
+            setRecyclerView(binding, list)
+        }
         sectionExploreFragmentVM.openBottomSheet.observe(
-            viewLifecycleOwner,
-            { list ->
-                if (list.size > 0) {
-                    callOfferDetailsSheeet(list[0])
-                }
+            viewLifecycleOwner
+        ) { list ->
+            if (list.size > 0) {
+                callOfferDetailsSheeet(list[0])
+            }
 
-            })
+        }
 
         sectionExploreFragmentVM.feedDetail.observe(
-            viewLifecycleOwner,
-            { list ->
+            viewLifecycleOwner
+        ) { list ->
 
-                when (list.displayCard) {
+            when (list.displayCard) {
 
-                    AppConstants.FEED_TYPE_BLOG -> {
+                AppConstants.FEED_TYPE_BLOG -> {
 
-                        intentToActivitytoBlog(
-                            UserFeedsDetailView::class.java,
-                            list,
-                            AppConstants.FEED_TYPE_BLOG
-                        )
-                    }
-
-                    AppConstants.FEED_TYPE_STORIES -> {
-
-                        callDiduKnowBottomSheet(list.resourceArr)
-                    }
-
+                    intentToActivitytoBlog(
+                        UserFeedsDetailView::class.java,
+                        list,
+                        AppConstants.FEED_TYPE_BLOG
+                    )
                 }
 
+                AppConstants.FEED_TYPE_STORIES -> {
 
-            })
+                    callDiduKnowBottomSheet(list.resourceArr)
+                }
+
+            }
+
+
+        }
 
     }
 
@@ -181,16 +181,29 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
                 when (it.redirectionType) {
                     AppConstants.EXPLORE_IN_APP -> {
                         it.redirectionResource?.let { uri ->
-
                             val redirectionResources = uri.split(",")[0]
-                            if (redirectionResources == AppConstants.FyperScreen) {
-                                findNavController().navigate(R.id.navigation_fyper)
-                            } else if (redirectionResources == AppConstants.JACKPOTTAB) {
-                                findNavController().navigate(R.id.navigation_rewards)
-                            } else if (redirectionResources == AppConstants.CardScreen) {
-                                findNavController().navigate(R.id.navigation_card)
-                            } else {
-                                Utility.deeplinkRedirection(redirectionResources, requireContext())
+                            when (redirectionResources) {
+                                AppConstants.FyperScreen -> {
+                                    findNavController().navigate(R.id.navigation_fyper)
+                                }
+                                AppConstants.JACKPOTTAB -> {
+                                    findNavController().navigate(R.id.navigation_rewards)
+                                }
+                                AppConstants.CardScreen -> {
+                                    findNavController().navigate(R.id.navigation_card)
+                                }
+                                AppConstants.RewardHistory -> {
+                                    findNavController().navigate(R.id.navigation_rewards_history)
+                                }
+                                AppConstants.ARCADE -> {
+                                    findNavController().navigate(R.id.navigation_arcade)
+                                }
+                                AppConstants.GIFT_VOUCHER -> {
+                                    findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))
+                                }
+                                else -> {
+                                    Utility.deeplinkRedirection(redirectionResources, requireContext())
+                                }
                             }
 
 
@@ -265,6 +278,9 @@ class SectionExploreFragment : BaseFragment<FragmentSectionExploreBinding,Sectio
                             )
                         }
                         directions?.let { it1 -> findNavController().navigate(it1) }
+                    }
+                    AppConstants.GIFT_VOUCHER -> {
+                        findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))
                     }
                 }
 

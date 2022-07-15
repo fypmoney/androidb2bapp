@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.giftcard.viewModel.GiftCardDetailsFragmentVM" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor"
+        tools:context=".view.giftcard.view.GiftCardDetailsFragment">
+
+        <include
+            android:id="@+id/layout"
+            layout="@layout/toolbar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_cl"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:paddingHorizontal="@dimen/dp16"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/details_cl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:background="@drawable/horizontal_dashed_line"
+                    android:backgroundTint="@color/text_color_light"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/voucher_pin_cl" />
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_gift_card_details"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/box_upper_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_gift_details_upper" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/gift_card_brand_logo_iv"
+                    android:layout_height="50dp"
+                    android:layout_width="100dp"
+                    android:layout_marginTop="-20dp"
+                    android:layout_marginHorizontal="@dimen/dp16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/box_upper_iv"
+                    tools:src="@drawable/gift_test_logo" />
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/box_lower_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp10"
+                    android:layout_marginTop="@dimen/dp8"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gift_card_brand_logo_iv"
+                    app:srcCompat="@drawable/ic_gift_details_below" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/voucher_number_cl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginTop="@dimen/dp30"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gift_card_voucher_tv">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/gift_card_voucher_number_label_tv"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/voucher_number"
+                        android:textColor="@color/black_grey_txt_color"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/gift_card_voucher_number_value_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:drawableEnd="@drawable/ic_icon_feather_copy"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableTint="@color/black"
+                        android:onClick="@{()->viewModel.onVoucherValueCopyClicked()}"
+                        android:gravity="start|center"
+                        android:lineHeight="@dimen/dp20"
+                        android:text="@string/voucher_value"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/gift_card_voucher_number_label_tv"
+                        tools:text="83331111111111111111" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/voucher_pin_cl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp30"
+                    android:layout_marginEnd="@dimen/dp16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gift_card_voucher_tv">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/gift_card_voucher_pin_label_tv"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/voucher_pin"
+                        android:textColor="@color/black_grey_txt_color"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/gift_card_voucher_pin_value_tv"
+                        style="@style/TextviewBold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp12"
+                        android:onClick="@{()->viewModel.onVoucherPinCopyClicked()}"
+                        android:drawableEnd="@drawable/ic_icon_feather_copy"
+                        android:drawablePadding="@dimen/dp5"
+                        android:drawableTint="@color/black"
+                        android:gravity="start|center"
+                        android:lineHeight="@dimen/dp20"
+                        android:text="@string/voucher_value"
+                        android:textColor="@color/text_color_dark"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/gift_card_voucher_pin_label_tv"
+                        tools:text="8333111111111111111" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/voucher_validty_cl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp16"
+                    android:layout_marginTop="@dimen/dp20"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/voucher_validity_label_tv"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/validity"
+                        android:textColor="@color/black_grey_txt_color"
+                        android:textSize="14sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/voucher_validity_value_tv"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp8"
+                        android:gravity="start|center"
+                        android:text="@string/voucher_value"
+                        android:textColor="@color/black_grey_txt_color"
+                        android:textSize="12sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/voucher_validity_label_tv"
+                        tools:text="833332312321124124" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/fyp_order_no_cl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:layout_marginEnd="@dimen/dp16"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/fyp_order_no_label_tv"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/fy_order_no"
+                        android:gravity="end"
+                        android:textColor="@color/black_grey_txt_color"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/fyp_order_no_value_tv"
+                        style="@style/TextviewRegular"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:text="@string/voucher_value"
+                        android:textColor="@color/black_grey_txt_color"
+                        android:textSize="12sp"
+                        android:layout_marginTop="@dimen/dp8"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/fyp_order_no_label_tv"
+                        tools:text="833323132132131312312" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/gift_card_amount_tv"
+                    style="@style/TextviewBold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp20"
+                    android:textColor="@color/text_color_dark"
+                    android:textSize="24sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/box_lower_iv"
+                    tools:text="₹ 5000" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/gift_card_voucher_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp8"
+                    android:text="@string/voucher_value"
+                    android:textColor="@color/text_color_little_dark"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/gift_card_amount_tv" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.fypmoney.view.customview.PrimaryButton
+                android:id="@+id/reedem_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_marginTop="@dimen/dp24"
+                android:paddingHorizontal="@dimen/dp30"
+                android:paddingVertical="@dimen/dp15"
+                app:text="@string/reedem_now"
+                app:enabled="true"
+                android:onClick="@{()->viewModel.redeemNowClick()}"
+                app:enabled_bg="@color/color_task_card_green"
+                app:disabled_bg="@color/buttonUnselectedColor"
+                app:layout_constraintTop_toBottomOf="@+id/details_cl"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="@dimen/dp10"/>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/reccived_mynts_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/TextviewRegular"
+                android:textSize="16sp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_marginStart="@dimen/dp16"
+                android:drawableStart="@drawable/ic_mynt_coin"
+                android:drawablePadding="@dimen/dp16"
+                android:layout_marginBottom="@dimen/dp_40"
+                tools:text="You have won 200 \n Mynts"
+                android:gravity="start|center"
+                android:layout_marginEnd="@dimen/dp8"
+                app:layout_constraintEnd_toStartOf="@+id/play_now_btn"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/white"/>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/play_now_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:paddingHorizontal="28dp"
+                android:layout_gravity="center_horizontal"
+                android:paddingVertical="12dp"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_marginBottom="@dimen/dp_40"
+                android:text="@string/play_now"
+                android:onClick="@{()->viewModel.playNowClick()}"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:customCornerRadius="@{@dimen/dp32}"
+                app:customStrokeColor="@{@color/white}"
+                app:customStrokeWidth="@{@dimen/dp0_5}" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

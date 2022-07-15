@@ -19,10 +19,12 @@
         tools:replace="android:usesCleartextTraffic">
         <activity
             android:name=".view.addmoney.NewAddMoneyActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.cardofferdetails.CardOfferDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.ordercard.activateofflinecard.ScanCardKitNumberActivity"
             android:screenOrientation="portrait" />
@@ -35,7 +37,6 @@
         <activity
             android:name=".view.ordercard.cardorderoffer.CardOrderOfferActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".view.webview.WebViewActivity"
             android:screenOrientation="portrait" />
@@ -79,7 +80,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.OrderCardView"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.SetPinView"
             android:screenOrientation="portrait"
@@ -394,6 +395,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.giftcard.GiftCardsListScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:windowSoftInputMode="adjustPan"
+            android:name=".view.giftcard.view.CreateEGiftCardFragment" />
+        <activity android:name=".view.giftcard.GiftTermsAndConditions" />
+        <activity android:name=".view.giftcard.GiftHistoryActivity" />
+        <activity android:name=".view.giftcard.GiftHistoryUnusedActivity" />
+        <activity android:name=".view.giftcard.GiftDetailsActivity" />
+        <activity android:name=".view.giftcard.GiftViewAllScreen" />
 
         <meta-data android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled"
             android:value="true"/>

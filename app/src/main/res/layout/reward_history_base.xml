@@ -40,7 +40,7 @@
             android:layout_below="@+id/date_tv">
 
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.card.MaterialCardView
                 android:id="@+id/main_cv"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -48,9 +48,9 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:layout_marginEnd="10dp"
-                android:clipToPadding="false"
+                app:cardBackgroundColor="@android:color/transparent"
+                android:clipToPadding="true"
                 android:layout_marginBottom="@dimen/_2sdp"
-                android:backgroundTint="@color/background_light_dark"
                 app:cardCornerRadius="@dimen/dp16"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -64,10 +64,10 @@
                     android:minWidth="10dp"
                     android:minHeight="10dp"
                     android:scaleType="centerCrop"
-                    tools:src="@drawable/jackpot_banner" />
+                    tools:src="@drawable/transparent_img" />
 
 
-            </androidx.cardview.widget.CardView>
+            </com.google.android.material.card.MaterialCardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>

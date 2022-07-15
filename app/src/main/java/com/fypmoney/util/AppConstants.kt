@@ -110,7 +110,6 @@ object AppConstants {
     const val NOTIFICATION_TYPE_ADD_FAMILY = "ADD_FAMILY_MEMBER"
     const val NOTIFICATION_TYPE_REQUEST_MONEY = "REQUEST_MONEY"
 
-
     const val NOTIFICATION_TYPE_IN_APP_DIRECT = "IN_APP_DIRECT"
     const val NOTIFICATION_TYPE_WEB_DIRECT = "WEB_DIRECT"
     const val NOTIFICATION_TYPE_EXT_APP_DIRECT = "EXT_APP_DIRECT"
@@ -156,7 +155,7 @@ object AppConstants {
     const val CHANGED_DATE_TIME_FORMAT3 = "MMM dd, HH:mmaa"
     const val CHANGED_DATE_TIME_FORMAT4 = "MMM dd, yyyy"
     const val CHANGED_DATE_TIME_FORMAT6 = "MMM dd, yy"
-    const val CHANGED_DATE_TIME_FORMAT8 = "dd MMM, yy"
+    const val CHANGED_DATE_TIME_FORMAT8 = "dd MMM, yyyy"
     const val CHANGED_DATE_TIME_FORMAT7 = "HH:mm,  MMM dd, yy"
     const val CHANGED_DATE_TIME_FORMAT5 = " dd/MM/yyyy"
     const val REWARD_HISTORY_OUTPUT = "MMM dd' ,'hh:mm a"
@@ -224,6 +223,7 @@ object AppConstants {
     //DeepLinks constants
     const val HOMEVIEW = "HomeView"
     const val ReferralScreen = "ReferralScrren"
+    const val GiftScreen = "GiftCardScreen"
     const val CardScreen = "CardScreen"
     const val OfferScreen = "offerscreen"
     const val StoreScreen = "StoreScreen"
@@ -239,6 +239,7 @@ object AppConstants {
     const val RewardHistory = "RewardHistory"
     const val StoreofferScreen = "Storeofferscreen"
     const val StoreshopsScreen = "Storeshopsscreen"
+    const val GIFT_VOUCHER = "GIFT_VOUCHER"
 
     /* Home : "HomeView, 0"
 
@@ -296,6 +297,10 @@ object AppConstants {
     const val USER_TYPE = "UserType"
     const val KYC_type = "kyctype"
     const val POSTKYCKEY = "postkyc"
+
+    const val GIFT_BRAND_SELECTED = "gift_brand_selected"
+    const val GIFT_HISTORY_SELECTED = "gift_history_selected"
+    const val GIFT_ID = "gift_id"
     const val SEMI = "SEMI"
     const val MINIMUM = "MINIMUM"
     const val POSTPAID = "POSTPAID"
@@ -304,6 +309,9 @@ object AppConstants {
     const val KYC_UPGRADE_FROM_WHICH_SCREEN = "kyc_upgrade_from_which_screen"
     const val BROADBAND_RECHARGE_URL = "https://www.amazon.in/hfc/bill/landline"
     const val SHOW_RECHARGE_SCREEN = "SHOW_RECHARGE_SCREEN"
+    const val IS_GIFT_CARD_IS_AVAILABLE = "IS_GIFT_CARD_AVAILABLE"
+    const val SERVER_IS_UNDER_MAINTENANCE = "SERVER_IS_UNDER_MAINTENANCE"
+    const val SERVER_MAINTENANCE_DESCRIPTION = "SERVER_MAINTENANCE_DESCRIPTION"
     const val OFFER_REDIRECTION_EXTERNAL_WEB_VIEW = "EXTERNAL_WEB_VIEW"
     const val OFFER_REDIRECTION_EXTERNAL_WEB_VIEW_SUB = "EXTERNAL_WEB_VIEW_SUB"
     const val OFFER_REDIRECTION_IN_APP_VIEW_WITH_CARD_OPTION_SUBs =

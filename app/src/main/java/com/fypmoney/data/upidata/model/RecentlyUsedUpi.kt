@@ -1,11 +1,13 @@
 package com.fypmoney.data.upidata.model
 
+import androidx.annotation.Keep
 import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
+@Keep
 @Entity(tableName = "recently_used_upi",indices = [Index(value = ["upi_id","tag"],unique = true)])
 data class RecentlyUsedUpi(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id:Long? = 0,

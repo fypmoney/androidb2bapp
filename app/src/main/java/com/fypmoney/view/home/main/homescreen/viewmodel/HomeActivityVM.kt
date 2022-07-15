@@ -41,6 +41,9 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
         get() = _event
     private var _event = LiveEvent<HomeActivityEvent>()
 
+    init {
+        checkServerIsUnderMaintenance()
+    }
     fun onProfileClicked() {
         _event.value = HomeActivityEvent.ProfileClicked
     }
@@ -50,6 +53,10 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
     }
     fun onTransactionHistoryClicked() {
         _event.value = HomeActivityEvent.TransactionHistoryClicked
+    }
+
+    fun onGiftVoucherHistoryClicked() {
+        _event.value = HomeActivityEvent.GiftVoucherHistoryClicked
     }
 
     override fun onCleared() {
@@ -113,5 +120,19 @@ class HomeActivityVM(application: Application): BaseViewModel(application) {
         object ProfileClicked : HomeActivityEvent()
         object NotificationClicked : HomeActivityEvent()
         object TransactionHistoryClicked : HomeActivityEvent()
+        object GiftVoucherHistoryClicked : HomeActivityEvent()
+        data class ShowServerIsUnderMaintenance(val msg:String) : HomeActivityEvent()
+    }
+
+    private fun checkServerIsUnderMaintenance(){
+        SharedPrefUtils.getString(PockketApplication.instance,
+            SharedPrefUtils.SF_SERVER_IS_UNDER_MAINTENANCE)?.let {
+            if(it=="YES"){
+                SharedPrefUtils.getString(PockketApplication.instance,
+                    SharedPrefUtils.SF_SERVER_MAINTENANCE_DESCRIPTION)?.let {msg->
+                    _event.postValue(HomeActivityEvent.ShowServerIsUnderMaintenance(msg))
+                }
+            }
+        }
     }
 }

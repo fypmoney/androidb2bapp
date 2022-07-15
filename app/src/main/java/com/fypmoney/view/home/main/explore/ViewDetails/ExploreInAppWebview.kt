@@ -10,14 +10,9 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.databinding.ViewExploreInappBinding
-import com.fypmoney.databinding.ViewUserFeedsDetailBinding
-import com.fypmoney.databinding.ViewUserFeedsInappBinding
-import com.fypmoney.model.FeedDetails
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.activity.ChoresActivity
+import com.fypmoney.util.Utility
 import com.fypmoney.view.home.main.explore.viewmodel.ExploreDetailsViewModel
-import com.fypmoney.viewmodel.FeedDetailsViewModel
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_user_feeds_inapp.*
 
 /*
@@ -50,18 +45,26 @@ class ExploreInAppWebview : BaseActivity<ViewExploreInappBinding, ExploreDetails
         )
 
 
-        var url = intent.getStringExtra(AppConstants.IN_APP_URL)
+        val url = intent.getStringExtra(AppConstants.IN_APP_URL)
 
 
 
-        webView.settings.apply {
-            javaScriptEnabled = true
-        }
-        webView.isVerticalScrollBarEnabled = false
 
-        webView!!.webViewClient = object : WebViewClient() {
+        mViewBinding.webView.setMixedContentAllowed(false)
+
+        mViewBinding.webView.setCookiesEnabled(true)
+        mViewBinding.webView.settings.setSupportMultipleWindows(true)
+        mViewBinding.webView.settings.javaScriptCanOpenWindowsAutomatically = true
+        mViewBinding.webView.webViewClient = object : WebViewClient() {
+            @Deprecated("Deprecated in Java")
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
-                webView!!.loadUrl(url)
+                if (url.contains("https://www.youtube.com")) {
+                    mViewBinding.webView.loadUrl(url)
+                    finish()
+
+                } else {
+                    mViewBinding.webView.loadUrl(url)
+                }
                 return true
             }
 
@@ -76,25 +79,11 @@ class ExploreInAppWebview : BaseActivity<ViewExploreInappBinding, ExploreDetails
             }
 
         }
-
-        webView.setLayerType(View.LAYER_TYPE_HARDWARE, null)
-
-
         if (url != null) {
-            if (url.contains("https://www.youtube.com")) {
-                webView.loadUrl(url)
-                finish()
-
-            } else {
-                webView.loadUrl(url)
-
-            }
+            mViewBinding.webView.loadUrl(url)
+        }else{
+            Utility.showToast(getString(R.string.unable_to_open_page_please_try_again_later))
         }
-
-        val mimeType = "text/html"
-        val encoding = "UTF-8"
-
-
     }
 
 

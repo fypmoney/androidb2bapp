@@ -1,9 +1,11 @@
 package com.fypmoney.database.entity
 
+import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+@Keep
 @Entity(tableName = "member_entity")
 data class MemberEntity(
     @PrimaryKey(autoGenerate = true)

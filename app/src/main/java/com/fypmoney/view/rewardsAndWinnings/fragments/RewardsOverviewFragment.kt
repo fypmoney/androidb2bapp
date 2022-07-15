@@ -286,29 +286,27 @@ class RewardsOverviewFragment :
 
                 redirectionResource?.let { uri ->
 
-                    when (val redirectionResources = uri.split(",")[0]) {
-                        AppConstants.FyperScreen -> {
-                            findNavController().navigate(R.id.navigation_fyper)
-                        }
-                        AppConstants.JACKPOTTAB -> {
-                            findNavController().navigate(R.id.navigation_jackpot)
-                        }
-                        AppConstants.CardScreen -> {
-                            findNavController().navigate(R.id.navigation_card)
-                        }
-                        AppConstants.RewardHistory -> {
-                            findNavController().navigate(R.id.navigation_rewards_history)
-                        }
-                        AppConstants.ARCADE -> {
-                            findNavController().navigate(R.id.navigation_spin_wheel)
-                        }
-                        else -> {
-                            redirectionResources.let { it1 ->
-                                Utility.deeplinkRedirection(
-                                    it1,
-                                    requireContext()
-                                )
-                            }
+                    val redirectionResources = uri?.split(",")?.get(0)
+                    if (redirectionResources == AppConstants.FyperScreen) {
+                        findNavController().navigate(R.id.navigation_fyper)
+                    } else if (redirectionResources == AppConstants.JACKPOTTAB) {
+                        findNavController().navigate(R.id.navigation_jackpot)
+                    } else if (redirectionResources == AppConstants.CardScreen) {
+                        findNavController().navigate(R.id.navigation_card)
+                    } else if (redirectionResources == AppConstants.RewardHistory) {
+                        findNavController().navigate(R.id.navigation_rewards_history)
+                    }else if (redirectionResources == AppConstants.ARCADE) {
+                        findNavController().navigate(R.id.navigation_arcade)
+                    }
+                    else if (redirectionResources == AppConstants.GIFT_VOUCHER)  {
+                        findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
+                    }
+                    else {
+                        redirectionResources?.let { it1 ->
+                            Utility.deeplinkRedirection(
+                                it1,
+                                requireContext()
+                            )
                         }
                     }
                 }
@@ -363,6 +361,10 @@ class RewardsOverviewFragment :
 
                 }
 
+            }
+
+            AppConstants.GIFT_VOUCHER -> {
+                findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
             }
         }
     }

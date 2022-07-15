@@ -30,6 +30,7 @@ class PaymentProcessingFragmentVM(application: Application) : BaseViewModel(appl
     //in case of post paid
     var billPaymentRequest:BillPaymentRequest? = null
     var rechargeType:String? = null
+
     val state:LiveData<PaymentProcessingState>
         get() = _state
     private val _state = MutableLiveData<PaymentProcessingState>()
@@ -38,7 +39,6 @@ class PaymentProcessingFragmentVM(application: Application) : BaseViewModel(appl
         get() = _event
     private var _event = LiveEvent<PaymentProcessingEvent>()
 
-    var title = MutableLiveData<String>()
 
 
     //TODO Need to do refactor

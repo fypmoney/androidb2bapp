@@ -60,15 +60,13 @@ class CashbackHistoryAdapter(var viewModel: RewardsCashbackwonVM) :
     fun setList(transactionList1: List<BankTransactionHistoryResponseDetails>?) {
         try {
             if (transactionList1 != null) {
-                transactionList1?.forEach {
+                transactionList1.forEach {
                     transactionList!!.add(it)
                 }
             } else {
 
                 transactionList!!.clear()
             }
-
-
             notifyDataSetChanged()
         } catch (e: Exception) {
             e.printStackTrace()
