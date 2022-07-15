@@ -36,6 +36,10 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     val isApiLoading = ObservableField(true)
     val detailsCalling = ObservableField(false)
 
+    var totalMynts = MutableLiveData(false)
+    var totalCash = MutableLiveData(false)
+    var totalTickets = MutableLiveData(false)
+
 
     var orderNumber = MutableLiveData("")
 

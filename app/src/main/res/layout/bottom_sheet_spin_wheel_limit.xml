@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="limitViewModel"
+            type="com.fypmoney.view.arcadegames.viewmodel.LimitOverVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,6 +69,7 @@
             android:layout_width="wrap_content"
             android:padding="6dp"
             android:text="@string/continue_string"
+            android:onClick="@{()->limitViewModel.onContinueClicked()}"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/btn_more_rewards"
@@ -90,6 +93,7 @@
             android:background="@drawable/button_bottom_spin_wheel_back"
             android:fontFamily="@font/product_sans_bold"
             android:padding="8dp"
+            android:onClick="@{()->limitViewModel.onMoreRewardsClicked()}"
             android:text="@string/more_rewards"
             android:textAllCaps="false"
             android:textColor="#333333"

@@ -1,4 +1,145 @@
 package com.fypmoney.view.arcadegames.viewmodel
 
-class FragmentMultipleJackpotVM {
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.fypmoney.base.BaseViewModel
+import com.fypmoney.connectivity.ApiConstant
+import com.fypmoney.connectivity.ApiUrl
+import com.fypmoney.connectivity.network.NetworkUtil
+import com.fypmoney.connectivity.retrofit.ApiRequest
+import com.fypmoney.connectivity.retrofit.WebApiCaller
+import com.fypmoney.model.BaseRequest
+import com.fypmoney.model.RewardPointsSummaryResponse
+import com.fypmoney.view.arcadegames.model.JackpotDetailsItem
+import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
+import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
+import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+
+class FragmentMultipleJackpotVM(application: Application) : BaseViewModel(application) {
+
+    var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
+    var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
+    var totalJackpotAmount: MutableLiveData<TotalJackpotResponse> = MutableLiveData()
+    val state: LiveData<MultipleJackpotsState>
+        get() = _state
+    private val _state = MutableLiveData<MultipleJackpotsState>()
+
+    init {
+        callRewardSummary()
+        callTotalRewardsEarnings()
+        callTotalJackpotCards()
+        callMultipleJackpotsProduct()
+    }
+
+    private fun callRewardSummary() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_REWARD_SUMMARY,
+                NetworkUtil.endURL(ApiConstant.API_REWARD_SUMMARY),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
+    private fun callTotalRewardsEarnings() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_REWARD_EARNINGS,
+                NetworkUtil.endURL(ApiConstant.API_GET_REWARD_EARNINGS),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
+    private fun callTotalJackpotCards() {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_JACKPOT_CARDS,
+                NetworkUtil.endURL(ApiConstant.API_GET_JACKPOT_CARDS),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+    }
+
+    private fun callMultipleJackpotsProduct() {
+        _state.postValue(MultipleJackpotsState.Loading)
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE,
+                NetworkUtil.endURL(ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = true
+            )
+        )
+    }
+
+    override fun onSuccess(purpose: String, responseData: Any) {
+        super.onSuccess(purpose, responseData)
+
+        when (purpose) {
+            ApiConstant.API_GET_REWARD_EARNINGS -> {
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+                val array = Gson().fromJson(
+                    json.get("data").toString(),
+                    com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse::class.java
+                )
+
+                totalRewardsResponse.postValue(array)
+            }
+
+            ApiConstant.API_REWARD_SUMMARY -> {
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+
+                val array = Gson().fromJson(
+                    json.get("data").toString(),
+                    RewardPointsSummaryResponse::class.java
+                )
+
+                rewardSummaryStatus.postValue(array)
+            }
+
+            ApiConstant.API_GET_JACKPOT_CARDS -> {
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+                if (json.get("data").toString() != "[]") {
+                    val array = Gson().fromJson(
+                        json.get("data").toString(),
+                        TotalJackpotResponse::class.java
+                    )
+                    totalJackpotAmount.postValue(array)
+                }
+            }
+
+            ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
+                if (responseData is MultipleJackpotNetworkResponse) {
+//                    val multipleJackpot = responseData.data.filter {
+//                        it.isExpired == "NO"
+//                    }
+//                    _state.value = MultipleJackpotsState.Success(multipleJackpot)
+
+                    Log.d("JackpotData", "Data: ${responseData.data.toString()}")
+                    _state.value = responseData.data?.jackpotDetails?.get(0)
+                        ?.let { MultipleJackpotsState.Success(it) }
+                }
+            }
+        }
+    }
+
+    sealed class MultipleJackpotsState {
+        object Loading : MultipleJackpotsState()
+        data class Success(val multipleJackpotData: JackpotDetailsItem) : MultipleJackpotsState()
+        object Error : MultipleJackpotsState()
+    }
+
 }

@@ -116,8 +116,6 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
 
                     if (item.id == sectionId.toString()) {
 
-
-
                             if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
                                 trackr {
                                     it.name = TrackrEvent.spin_success

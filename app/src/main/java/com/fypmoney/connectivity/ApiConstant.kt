@@ -166,6 +166,15 @@ object ApiConstant {
     const val API_RECENT_RECHARGE = "services/PockketService/api/recharge-orders"
     const val Api_GET_DISCORD_PROFILE = "/services/loyaltyservice/api/fetch-discord-data"
 
+    const val API_GET_REWARD_SINGLE_PRODUCTS =
+        "services/PockketService/api/list/reward-product/"
+
+    const val API_GET_TREASURE_DATA =
+        "services/PockketService/api/list/reward-product"
+
+    const val API_GET_ALL_JACKPOTS_PRODUCTWISE =
+        "services/PockketService/api/jackpot/tickets/productwise/"
+
 }
 
 

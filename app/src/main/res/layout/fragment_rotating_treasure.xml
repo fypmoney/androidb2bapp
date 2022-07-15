@@ -13,278 +13,522 @@
         android:layout_height="match_parent"
         android:background="@color/bgcolor">
 
-        <androidx.core.widget.NestedScrollView
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/toolbar" />
+
+        <!--        <androidx.core.widget.NestedScrollView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">-->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/rotatingTreasureContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:id="@+id/containerRotatingChips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintBottom_toTopOf="@+id/cvJackpot"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/containerRotatingChips"
+                    android:id="@+id/chipMyntsView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/chipMyntsView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/curved_background_chip_back"
-                        android:paddingStart="12dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="12dp"
-                        android:paddingBottom="10dp"
+                    <FrameLayout
+                        android:id="@+id/frameRotatingMynts"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ivRotatingMynts"
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:layout_marginStart="6dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:paddingStart="4dp"
+                            android:paddingTop="11dp"
+                            android:paddingEnd="1dp"
+                            android:paddingBottom="11dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/mynt" />
+                            app:srcCompat="@drawable/ic_mynt_coin" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/tvRotatingMyntsCount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="6dp"
-                            android:textColor="@color/color_dark_yellow"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@id/ivRotatingMynts"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivRotatingMynts"
-                            app:layout_constraintTop_toTopOf="@id/ivRotatingMynts"
-                            tools:text="@string/dummy_amount" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivRotatingMyntsAnim"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    </FrameLayout>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/chipTicketView"
+                    <!--                        <androidx.appcompat.widget.AppCompatImageView-->
+                    <!--                            android:id="@+id/ivRotatingMynts"-->
+                    <!--                            android:layout_width="42dp"-->
+                    <!--                            android:layout_height="42dp"-->
+                    <!--                            android:paddingStart="2dp"-->
+                    <!--                            android:paddingTop="8dp"-->
+                    <!--                            android:paddingEnd="2dp"-->
+                    <!--                            android:paddingBottom="8dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/ic_mynt_coin" />-->
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvRotatingMyntsCount"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:background="@drawable/curved_background_chip_back"
-                        android:paddingStart="12dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="12dp"
-                        android:paddingBottom="10dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="4dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/color_dark_yellow"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintBottom_toBottomOf="@id/frameRotatingMynts"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/frameRotatingMynts"
+                        app:layout_constraintTop_toTopOf="@id/frameRotatingMynts"
+                        tools:text="@string/dummy_amount" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/chipTicketView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <FrameLayout
+                        android:id="@+id/frameRotatingTicket"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ivRotatingTicket"
-                            android:layout_width="28dp"
-                            android:layout_height="24dp"
-                            android:layout_marginStart="6dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="2dp"
+                            android:paddingStart="1dp"
+                            android:paddingTop="13dp"
+                            android:paddingEnd="1dp"
+                            android:paddingBottom="13dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/ticket" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/tvRotatingTicketsCount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="6dp"
-                            android:textColor="@color/yellow10"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@id/ivRotatingTicket"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivRotatingTicket"
-                            app:layout_constraintTop_toTopOf="@id/ivRotatingTicket"
-                            tools:text="@string/dummy_amount" />
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivRotatingTicketAnim"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="invisible"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    </FrameLayout>
+
+                    <!--                        <androidx.appcompat.widget.AppCompatImageView-->
+                    <!--                            android:id="@+id/ivRotatingTicket"-->
+                    <!--                            android:layout_width="42dp"-->
+                    <!--                            android:layout_height="42dp"-->
+                    <!--                            android:paddingStart="2dp"-->
+                    <!--                            android:paddingTop="8dp"-->
+                    <!--                            android:paddingEnd="2dp"-->
+                    <!--                            android:paddingBottom="8dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/ticket" />-->
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvRotatingTicketsCount"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:background="@drawable/curved_background_chip_back"
-                        android:paddingStart="12dp"
-                        android:paddingTop="10dp"
-                        android:paddingEnd="12dp"
-                        android:paddingBottom="10dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/yellow10"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintBottom_toBottomOf="@id/frameRotatingTicket"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/frameRotatingTicket"
+                        app:layout_constraintTop_toTopOf="@id/frameRotatingTicket"
+                        tools:text="@string/dummy_amount" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/chipCashView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/chipTicketView"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!--                        <androidx.appcompat.widget.AppCompatImageView-->
+                    <!--                            android:id="@+id/ivRotatingCash"-->
+                    <!--                            android:layout_width="42dp"-->
+                    <!--                            android:layout_height="42dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent" />-->
+
+                    <!--                        <androidx.appcompat.widget.AppCompatImageView-->
+                    <!--                            android:id="@+id/ivRotatingCashAnim"-->
+                    <!--                            android:layout_width="42dp"-->
+                    <!--                            android:layout_height="42dp"-->
+                    <!--                            android:paddingStart="2dp"-->
+                    <!--                            android:paddingTop="8dp"-->
+                    <!--                            android:paddingEnd="2dp"-->
+                    <!--                            android:paddingBottom="4dp"-->
+                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
+                    <!--                            app:layout_constraintTop_toTopOf="parent"-->
+                    <!--                            app:srcCompat="@drawable/cash" />-->
+
+                    <FrameLayout
+                        android:id="@+id/frameRotatingCash"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/chipTicketView"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ivRotatingCash"
-                            android:layout_width="28dp"
-                            android:layout_height="24dp"
-                            android:layout_marginStart="6dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="2dp"
+                            android:paddingStart="1dp"
+                            android:paddingTop="13dp"
+                            android:paddingEnd="1dp"
+                            android:paddingBottom="13dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
                             app:srcCompat="@drawable/cash" />
 
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/tvRotatingCashCount"
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivRotatingCashAnim"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:layout_marginEnd="6dp"
-                            android:textColor="@color/green_winnings"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@id/ivRotatingCash"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivRotatingCash"
-                            app:layout_constraintTop_toTopOf="@id/ivRotatingCash"
-                            tools:text="@string/dummy_amount1" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cvJackpot"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="28dp"
-                    android:layout_marginEnd="24dp"
-                    app:cardBackgroundColor="@color/back_surface_color"
-                    app:cardCornerRadius="18dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/containerRotatingChips">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/containerRotatingDefaultBanner"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/ic_ellipse_back"
-                        android:visibility="visible">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivBannerRotatingTreasures"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="center"
+                            android:layout_gravity="center_vertical"
+                            android:visibility="invisible"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@drawable/zerbonics" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:id="@+id/vpTreasuryBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="24dp"
-                    android:paddingStart="40dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="40dp"
-                    android:paddingBottom="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cvJackpot" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvRotatingAttemptsLeft"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:fontFamily="@font/product_sans_regular"
-                    tools:text="@string/attempts_left"
-                    android:textColor="@color/text_body_grey"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/vpTreasuryBox" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnPlayNow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/button_bottom_spin_wheel_back"
-                    android:fontFamily="@font/product_sans_bold"
-                    android:paddingStart="62dp"
-                    android:paddingTop="16dp"
-                    android:paddingEnd="62dp"
-                    android:paddingBottom="16dp"
-                    android:text="@string/play_now"
-                    android:textAllCaps="false"
-                    android:textColor="@color/text_color_dark"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tvRotatingAttemptsLeft" />
+                            app:layout_constraintTop_toTopOf="parent" />
 
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:layout_marginBottom="28dp"
-                    android:background="@drawable/curved_background_chip_back"
-                    android:paddingStart="12dp"
-                    android:paddingTop="10dp"
-                    android:paddingEnd="12dp"
-                    android:paddingBottom="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnPlayNow">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivMyntsRequired"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginStart="6dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/mynt" />
+                    </FrameLayout>
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvRotatingBurnMyntsCount"
+                        android:id="@+id/tvRotatingCashCount"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="6dp"
-                        android:textColor="@color/color_dark_yellow"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@id/ivMyntsRequired"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/green_winnings"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintBottom_toBottomOf="@id/frameRotatingCash"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/ivMyntsRequired"
-                        app:layout_constraintTop_toTopOf="@id/ivMyntsRequired"
-                        tools:text="@string/dummy_amount" />
+                        app:layout_constraintStart_toEndOf="@id/frameRotatingCash"
+                        app:layout_constraintTop_toTopOf="@id/frameRotatingCash"
+                        tools:text="@string/dummy_amount1" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.core.widget.NestedScrollView>
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvJackpot"
+                android:layout_width="match_parent"
+                android:layout_height="162dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="28dp"
+                app:cardBackgroundColor="@color/back_surface_color"
+                app:cardCornerRadius="18dp"
+                app:layout_constraintBottom_toTopOf="@+id/vpTreasuryBox"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/containerRotatingChips">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/containerRotatingDefaultBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="visible">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivBannerRotatingTreasures"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/containerRotatingTreasureRewards"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvYouWon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:fontFamily="@font/product_sans_bold"
+                        android:text="@string/you_have_won"
+                        android:textColor="@color/yellow_won_color"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivRotatingRewards"
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        android:layout_marginTop="14dp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvWinRewardsValue"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvYouWon"
+                        app:srcCompat="@drawable/ic_mynt_rewards" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvWinRewardsValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="18dp"
+                        android:fontFamily="@font/product_sans_bold"
+                        android:textColor="@color/color_orange"
+                        android:textSize="20sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivRotatingRewards"
+                        tools:text="@string/_100_mynts" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottieRewardConfetti"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:visibility="gone"
+                    app:lottie_autoPlay="true"
+                    app:lottie_rawRes="@raw/arcade_confetti_lottie" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <!--                <com.airbnb.lottie.LottieAnimationView-->
+            <!--                    android:id="@+id/lottie_test"-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="200dp"-->
+            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                    app:layout_constraintStart_toStartOf="parent"-->
+            <!--                    app:layout_constraintTop_toBottomOf="@+id/cvJackpot"-->
+            <!--                    app:lottie_autoPlay="true"-->
+            <!--                    app:lottie_repeatCount="1"-->
+            <!--                    app:lottie_rawRes="@raw/gold_box_open" />-->
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vpTreasuryBox"
+                android:layout_width="match_parent"
+                android:layout_height="228dp"
+                android:layout_marginTop="24dp"
+                android:paddingStart="90dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="90dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@id/tvRotatingAttemptsLeft"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cvJackpot" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieRotatingVP"
+                android:layout_width="240dp"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="false"
+                android:background="@color/bgcolor"
+                android:layout_height="228dp"
+                android:layout_marginTop="6dp"
+                android:visibility="invisible"
+                app:lottie_speed="3"
+                app:layout_constraintBottom_toTopOf="@id/tvRotatingAttemptsLeft"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cvJackpot"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvRotatingAttemptsLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:fontFamily="@font/product_sans_regular"
+                android:text="@string/attempts_left"
+                android:textColor="@color/text_body_grey"
+                app:layout_constraintBottom_toTopOf="@+id/frameBtnContainer"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vpTreasuryBox"
+                tools:text="@string/attempts_left" />
+
+            <FrameLayout
+                android:id="@+id/frameBtnContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                app:layout_constraintBottom_toTopOf="@+id/chipMyntsBurnView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRotatingAttemptsLeft">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivBtnPlayAnimation"
+                    android:layout_width="200dp"
+                    android:layout_height="72dp"
+                    android:visibility="visible" />
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
+                    android:id="@+id/progressBtnPlay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminate="true"
+                    android:visibility="invisible"
+                    app:indicatorColor="@color/color_orange" />
+
+            </FrameLayout>
+
+            <!--                <androidx.appcompat.widget.AppCompatButton-->
+            <!--                    android:id="@+id/btnPlayNow"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_centerHorizontal="true"-->
+            <!--                    android:layout_marginTop="24dp"-->
+            <!--                    android:background="@drawable/button_bottom_spin_wheel_back"-->
+            <!--                    android:fontFamily="@font/product_sans_bold"-->
+            <!--                    android:paddingStart="62dp"-->
+            <!--                    android:paddingTop="16dp"-->
+            <!--                    android:paddingEnd="62dp"-->
+            <!--                    android:paddingBottom="16dp"-->
+            <!--                    android:text="@string/play_now"-->
+            <!--                    android:textAllCaps="false"-->
+            <!--                    android:textColor="@color/text_color_dark"-->
+            <!--                    android:textSize="16sp"-->
+            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                    app:layout_constraintStart_toStartOf="parent"-->
+            <!--                    app:layout_constraintTop_toBottomOf="@+id/tvRotatingAttemptsLeft" />-->
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/chipMyntsBurnView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginBottom="18dp"
+                android:background="@drawable/curved_background_chip_back"
+                android:paddingStart="12dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/frameBtnContainer">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivMyntsRequired"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="6dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/mynt" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvRotatingBurnMyntsCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:textColor="@color/color_dark_yellow"
+                    android:textSize="14sp"
+                    app:fontFamily="@font/product_sans_bold"
+                    app:layout_constraintBottom_toBottomOf="@id/ivMyntsRequired"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/ivMyntsRequired"
+                    app:layout_constraintTop_toTopOf="@id/ivMyntsRequired"
+                    tools:text="@string/dummy_amount" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--        </androidx.core.widget.NestedScrollView>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

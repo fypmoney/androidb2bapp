@@ -1249,5 +1249,12 @@ Coming really soon!
     <string name="product_name">Portonics - Muffs-A wireless Headphones.</string>
     <string name="ticket_duration">From : June 02 - July 01</string>
     <string name="expired">Expired</string>
+    <string name="default_burn_mynts">200</string>
+
+    <string name="arcade_golden_tickets">%1$s Golden Tickets</string>
+    <string name="arcade_cashback">₹ %1$s Cashback</string>
+    <string name="arcade_cash_value">₹%1$s</string>
+    <string name="arcade_mynts">%1$s Mynts</string>
+    <string name="jackpot_duration">From: %1$s - %2$s</string>
 
 </resources>

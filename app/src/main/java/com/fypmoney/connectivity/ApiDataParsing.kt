@@ -13,10 +13,14 @@ import com.fypmoney.connectivity.ApiConstant.API_UPDATE_PROFILE
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.model.*
+import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
+import com.fypmoney.view.arcadegames.model.SingleSpinWheelProductNetworkResponse
+import com.fypmoney.view.arcadegames.model.TreasureBoxNetworkResponse
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
 import com.fypmoney.view.ordercard.model.UserOfferCardResponse
 import com.fypmoney.view.recharge.model.RecentRechargesResponse
 import com.google.gson.Gson
+import com.google.protobuf.Api
 import com.payu.india.Payu.PayuConstants
 import okhttp3.ResponseBody
 
@@ -222,6 +226,15 @@ class ApiDataParsing {
                 }
                 ApiConstant.API_RECENT_RECHARGE -> {
                     getObject(response, RecentRechargesResponse::class.java)
+                }
+                ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS -> {
+                    getObject(response, SingleSpinWheelProductNetworkResponse::class.java)
+                }
+                ApiConstant.API_GET_TREASURE_DATA -> {
+                    getObject(response, TreasureBoxNetworkResponse::class.java)
+                }
+                ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
+                    getObject(response, MultipleJackpotNetworkResponse::class.java)
                 }
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {

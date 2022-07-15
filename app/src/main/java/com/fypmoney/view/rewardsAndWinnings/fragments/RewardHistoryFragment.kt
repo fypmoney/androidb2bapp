@@ -103,7 +103,6 @@ class RewardHistoryFragment :
 
                 } else {
                     mViewModel?.callProductsDetailsApi(historyItem.orderNumber)
-
                 }
             }
         }

@@ -11,7 +11,6 @@ import com.fypmoney.R
 import com.fypmoney.model.HistoryItem
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
-import com.fypmoney.view.interfaces.ListContactClickListener
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
 import kotlinx.android.synthetic.main.reward_history_item_leaderboard.view.*
 
