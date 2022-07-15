@@ -13,7 +13,7 @@
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_92sdp"
             android:layout_margin="12dp"
             app:cardBackgroundColor="@color/cardBackColor"
             app:cardCornerRadius="14dp"
@@ -35,10 +35,9 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivMultipleJackpotProduct"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:padding="8dp"
-                        android:scaleType="centerInside"
                         app:srcCompat="@drawable/demo_product_image" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -56,11 +55,11 @@
                         android:layout_marginTop="14dp"
                         android:ellipsize="end"
                         android:maxLines="2"
+                        android:rotation="314"
+                        android:text="@string/expired"
                         android:textColor="@color/textColorRed1"
                         android:textSize="12sp"
                         android:textStyle="bold"
-                        android:text="@string/expired"
-                        android:rotation="314"
                         app:fontFamily="@font/product_sans_bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -128,7 +127,7 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -139,7 +138,7 @@
                         android:id="@+id/tvMultipleTicketValue"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
+                        android:gravity="center"
                         android:textColor="@color/yellow"
                         android:textSize="18sp"
                         android:textStyle="bold"

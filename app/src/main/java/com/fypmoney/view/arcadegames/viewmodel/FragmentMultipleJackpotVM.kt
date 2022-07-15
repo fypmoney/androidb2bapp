@@ -129,8 +129,7 @@ class FragmentMultipleJackpotVM(application: Application) : BaseViewModel(applic
 //                    _state.value = MultipleJackpotsState.Success(multipleJackpot)
 
                     Log.d("JackpotData", "Data: ${responseData.data.toString()}")
-                    _state.value = responseData.data?.jackpotDetails?.get(0)
-                        ?.let { MultipleJackpotsState.Success(it) }
+                    _state.value = MultipleJackpotsState.Success(responseData.data?.jackpotDetails)
                 }
             }
         }
@@ -138,7 +137,7 @@ class FragmentMultipleJackpotVM(application: Application) : BaseViewModel(applic
 
     sealed class MultipleJackpotsState {
         object Loading : MultipleJackpotsState()
-        data class Success(val multipleJackpotData: JackpotDetailsItem) : MultipleJackpotsState()
+        data class Success(val listOfJackpotDetailsItem: List<JackpotDetailsItem?>?) : MultipleJackpotsState()
         object Error : MultipleJackpotsState()
     }
 

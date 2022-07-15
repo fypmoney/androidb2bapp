@@ -17,7 +17,15 @@
             android:id="@+id/layout_toolbar"
             layout="@layout/toolbar" />
 
-        <androidx.core.widget.NestedScrollView
+        <!--        <androidx.core.widget.NestedScrollView-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="0dp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">-->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -26,151 +34,190 @@
             app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:id="@+id/containerMultipleJackpotChips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/containerMultipleJackpotChips"
+                    android:id="@+id/chipMyntsView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:paddingStart="6dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/chipMyntsView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingStart="6dp"
-                        android:paddingEnd="12dp"
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMultipleMynts"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:padding="10dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_mynt_coin" />
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivMultipleMynts"
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            android:padding="4dp"
-                            app:srcCompat="@drawable/ic_mynt_coin"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/tvMultipleJackpotsMyntsCount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginEnd="4dp"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/color_dark_yellow"
-                            android:textSize="14sp"
-                            app:fontFamily="@font/product_sans_bold"
-                            app:layout_constraintBottom_toBottomOf="@id/ivMultipleMynts"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivMultipleMynts"
-                            app:layout_constraintTop_toTopOf="@id/ivMultipleMynts"
-                            tools:text="@string/dummy_amount" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/chipTicketView"
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvMultipleJackpotsMyntsCount"
                         android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginEnd="4dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/color_dark_yellow"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintBottom_toBottomOf="@id/ivMultipleMynts"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ivMultipleMynts"
+                        app:layout_constraintTop_toTopOf="@id/ivMultipleMynts"
+                        tools:text="@string/dummy_amount" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/loadingMynts"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivMultipleTicket"
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            app:srcCompat="@drawable/ticket"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/tvMultipleJackpotsTicketsCount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginEnd="4dp"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/yellow10"
-                            android:textSize="14sp"
-                            app:fontFamily="@font/product_sans_bold"
-                            app:layout_constraintBottom_toBottomOf="@id/ivMultipleTicket"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivMultipleTicket"
-                            app:layout_constraintTop_toTopOf="@id/ivMultipleTicket"
-                            tools:text="@string/dummy_amount" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/chipCashView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/chipTicketView"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivMultipleCash"
-                            android:layout_width="42dp"
-                            android:layout_height="42dp"
-                            android:paddingBottom="2dp"
-                            app:srcCompat="@drawable/cash"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/tvMultipleJackpotsCashCount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginEnd="4dp"
-                            android:gravity="center_vertical"
-                            android:textColor="@color/green_winnings"
-                            android:textSize="14sp"
-                            app:fontFamily="@font/product_sans_bold"
-                            app:layout_constraintBottom_toBottomOf="@id/ivMultipleCash"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@+id/ivMultipleCash"
-                            app:layout_constraintTop_toTopOf="@id/ivMultipleCash"
-                            tools:text="@string/dummy_amount1" />
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                        android:layout_gravity="center"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivMultipleMynts"
+                        app:layout_constraintStart_toEndOf="@+id/ivMultipleMynts"
+                        app:layout_constraintTop_toTopOf="@+id/ivMultipleMynts"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/three_dot_amount_loader"
+                        tools:visibility="visible" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerMultipleJackpots"
-                    android:layout_width="0dp"
-                    android:layout_height="400dp"
-                    android:layout_marginTop="18dp"
-                    android:orientation="vertical"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/chipTicketView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/containerMultipleJackpotChips" />
+                    app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMultipleTicket"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:padding="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ticket" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvMultipleJackpotsTicketsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/yellow10"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintBottom_toBottomOf="@id/ivMultipleTicket"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ivMultipleTicket"
+                        app:layout_constraintTop_toTopOf="@id/ivMultipleTicket"
+                        tools:text="@string/dummy_amount" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/loadingTickets"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivMultipleTicket"
+                        app:layout_constraintStart_toEndOf="@+id/ivMultipleTicket"
+                        app:layout_constraintTop_toTopOf="@+id/ivMultipleTicket"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/three_dot_amount_loader"
+                        tools:visibility="visible" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/chipCashView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/chipTicketView"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivMultipleCash"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:padding="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/cash" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvMultipleJackpotsCashCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/green_winnings"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintBottom_toBottomOf="@id/ivMultipleCash"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/ivMultipleCash"
+                        app:layout_constraintTop_toTopOf="@id/ivMultipleCash"
+                        tools:text="@string/dummy_amount1" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/loadingCash"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="2dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivMultipleCash"
+                        app:layout_constraintStart_toEndOf="@+id/ivMultipleCash"
+                        app:layout_constraintTop_toTopOf="@+id/ivMultipleCash"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true"
+                        app:lottie_rawRes="@raw/three_dot_amount_loader"
+                        tools:visibility="visible" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.core.widget.NestedScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerMultipleJackpots"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/_12sdp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/containerMultipleJackpotChips" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--        </androidx.core.widget.NestedScrollView>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

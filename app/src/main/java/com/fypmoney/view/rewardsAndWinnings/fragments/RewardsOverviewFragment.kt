@@ -7,8 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.View
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -44,7 +42,7 @@ import com.fypmoney.view.storeoffers.model.offerDetailResponse
 import com.fypmoney.view.webview.ARG_WEB_URL_TO_OPEN
 
 
-class RewardsOverviewFragment() :
+class RewardsOverviewFragment :
     BaseFragment<FragmentRewardsOverviewBinding, RewardsAndVM>(),
     FeedsAdapter.OnFeedItemClickListener {
 
@@ -196,7 +194,7 @@ class RewardsOverviewFragment() :
         }
 
         mViewBinding?.chipTicketsView?.setOnClickListener {
-            findNavController().navigate(R.id.navigation_spin_wheel)
+            findNavController().navigate(R.id.navigation_multiple_jackpots)
         }
 
     }
@@ -302,7 +300,7 @@ class RewardsOverviewFragment() :
                             findNavController().navigate(R.id.navigation_rewards_history)
                         }
                         AppConstants.ARCADE -> {
-                            findNavController().navigate(R.id.navigation_rotating_treasure)
+                            findNavController().navigate(R.id.navigation_spin_wheel)
                         }
                         else -> {
                             redirectionResources.let { it1 ->

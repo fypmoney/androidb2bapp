@@ -187,12 +187,14 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
 
                 arcadeSounds("MYNTS")
 
-                increaseCountAnimation(
-                    mViewBinding!!.tvSpinWheelMyntsCount,
-                    1500,
-                    spinWheelRotateResponseDetails.myntsWon!!,
-                    "Ticket"
-                )
+                if (spinWheelRotateResponseDetails.myntsWon != null) {
+                    increaseCountAnimation(
+                        mViewBinding!!.tvSpinWheelMyntsCount,
+                        1500,
+                        spinWheelRotateResponseDetails.myntsWon!!,
+                        "Ticket"
+                    )
+                }
             } else {
                 mViewBinding!!.tvWinRewardsValue.text = String.format(
                     getString(R.string.arcade_golden_tickets),
@@ -215,6 +217,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
                     )
                 }
             }
+
 
         } else {
             Glide.with(this).load(R.drawable.ic_wallet_rewards).into(mViewBinding!!.ivSpinRewards)

@@ -15,7 +15,7 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.model.JackpotDetailsItem
 
-class MultipleJackpotAdapter() :
+class MultipleJackpotAdapter :
     ListAdapter<MultipleJackpotUiModel, MultipleJackpotAdapter.MultipleJackpotVH>(
         MultipleJackpotDiffUtils
     ) {
@@ -41,10 +41,10 @@ class MultipleJackpotAdapter() :
             binding.tvMultipleTicketValue.text = item.jackpotTicketValue.toString()
 
             if (item.isExpired == "NO") {
-                binding.ivMultipleTicket.visibility = View.GONE
+                binding.tvExpiredProduct.visibility = View.GONE
                 binding.ivMultipleJackpotExpiredPath.visibility = View.GONE
             } else {
-                binding.ivMultipleTicket.visibility = View.VISIBLE
+                binding.tvExpiredProduct.visibility = View.VISIBLE
                 binding.ivMultipleJackpotExpiredPath.visibility = View.VISIBLE
             }
 

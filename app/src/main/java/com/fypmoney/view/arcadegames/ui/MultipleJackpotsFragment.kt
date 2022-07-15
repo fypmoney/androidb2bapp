@@ -16,20 +16,14 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.adapter.MultipleJackpotAdapter
 import com.fypmoney.view.arcadegames.adapter.MultipleJackpotUiModel
 import com.fypmoney.view.arcadegames.model.JackpotDetailsItem
-import com.fypmoney.view.arcadegames.model.SectionListItem
 import com.fypmoney.view.arcadegames.viewmodel.FragmentMultipleJackpotVM
 import kotlinx.android.synthetic.main.toolbar.*
 
 class MultipleJackpotsFragment :
     BaseFragment<FragmentMultipleJackpotsBinding, FragmentMultipleJackpotVM>() {
 
-    private val TAG = MultipleJackpotsFragment::class.java.simpleName
-
     private var mViewBinding: FragmentMultipleJackpotsBinding? = null
     private val multipleJackpotVM by viewModels<FragmentMultipleJackpotVM> { defaultViewModelProviderFactory }
-    companion object {
-        var jackpotArrayList: List<JackpotDetailsItem> = ArrayList()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -43,6 +37,10 @@ class MultipleJackpotsFragment :
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
+
+        mViewBinding?.loadingMynts?.visibility = View.VISIBLE
+        mViewBinding?.loadingTickets?.visibility = View.VISIBLE
+        mViewBinding?.loadingCash?.visibility = View.VISIBLE
 
         setUpObserver(multipleJackpotVM)
 
@@ -67,13 +65,20 @@ class MultipleJackpotsFragment :
         viewModel.totalRewardsResponse.observe(
             viewLifecycleOwner
         ) { list ->
+
+            mViewBinding?.loadingCash?.clearAnimation()
+            mViewBinding?.loadingCash?.visibility = View.INVISIBLE
+
             mViewBinding?.tvMultipleJackpotsCashCount?.text =
-                getString(R.string.rupee_symbol) + " " + Utility.convertToRs("${list.amount}")
+                getString(R.string.rupee_symbol) + Utility.convertToRs("${list.amount}")
         }
 
         viewModel.rewardSummaryStatus.observe(
             viewLifecycleOwner
         ) { list ->
+            mViewBinding?.loadingMynts?.clearAnimation()
+            mViewBinding?.loadingMynts?.visibility = View.INVISIBLE
+
             if (list.totalPoints != null) {
                 mViewBinding?.tvMultipleJackpotsMyntsCount?.text =
                     String.format("%.0f", list.remainingPoints)
@@ -83,6 +88,8 @@ class MultipleJackpotsFragment :
         viewModel.totalJackpotAmount.observe(
             viewLifecycleOwner
         ) { list ->
+            mViewBinding?.loadingTickets?.clearAnimation()
+            mViewBinding?.loadingTickets?.visibility = View.INVISIBLE
             if (list.count != null) {
                 mViewBinding?.tvMultipleJackpotsTicketsCount?.text = "${list.count}"
             }
@@ -101,9 +108,13 @@ class MultipleJackpotsFragment :
 
             }
             is FragmentMultipleJackpotVM.MultipleJackpotsState.Success -> {
-//                (mViewBinding!!.recyclerMultipleJackpots.adapter as MultipleJackpotAdapter).submitList(it.multipleJackpotData.map{
-                    MultipleJackpotUiModel.fromMultipleJackpotItem(requireContext(),  it.multipleJackpotData)
-//                })
+                (mViewBinding!!.recyclerMultipleJackpots.adapter as MultipleJackpotAdapter).submitList(it.listOfJackpotDetailsItem?.map{
+                    it?.let { it1 ->
+                        MultipleJackpotUiModel.fromMultipleJackpotItem(requireContext(),
+                            it1
+                        )
+                    }
+              })
             }
             is FragmentMultipleJackpotVM.MultipleJackpotsState.Loading -> {
 
