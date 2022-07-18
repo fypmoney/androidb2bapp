@@ -1300,5 +1300,7 @@ Coming really soon!
     <string name="arcade_cash_value">₹%1$s</string>
     <string name="arcade_mynts">%1$s Mynts</string>
     <string name="jackpot_duration">From: %1$s - %2$s</string>
+    <string name="oops_upi_id_could_not_be_loaded">Oops! UPI ID could not be loaded</string>
+    <string name="try_again_exclamation">Try Again!</string>
 
 </resources>

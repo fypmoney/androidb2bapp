@@ -122,6 +122,7 @@ class NewAddMoneyActivity : BaseActivity<ActivityNewAddMoneyBinding, NewAddMoney
                 }
             }
             is NewAddMoneyActivityVM.BankDetailsState.LoadViaUPIOrQRCode -> {
+                binding.cvAddViaUpiError.toGone()
                 when (it.data.modeVisibility) {
                     Visibility.InVisible -> {
                         binding.cvAddViaUpiIdOrQRCode.toGone()
@@ -145,6 +146,10 @@ class NewAddMoneyActivity : BaseActivity<ActivityNewAddMoneyBinding, NewAddMoney
                 binding.tvPaymentModeNotAvailable.toGone()
                 binding.clPayModeDetailsCl.toVisible()
                 binding.shimmerLayout.toGone()
+            }
+            NewAddMoneyActivityVM.BankDetailsState.UnableToGenerateUPIIdState -> {
+                binding.cvAddViaUpiError.toVisible()
+                binding.cvAddViaUpiIdOrQRCode.toGone()
             }
         }
     }
@@ -231,6 +236,9 @@ class NewAddMoneyActivity : BaseActivity<ActivityNewAddMoneyBinding, NewAddMoney
                     intent.putExtra(ARG_WEB_URL_TO_OPEN, videoLink)
                     startActivity(intent)
                 }
+            }
+            NewAddMoneyActivityVM.BankDetailsEvent.ReloadAddViaUPI -> {
+
             }
         }
     }

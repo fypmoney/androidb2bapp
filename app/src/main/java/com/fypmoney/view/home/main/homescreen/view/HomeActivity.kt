@@ -315,5 +315,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
         }
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        navController?.handleDeepLink(intent)
+    }
 
 }

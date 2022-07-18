@@ -27,6 +27,7 @@ import com.google.gson.JsonParser
 
 class FragmentSpinWheelVM(application: Application) : BaseViewModel(application) {
 
+    lateinit var productCode:String
     var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
     var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
@@ -62,7 +63,6 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
 //        callExploreContent()
         callTotalRewardsEarnings()
         callTotalJackpotCards()
-        callSingleProductApi("SPIN_WHEEL_1000")
     }
 
 //    private fun callExploreContent() {
@@ -191,7 +191,7 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
         )
     }
 
-    private fun callSingleProductApi(code: String?) {
+    fun callSingleProductApi(code: String?) {
         _state.postValue(SpinWheelState.Loading)
         WebApiCaller.getInstance().request(
             ApiRequest(

@@ -36,6 +36,8 @@ import com.fypmoney.util.videoplayer.VideoActivityWithExplore
 import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.addmoney.NewAddMoneyActivity
+import com.fypmoney.view.arcadegames.model.ArcadeType
+import com.fypmoney.view.arcadegames.model.checkTheArcadeType
 import com.fypmoney.view.contacts.model.CONTACT_ACTIVITY_UI_MODEL
 import com.fypmoney.view.contacts.model.ContactActivityActionEvent
 import com.fypmoney.view.contacts.model.ContactsActivityUiModel
@@ -580,6 +582,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             AppConstants.GIFT_VOUCHER -> {
                 findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
             }
+            "ARCADE"-> {
+                val type = sectionContentItem.rfu1?.let { rfu->sectionContentItem.redirectionResource?.let { it1 -> checkTheArcadeType(arcadeType = rfu, productCode = it1) } }
+                when(type){
+                    ArcadeType.NOTypeFound -> TODO()
+                    is ArcadeType.SCRATCH_CARD -> TODO()
+                    is ArcadeType.SLOT -> TODO()
+                    is ArcadeType.SPIN_WHEEL -> {
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}"))
+                    }
+                    is ArcadeType.TREASURE_BOX -> {
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}"))
+                    }
+                    null -> TODO()
+                }
+            }
         }
     }
 
@@ -667,6 +684,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
                 }
 
             }
+
 
             /*AppConstants.EXPLORE_SECTION_EXPLORE->{
                 val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
