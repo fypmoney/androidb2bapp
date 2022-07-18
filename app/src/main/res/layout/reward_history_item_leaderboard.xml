@@ -38,13 +38,11 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/productType"
             android:layout_width="44dp"
-
             android:layout_height="56dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="@dimen/_10sdp"
             android:paddingBottom="12dp"
             android:src="@drawable/ic_spin_burned"
-
 
             />
 
@@ -95,17 +93,12 @@
         <ImageView
             android:id="@+id/note"
             android:layout_width="wrap_content"
-
-
             android:layout_height="@dimen/_8sdp"
-
             android:layout_alignTop="@+id/amount"
-
             android:layout_alignBottom="@+id/amount"
             android:layout_toStartOf="@+id/amount"
             android:paddingTop="@dimen/_2sdp"
             android:paddingBottom="@dimen/_2sdp"
-
             android:src="@drawable/cash" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -125,7 +118,6 @@
             android:id="@+id/status_tv"
             style="@style/TextviewRegular"
             android:layout_below="@+id/amount"
-
             android:layout_alignParentRight="true"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/_8sdp"

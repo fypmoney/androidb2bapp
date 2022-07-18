@@ -68,7 +68,7 @@
                         android:id="@+id/tvMultipleJackpotsMyntsCount"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_marginTop="2dp"
+                        android:layout_marginTop="1dp"
                         android:layout_marginEnd="4dp"
                         android:gravity="center_vertical"
                         android:textColor="@color/color_dark_yellow"
@@ -121,7 +121,7 @@
                         android:id="@+id/tvMultipleJackpotsTicketsCount"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="2dp"
                         android:layout_marginEnd="4dp"
                         android:gravity="center_vertical"
                         android:textColor="@color/yellow10"
@@ -174,7 +174,7 @@
                         android:id="@+id/tvMultipleJackpotsCashCount"
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="2dp"
                         android:layout_marginEnd="4dp"
                         android:gravity="center_vertical"
                         android:textColor="@color/green_winnings"
@@ -214,6 +214,54 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/containerMultipleJackpotChips" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/emptyMultipleJackpots"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:visibility="invisible"
+                android:layout_marginTop="@dimen/_12sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/containerMultipleJackpotChips">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivJackpotEmpty"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_marginTop="120dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/ic_jackpot_empty" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvJackpotsComing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:text="@string/jackpots_coming_soon"
+                    android:textColor="#F7AA11"
+                    android:textSize="22sp"
+                    app:fontFamily="@font/product_sans_bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivJackpotEmpty" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnViewMoreRewards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:backgroundTint="@color/reward_continue_button"
+                    android:fontFamily="@font/product_sans_regular"
+                    android:text="@string/try_other_rewards"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvJackpotsComing" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

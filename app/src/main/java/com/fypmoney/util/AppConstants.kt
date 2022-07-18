@@ -82,6 +82,7 @@ object AppConstants {
     const val YES = "YES"
     const val NO = "NO"
     const val PRODUCT_SPIN = "SPIN_WHEEL"
+    const val PRODUCT_TREASURE_BOX = "TREASURE_BOX"
     const val PRODUCT_SCRATCH = "SCRATCH_CARD"
     const val CUSTOMER_INFO_RESPONSE = "customer_info_response"
     const val SPLASH_TIME = 4000L

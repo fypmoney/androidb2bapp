@@ -42,10 +42,10 @@ class MultipleJackpotAdapter :
 
             if (item.isExpired == "NO") {
                 binding.tvExpiredProduct.visibility = View.GONE
-                binding.ivMultipleJackpotExpiredPath.visibility = View.GONE
+//                binding.ivMultipleJackpotExpiredPath.visibility = View.GONE
             } else {
                 binding.tvExpiredProduct.visibility = View.VISIBLE
-                binding.ivMultipleJackpotExpiredPath.visibility = View.VISIBLE
+//                binding.ivMultipleJackpotExpiredPath.visibility = View.VISIBLE
             }
 
         }
@@ -67,7 +67,7 @@ data class MultipleJackpotUiModel(
             context: Context,
             jackpotDetailsItem: JackpotDetailsItem
         ): MultipleJackpotUiModel {
-            val jackpotImage = jackpotDetailsItem.listImage
+            val jackpotImage = jackpotDetailsItem.detailImage
             val jackpotName = jackpotDetailsItem.productName
             val jackpotDuration = String.format(
                 context.resources.getString(R.string.jackpot_duration), Utility.parseDateTime(

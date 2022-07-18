@@ -29,6 +29,8 @@ import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.activity.UserFeedsInAppWebview
 import com.fypmoney.view.adapter.FeedsAdapter
+import com.fypmoney.view.arcadegames.ui.SpinWheelFragment
+import com.fypmoney.view.arcadegames.viewmodel.FragmentSpinWheelVM
 import com.fypmoney.view.arcadegames.model.ArcadeType
 import com.fypmoney.view.arcadegames.model.checkTheArcadeType
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
@@ -496,27 +498,35 @@ class RewardsOverviewFragment :
 
         }
 
-        viewModel.totalJackpotAmount.observe(
-            viewLifecycleOwner
-        ) { list ->
-//            mViewBinding?.loadingGoldenCards?.clearAnimation()
-//            mViewBinding?.loadingGoldenCards?.visibility = View.GONE
-
-            mViewBinding?.loadingTickets?.clearAnimation()
-            mViewBinding?.loadingTickets?.visibility = View.INVISIBLE
-
-//            mViewBinding?.amountGolderTv?.visibility = View.VISIBLE
-            if (list.count != null) {
-//                mViewBinding?.amountGolderTv?.text =
+//        viewModel.totalJackpotAmount.observe(
+//            viewLifecycleOwner
+//        ) { list ->
+//
+//            mViewBinding?.loadingTickets?.clearAnimation()
+//            mViewBinding?.loadingTickets?.visibility = View.INVISIBLE
+//
+//            if (list.count != null) {
+//                mViewBinding?.tvRewardsTicketsCount?.text =
 //                    "${list.count}"
-
-                mViewBinding?.tvRewardsTicketsCount?.text =
-                    "${list.count}"
-            }
-//            if (list.totalJackpotMsg != null) {
-//                mViewBinding?.golderCardWonHeading?.text = "${list.totalJackpotMsg}"
 //            }
+//
+//        }
 
+        viewModel.state.observe(viewLifecycleOwner) {
+            when (it) {
+                is RewardsAndVM.RewardsTicket.Error -> {
+
+                }
+                is RewardsAndVM.RewardsTicket.Success -> {
+                    mViewBinding?.loadingTickets?.clearAnimation()
+                    mViewBinding?.loadingTickets?.visibility = View.INVISIBLE
+
+                    mViewBinding?.tvRewardsTicketsCount?.text = "${it.totalTickets}"
+                }
+                is RewardsAndVM.RewardsTicket.Loading -> {
+
+                }
+            }
         }
     }
 

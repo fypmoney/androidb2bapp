@@ -269,7 +269,7 @@ public class PielView extends View {
     private void drawImage(Canvas canvas, float tmpAngle, Bitmap bitmap) {
         canvas.save();
         int imgWidth = 60;
-        float angle = (float) ((tmpAngle + 360f / mLuckyItemList.size() / 2) * Math.PI / 180);
+        float angle = (float) ((tmpAngle + 360f / mLuckyItemList.size() / 2) * (Math.PI / 180));
 
         int x = (int) +(mCenter + mRadius * 4 / 7 / 2 * Math.cos(angle));
         int y = (int) (mCenter + mRadius * 4 / 7 / 2 * Math.sin(angle));
@@ -281,7 +281,7 @@ public class PielView extends View {
         int arraySize = mLuckyItemList.size();
 
 
-        float initFloat = (tmpAngle + 360f / arraySize / 2);
+        float initFloat = (tmpAngle + 360f / arraySize / 2) + 90;
 
 
         canvas.rotate(initFloat + (arraySize / 18f), x, y);
@@ -291,11 +291,11 @@ public class PielView extends View {
 
     private void drawImagesingle(Canvas canvas, float tmpAngle, Bitmap bitmap) {
         canvas.save();
-        int imgWidth = 60;
+        int imgWidth = 50;
         float angle = (float) ((tmpAngle + 360f / mLuckyItemList.size() / 2) * Math.PI / 180);
 
-        int x = (int) +(mCenter + mRadius * 3 / 5 / 2 * Math.cos(angle));
-        int y = (int) (mCenter + mRadius * 3 / 5 / 2 * Math.sin(angle));
+        int x = (int) +(mCenter + mRadius * 3 / 5 / 2 * Math.cos(angle) + 30);
+        int y = (int) (mCenter + mRadius * 3 / 5 / 2 * Math.sin(angle) + 20);
 
         Rect rect = new Rect(x - imgWidth, y - imgWidth / 2,
                 x + imgWidth, y + imgWidth / 2);
@@ -304,13 +304,13 @@ public class PielView extends View {
         int arraySize = mLuckyItemList.size();
 
 
-        float initFloat = (tmpAngle + 360f / arraySize / 2);
-
+        float initFloat = (tmpAngle + 360f / arraySize / 2) + 90;
 
         canvas.rotate(initFloat + (arraySize / 18f), x, y);
         canvas.drawBitmap(bitmap, null, rect, null);
         canvas.restore();
     }
+
     private void drawCenterImage(Canvas canvas, Drawable drawable) {
         ;
         Bitmap bitmap = LuckyWheelUtils.drawableToBitmap(drawable);

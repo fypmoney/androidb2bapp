@@ -51,7 +51,7 @@ data class SpinWheelItem(
 	val listResource: String? = null,
 
 	@field:SerializedName("sectionId")
-	val sectionId: Any? = null,
+	val sectionId: Int? = null,
 
 	@field:SerializedName("scratchResourceHide")
 	val scratchResourceHide: Any? = null,

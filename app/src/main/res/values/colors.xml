@@ -114,12 +114,12 @@
     <color name="recommanded_bg">#EFFFF2</color>
     <color name="yellow10">#FAC660</color>
 
+    <color name="back_surface_color">#262B32</color>48AB5B
     <color name="amount_bg1">#BAE6C2</color>
     <color name="amount_bg2">#8ECFE3</color>
     <color name="amount_bg3">#FFD3D7</color>
     <color name="amount_bg4">#FFD98D</color>
     <color name="black_grey_txt_color">#333333</color>
-    <color name="back_surface_color">#262B32</color>
     <color name="text_body_grey">#B1B3B6</color>
     <color name="yellow_won_color">#FFD98D</color>
     <color name="cardBackColor">#1C2129</color>

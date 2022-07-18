@@ -1,7 +1,6 @@
 package com.fypmoney.view.arcadegames.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -123,13 +122,7 @@ class FragmentMultipleJackpotVM(application: Application) : BaseViewModel(applic
 
             ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
                 if (responseData is MultipleJackpotNetworkResponse) {
-//                    val multipleJackpot = responseData.data.filter {
-//                        it.isExpired == "NO"
-//                    }
-//                    _state.value = MultipleJackpotsState.Success(multipleJackpot)
-
-                    Log.d("JackpotData", "Data: ${responseData.data.toString()}")
-                    _state.value = MultipleJackpotsState.Success(responseData.data?.jackpotDetails)
+                    _state.value = MultipleJackpotsState.Success(responseData.data?.jackpotDetails, responseData.data?.totalTickets)
                 }
             }
         }
@@ -137,7 +130,7 @@ class FragmentMultipleJackpotVM(application: Application) : BaseViewModel(applic
 
     sealed class MultipleJackpotsState {
         object Loading : MultipleJackpotsState()
-        data class Success(val listOfJackpotDetailsItem: List<JackpotDetailsItem?>?) : MultipleJackpotsState()
+        data class Success(val listOfJackpotDetailsItem: List<JackpotDetailsItem?>?, val totalTickets: Int?) : MultipleJackpotsState()
         object Error : MultipleJackpotsState()
     }
 

@@ -40,30 +40,30 @@
                         android:padding="8dp"
                         app:srcCompat="@drawable/demo_product_image" />
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivMultipleJackpotExpiredPath"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_minus2sdp"
-                        android:layout_marginBottom="@dimen/_minus1sdp"
-                        app:srcCompat="@drawable/ic_path_expired" />
+<!--                    <androidx.appcompat.widget.AppCompatImageView-->
+<!--                        android:id="@+id/ivMultipleJackpotExpiredPath"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="@dimen/_minus2sdp"-->
+<!--                        android:layout_marginBottom="@dimen/_minus1sdp"-->
+<!--                        app:srcCompat="@drawable/ic_path_expired" />-->
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvExpiredProduct"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="14dp"
-                        android:ellipsize="end"
-                        android:maxLines="2"
-                        android:rotation="314"
-                        android:text="@string/expired"
-                        android:textColor="@color/textColorRed1"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:fontFamily="@font/product_sans_bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+<!--                    <com.google.android.material.textview.MaterialTextView-->
+<!--                        android:id="@+id/tvExpiredProduct"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginTop="14dp"-->
+<!--                        android:ellipsize="end"-->
+<!--                        android:maxLines="2"-->
+<!--                        android:rotation="314"-->
+<!--                        android:text="@string/expired"-->
+<!--                        android:textColor="@color/textColorRed1"-->
+<!--                        android:textSize="12sp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        app:fontFamily="@font/product_sans_bold"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintStart_toStartOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="parent" />-->
 
                 </RelativeLayout>
 
@@ -72,12 +72,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_percent="0.22" />
+                    app:layout_constraintGuide_percent="0.3" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/consLayProductDetails"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="12dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@id/guideline1"
@@ -92,7 +93,7 @@
                         android:ellipsize="end"
                         android:maxLines="2"
                         android:textColor="@color/white"
-                        android:textSize="18sp"
+                        android:textSize="16sp"
                         android:textStyle="bold"
                         app:fontFamily="@font/product_sans_bold"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -104,16 +105,16 @@
                         android:id="@+id/tvMultipleTicketDuration"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        android:layout_marginBottom="12dp"
                         android:textColor="@color/text_grey"
                         android:textSize="14sp"
                         android:textStyle="bold"
                         app:fontFamily="@font/product_sans_regular"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvMultipleProductName"
                         tools:text="@string/ticket_duration" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -126,8 +127,8 @@
                     app:layout_constraintGuide_percent="0.8" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:orientation="vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -140,8 +141,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textColor="@color/yellow"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:layout_marginTop="18dp"
+                        app:fontFamily="@font/product_sans_bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -155,6 +157,24 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvMultipleTicketValue"
                         app:srcCompat="@drawable/ticket" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvExpiredProduct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14dp"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@string/expired"
+                        android:textColor="@color/text_color_red"
+                        android:textSize="12sp"
+                        android:layout_marginBottom="12dp"
+                        android:drawablePadding="4dp"
+                        android:drawableStart="@drawable/ic_failed_status"
+                        app:fontFamily="@font/product_sans_regular"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

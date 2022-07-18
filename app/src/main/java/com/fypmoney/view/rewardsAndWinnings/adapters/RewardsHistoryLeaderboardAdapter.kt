@@ -44,33 +44,21 @@ class RewardsHistoryLeaderboardAdapter(
         (items[position].points.toString() + " Mynts").also { holder.numberofMynts.text = it }
         holder.desc.text = items[position].eventDescription.toString()
 
-
-
-
         if (items[position].isFullFilled == AppConstants.NO) {
             holder.note.visibility = View.INVISIBLE
-
-
             holder.amount.visibility = View.INVISIBLE
-
             holder.won_tv.visibility = View.INVISIBLE
-
             holder.status_tv.visibility = View.VISIBLE
         } else {
             holder.status_tv.visibility = View.INVISIBLE
-            if (items[position].noOfJackpotTicket == null) {
+            if (items[position].noOfJackpotTicket == null || items[position].noOfJackpotTicket == 0) {
                 if (items[position].cashbackWonForProduct != null && items[position].cashbackWonForProduct!! > 0) {
                     holder.note.visibility = View.VISIBLE
-
-
                     holder.amount.visibility = View.VISIBLE
-
                     holder.won_tv.visibility = View.VISIBLE
                     holder.status_tv.visibility = View.INVISIBLE
-
                     holder.amount.text =
                         " ₹" + Utility.convertToRs(items[position].cashbackWonForProduct.toString())
-
 
                     holder.note.setImageDrawable(
                         ContextCompat.getDrawable(
@@ -80,19 +68,19 @@ class RewardsHistoryLeaderboardAdapter(
                     )
 
                 } else {
-                    holder.note.visibility = View.INVISIBLE
-//           holder.amount.visibility=View.INVISIBLE
-
                     if (items[position].transactionType == AppConstants.TRANS_TYPE_EARN) {
-                        holder.amount.visibility = View.INVISIBLE
-
+                        holder.won_tv.visibility = View.VISIBLE
+                        holder.won_tv.text = items[position].fullfillmentDescription.toString()
+                    } else {
+                        holder.won_tv.visibility = View.INVISIBLE
                     }
-                    holder.amount.text = "₹0"
-//           holder.amount.visibility=View.INVISIBLE
-                    holder.amount.visibility = View.VISIBLE
+                    holder.note.visibility = View.INVISIBLE
+                    holder.amount.visibility = View.INVISIBLE
+//                    holder.amount.text = "₹0"
+//                    holder.amount.visibility=View.INVISIBLE
+//                    holder.amount.visibility = View.VISIBLE
 
-                    holder.won_tv.visibility = View.VISIBLE
-//            holder.amount.visibility = View.INVISIBLE
+//                    holder.amount.visibility = View.INVISIBLE
                     holder.status_tv.visibility = View.INVISIBLE
 
 
@@ -112,9 +100,8 @@ class RewardsHistoryLeaderboardAdapter(
 
         if (!items[position].fullfillmentDescription.isNullOrEmpty()) {
             holder.won_tv.text = items[position].fullfillmentDescription.toString()
-
-
         }
+
         if (items[position].productType == AppConstants.PRODUCT_SPIN) {
             holder.productType.setImageDrawable(
                 ContextCompat.getDrawable(
@@ -141,15 +128,26 @@ class RewardsHistoryLeaderboardAdapter(
             )
             holder.amount.visibility = View.INVISIBLE
             holder.note.visibility = View.INVISIBLE
-            holder.won_tv.visibility = View.INVISIBLE
+            if ((items[position].noOfJackpotTicket == null || items[position].noOfJackpotTicket == 0) &&
+                items[position].cashbackWonForProduct == null || items[position].cashbackWonForProduct!! == 0
+            ) {
+                holder.won_tv.text = "WON"
+//                if (items[position].fullfillmentDescription.toString() != null)
+//                    holder.won_tv.text = items[position].fullfillmentDescription.toString()
+//                else
+//                    holder.won_tv.text = "WON"
+                holder.won_tv.visibility = View.VISIBLE
+            }
+            else
+                holder.won_tv.visibility = View.INVISIBLE
+
 
         }
 
-        holder.card.setOnClickListener(View.OnClickListener {
+        holder.card.setOnClickListener {
             if (items[position].isFullFilled == AppConstants.NO)
                 clickInterface.onItemClicked(items[position])
-        })
-
+        }
 
     }
 
@@ -165,7 +163,5 @@ class RewardsHistoryLeaderboardAdapter(
         var status_tv = view.status_tv
         var note = view.note
         var productType = view.productType
-
-
     }
 }
