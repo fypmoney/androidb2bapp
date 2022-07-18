@@ -421,9 +421,6 @@
             android:screenOrientation="portrait" />
         <activity android:name=".view.discord.DiscordInviteActivity" />
         <activity android:name=".view.discord.DiscordWebView" />
-        <activity
-            android:name=".view.arcadegames.ui.SpinWheelHistoryView"
-            android:screenOrientation="portrait" />
         <activity android:name=".view.discord.DiscordProfileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -438,9 +435,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:windowSoftInputMode="adjustPan"
-            android:name=".view.giftcard.view.CreateEGiftCardFragment" />
+
         <activity android:name=".view.giftcard.GiftTermsAndConditions" />
         <activity android:name=".view.giftcard.GiftHistoryActivity" />
         <activity android:name=".view.giftcard.GiftHistoryUnusedActivity" />
