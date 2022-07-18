@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".view.arcadegames.ui.SpinWheelFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -16,15 +15,6 @@
         <include
             android:id="@+id/layout_toolbar"
             layout="@layout/toolbar" />
-
-        <!--&lt;!&ndash;        <androidx.core.widget.NestedScrollView&ndash;&gt;-->
-        <!--            android:id="@+id/nested_spin_wheel_container"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="0dp"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar">-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/spinWheelContainer"
@@ -85,7 +75,6 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:visibility="invisible"
-                            android:padding="10dp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -120,28 +109,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/chipMyntsView"
                     app:layout_constraintTop_toTopOf="parent">
-
-                    <!--                        <androidx.appcompat.widget.AppCompatImageView-->
-                    <!--                            android:id="@+id/ivSpinWheelTicket"-->
-                    <!--                            android:layout_width="42dp"-->
-                    <!--                            android:layout_height="42dp"-->
-                    <!--                            android:layout_gravity="center_vertical"-->
-                    <!--                            android:paddingEnd="1dp"-->
-                    <!--                            android:paddingTop="10dp"-->
-                    <!--                            android:paddingBottom="10dp"-->
-                    <!--                            android:paddingStart="4dp"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-                    <!--                        <androidx.appcompat.widget.AppCompatImageView-->
-                    <!--                            android:id="@+id/ivSpinWheelTicketAnim"-->
-                    <!--                            android:layout_width="42dp"-->
-                    <!--                            android:layout_height="42dp"-->
-                    <!--                            android:layout_gravity="center_vertical"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                            app:layout_constraintTop_toTopOf="parent" />-->
 
                     <FrameLayout
                         android:id="@+id/frameSpinWheelTicket"
@@ -179,14 +146,6 @@
 
                     </FrameLayout>
 
-                    <!--                        <androidx.appcompat.widget.AppCompatImageView-->
-                    <!--                            android:id="@+id/ivSpinWheelTicket"-->
-                    <!--                            android:layout_width="42dp"-->
-                    <!--                            android:layout_height="42dp"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvSpinWheelTicketsCount"
                         android:layout_width="wrap_content"
@@ -215,23 +174,6 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/chipTicketView"
                     app:layout_constraintTop_toTopOf="parent">
-
-                    <!--                        <androidx.appcompat.widget.AppCompatImageView-->
-                    <!--                            android:id="@+id/ivSpinWheelCash"-->
-                    <!--                            android:layout_width="42dp"-->
-                    <!--                            android:layout_height="42dp"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                            app:layout_constraintTop_toTopOf="parent" />-->
-
-                    <!--                        <androidx.appcompat.widget.AppCompatImageView-->
-                    <!--                            android:id="@+id/ivSpinWheelCashAnim"-->
-                    <!--                            android:layout_width="42dp"-->
-                    <!--                            android:layout_height="42dp"-->
-                    <!--                            android:paddingBottom="2dp"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                            app:layout_constraintTop_toTopOf="parent" />-->
 
                     <FrameLayout
                         android:id="@+id/frameSpinWheelCash"
@@ -268,15 +210,6 @@
 
 
                     </FrameLayout>
-
-                    <!--                        <androidx.appcompat.widget.AppCompatImageView-->
-                    <!--                            android:id="@+id/ivSpinWheelCash"-->
-                    <!--                            android:layout_width="42dp"-->
-                    <!--                            android:layout_height="42dp"-->
-                    <!--                            android:paddingBottom="2dp"-->
-                    <!--                            app:layout_constraintBottom_toBottomOf="parent"-->
-                    <!--                            app:layout_constraintStart_toStartOf="parent"-->
-                    <!--                            app:layout_constraintTop_toTopOf="parent" />-->
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvSpinWheelCashCount"
@@ -385,15 +318,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
-                app:layout_constraintBottom_toTopOf="@+id/tvSpinWheelAttemptsLeft"
+                app:layout_constraintBottom_toTopOf="@+id/frameBtnContainer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cvJackpot">
 
                 <com.fypmoney.util.spinwheel.LuckyWheelView
                     android:id="@+id/luckySpinWheelView"
-                    android:layout_width="@dimen/_200sdp"
-                    android:layout_height="@dimen/_200sdp"
+                    android:layout_width="@dimen/_220sdp"
+                    android:layout_height="@dimen/_220sdp"
                     android:scrollbarFadeDuration="30"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -409,8 +342,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivServiceLogo"
-                    android:layout_width="@dimen/_60sdp"
-                    android:layout_height="@dimen/_60sdp"
+                    android:layout_width="@dimen/_68sdp"
+                    android:layout_height="@dimen/_68sdp"
                     android:adjustViewBounds="true"
                     app:layout_constraintBottom_toBottomOf="@+id/luckySpinWheelView"
                     app:layout_constraintEnd_toEndOf="@+id/luckySpinWheelView"
@@ -422,7 +355,7 @@
                     android:id="@+id/ivServiceLogo1"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_margin="@dimen/_62sdp"
+                    android:layout_margin="@dimen/_68sdp"
                     android:adjustViewBounds="true"
                     android:rotation="39"
                     app:layout_constraintBottom_toBottomOf="@+id/luckySpinWheelView"
@@ -433,28 +366,29 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvSpinWheelAttemptsLeft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_20sdp"
-                android:fontFamily="@font/product_sans_regular"
-                android:textColor="@color/text_body_grey"
-                app:layout_constraintBottom_toTopOf="@+id/frameBtnContainer"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/luckyLayout"
-                tools:text="@string/attempts_left" />
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/tvSpinWheelAttemptsLeft"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/_20sdp"-->
+<!--                android:fontFamily="@font/product_sans_regular"-->
+<!--                android:textColor="@color/text_body_grey"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/frameBtnContainer"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/luckyLayout"-->
+<!--                tools:text="@string/attempts_left" />-->
 
             <FrameLayout
                 android:id="@+id/frameBtnContainer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_6sdp"
-                app:layout_constraintBottom_toTopOf="@+id/chipMyntsBurnView"
+                android:layout_marginBottom="@dimen/_24sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="@dimen/_12sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvSpinWheelAttemptsLeft">
+                app:layout_constraintTop_toBottomOf="@+id/luckyLayout">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivBtnPlayAnimation"
@@ -471,126 +405,51 @@
                     android:visibility="invisible"
                     app:indicatorColor="@color/color_orange" />
 
-                <!--                    <androidx.appcompat.widget.AppCompatButton-->
-                <!--                        android:id="@+id/btnPlayNow"-->
-                <!--                        android:layout_width="wrap_content"-->
-                <!--                        android:layout_height="wrap_content"-->
-                <!--                        android:layout_centerHorizontal="true"-->
-                <!--                        android:layout_marginTop="24dp"-->
-                <!--                        android:background="@drawable/button_bottom_spin_wheel_back"-->
-                <!--                        android:fontFamily="@font/product_sans_bold"-->
-                <!--                        android:paddingStart="62dp"-->
-                <!--                        android:paddingTop="16dp"-->
-                <!--                        android:paddingEnd="62dp"-->
-                <!--                        android:paddingBottom="16dp"-->
-                <!--                        android:text="@string/play_now"-->
-                <!--                        android:textAllCaps="false"-->
-                <!--                        android:textColor="@color/text_color_dark"-->
-                <!--
-                     android:textSize="16sp"-->
-                <!--                        app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                        app:layout_constraintStart_toStartOf="parent"-->
-                <!--                        app:layout_constraintTop_toBottomOf="@+id/tvSpinWheelAttemptsLeft" />-->
-
-
             </FrameLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/chipMyntsBurnView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
-                android:layout_marginBottom="@dimen/_24sdp"
-                android:paddingStart="@dimen/_3sdp"
-                android:paddingTop="@dimen/_3sdp"
-                android:paddingEnd="@dimen/_10sdp"
-                android:paddingBottom="@dimen/_3sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/frameBtnContainer"
-                app:layout_constraintVertical_bias="0.0">
+<!--            <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--                android:id="@+id/chipMyntsBurnView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="@dimen/_8sdp"-->
+<!--                android:layout_marginBottom="@dimen/_24sdp"-->
+<!--                android:paddingStart="@dimen/_3sdp"-->
+<!--                android:paddingTop="@dimen/_3sdp"-->
+<!--                android:paddingEnd="@dimen/_10sdp"-->
+<!--                android:paddingBottom="@dimen/_3sdp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/frameBtnContainer"-->
+<!--                app:layout_constraintVertical_bias="0.0">-->
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivMyntsRequired"
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp"
-                    android:layout_marginStart="@dimen/_4sdp"
-                    android:padding="@dimen/_2sdp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_mynt_coin" />
+<!--                <androidx.appcompat.widget.AppCompatImageView-->
+<!--                    android:id="@+id/ivMyntsRequired"-->
+<!--                    android:layout_width="@dimen/_18sdp"-->
+<!--                    android:layout_height="@dimen/_18sdp"-->
+<!--                    android:layout_marginStart="@dimen/_4sdp"-->
+<!--                    android:padding="@dimen/_2sdp"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent"-->
+<!--                    app:srcCompat="@drawable/ic_mynt_coin" />-->
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvSpinWheelBurnMyntsCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_4sdp"
-                    android:layout_marginEnd="@dimen/_4sdp"
-                    android:textColor="@color/color_dark_yellow"
-                    android:textSize="14sp"
-                    app:fontFamily="@font/product_sans_bold"
-                    app:layout_constraintBottom_toBottomOf="@id/ivMyntsRequired"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/ivMyntsRequired"
-                    app:layout_constraintTop_toTopOf="@id/ivMyntsRequired"
-                    tools:text="@string/default_burn_mynts" />
+<!--                <com.google.android.material.textview.MaterialTextView-->
+<!--                    android:id="@+id/tvSpinWheelBurnMyntsCount"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/_4sdp"-->
+<!--                    android:layout_marginEnd="@dimen/_4sdp"-->
+<!--                    android:textColor="@color/color_dark_yellow"-->
+<!--                    android:textSize="14sp"-->
+<!--                    app:fontFamily="@font/product_sans_bold"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@id/ivMyntsRequired"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/ivMyntsRequired"-->
+<!--                    app:layout_constraintTop_toTopOf="@id/ivMyntsRequired"-->
+<!--                    tools:text="@string/default_burn_mynts" />-->
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!--                <com.google.android.material.chip.ChipGroup-->
-            <!--                    android:id="@+id/chip_group_multiple_jackpots"-->
-            <!--                    android:layout_width="0dp"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                    app:layout_constraintStart_toStartOf="parent"-->
-            <!--                    app:layout_constraintTop_toTopOf="parent">-->
-
-            <!--                    <com.google.android.material.chip.Chip-->
-            <!--                        style="@style/Widget.MaterialComponents.Chip.Action"-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:fontFamily="@font/product_sans_bold"-->
-            <!--                        android:text="@string/dummy_amount"-->
-            <!--                        android:textColor="@color/color_dark_yellow"-->
-            <!--                        android:textSize="18sp"-->
-            <!--                        android:textStyle="bold"-->
-            <!--                        app:chipMinHeight="@dimen/_28sdp"-->
-            <!--                        app:chipStartPadding="12dp"-->
-            <!--                        android:paddingTop="12dp"-->
-            <!--                        app:chipEndPadding="12dp"-->
-            <!--                        app:chipIconSize="16dp"-->
-            <!--                        app:chipBackgroundColor="@color/back_surface_color"-->
-            <!--                        app:chipIcon="@drawable/mynt" />-->
-
-            <!--                    <com.google.android.material.chip.Chip-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:fontFamily="@font/product_sans_bold"-->
-            <!--                        android:text="@string/dummy_amount"-->
-            <!--                        android:textColor="@color/color_dark_yellow"-->
-            <!--                        android:textSize="18sp"-->
-            <!--                        app:chipMinHeight="@dimen/_28sdp"-->
-            <!--                        app:chipIconSize="28dp"-->
-            <!--                        android:textStyle="bold"-->
-            <!--                        app:chipBackgroundColor="@color/back_surface_color"-->
-            <!--                        app:chipIcon="@drawable/ticket" />-->
-
-            <!--                    <com.google.android.material.chip.Chip-->
-            <!--                        android:layout_width="wrap_content"-->
-            <!--                        android:layout_height="wrap_content"-->
-            <!--                        android:fontFamily="@font/product_sans_bold"-->
-            <!--                        android:text="@string/dummy_amount1"-->
-            <!--                        android:textColor="@color/color_dark_yellow"-->
-            <!--                        android:textSize="18sp"-->
-            <!--                        android:textStyle="bold"-->
-            <!--                        app:chipMinHeight="@dimen/_28sdp"-->
-            <!--                        app:chipIconSize="@dimen/dp16"-->
-            <!--                        app:chipBackgroundColor="@color/back_surface_color"-->
-            <!--                        app:chipIcon="@drawable/cash" />-->
-
-            <!--                </com.google.android.material.chip.ChipGroup>-->
+<!--            </androidx.constraintlayout.widget.ConstraintLayout>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -605,8 +464,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_rawRes="@raw/arcade_confetti" />
-
-        <!--        </androidx.core.widget.NestedScrollView>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

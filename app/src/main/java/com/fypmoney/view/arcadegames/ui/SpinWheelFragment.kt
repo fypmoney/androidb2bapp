@@ -3,7 +3,6 @@ package com.fypmoney.view.arcadegames.ui
 import android.animation.ValueAnimator
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.media.MediaPlayer
@@ -16,7 +15,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.Lifecycle
 import com.bumptech.glide.Glide
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
@@ -25,11 +24,12 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.FragmentSpinWheelBinding
+import com.fypmoney.extension.toInvisible
+import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SpinWheelRotateResponseDetails
 import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.model.SectionListItem
 import com.fypmoney.view.arcadegames.viewmodel.FragmentSpinWheelVM
-import com.fypmoney.view.rewardsAndWinnings.CashBackWonHistoryActivity
 import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
 import kotlinx.android.synthetic.main.fragment_spin_wheel.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -45,6 +45,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
     private val spinWheelFragmentVM by viewModels<FragmentSpinWheelVM> { defaultViewModelProviderFactory }
     private var dialogInsufficientMynts: Dialog? = null
     private var code: String? = null
+    private var via: String? = null
 
     companion object {
         var sectionArrayList: List<SectionListItem> = ArrayList()
@@ -63,55 +64,82 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
             backArrowTint = Color.WHITE
         )
 
-        code = "SPIN_WHEEL_1000"
-
         setBackgrounds()
 
         setUpObserver(spinWheelFragmentVM)
 
-        Glide.with(this).load(R.drawable.coin).into(mViewBinding!!.ivSpinWheelMyntsAnim)
+        Glide.with(this).load(R.drawable.coin_updated).into(mViewBinding!!.ivSpinWheelMyntsAnim)
         Glide.with(this).load(R.drawable.ticket_g).into(mViewBinding!!.ivSpinWheelTicketAnim)
         Glide.with(this).load(R.drawable.cash_g).into(mViewBinding!!.ivSpinWheelCashAnim)
 
         mViewBinding!!.ivBtnPlayAnimation.setOnClickListener {
-            if (spinWheelFragmentVM.remainFrequency.value!! > 0) {
-                mViewBinding!!.containerSpinWheelRewards.visibility = View.INVISIBLE
-                mViewBinding!!.containerSpinWheelDefaultBanner.visibility = View.VISIBLE
+//            if (via != null && via.equals("history")) {
+//                mViewBinding!!.containerSpinWheelRewards.visibility = View.INVISIBLE
+//                mViewBinding!!.containerSpinWheelDefaultBanner.visibility = View.VISIBLE
+//
+//                mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
+//                mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
+//
+//                vibrateDevice()
+//
+//                setViewVisibility(
+//                    mViewBinding!!.ivSpinWheelMyntsAnim,
+//                    mViewBinding!!.ivSpinWheelMynts
+//                )
+//
+//                arcadeSounds("SPINNER")
+//
+////                spinWheelFragmentVM.remainFrequency.value =
+////                    spinWheelFragmentVM.remainFrequency.value?.minus(1)
+//
+////                decreaseCountAnimation(mViewBinding!!.tvSpinWheelMyntsCount, 1500, myntsDisplay!!)
+//
+////                spinWheelFragmentVM.noOfJackpotTickets = list.noOfJackpotTicket
+//
+//                spinWheelFragmentVM.callSpinWheelApi(orderId)
+//
+//                luckySpinWheelView.startLuckyWheelWithTargetIndex(sectionId!! - 1)
+//
+//            } else {
+                if (spinWheelFragmentVM.remainFrequency.value!! > 0) {
+                    mViewBinding!!.containerSpinWheelRewards.visibility = View.INVISIBLE
+                    mViewBinding!!.containerSpinWheelDefaultBanner.visibility = View.VISIBLE
 
-                mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
-                mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
+                    mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
+                    mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
 
-                vibrateDevice()
+                    vibrateDevice()
 
-                setViewVisibility(
-                    mViewBinding!!.ivSpinWheelMyntsAnim,
-                    mViewBinding!!.ivSpinWheelMynts
-                )
+                    setViewVisibility(
+                        mViewBinding!!.ivSpinWheelMyntsAnim,
+                        mViewBinding!!.ivSpinWheelMynts
+                    )
 
-                spinWheelFragmentVM.callMyntsBurnApi(code)
+                    spinWheelFragmentVM.callMyntsBurnApi(code)
 
 //            spinWheelFragmentVM.enableSpin.value = false
 
-            } else {
-                val limitOverBottomSheet = LimitOverBottomSheet()
-                limitOverBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-                limitOverBottomSheet.show(childFragmentManager, "LimitOverBottomSheet")
-            }
+                } else {
+                    val limitOverBottomSheet = LimitOverBottomSheet()
+                    limitOverBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+                    limitOverBottomSheet.show(childFragmentManager, "LimitOverBottomSheet")
+                }
+//            }
 
         }
 
-        mViewBinding?.chipCashView?.setOnClickListener {
-            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
-            startActivity(intent)
-        }
-
-        mViewBinding?.chipMyntsView?.setOnClickListener {
-            findNavController().navigate(R.id.navigation_rewards_history)
-        }
-
-        mViewBinding?.chipTicketView?.setOnClickListener {
-            findNavController().navigate(R.id.navigation_multiple_jackpots)
-        }
+//        mViewBinding?.chipCashView?.setOnClickListener {
+//            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        mViewBinding?.chipMyntsView?.setOnClickListener {
+//            findNavController().navigate(R.id.navigation_rewards_history)
+//        }
+//
+//        mViewBinding?.chipTicketView?.setOnClickListener {
+//            findNavController().navigate(R.id.navigation_multiple_jackpots)
+//        }
 
         dialogInsufficientMynts = Dialog(this.requireContext())
 
@@ -126,9 +154,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
 
         wlp?.width = ViewGroup.LayoutParams.MATCH_PARENT
         dialogInsufficientMynts?.setCanceledOnTouchOutside(false)
-
         dialogInsufficientMynts?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-
         dialogInsufficientMynts?.window?.attributes = wlp
         dialogInsufficientMynts?.error_msg?.text = msg
 
@@ -247,7 +273,16 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
         ) { list ->
             if (list.errorCode == "PKT_2051") {
                 callInsufficientDialog(list.msg)
+                mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
+                mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
+            } else {
+                mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
+                mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
             }
+            setViewVisibility(
+                mViewBinding!!.ivSpinWheelMynts,
+                mViewBinding!!.ivSpinWheelMyntsAnim
+            )
         }
 
         viewModel.state.observe(viewLifecycleOwner) {
@@ -268,18 +303,33 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
             viewLifecycleOwner
         ) { list ->
             if (list.totalPoints != null) {
+                spinWheelFragmentVM.myntsCount = list.remainingPoints
                 mViewBinding?.tvSpinWheelMyntsCount?.text =
-                    String.format("%.0f", list.remainingPoints)
+                    String.format("%.0f", spinWheelFragmentVM.myntsCount)
             }
         }
 
-        viewModel.totalJackpotAmount.observe(
-            viewLifecycleOwner
-        ) { list ->
-            if (list.count != null) {
-                mViewBinding?.tvSpinWheelTicketsCount?.text = "${list.count}"
-            }
+//        viewModel.totalJackpotAmount.observe(
+//            viewLifecycleOwner
+//        ) { list ->
+//            if (list.count != null) {
+//                mViewBinding?.tvSpinWheelTicketsCount?.text = "${list.count}"
+//            }
+//
+//        }
 
+        viewModel.stateMJ.observe(viewLifecycleOwner) {
+            when (it) {
+                is FragmentSpinWheelVM.SpinWheelStateTicket.Error -> {
+
+                }
+                is FragmentSpinWheelVM.SpinWheelStateTicket.Success -> {
+                    mViewBinding?.tvSpinWheelTicketsCount?.text = "${it.totalTickets}"
+                }
+                is FragmentSpinWheelVM.SpinWheelStateTicket.Loading -> {
+
+                }
+            }
         }
 
 //        viewModel.onPlayClicked.observe(
@@ -344,7 +394,9 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
                 luckySpinWheelView.setLuckyRoundItemSelectedListener {
                     sectionArrayList.forEach { item ->
                         if (item.id == sectionId.toString()) {
-                            setSelectionOnCard(spinWheelRotation)
+                            if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
+                                setSelectionOnCard(spinWheelRotation)
+                            }
                             return@forEach
                         }
                     }
@@ -536,6 +588,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
                 Integer.parseInt(textScore.text.toString()) + (finalCount)
             )
         }
+
         animator.duration = animDuration
         animator.addUpdateListener { animation ->
             if (via == "Cash")
@@ -558,6 +611,12 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
             mViewBinding!!.lottieRewardConfetti.visibility = View.INVISIBLE
         }, animDuration)
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mp?.stop()
+    }
+
 
 }
 

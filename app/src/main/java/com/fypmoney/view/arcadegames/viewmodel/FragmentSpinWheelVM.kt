@@ -2,6 +2,7 @@ package com.fypmoney.view.arcadegames.viewmodel
 
 import android.app.Application
 import android.graphics.Color
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -13,11 +14,11 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
+import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
+import com.fypmoney.view.arcadegames.model.*
 import com.fypmoney.view.arcadegames.model.SectionListItem
-import com.fypmoney.view.arcadegames.model.SingleSpinWheelProductNetworkResponse
-import com.fypmoney.view.arcadegames.model.SpinWheelItem
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
@@ -38,8 +39,10 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
     var noOfJackpotTickets: Int? = null
     var frequency: Int? = 0
     var isSectionArrayListEmpty: Boolean? = null
-    var myntsCount: Int? = 0
+    var myntsCount: Float? = 0f
     var cashCount: Int? = 0
+
+    var redeemCallBackResponse = MutableLiveData<aRewardProductResponse>()
 
     var luckyItemList: ArrayList<LuckyItem> = ArrayList()
     var error: MutableLiveData<ErrorResponseInfo> = MutableLiveData()
@@ -51,10 +54,14 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
         get() = _state
     private val _state = MutableLiveData<SpinWheelState>()
 
+    val stateMJ: LiveData<SpinWheelStateTicket>
+        get() = _stateMJ
+    private val _stateMJ = MutableLiveData<SpinWheelStateTicket>()
+
     init {
         remainFrequency.value = 0
         noOfJackpotTickets = 0
-        myntsCount = 0
+        myntsCount = 0f
         cashCount = 0
         isSectionArrayListEmpty = true
 
@@ -76,6 +83,24 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
 //            )
 //        )
 //    }
+
+
+    /*
+* This method is used to call get rewards api
+* */
+
+    fun callProductsDetailsApi(orderId: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.REWARD_PRODUCT_DETAILS,
+                NetworkUtil.endURL(ApiConstant.REWARD_PRODUCT_DETAILS + orderId),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+
+    }
 
     private fun callRewardSummary() {
         WebApiCaller.getInstance().request(
@@ -104,8 +129,8 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
     private fun callTotalJackpotCards() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_GET_JACKPOT_CARDS,
-                NetworkUtil.endURL(ApiConstant.API_GET_JACKPOT_CARDS),
+                ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE,
+                NetworkUtil.endURL(ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -118,12 +143,12 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
         list.forEachIndexed { pos, item ->
 
             if (item.sectionValue == "0") {
-                if (rewardTypeOnFailure == "POINTS"){
+                if (rewardTypeOnFailure == "POINTS") {
                     val luckyItem1 = LuckyItem()
                     luckyItem1.icon = R.drawable.mynt
                     luckyItem1.color = Color.parseColor(item.colorCode)
                     luckyItemList.add(luckyItem1)
-                }else{
+                } else {
                     val luckyItem1 = LuckyItem()
                     luckyItem1.icon = R.drawable.ticket
                     luckyItem1.color = Color.parseColor(item.colorCode)
@@ -159,8 +184,6 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
                 this, isProgressBar = false
             )
         )
-
-
     }
 
     /*
@@ -229,25 +252,10 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
                 rewardSummaryStatus.postValue(array)
             }
 
-//            ApiConstant.API_Explore -> {
-//                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-//
-//                val array = Gson().fromJson(
-//                    json.get("data").toString(),
-//                    Array<ExploreContentResponse>::class.java
-//                )
-//                val arrayList = ArrayList(array.toMutableList())
-//                rewardHistoryList.postValue(arrayList)
-//            }
+            ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
 
-            ApiConstant.API_GET_JACKPOT_CARDS -> {
-                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-                if (json.get("data").toString() != "[]") {
-                    val array = Gson().fromJson(
-                        json.get("data").toString(),
-                        TotalJackpotResponse::class.java
-                    )
-                    totalJackpotAmount.postValue(array)
+                if (responseData is MultipleJackpotNetworkResponse) {
+                    _stateMJ.value = SpinWheelStateTicket.Success(responseData.data?.totalTickets)
                 }
             }
 
@@ -280,9 +288,17 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
 
 //                onPlayClicked()
 //                played.set(true)
-//                fromWhich.set(AppConstants.ERROR_TYPE_AFTER_SPIN)
 
 
+            }
+
+            ApiConstant.REWARD_PRODUCT_DETAILS -> {
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+                val spinDetails = Gson().fromJson(
+                    json.get("data"),
+                    aRewardProductResponse::class.java
+                )
+                redeemCallBackResponse.value = spinDetails
             }
 
         }
@@ -291,7 +307,27 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
     override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
         super.onError(purpose, errorResponseInfo)
         when (purpose) {
+            ApiConstant.API_GET_REWARD_EARNINGS -> {
+                error.postValue(errorResponseInfo)
+            }
+
+            ApiConstant.API_REWARD_SUMMARY -> {
+                error.postValue(errorResponseInfo)
+            }
+
+            ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
+                error.postValue(errorResponseInfo)
+            }
+
             ApiConstant.API_REDEEM_REWARD -> {
+                error.postValue(errorResponseInfo)
+            }
+
+            ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS -> {
+                error.postValue(errorResponseInfo)
+            }
+
+            ApiConstant.PLAY_ORDER_API -> {
                 error.postValue(errorResponseInfo)
             }
         }
@@ -301,5 +337,13 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
         object Loading : SpinWheelState()
         data class Success(var spinWheelData: SpinWheelItem) : SpinWheelState()
         object Error : SpinWheelState()
+    }
+
+    sealed class SpinWheelStateTicket {
+        object Loading : SpinWheelStateTicket()
+        data class Success(val totalTickets: Int?) :
+            SpinWheelStateTicket()
+
+        object Error : SpinWheelStateTicket()
     }
 }

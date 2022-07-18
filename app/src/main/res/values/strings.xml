@@ -1256,5 +1256,7 @@ Coming really soon!
     <string name="arcade_cash_value">₹%1$s</string>
     <string name="arcade_mynts">%1$s Mynts</string>
     <string name="jackpot_duration">From: %1$s - %2$s</string>
+    <string name="jackpots_coming_soon">Jackpots coming soon!</string>
+    <string name="try_other_rewards">Try Other Rewards!</string>
 
 </resources>

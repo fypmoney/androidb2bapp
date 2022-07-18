@@ -112,18 +112,18 @@ class RotatingTreasureFragment :
 //            }
         }
 
-        mViewBinding?.chipCashView?.setOnClickListener {
-            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
-            startActivity(intent)
-        }
-
-        mViewBinding?.chipMyntsView?.setOnClickListener {
-            findNavController().navigate(R.id.navigation_rewards_history)
-        }
-
-        mViewBinding?.chipTicketView?.setOnClickListener {
-            findNavController().navigate(R.id.navigation_multiple_jackpots)
-        }
+//        mViewBinding?.chipCashView?.setOnClickListener {
+//            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        mViewBinding?.chipMyntsView?.setOnClickListener {
+//            findNavController().navigate(R.id.navigation_rewards_history)
+//        }
+//
+//        mViewBinding?.chipTicketView?.setOnClickListener {
+//            findNavController().navigate(R.id.navigation_multiple_jackpots)
+//        }
 
     }
 
@@ -177,12 +177,31 @@ class RotatingTreasureFragment :
             }
         }
 
-        viewModel.totalJackpotAmount.observe(
-            viewLifecycleOwner
-        ) { list ->
-            if (list.count != null) {
-                mViewBinding?.tvRotatingTicketsCount?.text = "${list.count}"
+//        viewModel.totalJackpotAmount.observe(
+//            viewLifecycleOwner
+//        ) { list ->
+//            if (list.count != null) {
+//                mViewBinding?.tvRotatingTicketsCount?.text = "${list.count}"
+//            }
+//        }
+
+        viewModel.stateRotTicket.observe(viewLifecycleOwner) {
+            when (it) {
+                is FragmentRotatingTreasureVM.RotatingTicket.Error -> {
+
+                }
+
+                is FragmentRotatingTreasureVM.RotatingTicket.Success -> {
+                    if (it.totalTickets != null) {
+                        mViewBinding?.tvRotatingTicketsCount?.text = "${it.totalTickets}"
+                    }
+                }
+
+                is FragmentRotatingTreasureVM.RotatingTicket.Loading -> {
+
+                }
             }
+
         }
 
         viewModel.remainFrequency.observe(
@@ -207,7 +226,7 @@ class RotatingTreasureFragment :
                 currentRotateCount = 0
                 decreaseCountAnimation(mViewBinding!!.tvRotatingMyntsCount, 1500, 10)
                 viewModel.coinsBurned.postValue(null)
-                sectionId = 2//list.sectionId
+                sectionId = list.sectionId
                 orderId = list.orderNo
 
                 rotatingTreasureVM.noOfJackpotTickets = list.noOfJackpotTicket
@@ -216,7 +235,7 @@ class RotatingTreasureFragment :
 
                 try {
 //                    if (rotatingTreasureVM.btnClickCount > 1)
-                       // (mViewBinding!!.vpTreasuryBox.adapter as TreasurePagerAdapter).clearList()
+                    // (mViewBinding!!.vpTreasuryBox.adapter as TreasurePagerAdapter).clearList()
                     val treasureImages: ArrayList<TreasureAdapterUiModel> = ArrayList()
 //                    if (rotatingTreasureVM.btnClickCount < 2) {
                     treasureImages.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))

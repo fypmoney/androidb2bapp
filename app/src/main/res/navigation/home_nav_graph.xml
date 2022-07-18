@@ -73,6 +73,20 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ" />
 
+<!--        <argument-->
+<!--            android:name="myntsCount"-->
+<!--            android:defaultValue="@null"-->
+<!--            app:argType="integer" />-->
+
+<!--        <argument-->
+<!--            android:name="ticketsCount"-->
+<!--            android:defaultValue="@null"-->
+<!--            app:argType="integer" />-->
+
+<!--        <argument-->
+<!--            android:name="cashCount"-->
+<!--            android:defaultValue="@null"-->
+<!--            app:argType="integer" />-->
 
     </fragment>
 
@@ -106,7 +120,20 @@
         android:id="@+id/navigation_rewards_history"
         android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardHistoryFragment"
         android:label="@string/reward_history"
-        tools:layout="@layout/fragment_reward_history" />
+        tools:layout="@layout/fragment_reward_history">
+
+        <!--        <argument-->
+        <!--            android:name="sectionId"-->
+        <!--            app:argType="integer"-->
+        <!--            android:defaultValue="@null" />-->
+
+        <!--        <argument-->
+        <!--            android:name="orderNo"-->
+        <!--            app:argType="integer"-->
+        <!--            android:defaultValue="@null" />-->
+
+    </fragment>
+
     <fragment
         android:id="@+id/navigation_arcade"
         android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsSpinnerListFragment"

@@ -18,6 +18,7 @@ import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.arcadegames.model.*
 import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -45,6 +46,11 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
         get() = _state
     private val _state = MutableLiveData<RotatingTreasureState>()
 
+    val stateRotTicket: LiveData<RotatingTicket>
+        get() = _stateRotTicket
+    private val _stateRotTicket = MutableLiveData<RotatingTicket>()
+
+
     init {
         remainFrequency.value = 0
         btnClickCount = 0
@@ -61,8 +67,8 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
     private fun callRewardSummary() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_REWARD_SUMMARY,
-                NetworkUtil.endURL(ApiConstant.API_REWARD_SUMMARY),
+                ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE,
+                NetworkUtil.endURL(ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -140,6 +146,12 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
         object Error : RotatingTreasureState()
     }
 
+    sealed class RotatingTicket {
+        object Loading : RotatingTicket()
+        data class Success(val totalTickets: Int?) : RotatingTicket()
+        object Error : RotatingTicket()
+    }
+
     override fun onSuccess(purpose: String, responseData: Any) {
         super.onSuccess(purpose, responseData)
 
@@ -166,16 +178,16 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
                 rewardSummaryStatus.postValue(array)
             }
 
-            ApiConstant.API_GET_JACKPOT_CARDS -> {
-                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-                if (json.get("data").toString() != "[]") {
-                    val array = Gson().fromJson(
-                        json.get("data").toString(),
-                        TotalJackpotResponse::class.java
-                    )
-                    totalJackpotAmount.postValue(array)
-                }
-            }
+//            ApiConstant.API_GET_JACKPOT_CARDS -> {
+//                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+//                if (json.get("data").toString() != "[]") {
+//                    val array = Gson().fromJson(
+//                        json.get("data").toString(),
+//                        TotalJackpotResponse::class.java
+//                    )
+//                    totalJackpotAmount.postValue(array)
+//                }
+//            }
 
 //            ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS -> {
 //                if (responseData is TreasureBoxNetworkResponse) {
@@ -215,6 +227,13 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
 //                fromWhich.set(AppConstants.ERROR_TYPE_AFTER_SPIN)
 
 
+            }
+
+            ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
+
+                if (responseData is MultipleJackpotNetworkResponse) {
+                    _stateRotTicket.value = RotatingTicket.Success(responseData.data?.totalTickets)
+                }
             }
 
         }

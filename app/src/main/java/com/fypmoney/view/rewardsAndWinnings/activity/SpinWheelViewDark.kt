@@ -1,6 +1,5 @@
 package com.fypmoney.view.rewardsAndWinnings.activity
 
-
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -37,7 +36,6 @@ import kotlinx.android.synthetic.main.view_spin_wheel_black.*
 * */
 class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProductViewModel>(),
     ErrorBottomSpinProductSheet.OnSpinErrorClickListener {
-
 
     private var mp: MediaPlayer? = null
     private var noOfGoldenCard: Int? = null
@@ -102,13 +100,9 @@ class SpinWheelViewDark : BaseActivity<ViewSpinWheelBlackBinding, SpinWheelProdu
             luckylayout.visibility = View.VISIBLE
             mViewModel.setDataInSpinWheel(sectionArrayList)
             luckyWheelView.setData(mViewModel.luckyItemList)
-
         }
 
-
-
         try {
-
 
             luckyWheelView.setLuckyRoundItemSelectedListener {
 
