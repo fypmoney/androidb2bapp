@@ -16,6 +16,8 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.trackr
@@ -44,13 +46,17 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
     private var myntsDisplay: Int? = null
     private val spinWheelFragmentVM by viewModels<FragmentSpinWheelVM> { defaultViewModelProviderFactory }
     private var dialogInsufficientMynts: Dialog? = null
-    private var code: String? = null
     private var via: String? = null
+    private val navArgs by navArgs<SpinWheelFragmentArgs>()
 
     companion object {
         var sectionArrayList: List<SectionListItem> = ArrayList()
     }
 
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -63,6 +69,9 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
+        spinWheelFragmentVM.productCode = navArgs.productCode
+        spinWheelFragmentVM.callSingleProductApi(spinWheelFragmentVM.productCode)
+
 
         setBackgrounds()
 
@@ -115,7 +124,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
                         mViewBinding!!.ivSpinWheelMynts
                     )
 
-                    spinWheelFragmentVM.callMyntsBurnApi(code)
+                spinWheelFragmentVM.callMyntsBurnApi(spinWheelFragmentVM.productCode)
 
 //            spinWheelFragmentVM.enableSpin.value = false
 

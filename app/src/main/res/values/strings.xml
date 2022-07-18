@@ -1302,5 +1302,7 @@ Coming really soon!
     <string name="jackpot_duration">From: %1$s - %2$s</string>
     <string name="jackpots_coming_soon">Jackpots coming soon!</string>
     <string name="try_other_rewards">Try Other Rewards!</string>
+    <string name="oops_upi_id_could_not_be_loaded">Oops! UPI ID could not be loaded</string>
+    <string name="try_again_exclamation">Try Again!</string>
 
 </resources>

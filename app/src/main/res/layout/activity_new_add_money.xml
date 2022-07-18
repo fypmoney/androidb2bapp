@@ -189,167 +189,261 @@
                                     app:layout_constraintTop_toTopOf="parent" />
                             </androidx.cardview.widget.CardView>
 
-                            <androidx.cardview.widget.CardView
-                                android:id="@+id/cvAddViaUpiIdOrQRCode"
+                            <FrameLayout
+                                android:id="@+id/flAddViaUpiId"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="10dp"
-                                android:layout_marginEnd="10dp"
-                                app:cardCornerRadius="16dp"
-                                app:cardElevation="8dp"
-                                app:cardPreventCornerOverlap="true"
-                                app:cardUseCompatPadding="true"
-                                app:contentPadding="20dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@+id/add_via_debit_or_card_cv">
 
-                                <androidx.constraintlayout.widget.ConstraintLayout
-                                    android:id="@+id/clAddViaUpiAndQrCode"
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/cvAddViaUpiIdOrQRCode"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    tools:visibility="visible">
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    app:cardCornerRadius="16dp"
+                                    app:cardElevation="8dp"
+                                    app:cardPreventCornerOverlap="true"
+                                    app:cardUseCompatPadding="true"
+                                    app:contentPadding="20dp"
+                                    tools:visibility="gone">
 
-                                    <androidx.appcompat.widget.AppCompatImageView
-                                        android:id="@+id/shareUpiAndQrCode"
-                                        android:layout_width="wrap_content"
+                                    <androidx.constraintlayout.widget.ConstraintLayout
+                                        android:id="@+id/clAddViaUpiAndQrCode"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:src="@drawable/ic_upload"
-                                        android:onClick="@{()->viewModel.onShareUpiQrCode()}"
-                                        app:layout_constraintBottom_toBottomOf="@+id/tvAddViaUpiId"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintTop_toTopOf="@+id/tvAddViaUpiId" />
+                                        tools:visibility="visible">
+
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:id="@+id/shareUpiAndQrCode"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@drawable/ic_upload"
+                                            android:onClick="@{()->viewModel.onShareUpiQrCode()}"
+                                            app:layout_constraintBottom_toBottomOf="@+id/tvAddViaUpiId"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintTop_toTopOf="@+id/tvAddViaUpiId" />
 
 
 
 
-                                    <com.google.android.material.textview.MaterialTextView
-                                        android:id="@+id/tvAddViaUpiId"
-                                        style="@style/TextviewBold"
-                                        android:layout_width="0dp"
+                                        <com.google.android.material.textview.MaterialTextView
+                                            android:id="@+id/tvAddViaUpiId"
+                                            style="@style/TextviewBold"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:drawableEnd="@drawable/ic_copy"
+                                            android:text="@string/add_via_upi_id"
+                                            android:textColor="@color/black"
+                                            android:textSize="18sp"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
+
+                                        <com.google.android.material.textview.MaterialTextView
+                                            android:id="@+id/tvInstructionAddViaUPI"
+                                            style="@style/TextviewRegular"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="2dp"
+                                            android:textColor="@color/strokeColor"
+                                            android:textSize="12sp"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toBottomOf="@+id/tvAddViaUpiId" />
+
+                                        <com.google.android.material.textview.MaterialTextView
+                                            android:id="@+id/tvRecommandedMethodAddViaUPIOrQr"
+                                            style="@style/TextviewRegular"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/recommended"
+                                            android:textColor="@color/green6"
+                                            android:textSize="11sp"
+                                            android:paddingHorizontal="@dimen/dp6"
+                                            android:paddingVertical="3dp"
+                                            app:customStrokeWidth="@{@dimen/dp0_5}"
+                                            app:customStrokeColor="@{@color/green6}"
+                                            app:customCornerRadius="@{@dimen/dp25}"
+                                            app:customBackgroundColor="@{@color/recommanded_bg}"
+                                            app:layout_constraintBottom_toBottomOf="@+id/tvAddViaUpiId"
+                                            app:layout_constraintStart_toEndOf="@+id/tvAddViaUpiId"
+                                            app:layout_constraintTop_toTopOf="@+id/tvAddViaUpiId"/>
+
+
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:id="@+id/icQrcode"
+                                            android:layout_width="200dp"
+                                            android:layout_height="200dp"
+                                            android:layout_centerHorizontal="true"
+                                            android:adjustViewBounds="true"
+                                            android:cropToPadding="true"
+                                            android:layout_marginTop="@dimen/dp10"
+                                            tools:srcCompat="@drawable/ic_qr_icon"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toBottomOf="@+id/tvInstructionAddViaUPI" />
+
+                                        <com.google.android.material.textview.MaterialTextView
+                                            android:id="@+id/tvYourUpiIdLabel"
+                                            style="@style/TextviewRegular"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="@dimen/dp8"
+                                            android:text="@string/your_upi_id"
+                                            android:textColor="@color/text_color_light"
+                                            android:textSize="12sp"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintTop_toBottomOf="@+id/icQrcode" />
+
+
+                                        <com.google.android.material.textview.MaterialTextView
+                                            android:id="@+id/tvYourUpiIdValue"
+                                            style="@style/TextviewRegular"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="@dimen/dp8"
+                                            android:textColor="@color/bgcolor"
+                                            android:textSize="16sp"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toBottomOf="@+id/tvYourUpiIdLabel"
+                                            tools:text="Hritik.sharma.fyp@yesbank" />
+
+
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:id="@+id/ivCopyUpiId"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentEnd="true"
+                                            android:layout_marginStart="6dp"
+                                            android:padding="4dp"
+                                            android:scaleType="fitStart"
+                                            android:onClick="@{()->viewModel.copyUPIid()}"
+                                            android:src="@drawable/ic_icon_feather_copy"
+                                            android:tint="@color/gery11"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintTop_toTopOf="@+id/tvYourUpiIdValue"
+                                            app:layout_constraintBottom_toBottomOf="@+id/tvYourUpiIdValue"/>
+
+
+                                        <androidx.appcompat.widget.AppCompatImageView
+                                            android:id="@+id/ivUpiApps"
+                                            android:layout_width="118dp"
+                                            android:layout_height="20dp"
+                                            android:layout_marginTop="@dimen/dp24"
+                                            app:srcCompat="@drawable/ic_upi_apps"
+                                            app:layout_constraintTop_toBottomOf="@+id/ivCopyUpiId"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                                        <com.google.android.material.textview.MaterialTextView
+                                            android:id="@+id/tvNoTxnFeeViaUPIORQr"
+                                            style="@style/TextviewRegular"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="10dp"
+                                            android:text="@string/no_transaction_fee"
+                                            android:textColor="@color/yellow10"
+                                            android:textSize="12sp"
+                                            app:layout_constraintTop_toTopOf="@+id/ivUpiApps"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+                                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/cvAddViaUpiError"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:layout_marginEnd="10dp"
+                                    app:cardCornerRadius="16dp"
+                                    app:cardElevation="8dp"
+                                    app:cardPreventCornerOverlap="true"
+                                    app:cardUseCompatPadding="true"
+                                    app:contentPadding="20dp">
+
+                                    <androidx.constraintlayout.widget.ConstraintLayout
+                                        android:id="@+id/clAddViaUpiAndQrCodeError"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:drawableEnd="@drawable/ic_copy"
-                                        android:text="@string/add_via_upi_id"
-                                        android:textColor="@color/black"
-                                        android:textSize="18sp"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toTopOf="parent" />
+                                        tools:visibility="visible">
 
-                                    <com.google.android.material.textview.MaterialTextView
-                                        android:id="@+id/tvInstructionAddViaUPI"
-                                        style="@style/TextviewRegular"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="2dp"
-                                        android:textColor="@color/strokeColor"
-                                        android:textSize="12sp"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toBottomOf="@+id/tvAddViaUpiId" />
+                                        <com.google.android.material.textview.MaterialTextView
+                                            android:id="@+id/tvAddViaUpiIdError"
+                                            style="@style/TextviewBold"
+                                            android:layout_width="0dp"
+                                            android:layout_height="wrap_content"
+                                            android:drawableEnd="@drawable/ic_copy"
+                                            android:text="@string/add_via_upi_id"
+                                            android:textColor="@color/black"
+                                            android:textSize="18sp"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintTop_toTopOf="parent" />
 
-                                    <com.google.android.material.textview.MaterialTextView
-                                        android:id="@+id/tvRecommandedMethodAddViaUPIOrQr"
-                                        style="@style/TextviewRegular"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="@string/recommended"
-                                        android:textColor="@color/green6"
-                                        android:textSize="11sp"
-                                        android:paddingHorizontal="@dimen/dp6"
-                                        android:paddingVertical="3dp"
-                                        app:customStrokeWidth="@{@dimen/dp0_5}"
-                                        app:customStrokeColor="@{@color/green6}"
-                                        app:customCornerRadius="@{@dimen/dp25}"
-                                        app:customBackgroundColor="@{@color/recommanded_bg}"
-                                        app:layout_constraintBottom_toBottomOf="@+id/tvAddViaUpiId"
-                                        app:layout_constraintStart_toEndOf="@+id/tvAddViaUpiId"
-                                        app:layout_constraintTop_toTopOf="@+id/tvAddViaUpiId"/>
+                                        <com.google.android.material.textview.MaterialTextView
+                                            android:id="@+id/tvRecommandedMethodAddViaUPIOrQrError"
+                                            style="@style/TextviewRegular"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/recommended"
+                                            android:textColor="@color/green6"
+                                            android:textSize="11sp"
+                                            android:paddingHorizontal="@dimen/dp6"
+                                            android:paddingVertical="3dp"
+                                            app:customStrokeWidth="@{@dimen/dp0_5}"
+                                            app:customStrokeColor="@{@color/green6}"
+                                            app:customCornerRadius="@{@dimen/dp25}"
+                                            app:customBackgroundColor="@{@color/recommanded_bg}"
+                                            app:layout_constraintBottom_toBottomOf="@+id/tvAddViaUpiIdError"
+                                            app:layout_constraintStart_toEndOf="@+id/tvAddViaUpiIdError"
+                                            app:layout_constraintTop_toTopOf="@+id/tvAddViaUpiIdError"/>
 
 
-                                    <androidx.appcompat.widget.AppCompatImageView
-                                        android:id="@+id/icQrcode"
-                                        android:layout_width="200dp"
-                                        android:layout_height="200dp"
-                                        android:layout_centerHorizontal="true"
-                                        android:adjustViewBounds="true"
-                                        android:cropToPadding="true"
-                                        android:layout_marginTop="@dimen/dp10"
-                                        tools:srcCompat="@drawable/ic_qr_icon"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toBottomOf="@+id/tvInstructionAddViaUPI" />
-
-                                    <com.google.android.material.textview.MaterialTextView
-                                        android:id="@+id/tvYourUpiIdLabel"
-                                        style="@style/TextviewRegular"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/dp8"
-                                        android:text="@string/your_upi_id"
-                                        android:textColor="@color/text_color_light"
-                                        android:textSize="12sp"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintTop_toBottomOf="@+id/icQrcode" />
-
-
-                                    <com.google.android.material.textview.MaterialTextView
-                                        android:id="@+id/tvYourUpiIdValue"
-                                        style="@style/TextviewRegular"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="@dimen/dp8"
-                                        android:textColor="@color/bgcolor"
-                                        android:textSize="16sp"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintTop_toBottomOf="@+id/tvYourUpiIdLabel"
-                                        tools:text="Hritik.sharma.fyp@yesbank" />
-
-
-                                    <androidx.appcompat.widget.AppCompatImageView
-                                        android:id="@+id/ivCopyUpiId"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_alignParentEnd="true"
-                                        android:layout_marginStart="6dp"
-                                        android:padding="4dp"
-                                        android:scaleType="fitStart"
-                                        android:onClick="@{()->viewModel.copyUPIid()}"
-                                        android:src="@drawable/ic_icon_feather_copy"
-                                        android:tint="@color/gery11"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintTop_toTopOf="@+id/tvYourUpiIdValue"
-                                        app:layout_constraintBottom_toBottomOf="@+id/tvYourUpiIdValue"/>
-
-
-                                    <androidx.appcompat.widget.AppCompatImageView
-                                        android:id="@+id/ivUpiApps"
-                                        android:layout_width="118dp"
-                                        android:layout_height="20dp"
-                                        android:layout_marginTop="@dimen/dp24"
-                                        app:srcCompat="@drawable/ic_upi_apps"
-                                        app:layout_constraintTop_toBottomOf="@+id/ivCopyUpiId"
-                                        app:layout_constraintStart_toStartOf="parent"
-                                        app:layout_constraintBottom_toBottomOf="parent"/>
-
-                                    <com.google.android.material.textview.MaterialTextView
-                                        android:id="@+id/tvNoTxnFeeViaUPIORQr"
-                                        style="@style/TextviewRegular"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginTop="10dp"
-                                        android:text="@string/no_transaction_fee"
-                                        android:textColor="@color/yellow10"
-                                        android:textSize="12sp"
-                                        app:layout_constraintTop_toTopOf="@+id/ivUpiApps"
-                                        app:layout_constraintEnd_toEndOf="parent"
-                                        app:layout_constraintBottom_toBottomOf="parent"/>
+                                        <com.google.android.material.textview.MaterialTextView
+                                            android:id="@+id/tvAddViaUpiErrorText"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="16dp"
+                                            style="@style/TextviewRegular"
+                                            android:textSize="14sp"
+                                            android:text="@string/oops_upi_id_could_not_be_loaded"
+                                            android:textColor="@color/text_color_light"
+                                            android:layout_marginHorizontal="@dimen/dp16"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintTop_toBottomOf="@+id/tvAddViaUpiIdError"/>
 
 
 
-                                </androidx.constraintlayout.widget.ConstraintLayout>
+                                        <com.google.android.material.button.MaterialButton
+                                            android:id="@+id/btnTryAgain"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:textSize="18sp"
+                                            android:drawableTint="@color/white"
+                                            android:drawableStart="@drawable/ic_baseline_refresh_24"
+                                            android:onClick="@{()->viewModel.reloadAddViaUpiDetails()}"
+                                            android:layout_marginHorizontal="@dimen/dp16"
+                                            android:text="@string/try_again_exclamation"
+                                            app:layout_constraintStart_toStartOf="parent"
+                                            app:layout_constraintEnd_toEndOf="parent"
+                                            app:layout_constraintTop_toBottomOf="@+id/tvAddViaUpiErrorText"
+                                            android:layout_marginTop="@dimen/dp20"
+                                            android:layout_marginBottom="@dimen/dp20"/>
 
-                            </androidx.cardview.widget.CardView>
+
+                                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                                </androidx.cardview.widget.CardView>
+                            </FrameLayout>
 
                             <androidx.cardview.widget.CardView
                                 android:id="@+id/virtual_account_info_cv"
@@ -364,7 +458,7 @@
                                 app:contentPadding="20dp"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toBottomOf="@+id/cvAddViaUpiIdOrQRCode">
+                                app:layout_constraintTop_toBottomOf="@+id/flAddViaUpiId">
 
                                 <androidx.constraintlayout.widget.ConstraintLayout
                                     android:id="@+id/card_cl"

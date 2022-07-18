@@ -37,7 +37,7 @@ class NewAddMoneyActivityVM(application: Application):BaseViewModel(application)
     val event:LiveData<BankDetailsEvent>
         get() = _event
     private val _event = LiveEvent<BankDetailsEvent>()
-
+    //private var isClicked = true
     init {
         callGetWalletBalanceApi()
         getBankDetails()
@@ -78,6 +78,11 @@ class NewAddMoneyActivityVM(application: Application):BaseViewModel(application)
         _event.value = BankDetailsEvent.WatchAddMoneyVideo
     }
 
+    fun reloadAddViaUpiDetails(){
+        //isClicked = false
+        _event.value = BankDetailsEvent.ReloadAddViaUPI
+        getBankDetails()
+    }
 
     /*
        * This method is used to get the balance of wallet
@@ -142,17 +147,32 @@ class NewAddMoneyActivityVM(application: Application):BaseViewModel(application)
                                     )
                                 )
                             }else if(it.mode=="SHOW_STATIC_QR_INFO"){
-                                _state.value = BankDetailsState.LoadViaUPIOrQRCode(
-                                    data = BankDetailsUiModel(
-                                        loadMoneyMod = it.mode,
-                                        modeVisibility = if((it.toShow!!)=="YES") Visibility.Visible else Visibility.InVisible,
-                                        identifier1 = it.identifier1,
-                                        identifier2 = it.identifier2
+                                /*if(isClicked){
+                                    it.toShow = "YES"
+                                }else{
+                                    it.toShow = "YES"
+                                    it.identifier1 = "test@Gmail.com"
+                                    it.identifier2 = "dsadasd"
+                                }*/
+                                if(((it.toShow!!)=="YES") && (it.identifier1.isNullOrEmpty() || it.identifier2.isNullOrEmpty())){
+                                    _state.value = BankDetailsState.UnableToGenerateUPIIdState
+                                }else{
+                                    _state.value = BankDetailsState.LoadViaUPIOrQRCode(
+                                        data = BankDetailsUiModel(
+                                            loadMoneyMod = it.mode,
+                                            modeVisibility = if((it.toShow)=="YES") Visibility.Visible else Visibility.InVisible,
+                                            identifier1 = it.identifier1,
+                                            identifier2 = it.identifier2
+                                        )
                                     )
-                                )
-                                generateQrCodeForUpiId(it.identifier2!!,onQrCodeGenerated= {
-                                    _state.value = BankDetailsState.QRCodeGenerated(it)
-                                })
+                                    if((it.toShow)=="YES" && !it.identifier2.isNullOrEmpty()){
+                                        generateQrCodeForUpiId(it.identifier2!!,onQrCodeGenerated= {
+                                            _state.value = BankDetailsState.QRCodeGenerated(it)
+                                        })
+                                    }
+
+                                }
+
                             }else if(it.mode=="PG_PAYU_INFO"){
                                 _state.value = BankDetailsState.LoadViaPayU(
                                     data = BankDetailsUiModel(
@@ -198,6 +218,7 @@ class NewAddMoneyActivityVM(application: Application):BaseViewModel(application)
         data class LoadViaUPIOrQRCode(var data: BankDetailsUiModel):BankDetailsState()
         data class LoadViaBankTransfer(var data: BankDetailsUiModel):BankDetailsState()
         data class QRCodeGenerated(val qrCode:Bitmap):BankDetailsState()
+        object UnableToGenerateUPIIdState:BankDetailsState()
     }
 
     sealed class BankDetailsEvent{
@@ -210,6 +231,7 @@ class NewAddMoneyActivityVM(application: Application):BaseViewModel(application)
         object CopyIFSC:BankDetailsEvent()
         object CopyUPIId:BankDetailsEvent()
         object WatchAddMoneyVideo:BankDetailsEvent()
+        object ReloadAddViaUPI:BankDetailsEvent()
     }
 
     private fun generateQrCodeForUpiId(upiId:String, onQrCodeGenerated:(bitMap: Bitmap)->Unit){

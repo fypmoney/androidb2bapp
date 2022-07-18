@@ -800,7 +800,18 @@
         android:id="@+id/navigation_spin_wheel"
         android:name="com.fypmoney.view.arcadegames.ui.SpinWheelFragment"
         android:label="Spin Wheel Screen"
-        tools:layout="@layout/fragment_spin_wheel" />
+        tools:layout="@layout/fragment_spin_wheel">
+        <argument
+            android:name="productCode"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+
+        <deepLink
+            android:id="@+id/arcade_spin_wheel_deep_link"
+            android:autoVerify="true"
+            app:uri="https://www.fypmoney.in/spinwheel/{productCode}" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_multiple_jackpots"
         android:name="com.fypmoney.view.arcadegames.ui.MultipleJackpotsFragment"
@@ -810,6 +821,18 @@
         android:id="@+id/navigation_rotating_treasure"
         android:name="com.fypmoney.view.arcadegames.ui.RotatingTreasureFragment"
         android:label="Rotating Treasure Screen"
-        tools:layout="@layout/fragment_rotating_treasure" />
+        tools:layout="@layout/fragment_rotating_treasure">
+
+        <argument
+            android:name="productCode"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+
+        <deepLink
+            android:id="@+id/arcade_rotating_treasure_deep_link"
+            android:autoVerify="true"
+            app:uri="https://www.fypmoney.in/rotating_treasure/{productCode}" />
+    </fragment>
 
 </navigation>

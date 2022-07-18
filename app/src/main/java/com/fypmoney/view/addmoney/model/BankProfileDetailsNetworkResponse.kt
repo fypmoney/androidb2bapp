@@ -20,10 +20,10 @@ data class BankDetailsItem(
 	val identifier5: String? = null,
 
 	@field:SerializedName("identifier1")
-	val identifier1: String? = null,
+    var identifier1: String? = null,
 
 	@field:SerializedName("identifier2")
-	val identifier2: String? = null,
+	var identifier2: String? = null,
 
 	@field:SerializedName("identifier3")
 	val identifier3: String? = null,
@@ -32,7 +32,7 @@ data class BankDetailsItem(
 	val identifier4: String? = null,
 
 	@field:SerializedName("toShow")
-	val toShow: String? = null
+    var toShow: String? = null
 )
 
 @Keep

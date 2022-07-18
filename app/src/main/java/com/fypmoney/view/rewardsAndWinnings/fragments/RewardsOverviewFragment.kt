@@ -31,6 +31,8 @@ import com.fypmoney.view.activity.UserFeedsInAppWebview
 import com.fypmoney.view.adapter.FeedsAdapter
 import com.fypmoney.view.arcadegames.ui.SpinWheelFragment
 import com.fypmoney.view.arcadegames.viewmodel.FragmentSpinWheelVM
+import com.fypmoney.view.arcadegames.model.ArcadeType
+import com.fypmoney.view.arcadegames.model.checkTheArcadeType
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
 import com.fypmoney.view.fypstories.view.StoriesBottomSheet
 import com.fypmoney.view.home.main.explore.ViewDetails.ExploreInAppWebview
@@ -297,8 +299,6 @@ class RewardsOverviewFragment :
                         findNavController().navigate(R.id.navigation_card)
                     } else if (redirectionResources == AppConstants.RewardHistory) {
                         findNavController().navigate(R.id.navigation_rewards_history)
-                    }else if (redirectionResources == AppConstants.ARCADE) {
-                        findNavController().navigate(R.id.navigation_spin_wheel)
                     }
                     else if (redirectionResources == AppConstants.GIFT_VOUCHER)  {
                         findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
@@ -367,6 +367,21 @@ class RewardsOverviewFragment :
 
             AppConstants.GIFT_VOUCHER -> {
                 findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
+            }
+            "ARCADE"-> {
+                val type = sectionContentItem.rfu1?.let { redirectionResource?.let { it1 -> checkTheArcadeType(arcadeType = it, productCode = it1) } }
+                when(type){
+                    ArcadeType.NOTypeFound -> TODO()
+                    is ArcadeType.SCRATCH_CARD -> TODO()
+                    is ArcadeType.SLOT -> TODO()
+                    is ArcadeType.SPIN_WHEEL -> {
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}"))
+                    }
+                    is ArcadeType.TREASURE_BOX -> {
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}"))
+                    }
+                    null -> TODO()
+                }
             }
         }
     }
