@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/gift_card_amount_tv"
+        style="@style/TextviewRegular"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:textSize="14sp"
+        tools:background="@color/color_skyblue"
+        android:layout_margin="@dimen/dp5"
+        app:customCornerRadius="@{@dimen/dp14}"
+        app:customBackgroundColor="@{@color/link_color}"
+        android:paddingVertical="@dimen/dp5"
+        android:paddingHorizontal="@dimen/dp20"
+        tools:text="@string/add_money_50"
+        android:textColor="@color/text_color_dark" />
+</layout>

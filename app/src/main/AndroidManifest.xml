@@ -52,10 +52,12 @@
             android:exported="false" />
         <activity
             android:name=".view.addmoney.NewAddMoneyActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.ordercard.cardofferdetails.CardOfferDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".view.ordercard.activateofflinecard.ScanCardKitNumberActivity"
             android:screenOrientation="portrait" />
@@ -429,6 +431,21 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.giftcard.GiftCardsListScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:windowSoftInputMode="adjustPan"
+            android:name=".view.giftcard.view.CreateEGiftCardFragment" />
+        <activity android:name=".view.giftcard.GiftTermsAndConditions" />
+        <activity android:name=".view.giftcard.GiftHistoryActivity" />
+        <activity android:name=".view.giftcard.GiftHistoryUnusedActivity" />
+        <activity android:name=".view.giftcard.GiftDetailsActivity" />
+        <activity android:name=".view.giftcard.GiftViewAllScreen" />
 
         <meta-data
             android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled"

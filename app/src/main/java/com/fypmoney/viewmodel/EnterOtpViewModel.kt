@@ -76,6 +76,9 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
                         callLoginApi()
                     }
                     AppConstants.AADHAAR_VERIFICATION -> {
+                        trackr {
+                            it.name = TrackrEvent.yes_bank_otp
+                        }
                         callKycVerificationApi()
                     }
                     AppConstants.KYC_MOBILE_VERIFICATION -> {
@@ -415,7 +418,7 @@ class EnterOtpViewModel(application: Application) : BaseViewModel(application) {
         fromWhichScreenValue: String? = null,
         token: String? = null, kitNumber: String? = null
     ) {
-        mobile.value = type
+        mobile.value = type!!
         fromWhichScreen.set(fromWhichScreenValue)
         kycToken.set(token)
         kitFourDigit.set(kitNumber)

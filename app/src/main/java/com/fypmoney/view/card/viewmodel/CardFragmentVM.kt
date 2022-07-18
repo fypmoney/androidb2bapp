@@ -512,7 +512,6 @@ class CardFragmentVM(application: Application) :
 
     override fun onActivateCardClick(kitFourDigit: String?) {
         callActivateCardApi(kitFourDigit)
-
     }
 
     private fun callActivateCardApi(kitFourDigit: String?) {

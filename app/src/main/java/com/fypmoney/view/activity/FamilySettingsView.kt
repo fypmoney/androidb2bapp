@@ -26,7 +26,7 @@ import com.fypmoney.viewmodel.FamilySettingsViewModel
 
 /*
 * This class is used as Home Screen
-* TODO this will replace later with Fyper Fragment
+*
 * */
 
 class FamilySettingsView(val tabchangeListner: HomeTabChangeClickListener? = null) :

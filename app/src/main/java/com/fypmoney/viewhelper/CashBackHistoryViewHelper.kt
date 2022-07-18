@@ -5,6 +5,8 @@ import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
 import com.fypmoney.model.BankTransactionHistoryResponseDetails
 import com.fypmoney.util.AppConstants
+import com.fypmoney.util.AppConstants.CHANGED_DATE_TIME_FORMAT3
+import com.fypmoney.util.AppConstants.SERVER_DATE_TIME_FORMAT1
 import com.fypmoney.util.Utility
 import com.fypmoney.view.adapter.CashbackHistoryAdapter
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsCashbackwonVM
@@ -22,9 +24,8 @@ class CashBackHistoryViewHelper(
 ) {
     var date = ObservableField<String>()
     var amount = ObservableField<String>()
-    var dateWithoutTime = ObservableField<String>()
     var isCredited = ObservableField<Boolean>()
-    var isLineVisible = ObservableField<Boolean>()
+
     fun init() {
         setInitialData()
     }
@@ -56,7 +57,11 @@ class CashBackHistoryViewHelper(
 
         }
 
-        try {
+        date.set(Utility.parseDateTimeWithPlusFiveThirty(cashbackHistory?.transactionDate,
+            inputFormat = SERVER_DATE_TIME_FORMAT1,
+            outputFormat = CHANGED_DATE_TIME_FORMAT3))
+
+        /*try {
             val dateVal = cashbackHistory?.transactionDate?.split("+")
 
             date.set(
@@ -97,7 +102,7 @@ class CashBackHistoryViewHelper(
             }
         } catch (e: Exception) {
             e.printStackTrace()
-        }
+        }*/
 
 
     }

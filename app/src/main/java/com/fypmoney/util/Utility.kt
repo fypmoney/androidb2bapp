@@ -7,13 +7,12 @@ import android.content.ClipboardManager
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.database.Cursor
-import android.graphics.BlendMode
-import android.graphics.BlendModeColorFilter
-import android.graphics.PorterDuff
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract
+import android.provider.MediaStore
 import android.provider.Settings
 import android.text.*
 import android.text.InputFilter.LengthFilter
@@ -44,6 +43,7 @@ import com.fypmoney.util.AppConstants.CardScreen
 import com.fypmoney.util.AppConstants.DATE_FORMAT_CHANGED
 import com.fypmoney.util.AppConstants.FEEDSCREEN
 import com.fypmoney.util.AppConstants.FyperScreen
+import com.fypmoney.util.AppConstants.GiftScreen
 import com.fypmoney.util.AppConstants.HOMEVIEW
 import com.fypmoney.util.AppConstants.JACKPOTTAB
 import com.fypmoney.util.AppConstants.OfferScreen
@@ -57,6 +57,7 @@ import com.fypmoney.view.activity.ChoresActivity
 import com.fypmoney.view.activity.OfferDetailActivity
 import com.fypmoney.view.fragment.OffersStoreActivity
 import com.fypmoney.view.fragment.StoresActivity
+import com.fypmoney.view.giftcard.GiftCardsListScreen
 import com.fypmoney.view.home.main.homescreen.view.HomeActivity
 import com.fypmoney.view.ordercard.OrderCardView
 import com.fypmoney.view.ordercard.model.UserDeliveryAddress
@@ -330,7 +331,7 @@ object Utility {
         )
         if (isDateOfBirth) {
             datePickerDialog.datePicker.maxDate =
-                (System.currentTimeMillis() - 347039786000)//11 years //Todo
+                (System.currentTimeMillis() - 347039786000)//11 years
             datePickerDialog.datePicker.minDate = (System.currentTimeMillis() - 2208984820000)//70
 
         } else {
@@ -376,7 +377,7 @@ object Utility {
         )
         if (isDateOfBirth) {
             datePickerDialog.datePicker.maxDate =
-                (System.currentTimeMillis() - 347039786000)//11 years //Todo
+                (System.currentTimeMillis() - 347039786000)//11 years
             datePickerDialog.datePicker.minDate = (System.currentTimeMillis() - 2208984820000)//70
 
         } else {
@@ -438,13 +439,7 @@ object Utility {
             datePickerDialog.datePicker.minDate = cal.time.time
         }
 
-//        if(isDateOfBirth){
-//            datePickerDialog?.datePicker!!.maxDate = (System.currentTimeMillis() - 347039786000)//11 years //Todo
-//            datePickerDialog?.datePicker.minDate = (System.currentTimeMillis() - 2208984820000)//70
-//
-//        }else{
-//            datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
-//        }
+
         datePickerDialog.show()
 
     }
@@ -946,6 +941,27 @@ object Utility {
             ""
         }
     }
+    fun parseDateTimeWithPlusFiveThirty(
+        dateTime: String? = null,
+        inputFormat: String? = AppConstants.SERVER_DATE_TIME_FORMAT1,
+        outputFormat: String? = AppConstants.CHANGED_DATE_TIME_FORMAT1
+    ): String {
+        return if (dateTime != null) {
+            val input = SimpleDateFormat(inputFormat, Locale.getDefault())
+            input.timeZone = TimeZone.getTimeZone("UTC");
+            val output = SimpleDateFormat(outputFormat, Locale.getDefault())
+            output.timeZone = TimeZone.getTimeZone("Asia/Kolkata")
+            var d: Date? = null
+            try {
+                d = input.parse(dateTime)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+            output.format(d)
+        } else {
+            ""
+        }
+    }
 
 
 
@@ -993,15 +1009,12 @@ object Utility {
         url: String?,
         imageView: ImageView
     ) {
-
-
         url.let {
             if (!url.isNullOrEmpty()) {
                 Glide.with(context!!).load(url).placeholder(shimmerDrawable())
                     .into(imageView)
             } else {
                 imageView.setImageResource(R.drawable.ic_user)
-
             }
         }
     }
@@ -1056,6 +1069,10 @@ object Utility {
             }
             ReferralScreen -> {
                 intent = Intent(context, ReferAndEarnActivity::class.java)
+
+            }
+            GiftScreen -> {
+                intent = Intent(context, GiftCardsListScreen::class.java)
 
             }
             JACKPOTTAB -> {
@@ -1209,9 +1226,11 @@ object Utility {
 
 
     sealed class MobileNumberFromPhoneBook{
-        data class MobileNumberFound(val phoneNumber:String):MobileNumberFromPhoneBook()
+        data class MobileNumberFound(val phoneNumber:String,val name:String? = null):MobileNumberFromPhoneBook()
         data class UnableToFindMobileNumber(val errorMsg:String):MobileNumberFromPhoneBook()
     }
+
+
     fun getPhoneNumberFromContact(activity: Activity,data: Intent?):MobileNumberFromPhoneBook{
         val contactData = data!!.data
         val c: Cursor? =
@@ -1226,13 +1245,17 @@ object Utility {
                         ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id,
                         null, null
                     )
+
                     phones?.moveToFirst()
                     return if (phones != null) {
                         val cNumber = phones.getString(phones.getColumnIndex("data1"))
+                        val name = phones.getString(
+                            phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME_PRIMARY)
+                        )
                         System.out.println("number is:$cNumber")
                         val phoneNuber = cNumber.replace("\\s".toRegex(), "")
                         phones.close()
-                        MobileNumberFromPhoneBook.MobileNumberFound(phoneNuber.takeLast(10))
+                        MobileNumberFromPhoneBook.MobileNumberFound(phoneNuber.takeLast(10),name)
 
                     }else{
                         MobileNumberFromPhoneBook.UnableToFindMobileNumber(activity.getString(R.string.unable_to_pick_phone_number))
@@ -1247,6 +1270,31 @@ object Utility {
             }
         }
         return MobileNumberFromPhoneBook.UnableToFindMobileNumber(activity.getString(R.string.unable_to_pick_phone_number))
+
+    }
+
+    fun takeScreenShot(view: View): Bitmap? {
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+        return bitmap
+    }
+
+    fun shareScreenShotContent(bitmap: Bitmap,context: Context,text:String) {
+        val bitmapPath = MediaStore.Images.Media.insertImage(
+            context.contentResolver, bitmap, "title", ""
+        )
+        if(bitmapPath!=null){
+            val uri: Uri = Uri.parse(bitmapPath)
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "image/*"
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, "App")
+            shareIntent.putExtra(Intent.EXTRA_TEXT, text)
+            shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+            context.startActivity(Intent.createChooser(shareIntent, "Share"))
+        }else{
+            FirebaseCrashlytics.getInstance().recordException(throw Exception("Bitmap path is ${bitmapPath}"))
+        }
 
     }
 }

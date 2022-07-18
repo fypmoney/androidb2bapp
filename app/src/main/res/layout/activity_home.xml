@@ -94,6 +94,20 @@
                     android:onClick="@{()->viewModel.onTransactionHistoryClicked()}"
                     />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/gift_voucher_history_tv"
+                    style="@style/TextviewRegular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/my_orders"
+                    android:textColor="@color/spin_light"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:onClick="@{()->viewModel.onGiftVoucherHistoryClicked()}"
+                    />
+
                 <FrameLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

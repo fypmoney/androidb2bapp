@@ -10,7 +10,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/reward_background">
+        android:background="@drawable/jackpot_radial_gradient"
+        >
 
     <include
         android:id="@+id/layout_toolbar"
@@ -22,12 +23,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:background="@drawable/jackpot_radial_gradient"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp">
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:paddingBottom="50dp">
 
             <ImageView
@@ -54,12 +55,10 @@
                     android:id="@+id/bootom_part_cl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:layout_marginStart="@dimen/_14sdp"
                     android:paddingTop="@dimen/_6sdp"
                     android:layout_marginEnd="@dimen/_14sdp"
                     android:layout_marginTop="@dimen/_8sdp"
-
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="parent">
@@ -76,14 +75,11 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <ImageView
+                    <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imageView4"
-
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/_80sdp"
                         android:layout_marginTop="@dimen/_2sdp"
-
-
                         android:layout_marginBottom="@dimen/_6sdp"
                         android:src="@drawable/golden_cards"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -99,7 +95,6 @@
                         android:layout_marginBottom="@dimen/_18sdp"
                         android:alpha=".8"
                         android:layout_marginEnd="@dimen/_12sdp"
-
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -128,7 +123,6 @@
                         app:lottie_loop="true"
                         app:lottie_rawRes="@raw/three_dot_amount_loader"
                         app:layout_constraintBottom_toBottomOf="@+id/total_refral_won_value_tv"
-
                         app:layout_constraintStart_toEndOf="@+id/total_refral_won_value_tv"
                         app:layout_constraintTop_toTopOf="@+id/total_refral_won_value_tv"
                         tools:visibility="visible" />
@@ -158,21 +152,17 @@
                     android:orientation="vertical">
 
                     <include layout="@layout/shimmer_placeholder_layout_store" />
-
-                    <include layout="@layout/shimmer_placeholder_layout_store" />
-
-                    <include layout="@layout/shimmer_placeholder_layout_store" />
-
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/amount_mynts"
                 android:layout_marginTop="@dimen/dp10"
                 android:layout_marginBottom="@dimen/_8sdp"
+                android:layout_alignParentBottom="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:visibility="visible" />

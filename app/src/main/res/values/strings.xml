@@ -135,7 +135,7 @@
     <string name="otp_length_error">OTP length must be 6</string>
     <string name="phone_email_validity_error">Please enter valid Mobile No. or Email Id</string>
     <string name="continue_txt">Continue</string>
-    <string name="phone_number">Phone number</string>
+    <string name="phone_number">Phone number <font color='#ff434a'>*</font></string>
     <string name="no_internet_try_again">Not connected with internet, please try again</string>
     <string name="google_sign_in_failure">Google sign in failed.</string>
 
@@ -987,6 +987,9 @@ Coming really soon!
 
     <string name="will_be_deducted_from_your_balance_scratch">Will be deducted from your balance \nfor Scratch card.</string>
     <string name="make_your_first_transaction_using_your_fyp_card_and_earn_mynts">Make your first transaction using your fyp card and earn mynts.</string>
+    <string name="add_money_gift_card">Add money to your gift card</string>
+    <string name="tnc">TnC</string>
+    <string name="type_your_msg_here">Type your msg here</string>
     <string name="cash_back_won_history">Cashback Won History</string>
     <string name="looks_like_you_haven_t_any_referred_a_yet">Looks like you haven’t any referred a yet.</string>
     <string name="you_can_send_or_request_up_to_10000">You can send or request up to RS 10000</string>
@@ -1023,7 +1026,7 @@ Coming really soon!
     <string name="continue_string">Continue</string>
 
     <string name="rewards">Rewards</string>
-    <string name="explore">Explore</string>
+    <string name="explore">F-Store</string>
     <string name="title_home">Home</string>
     <string name="my_funds">My Funds</string>
     <string name="low_balance">Low Balance</string>
@@ -1089,12 +1092,6 @@ Coming really soon!
     <string name="no_savings_yet_start_transaction_to_save_now">No savings yet. Start transaction to save now!</string>
     <string name="you_can_not_add_more_funds_since_you_have_already_exceeded_your_monthly_limit">You can not add more funds since you have already exceeded your monthly limit</string>
 
-    <string name="close_button">Close</string>
-    <string name="buffering">Buffering…</string>
-
-    <string name="paused">Paused</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="ended">Ended</string>
 
     <string name="increased_monthly_limit_1_lakh">Increased Monthly Limit: 1 Lakh</string>
     <string name="atm_withdrawals_enabled">ATM Withdrawals Enabled</string>
@@ -1227,7 +1224,7 @@ Coming really soon!
     <string name="repeat">Repeat</string>
     <string name="recharge">Recharge</string>
     <string name="please_do_not_press_back_or_close_the_app">Please, do not press back or close the app</string>
-    <string name="_5_cashback">5% Cashback</string>
+    <string name="_5_cashback">%1$s Cashback</string>
     <string name="recommended">Recommended</string>
     <string name="no_transaction_fee">* No transaction fee</string>
     <string name="your_bank_account">Your Bank Account</string>
@@ -1236,6 +1233,53 @@ Coming really soon!
     <string name="search_contact">Search Contact</string>
     <string name="sending_money_to_other_fyp_users_is_temporarily_unavailable_we_re_working_hard_to_bring_it_back">Sending money to other Fyp users is temporarily unavailable.\n \n We\'re working hard to bring it back!</string>
 
+    <string name="close_button">Close</string>
+    <string name="buffering">Buffering…</string>
+    <string name="paused">Paused</string>
+    <string name="ended">Ended</string>
+    <string name="buy_now">Buy now</string>
+    <string name="whom_are_you_gifting_this_to">Whom are you gifting this to?</string>
+    <string name="myself">Myself</string>
+    <string name="someone">Someone</string>
+    <string name="fill_in_the_details_below_to_whom_you_re_sending_this_gift_card">Fill in the details below to whom you’re sending this gift card</string>
+    <string name="name">Name <font color='#ff434a'>*</font></string>
+    <string name="email">Email</string>
+    <string name="gift_card_amount_should_be_grater_with_min_amount">Gift card amount should be grater %1$s</string>
+    <string name="gift_card_amount_should_be_less_with_max_amount">Gift card amount should be less then %1$s</string>
+    <string name="min__max_gift_price">Min \u20B9 %1$s - Max \u20B9 %2$s</string>
+    <string name="create_gift_card">Create Gift card</string>
+    <string name="name_is_required">Name is required</string>
+    <string name="mobile_no_is_required">Mobile no is required</string>
+    <string name="create_gift_card_payment_processing_label">Create gift card payment processing</string>
+    <string name="processing_creating_gift_card">Processing payment of ₹ %1$s for %2$s</string>
+    <string name="create_gift_card_payment_success">Create gift card payment success</string>
+    <string name="you_have_won_mynts"><u>You have won %1$s Mynts</u></string>
+    <string name="you_have_won_mynts1"><u>You have won %1$s Mynts</u></string>
+    <string name="your_gift_card_prurchase_of_amount_successful">Your Gift Card Purchase of \n \u20B9 %1$s is successful</string>
+    <string name="your_gift_card_prurchase_of_amount_pending">Your Gift Card Purchase of \n \u20B9 %1$s is pending</string>
+    <string name="your_gift_card_prurchase_of_amount_failed">Your Gift Card Purchase of \n \u20B9 %1$s is failed</string>
+    <string name="gift_card_details">Gift Card Details</string>
+    <string name="voucher_number">Voucher Number</string>
+    <string name="voucher_value">Voucher Value</string>
+    <string name="voucher_pin">Voucher Pin</string>
+    <string name="validity">Validity</string>
+    <string name="fy_order_no">Fyp Order No.</string>
+    <string name="reedem_now">Redeem Now</string>
+    <string name="how_to_redeem_steps">How to redeem steps</string>
+    <string name="my_orders">My Orders</string>
+    <string name="you_have_not_purchased_any_order_yet">You have not purchased any order yet.</string>
+    <string name="refresh"><u>Refresh</u></string>
+    <string name="purchased">Purchased</string>
+    <string name="gifted">Gifted</string>
+    <string name="received">Received</string>
+    <string name="success">Success</string>
+    <string name="failed">Failed</string>
+    <string name="gift_card_history">Gift Card History</string>
+    <string name="add_via_upi_id">Add via UPI ID</string>
+    <string name="your_upi_id">Your UPI ID</string>
+    <string name="no_payment_mode_is_available_right_now_n_please_try_again_later">No payment mode is available right now. \n Please try again later</string>
+    <string name="global_alert">Global Alert</string>
+    <string name="instruction_on_static_qr">"Receive money using any UPI Apps.\nThis ID can only be used for adding money!\n \nMinimum: ₹10 | Maximum: ₹%1$s</string>
 
     //Arcade Games
     <string name="daily_limit_over">Daily Limit Over</string>
