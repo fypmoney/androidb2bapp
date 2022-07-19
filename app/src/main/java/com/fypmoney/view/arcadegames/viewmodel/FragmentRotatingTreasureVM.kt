@@ -25,6 +25,7 @@ import com.google.gson.JsonParser
 
 class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(application) {
 
+    lateinit var productCode:String
     var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
     var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
     var totalJackpotAmount: MutableLiveData<TotalJackpotResponse> = MutableLiveData()
@@ -67,8 +68,8 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
     private fun callRewardSummary() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE,
-                NetworkUtil.endURL(ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE),
+                ApiConstant.API_REWARD_SUMMARY,
+                NetworkUtil.endURL(ApiConstant.API_REWARD_SUMMARY),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false
@@ -91,8 +92,8 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
     private fun callTotalJackpotCards() {
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_GET_JACKPOT_CARDS,
-                NetworkUtil.endURL(ApiConstant.API_GET_JACKPOT_CARDS),
+                ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE,
+                NetworkUtil.endURL(ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE),
                 ApiUrl.GET,
                 BaseRequest(),
                 this, isProgressBar = false

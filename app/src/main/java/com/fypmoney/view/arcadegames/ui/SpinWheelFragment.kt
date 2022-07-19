@@ -279,6 +279,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
                 mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
                 mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
             } else {
+
                 mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
                 mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
             }
