@@ -329,12 +329,11 @@ class RewardsJackpotFragment : BaseFragment<FragmentJackpotOverviewBinding, Rewa
                             }
                             param(FirebaseAnalytics.Param.SCREEN_CLASS, ExploreFragment::class.java.simpleName)
                         }
-                        val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                            RewardsJackpotFragmentDirections.actionJackpotToSectionExplore(sectionExploreItem = it,
-                                sectionExploreName= it1
+                        val directions = RewardsJackpotFragmentDirections.actionJackpotToSectionExplore(sectionExploreItem = it,
+                                sectionExploreName= exploreContentResponse?.sectionDisplayText
                             )
-                        }
-                        directions?.let { it1 -> findNavController().navigate(it1) }
+
+                        directions.let { it1 -> findNavController().navigate(it1) }
                     }
                     AppConstants.GIFT_VOUCHER -> {
                         findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))

@@ -20,7 +20,7 @@ import com.google.gson.JsonParser
 
 class SectionExploreFragmentVM(application: Application) : BaseViewModel(application) {
     var sectionContent = MutableLiveData<SectionContentItem>()
-    var sectionName:String =""
+    var sectionName:String? = null
     var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
 
     var openBottomSheet: MutableLiveData<ArrayList<offerDetailResponse>> = MutableLiveData()

@@ -312,13 +312,12 @@ class DthStoresListFragment : BaseFragment<DthStoresListFragmentBinding, DthStor
                 startActivity(intent)
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
-                val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
+                val directions =
                     DthDetailsRechargeFragmentDirections.actionExploreSectionExplore(
                         sectionExploreItem = sectionContentItem,
-                        sectionExploreName = it1
+                        sectionExploreName = exploreContentResponse?.sectionDisplayText
                     )
-                }
-                directions?.let { it1 -> findNavController().navigate(it1) }
+                directions.let { it1 -> findNavController().navigate(it1) }
             }
             AppConstants.EXPLORE_IN_APP -> {
                 redirectionResource?.let { uri ->

@@ -29,8 +29,6 @@ import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.activity.UserFeedsInAppWebview
 import com.fypmoney.view.adapter.FeedsAdapter
-import com.fypmoney.view.arcadegames.ui.SpinWheelFragment
-import com.fypmoney.view.arcadegames.viewmodel.FragmentSpinWheelVM
 import com.fypmoney.view.arcadegames.model.ArcadeType
 import com.fypmoney.view.arcadegames.model.checkTheArcadeType
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
@@ -278,13 +276,11 @@ class RewardsOverviewFragment :
                 startActivity(intent)
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
-                val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                    RewardsOverviewFragmentDirections.actionExploreSectionExplore(
+                val directions = RewardsOverviewFragmentDirections.actionExploreSectionExplore(
                         sectionExploreItem = sectionContentItem,
-                        sectionExploreName = it1
+                        sectionExploreName = exploreContentResponse?.sectionDisplayText
                     )
-                }
-                directions?.let { it1 -> findNavController().navigate(it1) }
+                directions.let { it1 -> findNavController().navigate(it1) }
             }
             AppConstants.EXPLORE_IN_APP -> {
 
