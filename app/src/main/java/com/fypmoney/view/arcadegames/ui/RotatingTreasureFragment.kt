@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -53,6 +54,7 @@ class RotatingTreasureFragment :
     private var sectionId: Int? = null
 
     private var currentRotateCount = 0
+    private val navArgs by navArgs<RotatingTreasureFragmentArgs>()
 
     //    private var orderId: String? = null
     lateinit var eventEnd: TreasureEvent
@@ -79,6 +81,8 @@ class RotatingTreasureFragment :
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
+
+        rotatingTreasureVM.productCode = navArgs.productCode
 
         compositePageTransformer.addTransformer(MarginPageTransformer(40))
         compositePageTransformer.addTransformer { page: View, position: Float ->
@@ -107,7 +111,7 @@ class RotatingTreasureFragment :
             mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
             mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
 
-            rotatingTreasureVM.callMyntsBurnApi("TREASURE_BOX_101")
+            rotatingTreasureVM.callMyntsBurnApi(rotatingTreasureVM.productCode)
 
 //            }
         }
