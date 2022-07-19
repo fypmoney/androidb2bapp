@@ -458,6 +458,7 @@ class RewardsOverviewFragment :
 
 
         }
+
         viewModel.totalRewardsResponse.observe(
             viewLifecycleOwner
         ) { list ->
@@ -558,7 +559,6 @@ class RewardsOverviewFragment :
         }
     }
 
-
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
 
         val bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
@@ -591,6 +591,14 @@ class RewardsOverviewFragment :
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
         intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
         startActivity(intent)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mViewmodel?.callTotalJackpotCards()
+        mViewmodel?.callRewardSummary()
+        mViewmodel?.callTotalRewardsEarnings()
+
     }
 
 }

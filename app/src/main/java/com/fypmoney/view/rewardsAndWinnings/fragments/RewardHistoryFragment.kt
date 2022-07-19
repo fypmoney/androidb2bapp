@@ -99,6 +99,10 @@ class RewardHistoryFragment :
                             AppConstants.ORDER_NUM,
                             historyItem.orderNumber.toString()
                         )
+                        intent.putExtra(
+                            AppConstants.PRODUCT_CODE,
+                            historyItem.productCode
+                        )
                         intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
                         startActivity(intent)
 //                        val orderNo = historyItem.orderNumber.toString()
