@@ -954,10 +954,12 @@ object Utility {
             var d: Date? = null
             try {
                 d = input.parse(dateTime)
+                output.format(d)
             } catch (e: ParseException) {
                 e.printStackTrace()
+                FirebaseCrashlytics.getInstance().recordException(Throwable("Unable to parse datae ${d}"))
+                ""
             }
-            output.format(d)
         } else {
             ""
         }
