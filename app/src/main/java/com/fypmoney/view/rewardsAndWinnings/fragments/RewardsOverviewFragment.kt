@@ -29,8 +29,6 @@ import com.fypmoney.view.StoreWebpageOpener2
 import com.fypmoney.view.activity.UserFeedsDetailView
 import com.fypmoney.view.activity.UserFeedsInAppWebview
 import com.fypmoney.view.adapter.FeedsAdapter
-import com.fypmoney.view.arcadegames.ui.SpinWheelFragment
-import com.fypmoney.view.arcadegames.viewmodel.FragmentSpinWheelVM
 import com.fypmoney.view.arcadegames.model.ArcadeType
 import com.fypmoney.view.arcadegames.model.checkTheArcadeType
 import com.fypmoney.view.fragment.OfferDetailsBottomSheet
@@ -462,6 +460,7 @@ class RewardsOverviewFragment :
 
 
         }
+
         viewModel.totalRewardsResponse.observe(
             viewLifecycleOwner
         ) { list ->
@@ -562,7 +561,6 @@ class RewardsOverviewFragment :
         }
     }
 
-
     private fun callOfferDetailsSheeet(redeemDetails: offerDetailResponse) {
 
         val bottomSheetMessage = OfferDetailsBottomSheet(redeemDetails)
@@ -595,6 +593,14 @@ class RewardsOverviewFragment :
         intent.putExtra(AppConstants.FROM_WHICH_SCREEN, type)
         intent.putExtra(AppConstants.CUSTOMER_INFO_RESPONSE, CustomerInfoResponseDetails())
         startActivity(intent)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mViewmodel?.callTotalJackpotCards()
+        mViewmodel?.callRewardSummary()
+        mViewmodel?.callTotalRewardsEarnings()
+
     }
 
 }

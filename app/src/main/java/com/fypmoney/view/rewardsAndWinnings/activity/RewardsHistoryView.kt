@@ -195,13 +195,16 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
                 when (historyItem.productType) {
                     AppConstants.PRODUCT_SPIN -> {
                         val intent = Intent(this@RewardsHistoryView, SpinWheelHistoryView::class.java)
-                        SpinWheelViewDark.sectionArrayList.clear()
-                        intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
-
+//                        SpinWheelViewDark.sectionArrayList.clear()
                         intent.putExtra(
                             AppConstants.ORDER_NUM,
                             historyItem.orderNumber.toString()
                         )
+                        intent.putExtra(
+                            AppConstants.PRODUCT_CODE,
+                            historyItem.productCode
+                        )
+                        intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
                         startActivity(intent)
                     }
 

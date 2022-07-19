@@ -42,6 +42,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
     var totalMynts = MutableLiveData(false)
     var totalCash = MutableLiveData(false)
     var totalTickets = MutableLiveData(false)
+    var noOfJackpotTickets: Int? = null
 
     val state: LiveData<RewardsTicket>
         get() = _state
@@ -78,7 +79,7 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
         callExplporeContent()
 
         callTotalRewardsEarnings()
-        callTotalJackpotCards()
+//        callTotalJackpotCards()
 
     }
 

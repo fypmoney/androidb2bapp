@@ -18,29 +18,26 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseActivity
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.ActivitySpinWheelHistoryViewBinding
-import com.fypmoney.model.SectionListItem
+import com.fypmoney.view.arcadegames.model.SectionListItem
 import com.fypmoney.model.SpinWheelRotateResponseDetails
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.viewmodel.FragmentSpinWheelVM
-import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import kotlinx.android.synthetic.main.fragment_spin_wheel.*
 import kotlinx.android.synthetic.main.toolbar.*
-import kotlinx.android.synthetic.main.view_spin_wheel_black.*
 
 class SpinWheelHistoryView :
     BaseActivity<ActivitySpinWheelHistoryViewBinding, FragmentSpinWheelVM>() {
 
     private val spinWheelFragmentVM by viewModels<FragmentSpinWheelVM> { defaultViewModelProviderFactory }
     private var sectionId: Int? = null
-//    private var productCode: String? = null
-//    private var noOfGoldenCard: Int? = null
     private var mp: MediaPlayer? = null
     private var orderId: String? = null
+    private var productCode: String? = null
     private var mViewBinding: ActivitySpinWheelHistoryViewBinding? = null
 
     companion object {
-        var sectionArrayList: ArrayList<SectionListItem> = ArrayList()
+        var sectionArrayList: List<SectionListItem> = ArrayList()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,9 +47,8 @@ class SpinWheelHistoryView :
 
         val intent = intent
         orderId = intent.getStringExtra(AppConstants.ORDER_NUM)
+        productCode = intent.getStringExtra(AppConstants.PRODUCT_CODE)
         sectionId = intent.getIntExtra(AppConstants.SECTION_ID, -1)
-//        productCode = intent.getStringExtra(AppConstants.PRODUCT_CODE)
-//        noOfGoldenCard = intent.getIntExtra(AppConstants.NO_GOLDED_CARD, -1)
 
         setToolbarAndTitle(
             context = this@SpinWheelHistoryView,
@@ -61,6 +57,9 @@ class SpinWheelHistoryView :
             titleColor = Color.WHITE,
             backArrowTint = Color.WHITE
         )
+
+        spinWheelFragmentVM.productCode = productCode.toString()
+        spinWheelFragmentVM.callSingleProductApi(spinWheelFragmentVM.productCode)
 
         setBackgrounds()
 
@@ -79,14 +78,9 @@ class SpinWheelHistoryView :
 
             vibrateDevice()
 
-//            setViewVisibility(
-//                mViewBinding!!.ivSpinWheelMyntsAnim,
-//                mViewBinding!!.ivSpinWheelMynts
-//            )
+            arcadeSounds("SPINNER")
 
             spinWheelFragmentVM.callProductsDetailsApi(orderId)
-
-            arcadeSounds("SPINNER")
 
         }
 
@@ -155,7 +149,7 @@ class SpinWheelHistoryView :
     }
 
     private fun setWheel(
-        sectionList: List<com.fypmoney.view.arcadegames.model.SectionListItem>,
+        sectionList: List<SectionListItem>,
         rewardTypeOnFailure: String?
     ) {
         luckySpinWheelView.setRound(4)
@@ -258,7 +252,7 @@ class SpinWheelHistoryView :
         viewModel.spinWheelResponseList.observe(this) { spinWheelRotation ->
             try {
                 luckySpinWheelView.setLuckyRoundItemSelectedListener {
-                    SpinWheelFragment.sectionArrayList.forEach { item ->
+                    sectionArrayList.forEach { item ->
                         if (item.id == sectionId.toString()) {
                             setSelectionOnCard(spinWheelRotation)
                             return@forEach
@@ -306,8 +300,10 @@ class SpinWheelHistoryView :
                 Glide.with(this).load(it.spinWheelData.successResourceId)
                     .into(mViewBinding!!.ivBannerSpinWheel)
 
-                SpinWheelFragment.sectionArrayList =
-                    it.spinWheelData.sectionList as List<com.fypmoney.view.arcadegames.model.SectionListItem>
+                sectionArrayList = ArrayList()
+
+                sectionArrayList =
+                    it.spinWheelData.sectionList as List<SectionListItem>
 
                 spinWheelFragmentVM.frequency = it.spinWheelData.frequency
 
@@ -318,7 +314,7 @@ class SpinWheelHistoryView :
                         )
                     }
 
-                setWheel(SpinWheelFragment.sectionArrayList, it.spinWheelData.rewardTypeOnFailure)
+                setWheel(sectionArrayList, it.spinWheelData.rewardTypeOnFailure)
 
             }
             null -> {

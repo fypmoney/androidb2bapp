@@ -82,21 +82,6 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ" />
 
-<!--        <argument-->
-<!--            android:name="myntsCount"-->
-<!--            android:defaultValue="@null"-->
-<!--            app:argType="integer" />-->
-
-<!--        <argument-->
-<!--            android:name="ticketsCount"-->
-<!--            android:defaultValue="@null"-->
-<!--            app:argType="integer" />-->
-
-<!--        <argument-->
-<!--            android:name="cashCount"-->
-<!--            android:defaultValue="@null"-->
-<!--            app:argType="integer" />-->
-
     </fragment>
 
     <fragment

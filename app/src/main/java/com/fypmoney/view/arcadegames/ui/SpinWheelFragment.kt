@@ -16,7 +16,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.fyp.trackr.models.TrackrEvent
@@ -26,12 +25,11 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.FragmentSpinWheelBinding
-import com.fypmoney.extension.toInvisible
-import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SpinWheelRotateResponseDetails
 import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.model.SectionListItem
 import com.fypmoney.view.arcadegames.viewmodel.FragmentSpinWheelVM
+import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
 import kotlinx.android.synthetic.main.fragment_spin_wheel.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -46,7 +44,6 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
     private var myntsDisplay: Int? = null
     private val spinWheelFragmentVM by viewModels<FragmentSpinWheelVM> { defaultViewModelProviderFactory }
     private var dialogInsufficientMynts: Dialog? = null
-    private var via: String? = null
     private val navArgs by navArgs<SpinWheelFragmentArgs>()
 
     companion object {
@@ -54,9 +51,6 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
     }
 
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
