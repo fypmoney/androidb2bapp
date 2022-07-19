@@ -33,5 +33,6 @@ data class SectionContentItem(
     var contentDimensionY: Int? = null,
     val status: String? = null,
     val rfu1: String? = null,
+    val rfu2: String? = null,
 ):Parcelable
 

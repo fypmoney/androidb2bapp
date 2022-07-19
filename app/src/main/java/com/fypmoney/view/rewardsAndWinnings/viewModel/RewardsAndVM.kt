@@ -14,7 +14,6 @@ import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
-import com.fypmoney.view.arcadegames.viewmodel.FragmentSpinWheelVM
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
@@ -73,14 +72,10 @@ class RewardsAndVM(application: Application) : BaseViewModel(application) {
 
 
     init {
-//        callRewardProductList()
-        //callFetchFeedsApi()
         callRewardSummary()
         callExplporeContent()
-
         callTotalRewardsEarnings()
-//        callTotalJackpotCards()
-
+        callTotalJackpotCards()
     }
 
 

@@ -259,12 +259,10 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                             }
                             param(FirebaseAnalytics.Param.SCREEN_CLASS, ExploreFragment::class.java.simpleName)
                         }
-                        val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
+                        val directions =
                             ExploreFragmentDirections.actionExploreSectionExplore(sectionExploreItem = it,
-                                sectionExploreName= it1
-                            )
-                        }
-                        directions?.let { it1 -> findNavController().navigate(it1) }
+                                sectionExploreName= exploreContentResponse?.sectionDisplayText)
+                        directions.let { it1 -> findNavController().navigate(it1) }
                     }
                     AppConstants.GIFT_VOUCHER -> {
                         findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))

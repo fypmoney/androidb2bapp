@@ -13,9 +13,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.fyp.trackr.models.TrackrEvent
@@ -29,7 +31,6 @@ import com.fypmoney.model.SpinWheelRotateResponseDetails
 import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.model.SectionListItem
 import com.fypmoney.view.arcadegames.viewmodel.FragmentSpinWheelVM
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
 import kotlinx.android.synthetic.main.fragment_spin_wheel.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -145,6 +146,23 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
 //        }
 
         dialogInsufficientMynts = Dialog(this.requireContext())
+
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    if(spinWheelFragmentVM.isArcadeIsPlayed){
+                        findNavController().previousBackStackEntry?.savedStateHandle?.set(
+                            "arcade_is_played",
+                            true
+                        )
+                        findNavController().popBackStack()
+                    }else{
+                        findNavController().navigateUp()
+                    }
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
     }
 

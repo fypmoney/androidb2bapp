@@ -2,7 +2,6 @@ package com.fypmoney.view.arcadegames.viewmodel
 
 import android.app.Application
 import android.graphics.Color
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.R
@@ -14,11 +13,12 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
 import com.fypmoney.model.*
-import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.util.livedata.LiveEvent
-import com.fypmoney.view.arcadegames.model.*
+import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.arcadegames.model.SectionListItem
+import com.fypmoney.view.arcadegames.model.SingleSpinWheelProductNetworkResponse
+import com.fypmoney.view.arcadegames.model.SpinWheelItem
 import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
 import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
@@ -47,13 +47,15 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
 
     var luckyItemList: ArrayList<LuckyItem> = ArrayList()
     var error: MutableLiveData<ErrorResponseInfo> = MutableLiveData()
-
+    //Check user has play the arcade
+    var isArcadeIsPlayed = false
     val enableSpin = MutableLiveData<Boolean>()
 //    val onPlayClicked = MutableLiveData<Boolean>()
 
     val state: LiveData<SpinWheelState>
         get() = _state
     private val _state = MutableLiveData<SpinWheelState>()
+
 
     val stateMJ: LiveData<SpinWheelStateTicket>
         get() = _stateMJ
@@ -265,6 +267,7 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
                     json.get("data").toString(),
                     CoinsBurnedResponse::class.java
                 )
+                isArcadeIsPlayed = true
                 coinsBurned.postValue(array)
             }
 

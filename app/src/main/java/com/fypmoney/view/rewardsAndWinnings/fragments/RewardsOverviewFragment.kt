@@ -199,6 +199,16 @@ class RewardsOverviewFragment :
             findNavController().navigate(R.id.navigation_multiple_jackpots)
         }
 
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("arcade_is_played")
+            ?.observe(
+                viewLifecycleOwner
+            ) { result ->
+                if(result){
+                    mViewmodel?.callTotalJackpotCards()
+                    mViewmodel?.callRewardSummary()
+                    mViewmodel?.callTotalRewardsEarnings()
+                }
+            }
     }
 
 
@@ -276,13 +286,11 @@ class RewardsOverviewFragment :
                 startActivity(intent)
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
-                val directions = exploreContentResponse?.sectionDisplayText?.let { it1 ->
-                    RewardsOverviewFragmentDirections.actionExploreSectionExplore(
+                val directions = RewardsOverviewFragmentDirections.actionExploreSectionExplore(
                         sectionExploreItem = sectionContentItem,
-                        sectionExploreName = it1
+                        sectionExploreName = exploreContentResponse?.sectionDisplayText
                     )
-                }
-                directions?.let { it1 -> findNavController().navigate(it1) }
+                directions.let { it1 -> findNavController().navigate(it1) }
             }
             AppConstants.EXPLORE_IN_APP -> {
 
@@ -302,7 +310,7 @@ class RewardsOverviewFragment :
                         findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
                     }
                     else {
-                        redirectionResources?.let { it1 ->
+                        redirectionResources.let { it1 ->
                             Utility.deeplinkRedirection(
                                 it1,
                                 requireContext()
@@ -595,12 +603,5 @@ class RewardsOverviewFragment :
         startActivity(intent)
     }
 
-    override fun onStart() {
-        super.onStart()
-        mViewmodel?.callTotalJackpotCards()
-        mViewmodel?.callRewardSummary()
-        mViewmodel?.callTotalRewardsEarnings()
-
-    }
 
 }
