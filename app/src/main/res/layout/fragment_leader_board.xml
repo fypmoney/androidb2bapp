@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".view.arcadegames.ui.LeaderBoardFragment">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bgcolor">
+
+        <include
+            android:id="@+id/layout_toolbar"
+            layout="@layout/toolbar" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvLeaderboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="center_vertical"
+            android:text="@string/leaderboard"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:fontFamily="@font/product_sans_bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_toolbar" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/chipInfoView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="12dp"
+            android:paddingStart="@dimen/_3sdp"
+            android:paddingTop="@dimen/_3sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_3sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvLeaderboard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvLeaderboard">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivInfo"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:padding="@dimen/_2sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_rules_info" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:text="@string/rules"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:fontFamily="@font/product_sans_bold"
+                app:layout_constraintBottom_toBottomOf="@id/ivInfo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivInfo"
+                app:layout_constraintTop_toTopOf="@id/ivInfo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardLeaderBoardTop"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="18dp"
+            app:cardBackgroundColor="@color/back_surface_color"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chipInfoView">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="42dp"
+                android:background="@drawable/ic_leaderboard_stars" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_ellipse_leaderboard">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivLeaderboardNumber3"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="54dp"
+                    android:src="@drawable/golden_won"
+                    app:civ_border_color="#47BC5C"
+                    app:civ_border_width="3dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="-9dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboardNumber3"
+                    app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber3"
+                    app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber3"
+                    app:srcCompat="@drawable/ic_leaderboard_no_3" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLeaderboard3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/product_sans_regular"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber3"
+                    app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber3"
+                    app:layout_constraintTop_toBottomOf="@+id/ivLeaderboardNumber3"
+                    tools:text="Prashant Kumar" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivLeaderboardNumber1"
+                    android:layout_width="110dp"
+                    android:layout_height="110dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="24dp"
+                    android:src="@drawable/golden_won"
+                    app:civ_border_color="#F2DC12"
+                    app:civ_border_width="3dp"
+                    app:layout_constraintStart_toEndOf="@+id/ivLeaderboardNumber3"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivLeaderboard_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="-5dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboardNumber1"
+                    app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber1"
+                    app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber1"
+                    app:srcCompat="@drawable/ic_leaderboard_no_1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLeaderboard1_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/product_sans_bold"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboard_1"
+                    app:layout_constraintEnd_toEndOf="@+id/ivLeaderboard_1"
+                    app:layout_constraintStart_toStartOf="@+id/ivLeaderboard_1"
+                    app:layout_constraintTop_toTopOf="@+id/ivLeaderboard_1"
+                    tools:text="1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLeaderboard1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/product_sans_regular"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber1"
+                    app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber1"
+                    app:layout_constraintTop_toBottomOf="@+id/ivLeaderboardNumber1"
+                    tools:text="Tapan Yadav" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ivLeaderboardNumber2"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginTop="54dp"
+                    android:src="@drawable/golden_won"
+                    app:civ_border_color="#FF4856"
+                    app:civ_border_width="3dp"
+                    app:layout_constraintStart_toEndOf="@+id/ivLeaderboardNumber1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="-9dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboardNumber2"
+                    app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber2"
+                    app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber2"
+                    app:srcCompat="@drawable/ic_leaderboard_no_2" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLeaderboard2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/product_sans_regular"
+                    android:textColor="@color/white"
+                    app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber2"
+                    app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber2"
+                    app:layout_constraintTop_toBottomOf="@+id/ivLeaderboardNumber2"
+                    tools:text="Utkarsh Gupta" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardCountDown"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="18dp"
+            app:cardBackgroundColor="@color/back_surface_color"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardLeaderBoardTop">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivCountDownBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="160dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/lineLeaderboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:alpha="0.1"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ivCountDownBanner" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lineLeaderboard">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvTimerDays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="28sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintEnd_toEndOf="@+id/lineLeaderboard1"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="54" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvTimerDaysText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:alpha="0.5"
+                        android:text="@string/days"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/product_sans_regular"
+                        app:layout_constraintEnd_toEndOf="@+id/lineLeaderboard1"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTimerDays" />
+
+                    <View
+                        android:id="@+id/lineLeaderboard1"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="22dp"
+                        android:alpha="0.1"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tvTimerHours"
+                        app:layout_constraintStart_toEndOf="@+id/tvTimerDays"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvTimerHours"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="28sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintEnd_toEndOf="@id/lineLeaderboard2"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/lineLeaderboard1"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="14" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvTimerHoursText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:alpha="0.5"
+                        android:text="@string/hours"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/product_sans_regular"
+                        app:layout_constraintEnd_toEndOf="@id/lineLeaderboard2"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/lineLeaderboard1"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTimerHours" />
+
+                    <View
+                        android:id="@+id/lineLeaderboard2"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="22dp"
+                        android:alpha="0.1"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tvTimerMinutes"
+                        app:layout_constraintStart_toEndOf="@+id/tvTimerHours"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvTimerMinutes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/white"
+                        android:textSize="28sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintEnd_toEndOf="@+id/lineLeaderboard3"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/lineLeaderboard2"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="04" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvTimerMinutesText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:alpha="0.5"
+                        android:text="@string/minutes"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/product_sans_regular"
+                        app:layout_constraintEnd_toEndOf="@+id/lineLeaderboard3"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/lineLeaderboard2"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTimerMinutes" />
+
+                    <View
+                        android:id="@+id/lineLeaderboard3"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="22dp"
+                        android:alpha="0.1"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/tvTimerSeconds"
+                        app:layout_constraintStart_toEndOf="@+id/tvTimerMinutes"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvTimerSeconds"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="28sp"
+                        app:fontFamily="@font/product_sans_bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/lineLeaderboard3"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="44" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvTimerSecondsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:alpha="0.5"
+                        android:text="@string/seconds"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:fontFamily="@font/product_sans_regular"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/lineLeaderboard3"
+                        app:layout_constraintTop_toBottomOf="@+id/tvTimerSeconds" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/chipTicketView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardCountDown">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSpinWheelTicket"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ticket" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvSpinWheelTicketsCount"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginEnd="4dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/yellow10"
+                android:textSize="14sp"
+                android:layout_marginStart="8dp"
+                app:fontFamily="@font/product_sans_bold"
+                app:layout_constraintBottom_toBottomOf="@id/ivSpinWheelTicket"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivSpinWheelTicket"
+                app:layout_constraintTop_toTopOf="@id/ivSpinWheelTicket"
+                tools:text="@string/dummy_amount" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
