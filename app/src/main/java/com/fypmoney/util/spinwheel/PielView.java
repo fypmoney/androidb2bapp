@@ -291,15 +291,17 @@ public class PielView extends View {
 
     private void drawImagesingle(Canvas canvas, float tmpAngle, Bitmap bitmap) {
         canvas.save();
-        int imgWidth = 50;
+        int imgWidth = 60;
         float angle = (float) ((tmpAngle + 360f / mLuckyItemList.size() / 2) * Math.PI / 180);
 
-        int x = (int) +(mCenter + mRadius * 3 / 5 / 2 * Math.cos(angle) + 30);
-        int y = (int) (mCenter + mRadius * 3 / 5 / 2 * Math.sin(angle) + 20);
+        int x = (int) +(mCenter + mRadius * 3 / 5 / 2 * Math.cos(angle));
+        int y = (int) (mCenter + mRadius * 3 / 5 / 2 * Math.sin(angle));
 
-        Rect rect = new Rect(x - imgWidth, y - imgWidth / 2,
-                x + imgWidth, y + imgWidth / 2);
+//        Rect rect = new Rect(x - imgWidth, y - imgWidth / 2,
+//                x + imgWidth, y + imgWidth / 2);
 
+        Rect rect = new Rect(x - imgWidth, y - imgWidth / 2 - 60,
+                x + imgWidth, y + imgWidth / 2 + 10 );
 
         int arraySize = mLuckyItemList.size();
 

@@ -392,8 +392,8 @@
 
                 <com.fypmoney.util.spinwheel.LuckyWheelView
                     android:id="@+id/luckySpinWheelView"
-                    android:layout_width="@dimen/_200sdp"
-                    android:layout_height="@dimen/_200sdp"
+                    android:layout_width="@dimen/_210sdp"
+                    android:layout_height="@dimen/_210sdp"
                     android:scrollbarFadeDuration="30"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -409,8 +409,8 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivServiceLogo"
-                    android:layout_width="@dimen/_60sdp"
-                    android:layout_height="@dimen/_60sdp"
+                    android:layout_width="@dimen/_62sdp"
+                    android:layout_height="@dimen/_62sdp"
                     android:adjustViewBounds="true"
                     app:layout_constraintBottom_toBottomOf="@+id/luckySpinWheelView"
                     app:layout_constraintEnd_toEndOf="@+id/luckySpinWheelView"
@@ -422,7 +422,7 @@
                     android:id="@+id/ivServiceLogo1"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_margin="@dimen/_62sdp"
+                    android:layout_margin="@dimen/_60sdp"
                     android:adjustViewBounds="true"
                     android:rotation="39"
                     app:layout_constraintBottom_toBottomOf="@+id/luckySpinWheelView"

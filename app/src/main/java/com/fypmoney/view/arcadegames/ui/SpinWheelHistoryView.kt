@@ -76,10 +76,6 @@ class SpinWheelHistoryView :
             mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
             mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
 
-            vibrateDevice()
-
-            arcadeSounds("SPINNER")
-
             spinWheelFragmentVM.callProductsDetailsApi(orderId)
 
         }
@@ -129,20 +125,9 @@ class SpinWheelHistoryView :
 
     private fun vibrateDevice() {
         val vibrationEffect: VibrationEffect
-
-        // this is the only type of the vibration which requires system version Oreo (API 26)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // this effect creates the vibration of default amplitude for 1000ms(1 sec)
-
             val vibrator = this.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
             vibrationEffect = VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE)
-//            vibrationEffect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_TICK)
-//            vibrationEffect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_HEAVY_CLICK)
-//            vibrationEffect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_CLICK);
-//            vibrationEffect = VibrationEffect.createPredefined(VibrationEffect.EFFECT_DOUBLE_CLICK)
-
-
-            // it is safe to cancel other vibrations currently taking place
             vibrator.cancel()
             vibrator.vibrate(vibrationEffect)
         }
@@ -264,16 +249,14 @@ class SpinWheelHistoryView :
                 Log.d("Spin", "Ex: $e")
             }
 
-            viewModel.enableSpin.value = false
-
-            //Update mynts and ticket values on finish
-//            setResult(23)
-//            finish()
-
         }
 
         viewModel.redeemCallBackResponse.observe(this) {
             sectionId = it.sectionId
+
+            vibrateDevice()
+
+            arcadeSounds("SPINNER")
 
             luckySpinWheelView.startLuckyWheelWithTargetIndex(sectionId!! - 1)
             spinWheelFragmentVM.callSpinWheelApi(orderId)
@@ -291,8 +274,6 @@ class SpinWheelHistoryView :
             }
             is FragmentSpinWheelVM.SpinWheelState.Success -> {
                 mViewBinding!!.spinWheelContainer.visibility = View.VISIBLE
-
-                spinWheelFragmentVM.noOfJackpotTickets = it.spinWheelData.noOfJackpotTicket
 
                 Glide.with(this).load(R.drawable.play_button)
                     .into(mViewBinding!!.ivBtnPlayAnimation)
@@ -395,6 +376,10 @@ class SpinWheelHistoryView :
                 "Cash"
             )
         }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            finish()
+        }, 1000)
     }
 
     private fun arcadeSounds(from: String) {
@@ -425,6 +410,11 @@ class SpinWheelHistoryView :
             }
         }
         mp?.start()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mp?.stop()
     }
 
 }

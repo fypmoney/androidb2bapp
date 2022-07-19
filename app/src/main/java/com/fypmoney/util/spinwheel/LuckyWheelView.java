@@ -71,7 +71,7 @@ public class LuckyWheelView extends RelativeLayout implements PielView.PieRotate
             mTopTextSize = typedArray.getDimensionPixelSize(R.styleable.LuckyWheelView_lkwTopTextSize, (int) LuckyWheelUtils.convertDpToPixel(10f, getContext()));
             mSecondaryTextSize = typedArray.getDimensionPixelSize(R.styleable.LuckyWheelView_lkwSecondaryTextSize, (int) LuckyWheelUtils.convertDpToPixel(20f, getContext()));
             mTextColor = typedArray.getColor(R.styleable.LuckyWheelView_lkwTopTextColor, 0);
-            mTopTextPadding = typedArray.getDimensionPixelSize(R.styleable.LuckyWheelView_lkwTopTextPadding, (int) LuckyWheelUtils.convertDpToPixel(6f, getContext())) + (int) LuckyWheelUtils.convertDpToPixel(6f, getContext());
+            mTopTextPadding = typedArray.getDimensionPixelSize(R.styleable.LuckyWheelView_lkwTopTextPadding, (int) LuckyWheelUtils.convertDpToPixel(4f, getContext())) + (int) LuckyWheelUtils.convertDpToPixel(4f, getContext());
             mCursorImage = typedArray.getDrawable(R.styleable.LuckyWheelView_lkwCursor);
             mCenterImage = typedArray.getDrawable(R.styleable.LuckyWheelView_lkwCenterImage);
             mEdgeWidth = typedArray.getInt(R.styleable.LuckyWheelView_lkwEdgeWidth, 10);

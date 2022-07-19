@@ -19,8 +19,6 @@ import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.arcadegames.model.SectionListItem
 import com.fypmoney.view.arcadegames.model.SingleSpinWheelProductNetworkResponse
 import com.fypmoney.view.arcadegames.model.SpinWheelItem
-import com.fypmoney.view.home.main.explore.model.ExploreContentResponse
-import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
 import com.google.gson.Gson
 import com.google.gson.JsonObject
@@ -28,64 +26,60 @@ import com.google.gson.JsonParser
 
 class FragmentSpinWheelVM(application: Application) : BaseViewModel(application) {
 
+    //To store explore redirection code
     lateinit var productCode:String
+
+    //live data variable to store mynts data
     var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
+
+    //live data variable to store cash count data
     var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
-    var rewardHistoryList: MutableLiveData<ArrayList<ExploreContentResponse>> = MutableLiveData()
-    var totalJackpotAmount: MutableLiveData<TotalJackpotResponse> = MutableLiveData()
+
+    //live event data to store purchase reward-product response
     var coinsBurned: LiveEvent<CoinsBurnedResponse> = LiveEvent()
+
+    //live data variable to store frequency played count
     var remainFrequency: MutableLiveData<Int> = MutableLiveData()
+
+    //live data variable to store play order api response after successful order
     var spinWheelResponseList = MutableLiveData<SpinWheelRotateResponseDetails>()
 
-    var noOfJackpotTickets: Int? = null
+    //To store total frequency data
     var frequency: Int? = 0
-    var isSectionArrayListEmpty: Boolean? = null
-    var myntsCount: Float? = 0f
-    var cashCount: Int? = 0
 
+    //To store total mynts value
+    var myntsCount: Float? = 0f
+
+    //live data to store product data on spin-wheel history view
     var redeemCallBackResponse = MutableLiveData<aRewardProductResponse>()
 
+    //list to store data of wheel section-wise
     var luckyItemList: ArrayList<LuckyItem> = ArrayList()
+
+    //live data to store errors of all apis
     var error: MutableLiveData<ErrorResponseInfo> = MutableLiveData()
+
     //Check user has play the arcade
     var isArcadeIsPlayed = false
-    val enableSpin = MutableLiveData<Boolean>()
-//    val onPlayClicked = MutableLiveData<Boolean>()
 
+    //Observe spin wheel data using sealed class reward-product(SPIN_WHEEL_1000)
     val state: LiveData<SpinWheelState>
         get() = _state
     private val _state = MutableLiveData<SpinWheelState>()
 
-
+    //Observe ticket data using sealed class using product-wise api
     val stateMJ: LiveData<SpinWheelStateTicket>
         get() = _stateMJ
     private val _stateMJ = MutableLiveData<SpinWheelStateTicket>()
 
     init {
         remainFrequency.value = 0
-        noOfJackpotTickets = 0
         myntsCount = 0f
-        cashCount = 0
-        isSectionArrayListEmpty = true
 
         callRewardSummary()
-//        callExploreContent()
         callTotalRewardsEarnings()
         callTotalJackpotCards()
     }
-
-//    private fun callExploreContent() {
-//        WebApiCaller.getInstance().request(
-//            ApiRequest(
-//                ApiConstant.API_Explore,
-//                NetworkUtil.endURL(ApiConstant.API_Explore) + "REWARDS",
-//                ApiUrl.GET,
-//                BaseRequest(),
-//                this, isProgressBar = false
-//            )
-//        )
-//    }
-
 
     /*
 * This method is used to call get rewards api
@@ -142,17 +136,17 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
 
     fun setDataInSpinWheel(list: List<SectionListItem>, rewardTypeOnFailure: String?) {
         luckyItemList.clear()
-        list.forEachIndexed { pos, item ->
+        list.forEachIndexed { _, item ->
 
             if (item.sectionValue == "0") {
                 if (rewardTypeOnFailure == "POINTS") {
                     val luckyItem1 = LuckyItem()
-                    luckyItem1.icon = R.drawable.mynt
+                    luckyItem1.icon = R.drawable.mynts_new
                     luckyItem1.color = Color.parseColor(item.colorCode)
                     luckyItemList.add(luckyItem1)
                 } else {
                     val luckyItem1 = LuckyItem()
-                    luckyItem1.icon = R.drawable.ticket
+                    luckyItem1.icon = R.drawable.ticket_new
                     luckyItem1.color = Color.parseColor(item.colorCode)
                     luckyItemList.add(luckyItem1)
                 }
@@ -165,13 +159,6 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
             }
         }
     }
-
-    /*
-    * This method is used to play wheel
-    * */
-//    fun onPlayClicked() {
-//        onPlayClicked.value = true
-//    }
 
     /*
    * This method is used to call spin wheel api
@@ -187,22 +174,6 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
             )
         )
     }
-
-    /*
-* This method is used to call get rewards api
-* */
-
-//    fun callProductsDetailsApi(orderId: String?) {
-//        WebApiCaller.getInstance().request(
-//            ApiRequest(
-//                ApiConstant.REWARD_PRODUCT_DETAILS,
-//                NetworkUtil.endURL(ApiConstant.REWARD_PRODUCT_DETAILS + orderId),
-//                ApiUrl.GET,
-//                BaseRequest(),
-//                this, isProgressBar = true
-//            )
-//        )
-//    }
 
     fun callMyntsBurnApi(code: String?) {
         WebApiCaller.getInstance().request(
@@ -288,10 +259,6 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
                 )
 
                 spinWheelResponseList.value = spinDetails
-
-//                onPlayClicked()
-//                played.set(true)
-
 
             }
 
