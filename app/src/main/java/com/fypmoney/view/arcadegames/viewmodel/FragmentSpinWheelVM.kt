@@ -27,7 +27,7 @@ import com.google.gson.JsonParser
 class FragmentSpinWheelVM(application: Application) : BaseViewModel(application) {
 
     //To store explore redirection code
-    lateinit var productCode:String
+    lateinit var productCode: String
 
     //live data variable to store mynts data
     var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
@@ -82,8 +82,8 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
     }
 
     /*
-* This method is used to call get rewards api
-* */
+    * This method is used to call get rewards api
+    */
 
     fun callProductsDetailsApi(orderId: String?) {
         WebApiCaller.getInstance().request(

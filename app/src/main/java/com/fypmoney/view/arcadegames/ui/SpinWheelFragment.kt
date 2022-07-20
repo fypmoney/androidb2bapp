@@ -35,13 +35,10 @@ import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
 import kotlinx.android.synthetic.main.fragment_spin_wheel.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-
 class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWheelVM>() {
 
     private var mp: MediaPlayer? = null
     private var mViewBinding: FragmentSpinWheelBinding? = null
-    private var sectionId: Int? = null
-    private var orderId: String? = null
     private var myntsDisplay: Int? = null
     private val spinWheelFragmentVM by viewModels<FragmentSpinWheelVM> { defaultViewModelProviderFactory }
     private var dialogInsufficientMynts: Dialog? = null
@@ -50,7 +47,6 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
     companion object {
         var sectionArrayList: List<SectionListItem> = ArrayList()
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,7 +62,6 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
         )
         spinWheelFragmentVM.productCode = navArgs.productCode
         spinWheelFragmentVM.callSingleProductApi(spinWheelFragmentVM.productCode)
-
 
         setBackgrounds()
 
@@ -182,6 +177,8 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
                 arcadeSounds("MYNTS")
 
                 if (spinWheelRotateResponseDetails.myntsWon != null) {
+                    spinWheelFragmentVM.myntsCount =
+                        spinWheelRotateResponseDetails.myntsWon?.toFloat()
                     increaseCountAnimation(
                         mViewBinding!!.tvSpinWheelMyntsCount,
                         1500,
@@ -236,6 +233,9 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
     }
 
     private fun setUpObserver(viewModel: FragmentSpinWheelVM) {
+
+        var sectionId: Int? = null
+
         viewModel.error.observe(
             viewLifecycleOwner
         ) { list ->
@@ -250,6 +250,14 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
             setViewVisibility(
                 mViewBinding!!.ivSpinWheelMynts,
                 mViewBinding!!.ivSpinWheelMyntsAnim
+            )
+            setViewVisibility(
+                mViewBinding!!.ivSpinWheelCash,
+                mViewBinding!!.ivSpinWheelCashAnim
+            )
+            setViewVisibility(
+                mViewBinding!!.ivSpinWheelTicket,
+                mViewBinding!!.ivSpinWheelTicketAnim
             )
         }
 
@@ -269,7 +277,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
         viewModel.rewardSummaryStatus.observe(
             viewLifecycleOwner
         ) { list ->
-            if (list.totalPoints != null) {
+            if (list.remainingPoints != null) {
                 spinWheelFragmentVM.myntsCount = list.remainingPoints
                 mViewBinding?.tvSpinWheelMyntsCount?.text =
                     String.format("%.0f", spinWheelFragmentVM.myntsCount)
@@ -312,12 +320,12 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
                 spinWheelFragmentVM.remainFrequency.value =
                     spinWheelFragmentVM.remainFrequency.value?.minus(1)
 
-                decreaseCountAnimation(mViewBinding!!.tvSpinWheelMyntsCount, 1500, myntsDisplay!!)
+                decreaseCountAnimation(mViewBinding!!.tvSpinWheelMyntsCount, myntsDisplay!!)
 
                 sectionId = list.sectionId
-                orderId = list.orderNo
+//                orderId = list.orderNo
 
-                spinWheelFragmentVM.callSpinWheelApi(orderId)
+                spinWheelFragmentVM.callSpinWheelApi(list.orderNo)
 
             }
 
@@ -395,6 +403,12 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
                     .into(mViewBinding!!.ivBannerSpinWheel)
 
                 mViewBinding!!.tvSpinWheelBurnMyntsCount.text = it.spinWheelData.appDisplayText
+                spinWheelFragmentVM.myntsCount = it.spinWheelData.appDisplayText?.let { it1 ->
+                    spinWheelFragmentVM.myntsCount?.plus(
+                        it1.toFloat()
+                    )
+                }
+
 
                 sectionArrayList = emptyList()
                 sectionArrayList = ArrayList()
@@ -478,12 +492,12 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
         luckySpinWheelView.setData(spinWheelFragmentVM.luckyItemList)
     }
 
-    private fun decreaseCountAnimation(textScore: TextView, animDuration: Long, finalCount: Int) {
+    private fun decreaseCountAnimation(textScore: TextView, finalCount: Int) {
         val animator = ValueAnimator.ofInt(
             Integer.parseInt(textScore.text.toString()),
             Integer.parseInt(textScore.text.toString()) - (finalCount)
         )
-        animator.duration = animDuration
+        animator.duration = 1500
         animator.addUpdateListener { animation ->
             textScore.text = animation.animatedValue.toString()
         }
@@ -496,7 +510,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
                 mViewBinding!!.ivSpinWheelTicketAnim
             )
             setViewVisibility(mViewBinding!!.ivSpinWheelCash, mViewBinding!!.ivSpinWheelCashAnim)
-        }, animDuration)
+        }, 1500)
     }
 
     private fun increaseCountAnimation(
