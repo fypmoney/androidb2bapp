@@ -1310,5 +1310,6 @@ Coming really soon!
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
     <string name="seconds">Seconds</string>
+    <string name="total_golden_tickets_won">Total Golden Tickets Won</string>
 
 </resources>
