@@ -1312,4 +1312,6 @@ Coming really soon!
     <string name="seconds">Seconds</string>
     <string name="total_golden_tickets_won">Total Golden Tickets Won</string>
 
+    <string name="leaderboard_just_tickets">You are just <b> %1$s </b> away</string>
+
 </resources>

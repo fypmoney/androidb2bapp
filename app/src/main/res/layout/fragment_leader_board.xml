@@ -89,10 +89,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardLeaderBoardTop"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:layout_marginStart="18dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="18dp"
+                    android:layout_height="@dimen/_148sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
                     app:cardBackgroundColor="@color/back_surface_color"
                     app:cardCornerRadius="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -115,12 +115,11 @@
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ivLeaderboardNumber3"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="@dimen/_58sdp"
+                            android:layout_height="@dimen/_58sdp"
                             android:layout_marginStart="28dp"
-                            android:layout_marginTop="54dp"
-                            android:backgroundTint="@color/back_surface_color"
-                            android:padding="12dp"
+                            android:layout_marginTop="44dp"
+                            android:padding="20dp"
                             android:src="@drawable/ic_leaderboard_bronze"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -128,7 +127,7 @@
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="-9dp"
+                            android:layout_marginBottom="-8dp"
                             app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboardNumber3"
                             app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber3"
                             app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber3"
@@ -138,7 +137,7 @@
                             android:id="@+id/tvLeaderboard3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="14dp"
                             android:fontFamily="@font/product_sans_regular"
                             android:textColor="@color/white"
                             app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber3"
@@ -146,16 +145,14 @@
                             app:layout_constraintTop_toBottomOf="@+id/ivLeaderboardNumber3"
                             tools:text="Prashant Kumar" />
 
-                        <de.hdodenhof.circleimageview.CircleImageView
+                        <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ivLeaderboardNumber1"
-                            android:layout_width="110dp"
-                            android:layout_height="110dp"
+                            android:layout_width="@dimen/_78sdp"
+                            android:layout_height="@dimen/_78sdp"
                             android:layout_marginStart="28dp"
-                            android:layout_marginTop="24dp"
+                            android:layout_marginTop="20dp"
+                            android:padding="24dp"
                             android:src="@drawable/ic_leaderboard_golden"
-                            app:civ_border_color="#F2DC12"
-                            app:civ_border_width="3dp"
-                            app:civ_circle_background_color="@color/back_surface_color"
                             app:layout_constraintStart_toEndOf="@+id/ivLeaderboardNumber3"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -175,19 +172,19 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/product_sans_bold"
+                            android:text="1"
                             android:textColor="@color/white"
                             android:textSize="16sp"
                             app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboard_1"
                             app:layout_constraintEnd_toEndOf="@+id/ivLeaderboard_1"
                             app:layout_constraintStart_toStartOf="@+id/ivLeaderboard_1"
-                            app:layout_constraintTop_toTopOf="@+id/ivLeaderboard_1"
-                            tools:text="1" />
+                            app:layout_constraintTop_toTopOf="@+id/ivLeaderboard_1" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvLeaderboard1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="12dp"
+                            android:layout_marginTop="16dp"
                             android:fontFamily="@font/product_sans_regular"
                             android:textColor="@color/white"
                             android:textSize="18sp"
@@ -196,23 +193,21 @@
                             app:layout_constraintTop_toBottomOf="@+id/ivLeaderboardNumber1"
                             tools:text="Tapan Yadav" />
 
-                        <de.hdodenhof.circleimageview.CircleImageView
+                        <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ivLeaderboardNumber2"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
+                            android:layout_width="@dimen/_58sdp"
+                            android:layout_height="@dimen/_58sdp"
                             android:layout_marginStart="28dp"
-                            android:layout_marginTop="54dp"
+                            android:layout_marginTop="44dp"
+                            android:padding="20dp"
                             android:src="@drawable/ic_leaderboard_silver"
-                            app:civ_border_color="#A8D5E2"
-                            app:civ_border_width="3dp"
-                            app:civ_circle_background_color="@color/back_surface_color"
                             app:layout_constraintStart_toEndOf="@+id/ivLeaderboardNumber1"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="-9dp"
+                            android:layout_marginBottom="-8dp"
                             app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboardNumber2"
                             app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber2"
                             app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber2"
@@ -222,7 +217,7 @@
                             android:id="@+id/tvLeaderboard2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginTop="14dp"
                             android:fontFamily="@font/product_sans_regular"
                             android:textColor="@color/white"
                             app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber2"
@@ -237,10 +232,10 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardCountDown"
                     android:layout_width="match_parent"
-                    android:layout_height="260dp"
-                    android:layout_marginStart="18dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="18dp"
+                    android:layout_height="@dimen/_188sdp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
                     app:cardBackgroundColor="@color/back_surface_color"
                     app:cardCornerRadius="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -254,7 +249,7 @@
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/ivCountDownBanner"
                             android:layout_width="match_parent"
-                            android:layout_height="160dp"
+                            android:layout_height="@dimen/_112sdp"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -263,8 +258,8 @@
                             android:id="@+id/lineLeaderboard"
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginEnd="20dp"
+                            android:layout_marginStart="@dimen/_16sdp"
+                            android:layout_marginEnd="@dimen/_16sdp"
                             android:alpha="0.1"
                             android:background="@color/white"
                             android:orientation="horizontal"
@@ -275,9 +270,9 @@
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:layout_marginStart="8dp"
-                            android:layout_marginTop="18dp"
-                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="@dimen/_6sdp"
+                            android:layout_marginTop="@dimen/_14sdp"
+                            android:layout_marginEnd="@dimen/_6sdp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -288,7 +283,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="28sp"
+                                android:textSize="24sp"
                                 app:fontFamily="@font/product_sans_bold"
                                 app:layout_constraintEnd_toEndOf="@+id/lineLeaderboard1"
                                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -304,7 +299,7 @@
                                 android:alpha="0.5"
                                 android:text="@string/days"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
+                                android:textSize="16sp"
                                 app:fontFamily="@font/product_sans_regular"
                                 app:layout_constraintEnd_toEndOf="@+id/lineLeaderboard1"
                                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -330,7 +325,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="28sp"
+                                android:textSize="24sp"
                                 app:fontFamily="@font/product_sans_bold"
                                 app:layout_constraintEnd_toEndOf="@id/lineLeaderboard2"
                                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -346,7 +341,7 @@
                                 android:alpha="0.5"
                                 android:text="@string/hours"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
+                                android:textSize="16sp"
                                 app:fontFamily="@font/product_sans_regular"
                                 app:layout_constraintEnd_toEndOf="@id/lineLeaderboard2"
                                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -373,7 +368,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_horizontal"
                                 android:textColor="@color/white"
-                                android:textSize="28sp"
+                                android:textSize="24sp"
                                 app:fontFamily="@font/product_sans_bold"
                                 app:layout_constraintEnd_toEndOf="@+id/lineLeaderboard3"
                                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -389,7 +384,7 @@
                                 android:alpha="0.5"
                                 android:text="@string/minutes"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
+                                android:textSize="16sp"
                                 app:fontFamily="@font/product_sans_regular"
                                 app:layout_constraintEnd_toEndOf="@+id/lineLeaderboard3"
                                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -415,7 +410,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/white"
-                                android:textSize="28sp"
+                                android:textSize="24sp"
                                 app:fontFamily="@font/product_sans_bold"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -431,7 +426,7 @@
                                 android:alpha="0.5"
                                 android:text="@string/seconds"
                                 android:textColor="@color/white"
-                                android:textSize="18sp"
+                                android:textSize="16sp"
                                 app:fontFamily="@font/product_sans_regular"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_chainStyle="spread"
@@ -448,8 +443,7 @@
                     android:id="@+id/chipTicketView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="32dp"
                     android:paddingStart="12dp"
                     android:paddingTop="6dp"
                     android:paddingEnd="12dp"
@@ -495,7 +489,7 @@
                     android:alpha="0.5"
                     android:text="@string/total_golden_tickets_won"
                     android:textColor="@color/white"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     app:fontFamily="@font/product_sans_regular"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_chainStyle="spread"
@@ -503,14 +497,57 @@
                     app:layout_constraintTop_toBottomOf="@+id/chipTicketView" />
 
                 <androidx.appcompat.widget.AppCompatSeekBar
-                    android:layout_width="match_parent"
+                    android:id="@+id/seekBarLeaderBoard"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:progress="80"
+                    android:maxHeight="8dp"
+                    android:layout_marginStart="@dimen/_12sdp"
                     android:progressDrawable="@drawable/seek_bar_progress"
+                    android:thumb="@drawable/leaderboard_seekbar_thumb"
+                    app:layout_constraintEnd_toStartOf="@+id/ivWinningReward"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvGoldenTicketWon" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivWinningReward"
+                    android:layout_width="@dimen/_52sdp"
+                    android:layout_height="@dimen/_52sdp"
+                    android:layout_marginEnd="28dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/seekBarLeaderBoard"
                     app:layout_constraintTop_toBottomOf="@+id/tvGoldenTicketWon"
-                    android:layout_marginTop="28dp"
-                    android:progress="25"/>
+                    app:srcCompat="@drawable/golden_won" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLeaderBoardTicketsAway"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginEnd="18dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_body_grey"
+                    app:fontFamily="@font/product_sans_regular"
+                    android:gravity="center_horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/seekBarLeaderBoard"
+                    tools:text="@string/leaderboard_just_tickets" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerLeaderBoard"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="true"
+                    android:layout_marginTop="16dp"
+                    android:orientation="vertical"
+                    android:paddingBottom="18dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvLeaderBoardTicketsAway" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -819,5 +819,10 @@
             android:autoVerify="true"
             app:uri="https://www.fypmoney.in/rotating_treasure/{productCode}" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_leaderboard"
+        android:name="com.fypmoney.view.arcadegames.ui.LeaderBoardFragment"
+        android:label="LeaderBoard Fragment"
+        tools:layout="@layout/fragment_leader_board" />
 
 </navigation>

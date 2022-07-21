@@ -123,6 +123,8 @@
     <color name="text_body_grey">#B1B3B6</color>
     <color name="yellow_won_color">#FFD98D</color>
     <color name="cardBackColor">#1C2129</color>
+    <color name="rewardLeaderBoardSilver">#A8D5E2</color>
+    <color name="rewardLeaderBoardBronze">#DB8A1D</color>
 <!--    <color name="yellow_text_mynts_color">#F4DE14</color>-->
 
 </resources>

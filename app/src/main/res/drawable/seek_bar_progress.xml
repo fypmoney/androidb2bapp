@@ -2,8 +2,8 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@android:id/progress">
-        <shape>
-            <corners android:radius="2dp" />
+        <shape android:shape="rectangle">
+            <corners android:radius="12dp" />
             <gradient
                 android:centerColor="#FFB964"
                 android:endColor="#74A2FA"
@@ -12,9 +12,19 @@
     </item>
 
     <item android:id="@android:id/secondaryProgress">
-        <shape android:shape="rectangle">
-            <size android:height="3dp" />
-            <solid android:color="@color/transparent" />
-        </shape>
+        <scale android:scaleWidth="100%">
+            <selector>
+                <item
+                    android:drawable="@color/back_surface_color"
+                    android:state_enabled="false" />
+                <item>
+                    <shape android:shape="rectangle">
+                        <size android:height="3dp" />
+                        <corners android:radius="12dp" />
+                        <solid android:color="@color/back_surface_color" />
+                    </shape>
+                </item>
+            </selector>
+        </scale>
     </item>
 </layer-list>
