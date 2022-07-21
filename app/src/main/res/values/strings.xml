@@ -1122,51 +1122,24 @@ Coming really soon!
     <string name="complete_your_kyc_to_unlock_all_the_exclusive_features">Complete your KYC to unlock all the exclusive features</string>
     <string name="like">Like</string>
     <string name="share">Share</string>
-    <string-array name="person_category_array">
-        <item>Minor</item>
-        <item>Major</item>
-    </string-array>
-    <string-array name="my_profile_title_list">
-        <item>Privacy settings</item>
-        <item>Community settings</item>
-        <item>Privacy Policy</item>
-        <item>Terms &amp; Conditions</item>
-        <item>Help?</item>
-        <item>Log out</item>
-    </string-array>
-    <string-array name="relationNameList">
-        <item>Parent</item>
-        <item>Sibling</item>
-        <item>Spouse</item>
-        <item>Kids</item>
-        <item>Grand parents</item>
-        <item>Grand Child</item>
-        <item>Other</item>
-    </string-array>
-    <string-array name="order_card_list">
-        <item>Set your limit</item>
-        <item>Sensitive details kept safe</item>
-        <item>Real time activity notification</item>
-        <item>Easy card locking</item>
-    </string-array>
-
     <string name="ifsc_code">IFSC Code</string>
     <string name="bank_a_c">Bank A/C</string>
     <string name="transfer_money_to_this_bank">Transfer money to this Bank</string>
     <string name="bank_transfer">Bank Transfer</string>
+
     <string name="add_via_debit_card_upi">Add Via Debit Card/UPI</string>
     <string name="share_bank_details">
     </string>
+    <string name="is_your_child_already_on_fyp_enter_their_registed_mobile_no">Is your child already on Fyp? Enter their registered mobile no.</string>
+    <string name="search_for_plan_or_enter_amount">Search for plan or enter amount</string>
+    <string name="dth">DTH</string>
+    <string name="broadband">Broadband</string>
 
 
     Download Fyp, India's leading payments app, trusted by 1 Mn+ teens and families:
     https://fypmoney.in/app
-    <string name="is_your_child_already_on_fyp_enter_their_registed_mobile_no">Is your child already on Fyp? Enter their registered mobile no.</string>
-
-    <string name="search_for_plan_or_enter_amount">Search for plan or enter amount</string>
-    <string name="dth">DTH</string>
-    <string name="broadband">Broadband</string>
     <string name="postpaid">Postpaid</string>
+
     <string name="postpaid_recharge">Postpaid Recharge</string>
     <string name="prepaid">Prepaid</string>
     <string name="prepaid_recharge">Prepaid Recharge</string>
@@ -1203,12 +1176,12 @@ Coming really soon!
     <string name="enter_amount">Enter Amount</string>
     <string name="your_regular_recharge">Your regular recharge</string>
     <string name="keep_set_top_box_on_while_recharging">Keep set-top box on while recharging</string>
-
-
     <string name="add_money_1500">\u20B9 1500</string>
     <string name="add_money_2000">\u20B9 2000</string>
     <string name="know_more">Know More</string>
     <string name="please_enter_correct_details_for_successful_dth_recharge_otherwise_your_recharge_will_fail">Please enter correct details for successful DTH Recharge otherwise your recharge will fail.</string>
+
+
     <string name="whats_my_customer_id">What\'s my Customer ID (DTH number)?</string>
     <string name="airtel_know_more_body">To know your customer ID, please press the MENU button on your remote and select My Account . Alternatively, SMS BAL to 54325 from Registered Mobile Number (RMN) or place a missed call on 81300-81300 from your RMN.</string>
     <string name="dish_tv_title">What\'s my Viewing Card (VC) Number?</string>
@@ -1232,11 +1205,11 @@ Coming really soon!
     <string name="amount_with_currency"> \u20B9 %1$s</string>
     <string name="search_contact">Search Contact</string>
     <string name="sending_money_to_other_fyp_users_is_temporarily_unavailable_we_re_working_hard_to_bring_it_back">Sending money to other Fyp users is temporarily unavailable.\n \n We\'re working hard to bring it back!</string>
-
     <string name="close_button">Close</string>
     <string name="buffering">Buffering…</string>
     <string name="paused">Paused</string>
     <string name="ended">Ended</string>
+
     <string name="buy_now">Buy now</string>
     <string name="whom_are_you_gifting_this_to">Whom are you gifting this to?</string>
     <string name="myself">Myself</string>
@@ -1280,12 +1253,12 @@ Coming really soon!
     <string name="no_payment_mode_is_available_right_now_n_please_try_again_later">No payment mode is available right now. \n Please try again later</string>
     <string name="global_alert">Global Alert</string>
     <string name="instruction_on_static_qr">"Receive money using any UPI Apps.\nThis ID can only be used for adding money!\n \nMinimum: ₹10 | Maximum: ₹%1$s</string>
-
-    //Arcade Games
     <string name="daily_limit_over">Daily Limit Over</string>
     <string name="more_rewards">More Rewards</string>
     <string name="win">Win</string>
     <string name="super_jackpot">Super Jackpot</string>
+
+    //Arcade Games
     <string name="zerbonics_projector">ZERBONICS Projector</string>
     <string name="attempts_left">%1$s/%2$s Attempts Left</string>
     <string name="play_now">Play Now</string>
@@ -1294,11 +1267,11 @@ Coming really soon!
     <string name="ticket_duration">From : June 02 - July 01</string>
     <string name="expired">Expired</string>
     <string name="default_burn_mynts">200</string>
-
     <string name="arcade_golden_tickets">%1$s Golden Tickets</string>
     <string name="arcade_cashback">₹ %1$s Cashback</string>
     <string name="arcade_cash_value">₹%1$s</string>
     <string name="arcade_mynts">%1$s Mynts</string>
+
     <string name="jackpot_duration">From: %1$s - %2$s</string>
     <string name="jackpots_coming_soon">Jackpots coming soon!</string>
     <string name="try_other_rewards">Try Other Rewards!</string>
@@ -1310,5 +1283,32 @@ Coming really soon!
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
     <string name="seconds">Seconds</string>
+    <string-array name="person_category_array">
+        <item>Minor</item>
+        <item>Major</item>
+    </string-array>
+    <string-array name="my_profile_title_list">
+        <item>Privacy settings</item>
+        <item>Community settings</item>
+        <item>Privacy Policy</item>
+        <item>Terms &amp; Conditions</item>
+        <item>Help?</item>
+        <item>Log out</item>
+    </string-array>
+    <string-array name="relationNameList">
+        <item>Parent</item>
+        <item>Sibling</item>
+        <item>Spouse</item>
+        <item>Kids</item>
+        <item>Grand parents</item>
+        <item>Grand Child</item>
+        <item>Other</item>
+    </string-array>
+    <string-array name="order_card_list">
+        <item>Set your limit</item>
+        <item>Sensitive details kept safe</item>
+        <item>Real time activity notification</item>
+        <item>Easy card locking</item>
+    </string-array>
 
 </resources>

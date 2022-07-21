@@ -401,6 +401,7 @@
                 android:paddingTop="10dp"
                 android:paddingEnd="90dp"
                 android:paddingBottom="10dp"
+                    android:overScrollMode="never"
                 app:layout_constraintBottom_toTopOf="@id/tvRotatingAttemptsLeft"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

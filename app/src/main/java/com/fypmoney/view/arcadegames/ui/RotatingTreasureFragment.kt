@@ -1,7 +1,6 @@
 package com.fypmoney.view.arcadegames.ui
 
 import android.animation.ValueAnimator
-import android.content.Intent
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -13,11 +12,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
@@ -30,12 +28,9 @@ import com.fypmoney.databinding.FragmentRotatingTreasureBinding
 import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.Utility
-import com.fypmoney.view.arcadegames.TreasureEvent
-import com.fypmoney.view.arcadegames.adapter.TreasureAdapterUiModel
-import com.fypmoney.view.arcadegames.adapter.TreasurePagerAdapter
+import com.fypmoney.view.arcadegames.adapter.CircularPagerAdapter
 import com.fypmoney.view.arcadegames.model.SectionListItem1
 import com.fypmoney.view.arcadegames.viewmodel.FragmentRotatingTreasureVM
-import com.fypmoney.view.rewardsAndWinnings.CashBackWonHistoryActivity
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.math.abs
 
@@ -46,27 +41,25 @@ class RotatingTreasureFragment :
     private var mp: MediaPlayer? = null
     private var mViewBinding: FragmentRotatingTreasureBinding? = null
     private val rotatingTreasureVM by viewModels<FragmentRotatingTreasureVM> { defaultViewModelProviderFactory }
-    private val sliderHandler: Handler = Handler(Looper.getMainLooper())
     private val compositePageTransformer = CompositePageTransformer()
     private var orderId: String? = null
 
     //    private lateinit var treasureImages: ArrayList<Int>
-    private var sectionId: Int? = null
+    var listOfFragments = arrayListOf<Fragment>()
 
-    private var currentRotateCount = 0
     private val navArgs by navArgs<RotatingTreasureFragmentArgs>()
 
-    //    private var orderId: String? = null
-    lateinit var eventEnd: TreasureEvent
 
     companion object {
         var sectionArrayList: List<SectionListItem1> = ArrayList()
     }
 
+    private val sliderHandler: Handler = Handler(Looper.getMainLooper())
     private val sliderRunnable =
         Runnable {
             mViewBinding?.vpTreasuryBox?.currentItem = mViewBinding?.vpTreasuryBox!!.currentItem + 1
         }
+
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -100,62 +93,68 @@ class RotatingTreasureFragment :
         setBackgrounds()
 
         mViewBinding!!.ivBtnPlayAnimation.setOnClickListener {
-//            if (rotatingTreasureVM.remainFrequency.value!! > 0) {
-
             rotatingTreasureVM.btnClickCount += 1
-
             mViewBinding!!.lottieRotatingVP.toInvisible()
+
             mViewBinding!!.containerRotatingTreasureRewards.visibility = View.INVISIBLE
             mViewBinding!!.containerRotatingDefaultBanner.visibility = View.VISIBLE
 
             mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
             mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
-
+            sliderHandler.postDelayed(sliderRunnable,500)
             rotatingTreasureVM.callMyntsBurnApi(rotatingTreasureVM.productCode)
+            mViewBinding?.vpTreasuryBox?.registerOnPageChangeCallback(object :
+                OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    if(rotatingTreasureVM.sectionId !=null && (rotatingTreasureVM.sectionId == (position % listOfFragments.size)+1)){
+                        sliderHandler.removeCallbacks(sliderRunnable)
+                        Log.d("Win","${rotatingTreasureVM.sectionId} and ${position % listOfFragments.size}")
+                        when (rotatingTreasureVM.sectionId) {
+                            1 -> {
+                                mViewBinding!!.lottieRotatingVP.setAnimation(R.raw.silver_box_open)
+                            }
+                            2 -> {
+                                mViewBinding!!.lottieRotatingVP.setAnimation(R.raw.wood_box_open)
+                            }
+                            3 -> {
+                                mViewBinding!!.lottieRotatingVP.setAnimation(R.raw.gold_box_open)
+                            }
+                        }
+                        mViewBinding!!.lottieRotatingVP.toVisible()
+                        mViewBinding!!.lottieRotatingVP.playAnimation()
+                        setTreasureViewPagerData()
+                    }else{
+                        sliderHandler.postDelayed(sliderRunnable,500)
 
-//            }
+                    }
+                }
+            })
+
         }
 
-//        mViewBinding?.chipCashView?.setOnClickListener {
-//            val intent = Intent(requireContext(), CashBackWonHistoryActivity::class.java)
-//            startActivity(intent)
-//        }
-//
-//        mViewBinding?.chipMyntsView?.setOnClickListener {
-//            findNavController().navigate(R.id.navigation_rewards_history)
-//        }
-//
-//        mViewBinding?.chipTicketView?.setOnClickListener {
-//            findNavController().navigate(R.id.navigation_multiple_jackpots)
-//        }
+
+
 
     }
 
 
     private fun setTreasureInitialData() {
-        val treasureImages: ArrayList<TreasureAdapterUiModel> = ArrayList()
-        treasureImages.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
-        treasureImages.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
-        treasureImages.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
-
-        val adapter = TreasurePagerAdapter()
+        listOfFragments.add(TreasureItemFragment(R.raw.silver_box_open))
+        listOfFragments.add(TreasureItemFragment(R.raw.wood_box_open))
+        listOfFragments.add(TreasureItemFragment(R.raw.gold_box_open))
+        val adapter = CircularPagerAdapter(childFragmentManager, lifecycle,listOfFragments)
         mViewBinding?.vpTreasuryBox?.adapter = adapter
-
-        adapter.setList(treasureImages)
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            mViewBinding?.vpTreasuryBox?.currentItem = 1
-        }, 20)
-
         mViewBinding?.vpTreasuryBox?.isUserInputEnabled = false
         mViewBinding?.vpTreasuryBox?.clipToPadding = false
         mViewBinding?.vpTreasuryBox?.clipChildren = false
-        mViewBinding?.vpTreasuryBox?.offscreenPageLimit = 3
-        mViewBinding?.vpTreasuryBox?.getChildAt(0)?.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
-
         mViewBinding?.vpTreasuryBox?.setPageTransformer(compositePageTransformer)
 
+
+
+
     }
+
 
     private fun setUpObserver(viewModel: FragmentRotatingTreasureVM) {
 
@@ -181,13 +180,7 @@ class RotatingTreasureFragment :
             }
         }
 
-//        viewModel.totalJackpotAmount.observe(
-//            viewLifecycleOwner
-//        ) { list ->
-//            if (list.count != null) {
-//                mViewBinding?.tvRotatingTicketsCount?.text = "${list.count}"
-//            }
-//        }
+
 
         viewModel.stateRotTicket.observe(viewLifecycleOwner) {
             when (it) {
@@ -227,112 +220,29 @@ class RotatingTreasureFragment :
                 rotatingTreasureVM.remainFrequency.value =
                     rotatingTreasureVM.remainFrequency.value?.minus(1)
 
-                currentRotateCount = 0
                 decreaseCountAnimation(mViewBinding!!.tvRotatingMyntsCount, 1500, 10)
-                viewModel.coinsBurned.postValue(null)
-                sectionId = list.sectionId
+                rotatingTreasureVM.sectionId = list.sectionId
                 orderId = list.orderNo
 
                 rotatingTreasureVM.noOfJackpotTickets = list.noOfJackpotTicket
 
-                Toast.makeText(this.context, "section id: $sectionId", Toast.LENGTH_SHORT).show()
 
-                try {
-//                    if (rotatingTreasureVM.btnClickCount > 1)
-                    // (mViewBinding!!.vpTreasuryBox.adapter as TreasurePagerAdapter).clearList()
-                    val treasureImages: ArrayList<TreasureAdapterUiModel> = ArrayList()
-//                    if (rotatingTreasureVM.btnClickCount < 2) {
-                    treasureImages.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
-                    treasureImages.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
-                    treasureImages.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
-                    treasureImages.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
-                    treasureImages.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
-                    treasureImages.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
-                    treasureImages.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
-                    treasureImages.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
-                    treasureImages.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
-                    treasureImages.add(
-                        TreasureAdapterUiModel(
-                            R.raw.silver_box_open,
-                            sectionId == 1
-                        )
-                    )
-                    treasureImages.add(
-                        TreasureAdapterUiModel(
-                            R.raw.wood_box_open,
-                            sectionId == 2
-                        )
-                    )
-                    treasureImages.add(
-                        TreasureAdapterUiModel(
-                            R.raw.gold_box_open,
-                            sectionId == 3
-                        )
-                    )
-
-                    (mViewBinding!!.vpTreasuryBox.adapter as TreasurePagerAdapter).setList(
-                        treasureImages
-                    )
-
-//                    }
-
-                    mViewBinding?.vpTreasuryBox?.registerOnPageChangeCallback(object :
-                        OnPageChangeCallback() {
-                        override fun onPageSelected(position: Int) {
-                            super.onPageSelected(position)
-                            if (!treasureImages[position].isSelected) {
-                                Handler(Looper.getMainLooper()).postDelayed({
-                                    mViewBinding?.vpTreasuryBox?.currentItem =
-                                        mViewBinding?.vpTreasuryBox!!.currentItem + 1
-                                }, 200)
-                            } else {
-                                when (sectionId) {
-                                    1 -> {
-                                        mViewBinding!!.lottieRotatingVP.setAnimation(R.raw.silver_box_open)
-                                    }
-                                    2 -> {
-                                        mViewBinding!!.lottieRotatingVP.setAnimation(R.raw.wood_box_open)
-                                    }
-                                    3 -> {
-                                        mViewBinding!!.lottieRotatingVP.setAnimation(R.raw.gold_box_open)
-
-                                    }
-                                }
-                                mViewBinding!!.lottieRotatingVP.toVisible()
-                                mViewBinding!!.lottieRotatingVP.playAnimation()
-
-                                setTreasureViewPagerData(position)
-
-                            }
-                        }
-                    })
-
-                } catch (e: Exception) {
-                    Toast.makeText(this.requireContext(), "Ex: $e", Toast.LENGTH_SHORT).show()
-                    Log.d("Spin", "Ex: $e")
-                }
             }
+            viewModel.coinsBurned.postValue(null)
 
         }
 
         viewModel.spinWheelResponseList.observe(this.viewLifecycleOwner) {
             mp?.stop()
-            Toast.makeText(this.context, "Run", Toast.LENGTH_SHORT).show()
-
-            //Update mynts and ticket values on finish
-//            setResult(23)
-//            finish()
-
         }
 
     }
 
-    private fun setTreasureViewPagerData(position: Int) {
+    private fun setTreasureViewPagerData() {
 
-//        if ((currentRotateCount > 6) && (position % 3 == sectionId!! - 1)) {
 
         sectionArrayList.forEach { item ->
-            if (item.id == sectionId.toString()) {
+            if (item.id == rotatingTreasureVM.sectionId.toString()) {
                 if (lifecycle.currentState.isAtLeast(Lifecycle.State.STARTED)) {
                     Toast.makeText(
                         this.context,
@@ -343,22 +253,10 @@ class RotatingTreasureFragment :
                     Handler(Looper.getMainLooper()).postDelayed({
                         setWinningTreasureData(item.sectionValue, orderId)
                     }, 200)
-//                        val treasureImages: ArrayList<TreasureAdapterUiModel> = ArrayList()
-
-//                        treasureImages.add(TreasureAdapterUiModel(R.raw.silver_box_open,
-//                            sectionId == 1
-//                        ))
-//                        treasureImages.add(TreasureAdapterUiModel(R.raw.wood_box_open, sectionId == 2))
-//                        treasureImages.add(TreasureAdapterUiModel(R.raw.gold_box_open, sectionId == 3))
-
-//                        (mViewBinding!!.vpTreasuryBox.adapter as TreasurePagerAdapter).setWinningList(treasureImages)
-
                 }
                 return@forEach
             }
         }
-
-        Log.i("currentRotateCount:- ", currentRotateCount.toString())
     }
 
     private fun setWinningTreasureData(
