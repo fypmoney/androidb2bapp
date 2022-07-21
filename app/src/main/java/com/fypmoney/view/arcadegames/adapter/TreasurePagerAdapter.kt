@@ -3,12 +3,12 @@ package com.fypmoney.view.arcadegames.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.fypmoney.databinding.ItemRotatingTreasuresBinding
 
-class TreasurePagerAdapter(
-) : RecyclerView.Adapter<TreasurePagerAdapter.TreasureViewHolder>() {
+class TreasurePagerAdapter(var imagesList: MutableList<TreasureAdapterUiModel>, var pagerTreasures: ViewPager2) : RecyclerView.Adapter<TreasurePagerAdapter.TreasureViewHolder>() {
 
-    private val treasureImages = mutableListOf<TreasureAdapterUiModel>()
+    var newTreasureImages: List<TreasureAdapterUiModel> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TreasureViewHolder {
          val mRowBinding = ItemRotatingTreasuresBinding.inflate(
@@ -19,42 +19,26 @@ class TreasurePagerAdapter(
     }
 
     override fun onBindViewHolder(holder: TreasureViewHolder, position: Int) {
-        return holder.onBind(treasureImages[position])
+        return holder.onBind(imagesList[position])
     }
 
     override fun getItemCount(): Int {
-        return treasureImages.size
+        return imagesList.size
     }
 
      inner class TreasureViewHolder(private val binding: ItemRotatingTreasuresBinding? = null) : RecyclerView.ViewHolder(binding!!.root) {
         fun onBind(item:TreasureAdapterUiModel){
             binding?.lottieRotatingVP?.setAnimation(item.boxImage)
-//            if(item.isSelected){
-//                selected = binding!!
-//                binding.lottieRotatingVP.playAnimation()
-//            }
 
-//            if (absoluteAdapterPosition == treasureImages.size - 1) {
-//                rotatingTreasureVP.post(sliderRunnable)
-//            }
+            if (absoluteAdapterPosition == imagesList.size - 2)
+                pagerTreasures.post(runnable)
         }
 
 
     }
 
-
-    /**
-     * This will set the data in the list in adapter
-     */
-    fun setList(treasureList: List<TreasureAdapterUiModel>) {
-        for (item in treasureList){
-            treasureImages.add(item)
-        }
-        notifyDataSetChanged()
-    }
-
-    fun clearList(){
-        treasureImages.clear()
+    val runnable = Runnable {
+        imagesList.addAll(newTreasureImages)
         notifyDataSetChanged()
     }
 

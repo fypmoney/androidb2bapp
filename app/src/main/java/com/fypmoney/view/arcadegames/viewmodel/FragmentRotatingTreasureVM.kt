@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
+import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
@@ -35,12 +36,17 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
     var totalJackpotAmount: MutableLiveData<TotalJackpotResponse> = MutableLiveData()
     var coinsBurned: LiveEvent<CoinsBurnedResponse> = LiveEvent()
     var listAddedCount: Int = 0
-    var btnClickCount: Int = 0
     //    var rotatingTreasureResponseList = MutableLiveData<Rotati>
     var remainFrequency: MutableLiveData<Int> = MutableLiveData()
     var spinWheelResponseList = MutableLiveData<SpinWheelRotateResponseDetails>()
     var noOfJackpotTickets: Int? = null
     var positionSectionId: MutableLiveData<Int> = MutableLiveData()
+
+    //live data to store errors of all apis
+    var error: MutableLiveData<ErrorResponseInfo> = MutableLiveData()
+
+    //Check user has play the arcade
+    var isArcadeIsPlayed = false
 
     var sectionId: Int? = null
     //    var noOfJackpotTickets: Int? = null
@@ -59,15 +65,12 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
 
     init {
         remainFrequency.value = 0
-        btnClickCount = 0
-        listAddedCount = 0
         noOfJackpotTickets = 0
 //        currentRotateCount = 0
 
         callRewardSummary()
         callTotalRewardsEarnings()
         callTotalJackpotCards()
-        callSingleProductApi("TREASURE_BOX_101")
     }
 
     private fun callRewardSummary() {
@@ -106,7 +109,7 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
         )
     }
 
-    private fun callSingleProductApi(code: String?) {
+    fun callSingleProductApi(code: String?) {
         _state.postValue(RotatingTreasureState.Loading)
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -184,29 +187,10 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
                 rewardSummaryStatus.postValue(array)
             }
 
-//            ApiConstant.API_GET_JACKPOT_CARDS -> {
-//                val json = JsonParser.parseString(responseData.toString()) as JsonObject
-//                if (json.get("data").toString() != "[]") {
-//                    val array = Gson().fromJson(
-//                        json.get("data").toString(),
-//                        TotalJackpotResponse::class.java
-//                    )
-//                    totalJackpotAmount.postValue(array)
-//                }
-//            }
-
-//            ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS -> {
-//                if (responseData is TreasureBoxNetworkResponse) {
-//                    _state.value = responseData.data?.treasureBox?.get(0)
-//                        ?.let { RotatingTreasureState.Success(it) }
-//                }
-//            }
-
             ApiConstant.API_GET_TREASURE_DATA -> {
                 if (responseData is TreasureBoxNetworkResponse) {
                     _state.value = responseData.data?.treasureBox?.get(0)
                         ?.let { RotatingTreasureState.Success(it) }
-                    Log.d("TreasureBoxData", responseData.data.toString())
                 }
             }
 
@@ -216,12 +200,9 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
                     json.get("data").toString(),
                     CoinsBurnedResponse::class.java
                 )
-                viewModelScope.launch {
-                    delay(2000)
-                    coinsBurned.postValue(array)
+                isArcadeIsPlayed = true
+                coinsBurned.postValue(array)
 
-
-                }
             }
 
             ApiConstant.PLAY_ORDER_API -> {
@@ -247,6 +228,35 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
                 }
             }
 
+        }
+    }
+
+    override fun onError(purpose: String, errorResponseInfo: ErrorResponseInfo) {
+        super.onError(purpose, errorResponseInfo)
+        when (purpose) {
+            ApiConstant.API_GET_REWARD_EARNINGS -> {
+                error.postValue(errorResponseInfo)
+            }
+
+            ApiConstant.API_REWARD_SUMMARY -> {
+                error.postValue(errorResponseInfo)
+            }
+
+            ApiConstant.API_GET_TREASURE_DATA -> {
+                error.postValue(errorResponseInfo)
+            }
+
+            ApiConstant.API_REDEEM_REWARD -> {
+                error.postValue(errorResponseInfo)
+            }
+
+            ApiConstant.API_GET_ALL_JACKPOTS_PRODUCTWISE -> {
+                error.postValue(errorResponseInfo)
+            }
+
+            ApiConstant.PLAY_ORDER_API -> {
+                error.postValue(errorResponseInfo)
+            }
         }
     }
 
