@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.fypmoney.base.BaseViewModel
 import com.fypmoney.connectivity.ApiConstant
 import com.fypmoney.connectivity.ApiUrl
@@ -15,13 +16,16 @@ import com.fypmoney.model.CoinsBurnedResponse
 import com.fypmoney.model.RewardPointsSummaryResponse
 import com.fypmoney.model.SpinWheelRotateResponseDetails
 import com.fypmoney.util.livedata.LiveEvent
-import com.fypmoney.view.arcadegames.model.*
+import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
+import com.fypmoney.view.arcadegames.model.TreasureBoxItem
+import com.fypmoney.view.arcadegames.model.TreasureBoxNetworkResponse
 import com.fypmoney.view.rewardsAndWinnings.model.TotalJackpotResponse
 import com.fypmoney.view.rewardsAndWinnings.model.totalRewardsResponse
-import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsAndVM
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(application) {
 
@@ -38,6 +42,7 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
     var noOfJackpotTickets: Int? = null
     var positionSectionId: MutableLiveData<Int> = MutableLiveData()
 
+    var sectionId: Int? = null
     //    var noOfJackpotTickets: Int? = null
     var frequency: Int? = 0
 
@@ -211,7 +216,12 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
                     json.get("data").toString(),
                     CoinsBurnedResponse::class.java
                 )
-                coinsBurned.postValue(array)
+                viewModelScope.launch {
+                    delay(2000)
+                    coinsBurned.postValue(array)
+
+
+                }
             }
 
             ApiConstant.PLAY_ORDER_API -> {
