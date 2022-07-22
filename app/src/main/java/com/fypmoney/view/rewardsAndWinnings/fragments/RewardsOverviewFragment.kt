@@ -196,7 +196,7 @@ class RewardsOverviewFragment :
         }
 
         mViewBinding?.chipTicketsView?.setOnClickListener {
-            findNavController().navigate(R.id.navigation_multiple_jackpots)
+            findNavController().navigate(R.id.navigation_leaderboard)
         }
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("arcade_is_played")

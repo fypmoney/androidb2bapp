@@ -159,6 +159,7 @@ object AppConstants {
     const val CHANGED_DATE_TIME_FORMAT8 = "dd MMM, yyyy"
     const val CHANGED_DATE_TIME_FORMAT7 = "HH:mm,  MMM dd, yy"
     const val CHANGED_DATE_TIME_FORMAT5 = " dd/MM/yyyy"
+    const val CHANGED_DATE_TIME_FORMAT10 = "yyyy/MM/dd HH:mm:ss"
     const val REWARD_HISTORY_OUTPUT = "MMM dd' ,'hh:mm a"
     const val REWARD_HISTORY_INPUT = "MMM dd' ,'hh:mm a"
 

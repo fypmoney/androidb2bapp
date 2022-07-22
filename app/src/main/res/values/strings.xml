@@ -1283,6 +1283,9 @@ Coming really soon!
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
     <string name="seconds">Seconds</string>
+    <string name="total_golden_tickets_won">Total Golden Tickets Won</string>
+
+    <string name="leaderboard_just_tickets">You are just <b> %1$s </b> away</string>
     <string-array name="person_category_array">
         <item>Minor</item>
         <item>Major</item>

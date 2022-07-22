@@ -198,6 +198,8 @@ object ApiConstant {
     const val API_GET_ALL_JACKPOTS_PRODUCTWISE =
         "services/PockketService/api/jackpot/tickets/productwise/"
 
+    const val API_GET_LEADERBOARD_DATA = "services/PockketService/api/reward/leaderboard/"
+
 }
 
 
