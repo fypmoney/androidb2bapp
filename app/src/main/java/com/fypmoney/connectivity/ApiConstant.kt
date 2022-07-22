@@ -119,6 +119,9 @@ object ApiConstant {
         "services/loyaltyservice/api/loyalty/points/summary"
     const val API_GET_REWARD_PRODUCTS =
         "services/PockketService/api/list/reward-product"
+    //TODO need to change APIData parsing logic
+    const val API_GET_REWARD_PRODUCTS_PURPOSE =
+        "reward-product_purpose"
     const val API_GET_REWARD_EARNINGS =
         "services/PockketService/api/total-cashback-earned"
     const val API_POST_CHECK_OFFLINE_CARD =
@@ -186,6 +189,8 @@ object ApiConstant {
     const val API_BANK_DETAILS = "/services/PockketService/api/bank-details"
     const val API_GET_REWARD_SINGLE_PRODUCTS =
         "services/PockketService/api/list/reward-product/"
+    const val API_GET_REWARD_SINGLE_PRODUCTS_PURPOSE =
+        "reward-product"
 
     const val API_GET_TREASURE_DATA =
         "services/PockketService/api/list/reward-product"

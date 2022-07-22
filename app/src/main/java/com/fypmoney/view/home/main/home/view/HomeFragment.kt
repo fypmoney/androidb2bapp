@@ -28,7 +28,7 @@ import com.fypmoney.util.AppConstants.FyperScreen
 import com.fypmoney.util.AppConstants.NO
 import com.fypmoney.util.AppConstants.YES
 import com.fypmoney.util.SharedPrefUtils
-import com.fypmoney.util.SharedPrefUtils.Companion.SF_CASHBACK_RECHARGE_ALLOWED
+import com.fypmoney.util.SharedPrefUtils.Companion.SF_MESSAGE_ON_RECHARGE
 import com.fypmoney.util.Utility
 import com.fypmoney.util.Utility.deeplinkRedirection
 import com.fypmoney.util.videoplayer.VideoActivity2
@@ -105,11 +105,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
     }
 
     private fun checkForRechargeCashback() {
-        SharedPrefUtils.getString(requireContext(),SF_CASHBACK_RECHARGE_ALLOWED)?.let {
-            if(it == "0"){
+        SharedPrefUtils.getString(requireContext(), SF_MESSAGE_ON_RECHARGE)?.let {
+            if(it.isEmpty()){
                 binding.cashbackAmountTv.toInvisible()
             }else{
-                binding.cashbackAmountTv.text = it+"% Cashback"
+                binding.cashbackAmountTv.text = it
                 binding.cashbackAmountTv.toVisible()
             }
         }

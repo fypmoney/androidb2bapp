@@ -191,7 +191,7 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
         _state.postValue(SpinWheelState.Loading)
         WebApiCaller.getInstance().request(
             ApiRequest(
-                ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS,
+                ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS_PURPOSE,
                 NetworkUtil.endURL(ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS) + code,
                 ApiUrl.GET,
                 BaseRequest(),
@@ -242,7 +242,7 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
                 coinsBurned.postValue(array)
             }
 
-            ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS -> {
+            ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS_PURPOSE -> {
                 if (responseData is SingleSpinWheelProductNetworkResponse) {
                     _state.value =
                         responseData.data?.spinWheel?.get(0)?.let { SpinWheelState.Success(it) }
@@ -293,7 +293,7 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
                 error.postValue(errorResponseInfo)
             }
 
-            ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS -> {
+            ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS_PURPOSE -> {
                 error.postValue(errorResponseInfo)
             }
 

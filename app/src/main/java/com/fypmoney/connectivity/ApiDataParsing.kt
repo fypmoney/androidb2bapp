@@ -14,15 +14,14 @@ import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.model.*
 import com.fypmoney.view.addmoney.model.BankProfileDetailsNetworkResponse
-import com.fypmoney.view.giftcard.model.*
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.arcadegames.model.SingleSpinWheelProductNetworkResponse
 import com.fypmoney.view.arcadegames.model.TreasureBoxNetworkResponse
+import com.fypmoney.view.giftcard.model.*
 import com.fypmoney.view.home.main.home.model.networkmodel.CallToActionNetworkResponse
 import com.fypmoney.view.ordercard.model.UserOfferCardResponse
 import com.fypmoney.view.recharge.model.RecentRechargesResponse
 import com.google.gson.Gson
-import com.google.protobuf.Api
 import com.payu.india.Payu.PayuConstants
 import okhttp3.ResponseBody
 
@@ -247,7 +246,7 @@ class ApiDataParsing {
                 ApiConstant.API_BANK_DETAILS -> {
                     getObject(response, BankProfileDetailsNetworkResponse::class.java)
                 }
-                ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS -> {
+                ApiConstant.API_GET_REWARD_SINGLE_PRODUCTS_PURPOSE -> {
                     getObject(response, SingleSpinWheelProductNetworkResponse::class.java)
                 }
                 ApiConstant.API_GET_TREASURE_DATA -> {

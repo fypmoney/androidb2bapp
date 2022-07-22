@@ -29,6 +29,7 @@ data class PayAndRechargeResponse(
     val paymentStatus: String? = null,
     val merchantHttpCode: String? = null,
     val status: String? = null,
-    val isReversed: String? = null
+    val isReversed: String? = null,
+    val myntsRewarded: String? = null
 ) : Parcelable
 

@@ -13,6 +13,8 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.RechargeSuccessFragmentBinding
+import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.DTH
 import com.fypmoney.util.AppConstants.POSTPAID
@@ -61,6 +63,14 @@ class RechargeSuccessFragment :
                 binding.statusTitleTv.text = String.format(getString(R.string.your_recharge_is_successful),Utility.convertToRs(rechargeSuccessfulFragmentVM.amount),rechargeSuccessfulFragmentVM.mobile)
                 binding.comment.visibility = View.GONE
                 binding.logo.setAnimation(R.raw.success);
+                if(args.successResponse?.myntsRewarded.isNullOrEmpty()){
+                    binding.reccivedMyntsFl.toGone()
+
+                }else{
+                    binding.reccivedMyntsFl.toVisible()
+                    binding.reccivedMyntsTv.text = String.format(getString(R.string.you_have_won_mynts),args.successResponse?.myntsRewarded)
+
+                }
 
 
             } else if (args.successResponse?.isPurchased == AppConstants.NO) {

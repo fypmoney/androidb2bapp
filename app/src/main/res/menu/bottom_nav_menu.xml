@@ -20,7 +20,7 @@
 
     <item
         android:id="@+id/navigation_explore"
-        android:icon="@drawable/ic_explore_nav_menu"
+        android:icon="@drawable/ic_f_store"
         android:title="@string/explore"
         app:cnb_backgroundColor="@color/bgcolor"
         app:cnb_textColor="#FFFFFF"

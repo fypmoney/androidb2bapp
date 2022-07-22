@@ -143,23 +143,21 @@ class RotatingTreasureFragment :
             OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-
-                if (listOfBoxes[position].isSelected ) {
+                if (adapter!!.imagesList[position].isSelected) {
                     sliderHandler.removeCallbacks(sliderRunnable)
-                    when(rotatingTreasureVM.sectionId){
+                    mViewBinding!!.lottieRotatingVP.setAnimation(adapter!!.imagesList[position].boxImage)
+
+                    /*when(rotatingTreasureVM.sectionId){
                         1->{
                             mViewBinding!!.lottieRotatingVP.setAnimation(R.raw.silver_box_open)
-
                         }
                         2->{
                             mViewBinding!!.lottieRotatingVP.setAnimation(R.raw.wood_box_open)
-
                         }
                         3->{
                             mViewBinding!!.lottieRotatingVP.setAnimation(R.raw.gold_box_open)
-
                         }
-                    }
+                    }*/
 
                     mViewBinding!!.lottieRotatingVP.toVisible()
                     mViewBinding!!.lottieRotatingVP.playAnimation()
@@ -200,6 +198,12 @@ class RotatingTreasureFragment :
 
     private fun setTreasureInitialData() {
 
+        listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
+        listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
+        listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
+        listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
+        listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
+        listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
         listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
         listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
         listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
@@ -326,13 +330,13 @@ class RotatingTreasureFragment :
 
         viewModel.spinWheelResponseList.observe(viewLifecycleOwner) {
                 spinWheelRotateResponseDetails = it
-            val listOfBoxes = arrayListOf<TreasureAdapterUiModel>()
+            val listOfBoxes = arrayListOf<TreasureAdapterUiModel>()/*
             listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
             listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
             listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
             listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
             listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
+            listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))*/
             listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, rotatingTreasureVM.sectionId==1))
             listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, rotatingTreasureVM.sectionId==2))
             listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, rotatingTreasureVM.sectionId==3))
@@ -341,8 +345,6 @@ class RotatingTreasureFragment :
             listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
             adapter!!.newTreasureImages = listOfBoxes
             sliderHandler.postDelayed(sliderRunnable, 200)
-
-            arcadeSounds("SPINNER")
 
         }
 

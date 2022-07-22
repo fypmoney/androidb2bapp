@@ -178,7 +178,8 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
             "IS_GIFT_CARD_AVAILABLE",
             "SERVER_IS_UNDER_MAINTENANCE",
             "SERVER_MAINTENANCE_DESCRIPTION",
-            "CASHBACK_RECHARGE_ALLOWED"
+            "CASHBACK_RECHARGE_ALLOWED",
+            "MESSAGE_ON_RECHARGE"
         )
         WebApiCaller.getInstance().request(
             ApiRequest(
@@ -400,6 +401,13 @@ class  SplashViewModel(val  app: Application) : BaseViewModel(app) {
                                 SharedPrefUtils.putString(
                                     getApplication(),
                                     SharedPrefUtils.SF_CASHBACK_RECHARGE_ALLOWED,
+                                    it.value
+                                )
+                            }
+                            "MESSAGE_ON_RECHARGE"->{
+                                SharedPrefUtils.putString(
+                                    getApplication(),
+                                    SharedPrefUtils.SF_MESSAGE_ON_RECHARGE,
                                     it.value
                                 )
                             }

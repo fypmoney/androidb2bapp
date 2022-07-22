@@ -2,13 +2,14 @@ package com.fypmoney.view.arcadegames.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.Keep
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.fypmoney.databinding.ItemRotatingTreasuresBinding
 
 class TreasurePagerAdapter(var imagesList: MutableList<TreasureAdapterUiModel>, var pagerTreasures: ViewPager2) : RecyclerView.Adapter<TreasurePagerAdapter.TreasureViewHolder>() {
 
-    var newTreasureImages: List<TreasureAdapterUiModel> = arrayListOf()
+    var newTreasureImages: ArrayList<TreasureAdapterUiModel> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TreasureViewHolder {
          val mRowBinding = ItemRotatingTreasuresBinding.inflate(
@@ -39,11 +40,13 @@ class TreasurePagerAdapter(var imagesList: MutableList<TreasureAdapterUiModel>, 
 
     val runnable = Runnable {
         imagesList.addAll(newTreasureImages)
-        notifyDataSetChanged()
+        newTreasureImages.clear()
+         notifyDataSetChanged()
     }
 
 }
 
+@Keep
 data class TreasureAdapterUiModel(
     var boxImage:Int,
     var isSelected:Boolean = false

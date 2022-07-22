@@ -73,6 +73,47 @@
             app:layout_constraintStart_toStartOf="parent" />
 
 
+        <FrameLayout
+            android:id="@+id/reccived_mynts_fl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/dp24"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@+id/comment">
+
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/mynts_earned_lav"
+                android:layout_width="@dimen/dp176"
+                android:layout_height="176dp"
+                android:layout_gravity="center"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/mynts_earned" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/mynts_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_two_mynts"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/TextviewRegular"
+                android:id="@+id/reccived_mynts_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="You have won 200 Mynts"
+                android:layout_marginTop="@dimen/dp30"
+                android:layout_gravity="bottom|center"
+                android:textColor="@color/white"
+                android:lineHeight="16sp"
+                />
+
+        </FrameLayout>
+
 
         <com.fypmoney.view.customview.PrimaryButton
             android:layout_width="wrap_content"
