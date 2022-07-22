@@ -16,8 +16,8 @@ class LeaderBoardAdapter :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LeaderBoardUiModel) {
             when (item.userPosition) {
-                1 -> {
-                    binding.tvLeaderBoardPosition.text = item.userPosition.toString() + "st"
+                "1st" -> {
+                    binding.tvLeaderBoardPosition.text = item.userPosition.toString()
                     binding.relativePositionView.setBackgroundColor(
                         binding.relativePositionView.context.resources.getColor(
                             R.color.reward_golden_tickets_text
@@ -25,8 +25,8 @@ class LeaderBoardAdapter :
                     )
                     binding.tvLeaderBoardPosition.setTextColor(binding.tvLeaderBoardPosition.context.resources.getColor(R.color.black_grey_txt_color))
                 }
-                2 -> {
-                    binding.tvLeaderBoardPosition.text = item.userPosition.toString() + "nd"
+                "2nd" -> {
+                    binding.tvLeaderBoardPosition.text = item.userPosition.toString()
                     binding.relativePositionView.setBackgroundColor(
                         binding.relativePositionView.context.resources.getColor(
                             R.color.rewardLeaderBoardSilver
@@ -34,8 +34,8 @@ class LeaderBoardAdapter :
                     )
                     binding.tvLeaderBoardPosition.setTextColor(binding.tvLeaderBoardPosition.context.resources.getColor(R.color.black_grey_txt_color))
                 }
-                3 -> {
-                    binding.tvLeaderBoardPosition.text = item.userPosition.toString() + "rd"
+                "3rd" -> {
+                    binding.tvLeaderBoardPosition.text = item.userPosition.toString()
                     binding.relativePositionView.setBackgroundColor(
                         binding.relativePositionView.context.resources.getColor(
                             R.color.rewardLeaderBoardBronze
@@ -44,7 +44,7 @@ class LeaderBoardAdapter :
                     binding.tvLeaderBoardPosition.setTextColor(binding.tvLeaderBoardPosition.context.resources.getColor(R.color.black_grey_txt_color))
                 }
                 else -> {
-                    binding.tvLeaderBoardPosition.text = item.userPosition.toString() + "th"
+                    binding.tvLeaderBoardPosition.text = item.userPosition.toString()
                     binding.relativePositionView.setBackgroundColor(
                         binding.relativePositionView.context.resources.getColor(
                             R.color.transparent
@@ -75,7 +75,7 @@ class LeaderBoardAdapter :
 
 data class LeaderBoardUiModel(
     var userName: String?,
-    var userPosition: Int?,
+    var userPosition: String?,
     var userTicketsCount: Int?
 ) {
     companion object {

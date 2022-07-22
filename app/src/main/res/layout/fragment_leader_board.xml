@@ -113,117 +113,150 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/ic_ellipse_leaderboard">
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivLeaderboardNumber3"
-                            android:layout_width="@dimen/_58sdp"
-                            android:layout_height="@dimen/_58sdp"
-                            android:layout_marginStart="28dp"
-                            android:layout_marginTop="44dp"
-                            android:padding="20dp"
-                            android:src="@drawable/ic_leaderboard_bronze"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/clLeaderBoard3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toStartOf="@+id/clLeaderBoard1"
+                            app:layout_constraintHorizontal_chainStyle="spread"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <androidx.appcompat.widget.AppCompatImageView
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivLeaderboardNumber3"
+                                android:layout_width="@dimen/_58sdp"
+                                android:layout_height="@dimen/_58sdp"
+                                android:layout_marginTop="@dimen/_32sdp"
+                                android:padding="20dp"
+                                android:src="@drawable/ic_leaderboard_bronze"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="-8dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboardNumber3"
+                                app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber3"
+                                app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber3"
+                                app:srcCompat="@drawable/ic_leaderboard_no_3" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvLeaderboard3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="14dp"
+                                android:fontFamily="@font/product_sans_regular"
+                                android:textColor="@color/white"
+                                app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber3"
+                                app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber3"
+                                app:layout_constraintTop_toBottomOf="@+id/ivLeaderboardNumber3"
+                                tools:text="Prashant Kumar" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/clLeaderBoard1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="-8dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboardNumber3"
-                            app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber3"
-                            app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber3"
-                            app:srcCompat="@drawable/ic_leaderboard_no_3" />
+                            app:layout_constraintEnd_toStartOf="@+id/clLeaderBoard2"
+                            app:layout_constraintHorizontal_chainStyle="spread"
+                            app:layout_constraintStart_toEndOf="@+id/clLeaderBoard3"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvLeaderboard3"
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivLeaderboardNumber1"
+                                android:layout_width="@dimen/_78sdp"
+                                android:layout_height="@dimen/_78sdp"
+                                android:layout_marginTop="@dimen/_16sdp"
+                                android:padding="24dp"
+                                android:src="@drawable/ic_leaderboard_golden"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivLeaderboard_1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="-5dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboardNumber1"
+                                app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber1"
+                                app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber1"
+                                app:srcCompat="@drawable/ic_leaderboard_no_1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvLeaderboard1_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:fontFamily="@font/product_sans_bold"
+                                android:text="1"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboard_1"
+                                app:layout_constraintEnd_toEndOf="@+id/ivLeaderboard_1"
+                                app:layout_constraintStart_toStartOf="@+id/ivLeaderboard_1"
+                                app:layout_constraintTop_toTopOf="@+id/ivLeaderboard_1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvLeaderboard1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="16dp"
+                                android:fontFamily="@font/product_sans_regular"
+                                android:textColor="@color/white"
+                                android:textSize="18sp"
+                                app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber1"
+                                app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber1"
+                                app:layout_constraintTop_toBottomOf="@+id/ivLeaderboardNumber1"
+                                tools:text="Tapan Yadav" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/clLeaderBoard2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="14dp"
-                            android:fontFamily="@font/product_sans_regular"
-                            android:textColor="@color/white"
-                            app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber3"
-                            app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber3"
-                            app:layout_constraintTop_toBottomOf="@+id/ivLeaderboardNumber3"
-                            tools:text="Prashant Kumar" />
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_chainStyle="spread"
+                            app:layout_constraintStart_toEndOf="@+id/clLeaderBoard1"
+                            app:layout_constraintTop_toTopOf="parent">
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivLeaderboardNumber1"
-                            android:layout_width="@dimen/_78sdp"
-                            android:layout_height="@dimen/_78sdp"
-                            android:layout_marginStart="28dp"
-                            android:layout_marginTop="20dp"
-                            android:padding="24dp"
-                            android:src="@drawable/ic_leaderboard_golden"
-                            app:layout_constraintStart_toEndOf="@+id/ivLeaderboardNumber3"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/ivLeaderboardNumber2"
+                                android:layout_width="@dimen/_58sdp"
+                                android:layout_height="@dimen/_58sdp"
+                                android:layout_marginTop="@dimen/_32sdp"
+                                android:padding="20dp"
+                                android:src="@drawable/ic_leaderboard_silver"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
 
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivLeaderboard_1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="-5dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboardNumber1"
-                            app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber1"
-                            app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber1"
-                            app:srcCompat="@drawable/ic_leaderboard_no_1" />
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="-8dp"
+                                app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboardNumber2"
+                                app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber2"
+                                app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber2"
+                                app:srcCompat="@drawable/ic_leaderboard_no_2" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvLeaderboard1_text"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:fontFamily="@font/product_sans_bold"
-                            android:text="1"
-                            android:textColor="@color/white"
-                            android:textSize="16sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboard_1"
-                            app:layout_constraintEnd_toEndOf="@+id/ivLeaderboard_1"
-                            app:layout_constraintStart_toStartOf="@+id/ivLeaderboard_1"
-                            app:layout_constraintTop_toTopOf="@+id/ivLeaderboard_1" />
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvLeaderboard2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="14dp"
+                                android:fontFamily="@font/product_sans_regular"
+                                android:textColor="@color/white"
+                                app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber2"
+                                app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber2"
+                                app:layout_constraintTop_toBottomOf="@+id/ivLeaderboardNumber2"
+                                tools:text="Utkarsh Gupta" />
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvLeaderboard1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:fontFamily="@font/product_sans_regular"
-                            android:textColor="@color/white"
-                            android:textSize="18sp"
-                            app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber1"
-                            app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber1"
-                            app:layout_constraintTop_toBottomOf="@+id/ivLeaderboardNumber1"
-                            tools:text="Tapan Yadav" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivLeaderboardNumber2"
-                            android:layout_width="@dimen/_58sdp"
-                            android:layout_height="@dimen/_58sdp"
-                            android:layout_marginStart="28dp"
-                            android:layout_marginTop="44dp"
-                            android:padding="20dp"
-                            android:src="@drawable/ic_leaderboard_silver"
-                            app:layout_constraintStart_toEndOf="@+id/ivLeaderboardNumber1"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="-8dp"
-                            app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboardNumber2"
-                            app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber2"
-                            app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber2"
-                            app:srcCompat="@drawable/ic_leaderboard_no_2" />
-
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvLeaderboard2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="14dp"
-                            android:fontFamily="@font/product_sans_regular"
-                            android:textColor="@color/white"
-                            app:layout_constraintEnd_toEndOf="@+id/ivLeaderboardNumber2"
-                            app:layout_constraintStart_toStartOf="@+id/ivLeaderboardNumber2"
-                            app:layout_constraintTop_toBottomOf="@+id/ivLeaderboardNumber2"
-                            tools:text="Utkarsh Gupta" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -232,7 +265,7 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardCountDown"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/_188sdp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_16sdp"
                     android:layout_marginEnd="@dimen/_16sdp"
@@ -269,10 +302,11 @@
 
                         <androidx.constraintlayout.widget.ConstraintLayout
                             android:layout_width="0dp"
-                            android:layout_height="0dp"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_6sdp"
                             android:layout_marginTop="@dimen/_14sdp"
                             android:layout_marginEnd="@dimen/_6sdp"
+                            android:layout_marginBottom="@dimen/_14sdp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
@@ -296,11 +330,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
+                                android:layout_marginBottom="4dp"
                                 android:alpha="0.5"
                                 android:text="@string/days"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"
                                 app:fontFamily="@font/product_sans_regular"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="@+id/lineLeaderboard1"
                                 app:layout_constraintHorizontal_chainStyle="spread"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -310,7 +346,6 @@
                                 android:id="@+id/lineLeaderboard1"
                                 android:layout_width="1dp"
                                 android:layout_height="0dp"
-                                android:layout_marginBottom="22dp"
                                 android:alpha="0.1"
                                 android:background="@color/white"
                                 android:orientation="vertical"
@@ -338,11 +373,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
+                                android:layout_marginBottom="4dp"
                                 android:alpha="0.5"
                                 android:text="@string/hours"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"
                                 app:fontFamily="@font/product_sans_regular"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="@id/lineLeaderboard2"
                                 app:layout_constraintHorizontal_chainStyle="spread"
                                 app:layout_constraintStart_toEndOf="@+id/lineLeaderboard1"
@@ -352,7 +389,6 @@
                                 android:id="@+id/lineLeaderboard2"
                                 android:layout_width="1dp"
                                 android:layout_height="0dp"
-                                android:layout_marginBottom="22dp"
                                 android:alpha="0.1"
                                 android:background="@color/white"
                                 android:orientation="vertical"
@@ -381,11 +417,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
+                                android:layout_marginBottom="4dp"
                                 android:alpha="0.5"
                                 android:text="@string/minutes"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"
                                 app:fontFamily="@font/product_sans_regular"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="@+id/lineLeaderboard3"
                                 app:layout_constraintHorizontal_chainStyle="spread"
                                 app:layout_constraintStart_toEndOf="@+id/lineLeaderboard2"
@@ -395,7 +433,6 @@
                                 android:id="@+id/lineLeaderboard3"
                                 android:layout_width="1dp"
                                 android:layout_height="0dp"
-                                android:layout_marginBottom="22dp"
                                 android:alpha="0.1"
                                 android:background="@color/white"
                                 android:orientation="vertical"
@@ -423,11 +460,13 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
+                                android:layout_marginBottom="4dp"
                                 android:alpha="0.5"
                                 android:text="@string/seconds"
                                 android:textColor="@color/white"
                                 android:textSize="16sp"
                                 app:fontFamily="@font/product_sans_regular"
+                                app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintHorizontal_chainStyle="spread"
                                 app:layout_constraintStart_toEndOf="@+id/lineLeaderboard3"
@@ -497,27 +536,41 @@
                     app:layout_constraintTop_toBottomOf="@+id/chipTicketView" />
 
                 <androidx.appcompat.widget.AppCompatSeekBar
-                    android:id="@+id/seekBarLeaderBoard"
+                    android:id="@+id/seekBarLeaderBoardThumb"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_24sdp"
                     android:layout_marginTop="@dimen/_18sdp"
-                    android:progress="80"
                     android:maxHeight="8dp"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:progressDrawable="@drawable/seek_bar_progress"
-                    android:thumb="@drawable/leaderboard_seekbar_thumb"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/seek_bar_transparent"
+                    android:thumb="@drawable/ic_seek_bar_pin"
                     app:layout_constraintEnd_toStartOf="@+id/ivWinningReward"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tvGoldenTicketWon" />
+
+                <androidx.appcompat.widget.AppCompatSeekBar
+                    android:id="@+id/seekBarLeaderBoard"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_24sdp"
+                    android:maxHeight="8dp"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/bg_seek_bar_progress"
+                    android:thumb="@color/transparent"
+                    app:layout_constraintEnd_toStartOf="@+id/ivWinningReward"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/seekBarLeaderBoardThumb" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivWinningReward"
                     android:layout_width="@dimen/_52sdp"
                     android:layout_height="@dimen/_52sdp"
                     android:layout_marginEnd="28dp"
+                    app:layout_constraintBottom_toBottomOf="@id/seekBarLeaderBoard"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/seekBarLeaderBoard"
-                    app:layout_constraintTop_toBottomOf="@+id/tvGoldenTicketWon"
+                    app:layout_constraintTop_toTopOf="@+id/seekBarLeaderBoard"
                     app:srcCompat="@drawable/golden_won" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -527,10 +580,10 @@
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="12dp"
                     android:layout_marginEnd="18dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/text_body_grey"
-                    app:fontFamily="@font/product_sans_regular"
                     android:gravity="center_horizontal"
+                    android:textColor="@color/text_body_grey"
+                    android:textSize="16sp"
+                    app:fontFamily="@font/product_sans_regular"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/seekBarLeaderBoard"
@@ -540,8 +593,8 @@
                     android:id="@+id/recyclerLeaderBoard"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:clipToPadding="true"
                     android:layout_marginTop="16dp"
+                    android:clipToPadding="true"
                     android:orientation="vertical"
                     android:paddingBottom="18dp"
                     app:layout_constraintEnd_toEndOf="parent"

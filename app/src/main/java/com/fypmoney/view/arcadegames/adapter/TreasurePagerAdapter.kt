@@ -1,16 +1,9 @@
 package com.fypmoney.view.arcadegames.adapter
 
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
-import com.fypmoney.base.BaseViewHolder
 import com.fypmoney.databinding.ItemRotatingTreasuresBinding
-import com.fypmoney.view.arcadegames.TreasureEvent
-import com.fypmoney.view.arcadegames.viewmodel.FragmentRotatingTreasureVM
 
 class TreasurePagerAdapter(
 ) : RecyclerView.Adapter<TreasurePagerAdapter.TreasureViewHolder>() {

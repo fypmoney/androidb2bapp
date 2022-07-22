@@ -10,7 +10,7 @@ data class LeaderBoardResponse(
 @Keep
 data class LeaderBoardListItem(
 	val goldenTickets: Int? = null,
-	val position: Int? = null,
+	val position: String? = null,
 	val userName: String? = null
 )
 
@@ -36,8 +36,10 @@ data class RewardProduct(
 	val successResourceId: String? = null,
 	val sectionList: Any? = null,
 	val noOfJackpotTicket: Int? = null,
-	val productType: String? = null
-)
+	val productType: String? = null,
+	val endDate: String? = null,
+	val startDate: String? = null,
+	)
 
 @Keep
 data class Data3(
