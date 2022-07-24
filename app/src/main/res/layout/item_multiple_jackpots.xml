@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvJackpotItem"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_92sdp"
             android:layout_margin="12dp"

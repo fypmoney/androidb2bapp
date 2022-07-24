@@ -1,10 +1,12 @@
 package com.fypmoney.view.arcadegames.ui
 
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.BR
@@ -25,7 +27,6 @@ class MultipleJackpotsFragment :
 
     private var mViewBinding: FragmentMultipleJackpotsBinding? = null
     private val multipleJackpotVM by viewModels<FragmentMultipleJackpotVM> { defaultViewModelProviderFactory }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -52,7 +53,9 @@ class MultipleJackpotsFragment :
     }
 
     private fun setUpRecentRecyclerView() {
-        val multipleJackpotAdapter = MultipleJackpotAdapter()
+        val multipleJackpotAdapter = MultipleJackpotAdapter(onJackpotClick = {
+            findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${it}"))
+        })
 
         with(mViewBinding!!.recyclerMultipleJackpots) {
             adapter = multipleJackpotAdapter

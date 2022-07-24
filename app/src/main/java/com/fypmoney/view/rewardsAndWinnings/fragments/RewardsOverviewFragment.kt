@@ -196,7 +196,7 @@ class RewardsOverviewFragment :
         }
 
         mViewBinding?.chipTicketsView?.setOnClickListener {
-            findNavController().navigate(R.id.navigation_leaderboard)
+            findNavController().navigate(R.id.navigation_multiple_jackpots)
         }
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("arcade_is_played")
@@ -312,6 +312,10 @@ class RewardsOverviewFragment :
                     else if (redirectionResources == AppConstants.GIFT_VOUCHER)  {
                         findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
                     }
+
+                    else if (redirectionResources == AppConstants.ARCADE) {
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${redirectionResource}"))
+                    }
                     else {
                         redirectionResources.let { it1 ->
                             Utility.deeplinkRedirection(
@@ -374,6 +378,9 @@ class RewardsOverviewFragment :
 
             }
 
+            AppConstants.LEADERBOARD -> {
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${redirectionResource}"))
+            }
             AppConstants.GIFT_VOUCHER -> {
                 findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
             }

@@ -242,6 +242,7 @@ object AppConstants {
     const val StoreofferScreen = "Storeofferscreen"
     const val StoreshopsScreen = "Storeshopsscreen"
     const val GIFT_VOUCHER = "GIFT_VOUCHER"
+    const val LEADERBOARD = "LEADERBOARD"
 
     /* Home : "HomeView, 0"
 

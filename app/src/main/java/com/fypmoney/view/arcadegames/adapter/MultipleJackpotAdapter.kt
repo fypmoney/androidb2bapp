@@ -15,21 +15,19 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.model.JackpotDetailsItem
 
-class MultipleJackpotAdapter :
-    ListAdapter<MultipleJackpotUiModel, MultipleJackpotAdapter.MultipleJackpotVH>(
-        MultipleJackpotDiffUtils
-    ) {
+class MultipleJackpotAdapter(val onJackpotClick:(productCode:String)->Unit) : ListAdapter<MultipleJackpotUiModel, MultipleJackpotAdapter.MultipleJackpotVH>(MultipleJackpotDiffUtils) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MultipleJackpotVH {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemMultipleJackpotsBinding.inflate(inflater, parent, false)
-        return MultipleJackpotVH(binding)
+        return MultipleJackpotVH(binding,onJackpotClick)
     }
 
     override fun onBindViewHolder(holder: MultipleJackpotVH, position: Int) {
         holder.bind(getItem(position))
     }
 
-    class MultipleJackpotVH(private val binding: ItemMultipleJackpotsBinding) :
+    class MultipleJackpotVH(private val binding: ItemMultipleJackpotsBinding,
+                            val onJackpotClick:(productCode:String)->Unit) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: MultipleJackpotUiModel) {
@@ -42,11 +40,13 @@ class MultipleJackpotAdapter :
 
             if (item.isExpired == "NO") {
                 binding.tvExpiredProduct.visibility = View.GONE
-//                binding.ivMultipleJackpotExpiredPath.visibility = View.GONE
             } else {
                 binding.tvExpiredProduct.visibility = View.VISIBLE
-//                binding.ivMultipleJackpotExpiredPath.visibility = View.VISIBLE
             }
+            binding.cvJackpotItem.setOnClickListener {
+                onJackpotClick(item.productCode)
+            }
+
 
         }
 
@@ -60,7 +60,8 @@ data class MultipleJackpotUiModel(
     var jackpotName: String,
     var jackpotDuration: String,
     var jackpotTicketValue: Int?,
-    var isExpired: String
+    var isExpired: String,
+    var productCode:String
 ) {
     companion object {
         fun fromMultipleJackpotItem(
@@ -91,7 +92,8 @@ data class MultipleJackpotUiModel(
                 jackpotName = jackpotName,
                 jackpotDuration = jackpotDuration,
                 jackpotTicketValue = jackpotTicketValue,
-                isExpired = isExpired
+                isExpired = isExpired,
+                productCode = jackpotDetailsItem.productCode!!
             )
         }
     }

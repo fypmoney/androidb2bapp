@@ -2,7 +2,6 @@ package com.fypmoney.view.arcadegames.viewmodel
 
 import android.app.Application
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.fypmoney.base.BaseViewModel
@@ -24,7 +23,6 @@ class FragmentLeaderBoardVM(application: Application) : BaseViewModel(applicatio
         get() = _state
 
     private val _state = MutableLiveData<LeaderBoardState>()
-
 
     fun callLeaderBoardApi(code: String?) {
         _state.postValue(LeaderBoardState.Loading)

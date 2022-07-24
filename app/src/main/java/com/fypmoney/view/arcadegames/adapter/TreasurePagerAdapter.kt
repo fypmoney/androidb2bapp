@@ -40,7 +40,6 @@ class TreasurePagerAdapter(var imagesList: MutableList<TreasureAdapterUiModel>, 
 
     val runnable = Runnable {
         imagesList.addAll(newTreasureImages)
-        newTreasureImages.clear()
          notifyDataSetChanged()
     }
 

@@ -267,6 +267,9 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                     AppConstants.GIFT_VOUCHER -> {
                         findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${it.redirectionResource}"))
                     }
+                    AppConstants.LEADERBOARD -> {
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${it.redirectionResource}"))
+                    }
                     "ARCADE"-> {
                         val type = it.rfu1?.let { rfu->it.redirectionResource?.let { it1 -> checkTheArcadeType(arcadeType = rfu, productCode = it1) } }
                         when(type){

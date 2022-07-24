@@ -10,6 +10,7 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.fypmoney.BR
@@ -35,11 +36,12 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
     private var mViewBinding: FragmentLeaderBoardBinding? = null
     private lateinit var rulesList: List<String>
 
+    private val navArgs:LeaderBoardFragmentArgs by navArgs()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         mViewBinding = getViewDataBinding()
-
+        leaderBoardFragmentVM.productCode = navArgs.productCode
         setBackgrounds()
 
         setToolbarAndTitle(
@@ -50,7 +52,7 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
             backArrowTint = Color.WHITE
         )
 
-        leaderBoardFragmentVM.callLeaderBoardApi("SPIN_WHEEL_1000")
+        leaderBoardFragmentVM.callLeaderBoardApi(leaderBoardFragmentVM.productCode)
 
         setUpObserver(leaderBoardFragmentVM)
 
@@ -106,9 +108,8 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
                 mViewBinding!!.tvSpinWheelTicketsCount.text =
                     it.leaderBoardData?.currUserGoldenTickets.toString()
 
-                Glide.with(mViewBinding!!.ivCountDownBanner.context)
-                    .load(it.leaderBoardData?.rewardProduct?.successResourceId)
-                    .into(mViewBinding!!.ivCountDownBanner)
+                Utility.setImageUsingGlideWithShimmerPlaceholder(imageView = mViewBinding!!.ivCountDownBanner, url = it.leaderBoardData?.rewardProduct?.successResourceId)
+
 
                 Glide.with(mViewBinding!!.ivWinningReward.context)
                     .load(it.leaderBoardData?.rewardProduct?.detailResource)
@@ -158,22 +159,33 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
                 val formatter = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.getDefault())
                 formatter.timeZone = TimeZone.getTimeZone("Asia/Kolkata")
                 val date = Date()
-                val dateEndDate = formatter.parse(
-                    Utility.parseDateTime(
-                        it.leaderBoardData?.rewardProduct?.endDate,
-                        AppConstants.SERVER_DATE_TIME_FORMAT1,
-                        AppConstants.CHANGED_DATE_TIME_FORMAT10
-                    )
-                )
+                it.leaderBoardData?.rewardProduct?.endDate?.let {
+                    if(it.isNotEmpty()){
+                        val dateEndDate = formatter.parse(
+                            Utility.parseDateTime(
+                                it,
+                                AppConstants.SERVER_DATE_TIME_FORMAT1,
+                                AppConstants.CHANGED_DATE_TIME_FORMAT10
+                            )
+                        )
+                        val diff: Long = dateEndDate!!.time - date.time
+                        starTimer(diff)
+                    }else{
+                        mViewBinding!!.tvTimerDays.text = "00"
+                        mViewBinding!!.tvTimerHours.text = "00"
+                        mViewBinding!!.tvTimerMinutes.text = "00"
+                        mViewBinding!!.tvTimerSeconds.text = "00"
+                    }
 
-                val diff: Long = dateEndDate!!.time - date.time
+                }?: kotlin.run {
+                    mViewBinding!!.tvTimerDays.text = "00"
+                    mViewBinding!!.tvTimerHours.text = "00"
+                    mViewBinding!!.tvTimerMinutes.text = "00"
+                    mViewBinding!!.tvTimerSeconds.text = "00"
+                }
 
-                starTimer(diff)
 
-                mViewBinding!!.tvTimerDays.text = "00"
-                mViewBinding!!.tvTimerHours.text = "00"
-                mViewBinding!!.tvTimerMinutes.text = "00"
-                mViewBinding!!.tvTimerSeconds.text = "00"
+
 
                 rulesList =
                     it.leaderBoardData!!.rewardProduct?.additionalInfo.toString().split(",")

@@ -553,7 +553,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
 
             AppConstants.FEED_TYPE_BLOG -> {
                 homeFragmentVM.callFetchFeedsApi(redirectionResource)
-
             }
 
             AppConstants.EXT_WEBVIEW -> {
@@ -579,6 +578,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             }
             AppConstants.GIFT_VOUCHER -> {
                 findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
+            }
+
+            AppConstants.LEADERBOARD -> {
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${redirectionResource}"))
             }
             "ARCADE"-> {
                 val type = sectionContentItem.rfu1?.let { rfu->sectionContentItem.redirectionResource?.let { it1 -> checkTheArcadeType(arcadeType = rfu, productCode = it1) } }

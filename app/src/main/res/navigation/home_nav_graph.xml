@@ -824,6 +824,18 @@
         android:id="@+id/navigation_leaderboard"
         android:name="com.fypmoney.view.arcadegames.ui.LeaderBoardFragment"
         android:label="LeaderBoard Fragment"
-        tools:layout="@layout/fragment_leader_board" />
+        tools:layout="@layout/fragment_leader_board">
+
+        <argument
+            android:name="productCode"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+
+        <deepLink
+            android:id="@+id/explore_to_laeder_board"
+            android:autoVerify="true"
+            app:uri="https://www.fypmoney.in/leaderboard/{productCode}" />
+    </fragment>
 
 </navigation>
