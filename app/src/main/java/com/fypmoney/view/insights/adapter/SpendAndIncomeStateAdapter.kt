@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.fypmoney.view.insights.view.SpendsAndIncomeFragment
 
-class SpendAndIncomeStateAdapter(fragment:Fragment):FragmentStateAdapter(fragment) {
+class SpendAndIncomeStateAdapter(fragment:Fragment,val pageType:Array<String>):FragmentStateAdapter(fragment) {
     /**
      * Returns the total number of items in the data set held by the adapter.
      *
@@ -26,6 +26,6 @@ class SpendAndIncomeStateAdapter(fragment:Fragment):FragmentStateAdapter(fragmen
      * @see ViewPager2.setOffscreenPageLimit
      */
     override fun createFragment(position: Int): Fragment {
-        return SpendsAndIncomeFragment.newInstance()
+        return SpendsAndIncomeFragment.newInstance(pageType[position])
     }
 }

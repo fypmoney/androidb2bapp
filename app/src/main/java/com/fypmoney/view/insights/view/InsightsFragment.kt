@@ -50,10 +50,11 @@ class InsightsFragment : BaseFragment<FragmentInsightsBinding,InsightsFragmentVM
         super.onViewCreated(view, savedInstanceState)
         binding = getViewDataBinding()
         setUpViews()
+        setupObserver()
     }
 
     private fun setUpViews() {
-        binding.pager.adapter  = SpendAndIncomeStateAdapter(this)
+        binding.pager.adapter  = SpendAndIncomeStateAdapter(this, arrayOf(getString(R.string.spends),getString(R.string.income)))
         TabLayoutMediator(binding.tabLayoutSpendsIncome, binding.pager) { tab, position ->
             when(position){
                 0->{
@@ -68,4 +69,26 @@ class InsightsFragment : BaseFragment<FragmentInsightsBinding,InsightsFragmentVM
         }.attach()
     }
 
+
+    private fun setupObserver() {
+        insightsFragmentVM.state.observe(viewLifecycleOwner) {
+            handelState(it)
+        }
+    }
+
+    private fun handelState(it: InsightsFragmentVM.InsightsState?) {
+        when(it){
+            InsightsFragmentVM.InsightsState.Error -> {
+
+            }
+            InsightsFragmentVM.InsightsState.Loading -> {
+
+            }
+            is InsightsFragmentVM.InsightsState.Success -> {
+                binding.tvTotalSpendsValue.text = String.format(getString(R.string.amount_with_currency),it.data.spent?.total)
+                binding.tvTotalIncomeValue.text = String.format(getString(R.string.amount_with_currency),it.data.income?.total)
+            }
+            null -> TODO()
+        }
+    }
 }

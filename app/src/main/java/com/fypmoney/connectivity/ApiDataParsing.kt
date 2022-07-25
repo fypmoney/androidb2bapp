@@ -222,7 +222,10 @@ class ApiDataParsing {
                 }
                 ApiConstant.API_RECENT_RECHARGE -> {
                     getObject(response, RecentRechargesResponse::class.java)
-                }
+                }/*
+                ApiConstant.API_30_DAYS_TRANSACTION -> {
+                    getObject(response, SpendAndIncomeNetworkResponse::class.java)
+                }*/
                 ApiConstant.PAYU_PRODUCTION_URL -> {
                     when (command) {
                         PayuConstants.VALIDATE_VPA -> {

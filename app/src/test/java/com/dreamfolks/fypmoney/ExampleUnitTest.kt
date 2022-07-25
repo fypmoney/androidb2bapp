@@ -1,5 +1,6 @@
 package com.dreamfolks.fypmoney
 
+import com.fypmoney.util.AppConstants.CHANGED_DATE_TIME_FORMAT5
 import com.fypmoney.util.Utility
 import com.fypmoney.util.roundOfAmountToCeli
 import org.junit.Assert.assertEquals
@@ -28,5 +29,17 @@ class ExampleUnitTest {
         val cardNumber = "4456970100000228"
         val formattedCardNumber = Utility.stringToCardNumber(cardNumber)
         assertEquals(StringBuilder("4456 9701 0000 0228"), formattedCardNumber)
+    }
+
+    @Test
+    fun getStartAndEndDate(){
+        val dates = Utility.getStartDateAndEndDateOfMonth(0,CHANGED_DATE_TIME_FORMAT5)
+        System.out.println("pairs ${dates.first} ${dates.second}")
+    }
+
+    @Test
+    fun getLast12Months(){
+        val list = Utility.getLast12Months("Apr")
+        println("final list ${list}")
     }
 }

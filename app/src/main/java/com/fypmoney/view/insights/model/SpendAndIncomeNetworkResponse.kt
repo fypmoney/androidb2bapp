@@ -20,7 +20,7 @@ data class SpendAndIncomeNetworkResponse(
 data class Spent(
 
 	@field:SerializedName("total")
-	val total: Double? = null,
+	val total: String? = null,
 
 	@field:SerializedName("category")
 	val category: List<CategoryItem?>? = null
@@ -52,7 +52,7 @@ data class CategoryItem(
 data class AllTxnItem(
 
 	@field:SerializedName("amount")
-	val amount: Int? = null,
+	val amount: String? = null,
 
 	@field:SerializedName("paymentMode")
 	val paymentMode: String? = null,
@@ -95,7 +95,7 @@ data class AllTxnItem(
 data class Income(
 
 	@field:SerializedName("total")
-	val total: Double? = null,
+	val total: String? = null,
 
 	@field:SerializedName("category")
 	val category: List<CategoryItem?>? = null
