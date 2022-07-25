@@ -249,6 +249,7 @@ class SpinWheelHistoryView :
                 Log.d("Spin", "Ex: $e")
             }
 
+
         }
 
         viewModel.redeemCallBackResponse.observe(this) {

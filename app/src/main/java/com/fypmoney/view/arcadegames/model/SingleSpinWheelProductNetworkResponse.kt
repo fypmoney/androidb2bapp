@@ -96,6 +96,7 @@ data class SpinWheelItem(
 	val rewardTypeOnFailure: String? = null
 )
 
+@Keep
 data class Data(
 	@field:SerializedName("SPIN_WHEEL")
 	val spinWheel: List<SpinWheelItem?>? = null

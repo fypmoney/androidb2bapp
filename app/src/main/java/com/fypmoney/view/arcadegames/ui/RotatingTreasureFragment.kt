@@ -15,6 +15,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -498,9 +499,11 @@ class RotatingTreasureFragment :
 
                 mViewBinding!!.rotatingTreasureContainer.visibility = View.VISIBLE
 
-                Glide.with(this).load(it.treasureBoxItem.successResourceId).into(
-                    mViewBinding!!.ivBannerRotatingTreasures
-                )
+//                Glide.with(this).load(it.treasureBoxItem.successResourceId).into(
+//                    mViewBinding!!.ivBannerRotatingTreasures
+//                )
+
+                Utility.setImageUsingGlideWithShimmerPlaceholder(this.context, it.treasureBoxItem.successResourceId, mViewBinding!!.ivBannerRotatingTreasures)
 
                 rotatingTreasureVM.noOfJackpotTickets = it.treasureBoxItem.noOfJackpotTicket
 

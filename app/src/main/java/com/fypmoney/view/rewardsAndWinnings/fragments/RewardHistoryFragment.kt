@@ -70,8 +70,9 @@ class RewardHistoryFragment :
         )
         mViewBinding?.showHistory?.setOnClickListener {
 
-            val intent = Intent(requireContext(), RewardsHistoryView::class.java)
-            requireContext().startActivity(intent)
+            findNavController().navigate(R.id.navigation_more_history)
+//            val intent = Intent(requireContext(), RewardsHistoryView::class.java)
+//            requireContext().startActivity(intent)
         }
 
         setRecyclerView(mViewBinding)
