@@ -18,6 +18,7 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.FragmentLeaderBoardBinding
 import com.fypmoney.extension.toGone
+import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
@@ -92,10 +93,10 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
             }
 
             FragmentLeaderBoardVM.LeaderBoardState.Loading -> {
-
+                mViewBinding!!.leaderBoardMainNSV.toInvisible()
             }
             is FragmentLeaderBoardVM.LeaderBoardState.Success -> {
-
+                mViewBinding!!.leaderBoardMainNSV.toVisible()
                 mViewBinding!!.tvLeaderboard1.text =
                     it.leaderBoardData?.leaderBoardList?.get(0)?.userName
                 mViewBinding!!.tvLeaderboard2.text =
@@ -179,8 +180,12 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
                     it.leaderBoardData!!.rewardProduct?.additionalInfo.toString().split(",")
                         .map { it1 -> it1.trim() }
 
-                val percent: Int =
+                val percent: Int = if (it.leaderBoardData?.currUserGoldenTickets!! == 0) {
+                    0
+                } else {
                     (it.leaderBoardData?.leaderBoardList?.get(0)?.goldenTickets!! / it.leaderBoardData?.currUserGoldenTickets!!)
+                }
+
                 mViewBinding!!.seekBarLeaderBoard.progress = percent
                 mViewBinding!!.seekBarLeaderBoardThumb.progress = percent
 
@@ -241,6 +246,15 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
 
             setBackgroundDrawable(
                 it.chipTicketView,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                58f,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                0f,
+                false
+            )
+
+            setBackgroundDrawable(
+                it.chipInfoView,
                 ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
                 58f,
                 ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
