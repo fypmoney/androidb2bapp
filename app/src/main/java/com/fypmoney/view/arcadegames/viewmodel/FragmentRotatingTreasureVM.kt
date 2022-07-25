@@ -12,10 +12,7 @@ import com.fypmoney.connectivity.ErrorResponseInfo
 import com.fypmoney.connectivity.network.NetworkUtil
 import com.fypmoney.connectivity.retrofit.ApiRequest
 import com.fypmoney.connectivity.retrofit.WebApiCaller
-import com.fypmoney.model.BaseRequest
-import com.fypmoney.model.CoinsBurnedResponse
-import com.fypmoney.model.RewardPointsSummaryResponse
-import com.fypmoney.model.SpinWheelRotateResponseDetails
+import com.fypmoney.model.*
 import com.fypmoney.util.livedata.LiveEvent
 import com.fypmoney.view.arcadegames.model.MultipleJackpotNetworkResponse
 import com.fypmoney.view.arcadegames.model.TreasureBoxItem
@@ -31,6 +28,10 @@ import kotlinx.coroutines.launch
 class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(application) {
 
     lateinit var productCode:String
+
+    //To store productId on redirection
+    lateinit var productId: String
+
     var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
     var totalRewardsResponse: MutableLiveData<totalRewardsResponse> = MutableLiveData()
     var totalJackpotAmount: MutableLiveData<TotalJackpotResponse> = MutableLiveData()
@@ -41,6 +42,9 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
     var spinWheelResponseList = MutableLiveData<SpinWheelRotateResponseDetails>()
     var noOfJackpotTickets: Int? = null
     var positionSectionId: MutableLiveData<Int> = MutableLiveData()
+
+    //live data to store product data on treasure history view
+    var redeemCallBackResponse = MutableLiveData<aRewardProductResponse>()
 
     //live data to store errors of all apis
     var error: MutableLiveData<ErrorResponseInfo> = MutableLiveData()
@@ -149,6 +153,23 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
         )
     }
 
+    /*
+    * This method is used to call get rewards api
+    */
+
+    fun callProductsDetailsApi(orderId: String?) {
+        WebApiCaller.getInstance().request(
+            ApiRequest(
+                ApiConstant.REWARD_PRODUCT_DETAILS,
+                NetworkUtil.endURL(ApiConstant.REWARD_PRODUCT_DETAILS + orderId),
+                ApiUrl.GET,
+                BaseRequest(),
+                this, isProgressBar = false
+            )
+        )
+
+    }
+
     sealed class RotatingTreasureState {
         object Loading : RotatingTreasureState()
         data class Success(var treasureBoxItem: TreasureBoxItem) : RotatingTreasureState()
@@ -226,6 +247,15 @@ class FragmentRotatingTreasureVM(application: Application) : BaseViewModel(appli
                 if (responseData is MultipleJackpotNetworkResponse) {
                     _stateRotTicket.value = RotatingTicket.Success(responseData.data?.totalTickets)
                 }
+            }
+
+            ApiConstant.REWARD_PRODUCT_DETAILS -> {
+                val json = JsonParser.parseString(responseData.toString()) as JsonObject
+                val spinDetails = Gson().fromJson(
+                    json.get("data"),
+                    aRewardProductResponse::class.java
+                )
+                redeemCallBackResponse.value = spinDetails
             }
 
         }

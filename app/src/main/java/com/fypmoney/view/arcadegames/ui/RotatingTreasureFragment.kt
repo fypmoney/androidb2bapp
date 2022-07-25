@@ -15,7 +15,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
@@ -49,8 +48,8 @@ class RotatingTreasureFragment :
     private val compositePageTransformer = CompositePageTransformer()
     private var dialogInsufficientMynts: Dialog? = null
     private var spinWheelRotateResponseDetails: SpinWheelRotateResponseDetails? = null
-    var listOfBoxes = arrayListOf<TreasureAdapterUiModel>()
-    var adapter:TreasurePagerAdapter? = null
+    private var listOfBoxes = arrayListOf<TreasureAdapterUiModel>()
+    var adapter: TreasurePagerAdapter? = null
     private val navArgs by navArgs<RotatingTreasureFragmentArgs>()
     private var myntsDisplay: Int? = null
 
@@ -79,6 +78,7 @@ class RotatingTreasureFragment :
         )
 
         rotatingTreasureVM.productCode = navArgs.productCode
+        rotatingTreasureVM.productId = navArgs.orderId.toString()
 
         rotatingTreasureVM.callSingleProductApi(rotatingTreasureVM.productCode)
 
@@ -102,7 +102,30 @@ class RotatingTreasureFragment :
         setBackgrounds()
 
         mViewBinding!!.ivBtnPlayAnimation.setOnClickListener {
-            if (rotatingTreasureVM.remainFrequency.value!! > 0) {
+            if (rotatingTreasureVM.productId == null || rotatingTreasureVM.productId == "null") {
+                if (rotatingTreasureVM.remainFrequency.value!! > 0) {
+                    mViewBinding!!.lottieRotatingVP.toInvisible()
+
+                    mViewBinding!!.containerRotatingTreasureRewards.visibility = View.INVISIBLE
+                    mViewBinding!!.containerRotatingDefaultBanner.visibility = View.VISIBLE
+
+                    mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
+                    mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
+
+                    setViewVisibility(
+                        mViewBinding!!.ivRotatingMyntsAnim,
+                        mViewBinding!!.ivRotatingMynts
+                    )
+
+                    vibrateDevice()
+
+                    rotatingTreasureVM.callMyntsBurnApi(rotatingTreasureVM.productCode)
+                } else {
+                    val limitOverBottomSheet = LimitOverBottomSheet()
+                    limitOverBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+                    limitOverBottomSheet.show(childFragmentManager, "LimitOverBottomSheet")
+                }
+            } else {
                 mViewBinding!!.lottieRotatingVP.toInvisible()
 
                 mViewBinding!!.containerRotatingTreasureRewards.visibility = View.INVISIBLE
@@ -113,11 +136,8 @@ class RotatingTreasureFragment :
 
                 vibrateDevice()
 
-                rotatingTreasureVM.callMyntsBurnApi(rotatingTreasureVM.productCode)
-            } else {
-                val limitOverBottomSheet = LimitOverBottomSheet()
-                limitOverBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-                limitOverBottomSheet.show(childFragmentManager, "LimitOverBottomSheet")
+                rotatingTreasureVM.callProductsDetailsApi(rotatingTreasureVM.productId)
+
             }
 
         }
@@ -147,23 +167,9 @@ class RotatingTreasureFragment :
                 if (adapter!!.imagesList[position].isSelected) {
                     sliderHandler.removeCallbacks(sliderRunnable)
                     mViewBinding!!.lottieRotatingVP.setAnimation(adapter!!.imagesList[position].boxImage)
-
-                    /*when(rotatingTreasureVM.sectionId){
-                        1->{
-                            mViewBinding!!.lottieRotatingVP.setAnimation(R.raw.silver_box_open)
-                        }
-                        2->{
-                            mViewBinding!!.lottieRotatingVP.setAnimation(R.raw.wood_box_open)
-                        }
-                        3->{
-                            mViewBinding!!.lottieRotatingVP.setAnimation(R.raw.gold_box_open)
-                        }
-                    }*/
-
                     mViewBinding!!.lottieRotatingVP.toVisible()
                     mViewBinding!!.lottieRotatingVP.playAnimation()
                     setTreasureViewPagerData(spinWheelRotateResponseDetails)
-
                 } else {
                     if (position != 0) {
                         sliderHandler.removeCallbacks(sliderRunnable)
@@ -215,7 +221,7 @@ class RotatingTreasureFragment :
         listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
         listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
 
-        adapter =  TreasurePagerAdapter(listOfBoxes, mViewBinding?.vpTreasuryBox!!)
+        adapter = TreasurePagerAdapter(listOfBoxes, mViewBinding?.vpTreasuryBox!!)
         mViewBinding?.vpTreasuryBox?.adapter = adapter
         mViewBinding?.vpTreasuryBox?.isUserInputEnabled = false
         mViewBinding?.vpTreasuryBox?.clipToPadding = false
@@ -330,22 +336,38 @@ class RotatingTreasureFragment :
         }
 
         viewModel.spinWheelResponseList.observe(viewLifecycleOwner) {
-                spinWheelRotateResponseDetails = it
-            val listOfBoxes = arrayListOf<TreasureAdapterUiModel>()/*
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))*/
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, rotatingTreasureVM.sectionId==1))
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, rotatingTreasureVM.sectionId==2))
-            listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, rotatingTreasureVM.sectionId==3))
+            spinWheelRotateResponseDetails = it
+            val listOfBoxes = arrayListOf<TreasureAdapterUiModel>()
+            listOfBoxes.add(
+                TreasureAdapterUiModel(
+                    R.raw.silver_box_open,
+                    rotatingTreasureVM.sectionId == 1
+                )
+            )
+            listOfBoxes.add(
+                TreasureAdapterUiModel(
+                    R.raw.wood_box_open,
+                    rotatingTreasureVM.sectionId == 2
+                )
+            )
+            listOfBoxes.add(
+                TreasureAdapterUiModel(
+                    R.raw.gold_box_open,
+                    rotatingTreasureVM.sectionId == 3
+                )
+            )
             listOfBoxes.add(TreasureAdapterUiModel(R.raw.silver_box_open, false))
             listOfBoxes.add(TreasureAdapterUiModel(R.raw.wood_box_open, false))
             listOfBoxes.add(TreasureAdapterUiModel(R.raw.gold_box_open, false))
             adapter!!.newTreasureImages = listOfBoxes
             sliderHandler.postDelayed(sliderRunnable, 200)
+
+        }
+
+        viewModel.redeemCallBackResponse.observe(viewLifecycleOwner) {
+            rotatingTreasureVM.sectionId = it.sectionId
+
+            rotatingTreasureVM.callSpinWheelApi(rotatingTreasureVM.productId)
 
         }
 
@@ -365,8 +387,8 @@ class RotatingTreasureFragment :
         spinWheelRotateResponseDetails: SpinWheelRotateResponseDetails
     ) {
 
-        mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
-        mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
+//        mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
+//        mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
 
         mViewBinding!!.containerRotatingTreasureRewards.visibility = View.VISIBLE
         mViewBinding!!.containerRotatingDefaultBanner.visibility = View.INVISIBLE
@@ -437,6 +459,18 @@ class RotatingTreasureFragment :
             )
         }
 
+        if (rotatingTreasureVM.productId == null || rotatingTreasureVM.productId == "null") {
+            mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
+            mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
+        }else{
+            Handler(Looper.getMainLooper()).postDelayed({
+                rotatingTreasureVM.isArcadeIsPlayed = true
+                mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
+                mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
+                findNavController().navigateUp()
+            }, 1500)
+        }
+
     }
 
     private fun setViewVisibility(visibleImage: ImageView, invisibleImage: ImageView) {
@@ -503,7 +537,11 @@ class RotatingTreasureFragment :
 //                    mViewBinding!!.ivBannerRotatingTreasures
 //                )
 
-                Utility.setImageUsingGlideWithShimmerPlaceholder(this.context, it.treasureBoxItem.successResourceId, mViewBinding!!.ivBannerRotatingTreasures)
+                Utility.setImageUsingGlideWithShimmerPlaceholderWithoutNull(
+                    this.context,
+                    it.treasureBoxItem.successResourceId,
+                    mViewBinding!!.ivBannerRotatingTreasures
+                )
 
                 rotatingTreasureVM.noOfJackpotTickets = it.treasureBoxItem.noOfJackpotTicket
 
@@ -594,8 +632,8 @@ class RotatingTreasureFragment :
 
         Handler(Looper.getMainLooper()).postDelayed({
             setViewVisibility(mViewBinding!!.ivRotatingMynts, mViewBinding!!.ivRotatingMyntsAnim)
-            setViewVisibility(mViewBinding!!.ivRotatingTicket, mViewBinding!!.ivRotatingTicketAnim)
-            setViewVisibility(mViewBinding!!.ivRotatingCash, mViewBinding!!.ivRotatingCashAnim)
+//            setViewVisibility(mViewBinding!!.ivRotatingTicket, mViewBinding!!.ivRotatingTicketAnim)
+//            setViewVisibility(mViewBinding!!.ivRotatingCash, mViewBinding!!.ivRotatingCashAnim)
         }, 1500)
     }
 

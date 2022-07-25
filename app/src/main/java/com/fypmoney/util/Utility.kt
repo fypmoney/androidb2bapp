@@ -1004,6 +1004,22 @@ object Utility {
     }
 
     /*
+     * This method is used to set image using glide without null image condition
+     * */
+    fun setImageUsingGlideWithShimmerPlaceholderWithoutNull(
+        context: Context? = PockketApplication.instance,
+        url: String?,
+        imageView: ImageView
+    ) {
+        url.let {
+            if (!url.isNullOrEmpty()) {
+                Glide.with(context!!).load(url).placeholder(shimmerDrawable())
+                    .into(imageView)
+            }
+        }
+    }
+
+    /*
      * This method is used to set image using glide
      * */
     fun setImageUsingGlideWithShimmerPlaceholder(

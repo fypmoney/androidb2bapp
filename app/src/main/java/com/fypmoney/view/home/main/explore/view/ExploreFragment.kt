@@ -277,10 +277,10 @@ class ExploreFragment : BaseFragment<FragmentExploreBinding, ExploreFragmentVM>(
                             is ArcadeType.SCRATCH_CARD -> TODO()
                             is ArcadeType.SLOT -> TODO()
                             is ArcadeType.SPIN_WHEEL -> {
-                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}"))
+                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}/${null}"))
                             }
                             is ArcadeType.TREASURE_BOX -> {
-                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}"))
+                                findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}/${null}"))
                             }
                             null -> TODO()
                         }

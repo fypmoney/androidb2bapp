@@ -62,8 +62,8 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
         mViewBinding!!.seekBarLeaderBoard.setOnTouchListener { _, _ -> true }
         mViewBinding!!.seekBarLeaderBoardThumb.setOnTouchListener { _, _ -> true }
 
-        mViewBinding!!.seekBarLeaderBoard.setPadding(0, 0, 0, 0)
-        mViewBinding!!.seekBarLeaderBoardThumb.setPadding(0, 0, 0, 0)
+        mViewBinding!!.seekBarLeaderBoard.setPadding(32, 0, 32, 0)
+        mViewBinding!!.seekBarLeaderBoardThumb.setPadding(36, 0, 36, 0)
 
         mViewBinding!!.chipInfoView.setOnClickListener {
             showLeaderBoardRules(rulesList)
@@ -109,8 +109,7 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
                 mViewBinding!!.tvSpinWheelTicketsCount.text =
                     it.leaderBoardData?.currUserGoldenTickets.toString()
 
-                Utility.setImageUsingGlideWithShimmerPlaceholder(imageView = mViewBinding!!.ivCountDownBanner, url = it.leaderBoardData?.rewardProduct?.successResourceId)
-
+                Utility.setImageUsingGlideWithShimmerPlaceholderWithoutNull(imageView = mViewBinding!!.ivCountDownBanner, url = it.leaderBoardData?.rewardProduct?.successResourceId)
 
                 Glide.with(mViewBinding!!.ivWinningReward.context)
                     .load(it.leaderBoardData?.rewardProduct?.detailResource)
@@ -184,8 +183,6 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
                     mViewBinding!!.tvTimerMinutes.text = "00"
                     mViewBinding!!.tvTimerSeconds.text = "00"
                 }
-
-
 
 
                 rulesList =

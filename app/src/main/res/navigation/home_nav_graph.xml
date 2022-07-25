@@ -802,12 +802,12 @@
             android:name="orderId"
             android:defaultValue=""
             app:argType="string"
-            app:nullable="false" />
+            app:nullable="true" />
 
         <deepLink
             android:id="@+id/arcade_spin_wheel_deep_link"
             android:autoVerify="true"
-            app:uri="https://www.fypmoney.in/spinwheel/{productCode}" />
+            app:uri="https://www.fypmoney.in/spinwheel/{productCode}/{orderId}" />
 
     </fragment>
 
@@ -832,12 +832,12 @@
             android:name="orderId"
             android:defaultValue=""
             app:argType="string"
-            app:nullable="false" />
+            app:nullable="true" />
 
         <deepLink
             android:id="@+id/arcade_rotating_treasure_deep_link"
             android:autoVerify="true"
-            app:uri="https://www.fypmoney.in/rotating_treasure/{productCode}" />
+            app:uri="https://www.fypmoney.in/rotating_treasure/{productCode}/{orderId}" />
     </fragment>
 
     <fragment

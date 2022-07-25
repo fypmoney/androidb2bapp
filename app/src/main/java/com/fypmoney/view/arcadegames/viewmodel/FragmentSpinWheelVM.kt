@@ -29,6 +29,9 @@ class FragmentSpinWheelVM(application: Application) : BaseViewModel(application)
     //To store explore redirection code
     lateinit var productCode: String
 
+    //To store productId on redirection
+    lateinit var productId: String
+
     //live data variable to store mynts data
     var rewardSummaryStatus: MutableLiveData<RewardPointsSummaryResponse> = MutableLiveData()
 

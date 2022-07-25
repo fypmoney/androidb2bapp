@@ -61,6 +61,8 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
             backArrowTint = Color.WHITE
         )
         spinWheelFragmentVM.productCode = navArgs.productCode
+        spinWheelFragmentVM.productId = navArgs.orderId.toString()
+
         spinWheelFragmentVM.callSingleProductApi(spinWheelFragmentVM.productCode)
 
         setBackgrounds()
@@ -72,26 +74,39 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
         Glide.with(this).load(R.drawable.cash_g).into(mViewBinding!!.ivSpinWheelCashAnim)
 
         mViewBinding!!.ivBtnPlayAnimation.setOnClickListener {
-            if (spinWheelFragmentVM.remainFrequency.value!! > 0) {
+
+            if (spinWheelFragmentVM.productId == null || spinWheelFragmentVM.productId == "null") {
+                if (spinWheelFragmentVM.remainFrequency.value!! > 0) {
+                    mViewBinding!!.containerSpinWheelRewards.visibility = View.INVISIBLE
+                    mViewBinding!!.containerSpinWheelDefaultBanner.visibility = View.VISIBLE
+
+                    mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
+                    mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
+
+                    vibrateDevice()
+
+                    setViewVisibility(
+                        mViewBinding!!.ivSpinWheelMyntsAnim,
+                        mViewBinding!!.ivSpinWheelMynts
+                    )
+
+                    spinWheelFragmentVM.callMyntsBurnApi(spinWheelFragmentVM.productCode)
+
+                } else {
+                    val limitOverBottomSheet = LimitOverBottomSheet()
+                    limitOverBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+                    limitOverBottomSheet.show(childFragmentManager, "LimitOverBottomSheet")
+                }
+            } else {
+
                 mViewBinding!!.containerSpinWheelRewards.visibility = View.INVISIBLE
                 mViewBinding!!.containerSpinWheelDefaultBanner.visibility = View.VISIBLE
 
                 mViewBinding!!.ivBtnPlayAnimation.visibility = View.INVISIBLE
                 mViewBinding!!.progressBtnPlay.visibility = View.VISIBLE
 
-                vibrateDevice()
+                spinWheelFragmentVM.callProductsDetailsApi(spinWheelFragmentVM.productId)
 
-                setViewVisibility(
-                    mViewBinding!!.ivSpinWheelMyntsAnim,
-                    mViewBinding!!.ivSpinWheelMynts
-                )
-
-                spinWheelFragmentVM.callMyntsBurnApi(spinWheelFragmentVM.productCode)
-
-            } else {
-                val limitOverBottomSheet = LimitOverBottomSheet()
-                limitOverBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
-                limitOverBottomSheet.show(childFragmentManager, "LimitOverBottomSheet")
             }
 
         }
@@ -152,9 +167,6 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
     }
 
     private fun setSelectionOnCard(spinWheelRotateResponseDetails: SpinWheelRotateResponseDetails) {
-
-        mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
-        mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
 
         mViewBinding!!.containerSpinWheelRewards.visibility = View.VISIBLE
         mViewBinding!!.containerSpinWheelDefaultBanner.visibility = View.INVISIBLE
@@ -224,6 +236,18 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
                 Utility.convertToRs(spinWheelRotateResponseDetails.sectionValue)?.toInt()!!,
                 "Cash"
             )
+        }
+
+        if (spinWheelFragmentVM.productId == null || spinWheelFragmentVM.productId == "null") {
+            mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
+            mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
+        } else {
+            Handler(Looper.getMainLooper()).postDelayed({
+                mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
+                mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
+                spinWheelFragmentVM.isArcadeIsPlayed = true
+                findNavController().navigateUp()
+            }, 1500)
         }
     }
 
@@ -351,6 +375,18 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
             }
 
         }
+
+        viewModel.redeemCallBackResponse.observe(viewLifecycleOwner) {
+            sectionId = it.sectionId
+
+            vibrateDevice()
+
+            arcadeSounds("SPINNER")
+
+            luckySpinWheelView.startLuckyWheelWithTargetIndex(sectionId!! - 1)
+            spinWheelFragmentVM.callSpinWheelApi(spinWheelFragmentVM.productId)
+
+        }
     }
 
     private fun arcadeSounds(from: String) {
@@ -399,7 +435,11 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
                 Glide.with(this).load(R.drawable.play_button)
                     .into(mViewBinding!!.ivBtnPlayAnimation)
 
-                Utility.setImageUsingGlideWithShimmerPlaceholder(this.context, it.spinWheelData.successResourceId, mViewBinding!!.ivBannerSpinWheel)
+                Utility.setImageUsingGlideWithShimmerPlaceholderWithoutNull(
+                    this.context,
+                    it.spinWheelData.successResourceId,
+                    mViewBinding!!.ivBannerSpinWheel
+                )
 //                Glide.with(this).load(it.spinWheelData.successResourceId)
 //                    .into(mViewBinding!!.ivBannerSpinWheel)
 

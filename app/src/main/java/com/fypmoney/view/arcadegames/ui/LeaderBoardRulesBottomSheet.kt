@@ -57,7 +57,7 @@ class LeaderBoardRulesBottomSheet(private val rulesList: List<String>) :
         bottomSheetBehavior = BottomSheetBehavior.from(view.parent as View)
 
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-
+        bottomSheetBehavior.skipCollapsed = true
         val layout: CoordinatorLayout? = bottomSheetDialog.findViewById(R.id.bottomSheetLayout)
         if (layout != null) {
             layout.minimumHeight = Resources.getSystem().displayMetrics.heightPixels

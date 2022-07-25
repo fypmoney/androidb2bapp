@@ -2,6 +2,7 @@ package com.fypmoney.view.rewardsAndWinnings.fragments
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
@@ -94,23 +95,28 @@ class RewardHistoryFragment :
             override fun onItemClicked(historyItem: HistoryItem) {
                 when (historyItem.productType) {
                     AppConstants.PRODUCT_SPIN -> {
-                        val intent = Intent(requireContext(), SpinWheelHistoryView::class.java)
-//                        SpinWheelViewDark.sectionArrayList.clear()
-                        intent.putExtra(
-                            AppConstants.ORDER_NUM,
-                            historyItem.orderNumber.toString()
-                        )
-                        intent.putExtra(
-                            AppConstants.PRODUCT_CODE,
-                            historyItem.productCode
-                        )
-                        intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
-                        startActivity(intent)
-//                        val orderNo = historyItem.orderNumber.toString()
-//                        findNavController().navigate(R.id.navigation_spin_wheel)
+//                        val intent = Intent(requireContext(), SpinWheelHistoryView::class.java)
+////                        SpinWheelViewDark.sectionArrayList.clear()
+//                        intent.putExtra(
+//                            AppConstants.ORDER_NUM,
+//                            historyItem.orderNumber.toString()
+//                        )
+//                        intent.putExtra(
+//                            AppConstants.PRODUCT_CODE,
+//                            historyItem.productCode
+//                        )
+//                        intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
+//                        startActivity(intent)
+                        val productId = historyItem.orderNumber.toString()
+                        val productCode = historyItem.productCode.toString()
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${productCode}/${productId}"))
+//                        findNavController().navigate(R.id.navigation_spin_wheel, productCode, productId)
                     }
                     AppConstants.PRODUCT_TREASURE_BOX -> {
-                        findNavController().navigate(R.id.navigation_rotating_treasure)
+//                        findNavController().navigate(R.id.navigation_rotating_treasure)
+                        val productId = historyItem.orderNumber.toString()
+                        val productCode = historyItem.productCode.toString()
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${productCode}/${productId}"))
                     }
                     else -> {
                         mViewModel?.callProductsDetailsApi(historyItem.orderNumber)
