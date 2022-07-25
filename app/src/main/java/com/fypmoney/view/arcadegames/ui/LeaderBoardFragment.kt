@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.math.roundToInt
 
 class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLeaderBoardVM>() {
 
@@ -37,7 +38,7 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
     private var mViewBinding: FragmentLeaderBoardBinding? = null
     private lateinit var rulesList: List<String>
 
-    private val navArgs:LeaderBoardFragmentArgs by navArgs()
+    private val navArgs: LeaderBoardFragmentArgs by navArgs()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -109,7 +110,10 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
                 mViewBinding!!.tvSpinWheelTicketsCount.text =
                     it.leaderBoardData?.currUserGoldenTickets.toString()
 
-                Utility.setImageUsingGlideWithShimmerPlaceholderWithoutNull(imageView = mViewBinding!!.ivCountDownBanner, url = it.leaderBoardData?.rewardProduct?.successResourceId)
+                Utility.setImageUsingGlideWithShimmerPlaceholderWithoutNull(
+                    imageView = mViewBinding!!.ivCountDownBanner,
+                    url = it.leaderBoardData?.rewardProduct?.successResourceId
+                )
 
                 Glide.with(mViewBinding!!.ivWinningReward.context)
                     .load(it.leaderBoardData?.rewardProduct?.detailResource)
@@ -160,7 +164,7 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
                 formatter.timeZone = TimeZone.getTimeZone("Asia/Kolkata")
                 val date = Date()
                 it.leaderBoardData?.rewardProduct?.endDate?.let {
-                    if(it.isNotEmpty()){
+                    if (it.isNotEmpty()) {
                         val dateEndDate = formatter.parse(
                             Utility.parseDateTime(
                                 it,
@@ -170,14 +174,14 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
                         )
                         val diff: Long = dateEndDate!!.time - date.time
                         starTimer(diff)
-                    }else{
+                    } else {
                         mViewBinding!!.tvTimerDays.text = "00"
                         mViewBinding!!.tvTimerHours.text = "00"
                         mViewBinding!!.tvTimerMinutes.text = "00"
                         mViewBinding!!.tvTimerSeconds.text = "00"
                     }
 
-                }?: kotlin.run {
+                } ?: kotlin.run {
                     mViewBinding!!.tvTimerDays.text = "00"
                     mViewBinding!!.tvTimerHours.text = "00"
                     mViewBinding!!.tvTimerMinutes.text = "00"
@@ -189,14 +193,16 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
                     it.leaderBoardData!!.rewardProduct?.additionalInfo.toString().split(",")
                         .map { it1 -> it1.trim() }
 
-                val percent: Int = if (it.leaderBoardData?.currUserGoldenTickets!! == 0) {
-                    0
-                } else {
-                    (it.leaderBoardData?.leaderBoardList?.get(0)?.goldenTickets!! / it.leaderBoardData?.currUserGoldenTickets!!)
-                }
-
-                mViewBinding!!.seekBarLeaderBoard.progress = percent
-                mViewBinding!!.seekBarLeaderBoardThumb.progress = percent
+                val percent: Double =
+                    if (it.leaderBoardData?.leaderBoardList?.get(0)?.goldenTickets!! == 0) {
+                        0.0
+                    } else {
+                        ((it.leaderBoardData?.currUserGoldenTickets!!.toDouble() / it.leaderBoardData?.leaderBoardList?.get(
+                            0
+                        )?.goldenTickets!!) * 100)
+                    }
+                mViewBinding!!.seekBarLeaderBoard.progress = percent.roundToInt()
+                mViewBinding!!.seekBarLeaderBoardThumb.progress = percent.roundToInt()
 
             }
         }

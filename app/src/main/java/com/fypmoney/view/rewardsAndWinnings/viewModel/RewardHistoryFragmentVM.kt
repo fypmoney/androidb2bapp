@@ -59,12 +59,12 @@ class RewardHistoryFragmentVM(application: Application) : BaseViewModel(applicat
     }
 
 
-    init {
-
-        callRewardHistory()
-        callRewardSummary()
-
-    }
+//    init {
+//
+//        callRewardHistory()
+//        callRewardSummary()
+//
+//    }
 
 
     fun onRefresh() {

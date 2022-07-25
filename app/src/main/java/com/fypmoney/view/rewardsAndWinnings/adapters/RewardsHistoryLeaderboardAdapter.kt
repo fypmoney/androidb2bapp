@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.fypmoney.R
+import com.fypmoney.extension.toVisible
 import com.fypmoney.model.HistoryItem
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
@@ -90,8 +91,9 @@ class RewardsHistoryLeaderboardAdapter(
                 holder.amount.text = items[position].noOfJackpotTicket.toString()
                 holder.note.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ticket))
                 holder.amount.text = items[position].noOfJackpotTicket.toString()
-
-
+                holder.amount.toVisible()
+                holder.won_tv.toVisible()
+                holder.note.toVisible()
 //            holder.amount.visibility = View.INVISIBLE
                 holder.status_tv.visibility = View.INVISIBLE
 
