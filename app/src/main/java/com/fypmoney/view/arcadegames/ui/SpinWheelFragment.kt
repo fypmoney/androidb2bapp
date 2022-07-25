@@ -465,8 +465,9 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
                 Glide.with(this).load(R.drawable.play_button)
                     .into(mViewBinding!!.ivBtnPlayAnimation)
 
-                Glide.with(this).load(it.spinWheelData.successResourceId)
-                    .into(mViewBinding!!.ivBannerSpinWheel)
+                Utility.setImageUsingGlideWithShimmerPlaceholder(this.context, it.spinWheelData.successResourceId, mViewBinding!!.ivBannerSpinWheel)
+//                Glide.with(this).load(it.spinWheelData.successResourceId)
+//                    .into(mViewBinding!!.ivBannerSpinWheel)
 
                 mViewBinding!!.tvSpinWheelBurnMyntsCount.text = it.spinWheelData.appDisplayText
 

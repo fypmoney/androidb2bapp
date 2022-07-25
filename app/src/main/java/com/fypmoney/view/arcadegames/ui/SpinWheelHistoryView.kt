@@ -266,10 +266,6 @@ class SpinWheelHistoryView :
 
             viewModel.enableSpin.value = false
 
-            //Update mynts and ticket values on finish
-//            setResult(23)
-//            finish()
-
         }
 
         viewModel.redeemCallBackResponse.observe(this) {

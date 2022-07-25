@@ -40,7 +40,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
 
         <action
             android:id="@+id/action_home_to_global_alert"
@@ -690,7 +690,7 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ"
             app:popUpTo="@id/navigation_home"
-            app:popUpToInclusive="false"/>
+            app:popUpToInclusive="false" />
 
     </fragment>
 
@@ -706,23 +706,25 @@
             app:argType="com.fypmoney.view.giftcard.model.PurchasedGiftCardStatusUiModel"
             app:nullable="true" />
 
-        <action android:id="@+id/navigation_purchased_gift_card_payment_success_to_home"
+        <action
+            android:id="@+id/navigation_purchased_gift_card_payment_success_to_home"
             app:destination="@id/navigation_home"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/navigation_home"/>
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
 
-        <action android:id="@+id/action_purchased_gift_card_payment_success_to_gift_card_details"
+        <action
+            android:id="@+id/action_purchased_gift_card_payment_success_to_gift_card_details"
             app:destination="@id/navigation_gift_card_details"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/navigation_home"/>
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
 
     </fragment>
 
@@ -738,23 +740,25 @@
             app:argType="string"
             app:nullable="true" />
 
-        <action android:id="@+id/action_gift_card_details_to_rewards"
+        <action
+            android:id="@+id/action_gift_card_details_to_rewards"
             app:destination="@id/navigation_rewards"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/navigation_home"/>
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
 
-        <action android:id="@+id/action_gift_card_details_to_home"
+        <action
+            android:id="@+id/action_gift_card_details_to_home"
             app:destination="@id/navigation_home"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/navigation_home"/>
+            app:popUpTo="@id/navigation_home"
+            app:popUpToInclusive="true" />
 
     </fragment>
 
@@ -765,12 +769,13 @@
         tools:layout="@layout/fragment_purchased_gift_cards_history">
 
 
-        <action android:id="@+id/action_gift_card_history_to_gift_card_details"
+        <action
+            android:id="@+id/action_gift_card_history_to_gift_card_details"
             app:destination="@id/navigation_gift_card_details"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_righ"/>
+            app:popExitAnim="@anim/slide_out_righ" />
 
     </fragment>
 
@@ -792,11 +797,19 @@
             app:argType="string"
             app:nullable="false" />
 
+        <argument
+            android:name="orderId"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+
         <deepLink
             android:id="@+id/arcade_spin_wheel_deep_link"
             android:autoVerify="true"
             app:uri="https://www.fypmoney.in/spinwheel/{productCode}" />
+
     </fragment>
+
     <fragment
         android:id="@+id/navigation_multiple_jackpots"
         android:name="com.fypmoney.view.arcadegames.ui.MultipleJackpotsFragment"
@@ -814,15 +827,28 @@
             app:argType="string"
             app:nullable="false" />
 
+        <argument
+            android:name="orderId"
+            android:defaultValue=""
+            app:argType="string"
+            app:nullable="false" />
+
         <deepLink
             android:id="@+id/arcade_rotating_treasure_deep_link"
             android:autoVerify="true"
             app:uri="https://www.fypmoney.in/rotating_treasure/{productCode}" />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_leaderboard"
         android:name="com.fypmoney.view.arcadegames.ui.LeaderBoardFragment"
         android:label="LeaderBoard Fragment"
         tools:layout="@layout/fragment_leader_board" />
+
+    <fragment
+        android:id="@+id/navigation_more_history"
+        android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsMoreHistoryFragment"
+        android:label="Reward More History"
+        tools:layout="@layout/fragment_rewards_more_history" />
 
 </navigation>

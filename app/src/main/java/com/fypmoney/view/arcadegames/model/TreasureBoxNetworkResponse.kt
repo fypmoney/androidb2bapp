@@ -81,7 +81,7 @@ data class TreasureBoxItem(
     val additionalInfo: String? = null,
 
     @field:SerializedName("successResourceId")
-    val successResourceId: Any? = null,
+    val successResourceId: String? = null,
 
     @field:SerializedName("sectionList")
     val sectionList: List<SectionListItem1?>? = null,
@@ -93,6 +93,7 @@ data class TreasureBoxItem(
     val productType: String? = null
 )
 
+@Keep
 data class Data1(
     @field:SerializedName("TREASURE_BOX")
     val treasureBox: List<TreasureBoxItem?>? = null

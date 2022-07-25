@@ -1,7 +1,6 @@
 package com.fypmoney.view.arcadegames.ui
 
 import android.animation.ValueAnimator
-import android.content.Intent
 import android.graphics.Color
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -15,7 +14,6 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -30,12 +28,10 @@ import com.fypmoney.databinding.FragmentRotatingTreasureBinding
 import com.fypmoney.extension.toInvisible
 import com.fypmoney.extension.toVisible
 import com.fypmoney.util.Utility
-import com.fypmoney.view.arcadegames.TreasureEvent
 import com.fypmoney.view.arcadegames.adapter.TreasureAdapterUiModel
 import com.fypmoney.view.arcadegames.adapter.TreasurePagerAdapter
 import com.fypmoney.view.arcadegames.model.SectionListItem1
 import com.fypmoney.view.arcadegames.viewmodel.FragmentRotatingTreasureVM
-import com.fypmoney.view.rewardsAndWinnings.CashBackWonHistoryActivity
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.math.abs
 
@@ -55,9 +51,6 @@ class RotatingTreasureFragment :
 
     private var currentRotateCount = 0
     private val navArgs by navArgs<RotatingTreasureFragmentArgs>()
-
-    //    private var orderId: String? = null
-    lateinit var eventEnd: TreasureEvent
 
     companion object {
         var sectionArrayList: List<SectionListItem1> = ArrayList()
@@ -475,9 +468,11 @@ class RotatingTreasureFragment :
 
                 mViewBinding!!.rotatingTreasureContainer.visibility = View.VISIBLE
 
-                Glide.with(this).load(it.treasureBoxItem.successResourceId).into(
-                    mViewBinding!!.ivBannerRotatingTreasures
-                )
+//                Glide.with(this).load(it.treasureBoxItem.successResourceId).into(
+//                    mViewBinding!!.ivBannerRotatingTreasures
+//                )
+
+                Utility.setImageUsingGlideWithShimmerPlaceholder(this.context, it.treasureBoxItem.successResourceId, mViewBinding!!.ivBannerRotatingTreasures)
 
                 rotatingTreasureVM.noOfJackpotTickets = it.treasureBoxItem.noOfJackpotTicket
 
