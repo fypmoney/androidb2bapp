@@ -1,6 +1,5 @@
 package com.fypmoney.view.rewardsAndWinnings.fragments
 
-import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -14,15 +13,11 @@ import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentRewardHistoryBinding
 import com.fypmoney.model.HistoryItem
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.arcadegames.ui.SpinWheelHistoryView
-import com.fypmoney.view.rewardsAndWinnings.activity.RewardsHistoryView
-import com.fypmoney.view.rewardsAndWinnings.activity.SpinWheelViewDark
 import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryLeaderboardAdapter
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardHistoryFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.math.roundToInt
-
 
 class RewardHistoryFragment :
     BaseFragment<FragmentRewardHistoryBinding, RewardHistoryFragmentVM>() {
@@ -70,10 +65,7 @@ class RewardHistoryFragment :
             backArrowTint = Color.WHITE
         )
         mViewBinding?.showHistory?.setOnClickListener {
-
             findNavController().navigate(R.id.navigation_more_history)
-//            val intent = Intent(requireContext(), RewardsHistoryView::class.java)
-//            requireContext().startActivity(intent)
         }
 
         setRecyclerView(mViewBinding)
@@ -95,25 +87,11 @@ class RewardHistoryFragment :
             override fun onItemClicked(historyItem: HistoryItem) {
                 when (historyItem.productType) {
                     AppConstants.PRODUCT_SPIN -> {
-//                        val intent = Intent(requireContext(), SpinWheelHistoryView::class.java)
-////                        SpinWheelViewDark.sectionArrayList.clear()
-//                        intent.putExtra(
-//                            AppConstants.ORDER_NUM,
-//                            historyItem.orderNumber.toString()
-//                        )
-//                        intent.putExtra(
-//                            AppConstants.PRODUCT_CODE,
-//                            historyItem.productCode
-//                        )
-//                        intent.putExtra(AppConstants.NO_GOLDED_CARD, historyItem.noOfJackpotTicket)
-//                        startActivity(intent)
                         val productId = historyItem.orderNumber.toString()
                         val productCode = historyItem.productCode.toString()
                         findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${productCode}/${productId}"))
-//                        findNavController().navigate(R.id.navigation_spin_wheel, productCode, productId)
                     }
                     AppConstants.PRODUCT_TREASURE_BOX -> {
-//                        findNavController().navigate(R.id.navigation_rotating_treasure)
                         val productId = historyItem.orderNumber.toString()
                         val productCode = historyItem.productCode.toString()
                         findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${productCode}/${productId}"))
@@ -133,58 +111,58 @@ class RewardHistoryFragment :
     private fun setObserver(sharedViewModel: RewardHistoryFragmentVM) {
 
         sharedViewModel.rewardHistoryList.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { list ->
-                itemsArrayList.clear()
-                list.forEach { item ->
-                    item.history?.forEach { historyItem ->
-                        if (historyItem != null) {
-                            itemsArrayList.add(historyItem)
-                        }
+            viewLifecycleOwner
+        ) { list ->
+            itemsArrayList.clear()
+            list.forEach { item ->
+                item.history?.forEach { historyItem ->
+                    if (historyItem != null) {
+                        itemsArrayList.add(historyItem)
                     }
-
                 }
-                if (list.size > 0) {
 
-                    mViewBinding?.showHistory?.visibility = View.VISIBLE
-                    mViewBinding?.emptyScreen?.visibility = View.GONE
-                } else {
-                    mViewBinding?.showHistory?.visibility = View.GONE
-                    mViewBinding?.emptyScreen?.visibility = View.VISIBLE
+            }
+            if (list.size > 0) {
 
-
-                }
-                rewardAdapterHistory?.notifyDataSetChanged()
+                mViewBinding?.showHistory?.visibility = View.VISIBLE
+                mViewBinding?.emptyScreen?.visibility = View.GONE
+            } else {
+                mViewBinding?.showHistory?.visibility = View.GONE
+                mViewBinding?.emptyScreen?.visibility = View.VISIBLE
 
 
-            })
+            }
+            rewardAdapterHistory?.notifyDataSetChanged()
+
+
+        }
         sharedViewModel.rewardSummaryStatus.observe(
-            viewLifecycleOwner,
-            androidx.lifecycle.Observer { list ->
-                mViewBinding?.contraint?.visibility = View.VISIBLE
-                mViewBinding?.shimmerLayout?.visibility = View.GONE
-                mViewBinding?.shimmerLayout?.stopShimmer()
+            viewLifecycleOwner
+        ) { list ->
+            mViewBinding?.contraint?.visibility = View.VISIBLE
+            mViewBinding?.shimmerLayout?.visibility = View.GONE
+            mViewBinding?.shimmerLayout?.stopShimmer()
 
-                if (list.totalPoints != null) {
-                    mViewBinding?.totalearned?.text = String.format("%.0f", list.totalPoints)
-                }
-                if (list.burntPoints != null) {
-                    mViewBinding?.burnedPoints?.text = String.format("%.0f", list.burntPoints)
-                }
+            if (list.totalPoints != null) {
+                mViewBinding?.totalearned?.text = String.format("%.0f", list.totalPoints)
+            }
+            if (list.burntPoints != null) {
+                mViewBinding?.burnedPoints?.text = String.format("%.0f", list.burntPoints)
+            }
 
-                if ((list.burntPoints != 0.0f) and (list.totalPoints != 0.0f)) {
-                    mViewBinding?.statsProgressbar?.progress =
-                        ((list.burntPoints?.div(list.totalPoints!!))!! * 100).roundToInt()
-                } else {
-                    mViewBinding?.statsProgressbar?.progress = 0
-                }
+            if ((list.burntPoints != 0.0f) and (list.totalPoints != 0.0f)) {
+                mViewBinding?.statsProgressbar?.progress =
+                    ((list.burntPoints?.div(list.totalPoints!!))!! * 100).roundToInt()
+            } else {
+                mViewBinding?.statsProgressbar?.progress = 0
+            }
 
-                if (list.remainingPoints != null) {
-                    mViewBinding?.pointsLeft?.text = String.format("%.0f", list.remainingPoints)
-                }
+            if (list.remainingPoints != null) {
+                mViewBinding?.pointsLeft?.text = String.format("%.0f", list.remainingPoints)
+            }
 
 
-            })
+        }
     }
 
 

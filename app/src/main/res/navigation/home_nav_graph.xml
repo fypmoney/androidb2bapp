@@ -81,6 +81,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_righ" />
+        <action
+            android:id="@+id/action_navigation_rewards_to_navigation_multiple_jackpots"
+            app:destination="@id/navigation_multiple_jackpots"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
 
     </fragment>
 
@@ -117,16 +124,13 @@
         android:label="@string/reward_history"
         tools:layout="@layout/fragment_reward_history">
 
-        <!--        <argument-->
-        <!--            android:name="sectionId"-->
-        <!--            app:argType="integer"-->
-        <!--            android:defaultValue="@null" />-->
-
-        <!--        <argument-->
-        <!--            android:name="orderNo"-->
-        <!--            app:argType="integer"-->
-        <!--            android:defaultValue="@null" />-->
-
+        <action
+            android:id="@+id/action_navigation_rewards_history_to_navigation_more_history"
+            app:destination="@id/navigation_more_history"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
     </fragment>
 
     <fragment
@@ -815,7 +819,11 @@
         android:id="@+id/navigation_multiple_jackpots"
         android:name="com.fypmoney.view.arcadegames.ui.MultipleJackpotsFragment"
         android:label="Multiple Jackpots Screen"
-        tools:layout="@layout/fragment_multiple_jackpots" />
+        tools:layout="@layout/fragment_multiple_jackpots"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_righ"/>
     <fragment
         android:id="@+id/navigation_rotating_treasure"
         android:name="com.fypmoney.view.arcadegames.ui.RotatingTreasureFragment"
@@ -844,7 +852,11 @@
         android:id="@+id/navigation_leaderboard"
         android:name="com.fypmoney.view.arcadegames.ui.LeaderBoardFragment"
         android:label="LeaderBoard Fragment"
-        tools:layout="@layout/fragment_leader_board">
+        tools:layout="@layout/fragment_leader_board"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_righ">
 
         <argument
             android:name="productCode"
@@ -862,6 +874,21 @@
         android:id="@+id/navigation_more_history"
         android:name="com.fypmoney.view.rewardsAndWinnings.fragments.RewardsMoreHistoryFragment"
         android:label="Reward More History"
-        tools:layout="@layout/fragment_rewards_more_history" />
+        tools:layout="@layout/fragment_rewards_more_history">
+        <action
+            android:id="@+id/action_navigation_more_history_to_navigation_spin_wheel"
+            app:destination="@id/navigation_spin_wheel"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
+        <action
+            android:id="@+id/action_navigation_more_history_to_navigation_rotating_treasure"
+            app:destination="@id/navigation_rotating_treasure"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
+    </fragment>
 
 </navigation>
