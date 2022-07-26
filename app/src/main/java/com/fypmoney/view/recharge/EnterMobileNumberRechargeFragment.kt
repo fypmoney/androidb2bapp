@@ -172,7 +172,7 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
             EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeState.Loading -> {
                 binding.shimmerLayout.toVisible()
             }
-            null -> TODO()
+            null -> {}
             is EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeState.HLRSuccess -> {
                 binding.continueBtn.setBusy(false)
             }
@@ -221,7 +221,7 @@ class EnterMobileNumberRechargeFragment : BaseFragment<EnterMobileNumberRecharge
             EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeEvent.PickContactFromContactBookEvent -> {
                 selectContactFromPhoneContactList(PICK_CONTACT)
             }
-            null -> TODO()
+            null -> {}
             is EnterMobileNumberRechargeFragmentVM.EnterMobileNumberRechargeEvent.ShowNextScreenWithHlrInfo -> {
                 showEnterMobileNumberInfoRechargeScreen(it.hlrInfo?.circle,it.hlrInfo?.operator)
             }

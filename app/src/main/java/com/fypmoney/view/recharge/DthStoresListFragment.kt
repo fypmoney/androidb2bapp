@@ -198,7 +198,7 @@ class DthStoresListFragment : BaseFragment<DthStoresListFragmentBinding, DthStor
                     DthStoresListFragmentDirections.actionDthRechargeScreen( storeDataModel = it.model)
                 directions.let { it1 -> findNavController().navigate(it1) }
             }
-            null -> TODO()
+            null -> {}
         }
     }
 
@@ -220,7 +220,7 @@ class DthStoresListFragment : BaseFragment<DthStoresListFragmentBinding, DthStor
             DthStoresListFragmentVM.DthStoresListState.Loading -> {
                 binding.shimmerLayout.toVisible()
             }
-            null -> TODO()
+            null -> {}
             DthStoresListFragmentVM.DthStoresListState.RecentRechargeLoading -> {
                 binding.shimmerLayoutRecent.toVisible()
                 binding.noRecentRechargesTv.toGone()

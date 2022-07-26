@@ -586,16 +586,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeFragmentVM>(),
             "ARCADE"-> {
                 val type = sectionContentItem.rfu1?.let { rfu->sectionContentItem.redirectionResource?.let { it1 -> checkTheArcadeType(arcadeType = rfu, productCode = it1) } }
                 when(type){
-                    ArcadeType.NOTypeFound -> TODO()
-                    is ArcadeType.SCRATCH_CARD -> TODO()
-                    is ArcadeType.SLOT -> TODO()
+                    ArcadeType.NOTypeFound -> {}
+                    is ArcadeType.SCRATCH_CARD -> {}
+                    is ArcadeType.SLOT -> {}
                     is ArcadeType.SPIN_WHEEL -> {
+                        //TODO create deeplink with query parameter
                         findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}/${null}"))
                     }
                     is ArcadeType.TREASURE_BOX -> {
+                        //TODO create deeplink with query parameter
                         findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}/${null}"))
                     }
-                    null -> TODO()
+                    null -> {}
                 }
             }
         }

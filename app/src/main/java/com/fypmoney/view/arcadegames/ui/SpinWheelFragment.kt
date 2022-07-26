@@ -560,30 +560,43 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
         finalCount: Int,
         via: String
     ) {
+        if (via == "Cash") {
+            val startPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
+            val endPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
+            if (startPosition == null || endPosition == null) {
+                textScore.text = String.format(
+                    getString(R.string.arcade_cash_value),
+                    (textScore.text.toString().split("₹")[1]).toDouble() + finalCount
+                )
+            } else {
+                val animator: ValueAnimator =
+                    ValueAnimator.ofInt(
+                        (textScore.text.toString().split("₹")[1]).toInt(),
+                        (textScore.text.toString().split("₹")[1]).toInt() + (finalCount)
+                    )
 
-        val animator: ValueAnimator = if (via == "Cash") {
-            ValueAnimator.ofInt(
-                Integer.parseInt(textScore.text.toString().split("₹")[1]),
-                Integer.parseInt(textScore.text.toString().split("₹")[1]) + (finalCount)
-            )
+                animator.duration = animDuration
+                animator.addUpdateListener { animation ->
+                    textScore.text = String.format(
+                        getString(R.string.arcade_cash_value),
+                        animation.animatedValue.toString()
+                    )
+                }
+                animator.start()
+            }
         } else {
-            ValueAnimator.ofInt(
+            val animator: ValueAnimator = ValueAnimator.ofInt(
                 Integer.parseInt(textScore.text.toString()),
                 Integer.parseInt(textScore.text.toString()) + (finalCount)
             )
+
+            animator.duration = animDuration
+            animator.addUpdateListener { animation ->
+                textScore.text = animation.animatedValue.toString()
+            }
+            animator.start()
         }
 
-        animator.duration = animDuration
-        animator.addUpdateListener { animation ->
-            if (via == "Cash")
-                textScore.text = String.format(
-                    getString(R.string.arcade_cash_value),
-                    animation.animatedValue.toString()
-                )
-            else
-                textScore.text = animation.animatedValue.toString()
-        }
-        animator.start()
 
         Handler(Looper.getMainLooper()).postDelayed({
             setViewVisibility(mViewBinding!!.ivSpinWheelMynts, mViewBinding!!.ivSpinWheelMyntsAnim)
@@ -600,7 +613,6 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
         super.onDestroyView()
         mp?.stop()
     }
-
 
 }
 

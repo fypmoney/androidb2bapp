@@ -15,8 +15,6 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
 import kotlinx.android.synthetic.main.reward_history_item_leaderboard.view.*
 
-import java.util.*
-
 
 class RewardsHistoryLeaderboardAdapter(
     val items: ArrayList<HistoryItem>,
@@ -77,13 +75,7 @@ class RewardsHistoryLeaderboardAdapter(
                     }
                     holder.note.visibility = View.INVISIBLE
                     holder.amount.visibility = View.INVISIBLE
-//                    holder.amount.text = "₹0"
-//                    holder.amount.visibility=View.INVISIBLE
-//                    holder.amount.visibility = View.VISIBLE
-
-//                    holder.amount.visibility = View.INVISIBLE
                     holder.status_tv.visibility = View.INVISIBLE
-
 
                 }
 
@@ -134,10 +126,6 @@ class RewardsHistoryLeaderboardAdapter(
                 items[position].cashbackWonForProduct == null || items[position].cashbackWonForProduct!! == 0
             ) {
                 holder.won_tv.text = "WON"
-//                if (items[position].fullfillmentDescription.toString() != null)
-//                    holder.won_tv.text = items[position].fullfillmentDescription.toString()
-//                else
-//                    holder.won_tv.text = "WON"
                 holder.won_tv.visibility = View.VISIBLE
             }
             else

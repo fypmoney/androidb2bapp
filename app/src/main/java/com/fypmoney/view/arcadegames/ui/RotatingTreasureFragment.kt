@@ -643,29 +643,67 @@ class RotatingTreasureFragment :
         finalCount: Int,
         via: String
     ) {
-        val animator: ValueAnimator = if (via == "Cash") {
-            ValueAnimator.ofInt(
-                Integer.parseInt(textScore.text.toString().split("₹")[1]),
-                Integer.parseInt(textScore.text.toString().split("₹")[1]) + (finalCount)
-            )
+
+        if (via == "Cash") {
+            val startPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
+            val endPosition = (textScore.text.toString().split("₹")[1]).toIntOrNull()
+            if (startPosition == null || endPosition == null) {
+                textScore.text = String.format(
+                    getString(R.string.arcade_cash_value),
+                    (textScore.text.toString().split("₹")[1]).toDouble() + finalCount
+                )
+            } else {
+                val animator: ValueAnimator =
+                    ValueAnimator.ofInt(
+                        (textScore.text.toString().split("₹")[1]).toInt(),
+                        (textScore.text.toString().split("₹")[1]).toInt() + (finalCount)
+                    )
+
+                animator.duration = animDuration
+                animator.addUpdateListener { animation ->
+                    textScore.text = String.format(
+                        getString(R.string.arcade_cash_value),
+                        animation.animatedValue.toString()
+                    )
+                }
+                animator.start()
+            }
         } else {
-            ValueAnimator.ofInt(
+            val animator: ValueAnimator = ValueAnimator.ofInt(
                 Integer.parseInt(textScore.text.toString()),
                 Integer.parseInt(textScore.text.toString()) + (finalCount)
             )
-        }
-        animator.duration = animDuration
 
-        animator.addUpdateListener { animation ->
-            if (via == "Cash")
-                textScore.text = String.format(
-                    getString(R.string.arcade_cash_value),
-                    animation.animatedValue.toString()
-                )
-            else
+            animator.duration = animDuration
+            animator.addUpdateListener { animation ->
                 textScore.text = animation.animatedValue.toString()
+            }
+            animator.start()
         }
-        animator.start()
+
+//        val animator: ValueAnimator = if (via == "Cash") {
+//            ValueAnimator.ofInt(
+//                Integer.parseInt(textScore.text.toString().split("₹")[1]),
+//                Integer.parseInt(textScore.text.toString().split("₹")[1]) + (finalCount)
+//            )
+//        } else {
+//            ValueAnimator.ofInt(
+//                Integer.parseInt(textScore.text.toString()),
+//                Integer.parseInt(textScore.text.toString()) + (finalCount)
+//            )
+//        }
+//        animator.duration = animDuration
+//
+//        animator.addUpdateListener { animation ->
+//            if (via == "Cash")
+//                textScore.text = String.format(
+//                    getString(R.string.arcade_cash_value),
+//                    animation.animatedValue.toString()
+//                )
+//            else
+//                textScore.text = animation.animatedValue.toString()
+//        }
+//        animator.start()
 
         Handler(Looper.getMainLooper()).postDelayed({
             setViewVisibility(mViewBinding!!.ivRotatingMynts, mViewBinding!!.ivRotatingMyntsAnim)

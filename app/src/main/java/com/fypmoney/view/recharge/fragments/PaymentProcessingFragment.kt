@@ -118,7 +118,7 @@ class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,
                 findNavController().navigate(directions)
 
             }
-            null -> TODO()
+            null -> {}
             is PaymentProcessingFragmentVM.PaymentProcessingEvent.ShowPostPaidSuccessScreen -> {
                 val directions  = PaymentProcessingFragmentDirections.navigateFromPaymentProcessingToPaymentSuccess(
                     successResponse = PayAndRechargeResponse(isPurchased = it.billPaymentResponse.isPurchased),
@@ -148,7 +148,7 @@ class PaymentProcessingFragment : BaseFragment<PaymentProcessingFragmentBinding,
             is PaymentProcessingFragmentVM.PaymentProcessingState.Success -> {
 
             }
-            null -> TODO()
+            null -> {}
             is PaymentProcessingFragmentVM.PaymentProcessingState.BillSuccess -> {
 
             }

@@ -101,7 +101,7 @@ class RechargePlansFragment : BaseFragment<RechargePlansFragmentBinding, Recharg
                 mViewBinding.shimmerPlans.toGone()
                 initializeTabs(mViewBinding.tabLayout, it.plans)
             }
-            null -> TODO()
+            null -> {}
         }
     }
 

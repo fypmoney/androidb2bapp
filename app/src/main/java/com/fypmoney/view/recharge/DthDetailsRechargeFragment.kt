@@ -159,7 +159,7 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
                     payAndRechargeRequest = it.payAndRechargeRequest, rechargeType = DTH)
                 findNavController().navigate(directions)
             }
-            null -> TODO()
+            null -> {}
             DthDetailsRechargeFragmentVM.DthDetailsEvent.OnPayClickEvent -> {
                 askForDevicePassword()
             }
@@ -199,7 +199,7 @@ class DthDetailsRechargeFragment : BaseFragment<DthDetailsRechargeFragmentBindin
                 binding.shimmerLayout.toGone()
                 setRecyclerView(binding, it.explore)
             }
-            null -> TODO()
+            null -> {}
             is DthDetailsRechargeFragmentVM.DthDetailsState.BalanceSuccess -> {
                 binding.continueBtn.setBusy(false)
             }

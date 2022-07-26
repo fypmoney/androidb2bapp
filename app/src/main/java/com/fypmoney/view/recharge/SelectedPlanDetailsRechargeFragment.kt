@@ -122,7 +122,7 @@ class SelectedPlanDetailsRechargeFragment: BaseFragment<SelectedPlanDetailsRecha
                 binding.continueBtn.setBusy(false)
 
             }
-            null -> TODO()
+            null -> {}
         }
     }
 
@@ -141,7 +141,7 @@ class SelectedPlanDetailsRechargeFragment: BaseFragment<SelectedPlanDetailsRecha
                 )
                 findNavController().navigate(direction)
             }
-            null -> TODO()
+            null -> {}
             SelectedPlanDetailsRechargeFragmentVM.SelectedPlanDetailsRechargeEvent.OnPayClickEvent -> {
                 askForDevicePassword()
             }
