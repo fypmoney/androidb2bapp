@@ -34,24 +34,21 @@ import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.adapter.TreasureAdapterUiModel
 import com.fypmoney.view.arcadegames.adapter.TreasurePagerAdapter
 import com.fypmoney.view.arcadegames.model.SectionListItem1
-import com.fypmoney.view.arcadegames.viewmodel.FragmentRotatingTreasureVM
+import com.fypmoney.view.arcadegames.viewmodel.RotatingTreasureFragmentVM
 import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlin.math.abs
 
 class RotatingTreasureFragment :
-    BaseFragment<FragmentRotatingTreasureBinding, FragmentRotatingTreasureVM>() {
+    BaseFragment<FragmentRotatingTreasureBinding, RotatingTreasureFragmentVM>() {
 
-    private var mp: MediaPlayer? = null
     private var mViewBinding: FragmentRotatingTreasureBinding? = null
-    private val rotatingTreasureVM by viewModels<FragmentRotatingTreasureVM> { defaultViewModelProviderFactory }
+    private val rotatingTreasureVM by viewModels<RotatingTreasureFragmentVM> { defaultViewModelProviderFactory }
     private val compositePageTransformer = CompositePageTransformer()
     private var dialogInsufficientMynts: Dialog? = null
-    private var spinWheelRotateResponseDetails: SpinWheelRotateResponseDetails? = null
     private var listOfBoxes = arrayListOf<TreasureAdapterUiModel>()
     var adapter: TreasurePagerAdapter? = null
     private val navArgs by navArgs<RotatingTreasureFragmentArgs>()
-    private var myntsDisplay: Int? = null
 
     companion object {
         var sectionArrayList: List<SectionListItem1> = ArrayList()
@@ -68,6 +65,10 @@ class RotatingTreasureFragment :
         super.onViewCreated(view, savedInstanceState)
 
         mViewBinding = getViewDataBinding()
+
+        mViewBinding?.loadingMynts?.visibility = View.VISIBLE
+        mViewBinding?.loadingTickets?.visibility = View.VISIBLE
+        mViewBinding?.loadingCash?.visibility = View.VISIBLE
 
         setToolbarAndTitle(
             context = requireContext(),
@@ -169,7 +170,7 @@ class RotatingTreasureFragment :
                     mViewBinding!!.lottieRotatingVP.setAnimation(adapter!!.imagesList[position].boxImage)
                     mViewBinding!!.lottieRotatingVP.toVisible()
                     mViewBinding!!.lottieRotatingVP.playAnimation()
-                    setTreasureViewPagerData(spinWheelRotateResponseDetails)
+                    setTreasureViewPagerData(rotatingTreasureVM.spinWheelRotateResponseDetails)
                 } else {
                     if (position != 0) {
                         sliderHandler.removeCallbacks(sliderRunnable)
@@ -237,7 +238,7 @@ class RotatingTreasureFragment :
 
     }
 
-    private fun setUpObserver(viewModel: FragmentRotatingTreasureVM) {
+    private fun setUpObserver(viewModel: RotatingTreasureFragmentVM) {
 
         viewModel.error.observe(
             viewLifecycleOwner
@@ -268,42 +269,6 @@ class RotatingTreasureFragment :
             handleState(it)
         }
 
-        viewModel.totalRewardsResponse.observe(
-            viewLifecycleOwner
-        ) { list ->
-            mViewBinding?.tvRotatingCashCount?.text = String.format(
-                getString(R.string.arcade_cash_value),
-                Utility.convertToRs(list.amount.toString())
-            )
-        }
-
-        viewModel.rewardSummaryStatus.observe(
-            viewLifecycleOwner
-        ) { list ->
-            if (list.totalPoints != null) {
-                mViewBinding?.tvRotatingMyntsCount?.text =
-                    String.format("%.0f", list.remainingPoints)
-            }
-        }
-
-        viewModel.stateRotTicket.observe(viewLifecycleOwner) {
-            when (it) {
-                is FragmentRotatingTreasureVM.RotatingTicket.Error -> {
-
-                }
-
-                is FragmentRotatingTreasureVM.RotatingTicket.Success -> {
-                    if (it.totalTickets != null) {
-                        mViewBinding?.tvRotatingTicketsCount?.text = "${it.totalTickets}"
-                    }
-                }
-
-                is FragmentRotatingTreasureVM.RotatingTicket.Loading -> {
-
-                }
-            }
-        }
-
         viewModel.remainFrequency.observe(
             viewLifecycleOwner
         ) {
@@ -323,11 +288,12 @@ class RotatingTreasureFragment :
                 rotatingTreasureVM.remainFrequency.value =
                     rotatingTreasureVM.remainFrequency.value?.minus(1)
 
-                decreaseCountAnimation(mViewBinding!!.tvRotatingMyntsCount, myntsDisplay!!)
+                decreaseCountAnimation(
+                    mViewBinding!!.tvRotatingMyntsCount,
+                    rotatingTreasureVM.myntsDisplay!!
+                )
 
                 rotatingTreasureVM.sectionId = list.sectionId
-
-                rotatingTreasureVM.noOfJackpotTickets = list.noOfJackpotTicket
 
                 rotatingTreasureVM.callSpinWheelApi(list.orderNo)
 
@@ -336,7 +302,7 @@ class RotatingTreasureFragment :
         }
 
         viewModel.spinWheelResponseList.observe(viewLifecycleOwner) {
-            spinWheelRotateResponseDetails = it
+            rotatingTreasureVM.spinWheelRotateResponseDetails = it
             val listOfBoxes = arrayListOf<TreasureAdapterUiModel>()
             listOfBoxes.add(
                 TreasureAdapterUiModel(
@@ -462,7 +428,7 @@ class RotatingTreasureFragment :
         if (rotatingTreasureVM.productId == null || rotatingTreasureVM.productId == "null") {
             mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
             mViewBinding!!.progressBtnPlay.visibility = View.INVISIBLE
-        }else{
+        } else {
             Handler(Looper.getMainLooper()).postDelayed({
                 rotatingTreasureVM.isArcadeIsPlayed = true
                 mViewBinding!!.ivBtnPlayAnimation.visibility = View.VISIBLE
@@ -493,49 +459,72 @@ class RotatingTreasureFragment :
     private fun arcadeSounds(from: String) {
         when (from) {
             "MYNTS" -> {
-                mp = MediaPlayer.create(
+                rotatingTreasureVM.mp = MediaPlayer.create(
                     this.requireContext(),
                     R.raw.arcade_mynts
                 )
             }
             "TICKETS" -> {
-                mp = MediaPlayer.create(
+                rotatingTreasureVM.mp = MediaPlayer.create(
                     this.requireContext(),
                     R.raw.arcade_golden_ticket
                 )
             }
             "SPINNER" -> {
-                mp = MediaPlayer.create(
+                rotatingTreasureVM.mp = MediaPlayer.create(
                     this.requireContext(),
                     R.raw.arcade_spinner
                 )
             }
             else -> {
-                mp = MediaPlayer.create(
+                rotatingTreasureVM.mp = MediaPlayer.create(
                     this.requireContext(),
                     R.raw.arcade_cashback
                 )
             }
         }
-        mp?.start()
+        rotatingTreasureVM.mp?.start()
     }
 
-    private fun handleState(it: FragmentRotatingTreasureVM.RotatingTreasureState?) {
+    private fun handleState(it: RotatingTreasureFragmentVM.RotatingTreasureState?) {
         when (it) {
-            FragmentRotatingTreasureVM.RotatingTreasureState.Error -> {
+            RotatingTreasureFragmentVM.RotatingTreasureState.Error -> {
             }
 
-            FragmentRotatingTreasureVM.RotatingTreasureState.Loading -> {
-                mViewBinding!!.rotatingTreasureContainer.visibility = View.INVISIBLE
+            RotatingTreasureFragmentVM.RotatingTreasureState.Loading -> {
+//                mViewBinding!!.rotatingTreasureContainer.visibility = View.INVISIBLE
             }
 
-            is FragmentRotatingTreasureVM.RotatingTreasureState.Success -> {
+            is RotatingTreasureFragmentVM.RotatingTreasureState.MyntsSuccess -> {
+                if (it.remainingMynts != null) {
+                    mViewBinding?.loadingMynts?.clearAnimation()
+                    mViewBinding?.loadingMynts?.visibility = View.INVISIBLE
 
-                mViewBinding!!.rotatingTreasureContainer.visibility = View.VISIBLE
+                    mViewBinding?.tvRotatingMyntsCount?.text =
+                        String.format("%.0f", it.remainingMynts)
+                }
+            }
 
-//                Glide.with(this).load(it.treasureBoxItem.successResourceId).into(
-//                    mViewBinding!!.ivBannerRotatingTreasures
-//                )
+            is RotatingTreasureFragmentVM.RotatingTreasureState.TicketSuccess -> {
+                if (it.totalTickets != null) {
+                    mViewBinding?.loadingTickets?.clearAnimation()
+                    mViewBinding?.loadingTickets?.visibility = View.INVISIBLE
+
+                    mViewBinding?.tvRotatingTicketsCount?.text = "${it.totalTickets}"
+                }
+            }
+
+            is RotatingTreasureFragmentVM.RotatingTreasureState.CashSuccess -> {
+                mViewBinding?.loadingCash?.clearAnimation()
+                mViewBinding?.loadingCash?.visibility = View.INVISIBLE
+
+                mViewBinding?.tvRotatingCashCount?.text = String.format(
+                    getString(R.string.arcade_cash_value),
+                    Utility.convertToRs(it.totalCash.toString())
+                )
+            }
+
+            is RotatingTreasureFragmentVM.RotatingTreasureState.Success -> {
 
                 Utility.setImageUsingGlideWithShimmerPlaceholderWithoutNull(
                     this.context,
@@ -543,15 +532,22 @@ class RotatingTreasureFragment :
                     mViewBinding!!.ivBannerRotatingTreasures
                 )
 
-                rotatingTreasureVM.noOfJackpotTickets = it.treasureBoxItem.noOfJackpotTicket
+                rotatingTreasureVM.myntsDisplay = it.treasureBoxItem.appDisplayText?.toInt()
 
-                myntsDisplay = it.treasureBoxItem.appDisplayText?.toInt()
+                mViewBinding?.loadingBurnMynts?.clearAnimation()
+                mViewBinding?.loadingBurnMynts?.visibility = View.INVISIBLE
 
                 mViewBinding!!.tvRotatingBurnMyntsCount.text = it.treasureBoxItem.appDisplayText
 
                 rotatingTreasureVM.frequency = it.treasureBoxItem.frequency
 
+                mViewBinding!!.shimmerLayoutRotatingTreasure.toInvisible()
+                mViewBinding!!.frameBtnContainer.toVisible()
+                mViewBinding!!.tvRotatingAttemptsLeft.toVisible()
+                mViewBinding!!.vpTreasuryBox.toVisible()
+
                 sectionArrayList = it.treasureBoxItem.sectionList as List<SectionListItem1>
+
                 rotatingTreasureVM.remainFrequency.value =
                     it.treasureBoxItem.frequencyPlayed?.let { it1 ->
                         it.treasureBoxItem.frequency?.minus(
@@ -559,6 +555,20 @@ class RotatingTreasureFragment :
                         )
                     }
             }
+
+//            is FragmentRotatingTreasureVM.RotatingTreasureState.MyntsBurnSuccess -> {
+//                rotatingTreasureVM.coinsBurned.postValue(null)
+//
+//                rotatingTreasureVM.remainFrequency.value =
+//                    rotatingTreasureVM.remainFrequency.value?.minus(1)
+//
+//                decreaseCountAnimation(mViewBinding!!.tvRotatingMyntsCount, myntsDisplay!!)
+//
+//                rotatingTreasureVM.sectionId = it.coinsBurnedResponse.sectionId
+//
+//                rotatingTreasureVM.callSpinWheelApi(it.coinsBurnedResponse.orderNo)
+//
+//            }
             null -> {
 
             }
@@ -577,10 +587,11 @@ class RotatingTreasureFragment :
         return R.layout.fragment_rotating_treasure
     }
 
-    override fun getViewModel(): FragmentRotatingTreasureVM = rotatingTreasureVM
+    override fun getViewModel(): RotatingTreasureFragmentVM = rotatingTreasureVM
 
     private fun setBackgrounds() {
         mViewBinding?.let {
+
             setBackgroundDrawable(
                 it.chipMyntsView,
                 ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
@@ -677,6 +688,6 @@ class RotatingTreasureFragment :
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mp?.stop()
+        rotatingTreasureVM.mp?.stop()
     }
 }

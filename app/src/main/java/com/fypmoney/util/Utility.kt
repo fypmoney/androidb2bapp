@@ -34,6 +34,7 @@ import androidx.appcompat.widget.AppCompatEditText
 import com.bumptech.glide.Glide
 import com.fypmoney.R
 import com.fypmoney.application.PockketApplication
+import com.fypmoney.bindingAdapters.shimmerColorDrawable
 import com.fypmoney.bindingAdapters.shimmerDrawable
 import com.fypmoney.database.ContactRepository
 import com.fypmoney.database.entity.ContactEntity
@@ -1013,7 +1014,7 @@ object Utility {
     ) {
         url.let {
             if (!url.isNullOrEmpty()) {
-                Glide.with(context!!).load(url).placeholder(shimmerDrawable())
+                Glide.with(context!!).load(url).placeholder(shimmerColorDrawable())
                     .into(imageView)
             }
         }
