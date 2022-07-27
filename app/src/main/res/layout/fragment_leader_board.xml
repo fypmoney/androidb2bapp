@@ -20,10 +20,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerLayoutLeaderBoard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_toolbar">
+
+            <include layout="@layout/shimmer_leaderboard_view" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/leaderBoardMainNSV"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -202,7 +216,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="4dp"
                                 android:fontFamily="@font/product_sans_bold"
-                                android:text="1"
+                                android:text="@string/_1"
                                 android:textColor="@color/white"
                                 android:textSize="14sp"
                                 app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboard_1"

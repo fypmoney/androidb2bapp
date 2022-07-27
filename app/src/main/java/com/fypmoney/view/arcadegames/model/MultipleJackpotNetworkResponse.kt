@@ -1,7 +1,9 @@
 package com.fypmoney.view.arcadegames.model
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class MultipleJackpotNetworkResponse(
 
 	@field:SerializedName("data")
@@ -9,6 +11,7 @@ data class MultipleJackpotNetworkResponse(
 	val data: DataJack? = null
 )
 
+@Keep
 data class JackpotDetailsItem(
 
 	@field:SerializedName("productCode")
@@ -42,6 +45,7 @@ data class JackpotDetailsItem(
 	val detailImage: String? = null
 )
 
+@Keep
 data class DataJack(
 
 	@field:SerializedName("jackpotDetails")

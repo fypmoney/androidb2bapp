@@ -19,14 +19,15 @@ import com.fypmoney.extension.toVisible
 import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.adapter.MultipleJackpotAdapter
 import com.fypmoney.view.arcadegames.adapter.MultipleJackpotUiModel
-import com.fypmoney.view.arcadegames.viewmodel.FragmentMultipleJackpotVM
+import com.fypmoney.view.arcadegames.viewmodel.MultipleJackpotFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
 
 class MultipleJackpotsFragment :
-    BaseFragment<FragmentMultipleJackpotsBinding, FragmentMultipleJackpotVM>() {
+    BaseFragment<FragmentMultipleJackpotsBinding, MultipleJackpotFragmentVM>() {
 
     private var mViewBinding: FragmentMultipleJackpotsBinding? = null
-    private val multipleJackpotVM by viewModels<FragmentMultipleJackpotVM> { defaultViewModelProviderFactory }
+    private val multipleJackpotVM by viewModels<MultipleJackpotFragmentVM> { defaultViewModelProviderFactory }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,7 +45,7 @@ class MultipleJackpotsFragment :
         mViewBinding?.loadingTickets?.visibility = View.VISIBLE
         mViewBinding?.loadingCash?.visibility = View.VISIBLE
 
-        setUpObserver(multipleJackpotVM)
+        setUpObserver()
 
         setBackgrounds()
 
@@ -64,49 +65,47 @@ class MultipleJackpotsFragment :
         }
     }
 
-    private fun setUpObserver(viewModel: FragmentMultipleJackpotVM) {
-
-        viewModel.totalRewardsResponse.observe(
-            viewLifecycleOwner
-        ) { list ->
-
-            mViewBinding?.loadingCash?.clearAnimation()
-            mViewBinding?.loadingCash?.visibility = View.INVISIBLE
-
-            mViewBinding?.tvMultipleJackpotsCashCount?.text =
-                getString(R.string.rupee_symbol) + Utility.convertToRs("${list.amount}")
-        }
-
-        viewModel.rewardSummaryStatus.observe(
-            viewLifecycleOwner
-        ) { list ->
-            mViewBinding?.loadingMynts?.clearAnimation()
-            mViewBinding?.loadingMynts?.visibility = View.INVISIBLE
-
-            if (list.totalPoints != null) {
-                mViewBinding?.tvMultipleJackpotsMyntsCount?.text =
-                    String.format("%.0f", list.remainingPoints)
-            }
-        }
-
+    private fun setUpObserver() {
         multipleJackpotVM.state.observe(viewLifecycleOwner) {
             handleState(it)
         }
-
     }
 
-    private fun handleState(it: FragmentMultipleJackpotVM.MultipleJackpotsState?) {
+    private fun handleState(it: MultipleJackpotFragmentVM.MultipleJackpotsState?) {
         when (it) {
-            is FragmentMultipleJackpotVM.MultipleJackpotsState.Error -> {
+            is MultipleJackpotFragmentVM.MultipleJackpotsState.Error -> {
 
             }
-            is FragmentMultipleJackpotVM.MultipleJackpotsState.Success -> {
+
+            is MultipleJackpotFragmentVM.MultipleJackpotsState.MyntsSuccess -> {
+                if (it.remainingMynts != null) {
+                    mViewBinding?.loadingMynts?.clearAnimation()
+                    mViewBinding?.loadingMynts?.visibility = View.INVISIBLE
+
+                    mViewBinding?.tvMultipleJackpotsMyntsCount?.text =
+                        String.format("%.0f", it.remainingMynts)
+                }
+            }
+
+            is MultipleJackpotFragmentVM.MultipleJackpotsState.CashSuccess -> {
+                mViewBinding?.loadingCash?.clearAnimation()
+                mViewBinding?.loadingCash?.visibility = View.INVISIBLE
+
+                mViewBinding?.tvMultipleJackpotsCashCount?.text = String.format(
+                    getString(R.string.arcade_cash_value),
+                    Utility.convertToRs(it.totalCash.toString())
+                )
+            }
+
+            is MultipleJackpotFragmentVM.MultipleJackpotsState.Success -> {
 
                 mViewBinding?.loadingTickets?.clearAnimation()
                 mViewBinding?.loadingTickets?.visibility = View.INVISIBLE
                 if (it.totalTickets != null) {
                     mViewBinding?.tvMultipleJackpotsTicketsCount?.text = "${it.totalTickets}"
                 }
+
+                mViewBinding!!.shimmerLayoutMultipleJackpots.toInvisible()
 
                 if (it.listOfJackpotDetailsItem?.isEmpty() == true) {
                     mViewBinding!!.emptyMultipleJackpots.toVisible()
@@ -126,7 +125,7 @@ class MultipleJackpotsFragment :
                         }
                     })
             }
-            is FragmentMultipleJackpotVM.MultipleJackpotsState.Loading -> {
+            is MultipleJackpotFragmentVM.MultipleJackpotsState.Loading -> {
 
             }
         }
@@ -176,6 +175,6 @@ class MultipleJackpotsFragment :
         return R.layout.fragment_multiple_jackpots
     }
 
-    override fun getViewModel(): FragmentMultipleJackpotVM = multipleJackpotVM
+    override fun getViewModel(): MultipleJackpotFragmentVM = multipleJackpotVM
 
 }

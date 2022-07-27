@@ -45,14 +45,13 @@ class MultipleJackpotAdapter(val onJackpotClick: (productCode: String) -> Unit) 
 
             if (item.isExpired == "NO") {
                 binding.tvExpiredProduct.visibility = View.GONE
-                binding.cvJackpotItem.setOnClickListener {
-                    if (item.isExpired == "NO")
-                        onJackpotClick(item.productCode)
-                }
+//                binding.cvJackpotItem.setOnClickListener {
+//                    if (item.isExpired == "NO")
+//                        onJackpotClick(item.productCode)
+//                }
             } else {
                 binding.tvExpiredProduct.visibility = View.VISIBLE
             }
-
 
         }
 

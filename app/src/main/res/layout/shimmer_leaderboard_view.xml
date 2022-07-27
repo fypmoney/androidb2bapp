@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvLeaderboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="center_vertical"
+            android:text="@string/leaderboard"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            app:fontFamily="@font/product_sans_bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/viewChipInfoView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="12dp"
+            android:paddingStart="@dimen/_3sdp"
+            android:paddingTop="@dimen/_3sdp"
+            android:paddingEnd="@dimen/_10sdp"
+            android:paddingBottom="@dimen/_3sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/tvLeaderboard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvLeaderboard">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivInfo"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:padding="@dimen/_2sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_rules_info" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_4sdp"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:text="@string/rules"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:fontFamily="@font/product_sans_bold"
+                app:layout_constraintBottom_toBottomOf="@id/ivInfo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivInfo"
+                app:layout_constraintTop_toTopOf="@id/ivInfo" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardLeaderBoardTop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_132sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:cardBackgroundColor="@color/back_surface_color"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewChipInfoView">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:layout_marginBottom="42dp"
+                android:background="@drawable/ic_leaderboard_stars" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/ic_ellipse_leaderboard">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clLeaderBoard3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@+id/clLeaderBoard1"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/viewLeaderboardNumber3"
+                        android:layout_width="@dimen/_52sdp"
+                        android:layout_height="@dimen/_52sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:padding="20dp"
+                        android:src="@drawable/ic_leaderboard_bronze"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="-8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/viewLeaderboardNumber3"
+                        app:layout_constraintEnd_toEndOf="@+id/viewLeaderboardNumber3"
+                        app:layout_constraintStart_toStartOf="@+id/viewLeaderboardNumber3"
+                        app:srcCompat="@drawable/ic_leaderboard_no_3" />
+
+                    <View
+                        android:id="@+id/viewLeaderboard3"
+                        style="@style/TextviewRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_12sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="@dimen/_6sdp"
+                        android:background="@color/editTextStrokeColor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/viewLeaderboardNumber3" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clLeaderBoard1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toStartOf="@+id/clLeaderBoard2"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toEndOf="@+id/clLeaderBoard3"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/viewLeaderboardNumber1"
+                        android:layout_width="@dimen/_72sdp"
+                        android:layout_height="@dimen/_72sdp"
+                        android:layout_marginTop="@dimen/_16sdp"
+                        android:padding="24dp"
+                        android:src="@drawable/ic_leaderboard_golden"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivLeaderboard_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="-5dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/viewLeaderboardNumber1"
+                        app:layout_constraintEnd_toEndOf="@+id/viewLeaderboardNumber1"
+                        app:layout_constraintStart_toStartOf="@+id/viewLeaderboardNumber1"
+                        app:srcCompat="@drawable/ic_leaderboard_no_1" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/viewLeaderboard1_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/product_sans_bold"
+                        android:text="@string/_1"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivLeaderboard_1"
+                        app:layout_constraintEnd_toEndOf="@+id/ivLeaderboard_1"
+                        app:layout_constraintStart_toStartOf="@+id/ivLeaderboard_1"
+                        app:layout_constraintTop_toTopOf="@+id/ivLeaderboard_1" />
+
+                    <View
+                        android:id="@+id/viewLeaderboard1"
+                        style="@style/TextviewRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_12sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="@dimen/_6sdp"
+                        android:background="@color/editTextStrokeColor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/viewLeaderboardNumber1" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clLeaderBoard2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="spread"
+                    app:layout_constraintStart_toEndOf="@+id/clLeaderBoard1"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/viewLeaderboardNumber2"
+                        android:layout_width="@dimen/_52sdp"
+                        android:layout_height="@dimen/_52sdp"
+                        android:layout_marginTop="@dimen/_32sdp"
+                        android:padding="20dp"
+                        android:src="@drawable/ic_leaderboard_silver"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="-8dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/viewLeaderboardNumber2"
+                        app:layout_constraintEnd_toEndOf="@+id/viewLeaderboardNumber2"
+                        app:layout_constraintStart_toStartOf="@+id/viewLeaderboardNumber2"
+                        app:srcCompat="@drawable/ic_leaderboard_no_2" />
+
+                    <View
+                        android:id="@+id/viewLeaderboard2"
+                        style="@style/TextviewRegular"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/_12sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginEnd="@dimen/_6sdp"
+                        android:background="@color/editTextStrokeColor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/viewLeaderboardNumber2" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardCountDown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:cardBackgroundColor="@color/back_surface_color"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardLeaderBoardTop">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <View
+                    android:id="@+id/viewCountDownBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="@color/editTextStrokeColor"
+                    app:layout_constraintBottom_toTopOf="@id/lineLeaderboard"
+                    app:layout_constraintDimensionRatio="2.5:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/lineLeaderboard"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:alpha="0.1"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/viewCountDownBanner" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_14sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lineLeaderboard">
+
+                    <View
+                        android:id="@+id/viewTimerDays"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:background="@color/editTextStrokeColor"
+                        app:layout_constraintEnd_toEndOf="@+id/lineLeaderboard1"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/viewTimerDaysText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="4dp"
+                        android:alpha="0.5"
+                        android:text="@string/days"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/product_sans_regular"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/lineLeaderboard1"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/viewTimerDays" />
+
+                    <View
+                        android:id="@+id/lineLeaderboard1"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:alpha="0.1"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/viewTimerHours"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/viewTimerDays"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/viewTimerHours"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:background="@color/editTextStrokeColor"
+                        app:layout_constraintEnd_toEndOf="@id/lineLeaderboard2"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/lineLeaderboard1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/viewTimerHoursText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="4dp"
+                        android:alpha="0.5"
+                        android:text="@string/hours"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/product_sans_regular"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/lineLeaderboard2"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/lineLeaderboard1"
+                        app:layout_constraintTop_toBottomOf="@+id/viewTimerHours" />
+
+                    <View
+                        android:id="@+id/lineLeaderboard2"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:alpha="0.1"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/viewTimerMinutes"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/viewTimerHours"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/viewTimerMinutes"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:background="@color/editTextStrokeColor"
+                        app:layout_constraintEnd_toEndOf="@id/lineLeaderboard3"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/lineLeaderboard2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/viewTimerMinutesText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="4dp"
+                        android:alpha="0.5"
+                        android:text="@string/minutes"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/product_sans_regular"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/lineLeaderboard3"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/lineLeaderboard2"
+                        app:layout_constraintTop_toBottomOf="@+id/viewTimerMinutes" />
+
+                    <View
+                        android:id="@+id/lineLeaderboard3"
+                        android:layout_width="1dp"
+                        android:layout_height="0dp"
+                        android:alpha="0.1"
+                        android:background="@color/white"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/viewTimerSeconds"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/viewTimerMinutes"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/viewTimerSeconds"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        android:background="@color/editTextStrokeColor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/lineLeaderboard3"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/viewTimerSecondsText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="4dp"
+                        android:alpha="0.5"
+                        android:text="@string/seconds"
+                        android:textColor="@color/white"
+                        android:textSize="14sp"
+                        app:fontFamily="@font/product_sans_regular"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_chainStyle="spread"
+                        app:layout_constraintStart_toEndOf="@+id/lineLeaderboard3"
+                        app:layout_constraintTop_toBottomOf="@+id/viewTimerSeconds" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/viewChipTicketView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:paddingStart="12dp"
+            android:paddingTop="6dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="6dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardCountDown">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivSpinWheelTicket"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:rotation="-30"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ticket_reward" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/loadingLeaderBoardTickets"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="6dp"
+                app:layout_constraintBottom_toBottomOf="@id/ivSpinWheelTicket"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivSpinWheelTicket"
+                app:layout_constraintTop_toTopOf="@id/ivSpinWheelTicket"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/three_dot_amount_loader"
+                tools:visibility="visible" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/viewGoldenTicketWon"
+            style="@style/TextviewRegular"
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginTop="12dp"
+            android:background="@color/editTextStrokeColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewChipTicketView"  />
+
+        <androidx.appcompat.widget.AppCompatSeekBar
+            android:id="@+id/viewSeekBarLeaderBoardThumb"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:progress="20"
+            android:progressDrawable="@drawable/seek_bar_transparent"
+            android:thumb="@drawable/ic_seek_bar_pin"
+            app:layout_constraintEnd_toStartOf="@+id/viewWinningReward"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewGoldenTicketWon" />
+
+        <View
+            android:id="@+id/viewSeekBarLeaderBoard"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@color/editTextStrokeColor"
+            app:layout_constraintEnd_toStartOf="@+id/viewWinningReward"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewSeekBarLeaderBoardThumb"  />
+
+        <View
+            android:id="@+id/viewWinningReward"
+            style="@style/TextviewRegular"
+            android:layout_width="@dimen/_52sdp"
+            android:layout_height="@dimen/_52sdp"
+            android:layout_marginEnd="@dimen/_6sdp"
+            android:background="@color/editTextStrokeColor"
+            app:layout_constraintBottom_toBottomOf="@id/viewSeekBarLeaderBoard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/viewSeekBarLeaderBoard"
+            app:layout_constraintTop_toTopOf="@+id/viewSeekBarLeaderBoard" />
+
+        <View
+            android:id="@+id/viewLeaderBoardTicketsAway"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:background="@color/editTextStrokeColor"
+            app:layout_constraintEnd_toStartOf="@+id/viewWinningReward"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewSeekBarLeaderBoard"  />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewLeaderBoardTicketsAway">
+
+            <include layout="@layout/shimmer_multiple_jackpots_item" />
+
+            <include layout="@layout/shimmer_multiple_jackpots_item" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

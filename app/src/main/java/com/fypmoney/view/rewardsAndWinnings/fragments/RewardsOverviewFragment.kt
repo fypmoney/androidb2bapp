@@ -10,6 +10,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fyp.trackr.models.TrackrEvent
 import com.fyp.trackr.models.TrackrField
@@ -146,7 +147,6 @@ class RewardsOverviewFragment :
                 if (!feedDetails.resourceArr.isNullOrEmpty()) {
                     callDiduKnowBottomSheet(feedDetails.resourceArr)
                 }
-
             }
         }
     }
@@ -192,18 +192,32 @@ class RewardsOverviewFragment :
         }
 
         mViewBinding?.chipMyntsView?.setOnClickListener {
-            findNavController().navigate(R.id.navigation_rewards_history)
+            findNavController().navigate(R.id.navigation_rewards_history, null, navOptions {
+                anim {
+                    popEnter = R.anim.slide_in_left
+                    popExit = R.anim.slide_out_righ
+                    enter = R.anim.slide_in_right
+                    exit = R.anim.slide_out_left
+                }
+            })
         }
 
         mViewBinding?.chipTicketsView?.setOnClickListener {
-            findNavController().navigate(R.id.navigation_multiple_jackpots)
+            findNavController().navigate(R.id.navigation_multiple_jackpots, null, navOptions {
+                anim {
+                    popEnter = R.anim.slide_in_left
+                    popExit = R.anim.slide_out_righ
+                    enter = R.anim.slide_in_right
+                    exit = R.anim.slide_out_left
+                }
+            })
         }
 
         findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<Boolean>("arcade_is_played")
             ?.observe(
                 viewLifecycleOwner
             ) { result ->
-                if(result){
+                if (result) {
                     mViewmodel?.callTotalJackpotCards()
                     mViewmodel?.callRewardSummary()
                     mViewmodel?.callTotalRewardsEarnings()
@@ -287,16 +301,16 @@ class RewardsOverviewFragment :
             }
             AppConstants.EXPLORE_SECTION_EXPLORE -> {
                 val directions = RewardsOverviewFragmentDirections.actionExploreSectionExplore(
-                        sectionExploreItem = sectionContentItem,
-                        sectionExploreName = exploreContentResponse?.sectionDisplayText
-                    )
+                    sectionExploreItem = sectionContentItem,
+                    sectionExploreName = exploreContentResponse?.sectionDisplayText
+                )
                 directions.let { it1 -> findNavController().navigate(it1) }
             }
             AppConstants.EXPLORE_IN_APP -> {
 
                 redirectionResource?.let { uri ->
 
-                    val redirectionResources = uri?.split(",")?.get(0)
+                    val redirectionResources = uri.split(",")[0]
                     if (redirectionResources == AppConstants.FyperScreen) {
                         findNavController().navigate(R.id.navigation_fyper)
                     } else if (redirectionResources == AppConstants.JACKPOTTAB) {
@@ -305,18 +319,31 @@ class RewardsOverviewFragment :
                         findNavController().navigate(R.id.navigation_card)
                     } else if (redirectionResources == AppConstants.RewardHistory) {
                         findNavController().navigate(R.id.navigation_rewards_history)
-                    }
-                    else if(redirectionResources == AppConstants.ARCADE){
+                    } else if (redirectionResources == AppConstants.ARCADE) {
                         findNavController().navigate(R.id.navigation_arcade)
-                    }
-                    else if (redirectionResources == AppConstants.GIFT_VOUCHER)  {
-                        findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
-                    }
-
-                    else if (redirectionResources == AppConstants.ARCADE) {
-                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${redirectionResource}"))
-                    }
-                    else {
+                    } else if (redirectionResources == AppConstants.GIFT_VOUCHER) {
+                        findNavController().navigate(
+                            Uri.parse("fypmoney://creategiftcard/${redirectionResource}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
+                    } else if (redirectionResources == AppConstants.ARCADE) {
+                        findNavController().navigate(
+                            Uri.parse("https://www.fypmoney.in/leaderboard/${redirectionResource}"),
+                            navOptions {
+                                anim {
+                                    popEnter = R.anim.slide_in_left
+                                    popExit = R.anim.slide_out_righ
+                                    enter = R.anim.slide_in_right
+                                    exit = R.anim.slide_out_left
+                                }
+                            })
+                    } else {
                         redirectionResources.let { it1 ->
                             Utility.deeplinkRedirection(
                                 it1,
@@ -379,24 +406,59 @@ class RewardsOverviewFragment :
             }
 
             AppConstants.LEADERBOARD -> {
-                findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${redirectionResource}"))
+                findNavController().navigate(Uri.parse("https://www.fypmoney.in/leaderboard/${redirectionResource}"), navOptions {
+                    anim {
+                        popEnter = R.anim.slide_in_left
+                        popExit = R.anim.slide_out_righ
+                        enter = R.anim.slide_in_right
+                        exit = R.anim.slide_out_left
+                    }
+                })
             }
             AppConstants.GIFT_VOUCHER -> {
-                findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"))
+                findNavController().navigate(Uri.parse("fypmoney://creategiftcard/${redirectionResource}"), navOptions {
+                    anim {
+                        popEnter = R.anim.slide_in_left
+                        popExit = R.anim.slide_out_righ
+                        enter = R.anim.slide_in_right
+                        exit = R.anim.slide_out_left
+                    }
+                })
             }
-            "ARCADE"-> {
-                val type = sectionContentItem.rfu1?.let { redirectionResource?.let { it1 -> checkTheArcadeType(arcadeType = it, productCode = it1) } }
-                when(type){
-                    ArcadeType.NOTypeFound ->{
+            "ARCADE" -> {
+                val type = sectionContentItem.rfu1?.let {
+                    redirectionResource?.let { it1 ->
+                        checkTheArcadeType(
+                            arcadeType = it,
+                            productCode = it1
+                        )
+                    }
+                }
+                when (type) {
+                    ArcadeType.NOTypeFound -> {
 
                     }
                     is ArcadeType.SCRATCH_CARD -> TODO()
                     is ArcadeType.SLOT -> TODO()
                     is ArcadeType.SPIN_WHEEL -> {
-                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}/${null}"))
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${type.productCode}/${null}"),navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
                     }
                     is ArcadeType.TREASURE_BOX -> {
-                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}/${null}"))
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${type.productCode}/${null}"),navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
                     }
                     null -> TODO()
                 }

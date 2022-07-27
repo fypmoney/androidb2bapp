@@ -27,20 +27,20 @@ import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.bindingAdapters.setBackgroundDrawable
 import com.fypmoney.databinding.FragmentSpinWheelBinding
+import com.fypmoney.extension.toInvisible
+import com.fypmoney.extension.toVisible
 import com.fypmoney.model.SpinWheelRotateResponseDetails
 import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.model.SectionListItem
-import com.fypmoney.view.arcadegames.viewmodel.FragmentSpinWheelVM
+import com.fypmoney.view.arcadegames.viewmodel.SpinWheelFragmentVM
 import kotlinx.android.synthetic.main.dialog_rewards_insufficient.*
 import kotlinx.android.synthetic.main.fragment_spin_wheel.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWheelVM>() {
+class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragmentVM>() {
 
-    private var mp: MediaPlayer? = null
     private var mViewBinding: FragmentSpinWheelBinding? = null
-    private var myntsDisplay: Int? = null
-    private val spinWheelFragmentVM by viewModels<FragmentSpinWheelVM> { defaultViewModelProviderFactory }
+    private val spinWheelFragmentVM by viewModels<SpinWheelFragmentVM> { defaultViewModelProviderFactory }
     private var dialogInsufficientMynts: Dialog? = null
     private val navArgs by navArgs<SpinWheelFragmentArgs>()
 
@@ -52,6 +52,10 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
         super.onViewCreated(view, savedInstanceState)
 
         mViewBinding = getViewDataBinding()
+
+        mViewBinding?.loadingMynts?.visibility = View.VISIBLE
+        mViewBinding?.loadingTickets?.visibility = View.VISIBLE
+        mViewBinding?.loadingCash?.visibility = View.VISIBLE
 
         setToolbarAndTitle(
             context = requireContext(),
@@ -256,7 +260,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
         invisibleImage.visibility = View.INVISIBLE
     }
 
-    private fun setUpObserver(viewModel: FragmentSpinWheelVM) {
+    private fun setUpObserver(viewModel: SpinWheelFragmentVM) {
 
         var sectionId: Int? = null
 
@@ -289,39 +293,6 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
             handleState(it)
         }
 
-        viewModel.totalRewardsResponse.observe(
-            viewLifecycleOwner
-        ) { list ->
-            mViewBinding?.tvSpinWheelCashCount?.text = String.format(
-                getString(R.string.arcade_cash_value),
-                Utility.convertToRs(list.amount.toString())
-            )
-        }
-
-        viewModel.rewardSummaryStatus.observe(
-            viewLifecycleOwner
-        ) { list ->
-            if (list.remainingPoints != null) {
-                spinWheelFragmentVM.myntsCount = list.remainingPoints
-                mViewBinding?.tvSpinWheelMyntsCount?.text =
-                    String.format("%.0f", spinWheelFragmentVM.myntsCount)
-            }
-        }
-
-        viewModel.stateMJ.observe(viewLifecycleOwner) {
-            when (it) {
-                is FragmentSpinWheelVM.SpinWheelStateTicket.Error -> {
-
-                }
-                is FragmentSpinWheelVM.SpinWheelStateTicket.Success -> {
-                    mViewBinding?.tvSpinWheelTicketsCount?.text = "${it.totalTickets}"
-                }
-                is FragmentSpinWheelVM.SpinWheelStateTicket.Loading -> {
-
-                }
-            }
-        }
-
         viewModel.remainFrequency.observe(
             viewLifecycleOwner
         ) {
@@ -344,10 +315,9 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
                 spinWheelFragmentVM.remainFrequency.value =
                     spinWheelFragmentVM.remainFrequency.value?.minus(1)
 
-                decreaseCountAnimation(mViewBinding!!.tvSpinWheelMyntsCount, myntsDisplay!!)
+                decreaseCountAnimation(mViewBinding!!.tvSpinWheelMyntsCount, spinWheelFragmentVM.myntsDisplay!!)
 
                 sectionId = list.sectionId
-//                orderId = list.orderNo
 
                 spinWheelFragmentVM.callSpinWheelApi(list.orderNo)
 
@@ -392,48 +362,88 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
     private fun arcadeSounds(from: String) {
         when (from) {
             "MYNTS" -> {
-                mp = MediaPlayer.create(
+                spinWheelFragmentVM.mp = MediaPlayer.create(
                     this.requireContext(),
                     R.raw.arcade_mynts
                 )
             }
             "TICKETS" -> {
-                mp = MediaPlayer.create(
+                spinWheelFragmentVM.mp = MediaPlayer.create(
                     this.requireContext(),
                     R.raw.arcade_golden_ticket
                 )
             }
             "SPINNER" -> {
-                mp = MediaPlayer.create(
+                spinWheelFragmentVM.mp = MediaPlayer.create(
                     this.requireContext(),
                     R.raw.arcade_spinner
                 )
             }
             else -> {
-                mp = MediaPlayer.create(
+                spinWheelFragmentVM.mp = MediaPlayer.create(
                     this.requireContext(),
                     R.raw.arcade_cashback
                 )
             }
         }
-        mp?.start()
+        spinWheelFragmentVM.mp?.start()
     }
 
-    private fun handleState(it: FragmentSpinWheelVM.SpinWheelState?) {
+    private fun handleState(it: SpinWheelFragmentVM.SpinWheelState?) {
         when (it) {
-            FragmentSpinWheelVM.SpinWheelState.Error -> {
+            SpinWheelFragmentVM.SpinWheelState.Error -> {
 
             }
-            FragmentSpinWheelVM.SpinWheelState.Loading -> {
-                mViewBinding!!.spinWheelContainer.visibility = View.INVISIBLE
+            SpinWheelFragmentVM.SpinWheelState.Loading -> {
+//                mViewBinding!!.spinWheelContainer.visibility = View.INVISIBLE
             }
-            is FragmentSpinWheelVM.SpinWheelState.Success -> {
-                mViewBinding!!.spinWheelContainer.visibility = View.VISIBLE
 
-                myntsDisplay = it.spinWheelData.appDisplayText?.toInt()
+            is SpinWheelFragmentVM.SpinWheelState.MyntsSuccess -> {
+                if (it.remainingMynts != null) {
+                    mViewBinding?.loadingMynts?.clearAnimation()
+                    mViewBinding?.loadingMynts?.visibility = View.INVISIBLE
+
+                    spinWheelFragmentVM.myntsCount = it.remainingMynts
+
+                    mViewBinding?.tvSpinWheelMyntsCount?.text =
+                        String.format("%.0f", it.remainingMynts)
+                }
+            }
+
+            is SpinWheelFragmentVM.SpinWheelState.TicketSuccess -> {
+                if (it.totalTickets != null) {
+                    mViewBinding?.loadingTickets?.clearAnimation()
+                    mViewBinding?.loadingTickets?.visibility = View.INVISIBLE
+
+                    mViewBinding?.tvSpinWheelTicketsCount?.text = "${it.totalTickets}"
+                }
+            }
+
+            is SpinWheelFragmentVM.SpinWheelState.CashSuccess -> {
+                mViewBinding?.loadingCash?.clearAnimation()
+                mViewBinding?.loadingCash?.visibility = View.INVISIBLE
+
+                mViewBinding?.tvSpinWheelCashCount?.text = String.format(
+                    getString(R.string.arcade_cash_value),
+                    Utility.convertToRs(it.totalCash.toString())
+                )
+            }
+
+            is SpinWheelFragmentVM.SpinWheelState.Success -> {
+//                mViewBinding!!.spinWheelContainer.visibility = View.VISIBLE
+
+                mViewBinding?.loadingBurnMynts?.clearAnimation()
+                mViewBinding?.loadingBurnMynts?.visibility = View.INVISIBLE
+
+                spinWheelFragmentVM.myntsDisplay = it.spinWheelData.appDisplayText?.toInt()
 
                 Glide.with(this).load(R.drawable.play_button)
                     .into(mViewBinding!!.ivBtnPlayAnimation)
+
+                mViewBinding!!.shimmerLayoutSpinWheel.toInvisible()
+                mViewBinding!!.frameBtnContainer.toVisible()
+                mViewBinding!!.luckyLayout.toVisible()
+                mViewBinding!!.tvSpinWheelAttemptsLeft.toVisible()
 
                 Utility.setImageUsingGlideWithShimmerPlaceholderWithoutNull(
                     this.context,
@@ -485,10 +495,29 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
         return R.layout.fragment_spin_wheel
     }
 
-    override fun getViewModel(): FragmentSpinWheelVM = spinWheelFragmentVM
+    override fun getViewModel(): SpinWheelFragmentVM = spinWheelFragmentVM
 
     private fun setBackgrounds() {
         mViewBinding?.let {
+
+            setBackgroundDrawable(
+                it.viewMiddleContent,
+                ContextCompat.getColor(this.requireContext(), R.color.editTextStrokeColor),
+                98f,
+                ContextCompat.getColor(this.requireContext(), R.color.editTextStrokeColor),
+                0f,
+                true
+            )
+
+            setBackgroundDrawable(
+                it.btnPlay,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                58f,
+                ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
+                0f,
+                false
+            )
+
             setBackgroundDrawable(
                 it.chipMyntsView,
                 ContextCompat.getColor(this.requireContext(), R.color.back_surface_color),
@@ -598,7 +627,7 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, FragmentSpinWhe
 
     override fun onDestroyView() {
         super.onDestroyView()
-        mp?.stop()
+        spinWheelFragmentVM.mp?.stop()
     }
 
 

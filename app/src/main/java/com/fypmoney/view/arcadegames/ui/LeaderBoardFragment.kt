@@ -25,16 +25,16 @@ import com.fypmoney.util.AppConstants
 import com.fypmoney.util.Utility
 import com.fypmoney.view.arcadegames.adapter.LeaderBoardAdapter
 import com.fypmoney.view.arcadegames.adapter.LeaderBoardUiModel
-import com.fypmoney.view.arcadegames.viewmodel.FragmentLeaderBoardVM
+import com.fypmoney.view.arcadegames.viewmodel.LeaderBoardFragmentVM
 import kotlinx.android.synthetic.main.toolbar.*
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.math.roundToInt
 
-class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLeaderBoardVM>() {
+class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, LeaderBoardFragmentVM>() {
 
-    private val leaderBoardFragmentVM by viewModels<FragmentLeaderBoardVM> { defaultViewModelProviderFactory }
+    private val leaderBoardFragmentVM by viewModels<LeaderBoardFragmentVM> { defaultViewModelProviderFactory }
     private var mViewBinding: FragmentLeaderBoardBinding? = null
     private lateinit var rulesList: List<String>
 
@@ -84,22 +84,21 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
         }
     }
 
-    private fun setUpObserver(leaderBoardFragmentVM: FragmentLeaderBoardVM) {
+    private fun setUpObserver(leaderBoardFragmentVM: LeaderBoardFragmentVM) {
         leaderBoardFragmentVM.state.observe(viewLifecycleOwner) {
             handleState(it)
         }
     }
 
-    private fun handleState(it: FragmentLeaderBoardVM.LeaderBoardState?) {
+    private fun handleState(it: LeaderBoardFragmentVM.LeaderBoardState?) {
         when (it) {
-            FragmentLeaderBoardVM.LeaderBoardState.Error -> {
+            LeaderBoardFragmentVM.LeaderBoardState.Error -> {
             }
 
-            FragmentLeaderBoardVM.LeaderBoardState.Loading -> {
+            LeaderBoardFragmentVM.LeaderBoardState.Loading -> {
                 mViewBinding!!.leaderBoardMainNSV.toInvisible()
             }
-            is FragmentLeaderBoardVM.LeaderBoardState.Success -> {
-                mViewBinding!!.leaderBoardMainNSV.toVisible()
+            is LeaderBoardFragmentVM.LeaderBoardState.Success -> {
                 mViewBinding!!.tvLeaderboard1.text =
                     it.leaderBoardData?.leaderBoardList?.get(0)?.userName
                 mViewBinding!!.tvLeaderboard2.text =
@@ -204,6 +203,11 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
                 mViewBinding!!.seekBarLeaderBoard.progress = percent.roundToInt()
                 mViewBinding!!.seekBarLeaderBoardThumb.progress = percent.roundToInt()
 
+
+                mViewBinding!!.leaderBoardMainNSV.toVisible()
+                mViewBinding!!.shimmerLayoutLeaderBoard.toInvisible()
+
+
             }
         }
     }
@@ -297,6 +301,6 @@ class LeaderBoardFragment : BaseFragment<FragmentLeaderBoardBinding, FragmentLea
         return R.layout.fragment_leader_board
     }
 
-    override fun getViewModel(): FragmentLeaderBoardVM = leaderBoardFragmentVM
+    override fun getViewModel(): LeaderBoardFragmentVM = leaderBoardFragmentVM
 
 }

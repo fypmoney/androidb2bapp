@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fypmoney.BR
 import com.fypmoney.R
@@ -65,7 +66,15 @@ class RewardHistoryFragment :
             backArrowTint = Color.WHITE
         )
         mViewBinding?.showHistory?.setOnClickListener {
-            findNavController().navigate(R.id.navigation_more_history)
+
+            findNavController().navigate(R.id.navigation_more_history, null, navOptions {
+                anim {
+                    popEnter = R.anim.slide_in_left
+                    popExit = R.anim.slide_out_righ
+                    enter = R.anim.slide_in_right
+                    exit = R.anim.slide_out_left
+                }
+            })
         }
 
         setRecyclerView(mViewBinding)
@@ -89,12 +98,27 @@ class RewardHistoryFragment :
                     AppConstants.PRODUCT_SPIN -> {
                         val productId = historyItem.orderNumber.toString()
                         val productCode = historyItem.productCode.toString()
-                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${productCode}/${productId}"))
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/spinwheel/${productCode}/${productId}"),
+                            navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
                     }
                     AppConstants.PRODUCT_TREASURE_BOX -> {
                         val productId = historyItem.orderNumber.toString()
                         val productCode = historyItem.productCode.toString()
-                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${productCode}/${productId}"))
+                        findNavController().navigate(Uri.parse("https://www.fypmoney.in/rotating_treasure/${productCode}/${productId}"), navOptions {
+                            anim {
+                                popEnter = R.anim.slide_in_left
+                                popExit = R.anim.slide_out_righ
+                                enter = R.anim.slide_in_right
+                                exit = R.anim.slide_out_left
+                            }
+                        })
                     }
                     else -> {
                         mViewModel?.callProductsDetailsApi(historyItem.orderNumber)
@@ -111,15 +135,15 @@ class RewardHistoryFragment :
     private fun setObserver(sharedViewModel: RewardHistoryFragmentVM) {
 
         sharedViewModel.rewardHistoryList.observe(
-            viewLifecycleOwner
-        ) { list ->
-            itemsArrayList.clear()
-            list.forEach { item ->
-                item.history?.forEach { historyItem ->
-                    if (historyItem != null) {
-                        itemsArrayList.add(historyItem)
+            viewLifecycleOwner,
+            androidx.lifecycle.Observer { list ->
+                itemsArrayList.clear()
+                list.forEach { item ->
+                    item.history?.forEach { historyItem ->
+                        if (historyItem != null) {
+                            itemsArrayList.add(historyItem)
+                        }
                     }
-                }
 
             }
             if (list.size > 0) {
@@ -135,7 +159,7 @@ class RewardHistoryFragment :
             rewardAdapterHistory?.notifyDataSetChanged()
 
 
-        }
+            })
         sharedViewModel.rewardSummaryStatus.observe(
             viewLifecycleOwner
         ) { list ->

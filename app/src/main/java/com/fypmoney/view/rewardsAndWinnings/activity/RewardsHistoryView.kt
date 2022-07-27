@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.Nullable
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -21,12 +19,9 @@ import com.fypmoney.databinding.ViewRewardHistoryBinding
 import com.fypmoney.model.HistoryItem
 import com.fypmoney.model.RewardHistoryResponseNew
 import com.fypmoney.util.AppConstants
-import com.fypmoney.view.arcadegames.ui.SpinWheelHistoryView
 import com.fypmoney.view.rewardsAndWinnings.adapters.RewardsHistoryBaseAdapter
 import com.fypmoney.view.rewardsAndWinnings.interfaces.ListRewardsItemClickListener
 import com.fypmoney.view.rewardsAndWinnings.viewModel.RewardsHistoryVM
-import kotlinx.android.synthetic.main.fragment_reward_history.view.*
-import kotlinx.android.synthetic.main.fragment_your_task.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.view_reward_history.*
 
@@ -194,7 +189,7 @@ class RewardsHistoryView : BaseActivity<ViewRewardHistoryBinding, RewardsHistory
 
                 when (historyItem.productType) {
                     AppConstants.PRODUCT_SPIN -> {
-                        val intent = Intent(this@RewardsHistoryView, SpinWheelHistoryView::class.java)
+                        val intent = Intent(this@RewardsHistoryView, SpinWheelViewDark::class.java)
 //                        SpinWheelViewDark.sectionArrayList.clear()
                         intent.putExtra(
                             AppConstants.ORDER_NUM,
