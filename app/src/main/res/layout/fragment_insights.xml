@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
+
         <variable
             name="viewModel"
             type="com.fypmoney.view.insights.viewmodel.InsightsFragmentVM" />
@@ -15,6 +17,61 @@
         android:background="@color/bgcolor"
         tools:context=".view.insights.view.InsightsFragment">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginEnd="0dp"
+            app:elevation="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                style="@style/Widget.MaterialComponents.Toolbar.Primary"
+                android:layout_width="match_parent"
+                android:background="@color/bgcolor"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/toolbarTitleTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textAppearance="@style/TextAppearance.Fyp.Subtitle1"
+                        android:textColor="@color/white"
+                        android:text="@string/insights"
+                        android:layout_marginStart="12dp"
+                        android:textSize="@dimen/text_18sp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/insights_filter_iv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/dp16"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:onClick="@{()->viewModel.showMonthFilterClick()}"
+                        app:tint="@color/white"
+                        app:srcCompat="@drawable/ic_filter" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/calender_waise_insights_cl"
             android:layout_width="match_parent"
@@ -22,13 +79,13 @@
             android:paddingHorizontal="@dimen/dp16"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/app_bar">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clMonths"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/dp8"
+                android:paddingVertical="@dimen/dp6"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -40,6 +97,8 @@
                     app:srcCompat="@drawable/ic_forword_arrow"
                     android:rotation="180"
                     app:tint="@color/white"
+                    android:visibility="@{viewModel.selectedMonth==11 ? View.GONE : View.VISIBLE}"
+                    android:onClick="@{()->viewModel.selectPreviousMonthClick()}"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
@@ -48,7 +107,7 @@
                     android:id="@+id/tvMonth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="December"
+                    tools:text="December"
                     android:textSize="20sp"
                     android:gravity="center"
                     app:layout_constraintStart_toEndOf="@+id/ivPreviousMonth"
@@ -64,6 +123,8 @@
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/ic_forword_arrow"
                     app:tint="@color/white"
+                    android:onClick="@{()->viewModel.selectNextMonthClick()}"
+                    android:visibility="@{viewModel.selectedMonth==0 ? View.GONE : View.VISIBLE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
@@ -84,7 +145,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:paddingHorizontal="@dimen/dp10"
-                    android:paddingVertical="@dimen/dp10"
+                    android:paddingVertical="@dimen/dp8"
                     app:customBackgroundColor="@{@color/orange11}"
                     app:customCornerRadius="@{@dimen/dp18}"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -110,7 +171,7 @@
                         style="@style/TextviewRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp8"
+                        android:layout_marginTop="@dimen/dp4"
                         android:text="@string/total_spends"
                         android:textColor="@color/black10"
                         android:layout_marginStart="@dimen/dp8"
@@ -140,7 +201,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:paddingHorizontal="@dimen/dp10"
-                    android:paddingVertical="@dimen/dp10"
+                    android:paddingVertical="@dimen/dp8"
                     android:layout_marginStart="@dimen/dp16"
                     app:customBackgroundColor="@{@color/sky1}"
                     app:customCornerRadius="@{@dimen/dp18}"
@@ -154,11 +215,11 @@
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/ivTotalIncome"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="178dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_total_spends" />
+                        app:srcCompat="@drawable/ic_total_income" />
 
 
                     <com.google.android.material.textview.MaterialTextView
@@ -166,7 +227,7 @@
                         style="@style/TextviewRegular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dp8"
+                        android:layout_marginTop="@dimen/dp4"
                         android:text="@string/total_income"
                         android:textColor="@color/black10"
                         android:textSize="10sp"
@@ -200,6 +261,7 @@
                 app:customBackgroundAlpha="@{5}"
                 android:padding="@dimen/dp15"
                 android:layout_marginTop="@dimen/dp20"
+                android:onClick="@{()->viewModel.showTransactionHistory()}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/clSpends">

@@ -1247,5 +1247,7 @@ Coming really soon!
     <string name="income">Income</string>
     <string name="do_your_first_transaction">Do your first transaction!</string>
     <string name="pecentaze_value">%1$s %</string>
+    <string name="choose_month_to_display_transactions">Choose month to display transactions</string>
+    <string name="no_transaction_marked_in_this_category">No transaction marked in this category</string>
 
 </resources>

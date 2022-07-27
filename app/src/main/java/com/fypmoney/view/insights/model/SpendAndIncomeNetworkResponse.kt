@@ -1,7 +1,9 @@
 package com.fypmoney.view.insights.model
 
+import android.os.Parcelable
 import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 
 @Keep
 data class SpendAndIncomeNetworkResponse(
@@ -48,6 +50,7 @@ data class CategoryItem(
 	val iconLink: String? = null
 )
 
+@Parcelize
 @Keep
 data class AllTxnItem(
 
@@ -89,7 +92,7 @@ data class AllTxnItem(
 
 	@field:SerializedName("category")
 	val category: String? = null
-)
+):Parcelable
 
 @Keep
 data class Income(

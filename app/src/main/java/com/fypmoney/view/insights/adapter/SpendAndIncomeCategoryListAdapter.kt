@@ -18,7 +18,7 @@ import kotlin.math.roundToInt
 
 class SpendAndIncomeCategoryListAdapter(
     private val lifeCycleOwner:LifecycleOwner,
-    private val onCategoryClick:(categoryCode:String)->Unit
+    private val onCategoryClick:(categoryCode:String,categoryName:String)->Unit
 ):ListAdapter<SpendAndIncomeCategoryUiModel, SpendAndIncomeCategoryListAdapter.SpendAndIncomeCategoryItemVH>(SpendAndIncomeCategoryDiffUtils) {
 
     /**
@@ -82,10 +82,11 @@ class SpendAndIncomeCategoryListAdapter(
     class SpendAndIncomeCategoryItemVH(
         private val binding: ItemSpendsIncomeBinding,
         private val lifeCycleOwner: LifecycleOwner,
-        private val onCategoryClick:(categoryCode:String)->Unit
+        private val onCategoryClick:(categoryCode:String,categoryName:String)->Unit
     ): RecyclerView.ViewHolder(binding.root){
         fun onBind(item:SpendAndIncomeCategoryUiModel){
             binding.executeAfter {
+                lifecycleOwner = lifeCycleOwner
                 cvSpendsAndIncome.setCardBackgroundColor(Color.parseColor(item.categoryColor))
                 Utility.setImageUsingGlideWithShimmerPlaceholder(
                     context = ivCategorey.context,
@@ -98,7 +99,7 @@ class SpendAndIncomeCategoryListAdapter(
                 cpiIncomeSpendsPercentage.progress = item.progress?:0
                 cpiIncomeSpendsPercentage.setIndicatorColor(Color.parseColor(item.categoryColor))
                 cvSpendsAndIncome.setOnClickListener{
-
+                    onCategoryClick(item.categoryCode!!,item.categoryName!!)
                 }
             }
         }

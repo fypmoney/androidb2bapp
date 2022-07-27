@@ -81,6 +81,8 @@
         android:label="@string/insights"
         tools:layout="@layout/fragment_insights">
 
+
+
     </fragment>
 
     <fragment
@@ -619,6 +621,31 @@
             app:popExitAnim="@anim/slide_out_righ"
             app:popUpTo="@id/navigation_home"
             app:popUpToInclusive="false"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_spend_and_income"
+        android:name="com.fypmoney.view.insights.view.SpendsAndIncomeFragment"
+        android:label="Spend and Income"
+        tools:layout="@layout/fragment_spends_and_income" >
+        <action
+            android:id="@+id/action_spend_and_income_to_category_wise_transaction_list"
+            app:destination="@+id/navigation_category_wise_transaction_list"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_category_wise_transaction_list"
+        android:name="com.fypmoney.view.insights.view.CategoryWaiseTransactionListFragment"
+        android:label="Category wise transaction list"
+        tools:layout="@layout/fragment_category_waise_transaction_list">
+
+
+
+
 
     </fragment>
 

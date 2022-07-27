@@ -61,6 +61,9 @@
     <dimen name="dp54">54dp</dimen>
     <dimen name="dp14">14dp</dimen>
     <dimen name="dp2">2dp</dimen>
+    <dimen name="dp4">4dp</dimen>
+    <dimen name="dp28">28dp</dimen>
+    <dimen name="dp41">41dp</dimen>
 
 
 </resources>

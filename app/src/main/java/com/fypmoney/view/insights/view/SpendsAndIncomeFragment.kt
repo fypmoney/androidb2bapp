@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -13,7 +14,11 @@ import com.fypmoney.extension.toVisible
 import com.fypmoney.view.insights.adapter.SpendAndIncomeCategoryListAdapter
 import com.fypmoney.view.insights.adapter.SpendAndIncomeCategoryUiModel.Companion.mapNetworkResponseToSpendAndIncomeCategoryUiModel
 import com.fypmoney.view.insights.viewmodel.InsightsFragmentVM
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 
+@ObsoleteCoroutinesApi
+@FlowPreview
 class SpendsAndIncomeFragment : BaseFragment<FragmentSpendsAndIncomeBinding, InsightsFragmentVM>() {
 
     private val spendsAndIncomeFragmentVM by viewModels<InsightsFragmentVM> ({ requireParentFragment() })
@@ -64,9 +69,14 @@ class SpendsAndIncomeFragment : BaseFragment<FragmentSpendsAndIncomeBinding, Ins
     private fun setupViews() {
         binding.rvSpendsAndIncome.adapter = SpendAndIncomeCategoryListAdapter(
             lifeCycleOwner = viewLifecycleOwner,
-            onCategoryClick = {
+            onCategoryClick = {categoryCode,categoryName->
+                val filteredList = spendsAndIncomeFragmentVM.allTxnItem?.filter {
+                    it!!.categoryCode.equals(categoryCode)
+                }
+                val bundle = bundleOf("categoryName" to categoryName,"transactionList" to filteredList)
+                findNavController().navigate(R.id.navigation_category_wise_transaction_list,bundle)
 
-            })
+        })
     }
 
 

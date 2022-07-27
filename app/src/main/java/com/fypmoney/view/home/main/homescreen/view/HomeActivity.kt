@@ -101,7 +101,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     }
                     binding.bottomMenu.setItemSelected(R.id.navigation_insights, true)
 
-                    binding.toolbar.setBackgroundColor(resources.getColor(R.color.bgcolor))
+                  /*  binding.toolbar.setBackgroundColor(resources.getColor(R.color.bgcolor))
                     binding.toolbarTitleTv.setTextColor(resources.getColor(R.color.white))
                     homeActivityVM.toolbarTitle.value = getString(R.string.insights)
                     binding.help.toGone()
@@ -109,7 +109,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding, HomeActivityVM>(),
                     binding.transactionHistoryAiv.toGone()
                     binding.myProfileIv.toGone()
                     binding.insightsFilterIv.toVisible()
-                    showToolbar()
+                    showToolbar()*/
+                    hideToolbar()
                     showBottomNavigation()
                 }
                 R.id.navigation_rewards -> {

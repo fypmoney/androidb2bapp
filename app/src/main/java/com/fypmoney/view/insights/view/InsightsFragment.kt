@@ -1,5 +1,8 @@
 package com.fypmoney.view.insights.view
 
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -8,10 +11,15 @@ import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
 import com.fypmoney.databinding.FragmentInsightsBinding
+import com.fypmoney.view.activity.BankTransactionHistoryView
 import com.fypmoney.view.insights.adapter.SpendAndIncomeStateAdapter
 import com.fypmoney.view.insights.viewmodel.InsightsFragmentVM
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 
+@ObsoleteCoroutinesApi
+@FlowPreview
 class InsightsFragment : BaseFragment<FragmentInsightsBinding,InsightsFragmentVM>() {
 
     companion object {
@@ -74,6 +82,9 @@ class InsightsFragment : BaseFragment<FragmentInsightsBinding,InsightsFragmentVM
         insightsFragmentVM.state.observe(viewLifecycleOwner) {
             handelState(it)
         }
+        insightsFragmentVM.event.observe(viewLifecycleOwner){
+            handelEvent(it)
+        }
     }
 
     private fun handelState(it: InsightsFragmentVM.InsightsState?) {
@@ -85,10 +96,50 @@ class InsightsFragment : BaseFragment<FragmentInsightsBinding,InsightsFragmentVM
 
             }
             is InsightsFragmentVM.InsightsState.Success -> {
-                binding.tvTotalSpendsValue.text = String.format(getString(R.string.amount_with_currency),it.data.spent?.total)
-                binding.tvTotalIncomeValue.text = String.format(getString(R.string.amount_with_currency),it.data.income?.total)
+                binding.tvMonth.text = it.currentMonth
+                it.data.spent?.total?.let {
+                    binding.tvTotalSpendsValue.text = String.format(getString(R.string.amount_with_currency),it)
+
+                }?: kotlin.run{
+                    binding.tvTotalSpendsValue.text = String.format(getString(R.string.amount_with_currency),"0.00")
+                }
+                it.data.income?.total?.let {
+                    binding.tvTotalIncomeValue.text = String.format(getString(R.string.amount_with_currency),it)
+                }?: kotlin.run {
+                    binding.tvTotalIncomeValue.text = String.format(getString(R.string.amount_with_currency),"0.00")
+                }
             }
-            null -> TODO()
+            null -> {
+
+            }
+            is InsightsFragmentVM.InsightsState.SelectNextMonth -> {
+                binding.tvMonth.text = it.nextMonth
+
+            }
+            is InsightsFragmentVM.InsightsState.SelectPreviousMonth -> {
+                binding.tvMonth.text = it.prevMonth
+
+            }
+        }
+    }
+
+    private fun handelEvent(it: InsightsFragmentVM.InsightsEvent?) {
+        when(it){
+            InsightsFragmentVM.InsightsEvent.ShowTransactionHistory -> {
+                startActivity(Intent(requireActivity(),BankTransactionHistoryView::class.java))
+            }
+            null -> {
+
+            }
+            is InsightsFragmentVM.InsightsEvent.ShowMonthListClickEvent -> {
+                val previous12MonthListBottomSheet = Previous12MonthListBottomSheet(
+                    monthsList = it.listOfMonth,
+                    onMonthSelected = {
+                        insightsFragmentVM.selectedMonth.value = it
+                    })
+                previous12MonthListBottomSheet.dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.RED))
+                previous12MonthListBottomSheet.show(childFragmentManager, "MonthBottomSheet")
+            }
         }
     }
 }

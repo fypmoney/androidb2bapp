@@ -74,6 +74,7 @@ import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.io.InputStream
 import java.nio.charset.Charset
+import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -948,6 +949,29 @@ object Utility {
         }
     }
 
+    fun parseDateTimeWithPlusFiveThirty(
+        dateTime: String? = null,
+        inputFormat: String? = AppConstants.SERVER_DATE_TIME_FORMAT1,
+        outputFormat: String? = AppConstants.CHANGED_DATE_TIME_FORMAT1
+    ): String {
+        return if (dateTime != null) {
+            val input = SimpleDateFormat(inputFormat, Locale.getDefault())
+            input.timeZone = TimeZone.getTimeZone("UTC");
+            val output = SimpleDateFormat(outputFormat, Locale.getDefault())
+            output.timeZone = TimeZone.getTimeZone("Asia/Kolkata")
+            var d: Date? = null
+            try {
+                d = input.parse(dateTime)
+                output.format(d)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+                FirebaseCrashlytics.getInstance().recordException(Throwable("Unable to parse datae ${d}"))
+                ""
+            }
+        } else {
+            ""
+        }
+    }
 
 
     /*
@@ -1253,7 +1277,11 @@ object Utility {
 
     fun getStartDateAndEndDateOfMonth(month:Int,outputFormat: String):Pair<String,String>{
         val calendar = getInstance()
-        calendar.add(MONTH, month)
+        if(month!=0){
+            calendar.add(MONTH, -month)
+        }else{
+            calendar.add(MONTH, month)
+        }
         calendar[DATE] = calendar.getActualMinimum(DAY_OF_MONTH)
         val monthFirstDay = calendar.time
         calendar[DATE] = calendar.getActualMaximum(DAY_OF_MONTH)
@@ -1287,7 +1315,7 @@ object Utility {
     @Keep
     data class Last12MonthItem(
         var monthFullName:String,
-        var monthSortName:String
+        var monthSortName:String,
     )
     /*fun getMonth(month:Int){
         val calendar = getInstance()
@@ -1304,4 +1332,10 @@ object Utility {
         System.out.println("startDate formated$firstDate")
         System.out.println("endDate formated$lastDate")
     }*/
+    fun getCurrentMonth():String{
+        val dateFormat: DateFormat = SimpleDateFormat("MMM", Locale.getDefault())
+        val date = Date()
+        Log.d("Month", dateFormat.format(date))
+        return dateFormat.format(date)
+    }
 }
