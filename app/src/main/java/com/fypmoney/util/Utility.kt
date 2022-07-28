@@ -1311,7 +1311,10 @@ object Utility {
             shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
             context.startActivity(Intent.createChooser(shareIntent, "Share"))
         }else{
-            FirebaseCrashlytics.getInstance().recordException(throw Exception("Bitmap path is ${bitmapPath}"))
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, text)
+            context.startActivity(Intent.createChooser(intent, "Share Link"))
         }
 
     }

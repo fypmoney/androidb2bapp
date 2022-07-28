@@ -35,4 +35,5 @@ class ExampleUnitTest {
     fun numberFormatTest(){
         println(("₹116.01".split("₹")[1]).toDouble().roundToInt())
     }
+
 }
