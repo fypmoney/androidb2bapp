@@ -42,7 +42,7 @@ class CategoryWiseTxnListAdapter(private val lifecycleOwner: LifecycleOwner,
                 tvTransactionDate.text = item.categoryTxnTime
                 tvTransactionAmount.text = item.txnAmount
                 cvTransactionItem.setOnClickListener {
-                    onCategoryItemClick(item.categoryTxnTime)
+                    onCategoryItemClick(item.txnRefNumber)
                 }
             }
         }

@@ -26,10 +26,14 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import com.freshchat.consumer.sdk.FaqOptions
+import com.freshchat.consumer.sdk.Freshchat
 import com.fypmoney.R
+import com.fypmoney.application.PockketApplication
 import com.fypmoney.util.AppConstants
 import com.fypmoney.util.AppConstants.DEVICE_SECURITY_REQUEST_CODE
 import com.fypmoney.util.DialogUtils
+import com.fypmoney.util.SharedPrefUtils
 import com.fypmoney.util.Utility
 import com.fypmoney.view.activity.LoginView
 import kotlinx.android.synthetic.main.toolbar.*
@@ -373,5 +377,35 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
     }
 
 
+    fun callFreshChat(context: Context) {
+        val fresh = PockketApplication.instance.freshchat
+
+        val user = fresh?.user?.apply {
+            firstName = SharedPrefUtils.getString(
+                requireActivity().applicationContext,
+                SharedPrefUtils.SF_KEY_USER_FIRST_NAME
+            )
+            lastName = SharedPrefUtils.getString(
+                requireActivity().applicationContext,
+                SharedPrefUtils.SF_KEY_USER_LAST_NAME
+            )
+
+        }
+        user?.setPhone(
+            "+91", SharedPrefUtils.getString(
+                requireActivity().applicationContext,
+                SharedPrefUtils.SF_KEY_USER_MOBILE)
+
+        )
+        if (user != null) {
+            fresh.user = user
+        }
+        val faqOptions = FaqOptions()
+            .showFaqCategoriesAsGrid(false)
+            .showContactUsOnAppBar(true)
+            .showContactUsOnFaqScreens(true)
+            .showContactUsOnFaqNotHelpful(true)
+        Freshchat.showFAQs(context, faqOptions)
+    }
 
 }

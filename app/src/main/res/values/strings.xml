@@ -1249,5 +1249,9 @@ Coming really soon!
     <string name="pecentaze_value">%1$s %</string>
     <string name="choose_month_to_display_transactions">Choose month to display transactions</string>
     <string name="no_transaction_marked_in_this_category">No transaction marked in this category</string>
+    <string name="transaction_details">Transaction Details</string>
+    <string name="fyp_transaction_id">Fyp Transaction ID</string>
+    <string name="sent_with_time">Sent | %1$s</string>
+    <string name="reccived_with_time">Received | %1$s</string>
 
 </resources>

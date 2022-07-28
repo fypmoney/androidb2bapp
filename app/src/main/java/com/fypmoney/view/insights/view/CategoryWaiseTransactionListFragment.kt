@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.fypmoney.BR
 import com.fypmoney.R
 import com.fypmoney.base.BaseFragment
@@ -59,7 +60,13 @@ class CategoryWaiseTransactionListFragment : BaseFragment<FragmentCategoryWaiseT
         binding.rvTransactionList.adapter = CategoryWiseTxnListAdapter(
             lifecycleOwner =viewLifecycleOwner,
             onCategoryItemClick = {
-
+                val item = categoryWaiseTransactionListFragmentVM.categoryWiseTxnList.find { allTxnItem->
+                    allTxnItem.accReferenceNumber==it
+                }
+                val directions = CategoryWaiseTransactionListFragmentDirections.actionCategoryTxnListToTxnDetails(
+                    txnDetail = item
+                )
+                findNavController().navigate(directions)
             })
     }
 

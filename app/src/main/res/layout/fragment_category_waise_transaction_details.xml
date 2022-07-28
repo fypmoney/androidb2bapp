@@ -4,7 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.fypmoney.view.insights.view.CategoryWaiseTransactionDetailsFragmentVM" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -31,11 +33,10 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clTransactionDetailsUpperPart"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/guideline">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivCategory"
@@ -48,12 +49,25 @@
                     tools:src="@drawable/ic_card_settings"/>
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/tvMobileNo"
+                    android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ivCategory"
+                    android:layout_marginTop="@dimen/dp5"
+                    style="@style/TextviewRegular"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    tools:text="ZOMOTO"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvMobileNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvName"
                     android:layout_marginTop="@dimen/dp5"
                     style="@style/TextviewRegular"
                     android:textColor="@color/text_color_light"
@@ -179,23 +193,139 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintGuide_begin="300dp" />
-
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clTransactionDetailsBelowPart"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="@dimen/dp32"
+                android:paddingHorizontal="@dimen/dp50"
+                android:background="@drawable/curved_background12"
+                android:backgroundTint="@color/black13"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/guideline"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/clTransactionDetailsUpperPart">
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="@dimen/dp_40"
+                    android:layout_height="2dp"
+                    android:layout_marginTop="18dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="@color/dividerColor" />
 
 
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvTransactionDetailsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextviewRegular"
+                    android:textSize="17sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/dp28"
+                    android:text="@string/transaction_details"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view1"/>
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvFypTxnIdLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextviewRegular"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_color_light"
+                    android:layout_marginTop="@dimen/dp24"
+                    android:text="@string/fyp_transaction_id"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTransactionDetailsLabel"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvFypTxnIdValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextviewRegular"
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/dp7"
+                    tools:text="000000000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvFypTxnIdLabel"/>
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/dp16"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@color/strokeColor"
+                    app:layout_constraintTop_toBottomOf="@+id/tvFypTxnIdValue"/>
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvBankTxnIdLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/TextviewRegular"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_color_light"
+                    android:layout_marginTop="@dimen/dp24"
+                    android:text="@string/bank_transaction_heading"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view2"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvBankTxnIdValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextviewRegular"
+                    android:textSize="15sp"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="@dimen/dp7"
+                    tools:text="000000000000"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBankTxnIdLabel"/>
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/dp16"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@color/strokeColor"
+                    app:layout_constraintTop_toBottomOf="@+id/tvBankTxnIdValue"/>
+
+
+                <com.fypmoney.view.customview.PrimaryButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:fontFamily="sans-serif"
+                    android:paddingLeft="54dp"
+                    android:paddingTop="14dp"
+                    android:paddingRight="54dp"
+                    android:paddingBottom="14dp"
+                    app:text="@string/get_help"
+                    android:layout_marginBottom="@dimen/dp20"
+                    android:textAllCaps="false"
+                    app:enabled="true"
+                    android:onClick="@{()->viewModel.onGetHelpClick()}"
+                    android:id="@+id/get_help_button"
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    app:disabled_bg="@color/cb_grey"
+                    app:disabled_text="@color/grey_heading"
+                    app:enabled_text="@color/white"
+                    app:enabled_bg="@color/green6"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

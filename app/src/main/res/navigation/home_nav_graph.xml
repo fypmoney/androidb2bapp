@@ -643,9 +643,27 @@
         android:label="Category wise transaction list"
         tools:layout="@layout/fragment_category_waise_transaction_list">
 
+        <action
+            android:id="@+id/action_category_txn_list_to_txn_details"
+            app:destination="@+id/navigation_category_transaction_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_righ"/>
 
 
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_category_transaction_details"
+        android:name="com.fypmoney.view.insights.view.CategoryWaiseTransactionDetailsFragment"
+        android:label="Category wise transaction Details"
+        tools:layout="@layout/fragment_category_waise_transaction_details">
 
+        <argument
+            android:name="txnDetail"
+            android:defaultValue="@null"
+            app:argType="com.fypmoney.view.insights.model.AllTxnItem"
+            app:nullable="true" />
 
     </fragment>
 
