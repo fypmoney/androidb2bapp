@@ -203,7 +203,7 @@ class RewardsOverviewFragment :
         }
 
         mViewBinding?.chipTicketsView?.setOnClickListener {
-            findNavController().navigate(R.id.navigation_multiple_jackpots, null, navOptions {
+            findNavController().navigate(R.id.navigation_slot_machine, null, navOptions {
                 anim {
                     popEnter = R.anim.slide_in_left
                     popExit = R.anim.slide_out_righ

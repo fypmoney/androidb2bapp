@@ -117,7 +117,6 @@ class SpinWheelFragment : BaseFragment<FragmentSpinWheelBinding, SpinWheelFragme
 
         dialogInsufficientMynts = Dialog(this.requireContext())
 
-
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {

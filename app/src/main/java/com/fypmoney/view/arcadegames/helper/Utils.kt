@@ -1,7 +1,10 @@
 package com.fypmoney.view.arcadegames.helper
 
 object Utils {
-    var mynts = 0
-    var tickets = 1
-    var cash = 2
+    var seven = 0
+    var diamond = 1
+    var crown = 2
+    var apple = 3
+    var card = 4
+    var grapes = 5
 }

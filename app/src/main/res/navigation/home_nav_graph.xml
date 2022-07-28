@@ -891,4 +891,10 @@
             app:popExitAnim="@anim/slide_out_righ"/>
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_slot_machine"
+        android:name="com.fypmoney.view.arcadegames.ui.SlotMachineFragment"
+        android:label="Slot Machine Fragment"
+        tools:layout="@layout/fragment_slot_machine" />
+
 </navigation>

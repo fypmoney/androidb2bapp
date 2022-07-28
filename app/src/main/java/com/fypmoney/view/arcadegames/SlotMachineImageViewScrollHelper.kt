@@ -23,7 +23,7 @@ class SlotMachineImageViewScrollHelper(context: Context, attributeSet: Attribute
         ViewSlotMachineImageScrollingBinding.inflate(LayoutInflater.from(context))
 
     companion object {
-        private const val ANIMATION_DURATION = 120
+        private const val ANIMATION_DURATION = 150
     }
 
     val value: Int
@@ -82,9 +82,12 @@ class SlotMachineImageViewScrollHelper(context: Context, attributeSet: Attribute
     private fun setImage(img: ImageView?, value: Int) {
 
         when (value) {
-            Utils.mynts -> img!!.setImageResource(R.drawable.mynts_new)
-            Utils.tickets -> img!!.setImageResource(R.drawable.ticket)
-            Utils.cash -> img!!.setImageResource(R.drawable.cash)
+            Utils.seven -> img!!.setImageResource(R.drawable.seven)
+            Utils.diamond -> img!!.setImageResource(R.drawable.diamond)
+            Utils.crown -> img!!.setImageResource(R.drawable.crown)
+            Utils.apple -> img!!.setImageResource(R.drawable.apple)
+            Utils.card -> img!!.setImageResource(R.drawable.card)
+            Utils.grapes -> img!!.setImageResource(R.drawable.grapes)
         }
 
         img!!.tag = value
